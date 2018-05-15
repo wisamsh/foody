@@ -23,6 +23,7 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
+# Bootstrap
 # Normalize
 # Typography
 # Elements
@@ -46,6 +47,15 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 @import "mixins/mixins-master";
 
 /*--------------------------------------------------------------
+# Bootstrap
+--------------------------------------------------------------*/
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap-material-design/scss/bootstrap-material-design";
+
+
+@import "~slick-carousel/slick/slick.scss";
+
+/*--------------------------------------------------------------
 # Normalize
 --------------------------------------------------------------*/
 @import "normalize";
@@ -54,7 +64,7 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 # Typography
 --------------------------------------------------------------*/
 @import "typography/typography";
-
+@import "typography/_icons.css";
 /*--------------------------------------------------------------
 # Elements
 --------------------------------------------------------------*/
@@ -104,3 +114,12 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 # Media
 --------------------------------------------------------------*/
 @import "media/media";
+
+/*--------------------------------------------------------------
+# Pages
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Homepage
+--------------------------------------------------------------*/
+@import "site/primary/homepage/hompage";

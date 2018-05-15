@@ -7,6 +7,7 @@
  * @package Foody
  */
 
+
 if ( ! function_exists( 'foody_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
@@ -122,13 +123,16 @@ add_action( 'widgets_init', 'foody_widgets_init' );
 function foody_scripts() {
 	wp_enqueue_style( 'foody-style', get_stylesheet_uri() );
 
-	wp_enqueue_script( 'foody-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
+	wp_enqueue_script( 'foody-navigation', get_template_directory_uri() . '/resources/js/navigation.js', array(), '20151215', true );
 
-	wp_enqueue_script( 'foody-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+	wp_enqueue_script( 'foody-skip-link-focus-fix', get_template_directory_uri() . '/resources/js/skip-link-focus-fix.js', array(), '20151215', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
+
+	wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/bundle.js', false, false, true);
+
 }
 add_action( 'wp_enqueue_scripts', 'foody_scripts' );
 
@@ -152,10 +156,17 @@ require get_template_directory() . '/inc/template-functions.php';
  */
 require get_template_directory() . '/inc/customizer.php';
 
+// Register Custom Navigation Walker
+require_once get_template_directory() . '/inc/wp-bootstrap-navwalker.php';
+register_nav_menus( array(
+	'primary' => __( 'Primary Menu', 'foody' ),
+) );
+
+require_once get_template_directory() . '/functions/includes.php';
+
 /**
  * Load Jetpack compatibility file.
  */
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
-

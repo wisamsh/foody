@@ -1,0 +1,110 @@
+.homepage {
+
+  .cover-image {
+    background: #000;
+    height: 200px;
+  }
+
+  .content {
+    padding: 13px;
+
+    .featured {
+
+      .featured-post {
+
+        > div {
+          background-color: red;
+          height: 300px;
+          clip-path: inset(0px round 3px);
+        }
+
+        .post-details {
+          padding: 10px 5px;
+          .image-container {
+
+            text-align: right;
+            padding: 0;
+
+            img {
+              width: 55px;
+              height: 55px;
+              border-radius: 50%;
+            }
+          }
+
+          ul {
+            padding: 0;
+            margin: 0;
+            overflow: auto;
+
+            li {
+              list-style-type: none;
+              display: inline-block;
+            }
+
+            li:not(:first-child):before {
+              content: "\00b7";
+              line-height: normal;
+              vertical-align: middle;
+              font-size: 30px;
+            }
+          }
+        }
+      }
+    }
+
+    .categories-listing {
+
+      .category-listing {
+
+        img {
+          padding: 10px;
+        }
+        .categort-listing-title {
+          text-align: center;
+        }
+      }
+    }
+
+    .team-listing {
+      border-bottom: 1px solid $color__divider;
+
+      .author {
+        img {
+          margin: 0 auto;
+          clip-path: circle();
+        }
+
+        h4 {
+          text-align: center;
+          margin: 10px 0;
+        }
+
+      }
+    }
+
+    .feed-container {
+
+      height: 700px;
+      background-color: #1a0dab;
+      padding-top: 20px;
+
+      .feed-header {
+        height: 60px;
+        background-color: #00b9eb;
+        width: 100%;
+      }
+      aside {
+        height: 100%;
+        background-color: #3c763d;
+      }
+
+      article {
+        height: 100%;
+        background-color: #3C2BB6;
+      }
+
+    }
+  }
+}
+

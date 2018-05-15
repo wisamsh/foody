@@ -1,4 +1,26 @@
 const {mix} = require('laravel-mix');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+mix.webpackConfig({
+    plugins: [
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // both options are optional
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        }),
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.(scss)$/,
+                use: [
+                    MiniCssExtractPlugin.loader
+                ]
+            }
+        ]
+    }
+});
 
 /*
  |--------------------------------------------------------------------------
