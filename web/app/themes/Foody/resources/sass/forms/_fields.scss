@@ -18,7 +18,8 @@ textarea {
 	border: 1px solid $color__border-input;
 	border-radius: 3px;
 	padding: 3px;
-
+	background-color: #FFFFFF;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
 	&:focus {
 		color: $color__text-input-focus;
 	}
@@ -30,4 +31,15 @@ select {
 
 textarea {
 	width: 100%;
+}
+
+div.checkbox{
+	text-align: right;
+}
+
+input{
+	&.search{
+		background: url(../images/icons/search-gray.png) no-repeat scroll 7px 50%;
+		padding-left:30px;
+	}
 }

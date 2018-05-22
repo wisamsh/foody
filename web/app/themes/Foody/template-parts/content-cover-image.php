@@ -8,5 +8,5 @@
 ?>
 
 <div class="cover-image">
-    <img src="<?php get_header_image() ?>" alt="">
+    <img src="<?php echo get_header_image() ?>" alt="">
 </div>

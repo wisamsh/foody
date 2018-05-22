@@ -43,7 +43,7 @@ module.exports = {
                 }]
             },
             {
-                test: /\.(png|jp(e*)g|svg)$/,
+                test: /\.(png|jp(e*)g)$/,
                 use: [{
                     loader: 'url-loader',
                     options: {
@@ -51,7 +51,21 @@ module.exports = {
                         name: 'images/[hash]-[name].[ext]'
                     }
                 }]
-            }
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                use:[{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 50000,
+                        name: 'fonts/[name].[ext]'
+                    }
+                }]
+            },
+            // { test: /\.woff$/, loader: 'url-loader?limit=65000&mimetype=application/font-woff&name=fonts/[name].[ext]' },
+            // { test: /\.woff2$/, loader: 'url-loader?limit=65000&mimetype=application/font-woff2&name=fonts/[name].[ext]' },
+            { test: /\.otf$/, loader: 'url-loader?limit=65000000&mimetype=application/octet-stream&name=fonts/[name].[ext]' },
+            // { test: /\.eot$/, loader: 'url-loader?limit=65000&mimetype=application/vnd.ms-fontobject&name=fonts/[name].[ext]' }
         ]
     },
     watch: true

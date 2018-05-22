@@ -4,3 +4,5 @@
 
 
 require('./team');
+require('./recommended');
+require('./categories');

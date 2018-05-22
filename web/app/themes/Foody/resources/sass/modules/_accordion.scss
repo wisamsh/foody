@@ -1,0 +1,21 @@
+.foody-accordion {
+
+  a[data-toggle="collapse"] {
+
+    width: 100%;
+    color: $color__text-main;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.06px;
+    line-height: 23px;
+
+    &:after {
+      content: url("../images/icons/arrow-down.png");
+      position: absolute;
+      left: 20px;
+      line-height: normal;
+    }
+
+  }
+
+}

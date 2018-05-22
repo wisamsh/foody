@@ -1,8 +1,11 @@
 .homepage {
 
   .cover-image {
-    background: #000;
-    height: 200px;
+
+    img {
+      background-size: cover;
+      width: 100%;
+    }
   }
 
   .content {
@@ -55,13 +58,28 @@
 
     .categories-listing {
 
-      .category-listing {
+      padding: 0 10px;
 
+      .category-listing {
+        padding: 0 5px;
         img {
-          padding: 10px;
+          clip-path: inset(0 round .5rem);
+          box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+          height: 250px;
         }
         .categort-listing-title {
           text-align: center;
+        }
+
+        .overlay {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          font-size: 2rem;
+          text-align: center;
+          //z-index: $zindex-dropdown;
+          color: $color__primary;
         }
       }
     }
@@ -73,6 +91,8 @@
         img {
           margin: 0 auto;
           clip-path: circle();
+          width: 167px;
+          //height: 167px;
         }
 
         h4 {
@@ -85,26 +105,194 @@
 
     .feed-container {
 
-      height: 700px;
-      background-color: #1a0dab;
       padding-top: 20px;
-
       .feed-header {
         height: 60px;
-        background-color: #00b9eb;
         width: 100%;
+
+        .socials {
+
+        }
+
+        .h3 {
+
+        }
+
       }
       aside {
-        height: 100%;
-        background-color: #3c763d;
+        margin-bottom: -15px;
+        background-color: #fff;
+        input[type="text"] {
+          width: 100%;
+          height: 47px;
+        }
       }
 
       article {
-        height: 100%;
-        background-color: #3C2BB6;
+
+        &.feed {
+          margin: 0;
+
+          .show-more{
+            margin: 0 auto;
+            padding: 20px 0;
+            text-align: center;
+            cursor: pointer;
+            img{
+              margin-bottom: 10px;
+            }
+            h4{
+              color: $color__primary;
+            }
+          }
+        }
+
+        &.feed, &.recommended-container {
+          img {
+            &.recipe-item-image {
+              min-height: 270px;
+            }
+          }
+        }
+
       }
 
     }
   }
+
+  .filter {
+    input[type="text"] {
+      margin-bottom: 15px;
+    }
+
+    .filters {
+      padding-left: 20px;
+    }
+  }
 }
+
+@include breakpoint(mobileonly) {
+  .homepage {
+
+    .cover-image {
+
+      img {
+      }
+    }
+
+    .content {
+
+      .categories-listing {
+
+        padding: 0;
+
+        .category-listing {
+          padding: 0 3px;
+          img {
+            clip-path: inset(0 round .3rem);
+            height: 100px;
+            width: auto;
+          }
+          .categort-listing-title {
+
+          }
+
+        }
+      }
+
+      .team-listing {
+
+        .author {
+          img {
+            width: 80px;
+
+          }
+
+          h4 {
+            font-size: 18px;
+          }
+
+        }
+      }
+
+      .feed-container {
+
+        .feed-header {
+
+          .socials {
+
+          }
+
+          .h3 {
+
+          }
+
+        }
+        aside {
+
+          input[type="text"] {
+
+          }
+        }
+
+        article {
+
+          &.feed {
+
+          }
+
+          &.feed, &.recommended-container {
+            img {
+              &.recipe-item-image {
+                min-height: 210px;
+              }
+            }
+          }
+
+        }
+
+      }
+    }
+
+    .filter {
+      input[type="text"] {
+
+      }
+
+      .filters {
+
+      }
+    }
+  }
+
+  .filter-mobile {
+    background-color: #fff;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+
+
+    .filter-btn {
+      height: 55px;
+      width: 140px;
+      border-radius: 28px;
+      background-color: #FFFFFF;
+      box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.13);
+      color: $color__primary;
+      vertical-align: middle;
+      display: inline-block;
+      line-height: 55px;
+    }
+  }
+}
+
+.filter .form-check{
+  text-align: right;
+  input{
+    margin-left: 10px;
+    position: unset;
+  }
+}
+
+
 

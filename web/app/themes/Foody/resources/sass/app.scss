@@ -42,24 +42,31 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 # Media
 	## Captions
 	## Galleries
+
+
 --------------------------------------------------------------*/
-@import "variables-site/variables-site";
 @import "mixins/mixins-master";
+@import "variables-site/variables-site";
 
 /*--------------------------------------------------------------
 # Bootstrap
 --------------------------------------------------------------*/
 @import "~bootstrap/scss/bootstrap";
 @import "~bootstrap-material-design/scss/bootstrap-material-design";
-
+@import "~awesome-bootstrap-checkbox/awesome-bootstrap-checkbox";
 
 @import "~slick-carousel/slick/slick.scss";
+
 
 /*--------------------------------------------------------------
 # Normalize
 --------------------------------------------------------------*/
 @import "normalize";
 
+/*--------------------------------------------------------------
+# Layout
+--------------------------------------------------------------*/
+@import "layout/header";
 /*--------------------------------------------------------------
 # Typography
 --------------------------------------------------------------*/
@@ -96,6 +103,18 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 @import "modules/clearings";
 
 /*--------------------------------------------------------------
+# Slider
+--------------------------------------------------------------*/
+@import "modules/slider";
+
+
+/*--------------------------------------------------------------
+# Accordion
+--------------------------------------------------------------*/
+@import "modules/accordion";
+
+
+/*--------------------------------------------------------------
 # Widgets
 --------------------------------------------------------------*/
 @import "site/secondary/widgets";
@@ -123,3 +142,44 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 # Homepage
 --------------------------------------------------------------*/
 @import "site/primary/homepage/hompage";
+
+
+/*--------------------------------------------------------------
+# Recipes Grid
+--------------------------------------------------------------*/
+@import "recipes-grid/recipes-grid";
+@import "recipes-grid/recipe-grid-item";
+
+@media (max-width: 768px) {
+  .navbar-collapse {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    height: 100vh;
+    width: 100%;
+    background-color: #fff;
+    opacity: 0;
+  }
+  .navbar-collapse.collapsing {
+    -webkit-transition: right .3s linear, opacity .3s linear;
+    -o-transition: right .3s linear, opacity .3s linear;
+    -moz-transition: right .3s linear, opacity .3s linear;
+    transition: right .3s linear, opacity .3s linear;
+    right: -50%;
+    opacity: 0;
+    z-index: $zindex-top;
+  }
+
+  .navbar-collapse.show {
+    right: 0;
+    z-index: $zindex-top;
+    -webkit-transition: right .3s linear, opacity .3s linear;
+    -o-transition: right .3s linear, opacity .3s linear;
+    -moz-transition: right .3s linear, opacity .3s linear;
+    transition: right .3s linear, opacity .3s linear;
+    opacity: 1;
+  }
+}
