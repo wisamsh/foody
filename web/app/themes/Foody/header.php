@@ -8,13 +8,13 @@
  *
  * @package Foody
  */
-
+$header = new Header();
 ?>
 <!doctype html>
-<html <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?> dir="rtl">
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="profile" href="http://gmpg.org/xfn/11">
 
     <?php wp_head(); ?>
@@ -23,12 +23,12 @@
     </script>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class(); ?> dir="rtl">
 <div id="page" class="site">
 
     <header id="masthead" class="site-header">
         <div class="socials d-none d-sm-block">
-
+            <?php $header->the_socials_bar() ?>
         </div>
         <div class="site-branding">
             <div class="logo-container d-none d-sm-block">
@@ -56,7 +56,7 @@
             <div class="container-fluid foody-navbar-container">
 
                 <div class="search-bar d-none d-sm-block">
-                    <input type="text" class="search">
+                    <input type="text" class="search" placeholder="חיפוש מתכון…">
                 </div>
 
                 <!-- Brand and toggle get grouped for better mobile display -->

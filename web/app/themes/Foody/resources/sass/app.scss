@@ -19,7 +19,6 @@ Underscores is distributed under the terms of the GNU GPL v2 or later.
 Normalizing styles have been helped along thanks to the fine work of
 Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 */
-
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
@@ -47,16 +46,29 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 --------------------------------------------------------------*/
 @import "mixins/mixins-master";
 @import "variables-site/variables-site";
-
 /*--------------------------------------------------------------
 # Bootstrap
 --------------------------------------------------------------*/
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+$theme-colors: (
+        "primary":$color__text-primary-dark,
+        "danger": #ff4136,
+        "dark":$color__text-primary-dark
+);
+
 @import "~bootstrap/scss/bootstrap";
+@import "~startbootstrap-simple-sidebar/css/simple-sidebar";
 @import "~bootstrap-material-design/scss/bootstrap-material-design";
-@import "~awesome-bootstrap-checkbox/awesome-bootstrap-checkbox";
+
+@import "plugins/pure-drawer/pure-drawer";
+
+/*--------------------------------------------------------------
+# Slick
+--------------------------------------------------------------*/
 
 @import "~slick-carousel/slick/slick.scss";
-
 
 /*--------------------------------------------------------------
 # Normalize
@@ -64,55 +76,64 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 @import "normalize";
 
 /*--------------------------------------------------------------
+# Common
+--------------------------------------------------------------*/
+@import "common/common";
+
+/*--------------------------------------------------------------
 # Layout
 --------------------------------------------------------------*/
 @import "layout/header";
+@import "layout/footer";
 /*--------------------------------------------------------------
 # Typography
 --------------------------------------------------------------*/
 @import "typography/typography";
-@import "typography/_icons.css";
+@import "typography/_icons";
 /*--------------------------------------------------------------
 # Elements
 --------------------------------------------------------------*/
-@import "elements/elements";
-
+//@import "elements/elements";
+//
 /*--------------------------------------------------------------
 # Forms
 --------------------------------------------------------------*/
 @import "forms/forms";
-
-/*--------------------------------------------------------------
-# Navigation
---------------------------------------------------------------*/
-@import "navigation/navigation";
-
-/*--------------------------------------------------------------
-# Accessibility
---------------------------------------------------------------*/
-@import "modules/accessibility";
-
-/*--------------------------------------------------------------
-# Alignments
---------------------------------------------------------------*/
-@import "modules/alignments";
-
-/*--------------------------------------------------------------
-# Clearings
---------------------------------------------------------------*/
-@import "modules/clearings";
+//
+///*--------------------------------------------------------------
+//# Navigation
+//--------------------------------------------------------------*/
+//@import "navigation/navigation";
+//
+///*--------------------------------------------------------------
+//# Accessibility
+//--------------------------------------------------------------*/
+//@import "modules/accessibility";
+//
+///*--------------------------------------------------------------
+//# Alignments
+//--------------------------------------------------------------*/
+//@import "modules/alignments";
+//
+///*--------------------------------------------------------------
+//# Clearings
+//--------------------------------------------------------------*/
+//@import "modules/clearings";
 
 /*--------------------------------------------------------------
 # Slider
 --------------------------------------------------------------*/
 @import "modules/slider";
 
+/*--------------------------------------------------------------
+# Show More List
+--------------------------------------------------------------*/
+@import "modules/show-more-list";
 
 /*--------------------------------------------------------------
 # Accordion
 --------------------------------------------------------------*/
 @import "modules/accordion";
-
 
 /*--------------------------------------------------------------
 # Widgets
@@ -122,17 +143,17 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 /*--------------------------------------------------------------
 # Content
 --------------------------------------------------------------*/
-@import "site/site";
+//@import "site/site";
 
 /*--------------------------------------------------------------
 # Infinite scroll
 --------------------------------------------------------------*/
-@import "modules/infinite-scroll";
+//@import "modules/infinite-scroll";
 
 /*--------------------------------------------------------------
 # Media
 --------------------------------------------------------------*/
-@import "media/media";
+//@import "media/media";
 
 /*--------------------------------------------------------------
 # Pages
@@ -143,6 +164,15 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 --------------------------------------------------------------*/
 @import "site/primary/homepage/hompage";
 
+/*--------------------------------------------------------------
+# Team
+--------------------------------------------------------------*/
+@import "site/primary/team/team";
+
+/*--------------------------------------------------------------
+# Pages
+--------------------------------------------------------------*/
+@import "pages/pages";
 
 /*--------------------------------------------------------------
 # Recipes Grid

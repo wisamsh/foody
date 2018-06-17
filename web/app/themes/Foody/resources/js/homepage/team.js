@@ -3,40 +3,20 @@
  */
 
 
-let teamSliderSelector = '.team-listing';
+if (!globals.isMobile) {
+    showMoreList('.homepage .team-listing .author:last-child');
+} else {
+    showSlider()
+}
 
-slider(teamSliderSelector, {
-    slidesToShow: 7,
-    slidesToScroll: 3,
-    rtl:true,
-    arrows:true,
-    infinite:false,
-    responsive: [
-        {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
-                infinite: true,
-                dots: true
-            }
-        },
-        {
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2
-            }
-        },
-        {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 4,
-                slidesToScroll: 1
-            }
-        }
-        // You can unslick at a given breakpoint now by adding:
-        // settings: "unslick"
-        // instead of a settings object
-    ]
-});
+
+function showSlider() {
+    let teamSliderSelector = '.homepage .team-listing';
+    $('.homepage .team-listing .author').removeClass('col');
+    slider(teamSliderSelector, {
+        slidesToShow: 1,
+        rtl: true,
+        variableWidth: true,
+        arrows: false,
+    });
+}

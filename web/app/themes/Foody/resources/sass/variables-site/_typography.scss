@@ -1,9 +1,16 @@
-@include font-face(RaananSuper, '../fonts/RaanaSuperRegular',null,null,'otf');
-@include font-face(RaananSuperBold, '../fonts/RaanaSuperBold',null,null,'otf');
+@include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperRegular',null,null,'otf');
+@include font-face(RaananSuperBold, '../fonts/Raanan/RaanaSuperBlack',null,null,'otf');
+@include font-face(Assistant, '../fonts/Assistant/Assistant-Regular',null,null,'ttf');
+@include font-face(AssistantBold, '../fonts/Assistant/Assistant-Bold',null,null,'ttf');
+
+@include font-face(ArielRounded, '../fonts/ArielRounded',null,null,'ttf');
 
 
 $font__main: RaananSuper;
 $font__bold: RaananSuperBold;
+$font__assistant: Assistant;
+$font__assistant-bold: AssistantBold;
+$font__ariel-rounded: ArielRounded;
 $font__code: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
 $font__pre: "Courier 10 Pitch", Courier, monospace;
 $font__line-height-body: 1.5;

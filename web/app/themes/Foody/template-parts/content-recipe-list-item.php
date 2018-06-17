@@ -31,30 +31,37 @@ $recipe = new Recipe();
         <div class="image-container col-1 nopadding">
             <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
         </div>
-        <section class="col-10">
+        <section class="col-11">
             <h3>
-                <?php echo $recipe->getTitle() ?>
+				<?php echo $recipe->getTitle() ?>
             </h3>
             <ul>
                 <li>
-                    <?php echo $recipe->getAuthorName() ?>
+					<?php echo $recipe->getAuthorName() ?>
                 </li>
                 <li>
-                    <?php echo $recipe->getViewCount() ?>
+					<?php echo $recipe->getViewCount() ?>
                 </li>
                 <li>
-                    <?php echo $recipe->getPostedOn() ?>
+					<?php echo $recipe->getPostedOn() ?>
                 </li>
             </ul>
             <div class="description">
-                <?php echo $recipe->getDescription() ?>
+				<?php echo $recipe->getDescription() ?>
+            </div>
+
+
+            <div class="favorite">
+                <i class="icon-heart">
+
+                </i>
+                <span>
+                    הוספה למועדפים
+                </span>
             </div>
         </section>
 
 
-        <i class="icon-heart col-1">
-
-        </i>
     </section>
 </div>
 

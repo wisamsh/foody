@@ -6,7 +6,7 @@
  * Date: 5/16/18
  * Time: 6:23 PM
  */
-class Recipe extends FoodyPost
+class Recipe extends Foody_Post
 {
 
     private $author_image;
@@ -27,7 +27,8 @@ class Recipe extends FoodyPost
 
         $this->duration = 2.45;
         $this->view_count = view_count_display(13454,1);
-        $this->author_image = $GLOBALS['images_dir'] . 'matan.jpg';
+
+        $this->author_image = 'http://localhost:8000/app/uploads/2018/05/avatar_user_2_1527527183-250x250.jpg';// $GLOBALS['images_dir'] . 'matan.jpg';
         $this->author_name = "ישראל אהרוני";
     }
 

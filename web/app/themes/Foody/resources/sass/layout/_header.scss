@@ -1,8 +1,34 @@
+$social-icon-size: 21px;
+
 header {
 
   .socials {
     height: 30px;
+    .essbfc-container {
+      margin-bottom: 0;
+      max-height: 100%;
+      &.essbfc-container-profiles.essbfc-template-roundcolor {
+        ul {
+          height: 100%;
+          display: inline-flex;
+          align-items: center;
+          li {
+            max-height: 100%;
+            .essbfc-network {
+              i {
+                width: $social-icon-size;
+                height: $social-icon-size;
+                line-height: $social-icon-size;
+                font-size: 0.8em;
+              }
+            }
+
+          }
+        }
+      }
+    }
   }
+
   .logo-container, .logo-container-mobile {
     position: absolute;
     z-index: $zindex-dropdown;
@@ -31,7 +57,7 @@ header {
 
   nav {
     &.navbar {
-
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
       height: 77px;
       background-color: #fff;
 
@@ -59,8 +85,14 @@ header {
       .search-bar {
         input {
           &.search {
-            width: 250px;
+            width: 310px;
             height: 47px;
+
+            &::-webkit-input-placeholder{
+              font-size: 24px;
+              vertical-align: sub;
+              line-height: 47px;
+            }
           }
         }
 
@@ -96,11 +128,11 @@ header {
 
   header {
     .logo-container-mobile {
-      top: 5px;
+      top: 12px;
       right: calc(50vw - 30px);
 
       img {
-        border: 3px solid #fff;
+        border: 1.5px solid #fff;
         border-radius: 50%;
         background-color: #fff;
       }
@@ -117,8 +149,12 @@ header {
           border: 0;
 
           .navbar-toggler-icon {
-            background-image: url("../images/icons/menu.png");
+            background-image: url("/images/icons/menu.png");
           }
+        }
+
+        button{
+          background-color: transparent;
         }
 
       }

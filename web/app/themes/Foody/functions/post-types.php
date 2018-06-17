@@ -12,7 +12,8 @@ function register_post_types()
     $post_types = array(
         'recipe' => array(
             'name' => 'Recipes',
-            'singular_name' => 'Recipe'
+            'singular_name' => 'Recipe',
+	        'taxonomies'=>array('category','post_tag')
         ),
         'accessory' => array(
             'name' => 'Accessories',
@@ -21,19 +22,29 @@ function register_post_types()
         'technique' => array(
             'name' => 'Techniques',
             'singular_name' => 'Technique'
+        ),
+        'ingredient' => array(
+            'name' => 'Ingredients',
+            'singular_name' => 'Ingredient'
         )
     );
 
     foreach ($post_types as $type) {
+
+    	$args = array(
+		    'labels' => array(
+			    'name' => __($type['name']),
+			    'singular_name' => __($type['singular_name']),
+		    ),
+		    'public' => true,
+		    'has_archive' => true,
+	    );
+
+    	if(isset($type['taxonomies'])){
+		    $args['taxonomies'] = $type['taxonomies'];
+	    }
         register_post_type(strtolower('foody_' . $type['singular_name']),
-            array(
-                'labels' => array(
-                    'name' => __($type['name']),
-                    'singular_name' => __($type['singular_name']),
-                ),
-                'public' => true,
-                'has_archive' => true,
-            )
+	        $args
         );
     }
 }

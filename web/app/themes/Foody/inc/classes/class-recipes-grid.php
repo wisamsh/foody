@@ -9,6 +9,7 @@
 class RecipesGrid
 {
 
+    private const NONE = 1000;
 
     /**
      * RecipesGrid constructor.
@@ -21,18 +22,23 @@ class RecipesGrid
 
     public function draw($col_num, $col_num_mobile = 12)
     {
-        if ($col_num == 0 || 12 % $col_num != 0) {
-            throw new Error("RecipesGrid:  invalid col_num");
+        if ($col_num == 0) {
+            $col_num = self::NONE;
+        } elseif (12 % $col_num != 0) {
+            throw new Error("RecipesGrid:  invalid col_num $col_num");
+        }
+
+        $class = '';
+        if ($col_num != self::NONE) {
+            $class = 'col-sm-' . 12 / $col_num;
+
+            $mobile_class = ' col-' . $col_num_mobile;
+
+            $class .= $mobile_class;
         }
 
 
-        $class = 'col-sm-' . 12 / $col_num;
-
-        $mobile_class = ' col-' . $col_num_mobile;
-
-        $class .= $mobile_class;
-
-        $container_start = '<div class="' . $class . '">';
+        $container_start = '<div class="' . $class . ' recipe-item-container">';
         $container_end = '</div>';
 
         echo $container_start;
@@ -41,6 +47,14 @@ class RecipesGrid
 
         echo $container_end;
 
+    }
+
+    public function grid_debug($items_count,$col_num)
+    {
+
+        for ($i = 0; $i < $items_count; $i++) {
+            $this->draw($col_num);
+        }
     }
 
 }

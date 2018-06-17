@@ -9,4 +9,5 @@
 
 <div class="cover-image">
     <img src="<?php echo get_header_image() ?>" alt="">
+    <h1 class="cover-content"></h1>
 </div>

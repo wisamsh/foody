@@ -6,11 +6,11 @@
  * Date: 5/14/18
  * Time: 4:17 PM
  */
-class Header
-{
+class Header {
 
 
-    public function the_socials_bar(){
+	public function the_socials_bar() {
 
-    }
+		//Foody_Social::socials_bar();
+	}
 }

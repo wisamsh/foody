@@ -6,10 +6,15 @@
  * Time: 6:26 PM
  */
 
+$title = $template_args['title'];
+$content = $template_args['content'];
+$id = $template_args['id'];
+
+
 ?>
 
 <div id="accordion-<?php echo $id?>" role="tablist" class="foody-accordion">
-    <div class="">
+    <div class="foody-accordion-content">
         <div class="" role="tab" id="heading-<?php echo $id?>">
             <h5 class="mb-0">
                 <a data-toggle="collapse" href="#<?php echo $id?>" aria-expanded="true"

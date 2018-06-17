@@ -6,7 +6,7 @@
  * Date: 5/16/18
  * Time: 7:17 PM
  */
-abstract class FoodyPost
+abstract class Foody_Post
 {
 
     private $posted_on;
@@ -20,6 +20,13 @@ abstract class FoodyPost
 
     private $post;
 
+	protected $stub_images = array(
+//		'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0142.jpg',
+		'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0272.jpg',
+		'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0321.jpg',
+		'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0032.jpg'
+	);
+
     /**
      * FoodyPost constructor.
      * @param WP_Post $post
@@ -29,10 +36,12 @@ abstract class FoodyPost
         if ($post != null) {
             $this->post = $post;
         } else {
-            $this->image = $GLOBALS['images_dir'] . 'food.jpg';
+	        $k = array_rand($this->stub_images);
+	        $v = $this->stub_images[$k];
+            $this->image = $v;// $GLOBALS['images_dir'] . 'food.jpg';
             $this->posted_on = date('d.m.y');
-            $this->description = 'פשטידה מבצק עלים, תרד וגבינות. קלה להכנה במיוחד לשבועות.';
-            $this->title = 'מתכון';
+            $this->description = 'המנה המושלמת לאירוח, קלה ולעולם לא מאכזבת. הטעם המושלם של תפוחי אדמה בתנור עם טוויסט מיוחד.';
+            $this->title = 'סירות תפוחי אדמה אפויות';
         }
     }
 

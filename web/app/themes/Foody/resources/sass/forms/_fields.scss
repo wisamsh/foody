@@ -14,32 +14,87 @@ input[type="datetime"],
 input[type="datetime-local"],
 input[type="color"],
 textarea {
-	color: $color__text-input;
-	border: 1px solid $color__border-input;
-	border-radius: 3px;
-	padding: 3px;
-	background-color: #FFFFFF;
-	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
-	&:focus {
-		color: $color__text-input-focus;
-	}
+  color: $color__text-input;
+  border: 1px solid $color__border-input;
+  border-radius: 3px;
+  padding: 3px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  &:focus {
+    color: $color__text-input-focus;
+  }
 }
 
 select {
-	border: 1px solid $color__border-input;
+  border: 1px solid $color__border-input;
 }
 
 textarea {
-	width: 100%;
+  width: 100%;
 }
 
-div.checkbox{
-	text-align: right;
+div.checkbox {
+  text-align: right;
 }
 
-input{
-	&.search{
-		background: url(../images/icons/search-gray.png) no-repeat scroll 7px 50%;
-		padding-left:30px;
-	}
+input {
+  &.search {
+    background: url(../images/icons/search-gray.png) no-repeat scroll 7px 50%;
+    padding-left: 30px;
+  }
+}
+
+$dropdown-toggle-size: 22px;
+.dropdown {
+  &.bootstrap-select {
+    &.foody-select {
+      .filter-option {
+        color: $color__text-primary-dark;
+        padding: 0;
+        text-align: right;
+      }
+
+      .dropdown-toggle {
+
+        font-size: $dropdown-toggle-size;
+        height: $dropdown-toggle-size;
+        &:after {
+          color: $color__text-primary-dark;
+          left: 0;
+          position: absolute;
+          border-right: 0.2em solid transparent;
+          border-left: 0.2em solid transparent;
+        }
+      }
+
+      .dropdown-menu[role="combobox"] {
+        border: 1px solid rgba(151, 151, 151, 0.22);
+
+        li:not(:last-child) {
+          border-bottom: 0.5px solid rgba(151, 151, 151, 0.22);
+
+        }
+      }
+    }
+  }
+}
+
+.checkbox {
+  label{
+    .checkbox-decorator{
+      position: initial;
+
+      .check{
+        width: 15px;
+        height: 15px;
+        border: 1px solid $color__text-primary-dark;
+      }
+    }
+    .checkbox-label-text {
+      display: inline-block;
+      vertical-align: text-bottom;
+      margin-right: 5px;
+    }
+  }
+
 }
