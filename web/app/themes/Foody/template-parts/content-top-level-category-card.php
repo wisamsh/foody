@@ -19,7 +19,7 @@ $cards_per_row = 12 / $cards_per_row;
 $column_class = '';// 'col-12 col-sm-' . $cards_per_row;
 
 ?>
-<div class="<?php echo $column_class ?>">
+<div>
     <div class="card p-0">
         <img class="card-img-top img-fluid"
              src="<?php echo $foody_category->get_image() ?>"

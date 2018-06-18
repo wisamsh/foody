@@ -15,10 +15,13 @@
       color: $color__primary;
       border-radius: 12px;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
-      padding: 0.1rem 0.4rem;
+      padding: 0 7.5px;
 
-      i:before {
-        font-size: 0.7rem
+      i {
+        vertical-align: middle;
+        &:before {
+          vertical-align: text-bottom;
+        }
       }
 
       span {
@@ -33,18 +36,21 @@
     .image-container {
 
       text-align: right;
+      margin-left: 10px;
+      margin-top: 10px;
       padding: 0;
 
       img {
-        width: 55px;
+        width: 40px;
         border-radius: 50%;
+        max-width: unset;
       }
     }
 
     h3 {
       margin: 0;
       font-size: 1.5rem;
-      font-family: $font__assistant;
+      font-family: $font__assistant-bold;
       font-weight: bold;
     }
 
@@ -77,6 +83,7 @@
     .favorite {
       text-align: right;
       color: $color__primary;
+      padding: 5px 0;
 
       i {
         vertical-align: middle;

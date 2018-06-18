@@ -88,7 +88,7 @@ header {
             width: 310px;
             height: 47px;
 
-            &::-webkit-input-placeholder{
+            &::-webkit-input-placeholder {
               font-size: 24px;
               vertical-align: sub;
               line-height: 47px;
@@ -149,12 +149,25 @@ header {
           border: 0;
 
           .navbar-toggler-icon {
-            background-image: url("/images/icons/menu.png");
+            background-image: none;
+            &:before {
+              color: $color__primary;
+              display: inline-block;
+              padding-top: 4px;
+            }
           }
+
         }
 
-        button{
+        button {
           background-color: transparent;
+        }
+        .btn{
+          margin-bottom: 0;
+
+          &.accessibility{
+            margin-right: -35px;
+          }
         }
 
       }

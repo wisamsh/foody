@@ -46,7 +46,9 @@ class SidebarFilter
             'title' => $title,
             'id' => $accordion_id,
             'content' => '',
-            'return' => !$echo
+            'return' => !$echo,
+            'title_classes' => 'main-title filter-title',
+            'title_icon' => 'icon-filter'
         );
 
         // Groups loop start

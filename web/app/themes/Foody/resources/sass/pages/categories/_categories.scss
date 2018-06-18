@@ -4,11 +4,13 @@
     padding: 50px 29px 29px;
 
     h1.title {
-      padding-bottom: 15px;
+      padding-top: 10px;
+      padding-bottom: 5px;
     }
 
     .card-columns {
       .card {
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
         .card-block {
           padding: 1rem 1rem 1rem;
         }
@@ -20,7 +22,8 @@
         }
         .card-title {
           border-bottom: solid 1px $color__divider;
-          padding-bottom: 15px;
+          padding-bottom: 5px;
+          margin-bottom: 18px;
           color: $color__primary;
           font-size: 32px;
 
@@ -28,12 +31,15 @@
         .card-subtitle {
           color: $color__primary;
           font-family: $font__main;
-          margin-bottom: 12px;
+          margin-bottom: 10px;
           font-size: 24px;
+          a{
+            color: $color__primary;
+          }
         }
 
         .sub-categories-title {
-
+          margin-bottom: 0;
         }
 
         .sub-categories {
@@ -41,6 +47,8 @@
           padding-right: 15px;
 
           li {
+            line-height: normal;
+            padding: 3px 0;
             a {
               font-size: 24px;
               color: $color__text-primary-dark;

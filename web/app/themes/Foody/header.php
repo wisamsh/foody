@@ -63,13 +63,13 @@ $header = new Header();
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#foody-navbar-collapse"
                         aria-controls="foody-navbar-collapse" aria-expanded="false"
                         aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+<!--                    <span class="navbar-toggler-icon icon-menu-mobile"></span>-->
+                    <i class="navbar-toggler-icon icon-menu-mobile"></i>
                 </button>
 
-                <button type="button" class="btn btn-default navbar-btn  d-block d-sm-none">
+                <button type="button" class="btn btn-default navbar-btn  d-block d-sm-none accessibility">
 
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>" alt="">
-
                 </button>
                 <button type="button" class="btn btn-default navbar-btn d-block d-sm-none">
 

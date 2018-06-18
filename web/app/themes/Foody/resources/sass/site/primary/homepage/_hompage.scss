@@ -15,6 +15,22 @@ $feed-header-height: 60px;
     padding: 15px 15px 0;
     .featured {
 
+      .recipe-item-details {
+        .image-container {
+
+          & + section {
+            padding-right: 0;
+
+          }
+
+          img {
+            margin: 0 auto;
+            display: block;
+          }
+
+        }
+      }
+
       img.recipe-item-image {
         max-height: 23em;
         width: 100%;
@@ -97,9 +113,8 @@ $feed-header-height: 60px;
         width: 21%;
         margin-bottom: -180px;
 
-
-        $input-height : 57px;
-        $input-margin : 4px;
+        $input-height: 57px;
+        $input-margin: 4px;
 
         input[type="text"] {
           width: 100%;
@@ -107,7 +122,7 @@ $feed-header-height: 60px;
           margin-bottom: $input-margin;
         }
 
-        .sidebar-content{
+        .sidebar-content {
           min-height: calc(100% - #{$input-height});
           position: absolute;
           left: 0;
@@ -123,7 +138,7 @@ $feed-header-height: 60px;
           background-color: #fff;
           margin-right: -15px;
           padding: 0 15px;
-          box-shadow: -2px 1px 4px 0 rgba(0,0,0,0.09);
+          box-shadow: -2px 1px 4px 0 rgba(0, 0, 0, 0.09);
         }
       }
 
@@ -183,9 +198,8 @@ $feed-header-height: 60px;
   }
 }
 
-
-.page-template-homepage{
-  footer{
+.page-template-homepage {
+  footer {
     max-width: 79%;
     margin-right: 21%;
     padding-right: 0;
@@ -321,16 +335,15 @@ $feed-header-height: 60px;
         display: inline-block;
         line-height: 55px;
 
-        &:active,&:hover, &:focus{
+        &:active, &:hover, &:focus {
           border: 0;
         }
       }
     }
   }
 
-
-  .page-template-homepage{
-    footer{
+  .page-template-homepage {
+    footer {
       max-width: 100%;
       margin-right: 0;
       margin-top: 0;
@@ -338,8 +351,6 @@ $feed-header-height: 60px;
     }
   }
 }
-
-
 
 #filter-sidebar {
   min-width: 250px;

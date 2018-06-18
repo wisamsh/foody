@@ -21,18 +21,18 @@ require('../sass/app.scss');
 //
 //
 //
-// /*
-//  * Commmon
-//  * */
-//
-// require('./components');
-//
-//
-// /*
-//  * Pages
-//  * */
-//
-// require('./homepage');
+/*
+ * Commmon
+ * */
+
+require('./components');
+
+
+/*
+ * Pages
+ * */
+
+require('./homepage');
 
 jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();

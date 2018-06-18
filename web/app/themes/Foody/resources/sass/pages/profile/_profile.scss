@@ -11,8 +11,8 @@ $sidebar-width: 22.5% !default;
 
       .managed-list {
         list-style-type: none;
-        padding: 0;
         margin: 0;
+        padding: 10px 0;
 
         .managed-list-item {
           padding: 12.5px 0;
@@ -53,12 +53,18 @@ $sidebar-width: 22.5% !default;
   .container-fluid {
 
     aside {
-      padding-top: 44px;
       width: $sidebar-width;
       min-height: stretch;
       border-left: 1px solid $color__divider;
       background-color: #fff;
       margin-bottom: -#{$size__site-footer};
+      padding: 44px 30px;
+
+      #foody-filter {
+
+        padding-right: 30px;
+
+      }
     }
 
     .content {
@@ -77,10 +83,15 @@ $sidebar-width: 22.5% !default;
           padding-top: 23px;
           padding-bottom: 31px;
           padding-right: 40px;
+          place-items: center;
           .image-container {
+            margin-left: 22px;
 
             img {
+              border: 2px solid $color__primary;
+              -webkit-clip-path: circle();
               clip-path: circle();
+              border-radius: 50%;
             }
           }
 
@@ -102,13 +113,15 @@ $sidebar-width: 22.5% !default;
               font-size: 24px;
               font-weight: 900;
               letter-spacing: -0.1px;
+              text-align: center;
               color: $color__primary;
-              padding: 15px 15px 15px 30px;
+              padding: 10px;
 
               &:not(.active) {
                 color: $color__text-primary-light;
                 &:hover {
                   border-color: $color__primary;
+                  opacity: .6;
                   color: $color__primary;
                 }
               }
@@ -172,6 +185,10 @@ $sidebar-width: 22.5% !default;
 
       aside {
         display: none;
+
+        .foody-search-filter {
+          padding: 0 24px;
+        }
       }
 
       .content {
@@ -188,7 +205,7 @@ $sidebar-width: 22.5% !default;
           .user-details {
             text-align: right;
             padding-top: 23px;
-            padding-bottom: 31px;
+            padding-bottom: 0;
             padding-right: 0;
             margin: 0;
 
@@ -196,20 +213,28 @@ $sidebar-width: 22.5% !default;
             @include my-channels($my-channels-width);
 
             .my-channels {
-              padding: 15px;
+              padding: 20px;
               margin-top: 15px;
               background-color: $color__background-screen;
 
               ul, .channels {
                 background-color: $color__background-screen;
               }
+
+              ul.managed-list{
+                padding-top: 0;
+                padding-bottom: 0;
+              }
+
               h2 {
                 font-size: 24px;
+                margin-bottom: 0;
               }
 
               .channels {
 
                 box-shadow: none;
+                padding-right: 0;
 
                 .managed-list {
 
@@ -238,10 +263,14 @@ $sidebar-width: 22.5% !default;
               }
             }
 
-            .image-container {
+            h1{
+              margin-bottom: -4px !important;
+            }
 
+            .image-container {
+              margin-right: 20px;
               img {
-                clip-path: circle();
+                width: 70px;
               }
             }
 
@@ -266,7 +295,7 @@ $sidebar-width: 22.5% !default;
               width: 50%;
               a {
                 text-align: center;
-                padding: 5px;
+                padding: 16px 0;
 
                 &:not(.active) {
 
@@ -299,6 +328,11 @@ $sidebar-width: 22.5% !default;
 
             .tab-pane {
               padding: 0 17px;
+              h2 {
+                font-size: 24px;
+                padding: 16px 0;
+                margin-bottom: 0;
+              }
               .recipe-item-container {
                 display: inline-block;
                 float: right;

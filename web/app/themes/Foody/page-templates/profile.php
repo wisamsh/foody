@@ -32,19 +32,16 @@ get_header(); ?>
                             <?php endif; ?>
                             <section class="profile-top">
                                 <div class="user-details row">
-                                    <div class="d-inline-block image-container col-sm-1 col-3">
+                                    <div class="d-inline-block image-container">
                                         <img src="<?php echo $foody_profile->get_image() ?>" alt="">
                                     </div>
-                                    <div class="name-email col">
+                                    <div class="name-email">
                                         <h1 class="title m-0">
                                             <?php echo $foody_profile->get_name() ?>
                                         </h1>
                                         <span class="email">
                                         <?php echo $foody_profile->get_email() ?>
                                     </span>
-                                        <a href="#" class="edit d-none">
-                                            ערוך
-                                        </a>
                                     </div>
 
                                     <section class="my-channels col d-sm-none d-block">
@@ -90,7 +87,7 @@ get_header(); ?>
                                         <?php $foody_profile->my_channels_recipes() ?>
                                     </div>
                                 </div>
-                                <section class="my-channels col d-none d-sm-block">
+                                <section class="my-channels col d-none d-sm-block pr-0">
                                     <h2 class="title">
                                         הערוצים שלי
                                     </h2>
