@@ -25,6 +25,10 @@ textarea {
   }
 }
 
+input:focus,input:active{
+  outline: none !important;
+}
+
 select {
   border: 1px solid $color__border-input;
 }

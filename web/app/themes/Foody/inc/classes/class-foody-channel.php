@@ -9,11 +9,6 @@
 class Foody_Channel extends Foody_Post implements IFoody_Favorite
 {
 
-    public function parse(WP_Post $post)
-    {
-        // TODO: Implement parse() method.
-    }
-
     function favorite($subject)
     {
         // TODO: Implement favorite() method.

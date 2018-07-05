@@ -8,9 +8,13 @@ require('jquery-drawer');
 require('bootstrap');
 require('bootstrap-material-design');
 require('bootstrap-select');
+require('bootstrap-star-rating');
+
 // require('bootstrap-material-design/js/');
 require('slick-carousel');
 require('../sass/app.scss');
+window._ = require('underscore');
+
 
 
 // /*
@@ -25,6 +29,8 @@ require('../sass/app.scss');
  * Commmon
  * */
 
+require('./common');
+
 require('./components');
 
 
@@ -33,6 +39,10 @@ require('./components');
  * */
 
 require('./homepage');
+
+require('./team');
+
+require('./recipe');
 
 jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();

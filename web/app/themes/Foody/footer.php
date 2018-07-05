@@ -8,12 +8,18 @@
  *
  * @package Foody
  */
-
+$footer = new Foody_Footer();
 ?>
 
 	</div><!-- #content -->
 
 	<footer id="colophon" class="site-footer">
+
+        <?php
+
+        $footer->menu();
+
+        ?>
 
 	</footer><!-- #colophon -->
 </div><!-- #page -->

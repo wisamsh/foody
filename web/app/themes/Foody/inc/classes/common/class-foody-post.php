@@ -18,14 +18,14 @@ abstract class Foody_Post
     private $title;
 
 
-    private $post;
+    protected $post;
 
-	protected $stub_images = array(
+    protected $stub_images = array(
 //		'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0142.jpg',
-		'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0272.jpg',
-		'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0321.jpg',
-		'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0032.jpg'
-	);
+        'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0272.jpg',
+        'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0321.jpg',
+        'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0032.jpg'
+    );
 
     /**
      * FoodyPost constructor.
@@ -35,9 +35,14 @@ abstract class Foody_Post
     {
         if ($post != null) {
             $this->post = $post;
+            $this->image = get_post_thumbnail_id();
+            $this->posted_on = foody_posted_on(false);
+            $this->description = get_the_excerpt();
+            $this->title = get_the_title($post->ID);
+
         } else {
-	        $k = array_rand($this->stub_images);
-	        $v = $this->stub_images[$k];
+            $k = array_rand($this->stub_images);
+            $v = $this->stub_images[$k];
             $this->image = $v;// $GLOBALS['images_dir'] . 'food.jpg';
             $this->posted_on = date('d.m.y');
             $this->description = 'המנה המושלמת לאירוח, קלה ולעולם לא מאכזבת. הטעם המושלם של תפוחי אדמה בתנור עם טוויסט מיוחד.';
@@ -109,8 +114,18 @@ abstract class Foody_Post
         $this->title = $title;
     }
 
+    public function get_primary_category()
+    {
+        if ($this->post != null) {
+            $term_list = wp_get_post_terms($this->post->ID, 'category', array("fields" => "names"));
+            foreach ($term_list as $term) {
+                if (get_post_meta($this->post->ID, '_yoast_wpseo_primary_category', true) == $term->term_id) {
+                    return $term;
+                }
+            }
+            return $term_list[0];
+        }
 
-    public abstract function parse(WP_Post $post);
-
-
+        return null;
+    }
 }

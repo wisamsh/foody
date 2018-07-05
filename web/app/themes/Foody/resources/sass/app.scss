@@ -59,10 +59,11 @@ $theme-colors: (
 );
 
 @import "~bootstrap/scss/bootstrap";
-@import "~startbootstrap-simple-sidebar/css/simple-sidebar";
+//@import "~startbootstrap-simple-sidebar/css/simple-sidebar";
 @import "~bootstrap-material-design/scss/bootstrap-material-design";
 
 @import "plugins/pure-drawer/pure-drawer";
+
 
 /*--------------------------------------------------------------
 # Slick
@@ -99,11 +100,11 @@ $theme-colors: (
 # Forms
 --------------------------------------------------------------*/
 @import "forms/forms";
-//
-///*--------------------------------------------------------------
-//# Navigation
-//--------------------------------------------------------------*/
-//@import "navigation/navigation";
+
+/*--------------------------------------------------------------
+# Navigation
+--------------------------------------------------------------*/
+@import "navigation/navigation";
 //
 ///*--------------------------------------------------------------
 //# Accessibility
@@ -143,6 +144,8 @@ $theme-colors: (
 /*--------------------------------------------------------------
 # Content
 --------------------------------------------------------------*/
+
+@import "site/primary/comments";
 //@import "site/site";
 
 /*--------------------------------------------------------------

@@ -47,6 +47,8 @@ if (!function_exists('foody_setup')) :
         // This theme uses wp_nav_menu() in one location.
         register_nav_menus(array(
             'menu-1' => esc_html__('Primary', 'foody'),
+            'footer-pages' => esc_html__('Footer Pages', 'foody'),
+            'footer-links' => esc_html__('Footer Links', 'foody'),
         ));
 
         /*
@@ -137,7 +139,7 @@ function foody_scripts()
     wp_enqueue_script('foody-skip-link-focus-fix', get_template_directory_uri() . '/resources/js/skip-link-focus-fix.js', array(), '20151215', true);
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {
-        wp_enqueue_script('comment-reply');
+        wp_enqueue_script('comment-reply', false, false, true);
     }
 
 

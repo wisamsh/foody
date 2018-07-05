@@ -7,6 +7,15 @@
       padding: 10px 0;
       .foody-select {
         width: 120px;
+
+        &:hover, &:active, &:focus{
+          background-color: transparent;
+          border-color: transparent;
+        }
+
+        &.dropdown-toggle{
+          outline: none;
+        }
       }
     }
 

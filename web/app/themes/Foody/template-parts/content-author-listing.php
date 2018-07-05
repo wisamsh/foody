@@ -6,9 +6,11 @@
  * Time: 8:12 PM
  */
 
+$order = isset($template_args['order']) ? $template_args['order']: 0;
+
 ?>
 
-<div class="author col" data-name="<?php echo $template_args['name'] ?>">
+<div class="author col" data-name="<?php echo $template_args['name'] ?>" data-order="<?php echo $order ?>">
     <div class="image-container">
         <img class="avatar" src="<?php echo $template_args['image'] ?>" alt="">
 

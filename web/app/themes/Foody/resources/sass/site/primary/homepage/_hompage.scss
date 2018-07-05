@@ -129,7 +129,6 @@ $feed-header-height: 60px;
           right: 0;
           bottom: 0;
           top: 60px;
-          box-shadow: -2px 1px 4px 0 rgba(0, 0, 0, 0.09);
         }
 
         .filter {
@@ -199,10 +198,9 @@ $feed-header-height: 60px;
 }
 
 .page-template-homepage {
-  footer {
+  footer.site-footer {
     max-width: 79%;
     margin-right: 21%;
-    padding-right: 0;
   }
 }
 
@@ -343,11 +341,10 @@ $feed-header-height: 60px;
   }
 
   .page-template-homepage {
-    footer {
+    footer.site-footer {
       max-width: 100%;
       margin-right: 0;
       margin-top: 0;
-      padding-right: 0;
     }
   }
 }
@@ -385,12 +382,4 @@ $feed-header-height: 60px;
   top: 10px;
   right: 10px;
 }
-
-//.filter .form-check {
-//  text-align: right;
-//  input {
-//    margin-left: 10px;
-//    position: unset;
-//  }
-//}
 

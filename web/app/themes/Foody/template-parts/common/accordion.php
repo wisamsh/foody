@@ -25,7 +25,9 @@ $title_icon = isset($template_args['title_icon']) ? $template_args['title_icon']
                    aria-controls="<?php echo $id ?>">
                     <?php echo $title ?>
                 </a>
+
                 <i class="icon-side-arrow arrow" data-toggle="collapse" aria-controls="<?php echo $id ?>"></i>
+
             </h5>
         </div>
 

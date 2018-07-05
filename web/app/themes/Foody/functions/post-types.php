@@ -13,7 +13,9 @@ function register_post_types()
         'recipe' => array(
             'name' => 'Recipes',
             'singular_name' => 'Recipe',
-	        'taxonomies'=>array('category','post_tag')
+	        'taxonomies'=>array('category','post_tag'),
+            'supports' => array( 'title', 'editor', 'thumbnail', 'revisions' ),
+            'show_ui' => true,
         ),
         'accessory' => array(
             'name' => 'Accessories',
@@ -46,6 +48,25 @@ function register_post_types()
         register_post_type(strtolower('foody_' . $type['singular_name']),
 	        $args
         );
+
+    	$supported_features = array(
+            'title',
+            'editor',
+            'author',
+            'thumbnail',
+            'excerpt',
+            'trackbacks',
+            'custom-fields',
+            'comments',
+            'revisions',
+            'page-attributes',
+            'post-formats'
+        );
+
+        foreach ($supported_features as $feature) {
+            add_post_type_support(strtolower('foody_' . $type['singular_name']),$feature);
+        }
+
     }
 }
 
