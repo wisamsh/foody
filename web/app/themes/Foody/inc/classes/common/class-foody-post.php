@@ -128,4 +128,6 @@ abstract class Foody_Post
 
         return null;
     }
+
+    public abstract function the_featured_content();
 }

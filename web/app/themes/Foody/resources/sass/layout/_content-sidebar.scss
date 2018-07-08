@@ -1,22 +1,24 @@
-.content-area {
-	float: left;
-	margin: 0 (-$size__site-sidebar) 0 0;
-	width: $size__site-main;
-}
+body[class*="-template-content-with-sidebar"] {
+  $sidebar-width: 21%;
+  $content-width: 70%;
 
-.site-main {
-	margin: 0 $size__site-sidebar 0 0;
-}
+  article.content {
+    width: calc(100% - #{$sidebar-width});
+    margin-bottom: 180px;
+  }
 
-.site-content .widget-area {
-	float: right;
-	overflow: hidden;
-	width: $size__site-sidebar;
-}
+  aside {
+    min-width: $sidebar-width;
+    min-height: 100%;
+    border: solid 1px rgba(151, 151, 151, 0.3);
+    border-top: none;
+    background-color: white;
+  }
 
-.site-footer {
-	clear: both;
-	width: $size__site-main;
-}
+  footer.site-footer {
+    max-width: calc(100% - #{$sidebar-width});
+    margin-right: $sidebar-width;
+    margin-top: -180px;
+  }
 
-@import "no-sidebar";
+}

@@ -42,17 +42,7 @@ $content-width: 70%;
     }
   }
 
-  aside {
-    min-width: $sidebar-width;
-    min-height: 100%;
-    border: solid 1px rgba(151, 151, 151, 0.3);
-    border-top: none;
-    background-color: white;
-  }
-
   article.content {
-    width: calc(100% - #{$sidebar-width});
-    margin-bottom: 180px;
 
     .details-container {
       padding: 10px;
@@ -364,13 +354,5 @@ $content-width: 70%;
         }
       }
     }
-
   }
-
-  footer.site-footer {
-    max-width: calc(100% - #{$sidebar-width});
-    margin-right: $sidebar-width;
-    margin-top: -180px;
-  }
-
 }

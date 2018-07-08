@@ -6,7 +6,7 @@
  * Date: 5/16/18
  * Time: 6:23 PM
  */
-class Recipe extends Foody_Post
+class Foody_Recipe extends Foody_Post
 {
 
     private $author_image;
@@ -246,7 +246,7 @@ class Recipe extends Foody_Post
             $post_id = $item->ID;
             $items[] = '<li><a href="' . get_permalink($post_id) . '">' . get_the_title($post_id) . '</a></li>';
 
-            if ($this->debug){
+            if ($this->debug) {
                 $items[] = '<li><a href="' . get_permalink($post_id) . '">' . get_the_title($post_id) . '</a></li>';
                 $items[] = '<li><a href="' . get_permalink($post_id) . '">' . get_the_title($post_id) . '</a></li>';
                 $items[] = '<li><a href="' . get_permalink($post_id) . '">' . get_the_title($post_id) . '</a></li>';
@@ -258,11 +258,12 @@ class Recipe extends Foody_Post
     }
 
 
-    public function the_tags(){
+    public function the_tags()
+    {
 
         $tags = wp_get_post_tags($this->post->ID);
 
-        foody_get_template_part(get_template_directory() . '/template-parts/content-tags.php',$tags);
+        foody_get_template_part(get_template_directory() . '/template-parts/content-tags.php', $tags);
     }
 
 
@@ -376,5 +377,10 @@ class Recipe extends Foody_Post
         return array_map(function (Foody_Ingredient $ing) {
             return $ing->__toString();
         }, $ingredients);
+    }
+
+    public function the_featured_content()
+    {
+        $this->the_video_box();
     }
 }

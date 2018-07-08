@@ -40,6 +40,7 @@ function register_post_types()
 		    ),
 		    'public' => true,
 		    'has_archive' => true,
+            'capability_type' => 'post'
 	    );
 
     	if(isset($type['taxonomies'])){

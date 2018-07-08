@@ -13,4 +13,9 @@ class Foody_Channel extends Foody_Post implements IFoody_Favorite
     {
         // TODO: Implement favorite() method.
     }
+
+    public function the_featured_content()
+    {
+        // TODO: Implement the_featured_content() method.
+    }
 }

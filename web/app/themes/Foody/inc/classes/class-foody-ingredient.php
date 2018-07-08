@@ -50,4 +50,8 @@ class Foody_Ingredient extends Foody_Post
     }
 
 
+    public function the_featured_content()
+    {
+        // TODO: Implement the_featured_content() method.
+    }
 }

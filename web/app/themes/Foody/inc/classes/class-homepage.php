@@ -91,7 +91,7 @@ class HomePage {
 
 		$posts = array();
 		for ( $i = 0; $i < 99; $i ++ ) {
-			$posts[] = new Recipe();
+			$posts[] = new Foody_Recipe();
 		}
 
 		return $posts;
@@ -105,7 +105,7 @@ class HomePage {
 	private function get_featured_posts() {
 		$posts = array();
 		for ( $i = 0; $i < 2; $i ++ ) {
-			$posts[] = new Recipe();
+			$posts[] = new Foody_Recipe();
 		}
 
 		return $posts;
@@ -115,7 +115,7 @@ class HomePage {
 	private function get_recommended_posts() {
 		$posts = array();
 		for ( $i = 0; $i < 10; $i ++ ) {
-			$posts[] = new Recipe();
+			$posts[] = new Foody_Recipe();
 		}
 
 		return $posts;

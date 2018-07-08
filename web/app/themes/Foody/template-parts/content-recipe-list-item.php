@@ -6,7 +6,7 @@
  * Time: 8:21 PM
  */
 
-$recipe = new Recipe();
+$recipe = new Foody_Recipe();
 
 ?>
 

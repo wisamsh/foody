@@ -6,7 +6,7 @@
  * Time: 8:21 PM
  */
 global $post;
-$recipe = new Recipe($post);
+$recipe = new Foody_Recipe($post);
 ?>
 
 
@@ -123,24 +123,24 @@ $recipe = new Recipe($post);
 </script>
 
 
-<div class="recipe">
-
-
-    <div class="row m-0">
-        <div class="progress-wrapper">
-            <progress dir="ltr"></progress>
-        </div>
-
-        <aside class="col d-none d-sm-block">
-
-
-        </aside>
-
-        <article class="content">
+<!--<div class="recipe">-->
+<!---->
+<!---->
+<!--    <div class="row m-0">-->
+<!--        <div class="progress-wrapper">-->
+<!--            <progress dir="ltr"></progress>-->
+<!--        </div>-->
+<!---->
+<!--        <aside class="col d-none d-sm-block">-->
+<!---->
+<!---->
+<!--        </aside>-->
+<!---->
+<!--        <article class="content">-->
 
             <section class="details-container">
                 <div class="video-container">
-                    <?php $recipe->the_video_box() ?>
+                    <?php $recipe->the_featured_content() ?>
                 </div>
 
                 <div class="details container">
@@ -277,8 +277,14 @@ $recipe = new Recipe($post);
                 <?php comments_template() ?>
             </section>
 
-        </article>
-    </div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Launch demo modal
+            </button>
+            <?php foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php',array()) ?>
 
-
-</div>
+<!--        </article>-->
+<!--    </div>-->
+<!---->
+<!---->
+<!--</div>-->

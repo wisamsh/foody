@@ -1566,3 +1566,8 @@ function foody_set_post_views($postID)
 
 // Remove issues with prefetching adding extra views
 remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
+
+
+function foody_get_array_default($array, $key, $default) {
+    return isset($array[$key]) ? $array[$key] : $default;
+}

@@ -49,17 +49,44 @@ function foody_submit_ajax_comment()
     $GLOBALS['comment_depth'] = $comment_depth;
 
 
-
     $template_args = array(
         'comment' => $comment,
         'depth' => $comment_depth
     );
 
 
-    foody_get_template_part(get_template_directory() . '/template-parts/content-comment.php',$template_args);
+    foody_get_template_part(get_template_directory() . '/template-parts/content-comment.php', $template_args);
 
 //    echo $comment_html;
 
     die();
+
+}
+
+add_action('wp_ajax_ajaxhow_i_did', 'foody_submit_ajax_how_i_did');
+
+function foody_submit_ajax_how_i_did()
+{
+
+    $time = current_time('mysql');
+
+
+    $user = wp_get_current_user();
+
+    $data = array(
+        'comment_post_ID' => get_the_ID(),
+        'comment_author' => $user->user_login,
+        'comment_author_email' => $user->user_email,
+        'comment_content' => $_POST['comment'],
+        'comment_type' => 'how_i_did',
+        'comment_parent' => $_POST['comment_parent'],
+        'user_id' => get_current_user_id(),
+        'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
+        'comment_date' => $time
+    );
+
+
+
+    wp_insert_comment($data);
 
 }
