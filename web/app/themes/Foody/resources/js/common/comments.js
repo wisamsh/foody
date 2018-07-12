@@ -15,8 +15,6 @@ $(document).ready(() => {
 
         $comment.focusin(() => {
             $parent.add($commentForm).addClass('open');
-
-
         });
 
         // $comment.focusout(() => {
@@ -85,11 +83,16 @@ $(document).ready(() => {
 
         let form = '#commentform';
 
-        formSubmit({form: form, success: successCallback, ajaxUrl: '/wp/wp-admin/admin-ajax.php'});
+        formSubmit({
+            form: form,
+            success: successCallback,
+            ajaxUrl: '/wp/wp-admin/admin-ajax.php',
+            action: '&action=ajaxcomments'
+        });
 
 
         // load more button click event
-        $('#load-more').click(function () {
+        $('a[data-context="comments-list"]').click(function () {
             let button = $(this);
 
             // decrease the current comment page value

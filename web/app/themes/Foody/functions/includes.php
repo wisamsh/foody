@@ -38,6 +38,7 @@ require_once get_template_directory() . "/inc/classes/common/class-foody-user.ph
 require_once get_template_directory() . "/inc/classes/class-header.php";
 require_once get_template_directory() . "/inc/classes/class-foody-footer.php";
 require_once get_template_directory() . "/inc/classes/class-foody-comment-walker.php";
+require_once get_template_directory() . "/inc/classes/class-foody-how-i-did-walker.php";
 require_once get_template_directory() . "/inc/classes/class-homepage.php";
 require_once get_template_directory() . "/inc/classes/class-foody-category.php";
 require_once get_template_directory() . "/inc/classes/class-foody-categories.php";
@@ -49,6 +50,7 @@ require_once get_template_directory() . "/inc/classes/class-recipes-grid.php";
 require_once get_template_directory() . "/inc/classes/common/class-sidebar-filter.php";
 require_once get_template_directory() . "/inc/classes/class-foody-profile.php";
 require_once get_template_directory() . "/inc/classes/class-foody-comments.php";
+require_once get_template_directory() . "/inc/classes/class-foody-how-i-did.php";
 require_once get_template_directory() . "/inc/classes/class-foody-article.php";
 require_once get_template_directory() . "/inc/classes/class-foody-page-content-factory.php";
 
@@ -76,6 +78,7 @@ require_once get_template_directory() . "/functions/custom-options.php";
 require_once get_template_directory() . "/functions/filters.php";
 require_once get_template_directory() . "/functions/actions.php";
 require_once get_template_directory() . "/functions/foody-ajax.php";
+require_once get_template_directory() . "/functions/acf-utils.php";
 
 
 /*

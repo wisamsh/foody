@@ -43,21 +43,21 @@ class Foody_PageContentFactory
     {
 
         $page = null;
-
+        global $post;
         if (is_single()) {
 
             $post_type = get_post_type();
 
             switch ($post_type) {
                 case 'foody_recipe':
-                    $page = new Foody_Recipe();
+                    $page = new Foody_Recipe($post);
                     break;
                 case 'foody_channel':
-                    $page = new Foody_Channel();
+                    $page = new Foody_Channel($post);
                     break;
 
                 default:
-                    $page = new Foody_Article();
+                    $page = new Foody_Article($post);
                     break;
             }
         }

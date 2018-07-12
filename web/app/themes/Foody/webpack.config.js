@@ -86,7 +86,7 @@ module.exports = {
                 loader: 'url-loader?limit=102400000000'
             },
             {
-                test: /\.(png|jp(e*)g)$/,
+                test: /\.(png|jp(e*)g|gif)$/,
                 use: [{
                     loader: 'url-loader',
                     options: {

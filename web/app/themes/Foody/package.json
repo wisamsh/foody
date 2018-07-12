@@ -37,6 +37,7 @@
     "awesome-bootstrap-checkbox": "^1.0.1",
     "bootstrap": "^4.1.1",
     "bootstrap-material-design": "^4.1.1",
+    "bootstrap-rating-input": "^0.4.0",
     "bootstrap-select": "^1.13.1",
     "bootstrap-star-rating": "github:kartik-v/bootstrap-star-rating#sass",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",

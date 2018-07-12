@@ -24,7 +24,10 @@ class Foody_Comments
             $args = $this->get_list_comments_args();
         }
 
-        wp_list_comments($args);
+        $comments = get_comments(array('type' => 'comment'));
+
+        wp_list_comments($args,
+            $comments);
     }
 
 
@@ -34,15 +37,11 @@ class Foody_Comments
             'style' => 'ul',
             'format' => 'html5',
             'short_ping' => true,
+            'type' => 'comment',
             'walker' => new Foody_CommentWalker(),
             'per_page' => get_option('comments_per_page'),
-            'page' => '',
             'max_depth' => 2,
-            'reverse_top_level' => true,
-            'reply_text' => __('הוסף תגובה', 'Foody'),
-            'comments' => array(
-                'type' => 'comment'
-            )
+            'reply_text' => __('הוסף תגובה', 'Foody')
         );
     }
 
@@ -64,7 +63,7 @@ class Foody_Comments
 
     public function the_title()
     {
-        $foody_comment_count = get_comments_number();
+        $foody_comment_count = get_comments(array('count' => true, 'type' => 'comment'));
 
         printf(
         /* translators: 1: comment count number, 2: title. */

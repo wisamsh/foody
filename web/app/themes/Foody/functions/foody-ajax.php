@@ -57,10 +57,33 @@ function foody_submit_ajax_comment()
 
     foody_get_template_part(get_template_directory() . '/template-parts/content-comment.php', $template_args);
 
-//    echo $comment_html;
-
     die();
 
+}
+
+
+add_action('wp_ajax_cloadmore', 'foody_comments_loadmore_handler'); // wp_ajax_{action}
+add_action('wp_ajax_nopriv_cloadmore', 'foody_comments_loadmore_handler'); // wp_ajax_nopriv_{action}
+
+function foody_comments_loadmore_handler()
+{
+
+    // maybe it isn't the best way to declare global $post variable, but it is simple and works perfectly!
+    global $post;
+    $post = get_post($_POST['post_id']);
+    setup_postdata($post);
+
+    // actually we must copy the params from wp_list_comments() used in our theme
+    $foody_comments = new Foody_Comments();
+
+    $args = $foody_comments->get_list_comments_args();
+
+    $args['page'] = $_POST['cpage'];
+
+    $foody_comments->list_comments($args);
+
+
+    die; // don't forget this thing if you don't want "0" to be displayed
 }
 
 add_action('wp_ajax_ajaxhow_i_did', 'foody_submit_ajax_how_i_did');
@@ -73,8 +96,14 @@ function foody_submit_ajax_how_i_did()
 
     $user = wp_get_current_user();
 
+    $image = media_handle_upload('attachment', get_the_ID());
+
+    if (is_wp_error($image)) {
+        wp_die('bad file');
+    }
+
     $data = array(
-        'comment_post_ID' => get_the_ID(),
+        'comment_post_ID' => $_POST['post_id'],
         'comment_author' => $user->user_login,
         'comment_author_email' => $user->user_email,
         'comment_content' => $_POST['comment'],
@@ -82,11 +111,24 @@ function foody_submit_ajax_how_i_did()
         'comment_parent' => $_POST['comment_parent'],
         'user_id' => get_current_user_id(),
         'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
-        'comment_date' => $time
+        'comment_date' => $time,
+        'comment_meta' => array(
+            'attachment' => $image
+        )
     );
 
 
+    $comment_id = wp_insert_comment($data);
 
-    wp_insert_comment($data);
+    if (!$comment_id) {
+        wp_die('comment insert failed');
+    }
+
+    $comment = get_comment($comment_id, ARRAY_A);
+
+    foody_get_template_part(get_template_directory() . '/template-parts/content-comment-how-i-did.php', $comment);
+
+
+    die();
 
 }

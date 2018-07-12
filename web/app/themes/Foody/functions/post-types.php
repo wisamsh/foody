@@ -28,6 +28,10 @@ function register_post_types()
         'ingredient' => array(
             'name' => 'Ingredients',
             'singular_name' => 'Ingredient'
+        ),
+        'playlist' => array(
+            'name' => 'Playlists',
+            'singular_name' => 'Playlist'
         )
     );
 

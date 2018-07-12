@@ -130,4 +130,6 @@ abstract class Foody_Post
     }
 
     public abstract function the_featured_content();
+
+    public abstract function the_sidebar_content();
 }

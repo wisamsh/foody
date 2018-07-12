@@ -12,11 +12,13 @@
 
 get_header();
 
+$foody_page = Foody_PageContentFactory::get_instance()->get_page();
+
 ?>
 
     <div id="primary" class="content-area">
         <main id="main" class="site-main">
-
+            <?php  edit_post_link(); ?>
             <div class="row m-0">
                 <div class="progress-wrapper">
                     <progress dir="ltr"></progress>
@@ -24,6 +26,7 @@ get_header();
 
                 <aside class="col d-none d-sm-block">
 
+                    <?php $foody_page->the_sidebar_content() ?>
 
                 </aside>
 

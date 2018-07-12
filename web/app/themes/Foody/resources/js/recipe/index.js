@@ -5,3 +5,6 @@
 window.scroller = require('../common/scroll-progress');
 
 require('./recipe');
+require('./foody-calculator');
+
+calculator('.recipe-ingredients-container li:not(.free-text-ingredients)');

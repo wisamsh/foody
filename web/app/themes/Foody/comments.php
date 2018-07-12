@@ -26,8 +26,13 @@ $foody_comments = new Foody_Comments();
 <div id="comments" class="comments-area">
 
     <?php
+
+    $have_comments = get_comments(array(
+            'type' => 'comment',
+            'count' => true
+        )) > 0;
     // You can start editing here -- including this comment!
-    if (have_comments()) :
+    if ($have_comments) :
         ?>
         <h2 class="comments-title">
             <?php
@@ -44,7 +49,7 @@ $foody_comments = new Foody_Comments();
         ?>
 
 
-        <ol class="comment-list">
+        <ol id="comments-list" class="comment-list">
             <?php
             $foody_comments->list_comments();
             ?>
@@ -57,15 +62,12 @@ $foody_comments = new Foody_Comments();
 
         if ($cpage > 1) {
 
-            ?>
-            <a class="load-more" id="load-more">
-                <?php
-                echo __('הצג עוד', 'Foody');
-                ?>
-                <i class="icon-show-more-arrow"></i>
-            </a>
-
-            <?php
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/common/show-more-simple.php',
+                array(
+                    'context' => 'comments-list'
+                )
+            );
 
             echo '
                 <script>

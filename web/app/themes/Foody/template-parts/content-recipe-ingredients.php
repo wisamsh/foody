@@ -34,6 +34,14 @@ $ingredients_groups = $template_args;
 
             <?php endforeach; ?>
 
+            <?php foreach ($ingredients_group['free_text_ingredients'] as $free_text_ingredient): ?>
+
+                <li class="ingredients free-text-ingredients">
+                    <?php echo $free_text_ingredient ?>
+                </li>
+
+            <?php endforeach; ?>
+
         </ul>
 
     </div>

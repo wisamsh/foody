@@ -5,8 +5,11 @@
  * Date: 5/16/18
  * Time: 8:21 PM
  */
-global $post;
-$recipe = new Foody_Recipe($post);
+
+global $foody_page;
+
+/** @var Foody_Recipe $recipe */
+$recipe = $foody_page;
 ?>
 
 
@@ -114,177 +117,142 @@ $recipe = new Foody_Recipe($post);
 
 
 
-
-
-
-
-
-
 </script>
 
+<section class="details-container">
+    <div class="video-container">
+        <?php $recipe->the_featured_content() ?>
+    </div>
 
-<!--<div class="recipe">-->
-<!---->
-<!---->
-<!--    <div class="row m-0">-->
-<!--        <div class="progress-wrapper">-->
-<!--            <progress dir="ltr"></progress>-->
-<!--        </div>-->
-<!---->
-<!--        <aside class="col d-none d-sm-block">-->
-<!---->
-<!---->
-<!--        </aside>-->
-<!---->
-<!--        <article class="content">-->
+    <div class="details container">
+        <?php echo get_the_category_list() ?>
 
-            <section class="details-container">
-                <div class="video-container">
-                    <?php $recipe->the_featured_content() ?>
+        <section class="recipe-details  d-flex">
+            <div class="image-container col-1 nopadding">
+                <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
+            </div>
+            <section class="col-11">
+                <h1>
+                    <?php echo $recipe->getTitle() ?>
+                </h1>
+                <div class="description">
+                    <?php echo $recipe->getDescription() ?>
                 </div>
-
-                <div class="details container">
-                    <?php echo get_the_category_list() ?>
-
-                    <section class="recipe-details  d-flex">
-                        <div class="image-container col-1 nopadding">
-                            <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
-                        </div>
-                        <section class="col-11">
-                            <h1>
-                                <?php echo $recipe->getTitle() ?>
-                            </h1>
-                            <div class="description">
-                                <?php echo $recipe->getDescription() ?>
-                            </div>
-                            <ul>
-                                <li>
-                                    <?php echo $recipe->getAuthorName() ?>
-                                </li>
-                                <li>
-                                    <?php echo $recipe->getViewCount() ?>
-                                </li>
-                                <li>
-                                    <?php echo $recipe->getPostedOn() ?>
-                                </li>
-                            </ul>
+                <ul>
+                    <li>
+                        <?php echo $recipe->getAuthorName() ?>
+                    </li>
+                    <li>
+                        <?php echo $recipe->getViewCount() ?>
+                    </li>
+                    <li>
+                        <?php echo $recipe->getPostedOn() ?>
+                    </li>
+                </ul>
 
 
-                            <div class="favorite">
-                                <i class="icon-heart">
+                <div class="favorite">
+                    <i class="icon-heart">
 
-                                </i>
-                                <span>
+                    </i>
+                    <span>
                     הוספה למועדפים
                 </span>
-                            </div>
-                        </section>
-
-
-                    </section>
-
-
                 </div>
-
-
-            </section>
-
-            <section class="recipe-overview">
-
-                <?php $recipe->the_overview() ?>
-
-            </section>
-
-            <section class="recipe-ingredients">
-
-                <div class="recipe-ingredients-top row justify-content-between">
-                    <h2 class="title col-6">
-                        מצרכים
-                    </h2>
-
-                    <div class="amount-container col-6">
-                        <label for="number-of-dishes">
-                            כמות מנות
-                        </label>
-                        <input name="amount" type="number" id="number-of-dishes"
-                               value="<?php echo $recipe->getNumberOfDishes() ?>">
-                    </div>
-
-                </div>
-
-                <div class="recipe-ingredients-container row">
-
-                    <?php $recipe->the_ingredients() ?>
-                </div>
-
             </section>
 
 
-            <section class="recipe-content">
+        </section>
 
-                <div class="content-container">
-                    <?php echo $recipe->body ?>
-                </div>
-
-            </section>
-
-            <section class="recipe-notes">
-                <?php $recipe->the_notes() ?>
-            </section>
-
-            <section class="recipe-rating">
-                <?php $recipe->the_rating() ?>
-            </section>
-
-            <section class="recipe-nutrition">
-
-                <h2 class="title">
-                    ערכים תזונתיים
-                </h2>
-
-                <div class="nutrition-container">
-                    <?php $recipe->the_nutrition() ?>
-                </div>
-
-            </section>
-
-            <section class="recipe-accessories">
-                <?php $recipe->the_accessories() ?>
-            </section>
-
-            <section class="recipe-techniques">
-                <?php $recipe->the_techniques() ?>
-            </section>
+    </div>
 
 
-            <section class="recipe-tags">
+</section>
 
-                <h2 class="title">
-                    תגיות
-                </h2>
+<section class="recipe-overview">
 
-                <?php $recipe->the_tags() ?>
+    <?php $recipe->the_overview() ?>
 
-            </section>
+</section>
 
+<section class="recipe-ingredients box">
 
-            <section class="recipe-how-i-did">
+    <div class="recipe-ingredients-top row justify-content-between">
+        <h2 class="title col-6">
+            מצרכים
+        </h2>
 
+        <div class="amount-container col-6">
+            <label for="number-of-dishes">
+                כמות מנות
+            </label>
+            <input name="amount" type="number" id="number-of-dishes"
+                   value="<?php echo $recipe->getNumberOfDishes() ?>"
+                   data-amount="<?php echo $recipe->getNumberOfDishes() ?>"
+            >
+        </div>
 
-            </section>
+    </div>
 
-            <section class="recipe-comments">
-                <?php comments_template() ?>
-            </section>
+    <div class="recipe-ingredients-container row">
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Launch demo modal
-            </button>
-            <?php foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php',array()) ?>
+        <?php $recipe->the_ingredients() ?>
+    </div>
 
-<!--        </article>-->
-<!--    </div>-->
-<!---->
-<!---->
-<!--</div>-->
+</section>
+
+<section class="recipe-content">
+
+    <div class="content-container">
+        <?php echo $recipe->body ?>
+    </div>
+
+</section>
+
+<section class="recipe-notes box">
+    <?php $recipe->the_notes() ?>
+</section>
+
+<section class="recipe-rating box">
+    <?php $recipe->the_rating() ?>
+</section>
+
+<section class="recipe-nutrition box">
+
+    <h2 class="title">
+        ערכים תזונתיים
+    </h2>
+
+    <div class="nutrition-container">
+        <?php $recipe->the_nutrition() ?>
+    </div>
+
+</section>
+
+<section class="recipe-accessories">
+    <?php $recipe->the_accessories() ?>
+</section>
+
+<section class="recipe-techniques">
+    <?php $recipe->the_techniques() ?>
+</section>
+
+<section class="recipe-tags">
+
+    <h2 class="title">
+        תגיות
+    </h2>
+
+    <?php $recipe->the_tags() ?>
+
+</section>
+
+<section class="recipe-how-i-did">
+    <?php $recipe->how_i_did(); ?>
+
+</section>
+
+<section class="recipe-comments">
+    <?php $recipe->comments(); ?>
+</section>
+
