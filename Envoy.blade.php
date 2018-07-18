@@ -21,9 +21,9 @@ $app_dir = '/var/www/html';
 $release = 'release_' . date('YmdHis');
 $servers = ['local' => '127.0.0.1', 'dev' => 'ubuntu@foody-dev.moveodevelop.com'];
 
-@if (!isset($branch))
+if (!isset($branch)){
     $branch = 'staging';
-@endif
+}
 
 @endsetup
 
