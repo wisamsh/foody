@@ -9,7 +9,7 @@
 class RecipesGrid
 {
 
-    private const NONE = 1000;
+    const NONE = 1000;
 
     /**
      * RecipesGrid constructor.

@@ -12,7 +12,7 @@ class foody_Search_Filter extends Foody_Widget
 
     private $foody_filter;
 
-    public const CSS_CLASSES = 'foody-search-filter';
+    const CSS_CLASSES = 'foody-search-filter';
 
 
     /**

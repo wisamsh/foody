@@ -11,10 +11,10 @@ use Handlebars\Handlebars;
 class SidebarFilter
 {
 
-    private const FILTER_OPTIONS_ID = 'foody_search_options';
-    private const FILTER_SETTINGS_SELECTOR = 'groups';
+    const FILTER_OPTIONS_ID = 'foody_search_options';
+    const FILTER_SETTINGS_SELECTOR = 'groups';
 
-    private const FILTER_SECTIONS_SELECTOR = 'sections';
+    const FILTER_SECTIONS_SELECTOR = 'sections';
 
     private $settings;
 

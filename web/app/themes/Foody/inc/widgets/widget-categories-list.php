@@ -11,7 +11,7 @@ class foody_Categories_List_Widget extends Foody_Widget {
 
 	public static $foody_widget_id = 'categories_list_widget';
 
-	public const CSS_CLASSES = 'categories-list-widget';
+    const CSS_CLASSES = 'categories-list-widget';
 
 	/**
 	 * To create the example widget all four methods will be

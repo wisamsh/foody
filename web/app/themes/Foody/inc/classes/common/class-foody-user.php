@@ -9,7 +9,7 @@
 class Foody_User
 {
 
-    public const META_KEY_CHANNELS = 'favorite_channels';
+    const META_KEY_CHANNELS = 'favorite_channels';
 
     /**
      * @var WP_User current logged in user
