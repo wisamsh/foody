@@ -117,57 +117,9 @@ $recipe = $foody_page;
 
 
 
+
+
 </script>
-
-<section class="details-container">
-    <div class="video-container">
-        <?php $recipe->the_featured_content() ?>
-    </div>
-
-    <div class="details container">
-        <?php echo get_the_category_list() ?>
-
-        <section class="recipe-details  d-flex">
-            <div class="image-container col-1 nopadding">
-                <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
-            </div>
-            <section class="col-11">
-                <h1>
-                    <?php echo $recipe->getTitle() ?>
-                </h1>
-                <div class="description">
-                    <?php echo $recipe->getDescription() ?>
-                </div>
-                <ul>
-                    <li>
-                        <?php echo $recipe->getAuthorName() ?>
-                    </li>
-                    <li>
-                        <?php echo $recipe->getViewCount() ?>
-                    </li>
-                    <li>
-                        <?php echo $recipe->getPostedOn() ?>
-                    </li>
-                </ul>
-
-
-                <div class="favorite">
-                    <i class="icon-heart">
-
-                    </i>
-                    <span>
-                    הוספה למועדפים
-                </span>
-                </div>
-            </section>
-
-
-        </section>
-
-    </div>
-
-
-</section>
 
 <section class="recipe-overview">
 

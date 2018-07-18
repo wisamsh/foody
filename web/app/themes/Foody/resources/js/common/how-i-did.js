@@ -11,13 +11,19 @@ $(document).ready(() => {
 
     $parent = $('.commentform-element');
     $comment = $('#comment');
-
+    $uploadModal = $('#upload-image-modal');
 
     let successCallback = function (addedCommentHTML) {
 
         let $commentlist = $('.how-i-did-list');// comment list container
 
-        $commentlist.prepend(addedCommentHTML);
+
+        $uploadModal.on('hidden.bs.modal', function (e) {
+            $(this).unbind();
+            $commentlist.prepend(addedCommentHTML);
+        });
+
+        $uploadModal.modal('hide');
 
         //     respond = $('#respond'),
         //     cancelreplylink = $('#cancel-comment-reply-link');

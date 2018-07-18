@@ -1,0 +1,42 @@
+.related-content-title {
+  padding: 0 15px;
+}
+
+.related-content {
+  padding: 0 15px;
+  border-bottom: 1px solid $color__divider;
+
+  .related-item {
+    font-family: $font__assistant;
+    padding-bottom: 20px;
+
+    .image-container {
+      position: relative;
+      clip-path: inset(0 round 4px);
+
+      img {
+        height: 138px;
+        width: 100%;
+      }
+    }
+
+    .details {
+      .post-title {
+        font-family: $font__assistant;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .author-name {
+        unicode-bidi: isolate;
+        margin-left: 20px;
+      }
+
+      .view-count, .author-name {
+        font-weight: 600;
+
+      }
+    }
+  }
+}

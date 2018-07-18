@@ -14,10 +14,10 @@ $nutritions = $template_args;
 
     <?php foreach ($nutritions as $nutrition): ?>
 
-        <div class="col nutrition">
+        <div class="col-sm-4 col-12 nutrition">
 
             <?php foreach ($nutrition as $values): ?>
-                <div>
+                <div class="nutrition-row">
                     <span class="name">
                         <?php echo $values['name'] ?>
                     </span>

@@ -31,7 +31,7 @@ class Foody_HowIDid
                 'type' => 'how_i_did',
                 'number' => 3,
                 'walker' => new Foody_HowIDidWalker(),
-                'post_id' => get_the_ID()
+                'post_id' => get_the_ID(),
             );
 
         return $args;
@@ -46,7 +46,8 @@ class Foody_HowIDid
             array(
                 'type__not_in' => array('comment', 'pings'),
                 'type' => 'how_i_did',
-                'number' => 3
+                'number' => 3,
+                'post_id' => get_the_ID()
             )
         );
 
@@ -57,7 +58,7 @@ class Foody_HowIDid
 
     public function the_title()
     {
-        $foody_comment_count = get_comments(array('count' => true, 'type' => 'how_i_did'));
+        $foody_comment_count = get_comments(array('count' => true, 'type' => 'how_i_did', 'post_id' => get_the_ID()));
 
         printf(
         /* translators: 1: comment count number, 2: title. */

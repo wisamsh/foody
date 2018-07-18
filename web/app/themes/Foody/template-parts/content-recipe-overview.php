@@ -19,7 +19,7 @@ $labels = array(
 
 <?php foreach ($template_args as $key=>$value) :?>
 
-    <li class="overview-item col">
+    <li class="overview-item col-sm-4 col-6">
         <div class="key">
             <?php echo $labels[$key] ?>
         </div>

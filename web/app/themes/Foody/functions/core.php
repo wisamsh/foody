@@ -1568,6 +1568,22 @@ function foody_set_post_views($postID)
 remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
 
 
-function foody_get_array_default($array, $key, $default) {
+function foody_get_array_default($array, $key, $default)
+{
     return isset($array[$key]) ? $array[$key] : $default;
+}
+
+function array_not_empty($arr)
+{
+    $not_empty = false;
+    if (!is_null($arr) && !empty($arr)) {
+        $filtered = array_filter($arr, function ($var) {
+            return !is_null($var) && $var;
+        });
+
+        $not_empty = !empty($filtered);
+    }
+
+    return $not_empty;
+
 }

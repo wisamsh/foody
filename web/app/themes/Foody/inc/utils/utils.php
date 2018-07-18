@@ -42,5 +42,5 @@ function view_count_display( $number, $precision = 3, $divisors = null ) {
 
 	// We found our match, or there were no matches.
 	// Either way, use the last defined value for $divisor.
-	return number_format( $number / $divisor, $precision ) . sprintf( '<span class="view-count">%s</span>', $shorthand );
+	return number_format( $number / $divisor, $precision ) . sprintf( '<span class="view-count">%s צפיות</span>', $shorthand );
 }

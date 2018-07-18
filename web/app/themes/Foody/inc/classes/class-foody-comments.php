@@ -24,7 +24,7 @@ class Foody_Comments
             $args = $this->get_list_comments_args();
         }
 
-        $comments = get_comments(array('type' => 'comment'));
+        $comments = get_comments(array('type' => 'comment', 'post_id' => get_the_ID()));
 
         wp_list_comments($args,
             $comments);
@@ -63,7 +63,7 @@ class Foody_Comments
 
     public function the_title()
     {
-        $foody_comment_count = get_comments(array('count' => true, 'type' => 'comment'));
+        $foody_comment_count = get_comments(array('count' => true, 'type' => 'comment', 'post_id' => get_the_ID()));
 
         printf(
         /* translators: 1: comment count number, 2: title. */

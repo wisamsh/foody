@@ -12,7 +12,7 @@ $ingredients_groups = $template_args;
 
 <?php foreach ($ingredients_groups as $ingredients_group): ?>
 
-    <div class="col ingredients-group p-0">
+    <div class="col-sm col-12 ingredients-group p-0">
         <h4 class="ingredients-group-title">
             <?php echo $ingredients_group['title']; ?>
         </h4>

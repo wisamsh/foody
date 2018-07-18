@@ -47,9 +47,11 @@ $btn_cancel_classes = foody_get_array_default($modal, 'btn_cancel_classes', 'btn
                     <button type="submit" class="btn btn-primary <?php echo $btn_approve_classes ?>">
                         <?php echo $btn_approve ?>
                     </button>
-
                 </form>
             </div>
+
+
+
             <div class="modal-footer">
 
             </div>
