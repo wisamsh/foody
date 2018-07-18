@@ -13,9 +13,8 @@ $dotenv->load();
 $repo = 'git@github.com:MoveoTech/Foody.git';
 
 $theme_dir = 'web/app/themes/Foody';
-$release_dir = '/var/www/releases';
+$release_dir = '/home/ubuntu/releases';
 $db_backup_dir = '/var/www/db_backups';
-$malam_home = '/var/www/';
 $app_dir = '/var/www/html';
 
 $release = 'release_' . date('YmdHis');
@@ -40,7 +39,7 @@ run_after_install
 
 @task('upload_compiled_assets', ['on' => 'local'])
 cd {{ $theme_dir }}
-npm start
+npm run production
 tar -czf assets-{{ $release }}.tar.gz dist
 scp assets-{{  $release }}.tar.gz {{ $servers[$target] }}:~
 rm -rf assets-{{  $release }}.tar.gz
@@ -48,7 +47,7 @@ rm -rf assets-{{  $release }}.tar.gz
 
 
 @task('fetch_repo', [ 'on' => $target ])
-[ -d {{ $release_dir }} ] || mkdir {{ $release_dir }};
+[ -d {{ $release_dir }} ] || sudo mkdir {{ $release_dir }};
 cd {{ $release_dir }};
 git clone --single-branch -b  {{$branch}} {{ $repo }} {{ $release }};
 @endtask
@@ -65,7 +64,7 @@ composer install --prefer-dist;
 echo 'Installing compiled assets...'
 cd ~
 tar -xzf assets-{{ $release }}.tar.gz -C {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}
-rm -rf assets-{{ $release }}.tar.gz
+sudo rm -rf assets-{{ $release }}.tar.gz
 
 cd {{ $release_dir }}/{{ $release }};
 
@@ -77,7 +76,7 @@ sudo chgrp -R www-data {{ $release }};
 sudo chmod -R ug+rwx {{ $release }};
 
 echo 'Updating symlinks...'
-ln -nfs {{ $release_dir }}/{{ $release }} {{ $app_dir }};
+sudo ln -nfs {{ $release_dir }}/{{ $release }} {{ $app_dir }};
 
 echo 'Deployment to {{$target}} finished successfully.'
 @endtask
