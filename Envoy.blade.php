@@ -22,7 +22,7 @@ $release = 'release_' . date('YmdHis');
 $servers = ['local' => '127.0.0.1', 'dev' => 'ubuntu@foody-dev.moveodevelop.com'];
 
 @if (!isset($branch))
-    $branch = 'development';
+    $branch = 'staging';
 @endif
 
 @endsetup
