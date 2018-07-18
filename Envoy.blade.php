@@ -1,7 +1,7 @@
 @setup
 
 if(!isset($target)) {
-$target = 'staging';
+$target = 'dev';
 echo("\n\n        WARNING: No target deployment environment specified - deploying to staging by default.\n\n\n");
 }
 
