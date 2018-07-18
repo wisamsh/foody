@@ -1,0 +1,39 @@
+@for $i from 0 through 100 {
+  .gutter-#{$i} {
+    &.row {
+      margin-right: -#{$i}px;
+      margin-left: -#{$i}px;
+    }
+
+    > [class^="col-"] {
+
+      padding-right: #{$i}px;
+      padding-left: #{$i}px;
+    }
+
+  }
+}
+
+@for $i from 800 through 1440 {
+  .container-max-#{$i} {
+    max-width: #{$i}px !important;
+    margin: 0 auto;
+  }
+}
+
+@for $i from 1 through 12 {
+  .card-columns-#{$i} {
+    -webkit-column-count: #{$i} !important;
+    -moz-column-count: #{$i} !important;
+    column-count: #{$i} !important;
+  }
+
+  @include breakpoint(mobileonly) {
+    .card-columns-#{$i} {
+      -webkit-column-count: 1 !important;
+      -moz-column-count: 1 !important;
+      column-count: 1 !important;
+    }
+  }
+
+}

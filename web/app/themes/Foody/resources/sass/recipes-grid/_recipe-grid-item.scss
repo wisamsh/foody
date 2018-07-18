@@ -1,0 +1,142 @@
+.recipe-item {
+
+  .recipe-item-image {
+    clip-path: inset(0 round .2em);
+    object-fit: cover;
+  }
+
+  .main-image-container {
+    position: relative;
+    .duration {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background-color: #fff;
+      color: $color__primary;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+      padding: 0 7.5px;
+
+      i {
+        vertical-align: middle;
+        &:before {
+          vertical-align: text-bottom;
+        }
+      }
+
+      span {
+        display: inline-block;
+      }
+    }
+  }
+
+  .recipe-item-details {
+    font-family: $font__assistant;
+    padding: 10px 5px;
+    .image-container {
+
+      text-align: right;
+      margin-left: 10px;
+      margin-top: 10px;
+      padding: 0;
+
+      img {
+        width: 40px;
+        border-radius: 50%;
+        max-width: unset;
+      }
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-family: $font__assistant-bold;
+      font-weight: bold;
+    }
+
+    .description {
+      font-size: 1rem;
+      text-align: right;
+      line-height: normal;
+    }
+
+    .view-count {
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      overflow: auto;
+
+      li {
+        list-style-type: none;
+        display: inline-block;
+        font-size: 1rem;
+      }
+
+      li:not(:first-child):before {
+        content: "• ";
+        padding: 0 .5rem;
+      }
+    }
+
+    .favorite {
+      text-align: right;
+      color: $color__primary;
+      padding: 5px 0;
+
+      i {
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+@include breakpoint(mobile-only) {
+  .recipe-item {
+
+    .recipe-item-image {
+
+    }
+
+    .main-image-container {
+
+      .duration {
+
+        i:before {
+
+        }
+
+        span {
+
+        }
+      }
+    }
+
+    .recipe-item-details {
+
+      .image-container {
+
+        img {
+
+        }
+      }
+
+      h3 {
+
+      }
+
+      .description {
+
+      }
+
+      ul {
+        li {
+        }
+
+        li:not(:first-child):before {
+        }
+      }
+    }
+  }
+}

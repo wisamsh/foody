@@ -1,0 +1,36 @@
+/**
+ * Created by moveosoftware on 7/10/18.
+ */
+
+window.calculator = function (selector) {
+
+    $elements = $(selector);
+
+    if ($elements.length == 0) {
+        return;
+    }
+
+    let $numberOfDishes = $('#number-of-dishes');
+
+    let originalNumberOfDishes = parseInt($numberOfDishes.data('amount'));
+
+    $numberOfDishes.on('change', function () {
+
+        let val = $(this).val();
+
+        if (originalNumberOfDishes <= 0 || val <= 0) {
+            return;
+        }
+
+        $elements.each(function () {
+
+            let $this = $(this);
+            let base = parseInt($this.data('amount')) / originalNumberOfDishes;
+
+            let calculated = parseInt(base * val);
+            $('.amount', $this).text(calculated);
+        })
+    });
+
+
+};

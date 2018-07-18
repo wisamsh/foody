@@ -1,0 +1,25 @@
+.page,#page {
+
+  .cover-image {
+    position: relative;
+
+    .cover-content {
+      position: absolute;
+      top: 0;
+      line-height: 250px;
+      color: white;
+      text-align: center;
+      display: block;
+      left: 0;
+      right: 0;
+      font-size: 64px;
+      margin: 0;
+    }
+    img {
+      background-size: cover;
+      width: 100%;
+      max-height: 250px;
+    }
+  }
+
+}

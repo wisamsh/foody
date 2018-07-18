@@ -1,0 +1,78 @@
+/**
+ * Created by moveosoftware on 6/11/18.
+ */
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Bootstrap
+# Normalize
+# Typography
+# Elements
+# Forms
+# Navigation
+	## Links
+	## Menus
+# Accessibility
+# Alignments
+# Clearings
+# Widgets
+# Content
+	## Posts and pages
+	## Comments
+# Infinite scroll
+# Media
+	## Captions
+	## Galleries
+
+
+--------------------------------------------------------------*/
+@import "../../sass/mixins/mixins-master";
+@import "../../sass/variables-site/variables-site";
+/*--------------------------------------------------------------
+# Bootstrap
+--------------------------------------------------------------*/
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+$theme-colors: (
+        "primary":$color__text-primary-dark,
+        "danger": #ff4136,
+        "dark":$color__text-primary-dark
+);
+
+@import "~bootstrap/scss/bootstrap";
+@import "~startbootstrap-simple-sidebar/css/simple-sidebar";
+@import "~bootstrap-material-design/scss/bootstrap-material-design";
+
+
+/*--------------------------------------------------------------
+# Slick
+--------------------------------------------------------------*/
+
+@import "~slick-carousel/slick/slick.scss";
+
+/*--------------------------------------------------------------
+# Normalize
+--------------------------------------------------------------*/
+@import "../../sass/normalize";
+
+/*--------------------------------------------------------------
+# Common
+--------------------------------------------------------------*/
+@import "../../sass/common/common";
+
+/*--------------------------------------------------------------
+# Layout
+--------------------------------------------------------------*/
+@import "../../sass/layout/header";
+@import "../../sass/layout/footer";
+/*--------------------------------------------------------------
+# Typography
+--------------------------------------------------------------*/
+@import "../../sass/typography/typography";
+@import "../../sass/typography/_icons";
+
+/*--------------------------------------------------------------
+# Forms
+--------------------------------------------------------------*/
+@import "../../sass/forms/forms";

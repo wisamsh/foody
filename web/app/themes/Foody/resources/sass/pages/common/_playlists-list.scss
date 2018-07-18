@@ -1,0 +1,89 @@
+@import "related-content";
+
+.related-content {
+  &.related-playlists {
+    padding: 0 15px;
+    margin-bottom: 15px;
+    .related-item {
+
+      .image-container {
+
+        img {
+        }
+
+        .playlist-count {
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          background-color: rgba(255, 255, 255, .9);
+          text-align: center;
+          color: $color__primary;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 10px;
+
+          i {
+            margin-bottom: 10px;
+            &:before {
+              font-size: 26px;
+            }
+          }
+
+          .count {
+            font-size: 15px;
+          }
+        }
+      }
+
+      .playlist-details {
+        .post-title {
+
+        }
+
+        .author-name {
+
+        }
+
+        .view-count, .author-name {
+
+        }
+      }
+    }
+  }
+}
+
+.related-content {
+  &.related-recipes {
+    padding: 15px;
+
+    .related-item {
+
+      .image-container {
+
+        .duration {
+          position: absolute;
+          top: 0;
+          background-color: white;
+          margin: 5px;
+          border-radius: 1em;
+          padding: 0 6px;
+          color: $color__primary;
+          display: flex;
+          place-items: center;
+
+          > time {
+            font-family: $font__main;
+          }
+
+          i {
+            &:before {
+              font-size: 12px
+            }
+          }
+        }
+      }
+    }
+  }
+}

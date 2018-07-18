@@ -1,0 +1,54 @@
+@import 'team-listing';
+
+.page-template {
+  &.team {
+
+    .sort {
+      padding: 10px 0;
+      .foody-select {
+        width: 120px;
+
+        &:hover, &:active, &:focus{
+          background-color: transparent;
+          border-color: transparent;
+        }
+
+        &.dropdown-toggle{
+          outline: none;
+        }
+      }
+    }
+
+    #content{
+      > .container{
+        padding-top: 15px;
+      }
+    }
+
+    .team-listing{
+
+      .author{
+        opacity: .7;
+        transition: opacity .3s;
+
+        &:hover{
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(mobileonly) {
+
+  .page-template {
+    &.team {
+      .team-listing{
+        padding-right: 0;
+        .author{
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
