@@ -73,8 +73,8 @@ cd {{ $release_dir }}/{{ $release }};
 echo 'Setting permissions...'
 cd {{ $release_dir }};
 
-chgrp -R www-data {{ $release }};
-chmod -R ug+rwx {{ $release }};
+sudo chgrp -R www-data {{ $release }};
+sudo chmod -R ug+rwx {{ $release }};
 
 echo 'Updating symlinks...'
 ln -nfs {{ $release_dir }}/{{ $release }} {{ $app_dir }};
