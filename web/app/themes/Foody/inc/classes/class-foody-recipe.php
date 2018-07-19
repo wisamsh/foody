@@ -95,6 +95,9 @@ class Foody_Recipe extends Foody_Post
      */
     public function setAuthorImage(string $author_image)
     {
+        if($this->author_image == null){
+            $this->author_image = '';
+        }
         $this->author_image = $author_image;
     }
 

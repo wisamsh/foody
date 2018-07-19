@@ -22,9 +22,9 @@ abstract class Foody_Post
 
     protected $stub_images = array(
 //		'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0142.jpg',
-        'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0272.jpg',
-        'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0321.jpg',
-        'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0032.jpg'
+        'http://foody-dev.moveodevelop.com/app/uploads/2018/05/Nimrod_Genisher_0272.jpg',
+        'http://foody-dev.moveodevelop.com/app/uploads/2018/05/Nimrod_Genisher_0321.jpg',
+        'http://foody-dev.moveodevelop.com/app/uploads/2018/05/Nimrod_Genisher_0032.jpg'
     );
 
     /**
