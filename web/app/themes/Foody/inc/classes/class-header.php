@@ -11,6 +11,6 @@ class Header {
 
 	public function the_socials_bar() {
 
-		//Foody_Social::socials_bar();
+		Foody_Social::socials_bar();
 	}
 }
