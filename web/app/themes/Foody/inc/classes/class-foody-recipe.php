@@ -87,6 +87,9 @@ class Foody_Recipe extends Foody_Post
      */
     public function getAuthorImage(): string
     {
+        if ($this->author_image == null) {
+            $this->author_image = '';
+        }
         return $this->author_image;
     }
 
@@ -95,9 +98,6 @@ class Foody_Recipe extends Foody_Post
      */
     public function setAuthorImage(string $author_image)
     {
-        if($this->author_image == null){
-            $this->author_image = '';
-        }
         $this->author_image = $author_image;
     }
 
