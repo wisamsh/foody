@@ -47,7 +47,6 @@ $content-width: 70%;
   article.content {
 
     .details-container {
-      padding: 10px;
       background-color: white;
       .video-container {
         clip-path: inset(0 round 3px);
@@ -58,86 +57,86 @@ $content-width: 70%;
 
       }
 
-      .details {
-        max-width: $content-width;
-
-        .post-categories {
-          padding: 0;
-          margin: 0;
-          color: $color__text-primary-light;
-          list-style-type: none;
-
-          li {
-            display: inline-block;
-            padding: 10px 20px;
-            font-family: $font__assistant;
-
-            &:first-child {
-              padding-right: 0;
-            }
-          }
-        }
-
-        .recipe-details {
-
-          font-family: $font__assistant;
-          .image-container {
-
-            text-align: right;
-            padding: 0;
-
-            img {
-              width: 52px;
-              border-radius: 50%;
-              max-width: unset;
-            }
-          }
-
-          h1 {
-            margin: 0;
-            font-size: 42px;
-            font-family: $font__assistant-bold;
-            font-weight: bold;
-          }
-
-          .description {
-            font-size: 24px;
-            text-align: right;
-            line-height: normal;
-            padding: 10px 0;
-          }
-
-          .view-count {
-          }
-
-          ul.content-details-bullets {
-            padding: 0;
-            margin: 0;
-            overflow: auto;
-
-            li {
-              list-style-type: none;
-              display: inline-block;
-              font-size: 1rem;
-            }
-
-            li:not(:first-child):before {
-              content: "• ";
-              padding: 0 .5rem;
-            }
-          }
-
-          .favorite {
-            text-align: right;
-            color: $color__primary;
-            padding: 5px 0;
-
-            i {
-              vertical-align: middle;
-            }
-          }
-        }
-      }
+      //.details {
+      //  max-width: $content-width;
+      //
+      //  .post-categories {
+      //    padding: 0;
+      //    margin: 0;
+      //    color: $color__text-primary-light;
+      //    list-style-type: none;
+      //
+      //    li {
+      //      display: inline-block;
+      //      padding: 10px 20px;
+      //      font-family: $font__assistant;
+      //
+      //      &:first-child {
+      //        padding-right: 0;
+      //      }
+      //    }
+      //  }
+      //
+      //  .recipe-details {
+      //
+      //    font-family: $font__assistant;
+      //    .image-container {
+      //
+      //      text-align: right;
+      //      padding: 0;
+      //
+      //      img {
+      //        width: 52px;
+      //        border-radius: 50%;
+      //        max-width: unset;
+      //      }
+      //    }
+      //
+      //    h1 {
+      //      margin: 0;
+      //      font-size: 42px;
+      //      font-family: $font__assistant-bold;
+      //      font-weight: bold;
+      //    }
+      //
+      //    .description {
+      //      font-size: 24px;
+      //      text-align: right;
+      //      line-height: normal;
+      //      padding: 10px 0;
+      //    }
+      //
+      //    .view-count {
+      //    }
+      //
+      //    ul.content-details-bullets {
+      //      padding: 0;
+      //      margin: 0;
+      //      overflow: auto;
+      //
+      //      li {
+      //        list-style-type: none;
+      //        display: inline-block;
+      //        font-size: 1rem;
+      //      }
+      //
+      //      li:not(:first-child):before {
+      //        content: "• ";
+      //        padding: 0 .5rem;
+      //      }
+      //    }
+      //
+      //    .favorite {
+      //      text-align: right;
+      //      color: $color__primary;
+      //      padding: 5px 0;
+      //
+      //      i {
+      //        vertical-align: middle;
+      //      }
+      //    }
+      //  }
+      //}
     }
 
     .recipe-overview {
@@ -611,7 +610,8 @@ $content-width: 70%;
       .details-container {
 
         .video-container {
-          margin: 0 -10px;
+
+
           margin-top: -10px;
           clip-path: none;
           iframe {
@@ -689,11 +689,16 @@ $content-width: 70%;
             }
 
             .key {
-
+              line-height: 1rem;
             }
 
             .value {
 
+            }
+
+            &:nth-child(3), &:nth-child(4){
+              padding-bottom: 0;
+              padding-top: 20px;
             }
           }
         }

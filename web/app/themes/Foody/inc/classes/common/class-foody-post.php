@@ -15,7 +15,17 @@ abstract class Foody_Post
 
     private $description;
 
+    private $description_mobile;
+
     private $title;
+
+    private $author_image;
+
+    private $author_name;
+
+    private $view_count;
+
+    public $body;
 
 
     protected $post;
@@ -37,8 +47,13 @@ abstract class Foody_Post
             $this->post = $post;
             $this->image = get_post_thumbnail_id();
             $this->posted_on = foody_posted_on(false);
-            $this->description = get_the_excerpt();
+            $this->description = get_field('desktop_caption', $this->post->ID);
+            $this->description_mobile = get_field('mobile_caption', $this->post->ID);
             $this->title = get_the_title($post->ID);
+            $this->view_count = view_count_display(foody_get_post_views(get_the_ID()), 0);
+            $this->author_image = get_the_author_meta('wp_user_avatars', get_the_author_meta('ID'))['90'];
+            $this->author_name = foody_posted_by(false);// get_the_author_meta('display_name', get_the_author_meta('ID'));
+            $this->body = apply_filters('the_content', get_the_content());
 
         } else {
             $k = array_rand($this->stub_images);
@@ -47,7 +62,62 @@ abstract class Foody_Post
             $this->posted_on = date('d.m.y');
             $this->description = 'המנה המושלמת לאירוח, קלה ולעולם לא מאכזבת. הטעם המושלם של תפוחי אדמה בתנור עם טוויסט מיוחד.';
             $this->title = 'סירות תפוחי אדמה אפויות';
+            $this->view_count = view_count_display(13454, 1);
+            $this->author_image = 'http://localhost:8000/app/uploads/2018/05/avatar_user_2_1527527183-250x250.jpg';// $GLOBALS['images_dir'] . 'matan.jpg';
+            $this->author_name = "ישראל אהרוני";
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthorImage(): string
+    {
+        if ($this->author_image == null) {
+            $this->author_image = '';
+        }
+        return $this->author_image;
+    }
+
+    /**
+     * @param string $author_image
+     */
+    public function setAuthorImage(string $author_image)
+    {
+        $this->author_image = $author_image;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getAuthorName()
+    {
+        return $this->author_name;
+    }
+
+    /**
+     * @param mixed $author_name
+     */
+    public function setAuthorName($author_name)
+    {
+        $this->author_name = $author_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getViewCount(): string
+    {
+        return $this->view_count;
+    }
+
+    /**
+     * @param string $view_count
+     */
+    public function setViewCount(string $view_count)
+    {
+        $this->view_count = $view_count;
     }
 
     /**
@@ -87,6 +157,9 @@ abstract class Foody_Post
      */
     public function getDescription()
     {
+        if (wp_is_mobile()) {
+            return $this->description_mobile;
+        }
         return $this->description;
     }
 

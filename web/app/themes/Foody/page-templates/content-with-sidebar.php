@@ -55,42 +55,56 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
                                                 <?php echo $foody_page->getTitle() ?>
                                             </h1>
 
-                                            <div class=" social col p-0">
-                                                <?php echo do_shortcode('[easy-social-share buttons="print,mail,pinterest,whatsapp" template="11" counters=0 style="icon" point_type="simple"]'); ?>
-
-                                            </div>
-
+                                            <section class="d-none d-sm-block">
+                                                <?php
+                                                foody_get_template_part(
+                                                    get_template_directory() . '/template-parts/content-social-actions.php'
+                                                )
+                                                ?>
+                                            </section>
 
                                         </div>
 
                                         <div class="description">
+                                            <section class="post-bullets-container d-block d-sm-none">
+                                                <?php
+
+                                                $args = array(
+                                                    'foody_page' => $foody_page,
+                                                    'show_favorite' => false
+                                                );
+                                                foody_get_template_part(get_template_directory() . '/template-parts/content-post-bullets.php', $args);
+
+                                                ?>
+                                            </section>
                                             <?php echo $foody_page->getDescription() ?>
                                         </div>
-                                        <ul class="content-details-bullets">
-                                            <li>
-                                                <?php echo $foody_page->getAuthorName() ?>
-                                            </li>
-                                            <li>
-                                                <?php echo $foody_page->getViewCount() ?>
-                                            </li>
-                                            <li>
-                                                <?php echo $foody_page->getPostedOn() ?>
-                                            </li>
-                                        </ul>
 
+                                        <?php
 
-                                        <div class="favorite">
-                                            <i class="icon-heart">
+                                        if (!wp_is_mobile()) {
+                                            $args = array(
+                                                'foody_page' => $foody_page,
+                                                'show_favorite' => true
+                                            );
+                                            foody_get_template_part(get_template_directory() . '/template-parts/content-post-bullets.php', $args);
+                                        } else {
+                                            foody_get_template_part(get_template_directory() . '/template-parts/common/favorite.php');
+                                        }
 
-                                            </i>
-                                            <span>
-                    הוספה למועדפים
-                </span>
-                                        </div>
+                                        ?>
                                     </section>
 
 
+
                                 </section>
+
+
+                                <?php
+                                if (wp_is_mobile()) {
+                                    foody_get_template_part(get_template_directory() . '/template-parts/content-social-actions.php');
+                                }
+                                ?>
 
                             </div>
 
