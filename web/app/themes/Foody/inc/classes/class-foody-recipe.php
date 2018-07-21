@@ -67,7 +67,7 @@ class Foody_Recipe extends Foody_Post
      */
     public function getDuration(): string
     {
-        return $this->duration;
+        return $this->duration ?? '';
     }
 
     /**
@@ -335,7 +335,7 @@ class Foody_Recipe extends Foody_Post
 
     private function init_video()
     {
-        while (have_rows('video')): the_row();
+        while (have_rows('video',$this->post->ID)): the_row();
             $video_url = get_sub_field('url');
             $parts = explode('v=', $video_url);
             $query = explode('&', $parts[1]);
@@ -352,7 +352,7 @@ class Foody_Recipe extends Foody_Post
 
     private function init_overview()
     {
-        while (have_rows('overview')): the_row();
+        while (have_rows('overview',$this->post->ID)): the_row();
             $preparation_time = get_sub_field('preparation_time');
             $total_time = get_sub_field('total_time');
             $difficulty_level = get_sub_field('difficulty_level');
@@ -371,7 +371,7 @@ class Foody_Recipe extends Foody_Post
         $this->ingredients_groups = array();
         $this->ingredients_count = 0;
 
-        while (have_rows('ingredients')): the_row();
+        while (have_rows('ingredients',$this->post->ID)): the_row();
 
             $this->number_of_dishes = get_sub_field('number_of_dishes');
             $current_group = 0;
@@ -440,7 +440,7 @@ class Foody_Recipe extends Foody_Post
     private function related_content($related_content_args)
     {
         /** @var WP_Post[] $playlists */
-        $related_content = posts_to_array($related_content_args['selector']);
+        $related_content = posts_to_array($related_content_args['selector'],$this->post->ID);
 
         if (!empty($related_content)) {
             $template_args = array(

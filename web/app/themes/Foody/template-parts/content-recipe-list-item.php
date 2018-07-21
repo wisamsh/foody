@@ -6,7 +6,8 @@
  * Time: 8:21 PM
  */
 
-$recipe = new Foody_Recipe();
+/** @var Foody_Recipe $recipe */
+$recipe = $template_args['post'];
 
 ?>
 
@@ -33,32 +34,32 @@ $recipe = new Foody_Recipe();
         </div>
         <section class="col-11">
             <h3>
-				<?php echo $recipe->getTitle() ?>
+                <?php echo $recipe->getTitle() ?>
             </h3>
             <ul>
                 <li>
-					<?php echo $recipe->getAuthorName() ?>
+                    <?php echo $recipe->getAuthorName() ?>
                 </li>
                 <li>
-					<?php echo $recipe->getViewCount() ?>
+                    <?php echo $recipe->getViewCount() ?>
                 </li>
                 <li>
-					<?php echo $recipe->getPostedOn() ?>
+                    <?php echo $recipe->getPostedOn() ?>
                 </li>
             </ul>
             <div class="description">
-				<?php echo $recipe->getDescription() ?>
+                <?php echo $recipe->getDescription() ?>
             </div>
 
 
-            <div class="favorite">
-                <i class="icon-heart">
-
-                </i>
-                <span>
-                    הוספה למועדפים
-                </span>
-            </div>
+            <?php
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/common/favorite.php',
+                array(
+                    'id' => $recipe->id
+                )
+            );
+            ?>
         </section>
 
 

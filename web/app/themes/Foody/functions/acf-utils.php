@@ -11,13 +11,13 @@
  * @param $selector string field name. must be a field of type post (id or object)
  * @return WP_Post[] array of posts objects
  */
-function posts_to_array($selector)
+function posts_to_array($selector,$post = null)
 {
 
 
     $posts = array();
 
-    $posts_field = get_field($selector);
+    $posts_field = get_field($selector,$post);
 
     if (array_not_empty($posts_field)) {
         foreach ($posts_field as $item) {

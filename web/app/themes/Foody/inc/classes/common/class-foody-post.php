@@ -9,6 +9,8 @@
 abstract class Foody_Post
 {
 
+    public $id;
+
     private $posted_on;
 
     protected $image;
@@ -45,15 +47,16 @@ abstract class Foody_Post
     {
         if ($post != null) {
             $this->post = $post;
-            $this->image = get_post_thumbnail_id();
-            $this->posted_on = foody_posted_on(false);
+            $this->id = $post->ID;
+            $this->image = get_the_post_thumbnail_url($post);
+            $this->posted_on = foody_posted_on(false, $post);
             $this->description = get_field('desktop_caption', $this->post->ID);
             $this->description_mobile = get_field('mobile_caption', $this->post->ID);
             $this->title = get_the_title($post->ID);
-            $this->view_count = view_count_display(foody_get_post_views(get_the_ID()), 0);
+            $this->view_count = view_count_display(foody_get_post_views($post->ID), 0);
             $this->author_image = get_the_author_meta('wp_user_avatars', get_the_author_meta('ID'))['90'];
-            $this->author_name = foody_posted_by(false);// get_the_author_meta('display_name', get_the_author_meta('ID'));
-            $this->body = apply_filters('the_content', get_the_content());
+            $this->author_name = foody_posted_by(false);
+            $this->body = apply_filters('the_content', $post->post_content);
 
         } else {
             $k = array_rand($this->stub_images);

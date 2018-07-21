@@ -1570,7 +1570,11 @@ remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
 
 function foody_get_array_default($array, $key, $default)
 {
-    return isset($array[$key]) ? $array[$key] : $default;
+    $val = $default;
+    if(isset($array) && !empty($array)){
+        $val = isset($array[$key]) ? $array[$key] : $default;
+    }
+    return $val;
 }
 
 function array_not_empty($arr)

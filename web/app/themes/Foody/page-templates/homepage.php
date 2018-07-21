@@ -50,15 +50,13 @@ $homepage = new HomePage();
 
                     <article class="feed row gutter-3 recipes-grid">
                         <?php $homepage->feed() ?>
-
-                        <div class="show-more">
-                            <img src="<?php echo $GLOBALS['images_dir'] . 'bite.png' ?>" alt="">
-                            <h4>
-                                לעוד מתכונים
-                            </h4>
-                        </div>
-
                     </article>
+                    <div class="show-more">
+                        <img src="<?php echo $GLOBALS['images_dir'] . 'bite.png' ?>" alt="">
+                        <h4>
+                            לעוד מתכונים
+                        </h4>
+                    </div>
                 </section>
 
 

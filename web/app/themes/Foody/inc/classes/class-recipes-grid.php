@@ -20,7 +20,7 @@ class RecipesGrid
     }
 
 
-    public function draw($col_num, $col_num_mobile = 12)
+    public function draw($post, $col_num, $col_num_mobile = 12)
     {
         if ($col_num == 0) {
             $col_num = self::NONE;
@@ -43,17 +43,17 @@ class RecipesGrid
 
         echo $container_start;
 
-        get_template_part('template-parts/content', 'recipe-list-item');
+        foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-list-item.php', array('post' => $post));
 
         echo $container_end;
 
     }
 
-    public function grid_debug($items_count,$col_num)
+    public function grid_debug($items_count, $col_num)
     {
 
         for ($i = 0; $i < $items_count; $i++) {
-            $this->draw($col_num);
+            $this->draw(null, $col_num);
         }
     }
 

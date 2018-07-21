@@ -12,7 +12,6 @@
  */
 
 
-
 /*
  * Globals
  * */
@@ -23,11 +22,16 @@ require_once get_template_directory() . "/inc/utils/utils.php";
 require_once get_template_directory() . "/functions/js-globals.php";
 
 
-
 /*
  * Utils
  * */
 require_once get_template_directory() . "/inc/classes/common/class-foody-social.php";
+
+/*
+ * Interfaces
+ * */
+
+require_once get_template_directory() . "/inc/classes/interfaces/interface-foody-list-item.php";
 
 
 /*
@@ -53,6 +57,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-comments.php";
 require_once get_template_directory() . "/inc/classes/class-foody-how-i-did.php";
 require_once get_template_directory() . "/inc/classes/class-foody-article.php";
 require_once get_template_directory() . "/inc/classes/class-foody-page-content-factory.php";
+require_once get_template_directory() . "/inc/classes/class-foody-feed-factory.php";
 
 /*
  * Widgets

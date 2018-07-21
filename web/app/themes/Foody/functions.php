@@ -147,9 +147,9 @@ function foody_scripts()
 //        wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/home.js', false, false, true);
 //    }
 
-
-    wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/bundle.js', false, false, true);
-
+    if(!is_admin()){
+        wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/bundle.js', false, false, true);
+    }
 
 }
 

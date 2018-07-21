@@ -149,19 +149,6 @@ $feed-header-height: 60px;
 
           &.feed {
             margin: 0;
-
-            .show-more {
-              margin: 0 auto;
-              padding: 20px 0;
-              text-align: center;
-              cursor: pointer;
-              img {
-                margin-bottom: 10px;
-              }
-              h4 {
-                color: $color__primary;
-              }
-            }
           }
 
           &.feed, &.recommended-container {
@@ -176,10 +163,26 @@ $feed-header-height: 60px;
             img {
               &.recipe-item-image {
                 min-height: 270px;
+                max-height: 270px;
+                width: 100%;
               }
             }
           }
 
+        }
+      }
+
+      .show-more {
+        margin: 0 auto;
+        padding: 20px 0;
+        text-align: center;
+        cursor: pointer;
+        img {
+          margin-bottom: 10px;
+        }
+        h4 {
+          color: $color__primary;
+          text-align: center;
         }
       }
 
