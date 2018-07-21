@@ -309,7 +309,7 @@ $content-width: 70%;
               padding-left: 35px;
             }
 
-            > div {
+            > div:not(.clearfix) {
 
               padding: 5px 0;
 
@@ -821,12 +821,8 @@ $content-width: 70%;
                 border-left: 0;
               }
 
-              &:last-child {
-                padding: 0 15px;
-              }
-
-              > div {
-
+              > div:not(.clearfix) {
+                padding: 5px 30px;
                 &.nutrition-row:not(:last-child) {
                   border-bottom: 1px solid $color__divider;
 
@@ -847,6 +843,14 @@ $content-width: 70%;
                 }
 
               }
+
+              &:last-child {
+                padding-left: 15px;
+
+                div.nutrition-row:not(.clearfix) {
+                  border-bottom: none;
+                }
+              }
             }
           }
         }
@@ -864,7 +868,7 @@ $content-width: 70%;
         max-width: calc(100% - #{$content-padding});
 
         ul {
-
+          column-count: 2;
           li {
 
             &:before {
@@ -888,53 +892,75 @@ $content-width: 70%;
 
       .recipe-how-i-did {
         @include max-width-section;
-        max-width: calc(100% - #{$content-padding});
-        .header {
+        margin: 0;
+        max-width: 100%;
 
-          h2 {
+        #accordion-how-i-did {
 
-          }
+          .header {
+            .add-image {
+              width: 100%;
 
-          .add-image {
-
-            input[type="file"] {
-
-            }
-
-            label {
-              span {
-
-              }
-            }
-
-            .icon-camera {
-
-              &:before {
-
+              .label {
+                width: 100%;
+                text-align: center;
               }
             }
           }
 
-        }
+          .card-body {
+            padding: 20px;
+            .how-i-did-list {
+              margin: 0;
+              justify-content: space-between;
+              margin-top: 20px;
+              .how-i-did {
 
-        .how-i-did-list {
+                &:nth-child(odd) {
+                  padding-left: 10px;
+                  padding-right: 0;
+                }
+                &:nth-child(even) {
+                  padding-right: 10px;
+                  padding-left: 0;
+                }
+                .image-container {
 
-          .how-i-did {
+                  img {
+                    max-height: 6em;
+                  }
+                }
 
-            .image-container {
+                .author {
+                  padding: 10px 0;
+                  .author-name {
+                    font-family: $font__main;
+                    font-size: 18px;
+                    font-weight: 900;
+                  }
 
-              img {
-              }
-            }
+                  time {
+                    font-family: $font__main;
+                    font-size: 18px;
+                    opacity: 0.5;
+                  }
+                  img {
+                    height: 24px;
+                    width: 24px;
+                  }
 
-            .author {
-
-              .author-name {
-              }
-              img {
+                  .col {
+                    p {
+                      margin-right: -39px;
+                      font-size: 18px;
+                      line-height: 1.17;
+                    }
+                  }
+                }
               }
             }
           }
+
         }
       }
 
@@ -985,7 +1011,7 @@ $content-width: 70%;
 
       .recipe-comments {
         @include max-width-section;
-        max-width: calc(100% - #{$content-padding});
+        max-width: 100%;
 
         .commentform-element {
         }

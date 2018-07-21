@@ -19,3 +19,13 @@
     }
   }
 }
+
+@include breakpoint(mobileonly){
+  .load-more {
+    font-family: $font__main;
+
+    i {
+      display: none;
+    }
+  }
+}

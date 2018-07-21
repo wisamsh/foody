@@ -1,88 +1,115 @@
 @import "related-content";
 
-.related-content {
-  &.related-playlists {
-    padding: 0 15px;
-    margin-bottom: 15px;
-    .related-item {
+.related-content-container {
 
-      .image-container {
+  .related-content {
+    &.related-playlists {
+      padding: 0 15px;
+      margin-bottom: 15px;
+      .related-item {
 
-        img {
-        }
+        .image-container {
 
-        .playlist-count {
-          position: absolute;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          background-color: rgba(255, 255, 255, .9);
-          text-align: center;
-          color: $color__primary;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          padding: 10px;
-
-          i {
-            margin-bottom: 10px;
-            &:before {
-              font-size: 26px;
-            }
+          img {
           }
 
-          .count {
-            font-size: 15px;
+          .playlist-count {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, .9);
+            text-align: center;
+            color: $color__primary;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 10px;
+
+            i {
+              margin-bottom: 10px;
+              &:before {
+                font-size: 26px;
+              }
+            }
+
+            .count {
+              font-size: 15px;
+            }
+          }
+        }
+
+        .playlist-details {
+          .post-title {
+
+          }
+
+          .author-name {
+
+          }
+
+          .view-count, .author-name {
+
           }
         }
       }
+    }
+  }
 
-      .playlist-details {
-        .post-title {
+  .related-content {
+    &.related-recipes {
+      padding: 15px;
 
-        }
+      .related-item {
 
-        .author-name {
+        .image-container {
 
-        }
+          .duration {
+            position: absolute;
+            top: 0;
+            background-color: white;
+            margin: 5px;
+            border-radius: 1em;
+            padding: 0 6px;
+            color: $color__primary;
+            display: flex;
+            place-items: center;
 
-        .view-count, .author-name {
+            > time {
+              font-family: $font__main;
+            }
 
+            i {
+              &:before {
+                font-size: 12px
+              }
+            }
+          }
         }
       }
     }
   }
 }
 
-.related-content {
-  &.related-recipes {
-    padding: 15px;
+@include breakpoint(mobileonly) {
 
-    .related-item {
+  .related-content-container {
 
-      .image-container {
+    &.related-recipes {
 
-        .duration {
-          position: absolute;
-          top: 0;
-          background-color: white;
-          margin: 5px;
-          border-radius: 1em;
-          padding: 0 6px;
-          color: $color__primary;
-          display: flex;
-          place-items: center;
+      .related-content-title {
+        display: none;
+      }
 
-          > time {
-            font-family: $font__main;
-          }
+      .related-recipes {
+        padding-top: 0;
+      }
 
-          i {
-            &:before {
-              font-size: 12px
-            }
-          }
-        }
+    }
+
+    &.related-playlists {
+      .related-playlists {
+        margin-bottom: 0;
       }
     }
   }

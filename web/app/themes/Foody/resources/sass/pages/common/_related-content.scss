@@ -40,3 +40,38 @@
     }
   }
 }
+
+@include breakpoint(mobileonly) {
+
+  .related-content-container {
+
+    .related-content-title {
+    }
+
+    ul.related-content {
+
+      border-bottom: none;
+      .related-item {
+
+        .image-container {
+
+          img {
+            height: 211px;
+          }
+        }
+
+        .details {
+          .post-title {
+          }
+
+          .author-name {
+          }
+
+          .view-count, .author-name {
+          }
+        }
+      }
+    }
+  }
+
+}

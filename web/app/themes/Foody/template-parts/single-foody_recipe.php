@@ -199,6 +199,10 @@ $recipe = $foody_page;
 
 </section>
 
+<section class="recipe-sidebar-mobile d-block d-sm-none">
+    <?php  $recipe->the_mobile_sidebar_content();?>
+</section>
+
 <section class="recipe-how-i-did">
     <?php $recipe->how_i_did(); ?>
 

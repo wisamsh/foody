@@ -266,14 +266,24 @@ class Foody_Recipe extends Foody_Post
 
     public function how_i_did()
     {
+        $template = '/comments-how-i-did.php';
+
+        if (wp_is_mobile()) {
+            $template = '/comments-how-i-did-mobile.php';
+        }
+
         comments_template(
-            '/comments-how-i-did.php'
+            $template
         );
     }
 
     public function comments()
     {
-        comments_template();
+        $template = '';
+        if (wp_is_mobile()) {
+            $template = '/comments-mobile.php';
+        }
+        comments_template($template);
     }
 
     public function to_json_schema()
@@ -305,7 +315,7 @@ class Foody_Recipe extends Foody_Post
         $this->the_video_box();
     }
 
-    public function the_sidebar_content()
+    public function the_sidebar_content($args = array())
     {
 
         $playlists_args = array(
@@ -323,6 +333,37 @@ class Foody_Recipe extends Foody_Post
 
         $recipes_args = array(
             'title' => 'מתכונים נוספים',
+            'selector' => 'related_recipes',
+            'content_classes' => 'related-recipes',
+            'template_args_func' => function ($recipe) {
+                $foody_recipe = new Foody_Recipe($recipe);
+                return array(
+                    'duration' => $foody_recipe->getDuration()
+                );
+            }
+        );
+
+        $this->related_content($recipes_args);
+
+    }
+
+    public function the_mobile_sidebar_content()
+    {
+        $playlists_args = array(
+            'title' => 'מתכונים נוספים',
+            'selector' => 'related_playlists',
+            'content_classes' => 'related-playlists',
+            'template_args_func' => function ($item) {
+                return array(
+                    'count' => 20 // TODO
+                );
+            }
+        );
+
+        $this->related_content($playlists_args);
+
+        $recipes_args = array(
+            'title' => '',
             'selector' => 'related_recipes',
             'content_classes' => 'related-recipes',
             'template_args_func' => function ($recipe) {

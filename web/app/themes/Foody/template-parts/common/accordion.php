@@ -9,13 +9,15 @@
 $title = $template_args['title'];
 $content = $template_args['content'];
 $id = $template_args['id'];
-$title_classes = isset($template_args['title_classes']) ? $template_args['title_classes'] : '';
-$title_icon = isset($template_args['title_icon']) ? $template_args['title_icon'] : '';
+
+$classes = foody_get_array_default($template_args, 'classes', '');
+$title_classes = foody_get_array_default($template_args, 'title_classes', '');
+$title_icon = foody_get_array_default($template_args, 'title_icon', '');
 ?>
 
-<div id="accordion-<?php echo $id ?>" role="tablist" class="foody-accordion">
+<div id="accordion-<?php echo $id ?>" role="tablist" class="foody-accordion <?php echo $classes ?>">
     <div class="foody-accordion-content">
-        <div class="" role="tab" id="heading-<?php echo $id ?>">
+        <div class="foody-accordion-title" role="tab" id="heading-<?php echo $id ?>">
             <h5 class="mb-0">
                 <?php if ($title_icon != ''): ?>
                     <i class="<?php echo $title_icon ?>"></i>
@@ -34,7 +36,13 @@ $title_icon = isset($template_args['title_icon']) ? $template_args['title_icon']
         <div id="<?php echo $id ?>" class="collapse show" role="tabpanel"
              aria-labelledby="heading-<?php echo $id ?>" data-parent="#accordion-<?php echo $id ?>">
             <div class="card-body">
-                <?php echo $content ?>
+                <?php
+                if (is_callable($content)) {
+                    call_user_func($content);
+                } else {
+                    echo $content;
+                }
+                ?>
             </div>
         </div>
     </div>

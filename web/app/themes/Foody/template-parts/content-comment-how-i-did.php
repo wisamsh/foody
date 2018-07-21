@@ -17,7 +17,7 @@ $image = wp_get_attachment_url($attachment_id);
 ?>
 
 
-<div class="col-sm-4 col-12 how-i-did">
+<div class="col-sm-4 col-6 how-i-did">
     <div class="image-container">
         <img src="<?php echo $image ?>" alt="">
     </div>
