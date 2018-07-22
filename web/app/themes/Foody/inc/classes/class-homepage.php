@@ -25,7 +25,6 @@ class HomePage
         $this->sidebar_filter = new SidebarFilter();
     }
 
-
     public function featured()
     {
         if (wp_is_mobile()) {
@@ -36,7 +35,7 @@ class HomePage
 
 
         foreach ($posts as $post) {
-            $this->grid->draw($post,2);
+            $this->grid->draw($post, 2);
         }
     }
 
@@ -68,39 +67,24 @@ class HomePage
         Foody_Social::socials_bar();
     }
 
-    public function recommended()
-    {
-        $posts = $this->get_recommended_posts();
-
-        foreach ($posts as $post) {
-            $this->grid->draw($post,1);
-        }
-    }
-
     public function feed()
     {
         $posts = $this->feed_query();
 
-
         foreach ($posts as $post) {
-            $this->grid->draw($post,3);
+            $this->grid->draw($post, 3);
         }
 
     }
 
     public function filter()
     {
-//		$this->sidebar_filter->get_filter();
         dynamic_sidebar('foody-sidebar');
-
     }
-
 
     private function feed_query()
     {
-        // TODO implement
-
-
+        // TODO handle post types
         $query = new WP_Query();
 
         $args = array(
@@ -117,31 +101,17 @@ class HomePage
         return $posts;
     }
 
-
     private function get_featured_categories()
     {
-
+        // TODO
     }
 
     private function get_featured_posts()
     {
-        $posts = array();
-        for ($i = 0; $i < 2; $i++) {
-            $posts[] = new Foody_Recipe();
-        }
+        $posts = array_map(function ($post) {
+            return new Foody_Recipe($post);
+        }, posts_to_array('featured_content'));
 
         return $posts;
     }
-
-
-    private function get_recommended_posts()
-    {
-        $posts = array();
-        for ($i = 0; $i < 10; $i++) {
-            $posts[] = new Foody_Recipe();
-        }
-
-        return $posts;
-    }
-
 }

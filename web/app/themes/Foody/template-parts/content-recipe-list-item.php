@@ -34,7 +34,9 @@ $recipe = $template_args['post'];
         </div>
         <section class="col-11">
             <h3>
-                <?php echo $recipe->getTitle() ?>
+                <a href="<?php echo $recipe->link ?>">
+                    <?php echo $recipe->getTitle() ?>
+                </a>
             </h3>
             <ul>
                 <li>
