@@ -29,15 +29,12 @@ abstract class Foody_Post
 
     public $body;
 
+    public $link;
+
 
     protected $post;
 
-    protected $stub_images = array(
-//		'http://localhost:8000/app/uploads/2018/05/Nimrod_Genisher_0142.jpg',
-        'http://foody-dev.moveodevelop.com/app/uploads/2018/05/Nimrod_Genisher_0272.jpg',
-        'http://foody-dev.moveodevelop.com/app/uploads/2018/05/Nimrod_Genisher_0321.jpg',
-        'http://foody-dev.moveodevelop.com/app/uploads/2018/05/Nimrod_Genisher_0032.jpg'
-    );
+    protected $stub_images = array();
 
     /**
      * FoodyPost constructor.
@@ -45,6 +42,13 @@ abstract class Foody_Post
      */
     public function __construct(WP_Post $post = null)
     {
+
+        $this->stub_images = array(
+            'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/05/Nimrod_Genisher_0272.jpg',
+            'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/05/Nimrod_Genisher_0321.jpg',
+            'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/05/Nimrod_Genisher_0032.jpg'
+        );
+
         if ($post != null) {
             $this->post = $post;
             $this->id = $post->ID;
@@ -57,6 +61,7 @@ abstract class Foody_Post
             $this->author_image = get_the_author_meta('wp_user_avatars', get_the_author_meta('ID'))['90'];
             $this->author_name = foody_posted_by(false);
             $this->body = apply_filters('the_content', $post->post_content);
+            $this->link = get_permalink($post->ID);
 
         } else {
             $k = array_rand($this->stub_images);
@@ -66,8 +71,9 @@ abstract class Foody_Post
             $this->description = 'המנה המושלמת לאירוח, קלה ולעולם לא מאכזבת. הטעם המושלם של תפוחי אדמה בתנור עם טוויסט מיוחד.';
             $this->title = 'סירות תפוחי אדמה אפויות';
             $this->view_count = view_count_display(13454, 1);
-            $this->author_image = 'http://localhost:8000/app/uploads/2018/05/avatar_user_2_1527527183-250x250.jpg';// $GLOBALS['images_dir'] . 'matan.jpg';
+            $this->author_image = 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/05/avatar_user_2_1527527183-250x250.jpg';// $GLOBALS['images_dir'] . 'matan.jpg';
             $this->author_name = "ישראל אהרוני";
+            $this->link = get_permalink();
         }
     }
 

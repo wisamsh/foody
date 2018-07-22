@@ -23,7 +23,7 @@ class Foody_Recipe extends Foody_Post
 
     private $number_of_dishes;
 
-    private $debug = true;
+    private $debug = false;
 
 
     /**
@@ -32,7 +32,6 @@ class Foody_Recipe extends Foody_Post
     public function __construct(WP_Post $post = null)
     {
         parent::__construct($post);
-
         if ($post != null) {
 
             $this->init();
@@ -42,6 +41,8 @@ class Foody_Recipe extends Foody_Post
         } else {
             $this->duration = '2.45';
         }
+
+
 
 
     }

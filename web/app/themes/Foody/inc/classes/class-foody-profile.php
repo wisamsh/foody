@@ -62,35 +62,34 @@ class Foody_Profile
         $list = $this->foody_user->get_favorite_channels();
 
 
-
         $list = array(
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             ),
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             ),
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             ),
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             ),
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             ),
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             ),
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             )
         );
 

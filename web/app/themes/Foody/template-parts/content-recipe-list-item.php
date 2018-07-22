@@ -13,21 +13,21 @@ $recipe = $template_args['post'];
 
 
 <div class="recipe-item">
+    <a href="<?php echo $recipe->link ?>">
+        <div class="image-container main-image-container">
+            <img class="recipe-item-image" src="<?php echo $recipe->getImage() ?>" alt="">
+            <div class="duration">
 
-    <div class="image-container main-image-container">
-        <img class="recipe-item-image" src="<?php echo $recipe->getImage() ?>" alt="">
-        <div class="duration">
 
+                <i class="icon icon-timeplay">
 
-            <i class="icon icon-timeplay">
-
-            </i>
-            <span>
+                </i>
+                <span>
                    <?php echo $recipe->getDuration() ?>
             </span>
+            </div>
         </div>
-    </div>
-
+    </a>
     <section class="recipe-item-details  d-flex">
         <div class="image-container col-1 nopadding">
             <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
