@@ -9,6 +9,8 @@
  * @package Foody
  */
 $header = new Header();
+$user = new Foody_User();
+
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?> dir="rtl">
@@ -52,7 +54,7 @@ $header = new Header();
         <nav class="navbar navbar-expand-md navbar-light navbar-toggleable-md" role="navigation">
 
 
-
+            <!-- TODO change this to bootstrap offsets            -->
             <div class="container-fluid foody-navbar-container">
 
                 <div class="search-bar d-none d-sm-block">
@@ -63,7 +65,7 @@ $header = new Header();
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#foody-navbar-collapse"
                         aria-controls="foody-navbar-collapse" aria-expanded="false"
                         aria-label="Toggle navigation">
-<!--                    <span class="navbar-toggler-icon icon-menu-mobile"></span>-->
+                    <!--                    <span class="navbar-toggler-icon icon-menu-mobile"></span>-->
                     <i class="navbar-toggler-icon icon-menu-mobile"></i>
                 </button>
 
@@ -102,7 +104,7 @@ $header = new Header();
                 ));
                 ?>
                 <div class="d-none d-sm-block">
-                    <img class="avatar" src="<?php echo $GLOBALS['images_dir'] . 'avatar.png' ?>" alt="">
+                    <img class="avatar" src="<?php echo $user->get_image() ?>" alt="">
                 </div>
 
             </div>

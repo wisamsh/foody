@@ -98,6 +98,12 @@ header {
 
       }
 
+      .avatar{
+        clip-path: circle();
+        border-radius: 50%;
+        border: 2px solid $color__primary;
+      }
+
       .navbar-collapse {
         flex-direction: row-reverse;
       }

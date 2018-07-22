@@ -61,6 +61,8 @@ class Foody_Profile
     {
         $list = $this->foody_user->get_favorite_channels();
 
+
+
         $list = array(
             array(
                 'name' =>'שם שם',

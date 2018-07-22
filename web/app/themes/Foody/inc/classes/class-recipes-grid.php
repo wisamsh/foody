@@ -53,7 +53,7 @@ class RecipesGrid
     {
 
         for ($i = 0; $i < $items_count; $i++) {
-            $this->draw(null, $col_num);
+            $this->draw(new Foody_Recipe(), $col_num);
         }
     }
 
