@@ -4,3 +4,4 @@
 require('./forms');
 require('./comments');
 require('./how-i-did');
+require('./favorites');

@@ -38,6 +38,13 @@ $feed-header-height: 60px;
 
     }
 
+    .title{
+
+      a{
+        color: $color__primary;
+      }
+    }
+
     .categories-listing {
 
       padding: 0 10px;

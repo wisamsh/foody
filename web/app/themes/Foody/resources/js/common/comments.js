@@ -12,14 +12,9 @@ $(document).ready(() => {
         $parent = $('.commentform-element');
         $comment = $('#comment');
 
-
-        $comment.focusin(() => {
-            $parent.add($commentForm).addClass('open');
+        $comment.click(() => {
+            $parent.add($commentForm).toggleClass('open');
         });
-
-        // $comment.focusout(() => {
-        //     $parent.add($commentForm).removeClass('open');
-        // });
 
 
         attachCancelButton();
