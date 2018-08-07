@@ -14,5 +14,3 @@ $custom_plugins_path = get_template_directory() . '/inc/plugins/';
 foreach ( $plugins as $plugin ) {
 	require_once $custom_plugins_path . $plugin . '/index.php';
 }
-
-

@@ -109,5 +109,4 @@ get_header(); ?>
     </div><!-- #main-content -->
 
 <?php
-
 get_footer();

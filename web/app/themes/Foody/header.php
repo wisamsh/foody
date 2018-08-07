@@ -36,10 +36,6 @@ $user = new Foody_User();
             <div class="logo-container d-none d-sm-block">
                 <div class="logo-container-desktop">
                     <?php the_custom_logo() ?>
-                    <div class="d-none d-sm-inline-block cellcom-tv">
-                        <img class="cellcom-tv-img" src="<?php echo $GLOBALS['images_dir'] . 'foody-in-cellcom.png' ?>"
-                             alt="Cellcom TV">
-                    </div>
                 </div>
 
 

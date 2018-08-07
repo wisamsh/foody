@@ -89,12 +89,16 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
                                             );
                                             foody_get_template_part(get_template_directory() . '/template-parts/content-post-bullets.php', $args);
                                         } else {
-                                            foody_get_template_part(get_template_directory() . '/template-parts/common/favorite.php');
+                                            foody_get_template_part(
+                                                get_template_directory() . '/template-parts/common/favorite.php',
+                                                array(
+                                                    'post' => $foody_page
+                                                )
+                                            );
                                         }
 
                                         ?>
                                     </section>
-
 
 
                                 </section>

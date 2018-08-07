@@ -58,6 +58,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-how-i-did.php"
 require_once get_template_directory() . "/inc/classes/class-foody-article.php";
 require_once get_template_directory() . "/inc/classes/class-foody-page-content-factory.php";
 require_once get_template_directory() . "/inc/classes/class-foody-feed-factory.php";
+require_once get_template_directory() . "/inc/classes/class-foody-post-factory.php";
 
 /*
  * Widgets
@@ -72,6 +73,7 @@ require_once get_template_directory() . "/inc/widgets/widget-search-filter.php";
  * Functions
  * */
 
+require_once get_template_directory() . "/functions/foody-session.php";
 require_once get_template_directory() . "/functions/core.php";
 require_once get_template_directory() . "/functions/post-types.php";
 require_once get_template_directory() . "/functions/sidebars.php";

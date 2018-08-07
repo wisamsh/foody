@@ -5,12 +5,15 @@
  * Date: 6/30/18
  * Time: 1:44 PM
  */
+
+/** @noinspection PhpUndefinedVariableInspection */
 $notes = $template_args['notes'];
+$title = $template_args['title'];
 
 ?>
 
 <h4 class="title">
-    הערות
+    <?php echo $title ?>
 </h4>
 
 <ul class="notes" title="הערות">

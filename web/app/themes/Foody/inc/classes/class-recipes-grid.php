@@ -57,4 +57,11 @@ class RecipesGrid
         }
     }
 
+    public function loop($posts,$cols)
+    {
+        foreach ($posts as $post) {
+            $this->draw($post,$cols);
+        }
+    }
+
 }

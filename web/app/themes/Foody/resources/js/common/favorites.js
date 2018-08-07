@@ -20,41 +20,15 @@ $(document).ready(() => {
 
                 if (postId) {
 
-                    $icon = $('i', $this);
-                    $text = $('span', $this);
+                    let $icon = $('i', $this);
 
+                    let isAlreadyFavorite = $icon.hasClass('icon-favorite-pressed');
 
-                    let classToRemove, classToAdd, text;
-
-                    if ($icon.hasClass('icon-favorite-pressed')) {
-                        classToRemove = 'icon-favorite-pressed';
-                        classToAdd = 'icon-heart';
-                        text = 'הוספה למועדפים';
-                    } else {
-                        classToRemove = 'icon-heart';
-                        classToAdd = 'icon-favorite-pressed';
-                        text = 'נשמר במועדפים';
-                    }
-
-                    $icon.removeClass(classToRemove);
-                    $icon.addClass(classToAdd);
-                    $text.text(text);
-
-                    let scale = 1.4;
-                    let size = parseInt($icon.css('font-size'));
-
-                    $icon.animate({
-                        fontSize: size * scale
-                    }, 350, () => {
-                        $icon.animate({
-                            fontSize: size
-                        })
-                    });
+                    toggleAllFavorites(postId, isAlreadyFavorite);
 
 
                     $.ajax({
                         type: 'POST',
-                        dataType: 'json',
                         url: '/wp/wp-admin/admin-ajax.php', // admin-ajax.php URL
                         data: {
                             action: 'toggle_favorite',
@@ -69,11 +43,12 @@ $(document).ready(() => {
                             } else if (status == 'timeout') {
                                 alert('Error: Server doesn\'t respond.');
                             } else {
-                                alert('error');
+                                alert('error: ' + status);
                             }
+                            // revert animations and favorite indication
+                            toggleAllFavorites(postId, !isAlreadyFavorite);
                         },
                         success: () => {
-                            alert('success');
                         },
                         complete: function () {
                         }
@@ -81,10 +56,44 @@ $(document).ready(() => {
 
                 }
             });
-
-
         });
+    }
 
+
+    function toggleAllFavorites(postId, isAlreadyFavorite) {
+        $('.favorite[data-id="' + postId + '"]').each(function () {
+
+            let classToRemove, classToAdd, text;
+
+            let $this = $(this);
+            let $icon = $('i', $this);
+            let $text = $('span', $this);
+
+            if (isAlreadyFavorite) {
+                classToRemove = 'icon-favorite-pressed';
+                classToAdd = 'icon-heart';
+                text = 'הוספה למועדפים';
+            } else {
+                classToRemove = 'icon-heart';
+                classToAdd = 'icon-favorite-pressed';
+                text = 'נשמר במועדפים';
+            }
+
+            $icon.removeClass(classToRemove);
+            $icon.addClass(classToAdd);
+            $text.text(text);
+
+            let scale = 1.4;
+            let size = parseInt($icon.css('font-size'));
+
+            $icon.animate({
+                fontSize: size * scale
+            }, 350, () => {
+                $icon.animate({
+                    fontSize: size
+                })
+            });
+        });
     }
 
 

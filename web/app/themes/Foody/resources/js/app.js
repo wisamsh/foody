@@ -15,7 +15,7 @@ require('./plugins');
 require('slick-carousel');
 require('../sass/app.scss');
 window._ = require('underscore');
-
+window.Fraction = require('fractional').Fraction;
 
 // /*
 //  * Plugins

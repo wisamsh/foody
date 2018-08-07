@@ -6,17 +6,14 @@
  * Time: 12:53 PM
  */
 
-if ( ! is_admin() ):
-	$globals = array(
-		'isMobile' => wp_is_mobile()
-	);
+if (!is_admin()):
+    $globals = array(
+        'isMobile' => wp_is_mobile()
+    );
 
-	?>
+    ?>
     <script>
-        globals = <?php echo json_encode( $globals ) ?>;
+        globals = <?php echo json_encode($globals) ?>;
     </script>
 
 <?php endif; ?>
-
-
-

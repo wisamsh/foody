@@ -27,7 +27,10 @@ $foody_page = $template_args['foody_page'];
         <li class="no-bullet">
             <?php
             foody_get_template_part(
-                get_template_directory() . '/template-parts/common/favorite.php'
+                get_template_directory() . '/template-parts/common/favorite.php',
+                array(
+                    'post' => $foody_page
+                )
             )
             ?>
         </li>

@@ -160,14 +160,14 @@ $sidebar-width: 22.5% !default;
 
               .recipe-item-image {
                 min-height: 272px;
+                height: 272px;
+                width: 100%;
               }
             }
           }
         }
       }
-
     }
-
   }
 
   footer {
@@ -221,7 +221,7 @@ $sidebar-width: 22.5% !default;
                 background-color: $color__background-screen;
               }
 
-              ul.managed-list{
+              ul.managed-list {
                 padding-top: 0;
                 padding-bottom: 0;
               }
@@ -263,7 +263,7 @@ $sidebar-width: 22.5% !default;
               }
             }
 
-            h1{
+            h1 {
               margin-bottom: -4px !important;
             }
 

@@ -58,7 +58,8 @@ $recipe = $template_args['post'];
             foody_get_template_part(
                 get_template_directory() . '/template-parts/common/favorite.php',
                 array(
-                    'id' => $recipe->id
+                    'id' => $recipe->id,
+                    'post' => $recipe
                 )
             );
             ?>

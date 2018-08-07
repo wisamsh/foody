@@ -7,15 +7,30 @@
  */
 
 /** @noinspection PhpUndefinedVariableInspection */
-$post_id = foody_get_array_default($template_args, 'id', 0);
+
+/** @var Foody_Post $foody_post */
+$foody_post = $template_args['post'];
+$post_id = $foody_post->id;
+
+$favorite = [
+    'icon' => 'icon-heart',
+    'text' => 'הוספה למועדפים'
+];
+
+if ($foody_post->favorite) {
+    $favorite = [
+        'icon' => 'icon-favorite-pressed',
+        'text' => 'נשמר במועדפים'
+    ];
+}
 
 ?>
 
 <div class="favorite" data-id="<?php echo $post_id ?>">
-    <i class="icon-heart">
+    <i class="<?php echo $favorite['icon'] ?>">
 
     </i>
     <span>
-                    הוספה למועדפים
-                </span>
+        <?php echo $favorite['text'] ?>
+    </span>
 </div>

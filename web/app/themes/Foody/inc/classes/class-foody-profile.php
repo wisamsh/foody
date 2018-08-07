@@ -49,7 +49,20 @@ class Foody_Profile
 
     public function my_recipes()
     {
-        $this->grid->grid_debug(12, 2);
+        global $wp_session;
+
+        if (isset($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
+            $posts = [];
+            foreach ($favorite_posts as $favorite_post) {
+                $posts[] = Foody_PostFactory::get_post(get_post($favorite_post));
+            }
+
+            $this->grid->loop($posts, 2);
+        } else {
+            // TODO show 'no content';
+        }
+
+//        $this->grid->grid_debug(12, 2);
     }
 
     public function my_channels_recipes()

@@ -119,11 +119,19 @@ $recipe = $foody_page;
 
 
 
+
+
+
+
 </script>
 
 <section class="recipe-overview">
 
     <?php $recipe->the_overview() ?>
+
+    <section class="preview">
+        <?php $recipe->preview(); ?>
+    </section>
 
 </section>
 
@@ -131,14 +139,14 @@ $recipe = $foody_page;
 
     <div class="recipe-ingredients-top row justify-content-between">
         <h2 class="title col-6">
-            מצרכים
+            <?php echo $recipe->the_ingredients_title() ?>
         </h2>
 
         <div class="amount-container col-6">
             <label for="number-of-dishes">
-                כמות מנות
+                <?php echo $recipe->amount_for ?>
             </label>
-            <input name="amount" type="number" id="number-of-dishes"
+            <input name="amount" type="number" id="number-of-dishes" min="1"
                    value="<?php echo $recipe->getNumberOfDishes() ?>"
                    data-amount="<?php echo $recipe->getNumberOfDishes() ?>"
             >
@@ -171,13 +179,7 @@ $recipe = $foody_page;
 
 <section class="recipe-nutrition box">
 
-    <h2 class="title">
-        ערכים תזונתיים
-    </h2>
-
-    <div class="nutrition-container">
-        <?php $recipe->the_nutrition() ?>
-    </div>
+    <?php $recipe->the_nutrition() ?>
 
 </section>
 
@@ -200,7 +202,7 @@ $recipe = $foody_page;
 </section>
 
 <section class="recipe-sidebar-mobile d-block d-sm-none">
-    <?php  $recipe->the_mobile_sidebar_content();?>
+    <?php $recipe->the_mobile_sidebar_content(); ?>
 </section>
 
 <section class="recipe-how-i-did">

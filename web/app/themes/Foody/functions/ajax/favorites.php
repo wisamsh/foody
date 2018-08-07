@@ -20,15 +20,22 @@ function foody_toggle_favorite()
     $post_id = $_POST['post_id'];
     $user_id = get_current_user_id();
 
-    $favorites = get_user_meta($user_id, 'favorites');
+    $favorites = get_user_meta($user_id, 'favorites', true);
 
-    if (!empty($favorites)) {
-        if (in_array($post_id, $favorites)) {
-            delete_user_meta($user_id, 'favorites', $post_id);
-        }
-    } else {
-        add_user_meta($user_id, 'favorites', $post_id);
+    if (empty($favorites)) {
+        $favorites = [];
     }
+
+    $index = array_search($post_id, $favorites);
+    if ($index !== FALSE) {
+        unset($favorites[$index]);
+    } else {
+        $favorites[] = $post_id;
+    }
+
+    update_user_meta($user_id, 'favorites', $favorites);
+
+    $_SESSION['favorites'] = get_user_meta($user_id, 'favorites', true);
 
 
     die(); // don't forget this thing if you don't want "0" to be displayed

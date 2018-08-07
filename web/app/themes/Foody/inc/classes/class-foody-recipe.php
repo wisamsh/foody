@@ -9,6 +9,10 @@
 class Foody_Recipe extends Foody_Post
 {
 
+    public $ingredients_title;
+
+    public $amount_for;
+
     private $duration;
 
     private $video;
@@ -41,8 +45,6 @@ class Foody_Recipe extends Foody_Post
         } else {
             $this->duration = '2.45';
         }
-
-
 
 
     }
@@ -82,20 +84,26 @@ class Foody_Recipe extends Foody_Post
     public function the_video_box()
     {
         if ($this->post != null) {
+            if (have_rows('video', $this->post->ID)) {
+                while (have_rows('video', $this->post->ID)): the_row();
+                    $video_url = get_sub_field('url');
 
-            while (have_rows('video')): the_row();
-                $video_url = get_sub_field('url');
-                $parts = explode('v=', $video_url);
-                $query = explode('&', $parts[1]);
-                $video_id = $query[0];
-                $args = array(
-                    'id' => $video_id
-                );
+                    if ($video_url) {
+                        $parts = explode('v=', $video_url);
+                        $query = explode('&', $parts[1]);
+                        $video_id = $query[0];
+                        $args = array(
+                            'id' => $video_id
+                        );
+                        foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
+                    } else {
+                        the_post_thumbnail('full');
+                    }
 
-                foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
-            endwhile;
-
-
+                endwhile;
+            } else {
+                the_post_thumbnail('full');
+            }
         }
     }
 
@@ -123,10 +131,23 @@ class Foody_Recipe extends Foody_Post
 
     public function the_notes()
     {
-        $notes = get_field('notes');
+        $notes = null;
+        $title = null;
+
+        while (have_rows('notes', $this->post->ID)): the_row();
+
+
+            $notes = get_sub_field('notes');
+            $title = get_sub_field('title');
+        endwhile;
+
+        $template_args = [
+            'notes' => $notes,
+            'title' => $title
+        ];
 
         if (array_not_empty($notes)) {
-            foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-notes.php', $notes);
+            foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-notes.php', $template_args);
         }
 
     }
@@ -141,8 +162,8 @@ class Foody_Recipe extends Foody_Post
     public function the_nutrition()
     {
         $nutritions = array();
+        $title = get_field('nutritions_title');
         while (have_rows('nutritions')): the_row();
-
 
             while (have_rows('nutrition')): the_row();
 
@@ -163,9 +184,13 @@ class Foody_Recipe extends Foody_Post
         if (array_not_empty($nutritions)) {
             $nutritions = array_chunk($nutritions, ceil(count($nutritions) / 3));
 
+
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-nutritions.php',
-                $nutritions
+                [
+                    'nutritions' => $nutritions,
+                    'title' => $title
+                ]
             );
 
         }
@@ -174,15 +199,28 @@ class Foody_Recipe extends Foody_Post
 
     public function the_accessories()
     {
-        $posts = get_field('accessories');
-        $title = 'אביזרים';
+        $posts = [];
+        $title = '';
+
+        while (have_rows('accessories', $this->post->ID)): the_row();
+            $posts = get_sub_field('accessories');
+            $title = get_sub_field('title');
+        endwhile;
+
+
         $this->posts_bullets($posts, $title);
     }
 
     public function the_techniques()
     {
-        $posts = get_field('techniques');
-        $title = 'טכניקות';
+        $posts = [];
+        $title = '';
+
+        while (have_rows('techniques', $this->post->ID)): the_row();
+            $posts = get_sub_field('techniques');
+            $title = get_sub_field('title');
+        endwhile;
+
         $this->posts_bullets($posts, $title);
     }
 
@@ -259,7 +297,11 @@ class Foody_Recipe extends Foody_Post
             }
         );
 
-        $this->related_content($playlists_args);
+        $playlists = $this->get_related_content_by_categories('foody_playlist');
+
+        $this->related_content($playlists_args, $playlists);
+
+        $recipes = $this->get_related_content_by_categories('foody_recipe');
 
         $recipes_args = array(
             'title' => 'מתכונים נוספים',
@@ -273,7 +315,7 @@ class Foody_Recipe extends Foody_Post
             }
         );
 
-        $this->related_content($recipes_args);
+        $this->related_content($recipes_args, $recipes);
 
     }
 
@@ -308,6 +350,16 @@ class Foody_Recipe extends Foody_Post
 
     }
 
+    public function preview()
+    {
+        the_field('preview');
+    }
+
+    public function the_ingredients_title()
+    {
+        return $this->ingredients_title;
+    }
+
     /*
      * Private
      * */
@@ -336,35 +388,51 @@ class Foody_Recipe extends Foody_Post
 
     private function init_video()
     {
-        while (have_rows('video',$this->post->ID)): the_row();
-            $video_url = get_sub_field('url');
-            $parts = explode('v=', $video_url);
-            $query = explode('&', $parts[1]);
-            $video_id = $query[0];
+        if (have_rows('video', $this->post->ID)) {
+            while (have_rows('video', $this->post->ID)): the_row();
+
+                $video_url = get_sub_field('url');
+
+                if ($video_url) {
+                    $parts = explode('v=', $video_url);
+                    $query = explode('&', $parts[1]);
+                    $video_id = $query[0];
 
 
-            $this->video = array(
-                'id' => $video_id,
-                'url' => $video_url,
-                'duration' => get_sub_field('duration')
-            );
-        endwhile;
+                    $this->video = array(
+                        'id' => $video_id,
+                        'url' => $video_url,
+                        'duration' => get_sub_field('duration')
+                    );
+                }
+
+            endwhile;
+        }
+
     }
 
     private function init_overview()
     {
-        while (have_rows('overview',$this->post->ID)): the_row();
-            $preparation_time = get_sub_field('preparation_time');
-            $total_time = get_sub_field('total_time');
-            $difficulty_level = get_sub_field('difficulty_level');
+        $overview = get_field('overview', $this->post->ID);
 
-            $this->overview = array(
-                'preparation_time' => $preparation_time,
-                'total_time' => $total_time,
-                'difficulty_level' => $difficulty_level,
-                'ingredients_count' => $this->ingredients_count
-            );
-        endwhile;
+        $difficulty_level = $overview['difficulty_level'];
+
+        $this->overview = array(
+            'preparation_time' => $this->get_recipe_time($overview['preparation_time']),
+            'total_time' => $this->get_recipe_time($overview['total_time']),
+            'difficulty_level' => $difficulty_level,
+            'ingredients_count' => $this->ingredients_count
+        );
+
+    }
+
+    private function get_recipe_time($time_field)
+    {
+        $time = $time_field['time'];
+        $unit = $time_field['time_unit'];
+        $singular = preg_replace('/s$/', '', $unit);
+        $recipe_time = sprintf(_n("%s $singular", "%s $unit", $time), $time);
+        return $recipe_time;
     }
 
     private function init_ingredients()
@@ -372,45 +440,72 @@ class Foody_Recipe extends Foody_Post
         $this->ingredients_groups = array();
         $this->ingredients_count = 0;
 
-        while (have_rows('ingredients',$this->post->ID)): the_row();
+        if(have_rows(have_rows('ingredients', $this->post->ID))){
+            while (have_rows('ingredients', $this->post->ID)): the_row();
 
-            $this->number_of_dishes = get_sub_field('number_of_dishes');
-            $current_group = 0;
-            while (have_rows('ingredients_groups')): the_row();
+                $this->number_of_dishes = get_sub_field('number_of_dishes');
+                $this->amount_for = get_sub_field('amount_for');
+                $this->ingredients_title = get_sub_field('title');
+                $current_group = 0;
+                while (have_rows('ingredients_groups')): the_row();
 
-                $this->ingredients_groups[] = array(
-                    'title' => get_sub_field('title'),
-                    'ingredients' => array(),
-                    'free_text_ingredients' => array()
-                );
+                    $this->ingredients_groups[] = array(
+                        'title' => get_sub_field('title'),
+                        'ingredients' => array(),
+                        'free_text_ingredients' => array()
+                    );
 
 
-                while (have_rows('ingredients')): the_row();
+                    while (have_rows('ingredients')): the_row();
 
-                    $ingredient_post = get_sub_field('ingredient');
-                    $this->ingredients_count++;
+                        $ingredient_post = get_sub_field('ingredient');
+                        $this->ingredients_count++;
 
-                    $ingredient = new Foody_Ingredient($ingredient_post, get_sub_field('amount'), get_sub_field('unit'));
 
-                    $this->ingredients_groups[$current_group]['ingredients'][] = $ingredient;
-                    if ($this->debug) {
-                        for ($i = 0; $i < 3; $i++) {
-                            $this->ingredients_groups[$current_group]['ingredients'][] = $ingredient;
-                        }
-                    }
+                        $amounts = [];
+
+                        while (have_rows('amounts')): the_row();
+
+                            $unit_field = get_sub_field('unit');
+                            $unit = get_term($unit_field, 'units');
+                            $amount = get_sub_field('amount');
+                            if(!is_wp_error($unit)){
+                                $unit_name = $unit->name;
+
+                                if ($amount > 1) {
+                                    $plural = get_field('plural_name', $unit);
+                                    if ($plural != null) {
+                                        $unit_name = get_field('plural_name', $unit);
+                                    }
+                                }
+                            }else{
+                                $unit_name = '';
+                            }
+
+
+                            $amounts[] = [
+                                'amount' => $amount,
+                                'unit' => $unit_name
+                            ];
+
+                        endwhile;
+
+
+                        $ingredient = new Foody_Ingredient($ingredient_post);
+
+                        $ingredient->amounts = $amounts;
+
+                        $this->ingredients_groups[$current_group]['ingredients'][] = $ingredient;
+
+                    endwhile;
+
+                    $current_group++;
+
 
                 endwhile;
-
-                while (have_rows('free_text_ingredients')): the_row();
-                    $ingredient = get_sub_field('ingredient');
-                    $this->ingredients_groups[$current_group]['free_text_ingredients'][] = $ingredient;
-                endwhile;
-
-                $current_group++;
-
-
             endwhile;
-        endwhile;
+        }
+
     }
 
     private function posts_bullets($array, $title)
@@ -438,10 +533,13 @@ class Foody_Recipe extends Foody_Post
 
     }
 
-    private function related_content($related_content_args)
+    private function related_content($related_content_args, $posts = null)
     {
         /** @var WP_Post[] $playlists */
-        $related_content = posts_to_array($related_content_args['selector'],$this->post->ID);
+        $related_content = posts_to_array($related_content_args['selector'], $this->post->ID);
+        if ($posts != null) {
+            $related_content = $posts;
+        }
 
         if (!empty($related_content)) {
             $template_args = array(
@@ -457,7 +555,7 @@ class Foody_Recipe extends Foody_Post
                 $default_template_args = array(
                     'title' => $item->post_title,
                     'id' => $item->ID,
-                    'image' => get_the_post_thumbnail_url($item,'140'),
+                    'image' => get_the_post_thumbnail_url($item, '140'),
                     'author' => array(
                         'name' => get_the_author_meta('user_nicename', $item->post_author),
                         'link' => get_author_posts_url($item->post_author)
@@ -480,6 +578,24 @@ class Foody_Recipe extends Foody_Post
             );
         }
 
+    }
+
+    private function get_related_content_by_categories($post_type)
+    {
+        $posts = [];
+        $categories = wp_get_post_categories($this->post->ID);
+        if (!is_wp_error($categories)) {
+            $query = new WP_Query([
+                'post_type' => $post_type,
+                'category__in' => $categories,
+                'posts_per_page' => 3,
+                'post__not_in' => [$this->post->ID]
+            ]);
+
+            $posts = $query->get_posts();
+        }
+
+        return $posts;
     }
 
 }

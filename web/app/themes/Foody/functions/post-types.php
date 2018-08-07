@@ -110,3 +110,24 @@ function foody_remove_page_template()
 
 add_action('admin_footer', 'foody_remove_page_template', 10);
 
+
+function units_init()
+{
+    // create a new taxonomy
+    register_taxonomy(
+        'units',
+        'foody_ingredient',
+        array(
+            'label' => __('Units'),
+            'public' => true,
+            'rewrite' => array('slug' => 'unit'),
+            'capabilities' => array(
+                'assign_terms' => 'edit_posts',
+                'edit_terms' => 'publish_posts',
+                'show_ui' => true
+            )
+        )
+    );
+}
+
+add_action('init', 'units_init');
