@@ -431,7 +431,7 @@ class Foody_Recipe extends Foody_Post
         $time = $time_field['time'];
         $unit = $time_field['time_unit'];
         $singular = preg_replace('/s$/', '', $unit);
-        $recipe_time = sprintf(_n("%s $singular", "%s $unit", $time), $time);
+        $recipe_time = sprintf(_n("%s $singular", "%s $unit", $time), number_format_i18n(intval($time)));
         return $recipe_time;
     }
 

@@ -131,6 +131,9 @@ class FoodyMigrate extends Command
         // units
         $this->processUnits();
 
+        // categories
+        $this->processTaxonomy();
+
         // ingredients from nutrients values
         $this->processIngredients();
 
