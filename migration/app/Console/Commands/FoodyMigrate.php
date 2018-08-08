@@ -16,7 +16,7 @@ class FoodyMigrate extends Command
      *
      * @var string
      */
-    protected $signature = 'foody {action?} {--db-ingredients} {--recipes} {--accessories} {--techniques} {--ingredients} {--units} {--only-taxonomy} {--without-taxonomy} {--start=} {--end=} {--single=} {--startID=} {--endID=} {--force}';
+    protected $signature = 'foody {action?} {--categories} {--db-ingredients} {--recipes} {--accessories} {--techniques} {--ingredients} {--units} {--only-taxonomy} {--without-taxonomy} {--start=} {--end=} {--single=} {--startID=} {--endID=} {--force}';
 
     /**
      * The console command description.
@@ -82,6 +82,10 @@ class FoodyMigrate extends Command
     {
         if ($this->option('units')) {
             $this->processUnits();
+        }
+
+        if ($this->option('categories')) {
+            $this->processTaxonomy();
         }
 
         if ($this->option('ingredients')) {
@@ -170,10 +174,23 @@ class FoodyMigrate extends Command
 
     public function processTaxonomy()
     {
-        $categories = $this->extractValuesFromRecipes(function ($category) {
-            return $category != null;
-        }, 'General.Category');
+        $categories = [];
 
+        $query = $this->originDB->collection('recipemodels')->where('status', '=', 'active');
+
+        $recipes = $query->get()->toArray();
+
+        foreach ($recipes as $recipe) {
+            $categories[] = $recipe['General']['Category'];
+        }
+
+        $categories = array_flatten($categories);
+
+        $categories = array_filter($categories, function ($category) {
+            return !is_null($category) && !empty($category);
+        });
+
+        $categories = array_unique($categories);
 
         $this->insertTerms('category', $categories);
     }
