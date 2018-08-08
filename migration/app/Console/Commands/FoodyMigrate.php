@@ -245,7 +245,7 @@ class FoodyMigrate extends Command
                 'post_title' => $title,
                 'post_name' => $post_name,
                 'post_type' => 'foody_recipe',
-                'post_status' => 'publish',
+                'post_status' => 'draft',
                 'post_author' => 1,
                 'post_content' => $this->get_content($recipe['HowTo']),
                 'post_excerpt' => $recipe['General']['SubTextDesktop'],
