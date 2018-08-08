@@ -11,7 +11,8 @@ namespace App;
 
 class WordPressApi
 {
-    public function __construct() {
+    public function __construct()
+    {
 
         $this->loadWordPress();
     }
@@ -19,7 +20,8 @@ class WordPressApi
     /**
      *
      */
-    public function loadWordPress() {
+    public function loadWordPress()
+    {
 
 
         require_once base_path('../web/wp/wp-load.php');
@@ -28,6 +30,7 @@ class WordPressApi
         date_default_timezone_set('Europe/London');
 
 
+        switch_theme('Foody');
 
     }
 
@@ -35,11 +38,12 @@ class WordPressApi
      * @param $post
      * @return int|\WP_Error
      */
-    public function insertPost($post) {
+    public function insertPost($post)
+    {
 
         $id = wp_insert_post($post['post_data'], true);
-        if($id > 0) {
-            foreach($post['meta_data'] as $key => $value) {
+        if ($id > 0) {
+            foreach ($post['meta_data'] as $key => $value) {
                 add_post_meta($id, $key, $value);
             }
 
@@ -47,8 +51,8 @@ class WordPressApi
         return $id;
     }
 
-    public function getLastPost() {
-
+    public function getLastPost()
+    {
 
 
         $args = array(
@@ -60,13 +64,13 @@ class WordPressApi
             'include' => '',
             'exclude' => '',
             'meta_key' => '',
-            'meta_value' =>'',
+            'meta_value' => '',
             'post_type' => 'post',
             'post_status' => 'draft, publish, future, pending, private',
             'suppress_filters' => true
         );
 
-        return wp_get_recent_posts( $args, ARRAY_A );
+        return wp_get_recent_posts($args, ARRAY_A);
     }
 
 }

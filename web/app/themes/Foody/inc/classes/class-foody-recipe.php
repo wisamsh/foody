@@ -102,7 +102,7 @@ class Foody_Recipe extends Foody_Post
 
                 endwhile;
             } else {
-                the_post_thumbnail('full');
+                the_post_thumbnail(array(1099, 542));
             }
         }
     }
@@ -440,7 +440,7 @@ class Foody_Recipe extends Foody_Post
         $this->ingredients_groups = array();
         $this->ingredients_count = 0;
 
-        if(have_rows(have_rows('ingredients', $this->post->ID))){
+        if (have_rows(have_rows('ingredients', $this->post->ID))) {
             while (have_rows('ingredients', $this->post->ID)): the_row();
 
                 $this->number_of_dishes = get_sub_field('number_of_dishes');
@@ -469,7 +469,7 @@ class Foody_Recipe extends Foody_Post
                             $unit_field = get_sub_field('unit');
                             $unit = get_term($unit_field, 'units');
                             $amount = get_sub_field('amount');
-                            if(!is_wp_error($unit)){
+                            if (!is_wp_error($unit)) {
                                 $unit_name = $unit->name;
 
                                 if ($amount > 1) {
@@ -478,7 +478,7 @@ class Foody_Recipe extends Foody_Post
                                         $unit_name = get_field('plural_name', $unit);
                                     }
                                 }
-                            }else{
+                            } else {
                                 $unit_name = '';
                             }
 
@@ -555,7 +555,7 @@ class Foody_Recipe extends Foody_Post
                 $default_template_args = array(
                     'title' => $item->post_title,
                     'id' => $item->ID,
-                    'image' => get_the_post_thumbnail_url($item, '140'),
+                    'image' => get_the_post_thumbnail_url($item, 'list-item'),
                     'author' => array(
                         'name' => get_the_author_meta('user_nicename', $item->post_author),
                         'link' => get_author_posts_url($item->post_author)
@@ -585,11 +585,14 @@ class Foody_Recipe extends Foody_Post
         $posts = [];
         $categories = wp_get_post_categories($this->post->ID);
         if (!is_wp_error($categories)) {
+
+
             $query = new WP_Query([
                 'post_type' => $post_type,
                 'category__in' => $categories,
                 'posts_per_page' => 3,
-                'post__not_in' => [$this->post->ID]
+                'post__not_in' => [$this->post->ID],
+                'orderby' => 'rand',
             ]);
 
             $posts = $query->get_posts();

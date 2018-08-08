@@ -6,8 +6,6 @@
  * Date: 5/16/18
  * Time: 7:17 PM
  */
-
-
 abstract class Foody_Post
 {
 
@@ -57,11 +55,11 @@ abstract class Foody_Post
             $this->post = $post;
             $this->id = $post->ID;
             global $wp_session;
-            if(isset( $wp_session['favorites']) && in_array($this->id,$wp_session['favorites'])){
+            if (isset($wp_session['favorites']) && in_array($this->id, $wp_session['favorites'])) {
                 $this->favorite = true;
             }
-
-            $this->image = get_the_post_thumbnail_url($post);
+            $a = get_the_post_thumbnail($this->id,'foody-main');
+            $this->image = get_the_post_thumbnail_url($this->id ,'foody-main');
             $this->posted_on = foody_posted_on(false, $post);
             $this->description = get_the_excerpt($this->post->ID);
             $this->description_mobile = get_field('mobile_caption', $this->post->ID);

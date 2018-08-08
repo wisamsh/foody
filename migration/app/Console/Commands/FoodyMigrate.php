@@ -29,7 +29,7 @@ class FoodyMigrate extends Command
     public $wp;
 
 
-    public $debug = true;
+    public $debug = false;
 
     /**
      * Create a new command instance.
@@ -63,6 +63,8 @@ class FoodyMigrate extends Command
 
             $this->info("\nFinished processing migration.\n");
 
+        } elseif ($this->argument('action') == 'migrate-full') {
+            $this->processFullMigration();
         } else {
             $this->info("\n\n\n                Foody migration tool.\n\nFor usage instructions see the repository readme.md");
         }
@@ -117,19 +119,50 @@ class FoodyMigrate extends Command
         if ($this->option('db-ingredients')) {
             $this->processDBIngredients();
         }
+    }
+
+    /**
+     *
+     *  Run migration with all dependencies
+     *
+     */
+    private function processFullMigration()
+    {
+        // units
+        $this->processUnits();
+
+        // ingredients from nutrients values
+        $this->processIngredients();
+
+        // accessories
+        $query = $this->originDB->collection('otherdatamodels');
+
+        $data = $query->get()->first();
+
+        $accessories = $data['Accessories'];
+        $this->processData(
+            'foody_accessory', $accessories
+        );
+
+        // techniques
+        $query = $this->originDB->collection('otherdatamodels');
+
+        $data = $query->get()->first();
+
+        $techniques = $data['CoockingTechnics'];
+        $this->processData(
+            'foody_technique', $techniques
+        );
+
+        // ingredients from Mongo
+        $this->processDBIngredients();
+
+//        $this->debug = true;
+
+        // recipes
+        $this->processRecipes();
 
 
-//        if (!$this->option('without-taxonomy')) {
-//
-//            $this->processTaxonomy();
-//
-//        }
-//
-//        if (!$this->option('only-taxonomy')) {
-//
-//            $this->processRecipes();
-//
-//        }
     }
 
     public function processTaxonomy()
@@ -165,7 +198,7 @@ class FoodyMigrate extends Command
             if ($debug_recipe == null) {
                 $debug_recipe = $recipes[0];
             }
-            $recipes = array_slice($recipes, 186, 20);
+            $recipes = array_slice($recipes, 300, 1);
         }
 
         $bar = $this->output->createProgressBar(count($recipes));
@@ -214,9 +247,7 @@ class FoodyMigrate extends Command
                 'post_type' => 'foody_recipe',
                 'post_status' => 'publish',
                 'post_author' => 1,
-                'post_content' => implode('', array_map(function ($instruction) {
-                    return "<p>$instruction</p>";
-                }, $recipe['HowTo'])),
+                'post_content' => $this->get_content($recipe['HowTo']),
                 'post_excerpt' => $recipe['General']['SubTextDesktop'],
                 'post_category' => $categories
             ];
@@ -489,6 +520,7 @@ class FoodyMigrate extends Command
         $units = json_decode(file_get_contents(base_path('data/units.json')));
         $units = array_map('trim', $units);
         $units = array_unique($units);
+        $this->insertTerms('units', $units);
         return $units;
     }
 
@@ -885,5 +917,21 @@ class FoodyMigrate extends Command
 
         parent::error($string, $verbosity);
     }
+
+    private function get_content($content_array)
+    {
+
+        $title = '<h2>אופן הכנה</h2>';
+        $start_el = '<ol>';
+
+        $content = implode('', array_map(function ($instruction) {
+            return "<li>$instruction</li>";
+        }, $content_array));
+
+        $end_el = '</ol>';
+
+        return $title . $start_el . $content . $end_el;
+    }
+
 
 }

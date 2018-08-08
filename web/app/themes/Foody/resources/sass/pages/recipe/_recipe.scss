@@ -61,6 +61,10 @@ $content-width: 70%;
           min-height: 524px;
         }
 
+        .wp-post-image{
+          max-height: 524px;
+          width: 100%;
+        }
       }
     }
 
@@ -552,6 +556,9 @@ $content-width: 70%;
           iframe {
             max-height: 200px;
             min-height: 200px;
+          }
+
+          .wp-post-image{
           }
 
         }
