@@ -12,7 +12,8 @@ function foody_widgets() {
 
 	$widgets = array(
 		'foody_Categories_List_Widget',
-		'foody_Search_Filter'
+		'foody_Search_Filter',
+        'Foody_CategoriesAccordionWidget'
 	);
 
 	foreach ( $widgets as $widget ) {

@@ -65,7 +65,17 @@ abstract class Foody_Post
             $this->description_mobile = get_field('mobile_caption', $this->post->ID);
             $this->title = get_the_title($post->ID);
             $this->view_count = view_count_display(foody_get_post_views($post->ID), 0);
-            $this->author_image = get_the_author_meta('wp_user_avatars', get_the_author_meta('ID'))['90'];
+
+            $user_avatars = get_the_author_meta('wp_user_avatars', get_the_author_meta('ID'));
+
+            if(is_null($user_avatars) || empty($user_avatars) || !isset($user_avatars['90'])){
+                $this->author_image = get_avatar_url(get_the_author_meta('ID'), ['size' => 96]);
+            }else{
+                $this->author_image = $user_avatars['90'];
+            }
+
+
+
             $this->author_name = foody_posted_by(false);
             $this->body = apply_filters('the_content', $post->post_content);
             $this->link = get_permalink($post->ID);

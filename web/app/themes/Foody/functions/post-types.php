@@ -11,27 +11,32 @@ function register_post_types()
 {
     $post_types = array(
         'recipe' => array(
-            'name' => 'Recipes',
-            'singular_name' => 'Recipe',
+            'id' => 'recipe',
+            'name' => 'מתכונים',
+            'singular_name' => 'מתכונים',
             'taxonomies' => array('category', 'post_tag'),
             'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
             'show_ui' => true,
         ),
         'accessory' => array(
-            'name' => 'Accessories',
-            'singular_name' => 'Accessory'
+            'id' => 'accessory',
+            'name' => 'אביזרים',
+            'singular_name' => 'אביזר'
         ),
         'technique' => array(
-            'name' => 'Techniques',
-            'singular_name' => 'Technique'
+            'id' => 'technique',
+            'name' => 'טכניקות',
+            'singular_name' => 'טכניקה'
         ),
         'ingredient' => array(
-            'name' => 'Ingredients',
-            'singular_name' => 'Ingredient'
+            'id' => 'ingredient',
+            'name' => 'מצרכים',
+            'singular_name' => 'מצרך'
         ),
         'playlist' => array(
-            'name' => 'Playlists',
-            'singular_name' => 'Playlist'
+            'id' => 'playlist',
+            'name' => 'פלייליסטים',
+            'singular_name' => 'פלייליסט'
         )
     );
 
@@ -50,7 +55,7 @@ function register_post_types()
         if (isset($type['taxonomies'])) {
             $args['taxonomies'] = $type['taxonomies'];
         }
-        register_post_type(strtolower('foody_' . $type['singular_name']),
+        register_post_type(strtolower('foody_' . $type['id']),
             $args
         );
 
@@ -131,3 +136,52 @@ function units_init()
 }
 
 add_action('init', 'units_init');
+
+
+function foody_get_post_types()
+{
+    $all_types = get_post_types('', 'names');
+    $all_types = array_values($all_types);
+
+    $all_types = array_filter($all_types, function ($type) {
+        return preg_match('/foody_/', $type) || $type == 'post';
+    });
+
+    return $all_types;
+
+}
+
+function foody_count_posts_by_user($post_author = null, $post_type = array(), $post_status = array())
+{
+    global $wpdb;
+
+    if (empty($post_author))
+        return 0;
+
+    $post_status = (array)$post_status;
+    $post_type = (array)$post_type;
+
+    $sql = $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_author = %d AND ", $post_author);
+
+    //Post status
+    if (!empty($post_status)) {
+        $argtype = array_fill(0, count($post_status), '%s');
+        $where = "(post_status=" . implode(" OR post_status=", $argtype) . ') AND ';
+        $sql .= $wpdb->prepare($where, $post_status);
+    }
+
+    if (empty($post_type)) {
+        $post_type = foody_get_post_types();
+    }
+
+    //Post type
+
+    $argtype = array_fill(0, count($post_type), '%s');
+    $where = "(post_type=" . implode(" OR post_type=", $argtype) . ') AND ';
+    $sql .= $wpdb->prepare($where, $post_type);
+
+
+    $sql .= '1=1';
+    $count = $wpdb->get_var($sql);
+    return $count;
+}

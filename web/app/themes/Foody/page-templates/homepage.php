@@ -43,7 +43,6 @@ $homepage = new HomePage();
                     <div class="sidebar-content">
                         <?php $homepage->filter() ?>
                     </div>
-
                 </aside>
 
                 <section class="content-container col-sm-9 col-12">

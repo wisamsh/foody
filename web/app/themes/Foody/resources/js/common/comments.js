@@ -8,9 +8,8 @@ $(document).ready(() => {
 
     if ($commentForm.length) {
 
-
         $parent = $('.commentform-element');
-        $comment = $('#comment');
+        $comment = $('#comment',$parent);
 
         $comment.click(() => {
             $parent.add($commentForm).toggleClass('open');
@@ -92,7 +91,7 @@ $(document).ready(() => {
 
             // decrease the current comment page value
             cpage--;
-            let submitText = button.text();
+            let submitText = button.html();
             $.ajax({
                 url: ajaxurl, // AJAX handler, declared before
                 data: {
@@ -107,7 +106,7 @@ $(document).ready(() => {
                 success: function (data) {
                     if (data) {
                         $('ol.comment-list').append(data);
-                        button.text(submitText);
+                        button.html(submitText);
                         // if the last page, remove the button
                         if (cpage == 1)
                             button.remove();

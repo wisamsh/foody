@@ -9,7 +9,7 @@
 class FoodyTeam
 {
 
-    private static $debug = true;
+    private static $debug = false;
 
     /**
      * FoodyTeam constructor.
@@ -169,8 +169,17 @@ class FoodyTeam
         if ($author == null) {
             return '<div class="authorempty col" data-order="' . PHP_INT_MAX . '"></div>';
         }
-        $image = get_the_author_meta('wp_user_avatars', $author->ID)['250'];
-        $name = get_the_author_meta('display_name', $author->ID);
+
+        $user_avatars = get_the_author_meta('wp_user_avatars', $author->ID);
+
+        if (is_null($user_avatars) || empty($user_avatars) || !isset($user_avatars[250])) {
+            $image = get_avatar_url($author->ID, ['size' => 96]);
+        } else {
+            $image = $user_avatars['250'];
+        }
+
+
+        $name = get_the_author_meta('nickname', $author->ID);
 
         $author_data = array(
             'name' => $name,
@@ -180,7 +189,7 @@ class FoodyTeam
         );
 
         if ($show_count) {
-            $author_data['post_count'] = count_user_posts($author->ID);
+            $author_data['post_count'] = foody_count_posts_by_user($author->ID);
         }
 
         return foody_get_template_part(get_template_directory() . '/template-parts/content-author-listing.php', $author_data);

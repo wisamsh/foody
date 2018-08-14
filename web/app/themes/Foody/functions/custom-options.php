@@ -91,3 +91,21 @@ function validate_args($args)
 
     return $valid;
 }
+
+
+function custom_options(){
+
+    register_setting('discussion','hid_per_page');
+
+    add_settings_field( 'hid_per_page', __('מספר ״איך יצא לי״ בעמוד'), 'foody_custom_options_callback', 'discussion');
+
+    function foody_custom_options_callback() {
+
+        $options = get_option('hid_per_page',3);
+
+        echo '<input type="number" id="hid_per_page" name="hid_per_page" value="' . $options . '"></input>';
+
+    }
+}
+
+add_action('admin_init', 'custom_options');

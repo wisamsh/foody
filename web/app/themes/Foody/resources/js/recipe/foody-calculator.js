@@ -29,7 +29,7 @@ window.calculator = function (selector) {
 
             let calculated = base * val;
 
-            $this.text(calculated);
+            $this.text(calculated.toFixed(2));
         })
     });
 

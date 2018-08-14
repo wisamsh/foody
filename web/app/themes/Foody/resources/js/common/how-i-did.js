@@ -110,6 +110,55 @@ $(document).ready(() => {
         action: 'ajaxhow_i_did'
     });
 
+    $('.how-i-did-modal-open').on('click', function () {
+        let image = $(this).data('image');
+        let user = $(this).data('user');
+        let content = $(this).data('content');
+
+        let $modal = $('#how-i-did-modal');
+
+        $('#image', $modal).attr('src', image);
+
+        $('#user', $modal).text(user);
+        $('#content', $modal).text(content);
+    });
+
+    // load more button click event
+
+
+    $('a[data-context="how-i-did-list"]').click(function () {
+        let button = $(this);
+        let $context = $('.' + button.data('context'));
+        // decrease the current comment page value
+        chpage--;
+        let submitText = button.html();
+        $.ajax({
+            url: ajaxurl,
+            data: {
+                'action': 'hidloadmore',
+                'post_id': parent_post_id, // the current post
+                'chpage': chpage, // current comment page
+            },
+            type: 'POST',
+            beforeSend: function (xhr) {
+                // TODO change to loader
+                button.text('טוען...'); // preloader here
+            },
+            success: function (data) {
+                if (data) {
+                    $context.append(data);
+                    button.html(submitText);
+                    // if the last page, remove the button
+                    if (chpage == 0)
+                        button.remove();
+                } else {
+                    button.remove();
+                }
+            }
+        });
+        return false;
+    });
+
 
 });
 

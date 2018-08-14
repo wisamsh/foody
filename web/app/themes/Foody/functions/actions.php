@@ -21,8 +21,8 @@ add_action('pre_get_comments', function (\WP_Comment_Query $query) {
 *   Restrict non logged users to certain pages
 */
 
-add_action('template_redirect', 'my_non_logged_redirect');
-function my_non_logged_redirect()
+add_action('template_redirect', 'foody_non_logged_redirect');
+function foody_non_logged_redirect()
 {
     $restricted_pages = array(
         'פרופיל-אישי'

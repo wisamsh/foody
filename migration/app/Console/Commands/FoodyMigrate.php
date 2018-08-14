@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Jenssegers\Mongodb\Connection as MongoDBConnection;
 use League\Flysystem\Exception;
 use WP_Query;
+use WP_User;
 
 
 class FoodyMigrate extends Command
@@ -16,7 +17,7 @@ class FoodyMigrate extends Command
      *
      * @var string
      */
-    protected $signature = 'foody {action?} {--categories} {--db-ingredients} {--recipes} {--accessories} {--techniques} {--ingredients} {--units} {--only-taxonomy} {--without-taxonomy} {--start=} {--end=} {--single=} {--startID=} {--endID=} {--force}';
+    protected $signature = 'foody {action?} {--categories} {--users} {--db-ingredients} {--recipes} {--accessories} {--techniques} {--ingredients} {--units} {--only-taxonomy} {--without-taxonomy} {--start=} {--end=} {--single=} {--startID=} {--endID=} {--force}';
 
     /**
      * The console command description.
@@ -29,7 +30,110 @@ class FoodyMigrate extends Command
     public $wp;
 
 
-    public $debug = false;
+    public $debug = true;
+
+    private $authors = [
+        "אבי לוי" => [
+            'username' => 'אבי לוי',
+            'email' => 'avi_levy@foody.co.il'
+        ],
+        "ישראל אהרוני" => [
+            'username' => 'ישראל אהרוני',
+            'email' => 'israel_aharoni@foody.co.il'
+        ],
+        "איילת הירשמן" => [
+            'username' => 'איילת הירשמן',
+            'email' => 'ayelet_hirshman@foody.co.il'
+        ],
+        "קרין גורן" => [
+            'username' => 'קרין גורן',
+            'email' => 'karin_goren@foody.co.il'
+        ],
+        "שי-לי ליפא" => [
+            'username' => 'שי-לי ליפא',
+            'email' => 'shai_li_lifa@foody.co.il'
+        ],
+        "הילה אלפרט ומאיר אדוני" => [
+            'username' => 'הילה אלפרט ומאיר אדוני',
+            'email' => 'alpert_adoni@foody.co.il'
+        ],
+        "משה שגב" => [
+            'username' => 'משה שגב',
+            'email' => 'moshe_segev@foody.co.il'
+        ],
+        "ירון קסטנבאום" => [
+            'username' => 'ירון קסטנבאום',
+            'email' => 'yaron_kastenbaum@foody.co.il'
+        ],
+        "מיקי שמו" => [
+            'username' => 'מיקי שמו',
+            'email' => 'miki_shemo@foody.co.il'
+        ],
+        "אודי ואושר" => [
+            'username' => 'אודי ואושר',
+            'email' => 'ori_osher@foody.co.il'
+        ],
+        "תמרה אהרוני" => [
+            'username' => 'תמרה אהרוני',
+            'email' => 'tamara_aharoni@foody.co.il'
+        ],
+        "רחלי קרוט" => [
+            'username' => 'רחלי קרוט',
+            'email' => 'reheli_krut@foody.co.il'
+        ],
+        "אלון שבו" => [
+            'username' => 'אלון שבו',
+            'email' => 'alon_shebo@foody.co.il'
+        ],
+        "עז תלם" => [
+            'username' => 'עז תלם',
+            'email' => 'oz_telem@foody.co.il'
+        ],
+        "אושר אידלמן" => [
+            'username' => 'אושר אידלמן',
+            'email' => 'osher_idelman@foody.co.il'
+        ],
+        "אינס ינאי" => [
+            'username' => 'אינס ינאי',
+            'email' => 'ines_yanay@foody.co.il'
+        ],
+        "נטלי לוין" => [
+            'username' => 'נטלי לוין',
+            'email' => 'nataly_levin@foody.co.il'
+        ],
+        "ניקי ב" => [
+            'username' => 'ניקי ב',
+            'email' => 'nicky_b@foody.co.il'
+        ],
+        "אולגה טוכשר" => [
+            'username' => 'אולגה טוכשר',
+            'email' => 'olga_tuscher@foody.co.il'
+        ],
+        "יונית צוקרמן" => [
+            'username' => 'יונית צוקרמן',
+            'email' => 'yonit_tzukerman@foody.co.il'
+        ],
+        "רות אופק" => [
+            'username' => 'רות אופק',
+            'email' => 'ruth_ofek@foody.co.il'
+        ],
+        "רותם ליברזון" => [
+            'username' => 'רותם ליברזון',
+            'email' => 'rotem_lieberzon@foody.co.il'
+        ],
+        "אפרת ליכטנשטט" => [
+            'username' => 'אפרת ליכטנשטט',
+            'email' => 'efrat_lichtenstat@foody.co.il'
+        ],
+        "שר פיטנס" => [
+            'username' => 'שר פיטנס',
+            'email' => 'sher_fitness@foody.co.il'
+        ],
+        "Foody" => [
+            'email' => 'system@foody.co.il',
+            'username' => 'Foody'
+        ]
+    ];
 
     /**
      * Create a new command instance.
@@ -123,6 +227,10 @@ class FoodyMigrate extends Command
         if ($this->option('db-ingredients')) {
             $this->processDBIngredients();
         }
+
+        if ($this->option('users')) {
+            $this->processUsers();
+        }
     }
 
     /**
@@ -132,6 +240,9 @@ class FoodyMigrate extends Command
      */
     private function processFullMigration()
     {
+        // authors
+        $this->processUsers();
+
         // units
         $this->processUnits();
 
@@ -164,12 +275,8 @@ class FoodyMigrate extends Command
         // ingredients from Mongo
         $this->processDBIngredients();
 
-//        $this->debug = true;
-
         // recipes
         $this->processRecipes();
-
-
     }
 
     public function processTaxonomy()
@@ -204,21 +311,19 @@ class FoodyMigrate extends Command
 
         $recipes = $query->get()->toArray();
 
+        $debug_recipe = array_first($recipes, function ($recipe) {
+            $sponsors = $recipe['Other']['Sponsers'];
+            return is_array($sponsors) && count($sponsors) > 0 && !empty($sponsors[0]);
+        });
 
         if ($this->debug) {
-
-            $debug_recipe = null;
-
-            foreach ($recipes as $recipe) {
-                if (count($recipe['RecipeIngredients']) > 1) {
-                    $debug_recipe = $recipe;
-                    break;
-                }
-            }
             if ($debug_recipe == null) {
                 $debug_recipe = $recipes[0];
             }
-            $recipes = array_slice($recipes, 300, 1);
+
+            $recipes = [
+                $debug_recipe
+            ];
         }
 
         $bar = $this->output->createProgressBar(count($recipes));
@@ -261,12 +366,27 @@ class FoodyMigrate extends Command
             // post title
             $title = trim($recipe['Name']);
 
+            if (!isset($recipe['Author']) || !isset($this->authors[$recipe['Author']])) {
+                $author = $this->authors['Foody'];
+            } else {
+                $author = $this->authors[$recipe['Author']];
+            }
+
+            $author_email = $author['email'];
+
+
+            $user = get_user_by('email', $author_email);
+            $author_id = 1;
+            if ($user) {
+                $author_id = $user->ID;
+            }
+
             $post = [
                 'post_title' => $title,
                 'post_name' => $post_name,
                 'post_type' => 'foody_recipe',
                 'post_status' => 'draft',
-                'post_author' => 1,
+                'post_author' => $author_id,
                 'post_content' => $this->get_content($recipe['HowTo']),
                 'post_excerpt' => $recipe['General']['SubTextDesktop'],
                 'post_category' => $categories
@@ -276,6 +396,7 @@ class FoodyMigrate extends Command
             // insert basic post data and get post id
 
             $post_id = wp_insert_post($post, true);
+
 
             if (is_wp_error($post_id)) {
                 $this->error('Error inserting recipe post: ' . $post_id->get_error_message());
@@ -303,6 +424,35 @@ class FoodyMigrate extends Command
             }
 
             // ===== start custom fields ===== //
+
+            // sponsors
+            $sponsors = $recipe['Other']['Sponsers'];
+
+            if (is_array($sponsors) && count($sponsors) > 0) {
+
+                $sponsors = array_filter($sponsors, function ($sponsor) {
+                    return !is_null($sponsor) && !empty($sponsor);
+                });
+
+                $sponsors = array_map('trim', $sponsors);
+
+                $this->update_plain_repeater('sponsors', 'sponsor', $sponsors, $post_id);
+            }
+
+            // tv shows
+            if (isset($recipe['General']['TVOrigin'])) {
+                $tv_shows = $recipe['General']['TVOrigin'];
+
+                if (!empty($tv_shows)) {
+
+                    $tv_shows = [
+                        $tv_shows
+                    ];
+
+                    $this->update_plain_repeater('tv_shows', 'tv_show', $tv_shows, $post_id);
+                }
+
+            }
 
             // accessories
 
@@ -544,6 +694,86 @@ class FoodyMigrate extends Command
         return $units;
     }
 
+    public function processUsers()
+    {
+
+        $this->info("\n\nConverting and importing recipes...\n\n");
+
+        $users = $this->authors;
+
+        $bar = $this->output->createProgressBar(count($users));
+
+        $users_log = '';
+
+
+        foreach ($users as $key => $user) {
+
+            $email = $user['email'];
+            $username = trim($email);
+            if (null == username_exists($username)) {
+                $password = wp_generate_password(12, false);
+                $user_id = wp_create_user($username, $password, $email);
+
+                if (is_wp_error($user_id)) {
+                    $this->error('Error creating user: ' . $user_id->get_error_message());
+                } else {
+
+                    $u = new WP_User($user_id);
+
+                    // Remove role
+                    $u->remove_role('subscriber');
+
+                    // Add role
+                    $u->add_role('author');
+
+
+                    $user_data = array_merge(
+                        [
+                            'ID' => $user_id,
+                            'nickname' => $user['username']
+                        ],
+                        $this->get_first_and_last_name($user['username']));
+
+                    wp_update_user($user_data);
+
+
+                    $users_log .= "Created user with email: $email, password: $password\n";
+                }
+            } else {
+                $this->info("username $username already exists");
+            }
+            $bar->advance();
+        }
+
+        $bar->finish();
+
+        file_put_contents(base_path('logs/users.log'), $users_log, FILE_APPEND);
+    }
+
+    private function get_first_and_last_name($user)
+    {
+        $parts = explode(' ', $user);
+
+        $pivot = 2;
+
+        if (count($parts) > $pivot) {
+            $parts = [
+                implode(' ', array_slice($parts, 0, $pivot)),
+                implode(' ', array_slice($parts, $pivot))
+            ];
+        } elseif (count($parts) == 1) {
+            $parts = [
+                $parts[0],
+                $parts[0]
+            ];
+        }
+
+        return [
+            'first_name' => $parts[0],
+            'last_name' => $parts[1]
+        ];
+    }
+
     /**
      * Generic method to add posts
      * of different types from an array
@@ -640,31 +870,6 @@ class FoodyMigrate extends Command
         }
 
         $bar->finish();
-    }
-
-    private function extractValuesFromRecipes($mapper_func, $select, $uniqe_key = null)
-    {
-        $query = $this->originDB->collection('recipemodels')->select([$select]);
-
-        $values = $query->get();
-
-        $arr = $values->toArray();
-
-        $arr = array_map($mapper_func, $arr);
-
-        $arr = array_flatten($arr);
-
-        $arr = array_filter($arr, function ($value) {
-            return $value != null;
-        });
-
-        if ($uniqe_key != null) {
-            $arr = $this->uniqueAssocArray($arr, $uniqe_key);
-        } else {
-            $arr = array_unique($arr);
-        }
-
-        return $arr;
     }
 
     function uniqueAssocArray($array, $uniqueKey)
@@ -951,6 +1156,18 @@ class FoodyMigrate extends Command
         $end_el = '</ol>';
 
         return $title . $start_el . $content . $end_el;
+    }
+
+    private function update_plain_repeater($selector, $row_selector, $rows, $post_id)
+    {
+        $update = [];
+        $rows = array_map(function ($row) use ($row_selector) {
+            $ret = [];
+            $ret[$row_selector] = $row;
+            return $ret;
+        }, $rows);
+
+        update_field($selector, $rows, $post_id);
     }
 
 

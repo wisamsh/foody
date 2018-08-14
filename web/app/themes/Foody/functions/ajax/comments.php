@@ -132,3 +132,29 @@ function foody_submit_ajax_how_i_did()
     die();
 
 }
+
+add_action('wp_ajax_hidloadmore', 'foody_hid_loadmore_handler'); // wp_ajax_{action}
+
+function foody_hid_loadmore_handler()
+{
+
+    // maybe it isn't the best way to declare global $post variable, but it is simple and works perfectly!
+    global $post;
+    $post = get_post($_POST['post_id']);
+    setup_postdata($post);
+
+    // actually we must copy the params from wp_list_comments() used in our theme
+    $foody_comments = new Foody_HowIDid();
+
+    $args = [];
+
+    $current_page = $_POST['chpage'];
+
+
+    $args['offset'] = $current_page * get_option('hid_per_page');
+
+    $foody_comments->the_comments($args);
+
+
+    die; // don't forget this thing if you don't want "0" to be displayed
+}
