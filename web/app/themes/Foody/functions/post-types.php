@@ -28,7 +28,11 @@ function register_post_types()
         'ingredient' => array(
             'name' => 'Ingredients',
             'singular_name' => 'Ingredient'
-        )
+        ),
+	    'playlist' => array(
+		'name' => 'Playlists',
+		'singular_name' => 'Playlist'
+		)
     );
 
     foreach ($post_types as $type) {
@@ -66,7 +70,6 @@ function register_post_types()
         foreach ($supported_features as $feature) {
             add_post_type_support(strtolower('foody_' . $type['singular_name']),$feature);
         }
-
     }
 }
 

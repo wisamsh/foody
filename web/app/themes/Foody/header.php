@@ -8,16 +8,17 @@
  *
  * @package Foody
  */
-$header = new Header();
+$header   = new Header();
+$channels = new Foody_Channels_Menu();
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?> dir="rtl">
 <head>
-    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="profile" href="http://gmpg.org/xfn/11">
 
-    <?php wp_head(); ?>
+	<?php wp_head(); ?>
     <script>
         imagesUri = '<?php echo $GLOBALS['images_dir'] ?>';
     </script>
@@ -28,12 +29,12 @@ $header = new Header();
 
     <header id="masthead" class="site-header">
         <div class="socials d-none d-sm-block">
-            <?php $header->the_socials_bar() ?>
+			<?php $header->the_socials_bar() ?>
         </div>
         <div class="site-branding">
             <div class="logo-container d-none d-sm-block">
                 <div class="logo-container-desktop">
-                    <?php the_custom_logo() ?>
+					<?php the_custom_logo() ?>
                     <div class="d-none d-sm-inline-block cellcom-tv">
                         <img class="cellcom-tv-img" src="<?php echo $GLOBALS['images_dir'] . 'foody-in-cellcom.png' ?>"
                              alt="Cellcom TV">
@@ -44,13 +45,12 @@ $header = new Header();
             </div>
 
             <div class="logo-container-mobile d-block d-sm-none">
-                <?php echo get_logo_with_size('60', '60'); ?>
+				<?php echo get_logo_with_size( '60', '60' ); ?>
             </div>
 
         </div><!-- .site-branding -->
 
         <nav class="navbar navbar-expand-md navbar-light navbar-toggleable-md" role="navigation">
-
 
 
             <div class="container-fluid foody-navbar-container">
@@ -63,7 +63,7 @@ $header = new Header();
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#foody-navbar-collapse"
                         aria-controls="foody-navbar-collapse" aria-expanded="false"
                         aria-label="Toggle navigation">
-<!--                    <span class="navbar-toggler-icon icon-menu-mobile"></span>-->
+                    <!--                    <span class="navbar-toggler-icon icon-menu-mobile"></span>-->
                     <i class="navbar-toggler-icon icon-menu-mobile"></i>
                 </button>
 
@@ -89,18 +89,74 @@ $header = new Header();
 
                 </button>
 
-                <?php
-                wp_nav_menu(array(
-                    'theme_location' => 'primary',
-                    'depth' => 2,
-                    'container' => 'div',
-                    'container_class' => 'collapse navbar-collapse',
-                    'container_id' => 'foody-navbar-collapse',
-                    'menu_class' => 'nav navbar-nav',
-                    'fallback_cb' => 'WP_Bootstrap_Navwalker::fallback',
-                    'walker' => new WP_Bootstrap_Navwalker(),
-                ));
-                ?>
+                <!--                <div class="channels-nav">-->
+                <!--                    <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover"-->
+                <!--                            data-placement="bottom" data-html="true" data-content='-->
+				<?php //$channels->the_menu() ?><!--'>-->
+                <!--		                --><?php //echo foody_get_menu_title( 'channels-menu' ) ?>
+                <!--                    </button>-->
+                <!--                </div>-->
+
+				<?php
+
+				function my_nav_wrap( $channels ) {
+					$wrap = '<ul id="%1$s" class="%2$s">';
+					$wrap .= '<li class="channels-nav">';
+					$wrap .= '<button type="button" class="btn nav-link btn-channels-menu" data-container=".btn-channels-menu" data-toggle="popover"
+                             data-placement="bottom" data-html="true" data-trigger="hover" data-content=\'';
+					$wrap .= $channels->get_the_menu() . '\'>';
+					$wrap .= foody_get_menu_title( "channels-menu" );
+					$wrap .= '<i class="icon-arrowleft"></i></button>';
+					$wrap .= '</li>';
+					$wrap .= '%3$s';
+					$wrap .= '</ul>';
+
+					return urldecode( $wrap );
+				}
+
+				function mobile_nav_wrap( $channels ) {
+					$wrap = '<ul id="%1$s" class="%2$s">';
+					$wrap .= '%3$s';
+					$wrap .= '<li class="channels-nav">';
+//					$wrap .= '<button type="button" class="btn btn-secondary nav-link" data-toggle="modal" data-target="#modal">';
+//					$wrap .= foody_get_menu_title( "channels-menu" );
+//					$wrap .= '</button>';
+//					$wrap .= '<button type="button" class="btn btn-secondary nav-link btn-channels-menu" data-container="body" data-toggle="popover"
+//                             data-placement="bottom" data-html="true" data-content=\'';
+//					$wrap .= $channels->get_the_menu() . '\'>';
+//					$wrap .= foody_get_menu_title( "channels-menu" );
+					$wrap .= '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#channels-menu" 
+                             aria-controls="channels-menu" aria-expanded="false" aria-label="Toggle navigation">';
+					$wrap .= foody_get_menu_title( "channels-menu" );
+					$wrap .= '</button>';
+					$wrap .= '</li>';
+					$wrap .= '</ul>';
+
+					return urldecode( $wrap );
+				}
+
+				$nav_args   = array(
+					'theme_location'  => 'primary',
+					'depth'           => 2,
+					'container'       => 'div',
+					'container_class' => 'collapse navbar-collapse',
+					'container_id'    => 'foody-navbar-collapse',
+					'menu_class'      => 'nav navbar-nav',
+					'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
+					'walker'          => new WP_Bootstrap_Navwalker()
+				);
+				$items_wrap = my_nav_wrap( $channels );
+				if ( wp_is_mobile() ) {
+//					echo $channels->get_the_menu();
+					//$nav_args['items_wrap'] = mobile_nav_wrap( $channels );
+					$items_wrap = mobile_nav_wrap( $channels );
+				}
+
+				$nav_args['items_wrap'] = $items_wrap;
+				wp_nav_menu( $nav_args );
+
+				?>
+
                 <div class="d-none d-sm-block">
                     <img class="avatar" src="<?php echo $GLOBALS['images_dir'] . 'avatar.png' ?>" alt="">
                 </div>
@@ -109,6 +165,12 @@ $header = new Header();
 
 
         </nav>
+
+		<?php
+		if ( wp_is_mobile() ) {
+			echo $channels->get_the_menu();
+		}
+		?>
 
 
         <!-- #site-navigation -->

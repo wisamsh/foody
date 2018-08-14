@@ -49,6 +49,7 @@ require_once get_template_directory() . "/inc/classes/class-recipes-grid.php";
 require_once get_template_directory() . "/inc/classes/common/class-sidebar-filter.php";
 require_once get_template_directory() . "/inc/classes/class-foody-profile.php";
 require_once get_template_directory() . "/inc/classes/class-foody-comments.php";
+require_once get_template_directory() . "/inc/classes/class-foody-channels-menu.php";
 
 /*
  * Widgets

@@ -33,6 +33,7 @@ require('./common');
 
 require('./components');
 
+require('./layout');
 
 /*
  * Pages
@@ -47,4 +48,5 @@ require('./recipe');
 jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();
     $('.foody-select').selectpicker({dropdownAlignRight: true, style: 'foody-select'});
+    $('[data-toggle="popover"]').popover();
 });
