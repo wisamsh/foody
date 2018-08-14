@@ -3,7 +3,7 @@
  */
 
 let IScroll = require('iscroll');
-// let $ = require('jquery');
+let $ = require('jquery');
 require('jquery-drawer');
 require('bootstrap');
 require('bootstrap-material-design');
@@ -33,6 +33,7 @@ require('./common');
 
 require('./components');
 
+require('./layout');
 
 /*
  * Pages
@@ -47,5 +48,5 @@ require('./recipe');
 jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();
     $('.foody-select').selectpicker({dropdownAlignRight: true, style: 'foody-select'});
-    $('.foody-rating').rating({filledStar:'<i class="icon-big-star-rank filled"></i>',emptyStar:'<i class="icon-big-star-rank"></i>'})
+    $('[data-toggle="popover"]').popover();
 });

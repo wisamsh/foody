@@ -33,11 +33,11 @@ class Foody_Footer
             $footer_links = array_merge($footer_links, $this->dummy_links());
         }
 
-        $chunk_size = wp_is_mobile() ? (sizeof($footer_links) / 2 - (sizeof($footer_links) % 2)) : 7;
+        $chunk_size = wp_is_mobile() ? (sizeof($footer_links) / 2 - (sizeof($footer_links) % 2)): 7;
 
         $footer_links = array_chunk($footer_links, $chunk_size);
 
-        if (!wp_is_mobile()) {
+        if(!wp_is_mobile()){
             $this->display_menu($footer_pages);
         }
 
@@ -54,8 +54,8 @@ class Foody_Footer
 
         foreach ($menu_items as $link) {
 
-            $url = is_object($link) ? $link->url : (isset($link['url']) ? $link['url'] : '');
-            $title = is_object($link) ? $link->title : $link['title'];
+			$url   = is_object( $link ) ? $link->url : ( isset( $link['url'] ) ? $link['url'] : '' );
+			$title = is_object( $link ) ? $link->title : $link['title'];
 
             echo '<li class="menu-item"><a href="' . $url . '">' . $title . '</a></li>';
         }

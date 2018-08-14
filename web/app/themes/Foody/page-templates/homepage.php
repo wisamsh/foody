@@ -11,7 +11,6 @@
 get_header();
 
 $homepage = new HomePage();
-
 ?>
 
     <div class="homepage">

@@ -12,6 +12,7 @@
  */
 
 
+
 /*
  * Globals
  * */
@@ -20,6 +21,7 @@
 require_once get_template_directory() . "/inc/globals.php";
 require_once get_template_directory() . "/inc/utils/utils.php";
 require_once get_template_directory() . "/functions/js-globals.php";
+
 
 
 /*
@@ -60,6 +62,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-page-content-f
 require_once get_template_directory() . "/inc/classes/class-foody-feed-factory.php";
 require_once get_template_directory() . "/inc/classes/class-foody-post-factory.php";
 require_once get_template_directory() . "/inc/classes/class-bootstrap-collapse-nav-walker.php";
+require_once get_template_directory() . "/inc/classes/class-foody-channels-menu.php";
 
 /*
  * Widgets

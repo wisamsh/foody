@@ -49,6 +49,7 @@ if (!function_exists('foody_setup')) :
             'menu-1' => esc_html__('Primary', 'foody'),
             'footer-pages' => esc_html__('Footer Pages', 'foody'),
             'footer-links' => esc_html__('Footer Links', 'foody'),
+            'channels-menu' => esc_html__('Channels Menu', 'foody')
         ));
 
         /*
