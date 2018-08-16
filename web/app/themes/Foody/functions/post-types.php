@@ -123,7 +123,7 @@ function units_init()
         'units',
         'foody_ingredient',
         array(
-            'label' => __('Units'),
+            'label' => __('יחידות מידה'),
             'public' => true,
             'rewrite' => array('slug' => 'unit'),
             'capabilities' => array(
@@ -138,6 +138,56 @@ function units_init()
 add_action('init', 'units_init');
 
 
+function pans_init()
+{
+    // create a new taxonomy
+    register_taxonomy(
+        'pans',
+        'foody_accessory',
+        array(
+            'label' => __('תבניות'),
+            'public' => true,
+            'rewrite' => array('slug' => 'pan'),
+            'capabilities' => array(
+                'assign_terms' => 'edit_posts',
+                'edit_terms' => 'publish_posts',
+                'show_ui' => true
+            )
+        )
+    );
+}
+
+add_action('init', 'pans_init');
+
+
+function limitations_init()
+{
+    // create a new taxonomy
+    register_taxonomy(
+        'limitations',
+        'foody_ingredient',
+        array(
+            'label' => __('מגבלות'),
+            'public' => true,
+            'rewrite' => array('slug' => 'limitation'),
+            'capabilities' => array(
+                'assign_terms' => 'edit_posts',
+                'edit_terms' => 'publish_posts',
+                'show_ui' => true
+            )
+        )
+    );
+}
+
+add_action('init', 'limitations_init');
+
+
+/**
+ * Retrieves all custom foody
+ * post types
+ *
+ * @return array
+ */
 function foody_get_post_types()
 {
     $all_types = get_post_types('', 'names');
@@ -148,9 +198,19 @@ function foody_get_post_types()
     });
 
     return $all_types;
-
 }
 
+/**
+ *
+ * Counts the number of posts
+ * written by the author with consideration
+ * of custom post types
+ *
+ * @param null $post_author author id
+ * @param array $post_type post types to count
+ * @param array $post_status
+ * @return int|null|string number of posts written by the author
+ */
 function foody_count_posts_by_user($post_author = null, $post_type = array(), $post_status = array())
 {
     global $wpdb;

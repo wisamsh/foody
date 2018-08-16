@@ -17,7 +17,7 @@ class FoodyMigrate extends Command
      *
      * @var string
      */
-    protected $signature = 'foody {action?} {--categories} {--users} {--db-ingredients} {--recipes} {--accessories} {--techniques} {--ingredients} {--units} {--only-taxonomy} {--without-taxonomy} {--start=} {--end=} {--single=} {--startID=} {--endID=} {--force}';
+    protected $signature = 'foody {action?} {--taxonomy} {--categories} {--users} {--limitations} {--db-ingredients} {--recipes} {--accessories} {--techniques} {--ingredients} {--units} {--pans}';
 
     /**
      * The console command description.
@@ -184,12 +184,23 @@ class FoodyMigrate extends Command
      */
     private function processMigration()
     {
-        if ($this->option('units')) {
-            $this->processUnits();
-        }
-
-        if ($this->option('categories')) {
+        if ($this->option('taxonomy')) {
             $this->processTaxonomy();
+        } else {
+            if ($this->option('units')) {
+                $this->processUnits();
+            }
+
+            if ($this->option('pans')) {
+                $this->processPans();
+            }
+            if ($this->option('limitations')) {
+                $this->processLimitations();
+            }
+
+            if ($this->option('categories')) {
+                $this->processTaxonomy();
+            }
         }
 
         if ($this->option('ingredients')) {
@@ -243,16 +254,13 @@ class FoodyMigrate extends Command
         // authors
         $this->processUsers();
 
-        // units
-        $this->processUnits();
-
-        // categories
+        // all taxonomies
         $this->processTaxonomy();
 
         // ingredients from nutrients values
         $this->processIngredients();
 
-        // accessories
+        // accessories posts
         $query = $this->originDB->collection('otherdatamodels');
 
         $data = $query->get()->first();
@@ -262,7 +270,7 @@ class FoodyMigrate extends Command
             'foody_accessory', $accessories
         );
 
-        // techniques
+        // techniques posts
         $query = $this->originDB->collection('otherdatamodels');
 
         $data = $query->get()->first();
@@ -279,29 +287,22 @@ class FoodyMigrate extends Command
         $this->processRecipes();
     }
 
+
+    /**
+     * Insert all taxonomy type into WordPress
+     */
     public function processTaxonomy()
     {
-        $categories = [];
-
-        $query = $this->originDB->collection('recipemodels')->where('status', '=', 'active');
-
-        $recipes = $query->get()->toArray();
-
-        foreach ($recipes as $recipe) {
-            $categories[] = $recipe['General']['Category'];
-        }
-
-        $categories = array_flatten($categories);
-
-        $categories = array_filter($categories, function ($category) {
-            return !is_null($category) && !empty($category);
-        });
-
-        $categories = array_unique($categories);
-
-        $this->insertTerms('category', $categories);
+        $this->processUnits();
+        $this->processPans();
+        $this->processLimitations();
+        $this->processTaxonomy();
     }
 
+
+    /**
+     * Insert recipe posts with all custom fields
+     */
     public function processRecipes()
     {
 
@@ -312,8 +313,10 @@ class FoodyMigrate extends Command
         $recipes = $query->get()->toArray();
 
         $debug_recipe = array_first($recipes, function ($recipe) {
-            $sponsors = $recipe['Other']['Sponsers'];
-            return is_array($sponsors) && count($sponsors) > 0 && !empty($sponsors[0]);
+            return isset($recipe['Other']['OpcionalSponsers']) &&
+                is_array($recipe['Other']['OpcionalSponsers']) &&
+                count($recipe['Other']['OpcionalSponsers']) > 0 &&
+                !empty($recipe['Other']['OpcionalSponsers'][0]);
         });
 
         if ($this->debug) {
@@ -339,29 +342,36 @@ class FoodyMigrate extends Command
             $post_name = sanitize_title_with_dashes($title, null, 'save');
 
             // categories
-
-
             $categories = $recipe['General']['Category'];
+            $meal_types = [];
+            if (isset($recipe['General']['MealType'])) {
 
-            if ($categories) {
-                $categories = array_map(function ($category) {
-                    $id = null;
-                    if ($category && !empty($category)) {
-                        $term = get_term_by('name', $category, 'category');
-                        if ($term && !is_wp_error($term)) {
-                            $id = $term->term_id;
-                        }
-                    }
-                    return $id;
-
-                }, $categories);
-
-                $categories = array_filter($categories, function ($category) {
-                    return $category != null && is_numeric($category);
-                });
-            } else {
+                if (is_array($recipe['General']['MealType']) && count($recipe['General']['MealType']) > 0) {
+                    $meal_types = $recipe['General']['MealType'];
+                }
+            }
+            if (!$categories) {
                 $categories = [];
             }
+
+            $categories = array_merge($categories, $meal_types);
+            $categories = array_unique($categories);
+
+            $categories = array_map(function ($category) {
+                $id = null;
+                if ($category && !empty($category)) {
+                    $term = get_term_by('name', $category, 'category');
+                    if ($term && !is_wp_error($term)) {
+                        $id = $term->term_id;
+                    }
+                }
+                return $id;
+
+            }, $categories);
+
+            $categories = array_filter($categories, function ($category) {
+                return $category != null && is_numeric($category);
+            });
 
             // post title
             $title = trim($recipe['Name']);
@@ -426,19 +436,36 @@ class FoodyMigrate extends Command
             // ===== start custom fields ===== //
 
             // sponsors
-            $sponsors = $recipe['Other']['Sponsers'];
+            if (isset($recipe['Other']['Sponsers'])) {
+                $sponsors = $recipe['Other']['Sponsers'];
 
-            if (is_array($sponsors) && count($sponsors) > 0) {
+                if (is_array($sponsors) && count($sponsors) > 0) {
 
-                $sponsors = array_filter($sponsors, function ($sponsor) {
-                    return !is_null($sponsor) && !empty($sponsor);
-                });
+                    $sponsors = array_filter($sponsors, function ($sponsor) {
+                        return !is_null($sponsor) && !empty($sponsor);
+                    });
 
-                $sponsors = array_map('trim', $sponsors);
+                    $sponsors = array_map('trim', $sponsors);
 
-                $this->update_plain_repeater('sponsors', 'sponsor', $sponsors, $post_id);
+                    $this->update_plain_repeater('sponsors', 'sponsor', $sponsors, $post_id);
+                }
             }
 
+            // optional sponsors
+            if (isset($recipe['Other']['OpcionalSponsers'])) {
+                $optional_sponsors = $recipe['Other']['OpcionalSponsers'];
+
+                if (is_array($optional_sponsors) && count($optional_sponsors) > 0) {
+
+                    $optional_sponsors = array_filter($optional_sponsors, function ($sponsor) {
+                        return !is_null($sponsor) && !empty($sponsor);
+                    });
+
+                    $optional_sponsors = array_map('trim', $optional_sponsors);
+
+                    $this->update_plain_repeater('optional_sponsors', 'optional_sponsor', $optional_sponsors, $post_id);
+                }
+            }
             // tv shows
             if (isset($recipe['General']['TVOrigin'])) {
                 $tv_shows = $recipe['General']['TVOrigin'];
@@ -508,6 +535,27 @@ class FoodyMigrate extends Command
             update_field('original_recipe', "http://foody-prod.moveodevelop.com/admin/CreateOrEditRecipe?recipeId=$original_id", $post_id);
 
 
+            if (isset($recipe['General']['Limitations'])) {
+                $limitations = $recipe['General']['Limitations'];
+
+                $limitations = array_map(function ($limitation) {
+                    $limitation = trim($limitation);
+
+                    $term = get_term_by('name', $limitation, 'limitations');
+                    $term_id = null;
+                    if ($term && !is_wp_error($term)) {
+                        $term_id = $term->term_id;
+                    }
+                    return $term_id;
+                }, $limitations);
+
+                $limitations = array_filter($limitations, function ($limitation) {
+                    return !is_null($limitation) && is_numeric($limitation);
+                });
+
+                update_field('limitations', $limitations, $post_id);
+            }
+
             // add ingredients groups
 
             $ingredients_groups = $recipe['RecipeIngredients'];
@@ -565,23 +613,6 @@ class FoodyMigrate extends Command
                         'ingredient' => $ingredient_post->ID
                     ];
 
-
-//                    if (!empty($ingredient['AlternativeIngredient'])) {
-//                        $alt_ingredient_post = $this->get_ingredient_by_name($ingredient['AlternativeIngredient']);
-//
-//                        if (!is_null($alt_ingredient_post)) {
-//                            $alt_amount = $this->parse_amount($ingredient['AlternativeAmountType']);
-//                            $alt_unit = $this->get_unit_by_name($ingredient['AlternativeAmountType']);
-//
-//                            if (!is_wp_error($alt_unit) && !is_null($alt_unit)) {
-//                                $ingredient_row['amounts'][] = [
-//                                    'amount' => $alt_amount,
-//                                    'unit' => $alt_unit->term_id,
-//                                ];
-//                            }
-//                        }
-//                    }
-
                     return $ingredient_row;
 
                 }, $ingredients);
@@ -625,6 +656,10 @@ class FoodyMigrate extends Command
         $bar->finish();
     }
 
+
+    /**
+     * Insert ingredient posts from nutrients data
+     */
     public function processIngredients()
     {
         $this->info("\n\nConverting and importing ingredients...\n\n");
@@ -677,6 +712,9 @@ class FoodyMigrate extends Command
         $bar->finish();
     }
 
+    /**
+     * Insert ingredient posts from MongoDB
+     */
     public function processDBIngredients()
     {
         $ingredients = json_decode(file_get_contents(base_path('data/ingredients.json')));
@@ -685,15 +723,9 @@ class FoodyMigrate extends Command
         $this->processData('foody_ingredient', $ingredients);
     }
 
-    public function processUnits()
-    {
-        $units = json_decode(file_get_contents(base_path('data/units.json')));
-        $units = array_map('trim', $units);
-        $units = array_unique($units);
-        $this->insertTerms('units', $units);
-        return $units;
-    }
-
+    /**
+     * Insert users with 'author' role
+     */
     public function processUsers()
     {
 
@@ -750,6 +782,72 @@ class FoodyMigrate extends Command
         file_put_contents(base_path('logs/users.log'), $users_log, FILE_APPEND);
     }
 
+
+    /**
+     *
+     */
+    public function processUnits()
+    {
+        $this->insertTerms('units', 'units');
+    }
+
+    /**
+     *
+     */
+    public function processPans()
+    {
+        $this->insertTerms('pans', 'pans');
+    }
+
+    /**
+     *
+     */
+    public function processLimitations()
+    {
+        $this->insertTerms('limitations', 'limitations');
+    }
+
+    /**
+     *
+     */
+    public function processCategories()
+    {
+        $this->insertTerms('category', 'categories');
+    }
+
+    /**
+     * @param $termType string valid taxonomy type
+     * @param $source_file string file name to read data from
+     */
+    private function insertTerms($termType, $source_file)
+    {
+        $terms = json_decode(file_get_contents(base_path("data/$source_file.json")));
+        $terms = array_map('trim', $terms);
+        $terms = array_unique($terms);
+
+        $this->info("\n\nConverting and importing terms of type $termType...\n\n");
+
+        $bar = $this->output->createProgressBar(count($terms));
+
+
+        foreach ($terms as $term) {
+            $source = wp_insert_term($term, $termType);
+            if (is_wp_error($source)) {
+                $this->error($source->get_error_message());
+            } else {
+                $source_id = $source['term_id'];
+                add_term_meta($source_id, 'active', true);
+            }
+            $bar->advance();
+        }
+
+        $bar->finish();
+    }
+
+    /**
+     * @param $user string full name
+     * @return array containing first and last name
+     */
     private function get_first_and_last_name($user)
     {
         $parts = explode(' ', $user);
@@ -812,6 +910,11 @@ class FoodyMigrate extends Command
         $bar->finish();
     }
 
+    /**
+     * Get nutritional values from json
+     *
+     * @return array|mixed|object
+     */
     private function getNutritions()
     {
         $nutritions = json_decode(file_get_contents(base_path('data/nutrients.json')), true);
@@ -850,48 +953,12 @@ class FoodyMigrate extends Command
         return $nutritions;
     }
 
-    private function insertTerms($termType, $terms)
-    {
-
-        $this->info("\n\nConverting and importing terms of type $termType...\n\n");
-
-        $bar = $this->output->createProgressBar(count($terms));
-
-
-        foreach ($terms as $term) {
-            $source = wp_insert_term($term, $termType);
-            if (is_wp_error($source)) {
-                $this->error($source->get_error_message());
-            } else {
-                $source_id = $source['term_id'];
-                add_term_meta($source_id, 'active', true);
-            }
-            $bar->advance();
-        }
-
-        $bar->finish();
-    }
-
-    function uniqueAssocArray($array, $uniqueKey)
-    {
-        if (!is_array($array)) {
-            return array();
-        }
-        $uniqueKeys = array();
-//        foreach ($array as $key => $item) {
-//            $groupBy = $item[$uniqueKey];
-//            if (isset($uniqueKeys[$groupBy])) {
-//                //compare $item with $uniqueKeys[$groupBy] and decide if you
-//                //want to use the new item
-//                $replace = ...
-//        } else {
-//                $replace = true;
-//            }
-//            if ($replace) $uniqueKeys[$groupBy] = $item;
-//        }
-        return $uniqueKeys;
-    }
-
+    /**
+     * Groups an associative arrat by key
+     * @param $array array
+     * @param $key string
+     * @return mixed[][]
+     */
     private function _group_by($array, $key)
     {
         $return = array();
@@ -901,6 +968,12 @@ class FoodyMigrate extends Command
         return $return;
     }
 
+    /**
+     * Get array key val or default val
+     * @param $value
+     * @param int $default
+     * @return int
+     */
     private function defaultVal($value, $default = 0)
     {
         if (empty($value)) {
@@ -910,6 +983,10 @@ class FoodyMigrate extends Command
         return $value;
     }
 
+    /** get a @link WP_Post object by name
+     * @param $name
+     * @return \WP_Post
+     */
     public function get_ingredient_by_name($name)
     {
 
@@ -934,6 +1011,11 @@ class FoodyMigrate extends Command
         return $ingredient_post;
     }
 
+    /**
+     * get a @link WP_Term object by term name
+     * @param $name string unit term name
+     * @return array|false|null|string|\WP_Term
+     */
     public function get_unit_by_name($name)
     {
         if (empty($name) || $name == 'ללא מידה') {
@@ -950,6 +1032,12 @@ class FoodyMigrate extends Command
         return $unit;
     }
 
+    /**
+     * Handle fractional representation of
+     * ingredients amounts
+     * @param $amount string
+     * @return int|mixed|string
+     */
     public function parse_amount($amount)
     {
         if (empty($amount)) {
@@ -1001,6 +1089,12 @@ class FoodyMigrate extends Command
 
     }
 
+    /**
+     * Map strings to posts ids
+     * @param $names string[] post names
+     * @param $type string post type
+     * @return int[] posts ids
+     */
     private function get_posts_by_names($names, $type)
     {
         if ($names == null || !is_array($names) || count($names) == 0) {
@@ -1024,6 +1118,14 @@ class FoodyMigrate extends Command
         }, $posts);
     }
 
+    /**
+     * Upload an image to WP's media library
+     * from a url and attach it to the post
+     * @param $postID
+     * @param $url
+     * @param string $alt
+     * @return int|null|object|\WP_Error
+     */
     private function upload_image($postID, $url, $alt = "")
     {
 
@@ -1033,11 +1135,12 @@ class FoodyMigrate extends Command
 
         try {
             $wp_path = base_path("../web/wp");
+            /** @noinspection PhpIncludeInspection */
             require_once("$wp_path/wp-admin/includes/image.php");
+            /** @noinspection PhpIncludeInspection */
             require_once("$wp_path/wp-admin/includes/file.php");
+            /** @noinspection PhpIncludeInspection */
             require_once("$wp_path/wp-admin/includes/media.php");
-
-//            $tmp = download_url($url);
 
             $tmp = wp_tempnam('', base_path('tmp/'));
 
@@ -1084,6 +1187,10 @@ class FoodyMigrate extends Command
         }
     }
 
+    /** Maps time units from MongoDB to ACF
+     * @param $unit string
+     * @return string
+     */
     private function get_time_unit($unit)
     {
         $time_unit = '';
@@ -1102,6 +1209,11 @@ class FoodyMigrate extends Command
         return $time_unit;
     }
 
+    /**
+     * Maps difficulty levels from MongoDB to ACF
+     * @param $db_difficulty string old db representation of a recipe's difficulty
+     * @return int value to be used with ACF's dropdown field
+     */
     private function get_difficulty($db_difficulty)
     {
         $difficulty = 1;
@@ -1129,20 +1241,13 @@ class FoodyMigrate extends Command
         return $difficulty;
     }
 
-    public function info($string, $verbosity = null)
-    {
-        $string = "\n$string\n";
-        parent::info($string, $verbosity);
-    }
-
-
-    public function error($string, $verbosity = null)
-    {
-        file_put_contents(base_path('logs/error.log'), $string . PHP_EOL, FILE_APPEND);
-
-        parent::error($string, $verbosity);
-    }
-
+    /**
+     * Converts an array of strings to an html ol
+     * element
+     *
+     * @param $content_array string[]
+     * @return string html string for the_content
+     */
     private function get_content($content_array)
     {
 
@@ -1158,9 +1263,17 @@ class FoodyMigrate extends Command
         return $title . $start_el . $content . $end_el;
     }
 
+    /**
+     * Updates a simple one text field repeater
+     * for a given post
+     *
+     * @param $selector string repeater field name
+     * @param $row_selector string row field name. a repeater with a single text field is supported
+     * @param $rows string[] array of items to insert
+     * @param $post_id int post id
+     */
     private function update_plain_repeater($selector, $row_selector, $rows, $post_id)
     {
-        $update = [];
         $rows = array_map(function ($row) use ($row_selector) {
             $ret = [];
             $ret[$row_selector] = $row;
@@ -1168,6 +1281,28 @@ class FoodyMigrate extends Command
         }, $rows);
 
         update_field($selector, $rows, $post_id);
+    }
+
+    /**
+     * @param string $string
+     * @param null $verbosity
+     */
+    public function info($string, $verbosity = null)
+    {
+        $string = "\n$string\n";
+        parent::info($string, $verbosity);
+    }
+
+
+    /**
+     * @param string $string
+     * @param null $verbosity
+     */
+    public function error($string, $verbosity = null)
+    {
+        file_put_contents(base_path('logs/error.log'), $string . PHP_EOL, FILE_APPEND);
+
+        parent::error($string, $verbosity);
     }
 
 
