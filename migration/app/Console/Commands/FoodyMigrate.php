@@ -30,7 +30,7 @@ class FoodyMigrate extends Command
     public $wp;
 
 
-    public $debug = true;
+    public $debug = false;
 
     private $authors = [
         "אבי לוי" => [
