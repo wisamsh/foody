@@ -296,7 +296,7 @@ class FoodyMigrate extends Command
         $this->processUnits();
         $this->processPans();
         $this->processLimitations();
-        $this->processTaxonomy();
+        $this->processCategories();
     }
 
 
@@ -313,10 +313,7 @@ class FoodyMigrate extends Command
         $recipes = $query->get()->toArray();
 
         $debug_recipe = array_first($recipes, function ($recipe) {
-            return isset($recipe['Other']['OpcionalSponsers']) &&
-                is_array($recipe['Other']['OpcionalSponsers']) &&
-                count($recipe['Other']['OpcionalSponsers']) > 0 &&
-                !empty($recipe['Other']['OpcionalSponsers'][0]);
+            return isset($recipe['General']['Templates']) && !empty($recipe['General']['Templates']);
         });
 
         if ($this->debug) {
@@ -563,6 +560,17 @@ class FoodyMigrate extends Command
             $number_of_dishes = $recipe['General']['AmountDinners'];
             if (!is_numeric($number_of_dishes)) {
                 $number_of_dishes = 1;
+            }
+
+
+            // pans
+            if (isset($recipe['General']['Templates']) && !empty($recipe['General']['Templates'])) {
+                $pan = trim($recipe['General']['Templates']);
+                $term = get_term_by('name', $pan, 'pans');
+                if ($term && !is_wp_error($term)) {
+                    update_field('ingredients_pan', $term->term_id, $post_id);
+                    update_field('ingredients_use_pan_conversion', 1,$post_id);
+                }
             }
 
             $number_of_dishes = intval($number_of_dishes);
@@ -1012,7 +1020,7 @@ class FoodyMigrate extends Command
     }
 
     /**
-     * get a @link WP_Term object by term name
+     * Get a @link WP_Term object by term name
      * @param $name string unit term name
      * @return array|false|null|string|\WP_Term
      */
@@ -1031,6 +1039,7 @@ class FoodyMigrate extends Command
 
         return $unit;
     }
+
 
     /**
      * Handle fractional representation of
