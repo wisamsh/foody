@@ -532,7 +532,11 @@ class FoodyMigrate extends Command
             update_field('original_recipe', "http://foody-prod.moveodevelop.com/admin/CreateOrEditRecipe?recipeId=$original_id", $post_id);
 
 
-            if (isset($recipe['General']['Limitations'])) {
+            if (
+                isset($recipe['General']['Limitations']) &&
+                is_array($recipe['General']['Limitations']) &&
+                count($recipe['General']['Limitations']) > 0
+            ) {
                 $limitations = $recipe['General']['Limitations'];
 
                 $limitations = array_map(function ($limitation) {
@@ -569,7 +573,7 @@ class FoodyMigrate extends Command
                 $term = get_term_by('name', $pan, 'pans');
                 if ($term && !is_wp_error($term)) {
                     update_field('ingredients_pan', $term->term_id, $post_id);
-                    update_field('ingredients_use_pan_conversion', 1,$post_id);
+                    update_field('ingredients_use_pan_conversion', 1, $post_id);
                 }
             }
 
