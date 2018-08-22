@@ -23,4 +23,9 @@ class Foody_Channel extends Foody_Post implements IFoody_Favorite
     {
         // TODO: Implement the_sidebar_content() method.
     }
+
+    public function the_details()
+    {
+        // TODO: Implement the_details() method.
+    }
 }

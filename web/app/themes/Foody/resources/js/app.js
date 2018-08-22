@@ -50,4 +50,8 @@ jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();
     $('.foody-select').selectpicker({dropdownAlignRight: true, style: 'foody-select'});
     $('[data-toggle="popover"]').popover();
+    $('.foody-rating').rating({
+        filledStar: '<i class="icon-big-star-rank filled"></i>',
+        emptyStar: '<i class="icon-big-star-rank"></i>'
+    });
 });

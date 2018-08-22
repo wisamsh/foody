@@ -16,7 +16,7 @@
  *
  * @return string
  */
-function view_count_display( $number, $precision = 3, $divisors = null ) {
+function view_count_display( $number, $precision = 0, $divisors = null ) {
 
 	// Setup default $divisors if not provided
 	if ( ! isset( $divisors ) ) {

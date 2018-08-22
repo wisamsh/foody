@@ -8,7 +8,7 @@ $content-width: 70%;
 
 @import "../../common/show-more-simple";
 
-.single-foody_recipe {
+.single-foody_recipe, .single-foody_playlist {
 
 
   .progress-wrapper {
@@ -571,7 +571,7 @@ $content-width: 70%;
   $sidebar-width: 0;
   $content-width: 100%;
   $content-padding: 40px;
-  .single-foody_recipe {
+  .single-foody_recipe , .single-foody_playlist {
 
     .progress-wrapper {
 

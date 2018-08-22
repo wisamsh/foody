@@ -34,7 +34,7 @@ abstract class Foody_Post
     public $favorite = false;
 
 
-    protected $post;
+    public $post;
 
     protected $stub_images = array();
 
@@ -55,11 +55,10 @@ abstract class Foody_Post
             $this->post = $post;
             $this->id = $post->ID;
             global $wp_session;
-            if (isset($wp_session['favorites']) && in_array($this->id, $wp_session['favorites'])) {
+            if (isset($wp_session['favorites']) && is_array($wp_session['favorites']) && in_array($this->id, $wp_session['favorites'])) {
                 $this->favorite = true;
             }
-            $a = get_the_post_thumbnail($this->id,'foody-main');
-            $this->image = get_the_post_thumbnail_url($this->id ,'foody-main');
+            $this->image = get_the_post_thumbnail_url($this->id, 'foody-main');
             $this->posted_on = foody_posted_on(false, $post);
             $this->description = get_the_excerpt($this->post->ID);
             $this->description_mobile = get_field('mobile_caption', $this->post->ID);
@@ -68,12 +67,11 @@ abstract class Foody_Post
 
             $user_avatars = get_the_author_meta('wp_user_avatars', get_the_author_meta('ID'));
 
-            if(is_null($user_avatars) || empty($user_avatars) || !isset($user_avatars['90'])){
+            if (is_null($user_avatars) || empty($user_avatars) || !isset($user_avatars['90'])) {
                 $this->author_image = get_avatar_url(get_the_author_meta('ID'), ['size' => 96]);
-            }else{
+            } else {
                 $this->author_image = $user_avatars['90'];
             }
-
 
 
             $this->author_name = foody_posted_by(false);
@@ -231,4 +229,14 @@ abstract class Foody_Post
     public abstract function the_featured_content();
 
     public abstract function the_sidebar_content();
+
+    public abstract function the_details();
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }

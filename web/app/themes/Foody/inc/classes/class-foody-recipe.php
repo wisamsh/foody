@@ -162,10 +162,10 @@ class Foody_Recipe extends Foody_Post
     public function the_nutrition()
     {
         $nutritions = array();
-        $title = get_field('nutritions_title');
-        while (have_rows('nutritions')): the_row();
+        $title = get_field('nutritions_title', $this->post->ID);
+        while (have_rows('nutritions', $this->post->ID)): the_row();
 
-            while (have_rows('nutrition')): the_row();
+            while (have_rows('nutrition', $this->post->ID)): the_row();
 
                 $value = get_sub_field('value');
                 $name = get_sub_field('name');
@@ -286,37 +286,40 @@ class Foody_Recipe extends Foody_Post
     public function the_sidebar_content($args = array())
     {
 
-        $playlists_args = array(
-            'title' => 'פלייליסט',
-            'selector' => 'related_playlists',
-            'content_classes' => 'related-playlists',
-            'template_args_func' => function ($item) {
-                return array(
-                    'count' => 20 // TODO
-                );
-            }
-        );
+        if (!isset($args['hide_playlists']) || $args['hide_playlists'] == false) {
+            $playlists_args = array(
+                'title' => 'פלייליסט',
+                'selector' => 'related_playlists',
+                'content_classes' => 'related-playlists',
+                'template_args_func' => function ($item) {
+                    return array(
+                        'count' => 20 // TODO
+                    );
+                }
+            );
 
-        $playlists = $this->get_related_content_by_categories('foody_playlist');
+            $playlists = $this->get_related_content_by_categories('foody_playlist');
 
-        $this->related_content($playlists_args, $playlists);
+            $this->related_content($playlists_args, $playlists);
+        }
 
-        $recipes = $this->get_related_content_by_categories('foody_recipe');
+        if (!isset($args['hide_recipes']) || $args['hide_recipes'] == false) {
+            $recipes = $this->get_related_content_by_categories('foody_recipe');
 
-        $recipes_args = array(
-            'title' => 'מתכונים נוספים',
-            'selector' => 'related_recipes',
-            'content_classes' => 'related-recipes',
-            'template_args_func' => function ($recipe) {
-                $foody_recipe = new Foody_Recipe($recipe);
-                return array(
-                    'duration' => $foody_recipe->getDuration()
-                );
-            }
-        );
+            $recipes_args = array(
+                'title' => 'מתכונים נוספים',
+                'selector' => 'related_recipes',
+                'content_classes' => 'related-recipes',
+                'template_args_func' => function ($recipe) {
+                    $foody_recipe = new Foody_Recipe($recipe);
+                    return array(
+                        'duration' => $foody_recipe->getDuration()
+                    );
+                }
+            );
 
-        $this->related_content($recipes_args, $recipes);
-
+            $this->related_content($recipes_args, $recipes);
+        }
     }
 
     public function the_mobile_sidebar_content()
@@ -352,7 +355,7 @@ class Foody_Recipe extends Foody_Post
 
     public function preview()
     {
-        the_field('preview');
+        the_field('preview', $this->post->ID);
     }
 
     public function the_ingredients_title()
@@ -440,14 +443,14 @@ class Foody_Recipe extends Foody_Post
         $this->ingredients_groups = array();
         $this->ingredients_count = 0;
 
-        if (have_rows(have_rows('ingredients', $this->post->ID))) {
+        if (have_rows('ingredients', $this->post->ID)) {
             while (have_rows('ingredients', $this->post->ID)): the_row();
 
                 $this->number_of_dishes = get_sub_field('number_of_dishes');
                 $this->amount_for = get_sub_field('amount_for');
                 $this->ingredients_title = get_sub_field('title');
                 $current_group = 0;
-                while (have_rows('ingredients_groups')): the_row();
+                while (have_rows('ingredients_groups', $this->post->ID)): the_row();
 
                     $this->ingredients_groups[] = array(
                         'title' => get_sub_field('title'),
@@ -456,7 +459,7 @@ class Foody_Recipe extends Foody_Post
                     );
 
 
-                    while (have_rows('ingredients')): the_row();
+                    while (have_rows('ingredients', $this->post->ID)): the_row();
 
                         $ingredient_post = get_sub_field('ingredient');
                         $this->ingredients_count++;
@@ -464,7 +467,7 @@ class Foody_Recipe extends Foody_Post
 
                         $amounts = [];
 
-                        while (have_rows('amounts')): the_row();
+                        while (have_rows('amounts', $this->post->ID)): the_row();
 
                             $unit_field = get_sub_field('unit');
                             $unit = get_term($unit_field, 'units');
@@ -601,4 +604,10 @@ class Foody_Recipe extends Foody_Post
         return $posts;
     }
 
+    public function the_details()
+    {
+        foody_get_template_part(
+            get_template_directory() . '/template-parts/content-recipe-details.php'
+        );
+    }
 }

@@ -37,7 +37,7 @@ class Foody_PageContentFactory
      * Returns the relevant class
      * for the page content
      *
-     * @return Foody_Article|Foody_Channel|Foody_Recipe|null
+     * @return Foody_Article|Foody_Channel|Foody_Recipe|Foody_Playlist|null
      */
     public function get_page()
     {
@@ -54,6 +54,10 @@ class Foody_PageContentFactory
                     break;
                 case 'foody_channel':
                     $page = new Foody_Channel($post);
+                    break;
+
+                case 'foody_playlist':
+                    $page = new Foody_Playlist($post);
                     break;
 
                 default:

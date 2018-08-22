@@ -147,4 +147,8 @@ class Foody_Ingredient extends Foody_Post
         return $this->the_amounts(false);
     }
 
+    public function the_details()
+    {
+        // TODO: Implement the_details() method.
+    }
 }

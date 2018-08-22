@@ -52,6 +52,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-team.php";
 require_once get_template_directory() . "/inc/classes/common/class-foody-post.php";
 require_once get_template_directory() . "/inc/classes/class-foody-ingredient.php";
 require_once get_template_directory() . "/inc/classes/class-foody-recipe.php";
+require_once get_template_directory() . "/inc/classes/class-foody-playlist.php";
 require_once get_template_directory() . "/inc/classes/class-recipes-grid.php";
 require_once get_template_directory() . "/inc/classes/common/class-sidebar-filter.php";
 require_once get_template_directory() . "/inc/classes/class-foody-profile.php";

@@ -13,7 +13,7 @@ function register_post_types()
         'recipe' => array(
             'id' => 'recipe',
             'name' => 'מתכונים',
-            'singular_name' => 'מתכונים',
+            'singular_name' => 'מתכון',
             'taxonomies' => array('category', 'post_tag'),
             'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
             'show_ui' => true,
@@ -31,12 +31,18 @@ function register_post_types()
         'ingredient' => array(
             'id' => 'ingredient',
             'name' => 'מצרכים',
-            'singular_name' => 'מצרך'
+            'singular_name' => 'מצרך',
+             'taxonomies' => array('category', 'post_tag'),
+            'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
+            'show_ui' => true,
         ),
         'playlist' => array(
             'id' => 'playlist',
             'name' => 'פלייליסטים',
-            'singular_name' => 'פלייליסט'
+            'singular_name' => 'פלייליסט',
+            'taxonomies' => array('category', 'post_tag'),
+            'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
+            'show_ui' => true,
         )
     );
 
@@ -74,7 +80,7 @@ function register_post_types()
         );
 
         foreach ($supported_features as $feature) {
-            add_post_type_support(strtolower('foody_' . $type['singular_name']), $feature);
+            add_post_type_support(strtolower('foody_' . $type['id']), $feature);
         }
 
     }
@@ -104,10 +110,8 @@ function foody_remove_page_template()
             (function ($) {
                 $(document).ready(function () {
                     $('#page_template').val('<?php echo $default_template?>');
-                })
-
-
-            })(jQuery)
+                });
+            })(jQuery);
         </script>
         <?php
     }
