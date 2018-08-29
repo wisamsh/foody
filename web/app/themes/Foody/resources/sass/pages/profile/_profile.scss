@@ -152,6 +152,22 @@ $sidebar-width: 22.5% !default;
           padding: 0;
           min-width: calc(100% - #{$my-channels-width});
 
+          .no-recipes {
+            text-align: center;
+            padding: 50px 0;
+
+            .title {
+              margin: 15px 0;
+              text-align: center;
+            }
+
+            p {
+              font-family: $font__assistant;
+              font-size: 18px;
+              margin-bottom: 0;
+            }
+          }
+
           .tab-pane {
             padding: 0 17px;
             .recipe-item-container {

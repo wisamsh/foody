@@ -13,11 +13,16 @@ $playlist = $foody_page;
 
 $recipe = $playlist->get_current_recipe();
 
-foody_get_template_part(
-    get_template_directory() . '/template-parts/content-recipe-display.php',
-    [
-        'recipe' => $recipe
-    ]
-)
+if (!wp_is_mobile()) {
+    foody_get_template_part(
+        get_template_directory() . '/template-parts/content-recipe-display.php',
+        [
+            'recipe' => $recipe
+        ]
+    );
+} else {
+    $playlist->the_mobile_sidebar_content();
+}
+
 
 ?>

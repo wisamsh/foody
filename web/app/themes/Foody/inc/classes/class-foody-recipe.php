@@ -15,7 +15,7 @@ class Foody_Recipe extends Foody_Post
 
     private $duration;
 
-    private $video;
+    public $video;
 
     private $sponsership;
 
@@ -493,12 +493,13 @@ class Foody_Recipe extends Foody_Post
 
                         endwhile;
 
+                        if ($ingredient_post && $ingredient_post instanceof WP_Post) {
+                            $ingredient = new Foody_Ingredient($ingredient_post);
 
-                        $ingredient = new Foody_Ingredient($ingredient_post);
+                            $ingredient->amounts = $amounts;
 
-                        $ingredient->amounts = $amounts;
-
-                        $this->ingredients_groups[$current_group]['ingredients'][] = $ingredient;
+                            $this->ingredients_groups[$current_group]['ingredients'][] = $ingredient;
+                        }
 
                     endwhile;
 
@@ -588,7 +589,6 @@ class Foody_Recipe extends Foody_Post
         $posts = [];
         $categories = wp_get_post_categories($this->post->ID);
         if (!is_wp_error($categories)) {
-
 
             $query = new WP_Query([
                 'post_type' => $post_type,

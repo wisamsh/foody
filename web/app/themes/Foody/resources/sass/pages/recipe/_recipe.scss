@@ -603,6 +603,8 @@ $content-width: 70%;
         .video-container {
 
           margin-top: -10px;
+          margin-left: 0;
+          margin-right: 0;
           clip-path: none;
           iframe {
             max-height: 200px;
@@ -629,7 +631,7 @@ $content-width: 70%;
             }
           }
 
-          .recipe-details {
+          .recipe-details,.playlist-details {
 
             .image-container {
 

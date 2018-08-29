@@ -9,8 +9,11 @@
 class Foody_Playlist extends Foody_Post
 {
 
-
-    private $recipes;
+    /**
+     * @var Foody_Recipe[].
+     *
+     */
+    public $recipes;
 
     public $num_of_recipes;
 
@@ -38,6 +41,7 @@ class Foody_Playlist extends Foody_Post
         foody_get_template_part(
             get_template_directory() . '/template-parts/content-playlist-recipes.php',
             [
+                'playlist' => $this,
                 'recipes' => $this->recipes,
                 'title' => $this->get_playlist_title()
             ]
@@ -56,16 +60,52 @@ class Foody_Playlist extends Foody_Post
     public function get_current_recipe()
     {
         $recipe = null;
-        $current_playlist_index = get_query_var('playlist_index', 0);
         if ($this->recipes != null) {
-
-            if ($current_playlist_index > count($this->recipes) - 1) {
-                $current_playlist_index = count($this->recipes) - 1;
-            }
-            $recipe = $this->recipes[$current_playlist_index];
+            $index = $this->get_current_recipe_index();
+            $recipe = $this->recipes[$index];
         }
 
         return $recipe;
+    }
+
+
+    public function get_current_recipe_index()
+    {
+        if (!is_null(get_query_var('recipe', null))) {
+            $recipe_name = get_query_var('recipe');
+            $index = array_search($recipe_name, array_map(function ($recipe) use ($recipe_name) {
+                return urldecode($recipe->post->post_name);
+            }, $this->recipes));
+        } else {
+            $index = 0;
+        }
+        return $index;
+    }
+
+    public function next()
+    {
+        $link = '';
+        $next_index = $this->get_current_recipe_index() + 1;
+        if ($next_index < count($this->recipes)) {
+            $recipe = $this->recipes[$next_index];
+            $link = $this->get_playlist_recipe_link($recipe);
+        }
+
+
+        return $link;
+    }
+
+    public function prev()
+    {
+        $link = '';
+        $prev_index = $this->get_current_recipe_index() - 1;
+        if ($prev_index >= 0) {
+            $recipe = $this->recipes[$prev_index];
+            $link = $link = $this->get_playlist_recipe_link($recipe);
+        }
+
+        return $link;
+
     }
 
     public function getTitle()
@@ -136,5 +176,25 @@ class Foody_Playlist extends Foody_Post
     public function get_playlist_title()
     {
         return parent::getTitle();
+    }
+
+    public function the_mobile_sidebar_content()
+    {
+        foody_get_template_part(
+            get_template_directory() . '/template-parts/content-playlist-recipes.php',
+            [
+                'playlist' => $this,
+                'recipes' => $this->recipes,
+                'title' => $this->get_playlist_title(),
+                'hide_title' => true
+            ]
+        );
+
+    }
+
+    public function get_playlist_recipe_link($recipe)
+    {
+        $link = add_query_arg('recipe', $recipe->post->post_name, get_permalink());
+        return $link;
     }
 }

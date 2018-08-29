@@ -74,9 +74,6 @@ get_header(); ?>
                                 <div class="tab-content col">
                                     <div class="tab-pane fade show active row gutter-3" id="my-recipes" role="tabpanel"
                                          aria-labelledby="my-recipes-tab">
-                                        <h2 class="title">
-                                            ספר המתכונים שלי
-                                        </h2>
                                         <?php $foody_profile->my_recipes() ?>
                                     </div>
                                     <div class="tab-pane fade row gutter-3" id="my-channels-recipes" role="tabpanel"

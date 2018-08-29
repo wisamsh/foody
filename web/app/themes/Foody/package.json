@@ -62,6 +62,7 @@
     "startbootstrap-simple-sidebar": "^4.0.0",
     "tinysort": "^2.3.6",
     "underscore": "^1.9.1",
-    "url-loader": "^1.0.1"
+    "url-loader": "^1.0.1",
+    "youtube-player": "^5.5.0"
   }
 }

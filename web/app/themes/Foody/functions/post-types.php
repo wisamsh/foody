@@ -32,7 +32,7 @@ function register_post_types()
             'id' => 'ingredient',
             'name' => 'מצרכים',
             'singular_name' => 'מצרך',
-             'taxonomies' => array('category', 'post_tag'),
+            'taxonomies' => array('category', 'post_tag'),
             'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
             'show_ui' => true,
         ),
@@ -43,6 +43,10 @@ function register_post_types()
             'taxonomies' => array('category', 'post_tag'),
             'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
             'show_ui' => true,
+            'rewrite' => array(
+                'slug' => 'playlist',
+                'with_front' => true
+            )
         )
     );
 
@@ -57,6 +61,10 @@ function register_post_types()
             'has_archive' => true,
             'capability_type' => 'post'
         );
+
+        if (isset($type['rewrite'])) {
+            $args['rewrite'] = $type['rewrite'];
+        }
 
         if (isset($type['taxonomies'])) {
             $args['taxonomies'] = $type['taxonomies'];
@@ -200,7 +208,6 @@ function foody_get_post_types()
     $all_types = array_filter($all_types, function ($type) {
         return preg_match('/foody_/', $type) || $type == 'post';
     });
-
     return $all_types;
 }
 
@@ -249,3 +256,40 @@ function foody_count_posts_by_user($post_author = null, $post_type = array(), $p
     $count = $wpdb->get_var($sql);
     return $count;
 }
+
+
+add_filter('rewrite_rules_array', 'mmp_rewrite_rules');
+function mmp_rewrite_rules($rules)
+{
+    $newRules = array();
+    $newRules['playlist/(.+)/(.+)/?$'] = 'index.php?foody_playlist=$matches[0]&recipename=$matches[1]'; // my custom structure will always have the post name as the 5th uri segment
+
+    return array_merge($newRules, $rules);
+}
+
+//function so23698827_filter_post_type_link($link, $post)
+//{
+//    if ($post->post_type == 'foody_playlist') {
+//
+////        $link = str_replace('/' . $post->post_name . '/', '', $link);
+////        $link = str_replace('%postname%', $post->post_name, $link);
+////        $link = str_replace('%recipename%', 'a', $link);
+//
+//        $playlist = new Foody_Playlist($post);
+//
+////        $index = $playlist->get_current_recipe_index();
+////
+////        if ($index == 0) {
+////            $recipe = $playlist->recipes[0]->post->post_name;
+////        }
+////
+////        if (isset($recipe)) {
+////            $link = add_query_arg('recipe', $recipe, $link);
+////        }
+//
+//
+//    }
+//    return $link;
+//}
+//
+//add_filter('post_type_link', 'so23698827_filter_post_type_link', 10, 2);

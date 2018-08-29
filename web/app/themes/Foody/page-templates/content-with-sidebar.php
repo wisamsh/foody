@@ -48,7 +48,6 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
 
                         get_template_part('template-parts/single', get_post_type());
 
-                        edit_post_link();
 
                     endwhile; // End of the loop.
                     ?>

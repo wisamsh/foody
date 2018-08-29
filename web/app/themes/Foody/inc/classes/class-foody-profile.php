@@ -51,15 +51,18 @@ class Foody_Profile
     {
         global $wp_session;
 
-        if (isset($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
+        if (!isset($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
             $posts = [];
             foreach ($favorite_posts as $favorite_post) {
                 $posts[] = Foody_PostFactory::get_post(get_post($favorite_post));
             }
 
+            echo '<h2 class="title">ספר המתכונים שלי</h2>';
+
             $this->grid->loop($posts, 2);
         } else {
             // TODO show 'no content';
+            foody_get_template_part(get_template_directory() . '/template-parts/content-no-recipes.php');
         }
 
 //        $this->grid->grid_debug(12, 2);
