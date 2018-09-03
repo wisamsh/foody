@@ -15,4 +15,5 @@ function foody_ajax_error($message = 'Error'){
 
 require_once get_template_directory() . '/functions/ajax/comments.php';
 require_once get_template_directory() . '/functions/ajax/favorites.php';
+require_once get_template_directory() . '/functions/ajax/follow.php';
 //require_once get_template_directory() . '/functions/ajax/duplicate-titles.php';

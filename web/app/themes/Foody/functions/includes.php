@@ -31,7 +31,9 @@ require_once get_template_directory() . "/inc/classes/common/class-foody-social.
  * Interfaces
  * */
 
+require_once get_template_directory() . "/inc/classes/interfaces/interface-content-with-sidebar.php";
 require_once get_template_directory() . "/inc/classes/interfaces/interface-foody-list-item.php";
+require_once get_template_directory() . "/inc/classes/interfaces/interface-foody-topic.php";
 
 
 /*
@@ -51,6 +53,7 @@ require_once get_template_directory() . "/inc/classes/common/class-foody-post.ph
 require_once get_template_directory() . "/inc/classes/class-foody-ingredient.php";
 require_once get_template_directory() . "/inc/classes/class-foody-recipe.php";
 require_once get_template_directory() . "/inc/classes/class-foody-playlist.php";
+require_once get_template_directory() . "/inc/classes/class-foody-channel.php";
 require_once get_template_directory() . "/inc/classes/class-recipes-grid.php";
 require_once get_template_directory() . "/inc/classes/common/class-sidebar-filter.php";
 require_once get_template_directory() . "/inc/classes/class-foody-profile.php";
@@ -62,6 +65,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-feed-factory.p
 require_once get_template_directory() . "/inc/classes/class-foody-post-factory.php";
 require_once get_template_directory() . "/inc/classes/class-bootstrap-collapse-nav-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-channels-menu.php";
+require_once get_template_directory() . "/inc/classes/class-foody-author.php";
 
 /*
  * Widgets

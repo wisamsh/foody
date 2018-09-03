@@ -7,7 +7,7 @@ if ($('.single-foody_playlist').length) {
 
     let videoId = $currentPlaying.data('video');
 
-    let player = ytPlayer('.video-container', videoId);
+    let player = ytPlayer('.featured-content-container', videoId);
 
 
     player.on('stateChange', (event) => {

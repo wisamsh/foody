@@ -8,7 +8,7 @@ $content-width: 70%;
 
 @import "../../common/show-more-simple";
 
-.single-foody_recipe, .single-foody_playlist {
+.single-foody_recipe, .single-foody_playlist , .archive.author, body[class~="foody_channel-template-channel"] {
 
 
   .progress-wrapper {
@@ -54,7 +54,7 @@ $content-width: 70%;
 
     .details-container {
       background-color: white;
-      .video-container {
+      .featured-content-container {
         clip-path: inset(0 round 3px);
         margin: 0 10px 10px;
 
@@ -600,7 +600,7 @@ $content-width: 70%;
 
       .details-container {
 
-        .video-container {
+        .featured-content-container {
 
           margin-top: -10px;
           margin-left: 0;

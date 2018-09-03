@@ -6,7 +6,7 @@
  * Date: 5/16/18
  * Time: 7:17 PM
  */
-abstract class Foody_Post
+abstract class Foody_Post implements Foody_ContentWithSidebar
 {
 
     public $id;
@@ -60,10 +60,10 @@ abstract class Foody_Post
             }
             $this->image = get_the_post_thumbnail_url($this->id, 'foody-main');
             $this->posted_on = foody_posted_on(false, $post);
-            $this->description = get_the_excerpt($this->post->ID);
-            $this->description_mobile = get_field('mobile_caption', $this->post->ID);
+            $this->description = !empty($post->post_excerpt) ? get_the_excerpt($this->id) : null;
+            $this->description_mobile = get_field('mobile_caption', $this->id);
             $this->title = get_the_title($post->ID);
-            $this->view_count = view_count_display(foody_get_post_views($post->ID), 0);
+            $this->view_count = view_count_display(foody_get_post_views($this->id), 0);
 
             $user_avatars = get_the_author_meta('wp_user_avatars', get_the_author_meta('ID'));
 
@@ -76,7 +76,7 @@ abstract class Foody_Post
 
             $this->author_name = foody_posted_by(false);
             $this->body = apply_filters('the_content', $post->post_content);
-            $this->link = get_permalink($post->ID);
+            $this->link = get_permalink($this->id);
 
         } else {
             $k = array_rand($this->stub_images);
@@ -163,9 +163,14 @@ abstract class Foody_Post
     /**
      * @return mixed
      */
-    public function getImage()
+    public function getImage($size = null)
     {
-        return $this->image;
+        $image = $this->image;
+        if ($size != null) {
+            $image = get_the_post_thumbnail_url($this->getId(), $size);
+        }
+
+        return $image;
     }
 
     /**
@@ -231,6 +236,18 @@ abstract class Foody_Post
     public abstract function the_sidebar_content();
 
     public abstract function the_details();
+
+    function the_content($page)
+    {
+//        get_template_part('template-parts/single', get_post_type());
+        $type = get_post_type();
+        foody_get_template_part(
+            get_template_directory() . "/template-parts/single-$type.php",
+            [
+                'page' => $page
+            ]
+        );
+    }
 
     /**
      * @return int

@@ -432,9 +432,13 @@ class Foody_Recipe extends Foody_Post
     private function get_recipe_time($time_field)
     {
         $time = $time_field['time'];
-        $unit = $time_field['time_unit'];
+        $unit = trim($time_field['time_unit']);
         $singular = preg_replace('/s$/', '', $unit);
-        $recipe_time = sprintf(_n("%s $singular", "%s $unit", $time), number_format_i18n(intval($time)));
+        if ($unit == 'minutes') {
+            $unit = 'דקות';
+            $singular = 'דקה';
+        }
+        $recipe_time = sprintf(_n("%s $singular", "%s $unit", trim($time)), number_format_i18n(intval($time)));
         return $recipe_time;
     }
 
@@ -607,7 +611,10 @@ class Foody_Recipe extends Foody_Post
     public function the_details()
     {
         foody_get_template_part(
-            get_template_directory() . '/template-parts/content-recipe-details.php'
+            get_template_directory() . '/template-parts/content-recipe-details.php',
+            [
+                'page' => $this
+            ]
         );
     }
 }

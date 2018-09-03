@@ -17,6 +17,8 @@ class Foody_Playlist extends Foody_Post
 
     public $num_of_recipes;
 
+    private $debug = false;
+
     /**
      * Foody_Playlist constructor.
      * @param WP_Post $post
@@ -150,16 +152,19 @@ class Foody_Playlist extends Foody_Post
 
         $recipes_posts = posts_to_array('recipes', $this->post->ID, 'Foody_Recipe');
         if (is_null($recipes_posts) || empty($recipes_posts)) {
-            throw new Exception('no recipes for this recipe');
+            if ($this->debug) {
+                throw new Exception('no recipes for this playlist');
+            }
+            $this->recipes = [];
+            $this->num_of_recipes = 0;
+        } else {
+            $this->recipes = $recipes_posts;
+            $this->num_of_recipes = count($this->recipes);
         }
-
-        $this->recipes = $recipes_posts;
-        $this->num_of_recipes = count($this->recipes);
     }
 
     public function the_details()
     {
-        // TODO: Implement the_details() method.
         if (!wp_is_mobile()) {
             $current_recipe = $this->get_current_recipe();
             $current_recipe->the_details();

@@ -182,6 +182,7 @@ class FoodyTeam
         $name = get_the_author_meta('nickname', $author->ID);
 
         $author_data = array(
+            'id' => $author->ID,
             'name' => $name,
             'image' => $image,
             'order' => $order,

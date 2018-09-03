@@ -47,6 +47,18 @@ function register_post_types()
                 'slug' => 'playlist',
                 'with_front' => true
             )
+        ),
+        'channel' => array(
+            'id' => 'channel',
+            'name' => 'ערוצים',
+            'singular_name' => 'ערוץ',
+            'taxonomies' => array('category', 'post_tag'),
+            'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
+            'show_ui' => true,
+            'rewrite' => array(
+                'slug' => 'channel',
+                'with_front' => true
+            )
         )
     );
 
@@ -267,29 +279,19 @@ function mmp_rewrite_rules($rules)
     return array_merge($newRules, $rules);
 }
 
-//function so23698827_filter_post_type_link($link, $post)
-//{
-//    if ($post->post_type == 'foody_playlist') {
-//
-////        $link = str_replace('/' . $post->post_name . '/', '', $link);
-////        $link = str_replace('%postname%', $post->post_name, $link);
-////        $link = str_replace('%recipename%', 'a', $link);
-//
-//        $playlist = new Foody_Playlist($post);
-//
-////        $index = $playlist->get_current_recipe_index();
-////
-////        if ($index == 0) {
-////            $recipe = $playlist->recipes[0]->post->post_name;
-////        }
-////
-////        if (isset($recipe)) {
-////            $link = add_query_arg('recipe', $recipe, $link);
-////        }
-//
-//
-//    }
-//    return $link;
-//}
-//
-//add_filter('post_type_link', 'so23698827_filter_post_type_link', 10, 2);
+function filter_post_type_link($link, $post)
+{
+    if ($post->post_type == 'foody_playlist') {
+
+        $recipe_name = get_query_var('recipe', null);
+        if (is_null($recipe_name)) {
+            $recipes = posts_to_array('recipes', $post->ID);
+            $recipe_name = $recipes[0]->post_name;
+            $link = add_query_arg('recipe', $recipe_name, $link);
+        }
+
+    }
+    return $link;
+}
+
+add_filter('post_type_link', 'filter_post_type_link', 10, 2);

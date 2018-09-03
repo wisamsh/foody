@@ -44,11 +44,12 @@ module.exports = {
     entry: {
         // common : "./resources/pages/common/index",
         // home: "./resources/pages/homepage/index",
-        main: "./resources/js/app"
+        main: "./resources/js/app",
+        admin: "./resources/js/admin"
     },
     output: {
         // filename: '[name].js',
-        filename: 'bundle.js',
+        filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
         // publicPath: '/resources'
     },

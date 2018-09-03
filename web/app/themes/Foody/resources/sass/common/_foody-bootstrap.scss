@@ -45,3 +45,7 @@
     visibility: visible;
   }
 }
+
+.btn.btn-primary:focus, .btn-primary.custom-file-control:focus::before, .btn.btn-primary.focus, .btn-primary.focus.custom-file-control::before {
+  border-color: white;
+}

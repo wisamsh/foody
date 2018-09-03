@@ -6,7 +6,10 @@
  * Time: 2:48 PM
  */
 
-global $foody_page;
+
+/** @var Foody_Recipe $foody_page */
+/** @noinspection PhpUndefinedVariableInspection */
+$foody_page = $template_args['page'];
 ?>
 <div class="details container">
     <?php echo get_the_category_list('', '', $foody_page->getId()) ?>

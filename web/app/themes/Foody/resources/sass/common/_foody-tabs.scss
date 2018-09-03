@@ -1,0 +1,38 @@
+.foody-tabs {
+  .nav-tabs {
+    .nav-item {
+      margin-left: 30px;
+      a {
+        font-size: 24px;
+        font-weight: 900;
+        letter-spacing: -0.1px;
+        text-align: center;
+        color: $color__primary;
+        padding: 10px;
+
+        &:not(.active) {
+          color: $color__text-primary-light;
+          &:hover {
+            border-color: $color__primary;
+            opacity: .6;
+            color: $color__primary;
+          }
+        }
+
+        &.active {
+          border-color: $color__primary;
+        }
+
+        //&:after{
+        //  content: '';
+        //  height: 3px;
+        //  background-color: rebeccapurple;
+        //  width: 98%;
+        //  display: inline-block;
+        //  border-radius: 4px;
+        //}
+      }
+    }
+  }
+}
+

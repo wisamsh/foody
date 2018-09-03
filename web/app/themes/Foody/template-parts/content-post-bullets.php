@@ -8,6 +8,7 @@
 
 
 /** @var Foody_Post $foody_page */
+/** @noinspection PhpUndefinedVariableInspection */
 $foody_page = $template_args['foody_page'];
 ?>
 

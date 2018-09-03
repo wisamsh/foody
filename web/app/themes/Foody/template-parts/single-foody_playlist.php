@@ -9,7 +9,8 @@
 global $foody_page;
 
 /** @var Foody_Playlist $playlist */
-$playlist = $foody_page;
+/** @noinspection PhpUndefinedVariableInspection */
+$playlist = $template_args['page'];
 
 $recipe = $playlist->get_current_recipe();
 

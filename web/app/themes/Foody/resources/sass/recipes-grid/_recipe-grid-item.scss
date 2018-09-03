@@ -1,6 +1,6 @@
-.recipe-item {
+.recipe-item,.playlist-item {
 
-  .recipe-item-image {
+  .recipe-item-image,.playlist-item-image {
     clip-path: inset(0 round .2em);
     object-fit: cover;
   }
@@ -28,9 +28,34 @@
         display: inline-block;
       }
     }
+
+    .playlist-count {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, .9);
+      text-align: center;
+      color: $color__primary;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px;
+
+      i {
+        margin-bottom: 10px;
+        &:before {
+          font-size: 26px;
+        }
+      }
+
+      .count {
+        font-size: 15px;
+      }
+    }
   }
 
-  .recipe-item-details {
+  .recipe-item-details, .playlist-item-details {
     font-family: $font__assistant;
     padding: 10px 5px;
     .image-container {

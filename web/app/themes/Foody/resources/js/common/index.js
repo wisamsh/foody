@@ -5,3 +5,5 @@ require('./forms');
 require('./how-i-did');
 require('./favorites');
 require('./comments');
+require('./follow');
+require('./sort');
