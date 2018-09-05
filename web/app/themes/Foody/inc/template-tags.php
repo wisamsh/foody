@@ -52,7 +52,7 @@ if (!function_exists('foody_posted_by')) :
         $author = get_user_by('ID', $post_author_id);
 
         $author_name = null;
-        if (is_null($author)) {
+        if (is_null($author) || !$author) {
             $author_name = get_the_author();
         } else {
             $author_name = $author->display_name;
