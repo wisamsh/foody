@@ -9,7 +9,7 @@
 class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 {
 
-    public $debug = true;
+    public $debug = false;
 
     private $author;
 
@@ -94,13 +94,10 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
         $args = [
             'post_type' => $type,
             'posts_per_page' => 9,
-            // TODO query real author
-            'author' => 1// $this->author->ID
+            'author' => $this->author->ID
         ];
 
-        // TODO query real author
-//        $count = count_user_posts($this->author->ID, $type);
-        $count = count_user_posts(1, $type);
+        $count = count_user_posts($this->author->ID, $type);
 
         $query = new WP_Query($args);
         $posts = $query->get_posts();
@@ -117,7 +114,7 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
     private function get_posts_grid($posts, $type)
     {
-        if ($this->debug) {
+        if ($this->debug && !empty($posts)) {
             for ($i = 0; $i < 6; $i++)
                 $posts[] = $posts[0];
         }
