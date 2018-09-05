@@ -51,11 +51,18 @@ if (!function_exists('foody_posted_by')) :
     {
         $author = get_user_by('ID', $post_author_id);
 
+        $author_name = null;
+        if (is_null($author)) {
+            $author_name = get_the_author();
+        } else {
+            $author_name = $author->display_name;
+        }
+
         $byline = sprintf(
         /* translators: %s: post author. */
             esc_html_x('%s', 'post author', 'foody'),
-            '<span class="author vcard"><a class="url fn n" href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'))) . '">' . esc_html($author->display_name) . '</a></span>'
-            );
+            '<span class="author vcard"><a class="url fn n" href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'))) . '">' . esc_html($author_name) . '</a></span>'
+        );
 
         $posted_by = '<span class="byline"> ' . $byline . '</span>'; // WPCS: XSS OK.
 
