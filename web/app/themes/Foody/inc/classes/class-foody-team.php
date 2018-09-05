@@ -179,7 +179,7 @@ class FoodyTeam
         }
 
 
-        $name = get_the_author_meta('nickname', $author->ID);
+        $name = get_the_author_meta('display_name', $author->ID);
 
         $author_data = array(
             'id' => $author->ID,

@@ -20,4 +20,6 @@ interface Foody_Topic
     function get_type();
 
     function get_id();
+
+    function get_breadcrumbs_path();
 }

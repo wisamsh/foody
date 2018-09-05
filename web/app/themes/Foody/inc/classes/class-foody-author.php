@@ -170,4 +170,19 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
     {
         return $this->author->description;
     }
+
+    function get_breadcrumbs_path()
+    {
+        $team_link = get_permalink(18);
+
+        return [
+            [
+                'href' => $team_link,
+                'title' => get_post_field('post_title', 18)
+            ],
+            [
+                'title' => $this->topic_title()
+            ]
+        ];
+    }
 }

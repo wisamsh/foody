@@ -565,7 +565,7 @@ class Foody_Recipe extends Foody_Post
                     'id' => $item->ID,
                     'image' => get_the_post_thumbnail_url($item, 'list-item'),
                     'author' => array(
-                        'name' => get_the_author_meta('user_nicename', $item->post_author),
+                        'name' => get_the_author_meta('display_name', $item->post_author),
                         'link' => get_author_posts_url($item->post_author)
                     ),
                     'view_count' => view_count_display(foody_get_post_views($item->ID))

@@ -40,11 +40,11 @@ if ($follow.length) {
                         // TODO handle errors
 
                         if (status == 500) {
-                            alert('Error while adding comment');
+                            console.log('Error while adding comment');
                         } else if (status == 'timeout') {
-                            alert('Error: Server doesn\'t respond.');
+                            console.log('Error: Server doesn\'t respond.');
                         } else {
-                            alert('error: ' + status);
+                            alert('please sign in');
                         }
                         // revert animations and favorite indication
                         toggleAllFollowed(topicId, !isAlreadyFollowed);

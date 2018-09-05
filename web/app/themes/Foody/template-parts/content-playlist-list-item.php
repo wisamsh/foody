@@ -53,17 +53,6 @@ $playlist = $template_args['post'];
             <div class="description">
                 <?php echo $playlist->getDescription() ?>
             </div>
-
-
-            <?php
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/common/favorite.php',
-                array(
-                    'id' => $playlist->id,
-                    'post' => $playlist
-                )
-            );
-            ?>
         </section>
 
 

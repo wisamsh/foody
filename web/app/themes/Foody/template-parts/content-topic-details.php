@@ -45,7 +45,7 @@ $follow_btn_text = $is_followed ? __('עוקב') : __('עקוב');
         </div>
 
         <div class="details col">
-            <?php bootstrap_breadcrumb(); ?>
+            <?php bootstrap_breadcrumb(null, $topic->get_breadcrumbs_path()); ?>
 
             <h1 class="title">
                 <?php echo $topic->topic_title() ?>

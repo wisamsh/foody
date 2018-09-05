@@ -145,4 +145,10 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
     }
 
 
+    function get_breadcrumbs_path()
+    {
+        return [
+            ['title' => $this->getTitle()]
+        ];
+    }
 }
