@@ -151,7 +151,7 @@ $user = new Foody_User();
 					$items_wrap = mobile_nav_wrap( $channels );
 				}
 
-				$nav_args['items_wrap'] = $items_wrap;
+//				$nav_args['items_wrap'] = $items_wrap;
 				wp_nav_menu( $nav_args );
 
 				?>
