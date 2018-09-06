@@ -9,30 +9,80 @@ Requirements:
 
 ## Usage
 
+Command signature: 
+``php artisan foody {action} {option[s]}``
+
 ###First run:
 
-execute the mongo shell commands
+* execute the mongo shell commands
 found under app/Mongo/scripts.js
+* run ``composer install``
+* Laravel and WordPress both declare the __() function
+for localization, and are conflicting when loaded together.
+To solve this you need to manually edit Laravel's function:
+    * `sudo vim vendor/laravel/framework/src/Illuminate/Foundation/helpers.php -c ":821"`
+    * edit the function declaration and the function_exists line.
+    * create relevant directories:
+        * mkdir tmp
+        * mkdir logs
 
 ####Default action:
 ````
+php artisan foody migrate-full
+````
+####Available action:
+````
 php artisan foody migrate
 ````
-####Without taxonomy (categories):
-````
-php artisan foody migrate --without-taxonomy
-````
+
 ####Only taxonomy:
 ````
-php artisan foody migrate --only-taxonomy
+php artisan foody migrate --taxonomy
 ````
+_Imports all taxonomy types._
+_To import a single type use the relevant option._
+
 ####Ingredients:
 ````
 php artisan foody migrate --ingredients
 ````
+####Mongo Ingredients:
+````
+php artisan foody migrate --db-ingredients
+````
 
-####Sincle record ID
+####Categories:
 ````
-php artisan foody migrate --single=1000
+php artisan foody migrate --categories
 ````
-_Only applies to articles_
+####Pans:
+````
+php artisan foody migrate --pans
+````
+####Limitations:
+````
+php artisan foody migrate --limitations
+````
+####Accessories:
+````
+php artisan foody migrate --accessories
+````
+####Units:
+````
+php artisan foody migrate --units
+````
+####Techniques:
+````
+php artisan foody migrate --techniques
+````
+####Users:
+````
+php artisan foody migrate --users
+````
+####Recipes:
+````
+php artisan foody migrate --recipes
+````
+* Note: make sure to import relevant 
+all other types before importing recipes
+        

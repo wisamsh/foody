@@ -8,14 +8,13 @@
 
 
 get_header();
-bootstrap_breadcrumb();
+$category_id = get_queried_object_id();
+
+$category = new Foody_Category($category_id);
+
+
 
 ?>
-
-
-
-
-
 
 
 
