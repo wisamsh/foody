@@ -1,0 +1,240 @@
+.archive.author, body[class~="foody_channel-template-channel"] {
+
+  article {
+    &.content {
+
+      .details-container {
+
+        .featured-content-container {
+
+          img {
+            height: 250px;
+            width: 100%;
+          }
+        }
+
+        .topic-details {
+          width: 70%;
+
+          .image-container {
+            img {
+              clip-path: circle();
+              width: 96px;
+              height: 96px;
+            }
+          }
+
+          .details {
+            max-width: initial;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            justify-content: flex-end;
+            padding: 0 20px;
+
+            h1 {
+              margin: 0;
+              font-size: 32px;
+            }
+
+            .breadcrumb {
+              font-size: 18px;
+            }
+          }
+
+          .follow {
+            button {
+              padding: 0 20px;
+              background-color: $color__primary;
+              color: white;
+              font-size: 22px;
+
+              i {
+                display: none;
+
+              }
+
+              &.followed {
+                padding-right: 5px;
+                background-color: white;
+                color: $color__primary;
+                border: 1px solid $color__primary;
+
+                i {
+                  display: initial;
+                  vertical-align: middle;
+
+                  &:before {
+                    font-size: 16px;
+                  }
+                }
+
+                span {
+                  vertical-align: sub;
+                }
+              }
+            }
+          }
+
+          @import "../../common/social-bar";
+
+        }
+
+        .description {
+          font-family: $font__assistant;
+          font-size: 22px;
+          text-align: right;
+          margin: 0;
+        }
+      }
+
+      @import "../../common/foody-tabs";
+
+      .foody-tabs {
+        background-color: white;
+
+        .nav-tabs {
+          padding-right: 5px;
+          max-width: 70%;
+          background-color: white;
+          margin: 0 auto;
+
+          li {
+            min-width: 15%;
+          }
+        }
+        .tabs-container {
+          background-color: $color__background-body;
+
+          .bootstrap-select.foody-select {
+            max-width: 7em;
+            margin-left: 20px;
+            margin-top: 10px;
+          }
+          .tab-content {
+            background-color: $color__background-body;
+
+            .tab-pane {
+
+              &.show {
+                flex-direction: row;
+                display: flex;
+                padding-top: 20px;
+                padding-bottom: 20px;
+              }
+
+              .recipe-item {
+                .recipe-item-image {
+                  height: 276px;
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+
+}
+
+@include breakpoint(mobileonly) {
+  .archive.author, body[class~="foody_channel-template-channel"] {
+
+    article {
+      &.content {
+
+        .details-container {
+          padding-top: 0;
+          .featured-content-container {
+            margin: 0;
+            clip-path: none;
+
+            .image-container {
+
+            }
+            img {
+              height: 150px;
+            }
+          }
+
+          .topic-details {
+            width: 100%;
+            padding-top: 10px;
+            > .row {
+              margin: 0;
+              padding: 0 10px;
+            }
+
+            .image-container {
+              margin-top: -58px;
+              img {
+                border: 2px solid white;
+                border-radius: 50%;
+              }
+            }
+
+            .details {
+
+              h1 {
+
+              }
+
+              .breadcrumb {
+                display: none;
+              }
+            }
+
+            .follow {
+              button {
+
+              }
+            }
+
+          }
+
+          .description {
+            margin: 0 15px;
+            border-bottom: solid 1px rgba(58, 58, 58, 0.5);
+            padding-bottom: 10px;
+          }
+        }
+
+        .foody-tabs {
+
+          .nav-tabs {
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+
+            .nav-item {
+              width: 50%;
+              min-width: 50%;
+              margin: 0;
+              display: inline-block;
+            }
+          }
+          .tabs {
+
+            .bootstrap-select.foody-select {
+
+            }
+            .tab-content {
+
+              .tab-pane {
+
+                .recipe-item {
+                  .recipe-item-image {
+                  }
+                }
+              }
+            }
+          }
+
+        }
+      }
+    }
+
+  }
+}

@@ -7,7 +7,8 @@
  */
 
 
-function get_logo_with_size($width,$height){
+function get_logo_with_size($width, $height)
+{
     $custom_logo_id = get_theme_mod('custom_logo');
     $url = network_site_url();
     $html = sprintf('<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url">%2$s</a>',
@@ -19,3 +20,23 @@ function get_logo_with_size($width,$height){
 
     return $html;
 }
+
+add_theme_support( 'post-thumbnails' );
+
+$sizes = [
+    [
+        'width' => 1099,
+        'height' => 524,
+        'name' => 'foody-main'
+    ],
+    [
+        'width' => 298,
+        'height' => 138,
+        'name' => 'list-item'
+    ],
+];
+
+foreach ($sizes as $size) {
+    add_image_size($size['name'], $size['width'], $size['height'],true);
+}
+

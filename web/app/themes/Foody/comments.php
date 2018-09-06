@@ -71,9 +71,11 @@ $foody_comments = new Foody_Comments();
 
             echo '
                 <script>
-                let ajaxurl = \'' . site_url('wp-admin/admin-ajax.php') . '\',
-                    parent_post_id = ' . get_the_ID() . ',
-                        cpage = ' . $cpage . '
+                if(!ajaxurl){
+                    var ajaxurl = \'' . site_url('wp-admin/admin-ajax.php') . '\';
+                    var parent_post_id = ' . get_the_ID() . '
+                }
+                let cpage = ' . $cpage . '
                 </script>';
         }
 

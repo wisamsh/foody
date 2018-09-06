@@ -23,7 +23,7 @@ html {
 
 body {
   margin: 0;
-  padding:0;
+  padding: 0;
   background-color: $color__background-screen !important;
   direction: rtl;
   text-rendering: optimizeLegibility !important;
@@ -371,9 +371,10 @@ li.widget {
 .no-margin {
   margin: 0;
 }
-.site-content{
-  min-height:100%;
-  position:relative;
+
+.site-content {
+  //min-height:100%;
+  position: relative;
 }
 
 a {
@@ -393,6 +394,10 @@ a {
   }
 }
 
-.email{
+.email {
   font-family: $font__ariel-rounded;
+}
+
+figure {
+  margin: 0;
 }

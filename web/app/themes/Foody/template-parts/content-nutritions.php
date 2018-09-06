@@ -6,32 +6,37 @@
  * Time: 11:52 AM
  */
 
-$nutritions = $template_args;
+$nutritions = $template_args['nutritions'];
+$title = $template_args['title'];
 
 ?>
 
-<div class="nutritions row">
+<h2 class="title">
+    <?php echo $title ?>
+</h2>
 
-    <?php foreach ($nutritions as $nutrition): ?>
+<div class="nutrition-container">
+    <div class="nutritions row">
 
-        <div class="col-sm-4 col-12 nutrition">
+        <?php foreach ($nutritions as $nutrition): ?>
 
-            <?php foreach ($nutrition as $values): ?>
-                <div class="nutrition-row">
+            <div class="col-sm-4 col-12 nutrition">
+
+                <?php foreach ($nutrition as $values): ?>
+                    <div class="nutrition-row">
                     <span class="name">
                         <?php echo $values['name'] ?>
                     </span>
 
-                    <span class="value <?php echo $values['positive_negative'] ?>">
+                        <span class="value <?php echo $values['positive_negative'] ?>">
                         <?php echo $values['value'] ?>
                     </span>
-                </div>
-                <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
 
-            <?php endforeach; ?>
-        </div>
+                <?php endforeach; ?>
+            </div>
 
-    <?php endforeach; ?>
-
-
+        <?php endforeach; ?>
+    </div>
 </div>

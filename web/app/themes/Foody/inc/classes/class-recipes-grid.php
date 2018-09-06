@@ -11,6 +11,14 @@ class RecipesGrid
 
     const NONE = 1000;
 
+    private $is_in_loop = false;
+    private $current_item = 0;
+
+    private $items_for_type = [
+        'Foody_Recipe' => ''
+    ];
+
+
     /**
      * RecipesGrid constructor.
      */
@@ -20,7 +28,15 @@ class RecipesGrid
     }
 
 
-    public function draw($col_num, $col_num_mobile = 12)
+    /**
+     * @param $post Foody_Post
+     * @param $col_num
+     * @param int $col_num_mobile
+     * @param bool $echo
+     * @return string the item html
+     * @throws Error if 12 is not divided by col_num
+     */
+    public function draw($post, $col_num, $col_num_mobile = 12, $echo = true, $type = 'recipe')
     {
         if ($col_num == 0) {
             $col_num = self::NONE;
@@ -38,23 +54,54 @@ class RecipesGrid
         }
 
 
-        $container_start = '<div class="' . $class . ' recipe-item-container">';
+        $container_start = '<div class="' . $class . ' ' . $type . '-item-container" data-sort="' . $post->getTitle() . '" data-order="' . $this->current_item . '">';
         $container_end = '</div>';
 
-        echo $container_start;
+        $item_content = $container_start;
 
-        get_template_part('template-parts/content', 'recipe-list-item');
+        $item_content .= foody_get_template_part(
+            get_template_directory() . '/template-parts/content-' . $type . '-list-item.php',
+            [
+                'post' => $post,
+                'return' => true
+            ]
+        );
 
-        echo $container_end;
+        $item_content .= $container_end;
+
+        if ($echo) {
+            echo $item_content;
+        }
+        return $item_content;
 
     }
 
-    public function grid_debug($items_count,$col_num)
+    public function grid_debug($items_count, $col_num)
     {
 
         for ($i = 0; $i < $items_count; $i++) {
-            $this->draw($col_num);
+            $this->draw(new Foody_Recipe(), $col_num);
         }
+    }
+
+    /**
+     * @param $posts Foody_Post[]
+     * @param $cols
+     * @param bool $echo
+     * @param string $type
+     * @return string
+     */
+    public function loop($posts, $cols, $echo = true, $type = 'recipe')
+    {
+        $items = '';
+        $this->is_in_loop = true;
+        foreach ($posts as $post) {
+            $items .= $this->draw($post, $cols, 12, $echo, $type);
+            $this->current_item++;
+        }
+        $this->current_item = 0;
+        $this->is_in_loop = false;
+        return $items;
     }
 
 }

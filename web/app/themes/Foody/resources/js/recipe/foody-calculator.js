@@ -25,10 +25,11 @@ window.calculator = function (selector) {
         $elements.each(function () {
 
             let $this = $(this);
-            let base = parseInt($this.data('amount')) / originalNumberOfDishes;
+            let base = $this.data('amount') / originalNumberOfDishes;
 
-            let calculated = parseInt(base * val);
-            $('.amount', $this).text(calculated);
+            let calculated = base * val;
+
+            $this.text(calculated.toFixed(2));
         })
     });
 

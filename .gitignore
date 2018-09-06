@@ -135,4 +135,6 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 .idea
-bundle.js
+migration/tmp
+migration/vendor
+migration/bootstrap/cache

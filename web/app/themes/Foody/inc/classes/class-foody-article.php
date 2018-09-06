@@ -18,4 +18,9 @@ class Foody_Article extends Foody_Post
     {
         // TODO: Implement the_sidebar_content() method.
     }
+
+    public function the_details()
+    {
+        // TODO: Implement the_details() method.
+    }
 }

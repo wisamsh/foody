@@ -20,16 +20,10 @@ $ingredients_groups = $template_args;
 
             <?php foreach ($ingredients_group['ingredients'] as $ingredient): ?>
 
-                <li class="ingredients" data-amount="<?php echo $ingredient->amount; ?>" data-unit="<?php echo $ingredient->amount; ?>">
-                    <span class="amount">
-                        <?php echo $ingredient->amount; ?>
-                    </span>
-                    <span class="unit">
-                        <?php echo $ingredient->getUnit(); ?>
-                    </span>
-                    <span class="unit">
-                        <?php echo $ingredient->getTitle(); ?>
-                    </span>
+                <li class="ingredients">
+
+                    <?php $ingredient->the_amounts() ?>
+
                 </li>
 
             <?php endforeach; ?>

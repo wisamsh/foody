@@ -73,11 +73,32 @@ $foody_comments = new Foody_HowIDid();
         </ol><!-- .comment-list -->
 
         <?php
-        foody_get_template_part(
-            get_template_directory() . '/template-parts/common/show-more-simple.php',
-            array(
-                'context' => 'how-i-did-list'
-            ));
+
+        $page = get_query_var('chpage', null);
+
+        if ($page == null) {
+            $page = $foody_comments->get_page_count();
+            set_query_var('chpage', $page);
+        }
+
+        if($page >= 0){
+
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/common/show-more-simple.php',
+                array(
+                    'context' => 'how-i-did-list'
+                ));
+
+            echo '
+                <script>
+                if(!ajaxurl){
+                    var ajaxurl = \'' . site_url('wp-admin/admin-ajax.php') . '\';
+                    var parent_post_id = ' . get_the_ID() . '
+                }
+                let chpage = ' . $page . '
+                </script>';
+        }
+
         ?>
 
 

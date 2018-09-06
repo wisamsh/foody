@@ -1567,10 +1567,45 @@ function foody_set_post_views($postID)
 // Remove issues with prefetching adding extra views
 remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
 
+/**
+ * @param string $theme_location
+ *
+ * @return array of menu items
+ */
+function foody_get_menu_by_location( $theme_location ) {
+	$theme_locations = get_nav_menu_locations();
+	$menu_obj = get_term( $theme_locations[ $theme_location ], 'nav_menu' );
+	if ( $menu_obj && !is_wp_error($menu_obj))
+		return wp_get_nav_menu_items( $menu_obj->term_id);
+	else
+		return $menu_obj;
+}
+
+/**
+ * @param string $theme_location
+ * @param string $default_name
+ *
+ * @return string menu name if exists, else return "menu"
+ */
+function foody_get_menu_title( $theme_location, $default_name = 'menu' ) {
+	if ( $theme_location && ( $locations = get_nav_menu_locations() ) && isset( $locations[ $theme_location ] ) ) {
+		$menu = wp_get_nav_menu_object( $locations[ $theme_location ] );
+
+		if( $menu && $menu->name ) {
+			return $menu->name;
+		}
+	}
+	return $default_name;
+}
+
 
 function foody_get_array_default($array, $key, $default)
 {
-    return isset($array[$key]) ? $array[$key] : $default;
+    $val = $default;
+    if(isset($array) && !empty($array)){
+        $val = isset($array[$key]) ? $array[$key] : $default;
+    }
+    return $val;
 }
 
 function array_not_empty($arr)

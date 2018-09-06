@@ -164,3 +164,111 @@
 
 }
 
+
+@include breakpoint(mobileonly){
+  .comment-content a {
+
+  }
+
+  .bypostauthor {
+
+  }
+
+  .comments-title {
+
+  }
+
+  .comment-form {
+
+    .commentform-element {
+
+      img.avatar {
+
+      }
+
+      .name {
+
+      }
+
+      #comment {
+      }
+
+      &.open {
+
+        #comment {
+
+        }
+
+        img.avatar {
+        }
+      }
+    }
+
+    &.open {
+      .form-submit {
+
+      }
+    }
+
+    .form-submit {
+
+      input[type="submit"], input[type="button"] {
+
+      }
+
+      input[type="submit"] {
+
+      }
+
+      input.cancel {
+
+      }
+    }
+  }
+
+  .comment-list {
+
+    padding-left: 0;
+
+
+    .foody-comment {
+
+      img.avatar {
+
+      }
+
+      .comment-body {
+
+        .author {
+
+        }
+
+        time {
+
+        }
+
+        p {
+
+        }
+
+      }
+
+      .reply {
+
+      }
+
+    }
+
+    .children {
+      margin-left: 0;
+      .foody-comment {
+        img.avatar {
+
+        }
+      }
+    }
+
+  }
+
+}
+

@@ -1,0 +1,42 @@
+.foody-accordion {
+
+  &.accordion-mobile {
+    .foody-accordion-content {
+      .foody-accordion-title {
+        background-image: linear-gradient(80deg, #ec3849, #f35644);
+        padding: 0 20px;
+        height: 50px;
+
+        i {
+          &:before {
+            color: white;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: transform .3s ease;
+          }
+        }
+
+        a {
+
+          &[data-toggle="collapse"] {
+            color: white;
+            font-size: 24px;
+            line-height: 50px;
+          }
+
+          &.collapsed + i {
+            &:before{
+              transform-origin: 50%;
+              transform: rotate(180deg) translateY(-100%);
+            }
+          }
+        }
+      }
+
+      .card-body{
+        padding: 10px 20px;
+      }
+    }
+  }
+
+}

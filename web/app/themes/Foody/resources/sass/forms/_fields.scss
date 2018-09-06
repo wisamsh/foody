@@ -25,7 +25,7 @@ textarea {
   }
 }
 
-input:focus,input:active{
+input:focus, input:active {
   outline: none !important;
 }
 
@@ -39,6 +39,7 @@ textarea {
 
 div.checkbox {
   text-align: right;
+  direction: ltr;
 }
 
 input {
@@ -49,6 +50,8 @@ input {
 }
 
 $dropdown-toggle-size: 22px;
+$mdb-checkbox-size: 15px;
+
 .dropdown {
   &.bootstrap-select {
     &.foody-select {
@@ -84,14 +87,16 @@ $dropdown-toggle-size: 22px;
 }
 
 .checkbox {
-  label{
-    .checkbox-decorator{
+  label {
+    direction: rtl;
+    .checkbox-decorator {
       position: initial;
 
-      .check{
+      .check {
         width: 15px;
         height: 15px;
         border: 1px solid $color__text-primary-dark;
+        direction: ltr;
       }
     }
     .checkbox-label-text {

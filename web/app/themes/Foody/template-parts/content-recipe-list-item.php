@@ -6,59 +6,63 @@
  * Time: 8:21 PM
  */
 
-$recipe = new Foody_Recipe();
+/** @var Foody_Recipe $recipe */
+$recipe = $template_args['post'];
 
 ?>
 
 
 <div class="recipe-item">
+    <a href="<?php echo $recipe->link ?>">
+        <div class="image-container main-image-container">
+            <img class="recipe-item-image" src="<?php echo $recipe->getImage() ?>" alt="">
+            <div class="duration">
 
-    <div class="image-container main-image-container">
-        <img class="recipe-item-image" src="<?php echo $recipe->getImage() ?>" alt="">
-        <div class="duration">
 
+                <i class="icon icon-timeplay">
 
-            <i class="icon icon-timeplay">
-
-            </i>
-            <span>
+                </i>
+                <span>
                    <?php echo $recipe->getDuration() ?>
             </span>
+            </div>
         </div>
-    </div>
-
+    </a>
     <section class="recipe-item-details  d-flex">
         <div class="image-container col-1 nopadding">
             <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
         </div>
         <section class="col-11">
             <h3>
-				<?php echo $recipe->getTitle() ?>
+                <a href="<?php echo $recipe->link ?>">
+                    <?php echo $recipe->getTitle() ?>
+                </a>
             </h3>
             <ul>
                 <li>
-					<?php echo $recipe->getAuthorName() ?>
+                    <?php echo $recipe->getAuthorName() ?>
                 </li>
                 <li>
-					<?php echo $recipe->getViewCount() ?>
+                    <?php echo $recipe->getViewCount() ?>
                 </li>
                 <li>
-					<?php echo $recipe->getPostedOn() ?>
+                    <?php echo $recipe->getPostedOn() ?>
                 </li>
             </ul>
             <div class="description">
-				<?php echo $recipe->getDescription() ?>
+                <?php echo $recipe->getDescription() ?>
             </div>
 
 
-            <div class="favorite">
-                <i class="icon-heart">
-
-                </i>
-                <span>
-                    הוספה למועדפים
-                </span>
-            </div>
+            <?php
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/common/favorite.php',
+                array(
+                    'id' => $recipe->id,
+                    'post' => $recipe
+                )
+            );
+            ?>
         </section>
 
 

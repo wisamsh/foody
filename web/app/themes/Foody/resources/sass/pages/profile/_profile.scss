@@ -84,6 +84,7 @@ $sidebar-width: 22.5% !default;
           padding-bottom: 31px;
           padding-right: 40px;
           place-items: center;
+          margin-left: 0;
           .image-container {
             margin-left: 22px;
 
@@ -152,6 +153,22 @@ $sidebar-width: 22.5% !default;
           padding: 0;
           min-width: calc(100% - #{$my-channels-width});
 
+          .no-recipes {
+            text-align: center;
+            padding: 50px 0;
+
+            .title {
+              margin: 15px 0;
+              text-align: center;
+            }
+
+            p {
+              font-family: $font__assistant;
+              font-size: 18px;
+              margin-bottom: 0;
+            }
+          }
+
           .tab-pane {
             padding: 0 17px;
             .recipe-item-container {
@@ -160,14 +177,14 @@ $sidebar-width: 22.5% !default;
 
               .recipe-item-image {
                 min-height: 272px;
+                height: 272px;
+                width: 100%;
               }
             }
           }
         }
       }
-
     }
-
   }
 
   footer {
@@ -221,7 +238,7 @@ $sidebar-width: 22.5% !default;
                 background-color: $color__background-screen;
               }
 
-              ul.managed-list{
+              ul.managed-list {
                 padding-top: 0;
                 padding-bottom: 0;
               }
@@ -263,7 +280,7 @@ $sidebar-width: 22.5% !default;
               }
             }
 
-            h1{
+            h1 {
               margin-bottom: -4px !important;
             }
 

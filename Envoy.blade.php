@@ -16,9 +16,11 @@ $theme_dir = 'web/app/themes/Foody';
 $release_dir = '/home/ubuntu/releases';
 $db_backup_dir = '/var/www/db_backups';
 $app_dir = '/var/www/html';
+$global_uploads_dir = '/home/ubuntu/uploads';
+$app_uploads_dir = $app_dir . '/web/app/uploads';
 
 $release = 'release_' . date('YmdHis');
-$servers = ['local' => '127.0.0.1', 'dev' => 'ubuntu@foody-dev.moveodevelop.com'];
+$servers = ['local' => '127.0.0.1', 'dev' => 'ubuntu@foody-dev.moveodevelop.com', 'medio-dev' => 'ubuntu@foody.moveodevelop.com'];
 
 if (!isset($branch)){
     $branch = 'staging';
@@ -77,6 +79,8 @@ sudo chmod -R ug+rwx {{ $release }};
 
 echo 'Updating symlinks...'
 sudo ln -nfs {{ $release_dir }}/{{ $release }} {{ $app_dir }};
+sudo rm -r {{ $app_uploads_dir }}
+sudo ln -s {{$global_uploads_dir}} {{$app_uploads_dir}}
 
 echo 'Deployment to {{$target}} finished successfully.'
 @endtask

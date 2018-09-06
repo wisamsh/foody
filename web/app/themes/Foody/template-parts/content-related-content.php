@@ -33,6 +33,7 @@ $type = foody_get_array_default($related_content, 'type', 'foody_recipe');
 $items = foody_get_array_default($related_content, 'items', array());
 
 ?>
+<section class="related-content-container <?php echo $content_classes ?>">
 
 <h3 class="title related-content-title">
     <?php echo $related_content['title'] ?>
@@ -78,3 +79,4 @@ $items = foody_get_array_default($related_content, 'items', array());
 
 
 </ul>
+</section>

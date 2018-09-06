@@ -49,6 +49,7 @@ if (!function_exists('foody_setup')) :
             'menu-1' => esc_html__('Primary', 'foody'),
             'footer-pages' => esc_html__('Footer Pages', 'foody'),
             'footer-links' => esc_html__('Footer Links', 'foody'),
+            'channels-menu' => esc_html__('Channels Menu', 'foody')
         ));
 
         /*
@@ -147,9 +148,9 @@ function foody_scripts()
 //        wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/home.js', false, false, true);
 //    }
 
-
-    wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/bundle.js', false, false, true);
-
+    if(!is_admin()) {
+        wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/main.js', false, false, true);
+    }
 
 }
 
@@ -189,3 +190,11 @@ require_once get_template_directory() . '/functions/includes.php';
 if (defined('JETPACK__VERSION')) {
     require get_template_directory() . '/inc/jetpack.php';
 }
+
+
+function admin_theme_style()
+{
+    wp_enqueue_script('admin-script', get_template_directory_uri() . '/dist/admin.js', false, false, true);
+}
+add_action('admin_enqueue_scripts', 'admin_theme_style');
+add_action('login_enqueue_scripts', 'admin_theme_style');

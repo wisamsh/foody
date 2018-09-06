@@ -3,7 +3,7 @@
  */
 
 let IScroll = require('iscroll');
-// let $ = require('jquery');
+let $ = require('jquery');
 require('jquery-drawer');
 require('bootstrap');
 require('bootstrap-material-design');
@@ -15,7 +15,8 @@ require('./plugins');
 require('slick-carousel');
 require('../sass/app.scss');
 window._ = require('underscore');
-
+window.Fraction = require('fractional').Fraction;
+window.lottie = require('lottie-web');
 
 // /*
 //  * Plugins
@@ -33,6 +34,7 @@ require('./common');
 
 require('./components');
 
+require('./layout');
 
 /*
  * Pages
@@ -43,9 +45,14 @@ require('./homepage');
 require('./team');
 
 require('./recipe');
+require('./playlist');
 
 jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();
     $('.foody-select').selectpicker({dropdownAlignRight: true, style: 'foody-select'});
-    $('.foody-rating').rating({filledStar:'<i class="icon-big-star-rank filled"></i>',emptyStar:'<i class="icon-big-star-rank"></i>'})
+    $('[data-toggle="popover"]').popover();
+    $('.foody-rating').rating({
+        filledStar: '<i class="icon-big-star-rank filled"></i>',
+        emptyStar: '<i class="icon-big-star-rank"></i>'
+    });
 });

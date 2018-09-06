@@ -73,6 +73,16 @@ class Foody_User
     }
 
 
+    public function get_image()
+    {
+        $image = $GLOBALS['images_dir'] . 'avatar.png';
+        if ($this->user->ID > 0) {
+            $image = get_user_meta(get_current_user_id(), 'wp_user_avatars', true)['52'];
+        }
+
+        return $image;
+    }
+
     /*
      *
      * Generic

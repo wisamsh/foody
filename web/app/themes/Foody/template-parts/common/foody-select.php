@@ -14,7 +14,8 @@
     $placeholder = $template_args['placeholder'] ?? 'select';
     $id = $template_args['id'];
     ?>
-    <select class="foody-select" title="<?php echo $name ?>" name="<?php echo $name ?>" id="<?php echo $id ?>">
+    <select class="foody-select foody-sort" title="<?php echo $name ?>" name="<?php echo $name ?>"
+            id="<?php echo $id ?>">
         <option value="">
             <?php echo $placeholder ?>
         </option>

@@ -11,7 +11,6 @@
 get_header();
 
 $homepage = new HomePage();
-
 ?>
 
     <div class="homepage">
@@ -43,22 +42,20 @@ $homepage = new HomePage();
                     <div class="sidebar-content">
                         <?php $homepage->filter() ?>
                     </div>
-
                 </aside>
 
                 <section class="content-container col-sm-9 col-12">
 
                     <article class="feed row gutter-3 recipes-grid">
                         <?php $homepage->feed() ?>
-
-                        <div class="show-more">
-                            <img src="<?php echo $GLOBALS['images_dir'] . 'bite.png' ?>" alt="">
-                            <h4>
-                                לעוד מתכונים
-                            </h4>
-                        </div>
-
                     </article>
+                    <div class="show-more">
+                        <img src="<?php echo $GLOBALS['images_dir'] . 'bite.png' ?>" alt="">
+                        <h4>
+                            לעוד מתכונים
+                        </h4>
+                    </div>
+
                 </section>
 
 

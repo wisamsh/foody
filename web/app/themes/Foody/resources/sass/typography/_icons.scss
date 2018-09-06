@@ -24,221 +24,196 @@
 .icon-Asset-1:before {
   content: "\e92d";
 }
-
-.icon-instagram {
-  .path1:before {
-    content: "\e900";
-    color: rgb(237, 61, 72);
-  }
-  .path2:before {
-    content: "\e901";
-    margin-left: -1em;
-    color: rgb(255, 255, 255);
-  }
-  .path3:before {
-    content: "\e902";
-    margin-left: -1em;
-    color: rgb(237, 61, 72);
-  }
-  .path4:before {
-    content: "\e903";
-    margin-left: -1em;
-    color: rgb(237, 61, 72);
-  }
+.icon-Backw:before {
+  content: "\e92e";
+  color: #ed3d48;
 }
-
-.icon-youtube {
-  .path1:before {
-    content: "\e904";
-    color: rgb(237, 61, 72);
-  }
-  .path2:before {
-    content: "\e905";
-    margin-left: -1em;
-    color: rgb(237, 61, 72);
-  }
-  .path3:before {
-    content: "\e906";
-    margin-left: -1em;
-    color: rgb(237, 61, 72);
-  }
-  .path4:before {
-    content: "\e907";
-    margin-left: -1em;
-    color: rgb(255, 255, 255);
-  }
+.icon-Forw:before {
+  content: "\e92f";
+  color: #ed3d48;
 }
-
-.icon-facebook {
-  .path1:before {
-    content: "\e908";
-    color: rgb(237, 61, 72);
-  }
-  .path2:before {
-    content: "\e909";
-    margin-left: -1em;
-    color: rgb(255, 255, 255);
-  }
+.icon-Play-on-playlist:before {
+  content: "\e930";
+  color: #fff;
 }
-
+.icon-Playlist:before {
+  content: "\e931";
+  color: #ed3d48;
+}
+.icon-instagram .path1:before {
+  content: "\e900";
+  color: rgb(237, 61, 72);
+}
+.icon-instagram .path2:before {
+  content: "\e901";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-instagram .path3:before {
+  content: "\e902";
+  margin-left: -1em;
+  color: rgb(237, 61, 72);
+}
+.icon-instagram .path4:before {
+  content: "\e903";
+  margin-left: -1em;
+  color: rgb(237, 61, 72);
+}
+.icon-youtube .path1:before {
+  content: "\e904";
+  color: rgb(237, 61, 72);
+}
+.icon-youtube .path2:before {
+  content: "\e905";
+  margin-left: -1em;
+  color: rgb(237, 61, 72);
+}
+.icon-youtube .path3:before {
+  content: "\e906";
+  margin-left: -1em;
+  color: rgb(237, 61, 72);
+}
+.icon-youtube .path4:before {
+  content: "\e907";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-facebook .path1:before {
+  content: "\e908";
+  color: rgb(237, 61, 72);
+}
+.icon-facebook .path2:before {
+  content: "\e909";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
 .icon-arrowleft:before {
   content: "\e90a";
 }
-
 .icon-celcomtv:before {
   content: "\e90b";
 }
-
 .icon-Checkmark:before {
   content: "\e90c";
 }
-
-.icon-email {
-  .path1:before {
-    content: "\e90d";
-    color: rgb(237, 61, 72);
-  }
-  .path2:before {
-    content: "\e90e";
-    margin-left: -1em;
-    color: rgb(255, 255, 255);
-  }
-  .path3:before {
-    content: "\e90f";
-    margin-left: -1em;
-    color: rgb(255, 255, 255);
-  }
+.icon-email .path1:before {
+  content: "\e90d";
+  color: rgb(237, 61, 72);
 }
-
+.icon-email .path2:before {
+  content: "\e90e";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-email .path3:before {
+  content: "\e90f";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
 .icon-heart-mobile:before {
   content: "\e910";
 }
-
 .icon-heart:before {
   content: "\e911";
 }
-
 .icon-heartfillred:before {
   content: "\e912";
 }
-
 .icon-menu-mobile:before {
   content: "\e913";
 }
-
 .icon-more-mobile:before {
   content: "\e914";
 }
-
 .icon-more:before {
   content: "\e915";
 }
-
-.icon-pinterest {
-  .path1:before {
-    content: "\e916";
-    color: rgb(237, 61, 72);
-  }
-  .path2:before {
-    content: "\e917";
-    margin-left: -1em;
-    color: rgb(255, 255, 255);
-  }
+.icon-pinterest .path1:before {
+  content: "\e916";
+  color: rgb(237, 61, 72);
 }
-
+.icon-pinterest .path2:before {
+  content: "\e917";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
 .icon-Search-mobile:before {
   content: "\e918";
 }
-
 .icon-search:before {
   content: "\e919";
 }
-
 .icon-timeplay:before {
   content: "\e91a";
   color: #ec5a5a;
 }
-
+.icon-Shape:before {
+  content: "\e932";
+  color: #ed3d48;
+}
 .icon-envelop:before {
   content: "\e91b";
 }
-
 .icon-pinterest-recipe:before {
   content: "\e91c";
   color: #c8232c;
 }
-
 .icon-printer:before {
   content: "\e91d";
 }
-
 .icon-whatsapp:before {
   content: "\e91e";
   color: #75b73b;
 }
-
 .icon-big-star-rank:before {
   content: "\e91f";
   color: #d8d8d8;
 }
-
 .icon-show-more-arrow:before {
   content: "\e920";
   color: #ed3d48;
 }
-
 .icon-camera:before {
   content: "\e921";
 }
-
 .icon-side-arrow:before {
   content: "\e922";
 }
-
 .icon-categories:before {
   content: "\e923";
   color: #ed3d48;
 }
-
 .icon-filter:before {
   content: "\e924";
   color: #ed3d48;
 }
-
 .icon-favorite-pressed:before {
   content: "\e925";
   color: #ed3d48;
 }
-
 .icon-acces:before {
   content: "\e926";
 }
-
 .icon-facebook2:before {
   content: "\e927";
   color: #ed3d48;
 }
-
 .icon-favorite:before {
   content: "\e928";
   color: #ed3d48;
 }
-
 .icon-mail:before {
   content: "\e929";
   color: #ed3d48;
 }
-
 .icon-pinterest2:before {
   content: "\e92a";
   color: #ed3d48;
 }
-
 .icon-youtube2:before {
   content: "\e92b";
   color: #ed3d48;
 }
-
 .icon-instagram2:before {
   content: "\e92c";
   color: #ed3d48;

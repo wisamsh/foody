@@ -25,10 +25,15 @@ window.formSubmit = function (settings) {
                 url: settings.ajaxUrl, // admin-ajax.php URL
                 data: $(this).serialize() + action, // send form data + action parameter
                 beforeSend: function (xhr) {
+
+                    // TODO change to loader
                     // what to do just after the form has been submitted
                     button.addClass('loadingform').val('Loading...');
                 },
                 error: function (request, status, error) {
+
+                    // TODO handle errors
+
                     if (status == 500) {
                         alert('Error while adding comment');
                     } else if (status == 'timeout') {
@@ -43,6 +48,7 @@ window.formSubmit = function (settings) {
                 },
                 success: settings.success,
                 complete: function () {
+                    // TODO handle loader
                     // what to do after a comment has been added
                     button.removeClass('loadingform').val('Post Comment');
                 }
@@ -79,7 +85,6 @@ window.formSubmitWithFiles = function (settings) {
             $.each($('input[type="file"]', this), function () {
                 data.append($(this).attr('name'), $(this)[0].files[0])
             });
-
 
 
             // ajax request

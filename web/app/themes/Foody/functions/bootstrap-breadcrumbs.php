@@ -2,7 +2,7 @@
 /**
  * Display the breadcrumb
  */
-function bootstrap_breadcrumb($parent_id = null)
+function bootstrap_breadcrumb($parent_id = null, $path = null)
 {
 
 //    bcn_display($return = false, $linked = true, $reverse = false);
@@ -11,17 +11,31 @@ function bootstrap_breadcrumb($parent_id = null)
     wp_reset_query();
     global $post;
 
-    if (!is_front_page() && !is_home()) {
+    if ($path != null && !empty($path)) {
+
+        echo '<ol class="breadcrumb">';
+        //display home link
+        home_item();
+
+
+        for ($i = 0; $i < count($path); $i++) {
+
+            $link = $path[$i];
+            if ($i != count($path) - 1) {
+                echo '<li><a href="' . $link['href'] . '">' . $link['title'] . '</a></li>';
+            } else {
+                echo '<li class="active">' . $link['title'] . '</li>';
+            }
+        }
+
+        echo '</ol>';
+
+    } elseif (!is_front_page() && !is_home()) {
         //open up breadcrumbs list
         echo '<ol class="breadcrumb">';
 
         //display home link
-        echo '<li><a href="';
-        echo get_option('home');
-        echo '">';
-        echo get_the_title(get_option('page_on_front'));
-        echo "</a></li>";
-
+        home_item();
 
         if (is_single() && !is_category() && !is_page()) {
 
@@ -29,12 +43,12 @@ function bootstrap_breadcrumb($parent_id = null)
             $category_name_and_link = get_primary_category($category);
             $category_id = $category[0]->ID;
             $category_name = $category[0]->cat_name;
-            if ($category_name_and_link != null){
+            if ($category_name_and_link != null) {
                 $category_id = $category_name_and_link['id'];
                 $category_name = $category_name_and_link['name'];
             }
 
-            $subCategory = new Foody_Category($category_id,$category);
+            $subCategory = new Foody_Category($category_id, $category);
             $subCategoryParentId = $subCategory->parent($category_name);
             echo '<li><a href="' . get_permalink($subCategoryParentId) . '">' . get_the_title($subCategoryParentId) . '</a></li>';
             echo '<li class="active"><a href="' . get_category_link($category_id) . '">' . $category_name . '</a></li>';
@@ -95,4 +109,13 @@ function get_primary_category($category)
     }
 
     return $category_name_and_link;
+}
+
+function home_item()
+{
+    echo '<li><a href="';
+    echo get_option('home');
+    echo '">';
+    echo get_the_title(get_option('page_on_front'));
+    echo "</a></li>";
 }

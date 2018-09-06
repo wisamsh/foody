@@ -61,14 +61,25 @@ class Foody_Comments
         );
     }
 
-    public function the_title()
+    public function the_title($echo = true)
     {
         $foody_comment_count = get_comments(array('count' => true, 'type' => 'comment', 'post_id' => get_the_ID()));
 
-        printf(
+        $title = sprintf(
         /* translators: 1: comment count number, 2: title. */
             esc_html(_nx('תגובה אחת', 'תגובות (%s)', $foody_comment_count, 'comments title', 'foody')),
             number_format_i18n($foody_comment_count)
         );
+
+        if ($echo) {
+            echo $title;
+        }
+
+        return $title;
+    }
+
+    public function get_the_title()
+    {
+        return $this->the_title(false);
     }
 }

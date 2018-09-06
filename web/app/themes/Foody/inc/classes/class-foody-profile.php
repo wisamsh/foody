@@ -49,7 +49,23 @@ class Foody_Profile
 
     public function my_recipes()
     {
-        $this->grid->grid_debug(12, 2);
+        global $wp_session;
+
+        if (!isset($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
+            $posts = [];
+            foreach ($favorite_posts as $favorite_post) {
+                $posts[] = Foody_PostFactory::get_post(get_post($favorite_post));
+            }
+
+            echo '<h2 class="title">ספר המתכונים שלי</h2>';
+
+            $this->grid->loop($posts, 2);
+        } else {
+            // TODO show 'no content';
+            foody_get_template_part(get_template_directory() . '/template-parts/content-no-recipes.php');
+        }
+
+//        $this->grid->grid_debug(12, 2);
     }
 
     public function my_channels_recipes()
@@ -61,34 +77,35 @@ class Foody_Profile
     {
         $list = $this->foody_user->get_favorite_channels();
 
+
         $list = array(
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             ),
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             ),
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             ),
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             ),
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             ),
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             ),
             array(
-                'name' =>'שם שם',
-                'image' => 'http://localhost:8000/app/uploads/2018/06/matan-90x90.jpg'
+                'name' => 'שם שם',
+                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
             )
         );
 

@@ -2,6 +2,7 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phospr/fraction" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/xamin/handlebars.php" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -19,10 +20,22 @@
     <orderEntry type="module-library">
       <library name="PHP" type="php">
         <CLASSES>
+          <root url="file://$MODULE_DIR$/vendor/phospr/fraction" />
           <root url="file://$MODULE_DIR$/vendor/xamin/handlebars.php" />
         </CLASSES>
         <SOURCES>
+          <root url="file://$MODULE_DIR$/vendor/phospr/fraction" />
           <root url="file://$MODULE_DIR$/vendor/xamin/handlebars.php" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="PHARS">
+        <CLASSES>
+          <root url="phar://$MODULE_DIR$/migration/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
+        </CLASSES>
+        <SOURCES>
+          <root url="phar://$MODULE_DIR$/migration/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
         </SOURCES>
       </library>
     </orderEntry>

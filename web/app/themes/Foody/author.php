@@ -7,13 +7,4 @@
  */
 
 
-?>
-
-
-<div class="author">
-
-    <img class="avatar" src="<?php echo $image ?>" alt="">
-
-    <h4> <?php echo $name ?> </h4>
-
-</div>
+foody_get_template_part(get_template_directory() . '/template-parts/content-content-with-sidebar.php', ['hide_progress' => true]);

@@ -11,28 +11,27 @@ if (!function_exists('foody_posted_on')) :
     /**
      * Prints HTML with meta information for the current post-date/time.
      */
-    function foody_posted_on($echo = true)
+    function foody_posted_on($echo = true, $post = null)
     {
         $format = 'd.m.y';
         $time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-        if (get_the_time($format) !== get_the_modified_time($format)) {
+        if (get_the_time($format, $post) !== get_the_modified_time($format, $post)) {
             $time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
         }
 
 
-
         $time_string = sprintf($time_string,
-            esc_attr(get_the_date($format)),
-            esc_html(get_the_date($format)),
-            esc_attr(get_the_modified_date($format)),
-            esc_html(get_the_modified_date($format))
+            esc_attr(get_the_date($format, $post)),
+            esc_html(get_the_date($format, $post)),
+            esc_attr(get_the_modified_date($format, $post)),
+            esc_html(get_the_modified_date($format, $post))
         );
 
 
         $posted_on = sprintf(
         /* translators: %s: post date. */
             esc_html_x('%s', 'post date', 'foody'),
-            '<a href="' . esc_url(get_permalink()) . '" rel="bookmark">' . $time_string . '</a>'
+            '<a href="' . esc_url(get_permalink($post)) . '" rel="bookmark">' . $time_string . '</a>'
         );
 
         $posted_on = '<span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
@@ -41,8 +40,6 @@ if (!function_exists('foody_posted_on')) :
         } else {
             return $posted_on;
         }
-
-
     }
 endif;
 
@@ -50,12 +47,21 @@ if (!function_exists('foody_posted_by')) :
     /**
      * Prints HTML with meta information for the current author.
      */
-    function foody_posted_by($echo = true)
+    function foody_posted_by($echo = true, $post_author_id)
     {
+        $author = get_user_by('ID', $post_author_id);
+
+        $author_name = null;
+        if (is_null($author) || !$author) {
+            $author_name = get_the_author();
+        } else {
+            $author_name = $author->display_name;
+        }
+
         $byline = sprintf(
         /* translators: %s: post author. */
             esc_html_x('%s', 'post author', 'foody'),
-            '<span class="author vcard"><a class="url fn n" href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'))) . '">' . esc_html(get_the_author()) . '</a></span>'
+            '<span class="author vcard"><a class="url fn n" href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'))) . '">' . esc_html($author_name) . '</a></span>'
         );
 
         $posted_by = '<span class="byline"> ' . $byline . '</span>'; // WPCS: XSS OK.
@@ -65,8 +71,6 @@ if (!function_exists('foody_posted_by')) :
         } else {
             return $posted_by;
         }
-
-
     }
 endif;
 

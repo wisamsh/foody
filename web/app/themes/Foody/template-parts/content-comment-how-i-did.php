@@ -17,9 +17,13 @@ $image = wp_get_attachment_url($attachment_id);
 ?>
 
 
-<div class="col-sm-4 col-12 how-i-did">
+<div class="col-sm-4 col-6 how-i-did">
     <div class="image-container">
-        <img src="<?php echo $image ?>" alt="">
+        <a class="how-i-did-modal-open" href="#how-i-did-modal" data-toggle="modal" data-image="<?php echo $image ?>"
+           data-user="<?php echo get_comment_author($comment['comment_ID']) ?>"
+           data-content="<?php echo strip_tags(get_comment_text($comment['comment_ID'])); ?>">
+            <img src="<?php echo $image ?>" alt="">
+        </a>
     </div>
     <div class="author row gutter-0">
         <div>
@@ -30,7 +34,7 @@ $image = wp_get_attachment_url($attachment_id);
                 <?php printf(__('%s'), sprintf('<span class="author-name">%s</span>', get_comment_author_link($comment['comment_ID']))); ?>
             </span>
             <time>
-                <?php echo human_time_diff(get_comment_date('U',$comment['comment_ID']), date('U')) ?>
+                <?php echo human_time_diff(get_comment_date('U', $comment['comment_ID']), date('U')) ?>
             </time>
             <?php comment_text($comment['comment_ID']); ?>
         </div>

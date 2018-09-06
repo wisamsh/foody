@@ -8,7 +8,8 @@ $content-width: 70%;
 
 @import "../../common/show-more-simple";
 
-.single-foody_recipe {
+.single-foody_recipe, .single-foody_playlist , .archive.author, body[class~="foody_channel-template-channel"] {
+
 
   .progress-wrapper {
     $progress-height: 5px;
@@ -46,102 +47,30 @@ $content-width: 70%;
 
   article.content {
 
+    > section[class^="recipe-"] {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
     .details-container {
-      padding: 10px;
       background-color: white;
-      .video-container {
+      .featured-content-container {
         clip-path: inset(0 round 3px);
+        margin: 0 10px 10px;
 
         iframe {
           min-height: 524px;
         }
 
-      }
-
-      .details {
-        max-width: $content-width;
-
-        .post-categories {
-          padding: 0;
-          margin: 0;
-          color: $color__text-primary-light;
-          list-style-type: none;
-
-          li {
-            display: inline-block;
-            padding: 10px 20px;
-            font-family: $font__assistant;
-
-            &:first-child {
-              padding-right: 0;
-            }
-          }
-        }
-
-        .recipe-details {
-
-          font-family: $font__assistant;
-          .image-container {
-
-            text-align: right;
-            padding: 0;
-
-            img {
-              width: 52px;
-              border-radius: 50%;
-              max-width: unset;
-            }
-          }
-
-          h1 {
-            margin: 0;
-            font-size: 42px;
-            font-family: $font__assistant-bold;
-            font-weight: bold;
-          }
-
-          .description {
-            font-size: 24px;
-            text-align: right;
-            line-height: normal;
-            padding: 10px 0;
-          }
-
-          .view-count {
-          }
-
-          ul.content-details-bullets {
-            padding: 0;
-            margin: 0;
-            overflow: auto;
-
-            li {
-              list-style-type: none;
-              display: inline-block;
-              font-size: 1rem;
-            }
-
-            li:not(:first-child):before {
-              content: "• ";
-              padding: 0 .5rem;
-            }
-          }
-
-          .favorite {
-            text-align: right;
-            color: $color__primary;
-            padding: 5px 0;
-
-            i {
-              vertical-align: middle;
-            }
-          }
+        .wp-post-image {
+          max-height: 524px;
+          width: 100%;
         }
       }
     }
 
     .recipe-overview {
-      padding: 20px 0;
+
       .overview {
         list-style-type: none;
         @include max-width-section;
@@ -160,10 +89,18 @@ $content-width: 70%;
 
           .value {
             color: $color__primary;
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
+            font-family: $font__main;
           }
         }
+      }
+
+      .preview {
+        @include max-width-section;
+        font-family: $font__assistant;
+        font-size: 24px;
+        text-align: right;
       }
     }
 
@@ -179,6 +116,7 @@ $content-width: 70%;
         .title {
           line-height: normal;
           padding-right: 0;
+          padding-top: 10px;
         }
 
         .amount-container {
@@ -219,13 +157,20 @@ $content-width: 70%;
             font-family: $font__assistant;
             font-weight: bold;
             font-size: 24px;
+            max-width: 80%;
           }
 
           ul {
-
             padding: 0;
             list-style-type: none;
             font-size: 22px;
+            margin-bottom: 0;
+
+            span {
+              &.amount {
+                display: inline-block;
+              }
+            }
           }
         }
 
@@ -233,7 +178,7 @@ $content-width: 70%;
     }
 
     .recipe-content {
-      padding: 20px 0;
+
       .content-container {
         @include max-width-section;
         text-align: right;
@@ -309,18 +254,18 @@ $content-width: 70%;
               padding-left: 35px;
             }
 
-            > div {
+            > div:not(.clearfix) {
 
               padding: 5px 0;
 
               .name {
                 float: right;
-                font-size: 22px;
+                font-size: 20px;
                 font-weight: bold;
               }
 
               .value {
-                font-size: 22px;
+                font-size: 20px;
 
                 &.positive {
                   color: #66c264;
@@ -334,11 +279,6 @@ $content-width: 70%;
           }
         }
       }
-    }
-
-    > section[class^="recipe-"] {
-      margin-top: 20px;
-      margin-bottom: 20px;
     }
 
     > section[class^="recipe-"].box {
@@ -476,6 +416,56 @@ $content-width: 70%;
           }
         }
       }
+
+      #how-i-did-modal {
+
+        .modal-content {
+
+          .modal-header {
+            background-image: linear-gradient(83deg, #ec3849, #f35644);
+            color: #ffffff;
+            padding: 0;
+
+            .modal-title{
+              font-family: $font__main;
+              font-size: 28px;
+              font-weight: 900;
+              place-self: center;
+              margin-right: 20px;
+            }
+            .close{
+              float: left;
+              margin: 0;
+              color: #ffffff;
+              opacity: 1;
+            }
+          }
+          .modal-body {
+            padding: 0;
+
+            img {
+              display: inline-block;
+              float: right;
+              object-fit: scale-down;
+              border-bottom-right-radius: 0.25rem;
+            }
+
+            .details {
+              display: inline-block;
+              float: right;
+              text-align: right;
+              padding: 20px 5px 5px;
+              font-family: $font__assistant;
+              font-size: 22px;
+
+              h4 {
+                font-weight: bold;
+                font-family: $font__assistant;
+              }
+            }
+          }
+        }
+      }
     }
 
     #upload-image-modal {
@@ -581,7 +571,7 @@ $content-width: 70%;
   $sidebar-width: 0;
   $content-width: 100%;
   $content-padding: 40px;
-  .single-foody_recipe {
+  .single-foody_recipe , .single-foody_playlist {
 
     .progress-wrapper {
 
@@ -610,13 +600,18 @@ $content-width: 70%;
 
       .details-container {
 
-        .video-container {
-          margin: 0 -10px;
+        .featured-content-container {
+
           margin-top: -10px;
+          margin-left: 0;
+          margin-right: 0;
           clip-path: none;
           iframe {
             max-height: 200px;
             min-height: 200px;
+          }
+
+          .wp-post-image {
           }
 
         }
@@ -636,7 +631,7 @@ $content-width: 70%;
             }
           }
 
-          .recipe-details {
+          .recipe-details,.playlist-details {
 
             .image-container {
 
@@ -689,11 +684,16 @@ $content-width: 70%;
             }
 
             .key {
-
+              line-height: 1rem;
             }
 
             .value {
 
+            }
+
+            &:nth-child(3), &:nth-child(4) {
+              padding-bottom: 0;
+              padding-top: 20px;
             }
           }
         }
@@ -729,6 +729,7 @@ $content-width: 70%;
               margin-bottom: 15px;
             }
             .ingredients-group-title {
+              max-width: 100%;
             }
 
             ul {
@@ -737,7 +738,8 @@ $content-width: 70%;
               margin: 0;
 
               li {
-                padding: 0 10px;
+                padding: 5px 10px;
+                font-size: 20px;
                 &:nth-child(odd) {
                   background-color: white;
                 }
@@ -821,12 +823,8 @@ $content-width: 70%;
                 border-left: 0;
               }
 
-              &:last-child {
-                padding: 0 15px;
-              }
-
-              > div {
-
+              > div:not(.clearfix) {
+                padding: 5px 30px;
                 &.nutrition-row:not(:last-child) {
                   border-bottom: 1px solid $color__divider;
 
@@ -847,6 +845,14 @@ $content-width: 70%;
                 }
 
               }
+
+              &:last-child {
+                padding-left: 15px;
+
+                div.nutrition-row:not(.clearfix) {
+                  border-bottom: none;
+                }
+              }
             }
           }
         }
@@ -864,7 +870,7 @@ $content-width: 70%;
         max-width: calc(100% - #{$content-padding});
 
         ul {
-
+          column-count: 2;
           li {
 
             &:before {
@@ -888,53 +894,75 @@ $content-width: 70%;
 
       .recipe-how-i-did {
         @include max-width-section;
-        max-width: calc(100% - #{$content-padding});
-        .header {
+        margin: 0;
+        max-width: 100%;
 
-          h2 {
+        #accordion-how-i-did {
 
-          }
+          .header {
+            .add-image {
+              width: 100%;
 
-          .add-image {
-
-            input[type="file"] {
-
-            }
-
-            label {
-              span {
-
-              }
-            }
-
-            .icon-camera {
-
-              &:before {
-
+              .label {
+                width: 100%;
+                text-align: center;
               }
             }
           }
 
-        }
+          .card-body {
+            padding: 20px;
+            .how-i-did-list {
+              margin: 0;
+              justify-content: space-between;
+              margin-top: 20px;
+              .how-i-did {
 
-        .how-i-did-list {
+                &:nth-child(odd) {
+                  padding-left: 10px;
+                  padding-right: 0;
+                }
+                &:nth-child(even) {
+                  padding-right: 10px;
+                  padding-left: 0;
+                }
+                .image-container {
 
-          .how-i-did {
+                  img {
+                    max-height: 6em;
+                  }
+                }
 
-            .image-container {
+                .author {
+                  padding: 10px 0;
+                  .author-name {
+                    font-family: $font__main;
+                    font-size: 18px;
+                    font-weight: 900;
+                  }
 
-              img {
-              }
-            }
+                  time {
+                    font-family: $font__main;
+                    font-size: 18px;
+                    opacity: 0.5;
+                  }
+                  img {
+                    height: 24px;
+                    width: 24px;
+                  }
 
-            .author {
-
-              .author-name {
-              }
-              img {
+                  .col {
+                    p {
+                      margin-right: -39px;
+                      font-size: 18px;
+                      line-height: 1.17;
+                    }
+                  }
+                }
               }
             }
           }
+
         }
       }
 
@@ -985,7 +1013,7 @@ $content-width: 70%;
 
       .recipe-comments {
         @include max-width-section;
-        max-width: calc(100% - #{$content-padding});
+        max-width: 100%;
 
         .commentform-element {
         }
