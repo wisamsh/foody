@@ -1575,7 +1575,7 @@ remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
 function foody_get_menu_by_location( $theme_location ) {
 	$theme_locations = get_nav_menu_locations();
 	$menu_obj = get_term( $theme_locations[ $theme_location ], 'nav_menu' );
-	if ( $menu_obj )
+	if ( $menu_obj && !is_wp_error($menu_obj))
 		return wp_get_nav_menu_items( $menu_obj->term_id);
 	else
 		return $menu_obj;

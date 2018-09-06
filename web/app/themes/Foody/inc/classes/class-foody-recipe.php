@@ -434,7 +434,7 @@ class Foody_Recipe extends Foody_Post
         $time = $time_field['time'];
         $unit = trim($time_field['time_unit']);
         $singular = preg_replace('/s$/', '', $unit);
-        if ($unit == 'minutes') {
+        if (mb_strtolower($unit) == 'minutes') {
             $unit = 'דקות';
             $singular = 'דקה';
         }

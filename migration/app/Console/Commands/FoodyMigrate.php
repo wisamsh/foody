@@ -30,7 +30,7 @@ class FoodyMigrate extends Command
     public $wp;
 
 
-    public $debug = false;
+    public $debug = true;
 
     private $authors = [
         "אבי לוי" => [
@@ -313,7 +313,7 @@ class FoodyMigrate extends Command
         $recipes = $query->get()->toArray();
 
         $debug_recipe = array_first($recipes, function ($recipe) {
-            return isset($recipe['General']['Templates']) && !empty($recipe['General']['Templates']);
+            return $recipe['_id'] == '5ac1cf18c8f6a078b21351c4';
         });
 
         if ($this->debug) {
@@ -373,10 +373,10 @@ class FoodyMigrate extends Command
             // post title
             $title = trim($recipe['Name']);
 
-            if (!isset($recipe['Author']) || !isset($this->authors[$recipe['Author']])) {
+            if (!isset($recipe['General']['RecipeAuthors']) || !isset($this->authors[$recipe['General']['RecipeAuthors']])) {
                 $author = $this->authors['Foody'];
             } else {
-                $author = $this->authors[$recipe['Author']];
+                $author = $this->authors[$recipe['General']['RecipeAuthors']];
             }
 
             $author_email = $author['email'];
@@ -419,7 +419,14 @@ class FoodyMigrate extends Command
             // featured image
 
             if (isset($recipe['General']['Image']) && !empty($recipe['General']['Image'])) {
-                $attachment_id = $this->upload_image($post_id, $recipe['General']['Image'], $title);
+
+                $image_title = null;
+
+                if (isset($recipe['General']['ImageCameraMan'])) {
+                    $image_title = trim($recipe['General']['ImageCameraMan']);
+                }
+
+                $attachment_id = $this->upload_image($post_id, $recipe['General']['Image'], $title, $image_title);
 
                 if (!is_wp_error($attachment_id)) {
                     if (!is_null($attachment_id)) {
@@ -431,6 +438,26 @@ class FoodyMigrate extends Command
             }
 
             // ===== start custom fields ===== //
+
+            // comments
+
+            if (isset($recipe['Comment']) && !empty($recipe['Comment'])) {
+                $comment = $recipe['Comment'];
+                $comments = [
+                    trim($comment)
+                ];
+
+                $notes = [
+                    'notes' => [
+                        [
+                            'note' => trim($comment)
+                        ]
+                    ]
+                ];
+
+                update_field('notes', $notes, $post_id);
+            }
+
 
             // sponsors
             if (isset($recipe['Other']['Sponsers'])) {
@@ -624,6 +651,33 @@ class FoodyMigrate extends Command
                         ],
                         'ingredient' => $ingredient_post->ID
                     ];
+
+                    if (
+                        isset($ingredient['AlternativeAmountType']) &&
+                        !empty($ingredient['AlternativeAmountType']) &&
+                        trim($ingredient['AlternativeAmountType']) != 'ללא מידה'
+                        && (!isset($ingredient['AlternativeIngredient']) || trim($ingredient['AlternativeIngredient']) == '')
+                    ) {
+                        $ingredient['AlternativeAmountType'] = trim($ingredient['AlternativeAmountType']);
+                        if($ingredient['AlternativeAmountType'] == 'מ'){
+                            $ingredient['AlternativeAmountType'] = 'מ"ל';
+                        }elseif ($ingredient['AlternativeAmountType'] == 'ק'){
+                            $ingredient['AlternativeAmountType'] = 'ק"ג';
+                        }
+
+                        $alt_unit = trim($ingredient['AlternativeAmountType']);
+                        $alt_unit = $this->get_unit_by_name($alt_unit);
+                        $alt_amount = [
+                            'unit' => ($alt_unit instanceof \WP_Term) ? $alt_unit->term_id : ''
+                        ];
+
+                        if (isset($ingredient['AlternativeAmount']) && !empty($ingredient['AlternativeAmount'])) {
+                            $alt_amount['amount'] = intval(($ingredient['AlternativeAmount']));
+                        }
+
+                        $ingredient_row['amounts'][] = $alt_amount;
+
+                    }
 
                     return $ingredient_row;
 
@@ -1033,13 +1087,13 @@ class FoodyMigrate extends Command
         if (empty($name) || $name == 'ללא מידה') {
             return '';
         }
+        $name = trim($name);
 
-        $unit = get_term_by('name', trim($name), 'units');
+        $unit = get_term_by('name', $name, 'units');
 
         if (is_wp_error($unit) || is_null($unit) || $unit === false) {
             return NULL;
         }
-
 
         return $unit;
     }
@@ -1139,7 +1193,7 @@ class FoodyMigrate extends Command
      * @param string $alt
      * @return int|null|object|\WP_Error
      */
-    private function upload_image($postID, $url, $alt = "")
+    private function upload_image($postID, $url, $post_title, $image_title = null)
     {
 
         if (!$postID || !is_numeric($postID)) {
@@ -1166,7 +1220,7 @@ class FoodyMigrate extends Command
 
             $id = null;
             if ($file) {
-                $desc = $alt;
+                $desc = $image_title != null ? $image_title : '';
                 $file_array = array();
 
                 // Set variables for storage
@@ -1186,12 +1240,29 @@ class FoodyMigrate extends Command
                 // do the validation and storage stuff
                 $id = media_handle_sideload($file_array, $postID, $desc);
 
+
                 // If error storing permanently, unlink
                 if (is_wp_error($id)) {
                     @unlink($file_array['tmp_name']);
                     return $id;
                 }
                 @unlink($file_array['tmp_name']);
+
+
+                if ($image_title != null) {
+                    $image_meta = array(
+                        'ID' => $id,            // Specify the image (ID) to be updated
+                        'post_title' => $post_title,        // Set image Title to sanitized title
+                        'post_excerpt' => $image_title,        // Set image Caption (Excerpt) to sanitized title
+                        'post_content' => $post_title,        // Set image Description (Content) to sanitized title
+                    );
+                    // Set the image Alt-Text
+                    update_post_meta($id, '_wp_attachment_image_alt', $post_title);
+
+                    wp_update_post($image_meta);
+                }
+
+
             }
 
             return $id;
@@ -1317,6 +1388,4 @@ class FoodyMigrate extends Command
 
         parent::error($string, $verbosity);
     }
-
-
 }
