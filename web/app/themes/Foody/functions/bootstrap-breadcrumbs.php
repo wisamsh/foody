@@ -37,28 +37,46 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
         //display home link
         home_item();
 
-        if (is_single() && !is_category() && !is_page()) {
-
-            $category = get_the_category();
-            $category_name_and_link = get_primary_category($category);
-            $category_id = $category[0]->ID;
-            $category_name = $category[0]->cat_name;
-            if ($category_name_and_link != null) {
-                $category_id = $category_name_and_link['id'];
-                $category_name = $category_name_and_link['name'];
-            }
-
-            $subCategory = new Foody_Category($category_id, $category);
-            $subCategoryParentId = $subCategory->parent($category_name);
-            echo '<li><a href="' . get_permalink($subCategoryParentId) . '">' . get_the_title($subCategoryParentId) . '</a></li>';
-            echo '<li class="active"><a href="' . get_category_link($category_id) . '">' . $category_name . '</a></li>';
-        }
+//        if (is_single() && !is_category() && !is_page()) {
+//
+//            $category = get_the_category();
+//            $category_name_and_link = get_primary_category($category);
+//            $category_id = $category[0]->ID;
+//            $category_name = $category[0]->cat_name;
+//            if ($category_name_and_link != null) {
+//                $category_id = $category_name_and_link['id'];
+//                $category_name = $category_name_and_link['name'];
+//            }
+//
+//            $subCategory = new Foody_Category($category_id, $category);
+//            $subCategoryParentId = $subCategory->parent($category_name);
+//            echo '<li><a href="' . get_permalink($subCategoryParentId) . '">' . get_the_title($subCategoryParentId) . '</a></li>';
+//            echo '<li class="active"><a href="' . get_category_link($category_id) . '">' . $category_name . '</a></li>';
+//        }
         if (is_category()) {
-            if ($parent_id) {
-                echo '<li><a href="' . get_permalink($parent_id) . '">' . get_the_title($parent_id) . '</a></li>';
-                echo '<li class="active">' . single_cat_title(null, false) . '</li>';
 
+            $category = new Foody_Category(get_queried_object_id());
+            $parents = $category->get_tree();
+
+            array_pop($parents);
+
+            foreach ($parents as $parent) {
+
+                ?>
+
+                <li>
+                    <a href="<?php echo get_term_link($parent, 'category') ?>">
+                        <?php echo get_term($parent)->name ?>
+                    </a>
+                </li>
+
+                <?php
             }
+
+            echo '<li class="active">' . single_cat_title(null, false) . '</li>';
+
+//            echo '<li><a href="' . get_permalink($parent_id) . '">' . get_the_title($parent_id) . '</a></li>';
+//            echo '<li class="active">' . single_cat_title(null, false) . '</li>';
 
         } elseif (is_page() && $post->post_parent) {
             $home = get_post(get_option('page_on_front'));

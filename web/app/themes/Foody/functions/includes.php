@@ -66,6 +66,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-post-factory.p
 require_once get_template_directory() . "/inc/classes/class-bootstrap-collapse-nav-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-channels-menu.php";
 require_once get_template_directory() . "/inc/classes/class-foody-author.php";
+require_once get_template_directory() . "/inc/classes/class-foody-search.php";
 
 /*
  * Widgets

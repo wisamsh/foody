@@ -1622,3 +1622,11 @@ function array_not_empty($arr)
     return $not_empty;
 
 }
+
+function group_by($array, $key) {
+    $return = array();
+    foreach($array as $val) {
+        $return[$val[$key]][] = $val;
+    }
+    return $return;
+}

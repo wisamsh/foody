@@ -50,8 +50,7 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
                             $foody_page->the_content($foody_page);
 
                         endwhile; // End of the loop.
-                    } else {
-                        if (is_author()) {
+                    } elseif (is_author()) {
                             ?>
                             <section class="details-container">
                                 <div class="featured-content-container">
@@ -64,7 +63,20 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
                             <?php
 
                             $foody_page->the_content($foody_page);
-                        }
+
+                    }elseif(is_category()){
+                        ?>
+                        <section class="details-container">
+                            <div class="featured-content-container">
+                                <?php $foody_page->the_featured_content() ?>
+                            </div>
+
+                            <?php $foody_page->the_details() ?>
+
+                        </section>
+                        <?php
+
+                        $foody_page->the_content($foody_page);
                     }
 
                     ?>

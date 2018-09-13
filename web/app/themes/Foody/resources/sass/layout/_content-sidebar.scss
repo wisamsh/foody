@@ -1,4 +1,4 @@
-body[class*="-template-content-with-sidebar"], body[class~="author"], body[class~="foody_channel-template-channel"] {
+body[class*="-template-content-with-sidebar"], body[class~="author"], body[class~="category"], body[class~="foody_channel-template-channel"] {
   $sidebar-width: 21%;
   $content-width: 70%;
 
@@ -200,7 +200,7 @@ body[class*="-template-content-with-sidebar"], body[class~="author"], body[class
 }
 
 @include breakpoint(mobileonly) {
-  body[class*="-template-content-with-sidebar"], body[class~="author"], body[class~="foody_channel-template-channel"] {
+  body[class*="-template-content-with-sidebar"], body[class~="author"], body[class~="category"], body[class~="foody_channel-template-channel"] {
     $sidebar-width: 0;
     $content-width: 100%;
 

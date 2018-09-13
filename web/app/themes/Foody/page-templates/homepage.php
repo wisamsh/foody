@@ -10,6 +10,10 @@
 
 get_header();
 
+//$search = new Foody_Search();
+//
+//$search->search_ingredient();
+
 $homepage = new HomePage();
 ?>
 

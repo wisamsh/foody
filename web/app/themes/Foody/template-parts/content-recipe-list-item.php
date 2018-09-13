@@ -12,10 +12,10 @@ $recipe = $template_args['post'];
 ?>
 
 
-<div class="recipe-item">
+<div class="recipe-item feed-item">
     <a href="<?php echo $recipe->link ?>">
         <div class="image-container main-image-container">
-            <img class="recipe-item-image" src="<?php echo $recipe->getImage() ?>" alt="">
+            <img class="recipe-item-image feed-item-image" src="<?php echo $recipe->getImage() ?>" alt="">
             <div class="duration">
 
 

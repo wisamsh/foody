@@ -13,10 +13,10 @@ $playlist = $template_args['post'];
 ?>
 
 
-<div class="playlist-item">
+<div class="playlist-item feed-item">
     <a href="<?php echo $playlist->link ?>">
         <div class="image-container main-image-container">
-            <img class="playlist-item-image" src="<?php echo $playlist->getImage() ?>" alt="">
+            <img class="playlist-item-image feed-item-image" src="<?php echo $playlist->getImage() ?>" alt="">
             <div class="playlist-count">
                 <i class="icon-timeplay"></i>
 

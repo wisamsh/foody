@@ -91,13 +91,30 @@ class RecipesGrid
      * @param string $type
      * @return string
      */
-    public function loop($posts, $cols, $echo = true, $type = 'recipe')
+    public function loop($posts, $cols, $echo = true, $type = null)
     {
         $items = '';
         $this->is_in_loop = true;
+        $reset_type = false;
         foreach ($posts as $post) {
+
+            if (is_null($type)) {
+                $reset_type = true;
+                $type = $post->post->post_type;
+                $type = str_replace('foody_', '', $type);
+
+                if ($type == 'post') {
+                    $type = 'article';
+                }
+            }
+
             $items .= $this->draw($post, $cols, 12, $echo, $type);
             $this->current_item++;
+            if ($reset_type) {
+                $reset_type = false;
+                $type = null;
+            }
+
         }
         $this->current_item = 0;
         $this->is_in_loop = false;

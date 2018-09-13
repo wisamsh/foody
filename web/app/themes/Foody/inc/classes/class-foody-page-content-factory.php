@@ -43,9 +43,10 @@ class Foody_PageContentFactory
     {
 
         $page = null;
-        global $post;
+
         if (is_single()) {
 
+            global $post;
             $post_type = get_post_type();
 
             switch ($post_type) {
@@ -64,10 +65,12 @@ class Foody_PageContentFactory
                     $page = new Foody_Article($post);
                     break;
             }
-        } else {
-            if (is_author()) {
-                $page = new Foody_Author();
-            }
+        } elseif (is_author()) {
+            $page = new Foody_Author();
+
+        } elseif (is_category()) {
+            $category_id = get_queried_object_id();
+            $page = new Foody_Category($category_id);
         }
 
 

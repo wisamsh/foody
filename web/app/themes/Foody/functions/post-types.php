@@ -295,3 +295,27 @@ function filter_post_type_link($link, $post)
 }
 
 add_filter('post_type_link', 'filter_post_type_link', 10, 2);
+
+
+/**
+ * @param WP_Post $post
+ */
+function post_to_foody_post($post)
+{
+
+    $foody_post = null;
+
+    switch ($post->post_type) {
+        case 'foody_recipe':
+            $foody_post = new Foody_Recipe($post);
+            break;
+        case 'foody_playlist':
+            $foody_post = new Foody_Playlist($post);
+            break;
+        default:
+            $foody_post = new Foody_Article($post);
+            break;
+    }
+
+    return $foody_post;
+}

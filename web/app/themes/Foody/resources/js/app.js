@@ -55,4 +55,6 @@ jQuery(document).ready(function ($) {
         filledStar: '<i class="icon-big-star-rank filled"></i>',
         emptyStar: '<i class="icon-big-star-rank"></i>'
     });
+
+    $('.foody-slider').slick();
 });
