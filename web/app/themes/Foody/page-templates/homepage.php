@@ -10,9 +10,47 @@
 
 get_header();
 
-//$search = new Foody_Search();
-//
-//$search->search_ingredient();
+$search = new Foody_Search();
+
+/*
+        * {
+        *  search:'asfgag',
+        *  'types':[{
+        *      type:'category|ingredient|technique|accessory',
+        *      exclude:false,
+        *      id:8
+        *  }]
+        * }
+        * */
+
+$args = [
+    'types' => [
+//        [
+//            'type' => 'ingredient',
+//            'id' => 2665,
+//            'exclude' => false
+//        ],
+//        [
+//            'type' => 'category',
+//            'id' => 3,
+//            'exclude' => false
+//        ],
+//        [
+//            'type' => 'category',
+//            'id' => 8,
+//            'exclude' => false
+//        ]
+        [
+            'id' => 236,
+            'type' => 'limitation',
+            'exclude' => true
+        ]
+    ]
+
+];
+
+
+//$search->query($args);
 
 $homepage = new HomePage();
 ?>

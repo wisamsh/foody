@@ -5,6 +5,12 @@
     color: $color__primary;
   }
 
+  p {
+    margin: 0;
+    text-align: right;
+    font-family: $font__assistant;
+  }
+
   ol {
     list-style-type: none;
     counter-reset: counter;

@@ -3,8 +3,9 @@
  */
 
 let IScroll = require('iscroll');
-let $ = require('jquery');
+// let $ = require('jquery');
 require('jquery-drawer');
+require('autocomplete.js/src/jquery/plugin.js');
 require('bootstrap');
 require('bootstrap-material-design');
 require('bootstrap-select');

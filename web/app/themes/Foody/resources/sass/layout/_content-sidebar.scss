@@ -1,4 +1,4 @@
-body[class*="-template-content-with-sidebar"], body[class~="author"], body[class~="category"], body[class~="foody_channel-template-channel"] {
+body[class*="-template-content-with-sidebar"], body[class~="author"], body[class~="category"], body[class~="search-results"], body[class~="foody_channel-template-channel"] {
   $sidebar-width: 21%;
   $content-width: 70%;
 
@@ -14,6 +14,30 @@ body[class*="-template-content-with-sidebar"], body[class~="author"], body[class
     border-top: none;
     background-color: white;
     padding: 60px 0 0;
+
+    .widget {
+      padding: 20px 15px 0;
+
+      &:before {
+        content: '';
+        width: 100%;
+        height: 1px;
+        display: inline-block;
+        background-color: rgba(151, 151, 151, .30);
+        margin-bottom: 15px;
+      }
+      &.widget_text {
+
+        .widgettitle {
+          font-size: 30px;
+          font-weight: 900;
+          letter-spacing: -0.1px;
+          text-align: right;
+          color: $color__primary;
+        }
+      }
+    }
+
   }
 
   footer.site-footer {
@@ -200,7 +224,7 @@ body[class*="-template-content-with-sidebar"], body[class~="author"], body[class
 }
 
 @include breakpoint(mobileonly) {
-  body[class*="-template-content-with-sidebar"], body[class~="author"], body[class~="category"], body[class~="foody_channel-template-channel"] {
+  body[class*="-template-content-with-sidebar"], body[class~="author"], body[class~="category"], body[class~="search-results"], body[class~="foody_channel-template-channel"] {
     $sidebar-width: 0;
     $content-width: 100%;
 

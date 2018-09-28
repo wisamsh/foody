@@ -8,7 +8,7 @@
  *
  * @package Foody
  */
-$header   = new Header();
+$header = new Header();
 $channels = new Foody_Channels_Menu();
 $user = new Foody_User();
 
@@ -24,9 +24,15 @@ $user = new Foody_User();
     <script>
         imagesUri = '<?php echo $GLOBALS['images_dir'] ?>';
     </script>
+
+    <?php
+    $header->facebook_init();
+    ?>
+
 </head>
 
 <body <?php body_class(); ?> dir="rtl">
+<div id="fb-root"></div>
 <div id="page" class="site">
 
     <header id="masthead" class="site-header">
@@ -50,19 +56,19 @@ $user = new Foody_User();
 
         <nav class="navbar navbar-expand-md navbar-light navbar-toggleable-md" role="navigation">
 
-
             <!-- TODO change this to bootstrap offsets            -->
             <div class="container-fluid foody-navbar-container">
 
                 <div class="search-bar d-none d-sm-block">
-                    <input type="text" class="search" placeholder="חיפוש מתכון…">
+                    <!--                    <input type="text" class="search" placeholder="חיפוש מתכון…">-->
+                    <?php get_search_form(); ?>
                 </div>
 
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#foody-navbar-collapse"
                         aria-controls="foody-navbar-collapse" aria-expanded="false"
                         aria-label="Toggle navigation">
-<!--                    <span class="navbar-toggler-icon icon-menu-mobile"></span>-->
+                    <!--                    <span class="navbar-toggler-icon icon-menu-mobile"></span>-->
                     <i class="navbar-toggler-icon icon-menu-mobile"></i>
                 </button>
 
@@ -82,7 +88,7 @@ $user = new Foody_User();
                 <button type="button" class="btn btn-default navbar-btn d-block d-sm-none">
 
                 </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-sm-none">
+                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-sm-none">
 
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="">
 
@@ -91,32 +97,34 @@ $user = new Foody_User();
                 <!--                <div class="channels-nav">-->
                 <!--                    <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover"-->
                 <!--                            data-placement="bottom" data-html="true" data-content='-->
-				<?php //$channels->the_menu() ?><!--'>-->
+                <?php //$channels->the_menu() ?><!--'>-->
                 <!--		                --><?php //echo foody_get_menu_title( 'channels-menu' ) ?>
                 <!--                    </button>-->
                 <!--                </div>-->
 
-				<?php
+                <?php
 
-				function my_nav_wrap( $channels ) {
-					$wrap = '<ul id="%1$s" class="%2$s">';
-					$wrap .= '<li class="channels-nav">';
-					$wrap .= '<button type="button" class="btn nav-link btn-channels-menu" data-container=".btn-channels-menu" data-toggle="popover"
+                function my_nav_wrap($channels)
+                {
+                    $wrap = '<ul id="%1$s" class="%2$s">';
+                    $wrap .= '<li class="channels-nav">';
+                    $wrap .= '<button type="button" class="btn nav-link btn-channels-menu" data-container=".btn-channels-menu" data-toggle="popover"
                              data-placement="bottom" data-html="true" data-trigger="hover" data-content=\'';
-					$wrap .= $channels->get_the_menu() . '\'>';
-					$wrap .= foody_get_menu_title( "channels-menu" );
-					$wrap .= '<i class="icon-arrowleft"></i></button>';
-					$wrap .= '</li>';
-					$wrap .= '%3$s';
-					$wrap .= '</ul>';
+                    $wrap .= $channels->get_the_menu() . '\'>';
+                    $wrap .= foody_get_menu_title("channels-menu");
+                    $wrap .= '<i class="icon-arrowleft"></i></button>';
+                    $wrap .= '</li>';
+                    $wrap .= '%3$s';
+                    $wrap .= '</ul>';
 
-					return urldecode( $wrap );
-				}
+                    return urldecode($wrap);
+                }
 
-				function mobile_nav_wrap( $channels ) {
-					$wrap = '<ul id="%1$s" class="%2$s">';
-					$wrap .= '%3$s';
-					$wrap .= '<li class="channels-nav">';
+                function mobile_nav_wrap($channels)
+                {
+                    $wrap = '<ul id="%1$s" class="%2$s">';
+                    $wrap .= '%3$s';
+                    $wrap .= '<li class="channels-nav">';
 //					$wrap .= '<button type="button" class="btn btn-secondary nav-link" data-toggle="modal" data-target="#modal">';
 //					$wrap .= foody_get_menu_title( "channels-menu" );
 //					$wrap .= '</button>';
@@ -124,37 +132,37 @@ $user = new Foody_User();
 //                             data-placement="bottom" data-html="true" data-content=\'';
 //					$wrap .= $channels->get_the_menu() . '\'>';
 //					$wrap .= foody_get_menu_title( "channels-menu" );
-					$wrap .= '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#channels-menu" 
+                    $wrap .= '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#channels-menu" 
                              aria-controls="channels-menu" aria-expanded="false" aria-label="Toggle navigation">';
-					$wrap .= foody_get_menu_title( "channels-menu" );
-					$wrap .= '</button>';
-					$wrap .= '</li>';
-					$wrap .= '</ul>';
+                    $wrap .= foody_get_menu_title("channels-menu");
+                    $wrap .= '</button>';
+                    $wrap .= '</li>';
+                    $wrap .= '</ul>';
 
-					return urldecode( $wrap );
-				}
+                    return urldecode($wrap);
+                }
 
-				$nav_args   = array(
-					'theme_location'  => 'primary',
-					'depth'           => 2,
-					'container'       => 'div',
-					'container_class' => 'collapse navbar-collapse',
-					'container_id'    => 'foody-navbar-collapse',
-					'menu_class'      => 'nav navbar-nav',
-					'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
-					'walker'          => new WP_Bootstrap_Navwalker()
-				);
-				$items_wrap = my_nav_wrap( $channels );
-				if ( wp_is_mobile() ) {
+                $nav_args = array(
+                    'theme_location' => 'primary',
+                    'depth' => 2,
+                    'container' => 'div',
+                    'container_class' => 'collapse navbar-collapse',
+                    'container_id' => 'foody-navbar-collapse',
+                    'menu_class' => 'nav navbar-nav',
+                    'fallback_cb' => 'WP_Bootstrap_Navwalker::fallback',
+                    'walker' => new WP_Bootstrap_Navwalker()
+                );
+                $items_wrap = my_nav_wrap($channels);
+                if (wp_is_mobile()) {
 //					echo $channels->get_the_menu();
-					//$nav_args['items_wrap'] = mobile_nav_wrap( $channels );
-					$items_wrap = mobile_nav_wrap( $channels );
-				}
+                    //$nav_args['items_wrap'] = mobile_nav_wrap( $channels );
+                    $items_wrap = mobile_nav_wrap($channels);
+                }
 
-//				$nav_args['items_wrap'] = $items_wrap;
-				wp_nav_menu( $nav_args );
+                //				$nav_args['items_wrap'] = $items_wrap;
+                wp_nav_menu($nav_args);
 
-				?>
+                ?>
 
                 <div class="d-none d-sm-block">
 
@@ -168,14 +176,25 @@ $user = new Foody_User();
 
             </div>
 
-
         </nav>
 
-		<?php
-		if ( wp_is_mobile() ) {
-			echo $channels->get_the_menu();
-		}
-		?>
+        <div class="search-overlay">
+
+            <div class="input-container">
+                <input type="search" class="search-autocomplete">
+                <span class="close">&times;</span>
+            </div>
+            <div class="overlay-white">
+
+            </div>
+
+        </div>
+
+        <?php
+        if (wp_is_mobile()) {
+            echo $channels->get_the_menu();
+        }
+        ?>
 
 
         <!-- #site-navigation -->

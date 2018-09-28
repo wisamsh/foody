@@ -8,7 +8,8 @@
 
 if (!is_admin()):
     $globals = array(
-        'isMobile' => wp_is_mobile()
+        'isMobile' => wp_is_mobile(),
+        'ajax' => admin_url( 'admin-ajax.php' ),
     );
 
     ?>

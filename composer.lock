@@ -4,8 +4,19 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b33e7e504e4f8c4475dd45d5351960f8",
+    "content-hash": "4ea1d149a0ccf3d30f3a69154c47dd02",
     "packages": [
+        {
+            "name": "abdullah-irfan/whitelist",
+            "version": "3.5",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/fifthsegment-whitelist.3.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
         {
             "name": "andrewozz/tinymce-advanced",
             "version": "4.7.11",
@@ -288,6 +299,17 @@
             "time": "2018-01-29T14:49:29+00:00"
         },
         {
+            "name": "miled/wordpress-social-login",
+            "version": "2.3.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wordpress-social-login.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "oscarotero/env",
             "version": "v1.1.0",
             "source": {
@@ -461,6 +483,17 @@
                 "wordpress wp bcrypt password"
             ],
             "time": "2016-03-01T16:27:06+00:00"
+        },
+        {
+            "name": "smash-baloon/instagram-feed",
+            "version": "1.10.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.10.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
         },
         {
             "name": "stuttter/wp-user-avatars",
@@ -797,12 +830,12 @@
             "version": "7.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Yoast/wordpress-seo.git",
+                "url": "https://github.com/Yoast-dist/wordpress-seo.git",
                 "reference": "89977c35bd3e3d8cd362f7cda698698f14a2e20e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Yoast/wordpress-seo/zipball/89977c35bd3e3d8cd362f7cda698698f14a2e20e",
+                "url": "https://api.github.com/repos/Yoast-dist/wordpress-seo/zipball/89977c35bd3e3d8cd362f7cda698698f14a2e20e",
                 "reference": "89977c35bd3e3d8cd362f7cda698698f14a2e20e",
                 "shasum": ""
             },

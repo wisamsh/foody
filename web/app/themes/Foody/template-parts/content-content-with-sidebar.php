@@ -31,7 +31,7 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
 
                 <article class="content">
                     <?php
-                    if (have_posts()) {
+                    if (have_posts() && !is_search()) {
                         while (have_posts()) :
                             the_post();
                             foody_set_post_views($foody_page->getId());
@@ -50,21 +50,7 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
                             $foody_page->the_content($foody_page);
 
                         endwhile; // End of the loop.
-                    } elseif (is_author()) {
-                            ?>
-                            <section class="details-container">
-                                <div class="featured-content-container">
-                                    <?php $foody_page->the_featured_content() ?>
-                                </div>
-
-                                <?php $foody_page->the_details() ?>
-
-                            </section>
-                            <?php
-
-                            $foody_page->the_content($foody_page);
-
-                    }elseif(is_category()){
+                    } elseif (is_author() || is_search() || is_category()) {
                         ?>
                         <section class="details-container">
                             <div class="featured-content-container">
@@ -77,7 +63,35 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
                         <?php
 
                         $foody_page->the_content($foody_page);
+
                     }
+                    //                    elseif (is_category()) {
+                    //                        ?>
+                    <!--                        <section class="details-container">-->
+                    <!--                            <div class="featured-content-container">-->
+                    <!--                                --><?php //$foody_page->the_featured_content() ?>
+                    <!--                            </div>-->
+                    <!---->
+                    <!--                            --><?php //$foody_page->the_details() ?>
+                    <!---->
+                    <!--                        </section>-->
+                    <!--                        --><?php
+                    //
+                    //                        $foody_page->the_content($foody_page);
+                    //                    } elseif (is_search()) {
+                    //                        ?>
+                    <!--                        <section class="details-container">-->
+                    <!--                            <div class="featured-content-container">-->
+                    <!--                                --><?php //$foody_page->the_featured_content() ?>
+                    <!--                            </div>-->
+                    <!---->
+                    <!--                            --><?php //$foody_page->the_details() ?>
+                    <!---->
+                    <!--                        </section>-->
+                    <!--                        --><?php
+                    //
+                    //                        $foody_page->the_content($foody_page);
+                    //                    }
 
                     ?>
                 </article>

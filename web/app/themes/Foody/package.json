@@ -33,6 +33,7 @@
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
+    "autocomplete.js": "^0.31.0",
     "autoprefixer": "^8.5.0",
     "awesome-bootstrap-checkbox": "^1.0.1",
     "bootstrap": "^4.1.1",

@@ -67,6 +67,9 @@ require_once get_template_directory() . "/inc/classes/class-bootstrap-collapse-n
 require_once get_template_directory() . "/inc/classes/class-foody-channels-menu.php";
 require_once get_template_directory() . "/inc/classes/class-foody-author.php";
 require_once get_template_directory() . "/inc/classes/class-foody-search.php";
+require_once get_template_directory() . "/inc/classes/class-foody-search.php";
+require_once get_template_directory() . "/inc/classes/class-foody-search-page.php";
+require_once get_template_directory() . "/inc/classes/class-foody-registration.php";
 
 /*
  * Widgets
@@ -97,9 +100,11 @@ require_once get_template_directory() . "/functions/foody-ajax.php";
 require_once get_template_directory() . "/functions/acf-utils.php";
 require_once get_template_directory() . "/functions/editor.php";
 require_once get_template_directory() . "/functions/http.php";
+require_once get_template_directory() . "/functions/redirects.php";
 
 
 /*
  * Shortcodes
  * */
 require_once get_template_directory() . "/inc/shortcodes/shortcode-team.php";
+require_once get_template_directory() . "/inc/shortcodes/shortcode-register.php";

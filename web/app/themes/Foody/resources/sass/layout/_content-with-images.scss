@@ -1,0 +1,37 @@
+body[class~='page-template-content-with-images'] {
+
+  .content-with-images {
+    background-color: white;
+    .image-container {
+
+      padding: 0;
+      position: relative;
+      img {
+        position: absolute;
+
+      }
+      &.image-container-right {
+
+        img {
+          right: 0;
+          top: 40px;
+        }
+      }
+
+      &.image-container-left {
+        min-height: 100%;
+        img {
+          left: 0;
+          bottom: 40px;
+        }
+      }
+
+    }
+
+    .content {
+      padding-top: 40px;
+    }
+
+  }
+
+}

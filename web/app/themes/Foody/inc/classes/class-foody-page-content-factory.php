@@ -71,6 +71,8 @@ class Foody_PageContentFactory
         } elseif (is_category()) {
             $category_id = get_queried_object_id();
             $page = new Foody_Category($category_id);
+        }elseif (is_search()){
+            $page = new Foody_SearchPage();
         }
 
 

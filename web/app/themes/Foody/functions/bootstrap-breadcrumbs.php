@@ -93,7 +93,7 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
         } elseif (is_page()) {
             echo '<li class="active">' . get_the_title($post->ID) . '</li>';
         } elseif (is_search()) {
-            echo '<li class="active">' . __('Search', 'WordPress') . '</li>';
+            echo '<li class="active">' . __('חיפוש', 'WordPress') . '</li>';
         } elseif (is_404()) {
             echo '<li class="active">404</li>';
         }

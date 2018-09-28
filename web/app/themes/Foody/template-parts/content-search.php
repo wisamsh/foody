@@ -13,14 +13,14 @@
 	<header class="entry-header">
 		<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
 
-		<?php if ( 'post' === get_post_type() ) : ?>
+
 		<div class="entry-meta">
 			<?php
 			foody_posted_on();
-			foody_posted_by();
+			foody_posted_by(true,get_the_author_meta('ID'));
 			?>
 		</div><!-- .entry-meta -->
-		<?php endif; ?>
+
 	</header><!-- .entry-header -->
 
 	<?php foody_post_thumbnail(); ?>
@@ -29,7 +29,4 @@
 		<?php the_excerpt(); ?>
 	</div><!-- .entry-summary -->
 
-	<footer class="entry-footer">
-		<?php foody_entry_footer(); ?>
-	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->

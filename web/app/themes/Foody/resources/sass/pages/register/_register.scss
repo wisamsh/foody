@@ -1,0 +1,212 @@
+@import "../../layout/content-with-images";
+
+.register {
+
+  >.container-fluid{
+    min-height: unset;
+  }
+
+  .dividers, .buttons {
+    padding: 0;
+  }
+
+  .buttons {
+
+    button {
+      height: 53px;
+      border-radius: 3px;
+      font-family: $font__assistant;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffffff;
+
+      &.btn-facebook {
+        background-color: #3a539f;
+      }
+
+      &.btn-google {
+        background-color: #d35647;
+
+      }
+    }
+
+  }
+  .dividers {
+    padding: 20px 0;
+    .divider {
+      opacity: 0.3;
+      vertical-align: middle;
+
+      &:before {
+        content: '';
+        display: inline-block;
+        background-color: #979797;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        height: 1px;
+        width: 100%;
+      }
+    }
+    .or {
+      text-align: center;
+    }
+  }
+
+  form {
+
+    .form-group {
+      padding-right: 0;
+      padding-left: 0;
+      label {
+        font-family: $font__assistant;
+        font-size: 18px;
+        font-weight: bold;
+        color: #333a45;
+        right: 0;
+        left: unset;
+        top: 0;
+
+        span{
+          font-weight: normal;
+        }
+      }
+
+      input:not([type="checkbox"]) {
+        width: 100%;
+        height: 53px;
+        border-radius: 3px;
+        background-color: #ffffff;
+        border: solid 2px #d0d0d0;
+      }
+
+    }
+
+    #password-help {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        font-family: $font__assistant;
+        display: inline-block;
+        list-style-type: none;
+        padding: 0 15px;
+        font-size: 16px;
+        color: #333a45;
+
+        &:before {
+          content: '';
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          -moz-border-radius: 50%;
+          -webkit-border-radius: 50%;
+          border-radius: 50%;
+          background-color: $color__primary;
+          vertical-align: middle;
+        }
+      }
+    }
+
+    .form-submit {
+      text-align: right;
+      margin-top: 20px;
+      button[type="submit"] {
+        width: 33%;
+        height: 53px;
+        border-radius: 3px;
+        background-color: #ed3d48;
+        color: white;
+        font-family: $font__assistant;
+        font-size: 18px;
+        font-weight: bold;
+
+        &[disabled] {
+          opacity: 0.2;
+        }
+      }
+    }
+
+  }
+}
+
+@include breakpoint(mobileonly){
+  .register {
+
+    >.container-fluid{
+
+    }
+
+    .dividers, .buttons {
+
+    }
+
+    .buttons {
+
+      button {
+
+
+        &.btn-facebook {
+        }
+
+        &.btn-google {
+
+        }
+      }
+
+    }
+    .dividers {
+      .divider {
+
+        &:before {
+        }
+      }
+      .or {
+      }
+    }
+
+    form {
+
+      .form-group {
+        label {
+
+          span{
+          }
+        }
+
+        input:not([type="checkbox"]) {
+
+        }
+
+      }
+
+      .md-checkbox{
+        label{
+          display: table-cell;
+        }
+      }
+
+      #password-help {
+
+        li {
+
+          &:before {
+
+          }
+        }
+      }
+
+      .form-submit {
+
+        button[type="submit"] {
+
+          &[disabled] {
+          }
+        }
+      }
+
+    }
+  }
+}

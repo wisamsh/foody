@@ -31,6 +31,7 @@ module.exports = {
             $: 'jquery',
             jQuery: 'jquery',
             'window.jQuery': 'jquery',
+            "window.$": "jquery",
             Popper: ['popper.js', 'default'],
             IScroll: 'iscroll'
         }),
@@ -56,6 +57,10 @@ module.exports = {
     mode: 'development',
     module: {
         rules: [
+            {
+                test: /\.css$/,
+                loaders: ["style-loader","css-loader"]
+            },
             {
                 test: /\.(scss)$/,
                 use: [

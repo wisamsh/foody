@@ -319,3 +319,17 @@ function post_to_foody_post($post)
 
     return $foody_post;
 }
+
+function my_pre_get_posts(WP_Query $query)
+{
+
+    if (is_admin())
+        return;
+
+    if (is_search() && $query->is_main_query()) {
+        $query->set('post_type', 'foody_recipe');
+    }
+
+}
+
+add_action('pre_get_posts', 'my_pre_get_posts');

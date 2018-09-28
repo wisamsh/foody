@@ -152,6 +152,10 @@ function foody_scripts()
         wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/main.js', false, false, true);
     }
 
+    if(is_page(get_page_by_title('הרשמה'))){
+        wp_enqueue_script('recaptcha','https://www.google.com/recaptcha/api.js');
+    }
+
 }
 
 add_action('wp_enqueue_scripts', 'foody_scripts');
@@ -198,3 +202,17 @@ function admin_theme_style()
 }
 add_action('admin_enqueue_scripts', 'admin_theme_style');
 add_action('login_enqueue_scripts', 'admin_theme_style');
+
+
+/**
+ * Automatically logs the user in
+ * after registration
+ * @param int $user_id
+ */
+function auto_login_new_user($user_id ) {
+    wp_set_current_user($user_id);
+    wp_set_auth_cookie($user_id);
+    wp_redirect( home_url() );
+    exit;
+}
+add_action( 'user_register', 'auto_login_new_user' );

@@ -81,6 +81,42 @@
           "url": "https://downloads.wordpress.org/plugin/tinymce-advanced.4.7.11.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "smash-baloon/instagram-feed",
+        "version": "1.10.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.10.1.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "miled/wordpress-social-login",
+        "version": "2.3.3",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wordpress-social-login.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "abdullah-irfan/whitelist",
+        "version": "3.5",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/fifthsegment-whitelist.3.5.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -98,7 +134,10 @@
     "designs&code/search-filter": "^1.2",
     "andrewozz/tinymce-advanced": "^4.7",
     "xamin/handlebars.php": "^0.10.4",
-    "phospr/fraction": "^1.2"
+    "phospr/fraction": "^1.2",
+    "smash-baloon/instagram-feed": "^1.10",
+    "miled/wordpress-social-login": "^2.3",
+    "abdullah-irfan/whitelist": "^3.5"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"
