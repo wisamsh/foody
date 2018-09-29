@@ -32,40 +32,40 @@ $foody_comments = new Foody_HowIDid();
             'count' => true
         )) > 0;
     // You can start editing here -- including this comment!
-    if ($have_comments) :
-        ?>
-        <div class="header">
-            <h2 class="comments-title">
-                <?php
 
-                $foody_comments->the_title();
+    ?>
+    <div class="header">
+        <h2 class="comments-title">
+            <?php
 
-                ?>
-            </h2><!-- .comments-title -->
+            $foody_comments->the_title();
 
-            <div class="add-image">
-                <form id="image-upload-hidden">
-                    <label for="attachment">
-                        <i class="icon-camera"></i>
-                        <span>
+            ?>
+        </h2><!-- .comments-title -->
+
+        <div class="add-image">
+            <form id="image-upload-hidden">
+                <label for="attachment">
+                    <i class="icon-camera"></i>
+                    <span>
                              תעלו תמונה להשוויץ
                         </span>
-                    </label>
-                    <input id="attachment" type="file" name="attachment">
-                    <input id="comment" type="hidden" name="comment">
-                    <input name="post_id" type="hidden" value="<?php echo get_the_ID() ?>">
-                </form>
-            </div>
+                </label>
+                <input id="attachment" type="file" name="attachment">
+                <input id="comment" type="hidden" name="comment">
+                <input name="post_id" type="hidden" value="<?php echo get_the_ID() ?>">
+            </form>
         </div>
+    </div>
 
-        <?php foody_get_template_part(
+    <?php foody_get_template_part(
         get_template_directory() . '/template-parts/content-image-upload-modal.php',
         array(
             'title' => 'תיראו מה יצא לי'
         ))
-        ?>
+    ?>
 
-
+    <?php if ($have_comments) : ?>
         <ol id="how-i-did-list" class="row gutter-1 how-i-did-list">
             <?php
             $foody_comments->the_comments();
@@ -81,7 +81,7 @@ $foody_comments = new Foody_HowIDid();
             set_query_var('chpage', $page);
         }
 
-        if($page >= 0){
+        if ($page >= 0) {
 
             foody_get_template_part(
                 get_template_directory() . '/template-parts/common/show-more-simple.php',
