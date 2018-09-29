@@ -149,7 +149,7 @@ function foody_scripts()
 //    }
 
     if(!is_admin()) {
-        wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/main.js', false, false, true);
+        wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/main.js', false, false, false);
     }
 
     if(is_page(get_page_by_title('הרשמה'))){

@@ -59,4 +59,5 @@ jQuery(document).ready(function ($) {
     });
 
     $('.foody-slider').slick();
+
 });
