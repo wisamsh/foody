@@ -164,23 +164,28 @@ $user = new Foody_User();
 
                 ?>
 
-                <div class="d-none d-sm-block">
+                <?php if (is_user_logged_in()): ?>
 
-                    <?php
-                    $link = is_user_logged_in() ? get_permalink(get_page_by_path('פרופיל-אישי')) : '';
-                    ?>
-                    <a href="<?php echo $link ?>">
-                        <img class="avatar" src="<?php echo $user->get_image() ?>" alt="">
-                    </a>
-                </div>
+                    <div class="d-none d-sm-block">
+
+                        <?php
+                        $link = is_user_logged_in() ? get_permalink(get_page_by_path('פרופיל-אישי')) : '';
+                        ?>
+                        <a href="<?php echo $link ?>">
+                            <img class="avatar" src="<?php echo $user->get_image() ?>" alt="">
+                        </a>
+                    </div>
+
+                <?php endif; ?>
 
             </div>
 
         </nav>
 
-        <div class="search-overlay">
+        <div class="search-overlay d-sm-none">
 
             <div class="input-container">
+                <!--suppress HtmlFormInputWithoutLabel -->
                 <input type="search" class="search-autocomplete">
                 <span class="close">&times;</span>
             </div>

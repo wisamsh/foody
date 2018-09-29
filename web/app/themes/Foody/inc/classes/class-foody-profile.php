@@ -15,6 +15,7 @@ class Foody_Profile
 
     private $grid;
 
+
     /**
      * Foody_Profile constructor.
      */
@@ -25,6 +26,9 @@ class Foody_Profile
         $this->grid = new RecipesGrid();
     }
 
+    /**
+     * Displays the sidebar
+     */
     public function sidebar()
     {
         dynamic_sidebar('foody-sidebar');
@@ -32,7 +36,7 @@ class Foody_Profile
 
     public function get_image()
     {
-        return get_user_meta(get_current_user_id(), 'wp_user_avatars', true)['90'];
+        return $this->foody_user->get_image('90');
     }
 
     public function get_name()
@@ -47,11 +51,15 @@ class Foody_Profile
         return $this->foody_user->user->user_email;
     }
 
-    public function my_recipes()
+    /**
+     * Displays a grid of items the
+     * user added to the favorites list
+     */
+    public function my_favorites()
     {
         global $wp_session;
 
-        if (!isset($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
+        if (isset($wp_session['favorites']) && !empty($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
             $posts = [];
             foreach ($favorite_posts as $favorite_post) {
                 $posts[] = Foody_PostFactory::get_post(get_post($favorite_post));
@@ -61,57 +69,61 @@ class Foody_Profile
 
             $this->grid->loop($posts, 2);
         } else {
-            // TODO show 'no content';
             foody_get_template_part(get_template_directory() . '/template-parts/content-no-recipes.php');
         }
 
-//        $this->grid->grid_debug(12, 2);
     }
 
-    public function my_channels_recipes()
+    /**
+     * Displays content related to
+     * followed channels or authors
+     */
+    public function my_topics_content()
     {
-        $this->grid->grid_debug(9, 2);
+
+        $posts = $this->foody_user->get_followed_content();
+
+        $posts = array_map('Foody_Post::create', $posts);
+
+        $data_attrs = [
+
+        ];
+
+
+        $this->grid->loop($posts, 2, true, null, $data_attrs);
+
     }
 
-    public function my_channels()
+    /**
+     * Displays a list of followed
+     * channels and authors.
+     */
+    public function my_followed_topics()
     {
-        $list = $this->foody_user->get_favorite_channels();
-
-
-        $list = array(
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            ),
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            ),
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            ),
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            ),
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            ),
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            ),
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            )
-        );
+        $list = $this->foody_user->get_followed_topics();
 
         foody_get_template_part(
             get_template_directory() . '/template-parts/content-user-managed-list.php',
             $list
         );
+    }
+
+    public function favorites_tab()
+    {
+        global $wp_session;
+
+        $count = empty($wp_session['favorites']) ? 0 : count($wp_session['favorites']);
+
+
+        echo '<span>' . sprintf("המתכונים שלי (%s)", $count) . '</span>';
+    }
+
+    public function channels_tab()
+    {
+        $results = $this->foody_user->get_followed_content(0, 10, true);
+
+        $count = $results[0]->count;
+
+        echo '<span>' . sprintf('מתכונים מערוצים (%s)', $count) . '</span>';
     }
 }

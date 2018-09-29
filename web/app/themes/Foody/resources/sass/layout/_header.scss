@@ -216,6 +216,13 @@ header {
             text-align: center;
             text-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.5);
           }
+
+          .login-signup {
+            .nav-link, .nav-link-separator {
+              color: $color__primary;
+            }
+          }
+
         }
       }
 

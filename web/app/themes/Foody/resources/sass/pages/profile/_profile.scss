@@ -52,6 +52,7 @@ $sidebar-width: 22.5% !default;
 
   .container-fluid {
 
+    //noinspection CssInvalidPropertyValue
     aside {
       width: $sidebar-width;
       min-height: stretch;
@@ -171,16 +172,18 @@ $sidebar-width: 22.5% !default;
 
           .tab-pane {
             padding: 0 17px;
-            .recipe-item-container {
-              display: inline-block;
-              float: right;
+            text-align: right;
 
-              .recipe-item-image {
-                min-height: 272px;
-                height: 272px;
+            .grid-item{
+              display: inline-block;
+
+              .feed-item-image{
+                max-height: 272px;
+                height: auto;
                 width: 100%;
               }
             }
+
           }
         }
       }

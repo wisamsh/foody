@@ -53,6 +53,8 @@ class RecipesGrid
             $class .= $mobile_class;
         }
 
+        $class .= ' grid-item';
+
 
         $container_start = '<div class="' . $class . ' ' . $type . '-item-container" data-sort="' . $post->getTitle() . '" data-order="' . $this->current_item . '">';
         $container_end = '</div>';
@@ -91,7 +93,7 @@ class RecipesGrid
      * @param string $type
      * @return string
      */
-    public function loop($posts, $cols, $echo = true, $type = null)
+    public function loop($posts, $cols, $echo = true, $type = null, $data_attrs = [])
     {
         $items = '';
         $this->is_in_loop = true;

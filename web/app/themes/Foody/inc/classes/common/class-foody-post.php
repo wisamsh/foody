@@ -65,7 +65,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $this->title = get_the_title($post->ID);
             $this->view_count = view_count_display(foody_get_post_views($this->id), 0);
 
-            $post_author_id = get_post_field( 'post_author', $this->getId() );
+            $post_author_id = get_post_field('post_author', $this->getId());
 
 
             $user_avatars = get_the_author_meta('wp_user_avatars', $post_author_id);
@@ -76,7 +76,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 $this->author_image = $user_avatars['90'];
             }
 
-            $this->author_name = foody_posted_by(false,$post_author_id);
+            $this->author_name = foody_posted_by(false, $post_author_id);
             $this->body = apply_filters('the_content', $post->post_content);
             $this->link = get_permalink($this->id);
 
@@ -257,5 +257,36 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * Factory method for creating
+     * Foody_Post objects based
+     * on the WP_Post::post_type field.
+     *
+     * @param stdClass|WP_Post $post
+     * @return Foody_Post
+     */
+    public static function create($post)
+    {
+        if ($post instanceof stdClass) {
+            $post = new WP_Post($post);
+        }
+
+        $type = $post->post_type;
+
+        switch ($type) {
+            case 'foody_recipe':
+                $foody_post = new Foody_Recipe($post);
+                break;
+            case 'foody_playlist':
+                $foody_post = new Foody_Playlist($post);
+                break;
+            default:
+                $foody_post = new Foody_Article($post);
+                break;
+        }
+
+        return $foody_post;
     }
 }

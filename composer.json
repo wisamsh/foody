@@ -136,8 +136,7 @@
     "xamin/handlebars.php": "^0.10.4",
     "phospr/fraction": "^1.2",
     "smash-baloon/instagram-feed": "^1.10",
-    "miled/wordpress-social-login": "^2.3",
-    "abdullah-irfan/whitelist": "^3.5"
+    "miled/wordpress-social-login": "^2.3"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

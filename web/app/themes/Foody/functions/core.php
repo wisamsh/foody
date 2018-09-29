@@ -1572,13 +1572,14 @@ remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
  *
  * @return array of menu items
  */
-function foody_get_menu_by_location( $theme_location ) {
-	$theme_locations = get_nav_menu_locations();
-	$menu_obj = get_term( $theme_locations[ $theme_location ], 'nav_menu' );
-	if ( $menu_obj && !is_wp_error($menu_obj))
-		return wp_get_nav_menu_items( $menu_obj->term_id);
-	else
-		return $menu_obj;
+function foody_get_menu_by_location($theme_location)
+{
+    $theme_locations = get_nav_menu_locations();
+    $menu_obj = get_term($theme_locations[$theme_location], 'nav_menu');
+    if ($menu_obj && !is_wp_error($menu_obj))
+        return wp_get_nav_menu_items($menu_obj->term_id);
+    else
+        return $menu_obj;
 }
 
 /**
@@ -1587,22 +1588,23 @@ function foody_get_menu_by_location( $theme_location ) {
  *
  * @return string menu name if exists, else return "menu"
  */
-function foody_get_menu_title( $theme_location, $default_name = 'menu' ) {
-	if ( $theme_location && ( $locations = get_nav_menu_locations() ) && isset( $locations[ $theme_location ] ) ) {
-		$menu = wp_get_nav_menu_object( $locations[ $theme_location ] );
+function foody_get_menu_title($theme_location, $default_name = 'menu')
+{
+    if ($theme_location && ($locations = get_nav_menu_locations()) && isset($locations[$theme_location])) {
+        $menu = wp_get_nav_menu_object($locations[$theme_location]);
 
-		if( $menu && $menu->name ) {
-			return $menu->name;
-		}
-	}
-	return $default_name;
+        if ($menu && $menu->name) {
+            return $menu->name;
+        }
+    }
+    return $default_name;
 }
 
 
 function foody_get_array_default($array, $key, $default)
 {
     $val = $default;
-    if(isset($array) && !empty($array)){
+    if (isset($array) && !empty($array)) {
         $val = isset($array[$key]) ? $array[$key] : $default;
     }
     return $val;
@@ -1623,10 +1625,16 @@ function array_not_empty($arr)
 
 }
 
-function group_by($array, $key) {
+function group_by($array, $key)
+{
     $return = array();
-    foreach($array as $val) {
+    foreach ($array as $val) {
         $return[$val[$key]][] = $val;
     }
     return $return;
+}
+
+function string_array_to_int($arr)
+{
+    return array_map('intval', $arr);
 }

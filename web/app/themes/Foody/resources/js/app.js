@@ -47,6 +47,7 @@ require('./team');
 
 require('./recipe');
 require('./playlist');
+require('./profile');
 
 jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();

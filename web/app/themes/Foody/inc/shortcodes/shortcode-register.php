@@ -11,9 +11,9 @@ function foody_register_shortcode($atts)
 {
 
 
-    $disaply = foody_get_template_part(get_template_directory() . '/template-parts/register-shortcode.php', ['return' => true]);
+    $display = foody_get_template_part(get_template_directory() . '/template-parts/register-shortcode.php', ['return' => true]);
 
-    return $disaply;
+    return $display;
 
 }
 

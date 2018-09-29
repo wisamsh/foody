@@ -7,6 +7,7 @@
  */
 
 /** @var Foody_Recipe $recipe */
+/** @noinspection PhpUndefinedVariableInspection */
 $recipe = $template_args['post'];
 
 ?>

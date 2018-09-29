@@ -4,19 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ea1d149a0ccf3d30f3a69154c47dd02",
+    "content-hash": "92d91556e50800354d44219642fb8c1a",
     "packages": [
-        {
-            "name": "abdullah-irfan/whitelist",
-            "version": "3.5",
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/fifthsegment-whitelist.3.5.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin"
-        },
         {
             "name": "andrewozz/tinymce-advanced",
             "version": "4.7.11",

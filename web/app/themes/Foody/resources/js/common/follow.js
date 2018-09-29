@@ -27,38 +27,27 @@ if ($follow.length) {
                 toggleAllFollowed(topicId, isAlreadyFollowed);
 
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/wp/wp-admin/admin-ajax.php', // admin-ajax.php URL
-                    data: {
-                        action: 'toggle_follow',
-                        topic_id: topicId,
-                        topic: topic
-                    },
-                    error: function (request, status, error) {
+                toggleFollowed(topicId, topic, function (error) {
 
-                        // TODO handle errors
-
-                        if (status == 500) {
+                    if (error) {
+                        if (error.status == 500) {
                             console.log('Error while adding comment');
-                        } else if (status == 'timeout') {
+                        } else if (error.status == 'timeout') {
                             console.log('Error: Server doesn\'t respond.');
                         } else {
                             alert('please sign in');
                         }
                         // revert animations and favorite indication
                         toggleAllFollowed(topicId, !isAlreadyFollowed);
-                    },
-                    success: () => {
-                    },
-                    complete: function () {
                     }
-                })
-
+                });
             }
         });
     });
 }
+
+
+
 
 
 function toggleAllFollowed(topicId, isAlreadyFollowed) {
@@ -73,6 +62,29 @@ function toggleAllFollowed(topicId, isAlreadyFollowed) {
         }
     });
 }
+
+function toggleFollowed(topicId, topic, cb) {
+    $.ajax({
+        type: 'POST',
+        url: '/wp/wp-admin/admin-ajax.php', // admin-ajax.php URL
+        data: {
+            action: 'toggle_follow',
+            topic_id: topicId,
+            topic: topic
+        },
+        error: function (request, status, error) {
+
+            cb({error: error, status: status});
+        },
+        success: () => {
+        },
+        complete: function () {
+            cb();
+        }
+    })
+}
+
+module.exports = toggleFollowed;
 
 
 // });

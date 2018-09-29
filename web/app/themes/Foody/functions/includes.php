@@ -101,6 +101,7 @@ require_once get_template_directory() . "/functions/acf-utils.php";
 require_once get_template_directory() . "/functions/editor.php";
 require_once get_template_directory() . "/functions/http.php";
 require_once get_template_directory() . "/functions/redirects.php";
+require_once get_template_directory() . "/functions/menus.php";
 
 
 /*
@@ -108,3 +109,4 @@ require_once get_template_directory() . "/functions/redirects.php";
  * */
 require_once get_template_directory() . "/inc/shortcodes/shortcode-team.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-register.php";
+require_once get_template_directory() . "/inc/shortcodes/shortcode-login.php";

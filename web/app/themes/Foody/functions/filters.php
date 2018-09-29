@@ -6,6 +6,7 @@
  * Time: 1:17 PM
  */
 
+// TODO move hooks to the relevant files under Foody/functions/
 
 /**
  * Wrap content with foody class
@@ -40,14 +41,18 @@ function foody_comment_form_fields($fields)
 add_filter('comment_form_default_fields', 'foody_comment_form_fields');
 
 
-//  This hooks into the page template and over rides the default template use this to make sure your magazine template is always default
-add_filter('template_include', 'default_page_template', 10);
-
+/**
+ * Hooks into the page template and
+ * overrides the default template.
+ * Used to make sure the relevant
+ * post types are rendered with Foody's
+ * custom templates.
+ * @param $template
+ * @return string
+ */
 function default_page_template($template)
 {
-// Change page to post if not a page your working on or custom post type name
     if (is_singular(array('post', 'foody_recipe', 'foody_article'))) {
-
         $default_template = locate_template(array('page-templates/content-with-sidebar.php'));
         if ('' != $default_template) {
             return $default_template;
@@ -56,3 +61,6 @@ function default_page_template($template)
 
     return $template;
 }
+
+add_filter('template_include', 'default_page_template', 10);
+

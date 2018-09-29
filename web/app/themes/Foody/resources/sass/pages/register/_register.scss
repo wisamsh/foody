@@ -1,8 +1,8 @@
 @import "../../layout/content-with-images";
 
-.register {
+.register, .login {
 
-  >.container-fluid{
+  > .container-fluid {
     min-height: unset;
   }
 
@@ -19,14 +19,23 @@
       font-size: 18px;
       font-weight: bold;
       color: #ffffff;
+      width: 100%;
 
       &.btn-facebook {
         background-color: #3a539f;
+        .facebook-icon:after{
+          background: url("../images/icons/facebook.svg") no-repeat;
+          content: '';
+          display: inline-block;
+        }
+
       }
 
       &.btn-google {
         background-color: #d35647;
-
+        .google-icon:after{
+          background: url("../images/icons/google.svg") no-repeat;
+        }
       }
     }
 
@@ -55,7 +64,7 @@
   }
 
   form {
-
+    width: 100%;
     .form-group {
       padding-right: 0;
       padding-left: 0;
@@ -68,7 +77,7 @@
         left: unset;
         top: 0;
 
-        span{
+        span {
           font-weight: normal;
         }
       }
@@ -117,7 +126,7 @@
         width: 33%;
         height: 53px;
         border-radius: 3px;
-        background-color: #ed3d48;
+        background-image: linear-gradient(66deg, #ec3849, #f35644);
         color: white;
         font-family: $font__assistant;
         font-size: 18px;
@@ -129,13 +138,25 @@
       }
     }
 
+    .forgot-password {
+
+      font-family: $font__assistant;
+      font-size: 18px;
+      color: #ed3d48;
+
+    }
+
   }
 }
 
-@include breakpoint(mobileonly){
+.wp-social-login-widget {
+  display: none !important;
+}
+
+@include breakpoint(mobileonly) {
   .register {
 
-    >.container-fluid{
+    > .container-fluid {
 
     }
 
@@ -146,7 +167,6 @@
     .buttons {
 
       button {
-
 
         &.btn-facebook {
         }
@@ -172,7 +192,7 @@
       .form-group {
         label {
 
-          span{
+          span {
           }
         }
 
@@ -182,8 +202,8 @@
 
       }
 
-      .md-checkbox{
-        label{
+      .md-checkbox {
+        label {
           display: table-cell;
         }
       }

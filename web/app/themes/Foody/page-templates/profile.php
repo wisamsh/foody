@@ -41,6 +41,10 @@ get_header(); ?>
                                         </h1>
                                         <span class="email">
                                         <?php echo $foody_profile->get_email() ?>
+                                            <a href="<?php echo wp_logout_url(get_home_url()) ?>">
+                                            <?php echo __('יציאה', 'foody') ?>
+                                        </a>
+
                                     </span>
                                     </div>
 
@@ -49,7 +53,7 @@ get_header(); ?>
                                             הערוצים שלי
                                         </h2>
                                         <section class="channels">
-                                            <?php $foody_profile->my_channels() ?>
+                                            <?php $foody_profile->my_followed_topics() ?>
                                         </section>
 
                                     </section>
@@ -58,13 +62,16 @@ get_header(); ?>
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab"
-                                           href="#my-recipes" aria-controls="my-recipes" aria-selected="true">המתכונים
-                                            שלי (36)</a>
+                                           href="#my-recipes" aria-controls="my-recipes" aria-selected="true">
+                                            <?php $foody_profile->favorites_tab() ?>
+                                        </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="profile-tab" data-toggle="tab"
                                            href="#my-channels-recipes" role="tab" aria-controls="my-channels-recipes"
-                                           aria-selected="false">מתכונים מערוצים (13)</a>
+                                           aria-selected="false">
+                                            <?php $foody_profile->channels_tab() ?>
+                                        </a>
                                     </li>
                                 </ul>
                             </section>
@@ -74,14 +81,14 @@ get_header(); ?>
                                 <div class="tab-content col">
                                     <div class="tab-pane fade show active row gutter-3" id="my-recipes" role="tabpanel"
                                          aria-labelledby="my-recipes-tab">
-                                        <?php $foody_profile->my_recipes() ?>
+                                        <?php $foody_profile->my_favorites() ?>
                                     </div>
                                     <div class="tab-pane fade row gutter-3" id="my-channels-recipes" role="tabpanel"
                                          aria-labelledby="my-channels-recipes-tab">
                                         <h2 class="title">
                                             מתכונים מערוצים
                                         </h2>
-                                        <?php $foody_profile->my_channels_recipes() ?>
+                                        <?php $foody_profile->my_topics_content() ?>
                                     </div>
                                 </div>
                                 <section class="my-channels col d-none d-sm-block pr-0">
@@ -89,7 +96,7 @@ get_header(); ?>
                                         הערוצים שלי
                                     </h2>
                                     <section class="channels">
-                                        <?php $foody_profile->my_channels() ?>
+                                        <?php $foody_profile->my_followed_topics() ?>
                                     </section>
 
                                 </section>
