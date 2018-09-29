@@ -18,6 +18,11 @@ class RecipesGrid
         'Foody_Recipe' => ''
     ];
 
+    private $supported_types = [
+        'recipe',
+        'playlist'
+    ];
+
 
     /**
      * RecipesGrid constructor.
@@ -38,6 +43,9 @@ class RecipesGrid
      */
     public function draw($post, $col_num, $col_num_mobile = 12, $echo = true, $type = 'recipe')
     {
+        if (!in_array($type, $this->supported_types)) {
+            return '';
+        }
         if ($col_num == 0) {
             $col_num = self::NONE;
         } elseif (12 % $col_num != 0) {
