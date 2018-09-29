@@ -1636,5 +1636,8 @@ function group_by($array, $key)
 
 function string_array_to_int($arr)
 {
+    if(!is_array($arr)){
+        return $arr;
+    }
     return array_map('intval', $arr);
 }
