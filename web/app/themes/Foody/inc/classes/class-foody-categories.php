@@ -49,7 +49,7 @@ class Foody_Categories
 
                 $main_category_id = get_sub_field('category');
                 $main_title = get_sub_field('title');
-                if(!$main_title){
+                if (!$main_title) {
                     $main_title = get_cat_name($main_category_id);
                 }
 
@@ -61,10 +61,6 @@ class Foody_Categories
                     'cards_per_row' => $cards_per_row
                 );
 
-                foody_get_template_part(get_template_directory() . '/template-parts/content-top-level-category-card.php', $args);
-                foody_get_template_part(get_template_directory() . '/template-parts/content-top-level-category-card.php', $args);
-                foody_get_template_part(get_template_directory() . '/template-parts/content-top-level-category-card.php', $args);
-                foody_get_template_part(get_template_directory() . '/template-parts/content-top-level-category-card.php', $args);
                 foody_get_template_part(get_template_directory() . '/template-parts/content-top-level-category-card.php', $args);
 
 

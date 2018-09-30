@@ -121,3 +121,27 @@ window.formSubmitWithFiles = function (settings) {
         return false;
     });
 };
+
+
+jQuery(document).ready(($) => {
+
+
+    let $checkboxes = $('.md-checkbox');
+
+    if ($checkboxes.length) {
+
+
+        $checkboxes.click(function () {
+
+
+            let $input = $('input', this);
+
+            let checked = $input.prop('checked') || false;
+
+            checked = !checked;
+
+            $input.prop('checked', checked);
+
+        });
+    }
+});

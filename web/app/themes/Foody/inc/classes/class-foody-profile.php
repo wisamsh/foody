@@ -121,8 +121,11 @@ class Foody_Profile
     public function channels_tab()
     {
         $results = $this->foody_user->get_followed_content(0, 10, true);
+        $count = 0;
+        if (isset($results[0]) && isset($results[0]->count)) {
+            $count = $results[0]->count;
+        }
 
-        $count = $results[0]->count;
 
         echo '<span>' . sprintf('מתכונים מערוצים (%s)', $count) . '</span>';
     }

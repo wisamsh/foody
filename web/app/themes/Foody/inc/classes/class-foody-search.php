@@ -9,12 +9,28 @@
 class Foody_Search
 {
 
+    const type_ingredient = 'ingredient';
+    const type_category = 'category';
+    const type_technique = 'technique';
+    const type_limitation = 'limitation';
+    const type_accessory = 'accessory';
+    const type_tags = 'tag';
+
     private $types;
 
     private $query_builder;
 
     public $wildcards = [
         'ingredients_ingredients_groups_$_ingredients_$_ingredient' => 'ingredients_ingredients_groups_%_ingredients_%_ingredient'
+    ];
+
+    private $types_aliases = [
+        'ingredient' => 'ingredients',
+        'category' => 'categories',
+        'technique' => 'techniques',
+        'accessory' => 'accessories',
+        'limitation' => 'limitations',
+        'tag' => 'tags'
     ];
 
     /**
@@ -32,43 +48,48 @@ class Foody_Search
          * {
          *  search:'asfgag',
          *  'types':[{
-         *      type:'categories|ingredients|techniques|accessories|limitations',
+         *      type:'categories|ingredients|techniques|accessories|limitations|tags',
          *      exclude:false,
          *      id:8
          *  }]
          * }
          * */
 
-        if (isset($this->types['ingredient'])) {
-            $ingredients = $this->types['ingredient'];
-            $this->query_builder
-                ->ingredients($ingredients);
+        // TODO check generic implementation
+        foreach ($this->types as $type) {
+            $this->maybe_add_to_query($type);
         }
 
-        if (isset($this->types['category'])) {
-            $categories = $this->types['category'];
-            $this->query_builder
-                ->categories($categories);
-        }
-
-        if (isset($this->types['technique'])) {
-            $techniques = $this->types['technique'];
-            $this->query_builder
-                ->techniques($techniques);
-        }
-
-        if (isset($this->types['limitation'])) {
-            $limitation = $this->types['limitation'];
-            $this->query_builder
-                ->limitations($limitation);
-        }
-
-
-        if (isset($this->types['tag'])) {
-            $tags = $this->types['tag'];
-            $this->query_builder
-                ->tags($tags);
-        }
+//        if (isset($this->types['ingredient'])) {
+//            $ingredients = $this->types['ingredient'];
+//            $this->query_builder
+//                ->ingredients($ingredients);
+//        }
+//
+//        if (isset($this->types['category'])) {
+//            $categories = $this->types['category'];
+//            $this->query_builder
+//                ->categories($categories);
+//        }
+//
+//        if (isset($this->types['technique'])) {
+//            $techniques = $this->types['technique'];
+//            $this->query_builder
+//                ->techniques($techniques);
+//        }
+//
+//        if (isset($this->types['limitation'])) {
+//            $limitation = $this->types['limitation'];
+//            $this->query_builder
+//                ->limitations($limitation);
+//        }
+//
+//
+//        if (isset($this->types['tag'])) {
+//            $tags = $this->types['tag'];
+//            $this->query_builder
+//                ->tags($tags);
+//        }
 
 
         $query = $this->query_builder
@@ -78,8 +99,6 @@ class Foody_Search
         if ($this->query_builder->has_wildcard_key) {
             add_filter('posts_where', array($this, 'replace_wildcards_keys'), 10, 1);
         }
-
-
 
 
         $posts = $query->get_posts();
@@ -92,6 +111,31 @@ class Foody_Search
 
         echo count($posts);
 
+    }
+
+    private function maybe_add_to_query($type)
+    {
+        $values = $this->get_values_for_type($type);
+
+        // only add to query if
+        // has values
+        if (!empty($values)) {
+
+            if (isset($this->types_aliases[$type])) {
+
+                // type alias corresponds
+                // to builder method.
+                // Example: type->ingredient, method->ingredients
+                $fn = $this->types_aliases[$type];
+                if (method_exists($this->query_builder, $fn)) {
+                    call_user_func(array($this->query_builder, $fn), $values);
+                } else {
+                    if (WP_ENV == 'development') {
+                        throw new Exception("unknown builder method: $fn");
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -113,6 +157,29 @@ class Foody_Search
         }
 
         return $where;
+    }
+
+    private function get_values_for_type($type)
+    {
+        $values = [];
+
+        // safety
+        if (!is_null($this->types)) {
+
+            if (isset($this->types[$type])) {
+                $values = $this->types[$type];
+            } else {
+                // if we have an alias for
+                // the current type call method
+                // again with alias.
+                if (isset($this->types_aliases[$type])) {
+                    $type = $this->types_aliases[$type];
+                    return $this->get_values_for_type($type);
+                }
+            }
+        }
+
+        return $values;
     }
 
 }
