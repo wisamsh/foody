@@ -10,3 +10,8 @@ require('./categories');
 // $('#dw-p2').bmdDrawer();
 
 // $('.drawer-nav').drawer();
+
+
+jQuery(document).ready(($) => {
+
+});

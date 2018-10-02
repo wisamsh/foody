@@ -22,10 +22,29 @@ $user = new Foody_User();
     <script>
         imagesUri = '<?php echo $GLOBALS['images_dir'] ?>';
     </script>
+
+    <?php if (!is_admin()):
+        $globalsss = array(
+            'isMobile' => wp_is_mobile(),
+            'ajax' => admin_url('admin-ajax.php'),
+        );
+
+        ?>
+        <script>
+            foody_globals = {
+                isMobile:'<?php echo wp_is_mobile() ? 'true' : 'false' ?>',
+                ajax:'<?php echo admin_url('admin-ajax.php')?>'
+            };
+        </script>
+
+    <?php endif; ?>
+
     <?php wp_head(); ?>
 
 
     <?php
+    // TODO check facebook sdk
+    // TODO loads only once (wp social login may load it too)
     $header->facebook_init();
     ?>
 

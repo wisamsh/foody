@@ -3,11 +3,15 @@
  */
 
 
-if (!globals.isMobile) {
-    showMoreList('.homepage .team-listing .author:last-child');
-} else {
-    showSlider()
-}
+jQuery(document).ready(($)=>{
+    if (!foody_globals.isMobile) {
+        showMoreList('.homepage .team-listing .author:last-child');
+    } else {
+        showSlider()
+    }
+});
+
+
 
 
 function showSlider() {

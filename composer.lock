@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d2730770c953dd8587e436754b9561e",
+    "content-hash": "c36973610188498acbedd50121f44f38",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -378,6 +378,17 @@
             ],
             "description": "A composer-installable fractions library",
             "time": "2016-12-21T15:33:12+00:00"
+        },
+        {
+            "name": "rebert-felty/collapsing-categories",
+            "version": "2.1.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/collapsing-categories.2.1.2.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
         },
         {
             "name": "roots/multisite-url-fixer",

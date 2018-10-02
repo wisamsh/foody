@@ -3,3 +3,4 @@
  */
 require('./slider');
 require('./show-more-list');
+require('./foody-accordion');

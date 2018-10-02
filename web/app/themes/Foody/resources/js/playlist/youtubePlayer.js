@@ -26,7 +26,7 @@ let defaultOptions = {
 window.ytPlayer = function (selector, youtubeId) {
 
     let player;
-    let options = globals.isMobile ? videoSizes.mobile : videoSizes.desktop;
+    let options = foody_globals.isMobile ? videoSizes.mobile : videoSizes.desktop;
 
     options = _.extend(defaultOptions,options);
     player = YouTubePlayer($(selector)[0], options);

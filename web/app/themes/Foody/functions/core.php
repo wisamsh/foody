@@ -1636,8 +1636,20 @@ function group_by($array, $key)
 
 function string_array_to_int($arr)
 {
-    if(!is_array($arr)){
+    if (!is_array($arr)) {
         return $arr;
     }
     return array_map('intval', $arr);
+}
+
+function foody_el_classes($classes)
+{
+
+    if (is_array($classes)) {
+        $classes = implode(' ', $classes);
+    }
+
+    $classes = trim($classes);
+
+    echo $classes;
 }

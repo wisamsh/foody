@@ -15,7 +15,8 @@
         <div class="row">
 
             <div class="row col-12 justify-content-between gutter-0 buttons">
-                <a class="col-12 col-sm-5" href="http://foody.co.il/wp/wp-login.php?action=wordpress_social_authenticate&mode=login&provider=Google&redirect_to=http%3A%2F%2Ffoody.co.il%2F%25d7%2594%25d7%25a8%25d7%25a9%25d7%259e%25d7%2594%2F">
+                <a class="col-12 col-sm-5"
+                   href="<?php echo WP_HOME ?>/wp/wp-login.php?action=wordpress_social_authenticate&mode=login&provider=Google&redirect_to=http%3A%2F%2Ffoody.co.il%2F%25d7%2594%25d7%25a8%25d7%25a9%25d7%259e%25d7%2594%2F">
                     <button class="btn btn-google">
                     <span>
                         <?php echo __('כניסה דרך גוגל', 'foody') ?>
@@ -23,7 +24,8 @@
                         <span class="icon-google"></span>
                     </button>
                 </a>
-                <a class="col-12 col-sm-5" href="http://foody.co.il/wp/wp-login.php?action=wordpress_social_authenticate&mode=login&provider=Facebook&redirect_to=http%3A%2F%2Ffoody.co.il%2F%25d7%2594%25d7%25a8%25d7%25a9%25d7%259e%25d7%2594%2F">
+                <a class="col-12 col-sm-5"
+                   href="<?php echo WP_HOME ?>/wp/wp-login.php?action=wordpress_social_authenticate&mode=login&provider=Facebook&redirect_to=http%3A%2F%2Ffoody.co.il%2F%25d7%2594%25d7%25a8%25d7%25a9%25d7%259e%25d7%2594%2F">
                     <button class="btn btn-facebook">
                     <span>
                         <?php echo __('הירשמו דרך פייסבוק', 'foody') ?>

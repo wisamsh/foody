@@ -36,6 +36,8 @@ footer.site-footer {
   footer.site-footer {
     padding: 15px;
     height: auto;
+    position: unset;
+    width: 100%;
 
     ul {
       &.menu {

@@ -28,6 +28,7 @@ body {
   direction: rtl;
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
+  min-height: fit-content;
 }
 
 html, body, .container-fluid {
@@ -400,4 +401,8 @@ a {
 
 figure {
   margin: 0;
+}
+
+#page{
+  position: relative;
 }

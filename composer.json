@@ -12,7 +12,12 @@
     }
   ],
   "keywords": [
-    "moveo", "foody", "wordpress", "stack", "composer", "wp"
+    "moveo",
+    "foody",
+    "wordpress",
+    "stack",
+    "composer",
+    "wp"
   ],
   "config": {
     "preferred-install": "dist"
@@ -30,7 +35,7 @@
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
-          "url":"https://codecanyon.net/user/dev_moveo/download_purchase/e452d3a6-24ff-4b0a-afda-07fae5f60a94"
+          "url": "https://codecanyon.net/user/dev_moveo/download_purchase/e452d3a6-24ff-4b0a-afda-07fae5f60a94"
         }
       }
     },
@@ -129,6 +134,18 @@
           "url": "https://downloads.wordpress.org/plugin/wordpress-seo.8.3.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "rebert-felty/collapsing-categories",
+        "version": "2.1.2",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/collapsing-categories.2.1.2.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -148,16 +165,23 @@
     "phospr/fraction": "^1.2",
     "smash-baloon/instagram-feed": "^1.10",
     "miled/wordpress-social-login": "^2.3",
-    "yoast/wordpress-seo": "^8.3"
+    "yoast/wordpress-seo": "^8.3",
+    "rebert-felty/collapsing-categories": "^2.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"
   },
   "extra": {
     "installer-paths": {
-      "web/app/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
-      "web/app/plugins/{$name}/": ["type:wordpress-plugin"],
-      "web/app/themes/{$name}/": ["type:wordpress-theme"]
+      "web/app/mu-plugins/{$name}/": [
+        "type:wordpress-muplugin"
+      ],
+      "web/app/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "web/app/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
     },
     "wordpress-install-dir": "web/wp"
   },

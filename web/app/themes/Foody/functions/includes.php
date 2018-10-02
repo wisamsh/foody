@@ -19,7 +19,6 @@
 
 require_once get_template_directory() . "/inc/globals.php";
 require_once get_template_directory() . "/inc/utils/utils.php";
-require_once get_template_directory() . "/functions/js-globals.php";
 
 
 /*
@@ -70,6 +69,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-search.php";
 require_once get_template_directory() . "/inc/classes/class-foody-search.php";
 require_once get_template_directory() . "/inc/classes/class-foody-search-page.php";
 require_once get_template_directory() . "/inc/classes/class-foody-registration.php";
+require_once get_template_directory() . "/inc/classes/class-foody-categories-accordion-walker.php";
 
 /*
  * Widgets

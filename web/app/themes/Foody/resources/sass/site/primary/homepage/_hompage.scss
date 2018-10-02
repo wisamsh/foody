@@ -86,24 +86,25 @@ $feed-header-height: 60px;
         height: $feed-header-height;
         width: 100%;
 
-        .socials {
-
-          vertical-align: middle;
-          width: calc(99% - #{$content-width});
-
-          .essbfc-container {
-
-            display: inline-block;
-            margin: 0;
-            width: 100%;
-            padding: 0 25px;
-
-            ul {
-              display: flex;
-              justify-content: space-between;
-            }
-          }
-        }
+        // TODO remove
+        //.socials {
+        //
+        //  vertical-align: middle;
+        //  width: calc(99% - #{$content-width});
+        //
+        //  .essbfc-container {
+        //
+        //    display: inline-block;
+        //    margin: 0;
+        //    width: 100%;
+        //    padding: 0 25px;
+        //
+        //    ul {
+        //      display: flex;
+        //      justify-content: space-between;
+        //    }
+        //  }
+        //}
 
         .title {
           width: $content-width;
@@ -118,20 +119,19 @@ $feed-header-height: 60px;
       aside {
 
         width: 21%;
-        margin-bottom: -180px;
+        padding-right: 0;
 
         $input-height: 57px;
         $input-margin: 4px;
 
         input[type="text"] {
-          width: 100%;
+          width: calc(100% - 15px);
           height: $input-height;
           margin-bottom: $input-margin;
         }
 
         .sidebar-content {
-          min-height: calc(100% - #{$input-height});
-          position: absolute;
+          min-height: fit-content;
           left: 0;
           right: 0;
           bottom: 0;
@@ -209,8 +209,11 @@ $feed-header-height: 60px;
 
 .page-template-homepage {
   footer.site-footer {
-    max-width: 79%;
+    width: 79%;
     margin-right: 21%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
   }
 }
 
@@ -355,6 +358,8 @@ $feed-header-height: 60px;
       max-width: 100%;
       margin-right: 0;
       margin-top: 0;
+      position: unset;
+      width: 100%;
     }
   }
 }
