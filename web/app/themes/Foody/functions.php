@@ -148,12 +148,16 @@ function foody_scripts()
 //        wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/home.js', false, false, true);
 //    }
 
-    if(!is_admin()) {
+    if (!is_admin()) {
         wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/main.js', false, false, false);
+    } else {
+        echo "<style>
+                html{    overflow-x: hidden !important;}
+             </style>";
     }
 
-    if(is_page(get_page_by_title('הרשמה'))){
-        wp_enqueue_script('recaptcha','https://www.google.com/recaptcha/api.js');
+    if (is_page(get_page_by_title('הרשמה'))) {
+        wp_enqueue_script('recaptcha', 'https://www.google.com/recaptcha/api.js');
     }
 
 }
@@ -200,6 +204,7 @@ function admin_theme_style()
 {
     wp_enqueue_script('admin-script', get_template_directory_uri() . '/dist/admin.js', false, false, true);
 }
+
 add_action('admin_enqueue_scripts', 'admin_theme_style');
 add_action('login_enqueue_scripts', 'admin_theme_style');
 
@@ -209,10 +214,81 @@ add_action('login_enqueue_scripts', 'admin_theme_style');
  * after registration
  * @param int $user_id
  */
-function auto_login_new_user($user_id ) {
+function auto_login_new_user($user_id)
+{
     wp_set_current_user($user_id);
     wp_set_auth_cookie($user_id);
-    wp_redirect( home_url() );
+    wp_redirect(home_url());
     exit;
 }
-add_action( 'user_register', 'auto_login_new_user' );
+
+add_action('user_register', 'auto_login_new_user');
+
+
+//add_action('muplugins_loaded', 'foody_plugin_override');
+
+function foody_plugin_override()
+{
+    throw new Exception('akshfljkahsf');
+    file_put_contents('/Users/moveosoftware/Desktop/debug.txt','muplugins_loaded');
+    function wsl_render_redirect_to_provider_loading_screen($provider)
+    {
+        ?>
+        <!DOCTYPE html>
+        <head>
+            <meta name="robots" content="NOINDEX, NOFOLLOW">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <title>Redirecting...</title>
+            <style type="text/css">
+                html {
+                    background: #f1f1f1;
+                }
+
+                body {
+                    background: #fff;
+                    color: #444;
+                    font-family: "Open Sans", sans-serif;
+                    margin: 2em auto;
+                    padding: 1em 2em;
+                    max-width: 700px;
+                    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13);
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13);
+                }
+
+                #loading-screen {
+                    margin-top: 50px;
+                }
+
+                #loading-screen div {
+                    line-height: 20px;
+                    padding: 8px;
+                    background-color: #f2f2f2;
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                    text-align: center;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13);
+                    margin-top: 25px;
+                }
+            </style>
+            <script>
+                function init() {
+                    window.location.replace(window.location.href + "&redirect_to_provider=true");
+                }
+            </script>
+        </head>
+        <body id="loading-screen" onload="init();">
+        <table width="100%" border="0">
+            <tr>
+                <td align="center">
+                    <div>
+                        Loading
+                    </div>
+                </td>
+            </tr>
+        </table>
+        </body>
+        </html>
+        <?php
+        die();
+    }
+}

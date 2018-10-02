@@ -102,6 +102,7 @@ require_once get_template_directory() . "/functions/editor.php";
 require_once get_template_directory() . "/functions/http.php";
 require_once get_template_directory() . "/functions/redirects.php";
 require_once get_template_directory() . "/functions/menus.php";
+require_once get_template_directory() . "/functions/registration.php";
 
 
 /*
