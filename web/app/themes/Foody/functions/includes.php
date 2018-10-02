@@ -70,7 +70,6 @@ require_once get_template_directory() . "/inc/classes/class-foody-search.php";
 require_once get_template_directory() . "/inc/classes/class-foody-search-page.php";
 require_once get_template_directory() . "/inc/classes/class-foody-registration.php";
 require_once get_template_directory() . "/inc/classes/class-foody-categories-accordion-walker.php";
-require_once get_template_directory() . "/inc/bs4navwalker.php";
 
 
 /*
@@ -113,3 +112,10 @@ require_once get_template_directory() . "/functions/registration.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-team.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-register.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-login.php";
+
+
+
+/*
+ * Plugins
+ * */
+require_once get_template_directory() . "/inc/plugins/easy-social-share-buttons3/index.php";

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed617377e888b769b670227996f8c402",
+    "content-hash": "ca7b2e60ac1aa31d7cfb4657e168a3ca",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
