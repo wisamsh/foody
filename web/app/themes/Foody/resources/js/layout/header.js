@@ -1,6 +1,16 @@
 jQuery(document).ready(function ($) {
 
     let channelsMenu = $('.channels-menu');
+    let navbar = $('#foody-navbar-collapse');
+
+
+    navbar.on('show.bs.collapse', function () {
+        $('body').addClass('lock');
+    });
+
+    navbar.on('hide.bs.collapse', function () {
+        $('body').removeClass('lock');
+    });
 
     channelsMenu.on('show.bs.collapse', function () {
         $('body').css('overflow', 'hidden');

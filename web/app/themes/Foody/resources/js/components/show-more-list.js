@@ -14,7 +14,7 @@ window.showMoreList = function (selector) {
     let count = $target.parent().data('count');
     if (count) {
         let $image = $('img', $target);
-
+        $('h4', $target).hide();
         let imageHeight = $image.height();
 
         let overlay = `<h4 class='show-more-list-overlay'> ${count}+</h4>`;

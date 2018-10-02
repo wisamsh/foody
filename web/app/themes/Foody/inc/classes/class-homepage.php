@@ -15,6 +15,9 @@ class HomePage
 
     private $sidebar_filter;
 
+    private $sidebar_id = 'foody-sidebar';
+    private $mobile_sidebar_id = 'foody-sidebar-mobile';
+
     /**
      * HomePage constructor.
      */
@@ -100,6 +103,24 @@ class HomePage
 
         return $posts;
     }
+
+
+    public function sidebar()
+    {
+        echo "<aside class=\"sidebar col pl-0\">";
+
+        $sidebar_name = $this->sidebar_id;
+        if (wp_is_mobile()) {
+            $sidebar_name = $this->mobile_sidebar_id;
+        } else {
+            echo "<input name=\"search\" type=\"text\" class=\"search\" title=\"search\" placeholder=\"חיפוש מתכון…\">";
+        }
+
+        echo "<div class=\"sidebar-content\">";
+        dynamic_sidebar($sidebar_name);
+        echo "</div></aside>";
+    }
+
 
     private function get_featured_categories()
     {

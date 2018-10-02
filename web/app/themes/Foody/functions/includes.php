@@ -70,6 +70,8 @@ require_once get_template_directory() . "/inc/classes/class-foody-search.php";
 require_once get_template_directory() . "/inc/classes/class-foody-search-page.php";
 require_once get_template_directory() . "/inc/classes/class-foody-registration.php";
 require_once get_template_directory() . "/inc/classes/class-foody-categories-accordion-walker.php";
+require_once get_template_directory() . "/inc/bs4navwalker.php";
+
 
 /*
  * Widgets

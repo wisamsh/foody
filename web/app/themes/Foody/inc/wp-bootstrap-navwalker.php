@@ -182,79 +182,6 @@ if (!class_exists('WP_Bootstrap_Navwalker')) {
                 $output .= $indent . '<li' . $id . $class_names . '>' . $n . $indent . $t;
             }
 
-            // TODO begin function extract
-//            $atts = array();
-//            $atts['title'] = !empty($item->attr_title) ? $item->attr_title : '';
-//            $atts['target'] = !empty($item->target) ? $item->target : '';
-//            $atts['rel'] = !empty($item->xfn) ? $item->xfn : '';
-//            $atts['href'] = !empty($item->url) ? $item->url : '';
-//
-//            /**
-//             * Filters the HTML attributes applied to a menu item's anchor element.
-//             *
-//             * @since 3.6.0
-//             * @since 4.1.0 The `$depth` parameter was added.
-//             *
-//             * @param array $atts {
-//             *     The HTML attributes applied to the menu item's `<a>` element, empty strings are ignored.
-//             *
-//             * @type string $title Title attribute.
-//             * @type string $target Target attribute.
-//             * @type string $rel The rel attribute.
-//             * @type string $href The href attribute.
-//             * }
-//             * @param WP_Post $item The current menu item.
-//             * @param stdClass $args An object of wp_nav_menu() arguments.
-//             * @param int $depth Depth of menu item. Used for padding.
-//             */
-//            $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args, $depth);
-//
-//            if ($args->walker->has_children) {
-//                $atts['data-toggle'] = 'dropdown';
-//                $atts['aria-haspopup'] = 'true';
-//                $atts['aria-expanded'] = 'false';
-//            }
-//
-//            $attributes = '';
-//            foreach ($atts as $attr => $value) {
-//                if (!empty($value)) {
-//                    $value = ('href' === $attr) ? esc_url($value) : esc_attr($value);
-//                    $attributes .= ' ' . $attr . '="' . $value . '"';
-//                }
-//            }
-//
-//            /** This filter is documented in wp-includes/post-template.php */
-//            $title = apply_filters('the_title', $item->title, $item->ID);
-//
-//
-//            /**
-//             * Filters a menu item's title.
-//             *
-//             * @since 4.4.0
-//             *
-//             * @param string $title The menu item's title.
-//             * @param WP_Post $item The current menu item.
-//             * @param stdClass $args An object of wp_nav_menu() arguments.
-//             * @param int $depth Depth of menu item. Used for padding.
-//             */
-//            $title = apply_filters('nav_menu_item_title', $title, $item, $args, $depth);
-//
-//            $item_classes = array('nav-link');
-//
-//            if ($args->walker->has_children) {
-//                $item_classes[] = 'dropdown-toggle';
-//            }
-//
-//            // menu depth > 0,
-//            // meaning a dropdown should
-//            // be rendered
-//            if (0 < $depth) {
-//                $item_classes = array_diff($item_classes, ['nav-link']);
-//                $item_classes[] = 'dropdown-item';
-//            }
-//
-//            // TODO end function extract
-
             $item_output = $args->before;
 
             /** @noinspection PhpUnusedLocalVariableInspection */
@@ -395,6 +322,12 @@ if (!class_exists('WP_Bootstrap_Navwalker')) {
                 $item_classes[] = 'dropdown-item';
             }
 
+            $icon = get_field('icon', $item);
+
+            if ($icon && wp_is_mobile()) {
+                $item_output .= "<i class='$icon'></i>";
+            }
+
             $item_output .= '<a class="' . implode(' ', $item_classes) . '" ' . $attributes . '>';
             $item_output .= $args->link_before . $title . $args->link_after;
             $item_output .= '</a>';
@@ -458,6 +391,8 @@ if (!class_exists('WP_Bootstrap_Navwalker')) {
                 }
             }
         }
+
+
 
     }
 

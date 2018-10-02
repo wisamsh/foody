@@ -62,13 +62,15 @@ class foody_Categories_List_Widget extends Foody_Widget
         echo '<div class="categories-listing d-flex flex-row" data-count="' . $categories_count . '">';
 
         $count = 0;
+        /** @var WP_Term $category */
         foreach ($categories as $category) {
             if ($count == $num_of_categories) {
                 break;
             }
             foody_get_template_part(get_template_directory() . '/template-parts/content-category-listing.php', array(
                 'name' => $category->name,
-                'image' => get_field('image', $category->taxonomy . '_' . $category->term_id)
+                'image' => get_field('image', $category->taxonomy . '_' . $category->term_id),
+                'link' => get_term_link($category->term_id)
             ));
 
             $count++;

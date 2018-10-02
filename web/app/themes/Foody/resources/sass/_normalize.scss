@@ -29,6 +29,35 @@ body {
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
   min-height: fit-content;
+
+  &:after {
+    transition: all .3s;
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #3a3a3a;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  &.side-active {
+    overflow: hidden;
+    &:after {
+      opacity: .8;
+    }
+  }
+
+  &.lock{
+    overflow: hidden;
+    .logo-container-mobile{
+      //display: none !important;
+      opacity: 0;
+    }
+  }
 }
 
 html, body, .container-fluid {
@@ -403,6 +432,6 @@ figure {
   margin: 0;
 }
 
-#page{
+#page {
   position: relative;
 }

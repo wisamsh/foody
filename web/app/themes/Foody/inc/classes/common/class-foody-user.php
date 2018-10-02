@@ -125,13 +125,13 @@ class Foody_User
         $query_authors = "";
         $query_channels = "";
 
-        if (count($authors) > 0 && is_array($authors)) {
+        if (is_array($authors) && count($authors) > 0) {
             $authors = string_array_to_int($authors);
             $authors = implode(',', $authors);
             $query_authors = "post_author IN ($authors)";
         }
 
-        if (count($channels) > 0 && is_array($channels)) {
+        if (is_array($channels) && count($channels) > 0) {
             $channels = string_array_to_int($channels);
             $channels = implode(',', $channels);
             $query_channels = "ID IN (

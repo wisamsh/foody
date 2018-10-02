@@ -17,16 +17,16 @@ $recipe = $template_args['post'];
     <a href="<?php echo $recipe->link ?>">
         <div class="image-container main-image-container">
             <img class="recipe-item-image feed-item-image" src="<?php echo $recipe->getImage() ?>" alt="">
-            <div class="duration">
+            <?php if ($recipe->video != null): ?>
+                <div class="duration">
+                    <i class="icon icon-timeplay">
 
-
-                <i class="icon icon-timeplay">
-
-                </i>
-                <span>
-                   <?php echo $recipe->getDuration() ?>
-            </span>
-            </div>
+                    </i>
+                    <span>
+                        <?php echo $recipe->getDuration() ?>
+                    </span>
+                </div>
+            <?php endif; ?>
         </div>
     </a>
     <section class="recipe-item-details  d-flex">

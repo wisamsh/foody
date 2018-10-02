@@ -38,6 +38,24 @@ function user_role_menu_items_filter($sorted_menu_items, stdClass $args)
 
 add_filter('wp_nav_menu_objects', 'user_role_menu_items_filter', 10, 2);
 
+function mobile_only_menu_items_filter($sorted_menu_items, stdClass $args)
+{
+
+    if (!is_admin() && !empty($sorted_menu_items)) {
+        $mobile = wp_is_mobile();
+
+        if (!$mobile) {
+            $sorted_menu_items = array_filter($sorted_menu_items, function ($item) {
+                $mobile_only = get_field('mobile_only', $item);
+                return $mobile_only == false;
+            });
+        }
+    }
+
+    return $sorted_menu_items;
+}
+
+add_filter('wp_nav_menu_objects', 'mobile_only_menu_items_filter', 10, 2);
 
 /**
  * @param stdClass[] $sorted_menu_items menu items objects
@@ -61,7 +79,8 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
             'url' => get_permalink(get_page_by_path('התחברות')),
             'attr_title' => $login_title,
             'target' => '',
-            'xfn' => ''
+            'xfn' => '',
+            'object'=>null
         ];
 
         $signup_title = __('הירשם', 'foody');
@@ -73,7 +92,8 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
             'url' => get_permalink(get_page_by_path('הרשמה')),
             'attr_title' => $signup_title,
             'target' => '',
-            'xfn' => ''
+            'xfn' => '',
+            'object'=>null
         ];
 
         $inline_children = [
@@ -86,6 +106,28 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
         $items_to_add = foody_get_menu_item_with_inline_children($start_id, $inline_children);
 
         $sorted_menu_items = array_merge($sorted_menu_items, $items_to_add);
+    }
+
+    if ($args->theme_location == 'primary' && wp_is_mobile()) {
+
+        $menu_item = new stdClass();
+        $menu_item->ID = PHP_INT_MAX;
+        $menu_item->url = '';
+        $menu_item->title = '<div class=""> <span>' . __('תפריט', 'foody') . '</span><span class="close" data-toggle="collapse" data-target="#foody-navbar-collapse"
+                        aria-controls="foody-navbar-collapse">&times;</span> </div>';
+        $menu_item->attr_title = '';
+        $menu_item->target = '';
+        $menu_item->xfn = '';
+        $menu_item->menu_order = PHP_INT_MAX;
+        $menu_item->object_id = PHP_INT_MAX;
+        $menu_item->db_id = PHP_INT_MAX;
+        $menu_item->object = null;
+        $menu_item->after = '<span>&times;</span>';
+        $classes = 'close-menu';
+
+        $menu_item->classes = $classes;
+
+        array_unshift($sorted_menu_items, $menu_item);
     }
 
     return $sorted_menu_items;
@@ -111,7 +153,7 @@ function foody_get_menu_item_with_inline_children($incremental_id, $children)
         $new_item->menu_order = PHP_INT_MAX;
         $new_item->object_id = $incremental_id;
         $new_item->db_id = $incremental_id;
-
+        $new_item->object = null;
         $classes = 'menu-item';
         $classes .= ' menu-item-type-post_type';
         $classes .= ' menu-item-object-page';
@@ -129,6 +171,7 @@ function foody_get_menu_item_with_inline_children($incremental_id, $children)
     $menu_item->target = '';
     $menu_item->xfn = '';
     $menu_item->menu_order = PHP_INT_MAX;
+    $menu_item->object = null;
     $menu_item->object_id = $incremental_id;
     $menu_item->db_id = $incremental_id;
 

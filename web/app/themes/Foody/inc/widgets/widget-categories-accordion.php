@@ -130,10 +130,10 @@ class Foody_CategoriesAccordionWidget extends Foody_Widget
         }
     }
 
-    private function get_accordion_item($category)
+    private function get_accordion_item($category,$classes = '')
     {
         $link = get_term_link($category->term_id);
 
-        return "<div class='category-accordion-item'><a href='$link'>{$category->name}</a></div>";
+        return "<div class='category-accordion-item $classes'><a href='$link'>{$category->name}</a></div>";
     }
 }

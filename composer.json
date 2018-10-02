@@ -54,30 +54,6 @@
     {
       "type": "package",
       "package": {
-        "name": "webdevstudios/custom-post-type-ui",
-        "version": "1.5.8",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/custom-post-type-ui.1.5.8.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "designs&code/search-filter",
-        "version": "1.2.9",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/search-filter.1.2.9.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
         "name": "andrewozz/tinymce-advanced",
         "version": "4.7.11",
         "type": "wordpress-plugin",
@@ -146,6 +122,18 @@
           "url": "https://downloads.wordpress.org/plugin/collapsing-categories.2.1.2.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "saurabhshukla-yapapaya/widgets-in-menu",
+        "version": "1.0.0",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/widgets-in-menu.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -158,15 +146,13 @@
     "roots/multisite-url-fixer": "^1.1",
     "stuttter/wp-user-avatars": "^1.4",
     "elliotcondon/advanced-custom-fields-pro": "^5.6",
-    "webdevstudios/custom-post-type-ui": "^1.5",
-    "designs&code/search-filter": "^1.2",
     "andrewozz/tinymce-advanced": "^4.7",
     "xamin/handlebars.php": "^0.10.4",
     "phospr/fraction": "^1.2",
     "smash-baloon/instagram-feed": "^1.10",
     "miled/wordpress-social-login": "^2.3",
     "yoast/wordpress-seo": "^8.3",
-    "rebert-felty/collapsing-categories": "^2.1"
+    "saurabhshukla-yapapaya/widgets-in-menu": "^1.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

@@ -12,6 +12,7 @@ class Foody_Recipe extends Foody_Post
     public $ingredients_title;
 
     public $amount_for;
+    public $has_video;
 
     private $duration;
 

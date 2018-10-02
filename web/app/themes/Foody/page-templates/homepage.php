@@ -10,47 +10,6 @@
 
 get_header();
 
-$search = new Foody_Search();
-
-/*
-        * {
-        *  search:'asfgag',
-        *  'types':[{
-        *      type:'category|ingredient|technique|accessory',
-        *      exclude:false,
-        *      id:8
-        *  }]
-        * }
-        * */
-
-$args = [
-    'types' => [
-//        [
-//            'type' => 'ingredient',
-//            'id' => 2665,
-//            'exclude' => false
-//        ],
-//        [
-//            'type' => 'category',
-//            'id' => 3,
-//            'exclude' => false
-//        ],
-//        [
-//            'type' => 'category',
-//            'id' => 8,
-//            'exclude' => false
-//        ]
-        [
-            'id' => 236,
-            'type' => 'limitation',
-            'exclude' => true
-        ]
-    ]
-
-];
-
-
-//$search->query($args);
 
 $homepage = new HomePage();
 ?>
@@ -79,12 +38,12 @@ $homepage = new HomePage();
                 </div>
 
 
-                <aside class="sidebar col d-none d-sm-block pl-0">
-                    <input name="search" type="text" class="search" title="search" placeholder="חיפוש מתכון…">
-                    <div class="sidebar-content">
-                        <?php $homepage->filter() ?>
-                    </div>
-                </aside>
+                <?php
+                if (!wp_is_mobile()) {
+                    $homepage->sidebar();
+                }
+
+                ?>
 
                 <section class="content-container col-sm-9 col-12">
 
@@ -106,15 +65,35 @@ $homepage = new HomePage();
 
         </div>
 
-        <!--        mobile filter -->
-        <div class="filter-mobile d-block d-sm-none">
-            <button class="navbar-toggler filter-btn" type="button" data-toggle="drawer"
-                    data-target="#dw-p2">
-                סינון
-            </button>
+        <?php if (wp_is_mobile()): ?>
+
+            <!--        mobile filter -->
+            <div class="filter-mobile d-block d-sm-none">
+                <button class="navbar-toggler filter-btn" type="button" data-toggle="drawer"
+                        data-target="#dw-p2">
+                    <?php echo __('סינון', 'foody'); ?>
+                </button>
+            </div>
+
+            <div class="mobile-filter d-sm-none">
+
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <?php $homepage->sidebar() ?>
+
+                <div class="show-recipes-container">
+
+                    <button class="btn show-recipes">
+                        <?php echo __('הצג מתכונים', 'foody') ?>
+                    </button>
+                </div>
+            </div>
 
 
-        </div>
+
+        <?php endif; ?>
     </div>
 <?php
 get_footer();

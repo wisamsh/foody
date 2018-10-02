@@ -32,8 +32,8 @@ $user = new Foody_User();
         ?>
         <script>
             foody_globals = {
-                isMobile:'<?php echo wp_is_mobile() ? true : false ?>',
-                ajax:'<?php echo admin_url('admin-ajax.php')?>'
+                isMobile: '<?php echo wp_is_mobile() ? true : false ?>',
+                ajax: '<?php echo admin_url('admin-ajax.php')?>'
             };
         </script>
 
@@ -79,7 +79,6 @@ $user = new Foody_User();
             <div class="container-fluid foody-navbar-container">
 
                 <div class="search-bar d-none d-sm-block">
-                    <!--                    <input type="text" class="search" placeholder="חיפוש מתכון…">-->
                     <?php get_search_form(); ?>
                 </div>
 
@@ -87,12 +86,10 @@ $user = new Foody_User();
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#foody-navbar-collapse"
                         aria-controls="foody-navbar-collapse" aria-expanded="false"
                         aria-label="Toggle navigation">
-                    <!--                    <span class="navbar-toggler-icon icon-menu-mobile"></span>-->
                     <i class="navbar-toggler-icon icon-menu-mobile"></i>
                 </button>
 
                 <button type="button" class="btn btn-default navbar-btn  d-block d-sm-none accessibility">
-
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>" alt="">
                 </button>
                 <button type="button" class="btn btn-default navbar-btn d-block d-sm-none">
@@ -169,7 +166,8 @@ $user = new Foody_User();
                     'container_id' => 'foody-navbar-collapse',
                     'menu_class' => 'nav navbar-nav',
                     'fallback_cb' => 'WP_Bootstrap_Navwalker::fallback',
-                    'walker' => new WP_Bootstrap_Navwalker()
+                    'before_menu' => '<div class="close-menu d-sm-none">תפריט</div>',
+                    'walker' => new WP_Bootstrap_Navwalker(),
                 );
                 $items_wrap = my_nav_wrap($channels);
                 if (wp_is_mobile()) {
@@ -182,6 +180,8 @@ $user = new Foody_User();
                 wp_nav_menu($nav_args);
 
                 ?>
+
+
 
                 <?php if (is_user_logged_in()): ?>
 

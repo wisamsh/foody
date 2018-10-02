@@ -19,6 +19,8 @@ window._ = require('underscore');
 window.Fraction = require('fractional').Fraction;
 window.lottie = require('lottie-web');
 
+
+
 // /*
 //  * Plugins
 //  * */

@@ -9,7 +9,7 @@
 class Foody_Footer
 {
     // TODO remove debug
-    private $debug = true;
+    private $debug = false;
 
     /**
      * Foody_Footer constructor.

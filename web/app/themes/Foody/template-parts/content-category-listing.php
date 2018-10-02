@@ -8,9 +8,10 @@
 
 ?>
 
+<a href="<?php echo $template_args['link']; ?>" class="col">
+    <div class="category-listing">
+        <img src="<?php echo $template_args['image']; ?>" alt="">
 
-<div class="category-listing flex-lg-column col">
-    <img src="<?php echo $template_args['image']; ?>" alt="">
-
-    <h4 class="categort-listing-title"><?php echo $template_args['name']; ?></h4>
-</div>
+        <h4 class="categort-listing-title"><?php echo $template_args['name']; ?></h4>
+    </div>
+</a>

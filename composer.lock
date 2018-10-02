@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c36973610188498acbedd50121f44f38",
+    "content-hash": "ed617377e888b769b670227996f8c402",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -136,17 +136,6 @@
                 "zikula"
             ],
             "time": "2017-12-29T09:13:20+00:00"
-        },
-        {
-            "name": "designs&code/search-filter",
-            "version": "1.2.9",
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/search-filter.1.2.9.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin"
         },
         {
             "name": "elliotcondon/advanced-custom-fields-pro",
@@ -380,17 +369,6 @@
             "time": "2016-12-21T15:33:12+00:00"
         },
         {
-            "name": "rebert-felty/collapsing-categories",
-            "version": "2.1.2",
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/collapsing-categories.2.1.2.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin"
-        },
-        {
             "name": "roots/multisite-url-fixer",
             "version": "1.1.0",
             "source": {
@@ -485,6 +463,17 @@
             "time": "2016-03-01T16:27:06+00:00"
         },
         {
+            "name": "saurabhshukla-yapapaya/widgets-in-menu",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/widgets-in-menu.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "smash-baloon/instagram-feed",
             "version": "1.10.1",
             "dist": {
@@ -577,17 +566,6 @@
                 "environment"
             ],
             "time": "2018-07-01T10:25:50+00:00"
-        },
-        {
-            "name": "webdevstudios/custom-post-type-ui",
-            "version": "1.5.8",
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/custom-post-type-ui.1.5.8.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin"
         },
         {
             "name": "xamin/handlebars.php",

@@ -62,6 +62,7 @@ body[class*="-template-content-with-sidebar"], body[class~="author"], body[class
           display: inline-block;
           padding: 10px;
           font-family: $font__assistant;
+          vertical-align: inherit;
 
           &:first-child {
             padding-right: 0;

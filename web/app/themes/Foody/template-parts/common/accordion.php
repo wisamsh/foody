@@ -46,9 +46,10 @@ $start_state = foody_get_array_default($template_args, 'start_state', 'show');
 $classes = array_merge($classes, ['foody-accordion']);
 
 if ($start_state != 'show') {
-//    $title_classes[] = 'collapsed';
+    $title_classes[] = 'collapsed';
 }
 
+$expanded = $start_state == 'show';
 $collapse_classes[] = $start_state;
 
 ?>
@@ -61,16 +62,15 @@ $collapse_classes[] = $start_state;
                     <i class="<?php echo $title_icon ?>"></i>
                 <?php endif; ?>
                 <a class="<?php foody_el_classes($title_classes) ?>" data-toggle="collapse" href="#<?php echo $id ?>"
-                   aria-expanded="true"
-                   aria-controls="<?php echo $id ?>">
+                   aria-expanded="<?php echo $expanded ?>"
+                   aria-controls="<?php echo $id ?>" role="button">
                     <?php echo $title ?>
                 </a>
                 <i class="icon-side-arrow arrow" data-toggle="collapse" aria-controls="<?php echo $id ?>"></i>
-
             </h5>
         </div>
 
-        <div id="<?php echo $id ?>" class="<?php foody_el_classes($collapse_classes) ?>" role="tabpanel"
+        <div id="<?php echo $id ?>" class="collapse <?php foody_el_classes($collapse_classes) ?>" role="tabpanel"
              aria-labelledby="heading-<?php echo $id ?>" data-parent="#accordion-<?php echo $id ?>">
             <div class="card-body">
                 <?php
