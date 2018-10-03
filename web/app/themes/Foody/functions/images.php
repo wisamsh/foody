@@ -10,7 +10,7 @@
 function get_logo_with_size($width, $height)
 {
     $custom_logo_id = get_theme_mod('custom_logo');
-    $url = network_site_url();
+    $url = home_url();
     $html = sprintf('<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url">%2$s</a>',
         esc_url($url),
         wp_get_attachment_image($custom_logo_id, array($width, $height), false, array(
@@ -21,7 +21,7 @@ function get_logo_with_size($width, $height)
     return $html;
 }
 
-add_theme_support( 'post-thumbnails' );
+add_theme_support('post-thumbnails');
 
 $sizes = [
     [
@@ -37,6 +37,6 @@ $sizes = [
 ];
 
 foreach ($sizes as $size) {
-    add_image_size($size['name'], $size['width'], $size['height'],true);
+    add_image_size($size['name'], $size['width'], $size['height'], true);
 }
 

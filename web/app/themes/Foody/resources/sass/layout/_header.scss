@@ -99,7 +99,6 @@ header {
     z-index: -1;
     background-color: transparent;
 
-
     .overlay-white {
       transition: all .3s linear;
       background-color: white;
@@ -333,10 +332,12 @@ header {
         #foody-navbar-collapse {
           top: 0;
           padding: 0;
+          overflow-y: scroll;
 
           #menu-navbar {
             margin: 0;
             padding: 0;
+
 
             .close-menu {
               width: 100%;

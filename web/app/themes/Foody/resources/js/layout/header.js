@@ -2,14 +2,18 @@ jQuery(document).ready(function ($) {
 
     let channelsMenu = $('.channels-menu');
     let navbar = $('#foody-navbar-collapse');
-
+    let navAccordion = $('.foody-accordion', navbar);
 
     navbar.on('show.bs.collapse', function () {
         $('body').addClass('lock');
     });
 
-    navbar.on('hide.bs.collapse', function () {
-        $('body').removeClass('lock');
+    navbar.on('hide.bs.collapse', function (e) {
+        console.log(e.target);
+        if (e.target && e.target.id == 'foody-navbar-collapse') {
+            $('body').removeClass('lock');
+        }
+
     });
 
     channelsMenu.on('show.bs.collapse', function () {
@@ -27,9 +31,7 @@ jQuery(document).ready(function ($) {
 
 
     let $searchOverlay = $('.search-overlay');
-    autocomplete('.search-overlay .search-autocomplete', {
-
-    });
+    autocomplete('.search-overlay .search-autocomplete', {});
 
 
     $('.btn-search').click(function () {
