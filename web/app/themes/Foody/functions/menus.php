@@ -30,6 +30,11 @@ function user_role_menu_items_filter($sorted_menu_items, stdClass $args)
                 $show_item_when_logged_in = get_field('show_when_logged_in', $item);
                 return $show_item_when_logged_in;
             });
+        } else {
+            $sorted_menu_items = array_filter($sorted_menu_items, function ($item) {
+                $show_item_only_logged_in = get_field('only_logged_in', $item);
+                return $show_item_only_logged_in == false;
+            });
         }
     }
 
@@ -37,6 +42,7 @@ function user_role_menu_items_filter($sorted_menu_items, stdClass $args)
 }
 
 add_filter('wp_nav_menu_objects', 'user_role_menu_items_filter', 10, 2);
+
 
 function mobile_only_menu_items_filter($sorted_menu_items, stdClass $args)
 {
@@ -56,6 +62,7 @@ function mobile_only_menu_items_filter($sorted_menu_items, stdClass $args)
 }
 
 add_filter('wp_nav_menu_objects', 'mobile_only_menu_items_filter', 10, 2);
+
 
 /**
  * @param stdClass[] $sorted_menu_items menu items objects
@@ -80,7 +87,7 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
             'attr_title' => $login_title,
             'target' => '',
             'xfn' => '',
-            'object'=>null
+            'object' => null
         ];
 
         $signup_title = __('הירשם', 'foody');
@@ -93,7 +100,7 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
             'attr_title' => $signup_title,
             'target' => '',
             'xfn' => '',
-            'object'=>null
+            'object' => null
         ];
 
         $inline_children = [
@@ -134,8 +141,6 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
 }
 
 add_filter('wp_nav_menu_objects', 'add_dynamic_menu_items', 10, 2);
-
-
 function foody_get_menu_item_with_inline_children($incremental_id, $children)
 {
     $inline_children = new stdClass();
@@ -195,5 +200,6 @@ function add_menu_items($items_html, $args)
 
     return $items_html;
 }
+
 
 add_filter('wp_nav_menu_items', 'add_menu_items', 10, 2);

@@ -286,10 +286,11 @@ function filter_post_type_link($link, $post)
         $recipe_name = get_query_var('recipe', null);
         if (is_null($recipe_name)) {
             $recipes = posts_to_array('recipes', $post->ID);
-            $recipe_name = $recipes[0]->post_name;
-            $link = add_query_arg('recipe', $recipe_name, $link);
+            if (is_array($recipes) && count($recipes) > 0) {
+                $recipe_name = $recipes[0]->post_name;
+                $link = add_query_arg('recipe', $recipe_name, $link);
+            }
         }
-
     }
     return $link;
 }
