@@ -3,65 +3,65 @@
  */
 
 
-// $(document).ready(() => {
+$(document).ready(() => {
 
-let $follow = $('.btn-follow');
+    let $follow = $('.btn-follow');
 
-if ($follow.length) {
-
-
-    $follow.each(function () {
+    if ($follow.length) {
 
 
-        let $this = $(this);
-
-        $this.click(() => {
-            let topicId = $this.data('id');
-            let topic = $this.data('topic');
+        $follow.each(function () {
 
 
-            if (topicId) {
+            let $this = $(this);
 
-                let isAlreadyFollowed = $this.data('followed');
+            $this.click(() => {
+                let topicId = $this.data('id');
+                let topic = $this.data('topic');
 
-                toggleAllFollowed(topicId, isAlreadyFollowed);
+
+                if (topicId) {
+
+                    let isAlreadyFollowed = $this.data('followed');
+
+                    toggleAllFollowed(topicId, isAlreadyFollowed);
 
 
-                toggleFollowed(topicId, topic, function (error) {
+                    toggleFollowed(topicId, topic, function (error) {
 
-                    if (error) {
-                        if (error.status == 500) {
-                            console.log('Error while adding comment');
-                        } else if (error.status == 'timeout') {
-                            console.log('Error: Server doesn\'t respond.');
-                        } else {
-                            alert('please sign in');
+                        if (error) {
+                            if (error.status == 500) {
+                                console.log('Error while adding comment');
+                            } else if (error.status == 'timeout') {
+                                console.log('Error: Server doesn\'t respond.');
+                            } else {
+                                alert('please sign in');
+                            }
+                            // revert animations and favorite indication
+                            toggleAllFollowed(topicId, !isAlreadyFollowed);
                         }
-                        // revert animations and favorite indication
-                        toggleAllFollowed(topicId, !isAlreadyFollowed);
-                    }
-                });
+                    });
+                }
+            });
+        });
+    }
+
+
+    function toggleAllFollowed(topicId, isAlreadyFollowed) {
+        isAlreadyFollowed = !isAlreadyFollowed;
+        $('.btn-follow[data-id="' + topicId + '"]').each(function () {
+            $(this).toggleClass('followed');
+            $(this).data('followed', isAlreadyFollowed);
+            if (isAlreadyFollowed) {
+                $('span', this).text('עוקב');
+            } else {
+                $('span', this).text('עקוב');
             }
         });
-    });
-}
+    }
 
 
-
-
-
-function toggleAllFollowed(topicId, isAlreadyFollowed) {
-    isAlreadyFollowed = !isAlreadyFollowed;
-    $('.btn-follow[data-id="' + topicId + '"]').each(function () {
-        $(this).toggleClass('followed');
-        $(this).data('followed', isAlreadyFollowed);
-        if (isAlreadyFollowed) {
-            $('span', this).text('עוקב');
-        } else {
-            $('span', this).text('עקוב');
-        }
-    });
-}
+});
 
 function toggleFollowed(topicId, topic, cb) {
     $.ajax({
@@ -85,6 +85,3 @@ function toggleFollowed(topicId, topic, cb) {
 }
 
 module.exports = toggleFollowed;
-
-
-// });

@@ -2,17 +2,7 @@
  * Created by moveosoftware on 6/27/18.
  */
 
-
-
 module.exports = function () {
-    // window.onscroll = function() {scroller()};
-    //
-    // function scroller() {
-    //     let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    //     let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    //     let scrolled = (winScroll / height) * 100;
-    //     document.getElementById("progress-bar").style.width = scrolled + "%";
-    // }
 
 
     const win = $(window);

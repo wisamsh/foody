@@ -11,22 +11,23 @@
 window.showMoreList = function (selector) {
     let $target = $(selector);
 
-    let count = $target.parent().data('count');
-    if (count) {
-        let $image = $('img', $target);
-        $('h4', $target).hide();
-        let imageHeight = $image.height();
+    if ($target && $target.length) {
+        let count = $target.parent().data('count');
+        if (count) {
+            let $image = $('img', $target);
+            $('h4', $target).hide();
+            let imageHeight = $image.height();
 
-        let overlay = `<h4 class='show-more-list-overlay'> ${count}+</h4>`;
+            let overlay = `<h4 class='show-more-list-overlay'> ${count}+</h4>`;
 
-        $(overlay).css({
-            top: 0,
-            'line-height': imageHeight + 'px'
-        }).appendTo($target.css("position", "relative"));
+            $(overlay).css({
+                top: 0,
+                'line-height': imageHeight + 'px'
+            }).appendTo($target.css("position", "relative"));
 
-        $target.addClass('show-more-list');
-        $image.css('opacity', '0.5');
+            $target.addClass('show-more-list');
+            $image.css('opacity', '0.5');
+        }
     }
-
 
 };
