@@ -34,10 +34,12 @@ jQuery(document).ready(function ($) {
 
     $('.btn-search').click(function () {
         $searchOverlay.addClass('open');
+        $('body').addClass('lock');
         $('input', $searchOverlay).focus();
     });
 
     $('.close', $searchOverlay).click(() => {
+        $('body').removeClass('lock');
         $searchOverlay.removeClass('open');
     })
 

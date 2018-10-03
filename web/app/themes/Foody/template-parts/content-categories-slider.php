@@ -23,13 +23,19 @@ $slider_data = [
             'breakpoint' => 1441,
             'settings' => [
                 'slidesToShow' => 5,
+                'adaptiveHeight' => true,
+                'slidesToScroll' => 1,
+                'infinite' => false,
             ]
         ],
         [
             'breakpoint' => 415,
             'settings' => [
                 'slidesToShow' => 4,
-                'arrows' => false
+                'arrows' => false,
+                'adaptiveHeight' => true,
+                'slidesToScroll' => 1,
+                'infinite' => false,
             ]
         ]
     ]
@@ -37,35 +43,35 @@ $slider_data = [
 
 ?>
 
-<h1 class="title">
-    <?php echo sprintf('קטגוריות %s', $category->title) ?>
-</h1>
+    <h1 class="title">
+        <?php echo sprintf('קטגוריות %s', $category->title) ?>
+    </h1>
+
+<?php
+/** @var Foody_Category[] $sub_categories */
+$sub_categories = $category->get_sub_categories();
+if (is_array($sub_categories)):
+    ?>
+
+    <ul class="foody-slider categories-slider" data-slick='<?php echo json_encode($slider_data, ENT_QUOTES) ?>'>
+        <?php
 
 
-<ul class="foody-slider categories-slider" data-slick='<?php echo json_encode($slider_data, ENT_QUOTES) ?>'>
-    <?php
+        foreach ($sub_categories as $sub_category):?>
 
-    /** @var Foody_Category[] $sub_categories */
-    $sub_categories = $category->get_sub_categories();
+            <li class="foody-slider-item category-slider-item">
+                <a href="<?php echo $sub_category->link ?>">
+                    <div>
+                        <img src="<?php echo $sub_category->get_image() ?>" alt="<?php echo $sub_category->title ?>">
+                    </div>
+                    <h4 class="title category-title">
+                        <?php echo $sub_category->title ?>
+                    </h4>
 
-    // TODO remove debug
-    for ($i = 0; $i < 8; $i++) {
-        $sub_categories[] = $sub_categories[0];
-    }
+                </a>
+            </li>
 
-    foreach ($sub_categories as $sub_category):?>
+        <?php endforeach; ?>
+    </ul>
 
-        <li class="foody-slider-item category-slider-item">
-            <a href="<?php echo $sub_category->link ?>">
-                <div>
-                    <img src="<?php echo $sub_category->get_image() ?>" alt="<?php echo $sub_category->title ?>">
-                </div>
-                <h4 class="title category-title">
-                    <?php echo $sub_category->title ?>
-                </h4>
-
-            </a>
-        </li>
-
-    <?php endforeach; ?>
-</ul>
+<?php endif;
