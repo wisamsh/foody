@@ -1,5 +1,7 @@
 $content-width: 79%;
 $feed-header-height: 60px;
+$footer-height: 180px;
+$sidebar-top-offset: 60px;
 .homepage {
 
   .cover-image {
@@ -53,7 +55,6 @@ $feed-header-height: 60px;
         padding: 0 11px;
         filter: drop-shadow(2px 2px 10px rgba(0, 0, 0, 0.3));
 
-
         img {
           clip-path: inset(0 round .5rem);
           height: 200px;
@@ -88,26 +89,6 @@ $feed-header-height: 60px;
         height: $feed-header-height;
         width: 100%;
 
-        // TODO remove
-        //.socials {
-        //
-        //  vertical-align: middle;
-        //  width: calc(99% - #{$content-width});
-        //
-        //  .essbfc-container {
-        //
-        //    display: inline-block;
-        //    margin: 0;
-        //    width: 100%;
-        //    padding: 0 25px;
-        //
-        //    ul {
-        //      display: flex;
-        //      justify-content: space-between;
-        //    }
-        //  }
-        //}
-
         .title {
           width: $content-width;
           max-width: $content-width;
@@ -133,11 +114,11 @@ $feed-header-height: 60px;
         }
 
         .sidebar-content {
-          min-height: fit-content;
+          min-height: 100%;
           left: 0;
           right: 0;
           bottom: 0;
-          top: 60px;
+          top: $sidebar-top-offset;
         }
 
         .filter {
@@ -154,6 +135,7 @@ $feed-header-height: 60px;
         width: $content-width;
         max-width: $content-width;
         flex: 0 0 $content-width;
+        margin-bottom: $footer-height;
         article {
 
           &.feed {
@@ -215,7 +197,7 @@ $feed-header-height: 60px;
     margin-right: 21%;
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -$sidebar-top-offset;
   }
 }
 
@@ -238,7 +220,7 @@ $feed-header-height: 60px;
       .categories-listing {
 
         padding: 0;
-        a.col{
+        a.col {
           padding: 0;
         }
 
@@ -299,6 +281,7 @@ $feed-header-height: 60px;
         .content-container {
           max-width: 100%;
           flex: 0 0 100%;
+          margin-bottom: 0;
           article {
 
             &.feed {
@@ -464,6 +447,7 @@ $feed-header-height: 60px;
       margin-right: 0;
       margin-top: 0;
       position: unset;
+      bottom: 0;
       width: 100%;
     }
   }

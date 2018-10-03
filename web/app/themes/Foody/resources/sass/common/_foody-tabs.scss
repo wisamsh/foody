@@ -9,6 +9,7 @@
         text-align: center;
         color: $color__primary;
         padding: 10px;
+        white-space: nowrap;
 
         &:not(.active) {
           color: $color__text-primary-light;
@@ -22,15 +23,6 @@
         &.active {
           border-color: $color__primary;
         }
-
-        //&:after{
-        //  content: '';
-        //  height: 3px;
-        //  background-color: rebeccapurple;
-        //  width: 98%;
-        //  display: inline-block;
-        //  border-radius: 4px;
-        //}
       }
     }
   }

@@ -37,7 +37,7 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
     function the_sidebar_content()
     {
-        // TODO: Implement the_sidebar_content() method.
+        dynamic_sidebar('foody-sidebar');
     }
 
     function the_details()

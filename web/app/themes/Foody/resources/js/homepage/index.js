@@ -45,6 +45,21 @@ jQuery(document).ready(($) => {
             $('body').removeClass('side-active');
             document.removeEventListener('click', closeMobileFilter)
         }
+
+
+        // fades the floating filter button in/out
+        // and hides/shows based on scroll to make sure
+        // no content is blocked
+        $(window).scroll(function () {
+            let threshold = 200; // number of pixels before bottom of page that you want to start fading
+            let op = (($(document).height() - $(window).height()) - $(window).scrollTop()) / threshold;
+            if (op <= 0) {
+                $mobileFilterBtn.hide();
+            } else {
+                $mobileFilterBtn.show();
+            }
+            $mobileFilterBtn.css("opacity", op);
+        });
     }
 
 });

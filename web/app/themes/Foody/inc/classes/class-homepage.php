@@ -101,6 +101,12 @@ class HomePage
             return new Foody_Recipe($post);
         }, $posts);
 
+
+        // debug a lot of feed items
+        // make sure to disable when not
+        // in dev
+        //$posts = array_fill(count($posts)-1,18,$posts[0]);
+
         return $posts;
     }
 
