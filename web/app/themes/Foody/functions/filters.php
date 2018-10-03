@@ -64,3 +64,5 @@ function default_page_template($template)
 
 add_filter('template_include', 'default_page_template', 10);
 
+add_filter('show_admin_bar', '__return_false');
+

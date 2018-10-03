@@ -16,7 +16,7 @@
 
             <div class="row col-12 justify-content-between gutter-0 buttons">
                 <a class="col-12 col-sm-5"
-                   href="http://foody.co.il/wp/wp-login.php?action=wordpress_social_authenticate&mode=login&provider=Google&redirect_to=http%3A%2F%2Ffoody.co.il%2F%25d7%2594%25d7%25a8%25d7%25a9%25d7%259e%25d7%2594%2F">
+                   href="<?php echo WP_HOME ?>/wp/wp-login.php?action=wordpress_social_authenticate&mode=login&provider=Google&redirect_to=<?php echo urlencode(WP_HOME) ?>">
                     <button class="btn btn-google">
                         <span>
                             <?php echo __('כניסה דרך גוגל', 'foody') ?>
@@ -25,7 +25,7 @@
                     </button>
                 </a>
                 <a class="col-12 col-sm-5"
-                   href="http://foody.co.il/wp/wp-login.php?action=wordpress_social_authenticate&mode=login&provider=Facebook&redirect_to=http%3A%2F%2Ffoody.co.il%2F%25d7%2594%25d7%25a8%25d7%25a9%25d7%259e%25d7%2594%2F">
+                   href="<?php echo WP_HOME ?>/wp/wp-login.php?action=wordpress_social_authenticate&mode=login&provider=Facebook&redirect_to=<?php echo urlencode(WP_HOME) ?>">
                     <button class="btn btn-facebook">
                     <span>
                         <?php echo __('הירשמו דרך פייסבוק', 'foody') ?>
@@ -72,7 +72,7 @@
 
                 <div class="form-group col-6">
                     <a class="forgot-password" href="<?php echo home_url() ?>">
-                        <?php echo __('שכחת סיסמא?','foody')?>
+                        <?php echo __('שכחת סיסמא?', 'foody') ?>
                     </a>
                 </div>
 
