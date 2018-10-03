@@ -11,7 +11,7 @@ add_action('muplugins_loaded', 'foody_plugin_override');
 
 function foody_plugin_override()
 {
-    function wsl_render_redirect_to_provider_loading_screen($provider)
+    function _disabled_wsl_render_redirect_to_provider_loading_screen($provider)
     {
 
         $html = file_get_contents(__DIR__ . '/foody-registration-pages/provider-loading-screen.html');
