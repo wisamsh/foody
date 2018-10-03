@@ -176,12 +176,36 @@ class Foody_User
         $image = $GLOBALS['images_dir'] . 'avatar.png';
         if ($this->user->ID > 0) {
             $user_images = get_user_meta($this->user_id, 'wp_user_avatars', true);
-            if (!empty($user_images) && isset($user_images[$size])) {
+            if (!empty($user_images)) {
+                if (!isset($user_images[$size])) {
+
+                    $available_sizes = array_keys($user_images);
+                    $available_sizes = array_filter($available_sizes, function ($key) {
+                        return is_numeric($key);
+                    });
+
+                    if (!empty($available_sizes)) {
+                        $size = $this->get_closest($size,$available_sizes);
+                    }
+                }
+
                 $image = $user_images[$size];
             }
         }
 
         return $image;
+    }
+
+    // TODO move to utils
+    function get_closest($search, $arr)
+    {
+        $closest = null;
+        foreach ($arr as $item) {
+            if ($closest === null || abs($search - $closest) > abs($item - $search)) {
+                $closest = $item;
+            }
+        }
+        return $closest;
     }
 
 }
