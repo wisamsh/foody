@@ -128,7 +128,7 @@ class Foody_Category implements Foody_ContentWithSidebar
 
     function the_sidebar_content()
     {
-        // TODO: Implement the_sidebar_content() method.
+       dynamic_sidebar('foody-sidebar');
     }
 
     function the_details()

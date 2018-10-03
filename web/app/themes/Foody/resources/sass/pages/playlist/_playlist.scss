@@ -72,8 +72,10 @@
 
         height: 70px;
         padding-left: 5px;
+
+
         img {
-          height: 100%;
+          height: 70px;
           width: 100%;
           clip-path: inset(0 round 3px);
         }
@@ -197,6 +199,7 @@
           .image-container {
             height: 88px;
             img {
+              height: 88px;
             }
           }
 
