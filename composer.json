@@ -78,18 +78,6 @@
     {
       "type": "package",
       "package": {
-        "name": "miled/wordpress-social-login",
-        "version": "2.3.3",
-        "type": "wordpress-muplugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/wordpress-social-login.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
         "name": "abdullah-irfan/whitelist",
         "version": "3.5",
         "type": "wordpress-plugin",
@@ -138,7 +126,6 @@
     "xamin/handlebars.php": "^0.10.4",
     "phospr/fraction": "^1.2",
     "smash-baloon/instagram-feed": "^1.10",
-    "miled/wordpress-social-login": "^2.3",
     "yoast/wordpress-seo": "^8.3",
     "saurabhshukla-yapapaya/widgets-in-menu": "^1.0"
   },
