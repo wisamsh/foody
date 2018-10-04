@@ -80,7 +80,7 @@
       "package": {
         "name": "miled/wordpress-social-login",
         "version": "2.3.3",
-        "type": "wordpress-plugin",
+        "type": "wordpress-muplugin",
         "dist": {
           "type": "zip",
           "url": "https://downloads.wordpress.org/plugin/wordpress-social-login.zip"
@@ -108,18 +108,6 @@
         "dist": {
           "type": "zip",
           "url": "https://downloads.wordpress.org/plugin/wordpress-seo.8.3.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "rebert-felty/collapsing-categories",
-        "version": "2.1.2",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/collapsing-categories.2.1.2.zip"
         }
       }
     },

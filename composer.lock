@@ -4,8 +4,19 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca7b2e60ac1aa31d7cfb4657e168a3ca",
+    "content-hash": "edc5c73d88d81a1a9dbae856a899fc12",
     "packages": [
+        {
+            "name": "Dev7studios/closed-beta",
+            "version": "2.8.8",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Dev7studios/closed-beta/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
         {
             "name": "andrewozz/tinymce-advanced",
             "version": "4.7.11",
@@ -282,6 +293,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/wordpress-social-login.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "niteo-themes/cmp-coming-soon-maintenance",
+            "version": "2.8.8",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/cmp-coming-soon-maintenance.2.8.8.zip",
                 "reference": null,
                 "shasum": null
             },
