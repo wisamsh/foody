@@ -50,6 +50,8 @@ require('./recipe');
 require('./playlist');
 require('./profile');
 require('./category');
+require('./author');
+require('./channel');
 
 jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();

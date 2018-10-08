@@ -38,7 +38,12 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
             for ($i = 0; $i < 6; $i++)
                 $posts[] = $posts[0];
         }
-        return $this->grid->loop($posts, 3, false, $type);
+
+        $grid_content = '<section class="channel-' . $type . '-grid">';
+        $grid_content .= $this->grid->loop($posts, 3, false, $type);
+        $grid_content .= '</section>';
+
+        return $grid_content;
     }
 
     public function the_featured_content()

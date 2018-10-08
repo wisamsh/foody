@@ -118,7 +118,12 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
             for ($i = 0; $i < 6; $i++)
                 $posts[] = $posts[0];
         }
-        return $this->grid->loop($posts, 3, false, $type);
+
+        $grid_content = '<section class="author-' . $type . '-grid">';
+        $grid_content .= $this->grid->loop($posts, 3, false, $type);
+        $grid_content .= '</section>';
+
+        return $grid_content;
     }
 
     // Foody_Topic

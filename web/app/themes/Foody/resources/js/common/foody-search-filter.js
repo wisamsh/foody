@@ -24,30 +24,34 @@ module.exports = (function () {
 
         if (this.$filter.length) {
 
+            //noinspection JSPotentiallyInvalidUsageOfThis
             this.searchFilter = this.buildInitialFilter();
-
-            let $checkboxes = $('input[type="checkbox"]', this.$filter);
-            let that = this;
-            $checkboxes.change(function () {
-                if (that.isLoading) {
-                    return;
-                }
-
-                that.loading();
-
-                let data = $(this).data();
-                let key = data.type + '_' + this.name;
-                if (this.checked) {
-                    that.searchFilter[key] = that.getParsedInput(this);
-                } else {
-                    if (that.searchFilter[key]) {
-                        delete that.searchFilter[key];
-                    }
-                }
-
-                that.doQuery();
-            });
+            this.attachChangeListener();
         }
+    };
+
+    FoodySearchFilter.prototype.attachChangeListener = function () {
+        let $checkboxes = $('input[type="checkbox"]', this.$filter);
+        let that = this;
+        $checkboxes.change(function () {
+            if (that.isLoading) {
+                return;
+            }
+
+            that.loading();
+
+            let data = $(this).data();
+            let key = data.type + '_' + this.name;
+            if (this.checked) {
+                that.searchFilter[key] = that.getParsedInput(this);
+            } else {
+                if (that.searchFilter[key]) {
+                    delete that.searchFilter[key];
+                }
+            }
+
+            that.doQuery();
+        });
     };
 
     FoodySearchFilter.prototype.loading = function () {
@@ -131,8 +135,6 @@ module.exports = (function () {
         if (!args.search && args.types.length == 0) {
             args.context = this.initialContext;
         }
-
-        console.log(args);
 
         return args;
 
