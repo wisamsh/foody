@@ -104,7 +104,7 @@ class Foody_Category implements Foody_ContentWithSidebar
         $args = [
             'post_type' => ['foody_recipe', 'foody_playlist', 'post'],
             'post_status' => 'publish',
-            'category' => $this->id
+            'cat' => $this->id
         ];
 
         $query = new WP_Query($args);
@@ -161,7 +161,7 @@ class Foody_Category implements Foody_ContentWithSidebar
         $gutter = wp_is_mobile() ? ' ' : ' gutter-30 '
 
         ?>
-        <div class="container">
+        <div class="container-fluid">
             <div class="feed-header row<?php echo $gutter ?>justify-content-space-between">
 
                 <h2 class="title col-sm-6 col-8">
@@ -180,7 +180,7 @@ class Foody_Category implements Foody_ContentWithSidebar
 
 
         <div class="container-fluid feed-container">
-            <div class="row gutter-3">
+            <div class="row gutter-3 foody-grid">
                 <?php $this->feed(); ?>
             </div>
         </div>

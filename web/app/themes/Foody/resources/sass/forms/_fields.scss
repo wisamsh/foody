@@ -131,6 +131,11 @@ $md-checkbox-label-padding: .75em;
     display: inline-block;
   }
 
+  &[disabled='disabled']{
+    opacity: .3;
+    pointer-events: none;
+  }
+
   label {
     font-family: $font__assistant;
     cursor: pointer;

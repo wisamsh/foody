@@ -199,6 +199,9 @@ class SidebarFilter
             case 'techniques':
                 $title = get_the_title($id);
                 break;
+            case 'authors':
+                $title = get_the_author_meta('display_name',$id);
+                break;
         }
 
         return $title;

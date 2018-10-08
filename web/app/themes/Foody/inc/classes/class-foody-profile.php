@@ -67,7 +67,11 @@ class Foody_Profile
 
             echo '<h2 class="title">ספר המתכונים שלי</h2>';
 
+            echo '<section class="my-recipes-grid">';
+
             $this->grid->loop($posts, 2);
+
+            echo '</section>';
         } else {
             foody_get_template_part(get_template_directory() . '/template-parts/content-no-recipes.php');
         }
@@ -80,6 +84,12 @@ class Foody_Profile
      */
     public function my_topics_content()
     {
+        ?>
+        <h2 class="title">
+            <?php echo __('מתכונים מערוצים', 'foody') ?>
+        </h2>
+        <section class="my-channels-grid">
+        <?php
 
         $posts = $this->foody_user->get_followed_content();
 
@@ -91,6 +101,8 @@ class Foody_Profile
 
 
         $this->grid->loop($posts, 2, true, null, $data_attrs);
+
+        echo '</section>';
 
     }
 

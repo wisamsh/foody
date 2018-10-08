@@ -6,11 +6,19 @@ body[class~="category"] {
       margin-right: 20px;
     }
 
+    > .container-fluid{
+      min-height:0;
+    }
+
     h1 {
       margin-bottom: 0;
       margin-top: 0;
     }
     .categories-slider {
+
+      .slick-track{
+        margin: 0;
+      }
 
       i.slick-arrow {
         background: white;

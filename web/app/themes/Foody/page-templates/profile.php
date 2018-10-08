@@ -85,12 +85,12 @@ get_header(); ?>
                                     </div>
                                     <div class="tab-pane fade row gutter-3" id="my-channels-recipes" role="tabpanel"
                                          aria-labelledby="my-channels-recipes-tab">
-                                        <h2 class="title">
-                                            מתכונים מערוצים
-                                        </h2>
+
                                         <?php $foody_profile->my_topics_content() ?>
+
                                     </div>
                                 </div>
+                                <!--  Followed authors and channels  -->
                                 <section class="my-channels col d-none d-sm-block pr-0">
                                     <h2 class="title">
                                         הערוצים שלי

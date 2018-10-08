@@ -59,7 +59,7 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                loaders: ["style-loader","css-loader"]
+                loaders: ["style-loader", "css-loader"]
             },
             {
                 test: /\.(scss)$/,
@@ -101,6 +101,15 @@ module.exports = {
                     }
                 }]
             },
+            {
+                type: 'javascript/auto',
+                test: /\.(json)/,
+                exclude: /(node_modules)/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {name: '[name].[ext]'},
+                }]
+            },
             // {
             //     test: /\.(eot|svg|ttf|woff|woff2|otf|svg)$/,
             //     use: [{
@@ -126,4 +135,5 @@ module.exports = {
         ]
     },
     watch: false
-};
+}
+;

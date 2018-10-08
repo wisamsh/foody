@@ -20,7 +20,6 @@ window.Fraction = require('fractional').Fraction;
 window.lottie = require('lottie-web');
 
 
-
 // /*
 //  * Plugins
 //  * */
@@ -50,6 +49,7 @@ require('./team');
 require('./recipe');
 require('./playlist');
 require('./profile');
+require('./category');
 
 jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();

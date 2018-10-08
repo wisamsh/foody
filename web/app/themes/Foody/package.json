@@ -50,6 +50,7 @@
     "jquery": "^2.2.4",
     "jquery-drawer": "^3.2.2",
     "jquery-mousewheel": "^3.1.13",
+    "json-loader": "^0.5.7",
     "lottie-web": "^5.2.1",
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "mdbootstrap": "^4.5.2",

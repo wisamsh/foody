@@ -31,7 +31,9 @@ $playlist = $template_args['post'];
 
     <section class="playlist-item-details  d-flex">
         <div class="image-container col-1 nopadding">
-            <img src="<?php echo $playlist->getAuthorImage() ?>" alt="">
+            <a href="<?php echo $playlist->get_author_link() ?>">
+                <img src="<?php echo $playlist->getAuthorImage() ?>" alt="">
+            </a>
         </div>
         <section class="col-11">
             <h3>

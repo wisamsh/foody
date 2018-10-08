@@ -7,11 +7,11 @@
  */
 
 /**
- * Live autocomplete search feature.
+ * Live autocomplete search.
  *
  * @since 1.0.0
  */
-function ja_ajax_search()
+function foody_ajax_autocomplete()
 {
     $search = stripslashes($_POST['search']);
 
@@ -52,11 +52,45 @@ function ja_ajax_search()
     wp_send_json_success($items);
 }
 
-add_action('wp_ajax_search_site', 'ja_ajax_search');
-add_action('wp_ajax_nopriv_search_site', 'ja_ajax_search');
+add_action('wp_ajax_search_site', 'foody_ajax_autocomplete');
+add_action('wp_ajax_nopriv_search_site', 'foody_ajax_autocomplete');
 
 
 /**
+ * Live autocomplete search.
+ *
+ * @since 1.0.0
+ */
+function foody_ajax_filter()
+{
+    if (!isset($_POST['data'])) {
+        wp_die(foody_ajax_error('no data provided for filter'));
+    }
+
+    $filter = $_POST['data'];
+    $options = $_POST['options'];
+
+    $foody_search = new Foody_Search();
+
+    $posts = $foody_search->query($filter);
+
+    $posts = array_map('Foody_Post::create',$posts);
+
+    $grid = new RecipesGrid();
+
+    // TODO pass cols
+    echo $grid->loop($posts,$options['cols'],false);
+
+    die();
+
+}
+
+add_action('wp_ajax_foody_filter', 'foody_ajax_filter');
+add_action('wp_ajax_nopriv_foody_filter', 'foody_ajax_filter');
+
+
+/**
+ * TODO move this to relevant functions script
  * @param string $search the search query
  * @param WP_Query $wp_query
  * @return string sql query
@@ -90,3 +124,4 @@ function __search_by_title_only($search, $wp_query)
 }
 
 add_filter('posts_search', '__search_by_title_only', 500, 2);
+

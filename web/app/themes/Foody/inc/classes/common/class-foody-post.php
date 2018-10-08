@@ -289,4 +289,9 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
         return $foody_post;
     }
+
+    public function get_author_link()
+    {
+        return get_author_posts_url($this->post->post_author);
+    }
 }

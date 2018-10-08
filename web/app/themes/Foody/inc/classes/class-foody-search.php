@@ -15,6 +15,7 @@ class Foody_Search
     const type_limitation = 'limitation';
     const type_accessory = 'accessory';
     const type_tags = 'tag';
+    const type_authors = 'author';
 
     private $types;
 
@@ -30,7 +31,8 @@ class Foody_Search
         'technique' => 'techniques',
         'accessory' => 'accessories',
         'limitation' => 'limitations',
-        'tag' => 'tags'
+        'tag' => 'tags',
+        'author' => 'authors'
     ];
 
     /**
@@ -43,20 +45,25 @@ class Foody_Search
 
     public function query($args)
     {
-        $this->types = group_by($args['types'], 'type');
         /*
-         * {
-         *  search:'asfgag',
-         *  'types':[{
-         *      type:'categories|ingredients|techniques|accessories|limitations|tags',
-         *      exclude:false,
-         *      id:8
-         *  }]
-         * }
-         * */
+         * args:
+        * {
+        *  search:'asfgag',
+        *  posts ids to include in the filter
+        *  context:[1,3,56],
+        *  'types':[{
+        *      type:'categories|ingredients|techniques|accessories|limitations|tags',
+        *      exclude:false,
+        *      id:8
+        *  }]
+        * }
+        * */
+
+        $this->types = group_by($args['types'], 'type');
+
 
         // TODO check generic implementation
-        foreach ($this->types as $type) {
+        foreach ($this->types as $type => $values) {
             $this->maybe_add_to_query($type);
         }
 
@@ -92,6 +99,13 @@ class Foody_Search
 //        }
 
 
+        if (isset($args['context'])) {
+            if (is_array($args['context'])) {
+                $args['context'] = array_map('intval', $args['context']);
+                $this->query_builder->context($args['context']);
+            }
+        }
+
         $query = $this->query_builder
             ->build();
 
@@ -109,7 +123,7 @@ class Foody_Search
             remove_filter('posts_where', array($this, 'replace_wildcards_keys'));
         }
 
-        echo count($posts);
+        return $posts;
 
     }
 
@@ -121,12 +135,15 @@ class Foody_Search
         // has values
         if (!empty($values)) {
 
-            if (isset($this->types_aliases[$type])) {
+            if (isset($this->types_aliases[$type]) || in_array($type, array_values($this->types_aliases))) {
 
                 // type alias corresponds
                 // to builder method.
                 // Example: type->ingredient, method->ingredients
                 $fn = $this->types_aliases[$type];
+                if (is_null($fn)) {
+                    $fn = $type;
+                }
                 if (method_exists($this->query_builder, $fn)) {
                     call_user_func(array($this->query_builder, $fn), $values);
                 } else {
@@ -198,6 +215,10 @@ class Foody_QueryBuilder
     private $tags__not_in = [];
 
     private $post__not_in = [];
+    private $post__in = [];
+
+    private $author__in;
+    private $author__not_in;
 
     private $s;
 
@@ -208,7 +229,6 @@ class Foody_QueryBuilder
     {
     }
 
-
     /**
      * @param array $categories_args
      * @return $this
@@ -216,7 +236,7 @@ class Foody_QueryBuilder
     public function categories($categories_args)
     {
         foreach ($categories_args as $category_arg) {
-            if (isset($category_arg['exclude']) && $category_arg['exclude']) {
+            if (isset($category_arg['exclude']) && $category_arg['exclude'] != "false") {
                 $this->categories__not_in[] = $category_arg['id'];
             } else {
                 $this->categories__in[] = $category_arg['id'];
@@ -225,7 +245,6 @@ class Foody_QueryBuilder
 
         return $this;
     }
-
 
     /**
      * @param array $ingredients
@@ -241,6 +260,13 @@ class Foody_QueryBuilder
 
 
         if (!empty($ingredients_to_exclude)) {
+
+
+            $values = array_map(function ($ingredient) {
+                return $ingredient['id'];
+            }, $ingredients_to_exclude);
+
+
             function my_posts_where($where, WP_Query $query)
             {
                 if ($query->get('has_wildcard_key')) {
@@ -262,7 +288,7 @@ class Foody_QueryBuilder
                     [
                         'key' => 'ingredients_ingredients_groups_$_ingredients_$_ingredient',
                         'compare' => 'IN',
-                        'value' => $ingredients_to_exclude
+                        'value' => $values
                     ]
 
                 ],
@@ -282,11 +308,14 @@ class Foody_QueryBuilder
 
 
         if (!empty($ingredients_to_include)) {
+            $values = array_map(function ($ingredient) {
+                return $ingredient['id'];
+            }, $ingredients_to_include);
             $this->has_wildcard_key = true;
             $this->meta_query_array[] = [
                 'key' => 'ingredients_ingredients_groups_$_ingredients_$_ingredient',
                 'compare' => 'IN',
-                'value' => $ingredients_to_include
+                'value' => $values
             ];
         }
 
@@ -374,6 +403,37 @@ class Foody_QueryBuilder
         return $this;
     }
 
+    public function authors($authors)
+    {
+        $parsed = $this->parse_args($authors);
+
+        if (count($parsed['exclude']) > 0) {
+            $this->author__not_in = array_map(function ($author) {
+                return $author['id'];
+            }, $parsed['exclude']);
+        }
+
+        if (count($parsed['include']) > 0) {
+            $this->author__in = array_map(function ($author) {
+                return $author['id'];
+            }, $parsed['include']);
+        }
+
+    }
+
+    /**
+     * Includes only posts within
+     * the current page
+     * @param $ids
+     * @return $this
+     */
+    public function context($ids)
+    {
+        $ids = array_unique($ids);
+        $this->post__in = array_merge($this->post__in, $ids);
+        return $this;
+    }
+
     /**
      * Creates a WP_Query instance
      * built from the passed args
@@ -385,7 +445,7 @@ class Foody_QueryBuilder
 
         $args = [
             'has_wildcard_key' => $this->has_wildcard_key,
-            'post_type' => 'foody_recipe',
+            'post_type' => ['foody_recipe','foody_playlist'],
             'meta_query' => $this->meta_query_array,
             'post__not_in' => $this->post__not_in
         ];
@@ -399,7 +459,6 @@ class Foody_QueryBuilder
             $args['category__not_in'] = $this->categories__not_in;
         }
 
-
         if (!empty($this->tags__in)) {
             $args['tags__in'] = $this->tags__in;
         }
@@ -409,8 +468,28 @@ class Foody_QueryBuilder
             $args['tags__not_in'] = $this->tags__not_in;
         }
 
+        if (!empty($this->author__not_in)) {
+            $args['author__not_in'] = $this->author__not_in;
+        }
+
+        if (!empty($this->author__in)) {
+            $args['author__in'] = $this->author__in;
+        }
+
+
         if (!empty($this->s)) {
             $args['s'] = $this->s;
+        }
+
+
+        if (!empty($this->post__in)) {
+
+            $this->post__in = array_filter($this->post__in, function ($post_id) {
+                return !in_array($post_id, $this->post__not_in);
+            });
+
+
+            $args['post__in'] = $this->post__in;
         }
 
         $query = new WP_Query($args);
@@ -467,7 +546,7 @@ class Foody_QueryBuilder
 
 
         foreach ($args as $arg) {
-            if (isset($arg['exclude']) && $arg['exclude']) {
+            if (isset($arg['exclude']) && $arg['exclude'] == "true") {
                 $exclude[] = $arg;
             } else {
                 $include[] = $arg;

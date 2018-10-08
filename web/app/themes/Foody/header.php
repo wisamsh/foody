@@ -31,7 +31,7 @@ $user = new Foody_User();
 
         ?>
         <script>
-            foody_globals = {
+            foodyGlobals = {
                 isMobile: '<?php echo wp_is_mobile() ? true : false ?>',
                 ajax: '<?php echo admin_url('admin-ajax.php')?>'
             };

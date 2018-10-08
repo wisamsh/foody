@@ -4,7 +4,7 @@
 
 
 jQuery(document).ready(($)=>{
-    if (!foody_globals.isMobile) {
+    if (!foodyGlobals.isMobile) {
         showMoreList('.homepage .team-listing .author:last-child');
     } else {
         showSlider()

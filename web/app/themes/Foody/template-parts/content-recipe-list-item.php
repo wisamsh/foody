@@ -31,8 +31,11 @@ $recipe = $template_args['post'];
     </a>
     <section class="recipe-item-details  d-flex">
         <div class="image-container col-1 nopadding">
-            <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
+            <a href="<?php echo $recipe->get_author_link() ?>">
+                <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
+            </a>
         </div>
+
         <section class="col-11">
             <h3>
                 <a href="<?php echo $recipe->link ?>">

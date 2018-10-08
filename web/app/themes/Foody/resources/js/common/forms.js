@@ -131,9 +131,12 @@ jQuery(document).ready(($) => {
     if ($checkboxes.length) {
 
 
-        $checkboxes.click(function () {
+        $checkboxes.click(function (e) {
 
-
+            if ($(this).attr('disabled')) {
+                e.preventDefault();
+                return;
+            }
             let $input = $('input', this);
 
             let checked = $input.prop('checked') || false;

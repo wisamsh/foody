@@ -3,7 +3,7 @@
  */
 
 let toggleFollowed = require('../common/follow');
-
+let FoodySearchFilter = require('../common/foody-search-filter');
 
 jQuery(document).ready(($) => {
 
@@ -30,5 +30,9 @@ jQuery(document).ready(($) => {
             }
         })
     });
+
+    new FoodySearchFilter({grid: '.my-channels-grid',cols:2});
+    new FoodySearchFilter({grid: '.my-recipes-grid',cols:2});
+
 
 });
