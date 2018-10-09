@@ -23,6 +23,10 @@ textarea {
   &:focus {
     color: $color__text-input-focus;
   }
+
+  &.error{
+    border: solid 2px rgba(255,0,0,.7) !important;
+  }
 }
 
 input:focus, input:active {
@@ -136,7 +140,7 @@ $md-checkbox-label-padding: .75em;
     pointer-events: none;
   }
 
-  label {
+  label:not(.error) {
     font-family: $font__assistant;
     cursor: pointer;
     display: inline;
@@ -168,6 +172,15 @@ $md-checkbox-label-padding: .75em;
     }
   }
 
+  label{
+    &.error{
+      &:before {
+        // box
+        border: $md-checkbox-border-width solid red;
+      }
+    }
+  }
+
   input[type="checkbox"] {
     outline: 0;
     visibility: hidden;
@@ -178,11 +191,11 @@ $md-checkbox-label-padding: .75em;
     font-size: inherit;
 
     &:checked {
-      + label:before {
+      + label:not(.error):before {
         background: $md-checkbox-checked-color;
         border: none;
       }
-      + label:after {
+      + label:not(.error):after {
 
         $md-checkmark-size: $md-checkbox-size - 2 * $md-checkbox-padding;
 
@@ -197,11 +210,11 @@ $md-checkbox-label-padding: .75em;
     }
 
     &:disabled {
-      + label:before {
+      + label:not(.error):before {
         border-color: $md-checkbox-border-color-disabled;
       }
       &:checked {
-        + label:before {
+        + label:not(.error):before {
           background: $md-checkbox-checked-color-disabled;
         }
       }
@@ -209,3 +222,22 @@ $md-checkbox-label-padding: .75em;
   }
 
 }
+
+.required-input label:not(.error):after {
+  content: ' *';
+  display: inline-block;
+  color: red;
+  font-size: 22px;
+  line-height: inherit;
+}
+
+label.error {
+  text-align: right;
+  display: block;
+  color:red !important;
+  font-family: $font__assistant;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+

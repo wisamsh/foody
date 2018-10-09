@@ -32,8 +32,7 @@ $homepage = new HomePage();
 
                 <div class="feed-header d-none d-sm-block">
                     <h3 class="title d-sm-inline-block">
-                        <?php __('Our Recommendations', 'foody') ?>
-                        ההמלצות שלנו
+                        <?php __('ההמלצות שלנו', 'foody') ?>
                     </h3>
                 </div>
 
@@ -42,18 +41,17 @@ $homepage = new HomePage();
                 if (!wp_is_mobile()) {
                     $homepage->sidebar();
                 }
-
                 ?>
 
                 <section class="content-container col-sm-9 col-12">
 
-                    <article class="feed row gutter-3 recipes-grid">
+                    <article id="feed-recipes-grid" class="feed row gutter-3 recipes-grid">
                         <?php $homepage->feed() ?>
                     </article>
                     <div class="show-more">
                         <img src="<?php echo $GLOBALS['images_dir'] . 'bite.png' ?>" alt="">
                         <h4>
-                            לעוד מתכונים
+                            <?php echo __('לעוד מתכונים', 'foody') ?>
                         </h4>
                     </div>
 
@@ -90,7 +88,6 @@ $homepage = new HomePage();
                     </button>
                 </div>
             </div>
-
 
 
         <?php endif; ?>

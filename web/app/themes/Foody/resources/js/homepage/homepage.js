@@ -6,7 +6,7 @@ let FoodySearchFilter = require('../common/foody-search-filter');
 
 jQuery(document).ready(($) => {
 
-    let filter = new FoodySearchFilter({grid: '.recipes-grid',cols:3});
+    let filter = new FoodySearchFilter({selector: '.homepage #accordion-foody-filter', grid: '#feed-recipes-grid', cols: 3});
 
     if (foodyGlobals.isMobile) {
 

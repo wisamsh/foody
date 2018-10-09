@@ -31,8 +31,8 @@ jQuery(document).ready(($) => {
         })
     });
 
-    new FoodySearchFilter({grid: '.my-channels-grid',cols:2});
-    new FoodySearchFilter({grid: '.my-recipes-grid',cols:2});
+    new FoodySearchFilter({selector:'.page-template-profile #accordion-foody-filter',grid: '.my-channels-grid',cols:2});
+    new FoodySearchFilter({selector:'.page-template-profile #accordion-foody-filter',grid: '.my-recipes-grid',cols:2});
 
 
 });

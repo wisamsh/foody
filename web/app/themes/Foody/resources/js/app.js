@@ -5,6 +5,7 @@
 let IScroll = require('iscroll');
 // let $ = require('jquery');
 require('jquery-drawer');
+require('jquery-validation');
 require('autocomplete.js/src/jquery/plugin.js');
 require('bootstrap');
 require('bootstrap-material-design');
@@ -52,6 +53,7 @@ require('./profile');
 require('./category');
 require('./author');
 require('./channel');
+require('./register');
 
 jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();

@@ -18,8 +18,12 @@ module.exports = (function () {
         this.settings = settings;
         this.grid = new FoodyGrid({selector: settings.grid});
 
+        if (!settings.selector) {
+            settings.selector = '#accordion-foody-filter';
+        }
+
         this.cols = settings.cols;
-        this.$filter = $('#accordion-foody-filter');
+        this.$filter = $(settings.selector);
         this.initialContext = this.grid.getItems();
 
         if (this.$filter.length) {
@@ -27,17 +31,20 @@ module.exports = (function () {
             //noinspection JSPotentiallyInvalidUsageOfThis
             this.searchFilter = this.buildInitialFilter();
             this.attachChangeListener();
+            if (settings.searchButton) {
+                $(settings.searchButton).click(this.doQuery);
+            }
         }
     };
 
     FoodySearchFilter.prototype.attachChangeListener = function () {
         let $checkboxes = $('input[type="checkbox"]', this.$filter);
         let that = this;
-        $checkboxes.change(function () {
+        $checkboxes.change(function (e) {
             if (that.isLoading) {
                 return;
             }
-
+            e.preventDefault();
             that.loading();
 
             let data = $(this).data();
@@ -50,7 +57,11 @@ module.exports = (function () {
                 }
             }
 
-            that.doQuery();
+            if (!foodyGlobals.isMobile) {
+                that.doQuery();
+            }
+
+            return false;
         });
     };
 
@@ -154,7 +165,11 @@ module.exports = (function () {
             }
         };
 
+        console.log('query');
 
+        if (this.settings.onQuery && typeof  this.settings.onQuery == 'function') {
+            this.settings.onQuery();
+        }
         let that = this;
         foodyAjax(ajaxSettings, function (err, posts) {
             that.stopLoading();

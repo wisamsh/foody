@@ -11,7 +11,7 @@ module.exports = (function () {
 
     FoodyGrid.prototype.init = function (settings) {
         this.$grid = $(settings.selector);
-        this.$grid.css('transition', 'opacity .3s');
+        // this.$grid.css('transition', 'opacity .3s');
         this.$parent = this.$grid.parent();
         this.$parent.css('position', 'relative');
         this.foodyLoader = new FoodyLoader({container: this.$parent});

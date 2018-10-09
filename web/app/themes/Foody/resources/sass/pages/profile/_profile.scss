@@ -196,6 +196,7 @@ $sidebar-width: 22.5% !default;
   }
 }
 
+
 @include breakpoint(mobileonly) {
   $sidebar-width: 0px;
 

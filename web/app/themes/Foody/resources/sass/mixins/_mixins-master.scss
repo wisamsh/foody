@@ -87,7 +87,7 @@ BREAKPOINTS
       @content;
     }
   } @else if $point == tablet {
-    @media (min-width: 50em) {
+    @media (min-width: 768px) {
       @content;
     }
   } @else if $point == phablet {
@@ -96,8 +96,9 @@ BREAKPOINTS
     }
   } @else if $point == mobileonly {
     //@media (max-width: 37.5em) {
-    @media (max-width: 50em) {
+    @media (max-width: 768px) {
       @content;
     }
   }
+
 }

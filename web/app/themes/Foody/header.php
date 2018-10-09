@@ -55,11 +55,11 @@ $user = new Foody_User();
 <div id="page" class="site">
 
     <header id="masthead" class="site-header">
-        <div class="socials d-none d-sm-block">
+        <div class="socials d-none d-xl-block">
             <?php $header->the_socials_bar() ?>
         </div>
         <div class="site-branding">
-            <div class="logo-container d-none d-sm-block">
+            <div class="logo-container d-none d-xl-block">
                 <div class="logo-container-desktop">
                     <?php the_custom_logo() ?>
                 </div>
@@ -67,18 +67,18 @@ $user = new Foody_User();
 
             </div>
 
-            <div class="logo-container-mobile d-block d-sm-none">
+            <div class="logo-container-mobile d-block d-xl-none">
                 <?php echo get_logo_with_size('60', '60'); ?>
             </div>
 
         </div><!-- .site-branding -->
 
-        <nav class="navbar navbar-expand-md navbar-light navbar-toggleable-md" role="navigation">
+        <nav class="navbar navbar-expand-xl navbar-light navbar-toggleable-xl" role="navigation">
 
             <!-- TODO change this to bootstrap offsets            -->
             <div class="container-fluid foody-navbar-container">
 
-                <div class="search-bar d-none d-sm-block">
+                <div class="search-bar d-none d-xl-block">
                     <?php get_search_form(); ?>
                 </div>
 
@@ -185,7 +185,7 @@ $user = new Foody_User();
 
                 <?php if (is_user_logged_in()): ?>
 
-                    <div class="d-none d-sm-block">
+                    <div class="d-none d-xl-block">
 
                         <?php
                         $link = is_user_logged_in() ? get_permalink(get_page_by_path('פרופיל-אישי')) : '';
