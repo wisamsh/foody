@@ -1,6 +1,8 @@
 <?php
 
-add_action( 'widgets_init' , create_function( '' , 'return register_widget( "ESSBSocialProfilesWidget" );' ) );
+add_action( 'widgets_init' ,function (){
+    return register_widget( "ESSBSocialProfilesWidget" );
+});
 
 if (!defined('ESSB3_SOCIALPROFILES_ACTIVE')) {
 	include_once (ESSB3_PLUGIN_ROOT . 'lib/modules/social-profiles/essb-social-profiles.php');
