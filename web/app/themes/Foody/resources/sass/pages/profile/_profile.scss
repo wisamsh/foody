@@ -45,6 +45,24 @@ $sidebar-width: 22.5% !default;
         }
       }
     }
+
+    .no-followed-topics {
+      text-align: center;
+      padding: 20px 0;
+      h5 {
+        font-family: $font__main;
+        font-size: 24px;
+        font-weight: 900;
+        text-align: center;
+      }
+
+      p {
+        font-family: $font__assistant;
+        font-size: 18px;
+        text-align: center;
+        margin: 0 auto;
+      }
+    }
   }
 }
 
@@ -174,10 +192,10 @@ $sidebar-width: 22.5% !default;
             padding: 0 17px;
             text-align: right;
 
-            .grid-item{
+            .grid-item {
               display: inline-block;
 
-              .feed-item-image{
+              .feed-item-image {
                 max-height: 272px;
                 height: 100%;
                 width: 100%;
@@ -195,7 +213,6 @@ $sidebar-width: 22.5% !default;
     margin-right: $sidebar-width;
   }
 }
-
 
 @include breakpoint(mobileonly) {
   $sidebar-width: 0px;

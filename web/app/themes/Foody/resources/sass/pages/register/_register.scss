@@ -23,7 +23,7 @@
 
       &.btn-facebook {
         background-color: #3a539f;
-        .facebook-icon:after{
+        .facebook-icon:after {
           background: url("../images/icons/facebook.svg") no-repeat;
           content: '';
           display: inline-block;
@@ -33,7 +33,7 @@
 
       &.btn-google {
         background-color: #d35647;
-        .google-icon:after{
+        .google-icon:after {
           background: url("../images/icons/google.svg") no-repeat;
         }
       }
@@ -147,6 +147,44 @@
     }
 
   }
+}
+
+.welcome {
+  text-align: center;
+  margin: 0 auto;
+
+  h2 {
+    text-align: center;
+    margin: 1em 0;
+  }
+
+  p {
+    text-align: center;
+    max-width: 60%;
+    margin: 2em auto;
+  }
+
+  button {
+    &.btn.btn-primary {
+      height: 53px;
+      width: 50%;
+      background: linear-gradient(33.82deg, #EC3849 0%, #F35644 100%);
+      padding: 0;
+
+    }
+
+    a {
+      color: #fff;
+      font-size: 18px;
+      display: block;
+      height: 100%;
+      line-height: 53px;
+      font-family: $font__assistant;
+      font-weight: bold;
+    }
+
+  }
+
 }
 
 .wp-social-login-widget {

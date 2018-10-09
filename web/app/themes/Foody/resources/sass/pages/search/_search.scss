@@ -1,4 +1,4 @@
-body[class~='search-results'] {
+body[class~='search'] {
 
   .content {
     .details-container {
@@ -50,8 +50,34 @@ body[class~='search-results'] {
           }
         }
       }
+
+      .no-results {
+        margin: 0 auto;
+        text-align: center;
+
+        h2 {
+          font-size: 32px;
+          font-weight: 900;
+          text-align: center;
+          color: $color__primary;
+          margin: 1em 0;
+        }
+
+      }
     }
 
   }
+}
 
+@include breakpoint(mobileonly){
+  body[class~='search'] {
+    #page{
+      position: initial;
+    }
+
+    footer{
+      position: absolute;
+      bottom: 0;
+    }
+  }
 }

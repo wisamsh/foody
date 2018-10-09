@@ -114,10 +114,18 @@ class Foody_Profile
     {
         $list = $this->foody_user->get_followed_topics();
 
-        foody_get_template_part(
-            get_template_directory() . '/template-parts/content-user-managed-list.php',
-            $list
-        );
+        if (!is_null($list) && !empty($list) && false){
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/content-user-managed-list.php',
+                $list
+            );
+        }else{
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/content-no-followed-topics.php'
+            );
+        }
+
+
     }
 
     public function favorites_tab()

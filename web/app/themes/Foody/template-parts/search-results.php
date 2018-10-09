@@ -15,6 +15,9 @@ $grid = new RecipesGrid();
                 <?php echo get_search_query(); ?>
             </h1>
 
+
+            <?php if (have_posts()): ?>
+
             <div class="sort col">
                 <?php
                 $select_args = array(
@@ -36,19 +39,32 @@ $grid = new RecipesGrid();
                 ?>
             </div>
 
+            <?php endif; ?>
+
         </div>
     </div>
 </header>
 <div class="container-fluid search-results">
-    <div class="row gutter-3">
-        <?php
 
-        while (have_posts()) {
-            the_post();
-            global $post;
-            $foody_post = new Foody_Recipe(($post));
-            $grid->draw($foody_post, 3);
-        }
-        ?>
-    </div>
+
+        <div class="row gutter-3">
+            <?php if (have_posts()): ?>
+            <?php
+
+            while (have_posts()) {
+                the_post();
+                global $post;
+                $foody_post = new Foody_Recipe(($post));
+                $grid->draw($foody_post, 3);
+            }
+            ?>
+
+            <?php else: foody_get_template_part(get_template_directory() . '/template-parts/no-results.php')?>
+            <?php endif; ?>
+        </div>
+
+
+
+
+
 </div>

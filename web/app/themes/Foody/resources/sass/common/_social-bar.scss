@@ -6,7 +6,7 @@
       li {
 
         &:not(:first-child):before {
-          content: '';
+          //content: '';
         }
 
         box-shadow: none;

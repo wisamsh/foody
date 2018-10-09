@@ -57,8 +57,8 @@ jQuery(document).ready(($) => {
             phone_number: {
                 regex: /^((\+972|972)|0)( |-)?([1-468-9]( |-)?\d{7}|(5|7)[0-9]( |-)?\d{7})/
             },
-            terms:{
-                required:true
+            terms: {
+                required: true
             }
         },
         messages: {
@@ -68,12 +68,10 @@ jQuery(document).ready(($) => {
             password: 'סיסמא אינה תקינה',
             'password-confirmation': 'סיסמאות אינן תואמות',
             phone_number: 'מספר טלפון נייד אינו תקין',
-            terms:'אנא אשר/י את תנאי השימוש'
+            terms: 'אנא אשר/י את תנאי השימוש'
         },
-        errorPlacement: function(error, element) {
-            //Custom position: first name
-            if (element.attr("type") == "checkbox" ) {
-
+        errorPlacement: function (error, element) {
+            if (element.attr("type") == "checkbox") {
                 let parent = $(element).parent('.md-checkbox');
                 error.insertBefore(parent);
             }

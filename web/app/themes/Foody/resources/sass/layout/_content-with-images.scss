@@ -7,22 +7,24 @@ body[class~='page-template-content-with-images'] {
       padding: 0;
       position: relative;
       img {
-        position: absolute;
+        //position: absolute;
 
       }
       &.image-container-right {
+        text-align: right;
+        padding-top: 40px;
 
-        img {
-          right: 0;
-          top: 40px;
-        }
       }
 
       &.image-container-left {
         min-height: 100%;
+        display: flex;
+        text-align: left;
+        justify-content: flex-end;
         img {
-          left: 0;
-          bottom: 40px;
+          display: inline-block;
+          align-self: flex-end;
+
         }
       }
 

@@ -12,6 +12,8 @@ html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
   direction: rtl;
+  height: auto;
+  min-height: 100%;
 }
 
 /* Sections
@@ -62,6 +64,11 @@ body {
 
 html, body, .container-fluid {
   min-height: 100%;
+}
+
+#page{
+  height: 100%;
+  min-height:100%;
 }
 
 /**

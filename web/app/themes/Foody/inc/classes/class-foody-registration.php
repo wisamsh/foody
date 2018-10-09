@@ -126,7 +126,7 @@ class Foody_Registration
                         $redirect_url = add_query_arg('register-errors', $errors, $redirect_url);
                     } else {
                         // Success, redirect to home page.
-                        $redirect_url = home_url();
+                        $redirect_url = add_query_arg('registered',true,$redirect_url);
                     }
                 }
             }

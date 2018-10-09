@@ -19,32 +19,22 @@ $user = new Foody_User();
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="profile" href="http://gmpg.org/xfn/11">
-    <script>
-        imagesUri = '<?php echo $GLOBALS['images_dir'] ?>';
-    </script>
 
-    <?php if (!is_admin()):
-        $globalsss = array(
-            'isMobile' => wp_is_mobile(),
-            'ajax' => admin_url('admin-ajax.php'),
-        );
-
-        ?>
+    <?php if (!is_admin()): ?>
         <script>
+            imagesUri = '<?php echo $GLOBALS['images_dir'] ?>';
             foodyGlobals = {
                 isMobile: '<?php echo wp_is_mobile() ? true : false ?>',
-                ajax: '<?php echo admin_url('admin-ajax.php')?>'
+                ajax: '<?php echo admin_url('admin-ajax.php')?>',
+                loggedIn:<?php echo(is_user_logged_in() ? 'true' : 'false'); ?>
             };
         </script>
-
     <?php endif; ?>
 
     <?php wp_head(); ?>
 
 
     <?php
-    // TODO check facebook sdk
-    // TODO loads only once (wp social login may load it too)
     $header->facebook_init();
     ?>
 
@@ -89,22 +79,22 @@ $user = new Foody_User();
                     <i class="navbar-toggler-icon icon-menu-mobile"></i>
                 </button>
 
-                <button type="button" class="btn btn-default navbar-btn  d-block d-sm-none accessibility">
+                <button type="button" class="btn btn-default navbar-btn  d-block d-xl-none accessibility">
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>" alt="">
                 </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-sm-none">
+                <button type="button" class="btn btn-default navbar-btn d-block d-xl-none">
 
                 </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-sm-none">
+                <button type="button" class="btn btn-default navbar-btn d-block d-xl-none">
 
                 </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-sm-none">
+                <button type="button" class="btn btn-default navbar-btn d-block d-xl-none">
 
                 </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-sm-none">
+                <button type="button" class="btn btn-default navbar-btn d-block d-xl-none">
 
                 </button>
-                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-sm-none">
+                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-xl-none">
 
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="">
 
@@ -201,7 +191,7 @@ $user = new Foody_User();
 
         </nav>
 
-        <div class="search-overlay d-sm-none">
+        <div class="search-overlay d-xl-none">
 
             <div class="input-container">
                 <!--suppress HtmlFormInputWithoutLabel -->

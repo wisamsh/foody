@@ -10,5 +10,6 @@ add_filter('query_vars', 'add_vars');
 function add_vars($public_query_vars)
 {
     $public_query_vars[] = 'recipe';
+    $public_query_vars[] = 'registered';
     return $public_query_vars;
 }

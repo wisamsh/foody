@@ -19,7 +19,7 @@ define ( 'ESSB3_SELF_ENABLED', false );
 
 define ( 'ESSB3_VERSION', '5.5.2' );
 define ( 'ESSB3_PLUGIN_ROOT', dirname ( __FILE__ ) . '/' );
-define ( 'ESSB3_PLUGIN_URL', plugins_url () . '/' . basename ( dirname ( __FILE__ ) ) );
+define ( 'ESSB3_PLUGIN_URL', WPMU_PLUGIN_URL . '/' . basename ( dirname ( __FILE__ ) ) );
 define ( 'ESSB3_PLUGIN_BASE_NAME', plugin_basename ( __FILE__ ) );
 define ( 'ESSB3_OPTIONS_NAME', 'easy-social-share-buttons3');
 define ( 'ESSB3_WPML_OPTIONS_NAME', 'easy-social-share-buttons3-wpml');

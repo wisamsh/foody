@@ -207,19 +207,3 @@ function admin_theme_style()
 
 add_action('admin_enqueue_scripts', 'admin_theme_style');
 add_action('login_enqueue_scripts', 'admin_theme_style');
-
-
-/**
- * Automatically logs the user in
- * after registration
- * @param int $user_id
- */
-function auto_login_new_user($user_id)
-{
-    wp_set_current_user($user_id);
-    wp_set_auth_cookie($user_id);
-    wp_redirect(home_url());
-    exit;
-}
-
-add_action('user_register', 'auto_login_new_user');
