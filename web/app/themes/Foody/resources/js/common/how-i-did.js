@@ -111,6 +111,9 @@ $(document).ready(() => {
     });
 
     $('.how-i-did-modal-open').on('click', function () {
+        if (!foodyGlobals.loggedIn) {
+            return showLoginModal();
+        }
         let image = $(this).data('image');
         let user = $(this).data('user');
         let content = $(this).data('content');

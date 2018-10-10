@@ -114,7 +114,7 @@ class Foody_Profile
     {
         $list = $this->foody_user->get_followed_topics();
 
-        if (!is_null($list) && !empty($list) && false){
+        if (!is_null($list) && !empty($list)){
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-user-managed-list.php',
                 $list

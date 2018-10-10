@@ -16,6 +16,9 @@ $(document).ready(() => {
             let $this = $(this);
 
             $this.click(() => {
+                if (!foodyGlobals.loggedIn){
+                   return showLoginModal();
+                }
                 let postId = $this.data('id');
 
                 if (postId) {

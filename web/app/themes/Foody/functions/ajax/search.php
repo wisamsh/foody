@@ -18,7 +18,7 @@ function foody_ajax_autocomplete()
     $results = new WP_Query(array(
         'post_type' => array('foody_recipe'),
         'post_status' => 'publish',
-        'posts_per_page' => 15,
+        'number' => 10,
         'orderby' => 'title',
         's' => $search,
     ));

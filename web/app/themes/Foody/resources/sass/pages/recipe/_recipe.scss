@@ -8,8 +8,7 @@ $content-width: 70%;
 
 @import "../../common/show-more-simple";
 
-.single-foody_recipe, .single-foody_playlist , .archive.author, body[class~="foody_channel-template-channel"] {
-
+.single-foody_recipe, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
 
   .progress-wrapper {
     $progress-height: 5px;
@@ -66,6 +65,40 @@ $content-width: 70%;
         .wp-post-image {
           max-height: 524px;
           width: 100%;
+        }
+      }
+
+      .content-details-bullets {
+        li {
+          > div[dir=ltr] {
+            vertical-align: bottom;
+            font-size: 5px;
+            display: inline-block;
+
+            .foody-rating-container {
+              display: inline;
+              .star {
+                i {
+                  &:before {
+                    font-size: 2em;
+                    padding: 0;
+                  }
+                }
+              }
+
+            }
+
+            span {
+              &.value {
+                font-size: 18px;
+                margin-left: 5px;
+              }
+            }
+
+            .rating-stars {
+              vertical-align: bottom;
+            }
+          }
         }
       }
     }
@@ -427,14 +460,14 @@ $content-width: 70%;
             color: #ffffff;
             padding: 0;
 
-            .modal-title{
+            .modal-title {
               font-family: $font__main;
               font-size: 28px;
               font-weight: 900;
               place-self: center;
               margin-right: 20px;
             }
-            .close{
+            .close {
               float: left;
               margin: 0;
               color: #ffffff;
@@ -572,7 +605,7 @@ $content-width: 70%;
   $sidebar-width: 0;
   $content-width: 100%;
   $content-padding: 40px;
-  .single-foody_recipe , .single-foody_playlist {
+  .single-foody_recipe, .single-foody_playlist {
 
     .progress-wrapper {
 
@@ -632,7 +665,7 @@ $content-width: 70%;
             }
           }
 
-          .recipe-details,.playlist-details {
+          .recipe-details, .playlist-details {
 
             .image-container {
 

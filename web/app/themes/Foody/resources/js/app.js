@@ -54,6 +54,7 @@ require('./category');
 require('./author');
 require('./channel');
 require('./register');
+require('./login');
 
 jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();
@@ -61,7 +62,8 @@ jQuery(document).ready(function ($) {
     $('[data-toggle="popover"]').popover();
     $('.foody-rating').rating({
         filledStar: '<i class="icon-big-star-rank filled"></i>',
-        emptyStar: '<i class="icon-big-star-rank"></i>'
+        emptyStar: '<i class="icon-big-star-rank"></i>',
+        containerClass:'foody-rating-container'
     });
 
     $('.foody-slider').slick();

@@ -56,5 +56,8 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    window.showLoginModal = function () {
+        $('#login-modal').modal('show');
+    }
 
 });

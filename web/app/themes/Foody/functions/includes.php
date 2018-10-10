@@ -118,4 +118,4 @@ require_once get_template_directory() . "/inc/shortcodes/shortcode-login.php";
 /*
  * Plugins
  * */
-//require_once get_template_directory() . "/inc/plugins/easy-social-share-buttons3/easy-social-share-buttons3.php";
+

@@ -214,4 +214,21 @@ $user = new Foody_User();
         <!-- #site-navigation -->
     </header><!-- #masthead -->
 
+
+    <?php
+    if (!is_user_logged_in()) {
+        $login_popup_args = [
+            'id' => 'login-modal',
+            'body' => do_shortcode('[foody-login]'),
+            'btn_approve_classes' => 'hide',
+            'btn_cancel_classes' => 'hide',
+            'title' => '',
+            'hide_buttons' => true
+        ];
+
+        foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', $login_popup_args);
+    }
+
+    ?>
     <div id="content" class="site-content">
+

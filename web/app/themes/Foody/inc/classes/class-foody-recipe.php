@@ -155,8 +155,13 @@ class Foody_Recipe extends Foody_Post
 
     public function the_rating()
     {
+        $args = [
+            'value' => get_rating_by_user_and_post($this->id)
+        ];
+
         foody_get_template_part(
-            get_template_directory() . '/template-parts/content-rating.php'
+            get_template_directory() . '/template-parts/content-rating.php',
+            $args
         );
     }
 

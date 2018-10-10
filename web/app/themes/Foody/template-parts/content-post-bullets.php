@@ -10,6 +10,9 @@
 /** @var Foody_Post $foody_page */
 /** @noinspection PhpUndefinedVariableInspection */
 $foody_page = $template_args['foody_page'];
+
+$dynamic = !empty($template_args['dynamic']) ? $template_args['dynamic'] : [];
+
 ?>
 
 <ul class="content-details-bullets">
@@ -22,6 +25,12 @@ $foody_page = $template_args['foody_page'];
     <li>
         <?php echo $foody_page->getPostedOn() ?>
     </li>
+
+    <?php foreach ($dynamic as $item): ?>
+        <li>
+            <?php echo $item; ?>
+        </li>
+    <?php endforeach; ?>
 
     <?php if (isset($template_args['show_favorite']) && $template_args['show_favorite']): ?>
 

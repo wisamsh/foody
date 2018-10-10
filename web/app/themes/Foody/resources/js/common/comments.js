@@ -12,7 +12,11 @@ $(document).ready(() => {
         $comment = $('#comment',$parent);
 
         $comment.click(() => {
-            $parent.add($commentForm).toggleClass('open');
+            if (foodyGlobals.loggedIn){
+                $parent.add($commentForm).toggleClass('open');
+            }else{
+                showLoginModal();
+            }
         });
 
 

@@ -13,6 +13,12 @@ $hide_progress = isset($template_args['hide_progress']) && $template_args['hide_
 $foody_page = Foody_PageContentFactory::get_instance()->get_page();
 ?>
 
+    <script>
+        post = {
+            ID: '<?php echo get_the_ID() ?>',
+            type: '<?php echo get_post_type()?>'
+        };
+    </script>
     <div id="primary" class="content-area">
         <main id="main" class="site-main">
             <div class="row m-0">
