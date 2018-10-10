@@ -176,7 +176,7 @@ class Foody_User
         $image = $GLOBALS['images_dir'] . 'avatar.png';
         if ($this->user->ID > 0) {
             $user_images = get_user_meta($this->user_id, 'wp_user_avatars', true);
-            if (!empty($user_images)) {
+            if (!empty($user_images) && is_array($user_images)) {
                 if (!isset($user_images[$size])) {
 
                     $available_sizes = array_keys($user_images);
@@ -185,7 +185,7 @@ class Foody_User
                     });
 
                     if (!empty($available_sizes)) {
-                        $size = $this->get_closest($size,$available_sizes);
+                        $size = $this->get_closest($size, $available_sizes);
                     }
                 }
 
