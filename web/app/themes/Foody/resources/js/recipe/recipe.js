@@ -32,3 +32,9 @@ function rating(value) {
     });
 
 }
+
+let ytPlayer = require('../common/youtubePlayer');
+
+
+
+

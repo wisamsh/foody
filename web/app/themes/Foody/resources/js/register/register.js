@@ -18,7 +18,7 @@ jQuery(document).ready(($) => {
 
     $.validator.addMethod(
         "password",
-        function (value, element) {
+        function (value) {
 
             let hasNumbers = /[0-9]+/.test(value);
             let nonEn = /[^a-z0-9]/i.test(value);
@@ -51,7 +51,7 @@ jQuery(document).ready(($) => {
             },
             'password-confirmation': {
                 required: true,
-                equalTo: '#password',
+                equalTo: '#password[name="password"]',
                 normalizer: textNormalizer
             },
             phone_number: {
@@ -80,11 +80,8 @@ jQuery(document).ready(($) => {
             }
         },
         submitHandler: function (form) {
-
             grecaptcha.reset();
             grecaptcha.execute();
-            console.log('submitHandler');
-
         }
     });
 

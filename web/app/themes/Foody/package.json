@@ -4,7 +4,7 @@
   "description": "Foody WordPress Theme",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --watch",
+    "start": "webpack --watch --env.NODE_ENV=local",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -55,6 +55,7 @@
     "lottie-web": "^5.2.1",
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "mdbootstrap": "^4.5.2",
+    "mixpanel-browser": "^2.22.4",
     "node-sass": "^4.9.1",
     "popper": "^1.0.1",
     "popper.js": "^1.14.3",

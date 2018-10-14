@@ -19,16 +19,16 @@ let defaultOptions = {
 
     playerVars: {
         autoplay: 0,
-        rel:0
+        rel: 0
     }
 };
 
-window.ytPlayer = function (selector, youtubeId) {
+module.exports = function (selector, youtubeId) {
 
     let player;
     let options = foodyGlobals.isMobile ? videoSizes.mobile : videoSizes.desktop;
 
-    options = _.extend(defaultOptions,options);
+    options = _.extend(defaultOptions, options);
     player = YouTubePlayer($(selector)[0], options);
 
     // 'loadVideoById' is queued until the player is ready to receive API calls.
