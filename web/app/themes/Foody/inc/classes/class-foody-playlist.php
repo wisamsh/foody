@@ -202,4 +202,17 @@ class Foody_Playlist extends Foody_Post
         $link = add_query_arg('recipe', $recipe->post->post_name, get_permalink());
         return $link;
     }
+
+    public function js_vars()
+    {
+        $current_recipe = $this->get_current_recipe();
+
+        $vars = parent::js_vars();
+
+        if (!empty($current_recipe)) {
+            $vars['currentRecipe'] = $current_recipe->js_vars();
+        }
+
+        return $vars;
+    }
 }

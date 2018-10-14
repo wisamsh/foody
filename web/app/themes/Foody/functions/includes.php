@@ -71,6 +71,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-search-page.ph
 require_once get_template_directory() . "/inc/classes/class-foody-registration.php";
 require_once get_template_directory() . "/inc/classes/class-foody-categories-accordion-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-query.php";
+require_once get_template_directory() . "/inc/classes/common/class-foody-analytics.php";
 
 
 /*

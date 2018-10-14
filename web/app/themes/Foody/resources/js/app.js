@@ -15,7 +15,7 @@ require('bootstrap-material-design');
 require('bootstrap-select');
 require('bootstrap-star-rating');
 require('./plugins');
-let mixpanel = require('mixpanel-browser');
+
 
 
 require('slick-carousel');
@@ -63,10 +63,6 @@ require('./search');
 
 jQuery(document).ready(function ($) {
 
-    // TODO change token based on env
-    mixpanel.init('4f106af7ed1ff172ef5bf5a29d7af3af');
-
-
     $('body').bootstrapMaterialDesign();
     $('.foody-select').selectpicker({dropdownAlignRight: true, style: 'foody-select'});
     $('[data-toggle="popover"]').popover();
@@ -77,5 +73,11 @@ jQuery(document).ready(function ($) {
     });
 
     $('.foody-slider').slick();
+
+    let FoodyAnalytics = require('./common/analytics');
+
+    window.analytics = new FoodyAnalytics();
+
+    analytics.view();
 
 });

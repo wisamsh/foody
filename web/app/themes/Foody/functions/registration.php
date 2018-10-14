@@ -30,8 +30,42 @@ function auto_login_new_user($user_id)
     wp_set_auth_cookie($user_id);
     $redirect_url = home_url('הרשמה');
     $redirect_url = add_query_arg('registered', true, $redirect_url);
+
+    Foody_Analytics::get_instance()->user_register();
+
     wp_redirect($redirect_url);
+
     exit;
 }
 
 add_action('user_register', 'auto_login_new_user');
+
+
+function foody_user_login($user_login, $user)
+{
+
+    if (user_can($user, 'subscriber')) {
+
+        Foody_Analytics::get_instance()->event('login', [
+            'email' => $user->user_email
+        ]);
+    }
+}
+
+
+add_action('wp_login', 'foody_user_login', 10, 2);
+
+function foody_user_logout()
+{
+    $user = wp_get_current_user();
+
+    if (user_can($user, 'subscriber')) {
+
+        Foody_Analytics::get_instance()->event('logout', [
+            'email' => $user->user_email
+        ]);
+    }
+}
+
+
+add_action('clear_auth_cookie', 'foody_user_logout', 10, 2);

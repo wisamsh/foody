@@ -9,12 +9,12 @@ $(document).ready(() => {
     if ($commentForm.length) {
 
         $parent = $('.commentform-element');
-        $comment = $('#comment',$parent);
+        $comment = $('#comment', $parent);
 
         $comment.click(() => {
-            if (foodyGlobals.loggedIn){
+            if (foodyGlobals.loggedIn) {
                 $parent.add($commentForm).toggleClass('open');
-            }else{
+            } else {
                 showLoginModal();
             }
         });
@@ -93,8 +93,18 @@ $(document).ready(() => {
         $('a[data-context="comments-list"]').click(function () {
             let button = $(this);
 
+
             // decrease the current comment page value
             cpage--;
+
+            analytics.event('show more comments', {
+                id: foodyGlobals.objectID,
+                type: foodyGlobals.post.type.replace('foody_',''),
+                title: foodyGlobals.title,
+                page: cpage
+            });
+
+
             let submitText = button.html();
             $.ajax({
                 url: ajaxurl, // AJAX handler, declared before

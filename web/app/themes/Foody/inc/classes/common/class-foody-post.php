@@ -369,7 +369,11 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             'selector' => 'related_recipes',
             'content_classes' => 'related-recipes',
             'template_args_func' => function ($recipe) {
-                $foody_recipe = new Foody_Recipe($recipe);
+                $foody_recipe = $recipe;
+
+                if (!$foody_recipe instanceof Foody_Recipe) {
+                    $foody_recipe = new Foody_Recipe($recipe);
+                }
                 return array(
                     'duration' => $foody_recipe->getDuration()
                 );
@@ -441,8 +445,21 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return get_author_posts_url($this->post->post_author);
     }
 
-    public function has_rating(){
+    public function has_rating()
+    {
         return false;
+    }
+
+    public function js_vars(){
+        return [
+            'ID' => $this->post->ID,
+            'type'=> $this->post->post_type,
+            'title' => $this->title
+        ];
+    }
+
+    public function featured_content_classes(){
+        return [];
     }
 
 }

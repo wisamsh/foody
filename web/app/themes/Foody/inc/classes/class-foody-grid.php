@@ -64,7 +64,7 @@ class FoodyGrid
         $class .= ' grid-item';
 
 
-        $container_start = '<div data-id="' . $post->id . '"  class="' . $class . ' ' . $type . '-item-container" data-sort="' . $post->getTitle() . '" data-order="' . $this->current_item . '">';
+        $container_start = '<div data-title="' . $post->getTitle() . '" data-id="' . $post->id . '"  class="' . $class . ' ' . $type . '-item-container" data-sort="' . $post->getTitle() . '" data-order="' . $this->current_item . '">';
         $container_end = '</div>';
 
         $item_content = $container_start;

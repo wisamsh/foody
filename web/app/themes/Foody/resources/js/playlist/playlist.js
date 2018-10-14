@@ -11,7 +11,7 @@ jQuery(document).ready(function ($) {
 
         let videoId = $currentPlaying.data('video');
 
-        let player = ytPlayer('.featured-content-container', videoId);
+        let player = ytPlayer('.video-container', videoId);
 
 
         /*
@@ -36,9 +36,18 @@ jQuery(document).ready(function ($) {
                         window.location.href = $('a', $next).attr('href');
                     }
                     break;
+                // video playing
+                case 1:
+                    analytics.timeEvent('playlist video');
+                    break;
                 // video paused
                 case 2:
-
+                    analytics.event('playlist video', {
+                        id: foodyGlobals.objectID,
+                        title: foodyGlobals.title,
+                        recipe_id: foodyGlobals.currentRecipe.ID,
+                        recipe_title: foodyGlobals.currentRecipe.title,
+                    });
                     break;
             }
         });

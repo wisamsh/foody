@@ -348,6 +348,7 @@ class Foody_Recipe extends Foody_Post
                         'url' => $video_url,
                         'duration' => get_sub_field('duration')
                     );
+                    $this->has_video = true;
                 }
 
             endwhile;
@@ -492,7 +493,16 @@ class Foody_Recipe extends Foody_Post
         );
     }
 
-    public function has_rating(){
+    public function has_rating()
+    {
         return true;
+    }
+
+    public function featured_content_classes()
+    {
+        $classes = parent::featured_content_classes();
+        if ($this->has_video) {
+            $classes[] = 'video-featured-content';
+        }
     }
 }

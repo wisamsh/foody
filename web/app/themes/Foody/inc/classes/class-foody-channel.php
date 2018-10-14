@@ -53,6 +53,8 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
             'classes' => [
                 "channel-$type-grid"
             ],
+            // TODO change after implementing dynamic channels
+            'more' => false,
             'return' => true
         ];
 

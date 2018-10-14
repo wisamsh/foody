@@ -18,7 +18,6 @@ $homepage = new HomePage();
 
         <?php $homepage->cover_photo() ?>
 
-
         <div class="content">
             <div class="row recipes-grid gutter-10 featured">
                 <?php $homepage->featured() ?>

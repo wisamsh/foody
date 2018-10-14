@@ -6,8 +6,8 @@ let YouTubePlayer = require('youtube-player');
 
 let videoSizes = {
     desktop: {
-        width: 1036,
-        height: 524
+        width: '100%',
+        height: 'auto'
     },
     mobile: {
         width: '100%',
@@ -18,10 +18,31 @@ let videoSizes = {
 let defaultOptions = {
 
     playerVars: {
-        autoplay: 0,
         rel: 0
     }
 };
+
+let debug = false;
+
+/*
+ * @see https://developers.google.com/youtube/iframe_api_reference#Events
+ * -1 (unstarted)
+ * 0 (ended)
+ * 1 (playing)
+ * 2 (paused)
+ * 3 (buffering)
+ * 5 (video cued).
+ * */
+
+let playerMessages = [
+    'unstarted',
+    'ended',
+    'playing',
+    'paused',
+    'buffering',
+    '',
+    'video cued',
+];
 
 module.exports = function (selector, youtubeId) {
 
@@ -31,8 +52,16 @@ module.exports = function (selector, youtubeId) {
     options = _.extend(defaultOptions, options);
     player = YouTubePlayer($(selector)[0], options);
 
-    // 'loadVideoById' is queued until the player is ready to receive API calls.
-    player.loadVideoById(youtubeId);
+    // 'cueVideoById' is queued until the player is ready to receive API calls.
+    player.cueVideoById(youtubeId);
+
+    if (debug) {
+        player.on('stateChange', (event) => {
+
+            let state = event.data + 1;
+            console.log(playerMessages[state]);
+        });
+    }
 
     return player;
 };

@@ -10,7 +10,6 @@ $content-width: 70%;
 
 .single-foody_recipe, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
 
-
   article.content {
 
     > section[class^="recipe-"] {
@@ -24,12 +23,22 @@ $content-width: 70%;
         clip-path: inset(0 round 3px);
         margin: 0 10px 10px;
 
-        iframe {
-          min-height: 524px;
+        &.video-featured-content {
+          position: relative;
+          padding-bottom: 56.25%; /* 16:9 */
+          padding-top: 25px;
+          height: 0;
+          iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          }
         }
 
         .wp-post-image {
-          max-height: 524px;
+          //max-height: 524px;
           width: 100%;
         }
       }
@@ -571,7 +580,7 @@ $content-width: 70%;
   $sidebar-width: 0;
   $content-width: 100%;
   $content-padding: 40px;
-  .single-foody_recipe, .single-foody_playlist,.single-post {
+  .single-foody_recipe, .single-foody_playlist, .single-post {
 
     article.content {
       width: $content-width;
@@ -584,7 +593,12 @@ $content-width: 70%;
           margin-left: 0;
           margin-right: 0;
           clip-path: none;
+          padding-bottom: 0;
+          height: auto;
+          position: initial;
+          padding-top: 0;
           iframe {
+            position: initial;
             max-height: 200px;
             min-height: 200px;
           }

@@ -334,3 +334,29 @@ function my_pre_get_posts(WP_Query $query)
 }
 
 add_action('pre_get_posts', 'my_pre_get_posts');
+
+
+/**
+ * Hooks into foody_js_globals to
+ * add relevant javascript variables
+ * based on the post type.
+ * @param $single_template
+ * @return mixed
+ */
+function custom_post_type_js_vars($single_template)
+{
+    global $post;
+
+    $foody_post = Foody_Post::create($post);
+
+    $js_vars = $foody_post->js_vars();
+
+    add_filter('foody_js_globals', function ($vars) use ($js_vars) {
+        return array_merge($js_vars, $vars);
+    });
+
+
+    return $single_template;
+}
+
+add_filter('single_template', 'custom_post_type_js_vars');

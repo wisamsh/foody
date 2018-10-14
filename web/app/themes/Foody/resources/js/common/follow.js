@@ -27,6 +27,21 @@ $(document).ready(() => {
 
                     let isAlreadyFollowed = $this.data('followed');
 
+                    let eventName = null;
+                    if (topic == 'followed_channels') {
+                        eventName = 'follow channel';
+                    } else if (topic == 'followed_authors') {
+                        eventName = 'follow creator';
+                    }
+
+                    if (eventName != null) {
+                        analytics.event(eventName, {
+                            id: topicId,
+                            title: $('h1', $this.closest('.topic-details')).text(),
+                            follow: !isAlreadyFollowed
+                        });
+                    }
+
                     toggleAllFollowed(topicId, isAlreadyFollowed);
 
 
