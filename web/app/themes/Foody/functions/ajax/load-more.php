@@ -63,7 +63,9 @@ function foody_ajax_load_more()
 
                 $foody_posts = array_map('Foody_Post::create', $posts);
 
-                $items = $grid->loop($foody_posts, 3, false);
+                $cols = foody_get_array_default($_POST, 'cols', 3);
+                $cols = intval($cols);
+                $items = $grid->loop($foody_posts, $cols, false);
 
                 $response = [
                     'next' => $next,

@@ -72,13 +72,13 @@ class Foody_Query
     }
 
 
-    public function search($s)
+    public function search()
     {
         $args = self::get_args([
-            // TODO check search
-            'post_type' => ['foody_recipe'],
-            's' => $s
+            'post_type' => ['foody_recipe', 'foody_playlist'],
+            's' => $this->get_query('s')
         ]);
+
 
         return $args;
     }
@@ -101,11 +101,11 @@ class Foody_Query
 
 
             if (!$page) {
-                if(isset($_REQUEST['page'])){
+                if (isset($_REQUEST['page'])) {
                     $page = $_REQUEST['page'];
-                }else{
+                } else {
                     $page = $this->get_param('page');
-                    if(!$page){
+                    if (!$page) {
                         $page = 1;
                     }
                 }
@@ -127,14 +127,17 @@ class Foody_Query
 
     public function has_more_posts(WP_Query $query)
     {
-        $current_page = $query->get('paged');
+        $current_page = intval($query->get('paged', 0));
 
         $max = $query->max_num_pages;
 
         if ($max > $current_page) {
             if ($current_page == 0) {
-                $query_per_page = $query->get('posts_per_page');
                 $options_per_page = $this->get_posts_per_page();
+                $query_per_page = intval($query->get('posts_per_page'));
+                $query->set('posts_per_page', $options_per_page);
+                $query->get_posts();
+                $max = $query->max_num_pages;
                 $current_page = $query_per_page / $options_per_page;
             }
         }
@@ -145,7 +148,7 @@ class Foody_Query
 
     private function get_posts_per_page()
     {
-        return get_option('posts_per_page');
+        return intval(get_option('posts_per_page'));
     }
 
     private function get_args($args)

@@ -38,7 +38,8 @@ module.exports = (function () {
                 context: this.settings.context,
                 page: page,
                 filter: this.filter.prepareFilterForQuery(),
-                context_args: this.settings.contextArgs
+                context_args: this.settings.contextArgs,
+                cols:this.filter.cols
             }
         };
 

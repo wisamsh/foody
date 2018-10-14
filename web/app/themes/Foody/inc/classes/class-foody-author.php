@@ -15,6 +15,8 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
     private $grid;
 
+    private $foody_query;
+
     /**
      * Foody_Author constructor.
      */
@@ -22,6 +24,7 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
     {
         $this->author = get_user_by('slug', get_query_var('author_name'));
         $this->grid = new FoodyGrid();
+        $this->foody_query = Foody_Query::get_instance();
     }
 
 
@@ -54,8 +57,8 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
     {
 
 
-        $recipes = $this->get_author_content('foody_recipe', Foody_Recipe::class);
-        $playlists = $this->get_author_content('foody_playlist', Foody_Playlist::class);
+        $recipes = $this->get_author_content('foody_recipe');
+        $playlists = $this->get_author_content('foody_playlist');
 
         $tabs = [
             [
@@ -64,7 +67,8 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
                 'content' =>
                     $this->get_posts_grid(
                         $recipes['posts'],
-                        'recipe'
+                        'recipe',
+                        $recipes['more']
                     ),
                 'classes' => 'show active',
                 'link_classes' => 'active'
@@ -75,7 +79,8 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
                 'content' =>
                     $this->get_posts_grid(
                         $playlists['posts'],
-                        'playlist'
+                        'playlist',
+                        $playlists['more']
                     )
             ]
         ];
@@ -88,42 +93,31 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
         return $this->author->ID;
     }
 
-    private function get_author_content($type, $class)
+    private function get_author_content($type)
     {
 
-        $args = [
-            'post_type' => $type,
-            'posts_per_page' => 9,
-            'author' => $this->author->ID
-        ];
+        $args = $this->foody_query->get_query('author', [
+            $this->getId(),
+            $type
+        ], true);
 
         $count = count_user_posts($this->author->ID, $type);
 
+
         $query = new WP_Query($args);
         $posts = $query->get_posts();
-        $foody_posts = array_map(function ($post) use ($class) {
-            return new $class($post);
-        }, $posts);
+        $foody_posts = array_map('Foody_Post::create', $posts);
 
         return [
             'posts' => $foody_posts,
-            'count' => $count
+            'count' => $count,
+            'more' => $this->foody_query->has_more_posts($query)
         ];
 
     }
 
-    private function get_posts_grid($posts, $type)
+    private function get_posts_grid($posts, $type, $more)
     {
-//        if ($this->debug && !empty($posts)) {
-//            for ($i = 0; $i < 6; $i++)
-//                $posts[] = $posts[0];
-//        }
-//
-//        $grid_content = '<section class="author-' . $type . '-grid">';
-//        $grid_content .= $this->grid->loop($posts, 3, false, $type);
-//        $grid_content .= '</section>';
-
-
         $id = "author-$type-feed";
 
         $grid = [
@@ -133,6 +127,7 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
             'classes' => [
                 "author-$type-grid"
             ],
+            'more' => $more,
             'return' => true
         ];
 
@@ -140,8 +135,6 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
             get_template_directory() . '/template-parts/common/foody-grid.php',
             $grid
         );
-
-//        return $grid_content;
     }
 
     // Foody_Topic

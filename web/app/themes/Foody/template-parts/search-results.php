@@ -6,6 +6,10 @@
  * Time: 1:29 PM
  */
 $grid = new FoodyGrid();
+
+
+/** @var Foody_SearchPage $search */
+$search = $template_args['search'];
 ?>
 
 <header class="search-results-header">
@@ -47,32 +51,16 @@ $grid = new FoodyGrid();
 <div class="container-fluid search-results">
 
     <div class="row gutter-3">
-        <?php if (have_posts()): ?>
-            <?php
 
-            global $wp_query;
+        <?php
 
-            $grid = [
-                'id' => 'search-results',
-                'cols' => 3,
-                'posts' => array_map('Foody_Post::create', $wp_query->posts)
-            ];
+        if (have_posts()) {
+            $search->the_results();
+        } else {
+            $search->no_results();
+        }
+        ?>
 
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/common/foody-grid.php',
-                $grid
-            );
-
-//            while (have_posts()) {
-//                the_post();
-//                global $post;
-//                $foody_post = new Foody_Recipe(($post));
-//                $grid->draw($foody_post, 3);
-//            }
-            ?>
-
-        <?php else: foody_get_template_part(get_template_directory() . '/template-parts/no-results.php') ?>
-        <?php endif; ?>
     </div>
 
 

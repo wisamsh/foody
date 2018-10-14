@@ -55,6 +55,7 @@ require('./author');
 require('./channel');
 require('./register');
 require('./login');
+require('./search');
 
 jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();

@@ -14,6 +14,8 @@ add_action('wp_head', 'Foody_Header::facebook_init');
 add_filter('foody_js_globals', function ($vars) {
 
     $vars['queryPage'] = Foody_Query::$page;
+    $vars['objectID'] = get_queried_object_id();
+
 
     return $vars;
 });

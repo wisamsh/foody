@@ -10,7 +10,9 @@ jQuery(document).ready(($) => {
 
     let categoryPager = new FoodyContentPaging({
         context: 'category',
-        contextArgs: [6],
+        contextArgs: [
+            foodyGlobals.objectID
+        ],
         filter: filter
     });
 
