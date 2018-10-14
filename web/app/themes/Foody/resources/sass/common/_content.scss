@@ -1,14 +1,21 @@
 .foody-content {
-  font-size: 22px;
+
   h2 {
     font-family: $font__bold;
     color: $color__primary;
+    font-size: 2.5rem;
+  }
+
+  h3,h4,h5,h6{
+    font-family: $font__assistant;
+    font-weight: bold;
   }
 
   p {
     margin: 0;
     text-align: right;
     font-family: $font__assistant;
+    font-size: 22px;
   }
 
   ol {

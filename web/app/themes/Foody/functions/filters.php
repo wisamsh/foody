@@ -52,10 +52,10 @@ add_filter('comment_form_default_fields', 'foody_comment_form_fields');
  */
 function default_page_template($template)
 {
-    if (is_singular(array('post', 'foody_recipe', 'foody_article'))) {
+    if (is_singular(array('post', 'foody_recipe', 'foody_playlist'))) {
         $default_template = locate_template(array('page-templates/content-with-sidebar.php'));
         if ('' != $default_template) {
-            return $default_template;
+            $template = $default_template;
         }
     }
 

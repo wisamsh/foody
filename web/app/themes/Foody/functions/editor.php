@@ -59,3 +59,39 @@ function add_custom_meta_box()
 }
 
 add_action("add_meta_boxes", "add_custom_meta_box");
+
+// remove inline width from figure tags
+add_filter('img_caption_shortcode_width', '__return_false');
+
+
+function add_image_class($class)
+{
+    $class .= ' foody-image';
+    return $class;
+}
+
+add_filter('get_image_tag_class', 'add_image_class');
+
+function wrap_content_images($content)
+{
+
+    $content = mb_convert_encoding($content, 'HTML-ENTITIES', "UTF-8");
+    $document = new DOMDocument();
+    libxml_use_internal_errors(true);
+    $document->loadHTML(utf8_decode($content));
+
+    $imgs = $document->getElementsByTagName('img');
+    /** @var DOMElement $img */
+    foreach ($imgs as $img) {
+        $parent = $img->parentNode;
+        if ($parent->tagName == 'p') {
+            $parent_class = $parent->getAttribute('class');
+            $parent->setAttribute('class', "$parent_class wp-caption");
+        }
+    }
+
+    $html = $document->saveHTML();
+    return $html;
+}
+
+add_filter('the_content', 'wrap_content_images');

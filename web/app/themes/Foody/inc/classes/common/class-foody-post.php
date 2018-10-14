@@ -233,18 +233,164 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return null;
     }
 
-    public abstract function the_featured_content();
+    public function the_featured_content()
+    {
+        the_post_thumbnail(array(1099, 542));
+    }
 
-    public abstract function the_sidebar_content();
+    public function the_sidebar_content()
+    {
+
+        if (!isset($args['hide_playlists']) || $args['hide_playlists'] == false) {
+            $playlists_args = array(
+                'title' => 'פלייליסט',
+                'selector' => 'related_playlists',
+                'content_classes' => 'related-playlists',
+                'template_args_func' => function (Foody_Playlist $item) {
+                    return array(
+                        'count' => $item->num_of_recipes
+                    );
+                }
+            );
+
+            $playlists = $this->get_related_content_by_categories('foody_playlist');
+
+            $this->related_content($playlists_args, $playlists);
+        }
+
+        if (!isset($args['hide_recipes']) || $args['hide_recipes'] == false) {
+            $recipes = $this->get_related_content_by_categories('foody_recipe');
+
+            $recipes_args = array(
+                'title' => 'מתכונים נוספים',
+                'selector' => 'related_recipes',
+                'content_classes' => 'related-recipes',
+                'template_args_func' => function ($recipe) {
+                    $foody_recipe = $recipe;
+                    if (!$foody_recipe instanceof Foody_Recipe) {
+
+                        $foody_recipe = new Foody_Recipe($recipe);
+                    }
+                    return array(
+                        'duration' => $foody_recipe->getDuration()
+                    );
+                }
+            );
+
+            $this->related_content($recipes_args, $recipes);
+        }
+
+    }
+
+    private function related_content($related_content_args, $posts = null)
+    {
+        /** @var WP_Post[] $playlists */
+        $related_content = posts_to_array($related_content_args['selector'], $this->post->ID);
+        if ($posts != null) {
+            $related_content = $posts;
+        }
+
+        if (!empty($related_content)) {
+            $template_args = array(
+                'items' => array(),
+                'type' => get_post_type($related_content[0]),
+                'content_classes' => $related_content_args['content_classes'],
+                'title' => $related_content_args['title']
+            );
+
+
+            $template_args['items'] = array_map(function (WP_Post $item) use ($related_content_args) {
+
+                $default_template_args = array(
+                    'title' => $item->post_title,
+                    'id' => $item->ID,
+                    'image' => get_the_post_thumbnail_url($item, 'list-item'),
+                    'author' => array(
+                        'name' => get_the_author_meta('display_name', $item->post_author),
+                        'link' => get_author_posts_url($item->post_author)
+                    ),
+                    'view_count' => view_count_display(foody_get_post_views($item->ID))
+                );
+
+                $foody_item = self::create($item);
+                $default_template_args = array_merge($default_template_args, call_user_func($related_content_args['template_args_func'], $foody_item));
+
+
+                return $default_template_args;
+
+            }, $related_content);
+
+
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/content-related-content.php',
+                $template_args
+            );
+        }
+
+    }
+
+    private function get_related_content_by_categories($post_type)
+    {
+        $posts = [];
+        $categories = wp_get_post_categories($this->post->ID);
+        if (!is_wp_error($categories)) {
+
+            $query = new WP_Query([
+                'post_type' => $post_type,
+                'category__in' => $categories,
+                'posts_per_page' => 3,
+                'post__not_in' => [$this->post->ID],
+                'orderby' => 'rand',
+            ]);
+
+            $posts = $query->get_posts();
+        }
+
+        return $posts;
+    }
+
+    public function the_mobile_sidebar_content()
+    {
+        $playlists_args = array(
+            'title' => 'מתכונים נוספים',
+            'selector' => 'related_playlists',
+            'content_classes' => 'related-playlists',
+            'template_args_func' => function (Foody_Playlist $item) {
+                return array(
+                    'count' => $item->num_of_recipes
+                );
+            }
+        );
+
+        $this->related_content($playlists_args);
+
+        $recipes_args = array(
+            'title' => '',
+            'selector' => 'related_recipes',
+            'content_classes' => 'related-recipes',
+            'template_args_func' => function ($recipe) {
+                $foody_recipe = new Foody_Recipe($recipe);
+                return array(
+                    'duration' => $foody_recipe->getDuration()
+                );
+            }
+        );
+
+        $this->related_content($recipes_args);
+
+    }
 
     public abstract function the_details();
 
     function the_content($page)
     {
-//        get_template_part('template-parts/single', get_post_type());
         $type = get_post_type();
+
+
+        $template = "/template-parts/single-$type.php";
+
         foody_get_template_part(
-            get_template_directory() . "/template-parts/single-$type.php",
+            get_template_directory() . $template,
             [
                 'page' => $page
             ]
@@ -294,4 +440,9 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     {
         return get_author_posts_url($this->post->post_author);
     }
+
+    public function has_rating(){
+        return false;
+    }
+
 }

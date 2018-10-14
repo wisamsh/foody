@@ -118,8 +118,8 @@ function foody_remove_page_template()
 
     $custom_content_post_types = array(
         'foody_recipe',
-        'foody_article',
-        'foody_playlist'
+        'foody_playlist',
+        'post'
     );
 
     $default_template = 'page-templates/content-with-sidebar.php';

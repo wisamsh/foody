@@ -57,23 +57,27 @@ $foody_page = $template_args['page'];
                     'foody_page' => $foody_page,
                     'show_favorite' => true
                 );
-                $rating_args = [
-                    'value' => get_post_rating($foody_page->id),
-                    'disabled' => true,
-                    'hide_title' => true,
-                    'size' => 'data-size="xs"',
-                    'show_value'=>true,
-                    'return' => true
-                ];
 
-                $rating = foody_get_template_part(
-                    get_template_directory() . '/template-parts/content-rating.php',
-                    $rating_args
-                );
+                if ($foody_page->has_rating()) {
+                    $rating_args = [
+                        'value' => get_post_rating($foody_page->id),
+                        'disabled' => true,
+                        'hide_title' => true,
+                        'size' => 'data-size="xs"',
+                        'show_value' => true,
+                        'return' => true
+                    ];
 
-                $args['dynamic'] = [
-                    $rating
-                ];
+                    $rating = foody_get_template_part(
+                        get_template_directory() . '/template-parts/content-rating.php',
+                        $rating_args
+                    );
+
+                    $args['dynamic'] = [
+                        $rating
+                    ];
+                }
+
                 foody_get_template_part(get_template_directory() . '/template-parts/content-post-bullets.php', $args);
             } else {
                 foody_get_template_part(
