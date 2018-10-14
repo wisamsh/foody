@@ -22,7 +22,7 @@ class Foody_Registration
     public function __construct()
     {
         add_action('login_form_register', array($this, 'do_register_user'));
-        add_action('login_form_login', array($this, 'redirect_to_custom_login'));
+//        add_action('login_form_login', array($this, 'redirect_to_custom_login'));
     }
 
     private function register_user($user_data)
