@@ -6,7 +6,7 @@
  * Date: 5/14/18
  * Time: 4:17 PM
  */
-class Header
+class Foody_Header
 {
 
 
@@ -16,7 +16,7 @@ class Header
         Foody_Social::socials_bar();
     }
 
-    public function facebook_init()
+    public static function facebook_init()
     {
         ?>
 

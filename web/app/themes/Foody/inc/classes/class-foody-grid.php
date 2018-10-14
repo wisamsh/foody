@@ -6,7 +6,7 @@
  * Date: 5/16/18
  * Time: 8:41 PM
  */
-class RecipesGrid
+class FoodyGrid
 {
 
     const NONE = 1000;

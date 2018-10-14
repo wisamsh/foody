@@ -10,7 +10,8 @@
 * Callback function to filter the MCE settings
 */
 
-function foody_mce_before_init_insert_formats( $init_array ) {
+function foody_mce_before_init_insert_formats($init_array)
+{
 
 // Define the style_formats array
 
@@ -32,10 +33,29 @@ function foody_mce_before_init_insert_formats( $init_array ) {
         )
     );
     // Insert the array, JSON ENCODED, into 'style_formats'
-    $init_array['formats'] = json_encode( $style_formats );
+    $init_array['formats'] = json_encode($style_formats);
 
     return $init_array;
 
 }
+
 // Attach callback to 'tiny_mce_before_init'
-add_filter( 'tiny_mce_before_init', 'foody_mce_before_init_insert_formats' );
+add_filter('tiny_mce_before_init', 'foody_mce_before_init_insert_formats');
+
+function custom_meta_box_markup()
+{
+    ?>
+    <h2 style="font-size: x-large;">
+
+        <?php echo get_the_ID() ?>
+
+    </h2>
+    <?php
+}
+
+function add_custom_meta_box()
+{
+    add_meta_box("recipe-id", "מזהה מתכון", "custom_meta_box_markup", "foody_recipe", "side", "high", null);
+}
+
+add_action("add_meta_boxes", "add_custom_meta_box");

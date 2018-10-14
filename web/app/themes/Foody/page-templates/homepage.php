@@ -43,17 +43,10 @@ $homepage = new HomePage();
                 }
                 ?>
 
+
                 <section class="content-container col-sm-9 col-12">
 
-                    <article id="feed-recipes-grid" class="feed row gutter-3 recipes-grid">
-                        <?php $homepage->feed() ?>
-                    </article>
-                    <div class="show-more">
-                        <img src="<?php echo $GLOBALS['images_dir'] . 'bite.png' ?>" alt="">
-                        <h4>
-                            <?php echo __('לעוד מתכונים', 'foody') ?>
-                        </h4>
-                    </div>
+                    <?php $homepage->feed(); ?>
 
                 </section>
 

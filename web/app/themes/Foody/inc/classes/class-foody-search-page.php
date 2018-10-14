@@ -35,7 +35,6 @@ class Foody_SearchPage implements Foody_ContentWithSidebar
 
     function the_content($page)
     {
-
       foody_get_template_part(get_template_directory().'/template-parts/search-results.php');
     }
 

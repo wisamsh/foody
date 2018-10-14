@@ -66,3 +66,38 @@ add_filter('template_include', 'default_page_template', 10);
 
 add_filter('show_admin_bar', '__return_false');
 
+
+/*
+ * Custom filter - Foody theme
+ * */
+
+
+/**
+ * Hooks into wp_head action hook.
+ * prints global js variables.
+ * usage: add_filter('foody_js_globals',function($vars))
+ * where vars is an array.
+ */
+function foody_js_globals()
+{
+    if (!is_admin()) {
+        // Hookable
+        $vars = apply_filters('foody_js_globals', []);
+        $vars['isMobile'] = wp_is_mobile();
+        $vars['ajax'] = admin_url('admin-ajax.php');
+        $vars['loggedIn'] = is_user_logged_in() ? 'true' : 'false';
+        $vars['imagesUri'] = $GLOBALS['images_dir'];
+
+        $js = wp_json_encode($vars);
+
+        ?>
+        <script>
+            foodyGlobals = <?php echo $js?>;
+        </script>
+
+        <?php
+    }
+}
+
+add_action('wp_head', 'foody_js_globals', -10000);
+

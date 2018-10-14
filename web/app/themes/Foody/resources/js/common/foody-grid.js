@@ -15,6 +15,7 @@ module.exports = (function () {
         this.$parent = this.$grid.parent();
         this.$parent.css('position', 'relative');
         this.foodyLoader = new FoodyLoader({container: this.$parent});
+        this.$loadMore = $('.show-more', this.$parent);
     };
 
     FoodyGrid.prototype.getItems = function () {
@@ -29,18 +30,32 @@ module.exports = (function () {
     FoodyGrid.prototype.loading = function () {
         this.$grid.css('opacity', '0.3');
         this.foodyLoader.attach();
+        this.$loadMore.addClass('disabled');
     };
 
 
     FoodyGrid.prototype.stopLoading = function () {
         this.$grid.css('opacity', '1');
         this.foodyLoader.detach();
+        this.$loadMore.removeClass('disabled');
     };
 
 
     FoodyGrid.prototype.refresh = function (items) {
         this.$grid.empty();
         this.$grid.append(items);
+    };
+
+    FoodyGrid.prototype.append = function (data) {
+        let items = data.items;
+        this.$grid.append(items);
+        if (!data.next) {
+            this.$loadMore.hide();
+        }
+    };
+
+    FoodyGrid.prototype.onLoadMore = function (callback) {
+        this.$loadMore.click(callback);
     };
 
 

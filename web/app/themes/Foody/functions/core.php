@@ -1653,3 +1653,17 @@ function foody_el_classes($classes)
 
     echo $classes;
 }
+
+function foody_validate_post_required($vars)
+{
+    $valid = true;
+
+    foreach ($vars as $var) {
+        if (!isset($_POST[$var])) {
+            $valid = false;
+            break;
+        }
+    }
+
+    return $valid;
+}

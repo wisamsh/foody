@@ -3,11 +3,26 @@
  */
 
 let FoodySearchFilter = require('../common/foody-search-filter');
+let FoodyContentPaging = require('../common/page-content-paging');
 
 jQuery(document).ready(($) => {
 
-    let filter = new FoodySearchFilter({selector: '.homepage #accordion-foody-filter', grid: '#feed-recipes-grid', cols: 3});
+    // sidebar filter
+    let filter = new FoodySearchFilter({
+        selector: '.homepage #accordion-foody-filter',
+        grid: '#homepage-feed',
+        cols: 3
+    });
 
+    // search and filter pager
+    let pager = new FoodyContentPaging({
+        context: 'homepage',
+        contextArgs: [],
+        filter: filter
+    });
+
+
+    // mobile filter handlers
     if (foodyGlobals.isMobile) {
 
         let $mobileFilterBtn = $('.filter-mobile');

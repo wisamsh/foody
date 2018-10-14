@@ -23,7 +23,7 @@ class Foody_Profile
     {
         $this->sidebar_filter = new SidebarFilter();
         $this->foody_user = new Foody_User();
-        $this->grid = new RecipesGrid();
+        $this->grid = new FoodyGrid();
     }
 
     /**

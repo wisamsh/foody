@@ -15,7 +15,7 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
     public function __construct(WP_Post $post = null)
     {
         parent::__construct($post);
-        $this->grid = new RecipesGrid();
+        $this->grid = new FoodyGrid();
     }
 
     private function get_channel_content($selector, $class)
@@ -34,16 +34,34 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
 
     private function get_posts_grid($posts, $type)
     {
-        if ($this->debug) {
-            for ($i = 0; $i < 6; $i++)
-                $posts[] = $posts[0];
-        }
+//        if ($this->debug) {
+//            for ($i = 0; $i < 6; $i++)
+//                $posts[] = $posts[0];
+//        }
+//
+//        $grid_content = '<section class="channel-' . $type . '-grid">';
+//        $grid_content .= $this->grid->loop($posts, 3, false, $type);
+//        $grid_content .= '</section>';
 
-        $grid_content = '<section class="channel-' . $type . '-grid">';
-        $grid_content .= $this->grid->loop($posts, 3, false, $type);
-        $grid_content .= '</section>';
 
-        return $grid_content;
+        $id = "channel-$type-feed";
+
+        $grid = [
+            'id' => $id,
+            'cols' => 3,
+            'posts' => $posts,
+            'classes' => [
+                "channel-$type-grid"
+            ],
+            'return' => true
+        ];
+
+        return foody_get_template_part(
+            get_template_directory() . '/template-parts/common/foody-grid.php',
+            $grid
+        );
+
+//        return $grid_content;
     }
 
     public function the_featured_content()

@@ -5,7 +5,7 @@
  * Date: 9/26/18
  * Time: 1:29 PM
  */
-$grid = new RecipesGrid();
+$grid = new FoodyGrid();
 ?>
 
 <header class="search-results-header">
@@ -18,26 +18,26 @@ $grid = new RecipesGrid();
 
             <?php if (have_posts()): ?>
 
-            <div class="sort col">
-                <?php
-                $select_args = array(
-                    'id' => 'sort-search',
-                    'placeholder' => 'סדר על פי',
-                    'options' => array(
-                        array(
-                            'value' => 1,
-                            'label' => 'א-ת'
-                        ),
-                        array(
-                            'value' => -1,
-                            'label' => 'ת-א'
+                <div class="sort col">
+                    <?php
+                    $select_args = array(
+                        'id' => 'sort-search',
+                        'placeholder' => 'סדר על פי',
+                        'options' => array(
+                            array(
+                                'value' => 1,
+                                'label' => 'א-ת'
+                            ),
+                            array(
+                                'value' => -1,
+                                'label' => 'ת-א'
+                            )
                         )
-                    )
-                );
+                    );
 
-                foody_get_template_part(get_template_directory() . '/template-parts/common/foody-select.php', $select_args);
-                ?>
-            </div>
+                    foody_get_template_part(get_template_directory() . '/template-parts/common/foody-select.php', $select_args);
+                    ?>
+                </div>
 
             <?php endif; ?>
 
@@ -46,25 +46,34 @@ $grid = new RecipesGrid();
 </header>
 <div class="container-fluid search-results">
 
-
-        <div class="row gutter-3">
-            <?php if (have_posts()): ?>
+    <div class="row gutter-3">
+        <?php if (have_posts()): ?>
             <?php
 
-            while (have_posts()) {
-                the_post();
-                global $post;
-                $foody_post = new Foody_Recipe(($post));
-                $grid->draw($foody_post, 3);
-            }
+            global $wp_query;
+
+            $grid = [
+                'id' => 'search-results',
+                'cols' => 3,
+                'posts' => array_map('Foody_Post::create', $wp_query->posts)
+            ];
+
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/common/foody-grid.php',
+                $grid
+            );
+
+//            while (have_posts()) {
+//                the_post();
+//                global $post;
+//                $foody_post = new Foody_Recipe(($post));
+//                $grid->draw($foody_post, 3);
+//            }
             ?>
 
-            <?php else: foody_get_template_part(get_template_directory() . '/template-parts/no-results.php')?>
-            <?php endif; ?>
-        </div>
-
-
-
+        <?php else: foody_get_template_part(get_template_directory() . '/template-parts/no-results.php') ?>
+        <?php endif; ?>
+    </div>
 
 
 </div>

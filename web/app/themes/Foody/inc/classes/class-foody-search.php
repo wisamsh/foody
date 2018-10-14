@@ -43,7 +43,7 @@ class Foody_Search
         $this->query_builder = new Foody_QueryBuilder();
     }
 
-    public function query($args)
+    public function query($args,$wp_args = [])
     {
         /*
          * args:
@@ -59,15 +59,27 @@ class Foody_Search
         * }
         * */
 
-        $this->types = group_by($args['types'], 'type');
+        $query = $this->build_query($args,$wp_args);
+
+        $this->before_query();
+
+        $posts = $query->get_posts();
+
+        $this->after_query();
+
+        return $posts;
+    }
 
 
-        // TODO check generic implementation
-        foreach ($this->types as $type => $values) {
-            $this->maybe_add_to_query($type);
-        }
-
-//        if (isset($this->types['ingredient'])) {
+    /**
+     * Get wp query
+     * @param array $args
+     * @param array $wp_args
+     * @return WP_Query
+     */
+    public function build_query($args, $wp_args = [])
+    {
+        //        if (isset($this->types['ingredient'])) {
 //            $ingredients = $this->types['ingredient'];
 //            $this->query_builder
 //                ->ingredients($ingredients);
@@ -97,6 +109,12 @@ class Foody_Search
 //            $this->query_builder
 //                ->tags($tags);
 //        }
+        $this->types = group_by($args['types'], 'type');
+
+        // TODO check generic implementation
+        foreach ($this->types as $type => $values) {
+            $this->maybe_add_to_query($type);
+        }
 
 
         if (isset($args['context'])) {
@@ -107,23 +125,28 @@ class Foody_Search
         }
 
         $query = $this->query_builder
-            ->build();
+            ->build($wp_args);
 
+
+        return $query;
+    }
+
+    public function before_query()
+    {
         // add filter to manage meta_key wildcard placeholders
         if ($this->query_builder->has_wildcard_key) {
             add_filter('posts_where', array($this, 'replace_wildcards_keys'), 10, 1);
         }
+    }
 
 
-        $posts = $query->get_posts();
-
+    public function after_query()
+    {
         // remove filter to prevent query
         // corruption in other queries
         if ($this->query_builder->has_wildcard_key) {
             remove_filter('posts_where', array($this, 'replace_wildcards_keys'));
         }
-
-        return $posts;
 
     }
 
@@ -440,12 +463,23 @@ class Foody_QueryBuilder
      *
      * @return WP_Query
      */
-    public function build()
+    public function build($wp_args = [])
     {
 
+        $args = $this->get_args();
+
+        $args = array_merge_recursive($args, $wp_args);
+
+        $query = new WP_Query($args);
+
+        return $query;
+    }
+
+    public function get_args()
+    {
         $args = [
             'has_wildcard_key' => $this->has_wildcard_key,
-            'post_type' => ['foody_recipe','foody_playlist'],
+            'post_type' => ['foody_recipe', 'foody_playlist'],
             'meta_query' => $this->meta_query_array,
             'post__not_in' => $this->post__not_in
         ];
@@ -492,9 +526,7 @@ class Foody_QueryBuilder
             $args['post__in'] = $this->post__in;
         }
 
-        $query = new WP_Query($args);
-
-        return $query;
+        return $args;
     }
 
 

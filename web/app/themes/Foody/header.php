@@ -8,7 +8,7 @@
  *
  * @package Foody
  */
-$header = new Header();
+$header = new Foody_Header();
 $channels = new Foody_Channels_Menu();
 $user = new Foody_User();
 
@@ -20,23 +20,7 @@ $user = new Foody_User();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="profile" href="http://gmpg.org/xfn/11">
 
-    <?php if (!is_admin()): ?>
-        <script>
-            imagesUri = '<?php echo $GLOBALS['images_dir'] ?>';
-            foodyGlobals = {
-                isMobile: '<?php echo wp_is_mobile() ? true : false ?>',
-                ajax: '<?php echo admin_url('admin-ajax.php')?>',
-                loggedIn:<?php echo(is_user_logged_in() ? 'true' : 'false'); ?>
-            };
-        </script>
-    <?php endif; ?>
-
     <?php wp_head(); ?>
-
-
-    <?php
-    $header->facebook_init();
-    ?>
 
 </head>
 

@@ -13,7 +13,6 @@ module.exports = (function () {
         this.init(settings);
     }
 
-
     FoodySearchFilter.prototype.init = function (settings) {
         this.settings = settings;
         this.grid = new FoodyGrid({selector: settings.grid});
@@ -164,8 +163,6 @@ module.exports = (function () {
                 }
             }
         };
-
-        console.log('query');
 
         if (this.settings.onQuery && typeof  this.settings.onQuery == 'function') {
             this.settings.onQuery();

@@ -76,7 +76,7 @@ function foody_ajax_filter()
 
     $posts = array_map('Foody_Post::create',$posts);
 
-    $grid = new RecipesGrid();
+    $grid = new FoodyGrid();
 
     // TODO pass cols
     echo $grid->loop($posts,$options['cols'],false);

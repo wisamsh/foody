@@ -21,7 +21,7 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
     public function __construct()
     {
         $this->author = get_user_by('slug', get_query_var('author_name'));
-        $this->grid = new RecipesGrid();
+        $this->grid = new FoodyGrid();
     }
 
 
@@ -114,16 +114,34 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
     private function get_posts_grid($posts, $type)
     {
-        if ($this->debug && !empty($posts)) {
-            for ($i = 0; $i < 6; $i++)
-                $posts[] = $posts[0];
-        }
+//        if ($this->debug && !empty($posts)) {
+//            for ($i = 0; $i < 6; $i++)
+//                $posts[] = $posts[0];
+//        }
+//
+//        $grid_content = '<section class="author-' . $type . '-grid">';
+//        $grid_content .= $this->grid->loop($posts, 3, false, $type);
+//        $grid_content .= '</section>';
 
-        $grid_content = '<section class="author-' . $type . '-grid">';
-        $grid_content .= $this->grid->loop($posts, 3, false, $type);
-        $grid_content .= '</section>';
 
-        return $grid_content;
+        $id = "author-$type-feed";
+
+        $grid = [
+            'id' => $id,
+            'cols' => 3,
+            'posts' => $posts,
+            'classes' => [
+                "author-$type-grid"
+            ],
+            'return' => true
+        ];
+
+        return foody_get_template_part(
+            get_template_directory() . '/template-parts/common/foody-grid.php',
+            $grid
+        );
+
+//        return $grid_content;
     }
 
     // Foody_Topic

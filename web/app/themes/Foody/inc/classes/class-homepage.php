@@ -17,6 +17,7 @@ class HomePage
 
     private $sidebar_id = 'foody-sidebar';
     private $mobile_sidebar_id = 'foody-sidebar-mobile';
+    private $foody_query;
 
     /**
      * HomePage constructor.
@@ -24,8 +25,9 @@ class HomePage
     public function __construct()
     {
         $this->team = new FoodyTeam();
-        $this->grid = new RecipesGrid();
+        $this->grid = new FoodyGrid();
         $this->sidebar_filter = new SidebarFilter();
+        $this->foody_query = Foody_Query::get_instance();
     }
 
     public function featured()
@@ -72,11 +74,26 @@ class HomePage
 
     public function feed()
     {
-        $posts = $this->feed_query();
+        $query = new WP_Query();
 
-        foreach ($posts as $post) {
-            $this->grid->draw($post, 3);
-        }
+        $args = $this->foody_query->get_query('homepage',[],true);
+
+        $posts = $query->query($args);
+
+        $posts = array_map('Foody_Post::create', $posts);
+
+
+        $grid = [
+            'id' => 'homepage-feed',
+            'cols' => 3,
+            'posts' => $posts,
+            'more' => $this->foody_query->has_more_posts($query)
+        ];
+
+        foody_get_template_part(
+            get_template_directory() . '/template-parts/common/foody-grid.php',
+            $grid
+        );
 
     }
 
@@ -85,21 +102,15 @@ class HomePage
         dynamic_sidebar('foody-sidebar');
     }
 
-    private function feed_query()
+    public function feed_query()
     {
-        // TODO handle post types
         $query = new WP_Query();
 
-        $args = array(
-            'post_type' => array('foody_recipe'),
-            'number' => get_option('posts_per_page')
-        );
+        $args = $this->foody_query->get_query('homepage',[],true);
 
         $posts = $query->query($args);
 
-        $posts = array_map(function ($post) {
-            return new Foody_Recipe($post);
-        }, $posts);
+        $posts = array_map('Foody_Post::create', $posts);
 
 
         // debug a lot of feed items
@@ -109,7 +120,6 @@ class HomePage
 
         return $posts;
     }
-
 
     public function sidebar()
     {
@@ -126,7 +136,6 @@ class HomePage
         dynamic_sidebar($sidebar_name);
         echo "</div></aside>";
     }
-
 
     private function get_featured_categories()
     {

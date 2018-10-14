@@ -18,7 +18,7 @@ class Foody_Category implements Foody_ContentWithSidebar
 
 
     /**
-     * @var RecipesGrid
+     * @var FoodyGrid
      */
     private $grid;
 
@@ -36,7 +36,7 @@ class Foody_Category implements Foody_ContentWithSidebar
 
         $this->link = get_term_link($id);
 
-        $this->grid = new RecipesGrid();
+        $this->grid = new FoodyGrid();
     }
 
 
@@ -101,11 +101,8 @@ class Foody_Category implements Foody_ContentWithSidebar
     function feed()
     {
 
-        $args = [
-            'post_type' => ['foody_recipe', 'foody_playlist', 'post'],
-            'post_status' => 'publish',
-            'cat' => $this->id
-        ];
+        $foody_query = Foody_Query::get_instance();
+        $args = $foody_query->get_query('category', [$this->id], true);
 
         $query = new WP_Query($args);
 
@@ -113,7 +110,17 @@ class Foody_Category implements Foody_ContentWithSidebar
 
         $posts = array_map('post_to_foody_post', $posts);
 
-        $this->grid->loop($posts, 3);
+        $grid = [
+            'id' => 'category-feed',
+            'cols' => 3,
+            'posts' => $posts,
+            'more' => $foody_query->has_more_posts($query)
+        ];
+
+        foody_get_template_part(
+            get_template_directory() . '/template-parts/common/foody-grid.php',
+            $grid
+        );
 
 
     }
@@ -128,7 +135,7 @@ class Foody_Category implements Foody_ContentWithSidebar
 
     function the_sidebar_content()
     {
-       dynamic_sidebar('foody-sidebar');
+        dynamic_sidebar('foody-sidebar');
     }
 
     function the_details()
