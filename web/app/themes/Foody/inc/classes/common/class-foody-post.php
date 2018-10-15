@@ -71,7 +71,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $user_avatars = get_the_author_meta('wp_user_avatars', $post_author_id);
 
             if (is_null($user_avatars) || empty($user_avatars) || !isset($user_avatars['90'])) {
-                $this->author_image = get_avatar_url(get_the_author_meta('ID'), ['size' => 96]);
+                $this->author_image = get_avatar_url($this->post->post_author, ['size' => 96]);
             } else {
                 $this->author_image = $user_avatars['90'];
             }
