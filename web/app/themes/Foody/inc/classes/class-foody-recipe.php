@@ -291,7 +291,7 @@ class Foody_Recipe extends Foody_Post
 
     public function the_sidebar_content($args = array())
     {
-        parent::the_sidebar_content();
+        //parent::the_sidebar_content();
     }
 
     public function preview()
@@ -375,13 +375,84 @@ class Foody_Recipe extends Foody_Post
     {
         $time = $time_field['time'];
         $unit = trim($time_field['time_unit']);
-        $singular = preg_replace('/s$/', '', $unit);
-        if (mb_strtolower($unit) == 'minutes') {
+
+        $converted_time = $this->unit_to_minutes($unit, $time);
+        $times = $this->convert_to_hours_minutes($converted_time);
+
+        $recipe_time = '';
+
+        if (!empty($times['days'])) {
+            $unit = 'days';
+            $singular = 'day';
+            $recipe_time = sprintf(_n("%s $singular", "%s $unit", trim($times['days'])), number_format_i18n(intval($times['days'])));
+        }
+
+        if (!empty($times['hours'])) {
+            $unit = 'hours';
+            $singular = 'hour';
+
+            if (!empty($recipe_time)) {
+                $recipe_time .= ', ';
+            }
+
+            $recipe_time .= sprintf(_n("%s $singular", "%s $unit", trim($times['hours'])), number_format_i18n(intval($times['hours'])));
+        }
+
+        if (!empty($times['minutes'])) {
             $unit = 'דקות';
             $singular = 'דקה';
+            $minutes_time = sprintf(_n("%s $singular", "%s $unit", trim($times['minutes'])), number_format_i18n(intval($times['minutes'])));
+            if (!empty($recipe_time)) {
+                $recipe_time .= __(' ו-');
+            }
+            $recipe_time .= $minutes_time;
         }
-        $recipe_time = sprintf(_n("%s $singular", "%s $unit", trim($time)), number_format_i18n(intval($time)));
+
         return $recipe_time;
+    }
+
+    private function unit_to_minutes($unit, $time)
+    {
+        $new_time = $time;
+        if (mb_strtolower($unit) == 'hours') {
+            $new_time = $new_time * 60;
+        } elseif (mb_strtolower($unit) == 'days') {
+            $new_time = $new_time * 60 * 24;
+        }
+
+        return $new_time;
+    }
+
+    /**
+     * @param int $time time in minutes
+     * @return array|string
+     */
+    private function convert_to_hours_minutes($time)
+    {
+        if (!is_numeric($time)) {
+            return '';
+        }
+
+        $time = intval($time);
+        if ($time < 1) {
+            return '';
+        }
+        $hours = floor($time / 60);
+        $minutes = (int)($time % 60);
+
+
+        $days = 0;
+        if ($hours > 24) {
+            $days = (int)($hours / 24);
+            $hours = (int)($hours % 24);
+        }
+
+
+        return [
+            'hours' => $hours,
+            'minutes' => $minutes,
+            'days' => $days
+        ];
     }
 
     private function init_ingredients()
