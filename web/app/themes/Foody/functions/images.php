@@ -25,8 +25,8 @@ add_theme_support('post-thumbnails');
 
 $sizes = [
     [
-        'width' => 1099,
-        'height' => 524,
+        'width' => 1100,
+        'height' => 733.33,
         'name' => 'foody-main'
     ],
     [
