@@ -132,7 +132,7 @@
                 <div class="md-checkbox col-12">
                     <input id="check-marketing" type="checkbox" checked name="marketing">
                     <label for="check-marketing">
-                        <?php echo __('הנני מעוניין בקבלת תוכן מדהים למייל.') ?>
+                        <?php echo __('הריני לאשר בזה קבלת דואר מאתר Foody הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר') ?>
                     </label>
                 </div>
                 <!--suppress JSUnusedLocalSymbols -->

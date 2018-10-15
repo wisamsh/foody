@@ -144,11 +144,11 @@ $md-checkbox-label-padding: .75em;
   label:not(.error) {
     font-family: $font__assistant;
     cursor: pointer;
-    display: inline;
+    //display: inline;
     line-height: $md-checkbox-size;
     vertical-align: top;
     clear: both;
-
+    display: table-cell;
 
     &:before, &:after {
       content: "";

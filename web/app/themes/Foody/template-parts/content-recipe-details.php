@@ -23,7 +23,24 @@ $foody_page = $template_args['page'];
                 <h1 class="col p-0">
                     <?php echo $foody_page->getTitle() ?>
                 </h1>
+                <section class="d-block d-sm-none mobile-rating col-12">
+                    <?php
+                    $rating_args = [
+                        'value' => get_post_rating($foody_page->id),
+                        'disabled' => true,
+                        'hide_title' => true,
+                        'size' => 'data-size="xs"',
+                        'show_value' => true
+                    ];
 
+                    foody_get_template_part(
+                        get_template_directory() . '/template-parts/content-rating.php',
+                        $rating_args
+                    );
+
+
+                    ?>
+                </section>
                 <section class="d-none d-sm-block">
                     <?php
                     foody_get_template_part(

@@ -6,6 +6,8 @@
  * Time: 11:51 AM
  */
 
+register_setting('discussion','hid_per_page');
+
 
 $page_name = __('הגדרות חיפוש - פודי', 'foody');
 

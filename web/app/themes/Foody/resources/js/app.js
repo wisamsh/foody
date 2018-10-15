@@ -17,7 +17,6 @@ require('bootstrap-star-rating');
 require('./plugins');
 
 
-
 require('slick-carousel');
 require('../sass/app.scss');
 window._ = require('underscore');
@@ -60,6 +59,7 @@ require('./channel');
 require('./register');
 require('./login');
 require('./search');
+
 
 jQuery(document).ready(function ($) {
 
