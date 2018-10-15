@@ -16,7 +16,19 @@ $recipe = $template_args['post'];
 <div class="recipe-item feed-item">
     <a href="<?php echo $recipe->link ?>">
         <div class="image-container main-image-container">
-            <img class="recipe-item-image feed-item-image" src="<?php echo $recipe->getImage() ?>" alt="">
+            <img class="recipe-item-image feed-item-image" src="<?php echo $recipe->getImage('list-item') ?>" alt="">
+
+            <?php if (!empty($label = $recipe->get_label())): ?>
+
+                <div class="recipe-label">
+<!--                    <img src="--><?php //echo $GLOBALS['images_dir']. 'label.svg' ?><!--" alt="">-->
+                    <span>
+
+                    <?php echo $label ?>
+                    </span>
+                </div>
+
+            <?php endif; ?>
             <?php if ($recipe->video != null): ?>
                 <div class="duration">
                     <i class="icon icon-timeplay">

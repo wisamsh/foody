@@ -14,7 +14,7 @@ window.calculator = function (selector) {
 
     let originalNumberOfDishes = parseInt($numberOfDishes.data('amount'));
 
-    $numberOfDishes.on('change', function () {
+    $numberOfDishes.on('change keyup paste', function () {
 
         let val = $(this).val();
 

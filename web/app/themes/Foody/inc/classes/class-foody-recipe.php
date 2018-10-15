@@ -434,7 +434,8 @@ class Foody_Recipe extends Foody_Post
 
                             $amounts[] = [
                                 'amount' => $amount,
-                                'unit' => $unit_name
+                                'unit' => $unit_name,
+                                'unit_tax' => $unit
                             ];
 
                         endwhile;
@@ -504,5 +505,16 @@ class Foody_Recipe extends Foody_Post
         if ($this->has_video) {
             $classes[] = 'video-featured-content';
         }
+    }
+
+    public function get_label()
+    {
+        $label = get_field('recipe_label', $this->post->ID);
+
+        if (empty($label)) {
+            $label = '';
+        }
+
+        return $label;
     }
 }

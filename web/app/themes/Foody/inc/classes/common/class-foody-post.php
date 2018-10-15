@@ -58,7 +58,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             if (isset($wp_session['favorites']) && is_array($wp_session['favorites']) && in_array($this->id, $wp_session['favorites'])) {
                 $this->favorite = true;
             }
-            $this->image = get_the_post_thumbnail_url($this->id, 'foody-main');
+            $this->image = get_the_post_thumbnail_url($this->id, 'list-item');
             $this->posted_on = foody_posted_on(false, $post);
             $this->description = !empty($post->post_excerpt) ? get_the_excerpt($this->id) : null;
             $this->description_mobile = get_field('mobile_caption', $this->id);

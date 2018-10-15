@@ -30,8 +30,8 @@ $sizes = [
         'name' => 'foody-main'
     ],
     [
-        'width' => 298,
-        'height' => 138,
+        'width' => 355,
+        'height' => 236.666666666666667,
         'name' => 'list-item'
     ],
 ];
