@@ -148,7 +148,6 @@ $md-checkbox-label-padding: .75em;
     line-height: $md-checkbox-size;
     vertical-align: top;
     clear: both;
-    display: table-cell;
 
     &:before, &:after {
       content: "";

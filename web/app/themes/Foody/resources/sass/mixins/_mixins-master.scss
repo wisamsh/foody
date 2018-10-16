@@ -83,11 +83,15 @@ BREAKPOINTS
       @content;
     }
   } @else if $point == laptop {
-    @media (min-width: 64em) {
+    @media (min-width: 64em) and (max-width: 1024px) {
       @content;
     }
   } @else if $point == tablet {
-    @media (min-width: 768px) {
+    @media (min-width: 768px) and(max-width: 1024px) {
+      @content;
+    }
+  } @else if $point == tablet-landscape {
+    @media (min-width: 1024px) and (max-width: 1025px) {
       @content;
     }
   } @else if $point == phablet {

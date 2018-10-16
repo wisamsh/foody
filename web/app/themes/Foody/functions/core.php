@@ -1667,3 +1667,23 @@ function foody_validate_post_required($vars)
 
     return $valid;
 }
+
+function foody_is_tablet()
+{
+    $tablet_browser = false;
+
+    if (preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
+        $tablet_browser = true;
+    }
+
+
+    if (strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'opera mini') > 0) {
+        //Check for tablets on opera mini alternative headers
+        $stock_ua = strtolower(isset($_SERVER['HTTP_X_OPERAMINI_PHONE_UA']) ? $_SERVER['HTTP_X_OPERAMINI_PHONE_UA'] : (isset($_SERVER['HTTP_DEVICE_STOCK_UA']) ? $_SERVER['HTTP_DEVICE_STOCK_UA'] : ''));
+        if (preg_match('/(tablet|ipad|playbook)|(android(?!.*mobile))/i', $stock_ua)) {
+            $tablet_browser = true;
+        }
+    }
+
+    return $tablet_browser;
+}

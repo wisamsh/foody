@@ -67,10 +67,12 @@ class foody_Categories_List_Widget extends Foody_Widget
             if ($count == $num_of_categories) {
                 break;
             }
+
+            $foody_category = new Foody_Category($category->term_id);
             foody_get_template_part(get_template_directory() . '/template-parts/content-category-listing.php', array(
                 'name' => $category->name,
-                'image' => get_field('image', $category->taxonomy . '_' . $category->term_id),
-                'link' => get_term_link($category->term_id)
+                'image' => $foody_category->get_image(),
+                'link' => $foody_category->link
             ));
 
             $count++;

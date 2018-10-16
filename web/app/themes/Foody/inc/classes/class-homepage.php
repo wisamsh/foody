@@ -126,11 +126,12 @@ class HomePage
         echo "<aside class=\"sidebar col pl-0\">";
 
         $sidebar_name = $this->sidebar_id;
-        if (wp_is_mobile()) {
+        if (wp_is_mobile() && !foody_is_tablet()) {
             $sidebar_name = $this->mobile_sidebar_id;
-        } else {
-            echo "<input name=\"search\" type=\"text\" class=\"search\" title=\"search\" placeholder=\"חיפוש מתכון…\">";
         }
+//        else {
+            echo "<input name=\"search\" type=\"text\" class=\"search d-none d-lg-block\" title=\"search\" placeholder=\"חיפוש מתכון…\">";
+//        }
 
         echo "<div class=\"sidebar-content\">";
         dynamic_sidebar($sidebar_name);

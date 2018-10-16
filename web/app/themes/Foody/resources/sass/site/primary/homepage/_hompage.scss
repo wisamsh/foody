@@ -57,7 +57,6 @@ $sidebar-top-offset: 60px;
 
         img {
           clip-path: inset(0 round .5rem);
-          //height: 200px;
           width: 100%;
         }
         .categort-listing-title {
@@ -99,35 +98,85 @@ $sidebar-top-offset: 60px;
         }
 
       }
-      aside {
 
+      .sidebar-container {
+
+        // min items
+        //width: 21%;
+        //padding-right: 0;
+        //max-height: stretch;
+        //min-height: stretch;
+
+        // max items
         width: 21%;
         padding-right: 0;
+        //max-height: stretch;
+        //min-height: stretch;
+        min-height: max-content;
 
-        $input-height: 57px;
-        $input-margin: 4px;
 
-        input[type="text"] {
-          width: calc(100% - 15px);
-          height: $input-height;
-          margin-bottom: $input-margin;
-        }
+        aside {
+          // min items
+          //width: 100%;
+          //padding-right: 0;
+          //left: 0;
+          //right: 0;
+          //bottom: 0;
+          //height: stretch;
+          ///* bottom: 0; */
+          //min-height: 100%;
+          //display: flow-root;
 
-        .sidebar-content {
-          min-height: 100%;
+
+          // max items
+
+          width: 100%;
+          padding-right: 0;
           left: 0;
           right: 0;
           bottom: 0;
-          top: $sidebar-top-offset;
-        }
+          display: flow-root;
+          min-height: max-content;
+          height: 100%;
 
-        .filter {
-          margin-top: 5px;
-          height: 100rem;
-          background-color: #fff;
-          margin-right: -15px;
-          padding: 0 15px;
-          box-shadow: -2px 1px 4px 0 rgba(0, 0, 0, 0.09);
+          $input-height: 57px;
+          $input-margin: 4px;
+
+          input[type="text"] {
+            width: calc(100% - 15px);
+            height: $input-height;
+            margin-bottom: $input-margin;
+          }
+
+          .sidebar-content {
+            // min items
+            //left: 0;
+            //right: 0;
+            //bottom: 0;
+            //max-height: stretch;
+            //height: 100%;
+            //background: blue;
+            //min-height: stretch;
+
+
+            // max items
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+            max-height: stretch;
+            height: 100%;
+            min-height: fit-content;
+          }
+
+          .filter {
+            margin-top: 5px;
+            height: 100rem;
+            background-color: #fff;
+            margin-right: -15px;
+            padding: 0 15px;
+            box-shadow: -2px 1px 4px 0 rgba(0, 0, 0, 0.09);
+          }
         }
       }
 
@@ -183,6 +232,7 @@ $sidebar-top-offset: 60px;
     position: absolute;
     left: 0;
     bottom: -$sidebar-top-offset;
+    //bottom: 0;
   }
 }
 
@@ -213,7 +263,6 @@ $sidebar-top-offset: 60px;
           padding: 0 3px;
           img {
             clip-path: inset(0 round .3rem);
-            height: 100px;
           }
           .categort-listing-title {
 
@@ -223,23 +272,24 @@ $sidebar-top-offset: 60px;
       }
 
       .team-listing {
-        padding-right: 10px;
+        padding-right: 0;
         border-bottom: 0;
         .slick-slide {
           height: auto;
-          width: 90px;
         }
 
         .author {
+
           img {
             width: 80px;
-
           }
 
           h4 {
             font-size: 18px;
+            //noinspection CssInvalidPropertyValue
+            word-break: break-word;
+            margin-bottom: 0;
           }
-
         }
       }
 
@@ -434,6 +484,338 @@ $sidebar-top-offset: 60px;
       position: unset;
       bottom: 0;
       width: 100%;
+    }
+  }
+}
+
+@include breakpoint(tablet) {
+  .homepage {
+
+    .cover-image {
+
+      img {
+      }
+    }
+
+    .content {
+
+      &.container-fluid {
+      }
+
+      .categories-listing {
+
+        a.col {
+        }
+
+        .category-listing {
+          img {
+          }
+          .categort-listing-title {
+
+          }
+
+        }
+      }
+
+      .team-listing {
+        .slick-slide {
+        }
+
+        .author {
+
+          img {
+            width: 167px;
+          }
+
+          h4 {
+          }
+        }
+      }
+
+      .feed-container {
+        .feed-header {
+
+          .socials {
+
+          }
+
+          .h3 {
+
+          }
+
+        }
+        aside {
+
+          input[type="text"] {
+
+          }
+        }
+
+        .content-container {
+          article {
+
+            &.feed {
+              .show-more {
+              }
+            }
+
+            &.feed, &.recommended-container {
+              img {
+                &.recipe-item-image {
+                }
+              }
+            }
+
+          }
+        }
+
+      }
+    }
+
+    .filter {
+      input[type="text"] {
+
+      }
+
+      .filters {
+
+      }
+    }
+
+    .filter-mobile {
+
+      .filter-btn {
+
+        &:active, &:hover, &:focus {
+        }
+      }
+    }
+
+    .mobile-filter {
+      .show-recipes-container {
+        button {
+        }
+      }
+
+      &.open {
+
+        button.close {
+        }
+
+        .show-recipes-container {
+          button {
+
+          }
+        }
+      }
+
+      aside {
+
+        li.widget, .sidebar-section {
+        }
+
+        .sidebar-content {
+
+          #accordion-foody-filter {
+
+            #heading-foody-filter {
+              i {
+              }
+
+              .main-title {
+              }
+            }
+
+            #foody-filter {
+
+              h5 {
+                i.arrow {
+                  &:before {
+                  }
+                }
+              }
+
+              .card-body {
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+  .page-template-homepage {
+    footer.site-footer {
+    }
+  }
+}
+
+@include breakpoint(tablet-landscape) {
+  .homepage {
+
+    .cover-image {
+
+      img {
+      }
+    }
+
+    .content {
+
+      &.container-fluid {
+      }
+
+      .categories-listing {
+
+        a.col {
+        }
+
+        .category-listing {
+          img {
+          }
+          .categort-listing-title {
+
+          }
+
+        }
+      }
+
+      .team-listing {
+        .slick-slide {
+          width: unset;
+        }
+
+        .author {
+          max-width: unset;
+          img {
+          }
+
+          h4 {
+          }
+        }
+      }
+
+      .feed-container {
+        .feed-header {
+
+          .socials {
+
+          }
+
+          .h3 {
+
+          }
+
+        }
+        aside {
+
+          input[type="text"] {
+
+          }
+
+          .sidebar-content {
+            //position: relative;
+            //margin-top: -60px;
+          }
+        }
+
+        .content-container {
+          //margin-bottom: 0;
+          article {
+
+            &.feed {
+              .show-more {
+              }
+            }
+
+            &.feed, &.recommended-container {
+              img {
+                &.recipe-item-image {
+                }
+              }
+            }
+
+          }
+        }
+
+      }
+    }
+
+    .filter {
+      input[type="text"] {
+
+      }
+
+      .filters {
+
+      }
+    }
+
+    .filter-mobile {
+
+      .filter-btn {
+
+        &:active, &:hover, &:focus {
+        }
+      }
+    }
+
+    .mobile-filter {
+      .show-recipes-container {
+        button {
+        }
+      }
+
+      &.open {
+
+        button.close {
+        }
+
+        .show-recipes-container {
+          button {
+
+          }
+        }
+      }
+
+      aside {
+
+        li.widget, .sidebar-section {
+        }
+
+        .sidebar-content {
+
+          #accordion-foody-filter {
+
+            #heading-foody-filter {
+              i {
+              }
+
+              .main-title {
+              }
+            }
+
+            #foody-filter {
+
+              h5 {
+                i.arrow {
+                  &:before {
+                  }
+                }
+              }
+
+              .card-body {
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+  .page-template-homepage {
+    footer.site-footer {
     }
   }
 }

@@ -29,21 +29,23 @@ $homepage = new HomePage();
 
             <section class="feed-container row">
 
-                <div class="feed-header d-none d-sm-block">
-                    <h3 class="title d-sm-inline-block">
-                        <?php __('ההמלצות שלנו', 'foody') ?>
+                <div class="feed-header d-none d-lg-block">
+                    <h3 class="title d-lg-inline-block">
+                        <?php echo __('ההמלצות שלנו', 'foody') ?>
                     </h3>
                 </div>
 
-
-                <?php
-                if (!wp_is_mobile()) {
+                <section class="sidebar-container d-none d-lg-block">
+                    <?php
+                    //                if (!wp_is_mobile() && !foody_is_tablet()) {
                     $homepage->sidebar();
-                }
-                ?>
+                    //                }
+                    ?>
+                </section>
 
 
-                <section class="content-container col-sm-9 col-12">
+
+                <section class="content-container col-lg-9 col-12">
 
                     <?php $homepage->feed(); ?>
 
@@ -55,17 +57,17 @@ $homepage = new HomePage();
 
         </div>
 
-        <?php if (wp_is_mobile()): ?>
+<!--        --><?php //if (wp_is_mobile()): ?>
 
             <!--        mobile filter -->
-            <div class="filter-mobile d-block d-sm-none">
+            <div class="filter-mobile d-block d-lg-none">
                 <button class="navbar-toggler filter-btn" type="button" data-toggle="drawer"
                         data-target="#dw-p2">
                     <?php echo __('סינון', 'foody'); ?>
                 </button>
             </div>
 
-            <div class="mobile-filter d-sm-none">
+            <div class="mobile-filter d-lg-none">
 
                 <button type="button" class="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -82,7 +84,7 @@ $homepage = new HomePage();
             </div>
 
 
-        <?php endif; ?>
+<!--        --><?php //endif; ?>
     </div>
 <?php
 get_footer();

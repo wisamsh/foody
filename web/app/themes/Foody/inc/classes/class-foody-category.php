@@ -44,11 +44,20 @@ class Foody_Category implements Foody_ContentWithSidebar
      * Get the category image (ACF Field)
      * @return mixed|null|string
      */
-    public function get_image()
+    public function get_image($size = 'list-item')
     {
         $image = '';
         if ($this->category != null) {
             $image = get_field('image', $this->category->taxonomy . '_' . $this->category->term_id);
+
+
+            if (is_array($image)) {
+                if (isset($image['sizes'][$size])) {
+                    $image = $image['sizes'][$size];
+                } else {
+                    $image = $image['sizes'][array_keys($image['sizes'])[0]];
+                }
+            }
         }
 
         return $image;

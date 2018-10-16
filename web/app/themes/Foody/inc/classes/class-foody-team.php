@@ -173,7 +173,7 @@ class FoodyTeam
         $user_avatars = get_the_author_meta('wp_user_avatars', $author->ID);
 
         if (is_null($user_avatars) || empty($user_avatars) || !isset($user_avatars[250])) {
-            $image = get_avatar_url($author->ID, ['size' => 96]);
+            $image = get_avatar_url($author->ID, ['size' => 250]);
         } else {
             $image = $user_avatars['250'];
         }

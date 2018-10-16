@@ -72,3 +72,14 @@ function foody_js_globals_main($vars)
 }
 
 add_filter('foody_js_globals', 'foody_js_globals_main');
+
+
+function is_tablet($vars)
+{
+    $tablet_browser = foody_is_tablet();
+
+    $vars['isTablet'] = $tablet_browser;
+    return $vars;
+}
+
+add_filter('foody_js_globals', 'is_tablet');

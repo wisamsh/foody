@@ -54,8 +54,10 @@ class FoodyGrid
 
         $class = '';
         if ($col_num != self::NONE) {
-            $class = 'col-sm-' . 12 / $col_num;
 
+            $grid_col = 12 / $col_num;
+            $class = 'col-xl-' . $grid_col;
+            $class .= ' col-sm-6';
             $mobile_class = ' col-' . $col_num_mobile;
 
             $class .= $mobile_class;

@@ -92,6 +92,12 @@
 
     }
 
+    .md-checkbox{
+      label:not(.error){
+        display: table-cell;
+      }
+    }
+
     #password-help {
       list-style-type: none;
       padding: 0;
