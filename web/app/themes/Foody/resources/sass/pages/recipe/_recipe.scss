@@ -47,8 +47,12 @@ $content-width: 70% !default;
           width: 100%;
         }
       }
-
+      .favorite{
+        cursor: pointer;
+      }
       .content-details-bullets {
+
+
         li {
           > div[dir=ltr] {
             vertical-align: bottom;
