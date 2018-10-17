@@ -55,8 +55,10 @@ class FoodyGrid
         $class = '';
         if ($col_num != self::NONE) {
 
+            // TODO check responsive cols
             $grid_col = 12 / $col_num;
             $class = 'col-xl-' . $grid_col;
+            $class .= ' col-md-6';
             $class .= ' col-sm-6';
             $mobile_class = ' col-' . $col_num_mobile;
 

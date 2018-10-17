@@ -6,7 +6,7 @@
  * Date: 5/6/18
  * Time: 8:35 PM
  */
-class HomePage
+class Foody_HomePage
 {
 
     private $team;
@@ -76,7 +76,7 @@ class HomePage
     {
         $query = new WP_Query();
 
-        $args = $this->foody_query->get_query('homepage',[],true);
+        $args = $this->foody_query->get_query('homepage', [], true);
 
         $posts = $query->query($args);
 
@@ -106,7 +106,7 @@ class HomePage
     {
         $query = new WP_Query();
 
-        $args = $this->foody_query->get_query('homepage',[],true);
+        $args = $this->foody_query->get_query('homepage', [], true);
 
         $posts = $query->query($args);
 
@@ -129,9 +129,11 @@ class HomePage
         if (wp_is_mobile() && !foody_is_tablet()) {
             $sidebar_name = $this->mobile_sidebar_id;
         }
-//        else {
-            echo "<input name=\"search\" type=\"text\" class=\"search d-none d-lg-block\" title=\"search\" placeholder=\"חיפוש מתכון…\">";
-//        }
+
+        get_search_form();
+
+//        echo "<input name=\"search\" type=\"text\" class=\"search d-none d-lg-block\" title=\"search\" placeholder=\"חיפוש מתכון…\">";
+
 
         echo "<div class=\"sidebar-content\">";
         dynamic_sidebar($sidebar_name);

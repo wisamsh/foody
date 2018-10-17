@@ -22,14 +22,12 @@ $sidebar-top-offset: 60px;
 
           & + section {
             padding-right: 0;
-
           }
 
           img {
             margin: 0 auto;
             display: block;
           }
-
         }
       }
 
@@ -110,8 +108,6 @@ $sidebar-top-offset: 60px;
         // max items
         width: 21%;
         padding-right: 0;
-        //max-height: stretch;
-        //min-height: stretch;
         min-height: max-content;
 
 
@@ -135,18 +131,51 @@ $sidebar-top-offset: 60px;
           left: 0;
           right: 0;
           bottom: 0;
-          display: flow-root;
           min-height: max-content;
           height: 100%;
 
           $input-height: 57px;
           $input-margin: 4px;
+          $input-side-offset: 15px;
 
-          input[type="text"] {
-            width: calc(100% - 15px);
-            height: $input-height;
-            margin-bottom: $input-margin;
+
+          @import "../../../common/foody-autocomplete";
+
+
+          .foody-search-form{
+
+            .search-bar{
+              transition: all .25s;
+              .algolia-autocomplete{
+                width: 100%;
+
+                input{
+                  &.search{
+                    width: calc(100% - #{$input-side-offset});
+                    height: $input-height;
+                    margin-bottom: $input-margin;
+                    text-align: right;
+                    direction: rtl;
+
+                    //noinspection CssInvalidPseudoSelector
+                    &::placeholder {
+                      font-size: 24px;
+                      vertical-align: sub;
+                      line-height: $input-height;
+                      text-align: right;
+                      direction: rtl;
+                    }
+                  }
+                }
+              }
+            }
+            .foody-dropdown-menu{
+              width: calc(100% - #{$input-side-offset});
+              margin-right: 15px;
+              margin-top: 0;
+            }
           }
+
 
           .sidebar-content {
             // min items
@@ -164,6 +193,10 @@ $sidebar-top-offset: 60px;
             left: 0;
             right: 0;
             bottom: 0;
+            // Autoprefixer will change 'stretch'
+            // into fill-available and the different
+            // browsers equivalent.
+            // noinspection CssInvalidPropertyValue
             max-height: stretch;
             height: 100%;
             min-height: fit-content;

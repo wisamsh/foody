@@ -11,7 +11,7 @@
 get_header();
 
 
-$homepage = new HomePage();
+$homepage = new Foody_HomePage();
 ?>
 
     <div class="homepage">

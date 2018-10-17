@@ -1,3 +1,4 @@
+
 body[class~="-template-content-with-sidebar"],
 body[class~="author"], body[class~="category"],
 body[class~="search"],
@@ -5,9 +6,9 @@ body[class~="foody_channel-template-channel"],
 body[class~="single-foody_recipe"],
 body[class~="single-foody_playlist"],
 body[class~="post-template-content-with-sidebar"] {
+
   $sidebar-width: 21%;
   $content-width: 70%;
-
   .progress-wrapper {
     $progress-height: 5px;
     position: sticky;
@@ -42,7 +43,6 @@ body[class~="post-template-content-with-sidebar"] {
       }
     }
   }
-
 
   article.content {
     width: calc(100% - #{$sidebar-width});
@@ -290,7 +290,6 @@ body[class~="post-template-content-with-sidebar"] {
   body[class~="post-template-content-with-sidebar"] {
     $sidebar-width: 0;
     $content-width: 100%;
-
     article.content {
       width: $content-width;
       margin-bottom: 0;
@@ -446,3 +445,255 @@ body[class~="post-template-content-with-sidebar"] {
   }
 
 }
+
+@include breakpoint(tablet-l) {
+
+  body[class~="-template-content-with-sidebar"],
+  body[class~="author"], body[class~="category"],
+  body[class~="search"],
+  body[class~="foody_channel-template-channel"],
+  body[class~="single-foody_recipe"],
+  body[class~="single-foody_playlist"],
+  body[class~="post-template-content-with-sidebar"] {
+    $sidebar-width: 22%;
+    .progress-wrapper {
+
+      progress {
+
+        &::-moz-progress-bar {
+
+        }
+
+        &::-webkit-progress-bar {
+
+        }
+
+        &::-webkit-progress-value {
+
+        }
+
+        &::-ms-fill {
+
+        }
+      }
+    }
+
+    article.content {
+      width: calc(100% - #{$sidebar-width});
+      margin-bottom: 180px;
+    }
+
+    aside {
+      min-width: $sidebar-width;
+
+      .widget {
+
+
+        &:before {
+
+        }
+        &.widget_text {
+
+          .widgettitle {
+
+          }
+        }
+      }
+
+    }
+
+    footer.site-footer {
+
+    }
+
+    .details-container {
+
+
+
+      .featured-content-container {
+
+
+
+        iframe {
+
+        }
+
+        .wp-post-image {
+
+
+        }
+      }
+      .details {
+
+
+
+        .post-categories {
+
+
+
+
+
+          li {
+
+
+
+
+
+            &:first-child {
+
+            }
+          }
+        }
+
+        .recipe-details {
+
+
+          .image-container {
+
+
+
+
+            img {
+
+
+
+            }
+          }
+
+          h1 {
+
+
+
+
+          }
+
+          .description {
+
+
+
+
+          }
+
+          .view-count {
+          }
+
+          ul.content-details-bullets {
+
+
+
+
+
+            li:not(:first-child):before {
+
+
+            }
+
+            li {
+
+
+
+
+              &.no-bullet {
+
+                &:before {
+
+
+                }
+              }
+            }
+
+          }
+
+          .favorite {
+
+
+
+            i {
+
+            }
+          }
+        }
+
+        .social {
+          .essb_links {
+
+            .essb_links_list {
+
+              li {
+
+                &:not(:first-child):before {
+
+                }
+
+
+
+                &.essb_link_whatsapp {
+
+                  a {
+
+
+                    &:hover {
+
+                    }
+                  }
+                }
+                &.essb_link_pinterest {
+
+                  a {
+
+
+                    &:hover {
+
+                    }
+                  }
+                }
+                &.essb_link_mail, &.essb_link_print {
+
+                  a {
+
+
+                    &:hover {
+
+                    }
+                  }
+                }
+                a {
+
+                  .essb_network_name {
+                  }
+
+                  .essb_icon {
+
+
+
+
+
+                    &:before {
+
+
+                    }
+                  }
+                }
+              }
+            }
+
+          }
+
+          .btn-facebook {
+
+
+          }
+        }
+
+        .favorite {
+
+        }
+      }
+    }
+
+  }
+}
+
+
+
+

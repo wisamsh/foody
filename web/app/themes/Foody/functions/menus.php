@@ -44,6 +44,7 @@ function user_role_menu_items_filter($sorted_menu_items, stdClass $args)
 add_filter('wp_nav_menu_objects', 'user_role_menu_items_filter', 10, 2);
 
 
+
 function mobile_only_menu_items_filter($sorted_menu_items, stdClass $args)
 {
 
@@ -56,12 +57,35 @@ function mobile_only_menu_items_filter($sorted_menu_items, stdClass $args)
                 return $mobile_only == false;
             });
         }
+
+
     }
 
     return $sorted_menu_items;
 }
 
 add_filter('wp_nav_menu_objects', 'mobile_only_menu_items_filter', 10, 2);
+
+
+
+function foody_menu_items_classes($sorted_menu_items, stdClass $args)
+{
+
+    if (!is_admin() && !empty($sorted_menu_items)) {
+
+        foreach ($sorted_menu_items as $menu_item) {
+            $mobile = get_field('mobile_only', $menu_item);
+            if ($mobile) {
+                $menu_item->classes[] = 'foody-mobile-menu-item';
+            }
+        }
+    }
+
+    return $sorted_menu_items;
+}
+
+add_filter('wp_nav_menu_objects', 'foody_menu_items_classes', 10, 2);
+
 
 
 /**
@@ -130,7 +154,7 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
         $menu_item->db_id = PHP_INT_MAX;
         $menu_item->object = null;
         $menu_item->after = '<span>&times;</span>';
-        $classes = 'close-menu';
+        $classes = 'close-menu foody-mobile-menu-item';
 
         $menu_item->classes = $classes;
 

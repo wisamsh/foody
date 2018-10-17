@@ -19,7 +19,7 @@ aside {
         border-bottom: $sidebar-border;
       }
 
-      .widgettitle{
+      .widgettitle {
         font-size: 1.5em;
         color: $color__primary;
       }
@@ -85,4 +85,77 @@ aside {
     }
 
   }
+}
+
+@include breakpoint(tablet-landscape) {
+
+  aside {
+    &.sidebar {
+      .sidebar-content {
+
+      }
+
+      li.widget, .sidebar-section {
+        padding: 10px;
+        &:not(:last-child) {
+
+        }
+
+        .widgettitle {
+
+        }
+      }
+    }
+
+    #accordion-foody-filter {
+
+      h5 {
+        + a {
+
+        }
+
+      }
+      .md-checkbox {
+        label {
+          display: table-cell;
+          padding-right: 1em;
+          &:before, &:after {
+
+          }
+
+          &:before {
+
+          }
+        }
+
+        input:checked {
+
+          + {
+            label {
+
+            }
+          }
+        }
+      }
+    }
+
+    #accordion-categories-widget-accordion {
+
+      .main-title {
+
+      }
+
+      #categories-widget-accordion {
+
+        .card-body {
+
+          .category-accordion-item {
+
+          }
+        }
+      }
+
+    }
+  }
+
 }

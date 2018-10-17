@@ -16,14 +16,16 @@ $foody_page = $template_args['page'];
 
     <section class="recipe-details  d-flex">
         <div class="image-container col-sm-1 col-2 nopadding">
-            <img src="<?php echo $foody_page->getAuthorImage() ?>" alt="">
+            <a href="<?php echo $foody_page->get_author_link() ?>">
+                <img src="<?php echo $foody_page->getAuthorImage() ?>" alt="">
+            </a>
         </div>
         <section class="col-sm-11 col-10">
             <div class="row justify-content-between m-0">
                 <h1 class="col p-0">
                     <?php echo $foody_page->getTitle() ?>
                 </h1>
-                <section class="d-block d-sm-none mobile-rating col-12">
+                <section class="d-block d-lg-none mobile-rating col-12">
                     <?php
                     $rating_args = [
                         'value' => get_post_rating($foody_page->id),
@@ -41,7 +43,7 @@ $foody_page = $template_args['page'];
 
                     ?>
                 </section>
-                <section class="d-none d-sm-block">
+                <section class="d-none d-lg-block">
                     <?php
                     foody_get_template_part(
                         get_template_directory() . '/template-parts/content-social-actions.php'
@@ -52,12 +54,11 @@ $foody_page = $template_args['page'];
             </div>
 
             <div class="description">
-                <section class="post-bullets-container d-block d-sm-none">
+                <section class="post-bullets-container d-block d-lg-none">
                     <?php
 
                     $args = array(
-                        'foody_page' => $foody_page,
-                        'show_favorite' => false
+                        'foody_page' => $foody_page
                     );
 
                     foody_get_template_part(get_template_directory() . '/template-parts/content-post-bullets.php', $args);
@@ -67,9 +68,10 @@ $foody_page = $template_args['page'];
                 <?php echo $foody_page->getDescription() ?>
             </div>
 
-            <?php
+            <section class="d-none d-lg-block">
+                <?php
 
-            if (!wp_is_mobile()) {
+
                 $args = array(
                     'foody_page' => $foody_page,
                     'show_favorite' => true
@@ -96,16 +98,24 @@ $foody_page = $template_args['page'];
                 }
 
                 foody_get_template_part(get_template_directory() . '/template-parts/content-post-bullets.php', $args);
-            } else {
+
+
+                ?>
+
+            </section>
+            <section class="d-block d-xl-none favorite-container">
+                <?php
+
                 foody_get_template_part(
                     get_template_directory() . '/template-parts/common/favorite.php',
                     array(
                         'post' => $foody_page
                     )
                 );
-            }
+                ?>
+            </section>
 
-            ?>
+
         </section>
 
 
@@ -113,9 +123,13 @@ $foody_page = $template_args['page'];
 
 
     <?php
-    if (wp_is_mobile()) {
-        foody_get_template_part(get_template_directory() . '/template-parts/content-social-actions.php');
-    }
+
+    ?>
+    <section class="d-block d-lg-none">
+        <?php foody_get_template_part(get_template_directory() . '/template-parts/content-social-actions.php'); ?>
+    </section>
+    <?php
+
     ?>
 
 </div>

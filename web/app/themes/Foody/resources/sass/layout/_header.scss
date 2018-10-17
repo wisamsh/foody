@@ -230,6 +230,9 @@ header {
       }
 
       .search-bar {
+
+        $input-height: 47px;
+
         input {
           &.search {
             width: 310px;
@@ -237,12 +240,15 @@ header {
             font-size: 25px;
             text-align: right;
             padding-right: 15px;
-            &::-webkit-input-placeholder {
+
+            // Autoprefixer
+            //noinspection CssInvalidPseudoSelector
+            &::placeholder {
               font-size: 24px;
               vertical-align: sub;
-              line-height: 47px;
+              line-height: $input-height;
               text-align: right;
-              margin-top: 3px;
+              //margin-top: 3px;
               direction: rtl;
             }
           }
@@ -279,7 +285,6 @@ header {
       }
     }
   }
-
 }
 
 @include breakpoint(mobileonly) {
@@ -337,7 +342,6 @@ header {
           #menu-navbar {
             margin: 0;
             padding: 0;
-
 
             .close-menu {
               width: 100%;
@@ -439,6 +443,166 @@ header {
 
     }
 
+  }
+}
+
+@include breakpoint(tablet-landscape) {
+  header {
+
+    .socials {
+      .essbfc-container {
+        &.essbfc-container-profiles.essbfc-template-roundcolor {
+          ul {
+            li {
+              .essbfc-network {
+                i {
+                }
+              }
+
+            }
+          }
+        }
+      }
+    }
+
+    .logo-container, .logo-container-mobile {
+    }
+
+    .logo-container-desktop {
+
+      img {
+        &.custom-logo {
+        }
+      }
+    }
+
+    .cellcom-tv-img {
+    }
+
+    .foody-dropdown-menu {
+      .foody-search-suggestions {
+
+        .foody-search-suggestion {
+
+          &.foody-cursor {
+          }
+
+          a {
+
+            span {
+
+            }
+
+          }
+        }
+      }
+    }
+
+    .search-overlay {
+
+      .overlay-white {
+      }
+
+      .input-container {
+
+        .algolia-autocomplete {
+        }
+        input {
+        }
+
+        span.close {
+        }
+
+        .foody-dropdown-menu {
+
+          .foody-search-suggestions {
+
+            .foody-search-suggestion {
+              &.foody-cursor {
+              }
+
+              a {
+                span {
+                }
+
+              }
+            }
+          }
+        }
+      }
+
+      &.open {
+        .input-container {
+
+          span.close {
+          }
+        }
+        .overlay-white {
+        }
+      }
+    }
+
+    nav {
+      &.navbar {
+
+        .foody-navbar-container {
+          padding-right: 200px;
+        }
+
+        &.navbar-light {
+
+          .navbar-nav {
+
+            .nav-link {
+            }
+
+            .login-signup {
+              .nav-link, .nav-link-separator {
+              }
+            }
+
+          }
+        }
+
+        .search-bar {
+
+          input {
+            &.search {
+
+              // Autoprefixer
+              //noinspection CssInvalidPseudoSelector
+              &::placeholder {
+              }
+            }
+          }
+
+        }
+
+        .avatar {
+        }
+
+        .navbar-collapse {
+
+          ul {
+            li {
+              i{
+                display: none;
+              }
+              &.menu-item-type-yawp_wim {
+                display: none;
+              }
+              &.foody-mobile-menu-item {
+                display: none;
+              }
+
+              a {
+              }
+            }
+          }
+        }
+
+      }
+    }
   }
 }
 

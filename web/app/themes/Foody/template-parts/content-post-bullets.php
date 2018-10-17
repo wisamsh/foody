@@ -34,7 +34,7 @@ $dynamic = !empty($template_args['dynamic']) ? $template_args['dynamic'] : [];
 
     <?php if (isset($template_args['show_favorite']) && $template_args['show_favorite']): ?>
 
-        <li class="no-bullet">
+        <li class="no-bullet d-none d-xl-inline-block">
             <?php
             foody_get_template_part(
                 get_template_directory() . '/template-parts/common/favorite.php',

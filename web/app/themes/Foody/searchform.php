@@ -8,7 +8,7 @@
 
 ?>
 
-<form class="navbar-form" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
+<form class="navbar-form foody-search-form" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
     <div class="search-bar d-none d-sm-block">
         <input name="s" type="text" class="search search-autocomplete" placeholder="חיפוש מתכון…">
         <input type="hidden" name="post_type" value="foody_recipe"/>

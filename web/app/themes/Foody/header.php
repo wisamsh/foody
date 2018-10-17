@@ -30,11 +30,11 @@ $user = new Foody_User();
 <div id="page" class="site">
 
     <header id="masthead" class="site-header">
-        <div class="socials d-none d-xl-block">
+        <div class="socials d-none d-lg-block">
             <?php $header->the_socials_bar() ?>
         </div>
         <div class="site-branding">
-            <div class="logo-container d-none d-xl-block">
+            <div class="logo-container d-none d-lg-block">
                 <div class="logo-container-desktop">
                     <?php the_custom_logo() ?>
                 </div>
@@ -42,18 +42,18 @@ $user = new Foody_User();
 
             </div>
 
-            <div class="logo-container-mobile d-block d-xl-none">
+            <div class="logo-container-mobile d-block d-lg-none">
                 <?php echo get_logo_with_size('60', '60'); ?>
             </div>
 
         </div><!-- .site-branding -->
 
-        <nav class="navbar navbar-expand-xl navbar-light navbar-toggleable-xl" role="navigation">
+        <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg" role="navigation">
 
             <!-- TODO change this to bootstrap offsets            -->
             <div class="container-fluid foody-navbar-container">
 
-                <div class="search-bar d-none d-xl-block">
+                <div class="search-bar d-none d-lg-block">
                     <?php get_search_form(); ?>
                 </div>
 
@@ -64,22 +64,22 @@ $user = new Foody_User();
                     <i class="navbar-toggler-icon icon-menu-mobile"></i>
                 </button>
 
-                <button type="button" class="btn btn-default navbar-btn  d-block d-xl-none accessibility">
+                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>" alt="">
                 </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-xl-none">
+                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none">
 
                 </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-xl-none">
+                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none">
 
                 </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-xl-none">
+                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none">
 
                 </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-xl-none">
+                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none">
 
                 </button>
-                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-xl-none">
+                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none">
 
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="">
 
@@ -160,7 +160,7 @@ $user = new Foody_User();
 
                 <?php if (is_user_logged_in()): ?>
 
-                    <div class="d-none d-xl-block">
+                    <div class="d-none d-lg-block">
 
                         <?php
                         $link = is_user_logged_in() ? get_permalink(get_page_by_path('פרופיל-אישי')) : '';
@@ -176,7 +176,7 @@ $user = new Foody_User();
 
         </nav>
 
-        <div class="search-overlay d-xl-none">
+        <div class="search-overlay d-lg-none">
 
             <div class="input-container">
                 <!--suppress HtmlFormInputWithoutLabel -->

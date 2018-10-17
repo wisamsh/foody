@@ -34,7 +34,7 @@ $featured_content_classes[] = 'featured-content-container';
 
                 <?php endif; ?>
 
-                <aside class="col d-none d-sm-block">
+                <aside class="col d-none d-lg-block">
 
                     <?php $foody_page->the_sidebar_content() ?>
 
