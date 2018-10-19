@@ -161,7 +161,8 @@ $(document).ready(() => {
         ctx.drawImage(img, 0, 0, width, height);
 
         $(img).attr('src',canvas.toDataURL());
-
+        img= null;
+        canvas = null;
     }
 
 
