@@ -51,13 +51,19 @@ class FoodyTeam
         switch ($display) {
             case 'grid':
                 $row_container = '<div class="row team-grid-row">';
-                $col_span = isset($display_args['grid_col_span']) ? intval($display_args['grid_col_span']) : 5;
+                $def_col_span = 5;
+                if(wp_is_mobile()){
+                    $def_col_span = 3;
+                    if(foody_is_tablet()){
+                        $def_col_span = 4;
+                    }
+                }
+                $col_span = isset($display_args['grid_col_span']) ? intval($display_args['grid_col_span']) : $def_col_span;
+                $col_span = $def_col_span;
                 if ($col_span >= $query_count) {
                     $col_span = $query_count;
                 }
-                if (wp_is_mobile()) {
-                    $col_span = 3;
-                }
+
 
                 if (self::$debug) {
                     $add = 17;

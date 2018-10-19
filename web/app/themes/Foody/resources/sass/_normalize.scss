@@ -66,9 +66,10 @@ html, body, .container-fluid {
   min-height: 100%;
 }
 
+//noinspection CssInvalidPropertyValue
 #page{
   height: 100%;
-  min-height:100%;
+  min-height:stretch;
 }
 
 /**

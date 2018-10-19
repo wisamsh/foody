@@ -246,12 +246,15 @@ function foody_count_posts_by_user($post_author = null, $post_type = array(), $p
 
     $sql = $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_author = %d AND ", $post_author);
 
+    $where = "(post_status='publish') AND ";
+    $sql .= $where;
+
     //Post status
-    if (!empty($post_status)) {
-        $argtype = array_fill(0, count($post_status), '%s');
-        $where = "(post_status=" . implode(" OR post_status=", $argtype) . ') AND ';
-        $sql .= $wpdb->prepare($where, $post_status);
-    }
+//    if (!empty($post_status)) {
+//        $argtype = array_fill(0, count($post_status), '%s');
+//        $where = "(post_status=" . implode(" OR post_status=", $argtype) . ') AND ';
+//        $sql .= $wpdb->prepare($where, $post_status);
+//    }
 
     if (empty($post_type)) {
         $post_type = foody_get_post_types();

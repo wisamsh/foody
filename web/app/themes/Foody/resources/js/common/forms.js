@@ -50,7 +50,7 @@ window.formSubmit = function (settings) {
                 complete: function () {
                     // TODO handle loader
                     // what to do after a comment has been added
-                    button.removeClass('loadingform').val('Post Comment');
+                    button.removeClass('loadingform').val('שלח');
                 }
             });
         }
@@ -114,7 +114,7 @@ window.formSubmitWithFiles = function (settings) {
                 success: settings.success,
                 complete: function () {
                     // what to do after a comment has been added
-                    button.removeClass('loadingform').val('Post Comment');
+                    button.removeClass('loadingform').val('שלח');
                 }
             });
         }

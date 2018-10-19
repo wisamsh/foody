@@ -235,8 +235,8 @@ $sidebar-top-offset: 60px;
 
             img {
               &.recipe-item-image {
-                min-height: 270px;
-                max-height: 270px;
+                //min-height: 270px;
+                //max-height: 270px;
                 width: 100%;
               }
             }
@@ -361,7 +361,7 @@ $sidebar-top-offset: 60px;
             &.feed, &.recommended-container {
               img {
                 &.recipe-item-image {
-                  min-height: 210px;
+                  //min-height: 210px;
                 }
               }
             }

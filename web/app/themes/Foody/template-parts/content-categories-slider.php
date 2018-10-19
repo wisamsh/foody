@@ -31,7 +31,7 @@ $slider_data = [
         [
             'breakpoint' => 415,
             'settings' => [
-                'slidesToShow' => 4,
+                'slidesToShow' => 3,
                 'arrows' => false,
                 'adaptiveHeight' => true,
                 'slidesToScroll' => 1,

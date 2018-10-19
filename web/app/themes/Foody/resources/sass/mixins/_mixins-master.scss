@@ -87,7 +87,7 @@ BREAKPOINTS
       @content;
     }
   } @else if $point == tablet {
-    @media (min-width: 768px) and(max-width: 1024px) {
+    @media (min-width: 768px) and(max-width: 1023px) {
       @content;
     }
   } @else if $point == tablet-landscape or $point == tablet-l {

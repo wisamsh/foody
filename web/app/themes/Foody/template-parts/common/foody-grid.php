@@ -30,7 +30,7 @@ if (!empty($settings['show_header'])) {
         <?php $grid->loop($posts, $cols) ?>
     </section>
 
-    <?php if (!empty($posts) && $more): ?>
+    <?php if (!empty($posts) && $more && $grid->is_displayable($posts)): ?>
 
         <div class="show-more">
             <img src="<?php echo $GLOBALS['images_dir'] . 'bite.png' ?>" alt="">

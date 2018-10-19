@@ -20,7 +20,8 @@ class FoodyGrid
 
     private $supported_types = [
         'recipe',
-        'playlist'
+        'playlist',
+//        'article'
     ];
 
 
@@ -133,6 +134,33 @@ class FoodyGrid
         $this->current_item = 0;
         $this->is_in_loop = false;
         return $items;
+    }
+
+    /**
+     * @param Foody_Post $post
+     * @return bool
+     */
+    public function is_post_displayable($post)
+    {
+
+        $type = $post->post->post_type;
+        if ($type == 'post') {
+            $type = 'article';
+        }
+
+        $type = str_replace('foody_', '', $type);
+
+        return in_array($type, $this->supported_types);
+    }
+
+
+    /**
+     * @param Foody_Post[] $posts
+     * @return bool
+     */
+    public function is_displayable($posts)
+    {
+        return count(array_filter($posts, array($this, 'is_post_displayable'))) > 0;
     }
 
 }

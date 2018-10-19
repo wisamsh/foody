@@ -196,8 +196,8 @@ $sidebar-width: 22.5% !default;
               display: inline-block;
 
               .feed-item-image {
-                max-height: 272px;
-                height: 100%;
+                //max-height: 272px;
+                //height: 100%;
                 width: 100%;
               }
             }
@@ -376,7 +376,7 @@ $sidebar-width: 22.5% !default;
                 float: right;
 
                 .recipe-item-image {
-                  min-height: 272px;
+                  //min-height: 272px;
                 }
               }
             }

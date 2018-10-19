@@ -43,15 +43,13 @@ $content-width: 70% !default;
         }
 
         .wp-post-image {
-          //max-height: 524px;
           width: 100%;
         }
       }
-      .favorite{
+      .favorite {
         cursor: pointer;
       }
       .content-details-bullets {
-
 
         li {
           > div[dir=ltr] {
@@ -413,7 +411,7 @@ $content-width: 70% !default;
 
             img {
               width: 100%;
-              height: 150px;
+              //height: 150px;
               border-radius: 3px;
             }
           }
@@ -633,14 +631,7 @@ $content-width: 70% !default;
         .featured-content-container {
 
           &.video-featured-content {
-            position: relative;
-            padding-bottom: 0;
-            padding-top: 0;
-            height: initial;
             iframe {
-              position: initial;
-              width: 100%;
-              height: 100%;
             }
           }
 
@@ -652,11 +643,6 @@ $content-width: 70% !default;
           height: auto;
           position: initial;
           padding-top: 0;
-          iframe {
-            position: initial;
-            max-height: 200px;
-            min-height: 200px;
-          }
 
           .wp-post-image {
           }
@@ -946,6 +932,16 @@ $content-width: 70% !default;
 
         #accordion-how-i-did {
 
+          .foody-accordion-title {
+            h5 {
+              i.icon-side-arrow {
+                &:before {
+                  left: 0;
+                }
+              }
+            }
+          }
+
           .header {
             .add-image {
               width: 100%;
@@ -1061,7 +1057,15 @@ $content-width: 70% !default;
       .recipe-comments {
         @include max-width-section;
         max-width: 100%;
-
+        .foody-accordion-title {
+          h5 {
+            i.icon-side-arrow {
+              &:before {
+                left: 0;
+              }
+            }
+          }
+        }
         .commentform-element {
         }
       }
@@ -1331,6 +1335,18 @@ $content-width: 70% !default;
       .recipe-how-i-did {
         @include max-width-section;
 
+        #accordion-how-i-did {
+          .foody-accordion-title {
+            h5 {
+              i.icon-side-arrow {
+                &:before {
+                  left: 5em;
+                }
+              }
+            }
+          }
+        }
+
         .header {
 
           h2 {
@@ -1471,6 +1487,18 @@ $content-width: 70% !default;
 
       .recipe-comments {
         @include max-width-section;
+
+        #accordion-comments-accordion {
+          .foody-accordion-title {
+            h5 {
+              i.icon-side-arrow {
+                &:before {
+                  left: 5em;
+                }
+              }
+            }
+          }
+        }
 
         .commentform-element {
 
@@ -1766,6 +1794,18 @@ $content-width: 70% !default;
       .recipe-how-i-did {
         @include max-width-section;
 
+        #accordion-how-i-did {
+          .foody-accordion-title {
+            h5 {
+              i.icon-side-arrow {
+                &:before {
+                  left: 5em;
+                }
+              }
+            }
+          }
+        }
+
         .header {
 
           h2 {
@@ -1894,7 +1934,15 @@ $content-width: 70% !default;
 
       .recipe-comments {
         @include max-width-section;
-
+        .foody-accordion-title {
+          h5 {
+            i.icon-side-arrow {
+              &:before {
+                left: 5em;
+              }
+            }
+          }
+        }
         .commentform-element {
 
         }

@@ -68,3 +68,24 @@
     }
   }
 }
+
+@include breakpoint(tablet-l) {
+  .team-listing {
+    .team-grid-row{
+      justify-content: space-around;
+      .author {
+
+        .image-container {
+
+
+          .post-count {
+          }
+        }
+
+        .author-name{
+        }
+      }
+    }
+
+  }
+}
