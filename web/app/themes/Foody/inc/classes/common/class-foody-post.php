@@ -272,7 +272,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                         $foody_recipe = new Foody_Recipe($recipe);
                     }
                     return array(
-                        'duration' => $foody_recipe->getDuration()
+                        'duration' => $foody_recipe->getDuration(),
+                        'has_video' => $foody_recipe->has_video
                     );
                 }
             );
