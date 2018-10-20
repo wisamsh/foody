@@ -6,6 +6,7 @@ $(document).ready(() => {
 
     $commentForm = $('#commentform');
 
+
     if ($commentForm.length) {
 
         $parent = $('.commentform-element');
@@ -20,31 +21,17 @@ $(document).ready(() => {
         });
 
 
-        attachCancelButton();
-
-
-        function attachCancelButton() {
-
-            $submitContainer = $('input[type="submit"]', $commentForm).parent();
-            $cancelButton = $('.cancel', $submitContainer);
-
-            if (!$cancelButton.length) {
-                $cancelButton = $('<input class="cancel" type="button" value="ביטול"/>');
-
-                $submitContainer.prepend($cancelButton);
-
-                $cancelButton.on('click', () => {
-                    $parent.add($commentForm).removeClass('open');
-                });
-            }
-        }
-
-
         let successCallback = function (addedCommentHTML) {
 
             let commentlist = $('.comment-list'),// comment list container
                 respond = $('#respond'),
                 cancelreplylink = $('#cancel-comment-reply-link');
+
+            let $comment = $(addedCommentHTML);
+            let approved = $('.waiting-approval', $comment).length == 0;
+            if (approved) {
+                incrementCommentsCount('.recipe-comments .comments-title');
+            }
             // if this post already has comments
             if (commentlist.length > 0) {
 
@@ -66,7 +53,6 @@ $(document).ready(() => {
                 } else {
                     // simple comment
                     commentlist.prepend(addedCommentHTML);
-                    alert('main comment');
                 }
             } else {
                 // if no comments yet
@@ -80,13 +66,87 @@ $(document).ready(() => {
         };
 
         let form = '#commentform';
-
-        formSubmit({
+        let button = $(form + ' input[type="submit"]');
+        if (button.length == 0) {
+            button = $(form + ' button[type="submit"]');
+        }
+        let validator;
+        let submitHandler = formSubmit({
             form: form,
-            success: successCallback,
             ajaxUrl: '/wp/wp-admin/admin-ajax.php',
-            action: '&action=ajaxcomments'
+            action: '&action=ajaxcomments',
+            unbind: false,
+            ajaxSettings: {
+                beforeSend: function (xhr) {
+
+
+                    // TODO change to loader
+                    // what to do just after the form has been submitted
+                    button.addClass('loadingform').val('שולח...');
+                },
+                error: function (request, status, error) {
+                    let response = request.responseJSON;
+                    let errors = {comment: response.data.message};
+                    // Show errors on the form
+                    validator.showErrors(errors);
+                },
+                success: successCallback,
+                complete: function () {
+                    // TODO handle loader
+                    // what to do after a comment has been added
+                    button.removeClass('loadingform').val('שלח');
+                }
+            }
         });
+
+        validator = $commentForm.validate({
+            rules: {
+                comment: {
+                    required: true
+                }
+            },
+            messages: {
+                comment: {
+                    required: 'אנא הזנ/י תגובה'
+                }
+            }
+        });
+
+
+        attachCancelButton();
+
+
+        function attachCancelButton() {
+
+            $submitContainer = $('input[type="submit"]', $commentForm).parent();
+            $cancelButton = $('.cancel', $submitContainer);
+
+            if (!$cancelButton.length) {
+                $cancelButton = $('<input class="cancel" type="button" value="ביטול"/>');
+
+                $submitContainer.prepend($cancelButton);
+
+                $cancelButton.on('click', () => {
+                    $parent.add($commentForm).removeClass('open');
+                    validator.resetForm();
+                    $commentForm[0].reset();
+                });
+            }
+        }
+
+        function incrementCommentsCount(titleSelector) {
+            let title = $(titleSelector).text();
+            let matches = title.match(/\(([0-9]+)\)/);
+            if (matches && matches.length > 0) {
+                let count = parseInt(matches[1]);
+                if (!isNaN(count)) {
+                    count += 1;
+
+                    title = title.replace(/[0-9]+/, count);
+                    $(titleSelector).text(title);
+                }
+            }
+        }
 
 
         // load more button click event
@@ -99,7 +159,7 @@ $(document).ready(() => {
 
             analytics.event('show more comments', {
                 id: foodyGlobals.objectID,
-                type: foodyGlobals.post.type.replace('foody_',''),
+                type: foodyGlobals.post.type.replace('foody_', ''),
                 title: foodyGlobals.title,
                 page: cpage
             });

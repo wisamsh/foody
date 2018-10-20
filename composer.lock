@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff3136f664f5ab73b5c18371d5cead05",
+    "content-hash": "9e2ef977b5faf336d3371ce0554301ba",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -143,6 +143,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9MTMxNzg3fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTIzIDEyOjE1OjI5",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "gagan-deep-singh/fix-image-rotation",
+            "version": "2.1.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/fix-image-rotation.2.1.1.zip",
                 "reference": null,
                 "shasum": null
             },

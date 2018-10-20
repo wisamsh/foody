@@ -136,8 +136,6 @@ class Foody_Recipe extends Foody_Post
         $title = null;
 
         while (have_rows('notes', $this->post->ID)): the_row();
-
-
             $notes = get_sub_field('notes');
             $title = get_sub_field('title');
         endwhile;
@@ -589,5 +587,16 @@ class Foody_Recipe extends Foody_Post
         }
 
         return $label;
+    }
+
+    public function has_notes()
+    {
+        return have_rows('notes', $this->post->ID);
+    }
+
+    public function has_nutrients()
+    {
+        // TODO change check after implementing
+        return false;
     }
 }

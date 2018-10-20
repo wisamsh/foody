@@ -8,8 +8,10 @@ window.formSubmit = function (settings) {
     let $form = $(settings.form);
     let action = settings.action;
 
-    $form.submit(function (e) {
-
+    function handler(e) {
+        if (!$form.valid()) {
+            return;
+        }
         e.preventDefault();
         let button = $('input[type="submit"]', $form);
         if (button.length == 0) {
@@ -19,43 +21,32 @@ window.formSubmit = function (settings) {
         // if comment form isn't in process, submit it
         if (!button.hasClass('loadingform')) {
 
-            // ajax request
-            $.ajax({
+
+            let ajaxSettings = {
                 type: 'POST',
                 url: settings.ajaxUrl, // admin-ajax.php URL
                 data: $(this).serialize() + action, // send form data + action parameter
-                beforeSend: function (xhr) {
+            };
 
-                    // TODO change to loader
-                    // what to do just after the form has been submitted
-                    button.addClass('loadingform').val('Loading...');
-                },
-                error: function (request, status, error) {
-
-                    // TODO handle errors
-
-                    if (status == 500) {
-                        alert('Error while adding comment');
-                    } else if (status == 'timeout') {
-                        alert('Error: Server doesn\'t respond.');
-                    } else {
-                        // process WordPress errors
-                        let wpErrorHtml = request.responseText.split("<p>"),
-                            wpErrorStr = wpErrorHtml[1].split("</p>");
-
-                        alert(wpErrorStr[0]);
+            if (settings.ajaxSettings) {
+                for (let key in settings.ajaxSettings) {
+                    if (settings.ajaxSettings.hasOwnProperty(key)) {
+                        ajaxSettings[key] = settings.ajaxSettings[key];
                     }
-                },
-                success: settings.success,
-                complete: function () {
-                    // TODO handle loader
-                    // what to do after a comment has been added
-                    button.removeClass('loadingform').val('שלח');
                 }
-            });
+            }
+
+            // ajax request
+            $.ajax(ajaxSettings);
         }
         return false;
-    });
+    }
+
+    if (!settings.unbind) {
+        $form.submit(handler);
+    }
+
+    return handler;
 };
 
 

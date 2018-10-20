@@ -8,6 +8,12 @@
       .foody-select {
         width: 120px;
 
+        .btn{
+          &.dropdown-toggle{
+            z-index: 0;
+          }
+        }
+
         &:hover, &:active, &:focus{
           background-color: transparent;
           border-color: transparent;

@@ -49,7 +49,7 @@ class Foody_HowIDid
      */
     public function the_comments($args = [])
     {
-        $args = array_merge($args,$this->get_args());
+        $args = array_merge($args, $this->get_args());
 
         foody_get_template_part(get_template_directory() . '/template-parts/content-how-i-did-popup.php');
 
@@ -94,12 +94,11 @@ class Foody_HowIDid
     {
 
         $args = $this->get_args();
-        $args['count'] = true;
-        $count = get_comments($args);
+        unset($args['number']);
+        $comments = get_comments($args);
 
-        $comments_per_page = $options = get_option('hid_per_page', 3);
-
-        $num_of_pages = floor($count / $comments_per_page);
+        $comments_per_page = get_option('hid_per_page', 3);
+        $num_of_pages = get_comment_pages_count($comments, $comments_per_page);
 
         return $num_of_pages;
 

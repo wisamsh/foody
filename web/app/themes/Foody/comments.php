@@ -57,7 +57,7 @@ $foody_comments = new Foody_Comments();
 
 
         <?php
-        $cpage = get_query_var('cpage') ? get_query_var('cpage') : 1;
+        $cpage = get_query_var('cpage', 1);
 
 
         if ($cpage > 1) {

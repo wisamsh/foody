@@ -5,18 +5,25 @@ jQuery(document).ready(($) => {
 
     let $form = $('#login-form');
 
+    $.validator.addMethod(
+        "emailOrUsername",
+        function (value, element) {
+            return this.emal(element) || /^[^a-z0-9\s_.\-@]$/i.test(value);
+        }
+    );
+
     $form.validate({
         rules: {
             log: {
                 required: true,
-                email: true
+                emailOrUsername: true
             },
             pwd: {
                 required: true
             }
         },
         messages: {
-            log: 'כתובת המייל אינה תקינה',
+            log: 'כתובת המייל/שם המשתמש אינה תקינה',
             pwd: 'סיסמא אינה תקינה',
         },
         submitHandler: function (form) {

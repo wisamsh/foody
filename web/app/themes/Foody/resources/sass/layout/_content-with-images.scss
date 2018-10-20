@@ -37,3 +37,46 @@ body[class~='page-template-content-with-images'] {
   }
 
 }
+
+@include breakpoint(mobileonly) {
+
+  body[class~='page-template-content-with-images'] {
+
+    #page {
+      background: white;
+      .content-with-images {
+        .image-container {
+          img {
+
+          }
+          &.image-container-right {
+
+          }
+
+          &.image-container-left {
+            img {
+
+            }
+          }
+
+        }
+
+        .content {
+          padding-bottom: 40px;
+
+          form {
+            [type="submit"] {
+              width: 100%;
+            }
+          }
+        }
+
+      }
+    }
+  }
+
+  footer.site-footer {
+    position: absolute;
+    bottom: 0;
+  }
+}

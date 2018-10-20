@@ -15,7 +15,6 @@ $slider_data = [
     'rtl' => true,
     'prevArrow' => '<i class="icon-arrowleft prev"></i>',
     'nextArrow' => '<i class="icon-arrowleft next"></i>',
-    'adaptiveHeight' => true,
     'slidesToScroll' => 3,
     'infinite' => false,
     'responsive' => [
@@ -23,9 +22,16 @@ $slider_data = [
             'breakpoint' => 1441,
             'settings' => [
                 'slidesToShow' => 5,
-                'adaptiveHeight' => true,
-                'slidesToScroll' => 1,
-                'infinite' => false,
+                'arrows' => false,
+                'slidesToScroll' => 1
+            ]
+        ],
+        [
+            'breakpoint' => 1025,
+            'settings' => [
+                'slidesToShow' => 5,
+                'arrows' => false,
+                'slidesToScroll' => 1
             ]
         ],
         [
@@ -33,9 +39,7 @@ $slider_data = [
             'settings' => [
                 'slidesToShow' => 3,
                 'arrows' => false,
-                'adaptiveHeight' => true,
-                'slidesToScroll' => 1,
-                'infinite' => false,
+                'slidesToScroll' => 1
             ]
         ]
     ]
@@ -70,6 +74,7 @@ if (is_array($sub_categories)):
 
                 </a>
             </li>
+
 
         <?php endforeach; ?>
     </ul>

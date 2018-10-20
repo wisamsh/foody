@@ -12,6 +12,7 @@ $(document).ready(() => {
     $parent = $('.commentform-element');
     $comment = $('#comment');
     $uploadModal = $('#upload-image-modal');
+    $uploadDialog = $('#how-i-did-modal');
 
     let successCallback = function (addedCommentHTML) {
 
@@ -24,46 +25,23 @@ $(document).ready(() => {
         });
 
         $uploadModal.modal('hide');
-
-        //     respond = $('#respond'),
-        //     cancelreplylink = $('#cancel-comment-reply-link');
-        // // if this post already has comments
-        // if (commentlist.length > 0) {
-        //
-        //
-        //     let $repondParent = $(respond.parent()).parent();
-        //     // if in reply to another comment
-        //     if ($repondParent.hasClass('comment-body')) {
-        //
-        //         // if the other replies exist
-        //         if ($repondParent.next('.children').length) {
-        //             $repondParent.next('.children').append(addedCommentHTML);
-        //         } else {
-        //             // if no replies, add <ol class="children">
-        //             addedCommentHTML = '<ol class="children">' + addedCommentHTML + '</ol>';
-        //             $repondParent.append(addedCommentHTML);
-        //         }
-        //         // close respond form
-        //         cancelreplylink.trigger("click");
-        //     } else {
-        //         // simple comment
-        //         commentlist.prepend(addedCommentHTML);
-        //         alert('main comment');
-        //     }
-        // } else {
-        //     // if no comments yet
-        //     addedCommentHTML = '<ol class="comment-list">' + addedCommentHTML + '</ol>';
-        //     respond.before($(addedCommentHTML));
-        // }
-        // // clear textarea field
-        // $('#comment').val('');
-        //
-        // $parent.add($commentForm).removeClass('open');
     };
 
 
+    let $attachment =  $('#attachment');
+
+    // prevent upload if not logged in
+    $attachment.on('click',(e) => {
+        if (foodyGlobals.loggedIn == 'false') {
+            e.preventDefault();
+            showLoginModal();
+            return false;
+        }
+    });
+
+
     // show modal on input change
-    $('#attachment').on('change', function (e) {
+    $attachment.on('change', function (e) {
 
         let $modal = $('#upload-image-modal');
         $modal.modal('show');
@@ -71,7 +49,7 @@ $(document).ready(() => {
         readURL(this, $('img', $modal));
     });
 
-
+    // convert file to image
     function readURL(input, img) {
 
         if (input.files && input.files[0]) {
@@ -86,7 +64,7 @@ $(document).ready(() => {
                 // Update an image tag with loaded image source
                 $(img).attr('src', e.target.result);
                 // Use EXIF library to handle the loaded image exif orientation
-                EXIF.getData(input.files[0], function() {
+                EXIF.getData(input.files[0], function () {
 
                     // // Fetch image tag
                     // let img = $(img).get(0);
@@ -101,6 +79,7 @@ $(document).ready(() => {
         }
     }
 
+    // handle mobile image orientation
     function orientation(img, canvas) {
 
         // Set variables
@@ -113,7 +92,7 @@ $(document).ready(() => {
         console.log(height);
 
         // Check orientation in EXIF metadatas
-        EXIF.getData(img, function() {
+        EXIF.getData(img, function () {
             let allMetaData = EXIF.getAllTags(this);
             exifOrientation = allMetaData.Orientation;
             console.log('Exif orientation: ' + exifOrientation);
@@ -160,8 +139,8 @@ $(document).ready(() => {
         // Draw img into canvas
         ctx.drawImage(img, 0, 0, width, height);
 
-        $(img).attr('src',canvas.toDataURL());
-        img= null;
+        $(img).attr('src', canvas.toDataURL());
+        img = null;
         canvas = null;
     }
 
@@ -171,6 +150,7 @@ $(document).ready(() => {
     ];
 
     let $boundForm = $('#image-upload-hidden');
+
 
     inputsToBind.forEach((inputName) => {
         let inputSelector = 'input[name="' + inputName + '"]';
@@ -191,10 +171,7 @@ $(document).ready(() => {
         action: 'ajaxhow_i_did'
     });
 
-    $('.how-i-did-modal-open').on('click', function () {
-        if (!foodyGlobals.loggedIn) {
-            return showLoginModal();
-        }
+    $('.how-i-did-list').on('click','.how-i-did-modal-open', function () {
         let image = $(this).data('image');
         let user = $(this).data('user');
         let content = $(this).data('content');
@@ -207,21 +184,20 @@ $(document).ready(() => {
         $('#content', $modal).text(content);
     });
 
+
     // load more button click event
-
-
     $('a[data-context="how-i-did-list"]').click(function () {
         let button = $(this);
         let $context = $('.' + button.data('context'));
         // decrease the current comment page value
-        chpage--;
+        hidpage--;
         let submitText = button.html();
         $.ajax({
             url: ajaxurl,
             data: {
                 'action': 'hidloadmore',
                 'post_id': parent_post_id, // the current post
-                'chpage': chpage, // current comment page
+                'hidpage': hidpage, // current comment page
             },
             type: 'POST',
             beforeSend: function (xhr) {
@@ -233,7 +209,7 @@ $(document).ready(() => {
                     $context.append(data);
                     button.html(submitText);
                     // if the last page, remove the button
-                    if (chpage == 0)
+                    if (hidpage == 0)
                         button.remove();
                 } else {
                     button.remove();

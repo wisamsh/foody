@@ -69,7 +69,7 @@
                     <label for="email">
                         <?php echo __('כתובת מייל', 'foody') ?>
                     </label>
-                    <input type="email" id="email" name="log">
+                    <input type="text" id="email" name="log">
                 </div>
                 <div class="form-group col-12 required-input">
                     <label for="password">

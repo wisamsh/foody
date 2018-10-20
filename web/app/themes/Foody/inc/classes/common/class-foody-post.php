@@ -339,6 +339,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 'post_type' => $post_type,
                 'category__in' => $categories,
                 'posts_per_page' => 3,
+                'post_status' => 'publish',
                 'post__not_in' => [$this->post->ID],
                 'orderby' => 'rand',
             ]);
@@ -450,15 +451,17 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return false;
     }
 
-    public function js_vars(){
+    public function js_vars()
+    {
         return [
             'ID' => $this->post->ID,
-            'type'=> $this->post->post_type,
+            'type' => $this->post->post_type,
             'title' => $this->title
         ];
     }
 
-    public function featured_content_classes(){
+    public function featured_content_classes()
+    {
         return [];
     }
 

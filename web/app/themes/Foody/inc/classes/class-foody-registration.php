@@ -22,7 +22,10 @@ class Foody_Registration
     public function __construct()
     {
         add_action('login_form_register', array($this, 'do_register_user'));
-//        add_action('login_form_login', array($this, 'redirect_to_custom_login'));
+        add_action('login_form_login', array($this, 'redirect_to_custom_login'));
+        add_filter("login_redirect", array($this, 'redirect_admin'), 10, 3);
+
+
     }
 
     private function register_user($user_data)
@@ -255,6 +258,21 @@ class Foody_Registration
         }
     }
 
+
+    public function redirect_admin($redirect_to, $request, $user)
+    {
+
+        global $user;
+        if (isset($user->roles) && is_array($user->roles)) {
+            if (!user_can($user,'subscriber')) {
+                return admin_url();
+            } else {
+                return home_url();
+            }
+        } else {
+            return $redirect_to;
+        }
+    }
 
 }
 

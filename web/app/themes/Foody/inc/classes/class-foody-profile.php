@@ -67,11 +67,20 @@ class Foody_Profile
 
             echo '<h2 class="title">ספר המתכונים שלי</h2>';
 
-            echo '<section class="my-recipes-grid">';
 
-            $this->grid->loop($posts, 2);
+            $grid_args = [
+                'id' => 'my-recipes-grid',
+//                'responsive' => [
+//                    'tablet_l' => 'col-lg-12',
+//                    'tablet' => 'col-md-6',
+//                ],
+                'posts' => $posts,
+                'more' => false,
+                'cols' => 2
+            ];
 
-            echo '</section>';
+            foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php',$grid_args);
+
         } else {
             foody_get_template_part(get_template_directory() . '/template-parts/content-no-recipes.php');
         }
@@ -88,21 +97,26 @@ class Foody_Profile
         <h2 class="title">
             <?php echo __('מתכונים מערוצים', 'foody') ?>
         </h2>
-        <section class="my-channels-grid">
         <?php
 
         $posts = $this->foody_user->get_followed_content();
 
         $posts = array_map('Foody_Post::create', $posts);
 
-        $data_attrs = [
 
+        $grid_args = [
+            'id' => 'my-channels-grid',
+//            'responsive' => [
+//                'tablet_l' => 'col-lg-12',
+//                'tablet' => 'col-md-6',
+//            ],
+            'posts' => $posts,
+            'more' => false,
+            'cols' => 2
         ];
 
+        foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php',$grid_args);
 
-        $this->grid->loop($posts, 2, true, null, $data_attrs);
-
-        echo '</section>';
 
     }
 
@@ -114,12 +128,12 @@ class Foody_Profile
     {
         $list = $this->foody_user->get_followed_topics();
 
-        if (!is_null($list) && !empty($list)){
+        if (!is_null($list) && !empty($list)) {
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-user-managed-list.php',
                 $list
             );
-        }else{
+        } else {
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-no-followed-topics.php'
             );

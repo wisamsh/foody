@@ -107,7 +107,7 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
             'ID' => PHP_INT_MAX,
             'db_id' => PHP_INT_MAX,
             'title' => $login_title,
-            'url' => get_permalink(get_page_by_path('התחברות')),
+            'url' => wp_login_url(),
             'attr_title' => $login_title,
             'target' => '',
             'xfn' => '',

@@ -7,6 +7,7 @@
  */
 
 $args = $template_args;
+/** @var WP_Comment $comment */
 $comment = $template_args['comment'];
 
 if (!isset($args['max_depth'])) {
@@ -18,16 +19,22 @@ if (!isset($args['depth'])) {
 }
 ?>
 
-<article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
+<article id="div-comment-<?php comment_ID(); ?>"
+         class="comment-body">
 
     <div class="foody-comment">
 
         <?php echo get_avatar($comment, 54); ?>
 
         <div class="comment-body" id="comment-body-<?php echo $comment->comment_ID ?>">
+            <?php if (!$comment->comment_approved): ?>
+                <div class="waiting-approval title">
+                    <?php echo __('ממתין לאישור','foody')?>
+                </div>
+            <?php endif; ?>
             <?php printf(__('%s'), sprintf('<span class="author">%s</span>', get_comment_author_link($comment))); ?>
             <time>
-                <?php echo human_time_diff(get_comment_date('U'),date('U')) ?>
+                <?php echo human_time_diff(get_comment_date('U'), date('U')) ?>
             </time>
 
             <?php comment_text(); ?>

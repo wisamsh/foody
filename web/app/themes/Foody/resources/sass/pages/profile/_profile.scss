@@ -214,6 +214,173 @@ $sidebar-width: 22.5% !default;
   }
 }
 
+@include breakpoint(tablet-l){
+
+  .page-template-profile {
+
+    .container-fluid {
+
+      aside {
+
+        .foody-search-filter {
+        }
+      }
+
+      .content {
+        padding-top: 18px;
+        width: calc(100% - #{$sidebar-width});
+        background-color: #fff;
+
+        .breadcrumb {
+          padding-right: 15px;
+        }
+
+        .profile-top {
+
+          .user-details {
+            text-align: right;
+            padding-top: 23px;
+            padding-bottom: 0;
+            padding-right: 0;
+            margin: 0;
+
+            $my-channels-width: 100%;
+            @include my-channels($my-channels-width);
+
+            .my-channels {
+              padding: 20px;
+              margin-top: 15px;
+              background-color: $color__background-screen;
+
+              ul, .channels {
+                background-color: $color__background-screen;
+              }
+
+              ul.managed-list {
+                padding-top: 0;
+                padding-bottom: 0;
+              }
+
+              h2 {
+                font-size: 24px;
+                margin-bottom: 0;
+              }
+
+              .channels {
+
+                box-shadow: none;
+                padding-right: 0;
+
+                .managed-list {
+
+                  .managed-list-item {
+
+                    img {
+
+                    }
+
+                    .close {
+                      display: inline-block;
+
+                      > span {
+
+                      }
+                    }
+
+                    &:hover {
+                      .close {
+
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+
+            h1 {
+              margin-bottom: -4px !important;
+            }
+
+            .image-container {
+              margin-right: 20px;
+              img {
+                width: 70px;
+              }
+            }
+
+            .name-email {
+              place-self: flex-end;
+              .email {
+
+              }
+
+              .edit {
+                color: $color__text-primary-light;
+              }
+            }
+          }
+
+          .nav {
+            .nav-item {
+              a {
+
+                &:not(.active) {
+
+                  &:hover {
+
+                  }
+                }
+
+                &.active {
+                }
+              }
+            }
+          }
+        }
+
+        .profile-content {
+          background-color: $color__background-screen;
+          padding: 0;
+
+          h2 {
+            &.title {
+              padding-top: 30px;
+              font-size: 32px;
+            }
+          }
+
+          .tab-content {
+            padding: 0;
+            min-width: 100%;
+
+            .tab-pane {
+              padding: 0 17px;
+              h2 {
+                font-size: 24px;
+                padding: 16px 0;
+                margin-bottom: 0;
+              }
+              .recipe-item-container {
+                display: inline-block;
+                float: right;
+
+                .recipe-item-image {
+                }
+              }
+            }
+          }
+        }
+
+      }
+
+    }
+
+    footer {
+    }
+  }
+}
+
 @include breakpoint(mobileonly) {
   $sidebar-width: 0px;
 

@@ -110,6 +110,18 @@
           "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "gagan-deep-singh/fix-image-rotation",
+        "version": "2.1.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/fix-image-rotation.2.1.1.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -129,7 +141,8 @@
     "yoast/wordpress-seo": "^8.3",
     "saurabhshukla-yapapaya/widgets-in-menu": "^1.0",
     "mixpanel/mixpanel-php" : "^2.6",
-    "joe-dolson/wp-accessibility": "^1.6"
+    "joe-dolson/wp-accessibility": "^1.6",
+    "gagan-deep-singh/fix-image-rotation": "^2.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

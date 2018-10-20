@@ -48,7 +48,7 @@ get_header(); ?>
                                     </span>
                                     </div>
 
-                                    <section class="my-channels col d-sm-none d-block">
+                                    <section class="my-channels col d-xl-none d-block">
                                         <h2 class="title">
                                             הערוצים שלי
                                         </h2>
@@ -91,7 +91,7 @@ get_header(); ?>
                                     </div>
                                 </div>
                                 <!--  Followed authors and channels  -->
-                                <section class="my-channels col d-none d-sm-block pr-0">
+                                <section class="my-channels col d-none d-xl-block pr-0">
                                     <h2 class="title">
                                         הערוצים שלי
                                     </h2>

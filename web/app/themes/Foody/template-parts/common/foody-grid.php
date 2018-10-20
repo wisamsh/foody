@@ -15,6 +15,7 @@ $posts = $settings['posts'];
 $cols = $settings['cols'];
 $more = $settings['more'];
 $classes = foody_get_array_default($settings, 'classes', []);
+$responsive = foody_get_array_default($settings, 'responsive',null);;
 
 // TODO add sort and title
 if (!empty($settings['show_header'])) {
@@ -27,7 +28,7 @@ if (!empty($settings['show_header'])) {
 <section class="foody-grid <?php foody_el_classes($classes) ?>">
 
     <section class="row" id="<?php echo $id ?>">
-        <?php $grid->loop($posts, $cols) ?>
+        <?php $grid->loop($posts, $cols,true,null,[],$responsive) ?>
     </section>
 
     <?php if (!empty($posts) && $more && $grid->is_displayable($posts)): ?>
