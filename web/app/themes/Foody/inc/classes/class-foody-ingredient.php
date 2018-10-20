@@ -82,10 +82,10 @@ class Foody_Ingredient extends Foody_Post
 
             $content = implode($this->amounts_delimiter, array_map(function ($amount) use ($to_fraction) {
 
-
+                $display = call_user_func($to_fraction, $amount['amount']);
                 return
-                    '<span dir="ltr" class="amount" data-amount="' . $amount['amount'] . '">
-                        ' . call_user_func($to_fraction, $amount['amount']) . '
+                    '<span dir="ltr" class="amount" data-amount="' . $amount['amount'] . '" data-original="' . $display . '">
+                        ' . $display . '
                     </span>
                     <span class="unit">
                          ' . $amount['unit'] . '
@@ -112,10 +112,12 @@ class Foody_Ingredient extends Foody_Post
 
             $show_after_ingredient = get_field('show_after_ingredient', $unit_tax);
 
+            $display = $this->to_fraction($last['amount']);
+
             if ($show_after_ingredient) {
                 $ing_html = '
-                    <span dir="ltr" class="amount" data-amount="' . $last['amount'] . '">
-                        ' . $this->to_fraction($last['amount']) . '
+                    <span dir="ltr" class="amount" data-amount="' . $last['amount'] . '" data-original="'.$display.'">
+                        ' . $display. '
                     </span>
                     <span class="unit">
                         ' . $this->getTitle() . '
@@ -127,8 +129,8 @@ class Foody_Ingredient extends Foody_Post
 
             } else {
                 $ing_html = '
-                    <span dir="ltr" class="amount" data-amount="' . $last['amount'] . '">
-                        ' . $this->to_fraction($last['amount']) . '
+                    <span dir="ltr" class="amount" data-amount="' . $last['amount'] . '" data-original="'.$display.'">
+                        ' . $display . '
                     </span>
                     <span class="unit">
                          ' . $last['unit'] . '

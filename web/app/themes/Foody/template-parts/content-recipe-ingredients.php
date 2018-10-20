@@ -18,7 +18,8 @@ $ingredients_groups = $template_args;
         </h4>
         <ul class="ingredients-group-list">
 
-            <?php foreach ($ingredients_group['ingredients'] as $ingredient): ?>
+            <?php /** @var Foody_Ingredient $ingredient */
+            foreach ($ingredients_group['ingredients'] as $ingredient): ?>
 
                 <li class="ingredients">
 

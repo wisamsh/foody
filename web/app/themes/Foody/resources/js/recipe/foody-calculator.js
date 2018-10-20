@@ -22,14 +22,19 @@ window.calculator = function (selector) {
             return;
         }
 
+
         $elements.each(function () {
 
             let $this = $(this);
             let base = $this.data('amount') / originalNumberOfDishes;
 
             let calculated = base * val;
+            let text = calculated.toFixed(2);
+            if (val == originalNumberOfDishes) {
+                text = $this.data('original');
+            }
 
-            $this.text(calculated.toFixed(2));
+            $this.text(text);
         })
     });
 

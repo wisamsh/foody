@@ -15,14 +15,12 @@ jQuery(document).ready(($) => {
 
         $('a[href="#' + target + '"]').click();
     });
-    //
-    // titles.click(function (e) {
-    //
-    //
-    //     e.stopPropagation();
-    //     $('a',this).click();
-    //
-    // });
+
+    $('.foody-accordion-title').on('click', 'i', function () {
+        let $icon = $(this);
+
+        $icon.next('a').click();
+    })
 
 
 });
