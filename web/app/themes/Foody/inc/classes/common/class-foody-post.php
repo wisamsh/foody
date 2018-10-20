@@ -235,7 +235,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_featured_content()
     {
-        the_post_thumbnail(array(1099, 542));
+        the_post_thumbnail('foody-main');
     }
 
     public function the_sidebar_content()
