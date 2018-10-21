@@ -14,7 +14,7 @@ input[type="datetime"],
 input[type="datetime-local"],
 input[type="color"],
 textarea {
-  font-family:$font__assistant;
+  font-family: $font__assistant;
   color: $color__text-input;
   border: 1px solid $color__border-input;
   border-radius: 3px;
@@ -25,8 +25,8 @@ textarea {
     color: $color__text-input-focus;
   }
 
-  &.error{
-    border: solid 2px rgba(255,0,0,.7) !important;
+  &.error {
+    border: solid 2px rgba(255, 0, 0, .7) !important;
   }
 }
 
@@ -60,15 +60,18 @@ $mdb-checkbox-size: 15px;
 .dropdown {
   &.bootstrap-select {
     &.foody-select {
+      max-width: 220px;
+      //noinspection CssInvalidPropertyValue
+      width: stretch;
 
-      button{
-        &:hover{
+      button {
+        &:hover {
           background: none;
         }
-        &:active{
+        &:active {
           background: none;
         }
-        &:focus{
+        &:focus {
           background: none;
         }
 
@@ -150,7 +153,7 @@ $md-checkbox-label-padding: .75em;
     display: inline-block;
   }
 
-  &[disabled='disabled']{
+  &[disabled='disabled'] {
     opacity: .3;
     pointer-events: none;
   }
@@ -186,8 +189,8 @@ $md-checkbox-label-padding: .75em;
     }
   }
 
-  label{
-    &.error{
+  label {
+    &.error {
       &:before {
         // box
         border: $md-checkbox-border-width solid red;
@@ -248,7 +251,7 @@ $md-checkbox-label-padding: .75em;
 label.error {
   text-align: right;
   display: block;
-  color:red !important;
+  color: red !important;
   font-family: $font__assistant;
   font-size: 18px;
   font-weight: bold;

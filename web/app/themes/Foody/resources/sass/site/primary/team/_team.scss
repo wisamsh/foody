@@ -8,36 +8,40 @@
       .foody-select {
         width: 120px;
 
-        .btn{
-          &.dropdown-toggle{
+        .btn {
+          &.dropdown-toggle {
             z-index: 0;
+
+            &:after {
+              top: 50%;
+            }
           }
         }
 
-        &:hover, &:active, &:focus{
+        &:hover, &:active, &:focus {
           background-color: transparent;
           border-color: transparent;
         }
 
-        &.dropdown-toggle{
+        &.dropdown-toggle {
           outline: none;
         }
       }
     }
 
-    #content{
-      > .container{
+    #content {
+      > .container {
         padding-top: 15px;
       }
     }
 
-    .team-listing{
+    .team-listing {
 
-      .author{
+      .author {
         opacity: .7;
         transition: opacity .3s;
 
-        &:hover{
+        &:hover {
           opacity: 1;
         }
       }
@@ -49,9 +53,9 @@
 
   .page-template {
     &.team {
-      .team-listing{
+      .team-listing {
         padding-right: 0;
-        .author{
+        .author {
           opacity: 1;
         }
       }
