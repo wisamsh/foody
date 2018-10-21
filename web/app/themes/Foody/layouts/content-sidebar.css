@@ -19,11 +19,6 @@
 	overflow: hidden;
 	width: 25%;
 }
-.site-footer {
-	clear: both;
-	width: 100%;
-}
-
 .no-sidebar .content-area {
 	float: none;
 	margin-left: auto;

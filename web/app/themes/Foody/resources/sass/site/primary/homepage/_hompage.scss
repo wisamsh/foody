@@ -110,7 +110,6 @@ $sidebar-top-offset: 60px;
         padding-right: 0;
         min-height: max-content;
 
-
         aside {
           // min items
           //width: 100%;
@@ -122,7 +121,6 @@ $sidebar-top-offset: 60px;
           ///* bottom: 0; */
           //min-height: 100%;
           //display: flow-root;
-
 
           // max items
 
@@ -138,19 +136,17 @@ $sidebar-top-offset: 60px;
           $input-margin: 4px;
           $input-side-offset: 15px;
 
-
           @import "../../../common/foody-autocomplete";
 
+          .foody-search-form {
 
-          .foody-search-form{
-
-            .search-bar{
+            .search-bar {
               transition: all .25s;
-              .algolia-autocomplete{
+              .algolia-autocomplete {
                 width: 100%;
 
-                input{
-                  &.search{
+                input {
+                  &.search {
                     width: calc(100% - #{$input-side-offset});
                     height: $input-height;
                     margin-bottom: $input-margin;
@@ -169,13 +165,12 @@ $sidebar-top-offset: 60px;
                 }
               }
             }
-            .foody-dropdown-menu{
+            .foody-dropdown-menu {
               width: calc(100% - #{$input-side-offset});
               margin-right: 15px;
               margin-top: 0;
             }
           }
-
 
           .sidebar-content {
             // min items
@@ -186,7 +181,6 @@ $sidebar-top-offset: 60px;
             //height: 100%;
             //background: blue;
             //min-height: stretch;
-
 
             // max items
 
@@ -260,12 +254,7 @@ $sidebar-top-offset: 60px;
 
 .page-template-homepage {
   footer.site-footer {
-    width: 79%;
-    margin-right: 21%;
-    position: absolute;
-    left: 0;
     bottom: -$sidebar-top-offset;
-    //bottom: 0;
   }
 }
 
@@ -506,17 +495,6 @@ $sidebar-top-offset: 60px;
         }
       }
 
-    }
-  }
-
-  .page-template-homepage {
-    footer.site-footer {
-      max-width: 100%;
-      margin-right: 0;
-      margin-top: 0;
-      position: unset;
-      bottom: 0;
-      width: 100%;
     }
   }
 }
