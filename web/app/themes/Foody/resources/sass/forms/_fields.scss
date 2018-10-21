@@ -60,6 +60,20 @@ $mdb-checkbox-size: 15px;
 .dropdown {
   &.bootstrap-select {
     &.foody-select {
+
+      button{
+        &:hover{
+          background: none;
+        }
+        &:active{
+          background: none;
+        }
+        &:focus{
+          background: none;
+        }
+
+        outline: none !important;
+      }
       .filter-option {
         color: $color__text-primary-dark;
         padding: 0;

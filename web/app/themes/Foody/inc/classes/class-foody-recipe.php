@@ -538,19 +538,10 @@ class Foody_Recipe extends Foody_Post
             foreach ($array as $item) {
                 $post_id = $item->ID;
                 $items[] = '<li><a href="' . get_permalink($post_id) . '">' . get_the_title($post_id) . '</a></li>';
-
-                if ($this->debug) {
-                    $items[] = '<li><a href="' . get_permalink($post_id) . '">' . get_the_title($post_id) . '</a></li>';
-                    $items[] = '<li><a href="' . get_permalink($post_id) . '">' . get_the_title($post_id) . '</a></li>';
-                    $items[] = '<li><a href="' . get_permalink($post_id) . '">' . get_the_title($post_id) . '</a></li>';
-                    $items[] = '<li><a href="' . get_permalink($post_id) . '">' . get_the_title($post_id) . '</a></li>';
-                }
             }
 
             echo sprintf($list, implode('', $items));
         }
-
-
     }
 
     public function the_details()
@@ -598,5 +589,37 @@ class Foody_Recipe extends Foody_Post
     {
         // TODO change check after implementing
         return false;
+    }
+
+    public function calculator()
+    {
+        $pan_conversion = get_field('ingredients_use_pan_conversion', $this->id);
+
+
+        if ($pan_conversion) {
+
+            $pan = get_field('ingredients_pan', $this->id);
+            if ($pan) {
+                $pan = get_term($pan, 'pans');
+                $conversions = get_field('conversions', $pan);
+                if (!empty($conversions)) {
+
+                    foody_get_template_part(
+                        get_template_directory() . '/template-parts/content-recipe-calculator-pans.php',
+                        [
+                            'pan' => $pan,
+                            'conversions' => $conversions
+                        ]
+                    );
+
+                }
+            }
+
+        } else {
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/content-recipe-calculator-dishes.php',
+                ['recipe' => $this]
+            );
+        }
     }
 }

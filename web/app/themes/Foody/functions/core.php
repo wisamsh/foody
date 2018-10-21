@@ -1687,3 +1687,16 @@ function foody_is_tablet()
 
     return $tablet_browser;
 }
+
+function foody_array_to_data_attr($data)
+{
+    if (empty($data)) {
+        return '';
+    }
+    $data_attrs = '';
+    foreach ($data as $key => $value) {
+        $data_attrs .= " data-$key='$value'";
+    }
+
+    return $data_attrs;
+}

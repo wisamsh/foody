@@ -23,20 +23,38 @@ window.calculator = function (selector) {
         }
 
 
-        $elements.each(function () {
+        updateIngredients($elements, originalNumberOfDishes, val);
 
-            let $this = $(this);
-            let base = $this.data('amount') / originalNumberOfDishes;
-
-            let calculated = base * val;
-            let text = calculated.toFixed(2);
-            if (val == originalNumberOfDishes) {
-                text = $this.data('original');
-            }
-
-            $this.text(text);
-        })
     });
 
 
+    $('#pan-conversions').on('changed.bs.select', function () {
+        let val = $(this).val();
+
+
+        let $option = $(this).find(':selected');
+
+        let original = $option.data('original');
+
+        updateIngredients($elements, 1, val, original);
+
+    });
+
 };
+
+
+function updateIngredients($elements, originalNumberOfDishes, val, reset) {
+    $elements.each(function () {
+
+        let $this = $(this);
+        let base = $this.data('amount') / originalNumberOfDishes;
+
+        let calculated = base * val;
+        let text = calculated.toFixed(2);
+        if (val == originalNumberOfDishes || reset) {
+            text = $this.data('original');
+        }
+
+        $this.text(text);
+    })
+}

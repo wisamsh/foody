@@ -139,6 +139,18 @@ $content-width: 70% !default;
           padding-left: 0;
           $input-height: 44px;
 
+          .foody-select {
+
+            .filter-option {
+              .filter-option-inner-inner {
+                white-space: normal;
+                line-height: normal;
+                padding-left: 4px;
+              }
+            }
+
+          }
+
           label {
             font-size: 24px;
             padding-left: 12px;
