@@ -11,7 +11,8 @@ jQuery(document).ready(($) => {
     let filter = new FoodySearchFilter({
         selector: '.homepage #accordion-foody-filter',
         grid: '#homepage-feed',
-        cols: 3
+        cols: 3,
+        searchButton: '.show-recipes'
     });
 
     // search and filter pager
@@ -30,6 +31,14 @@ jQuery(document).ready(($) => {
         let $closeBtn = $('.close', $mobileFilter);
 
         if ($mobileFilterBtn.length) {
+            $('.md-checkbox').on('click', (e) => {
+                e.stopPropagation();
+            });
+
+
+            $('.show-recipes', $mobileFilter).click(function () {
+                closeMobileFilter();
+            });
             $mobileFilterBtn.click((event) => {
                 event.stopPropagation();
                 $mobileFilter.addClass('open');

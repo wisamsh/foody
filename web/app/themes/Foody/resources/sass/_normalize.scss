@@ -50,6 +50,7 @@ body {
     overflow: hidden;
     &:after {
       opacity: .8;
+      pointer-events: initial;
     }
   }
 
