@@ -462,6 +462,9 @@ class Foody_Recipe extends Foody_Post
             while (have_rows('ingredients', $this->post->ID)): the_row();
 
                 $this->number_of_dishes = get_sub_field('number_of_dishes');
+                if(empty($this->number_of_dishes)){
+                    $this->number_of_dishes = 1;
+                }
                 $this->amount_for = get_sub_field('amount_for');
                 $this->ingredients_title = get_sub_field('title');
                 $current_group = 0;

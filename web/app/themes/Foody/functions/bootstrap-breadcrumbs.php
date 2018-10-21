@@ -60,6 +60,17 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
 
             array_pop($parents);
 
+            ?>
+
+            <li>
+                <?php $categories_page = get_page_by_path('קטגוריות') ?>
+                <a href="<?php echo get_permalink($categories_page) ?>">
+                    <?php echo get_the_title($categories_page) ?>
+                </a>
+            </li>
+
+            <?php
+
             foreach ($parents as $parent) {
 
                 ?>

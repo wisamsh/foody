@@ -253,13 +253,13 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 }
             );
 
-            $playlists = $this->get_related_content_by_categories('foody_playlist');
+            $playlists = $this->get_related_content_by_categories_and_custom('foody_playlist', 'related_playlists');
 
             $this->related_content($playlists_args, $playlists);
         }
 
         if (!isset($args['hide_recipes']) || $args['hide_recipes'] == false) {
-            $recipes = $this->get_related_content_by_categories('foody_recipe');
+            $recipes = $this->get_related_content_by_categories_and_custom('foody_recipe', 'related_recipes');
 
             $recipes_args = array(
                 'title' => 'מתכונים נוספים',
@@ -330,22 +330,35 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     }
 
-    private function get_related_content_by_categories($post_type)
+    private function get_related_content_by_categories_and_custom($post_type, $selector)
     {
         $posts = [];
-        $categories = wp_get_post_categories($this->post->ID);
+        $related = get_field($selector, $this->id);
+        if (!empty($related)) {
+            $posts = $related;
+        }
+
+        $items_to_fetch = 3 - count($posts);
+
+        $posts_to_exclude = array_map(function ($post) {
+            return $post->ID;
+        }, $posts);
+
+        $posts_to_exclude[]= $this->id;
+
+        $categories = wp_get_post_categories($this->id);
         if (!is_wp_error($categories)) {
 
             $query = new WP_Query([
                 'post_type' => $post_type,
-                'category__in' => $categories,
-                'posts_per_page' => 3,
+                'category__and' => $categories,
+                'number' => $items_to_fetch,
                 'post_status' => 'publish',
-                'post__not_in' => [$this->post->ID],
+                'post__not_in' =>  $posts_to_exclude,
                 'orderby' => 'rand',
             ]);
 
-            $posts = $query->get_posts();
+            $posts = array_merge($posts, $query->get_posts());
         }
 
         return $posts;
