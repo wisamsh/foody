@@ -1,6 +1,5 @@
 $content-width: 79%;
 $feed-header-height: 60px;
-$footer-height: 180px;
 $sidebar-top-offset: 60px;
 .homepage {
 
@@ -123,7 +122,6 @@ $sidebar-top-offset: 60px;
           //display: flow-root;
 
           // max items
-
           width: 100%;
           padding-right: 0;
           left: 0;
@@ -135,6 +133,10 @@ $sidebar-top-offset: 60px;
           $input-height: 57px;
           $input-margin: 4px;
           $input-side-offset: 15px;
+
+          .fb-page, .fb-page span, .fb-page span iframe[style] {
+            width: 100% !important;
+          }
 
           @import "../../../common/foody-autocomplete";
 
@@ -211,7 +213,6 @@ $sidebar-top-offset: 60px;
         width: $content-width;
         max-width: $content-width;
         flex: 0 0 $content-width;
-        margin-bottom: $footer-height;
         article {
 
           &.feed {
@@ -562,7 +563,13 @@ $sidebar-top-offset: 60px;
           }
         }
 
+        //$sidebar-width:35%;
+        //$content-width:calc(100% - #{$sidebar-width});
+
         .content-container {
+          //width: $content-width;
+          //max-width: $content-width;
+          //flex: 0 0 $content-width;
           article {
 
             &.feed {
@@ -621,11 +628,22 @@ $sidebar-top-offset: 60px;
       }
 
       aside {
-
+        height: 95%;
+        overflow-y: scroll;
         li.widget, .sidebar-section {
         }
 
+        li.widget, .categories-accordion-widget {
+          display: none !important;
+        }
+
         .sidebar-content {
+          height: 100%;
+
+          .foody-search-filter {
+            height: 100%;
+            border-bottom: 0;
+          }
 
           #accordion-foody-filter {
 

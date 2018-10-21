@@ -11,7 +11,14 @@
 $pan = $template_args['pan'];
 $conversions = $template_args['conversions'];
 
+
 $options = array_map(function ($conversion) {
+
+    // TODO remove after checking with the Krut
+    if(empty($conversion['pan'])){
+        $conversion['pan'] = $conversion['תבנית'];
+    }
+
     return [
         'value' => $conversion['conversion_rate'],
         'label' => get_term($conversion['pan'])->name
