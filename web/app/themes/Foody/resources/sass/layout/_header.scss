@@ -260,6 +260,7 @@ header {
         clip-path: circle();
         border-radius: 50%;
         border: 2px solid $color__primary;
+        max-width: 52px;
       }
 
       .navbar-collapse {

@@ -76,7 +76,6 @@ $sidebar-width: 22.5% !default;
       min-height: stretch;
       border-left: 1px solid $color__divider;
       background-color: #fff;
-      margin-bottom: -#{$size__site-footer};
       padding: 44px 30px;
       position: relative;
       #foody-filter {
@@ -111,6 +110,7 @@ $sidebar-width: 22.5% !default;
               border: 2px solid $color__primary;
               -webkit-clip-path: circle();
               clip-path: circle();
+              max-width: 90px;
               border-radius: 50%;
             }
           }

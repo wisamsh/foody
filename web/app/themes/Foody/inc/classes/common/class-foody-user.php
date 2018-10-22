@@ -173,7 +173,7 @@ class Foody_User
 
     public function get_image($size = '52')
     {
-        $image = $GLOBALS['images_dir'] . 'avatar.png';
+
         if ($this->user->ID > 0) {
             $user_images = get_user_meta($this->user_id, 'wp_user_avatars', true);
             if (!empty($user_images) && is_array($user_images)) {
@@ -190,7 +190,14 @@ class Foody_User
                 }
 
                 $image = $user_images[$size];
+            } else {
+                $image = wsl_get_wp_user_custom_avatar('gravatar.com',$this->user->ID,$size,'','');
+
             }
+        }
+
+        if (empty($image)) {
+            $image = $GLOBALS['images_dir'] . 'avatar.png';
         }
 
         return $image;
