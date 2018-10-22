@@ -33,7 +33,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public $favorite = false;
 
-    public const MAX__RELATED_ITEMS = 3;
+    public static $MAX__RELATED_ITEMS = 3;
 
 
     public $post;
@@ -343,7 +343,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $posts = $related;
         }
 
-        $items_to_fetch = self::MAX__RELATED_ITEMS - count($posts);
+        $items_to_fetch = self::$MAX__RELATED_ITEMS - count($posts);
 
         if ($items_to_fetch > 0) {
             $posts_to_exclude = array_map(function ($post) {
