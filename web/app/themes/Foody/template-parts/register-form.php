@@ -28,28 +28,18 @@ echo do_shortcode('[wordpress_social_login]');
         <div class="row">
 
             <div class="row col-12 justify-content-between gutter-0 buttons">
-<!--                <a class="col-12 col-sm-5" target="_top"-->
-<!--                   href="-->
-<!--            --><?php //echo WP_HOME ?><!--/wp/wp-login.php?action=wordpress_social_authenticate&mode=login&provider=Google&redirect_to=-->
-<!--            --><?php //echo urlencode(WP_HOME) ?><!--">-->
                     <button class="btn btn-google col-12 col-sm-5">
                                 <span>
                                     <?php echo __('כניסה דרך גוגל', 'foody') ?>
                                 </span>
                         <span class="icon-google"></span>
                     </button>
-<!--                </a>-->
-<!--                <a class="col-12 col-sm-5" target="_top"-->
-<!--                   href="-->
-<!--            --><?php //echo WP_HOME ?><!--/wp/wp-login.php?action=wordpress_social_authenticate&mode=login&provider=Facebook&redirect_to=-->
-<!--            --><?php //echo urlencode(WP_HOME) ?><!--">-->
                     <button class="btn btn-facebook col-12 col-sm-5">
                                 <span>
                                     <?php echo __('הירשמו דרך פייסבוק', 'foody') ?>
                                 </span>
                         <span class="icon-facebook"></span>
                     </button>
-<!--                </a>-->
             </div>
 
             <div class="row col-12 justify-content-between gutter-0 dividers">
