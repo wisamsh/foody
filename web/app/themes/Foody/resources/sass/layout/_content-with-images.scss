@@ -36,6 +36,15 @@ body[class~='page-template-content-with-images'] {
 
   }
 
+  footer{
+    &.site-footer{
+      margin-right: 0;
+      width: 100%;
+      max-width:100%;
+      bottom: unset;
+    }
+  }
+
 }
 
 @include breakpoint(mobileonly) {

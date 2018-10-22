@@ -33,6 +33,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public $favorite = false;
 
+    public const MAX__RELATED_ITEMS = 3;
+
 
     public $post;
 
@@ -335,30 +337,35 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         $posts = [];
         $related = get_field($selector, $this->id);
         if (!empty($related)) {
+//            $posts = array_filter($related,function ($item){
+//                return $item->ID != $this->id;
+//            });
             $posts = $related;
         }
 
-        $items_to_fetch = 3 - count($posts);
+        $items_to_fetch = self::MAX__RELATED_ITEMS - count($posts);
 
-        $posts_to_exclude = array_map(function ($post) {
-            return $post->ID;
-        }, $posts);
+        if ($items_to_fetch > 0) {
+            $posts_to_exclude = array_map(function ($post) {
+                return $post->ID;
+            }, $posts);
 
-        $posts_to_exclude[] = $this->id;
+            $posts_to_exclude[] = $this->id;
 
-        $categories = wp_get_post_categories($this->id);
-        if (!is_wp_error($categories)) {
+            $categories = wp_get_post_categories($this->id);
+            if (!is_wp_error($categories)) {
 
-            $query = new WP_Query([
-                'post_type' => $post_type,
-                'category__and' => $categories,
-                'number' => $items_to_fetch,
-                'post_status' => 'publish',
-                'post__not_in' => $posts_to_exclude,
-                'orderby' => 'rand',
-            ]);
+                $query = new WP_Query([
+                    'post_type' => $post_type,
+                    'category__and' => $categories,
+                    'number' => $items_to_fetch,
+                    'post_status' => 'publish',
+                    'post__not_in' => $posts_to_exclude,
+                    'orderby' => 'rand',
+                ]);
 
-            $posts = array_merge($posts, $query->get_posts());
+                $posts = array_merge($posts, $query->get_posts());
+            }
         }
 
         return $posts;

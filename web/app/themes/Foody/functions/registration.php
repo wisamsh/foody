@@ -69,3 +69,11 @@ function foody_user_logout()
 
 
 add_action('clear_auth_cookie', 'foody_user_logout', 10, 2);
+
+
+function social_login_redirect($user_id, $provider, $hybridauth_user_profile, $redirect_to)
+{
+    $redirect_to = $redirect_to;
+}
+
+add_action('wsl_hook_process_login_before_wp_safe_redirect', 'social_login_redirect',10,4);
