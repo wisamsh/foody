@@ -789,20 +789,21 @@ function wsl_process_login_update_wsl_user_data( $is_new_user, $user_id, $provid
 
 	// map hybridauth user profile to buddypress xprofile table, if enabled
 	// > Profile mapping will only work with new users. Profile mapping for returning users will implemented in future version of WSL.
-	if( $is_new_user )
-	{
-		wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_profile );
-	}
-
-	// import user contacts into wslusersprofiles, if enabled
-	// > wsl will only import the contacts list once per user per provider.
-	wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter );
+//	if( $is_new_user )
+//	{
+//		wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_profile );
+//	}
+//
+//	// import user contacts into wslusersprofiles, if enabled
+//	// > wsl will only import the contacts list once per user per provider.
+//	wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter );
 }
 
 // --------------------------------------------------------------------
 
 /**
-* Authenticate a user within wordpress
+* Authenticate a user within WordPress.
+* This is the final stage in the authentication flow
 *
 * Ref: http://codex.wordpress.org/Function_Reference/wp_set_auth_cookie
 * Ref: http://codex.wordpress.org/Function_Reference/wp_safe_redirect

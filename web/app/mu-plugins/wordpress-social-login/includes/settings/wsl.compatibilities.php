@@ -81,7 +81,7 @@ function wsl_update_compatibilities()
 
 	if( ! get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) )
 	{
-		update_option( 'wsl_settings_bouncer_accounts_linking_enabled', 1 );
+		update_option( 'wsl_settings_bouncer_accounts_linking_enabled', 2 );
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) )

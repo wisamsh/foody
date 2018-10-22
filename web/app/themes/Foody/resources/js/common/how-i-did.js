@@ -13,6 +13,7 @@ $(document).ready(() => {
     $comment = $('#comment');
     $uploadModal = $('#upload-image-modal');
     $uploadDialog = $('#how-i-did-modal');
+    let $boundForm = $('#image-upload-hidden');
 
     let successCallback = function (addedCommentHTML) {
 
@@ -25,6 +26,8 @@ $(document).ready(() => {
         });
 
         $uploadModal.modal('hide');
+        $commentForm[0].reset();
+        $boundForm[0].reset();
     };
 
 
@@ -149,7 +152,7 @@ $(document).ready(() => {
         'comment'
     ];
 
-    let $boundForm = $('#image-upload-hidden');
+
 
 
     inputsToBind.forEach((inputName) => {
@@ -162,6 +165,7 @@ $(document).ready(() => {
     $('button[type="submit"]', $commentForm).click((e) => {
         e.preventDefault();
         $boundForm.trigger('submit');
+
     });
 
     formSubmitWithFiles({

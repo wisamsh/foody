@@ -51,7 +51,7 @@ $foody_how_i_did = new Foody_HowIDid();
                              תעלו תמונה להשוויץ
                         </span>
                 </label>
-                <input id="attachment" type="file" name="attachment">
+                <input id="attachment" type="file" name="attachment" accept="image/*">
                 <input id="comment" type="hidden" name="comment">
                 <input name="post_id" type="hidden" value="<?php echo get_the_ID() ?>">
             </form>

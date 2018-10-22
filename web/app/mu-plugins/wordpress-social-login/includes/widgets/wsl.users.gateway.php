@@ -86,7 +86,8 @@ function wsl_process_login_new_users_gateway($provider, $redirect_to, $hybridaut
 
             $shall_pass = true;
         }
-    } elseif (isset($_REQUEST["bouncer_profile_completion"])) {
+    }
+    elseif (isset($_REQUEST["bouncer_profile_completion"])) {
         // Bouncer::Profile Completion enabled?
         // > if not enabled we just let the user pass
         if ($require_email == 2 && $change_username == 2 && $extra_fields == 2) {

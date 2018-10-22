@@ -59,8 +59,8 @@ $(document).ready(() => {
                 addedCommentHTML = '<ol class="comment-list">' + addedCommentHTML + '</ol>';
                 respond.before($(addedCommentHTML));
             }
-            // clear textarea field
-            $('#comment').val('');
+
+            $commentForm[0].reset();
 
             $parent.add($commentForm).removeClass('open');
         };
