@@ -344,7 +344,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             return $post->ID;
         }, $posts);
 
-        $posts_to_exclude[]= $this->id;
+        $posts_to_exclude[] = $this->id;
 
         $categories = wp_get_post_categories($this->id);
         if (!is_wp_error($categories)) {
@@ -354,7 +354,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 'category__and' => $categories,
                 'number' => $items_to_fetch,
                 'post_status' => 'publish',
-                'post__not_in' =>  $posts_to_exclude,
+                'post__not_in' => $posts_to_exclude,
                 'orderby' => 'rand',
             ]);
 
