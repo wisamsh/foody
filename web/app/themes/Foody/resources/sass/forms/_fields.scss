@@ -65,6 +65,10 @@ $mdb-checkbox-size: 15px;
       //noinspection CssInvalidPropertyValue
       width: stretch;
 
+      &.show{
+        z-index: 1;
+      }
+
       button {
         &:hover {
           background: none;

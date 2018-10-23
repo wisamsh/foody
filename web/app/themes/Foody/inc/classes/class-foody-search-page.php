@@ -54,7 +54,11 @@ class Foody_SearchPage implements Foody_ContentWithSidebar
             'id' => 'search-results',
             'cols' => 3,
             'posts' => $foody_posts,
-            'more' => $this->foody_query->has_more_posts($query)
+            'more' => $this->foody_query->has_more_posts($query),
+            'header' =>[
+                'sort'=>true,
+                'title' => get_search_query()
+            ]
         ];
 
         foody_get_template_part(

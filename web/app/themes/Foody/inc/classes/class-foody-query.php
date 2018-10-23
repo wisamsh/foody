@@ -76,7 +76,7 @@ class Foody_Query
     {
         $args = self::get_args([
             'post_type' => ['foody_recipe', 'foody_playlist'],
-            's' => $this->get_query('s')
+            's' => get_search_query()
         ]);
 
 

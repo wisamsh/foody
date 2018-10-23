@@ -55,7 +55,7 @@ $default_sort_options = [
                     <?php echo $grid_header['title'] ?>
                 </h2>
             <?php endif; ?>
-            <?php if (!empty($grid_header['sort'])):
+            <?php if (!empty($grid_header['sort']) && !empty($posts) && count($posts) > 1):
                 $sort = $grid_header['sort'];
                 $options = empty($sort['options']) ? $default_sort_options : $sort['options'];
                 $sort_args = [

@@ -12,7 +12,8 @@ jQuery(document).ready(($) => {
     let searchPager = new FoodyContentPaging({
         context: 'search',
         contextArgs: [],
-        filter: filter
+        filter: filter,
+        sort:'#sort-search-results'
     });
 
 

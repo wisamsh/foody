@@ -40,7 +40,8 @@ body[class~='search'] {
     }
 
     .search-results {
-
+      max-width: 100%;
+      padding: 0 18px;
       .recipe-item-container {
         .recipe-item {
           .recipe-item-image {
@@ -69,15 +70,15 @@ body[class~='search'] {
   }
 }
 
-@include breakpoint(mobileonly){
+@include breakpoint(mobileonly) {
   body[class~='search'] {
-    #page{
+    #page {
       position: initial;
     }
 
-    footer{
-      position: absolute;
-      //bottom: 0;
+    footer {
+      position: absolute !important;
+      bottom: unset;
     }
   }
 }
