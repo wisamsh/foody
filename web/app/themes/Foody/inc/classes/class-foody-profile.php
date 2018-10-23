@@ -79,7 +79,7 @@ class Foody_Profile
                 'cols' => 2
             ];
 
-            foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php',$grid_args);
+            foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
 
         } else {
             foody_get_template_part(get_template_directory() . '/template-parts/content-no-recipes.php');
@@ -115,7 +115,7 @@ class Foody_Profile
             'cols' => 2
         ];
 
-        foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php',$grid_args);
+        foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
 
 
     }
@@ -154,7 +154,7 @@ class Foody_Profile
 
     public function channels_tab()
     {
-        $results = $this->foody_user->get_followed_content(0, 10, true);
+        $results = $this->foody_user->get_followed_content(0, 12, true);
         $count = 0;
         if (isset($results[0]) && isset($results[0]->count)) {
             $count = $results[0]->count;
@@ -162,5 +162,87 @@ class Foody_Profile
 
 
         echo '<span>' . sprintf('מתכונים מערוצים (%s)', $count) . '</span>';
+    }
+
+    public function the_content()
+    {
+
+
+        $followed = $this->foody_user->get_followed_content();
+        $followed = array_map('Foody_Post::create',$followed);
+        $results = $this->foody_user->get_followed_content(0, 12, true);
+        $count = 0;
+        if (isset($results[0]) && isset($results[0]->count)) {
+            $count = $results[0]->count;
+        }
+
+
+        global $wp_session;
+
+        $favorite_count = 0;
+        if (isset($wp_session['favorites']) && !empty($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
+            $recipes = [];
+            $favorite_posts = $wp_session['favorites'];
+
+
+            foreach ($favorite_posts as $favorite_post) {
+                $recipes[] = Foody_PostFactory::get_post(get_post($favorite_post));
+            }
+
+            $favorite_count = count($favorite_posts);
+            $recipes_content = $this->get_posts_grid(
+                $recipes,
+                'my-recipes',
+                'ספר המתכונים שלי'
+            );
+        } else {
+            $recipes_content = '';
+        }
+
+        $tabs = [
+            [
+                'title' => sprintf("המתכונים שלי (%s)", $favorite_count),
+                'target' => 'my-recipes-tab-pane',
+                'content' => $recipes_content,
+                'classes' => 'show active',
+                'link_classes' => 'active'
+            ],
+            [
+                'title' => sprintf('מתכונים מערוצים (%s)', $count),
+                'target' => 'playlists-tab-pane',
+                'content' =>
+                    $this->get_posts_grid(
+                        $followed,
+                        'my-channels',
+                        'מתכונים מערוצים'
+                    )
+            ]
+        ];
+
+        foody_get_template_part(get_template_directory() . '/template-parts/common/foody-tabs.php', $tabs);
+    }
+
+    private function get_posts_grid($posts, $id, $title)
+    {
+
+        $grid = [
+            'id' => $id,
+            'cols' => 2,
+            'posts' => $posts,
+            'classes' => [
+                $id
+            ],
+            'more' => false,
+            'header' => [
+                'sort' => true,
+                'title' => $title
+            ],
+            'return' => true
+        ];
+
+        return foody_get_template_part(
+            get_template_directory() . '/template-parts/common/foody-grid.php',
+            $grid
+        );
     }
 }

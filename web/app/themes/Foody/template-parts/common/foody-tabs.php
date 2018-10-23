@@ -33,11 +33,11 @@ $tabs = $template_args;
             <?php endforeach; ?>
         </ul>
 
-        <section class="tabs-container tab-content">
+        <section class="tabs-container tab-content container">
 
-            <?php
-            echo get_sort_dropdown($tabs[0]['target']);
-            ?>
+<!--            --><?php
+//            echo get_sort_dropdown($tabs[0]['target']);
+//            ?>
 
             <div class="tab-content col">
 

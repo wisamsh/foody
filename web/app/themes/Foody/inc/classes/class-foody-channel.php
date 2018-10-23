@@ -32,18 +32,8 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
 
     }
 
-    private function get_posts_grid($posts, $type)
+    private function get_posts_grid($posts, $type, $title = '')
     {
-//        if ($this->debug) {
-//            for ($i = 0; $i < 6; $i++)
-//                $posts[] = $posts[0];
-//        }
-//
-//        $grid_content = '<section class="channel-' . $type . '-grid">';
-//        $grid_content .= $this->grid->loop($posts, 3, false, $type);
-//        $grid_content .= '</section>';
-
-
         $id = "channel-$type-feed";
 
         $grid = [
@@ -55,6 +45,11 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
             ],
             // TODO change after implementing dynamic channels
             'more' => false,
+            'header' => [
+                // TODO change after implementing dynamic channels
+                'sort' => false,
+                'title' => $title
+            ],
             'return' => true
         ];
 
@@ -103,7 +98,8 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
                 'content' =>
                     $this->get_posts_grid(
                         $recipes['posts'],
-                        'recipe'
+                        'recipe',
+                        __('')
                     ),
                 'classes' => 'show active',
                 'link_classes' => 'active'

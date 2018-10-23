@@ -19,7 +19,8 @@ jQuery(document).ready(($) => {
     let pager = new FoodyContentPaging({
         context: 'homepage',
         contextArgs: [],
-        filter: filter
+        filter: filter,
+        sort:'#sort-homepage-feed'
     });
 
 

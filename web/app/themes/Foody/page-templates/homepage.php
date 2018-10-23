@@ -29,20 +29,12 @@ $homepage = new Foody_HomePage();
 
             <section class="feed-container row">
 
-                <div class="feed-header d-none d-lg-block">
-                    <h3 class="title d-lg-inline-block">
-                        <?php echo __('ההמלצות שלנו', 'foody') ?>
-                    </h3>
-                </div>
 
                 <section class="sidebar-container d-none d-lg-block">
                     <?php
-                    //                if (!wp_is_mobile() && !foody_is_tablet()) {
                     $homepage->sidebar();
-                    //                }
                     ?>
                 </section>
-
 
 
                 <section class="content-container col-lg-9 col-12">
@@ -57,34 +49,29 @@ $homepage = new Foody_HomePage();
 
         </div>
 
-<!--        --><?php //if (wp_is_mobile()): ?>
+        <div class="filter-mobile d-block d-lg-none">
+            <button class="navbar-toggler filter-btn" type="button" data-toggle="drawer"
+                    data-target="#dw-p2">
+                <?php echo __('סינון', 'foody'); ?>
+            </button>
+        </div>
 
-            <!--        mobile filter -->
-            <div class="filter-mobile d-block d-lg-none">
-                <button class="navbar-toggler filter-btn" type="button" data-toggle="drawer"
-                        data-target="#dw-p2">
-                    <?php echo __('סינון', 'foody'); ?>
+        <div class="mobile-filter d-lg-none">
+
+            <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+            <?php $homepage->sidebar() ?>
+
+            <div class="show-recipes-container">
+
+                <button class="btn show-recipes">
+                    <?php echo __('הצג מתכונים', 'foody') ?>
                 </button>
             </div>
+        </div>
 
-            <div class="mobile-filter d-lg-none">
-
-                <button type="button" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-
-                <?php $homepage->sidebar() ?>
-
-                <div class="show-recipes-container">
-
-                    <button class="btn show-recipes">
-                        <?php echo __('הצג מתכונים', 'foody') ?>
-                    </button>
-                </div>
-            </div>
-
-
-<!--        --><?php //endif; ?>
     </div>
 <?php
 get_footer();

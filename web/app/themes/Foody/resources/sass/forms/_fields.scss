@@ -60,6 +60,7 @@ $mdb-checkbox-size: 15px;
 .dropdown {
   &.bootstrap-select {
     &.foody-select {
+      z-index: 0;
       max-width: 220px;
       //noinspection CssInvalidPropertyValue
       width: stretch;

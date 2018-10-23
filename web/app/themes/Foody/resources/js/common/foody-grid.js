@@ -27,6 +27,8 @@ module.exports = (function () {
     };
 
 
+
+
     FoodyGrid.prototype.loading = function () {
         this.$grid.css('opacity', '0.3');
         this.foodyLoader.attach();

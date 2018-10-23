@@ -180,6 +180,7 @@ $content-width: 70% !default;
         margin: 0 auto;
         .ingredients-group {
           display: inline-block;
+          margin-bottom: 15px;
 
           .ingredients-group-title {
             font-family: $font__assistant;

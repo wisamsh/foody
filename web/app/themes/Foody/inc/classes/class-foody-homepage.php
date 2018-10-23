@@ -87,7 +87,11 @@ class Foody_HomePage
             'id' => 'homepage-feed',
             'cols' => 3,
             'posts' => $posts,
-            'more' => $this->foody_query->has_more_posts($query)
+            'more' => $this->foody_query->has_more_posts($query),
+            'header' => [
+                'sort' => true,
+                'title' => __('ההמלצות שלנו', 'foody')
+            ]
         ];
 
         foody_get_template_part(

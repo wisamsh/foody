@@ -43,7 +43,7 @@ class Foody_Search
         $this->query_builder = new Foody_QueryBuilder();
     }
 
-    public function query($args,$wp_args = [])
+    public function query($args, $wp_args = [])
     {
         /*
          * args:
@@ -59,7 +59,7 @@ class Foody_Search
         * }
         * */
 
-        $query = $this->build_query($args,$wp_args);
+        $query = $this->build_query($args, $wp_args);
 
         $this->before_query();
 
@@ -77,41 +77,10 @@ class Foody_Search
      * @param array $wp_args
      * @return WP_Query
      */
-    public function build_query($args, $wp_args = [])
+    public function build_query($args, $wp_args = [], $sort = '')
     {
-        //        if (isset($this->types['ingredient'])) {
-//            $ingredients = $this->types['ingredient'];
-//            $this->query_builder
-//                ->ingredients($ingredients);
-//        }
-//
-//        if (isset($this->types['category'])) {
-//            $categories = $this->types['category'];
-//            $this->query_builder
-//                ->categories($categories);
-//        }
-//
-//        if (isset($this->types['technique'])) {
-//            $techniques = $this->types['technique'];
-//            $this->query_builder
-//                ->techniques($techniques);
-//        }
-//
-//        if (isset($this->types['limitation'])) {
-//            $limitation = $this->types['limitation'];
-//            $this->query_builder
-//                ->limitations($limitation);
-//        }
-//
-//
-//        if (isset($this->types['tag'])) {
-//            $tags = $this->types['tag'];
-//            $this->query_builder
-//                ->tags($tags);
-//        }
         $this->types = group_by($args['types'], 'type');
 
-        // TODO check generic implementation
         foreach ($this->types as $type => $values) {
             $this->maybe_add_to_query($type);
         }
@@ -122,6 +91,10 @@ class Foody_Search
                 $args['context'] = array_map('intval', $args['context']);
                 $this->query_builder->context($args['context']);
             }
+        }
+
+        if (!empty($sort)) {
+            $this->query_builder->sort($sort);
         }
 
         $query = $this->query_builder
@@ -228,6 +201,17 @@ class Foody_QueryBuilder
 {
 
     public $has_wildcard_key = false;
+
+    public $sort_keys = [
+        'popular',
+        'date',
+        'title'
+    ];
+
+    public $order;
+    public $order_by;
+    public $meta_key;
+    public $meta_type;
 
     private $meta_query_array = [];
 
@@ -526,6 +510,19 @@ class Foody_QueryBuilder
             $args['post__in'] = $this->post__in;
         }
 
+        if (!empty($this->order)) {
+            $args['order'] = strtoupper($this->order);
+            $args['orderby'] = $this->order_by;
+            if (!empty($this->meta_key)) {
+                $args['meta_key'] = $this->meta_key;
+
+                if (!empty($this->meta_type)) {
+                    $args['meta_type'] = $this->meta_type;
+
+                }
+            }
+        }
+
         return $args;
     }
 
@@ -590,6 +587,29 @@ class Foody_QueryBuilder
             'include' => $include
         ];
 
+    }
+
+    public function sort($sort)
+    {
+        $args = explode('_', $sort);
+
+        $key = $args[0];
+        $order = $args[1];
+
+        $this->order = $order;
+
+        if (in_array($key, $this->sort_keys)) {
+            switch ($key) {
+                case 'popular':
+                    $this->order_by = 'meta_value_num';
+                    $this->meta_key = 'post_views_count';
+                    $this->meta_type = 'NUMERIC';
+                    break;
+                case 'title':
+                    $this->order_by = 'title';
+                    break;
+            }
+        }
     }
 
 }

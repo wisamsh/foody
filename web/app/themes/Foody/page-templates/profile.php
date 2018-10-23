@@ -78,6 +78,11 @@ get_header(); ?>
 
 
                             <section class="profile-content row m-0">
+<!--                                <section class="col profile-tabs">-->
+<!--                                    --><?php //$foody_profile->the_content() ?>
+<!--                                </section>-->
+
+
                                 <div class="tab-content col">
                                     <div class="tab-pane fade show active row gutter-3" id="my-recipes" role="tabpanel"
                                          aria-labelledby="my-recipes-tab">

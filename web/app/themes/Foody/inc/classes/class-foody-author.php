@@ -128,6 +128,9 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
                 "author-$type-grid"
             ],
             'more' => $more,
+            'header' => [
+                'sort' => true
+            ],
             'return' => true
         ];
 

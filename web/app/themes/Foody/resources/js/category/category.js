@@ -13,7 +13,8 @@ jQuery(document).ready(($) => {
         contextArgs: [
             foodyGlobals.objectID
         ],
-        filter: filter
+        filter: filter,
+        sort:'#sort-category-feed'
     });
 
 

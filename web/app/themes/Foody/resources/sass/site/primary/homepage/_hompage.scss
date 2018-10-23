@@ -103,7 +103,7 @@ $sidebar-top-offset: 60px;
         //padding-right: 0;
         //max-height: stretch;
         //min-height: stretch;
-
+        margin-top: 66px;
         // max items
         width: 21%;
         padding-right: 0;
@@ -213,6 +213,7 @@ $sidebar-top-offset: 60px;
         width: $content-width;
         max-width: $content-width;
         flex: 0 0 $content-width;
+        margin-top: 20px;
         article {
 
           &.feed {

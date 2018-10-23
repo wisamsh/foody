@@ -24,25 +24,51 @@ module.exports = (function () {
         this.grid.onLoadMore(function () {
             that.loadMore();
         });
+
+        if (this.settings.sort) {
+            this.attachSort(this.settings.sort);
+        }
     };
+
+    PageContentPaging.prototype.attachSort = function (sort) {
+
+        let $sort = $(sort);
+
+        let that = this;
+        $sort.on('changed.bs.select', function () {
+            let val = $(this).val();
+            if (val) {
+                that.sort(val);
+            } else {
+                console.log('no val')
+            }
+        });
+
+    };
+
+    PageContentPaging.prototype.sort = function (sort) {
+
+        let ajaxSettings = this._prepareQuery(sort);
+
+        this.filter.loading();
+        let that = this;
+
+        foodyAjax(ajaxSettings, function (err, data) {
+            if (err) {
+                // TODO handle
+                return console.log(err);
+            }
+            that.filter.stopLoading();
+            that.grid.refresh(data.data.items);
+        });
+
+    };
+
 
     PageContentPaging.prototype.loadMore = function () {
 
-        let page = this.getPageFromSearch();
 
-        page++;
-
-        let ajaxSettings = {
-            action: 'load_more',
-            data: {
-                context: this.settings.context,
-                page: page,
-                filter: this.filter.prepareFilterForQuery(),
-                context_args: this.settings.contextArgs,
-                cols:this.filter.cols
-            }
-        };
-
+        let ajaxSettings = this._prepareQuery();
 
         this.filter.loading();
         let that = this;
@@ -55,10 +81,33 @@ module.exports = (function () {
             that.filter.stopLoading();
             that.grid.append(data.data);
             that.updateQuery(page);
-
         });
     };
 
+
+    PageContentPaging.prototype._prepareQuery = function (sort) {
+        let page = this.getPageFromSearch();
+
+        page++;
+        let ajaxSettings = {
+            action: 'load_more',
+            data: {
+                context: this.settings.context,
+                page: page,
+                filter: this.filter.prepareFilterForQuery(),
+                context_args: this.settings.contextArgs,
+                cols: this.filter.cols
+            }
+        };
+
+        if (sort) {
+            ajaxSettings.data.sort = sort;
+            ajaxSettings.data.page--;
+        }
+
+        return ajaxSettings;
+
+    };
 
     PageContentPaging.prototype.updateQuery = function (page) {
         if (history.pushState) {
@@ -92,7 +141,7 @@ module.exports = (function () {
             }
         }
 
-        if(!page){
+        if (!page) {
             page = 1;
         }
 

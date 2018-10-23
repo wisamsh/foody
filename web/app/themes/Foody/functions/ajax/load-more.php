@@ -49,7 +49,15 @@ function foody_ajax_load_more()
 
                 $foody_search = new Foody_Search();
 
-                $query = $foody_search->build_query($filter, $page_args);
+                $sort = '';
+                if(!empty($_POST['sort'])){
+                    $sort = $_POST['sort'];
+                    if(get_query_var('paged',null)){
+                        unset($page_args['paged']);
+                    }
+                }
+
+                $query = $foody_search->build_query($filter, $page_args,$sort);
 
                 $next = $query->max_num_pages > $page;
 

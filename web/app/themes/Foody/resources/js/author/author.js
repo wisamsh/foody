@@ -24,7 +24,8 @@ jQuery(document).ready(($) => {
             foodyGlobals.objectID,
             'foody_recipe'
         ],
-        filter: recipesFilter
+        filter: recipesFilter,
+        sort: '#sort-author-recipe-feed'
     });
 
     let playlistsPager = new FoodyContentPaging({
@@ -33,7 +34,8 @@ jQuery(document).ready(($) => {
             foodyGlobals.objectID,
             'foody_playlist'
         ],
-        filter: playlistsFilter
+        filter: playlistsFilter,
+        sort: '#sort-author-playlist-feed'
     });
 
 });
