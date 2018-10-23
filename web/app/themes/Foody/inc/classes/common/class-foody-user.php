@@ -86,7 +86,7 @@ class Foody_User
             $channel = new Foody_Channel($post);
 
             return [
-                'image' => $channel->getImage('thumbnail'),
+                'image' => get_the_post_thumbnail($channel->id),
                 'link' => get_permalink($channel_id),
                 'name' => $channel->getTitle(),
                 'id' => $channel_id,
@@ -190,6 +190,9 @@ class Foody_User
                 }
 
                 $image = $user_images[$size];
+                if(!empty($image)){
+                    $image = "<img class='avatar' src='$image' >";
+                }
             } else {
                 $image = wsl_get_wp_user_custom_avatar('gravatar.com',$this->user->ID,$size,'','');
 

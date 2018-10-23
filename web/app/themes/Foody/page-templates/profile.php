@@ -33,7 +33,8 @@ get_header(); ?>
                             <section class="profile-top">
                                 <div class="user-details row">
                                     <div class="d-inline-block image-container">
-                                        <img src="<?php echo $foody_profile->get_image() ?>" alt="">
+<!--                                        <img src="--><?php //echo $foody_profile->get_image() ?><!--" alt="">-->
+                                        <?php echo $foody_profile->get_image() ?>
                                     </div>
                                     <div class="name-email">
                                         <h1 class="title m-0">

@@ -12,7 +12,8 @@ $item = $template_args;
 
 <li class="managed-list-item" data-id="<?php echo $item['id'] ?>" data-type="<?php echo $item['type'] ?>">
 
-    <img src="<?php echo $item['image'] ?>" alt="<?php echo $item['name'] ?>">
+    <!--    <img src="--><?php //echo $item['image'] ?><!--" alt="--><?php //echo $item['name'] ?><!--">-->
+    <?php echo $item['image'] ?>
 
     <a href="<?php echo $item['link'] ?>">
         <?php echo $item['name'] ?>

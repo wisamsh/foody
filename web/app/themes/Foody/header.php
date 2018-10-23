@@ -166,7 +166,8 @@ $user = new Foody_User();
                         $link = is_user_logged_in() ? get_permalink(get_page_by_path('פרופיל-אישי')) : '';
                         ?>
                         <a href="<?php echo $link ?>">
-                            <img class="avatar" src="<?php echo $user->get_image() ?>" alt="">
+<!--                            <img class="avatar" src="--><?php //echo $user->get_image() ?><!--" alt="">-->
+                            <?php echo $user->get_image() ?>
                         </a>
                     </div>
 
