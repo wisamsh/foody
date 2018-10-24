@@ -107,7 +107,7 @@ $sidebar-top-offset: 60px;
         // max items
         width: 21%;
         padding-right: 0;
-        min-height: max-content;
+        //min-height: max-content;
 
         aside {
           // min items
@@ -189,13 +189,14 @@ $sidebar-top-offset: 60px;
             left: 0;
             right: 0;
             bottom: 0;
+            top: $sidebar-top-offset;
             // Autoprefixer will change 'stretch'
             // into fill-available and the different
             // browsers equivalent.
             // noinspection CssInvalidPropertyValue
-            max-height: stretch;
-            height: 100%;
-            min-height: fit-content;
+            //max-height: stretch;
+            //height: 100%;
+            //min-height: fit-content;
           }
 
           .filter {
@@ -256,7 +257,8 @@ $sidebar-top-offset: 60px;
 
 .page-template-homepage {
   footer.site-footer {
-    bottom: -$sidebar-top-offset;
+    //bottom: -$sidebar-top-offset;
+    position: unset;
   }
 }
 

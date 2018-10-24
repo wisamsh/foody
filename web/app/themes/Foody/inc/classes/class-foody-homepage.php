@@ -82,6 +82,9 @@ class Foody_HomePage
 
         $posts = array_map('Foody_Post::create', $posts);
 
+//        for ($i=0;$i<100;$i++){
+//            $posts[]= $posts[0];
+//        }
 
         $grid = [
             'id' => 'homepage-feed',

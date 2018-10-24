@@ -98,6 +98,14 @@ $sidebar-width: 22.5% !default;
 
 .page-template-profile {
 
+  #page {
+    background-color: white;
+  }
+
+  #main {
+    background-color: $color__background-screen;
+  }
+
   .container-fluid {
 
     //noinspection CssInvalidPropertyValue
@@ -196,7 +204,7 @@ $sidebar-width: 22.5% !default;
 
         .user-content {
 
-          &.show{
+          &.show {
             display: flex;
           }
           .tab-content {
@@ -321,7 +329,7 @@ $sidebar-width: 22.5% !default;
 
   footer {
     max-width: calc(100% - #{$sidebar-width});
-    margin-right: $sidebar-width;
+    margin-right: calc(#{$sidebar-width} - 1px);
   }
 }
 
@@ -610,8 +618,8 @@ Tablet landscape
                 color: $color__text-primary-light;
               }
 
-              ul.nav{
-                li{
+              ul.nav {
+                li {
                   width: auto;
                 }
               }

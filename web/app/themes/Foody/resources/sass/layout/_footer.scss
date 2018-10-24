@@ -6,12 +6,13 @@ footer.site-footer {
   padding: 25px 42px;
 
   width: calc(100% - #{$sidebar-width});
-  margin-right: $sidebar-width;
-  position: absolute;
+  margin-right: calc(#{$sidebar-width} - 1px);
+  //position: absolute;
   left: 0;
   bottom: 0;
   height: auto;
   right: 0;
+  border-right: 1px solid hsla(0,0%,59%,.3);
 
   ul {
     &.menu {
@@ -49,6 +50,7 @@ footer.site-footer {
     max-width: 100%;
     margin-right: 0;
     position: initial !important;
+    border: none;
 
     ul {
       &.menu {

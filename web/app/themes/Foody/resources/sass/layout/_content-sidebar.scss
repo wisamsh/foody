@@ -7,6 +7,13 @@ body[class~="single-foody_recipe"],
 body[class~="single-foody_playlist"],
 body[class~="post-template-content-with-sidebar"] {
 
+  #page{
+    background-color: white;
+  }
+  #main{
+    background-color: $color__background-screen;
+  }
+
   $sidebar-width: 21%;
   $content-width: 70%;
   .progress-wrapper {
@@ -52,6 +59,7 @@ body[class~="post-template-content-with-sidebar"] {
     min-width: $sidebar-width;
     min-height: 100%;
     border: solid 1px rgba(151, 151, 151, 0.3);
+    border-bottom: none;
     border-top: none;
     background-color: white;
     padding: 60px 20px 0;

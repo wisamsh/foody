@@ -8,6 +8,8 @@ aside {
   &.sidebar {
     .sidebar-content {
       border: $sidebar-border;
+      border-bottom: none;
+      position: absolute;
       padding: 0;
     }
 
