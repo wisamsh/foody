@@ -55,10 +55,9 @@ module.exports = function (selector, options) {
 
     $autocompletInput.on('autocomplete:selected', function (event, item) {
 
-        if (item) {
-            window.location.href = window.location.host + '?s=' + item.name;
-
-        }
+        // if (item) {
+        //     window.location.search.s = item.name;
+        // }
 
     });
 };
