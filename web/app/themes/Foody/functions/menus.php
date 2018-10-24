@@ -137,6 +137,21 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
         $items_to_add = foody_get_menu_item_with_inline_children($start_id, $inline_children);
 
         $sorted_menu_items = array_merge($sorted_menu_items, $items_to_add);
+    }elseif(  $args->theme_location == 'primary' &&
+        is_user_logged_in()){
+
+        $logout_item = (object)[
+            'ID' => PHP_INT_MAX - 1,
+            'db_id' => PHP_INT_MAX - 1,
+            'title' => __('התנתק'),
+            'url' => wp_logout_url(),
+            'attr_title' => __('התנתק'),
+            'target' => '',
+            'xfn' => '',
+            'object' => null
+        ];
+
+        $sorted_menu_items[]= $logout_item;
     }
 
     if ($args->theme_location == 'primary' && wp_is_mobile()) {

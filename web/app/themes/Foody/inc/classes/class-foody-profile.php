@@ -15,6 +15,7 @@ class Foody_Profile
 
     private $grid;
 
+    private $form_classes = ['profile-form'];
 
     /**
      * Foody_Profile constructor.
@@ -169,7 +170,7 @@ class Foody_Profile
 
 
         $followed = $this->foody_user->get_followed_content();
-        $followed = array_map('Foody_Post::create',$followed);
+        $followed = array_map('Foody_Post::create', $followed);
         $results = $this->foody_user->get_followed_content(0, 12, true);
         $count = 0;
         if (isset($results[0]) && isset($results[0]->count)) {
@@ -244,5 +245,19 @@ class Foody_Profile
             get_template_directory() . '/template-parts/common/foody-grid.php',
             $grid
         );
+    }
+
+    public function the_user_details_form()
+    {
+        foody_get_template_part(get_template_directory() . '/template-parts/content-profile-edit.php', [
+            'form_classes' => $this->form_classes
+        ]);
+    }
+
+    public function the_password_change_form()
+    {
+        foody_get_template_part(get_template_directory() . '/template-parts/content-password-change.php', [
+            'form_classes' => $this->form_classes
+        ]);
     }
 }

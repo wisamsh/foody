@@ -23,6 +23,24 @@ window._ = require('underscore');
 window.Fraction = require('fractional').Fraction;
 window.lottie = require('lottie-web');
 
+$.validator.addMethod(
+    "regex",
+    function (value, element, regexp) {
+        return this.optional(element) || regexp.test(value);
+    }
+);
+
+$.validator.addMethod(
+    "password",
+    function (value) {
+
+        let hasNumbers = /[0-9]+/.test(value);
+        let nonEn = /[^a-z0-9]/i.test(value);
+
+        return hasNumbers && nonEn == false;
+    }
+);
+
 
 // /*
 //  * Plugins
