@@ -15,7 +15,7 @@
       clip-path: inset(0 round 4px);
 
       img {
-        height: 138px;
+        //height: 138px;
         width: 100%;
       }
     }
@@ -56,7 +56,7 @@
         .image-container {
 
           img {
-            height: 211px;
+            //height: 211px;
           }
         }
 
@@ -74,4 +74,49 @@
     }
   }
 
+}
+
+@include breakpoint(tablet-l){
+  .related-content-title {
+
+  }
+
+  .related-content {
+
+
+
+    .related-item {
+
+
+
+      .image-container {
+
+
+
+        img {
+
+
+        }
+      }
+
+      .details {
+        .post-title {
+
+
+
+
+        }
+
+        .author-name {
+
+
+        }
+
+        .view-count, .author-name {
+
+
+        }
+      }
+    }
+  }
 }

@@ -32,67 +32,119 @@ get_header(); ?>
                             <?php endif; ?>
                             <section class="profile-top">
                                 <div class="user-details row">
-                                    <div class="d-inline-block image-container">
-                                        <img src="<?php echo $foody_profile->get_image() ?>" alt="">
+                                    <div class="d-inline-block image-container col-sm-1 col-2">
+                                        <?php echo $foody_profile->get_image() ?>
                                     </div>
-                                    <div class="name-email">
+                                    <div class="name-email col-8">
                                         <h1 class="title m-0">
                                             <?php echo $foody_profile->get_name() ?>
                                         </h1>
                                         <span class="email">
-                                        <?php echo $foody_profile->get_email() ?>
-                                    </span>
+                                            <?php echo $foody_profile->get_email() ?>
+                                        </span>
+
+                                        <ul class="nav nav-tabs col-12" id="profile-view-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a role="tab" data-toggle="tab"
+                                                   href="#edit-user-details" aria-controls="edit-user-details"
+                                                   aria-selected="false">
+                                                    <?php echo __('ערוך', 'foody') ?>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a data-toggle="tab" role="tab" data-toggle="tab"
+                                                   href="#change-password" aria-controls="change-password"
+                                                   aria-selected="false">
+                                                    <?php echo __('שנה סיסמא', 'foody') ?>
+                                                </a>
+
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="<?php echo wp_logout_url(get_home_url()) ?>">
+                                                    <?php echo __('יציאה', 'foody') ?>
+                                                </a>
+
+                                            </li>
+                                        </ul>
                                     </div>
 
-                                    <section class="my-channels col d-sm-none d-block">
+                                    <section class="my-channels col d-xl-none d-block col-12">
                                         <h2 class="title">
-                                            הערוצים שלי
+                                            <?php echo __('הערוצים שלי', 'foody') ?>
                                         </h2>
                                         <section class="channels">
-                                            <?php $foody_profile->my_channels() ?>
+                                            <?php $foody_profile->my_followed_topics() ?>
                                         </section>
 
                                     </section>
                                 </div>
 
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab"
-                                           href="#my-recipes" aria-controls="my-recipes" aria-selected="true">המתכונים
-                                            שלי (36)</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab"
-                                           href="#my-channels-recipes" role="tab" aria-controls="my-channels-recipes"
-                                           aria-selected="false">מתכונים מערוצים (13)</a>
-                                    </li>
-                                </ul>
+
                             </section>
 
 
-                            <section class="profile-content row m-0">
-                                <div class="tab-content col">
-                                    <div class="tab-pane fade show active row gutter-3" id="my-recipes" role="tabpanel"
-                                         aria-labelledby="my-recipes-tab">
-                                        <?php $foody_profile->my_recipes() ?>
+                            <section class="profile-content tab-content container-fluid m-0">
+
+                                <!-- Content and channels section -->
+                                <section class="user-content tab-pane fade show active in row gutter-0" role="tabpanel"
+                                         id="user-content">
+
+                                    <!-- Favories and Channels tab links -->
+                                    <ul class="nav nav-tabs col-12" id="user-content-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab"
+                                               href="#my-recipes" aria-controls="my-recipes" aria-selected="true">
+                                                <?php $foody_profile->favorites_tab() ?>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="profile-tab" data-toggle="tab"
+                                               href="#my-channels-recipes" role="tab"
+                                               aria-controls="my-channels-recipes"
+                                               aria-selected="false">
+                                                <?php $foody_profile->channels_tab() ?>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content col">
+                                        <div class="tab-pane fade show active in row gutter-3" id="my-recipes"
+                                             role="tabpanel"
+                                             aria-labelledby="my-recipes-tab">
+                                            <?php $foody_profile->my_favorites() ?>
+                                        </div>
+                                        <div class="tab-pane fade row gutter-3" id="my-channels-recipes" role="tabpanel"
+                                             aria-labelledby="my-channels-recipes-tab">
+
+                                            <?php $foody_profile->my_topics_content() ?>
+
+                                        </div>
                                     </div>
-                                    <div class="tab-pane fade row gutter-3" id="my-channels-recipes" role="tabpanel"
-                                         aria-labelledby="my-channels-recipes-tab">
+                                    <!--  Followed authors and channels  -->
+                                    <section class="my-channels col d-none d-xl-block pr-0">
                                         <h2 class="title">
-                                            מתכונים מערוצים
+                                            <?php echo __('הערוצים שלי', 'foody') ?>
                                         </h2>
-                                        <?php $foody_profile->my_channels_recipes() ?>
-                                    </div>
-                                </div>
-                                <section class="my-channels col d-none d-sm-block pr-0">
-                                    <h2 class="title">
-                                        הערוצים שלי
-                                    </h2>
-                                    <section class="channels">
-                                        <?php $foody_profile->my_channels() ?>
+                                        <section class="channels">
+                                            <?php $foody_profile->my_followed_topics() ?>
+                                        </section>
+
                                     </section>
 
                                 </section>
+
+                                <!-- Edit profile section -->
+                                <section class="edit-user-details tab-pane fade" role="tabpanel"
+                                         id="edit-user-details">
+                                    <?php $foody_profile->the_user_details_form() ?>
+                                </section>
+
+                                <!-- Change password section -->
+                                <section class="change-password tab-pane fade" role="tabpanel"
+                                         id="change-password">
+                                    <?php $foody_profile->the_password_change_form(); ?>
+                                </section>
+
+
                             </section>
                         </div>
                     </div>

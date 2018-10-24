@@ -13,15 +13,39 @@
     $options = $template_args['options'];
     $placeholder = $template_args['placeholder'] ?? 'select';
     $id = $template_args['id'];
+
+
+    $data = foody_get_array_default($template_args, 'data', []);
+    $data_attrs = '';
+    foreach ($data as $key => $value) {
+        $data_attrs .= " data-$key='$value'";
+    }
+
+
     ?>
-    <select class="foody-select foody-sort" title="<?php echo $name ?>" name="<?php echo $name ?>"
-            id="<?php echo $id ?>">
-        <option value="">
-            <?php echo $placeholder ?>
-        </option>
+    <select <?php echo $data_attrs ?> class="foody-select foody-sort col-" title="<?php echo $name ?>"
+                                      name="<?php echo $name ?>"
+                                      id="<?php echo $id ?>">
+        <?php if (!empty($placeholder)) : ?>
+            <option value="">
+                <?php echo $placeholder ?>
+            </option>
+
+        <?php endif; ?>
         <?php foreach ($options as $option): ?>
 
-            <option value="<?php echo $option['value'] ?>">
+
+            <?php
+            $data = '';
+            if (!empty($option['data'])) {
+                $data = foody_array_to_data_attr($option['data']);
+            }
+            ?>
+
+            <option <?php echo $data ?>
+                    value="<?php echo $option['value'] ?>" <?php if (!empty($option['selected'])) {
+                echo 'selected="selected"';
+            } ?>>
                 <?php echo $option['label'] ?>
             </option>
 

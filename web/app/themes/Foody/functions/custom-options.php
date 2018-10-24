@@ -6,7 +6,10 @@
  * Time: 11:51 AM
  */
 
+register_setting('discussion','hid_per_page');
 
+
+$page_name = __('הגדרות חיפוש - פודי', 'foody');
 
 /** @var array $options_pages
  * All ACF Options Pages.
@@ -16,8 +19,8 @@
  */
 $options_pages = array(
     array(
-        'page_title' => 'Foody Search Options',
-        'menu_title' => 'Foody Search Options',
+        'page_title' => $page_name,
+        'menu_title' => $page_name,
         'menu_slug' => 'foody-search-options.php',
         'post_id' => 'foody_search_options',
     )
@@ -93,15 +96,17 @@ function validate_args($args)
 }
 
 
-function custom_options(){
+function custom_options()
+{
 
-    register_setting('discussion','hid_per_page');
+    register_setting('discussion', 'hid_per_page');
 
-    add_settings_field( 'hid_per_page', __('מספר ״איך יצא לי״ בעמוד'), 'foody_custom_options_callback', 'discussion');
+    add_settings_field('hid_per_page', __('מספר ״איך יצא לי״ בעמוד'), 'foody_custom_options_callback', 'discussion');
 
-    function foody_custom_options_callback() {
+    function foody_custom_options_callback()
+    {
 
-        $options = get_option('hid_per_page',3);
+        $options = get_option('hid_per_page', 3);
 
         echo '<input type="number" id="hid_per_page" name="hid_per_page" value="' . $options . '"></input>';
 

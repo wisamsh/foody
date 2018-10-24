@@ -7,20 +7,9 @@
  */
 
 
-get_header();
-$category_id = get_queried_object_id();
 
-$category = new Foody_Category($category_id);
-
-
+foody_get_template_part(get_template_directory() . '/template-parts/content-content-with-sidebar.php', ['hide_progress' => true]);
 
 ?>
-
-
-
-
-<?php
-
-get_footer();
 
 

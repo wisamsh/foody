@@ -1,6 +1,6 @@
-.single-foody_playlist{
+.single-foody_playlist {
 
-  .related-recipes{
+  .related-recipes {
     padding-top: 20px;
   }
 
@@ -30,6 +30,29 @@
 
       .tint {
         margin: 0;
+        position: relative;
+        width: 100%;
+        .duration {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          background-color: #fff;
+          color: $color__primary;
+          border-radius: 12px;
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+          padding: 3px 7.5px;
+
+          i {
+            vertical-align: middle;
+            &:before {
+              vertical-align: text-bottom;
+            }
+          }
+
+          span {
+            display: inline-block;
+          }
+        }
       }
 
       &.current {
@@ -70,10 +93,9 @@
 
       .image-container {
 
-        height: 70px;
         padding-left: 5px;
+
         img {
-          height: 100%;
           width: 100%;
           clip-path: inset(0 round 3px);
         }
@@ -99,8 +121,6 @@
     }
   }
 }
-
-
 
 @include breakpoint(mobileonly) {
   .single-foody_playlist {
@@ -195,7 +215,6 @@
           }
 
           .image-container {
-            height: 88px;
             img {
             }
           }
@@ -213,4 +232,86 @@
 
   }
 
+}
+
+
+@include breakpoint(tablet){
+  .single-foody_playlist {
+
+    .content {
+      .details-container {
+      }
+
+      .playlist-details {
+
+        .title-container {
+
+          i {
+          }
+          h1.playlist-title {
+          }
+        }
+
+        .actions {
+
+          .btn {
+          }
+
+          .btn-prev {
+          }
+
+          .count {
+
+          }
+        }
+
+      }
+
+      .btn-show-recipe {
+
+        a {
+          i {
+          }
+
+          span {
+          }
+        }
+
+      }
+
+      .playlist-recipes {
+        &.nolist {
+        }
+
+        .playlist-recipe-item {
+
+          &:not(:last-child) {
+          }
+
+          .image-container {
+            img {
+            }
+          }
+
+          .playlist-recipe-item-details {
+            h3 {
+              font-size: 2em;
+            }
+
+            .author-name {
+
+              a{
+                font-size: 1.5em;
+              }
+            }
+
+            .description{
+              font-size: 1.7em;
+            }
+          }
+        }
+      }
+    }
+
+  }
 }

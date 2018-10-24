@@ -24,10 +24,9 @@ class Foody_Comments
             $args = $this->get_list_comments_args();
         }
 
-        $comments = get_comments(array('type' => 'comment', 'post_id' => get_the_ID()));
+//        $comments = get_comments(array('type' => 'comment', 'post_id' => get_the_ID()));
 
-        wp_list_comments($args,
-            $comments);
+        wp_list_comments($args);
     }
 
 

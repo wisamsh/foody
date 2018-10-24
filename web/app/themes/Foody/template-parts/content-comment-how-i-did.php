@@ -14,13 +14,14 @@ $attachment_id = get_comment_meta($comment['comment_ID'], 'attachment', true);
 
 $image = wp_get_attachment_url($attachment_id);
 
+$author = get_user_by('email', $comment['comment_author_email']);
 ?>
 
 
 <div class="col-sm-4 col-6 how-i-did">
     <div class="image-container">
         <a class="how-i-did-modal-open" href="#how-i-did-modal" data-toggle="modal" data-image="<?php echo $image ?>"
-           data-user="<?php echo get_comment_author($comment['comment_ID']) ?>"
+           data-user="<?php echo $author->display_name ?>"
            data-content="<?php echo strip_tags(get_comment_text($comment['comment_ID'])); ?>">
             <img src="<?php echo $image ?>" alt="">
         </a>

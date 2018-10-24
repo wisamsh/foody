@@ -14,7 +14,6 @@ $recipe = $template_args['recipe'];
 ?>
 
 
-
 <script type="application/ld+json">
      {
       "@context": "http://schema.org/",
@@ -126,6 +125,7 @@ $recipe = $template_args['recipe'];
 
 
 
+
 </script>
 
 <section class="recipe-overview">
@@ -146,13 +146,7 @@ $recipe = $template_args['recipe'];
         </h2>
 
         <div class="amount-container col-6">
-            <label for="number-of-dishes">
-                <?php echo $recipe->amount_for ?>
-            </label>
-            <input name="amount" type="number" id="number-of-dishes" min="1"
-                   value="<?php echo $recipe->getNumberOfDishes() ?>"
-                   data-amount="<?php echo $recipe->getNumberOfDishes() ?>"
-            >
+            <?php $recipe->calculator(); ?>
         </div>
 
     </div>
@@ -176,15 +170,25 @@ $recipe = $template_args['recipe'];
     <?php $recipe->the_notes() ?>
 </section>
 
-<section class="recipe-rating box">
-    <?php $recipe->the_rating() ?>
-</section>
+<?php if ($recipe->has_notes()): ?>
+
+    <section class="recipe-rating box">
+        <?php $recipe->the_rating() ?>
+    </section>
+
+<?php endif; ?>
+
+
+<?php if ($recipe->has_nutrients()): ?>
 
 <section class="recipe-nutrition box">
 
     <?php $recipe->the_nutrition() ?>
 
 </section>
+
+<?php endif; ?>
+
 
 <section class="recipe-accessories">
     <?php $recipe->the_accessories() ?>

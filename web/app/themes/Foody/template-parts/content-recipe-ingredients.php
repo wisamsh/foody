@@ -12,13 +12,14 @@ $ingredients_groups = $template_args;
 
 <?php foreach ($ingredients_groups as $ingredients_group): ?>
 
-    <div class="col-sm col-12 ingredients-group p-0">
+    <div class="col-sm-6 col-12 ingredients-group p-0">
         <h4 class="ingredients-group-title">
             <?php echo $ingredients_group['title']; ?>
         </h4>
         <ul class="ingredients-group-list">
 
-            <?php foreach ($ingredients_group['ingredients'] as $ingredient): ?>
+            <?php /** @var Foody_Ingredient $ingredient */
+            foreach ($ingredients_group['ingredients'] as $ingredient): ?>
 
                 <li class="ingredients">
 

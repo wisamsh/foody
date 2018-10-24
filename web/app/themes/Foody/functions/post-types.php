@@ -118,8 +118,8 @@ function foody_remove_page_template()
 
     $custom_content_post_types = array(
         'foody_recipe',
-        'foody_article',
-        'foody_playlist'
+        'foody_playlist',
+        'post'
     );
 
     $default_template = 'page-templates/content-with-sidebar.php';
@@ -246,12 +246,15 @@ function foody_count_posts_by_user($post_author = null, $post_type = array(), $p
 
     $sql = $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_author = %d AND ", $post_author);
 
+    $where = "(post_status='publish') AND ";
+    $sql .= $where;
+
     //Post status
-    if (!empty($post_status)) {
-        $argtype = array_fill(0, count($post_status), '%s');
-        $where = "(post_status=" . implode(" OR post_status=", $argtype) . ') AND ';
-        $sql .= $wpdb->prepare($where, $post_status);
-    }
+//    if (!empty($post_status)) {
+//        $argtype = array_fill(0, count($post_status), '%s');
+//        $where = "(post_status=" . implode(" OR post_status=", $argtype) . ') AND ';
+//        $sql .= $wpdb->prepare($where, $post_status);
+//    }
 
     if (empty($post_type)) {
         $post_type = foody_get_post_types();
@@ -286,12 +289,77 @@ function filter_post_type_link($link, $post)
         $recipe_name = get_query_var('recipe', null);
         if (is_null($recipe_name)) {
             $recipes = posts_to_array('recipes', $post->ID);
-            $recipe_name = $recipes[0]->post_name;
-            $link = add_query_arg('recipe', $recipe_name, $link);
+            if (is_array($recipes) && count($recipes) > 0) {
+                $recipe_name = $recipes[0]->post_name;
+                $link = add_query_arg('recipe', $recipe_name, $link);
+            }
         }
-
     }
     return $link;
 }
 
 add_filter('post_type_link', 'filter_post_type_link', 10, 2);
+
+
+/**
+ * @param WP_Post $post
+ */
+function post_to_foody_post($post)
+{
+
+    $foody_post = null;
+
+    switch ($post->post_type) {
+        case 'foody_recipe':
+            $foody_post = new Foody_Recipe($post);
+            break;
+        case 'foody_playlist':
+            $foody_post = new Foody_Playlist($post);
+            break;
+        default:
+            $foody_post = new Foody_Article($post);
+            break;
+    }
+
+    return $foody_post;
+}
+
+function my_pre_get_posts(WP_Query $query)
+{
+
+    if (is_admin())
+        return;
+
+    if (is_search() && $query->is_main_query()) {
+        $query->set('post_type', 'foody_recipe');
+    }
+
+}
+
+add_action('pre_get_posts', 'my_pre_get_posts');
+
+
+/**
+ * Hooks into foody_js_globals to
+ * add relevant javascript variables
+ * based on the post type.
+ * @param $single_template
+ * @return mixed
+ */
+function custom_post_type_js_vars($single_template)
+{
+    global $post;
+
+    $foody_post = Foody_Post::create($post);
+
+    $js_vars = $foody_post->js_vars();
+
+    add_filter('foody_js_globals', function ($vars) use ($js_vars) {
+        return array_merge($js_vars, $vars);
+    });
+
+
+    return $single_template;
+}
+
+add_filter('single_template', 'custom_post_type_js_vars');

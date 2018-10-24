@@ -14,10 +14,15 @@ $btn_cancel = foody_get_array_default($modal, 'btn_cancel', __('ביטול', 'fo
 $btn_approve_classes = foody_get_array_default($modal, 'btn_approve_classes', 'btn-approve');
 $btn_cancel_classes = foody_get_array_default($modal, 'btn_cancel_classes', 'btn-cancel');
 
+
+$id = $modal['id'];
+
+$hide_buttons = isset($modal['hide_buttons']) && $modal['hide_buttons'];
+
 ?>
 
 
-<div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
+<div class="modal fade" tabindex="-1" role="dialog" id="<?php echo $id ?>">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -34,12 +39,15 @@ $btn_cancel_classes = foody_get_array_default($modal, 'btn_cancel_classes', 'btn
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary <?php echo $btn_cancel_classes ?>" data-dismiss="modal">
-                    <?php echo $btn_cancel ?>
-                </button>
-                <button type="button" class="btn btn-primary <?php echo $btn_approve_classes ?>">
-                    <?php echo $btn_approve ?>
-                </button>
+                <?php if (!$hide_buttons): ?>
+                    <button type="button" class="btn btn-secondary <?php echo $btn_cancel_classes ?>"
+                            data-dismiss="modal">
+                        <?php echo $btn_cancel ?>
+                    </button>
+                    <button type="button" class="btn btn-primary <?php echo $btn_approve_classes ?>">
+                        <?php echo $btn_approve ?>
+                    </button>
+                <?php endif; ?>
             </div>
         </div>
     </div>

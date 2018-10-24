@@ -15,7 +15,7 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
     public function __construct(WP_Post $post = null)
     {
         parent::__construct($post);
-        $this->grid = new RecipesGrid();
+        $this->grid = new FoodyGrid();
     }
 
     private function get_channel_content($selector, $class)
@@ -32,13 +32,33 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
 
     }
 
-    private function get_posts_grid($posts, $type)
+    private function get_posts_grid($posts, $type, $title = '')
     {
-        if ($this->debug) {
-            for ($i = 0; $i < 6; $i++)
-                $posts[] = $posts[0];
-        }
-        return $this->grid->loop($posts, 3, false, $type);
+        $id = "channel-$type-feed";
+
+        $grid = [
+            'id' => $id,
+            'cols' => 3,
+            'posts' => $posts,
+            'classes' => [
+                "channel-$type-grid"
+            ],
+            // TODO change after implementing dynamic channels
+            'more' => false,
+            'header' => [
+                // TODO change after implementing dynamic channels
+                'sort' => false,
+                'title' => $title
+            ],
+            'return' => true
+        ];
+
+        return foody_get_template_part(
+            get_template_directory() . '/template-parts/common/foody-grid.php',
+            $grid
+        );
+
+//        return $grid_content;
     }
 
     public function the_featured_content()
@@ -53,7 +73,7 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
 
     public function the_sidebar_content()
     {
-        // TODO: Implement the_sidebar_content() method.
+        dynamic_sidebar('foody-sidebar');
     }
 
     public function the_details()
@@ -78,7 +98,8 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
                 'content' =>
                     $this->get_posts_grid(
                         $recipes['posts'],
-                        'recipe'
+                        'recipe',
+                        __('')
                     ),
                 'classes' => 'show active',
                 'link_classes' => 'active'

@@ -1,3 +1,30 @@
-.recipes-grid {
+.foody-grid {
+  width: 100%;
+  &.loading {
+    opacity: 0.3;
+  }
 
+  .show-more {
+    margin: 0 auto;
+    padding: 20px 0;
+    text-align: center;
+    cursor: pointer;
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    img {
+      margin-bottom: 10px;
+    }
+    h4 {
+      color: $color__primary;
+      text-align: center;
+    }
+  }
+
+  .grid-sort{
+    margin-bottom: 15px;
+  }
 }

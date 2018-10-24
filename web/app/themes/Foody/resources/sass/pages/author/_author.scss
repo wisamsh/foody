@@ -125,7 +125,7 @@
 
               .recipe-item {
                 .recipe-item-image {
-                  height: 276px;
+                  //height: 276px;
                   width: 100%;
                 }
               }
@@ -226,6 +226,112 @@
 
                 .recipe-item {
                   .recipe-item-image {
+                  }
+                }
+              }
+            }
+          }
+
+        }
+      }
+    }
+
+  }
+}
+
+@include breakpoint(tablet-l) {
+
+  .archive.author, body[class~="foody_channel-template-channel"] {
+
+    article {
+      &.content {
+
+        .details-container {
+
+          .featured-content-container {
+
+            img {
+
+            }
+          }
+
+          .topic-details {
+
+            .image-container {
+              img {
+
+              }
+            }
+
+            .details {
+
+              .breadcrumb {
+                margin-left: 0;
+              }
+
+              h1 {
+
+              }
+
+              .breadcrumb {
+
+              }
+            }
+
+            .follow {
+              button {
+
+                i {
+
+                }
+
+                &.followed {
+
+                  i {
+
+                    &:before {
+
+                    }
+                  }
+
+                  span {
+
+                  }
+                }
+              }
+            }
+
+          }
+
+          .description {
+
+          }
+        }
+
+        .foody-tabs {
+
+          .nav-tabs {
+
+            li {
+
+            }
+          }
+          .tabs-container {
+
+            .bootstrap-select.foody-select {
+
+            }
+            .tab-content {
+
+              .tab-pane {
+
+                &.show {
+
+                }
+
+                .recipe-item {
+                  .recipe-item-image {
+
                   }
                 }
               }

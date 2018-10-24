@@ -32,23 +32,23 @@ $foody_comments = new Foody_Comments();
             'count' => true
         )) > 0;
     // You can start editing here -- including this comment!
-    if ($have_comments) :
-        ?>
-        <h2 class="comments-title">
-            <?php
-
-            $foody_comments->the_title();
-
-            ?>
-        </h2><!-- .comments-title -->
-
+    //
+    ?>
+    <h2 class="comments-title">
         <?php
 
-        $foody_comments->the_comments_form();
+        $foody_comments->the_title();
 
         ?>
+    </h2><!-- .comments-title -->
 
+    <?php
 
+    $foody_comments->the_comments_form();
+
+    ?>
+
+    <?php if ($have_comments) : ?>
         <ol id="comments-list" class="comment-list">
             <?php
             $foody_comments->list_comments();
@@ -57,7 +57,7 @@ $foody_comments = new Foody_Comments();
 
 
         <?php
-        $cpage = get_query_var('cpage') ? get_query_var('cpage') : 1;
+        $cpage = get_query_var('cpage', 1);
 
 
         if ($cpage > 1) {
@@ -78,19 +78,20 @@ $foody_comments = new Foody_Comments();
                 let cpage = ' . $cpage . '
                 </script>';
         }
-
-        ?>
-
-        <?php
-
-        // If comments are closed and there are comments, let's leave a little note, shall we?
-        if (!comments_open()) :
-            ?>
-            <p class="no-comments"><?php esc_html_e('Comments are closed.', 'foody'); ?></p>
-            <?php
-        endif;
-
     endif; // Check for have_comments().
+    ?>
+
+
+
+    <?php
+
+    // If comments are closed and there are comments, let's leave a little note, shall we?
+    if (!comments_open()) :
+        ?>
+        <p class="no-comments"><?php esc_html_e('Comments are closed.', 'foody'); ?></p>
+        <?php
+    endif;
+
 
     ?>
 

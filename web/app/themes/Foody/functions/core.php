@@ -1572,13 +1572,14 @@ remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
  *
  * @return array of menu items
  */
-function foody_get_menu_by_location( $theme_location ) {
-	$theme_locations = get_nav_menu_locations();
-	$menu_obj = get_term( $theme_locations[ $theme_location ], 'nav_menu' );
-	if ( $menu_obj && !is_wp_error($menu_obj))
-		return wp_get_nav_menu_items( $menu_obj->term_id);
-	else
-		return $menu_obj;
+function foody_get_menu_by_location($theme_location)
+{
+    $theme_locations = get_nav_menu_locations();
+    $menu_obj = get_term($theme_locations[$theme_location], 'nav_menu');
+    if ($menu_obj && !is_wp_error($menu_obj))
+        return wp_get_nav_menu_items($menu_obj->term_id);
+    else
+        return $menu_obj;
 }
 
 /**
@@ -1587,22 +1588,23 @@ function foody_get_menu_by_location( $theme_location ) {
  *
  * @return string menu name if exists, else return "menu"
  */
-function foody_get_menu_title( $theme_location, $default_name = 'menu' ) {
-	if ( $theme_location && ( $locations = get_nav_menu_locations() ) && isset( $locations[ $theme_location ] ) ) {
-		$menu = wp_get_nav_menu_object( $locations[ $theme_location ] );
+function foody_get_menu_title($theme_location, $default_name = 'menu')
+{
+    if ($theme_location && ($locations = get_nav_menu_locations()) && isset($locations[$theme_location])) {
+        $menu = wp_get_nav_menu_object($locations[$theme_location]);
 
-		if( $menu && $menu->name ) {
-			return $menu->name;
-		}
-	}
-	return $default_name;
+        if ($menu && $menu->name) {
+            return $menu->name;
+        }
+    }
+    return $default_name;
 }
 
 
 function foody_get_array_default($array, $key, $default)
 {
     $val = $default;
-    if(isset($array) && !empty($array)){
+    if (isset($array) && !empty($array)) {
         $val = isset($array[$key]) ? $array[$key] : $default;
     }
     return $val;
@@ -1621,4 +1623,80 @@ function array_not_empty($arr)
 
     return $not_empty;
 
+}
+
+function group_by($array, $key)
+{
+    $return = array();
+    foreach ($array as $val) {
+        $return[$val[$key]][] = $val;
+    }
+    return $return;
+}
+
+function string_array_to_int($arr)
+{
+    if (!is_array($arr)) {
+        return $arr;
+    }
+    return array_map('intval', $arr);
+}
+
+function foody_el_classes($classes)
+{
+
+    if (is_array($classes)) {
+        $classes = implode(' ', $classes);
+    }
+
+    $classes = trim($classes);
+
+    echo $classes;
+}
+
+function foody_validate_post_required($vars)
+{
+    $valid = true;
+
+    foreach ($vars as $var) {
+        if (!isset($_POST[$var])) {
+            $valid = false;
+            break;
+        }
+    }
+
+    return $valid;
+}
+
+function foody_is_tablet()
+{
+    $tablet_browser = false;
+
+    if (preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
+        $tablet_browser = true;
+    }
+
+
+    if (strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'opera mini') > 0) {
+        //Check for tablets on opera mini alternative headers
+        $stock_ua = strtolower(isset($_SERVER['HTTP_X_OPERAMINI_PHONE_UA']) ? $_SERVER['HTTP_X_OPERAMINI_PHONE_UA'] : (isset($_SERVER['HTTP_DEVICE_STOCK_UA']) ? $_SERVER['HTTP_DEVICE_STOCK_UA'] : ''));
+        if (preg_match('/(tablet|ipad|playbook)|(android(?!.*mobile))/i', $stock_ua)) {
+            $tablet_browser = true;
+        }
+    }
+
+    return $tablet_browser;
+}
+
+function foody_array_to_data_attr($data)
+{
+    if (empty($data)) {
+        return '';
+    }
+    $data_attrs = '';
+    foreach ($data as $key => $value) {
+        $data_attrs .= " data-$key='$value'";
+    }
+
+    return $data_attrs;
 }

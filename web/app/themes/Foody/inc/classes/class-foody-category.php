@@ -6,112 +6,213 @@
  * Date: 6/2/18
  * Time: 3:34 PM
  */
-class Foody_Category {
-	public $id, $link, $title, $categories, $name, $category;
+class Foody_Category implements Foody_ContentWithSidebar
+{
+    public $id;
 
-	/**
-	 * MalamSubCategory constructor.
-	 * @param int $id
-	 * @param string $category_name
-	 */
-	public function __construct($id = false, $categories = null)
-	{
-		$this->id = 0;
-		if ($categories != null) {
-			$this->categories = $categories;
-		} else {
-			$this->categories = get_the_category($id);
-		}
+    public $link;
 
-		if($id){
-		    $this->category = get_term($id);
-        }
+    public $title;
 
-		wp_reset_query();
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function parent($title = null, $id = null)
-	{
-
-		$locations = get_nav_menu_locations();
-		$menu = get_term($locations['primary'], 'nav_menu');
-		$menu_items = wp_get_nav_menu_items($menu->slug);
-
-		$parent_term_id = 0;
-
-		// in case the post is associated with
-		// several categories we need to make sure
-		// the correct category is selected to be shown
-		// in the breadcrumbs so we have to compare
-		// the current category title
-		// with the possible categories
-		if ($title != null) {
-
-			foreach ($this->categories as $c) {
-				if (strcmp(mb_strtolower(mb_convert_encoding($c->name, 'UTF-8', 'auto'), 'UTF-8'), mb_strtolower($title, 'UTF-8')) === 0) {
-					$this->category = $c;
-					break;
-				}
-			}
-
-			if (isset($this->category)) {
-
-				$this->id = $this->category->cat_ID;
-			} elseif ($id != null) {
-				$this->id = $id;
-			}
-		} else {
-			$this->category = $this->categories[0];
-			$this->id = $this->category->cat_ID;
+    public $category;
 
 
-		}
+    /**
+     * @var FoodyGrid
+     */
+    private $grid;
 
+    /**
+     * Foody_Category constructor.
+     * @param int $id
+     */
+    public function __construct($id)
+    {
+        $this->id = $id;
 
-		foreach ($menu_items as $menu_item) {
-			//  echo $menu_item->object_id.' - '.$this->id. "
-			//";
+        $this->category = get_term($id);
 
-			if ($menu_item->object_id == $this->id) {
+        $this->title = $this->category->name;
 
+        $this->link = get_term_link($id);
 
-				$parent_term_id = $menu_item->menu_item_parent;
-
-				break;
-			}
-
-		}
-		foreach ($menu_items as $menu_item) {
-			if ($menu_item->ID == $parent_term_id) {
-				return $menu_item->object_id;
-				break;
-			}
-		}
-
-		wp_reset_query();
-
-	}
-
-
-	public function get_category_id()
-	{
-
-	}
+        $this->grid = new FoodyGrid();
+    }
 
 
     /**
      * Get the category image (ACF Field)
      * @return mixed|null|string
      */
-    public function get_image(){
-	    $image = '';
-	    if($this->category != null){
-            $image = get_field( 'image', $this->category->taxonomy . '_' . $this->category->term_id );
+    public function get_image($size = 'list-item')
+    {
+        $image = '';
+        if ($this->category != null) {
+            $image = get_field('image', $this->category->taxonomy . '_' . $this->category->term_id);
+
+
+            if (is_array($image)) {
+                if (isset($image['sizes'][$size])) {
+                    $image = $image['sizes'][$size];
+                } else {
+                    $image = $image['sizes'][array_keys($image['sizes'])[0]];
+                }
+            }
         }
 
         return $image;
+    }
+
+
+    /**
+     * Get array of sub categories
+     * as Foody_Category objects
+     * @return Foody_Category[]
+     */
+    public function get_sub_categories()
+    {
+        $parent_id = get_queried_object_id();
+        $wp_categories = get_categories(['parent' => $parent_id, 'hide_empty' => false]);
+        $sub_categories = [];
+        if (is_array($wp_categories)) {
+            $sub_categories = array_map(function ($category) {
+                return new Foody_Category($category->term_id);
+            }, $wp_categories);
+        }
+
+        return $sub_categories;
+    }
+
+
+    /**
+     * Get the category tree.
+     * Returns parents categories in
+     * desc order.
+     * @return array
+     */
+    function get_tree()
+    {
+
+        $current = get_term($this->id, 'category');
+
+        $tree = [];
+
+        while ($current->parent) {
+            $tree[] = $current->term_id;
+            $current = get_term($current->parent, 'category');
+        }
+        $tree[] = $current->term_id;
+        $tree = array_reverse($tree);
+
+        return $tree;
+    }
+
+    function feed()
+    {
+
+        $foody_query = Foody_Query::get_instance();
+        $args = $foody_query->get_query('category', [$this->id], true);
+
+        $query = new WP_Query($args);
+
+        $posts = $query->get_posts();
+
+        $posts = array_map('post_to_foody_post', $posts);
+
+        $grid = [
+            'id' => 'category-feed',
+            'cols' => 3,
+            'posts' => $posts,
+            'more' => $foody_query->has_more_posts($query),
+            'header' => [
+                'sort' => true,
+                'title' => sprintf('מתכוני %s', $this->title)
+            ]
+        ];
+
+        foody_get_template_part(
+            get_template_directory() . '/template-parts/common/foody-grid.php',
+            $grid
+        );
+
+
+    }
+
+
+    // === Foody_ContentWithSidebar === //
+
+    function the_featured_content()
+    {
+
+    }
+
+    function the_sidebar_content()
+    {
+        dynamic_sidebar('foody-sidebar');
+    }
+
+    function the_details()
+    {
+        bootstrap_breadcrumb();
+        if (!empty($this->get_sub_categories())) {
+            foody_get_template_part(get_template_directory() . '/template-parts/content-categories-slider.php', [
+                'category' => $this
+            ]);
+        }
+    }
+
+    function the_content($page)
+    {
+        $select_args = array(
+            'id' => 'sort-categories-posts',
+            'placeholder' => 'סדר על פי',
+            'options' => array(
+                array(
+                    'value' => 1,
+                    'label' => 'א-ת'
+                ),
+                array(
+                    'value' => -1,
+                    'label' => 'ת-א'
+                )
+            )
+        );
+
+        $gutter = wp_is_mobile() ? ' ' : ' gutter-30 '
+
+        ?>
+        <!--        <div class="container-fluid">-->
+        <!--            <div class="feed-header row--><?php //echo $gutter
+        ?><!--justify-content-space-between">-->
+        <!---->
+        <!--                <h2 class="title col-sm-6 col-8">-->
+        <!--                    --><?php //echo sprintf('מתכוני %s', $this->title)
+        ?>
+        <!--                </h2>-->
+        <!--                <div class="sort col-sm-6 col-4">-->
+        <!--                    --><?php
+//                    foody_get_template_part(
+//                        get_template_directory() . '/template-parts/common/foody-select.php',
+//                        $select_args
+//                    )
+//
+        ?>
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+
+        <div class="container-fluid feed-container">
+<!--            <div class="row gutter-3 foody-grid">-->
+                <?php $this->feed(); ?>
+<!--            </div>-->
+        </div>
+        <?php
+
+    }
+
+    function getId()
+    {
+        return $this->id;
     }
 }

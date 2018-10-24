@@ -15,6 +15,8 @@ class Foody_Profile
 
     private $grid;
 
+    private $form_classes = ['profile-form'];
+
     /**
      * Foody_Profile constructor.
      */
@@ -22,9 +24,12 @@ class Foody_Profile
     {
         $this->sidebar_filter = new SidebarFilter();
         $this->foody_user = new Foody_User();
-        $this->grid = new RecipesGrid();
+        $this->grid = new FoodyGrid();
     }
 
+    /**
+     * Displays the sidebar
+     */
     public function sidebar()
     {
         dynamic_sidebar('foody-sidebar');
@@ -32,7 +37,7 @@ class Foody_Profile
 
     public function get_image()
     {
-        return get_user_meta(get_current_user_id(), 'wp_user_avatars', true)['90'];
+        return $this->foody_user->get_image('90');
     }
 
     public function get_name()
@@ -47,11 +52,15 @@ class Foody_Profile
         return $this->foody_user->user->user_email;
     }
 
-    public function my_recipes()
+    /**
+     * Displays a grid of items the
+     * user added to the favorites list
+     */
+    public function my_favorites()
     {
         global $wp_session;
 
-        if (!isset($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
+        if (isset($wp_session['favorites']) && !empty($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
             $posts = [];
             foreach ($favorite_posts as $favorite_post) {
                 $posts[] = Foody_PostFactory::get_post(get_post($favorite_post));
@@ -59,59 +68,196 @@ class Foody_Profile
 
             echo '<h2 class="title">ספר המתכונים שלי</h2>';
 
-            $this->grid->loop($posts, 2);
+
+            $grid_args = [
+                'id' => 'my-recipes-grid',
+//                'responsive' => [
+//                    'tablet_l' => 'col-lg-12',
+//                    'tablet' => 'col-md-6',
+//                ],
+                'posts' => $posts,
+                'more' => false,
+                'cols' => 2
+            ];
+
+            foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
+
         } else {
-            // TODO show 'no content';
             foody_get_template_part(get_template_directory() . '/template-parts/content-no-recipes.php');
         }
 
-//        $this->grid->grid_debug(12, 2);
     }
 
-    public function my_channels_recipes()
+    /**
+     * Displays content related to
+     * followed channels or authors
+     */
+    public function my_topics_content()
     {
-        $this->grid->grid_debug(9, 2);
+        ?>
+        <h2 class="title">
+            <?php echo __('מתכונים מערוצים', 'foody') ?>
+        </h2>
+        <?php
+
+        $posts = $this->foody_user->get_followed_content();
+
+        $posts = array_map('Foody_Post::create', $posts);
+
+
+        $grid_args = [
+            'id' => 'my-channels-grid',
+//            'responsive' => [
+//                'tablet_l' => 'col-lg-12',
+//                'tablet' => 'col-md-6',
+//            ],
+            'posts' => $posts,
+            'more' => false,
+            'cols' => 2
+        ];
+
+        foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
+
+
     }
 
-    public function my_channels()
+    /**
+     * Displays a list of followed
+     * channels and authors.
+     */
+    public function my_followed_topics()
     {
-        $list = $this->foody_user->get_favorite_channels();
+        $list = $this->foody_user->get_followed_topics();
+
+        if (!is_null($list) && !empty($list)) {
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/content-user-managed-list.php',
+                $list
+            );
+        } else {
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/content-no-followed-topics.php'
+            );
+        }
 
 
-        $list = array(
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            ),
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            ),
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            ),
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            ),
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            ),
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            ),
-            array(
-                'name' => 'שם שם',
-                'image' => 'http://' . $_SERVER['HTTP_HOST'] . '/app/uploads/2018/06/matan-90x90.jpg'
-            )
+    }
+
+    public function favorites_tab()
+    {
+        global $wp_session;
+
+        $count = empty($wp_session['favorites']) ? 0 : count($wp_session['favorites']);
+
+
+        echo '<span>' . sprintf("המתכונים שלי (%s)", $count) . '</span>';
+    }
+
+    public function channels_tab()
+    {
+        $results = $this->foody_user->get_followed_content(0, 12, true);
+        $count = 0;
+        if (isset($results[0]) && isset($results[0]->count)) {
+            $count = $results[0]->count;
+        }
+
+
+        echo '<span>' . sprintf('מתכונים מערוצים (%s)', $count) . '</span>';
+    }
+
+    public function the_content()
+    {
+
+
+        $followed = $this->foody_user->get_followed_content();
+        $followed = array_map('Foody_Post::create', $followed);
+        $results = $this->foody_user->get_followed_content(0, 12, true);
+        $count = 0;
+        if (isset($results[0]) && isset($results[0]->count)) {
+            $count = $results[0]->count;
+        }
+
+
+        global $wp_session;
+
+        $favorite_count = 0;
+        if (isset($wp_session['favorites']) && !empty($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
+            $recipes = [];
+            $favorite_posts = $wp_session['favorites'];
+
+
+            foreach ($favorite_posts as $favorite_post) {
+                $recipes[] = Foody_PostFactory::get_post(get_post($favorite_post));
+            }
+
+            $favorite_count = count($favorite_posts);
+            $recipes_content = $this->get_posts_grid(
+                $recipes,
+                'my-recipes',
+                'ספר המתכונים שלי'
+            );
+        } else {
+            $recipes_content = '';
+        }
+
+        $tabs = [
+            [
+                'title' => sprintf("המתכונים שלי (%s)", $favorite_count),
+                'target' => 'my-recipes-tab-pane',
+                'content' => $recipes_content,
+                'classes' => 'show active',
+                'link_classes' => 'active'
+            ],
+            [
+                'title' => sprintf('מתכונים מערוצים (%s)', $count),
+                'target' => 'playlists-tab-pane',
+                'content' =>
+                    $this->get_posts_grid(
+                        $followed,
+                        'my-channels',
+                        'מתכונים מערוצים'
+                    )
+            ]
+        ];
+
+        foody_get_template_part(get_template_directory() . '/template-parts/common/foody-tabs.php', $tabs);
+    }
+
+    private function get_posts_grid($posts, $id, $title)
+    {
+
+        $grid = [
+            'id' => $id,
+            'cols' => 2,
+            'posts' => $posts,
+            'classes' => [
+                $id
+            ],
+            'more' => false,
+            'header' => [
+                'sort' => true,
+                'title' => $title
+            ],
+            'return' => true
+        ];
+
+        return foody_get_template_part(
+            get_template_directory() . '/template-parts/common/foody-grid.php',
+            $grid
         );
+    }
 
-        foody_get_template_part(
-            get_template_directory() . '/template-parts/content-user-managed-list.php',
-            $list
-        );
+    public function the_user_details_form()
+    {
+        foody_get_template_part(get_template_directory() . '/template-parts/content-profile-edit.php', [
+            'form_classes' => $this->form_classes
+        ]);
+    }
+
+    public function the_password_change_form()
+    {
+        foody_get_template_part(get_template_directory() . '/template-parts/content-password-change.php', [
+            'form_classes' => $this->form_classes
+        ]);
     }
 }

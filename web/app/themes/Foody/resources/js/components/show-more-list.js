@@ -8,25 +8,30 @@
  * in the last element of a list
  * to indicate the count of remaining items
  * */
-window.showMoreList = function (selector) {
+window.showMoreList = function (selector, moreLink) {
     let $target = $(selector);
 
-    let count = $target.parent().data('count');
-    if (count) {
-        let $image = $('img', $target);
+    if ($target && $target.length) {
+        let count = $target.parent().data('count');
+        if (count) {
+            let $image = $('img', $target);
+            $('h4', $target).text('הצג הכל').addClass('title');
 
-        let imageHeight = $image.height();
+            let $imageContainer = $('.image-container',$target);
+            let overlay = `<h4 class='show-more-list-overlay'> ${count}+</h4>`;
 
-        let overlay = `<h4 class='show-more-list-overlay'> ${count}+</h4>`;
+            $imageContainer.css("position", "relative");
+            $(overlay).appendTo($imageContainer);
 
-        $(overlay).css({
-            top: 0,
-            'line-height': imageHeight + 'px'
-        }).appendTo($target.css("position", "relative"));
 
-        $target.addClass('show-more-list');
-        $image.css('opacity', '0.5');
+            $target.addClass('show-more-list');
+
+            let $link = $image.closest('a');
+
+            $link.attr('href',moreLink);
+
+            $image.css('opacity', '0.2');
+        }
     }
-
 
 };

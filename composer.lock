@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b33e7e504e4f8c4475dd45d5351960f8",
+    "content-hash": "9e2ef977b5faf336d3371ce0554301ba",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -138,22 +138,33 @@
             "time": "2017-12-29T09:13:20+00:00"
         },
         {
-            "name": "designs&code/search-filter",
-            "version": "1.2.9",
+            "name": "elliotcondon/advanced-custom-fields-pro",
+            "version": "5.6.10",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/search-filter.1.2.9.zip",
+                "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9MTMxNzg3fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTIzIDEyOjE1OjI5",
                 "reference": null,
                 "shasum": null
             },
             "type": "wordpress-plugin"
         },
         {
-            "name": "elliotcondon/advanced-custom-fields-pro",
-            "version": "5.6.10",
+            "name": "gagan-deep-singh/fix-image-rotation",
+            "version": "2.1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9MTMxNzg3fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTIzIDEyOjE1OjI5",
+                "url": "https://downloads.wordpress.org/plugin/fix-image-rotation.2.1.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "joe-dolson/wp-accessibility",
+            "version": "1.6.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -286,6 +297,51 @@
                 "wordpress"
             ],
             "time": "2018-01-29T14:49:29+00:00"
+        },
+        {
+            "name": "mixpanel/mixpanel-php",
+            "version": "2.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mixpanel/mixpanel-php.git",
+                "reference": "7031e213554436793e0927184f41be72dcd63eb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mixpanel/mixpanel-php/zipball/7031e213554436793e0927184f41be72dcd63eb6",
+                "reference": "7031e213554436793e0927184f41be72dcd63eb6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/Mixpanel.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mixpanel <dev@mixpanel.com>",
+                    "homepage": "https://mixpanel.com/"
+                }
+            ],
+            "description": "The Official PHP library for Mixpanel",
+            "homepage": "https://mixpanel.com/help/reference/php",
+            "keywords": [
+                "mixpanel",
+                "mixpanel php"
+            ],
+            "time": "2014-06-11T19:10:51+00:00"
         },
         {
             "name": "oscarotero/env",
@@ -463,6 +519,28 @@
             "time": "2016-03-01T16:27:06+00:00"
         },
         {
+            "name": "saurabhshukla-yapapaya/widgets-in-menu",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/widgets-in-menu.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "smash-baloon/instagram-feed",
+            "version": "1.10.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.10.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "stuttter/wp-user-avatars",
             "version": "1.4.0",
             "source": {
@@ -546,17 +624,6 @@
             "time": "2018-07-01T10:25:50+00:00"
         },
         {
-            "name": "webdevstudios/custom-post-type-ui",
-            "version": "1.5.8",
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/custom-post-type-ui.1.5.8.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin"
-        },
-        {
             "name": "xamin/handlebars.php",
             "version": "v0.10.4",
             "source": {
@@ -597,6 +664,92 @@
             "description": "Handlebars processor for php",
             "homepage": "https://github.com/XaminProject/handlebars.php",
             "time": "2016-12-12T13:51:02+00:00"
+        },
+        {
+            "name": "yoast/wordpress-seo",
+            "version": "8.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.8.3.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "miled/wordpress-social-login",
+            "version": "2.3.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wordpress-social-login.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "niteo-themes/cmp-coming-soon-maintenance",
+            "version": "2.8.8",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/cmp-coming-soon-maintenance.2.8.8.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "d86873af43b4aa9d1f39a3601cc0cfcf02b25266"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d86873af43b4aa9d1f39a3601cc0cfcf02b25266",
+                "reference": "d86873af43b4aa9d1f39a3601cc0cfcf02b25266",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "bin": [
+                "bin/phpcs",
+                "bin/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "http://www.squizlabs.com/php-codesniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "time": "2018-06-06T23:58:19+00:00"
         },
         {
             "name": "xrstf/composer-php52",
@@ -791,115 +944,6 @@
             ],
             "description": "A WordPress package to nudge users to upgrade their software versions (starting with PHP)",
             "time": "2017-08-04T10:00:35+00:00"
-        },
-        {
-            "name": "yoast/wordpress-seo",
-            "version": "7.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Yoast/wordpress-seo.git",
-                "reference": "89977c35bd3e3d8cd362f7cda698698f14a2e20e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Yoast/wordpress-seo/zipball/89977c35bd3e3d8cd362f7cda698698f14a2e20e",
-                "reference": "89977c35bd3e3d8cd362f7cda698698f14a2e20e",
-                "shasum": ""
-            },
-            "require": {
-                "composer/installers": "~1.0",
-                "xrstf/composer-php52": "^1.0.20",
-                "yoast/api-libs": "^2.0",
-                "yoast/i18n-module": "^3.0",
-                "yoast/license-manager": "1.6.0",
-                "yoast/whip": "^1.1.0"
-            },
-            "require-dev": {
-                "roave/security-advisories": "dev-master",
-                "yoast/php-development-environment": "^1.0",
-                "yoast/yoastcs": "~0.4.3"
-            },
-            "type": "wordpress-plugin",
-            "autoload": {
-                "classmap": [
-                    "admin/",
-                    "frontend/",
-                    "inc/",
-                    "deprecated/",
-                    "cli/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Team Yoast",
-                    "email": "support@yoast.com",
-                    "homepage": "https://yoa.st/1--"
-                }
-            ],
-            "description": "Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the Yoast SEO plugin.",
-            "homepage": "https://yoa.st/1ui",
-            "keywords": [
-                "seo",
-                "wordpress"
-            ],
-            "time": "2018-07-10T08:24:47+00:00"
-        }
-    ],
-    "packages-dev": [
-        {
-            "name": "squizlabs/php_codesniffer",
-            "version": "3.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "d86873af43b4aa9d1f39a3601cc0cfcf02b25266"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d86873af43b4aa9d1f39a3601cc0cfcf02b25266",
-                "reference": "d86873af43b4aa9d1f39a3601cc0cfcf02b25266",
-                "shasum": ""
-            },
-            "require": {
-                "ext-simplexml": "*",
-                "ext-tokenizer": "*",
-                "ext-xmlwriter": "*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
-            },
-            "bin": [
-                "bin/phpcs",
-                "bin/phpcbf"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Greg Sherwood",
-                    "role": "lead"
-                }
-            ],
-            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
-            "homepage": "http://www.squizlabs.com/php-codesniffer",
-            "keywords": [
-                "phpcs",
-                "standards"
-            ],
-            "time": "2018-06-06T23:58:19+00:00"
         }
     ],
     "aliases": [],

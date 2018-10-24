@@ -14,7 +14,10 @@ function foody_sidebars()
     $sidebars = array(
         array(
             'id' => 'foody-sidebar',
-            'name' => 'Foody Sidbar',
+            'name' => 'Foody Sidebar',
+        ),array(
+            'id' => 'foody-sidebar-mobile',
+            'name' => 'Foody Mobile Sidebar',
         ), array(
             'id' => 'homepage-categories',
             'name' => 'Homepage Categories',

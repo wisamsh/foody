@@ -29,7 +29,6 @@
         color: $color__primary;
         display: inline-block;
         position: absolute;
-        z-index: 1;
         bottom: 0;
         margin-right: 5px;
         right: 0;
@@ -41,7 +40,8 @@
       text-align: center;
       margin: 10px 0;
       font-family: $font__main;
-      word-break: break-all;
+      //noinspection CssInvalidPropertyValue
+      word-break: break-word;
     }
 
   }
@@ -66,5 +66,26 @@
       .author-name{
       }
     }
+  }
+}
+
+@include breakpoint(tablet-l) {
+  .team-listing {
+    .team-grid-row{
+      justify-content: space-around;
+      .author {
+
+        .image-container {
+
+
+          .post-count {
+          }
+        }
+
+        .author-name{
+        }
+      }
+    }
+
   }
 }

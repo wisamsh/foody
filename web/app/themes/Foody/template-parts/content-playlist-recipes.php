@@ -45,13 +45,30 @@ $hide_title = isset($template_args['hide_title']) && $template_args['hide_title'
 
         <li class="playlist-recipe-item row gutter-0 <?php echo $item_class ?>"
             data-video="<?php echo $recipe->video['id'] ?>">
-            <div class="image-container col-6">
+            <div class="image-container col-7 col-sm-6">
                 <a href="<?php echo $playlist->get_playlist_recipe_link($recipe) ?>">
+
+
                     <figure class="tint">
+
                         <img src="<?php echo $recipe->getImage() ?>" alt="<?php echo $recipe->getTitle() ?>">
                         <?php
                         if (isset($current_icon) && !empty($current_icon)) {
                             echo $current_icon;
+                        } else {
+                            if ($recipe->video != null) {
+                                ?>
+                                <div class="duration">
+                                    <i class="icon icon-timeplay">
+
+                                    </i>
+                                    <span>
+                                        <?php echo $recipe->getDuration() ?>
+                                    </span>
+                                </div>
+                                <?php
+                            }
+
                         }
                         ?>
                     </figure>
@@ -59,7 +76,7 @@ $hide_title = isset($template_args['hide_title']) && $template_args['hide_title'
                 </a>
             </div>
 
-            <div class="playlist-recipe-item-details col-6">
+            <div class="playlist-recipe-item-details col-5 col-sm-6">
                 <h3>
                     <a href="<?php echo $playlist->get_playlist_recipe_link($recipe) ?>">
                         <?php echo $recipe->getTitle() ?>
@@ -69,6 +86,9 @@ $hide_title = isset($template_args['hide_title']) && $template_args['hide_title'
                 <a class="author-name" href="<?php echo get_author_posts_url($recipe->post->post_author) ?>">
                     <?php echo $recipe->getAuthorName() ?>
                 </a>
+                <div class="description d-none d-sm-block d-lg-none">
+                    <?php echo $recipe->getDescription() ?>
+                </div>
             </div>
 
 

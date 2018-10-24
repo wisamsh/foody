@@ -19,7 +19,11 @@ function foody_submit_ajax_comment()
     if (is_wp_error($comment)) {
         $error_data = intval($comment->get_error_data());
         if (!empty($error_data)) {
-            wp_die('<p>' . $comment->get_error_message() . '</p>', __('Comment Submission Failure'), array('response' => $error_data, 'back_link' => true));
+
+            wp_send_json_error([
+                'message' => $comment->get_error_message(),
+            ], 400);
+//            wp_die('<p>' . $comment->get_error_message() . '</p>', __('Comment Submission Failure'), array('response' => $error_data, 'back_link' => true));
         } else {
             wp_die('Unknown error');
         }
@@ -134,7 +138,7 @@ function foody_submit_ajax_how_i_did()
 }
 
 add_action('wp_ajax_hidloadmore', 'foody_hid_loadmore_handler'); // wp_ajax_{action}
-
+add_action('wp_ajax_nopriv_hidloadmore', 'foody_hid_loadmore_handler'); // wp_ajax_nopriv_{action}
 function foody_hid_loadmore_handler()
 {
 
@@ -148,7 +152,7 @@ function foody_hid_loadmore_handler()
 
     $args = [];
 
-    $current_page = $_POST['chpage'];
+    $current_page = $_POST['hidpage'];
 
 
     $args['offset'] = $current_page * get_option('hid_per_page');

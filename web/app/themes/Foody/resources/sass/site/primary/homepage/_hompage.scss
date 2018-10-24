@@ -1,5 +1,6 @@
 $content-width: 79%;
 $feed-header-height: 60px;
+$sidebar-top-offset: 60px;
 .homepage {
 
   .cover-image {
@@ -20,14 +21,12 @@ $feed-header-height: 60px;
 
           & + section {
             padding-right: 0;
-
           }
 
           img {
             margin: 0 auto;
             display: block;
           }
-
         }
       }
 
@@ -38,9 +37,9 @@ $feed-header-height: 60px;
 
     }
 
-    .title{
+    .title {
 
-      a{
+      a {
         color: $color__primary;
       }
     }
@@ -52,9 +51,9 @@ $feed-header-height: 60px;
       .category-listing {
         padding: 0 11px;
         filter: drop-shadow(2px 2px 10px rgba(0, 0, 0, 0.3));
+
         img {
           clip-path: inset(0 round .5rem);
-          height: 200px;
           width: 100%;
         }
         .categort-listing-title {
@@ -86,25 +85,6 @@ $feed-header-height: 60px;
         height: $feed-header-height;
         width: 100%;
 
-        .socials {
-
-          vertical-align: middle;
-          width: calc(99% - #{$content-width});
-
-          .essbfc-container {
-
-            display: inline-block;
-            margin: 0;
-            width: 100%;
-            padding: 0 25px;
-
-            ul {
-              display: flex;
-              justify-content: space-between;
-            }
-          }
-        }
-
         .title {
           width: $content-width;
           max-width: $content-width;
@@ -115,36 +95,118 @@ $feed-header-height: 60px;
         }
 
       }
-      aside {
 
+      .sidebar-container {
+
+        // min items
+        //width: 21%;
+        //padding-right: 0;
+        //max-height: stretch;
+        //min-height: stretch;
+        margin-top: 66px;
+        // max items
         width: 21%;
-        margin-bottom: -180px;
+        padding-right: 0;
+        //min-height: max-content;
 
-        $input-height: 57px;
-        $input-margin: 4px;
+        aside {
+          // min items
+          //width: 100%;
+          //padding-right: 0;
+          //left: 0;
+          //right: 0;
+          //bottom: 0;
+          //height: stretch;
+          ///* bottom: 0; */
+          //min-height: 100%;
+          //display: flow-root;
 
-        input[type="text"] {
+          // max items
           width: 100%;
-          height: $input-height;
-          margin-bottom: $input-margin;
-        }
-
-        .sidebar-content {
-          min-height: calc(100% - #{$input-height});
-          position: absolute;
+          padding-right: 0;
           left: 0;
           right: 0;
           bottom: 0;
-          top: 60px;
-        }
+          min-height: max-content;
+          height: 100%;
 
-        .filter {
-          margin-top: 5px;
-          height: 100rem;
-          background-color: #fff;
-          margin-right: -15px;
-          padding: 0 15px;
-          box-shadow: -2px 1px 4px 0 rgba(0, 0, 0, 0.09);
+          $input-height: 57px;
+          $input-margin: 4px;
+          $input-side-offset: 15px;
+
+          .fb-page, .fb-page span, .fb-page span iframe[style] {
+            width: 100% !important;
+          }
+
+          @import "../../../common/foody-autocomplete";
+
+          .foody-search-form {
+
+            .search-bar {
+              transition: all .25s;
+              .algolia-autocomplete {
+                width: 100%;
+
+                input {
+                  &.search {
+                    width: calc(100% - #{$input-side-offset});
+                    height: $input-height;
+                    margin-bottom: $input-margin;
+                    text-align: right;
+                    direction: rtl;
+
+                    //noinspection CssInvalidPseudoSelector
+                    &::placeholder {
+                      font-size: 24px;
+                      vertical-align: sub;
+                      line-height: $input-height;
+                      text-align: right;
+                      direction: rtl;
+                    }
+                  }
+                }
+              }
+            }
+            .foody-dropdown-menu {
+              width: calc(100% - #{$input-side-offset});
+              margin-right: 15px;
+              margin-top: 0;
+            }
+          }
+
+          .sidebar-content {
+            // min items
+            //left: 0;
+            //right: 0;
+            //bottom: 0;
+            //max-height: stretch;
+            //height: 100%;
+            //background: blue;
+            //min-height: stretch;
+
+            // max items
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: $sidebar-top-offset;
+            // Autoprefixer will change 'stretch'
+            // into fill-available and the different
+            // browsers equivalent.
+            // noinspection CssInvalidPropertyValue
+            //max-height: stretch;
+            //height: 100%;
+            //min-height: fit-content;
+          }
+
+          .filter {
+            margin-top: 5px;
+            height: 100rem;
+            background-color: #fff;
+            margin-right: -15px;
+            padding: 0 15px;
+            box-shadow: -2px 1px 4px 0 rgba(0, 0, 0, 0.09);
+          }
         }
       }
 
@@ -152,6 +214,7 @@ $feed-header-height: 60px;
         width: $content-width;
         max-width: $content-width;
         flex: 0 0 $content-width;
+        margin-top: 20px;
         article {
 
           &.feed {
@@ -169,8 +232,8 @@ $feed-header-height: 60px;
 
             img {
               &.recipe-item-image {
-                min-height: 270px;
-                max-height: 270px;
+                //min-height: 270px;
+                //max-height: 270px;
                 width: 100%;
               }
             }
@@ -178,21 +241,6 @@ $feed-header-height: 60px;
 
         }
       }
-
-      .show-more {
-        margin: 0 auto;
-        padding: 20px 0;
-        text-align: center;
-        cursor: pointer;
-        img {
-          margin-bottom: 10px;
-        }
-        h4 {
-          color: $color__primary;
-          text-align: center;
-        }
-      }
-
     }
   }
 
@@ -209,8 +257,8 @@ $feed-header-height: 60px;
 
 .page-template-homepage {
   footer.site-footer {
-    max-width: 79%;
-    margin-right: 21%;
+    //bottom: -$sidebar-top-offset;
+    position: unset;
   }
 }
 
@@ -233,12 +281,14 @@ $feed-header-height: 60px;
       .categories-listing {
 
         padding: 0;
+        a.col {
+          padding: 0;
+        }
 
         .category-listing {
           padding: 0 3px;
           img {
             clip-path: inset(0 round .3rem);
-            height: 100px;
           }
           .categort-listing-title {
 
@@ -248,23 +298,24 @@ $feed-header-height: 60px;
       }
 
       .team-listing {
-        padding-right: 10px;
+        padding-right: 0;
         border-bottom: 0;
         .slick-slide {
           height: auto;
-          width: 90px;
         }
 
         .author {
+
           img {
             width: 80px;
-
           }
 
           h4 {
             font-size: 18px;
+            //noinspection CssInvalidPropertyValue
+            word-break: break-word;
+            margin-bottom: 0;
           }
-
         }
       }
 
@@ -291,6 +342,7 @@ $feed-header-height: 60px;
         .content-container {
           max-width: 100%;
           flex: 0 0 100%;
+          margin-bottom: 0;
           article {
 
             &.feed {
@@ -302,7 +354,7 @@ $feed-header-height: 60px;
             &.feed, &.recommended-container {
               img {
                 &.recipe-item-image {
-                  min-height: 210px;
+                  //min-height: 210px;
                 }
               }
             }
@@ -348,13 +400,454 @@ $feed-header-height: 60px;
         }
       }
     }
+
+    .mobile-filter {
+
+      $show-recipes-button-height: 62px;
+      $show-recipes-button-margin: 18px;
+
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      min-height: 100%;
+      width: 0;
+      transition: all .4s;
+      opacity: 0;
+      z-index: 9999999999999;
+      background-color: white;
+      overflow-y: scroll;
+      padding-bottom: $show-recipes-button-height + $show-recipes-button-margin;
+
+      .show-recipes-container {
+        position: fixed;
+        bottom: 0;
+        width: 80%;
+        display: none;
+        padding: 0 40px;
+        right: 0;
+        margin-bottom: 20px;
+        button {
+          background-image: linear-gradient(71deg, #ec3849, #f35644);
+          height: $show-recipes-button-height;
+          width: 100%;
+          font-size: 32px;
+          color: #ffffff;
+        }
+      }
+
+      &.open {
+        width: 80%;
+        opacity: 1;
+
+        button.close {
+          padding: 10px;
+          position: absolute;
+          left: 20px;
+          top: 10px;
+          z-index: 1;
+        }
+
+        .show-recipes-container {
+          display: block;
+          button {
+
+          }
+        }
+      }
+
+      aside {
+        padding-right: 0;
+
+        li.widget, .sidebar-section {
+          padding: 20px;
+        }
+
+        .sidebar-content {
+          border: none;
+
+          #accordion-foody-filter {
+
+            #heading-foody-filter {
+              i {
+                display: none;
+              }
+
+              .main-title {
+                padding-right: 0;
+              }
+            }
+
+            #foody-filter {
+              margin-right: 0;
+
+              h5 {
+                i.arrow {
+                  &:before {
+                    left: 4.3em;
+                  }
+                }
+              }
+
+              .card-body {
+                padding-right: 0;
+                padding-left: 0;
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }
+}
+
+@include breakpoint(tablet) {
+  .homepage {
+
+    .cover-image {
+
+      img {
+      }
+    }
+
+    .content {
+
+      &.container-fluid {
+      }
+
+      .categories-listing {
+
+        a.col {
+        }
+
+        .category-listing {
+          img {
+          }
+          .categort-listing-title {
+
+          }
+
+        }
+      }
+
+      .team-listing {
+        .slick-slide {
+        }
+
+        .author {
+
+          img {
+            width: 167px;
+          }
+
+          h4 {
+          }
+        }
+      }
+
+      .feed-container {
+        .feed-header {
+
+          .socials {
+
+          }
+
+          .h3 {
+
+          }
+
+        }
+        aside {
+
+          input[type="text"] {
+
+          }
+        }
+
+        //$sidebar-width:35%;
+        //$content-width:calc(100% - #{$sidebar-width});
+
+        .content-container {
+          //width: $content-width;
+          //max-width: $content-width;
+          //flex: 0 0 $content-width;
+          article {
+
+            &.feed {
+              .show-more {
+              }
+            }
+
+            &.feed, &.recommended-container {
+              img {
+                &.recipe-item-image {
+                }
+              }
+            }
+
+          }
+        }
+
+      }
+    }
+
+    .filter {
+      input[type="text"] {
+
+      }
+
+      .filters {
+
+      }
+    }
+
+    .filter-mobile {
+
+      .filter-btn {
+
+        &:active, &:hover, &:focus {
+        }
+      }
+    }
+
+    .mobile-filter {
+      .show-recipes-container {
+        button {
+        }
+      }
+
+      &.open {
+
+        button.close {
+        }
+
+        .show-recipes-container {
+          button {
+
+          }
+        }
+      }
+
+      aside {
+        height: 95%;
+        overflow-y: scroll;
+        li.widget, .sidebar-section {
+        }
+
+        li.widget, .categories-accordion-widget {
+          display: none !important;
+        }
+
+        .sidebar-content {
+          height: 100%;
+
+          .foody-search-filter {
+            height: 100%;
+            border-bottom: 0;
+          }
+
+          #accordion-foody-filter {
+
+            #heading-foody-filter {
+              i {
+              }
+
+              .main-title {
+              }
+            }
+
+            #foody-filter {
+
+              h5 {
+                i.arrow {
+                  &:before {
+                  }
+                }
+              }
+
+              .card-body {
+              }
+            }
+          }
+        }
+      }
+
+    }
   }
 
   .page-template-homepage {
     footer.site-footer {
-      max-width: 100%;
-      margin-right: 0;
-      margin-top: 0;
+    }
+  }
+}
+
+@include breakpoint(tablet-landscape) {
+  .homepage {
+
+    .cover-image {
+
+      img {
+      }
+    }
+
+    .content {
+
+      &.container-fluid {
+      }
+
+      .categories-listing {
+
+        a.col {
+        }
+
+        .category-listing {
+          img {
+          }
+          .categort-listing-title {
+
+          }
+
+        }
+      }
+
+      .team-listing {
+        .slick-slide {
+          width: unset;
+        }
+
+        .author {
+          max-width: unset;
+          img {
+          }
+
+          h4 {
+          }
+        }
+      }
+
+      .feed-container {
+        .feed-header {
+
+          .socials {
+
+          }
+
+          .h3 {
+
+          }
+
+        }
+        aside {
+
+          input[type="text"] {
+
+          }
+
+          .sidebar-content {
+            //position: relative;
+            //margin-top: -60px;
+          }
+        }
+
+        .content-container {
+          //margin-bottom: 0;
+          article {
+
+            &.feed {
+              .show-more {
+              }
+            }
+
+            &.feed, &.recommended-container {
+              img {
+                &.recipe-item-image {
+                }
+              }
+            }
+
+          }
+        }
+
+      }
+    }
+
+    .filter {
+      input[type="text"] {
+
+      }
+
+      .filters {
+
+      }
+    }
+
+    .filter-mobile {
+
+      .filter-btn {
+
+        &:active, &:hover, &:focus {
+        }
+      }
+    }
+
+    .mobile-filter {
+      .show-recipes-container {
+        button {
+        }
+      }
+
+      &.open {
+
+        button.close {
+        }
+
+        .show-recipes-container {
+          button {
+
+          }
+        }
+      }
+
+      aside {
+
+        li.widget, .sidebar-section {
+        }
+
+        .sidebar-content {
+
+          #accordion-foody-filter {
+
+            #heading-foody-filter {
+              i {
+              }
+
+              .main-title {
+              }
+            }
+
+            #foody-filter {
+
+              h5 {
+                i.arrow {
+                  &:before {
+                  }
+                }
+              }
+
+              .card-body {
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+  .page-template-homepage {
+    footer.site-footer {
     }
   }
 }

@@ -10,9 +10,20 @@ get_header();
 
 $hide_progress = isset($template_args['hide_progress']) && $template_args['hide_progress'];
 
-$foody_page = Foody_PageContentFactory::get_instance()->get_page();
-?>
 
+$foody_page = Foody_PageContentFactory::get_instance()->get_page();
+
+
+if(method_exists($foody_page,'featured_content_classes')){
+    $featured_content_classes = $foody_page->featured_content_classes();
+}else{
+    $featured_content_classes = [];
+}
+
+
+$featured_content_classes[] = 'featured-content-container';
+
+?>
     <div id="primary" class="content-area">
         <main id="main" class="site-main">
             <div class="row m-0">
@@ -23,7 +34,7 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
 
                 <?php endif; ?>
 
-                <aside class="col d-none d-sm-block">
+                <aside class="col d-none d-lg-block">
 
                     <?php $foody_page->the_sidebar_content() ?>
 
@@ -31,14 +42,14 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
 
                 <article class="content">
                     <?php
-                    if (have_posts()) {
+                    if (have_posts() && !is_search()) {
                         while (have_posts()) :
                             the_post();
                             foody_set_post_views($foody_page->getId());
 
                             ?>
                             <section class="details-container">
-                                <div class="featured-content-container">
+                                <div class="<?php foody_el_classes($featured_content_classes) ?>">
                                     <?php $foody_page->the_featured_content() ?>
                                 </div>
 
@@ -50,21 +61,20 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
                             $foody_page->the_content($foody_page);
 
                         endwhile; // End of the loop.
-                    } else {
-                        if (is_author()) {
-                            ?>
-                            <section class="details-container">
-                                <div class="featured-content-container">
-                                    <?php $foody_page->the_featured_content() ?>
-                                </div>
+                    } elseif (is_author() || is_search() || is_category()) {
+                        ?>
+                        <section class="details-container">
+                            <div class="featured-content-container">
+                                <?php $foody_page->the_featured_content() ?>
+                            </div>
 
-                                <?php $foody_page->the_details() ?>
+                            <?php $foody_page->the_details() ?>
 
-                            </section>
-                            <?php
+                        </section>
+                        <?php
 
-                            $foody_page->the_content($foody_page);
-                        }
+                        $foody_page->the_content($foody_page);
+
                     }
 
                     ?>

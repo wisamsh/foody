@@ -17,7 +17,13 @@ $prev_class = $current_recipe_index == 0 ? 'disabled' : '';
 $next_class = $current_recipe_index == $playlist->num_of_recipes - 1 ? 'disabled' : '';
 
 ?>
-<div class="details-container">
+
+<section class="d-none d-lg-block">
+    <?php
+    $current_recipe->the_details();
+    ?>
+</section>
+<div class="details-container d-block d-lg-none">
 
     <div class="details">
         <section class="playlist-details">

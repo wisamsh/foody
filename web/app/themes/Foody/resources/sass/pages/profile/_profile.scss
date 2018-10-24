@@ -3,7 +3,7 @@ $sidebar-width: 22.5% !default;
 @mixin my-channels($width) {
   $my-channels-width: $width;
   .my-channels {
-    min-width: $my-channels-width;
+    max-width: $my-channels-width;
     .channels {
       background-color: #ffffff;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
@@ -45,21 +45,77 @@ $sidebar-width: 22.5% !default;
         }
       }
     }
+
+    .no-followed-topics {
+      text-align: center;
+      padding: 20px 0;
+      h5 {
+        font-family: $font__main;
+        font-size: 24px;
+        font-weight: 900;
+        text-align: center;
+      }
+
+      p {
+        font-family: $font__assistant;
+        font-size: 18px;
+        text-align: center;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+@mixin profile-tabs() {
+  .nav {
+    background: white;
+    .nav-item {
+      margin-left: 30px;
+      a {
+        font-size: 24px;
+        font-weight: 900;
+        letter-spacing: -0.1px;
+        text-align: center;
+        color: $color__primary;
+        padding: 10px;
+
+        &:not(.active) {
+          color: $color__text-primary-light;
+          &:hover {
+            border-color: $color__primary;
+            opacity: .6;
+            color: $color__primary;
+          }
+        }
+
+        &.active {
+          border-color: $color__primary;
+        }
+      }
+    }
   }
 }
 
 .page-template-profile {
 
+  #page {
+    background-color: white;
+  }
+
+  #main {
+    background-color: $color__background-screen;
+  }
+
   .container-fluid {
 
+    //noinspection CssInvalidPropertyValue
     aside {
       width: $sidebar-width;
       min-height: stretch;
       border-left: 1px solid $color__divider;
       background-color: #fff;
-      margin-bottom: -#{$size__site-footer};
       padding: 44px 30px;
-
+      position: relative;
       #foody-filter {
 
         padding-right: 30px;
@@ -92,6 +148,7 @@ $sidebar-width: 22.5% !default;
               border: 2px solid $color__primary;
               -webkit-clip-path: circle();
               clip-path: circle();
+              max-width: 90px;
               border-radius: 50%;
             }
           }
@@ -105,30 +162,17 @@ $sidebar-width: 22.5% !default;
               color: $color__text-primary-light;
             }
           }
-        }
 
-        .nav {
-          .nav-item {
-            margin-left: 30px;
-            a {
-              font-size: 24px;
-              font-weight: 900;
-              letter-spacing: -0.1px;
-              text-align: center;
-              color: $color__primary;
-              padding: 10px;
+          ul.nav {
+            padding: 0;
+            margin: 0;
 
-              &:not(.active) {
-                color: $color__text-primary-light;
-                &:hover {
-                  border-color: $color__primary;
-                  opacity: .6;
-                  color: $color__primary;
-                }
-              }
-
-              &.active {
-                border-color: $color__primary;
+            li {
+              margin-left: 1em;
+              a {
+                font-size: 18px;
+                font-weight: bold;
+                color: #b0b0b0;
               }
             }
           }
@@ -137,7 +181,16 @@ $sidebar-width: 22.5% !default;
 
       .profile-content {
         background-color: $color__background-screen;
-        padding: 0 0 0 35px;
+        padding: 0;
+        min-height: 0;
+
+        .tab-pane {
+          width: 100%;
+        }
+
+        .user-content {
+          @include profile-tabs;
+        }
 
         $my-channels-width: 30%;
         @include my-channels($my-channels-width);
@@ -149,39 +202,126 @@ $sidebar-width: 22.5% !default;
           }
         }
 
-        .tab-content {
-          padding: 0;
-          min-width: calc(100% - #{$my-channels-width});
+        .user-content {
 
-          .no-recipes {
-            text-align: center;
-            padding: 50px 0;
+          &.show {
+            display: flex;
+          }
+          .tab-content {
+            padding: 0;
+            max-width: calc(100% - #{$my-channels-width});
 
-            .title {
-              margin: 15px 0;
+            .no-recipes {
               text-align: center;
+              padding: 50px 0;
+
+              .title {
+                margin: 15px 0;
+                text-align: center;
+              }
+
+              p {
+                font-family: $font__assistant;
+                font-size: 18px;
+                margin-bottom: 0;
+              }
             }
 
-            p {
-              font-family: $font__assistant;
-              font-size: 18px;
-              margin-bottom: 0;
+            .tab-pane {
+              padding: 0 17px;
+              text-align: right;
+
+              .grid-item {
+                display: inline-block;
+
+                .feed-item-image {
+                  width: 100%;
+                }
+              }
+
             }
           }
+        }
 
-          .tab-pane {
-            padding: 0 17px;
-            .recipe-item-container {
-              display: inline-block;
-              float: right;
+        .edit-user-details, .change-password {
+          background: white;
+          border-top: solid 1px #B3979797;
+          padding-right: 11.33333%;
+          padding-top: 25px;
 
-              .recipe-item-image {
-                min-height: 272px;
-                height: 272px;
+          .profile-form {
+            max-width: 50%;
+
+            h4 {
+              font-family: $font__assistant;
+              font-weight: bold;
+            }
+
+            .form-group {
+              text-align: right;
+              padding-bottom: 0;
+              padding-top: 20px;
+              padding-right: 0;
+              margin-bottom: 0;
+
+              &.form-submit {
+
+                button {
+
+                  width: 100%;
+                  height: 53px;
+                  border-radius: 3px;
+                  font-family: $font__assistant;
+                  font-size: 18px;
+                  font-weight: bold;
+
+                  &.btn-primary {
+                    background-image: linear-gradient(66deg, #ec3849, #f35644);
+                    color: #fff;
+                  }
+
+                  &.btn-cancel {
+                    border: solid 1px $color__primary;
+                    background-image: none;
+                    background-color: #ffffff;
+                    color: $color__primary;
+                  }
+
+                }
+
+                ul {
+                  li {
+                    width: 100%;
+                    font-family: $font__assistant;
+                    font-size: 18px;
+                    font-weight: bold;
+                  }
+                }
+              }
+
+              label {
+                position: initial;
+                display: block;
+                font-family: $font__assistant;
+                font-size: 18px;
+                font-weight: bold;
+                color: #333a45;
+
+                span {
+                  font-weight: normal;
+                }
+
+              }
+
+              input {
                 width: 100%;
+                height: 53px;
+                border-radius: 3px;
+                border: solid 2px #c1c1c1;
               }
             }
           }
+
         }
       }
     }
@@ -189,22 +329,23 @@ $sidebar-width: 22.5% !default;
 
   footer {
     max-width: calc(100% - #{$sidebar-width});
-    margin-right: $sidebar-width;
+    margin-right: calc(#{$sidebar-width} - 1px);
   }
 }
 
-@include breakpoint(mobileonly) {
-  $sidebar-width: 0px;
+/*
+Tablet landscape
+*/
+
+@include breakpoint(tablet-l) {
 
   .page-template-profile {
 
     .container-fluid {
 
       aside {
-        display: none;
 
         .foody-search-filter {
-          padding: 0 24px;
         }
       }
 
@@ -304,6 +445,188 @@ $sidebar-width: 22.5% !default;
           }
 
           .nav {
+            .nav-item {
+              a {
+
+                &:not(.active) {
+
+                  &:hover {
+
+                  }
+                }
+
+                &.active {
+                }
+              }
+            }
+          }
+        }
+
+        .profile-content {
+          background-color: $color__background-screen;
+          padding: 0;
+          min-height: 0;
+
+          h2 {
+            &.title {
+              padding-top: 30px;
+              font-size: 32px;
+            }
+          }
+
+          .tab-content {
+            padding: 0;
+            min-width: 100%;
+
+            .tab-pane {
+              padding: 0 17px;
+              h2 {
+                font-size: 24px;
+                padding: 16px 0;
+                margin-bottom: 0;
+              }
+
+              .recipe-item-container {
+                display: inline-block;
+                float: right;
+
+                .recipe-item-image {
+                }
+              }
+            }
+          }
+
+        }
+
+      }
+
+    }
+
+    footer {
+    }
+  }
+}
+
+@include breakpoint(mobileonly) {
+  $sidebar-width: 0px;
+
+  .page-template-profile {
+
+    .container-fluid {
+
+      aside {
+        display: none;
+
+        .foody-search-filter {
+          padding: 0 24px;
+        }
+      }
+
+      .content {
+        padding-top: 18px;
+        width: calc(100% - #{$sidebar-width});
+        background-color: #fff;
+
+        .breadcrumb {
+          padding-right: 15px;
+        }
+
+        .profile-top {
+
+          .user-details {
+            text-align: right;
+            padding-top: 23px;
+            padding-bottom: 0;
+            padding-right: 0;
+            margin: 0;
+
+            $my-channels-width: 100%;
+            @include my-channels($my-channels-width);
+
+            .my-channels {
+              padding: 20px;
+              margin-top: 15px;
+              background-color: $color__background-screen;
+
+              ul, .channels {
+                background-color: $color__background-screen;
+              }
+
+              ul.managed-list {
+                padding-top: 0;
+                padding-bottom: 0;
+              }
+
+              h2 {
+                font-size: 24px;
+                margin-bottom: 0;
+              }
+
+              .channels {
+
+                box-shadow: none;
+                padding-right: 0;
+
+                .managed-list {
+
+                  .managed-list-item {
+
+                    img {
+
+                    }
+
+                    .close {
+                      display: inline-block;
+
+                      > span {
+
+                      }
+                    }
+
+                    &:hover {
+                      .close {
+
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+
+            h1 {
+              margin-bottom: -4px !important;
+            }
+
+            .image-container {
+              //margin-right: 20px;
+              margin-left: 0;
+              margin-right: 0;
+              img {
+                width: 70px;
+              }
+            }
+
+            .name-email {
+              place-self: flex-end;
+              margin-right: 20px;
+              .email {
+
+              }
+
+              .edit {
+                color: $color__text-primary-light;
+              }
+
+              ul.nav {
+                li {
+                  width: auto;
+                }
+              }
+            }
+          }
+
+          .nav {
             padding: 0;
             margin: 0;
             .nav-item {
@@ -355,10 +678,56 @@ $sidebar-width: 22.5% !default;
                 float: right;
 
                 .recipe-item-image {
-                  min-height: 272px;
+                  //min-height: 272px;
                 }
               }
             }
+          }
+
+          .edit-user-details, .change-password {
+            background: white;
+            border-top: solid 1px #B3979797;
+            padding: 20px;
+            margin-top: 20px;
+
+            .profile-form {
+              max-width: 100%;
+
+              h4 {
+              }
+
+              .form-group {
+
+                &.form-submit {
+
+                  button {
+
+                    &.btn-primary {
+                    }
+
+                    &.btn-cancel {
+                    }
+
+                  }
+
+                  ul {
+                    li {
+                    }
+                  }
+                }
+
+                label {
+
+                  span {
+                  }
+
+                }
+
+                input {
+                }
+              }
+            }
+
           }
         }
 

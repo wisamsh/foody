@@ -12,7 +12,12 @@
     }
   ],
   "keywords": [
-    "moveo", "foody", "wordpress", "stack", "composer", "wp"
+    "moveo",
+    "foody",
+    "wordpress",
+    "stack",
+    "composer",
+    "wp"
   ],
   "config": {
     "preferred-install": "dist"
@@ -21,18 +26,6 @@
     {
       "type": "composer",
       "url": "https://wpackagist.org"
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "appscreo/easy_social_share_buttons_for_wordpress",
-        "version": "5.5.2",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url":"https://codecanyon.net/user/dev_moveo/download_purchase/e452d3a6-24ff-4b0a-afda-07fae5f60a94"
-        }
-      }
     },
     {
       "type": "package",
@@ -49,36 +42,84 @@
     {
       "type": "package",
       "package": {
-        "name": "webdevstudios/custom-post-type-ui",
-        "version": "1.5.8",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/custom-post-type-ui.1.5.8.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "designs&code/search-filter",
-        "version": "1.2.9",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/search-filter.1.2.9.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
         "name": "andrewozz/tinymce-advanced",
         "version": "4.7.11",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
           "url": "https://downloads.wordpress.org/plugin/tinymce-advanced.4.7.11.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "smash-baloon/instagram-feed",
+        "version": "1.10.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.10.1.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "abdullah-irfan/whitelist",
+        "version": "3.5",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/fifthsegment-whitelist.3.5.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "yoast/wordpress-seo",
+        "version": "8.3",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wordpress-seo.8.3.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "saurabhshukla-yapapaya/widgets-in-menu",
+        "version": "1.0.0",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/widgets-in-menu.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "joe-dolson/wp-accessibility",
+        "version": "1.6.4",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "gagan-deep-singh/fix-image-rotation",
+        "version": "2.1.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/fix-image-rotation.2.1.1.zip"
         }
       }
     }
@@ -91,23 +132,32 @@
     "oscarotero/env": "^1.1.0",
     "roots/wp-password-bcrypt": "1.0.0",
     "roots/multisite-url-fixer": "^1.1",
-    "yoast/wordpress-seo": "^7.4",
     "stuttter/wp-user-avatars": "^1.4",
     "elliotcondon/advanced-custom-fields-pro": "^5.6",
-    "webdevstudios/custom-post-type-ui": "^1.5",
-    "designs&code/search-filter": "^1.2",
     "andrewozz/tinymce-advanced": "^4.7",
     "xamin/handlebars.php": "^0.10.4",
-    "phospr/fraction": "^1.2"
+    "phospr/fraction": "^1.2",
+    "smash-baloon/instagram-feed": "^1.10",
+    "yoast/wordpress-seo": "^8.3",
+    "saurabhshukla-yapapaya/widgets-in-menu": "^1.0",
+    "mixpanel/mixpanel-php" : "^2.6",
+    "joe-dolson/wp-accessibility": "^1.6",
+    "gagan-deep-singh/fix-image-rotation": "^2.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"
   },
   "extra": {
     "installer-paths": {
-      "web/app/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
-      "web/app/plugins/{$name}/": ["type:wordpress-plugin"],
-      "web/app/themes/{$name}/": ["type:wordpress-theme"]
+      "web/app/mu-plugins/{$name}/": [
+        "type:wordpress-muplugin"
+      ],
+      "web/app/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "web/app/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
     },
     "wordpress-install-dir": "web/wp"
   },

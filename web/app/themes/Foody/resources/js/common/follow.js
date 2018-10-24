@@ -3,76 +3,103 @@
  */
 
 
-// $(document).ready(() => {
+$(document).ready(() => {
 
-let $follow = $('.btn-follow');
+    let $follow = $('.btn-follow');
 
-if ($follow.length) {
-
-
-    $follow.each(function () {
+    if ($follow.length) {
 
 
-        let $this = $(this);
-
-        $this.click(() => {
-            let topicId = $this.data('id');
-            let topic = $this.data('topic');
+        $follow.each(function () {
 
 
-            if (topicId) {
+            let $this = $(this);
 
-                let isAlreadyFollowed = $this.data('followed');
+            $this.click(() => {
+                if (!foodyGlobals.loggedIn) {
+                    return showLoginModal();
+                }
+                let topicId = $this.data('id');
+                let topic = $this.data('topic');
 
-                toggleAllFollowed(topicId, isAlreadyFollowed);
 
+                if (topicId) {
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/wp/wp-admin/admin-ajax.php', // admin-ajax.php URL
-                    data: {
-                        action: 'toggle_follow',
-                        topic_id: topicId,
-                        topic: topic
-                    },
-                    error: function (request, status, error) {
+                    let isAlreadyFollowed = $this.data('followed');
 
-                        // TODO handle errors
-
-                        if (status == 500) {
-                            console.log('Error while adding comment');
-                        } else if (status == 'timeout') {
-                            console.log('Error: Server doesn\'t respond.');
-                        } else {
-                            alert('please sign in');
-                        }
-                        // revert animations and favorite indication
-                        toggleAllFollowed(topicId, !isAlreadyFollowed);
-                    },
-                    success: () => {
-                    },
-                    complete: function () {
+                    let eventName = null;
+                    if (topic == 'followed_channels') {
+                        eventName = 'follow channel';
+                    } else if (topic == 'followed_authors') {
+                        eventName = 'follow creator';
                     }
-                })
 
+                    if (eventName != null) {
+                        analytics.event(eventName, {
+                            id: topicId,
+                            title: $('h1', $this.closest('.topic-details')).text(),
+                            follow: !isAlreadyFollowed
+                        });
+                    }
+
+                    toggleAllFollowed(topicId, isAlreadyFollowed);
+
+
+                    toggleFollowed(topicId, topic, function (error) {
+
+                        if (error) {
+                            if (error.status == 500) {
+                                console.log('Error while adding comment');
+                            } else if (error.status == 'timeout') {
+                                console.log('Error: Server doesn\'t respond.');
+                            } else {
+                                alert('please sign in');
+                            }
+                            // revert animations and favorite indication
+                            toggleAllFollowed(topicId, !isAlreadyFollowed);
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+
+    function toggleAllFollowed(topicId, isAlreadyFollowed) {
+        isAlreadyFollowed = !isAlreadyFollowed;
+        $('.btn-follow[data-id="' + topicId + '"]').each(function () {
+            $(this).toggleClass('followed');
+            $(this).data('followed', isAlreadyFollowed);
+            if (isAlreadyFollowed) {
+                $('span', this).text('עוקב');
+            } else {
+                $('span', this).text('עקוב');
             }
         });
-    });
-}
+    }
 
 
-function toggleAllFollowed(topicId, isAlreadyFollowed) {
-    isAlreadyFollowed = !isAlreadyFollowed;
-    $('.btn-follow[data-id="' + topicId + '"]').each(function () {
-        $(this).toggleClass('followed');
-        $(this).data('followed', isAlreadyFollowed);
-        if (isAlreadyFollowed) {
-            $('span', this).text('עוקב');
-        } else {
-            $('span', this).text('עקוב');
+});
+
+function toggleFollowed(topicId, topic, cb) {
+    $.ajax({
+        type: 'POST',
+        url: '/wp/wp-admin/admin-ajax.php', // admin-ajax.php URL
+        data: {
+            action: 'toggle_follow',
+            topic_id: topicId,
+            topic: topic
+        },
+        error: function (request, status, error) {
+
+            cb({error: error, status: status});
+        },
+        success: () => {
+        },
+        complete: function () {
+            cb();
         }
-    });
+    })
 }
 
-
-// });
+module.exports = toggleFollowed;

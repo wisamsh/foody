@@ -6,7 +6,7 @@
  * Time: 11:53 AM
  */
 
-$tags = isset($template_args) ? $template_args :  wp_get_post_tags();
+$tags = isset($template_args) ? $template_args : wp_get_post_tags();
 
 ?>
 
@@ -17,26 +17,7 @@ $tags = isset($template_args) ? $template_args :  wp_get_post_tags();
 
         <li class="tag">
 
-            <a href="<?php echo get_term_link($tag->term_id)  ?>">
-                <?php echo $tag->name ?>
-            </a>
-        </li>
-
-        <li class="tag">
-
-            <a href="<?php echo get_term_link($tag->term_id)  ?>">
-                <?php echo $tag->name ?>
-            </a>
-        </li>
-        <li class="tag">
-
-            <a href="<?php echo get_term_link($tag->term_id)  ?>">
-                <?php echo $tag->name ?>
-            </a>
-        </li>
-        <li class="tag">
-
-            <a href="<?php echo get_term_link($tag->term_id)  ?>">
+            <a href="<?php echo get_term_link($tag->term_id) ?>">
                 <?php echo $tag->name ?>
             </a>
         </li>

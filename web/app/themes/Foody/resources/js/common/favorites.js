@@ -16,7 +16,16 @@ $(document).ready(() => {
             let $this = $(this);
 
             $this.click(() => {
+                if (!foodyGlobals.loggedIn) {
+                    return showLoginModal();
+                }
+
                 let postId = $this.data('id');
+                let $item = $this.closest('.grid-item');
+
+                console.log('item',$item);
+
+                let itemTitle = $item.data('title');
 
                 if (postId) {
 
@@ -25,6 +34,12 @@ $(document).ready(() => {
                     let isAlreadyFavorite = $icon.hasClass('icon-favorite-pressed');
 
                     toggleAllFavorites(postId, isAlreadyFavorite);
+
+                    analytics.event('add to favorites', {
+                        id: postId,
+                        title: itemTitle,
+                        favorite: !isAlreadyFavorite
+                    });
 
 
                     $.ajax({

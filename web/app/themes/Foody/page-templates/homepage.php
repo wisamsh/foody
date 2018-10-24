@@ -10,13 +10,13 @@
 
 get_header();
 
-$homepage = new HomePage();
+
+$homepage = new Foody_HomePage();
 ?>
 
     <div class="homepage">
 
         <?php $homepage->cover_photo() ?>
-
 
         <div class="content">
             <div class="row recipes-grid gutter-10 featured">
@@ -29,32 +29,17 @@ $homepage = new HomePage();
 
             <section class="feed-container row">
 
-                <div class="feed-header d-none d-sm-block">
-                    <h3 class="title d-sm-inline-block">
-                        <?php __('Our Recommendations', 'foody') ?>
-                        ההמלצות שלנו
-                    </h3>
-                </div>
+
+                <section class="sidebar-container d-none d-lg-block">
+                    <?php
+                    $homepage->sidebar();
+                    ?>
+                </section>
 
 
-                <aside class="sidebar col d-none d-sm-block pl-0">
-                    <input name="search" type="text" class="search" title="search" placeholder="חיפוש מתכון…">
-                    <div class="sidebar-content">
-                        <?php $homepage->filter() ?>
-                    </div>
-                </aside>
+                <section class="content-container col-lg-9 col-12">
 
-                <section class="content-container col-sm-9 col-12">
-
-                    <article class="feed row gutter-3 recipes-grid">
-                        <?php $homepage->feed() ?>
-                    </article>
-                    <div class="show-more">
-                        <img src="<?php echo $GLOBALS['images_dir'] . 'bite.png' ?>" alt="">
-                        <h4>
-                            לעוד מתכונים
-                        </h4>
-                    </div>
+                    <?php $homepage->feed(); ?>
 
                 </section>
 
@@ -64,15 +49,29 @@ $homepage = new HomePage();
 
         </div>
 
-        <!--        mobile filter -->
-        <div class="filter-mobile d-block d-sm-none">
+        <div class="filter-mobile d-block d-lg-none">
             <button class="navbar-toggler filter-btn" type="button" data-toggle="drawer"
                     data-target="#dw-p2">
-                סינון
+                <?php echo __('סינון', 'foody'); ?>
+            </button>
+        </div>
+
+        <div class="mobile-filter d-lg-none">
+
+            <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
             </button>
 
+            <?php $homepage->sidebar() ?>
 
+            <div class="show-recipes-container">
+
+                <button class="btn show-recipes">
+                    <?php echo __('הצג מתכונים', 'foody') ?>
+                </button>
+            </div>
         </div>
+
     </div>
 <?php
 get_footer();

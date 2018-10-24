@@ -1,7 +1,18 @@
+$sidebar-width:21%;
+
+
 footer.site-footer {
-  height: $size__site-footer;
   background-color: rgba(58, 58, 58, 0.05);
   padding: 25px 42px;
+
+  width: calc(100% - #{$sidebar-width});
+  margin-right: calc(#{$sidebar-width} - 1px);
+  //position: absolute;
+  left: 0;
+  bottom: 0;
+  height: auto;
+  right: 0;
+  border-right: 1px solid hsla(0,0%,59%,.3);
 
   ul {
     &.menu {
@@ -35,7 +46,11 @@ footer.site-footer {
 @include breakpoint(mobileonly) {
   footer.site-footer {
     padding: 15px;
-    height: auto;
+    width: 100%;
+    max-width: 100%;
+    margin-right: 0;
+    position: initial !important;
+    border: none;
 
     ul {
       &.menu {

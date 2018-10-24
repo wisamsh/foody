@@ -20,6 +20,8 @@ class Foody_Ingredient extends Foody_Post
 
     public $amounts_delimiter = ' <b> או </b> ';
 
+    public $unit_taxonomy;
+
     public $fractions = [
         '3' => '1/3',
         '25' => '1/4',
@@ -73,43 +75,81 @@ class Foody_Ingredient extends Foody_Post
     {
         if ($this->amounts != null) {
 
-            $content = implode($this->amounts_delimiter, array_map(function ($amount) {
+            $length = count($this->amounts);
+            $last = array_pop($this->amounts);
 
-                $to_fraction = function ($dec) {
+            $to_fraction = array($this, 'to_fraction');
 
-                    $str = strval($dec);
+            $content = implode($this->amounts_delimiter, array_map(function ($amount) use ($to_fraction) {
 
-                    $fraction = explode('.', $str);
-                    if (isset($fraction[1])) {
-
-
-                        if ($fraction != null) {
-                            $whole = $fraction[0];
-                            if ($whole == '0') {
-                                $whole = '';
-                            }
-                            return $whole . ' ' . $this->fractions[$fraction[1]];
-                        }
-                    }
-
-                    return $dec;
-                    // return Fraction::fromFloat($dec)
-
-                };
-
+                $display = call_user_func($to_fraction, $amount['amount']);
                 return
-                    '
-                    <span dir="ltr" class="amount" data-amount="' . $amount['amount'] . '">
-                        ' . $to_fraction($amount['amount']) . '
+                    '<span dir="ltr" class="amount" data-amount="' . $amount['amount'] . '" data-original="' . $display . '">
+                        ' . $display . '
                     </span>
                     <span class="unit">
                          ' . $amount['unit'] . '
+                    </span>';
+
+//                return
+//                    '
+//                    <span dir="ltr" class="amount" data-amount="' . $amount['amount'] . '">
+//                        ' . $to_fraction($amount['amount']) . '
+//                    </span>
+//                    <span class="unit">
+//                         ' . $amount['unit'] . '
+//                    </span>
+//                    <span class="unit">
+//                        ' . $this->getTitle() . '
+//                    </span>
+//                ';
+
+
+            }, $this->amounts));
+
+
+            $unit_tax = $last['unit_tax'];
+
+            $show_after_ingredient = get_field('show_after_ingredient', $unit_tax);
+
+            $display = $this->to_fraction($last['amount']);
+
+            if ($show_after_ingredient) {
+                $ing_html = '
+                    <span dir="ltr" class="amount" data-amount="' . $last['amount'] . '" data-original="'.$display.'">
+                        ' . $display. '
+                    </span>
+                    <span class="unit">
+                        ' . $this->getTitle() . '
+                    </span>
+                    <span class="unit">
+                         ' . $last['unit'] . '
+                    </span>
+                ';
+
+            } else {
+                $ing_html = '
+                    <span dir="ltr" class="amount" data-amount="' . $last['amount'] . '" data-original="'.$display.'">
+                        ' . $display . '
+                    </span>
+                    <span class="unit">
+                         ' . $last['unit'] . '
                     </span>
                     <span class="unit">
                         ' . $this->getTitle() . '
                     </span>
                 ';
-            }, $this->amounts));
+            }
+
+            if ($length > 1) {
+                $content .= $this->amounts_delimiter;
+            }
+
+            if (!empty($content)) {
+                $content .= $ing_html;
+            } else {
+                $content = $ing_html;
+            }
 
 
         } else {
@@ -124,7 +164,8 @@ class Foody_Ingredient extends Foody_Post
         return $content;
     }
 
-    public function to_fraction($dec)
+
+    private function to_fraction($dec)
     {
 
         $str = strval($dec);
@@ -132,8 +173,13 @@ class Foody_Ingredient extends Foody_Post
         $fraction = explode('.', $str);
         if (isset($fraction[1])) {
 
+
             if ($fraction != null) {
-                return $fraction[0] . ' ' . $this->fractions[$fraction[1]];
+                $whole = $fraction[0];
+                if ($whole == '0') {
+                    $whole = '';
+                }
+                return $whole . ' ' . $this->fractions[$fraction[1]];
             }
         }
 

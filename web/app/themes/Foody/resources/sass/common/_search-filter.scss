@@ -1,11 +1,163 @@
-#foody-filter{
+$sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
+
+#foody-filter {
   margin-right: 30px;
 }
 
-aside{
-  &.sidebar{
-    .sidebar-content{
-      border: solid 1px rgba(151, 151, 151, 0.3);
+aside {
+  &.sidebar {
+    .sidebar-content {
+      border: $sidebar-border;
+      border-bottom: none;
+      position: absolute;
+      padding: 0;
+    }
+
+    li.widget, .sidebar-section {
+      padding: 25px;
+      margin-top: 0;
+      margin-bottom: 0;
+      &:not(:last-child) {
+        border-bottom: $sidebar-border;
+      }
+
+      .widgettitle {
+        font-size: 1.5em;
+        color: $color__primary;
+      }
     }
   }
+
+  #accordion-foody-filter {
+
+    h5 {
+      + a {
+        font-family: $font__main;
+        font-size: 26px;
+        font-weight: 900;
+      }
+
+    }
+    .md-checkbox {
+      label {
+        margin-right: 1em;
+
+        font-family: $font__main;
+        font-size: 20px;
+
+        &:before, &:after {
+          font-size: .8em;
+        }
+
+        &:before {
+          border: 1px solid #3a3a3a;
+        }
+      }
+
+      input:checked {
+
+        + {
+          label {
+            font-weight: 900;
+          }
+        }
+      }
+    }
+  }
+
+  #accordion-categories-widget-accordion {
+
+    .main-title {
+      margin-bottom: 20px;
+    }
+
+    #categories-widget-accordion {
+      padding: 0 2em;
+
+      .card-body {
+        padding: 0.45rem 0.45rem 0.45rem;
+
+        .category-accordion-item {
+          font-size: 20px;
+          font-weight: normal;
+          text-align: right;
+          margin: 10px 0;
+        }
+      }
+    }
+
+  }
+}
+
+@include breakpoint(tablet-landscape) {
+
+  aside {
+    &.sidebar {
+      .sidebar-content {
+
+      }
+
+      li.widget, .sidebar-section {
+        padding: 10px;
+        &:not(:last-child) {
+
+        }
+
+        .widgettitle {
+
+        }
+      }
+    }
+
+    #accordion-foody-filter {
+
+      h5 {
+        + a {
+
+        }
+
+      }
+      .md-checkbox {
+        label {
+          display: table-cell;
+          padding-right: 1em;
+          &:before, &:after {
+
+          }
+
+          &:before {
+
+          }
+        }
+
+        input:checked {
+
+          + {
+            label {
+
+            }
+          }
+        }
+      }
+    }
+
+    #accordion-categories-widget-accordion {
+
+      .main-title {
+
+      }
+
+      #categories-widget-accordion {
+
+        .card-body {
+
+          .category-accordion-item {
+
+          }
+        }
+      }
+
+    }
+  }
+
 }

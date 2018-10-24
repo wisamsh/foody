@@ -14,7 +14,7 @@ window.calculator = function (selector) {
 
     let originalNumberOfDishes = parseInt($numberOfDishes.data('amount'));
 
-    $numberOfDishes.on('change', function () {
+    $numberOfDishes.on('change keyup paste', function () {
 
         let val = $(this).val();
 
@@ -22,16 +22,39 @@ window.calculator = function (selector) {
             return;
         }
 
-        $elements.each(function () {
 
-            let $this = $(this);
-            let base = $this.data('amount') / originalNumberOfDishes;
+        updateIngredients($elements, originalNumberOfDishes, val);
 
-            let calculated = base * val;
-
-            $this.text(calculated.toFixed(2));
-        })
     });
 
 
+    $('#pan-conversions').on('changed.bs.select', function () {
+        let val = $(this).val();
+
+
+        let $option = $(this).find(':selected');
+
+        let original = $option.data('original');
+
+        updateIngredients($elements, 1, val, original);
+
+    });
+
 };
+
+
+function updateIngredients($elements, originalNumberOfDishes, val, reset) {
+    $elements.each(function () {
+
+        let $this = $(this);
+        let base = $this.data('amount') / originalNumberOfDishes;
+
+        let calculated = base * val;
+        let text = calculated.toFixed(2);
+        if (val == originalNumberOfDishes || reset) {
+            text = $this.data('original');
+        }
+
+        $this.text(text);
+    })
+}

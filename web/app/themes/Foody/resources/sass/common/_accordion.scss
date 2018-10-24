@@ -39,4 +39,29 @@
     }
   }
 
+
+  .foody-accordion-content {
+    .foody-accordion-title {
+
+      i {
+        &:before {
+          cursor: pointer;
+        }
+      }
+
+      a {
+
+        &[data-toggle="collapse"] {
+        }
+
+        &.collapsed + i {
+          &:before{
+          }
+        }
+      }
+    }
+
+    .card-body{
+    }
+  }
 }

@@ -7,31 +7,47 @@
  */
 
 /** @var Foody_Recipe $recipe */
+/** @noinspection PhpUndefinedVariableInspection */
 $recipe = $template_args['post'];
 
 ?>
 
 
-<div class="recipe-item">
+<div class="recipe-item feed-item">
     <a href="<?php echo $recipe->link ?>">
         <div class="image-container main-image-container">
-            <img class="recipe-item-image" src="<?php echo $recipe->getImage() ?>" alt="">
-            <div class="duration">
+            <img class="recipe-item-image feed-item-image" src="<?php echo $recipe->getImage('list-item') ?>" alt="">
 
+            <?php if (!empty($label = $recipe->get_label())): ?>
 
-                <i class="icon icon-timeplay">
+                <div class="recipe-label">
+<!--                    <img src="--><?php //echo $GLOBALS['images_dir']. 'label.svg' ?><!--" alt="">-->
+                    <span>
 
-                </i>
-                <span>
-                   <?php echo $recipe->getDuration() ?>
-            </span>
-            </div>
+                    <?php echo $label ?>
+                    </span>
+                </div>
+
+            <?php endif; ?>
+            <?php if ($recipe->video != null): ?>
+                <div class="duration">
+                    <i class="icon icon-timeplay">
+
+                    </i>
+                    <span>
+                        <?php echo $recipe->getDuration() ?>
+                    </span>
+                </div>
+            <?php endif; ?>
         </div>
     </a>
     <section class="recipe-item-details  d-flex">
         <div class="image-container col-1 nopadding">
-            <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
+            <a href="<?php echo $recipe->get_author_link() ?>">
+                <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
+            </a>
         </div>
+
         <section class="col-11">
             <h3>
                 <a href="<?php echo $recipe->link ?>">

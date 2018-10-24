@@ -10,5 +10,8 @@ add_filter('query_vars', 'add_vars');
 function add_vars($public_query_vars)
 {
     $public_query_vars[] = 'recipe';
+    $public_query_vars[] = 'registered';
+    $public_query_vars[] = 'hid_page';
+    $public_query_vars[] = Foody_Query::$page;
     return $public_query_vars;
 }
