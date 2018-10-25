@@ -393,7 +393,11 @@ class Foody_Recipe extends Foody_Post
                 $recipe_time .= ', ';
             }
 
-            $recipe_time .= sprintf(_n("%s $singular", "%s $unit", trim($times['hours'])), number_format_i18n(intval($times['hours'])));
+            $hours_str = sprintf(_n("%s $singular", "%s $unit", trim($times['hours'])), number_format_i18n(intval($times['hours'])));
+            if(strcmp($hours_str,'שעה 1') == 0){
+                $hours_str = 'שעה';
+            }
+            $recipe_time .= $hours_str;
         }
 
         if (!empty($times['minutes'])) {

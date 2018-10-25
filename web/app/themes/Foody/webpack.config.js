@@ -4,7 +4,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+var HashPlugin = require('hash-webpack-plugin');
 
 module.exports = env => {
 
@@ -45,7 +45,8 @@ module.exports = env => {
                     return getPath('css/[name].css').replace('css/js', 'css');
                 },
                 allChunks: true
-            })
+            }),
+            new HashPlugin({ path: './build', fileName: 'version-hash.txt' })
         ],
         entry: {
             // common : "./resources/pages/common/index",
@@ -55,7 +56,7 @@ module.exports = env => {
         },
         output: {
             // filename: '[name].js',
-            filename: '[name].js',
+            filename: '[name].[hash].js',
             path: path.resolve(__dirname, 'dist'),
             // publicPath: '/resources'
         },

@@ -245,13 +245,13 @@ body[class~="post-template-content-with-sidebar"] {
 
                 .essb_icon {
                   color: white;
-                  width: 26px;
-                  height: 26px;
+                  width: 30px;
+                  height: 30px;
                   border-radius: 50%;
 
                   &:before {
-                    top: 4px;
-                    left: 4px;
+                    top: 6px;
+                    left: 6px;
                   }
                 }
               }
@@ -265,10 +265,10 @@ body[class~="post-template-content-with-sidebar"] {
           background-color: $color__facebook;
           font-family: $font__assistant;
           color: white;
-          padding: 0 5px;
+          padding: 0 10px;
           font-size: 15px;
           font-weight: bold;
-          height: 26px;
+          height: 30px;
         }
       }
 
