@@ -821,6 +821,11 @@ body[class~="post-template-content-with-sidebar"] {
       }
     }
 
+
+    footer.site-footer{
+      max-width: calc(100% - #{$sidebar-width});
+      margin-right: calc(#{$sidebar-width} - 1px);
+    }
   }
 }
 
