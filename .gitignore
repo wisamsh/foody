@@ -141,3 +141,4 @@ fabric.properties
 migration/tmp
 migration/vendor
 migration/bootstrap/cache
+web/app/themes/Foody/dist
