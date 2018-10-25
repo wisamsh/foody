@@ -135,7 +135,7 @@ jQuery(document).ready(($) => {
                 minlength: 8,
                 password: true,
             },
-            'password-confirmation': {
+            password_confirmation: {
                 required: true,
                 equalTo: '#password[name="password"]',
             }

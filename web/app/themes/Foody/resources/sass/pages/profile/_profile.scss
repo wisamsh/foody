@@ -320,6 +320,34 @@ $sidebar-width: 22.5% !default;
                 border: solid 2px #c1c1c1;
               }
             }
+
+            #password-help {
+              list-style-type: none;
+              padding: 0;
+              margin: 15px 0 0;
+
+              li {
+                font-family: $font__assistant;
+                display: inline-block;
+                list-style-type: none;
+                padding: 0 15px;
+                font-size: 16px;
+                color: #333a45;
+
+                &:before {
+                  content: '';
+                  display: inline-block;
+                  width: 8px;
+                  height: 8px;
+                  -moz-border-radius: 50%;
+                  -webkit-border-radius: 50%;
+                  border-radius: 50%;
+                  background-color: $color__primary;
+                  vertical-align: middle;
+                }
+              }
+            }
+
           }
 
         }

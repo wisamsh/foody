@@ -54,9 +54,9 @@ body {
     }
   }
 
-  &.lock{
+  &.lock {
     overflow: hidden;
-    .logo-container-mobile{
+    .logo-container-mobile {
       //display: none !important;
       opacity: 0;
     }
@@ -68,9 +68,9 @@ html, body, .container-fluid {
 }
 
 //noinspection CssInvalidPropertyValue
-#page{
+#page {
   height: 100%;
-  min-height:stretch;
+  min-height: stretch;
 }
 
 /**

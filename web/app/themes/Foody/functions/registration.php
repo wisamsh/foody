@@ -77,3 +77,61 @@ function social_login_redirect($user_id, $provider, $hybridauth_user_profile, $r
 }
 
 add_action('wsl_hook_process_login_before_wp_safe_redirect', 'social_login_redirect',10,4);
+
+add_action('wp', function () {
+    if (isset($_POST['submit_change_pass'])) {
+
+        $required = [
+            'current_password',
+            'password',
+            'password_confirmation'
+        ];
+
+        $errors = foody_form_validation($required);
+
+        if (!empty($errors)) {
+            var_dump($errors);
+
+        } else {
+            if (!is_user_logged_in()) {
+                $error = ['message' => "unauthorized"];
+                var_dump($error);
+            } else {
+                $user = wp_get_current_user();
+
+                $user_pass = $user->user_pass;
+
+                $current_password = $_POST['current_password'];
+                $new_password = $_POST['password'];
+
+
+                if (wp_check_password($current_password, $user_pass)) {
+
+                    $userID = $user->ID;
+                    $user_login = $user->user_login;
+
+                    wp_set_password($new_password, $user->ID);
+
+                    $user = wp_signon(array('user_login' => $user->user_login, 'user_password' => $new_password));
+
+                    wp_set_auth_cookie($user->ID, true, false);
+
+//                if (is_wp_error($user)) {
+//                    var_dump($user);
+//                } else {
+//
+////                    wp_set_current_user($userID, $user_login);
+//                    wp_set_auth_cookie($user->ID, true, false);
+////                    do_action('wp_login', $user_login);
+//                }
+
+                } else {
+                    $error = [
+                        'message' => 'invalid password'
+                    ];
+                    var_dump($error);
+                }
+            }
+        }
+    }
+});

@@ -6,61 +6,8 @@
  * Time: 4:00 PM
  */
 
-if (isset($_POST['submit_change_pass'])) {
-
-    $required = [
-        'current_password',
-        'password',
-        'password_confirmation'
-    ];
-
-    $errors = foody_form_validation($required);
-
-    if (!empty($errors)) {
-        var_dump($errors);
-
-    } else {
-        if (!is_user_logged_in()) {
-            $error = ['message' => "unauthorized"];
-            var_dump($error);
-        } else {
-            $user = wp_get_current_user();
-
-            $user_pass = $user->user_pass;
-
-            $current_password = $_POST['current_password'];
-            $new_password = $_POST['password'];
-
-            require_once ABSPATH . 'wp-includes/class-phpass.php';
-            $wp_hasher = new PasswordHash(8, true);
-
-            if ($wp_hasher->CheckPassword($current_password, $user_pass)) {
-
-                wp_set_password($new_password, $user->ID);
 
 
-                $user = wp_signon(array('user_login' => $user->user_login, 'user_password' => $new_password));
-
-
-                if (is_wp_error($user)) {
-                    var_dump($user);
-                } else {
-                    $userID = $user->ID;
-                    $user_login = $user->user_login;
-                    wp_set_current_user($userID, $user_login);
-                    wp_set_auth_cookie($userID, true, false);
-                    do_action('wp_login', $user_login);
-                }
-
-            } else {
-                $error = [
-                    'message' => 'invalid password'
-                ];
-                var_dump($error);
-            }
-        }
-    }
-}
 /** @noinspection PhpUndefinedVariableInspection */
 $form_classes = foody_get_array_default($template_args, 'form_classes', []);
 ?>
