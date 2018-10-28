@@ -52,9 +52,9 @@ class FoodyTeam
             case 'grid':
                 $row_container = '<div class="row team-grid-row">';
                 $def_col_span = 5;
-                if(wp_is_mobile()){
+                if (wp_is_mobile()) {
                     $def_col_span = 3;
-                    if(foody_is_tablet()){
+                    if (foody_is_tablet()) {
                         $def_col_span = 4;
                     }
                 }
@@ -196,7 +196,7 @@ class FoodyTeam
         );
 
         if ($show_count) {
-            $author_data['post_count'] = foody_count_posts_by_user($author->ID);
+            $author_data['post_count'] = foody_count_posts_by_user($author->ID, ['foody_playlist', 'foody_recipe']);
         }
 
         return foody_get_template_part(get_template_directory() . '/template-parts/content-author-listing.php', $author_data);

@@ -241,7 +241,6 @@ function foody_count_posts_by_user($post_author = null, $post_type = array(), $p
     if (empty($post_author))
         return 0;
 
-    $post_status = (array)$post_status;
     $post_type = (array)$post_type;
 
     $sql = $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_author = %d AND ", $post_author);

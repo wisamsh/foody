@@ -28,7 +28,22 @@ $(document).ready(() => {
         $uploadModal.modal('hide');
         $commentForm[0].reset();
         $boundForm[0].reset();
+        incrementCommentsCount('.how-i-did-title');
     };
+
+    function incrementCommentsCount(titleSelector) {
+        let title = $(titleSelector).text();
+        let matches = title.match(/\(([0-9]+)\)/);
+        if (matches && matches.length > 0) {
+            let count = parseInt(matches[1]);
+            if (!isNaN(count)) {
+                count += 1;
+
+                title = title.replace(/[0-9]+/, count);
+                $(titleSelector).text(title);
+            }
+        }
+    }
 
 
     let $attachment =  $('#attachment');
