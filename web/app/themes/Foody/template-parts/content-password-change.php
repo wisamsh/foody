@@ -69,7 +69,7 @@ $form_classes = foody_get_array_default($template_args, 'form_classes', []);
         </ul>
 
         <button type="submit" name="submit_change_pass" class="btn btn-primary col-lg-4 col-5">
-            <?php echo __('שיחזור סיסמא') ?>
+            <?php echo __('שינוי סיסמא') ?>
         </button>
     </div>
 

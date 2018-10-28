@@ -8,7 +8,7 @@ jQuery(document).ready(($) => {
     $.validator.addMethod(
         "emailOrUsername",
         function (value, element) {
-            return this.emal(element) || /^[^a-z0-9\s_.\-@]$/i.test(value);
+            return this.email(element) || /^[^a-z0-9\s_.\-@]$/i.test(value);
         }
     );
 
@@ -30,7 +30,6 @@ jQuery(document).ready(($) => {
             form.submit();
         }
     });
-
 
 
     $('.btn-google').on('click', () => {

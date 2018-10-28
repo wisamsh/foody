@@ -43,7 +43,7 @@ window.formSubmit = function (settings) {
     }
 
     if (!settings.unbind) {
-        $form.submit(handler);
+        $form.on('submit',handler);
     }
 
     return handler;
