@@ -26,11 +26,9 @@ class Foody_Footer
 
     public function menu()
     {
+
         $footer_pages = wp_get_nav_menu_items('footer-pages');
 
-        $footer_pages[] = array(
-            'title' => sprintf(__('Foody Israel') . ' %s', date('Y'))
-        );
 
         $footer_links = wp_get_nav_menu_items('footer-links');
 
@@ -51,7 +49,7 @@ class Foody_Footer
         }
 
         if (!wp_is_mobile()) {
-            $this->display_menu($footer_pages);
+            $this->display_pages_menu($footer_pages);
         }
 
 
@@ -70,14 +68,82 @@ class Foody_Footer
     {
         echo '<ul class="menu">';
 
+        $this->display_menu_items($menu_items);
+
+        echo '</ul>';
+    }
+
+    private function display_pages_menu($menu_items)
+    {
+
+        ?>
+        <ul class="menu row justify-content-between menu-pages">
+            <h4>
+                <?php echo __('אל תפספסו את המתכונים החמים!', 'foody'); ?>
+            </h4>
+
+            <section class="newsletter">
+                <form class="row justify-content-between" method="post">
+                    <div class="input-container col-7">
+                        <input type="email" placeholder="<?php echo __('הכנס כתובת מייל', 'foody') ?>">
+
+                    </div>
+                    <button type="submit" class="col-3 offset-1">
+                        <?php echo __('הרשמה', 'foody') ?>
+                    </button>
+                </form>
+            </section>
+
+            <?php
+
+            $items = array_chunk($menu_items, count($menu_items) / 2);
+
+
+            $items[1][] = array(
+                'title' => sprintf(__('Foody Israel') . ' %s', date('Y'))
+            );
+
+            $items[0][] = array(
+                'title' => '<img src="' . $GLOBALS['images_dir'] . 'moveo.png' . '">',
+                'url' => 'https://moveo.group',
+                'target' => '_blank'
+            );
+
+
+            foreach ($items as $item) {
+                echo '<ul class="menu pages-menu col-6">';
+
+                $this->display_menu_items($item);
+
+                echo '</ul>';
+            }
+            ?>
+        </ul>
+
+        <?php
+    }
+
+    private function display_menu_items($menu_items)
+    {
         foreach ($menu_items as $link) {
 
             $url = is_object($link) ? $link->url : (isset($link['url']) ? $link['url'] : '');
             $title = is_object($link) ? $link->title : $link['title'];
+            $target = !is_object($link) && isset($link['target']) ? $link['target'] : '';
 
-            echo '<li class="menu-item"><a href="' . $url . '">' . $title . '</a></li>';
+            $this->display_menu_item($url, $title, $target);
         }
-        echo '</ul>';
+
+    }
+
+
+    private function display_menu_item($url, $title, $target = '')
+    {
+        ?>
+        <li class="menu-item"><a <?php if ($target): ?> target="<?php echo $target ?>" <?php endif; ?>
+                    href="<?php echo $url ?>"><?php echo $title ?></a></li>
+
+        <?php
     }
 
 

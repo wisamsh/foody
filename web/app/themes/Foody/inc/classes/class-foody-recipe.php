@@ -394,8 +394,10 @@ class Foody_Recipe extends Foody_Post
             }
 
             $hours_str = sprintf(_n("%s $singular", "%s $unit", trim($times['hours'])), number_format_i18n(intval($times['hours'])));
-            if(strcmp($hours_str,'שעה 1') == 0){
+            if (strcmp($hours_str, 'שעה 1') == 0) {
                 $hours_str = 'שעה';
+            } elseif (strcmp($hours_str, '2 שעות') == 0) {
+                $hours_str = 'שעתיים';
             }
             $recipe_time .= $hours_str;
         }
@@ -466,7 +468,7 @@ class Foody_Recipe extends Foody_Post
             while (have_rows('ingredients', $this->post->ID)): the_row();
 
                 $this->number_of_dishes = get_sub_field('number_of_dishes');
-                if(empty($this->number_of_dishes)){
+                if (empty($this->number_of_dishes)) {
                     $this->number_of_dishes = 1;
                 }
                 $this->amount_for = get_sub_field('amount_for');
