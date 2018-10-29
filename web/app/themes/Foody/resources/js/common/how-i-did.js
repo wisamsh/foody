@@ -26,6 +26,7 @@ $(document).ready(() => {
         incrementCommentsCount('#how-i-did .comments-title');
     };
 
+    // TODO remove duplication
     function incrementCommentsCount(titleSelector) {
         let title = $(titleSelector).text();
         let matches = title.match(/\(([0-9]+)\)/);

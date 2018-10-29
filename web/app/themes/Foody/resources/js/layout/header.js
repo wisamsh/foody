@@ -6,16 +6,29 @@ jQuery(document).ready(function ($) {
     let navbar = $('#foody-navbar-collapse');
     let navAccordion = $('.foody-accordion', navbar);
 
+    let navbarShown = false;
+
     navbar.on('show.bs.collapse', function () {
         $('body').addClass('lock');
+        navbarShown = true;
     });
 
     navbar.on('hide.bs.collapse', function (e) {
         console.log(e.target);
         if (e.target && e.target.id == 'foody-navbar-collapse') {
             $('body').removeClass('lock');
+
+            navbarShown = false;
         }
 
+    });
+
+    window.addEventListener("orientationchange", function () {
+        if (foodyGlobals.isTablet && navbarShown) {
+            if (screen.orientation.angle == 90) {
+                $('.navbar-toggler').click();
+            }
+        }
     });
 
     channelsMenu.on('show.bs.collapse', function () {

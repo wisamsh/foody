@@ -20,7 +20,7 @@ jQuery(document).ready(($) => {
         context: 'homepage',
         contextArgs: [],
         filter: filter,
-        sort:'#sort-homepage-feed'
+        sort: '#sort-homepage-feed'
     });
 
 
@@ -30,7 +30,7 @@ jQuery(document).ready(($) => {
         let $mobileFilterBtn = $('.filter-mobile');
         let $mobileFilter = $('.mobile-filter');
         let $closeBtn = $('.close', $mobileFilter);
-
+        let filterShown = false;
         if ($mobileFilterBtn.length) {
             $('.md-checkbox').on('click', (e) => {
                 e.stopPropagation();
@@ -51,6 +51,7 @@ jQuery(document).ready(($) => {
                 });
 
                 $('body').addClass('side-active');
+                filterShown = true;
             });
 
             $closeBtn.click(closeMobileFilter);
@@ -63,6 +64,7 @@ jQuery(document).ready(($) => {
             $mobileFilter.removeClass('open');
             $('body').removeClass('side-active');
             document.removeEventListener('click', closeMobileFilter)
+            filterShown = false;
         }
 
 
@@ -78,6 +80,15 @@ jQuery(document).ready(($) => {
                 $mobileFilterBtn.show();
             }
             $mobileFilterBtn.css("opacity", op);
+        });
+
+
+        window.addEventListener("orientationchange", function () {
+            if (foodyGlobals.isTablet && filterShown) {
+                if (screen.orientation.angle == 90) {
+                    closeMobileFilter();
+                }
+            }
         });
     }
 
