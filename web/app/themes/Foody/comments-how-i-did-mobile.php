@@ -19,11 +19,11 @@ if (post_password_required()) {
     return;
 }
 
-$foody_comments = new Foody_HowIDid();
+$foody_how_i_did = new Foody_HowIDid();
 
 ?>
 
-<div id="comments how-i-did" class="comments-area">
+<div id="how-i-did" class="comments-area">
 
     <?php
 
@@ -38,9 +38,9 @@ $foody_comments = new Foody_HowIDid();
         <?php
         $accordion_args = array(
             'id' => 'how-i-did',
-            'title_classes' => 'how-i-did-title',
-            'title' => $foody_comments->get_the_title(),
-            'content' => function () use ($foody_comments) {
+            'title_classes' => 'how-i-did-title comments-title',
+            'title' => $foody_how_i_did->get_the_title(),
+            'content' => function () use ($foody_how_i_did) {
 
                 ?>
 
@@ -54,7 +54,7 @@ $foody_comments = new Foody_HowIDid();
                              תעלו תמונה להשוויץ
                         </span>
                             </label>
-                            <input id="attachment" type="file" name="attachment">
+                            <input id="attachment" type="file" accept="image/*" name="attachment">
                             <input id="comment" type="hidden" name="comment">
                             <input name="post_id" type="hidden" value="<?php echo get_the_ID() ?>">
                         </form>
@@ -63,18 +63,37 @@ $foody_comments = new Foody_HowIDid();
 
                 <ol id="how-i-did-list" class="row how-i-did-list">
                     <?php
-                    $foody_comments->the_comments();
+                    $foody_how_i_did->the_comments();
                     ?>
                 </ol><!-- .comment-list -->
 
 
                 <?php
 
-                foody_get_template_part(
-                    get_template_directory() . '/template-parts/common/show-more-simple.php',
-                    array(
-                        'context' => 'how-i-did-list'
-                    ));
+                $page = get_query_var('hid_page', null);
+
+                if ($page == null) {
+                    $page = $foody_how_i_did->get_page_count();
+                    set_query_var('hid_page', $page);
+                }
+
+                if ($page > 0) {
+
+                    foody_get_template_part(
+                        get_template_directory() . '/template-parts/common/show-more-simple.php',
+                        array(
+                            'context' => 'how-i-did-list'
+                        ));
+
+                    echo '
+                <script>
+                if(!ajaxurl){
+                    var ajaxurl = \'' . site_url('wp-admin/admin-ajax.php') . '\';
+                    var parent_post_id = ' . get_the_ID() . '
+                }
+                let hidpage = ' . $page . '
+                </script>';
+                }
             },
             'classes' => 'accordion-mobile'
         );
