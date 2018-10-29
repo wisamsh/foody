@@ -11,6 +11,8 @@ aside {
       border-bottom: none;
       position: absolute;
       padding: 0;
+      height: fit-content;
+      min-height: fit-content;
     }
 
     li.widget, .sidebar-section {
