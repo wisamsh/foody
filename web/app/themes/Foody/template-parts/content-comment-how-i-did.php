@@ -15,6 +15,7 @@ $attachment_id = get_comment_meta($comment['comment_ID'], 'attachment', true);
 $image = wp_get_attachment_url($attachment_id);
 
 $author = get_user_by('email', $comment['comment_author_email']);
+$username = $author->display_name;
 ?>
 
 
@@ -32,7 +33,7 @@ $author = get_user_by('email', $comment['comment_author_email']);
         </div>
         <div class="col">
            <span class="username">
-                <?php printf(__('%s'), sprintf('<span class="author-name">%s</span>', get_comment_author_link($comment['comment_ID']))); ?>
+                <?php printf(__('%s'), sprintf('<span class="author-name">%s</span>', $username)); ?>
             </span>
             <time>
                 <?php echo human_time_diff(get_comment_date('U', $comment['comment_ID']), date('U')) ?>
