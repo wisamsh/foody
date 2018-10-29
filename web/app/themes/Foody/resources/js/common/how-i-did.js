@@ -4,31 +4,26 @@
 
 $(document).ready(() => {
 
-    let howIDidForm = '#image-upload-form';
-
-    $commentForm = $(howIDidForm);
-
-
-    $parent = $('.commentform-element');
-    $comment = $('#comment');
-    $uploadModal = $('#upload-image-modal');
-    $uploadDialog = $('#how-i-did-modal');
-    let $boundForm = $('#image-upload-hidden');
+    let howIDidForm = 'form#image-upload-form';
+    let $commentForm = $(howIDidForm);
+    let $uploadModal = $('#upload-image-modal');
+    let $boundForm = $('form#image-upload-hidden');
 
     let successCallback = function (addedCommentHTML) {
 
         let $commentlist = $('.how-i-did-list');// comment list container
-
 
         $uploadModal.on('hidden.bs.modal', function (e) {
             $(this).unbind();
             $commentlist.prepend(addedCommentHTML);
         });
 
-        $uploadModal.modal('hide');
         $commentForm[0].reset();
         $boundForm[0].reset();
-        incrementCommentsCount('.how-i-did-title');
+
+        $uploadModal.modal('hide');
+
+        incrementCommentsCount('#how-i-did .comments-title');
     };
 
     function incrementCommentsCount(titleSelector) {
@@ -46,10 +41,10 @@ $(document).ready(() => {
     }
 
 
-    let $attachment =  $('#attachment');
+    let $attachment = $('#attachment');
 
     // prevent upload if not logged in
-    $attachment.on('click',(e) => {
+    $attachment.on('click', (e) => {
         if (foodyGlobals.loggedIn == 'false') {
             e.preventDefault();
             showLoginModal();
@@ -168,8 +163,6 @@ $(document).ready(() => {
     ];
 
 
-
-
     inputsToBind.forEach((inputName) => {
         let inputSelector = 'input[name="' + inputName + '"]';
         $(inputSelector, $commentForm).on('change', function () {
@@ -190,7 +183,7 @@ $(document).ready(() => {
         action: 'ajaxhow_i_did'
     });
 
-    $('.how-i-did-list').on('click','.how-i-did-modal-open', function () {
+    $('.how-i-did-list').on('click', '.how-i-did-modal-open', function () {
         let image = $(this).data('image');
         let user = $(this).data('user');
         let content = $(this).data('content');

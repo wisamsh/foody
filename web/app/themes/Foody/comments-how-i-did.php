@@ -23,7 +23,7 @@ $foody_how_i_did = new Foody_HowIDid();
 
 ?>
 
-<div id="comments how-i-did" class="comments-area">
+<div id="how-i-did" class="comments-area">
 
     <?php
 

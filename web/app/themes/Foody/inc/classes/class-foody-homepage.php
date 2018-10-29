@@ -119,6 +119,10 @@ class Foody_HomePage
 
         $posts = array_map('Foody_Post::create', $posts);
 
+        if(wp_is_mobile()){
+            $posts = array_merge($this->get_featured_posts(),$posts);
+        }
+
 
         // debug a lot of feed items
         // make sure to disable when not
