@@ -222,17 +222,21 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function get_primary_category()
     {
-        if ($this->post != null) {
-            $term_list = wp_get_post_terms($this->post->ID, 'category', array("fields" => "names"));
-            foreach ($term_list as $term) {
-                if (get_post_meta($this->post->ID, '_yoast_wpseo_primary_category', true) == $term->term_id) {
-                    return $term;
-                }
+
+        $primary = get_post_meta($this->post->ID, '_yoast_wpseo_primary_category', true);
+
+        if ($primary && is_numeric($primary) && intval($primary) > 0) {
+
+        }else{
+            /** @var WP_Term[] $categories */
+            $categories = wp_get_post_categories($this->id);
+            if(is_array($categories) && count($categories) >0){
+                $primary = $categories[0]->term_id;
             }
-            return $term_list[0];
+
         }
 
-        return null;
+        return $primary;
     }
 
     public function the_featured_content()

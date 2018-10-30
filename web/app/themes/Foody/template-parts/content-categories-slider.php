@@ -11,7 +11,7 @@
 $category = $template_args['category'];
 
 $slider_data = [
-    'slidesToShow' => 7,
+    'slidesToShow' => 4,
     'rtl' => true,
     'prevArrow' => '<i class="icon-arrowleft prev"></i>',
     'nextArrow' => '<i class="icon-arrowleft next"></i>',

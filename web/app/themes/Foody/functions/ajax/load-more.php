@@ -39,7 +39,9 @@ function foody_ajax_load_more()
 
             $page = $_POST['page'];
 
-            $page_args = $foody_query->get_query($context, $context_args);
+            $ranged = isset($_POST['ranged']) && $_POST['ranged'];
+
+            $page_args = $foody_query->get_query($context, $context_args,$ranged);
 
             if (is_wp_error($page_args)) {
                 $error = $page_args->get_error_message();
@@ -50,14 +52,14 @@ function foody_ajax_load_more()
                 $foody_search = new Foody_Search();
 
                 $sort = '';
-                if(!empty($_POST['sort'])){
+                if (!empty($_POST['sort'])) {
                     $sort = $_POST['sort'];
-                    if(get_query_var('paged',null)){
+                    if (get_query_var('paged', null)) {
                         unset($page_args['paged']);
                     }
                 }
 
-                $query = $foody_search->build_query($filter, $page_args,$sort);
+                $query = $foody_search->build_query($filter, $page_args, $sort);
 
                 $next = $query->max_num_pages > $page;
 
