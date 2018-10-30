@@ -44,7 +44,9 @@ jQuery(document).ready(($) => {
                 event.stopPropagation();
                 $mobileFilter.addClass('open');
 
-                $(window).click(closeMobileFilter);
+                $(window).click(function () {
+                    closeMobileFilter(false);
+                });
 
                 $mobileFilter.click(function (event) {
                     event.stopPropagation();
@@ -54,22 +56,34 @@ jQuery(document).ready(($) => {
                 filterShown = true;
             });
 
-            $closeBtn.click(closeMobileFilter);
+            $closeBtn.click(function () {
+                closeMobileFilter(true);
+            });
 
 
         }
 
 
-        function closeMobileFilter() {
+        function closeMobileFilter(clear) {
             $mobileFilter.removeClass('open');
             $('body').removeClass('side-active');
-            document.removeEventListener('click', closeMobileFilter)
+            document.removeEventListener('click', closeMobileFilter);
             filterShown = false;
+            if (clear) {
+                clearFilter();
+            }
+        }
+
+        function clearFilter() {
+            $('.md-checkbox input[type="checkbox"]:checked', $mobileFilter).each(function () {
+
+                $(this).next('label').click();
+            });
         }
 
 
         // fades the floating filter button in/out
-        // and hides/shows based on scroll to make sure
+        // and hides/shows based on scroll position to make sure
         // no content is blocked
         $(window).scroll(function () {
             let threshold = 200; // number of pixels before bottom of page that you want to start fading
