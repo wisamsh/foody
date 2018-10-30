@@ -24,6 +24,7 @@ jQuery(document).ready(($) => {
     });
 
 
+    // TODO move to common
     // mobile filter handlers
     if (foodyGlobals.isMobile) {
 

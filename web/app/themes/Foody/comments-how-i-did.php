@@ -66,6 +66,8 @@ $foody_how_i_did = new Foody_HowIDid();
     ?>
 
     <?php if ($have_comments) : ?>
+
+        <?php $foody_how_i_did->the_upload_popup(); ?>
         <ol id="how-i-did-list" class="row gutter-1 how-i-did-list">
             <?php
             $foody_how_i_did->the_comments();

@@ -977,11 +977,11 @@ $content-width: 70% !default;
               margin-top: 20px;
               .how-i-did {
 
-                &:nth-child( even) {
+                &:nth-child(odd) {
                   padding-left: 10px;
                   padding-right: 0;
                 }
-                &:nth-child(odd) {
+                &:nth-child(even) {
                   padding-right: 10px;
                   padding-left: 0;
                 }
@@ -1354,7 +1354,6 @@ $content-width: 70% !default;
       }
 
       .recipe-accessories, .recipe-techniques {
-
 
         ul {
           li {
@@ -2005,13 +2004,12 @@ $content-width: 70% !default;
             margin-right: 0;
           }
 
-
-          .social{
-            .essb_icon{
+          .social {
+            .essb_icon {
               width: 30px;
               height: 30px;
 
-              &:before{
+              &:before {
                 top: 6px;
                 left: 6px;
               }

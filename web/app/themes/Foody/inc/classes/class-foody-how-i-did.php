@@ -46,18 +46,23 @@ class Foody_HowIDid
     }
 
     /**
+     * @param array $args
      */
     public function the_comments($args = [])
     {
         $args = array_merge($args, $this->get_args());
-
-        foody_get_template_part(get_template_directory() . '/template-parts/content-how-i-did-popup.php');
 
         $comments = get_comments($args);
 
         foreach ($comments as $comment) {
             foody_get_template_part(get_template_directory() . '/template-parts/content-comment-how-i-did.php', $comment);
         }
+    }
+
+
+    public function the_upload_popup()
+    {
+        foody_get_template_part(get_template_directory() . '/template-parts/content-how-i-did-popup.php');
     }
 
     /**
@@ -103,4 +108,5 @@ class Foody_HowIDid
         return $num_of_pages;
 
     }
+
 }
