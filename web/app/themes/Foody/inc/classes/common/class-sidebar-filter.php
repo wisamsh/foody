@@ -93,7 +93,7 @@ class SidebarFilter
 
         foreach ($list['checkboxes'] as $checkbox) {
             $item = $this->engine->render($template, array(
-                'id' => $checkbox['value'],
+                'id' => $accordion_args['id'] . '_' . $checkbox['value'],
                 'exclude' => $checkbox['exclude'],
                 'value' => $checkbox['value'],
                 'type' => $checkbox['type'],
@@ -200,7 +200,7 @@ class SidebarFilter
                 $title = get_the_title($id);
                 break;
             case 'authors':
-                $title = get_the_author_meta('display_name',$id);
+                $title = get_the_author_meta('display_name', $id);
                 break;
         }
 

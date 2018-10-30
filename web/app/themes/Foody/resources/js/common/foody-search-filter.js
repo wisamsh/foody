@@ -42,7 +42,7 @@ module.exports = (function () {
     FoodySearchFilter.prototype.attachChangeListener = function () {
         let $checkboxes = $('input[type="checkbox"]', this.$filter);
         let that = this;
-        $checkboxes.change(function (e) {
+        $checkboxes.on('change', function (e) {
             if (that.isLoading) {
                 return;
             }
@@ -50,7 +50,8 @@ module.exports = (function () {
 
 
             let data = $(this).data();
-            let key = data.type + '_' + this.name;
+            let groupKey = $(this).closest('.foody-accordion').attr('id');
+            let key = `${groupKey}_${data.type}_${this.name}`;
             if (this.checked) {
                 that.searchFilter[key] = that.getParsedInput(this);
             } else {
@@ -148,6 +149,8 @@ module.exports = (function () {
         if (!args.search && args.types.length == 0) {
             args.context = this.initialContext;
         }
+
+        console.log(args);
 
         return args;
 
