@@ -9,6 +9,7 @@ let IScroll = require('iscroll');
 // let $ = require('jquery');
 require('jquery-drawer');
 require('jquery-validation');
+require('block-ui');
 require('autocomplete.js/src/jquery/plugin.js');
 require('bootstrap');
 require('bootstrap-material-design');
@@ -77,6 +78,7 @@ require('./channel');
 require('./register');
 require('./login');
 require('./search');
+
 
 
 jQuery(document).ready(function ($) {

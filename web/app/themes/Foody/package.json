@@ -37,6 +37,7 @@
     "autocomplete.js": "^0.31.0",
     "autoprefixer": "^8.5.0",
     "awesome-bootstrap-checkbox": "^1.0.1",
+    "block-ui": "^2.70.1",
     "bootstrap": "^4.1.1",
     "bootstrap-material-design": "^4.1.1",
     "bootstrap-rating-input": "^0.4.0",

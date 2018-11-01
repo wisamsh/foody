@@ -34,7 +34,7 @@ function showSlider() {
                 breakpoint: 769,
                 settings: {
                     slidesToShow: 4,
-                    slidesToScroll: 2,
+                    slidesToScroll: 4,
                     variableWidth: false,
                     rtl: true,
                 }
@@ -42,10 +42,10 @@ function showSlider() {
             {
                 breakpoint: 414,
                 settings: {
-                    slidesToShow: 5,
-                    slidesToScroll: 1,
+                    slidesToShow: 10,
+                    slidesToScroll: 10,
                     variableWidth: false,
-                    rtl: true,
+                    rtl: true
                 }
             },
             // You can unslick at a given breakpoint now by adding:

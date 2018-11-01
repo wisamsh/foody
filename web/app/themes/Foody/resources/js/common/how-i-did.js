@@ -2,12 +2,23 @@
  * Created by moveosoftware on 7/10/18.
  */
 
+let FoodyLoader = require('../common/foody-loader');
+
+
 $(document).ready(() => {
+
+
 
     let howIDidForm = 'form#image-upload-form';
     let $commentForm = $(howIDidForm);
     let $uploadModal = $('#upload-image-modal');
     let $boundForm = $('form#image-upload-hidden');
+
+    let $formContainer = $('#upload-image-modal .modal-content');
+    let submitButton = $('button[type="submit"]', $commentForm);
+
+    let loader = new FoodyLoader({container: $formContainer});
+
 
     let successCallback = function (addedCommentHTML) {
 
@@ -20,8 +31,9 @@ $(document).ready(() => {
 
         $commentForm[0].reset();
         $boundForm[0].reset();
-
         $uploadModal.modal('hide');
+
+
 
         incrementCommentsCount('#how-i-did .comments-title');
     };
@@ -181,7 +193,17 @@ $(document).ready(() => {
         form: '#image-upload-hidden',
         success: successCallback,
         ajaxUrl: '/wp/wp-admin/admin-ajax.php',
-        action: 'ajaxhow_i_did'
+        action: 'ajaxhow_i_did',
+        onSubmit: function () {
+            $formContainer.block({message:''});
+            loader.attach.call(loader);
+            submitButton.prop('disabled', true);
+        },
+        complete: function () {
+            loader.detach.call(loader);
+            submitButton.prop('disabled', false);
+            $formContainer.unblock();
+        }
     });
 
     $('.how-i-did-list').on('click', '.how-i-did-modal-open', function () {
@@ -202,6 +224,9 @@ $(document).ready(() => {
     $('a[data-context="how-i-did-list"]').click(function () {
         let button = $(this);
         let $context = $('.' + button.data('context'));
+
+
+        console.log(hidpage);
         // decrease the current comment page value
         hidpage--;
         let submitText = button.html();
@@ -222,7 +247,7 @@ $(document).ready(() => {
                     $context.append(data);
                     button.html(submitText);
                     // if the last page, remove the button
-                    if (hidpage == 0)
+                    if (hidpage == 1)
                         button.remove();
                 } else {
                     button.remove();

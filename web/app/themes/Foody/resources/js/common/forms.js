@@ -58,6 +58,9 @@ window.formSubmitWithFiles = function (settings) {
     $form.submit(function (e) {
 
         e.preventDefault();
+        if(settings.onSubmit && typeof  settings.onSubmit == 'function'){
+            settings.onSubmit();
+        }
         let button = $('input[type="submit"]', $form);
         if (button.length == 0) {
             button = $('button[type="submit"]', $form);
@@ -87,7 +90,7 @@ window.formSubmitWithFiles = function (settings) {
                 contentType: false,
                 beforeSend: function (xhr) {
                     // what to do just after the form has been submitted
-                    button.addClass('loadingform').val('Loading...');
+                    button.addClass('loadingform').prop('disabled', true).val('Loading...');
                 },
                 error: function (request, status, error) {
                     if (status == 500) {
@@ -105,7 +108,11 @@ window.formSubmitWithFiles = function (settings) {
                 success: settings.success,
                 complete: function () {
                     // what to do after a comment has been added
-                    button.removeClass('loadingform').val('שלח');
+                    button.removeClass('loadingform').prop('disabled', false).val('שלח');
+
+                    if(settings.complete && typeof  settings.complete == 'function'){
+                        settings.complete();
+                    }
                 }
             });
         }
