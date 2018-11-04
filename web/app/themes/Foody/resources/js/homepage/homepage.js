@@ -11,7 +11,7 @@ jQuery(document).ready(($) => {
     let filter = new FoodySearchFilter({
         selector: '.homepage #accordion-foody-filter',
         grid: '#homepage-feed',
-        cols: 3,
+        cols: 2,
         searchButton: '.show-recipes'
     });
 

@@ -55,12 +55,12 @@ jQuery(document).ready(($) => {
     new FoodySearchFilter({
         selector: '.page-template-profile #accordion-foody-filter',
         grid: '.my-channels-grid',
-        cols: 2
+        cols: 1
     });
     new FoodySearchFilter({
         selector: '.page-template-profile #accordion-foody-filter',
         grid: '.my-recipes-grid',
-        cols: 2
+        cols: 1
     });
 
     // Tab switch analytics

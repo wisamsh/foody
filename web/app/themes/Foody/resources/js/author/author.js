@@ -9,12 +9,12 @@ jQuery(document).ready(($) => {
     let recipesFilter = new FoodySearchFilter({
         selector: '.author #accordion-foody-filter',
         grid: '#author-recipe-feed',
-        cols: 3
+        cols: 2
     });
     let playlistsFilter = new FoodySearchFilter({
         selector: '.author #accordion-foody-filter',
         grid: '#author-playlist-feed',
-        cols: 3
+        cols: 2
     });
 
     // // search and filter pager

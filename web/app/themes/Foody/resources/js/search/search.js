@@ -7,13 +7,16 @@ let FoodyContentPaging = require('../common/page-content-paging');
 
 jQuery(document).ready(($) => {
 
-    let filter = new FoodySearchFilter({grid: '#search-results', cols: 3});
+    let filter = new FoodySearchFilter({
+        grid: '#search-results',
+        cols: 2
+    });
 
     let searchPager = new FoodyContentPaging({
         context: 'search',
         contextArgs: [],
         filter: filter,
-        sort:'#sort-search-results'
+        sort: '#sort-search-results'
     });
 
 
