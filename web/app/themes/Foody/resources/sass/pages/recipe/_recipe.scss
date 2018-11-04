@@ -83,6 +83,15 @@ $content-width: 95%;
           }
         }
       }
+
+      .btn-facebook-share{
+        a{
+          color: white;
+          &:hover{
+            color: white;
+          }
+        }
+      }
     }
 
     .recipe-overview {

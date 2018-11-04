@@ -79,7 +79,8 @@ $sidebar-top-offset: 60px;
     }
 
     .feed-container {
-
+      max-width: 100%;
+      margin: 0 auto;
       .feed-header {
         height: $feed-header-height;
         width: 100%;
@@ -214,12 +215,6 @@ $sidebar-top-offset: 60px;
     }
   }
 }
-
-//.page-template-homepage {
-//  footer.site-footer {
-//    position: unset;
-//  }
-//}
 
 @include breakpoint(mobileonly) {
   .homepage {

@@ -20,6 +20,15 @@
       font-weight: bold;
       color: #ffffff;
       width: 100%;
+      text-align: right;
+      padding: 0 20px;
+
+      i{
+        &:before{
+          font-size: 24px;
+          float: left;
+        }
+      }
 
       &.btn-facebook {
         background-color: #3a539f;
