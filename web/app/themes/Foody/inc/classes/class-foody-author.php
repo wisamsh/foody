@@ -122,7 +122,7 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
         $grid = [
             'id' => $id,
-            'cols' => 3,
+            'cols' => 2,
             'posts' => $posts,
             'classes' => [
                 "author-$type-grid"

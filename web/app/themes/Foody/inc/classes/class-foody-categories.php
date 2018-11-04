@@ -22,10 +22,10 @@ class Foody_Categories
     {
         $cards_per_row = get_field('cards_per_row');
         if ($cards_per_row <= 0) {
-            $cards_per_row = 4;
+            $cards_per_row = 3;
         }
 
-        $container = '<div class="card-columns card-columns-4  gutter-10">';
+        $container = "<div class='card-columns card-columns-$cards_per_row  gutter-10'>";
         echo $container;
 
         if (have_rows('categories')) {

@@ -9,14 +9,14 @@ aside {
     .sidebar-content {
       border: $sidebar-border;
       border-bottom: none;
-      position: absolute;
+      //position: absolute;
       padding: 0;
       height: fit-content;
       min-height: fit-content;
     }
 
     li.widget, .sidebar-section {
-      padding: 25px;
+      padding: 25px 10px;
       margin-top: 0;
       margin-bottom: 0;
       &:not(:last-child) {
@@ -42,10 +42,11 @@ aside {
     }
     .md-checkbox {
       label {
-        margin-right: 1em;
 
         font-family: $font__main;
         font-size: 20px;
+        display: table-cell;
+        padding-right: 1em;
 
         &:before, &:after {
           font-size: .8em;

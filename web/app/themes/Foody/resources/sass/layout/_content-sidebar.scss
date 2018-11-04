@@ -14,8 +14,8 @@ body[class~="post-template-content-with-sidebar"] {
     background-color: $color__background-screen;
   }
 
-  $sidebar-width: 21%;
-  $content-width: 70%;
+  $sidebar-width: 25%;
+  $content-width: 100%;
   .progress-wrapper {
     $progress-height: 5px;
     position: sticky;
@@ -819,12 +819,6 @@ body[class~="post-template-content-with-sidebar"] {
 
         }
       }
-    }
-
-
-    footer.site-footer{
-      max-width: calc(100% - #{$sidebar-width});
-      margin-right: calc(#{$sidebar-width} - 1px);
     }
   }
 }

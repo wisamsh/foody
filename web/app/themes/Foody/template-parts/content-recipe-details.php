@@ -12,8 +12,6 @@
 $foody_page = $template_args['page'];
 ?>
 <div class="details container">
-    <?php echo get_the_category_list('', '', $foody_page->getId()) ?>
-
     <section class="recipe-details  d-flex">
         <div class="image-container col-sm-1 col-2 nopadding">
             <a href="<?php echo $foody_page->get_author_link() ?>">

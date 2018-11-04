@@ -108,5 +108,9 @@ BREAKPOINTS
       @content;
     }
   }
+}
 
+@mixin site-width(){
+  max-width: $site-width;
+  margin: 0 auto;
 }

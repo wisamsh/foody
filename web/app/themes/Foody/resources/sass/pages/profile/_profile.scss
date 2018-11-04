@@ -1,4 +1,4 @@
-$sidebar-width: 22.5% !default;
+$sidebar-width: 25%;
 
 @mixin my-channels($width) {
   $my-channels-width: $width;
@@ -108,19 +108,15 @@ $sidebar-width: 22.5% !default;
 
   .container-fluid {
 
-    //noinspection CssInvalidPropertyValue
     aside {
       width: $sidebar-width;
+      //noinspection CssInvalidPropertyValue
       min-height: stretch;
       border-left: 1px solid $color__divider;
+      border-right: 1px solid $color__divider;
       background-color: #fff;
-      padding: 44px 30px;
+      padding: 44px 10px;
       position: relative;
-      #foody-filter {
-
-        padding-right: 30px;
-
-      }
     }
 
     .content {
@@ -192,7 +188,7 @@ $sidebar-width: 22.5% !default;
           @include profile-tabs;
         }
 
-        $my-channels-width: 30%;
+        $my-channels-width: 45%;
         @include my-channels($my-channels-width);
 
         h2 {
@@ -353,11 +349,6 @@ $sidebar-width: 22.5% !default;
         }
       }
     }
-  }
-
-  footer {
-    max-width: calc(100% - #{$sidebar-width});
-    margin-right: calc(#{$sidebar-width} - 1px);
   }
 }
 
@@ -761,11 +752,6 @@ Tablet landscape
 
       }
 
-    }
-
-    footer {
-      max-width: 100%;
-      margin-right: 0;
     }
   }
 }

@@ -201,6 +201,13 @@ class Foody_Recipe extends Foody_Post
 
     }
 
+    public function the_categories()
+    {
+        echo '<h2 class="title">' . __('קטגוריות') . '</h2>';
+        echo get_the_category_list('', '', $this->getId());
+    }
+
+
     public function the_accessories()
     {
         $posts = [];

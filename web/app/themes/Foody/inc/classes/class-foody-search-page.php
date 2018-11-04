@@ -52,7 +52,7 @@ class Foody_SearchPage implements Foody_ContentWithSidebar
 
         $grid = [
             'id' => 'search-results',
-            'cols' => 3,
+            'cols' => 2,
             'posts' => $foody_posts,
             'more' => $this->foody_query->has_more_posts($query),
             'header' =>[

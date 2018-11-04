@@ -1,4 +1,4 @@
-$content-width: 79%;
+$content-width: 75%;
 $feed-header-height: 60px;
 $sidebar-top-offset: 60px;
 .homepage {
@@ -13,7 +13,7 @@ $sidebar-top-offset: 60px;
   }
 
   .content {
-    padding: 15px 15px 0;
+    padding-top: 15px;
     .featured {
 
       .recipe-item-details {
@@ -31,7 +31,6 @@ $sidebar-top-offset: 60px;
       }
 
       img.recipe-item-image {
-        max-height: 23em;
         width: 100%;
       }
 
@@ -98,30 +97,11 @@ $sidebar-top-offset: 60px;
 
       .sidebar-container {
 
-        // min items
-        //width: 21%;
-        //padding-right: 0;
-        //max-height: stretch;
-        //min-height: stretch;
         margin-top: 66px;
-        // max items
-        width: 21%;
+        width: calc(100% - #{$content-width});
         padding-right: 0;
-        //min-height: max-content;
 
         aside {
-          // min items
-          //width: 100%;
-          //padding-right: 0;
-          //left: 0;
-          //right: 0;
-          //bottom: 0;
-          //height: stretch;
-          ///* bottom: 0; */
-          //min-height: 100%;
-          //display: flow-root;
-
-          // max items
           width: 100%;
           padding-right: 0;
           left: 0;
@@ -175,28 +155,10 @@ $sidebar-top-offset: 60px;
           }
 
           .sidebar-content {
-            // min items
-            //left: 0;
-            //right: 0;
-            //bottom: 0;
-            //max-height: stretch;
-            //height: 100%;
-            //background: blue;
-            //min-height: stretch;
-
-            // max items
-
             left: 0;
             right: 0;
             bottom: 0;
             top: $sidebar-top-offset;
-            // Autoprefixer will change 'stretch'
-            // into fill-available and the different
-            // browsers equivalent.
-            // noinspection CssInvalidPropertyValue
-            //max-height: stretch;
-            //height: 100%;
-            //min-height: fit-content;
           }
 
           .filter {
@@ -232,8 +194,6 @@ $sidebar-top-offset: 60px;
 
             img {
               &.recipe-item-image {
-                //min-height: 270px;
-                //max-height: 270px;
                 width: 100%;
               }
             }
@@ -255,12 +215,11 @@ $sidebar-top-offset: 60px;
   }
 }
 
-.page-template-homepage {
-  footer.site-footer {
-    //bottom: -$sidebar-top-offset;
-    position: unset;
-  }
-}
+//.page-template-homepage {
+//  footer.site-footer {
+//    position: unset;
+//  }
+//}
 
 @include breakpoint(mobileonly) {
   .homepage {
@@ -568,13 +527,7 @@ $sidebar-top-offset: 60px;
           }
         }
 
-        //$sidebar-width:35%;
-        //$content-width:calc(100% - #{$sidebar-width});
-
         .content-container {
-          //width: $content-width;
-          //max-width: $content-width;
-          //flex: 0 0 $content-width;
           article {
 
             &.feed {
@@ -748,13 +701,10 @@ $sidebar-top-offset: 60px;
           }
 
           .sidebar-content {
-            //position: relative;
-            //margin-top: -60px;
           }
         }
 
         .content-container {
-          //margin-bottom: 0;
           article {
 
             &.feed {
@@ -853,6 +803,8 @@ $sidebar-top-offset: 60px;
     }
   }
 }
+
+// TODO move to relevant files
 
 #filter-sidebar {
   min-width: 250px;

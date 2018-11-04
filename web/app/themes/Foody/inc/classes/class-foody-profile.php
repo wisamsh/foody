@@ -71,13 +71,9 @@ class Foody_Profile
 
             $grid_args = [
                 'id' => 'my-recipes-grid',
-//                'responsive' => [
-//                    'tablet_l' => 'col-lg-12',
-//                    'tablet' => 'col-md-6',
-//                ],
                 'posts' => $posts,
                 'more' => false,
-                'cols' => 2
+                'cols' => 1
             ];
 
             foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
@@ -107,13 +103,9 @@ class Foody_Profile
 
         $grid_args = [
             'id' => 'my-channels-grid',
-//            'responsive' => [
-//                'tablet_l' => 'col-lg-12',
-//                'tablet' => 'col-md-6',
-//            ],
             'posts' => $posts,
             'more' => false,
-            'cols' => 2
+            'cols' => 1
         ];
 
         foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);

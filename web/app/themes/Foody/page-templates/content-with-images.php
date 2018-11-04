@@ -22,7 +22,7 @@ $image_left = get_field('left_image');
                 <img src=" <?php echo $image_right['url'] ?>" alt="<?php echo $image_right['alt'] ?>">
             </div>
 
-            <div class="content col-12 col-sm-6">
+            <div class="content col-12 col-sm-6 col-xl-4">
                 <?php
 
                 the_content();

@@ -4,14 +4,12 @@ footer.site-footer {
   background-color: rgba(58, 58, 58, 0.05);
   padding: 25px 42px;
 
-  width: calc(100% - #{$sidebar-width});
-  margin-right: calc(#{$sidebar-width} - 1px);
-  //position: absolute;
+  @include site-width();
+
   left: 0;
   bottom: 0;
   height: auto;
   right: 0;
-  border-right: 1px solid hsla(0, 0%, 59%, .3);
 
   ul {
     &.menu {

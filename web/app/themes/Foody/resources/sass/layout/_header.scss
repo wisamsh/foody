@@ -35,6 +35,11 @@ header {
     right: 20px;
   }
 
+  .logo-container {
+    top: -5px;
+    right: 10px;
+  }
+
   .logo-container-desktop {
 
     width: 100px;
@@ -47,12 +52,6 @@ header {
         border-radius: 50%;
       }
     }
-  }
-
-  .cellcom-tv-img {
-    position: absolute;
-    top: 33.5px;
-    right: 110px;
   }
 
   .foody-dropdown-menu {
@@ -203,7 +202,8 @@ header {
       background-color: #fff;
 
       .foody-navbar-container {
-        padding-right: 250px;
+        @include site-width();
+        position: relative;
       }
 
       &.navbar-light {
@@ -229,17 +229,19 @@ header {
         }
       }
 
-      .search-bar {
+      .search-bar-container {
 
         $input-height: 47px;
-
+        margin-right: 150px;
         input {
           &.search {
-            //width: 310px;
+            width: 250px;
             height: 47px;
             font-size: 25px;
             text-align: right;
             padding-right: 15px;
+            //position: absolute;
+            //right: 150px;
 
             // Autoprefixer
             //noinspection CssInvalidPseudoSelector
@@ -256,15 +258,36 @@ header {
 
       }
 
-      .avatar {
-        clip-path: circle();
-        border-radius: 50%;
-        border: 2px solid $color__primary;
-        max-width: 52px;
+      .profile-picture-container {
+        margin-right: 20px;
+
+        .avatar {
+          clip-path: circle();
+          border-radius: 50%;
+          border: 2px solid $color__primary;
+          max-width: 52px;
+        }
       }
 
       .navbar-collapse {
         flex-direction: row-reverse;
+
+        ul {
+          li {
+            i {
+              display: none;
+            }
+            &.menu-item-type-yawp_wim {
+              display: none;
+            }
+            &.foody-mobile-menu-item {
+              display: none;
+            }
+
+            a {
+            }
+          }
+        }
       }
 
       .cellcom-tv {
@@ -272,6 +295,11 @@ header {
       }
 
       ul {
+
+        &#menu-navbar {
+          margin-left: 0;
+        }
+
         li {
           a {
             color: #3A3A3A;
@@ -290,7 +318,7 @@ header {
 
 @include breakpoint(mobileonly) {
 
-  #content{
+  #content {
 
     padding-top: 60px;
 
@@ -302,20 +330,19 @@ header {
     transition: transform 0.25s ease-in-out;
     z-index: 1;
 
-    &.header-unpin{
+    &.header-unpin {
       transform: translateY(-60px);
-      .logo-container-mobile{
+      .logo-container-mobile {
         transform: translateY(-30px);
       }
 
     }
-    &.header-pin{
+    &.header-pin {
       transform: translateY(0);
-      .logo-container-mobile{
+      .logo-container-mobile {
         transform: translateY(0);
       }
     }
-
 
     .logo-container-mobile {
       transition: opacity .6s;
@@ -335,6 +362,7 @@ header {
         height: 60px;
         .foody-navbar-container {
           padding-right: 0;
+          position: initial;
         }
         .navbar-toggler {
           border: 0;
@@ -356,8 +384,8 @@ header {
         .btn {
           margin-bottom: 0;
 
-          &.accessibility {
-            margin-right: -35px;
+          &.btn-search {
+            margin-right: auto;
           }
         }
 
@@ -591,11 +619,11 @@ header {
           }
         }
 
-        .search-bar {
-
+        .search-bar-container {
+          margin-right: 0;
           input {
             &.search {
-
+              right: 0;
               // Autoprefixer
               //noinspection CssInvalidPseudoSelector
               &::placeholder {
@@ -612,7 +640,7 @@ header {
 
           ul {
             li {
-              i{
+              i {
                 display: none;
               }
               &.menu-item-type-yawp_wim {

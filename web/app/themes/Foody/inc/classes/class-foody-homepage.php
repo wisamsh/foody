@@ -82,13 +82,14 @@ class Foody_HomePage
 
         $posts = array_map('Foody_Post::create', $posts);
 
+        // debug
 //        for ($i=0;$i<100;$i++){
 //            $posts[]= $posts[0];
 //        }
 
         $grid = [
             'id' => 'homepage-feed',
-            'cols' => 3,
+            'cols' => 2,
             'posts' => $posts,
             'more' => $this->foody_query->has_more_posts($query),
             'header' => [
@@ -119,8 +120,8 @@ class Foody_HomePage
 
         $posts = array_map('Foody_Post::create', $posts);
 
-        if(wp_is_mobile()){
-            $posts = array_merge($this->get_featured_posts(),$posts);
+        if (wp_is_mobile()) {
+            $posts = array_merge($this->get_featured_posts(), $posts);
         }
 
 

@@ -14,7 +14,7 @@ get_header(); ?>
     <div id="main-content" class="main-content">
 
         <div id="primary" class="content-area">
-            <div id="content" class="site-content" role="main">
+            <div class="site-content" role="main">
 
 
                 <div class="container-fluid p-0">
@@ -32,7 +32,7 @@ get_header(); ?>
                             <?php endif; ?>
                             <section class="profile-top">
                                 <div class="user-details row">
-                                    <div class="d-inline-block image-container col-sm-1 col-2">
+                                    <div class="d-inline-block image-container col-2">
                                         <?php echo $foody_profile->get_image() ?>
                                     </div>
                                     <div class="name-email col-8">

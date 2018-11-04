@@ -121,7 +121,7 @@ class Foody_Category implements Foody_ContentWithSidebar
 
         $grid = [
             'id' => 'category-feed',
-            'cols' => 3,
+            'cols' => 2,
             'posts' => $posts,
             'more' => $foody_query->has_more_posts($query),
             'header' => [
@@ -163,50 +163,12 @@ class Foody_Category implements Foody_ContentWithSidebar
 
     function the_content($page)
     {
-        $select_args = array(
-            'id' => 'sort-categories-posts',
-            'placeholder' => 'סדר על פי',
-            'options' => array(
-                array(
-                    'value' => 1,
-                    'label' => 'א-ת'
-                ),
-                array(
-                    'value' => -1,
-                    'label' => 'ת-א'
-                )
-            )
-        );
-
-        $gutter = wp_is_mobile() ? ' ' : ' gutter-30 '
-
         ?>
-        <!--        <div class="container-fluid">-->
-        <!--            <div class="feed-header row--><?php //echo $gutter
-        ?><!--justify-content-space-between">-->
-        <!---->
-        <!--                <h2 class="title col-sm-6 col-8">-->
-        <!--                    --><?php //echo sprintf('מתכוני %s', $this->title)
-        ?>
-        <!--                </h2>-->
-        <!--                <div class="sort col-sm-6 col-4">-->
-        <!--                    --><?php
-//                    foody_get_template_part(
-//                        get_template_directory() . '/template-parts/common/foody-select.php',
-//                        $select_args
-//                    )
-//
-        ?>
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-
 
         <div class="container-fluid feed-container">
-<!--            <div class="row gutter-3 foody-grid">-->
-                <?php $this->feed(); ?>
-<!--            </div>-->
+            <?php $this->feed(); ?>
         </div>
+
         <?php
 
     }

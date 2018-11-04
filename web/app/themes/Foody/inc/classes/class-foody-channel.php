@@ -38,7 +38,7 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
 
         $grid = [
             'id' => $id,
-            'cols' => 3,
+            'cols' => 2,
             'posts' => $posts,
             'classes' => [
                 "channel-$type-grid"

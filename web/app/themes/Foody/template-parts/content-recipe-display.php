@@ -126,6 +126,7 @@ $recipe = $template_args['recipe'];
 
 
 
+
 </script>
 
 <section class="recipe-overview">
@@ -181,14 +182,18 @@ $recipe = $template_args['recipe'];
 
 <?php if ($recipe->has_nutrients()): ?>
 
-<section class="recipe-nutrition box">
+    <section class="recipe-nutrition box">
 
-    <?php $recipe->the_nutrition() ?>
+        <?php $recipe->the_nutrition() ?>
 
-</section>
+    </section>
 
 <?php endif; ?>
 
+
+<section class="recipe-categories">
+    <?php $recipe->the_categories() ?>
+</section>
 
 <section class="recipe-accessories">
     <?php $recipe->the_accessories() ?>
@@ -201,7 +206,7 @@ $recipe = $template_args['recipe'];
 <section class="recipe-tags">
 
     <h2 class="title">
-        תגיות
+        <?php echo __('תגיות', 'foody') ?>
     </h2>
 
     <?php $recipe->the_tags() ?>

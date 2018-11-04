@@ -1,9 +1,9 @@
-$sidebar-width: 21%;
-$content-width: 70% !default;
+$sidebar-width: 25%;
+$content-width: 95%;
 
-@include breakpoint(tablet-l) {
-  $content-width: 80%;
-}
+//@include breakpoint(tablet-l) {
+//  $content-width: 80%;
+//}
 
 @mixin max-width-section() {
   max-width: $content-width;
@@ -132,11 +132,11 @@ $content-width: 70% !default;
         .title {
           line-height: normal;
           padding-right: 0;
-          padding-top: 10px;
         }
 
         .amount-container {
           padding-left: 0;
+          align-self: center;
           $input-height: 44px;
 
           .foody-select {
@@ -314,19 +314,24 @@ $content-width: 70% !default;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
     }
 
-    .recipe-accessories, .recipe-techniques {
+    .recipe-accessories, .recipe-techniques, .recipe-categories {
 
       @include max-width-section;
 
       ul {
-        column-count: 4;
+        //column-count: 4;
         padding: 0;
         margin: 0;
+        display: flex;
+        flex-direction: row;
+        flex-flow: row;
+        flex-wrap: wrap;
 
         li {
           font-family: $font__assistant;
           font-size: 22px;
           list-style-type: none;
+          margin-left: 1em;
 
           &:before {
             content: "·";
