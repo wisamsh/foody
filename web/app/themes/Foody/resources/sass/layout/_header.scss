@@ -466,10 +466,6 @@ header {
               .categories-accordion-widget {
                 a[data-toggle="collapse"] {
 
-                  &:not(.main-title) {
-                    font-size: 26px;
-                  }
-
                   &.main-title {
                     font-size: 24px;
                     padding-right: 0;
@@ -486,10 +482,42 @@ header {
                 .category-accordion-item {
                   &:not(.top-level) {
                     a {
-                      font-size: 20px;
-                      color: $color__primary;
+                      font-weight: normal;
                     }
                   }
+                }
+              }
+
+              #categories-widget-accordion {
+                padding-right: 45px;
+                > .card-body {
+                  > .foody-accordion, .category-accordion-item {
+                    margin-bottom: 10px;
+                  }
+
+                  > .category-accordion-item {
+                    > a {
+                      font-weight: bold;
+                    }
+                  }
+
+                  > .foody-accordion {
+                    .foody-accordion-title {
+                      a {
+                        font-weight: bold;
+                      }
+                    }
+                  }
+
+                  .card-body {
+                    padding-right: 1em;
+                    padding-bottom: 0;
+                  }
+                }
+
+                a {
+                  font-size: 22px;
+
                 }
               }
 
