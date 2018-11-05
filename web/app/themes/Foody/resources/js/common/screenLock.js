@@ -3,7 +3,7 @@
  */
 document.addEventListener('touchmove', function (event) {
     let bodyClasses = document.body.classList;
-    if (bodyClasses.indexOf('lock') != -1 || bodyClasses.indexOf('side-active') != -1) {
+    if (bodyClasses.contains('lock')|| bodyClasses.contains('side-active')) {
         event.preventDefault();
     }
 }, {passive: false});
