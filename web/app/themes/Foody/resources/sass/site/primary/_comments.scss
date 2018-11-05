@@ -10,6 +10,11 @@
   color: $color__primary;
 }
 
+
+#cancel-comment-reply-link{
+  display: none !important;
+}
+
 .comment-form {
 
   .commentform-element {
@@ -67,8 +72,13 @@
     }
   }
 
-  .form-submit {
+  #comment-error{
+    padding-right: 5px;
+  }
 
+
+  .form-submit {
+    text-align: left;
     display: none;
     margin-bottom: 10px;
 

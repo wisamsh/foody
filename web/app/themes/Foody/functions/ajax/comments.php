@@ -55,7 +55,9 @@ function foody_submit_ajax_comment()
 
     $template_args = array(
         'comment' => $comment,
-        'depth' => $comment_depth
+        'depth' => $comment_depth,
+        'max_depth'=>get_option('thread_comments_depth'),
+        'reply_text' => __('הוסף תגובה', 'Foody')
     );
 
 

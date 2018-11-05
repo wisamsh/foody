@@ -4,11 +4,7 @@
 document.addEventListener('touchmove', function (event) {
     let bodyClasses = document.body.classList;
     if (bodyClasses.contains('lock') || bodyClasses.contains('side-active')) {
-
-        let $target = $(event.target);
-        if ($target.parent('header').length == 0) {
-            event.preventDefault();
-        }
+        event.preventDefault();
     }
 }, {passive: false});
 
