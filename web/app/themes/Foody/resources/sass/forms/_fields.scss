@@ -65,7 +65,7 @@ $mdb-checkbox-size: 15px;
       //noinspection CssInvalidPropertyValue
       width: stretch;
 
-      &.show{
+      &.show {
         z-index: 1;
       }
 
@@ -262,4 +262,10 @@ label.error {
   font-weight: bold;
 }
 
+.wpcf7-response-output {
+  display: none !important;
+}
 
+.wpcf7-not-valid-tip {
+  font-weight: bold;
+}

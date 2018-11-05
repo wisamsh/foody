@@ -78,6 +78,7 @@ require('./channel');
 require('./register');
 require('./login');
 require('./search');
+require('./contact-us');
 
 
 

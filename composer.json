@@ -122,6 +122,30 @@
           "url": "https://downloads.wordpress.org/plugin/fix-image-rotation.2.1.1.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "takayuki-miyoshi/contact-form-7",
+        "version": "5.0.5",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/contact-form-7.5.0.5.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "arshid/contact-form-cfdb7",
+        "version": "1.2.4.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/contact-form-cfdb7.1.2.4.1.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -142,7 +166,9 @@
     "saurabhshukla-yapapaya/widgets-in-menu": "^1.0",
     "mixpanel/mixpanel-php" : "^2.6",
     "joe-dolson/wp-accessibility": "^1.6",
-    "gagan-deep-singh/fix-image-rotation": "^2.1"
+    "gagan-deep-singh/fix-image-rotation": "^2.1",
+    "takayuki-miyoshi/contact-form-7": "^5.0",
+    "arshid/contact-form-cfdb7": "1.2.4.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"
