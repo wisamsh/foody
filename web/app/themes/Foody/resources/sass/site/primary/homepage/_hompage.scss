@@ -226,7 +226,9 @@ $sidebar-top-offset: 60px;
     }
 
     .content {
-
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-top: 15px;
       &.container-fluid {
         padding: 10px;
         height: auto;

@@ -16,6 +16,24 @@ html {
   min-height: 100%;
 }
 
+body,html{
+  &.side-active {
+    overflow: hidden;
+    &:after {
+      opacity: .8;
+      pointer-events: initial;
+    }
+  }
+
+  &.lock {
+    overflow: hidden;
+    .logo-container-mobile {
+      //display: none !important;
+      opacity: 0;
+    }
+  }
+}
+
 /* Sections
 	 ========================================================================== */
 

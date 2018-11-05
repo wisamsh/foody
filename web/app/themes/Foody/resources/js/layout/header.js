@@ -1,3 +1,4 @@
+let toggleScreenLock = require('../common/screenLock');
 jQuery(document).ready(function ($) {
 
 
@@ -9,15 +10,14 @@ jQuery(document).ready(function ($) {
     let navbarShown = false;
 
     navbar.on('show.bs.collapse', function () {
-        $('body').addClass('lock');
+        toggleScreenLock(true);
         navbarShown = true;
     });
 
     navbar.on('hide.bs.collapse', function (e) {
         console.log(e.target);
         if (e.target && e.target.id == 'foody-navbar-collapse') {
-            $('body').removeClass('lock');
-
+            toggleScreenLock(false);
             navbarShown = false;
         }
 
@@ -32,11 +32,11 @@ jQuery(document).ready(function ($) {
     });
 
     channelsMenu.on('show.bs.collapse', function () {
-        $('body').css('overflow', 'hidden');
+        toggleScreenLock(true);
     });
 
     channelsMenu.on('hide.bs.collapse', function () {
-        $('body').css('overflow', 'visible');
+        toggleScreenLock(false);
     });
 
 
@@ -51,12 +51,12 @@ jQuery(document).ready(function ($) {
 
     $('.btn-search').click(function () {
         $searchOverlay.addClass('open');
-        $('body').addClass('lock');
+        toggleScreenLock(true);
         $('input', $searchOverlay).focus();
     });
 
     $('.close', $searchOverlay).click(() => {
-        $('body').removeClass('lock');
+        toggleScreenLock(false);
         $searchOverlay.removeClass('open');
     });
 
@@ -71,6 +71,7 @@ jQuery(document).ready(function ($) {
 
     window.showLoginModal = function () {
         $('#login-modal').modal('show');
-    }
+    };
+
 
 });

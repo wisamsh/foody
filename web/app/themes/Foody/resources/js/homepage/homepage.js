@@ -4,6 +4,7 @@
 
 let FoodySearchFilter = require('../common/foody-search-filter');
 let FoodyContentPaging = require('../common/page-content-paging');
+let toggleScreenLock = require('../common/screenLock');
 
 jQuery(document).ready(($) => {
 
@@ -53,7 +54,7 @@ jQuery(document).ready(($) => {
                     event.stopPropagation();
                 });
 
-                $('body').addClass('side-active');
+                toggleScreenLock(true,true);
                 filterShown = true;
             });
 
@@ -67,7 +68,7 @@ jQuery(document).ready(($) => {
 
         function closeMobileFilter(clear) {
             $mobileFilter.removeClass('open');
-            $('body').removeClass('side-active');
+            toggleScreenLock(false,true);
             document.removeEventListener('click', closeMobileFilter);
             filterShown = false;
             if (clear) {
