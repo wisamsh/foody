@@ -16,7 +16,7 @@ $(document).ready(() => {
             let $this = $(this);
 
             $this.click(() => {
-                if (!foodyGlobals.loggedIn) {
+                if (foodyGlobals.loggedIn == 'false') {
                     return showLoginModal();
                 }
 
@@ -58,7 +58,7 @@ $(document).ready(() => {
                             } else if (status == 'timeout') {
                                 console.log('Error: Server doesn\'t respond.');
                             } else {
-                                alert('please sign in');
+                                showLoginModal();
                             }
                             // revert animations and favorite indication
                             toggleAllFavorites(postId, !isAlreadyFavorite);
