@@ -3,6 +3,10 @@
 .page-template {
   &.team {
 
+    #content{
+      padding-top: 0;
+    }
+
     .sort {
       padding: 10px 0;
       .foody-select {
@@ -38,11 +42,15 @@
     .team-listing {
 
       .author {
-        opacity: .7;
-        transition: opacity .3s;
+        .post-count {
+          opacity: .7;
+          transition: opacity .3s;
+        }
 
         &:hover {
-          opacity: 1;
+          .post-count {
+            opacity: 1;
+          }
         }
       }
     }
@@ -53,10 +61,15 @@
 
   .page-template {
     &.team {
+      #content{
+        padding-top: 30px;
+      }
       .team-listing {
         padding-right: 0;
         .author {
-          opacity: 1;
+          .post-count {
+            opacity: 1;
+          }
         }
       }
     }
