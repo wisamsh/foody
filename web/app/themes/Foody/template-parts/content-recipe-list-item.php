@@ -21,7 +21,8 @@ $recipe = $template_args['post'];
             <?php if (!empty($label = $recipe->get_label())): ?>
 
                 <div class="recipe-label">
-<!--                    <img src="--><?php //echo $GLOBALS['images_dir']. 'label.svg' ?><!--" alt="">-->
+                    <!--                    <img src="-->
+                    <?php //echo $GLOBALS['images_dir']. 'label.svg' ?><!--" alt="">-->
                     <span>
 
                     <?php echo $label ?>
@@ -56,7 +57,9 @@ $recipe = $template_args['post'];
             </h3>
             <ul>
                 <li>
-                    <?php echo $recipe->getAuthorName() ?>
+                    <a href="<?php echo $recipe->get_author_link() ?>">
+                        <?php echo $recipe->getAuthorName() ?>
+                    </a>
                 </li>
                 <li>
                     <?php echo $recipe->getViewCount() ?>

@@ -67,7 +67,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $this->title = get_the_title($post->ID);
             $this->view_count = view_count_display(foody_get_post_views($this->id), 0);
 
-            $post_author_id = get_post_field('post_author', $this->getId());
+            $post_author_id = get_post_field('post_author', $this->id);
 
 
             $user_avatars = get_the_author_meta('wp_user_avatars', $post_author_id);
@@ -78,7 +78,15 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 $this->author_image = $user_avatars['90'];
             }
 
-            $this->author_name = foody_posted_by(false, $post_author_id);
+            $author = get_user_by('ID', $post->post_author);
+
+            if ($author) {
+                $this->author_name = get_user_by('ID', $post->post_author)->display_name;
+            } else {
+                $this->author_name = '';
+            }
+
+
             $this->body = apply_filters('the_content', $post->post_content);
             $this->link = get_permalink($this->id);
 
@@ -227,10 +235,10 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
         if ($primary && is_numeric($primary) && intval($primary) > 0) {
 
-        }else{
+        } else {
             /** @var WP_Term[] $categories */
             $categories = wp_get_post_categories($this->id);
-            if(is_array($categories) && count($categories) >0){
+            if (is_array($categories) && count($categories) > 0) {
                 $primary = $categories[0]->term_id;
             }
 
