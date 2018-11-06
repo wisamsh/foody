@@ -14,9 +14,10 @@ html {
   direction: rtl;
   height: auto;
   min-height: 100%;
+  height: 100%;
 }
 
-body,html{
+body, html {
   &.side-active {
     overflow: hidden;
     &:after {
@@ -467,14 +468,22 @@ figure {
   width: 100% !important;
 }
 
-#content.site-content{
+#content.site-content {
 
   @include site-width();
+
+  min-height: 58%;
 }
 
-@include breakpoint(tablet-l){
-  #content.site-content{
+@include breakpoint(tablet-l) {
+  #content.site-content {
     max-width: 100%;
+  }
+}
+
+@include breakpoint(mobileonly) {
+  #content {
+    min-height: calc(100% - 60px);
   }
 }
 

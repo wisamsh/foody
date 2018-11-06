@@ -1,0 +1,23 @@
+body {
+  &.error404 {
+    #content {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+
+      .error-404 {
+
+        h2 {
+          text-align: center;
+        }
+
+        .image-container {
+          text-align: center;
+          margin-bottom: 30px;
+        }
+
+      }
+    }
+  }
+}
+

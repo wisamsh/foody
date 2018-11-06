@@ -1,12 +1,12 @@
 /**
  * Created by moveosoftware on 11/5/18.
  */
-document.addEventListener('touchmove', function (event) {
-    let bodyClasses = document.body.classList;
-    if (bodyClasses.contains('lock') || bodyClasses.contains('side-active')) {
-        event.preventDefault();
-    }
-}, {passive: false});
+// document.addEventListener('touchmove', function (event) {
+//     let bodyClasses = document.body.classList;
+//     if (bodyClasses.contains('lock') || bodyClasses.contains('side-active')) {
+//         event.preventDefault();
+//     }
+// }, {passive: false});
 
 module.exports = function (lock, overlay) {
     let lockClasses = 'lock';
