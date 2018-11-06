@@ -10,14 +10,14 @@ jQuery(document).ready(function ($) {
     let navbarShown = false;
 
     navbar.on('show.bs.collapse', function () {
-        toggleScreenLock(true);
+        toggleScreenLock(true,'#foody-navbar-collapse');
         navbarShown = true;
     });
 
     navbar.on('hide.bs.collapse', function (e) {
         console.log(e.target);
         if (e.target && e.target.id == 'foody-navbar-collapse') {
-            toggleScreenLock(false);
+            toggleScreenLock(false,'#foody-navbar-collapse');
             navbarShown = false;
         }
 
@@ -51,12 +51,12 @@ jQuery(document).ready(function ($) {
 
     $('.btn-search').click(function () {
         $searchOverlay.addClass('open');
-        toggleScreenLock(true);
+        toggleScreenLock(true,$searchOverlay);
         $('input', $searchOverlay).focus();
     });
 
     $('.close', $searchOverlay).click(() => {
-        toggleScreenLock(false);
+        toggleScreenLock(false,$searchOverlay);
         $searchOverlay.removeClass('open');
     });
 

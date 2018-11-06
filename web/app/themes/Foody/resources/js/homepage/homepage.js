@@ -54,7 +54,7 @@ jQuery(document).ready(($) => {
                     event.stopPropagation();
                 });
 
-                toggleScreenLock(true,true);
+                toggleScreenLock(true,$mobileFilter,true);
                 filterShown = true;
             });
 
@@ -68,7 +68,7 @@ jQuery(document).ready(($) => {
 
         function closeMobileFilter(clear) {
             $mobileFilter.removeClass('open');
-            toggleScreenLock(false,true);
+            toggleScreenLock(false,$mobileFilter,true);
             document.removeEventListener('click', closeMobileFilter);
             filterShown = false;
             if (clear) {
