@@ -13,7 +13,7 @@ class Foody_Header
     public function the_socials_bar()
     {
 
-        Foody_Social::socials_bar();
+        foody_get_template_part(get_template_directory() . '/template-parts/header-social-bar.php');
     }
 
     public static function facebook_init()

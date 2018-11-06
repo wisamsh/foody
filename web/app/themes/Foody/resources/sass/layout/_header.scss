@@ -3,30 +3,59 @@ $social-icon-size: 21px;
 header {
 
   .socials {
-    height: 30px;
-    .essbfc-container {
-      margin-bottom: 0;
-      max-height: 100%;
-      &.essbfc-container-profiles.essbfc-template-roundcolor {
-        ul {
-          height: 100%;
-          display: inline-flex;
-          align-items: center;
-          li {
-            max-height: 100%;
-            .essbfc-network {
-              i {
-                width: $social-icon-size;
-                height: $social-icon-size;
-                line-height: $social-icon-size;
-                font-size: 0.8em;
-              }
-            }
 
+    .social-icons {
+      align-items: center;
+      display: flex;
+      height: 30px;
+      flex-direction: row-reverse;
+
+      @include site-width();
+
+      a, > span {
+        margin-right: 10px;
+      }
+
+      i {
+        span {
+          &:before {
+            font-size: 18px;
+            vertical-align: middle;
           }
         }
+
+      }
+
+      .follow-us{
+          font-size: 18px;
+          font-weight: normal;
       }
     }
+
+    //.essbfc-container {
+    //  margin-bottom: 0;
+    //  max-height: 100%;
+    //  &.essbfc-container-profiles.essbfc-template-roundcolor {
+    //    ul {
+    //      height: 100%;
+    //      display: inline-flex;
+    //      align-items: center;
+    //      li {
+    //        max-height: 100%;
+    //        .essbfc-network {
+    //          i {
+    //            width: $social-icon-size;
+    //            height: $social-icon-size;
+    //            line-height: $social-icon-size;
+    //            font-size: 0.8em;
+    //          }
+    //        }
+    //
+    //      }
+    //    }
+    //  }
+    //}
+
   }
 
   .logo-container, .logo-container-mobile {
