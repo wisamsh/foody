@@ -130,7 +130,7 @@ $sidebar-top-offset: 60px;
 
                 input {
                   &.search {
-                    width: calc(100% - #{$input-side-offset});
+                    width: 100%;
                     height: $input-height;
                     margin-bottom: $input-margin;
                     text-align: right;

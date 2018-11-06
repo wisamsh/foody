@@ -127,6 +127,7 @@ $recipe = $template_args['recipe'];
 
 
 
+
 </script>
 
 <section class="recipe-overview">
@@ -167,17 +168,13 @@ $recipe = $template_args['recipe'];
 
 </section>
 
-<section class="recipe-notes box">
-    <?php $recipe->the_notes() ?>
+
+<?php $recipe->the_notes() ?>
+
+
+<section class="recipe-rating box">
+    <?php $recipe->the_rating() ?>
 </section>
-
-<?php if ($recipe->has_notes()): ?>
-
-    <section class="recipe-rating box">
-        <?php $recipe->the_rating() ?>
-    </section>
-
-<?php endif; ?>
 
 
 <?php if ($recipe->has_nutrients()): ?>

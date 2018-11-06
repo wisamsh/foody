@@ -598,7 +598,7 @@ class Foody_Recipe extends Foody_Post
 
     public function has_notes()
     {
-        return have_rows('notes', $this->post->ID);
+        return have_rows('notes', $this->post->ID) && count(get_field('notes', $this->id)) > 0;
     }
 
     public function has_nutrients()
