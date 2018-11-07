@@ -8,7 +8,7 @@ const enableBodyScroll = bodyScrollLock.enableBodyScroll;
 
 
 module.exports = function (lock,target, overlay) {
-    let lockClasses = 'lock';
+    let lockClasses = '';
     if (overlay) {
         lockClasses = `${lockClasses} side-active`;
     }

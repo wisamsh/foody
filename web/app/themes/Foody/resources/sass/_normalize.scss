@@ -19,7 +19,7 @@ html {
 
 body {
   &.side-active {
-    overflow: hidden;
+    //overflow: hidden;
     &:after {
       opacity: .8;
       pointer-events: initial;
@@ -27,7 +27,7 @@ body {
   }
 
   &.lock {
-    overflow: hidden;
+    //overflow: hidden;
     .logo-container-mobile {
       //display: none !important;
       opacity: 0;
