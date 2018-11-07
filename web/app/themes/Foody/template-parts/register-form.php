@@ -12,7 +12,7 @@
 <p>הירשמו כדי להנות מתוכן מותאם אישית ולהשתתף בדיונים פורים.</p>
 <p>משתמש רשום?&nbsp;
     <span style="color: #ed3d48;">
-        <a style="color: #ed3d48;" href="http://foody.co.il/%d7%94%d7%a8%d7%a9%d7%9e%d7%94/">התחבר</a>
+        <a style="color: #ed3d48;" href="<?php echo get_permalink(get_page_by_path('התחברות'))?>">התחבר</a>
     </span>
 </p>
 <p>&nbsp;</p>
