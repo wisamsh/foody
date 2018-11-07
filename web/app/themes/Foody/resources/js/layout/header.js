@@ -9,9 +9,12 @@ jQuery(document).ready(function ($) {
 
     let navbarShown = false;
 
-    navbar.on('show.bs.collapse', function () {
-        toggleScreenLock(true,'#foody-navbar-collapse');
-        navbarShown = true;
+    navbar.on('show.bs.collapse', function (e) {
+        if (e.target && e.target.id == 'foody-navbar-collapse') {
+            toggleScreenLock(true,'#foody-navbar-collapse');
+            navbarShown = true;
+        }
+
     });
 
     navbar.on('hide.bs.collapse', function (e) {
