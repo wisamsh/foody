@@ -425,6 +425,7 @@ header {
           #menu-navbar {
             margin: 0;
             padding: 0;
+            height: 100%;
 
             .close-menu {
               width: 100%;
@@ -521,7 +522,7 @@ header {
                 padding-right: 45px;
                 > .card-body {
                   > .foody-accordion, .category-accordion-item {
-                    margin-bottom: 10px;
+                    //margin-bottom: 10px;
                   }
 
                   > .category-accordion-item {

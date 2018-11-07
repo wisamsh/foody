@@ -10,6 +10,8 @@ const classes = {
     pinned: 'header-pin',
     unpinned: 'header-unpin',
 };
+
+
 function onScroll() {
     currentScrollY = window.pageYOffset;
     if (currentScrollY < lastKnownScrollY) {

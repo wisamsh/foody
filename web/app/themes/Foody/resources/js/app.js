@@ -7,7 +7,7 @@ window.env = require('dotenv').config();
 
 let IScroll = require('iscroll');
 // let $ = require('jquery');
-require('jquery-drawer');
+// require('jquery-drawer');
 require('jquery-validation');
 require('block-ui');
 require('autocomplete.js/src/jquery/plugin.js');

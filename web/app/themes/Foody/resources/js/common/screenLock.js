@@ -5,7 +5,9 @@
 const bodyScrollLock = require('body-scroll-lock');
 const disableBodyScroll = bodyScrollLock.disableBodyScroll;
 const enableBodyScroll = bodyScrollLock.enableBodyScroll;
-
+const options = {
+    reserveScrollBarGap: true
+};
 
 module.exports = function (lock,target, overlay) {
     let lockClasses = '';
@@ -17,9 +19,9 @@ module.exports = function (lock,target, overlay) {
 
     if (lock) {
         jQuery('html,body').addClass(lockClasses);
-        disableBodyScroll(targetElement);
+        disableBodyScroll(targetElement,options);
     } else {
         jQuery('html,body').removeClass(lockClasses);
-        enableBodyScroll(targetElement);
+        enableBodyScroll(targetElement,options);
     }
 };

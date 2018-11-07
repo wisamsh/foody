@@ -34,13 +34,13 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    channelsMenu.on('show.bs.collapse', function () {
-        toggleScreenLock(true);
-    });
-
-    channelsMenu.on('hide.bs.collapse', function () {
-        toggleScreenLock(false);
-    });
+    // channelsMenu.on('show.bs.collapse', function () {
+    //     toggleScreenLock(true);
+    // });
+    //
+    // channelsMenu.on('hide.bs.collapse', function () {
+    //     toggleScreenLock(false);
+    // });
 
 
     let autocomplete = require('../common/autocomplete');
@@ -52,14 +52,14 @@ jQuery(document).ready(function ($) {
     autocomplete('.search-overlay .search-autocomplete', {});
 
 
-    $('.btn-search').click(function () {
+    $('.btn-search').on('click',function () {
         $searchOverlay.addClass('open');
-        toggleScreenLock(true,$searchOverlay);
+        // toggleScreenLock(true,$searchOverlay);
         $('input', $searchOverlay).focus();
     });
 
-    $('.close', $searchOverlay).click(() => {
-        toggleScreenLock(false,$searchOverlay);
+    $('.close', $searchOverlay).on('click',() => {
+        // toggleScreenLock(false,$searchOverlay);
         $searchOverlay.removeClass('open');
     });
 
