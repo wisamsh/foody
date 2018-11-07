@@ -44,6 +44,7 @@
     "bootstrap-rating-input": "^0.4.0",
     "bootstrap-select": "^1.13.1",
     "bootstrap-star-rating": "github:kartik-v/bootstrap-star-rating#sass",
+    "clean-webpack-plugin": "^0.1.19",
     "css-element-queries": "^1.0.2",
     "exif-js": "^2.3.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",

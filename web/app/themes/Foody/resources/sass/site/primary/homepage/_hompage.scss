@@ -156,6 +156,7 @@ $sidebar-top-offset: 60px;
           }
 
           .sidebar-content {
+            min-height: calc(100% - #{$sidebar-top-offset});
             left: 0;
             right: 0;
             bottom: 0;

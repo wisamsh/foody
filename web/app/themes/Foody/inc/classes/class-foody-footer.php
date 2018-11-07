@@ -48,6 +48,13 @@ class Foody_Footer
             $footer_links = array_chunk($footer_links, $chunk_size);
         }
 
+
+        ?>
+
+            <section class="row">
+
+        <?php
+
         if (!wp_is_mobile()) {
             $this->display_pages_menu($footer_pages);
         }
@@ -57,16 +64,24 @@ class Foody_Footer
             array_pop($footer_links);
         }
 
+
+
         foreach ($footer_links as $link_group) {
 
-            $this->display_menu($link_group);
+
+            $this->display_menu($link_group,'col');
         }
+
+        ?>
+            </section>
+        <?php
+
     }
 
 
-    private function display_menu($menu_items)
+    private function display_menu($menu_items,$classes = '')
     {
-        echo '<ul class="menu">';
+        echo '<ul class="menu '. $classes . '">';
 
         $this->display_menu_items($menu_items);
 
@@ -77,7 +92,7 @@ class Foody_Footer
     {
 
         ?>
-        <ul class="menu row justify-content-between menu-pages">
+        <ul class="menu col-4 row justify-content-between menu-pages">
             <h4>
                 <?php echo __('אל תפספסו את המתכונים החמים!', 'foody'); ?>
             </h4>

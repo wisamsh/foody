@@ -15,23 +15,3 @@ add_action('pre_get_comments', function (\WP_Comment_Query $query) {
         );
     }
 });
-
-
-/*
-*   Restrict non logged users to certain pages
-*/
-
-add_action('template_redirect', 'foody_non_logged_redirect');
-function foody_non_logged_redirect()
-{
-    $restricted_pages = array(
-        'פרופיל-אישי'
-    );
-
-    $slug = urldecode(get_post_field('post_name', get_post()));
-
-    if (in_array($slug, $restricted_pages) && !is_user_logged_in()) {
-        wp_redirect(home_url());
-        die();
-    }
-}
