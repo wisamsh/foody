@@ -5,19 +5,19 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HashPlugin = require('hash-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-// the path(s) that should be cleaned
-let pathsToClean = [
-    'dist'
-];
-
-// the clean options to use
-let cleanOptions = {
-    root:     path.resolve(__dirname, ''),
-    verbose:  true,
-    dry:      false
-};
+// const CleanWebpackPlugin = require('clean-webpack-plugin');
+//
+// // the path(s) that should be cleaned
+// let pathsToClean = [
+//     'dist'
+// ];
+//
+// // the clean options to use
+// let cleanOptions = {
+//     root:     path.resolve(__dirname, ''),
+//     verbose:  true,
+//     dry:      false
+// };
 
 module.exports = env => {
 
@@ -60,7 +60,7 @@ module.exports = env => {
                 allChunks: true
             }),
             new HashPlugin({ path: './build', fileName: 'version-hash.txt' }),
-            new CleanWebpackPlugin(pathsToClean, cleanOptions)
+            // new CleanWebpackPlugin(pathsToClean, cleanOptions)
         ],
         entry: {
             // common : "./resources/pages/common/index",
