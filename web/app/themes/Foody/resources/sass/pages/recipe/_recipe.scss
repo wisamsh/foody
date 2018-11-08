@@ -990,19 +990,10 @@ $content-width: 95%;
               justify-content: space-between;
               margin-top: 20px;
               .how-i-did {
-
-                &:nth-child(odd) {
-                  padding-left: 10px;
-                  padding-right: 0;
-                }
-                &:nth-child(even) {
-                  padding-right: 10px;
-                  padding-left: 0;
-                }
                 .image-container {
 
                   img {
-                    max-height: 6em;
+                    height: 10em;
                   }
                 }
 

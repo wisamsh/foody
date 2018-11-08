@@ -79,7 +79,7 @@ $foody_how_i_did = new Foody_HowIDid();
                     set_query_var('hid_page', $page);
                 }
 
-                if ($page > 0) {
+                if ($page > 1) {
 
                     foody_get_template_part(
                         get_template_directory() . '/template-parts/common/show-more-simple.php',
