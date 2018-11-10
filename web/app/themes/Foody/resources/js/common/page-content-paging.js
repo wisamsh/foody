@@ -132,7 +132,7 @@ module.exports = (function () {
             if (window.location.pathname == '/' || this.pathRegex.test(window.location.pathname)) {
                 newurl = window.location.protocol + "//" + window.location.host + '/' + this.pageQuery + '/' + currentPage;
 
-                
+
             }
             window.history.pushState({path: newurl}, '', newurl);
         }

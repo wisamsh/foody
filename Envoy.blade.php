@@ -44,6 +44,7 @@ cd {{ $theme_dir }}
 npm run production
 tar -czf assets-{{ $release }}.tar.gz dist
 scp assets-{{  $release }}.tar.gz {{ $servers[$target] }}:~
+scp ./build/version-hash.txt {{ $servers[$target] }}:~
 rm -rf assets-{{  $release }}.tar.gz
 @endtask
 
@@ -67,6 +68,8 @@ echo 'Installing compiled assets...'
 cd ~
 tar -xzf assets-{{ $release }}.tar.gz -C {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}
 sudo rm -rf assets-{{ $release }}.tar.gz
+
+mv version-hash.txt {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}/build/
 
 cd {{ $release_dir }}/{{ $release }};
 
