@@ -38,6 +38,20 @@ if (foodyGlobals.isMobile) {
 
     window.onload = function () {
         eleHeader = document.getElementById(idOfHeader);
-        document.addEventListener('scroll', onScroll, false);
+        enableScroller();
     };
 }
+
+function disableScroller() {
+    document.removeEventListener('scroll', onScroll);
+    pin();
+}
+
+function enableScroller() {
+    document.addEventListener('scroll', onScroll);
+}
+
+module.exports = {
+    disableScroller,
+    enableScroller
+};

@@ -299,7 +299,7 @@ header {
 
       .navbar-collapse {
         flex-direction: row-reverse;
-
+        height: auto;
         ul {
           li {
             i {
@@ -387,6 +387,10 @@ header {
     nav {
       &.navbar {
 
+        .navbar-collapse{
+          height: auto;
+        }
+
         height: 60px;
         .foody-navbar-container {
           padding-right: 0;
@@ -420,11 +424,18 @@ header {
         #foody-navbar-collapse {
           top: 0;
           padding: 0;
+
+          max-height: 100vh;
+          @supports (-webkit-overflow-scrolling: touch) {
+            max-height: calc(100vh - 72px);
+          }
+
           overflow-y: scroll;
 
           #menu-navbar {
             margin: 0;
             padding: 0;
+            //height: 100%;
 
             .close-menu {
               width: 100%;

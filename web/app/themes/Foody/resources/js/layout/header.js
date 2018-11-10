@@ -1,4 +1,5 @@
 let toggleScreenLock = require('../common/screenLock');
+let headerScroll = require('./mobile-header-scroll');
 jQuery(document).ready(function ($) {
 
 
@@ -10,7 +11,10 @@ jQuery(document).ready(function ($) {
     let navbarShown = false;
 
     navbar.on('show.bs.collapse', function (e) {
+
+
         if (e.target && e.target.id == 'foody-navbar-collapse') {
+            // headerScroll.disableScroller();
             toggleScreenLock(true,'#foody-navbar-collapse');
             navbarShown = true;
         }
@@ -20,6 +24,7 @@ jQuery(document).ready(function ($) {
     navbar.on('hide.bs.collapse', function (e) {
         console.log(e.target);
         if (e.target && e.target.id == 'foody-navbar-collapse') {
+            // headerScroll.enableScroller();
             toggleScreenLock(false,'#foody-navbar-collapse');
             navbarShown = false;
         }
