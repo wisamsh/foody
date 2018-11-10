@@ -112,11 +112,16 @@ class Foody_Playlist extends Foody_Post
 
     public function getTitle()
     {
-        $title = parent::getTitle();
-        $current_recipe = $this->get_current_recipe();
-        if (!is_null($current_recipe)) {
-            $title = $current_recipe->getTitle();
+        if (is_single('foody_playlist')){
+            $title = parent::getTitle();
+            $current_recipe = $this->get_current_recipe();
+            if (!is_null($current_recipe)) {
+                $title = $current_recipe->getTitle();
+            }
+        }else{
+            $title = parent::getTitle();
         }
+
         return $title;
     }
 

@@ -29,26 +29,26 @@ function foody_ajax_autocomplete()
         foreach ($results->posts as $result) {
             $items[] = [
                 'name' => $result->post_title,
-                'link' => get_search_link($result->post_title)
+                'link' => add_query_arg('s',$result->post_title,home_url())// get_search_link($result->post_title)
             ];
         }
     }
 
-    $terms = get_terms('category', array(
-        'name__like' => $search,
-        'number' => 5,
-        'hide_empty' => false // Optional
-    ));
-
-    if (!is_wp_error($terms)) {
-        /** @var WP_Term $term */
-        foreach ($terms as $term) {
-            $items[] = [
-                'name' => $term->name,
-                'link' => get_search_link($term->name)
-            ];
-        }
-    }
+//    $terms = get_terms('category', array(
+//        'name__like' => $search,
+//        'number' => 5,
+//        'hide_empty' => false // Optional
+//    ));
+//
+//    if (!is_wp_error($terms)) {
+//        /** @var WP_Term $term */
+//        foreach ($terms as $term) {
+//            $items[] = [
+//                'name' => $term->name,
+//                'link' => get_search_link($term->name)
+//            ];
+//        }
+//    }
     wp_send_json_success($items);
 }
 

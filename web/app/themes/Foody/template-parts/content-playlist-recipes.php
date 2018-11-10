@@ -46,7 +46,7 @@ $hide_title = isset($template_args['hide_title']) && $template_args['hide_title'
         <li class="playlist-recipe-item row gutter-0 <?php echo $item_class ?>"
             data-video="<?php echo $recipe->video['id'] ?>">
             <div class="image-container col-7 col-sm-6">
-                <a href="<?php echo $playlist->get_playlist_recipe_link($recipe) ?>">
+                <a href="<?php echo $recipe->link ?>">
 
 
                     <figure class="tint">

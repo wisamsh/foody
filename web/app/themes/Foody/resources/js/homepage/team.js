@@ -34,7 +34,7 @@ function showSlider() {
                 breakpoint: 769,
                 settings: {
                     slidesToShow: 4,
-                    slidesToScroll: 4,
+                    slidesToScroll: 7,
                     variableWidth: false,
                     rtl: true,
                 }
@@ -42,8 +42,8 @@ function showSlider() {
             {
                 breakpoint: 414,
                 settings: {
-                    slidesToShow: 10,
-                    slidesToScroll: 10,
+                    slidesToShow: 6,
+                    slidesToScroll: 5,
                     variableWidth: false,
                     rtl: true
                 }

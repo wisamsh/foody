@@ -109,7 +109,7 @@ module.exports = (function () {
             data: {
                 context: this.settings.context,
                 page: page,
-                filter: this.filter.prepareFilterForQuery(),
+                filter: this.filter.prepareFilterForQuery(this._getQuery('s')),
                 context_args: this.settings.contextArgs,
                 cols: this.filter.cols,
                 ranged: ranged
@@ -131,6 +131,8 @@ module.exports = (function () {
             let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + this.pageQuery + '=' + currentPage;
             if (window.location.pathname == '/' || this.pathRegex.test(window.location.pathname)) {
                 newurl = window.location.protocol + "//" + window.location.host + '/' + this.pageQuery + '/' + currentPage;
+
+                
             }
             window.history.pushState({path: newurl}, '', newurl);
         }
@@ -138,8 +140,7 @@ module.exports = (function () {
 
     PageContentPaging.prototype.getPageFromSearch = function () {
 
-        let urlParams = new URLSearchParams(window.location.search);
-        let currentPage = urlParams.get(this.pageQuery);
+        let currentPage = this._getQuery(this.pageQuery);
         if (!currentPage) {
             let path = window.location.pathname;
             if (path == '/' || this.pathRegex.test(path)) {
@@ -162,6 +163,11 @@ module.exports = (function () {
         }
 
         return currentPage;
+    };
+
+    PageContentPaging.prototype._getQuery = function (key) {
+        let urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(key);
     };
 
     PageContentPaging.prototype.log = function (logStr) {

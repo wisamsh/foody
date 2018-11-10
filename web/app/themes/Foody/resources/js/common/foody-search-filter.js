@@ -113,7 +113,7 @@ module.exports = (function () {
         };
     };
 
-    FoodySearchFilter.prototype.prepareFilterForQuery = function () {
+    FoodySearchFilter.prototype.prepareFilterForQuery = function (search) {
 
         /*
          * {
@@ -128,9 +128,12 @@ module.exports = (function () {
          * }
          * */
 
+
+        search = search || '';
+
         let args = {
             // TODO get from input if needed
-            search: '',
+            search: search,
             types: [],
             context: []
         };
@@ -150,7 +153,6 @@ module.exports = (function () {
             args.context = this.initialContext;
         }
 
-        console.log(args);
 
         return args;
 

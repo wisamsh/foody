@@ -74,9 +74,15 @@ class Foody_Query
 
     public function search()
     {
+        $search_term = get_search_query();
+        if (empty($search_term)) {
+            if (isset($POST['filter']['search'])) {
+                $search_term = $POST['filter']['search'];
+            }
+        }
         $args = self::get_args([
             'post_type' => ['foody_recipe', 'foody_playlist'],
-            's' => get_search_query()
+            's' => $search_term
         ]);
 
 
