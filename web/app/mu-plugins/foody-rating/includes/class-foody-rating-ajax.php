@@ -28,6 +28,7 @@ class Foody_Rating_Ajax
     private function register_ajax()
     {
         add_action('wp_ajax_foody_rating', array($this, 'ajax_add_rating'));
+        add_action('wp_ajax_foody_get_rating', array($this, 'ajax_get_rating'));
     }
 
     public function ajax_add_rating()
@@ -74,6 +75,22 @@ class Foody_Rating_Ajax
             wp_send_json_error(['message' => $error], $code);
         } else {
             wp_send_json_success();
+        }
+    }
+
+    public function ajax_get_rating(){
+
+
+        if(isset($_POST['post_id'])){
+            $post_id = $_POST['post_id'];
+
+            $rating = get_post_rating($post_id);
+
+
+            wp_send_json_success(['rating'=>$rating]);
+
+        }else{
+            wp_send_json_error(['message'=>'post id is required'],400);
         }
     }
 

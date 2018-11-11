@@ -4,6 +4,7 @@
 
 
 window.scroller();
+updateRating();
 
 $('.foody-rating').on('rating:change', function (event, value, caption) {
     rating(value);
@@ -34,6 +35,31 @@ function rating(value) {
             console.log(err);
         } else {
             console.log('frs');
+            updateRating();
+        }
+    });
+
+}
+
+
+function updateRating() {
+
+    let settings = {
+        action: 'foody_get_rating',
+        data: {
+            post_id: foodyGlobals.post.ID
+        }
+    };
+
+    foodyAjax(settings, (err, response) => {
+
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('frs',response);
+
+            $('.recipe-details .rating-input').rating('update', response.data.rating);
+
         }
     });
 
