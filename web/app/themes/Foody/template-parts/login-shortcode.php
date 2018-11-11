@@ -7,7 +7,7 @@
  */
 $login_status = '';
 $email = isset($_GET['l']) ? $_GET['l'] : '';
-if(isset($_GET['login'])){
+if (isset($_GET['login'])) {
     $login_status = $_GET['login'];
 }
 
@@ -22,13 +22,13 @@ if(isset($_GET['login'])){
     משתמש חדש?
 </span>
 
-    <a href="<?php echo get_permalink(get_page_by_path('הרשמה'))?>">הירשם</a>
+    <a href="<?php echo get_permalink(get_page_by_path('הרשמה')) ?>">הירשם</a>
 
 </p>
 <?php
 echo do_shortcode('[wordpress_social_login]');
 ?>
-<section class="login <?php echo $login_status?>">
+<section class="login <?php echo $login_status ?>">
 
     <div class="container-fluid">
 
@@ -65,7 +65,7 @@ echo do_shortcode('[wordpress_social_login]');
 
             <form id="login-form" action="<?php echo wp_login_url(home_url()); ?>" class="row" method="post">
                 <div role="alert" class="alert foody-alert alert-dismissible alert-danger login-failed-alert">
-                    <span><?php echo __('התחברות נכשלה. אנא ודא/י את כתובת המייל והסיסמא','foody');?></span>
+                    <span><?php echo __('התחברות נכשלה. אנא ודא/י את כתובת המייל והסיסמא', 'foody'); ?></span>
                     <a class="close" data-dismiss="alert">
                         ×
                     </a>
@@ -74,7 +74,7 @@ echo do_shortcode('[wordpress_social_login]');
                     <label for="email">
                         <?php echo __('כתובת מייל', 'foody') ?>
                     </label>
-                    <input type="text" id="email" name="log" value="<?php echo $email?>">
+                    <input type="text" id="email" name="log" value="<?php echo $email ?>">
                 </div>
                 <div class="form-group col-12 required-input">
                     <label for="password">
@@ -102,6 +102,15 @@ echo do_shortcode('[wordpress_social_login]');
                         <?php echo __('המשך') ?>
                     </button>
                 </div>
+
+                <?php
+                $redirect_to = get_permalink();
+                if (strpos($redirect_to, 'התחברות') !== false) {
+                    $redirect_to = home_url();
+                }
+                ?>
+
+                <input type="hidden" name="redirect_to" value="<?php echo $redirect_to; ?>">
 
             </form>
 

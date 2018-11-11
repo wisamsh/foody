@@ -267,7 +267,7 @@ class Foody_Registration
             if (!user_can($user,'subscriber')) {
                 return admin_url();
             } else {
-                return home_url();
+                return $redirect_to;
             }
         } else {
             return $redirect_to;
