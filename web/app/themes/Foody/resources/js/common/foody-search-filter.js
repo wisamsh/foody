@@ -147,6 +147,7 @@ module.exports = (function () {
         }
 
 
+        //noinspection JSPotentiallyInvalidUsageOfThis
         for (let key in this.searchFilter) {
             if (this.searchFilter.hasOwnProperty(key)) {
                 args.types.push(this.searchFilter[key]);
