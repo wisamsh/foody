@@ -539,14 +539,14 @@ header {
 
                   > .category-accordion-item {
                     > a {
-                      font-weight: bold;
+                      //font-weight: bold;
                     }
                   }
 
                   > .foody-accordion {
                     .foody-accordion-title {
                       a {
-                        font-weight: bold;
+                        //font-weight: bold;
                       }
                     }
                   }
@@ -560,7 +560,11 @@ header {
 
                 a {
                   font-size: 22px;
+                  font-family: $font__main;
 
+                  &[data-toggle="collapse"]{
+                    font-weight: normal;
+                  }
                 }
               }
 

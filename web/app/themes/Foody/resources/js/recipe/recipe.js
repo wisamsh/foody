@@ -123,6 +123,12 @@ if(foodyGlobals.post && foodyGlobals.post .type == 'foody_recipe' ){
 
     }
 
+
+    $('.must-log-in a').on('click',function (e) {
+        e.preventDefault();
+        showLoginModal();
+    });
+
 }
 
 
