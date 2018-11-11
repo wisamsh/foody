@@ -4,8 +4,19 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "40715366094be5406140f3238d8be8b9",
+    "content-hash": "e9ce7a678508f8f96dc461b471a5328a",
     "packages": [
+        {
+            "name": "anders-thorborgd/acf-image-crop-add-on",
+            "version": "1.4.12",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/acf-image-crop-add-on.1.4.12.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
         {
             "name": "andrewozz/tinymce-advanced",
             "version": "4.7.11",

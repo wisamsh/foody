@@ -146,6 +146,18 @@
           "url": "https://downloads.wordpress.org/plugin/contact-form-cfdb7.1.2.4.1.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "anders-thorborgd/acf-image-crop-add-on",
+        "version": "1.4.12",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/acf-image-crop-add-on.1.4.12.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -168,7 +180,8 @@
     "joe-dolson/wp-accessibility": "^1.6",
     "gagan-deep-singh/fix-image-rotation": "^2.1",
     "takayuki-miyoshi/contact-form-7": "^5.0",
-    "arshid/contact-form-cfdb7": "1.2.4.1"
+    "arshid/contact-form-cfdb7": "1.2.4.1",
+    "anders-thorborgd/acf-image-crop-add-on": "^1.4"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

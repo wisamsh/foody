@@ -9,14 +9,16 @@
 /** @var Foody_Recipe $recipe */
 /** @noinspection PhpUndefinedVariableInspection */
 $recipe = $template_args['post'];
+$args = foody_get_array_default($template_args,'args',[]);
 
+$image_size = isset($args['image_size']) ? $args['image_size'] : 'list-item';
 ?>
 
 
 <div class="recipe-item feed-item">
     <a href="<?php echo $recipe->link ?>">
         <div class="image-container main-image-container">
-            <img class="recipe-item-image feed-item-image" src="<?php echo $recipe->getImage('list-item') ?>" alt="">
+            <img class="recipe-item-image feed-item-image" src="<?php echo $recipe->getImage($image_size) ?>" alt="">
 
             <?php if (!empty($label = $recipe->get_label())): ?>
 

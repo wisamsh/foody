@@ -40,7 +40,7 @@ class Foody_HomePage
 
 
         foreach ($posts as $post) {
-            $this->grid->draw($post, 2);
+            $this->grid->draw($post, 2,12,true,'recipe',null,['image_size'=>'']);
         }
     }
 
@@ -82,8 +82,8 @@ class Foody_HomePage
 
         $posts = array_map('Foody_Post::create', $posts);
 
-        if(wp_is_mobile()){
-            $posts = array_merge($this->get_featured_posts(),$posts);
+        if (wp_is_mobile()) {
+            $posts = array_merge($this->get_featured_posts(), $posts);
         }
 
         // debug
@@ -163,10 +163,27 @@ class Foody_HomePage
 
     private function get_featured_posts()
     {
+        return $this->get_featured_posts_2();
         $posts = array_map(function ($post) {
             return new Foody_Recipe($post);
         }, posts_to_array('featured_content'));
 
         return $posts;
+    }
+
+    private function get_featured_posts_2()
+    {
+
+        $featured = get_field('featured_content_2');
+
+        return array_map(function ($row) {
+
+            $foody_post = Foody_Post::create($row['post']);
+
+            $foody_post->setImage($row['image']['url']);
+
+            return $foody_post;
+        }, $featured);
+
     }
 }

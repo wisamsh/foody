@@ -39,10 +39,12 @@ class FoodyGrid
      * @param $col_num
      * @param int $col_num_mobile
      * @param bool $echo
+     * @param string $type
+     * @param null $responsive
      * @return string the item html
      * @throws Error if 12 is not divided by col_num
      */
-    public function draw($post, $col_num, $col_num_mobile = 12, $echo = true, $type = 'recipe', $responsive = null)
+    public function draw($post, $col_num, $col_num_mobile = 12, $echo = true, $type = 'recipe', $responsive = null, $args = [])
     {
         if (!in_array($type, $this->supported_types)) {
             return '';
@@ -82,6 +84,7 @@ class FoodyGrid
             get_template_directory() . '/template-parts/content-' . $type . '-list-item.php',
             [
                 'post' => $post,
+                'args' => $args,
                 'return' => true
             ]
         );
@@ -110,7 +113,7 @@ class FoodyGrid
      * @param string $type
      * @return string
      */
-    public function loop($posts, $cols, $echo = true, $type = null, $data_attrs = [], $responsive = null)
+    public function loop($posts, $cols, $echo = true, $type = null, $data_attrs = [], $responsive = null,$args = [])
     {
         $items = '';
         $this->is_in_loop = true;
@@ -127,7 +130,7 @@ class FoodyGrid
                 }
             }
 
-            $items .= $this->draw($post, $cols, 12, $echo, $type, $responsive);
+            $items .= $this->draw($post, $cols, 12, $echo, $type, $responsive,$args);
             $this->current_item++;
             if ($reset_type) {
                 $reset_type = false;
