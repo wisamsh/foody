@@ -29,7 +29,7 @@ function foody_ajax_autocomplete()
         foreach ($results->posts as $result) {
             $items[] = [
                 'name' => $result->post_title,
-                'link' => add_query_arg('s',$result->post_title,home_url())// get_search_link($result->post_title)
+                'link' => Foody_Query::get_search_url($result->post_title) //add_query_arg('s',$result->post_title,home_url())// get_search_link($result->post_title)
             ];
         }
     }

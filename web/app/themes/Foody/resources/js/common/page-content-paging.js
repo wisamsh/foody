@@ -130,9 +130,10 @@ module.exports = (function () {
             console.log(this.pageQuery, currentPage);
             let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + this.pageQuery + '=' + currentPage;
             if (window.location.pathname == '/' || this.pathRegex.test(window.location.pathname)) {
+
                 newurl = window.location.protocol + "//" + window.location.host + '/' + this.pageQuery + '/' + currentPage;
-
-
+                let urlParams = new URLSearchParams(window.location.search);
+                newurl = `${newurl}?${urlParams.toString()}`;
             }
             window.history.pushState({path: newurl}, '', newurl);
         }

@@ -76,8 +76,8 @@ class Foody_Query
     {
         $search_term = get_search_query();
         if (empty($search_term)) {
-            if (isset($POST['filter']['search'])) {
-                $search_term = $POST['filter']['search'];
+            if (isset($_POST['filter']['search'])) {
+                $search_term = $_POST['filter']['search'];
             }
         }
         $args = self::get_args([
@@ -179,6 +179,21 @@ class Foody_Query
             return $urlParts[$position + 1];
 
         return $default;
+    }
+
+    public static function get_search_url($search_term)
+    {
+        $post_types = ['foody_playlist', 'foody_recipe'];
+
+        $base = home_url();
+
+        $base = add_query_arg('s', $search_term, $base);
+
+        foreach ($post_types as $post_type) {
+            $base = add_query_arg('post_type', $post_type, $base);
+        }
+
+        return $base;
     }
 
 }
