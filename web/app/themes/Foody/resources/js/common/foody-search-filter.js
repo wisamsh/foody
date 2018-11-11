@@ -138,8 +138,12 @@ module.exports = (function () {
             context: []
         };
 
-        if (this.grid) {
-            args.context = this.grid.getItems();
+        if (this.initialContext) {
+            args.context = this.initialContext;
+        } else {
+            if (this.grid) {
+                args.context = this.grid.getItems();
+            }
         }
 
 
