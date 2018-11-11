@@ -81,25 +81,25 @@ $(document).ready(() => {
         if (input.files && input.files[0]) {
             let reader = new FileReader();
 
-            // reader.onload = function (e) {
-            //     $(img).attr('src', e.target.result);
-            // };
-
-            reader.onloadend = function (e) {
-
-                // Update an image tag with loaded image source
+            reader.onload = function (e) {
                 $(img).attr('src', e.target.result);
-                // Use EXIF library to handle the loaded image exif orientation
-                EXIF.getData(input.files[0], function () {
-
-                    // // Fetch image tag
-                    // let img = $(img).get(0);
-                    // Fetch canvas
-                    let canvas = document.createElement('canvas');
-                    // run orientation on img in canvas
-                    orientation(img[0], canvas);
-                });
             };
+
+            // reader.onloadend = function (e) {
+            //
+            //     // Update an image tag with loaded image source
+            //     $(img).attr('src', e.target.result);
+            //     // Use EXIF library to handle the loaded image exif orientation
+            //     EXIF.getData(input.files[0], function () {
+            //
+            //         // // Fetch image tag
+            //         // let img = $(img).get(0);
+            //         // Fetch canvas
+            //         let canvas = document.createElement('canvas');
+            //         // run orientation on img in canvas
+            //         orientation(img[0], canvas);
+            //     });
+            // };
 
             reader.readAsDataURL(input.files[0]);
         }
