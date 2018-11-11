@@ -342,18 +342,20 @@ class Foody_Recipe extends Foody_Post
 
                 $video_url = get_sub_field('url');
 
-                if ($video_url) {
+                if (!empty($video_url)) {
                     $parts = explode('v=', $video_url);
-                    $query = explode('&', $parts[1]);
-                    $video_id = $query[0];
+                    if(!empty($parts) && count($parts) > 1){
+                        $query = explode('&', $parts[1]);
+                        $video_id = $query[0];
 
 
-                    $this->video = array(
-                        'id' => $video_id,
-                        'url' => $video_url,
-                        'duration' => get_sub_field('duration')
-                    );
-                    $this->has_video = true;
+                        $this->video = array(
+                            'id' => $video_id,
+                            'url' => $video_url,
+                            'duration' => get_sub_field('duration')
+                        );
+                        $this->has_video = true;
+                    }
                 }
 
             endwhile;

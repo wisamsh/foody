@@ -61,6 +61,11 @@ class Foody_Profile
         global $wp_session;
 
         if (isset($wp_session['favorites']) && !empty($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
+
+            $favorite_posts = array_filter($favorite_posts,function ($post){
+               return $post instanceof WP_Post;
+            });
+
             $posts = [];
             foreach ($favorite_posts as $favorite_post) {
                 $posts[] = Foody_PostFactory::get_post(get_post($favorite_post));
