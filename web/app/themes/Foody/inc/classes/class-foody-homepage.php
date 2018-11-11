@@ -82,6 +82,10 @@ class Foody_HomePage
 
         $posts = array_map('Foody_Post::create', $posts);
 
+        if(wp_is_mobile()){
+            $posts = array_merge($this->get_featured_posts(),$posts);
+        }
+
         // debug
 //        for ($i=0;$i<100;$i++){
 //            $posts[]= $posts[0];
