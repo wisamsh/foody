@@ -7,7 +7,13 @@ window.scroller();
 updateRating();
 
 $('.foody-rating').on('rating:change', function (event, value, caption) {
-    rating(value);
+    if(foodyGlobals.loggedIn == 'false'){
+        showLoginModal();
+        $(this).rating('update',0);
+    }else{
+        rating(value);
+    }
+
 });
 
 
