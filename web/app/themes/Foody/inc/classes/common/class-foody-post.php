@@ -357,14 +357,17 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
         $items_to_fetch = self::$MAX__RELATED_ITEMS - count($posts);
 
+
+        if ($items_to_fetch < 0){
+            $items_to_fetch = 0;
+        }
+
         if ($items_to_fetch > 0) {
             $posts_to_exclude = array_map(function ($post) {
                 return $post->ID;
             }, $posts);
 
             $posts_to_exclude[] = $this->id;
-
-            $categories = wp_get_post_categories($this->id);
 
             $categories = [
                 $this->get_primary_category()
