@@ -377,7 +377,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 $query = new WP_Query([
                     'post_type' => $post_type,
                     'category__and' => $categories,
-                    'number' => $items_to_fetch,
+                    'posts_per_page' => $items_to_fetch,
                     'post_status' => 'publish',
                     'post__not_in' => $posts_to_exclude,
                     'orderby' => 'rand',
