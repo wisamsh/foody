@@ -87,7 +87,7 @@ jQuery(document).ready(function ($) {
     $('body').bootstrapMaterialDesign();
     $.fn.selectpicker.Constructor.BootstrapVersion = '4';
     $('.foody-select').selectpicker({dropdownAlignRight: true, style: 'foody-select',dropupAuto:false});
-
+    $('.foody-select').click();
     $('[data-toggle="popover"]').popover();
 
     $('.foody-rating').rating({

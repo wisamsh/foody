@@ -349,9 +349,6 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         $posts = [];
         $related = get_field($selector, $this->id);
         if (!empty($related)) {
-//            $posts = array_filter($related,function ($item){
-//                return $item->ID != $this->id;
-//            });
             $posts = $related;
         }
 

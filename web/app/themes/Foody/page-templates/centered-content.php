@@ -12,7 +12,7 @@ get_header(); ?>
     <div id="main-content" class="main-content">
 
         <div id="primary" class="content-area">
-            <div id="content" class="site-content" role="main">
+            <div id="contentt" class="site-content" role="main">
 
 				<?php if ( has_post_thumbnail( $post->ID ) ): ?>
 					<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' ); ?>
