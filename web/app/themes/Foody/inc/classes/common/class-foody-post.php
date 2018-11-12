@@ -365,6 +365,10 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $posts_to_exclude[] = $this->id;
 
             $categories = wp_get_post_categories($this->id);
+
+            $categories = [
+                $this->get_primary_category()
+            ];
             if (!is_wp_error($categories)) {
 
                 $query = new WP_Query([
