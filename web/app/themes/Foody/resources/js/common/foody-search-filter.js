@@ -138,14 +138,6 @@ module.exports = (function () {
             context: []
         };
 
-        // if (this.initialContext) {
-        //     args.context = this.initialContext;
-        // } else {
-        //     if (this.grid) {
-        //         args.context = this.grid.getItems();
-        //     }
-        // }
-
         args.context = _.uniq(this.initialContext.concat(this.grid.getItems()));
 
 
