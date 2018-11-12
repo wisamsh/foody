@@ -91,3 +91,25 @@ function foody_override_og_image_size($size){
 }
 
 add_filter('wpseo_opengraph_image_size','foody_override_og_image_size',10,1);
+
+
+function foody_set_og_image()
+{
+
+
+    if (is_author()) {
+
+        $author = new Foody_Author();
+
+        $author_image = $author->topic_image();
+        $image = "<meta property=\"og:image\" content=\"$author_image\">";
+
+        $image .= '<meta property="og:image:width" content="96">';
+        $image .= '<meta property="og:image:height" content="96">';
+        echo $image;
+    }
+
+
+}
+
+add_action('wp_head', 'foody_set_og_image');
