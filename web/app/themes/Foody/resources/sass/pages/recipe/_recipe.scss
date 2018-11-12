@@ -47,7 +47,9 @@ $content-width: 95%;
         }
       }
       .favorite {
-        cursor: pointer;
+        i{
+          cursor: pointer;
+        }
       }
       .content-details-bullets {
 
@@ -84,10 +86,10 @@ $content-width: 95%;
         }
       }
 
-      .btn-facebook-share{
-        a{
+      .btn-facebook-share {
+        a {
           color: white;
-          &:hover{
+          &:hover {
             color: white;
           }
         }
@@ -623,7 +625,7 @@ $content-width: 95%;
       width: $content-width;
 
       .details-container {
-
+        padding-bottom: 0;
         .mobile-rating {
           text-align: right;
           padding-right: 0;
@@ -704,11 +706,11 @@ $content-width: 95%;
             }
 
             h1 {
-
+              font-size: 2em;
             }
 
             .description {
-
+              font-size: 20px;
             }
 
             .view-count {
@@ -732,15 +734,47 @@ $content-width: 95%;
               }
             }
           }
+
+          .essb_links_list {
+            .essb_item {
+              margin-left: 10px !important;
+              a {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+
+                .essb_icon {
+                  width: 36px;
+                  height: 36px;
+                  border-radius: 0;
+
+                  &:before {
+                    font-size: 27px !important;
+                    left: -4px;
+                  }
+                }
+              }
+            }
+          }
+
+          .btn-facebook {
+            padding: 0 20px;
+            height: 45px;
+            font-size: 18px;
+          }
+
+          .mobile-rating {
+            margin-top: 10px;
+          }
         }
       }
 
       .recipe-overview {
         .overview {
-
+          padding-top: 10px;
           max-width: calc(100% - #{$content-padding});
           li {
-            padding-bottom: 20px;
+            //padding-bottom: 20px;
             &:nth-child(odd) {
 
               border-left: 1px solid $color__divider;
@@ -759,6 +793,11 @@ $content-width: 95%;
               padding-top: 20px;
             }
           }
+        }
+
+        .preview{
+          font-size: 20px;
+          padding-top: 20px;
         }
       }
 

@@ -15,7 +15,7 @@ $(document).ready(() => {
 
             let $this = $(this);
 
-            $this.click(() => {
+            $('i',$this).click(() => {
                 if (foodyGlobals.loggedIn == 'false') {
                     return showLoginModal();
                 }

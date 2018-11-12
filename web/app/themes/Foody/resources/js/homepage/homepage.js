@@ -90,7 +90,9 @@ jQuery(document).ready(($) => {
         $(window).scroll(function () {
             let threshold = 200; // number of pixels before bottom of page that you want to start fading
             let op = (($(document).height() - $(window).height()) - $(window).scrollTop()) / threshold;
-            if (op <= 0) {
+
+            if (op <= 0.2) {
+                op = 0;
                 $mobileFilterBtn.hide();
             } else {
                 $mobileFilterBtn.show();
