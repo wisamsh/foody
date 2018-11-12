@@ -83,3 +83,11 @@ function is_tablet($vars)
 }
 
 add_filter('foody_js_globals', 'is_tablet');
+
+
+function foody_override_og_image_size($size){
+
+    return 'thumbnail';
+}
+
+add_filter('wpseo_opengraph_image_size','foody_override_og_image_size',10,1);
