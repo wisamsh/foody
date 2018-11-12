@@ -499,4 +499,16 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return [];
     }
 
+
+    public function get_label()
+    {
+        $label = get_field('recipe_label', $this->post->ID);
+
+        if (empty($label)) {
+            $label = '';
+        }
+
+        return $label;
+    }
+
 }

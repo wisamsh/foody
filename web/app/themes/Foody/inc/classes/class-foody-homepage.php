@@ -39,9 +39,7 @@ class Foody_HomePage
         $posts = $this->get_featured_posts();
 
 
-        foreach ($posts as $post) {
-            $this->grid->draw($post, 2,12,true,'recipe',null,['image_size'=>'']);
-        }
+        $this->grid->loop($posts,2,12,null,[],null,['image_size'=>'']);
     }
 
     public function cover_photo()
@@ -161,29 +159,24 @@ class Foody_HomePage
         // TODO
     }
 
+
     private function get_featured_posts()
     {
-        return $this->get_featured_posts_2();
-        $posts = array_map(function ($post) {
-            return new Foody_Recipe($post);
-        }, posts_to_array('featured_content'));
+
+        $featured = get_field('featured_items');
+        $posts = [];
+        if(!empty($featured)){
+
+            $posts = array_map(function ($row) {
+
+                $foody_post = Foody_Post::create($row['post']);
+
+                $foody_post->setImage($row['image']['url']);
+
+                return $foody_post;
+            }, $featured);
+        }
 
         return $posts;
-    }
-
-    private function get_featured_posts_2()
-    {
-
-        $featured = get_field('featured_content_2');
-
-        return array_map(function ($row) {
-
-            $foody_post = Foody_Post::create($row['post']);
-
-            $foody_post->setImage($row['image']['url']);
-
-            return $foody_post;
-        }, $featured);
-
     }
 }

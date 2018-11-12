@@ -587,17 +587,6 @@ class Foody_Recipe extends Foody_Post
         return $classes;
     }
 
-    public function get_label()
-    {
-        $label = get_field('recipe_label', $this->post->ID);
-
-        if (empty($label)) {
-            $label = '';
-        }
-
-        return $label;
-    }
-
     public function has_notes()
     {
         return have_rows('notes', $this->post->ID) && count(get_field('notes', $this->id)) > 0;
