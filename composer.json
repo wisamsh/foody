@@ -158,6 +158,18 @@
           "url": "https://downloads.wordpress.org/plugin/acf-image-crop-add-on.1.4.12.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "willnorris/wordpress-hum",
+        "version": "1.0.0",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/willnorris/wordpress-hum/archive/master.zip"
+        }
+      }
     }
   ],
   "require": {

@@ -638,8 +638,8 @@ function essb_get_share_address($network, $share = array(), $salt = '', $amp_end
 			if (!isset($share['mail_body'])) {
 				$share['mail_body'] = '';
 			}
-				
-			
+
+            $share['mail_body'] = get_permalink();
 			$share['mail_body'] = str_replace('"', '%22', $share['mail_body']);
 			$share['mail_body'] = str_replace("'", '%27', $share['mail_body']);
 			$share['mail_body'] = str_replace('&amp;', '%26', $share['mail_body']);
@@ -647,7 +647,8 @@ function essb_get_share_address($network, $share = array(), $salt = '', $amp_end
 			$share['mail_body'] = str_replace('&quot;', '%22', $share['mail_body']);
 			$share['mail_body'] = str_replace('%26quot;', '%22', $share['mail_body']);
 			$share['mail_body'] = str_replace('%26#039;', '%27', $share['mail_body']);
-			
+
+            $share['mail_subject'] = wp_get_document_title();
 			$url = sprintf('mailto:?subject=%1$s&amp;body=%2$s', $share['mail_subject'], $share['mail_body']);
 			$api_command = "essb.tracking_only('', 'mail', '".$salt."', true);";
 			break;
