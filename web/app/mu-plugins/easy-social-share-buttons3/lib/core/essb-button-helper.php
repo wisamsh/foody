@@ -607,6 +607,8 @@ function essb_get_share_address($network, $share = array(), $salt = '', $amp_end
 			$url = sprintf ( 'http://managewp.org/share/form?url=%1$s', urlencode ( $share ['url'] ) );
 			break;
 		case 'whatsapp' :
+            $share['url'] = wp_get_shortlink();
+            $share['short_url_whatsapp'] = wp_get_shortlink();
 			if ($share['short_url_whatsapp'] == '') {
 				$share['short_url_whatsapp'] = $share['url'];
 			}
@@ -639,7 +641,7 @@ function essb_get_share_address($network, $share = array(), $salt = '', $amp_end
 				$share['mail_body'] = '';
 			}
 
-            $share['mail_body'] = get_permalink();
+            $share['mail_body'] = wp_get_shortlink();// get_permalink();
 			$share['mail_body'] = str_replace('"', '%22', $share['mail_body']);
 			$share['mail_body'] = str_replace("'", '%27', $share['mail_body']);
 			$share['mail_body'] = str_replace('&amp;', '%26', $share['mail_body']);
