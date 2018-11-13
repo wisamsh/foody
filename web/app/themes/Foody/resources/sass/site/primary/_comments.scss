@@ -10,8 +10,7 @@
   color: $color__primary;
 }
 
-
-#cancel-comment-reply-link{
+#cancel-comment-reply-link {
   display: none !important;
 }
 
@@ -72,10 +71,9 @@
     }
   }
 
-  #comment-error{
+  #comment-error {
     padding-right: 5px;
   }
-
 
   .form-submit {
     text-align: left;
@@ -175,8 +173,7 @@
 
 }
 
-
-@include breakpoint(mobileonly){
+@include breakpoint(mobileonly) {
   .comment-content a {
 
   }
@@ -192,7 +189,8 @@
   .comment-form {
 
     .commentform-element {
-
+      height: unset;
+      padding: 20px 0;
       img.avatar {
 
       }
@@ -202,12 +200,16 @@
       }
 
       #comment {
+
+        &::placeholder {
+          font-size: 18px;
+        }
       }
 
       &.open {
 
         #comment {
-
+          line-height: unset;
         }
 
         img.avatar {
@@ -241,21 +243,21 @@
 
     padding-left: 0;
 
-
     .foody-comment {
-
+      padding-bottom: 0;
       img.avatar {
 
       }
 
       .comment-body {
-
+        padding: 10px;
+        vertical-align: top;
         .author {
-
+          font-size: 18px;
         }
 
         time {
-
+          font-size: 18px;
         }
 
         p {
@@ -265,7 +267,8 @@
       }
 
       .reply {
-
+        font-size: 18px;
+        padding-top: 5px;
       }
 
     }
@@ -275,6 +278,10 @@
       .foody-comment {
         img.avatar {
 
+
+          .comment-body{
+            width: auto;
+          }
         }
       }
     }

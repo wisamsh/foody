@@ -18,7 +18,7 @@ $username = $profile['username'];
 
 <section class="welcome">
     <div>
-        <img src="<?php echo $GLOBALS['images_dir'] . 'empty-recipes.svg' ?>" alt="">
+        <img src="<?php echo $GLOBALS['images_dir'] . 'avatar.svg' ?>" alt="">
 
     </div>
 

@@ -47,7 +47,7 @@ $content-width: 95%;
         }
       }
       .favorite {
-        i{
+        i {
           cursor: pointer;
         }
       }
@@ -772,7 +772,7 @@ $content-width: 95%;
 
       .recipe-overview {
         .overview {
-          padding-top: 10px;
+          padding: 10px 0 0;
           max-width: calc(100% - #{$content-padding});
           li {
             //padding-bottom: 20px;
@@ -786,7 +786,10 @@ $content-width: 95%;
             }
 
             .value {
-
+              line-height: normal;
+              margin-top: 10px;
+              font-family: $font__assistant-bold;
+              font-size: 24px;
             }
 
             &:nth-child(3), &:nth-child(4) {
@@ -796,9 +799,10 @@ $content-width: 95%;
           }
         }
 
-        .preview{
+        .preview {
           font-size: 20px;
           padding-top: 20px;
+          max-width: 90%;
         }
       }
 
@@ -855,7 +859,7 @@ $content-width: 95%;
                   //margin-left: 15px;
                   //min-width: 10%;
                   display: inline-block;
-
+                  margin-left: 3px;
                 }
               }
             }
@@ -888,6 +892,25 @@ $content-width: 95%;
 
       .recipe-rating, .recipe-notes {
         max-width: calc(100% - #{$content-padding});
+      }
+
+      .recipe-accessories, .recipe-techniques, .recipe-categories {
+
+        @include max-width-section;
+
+        .title {
+          margin-bottom: 0;
+        }
+
+        ul {
+          margin-top: -10px;
+          li {
+            font-size: 20px;
+
+            &:before {
+            }
+          }
+        }
       }
 
       .recipe-rating {
@@ -987,7 +1010,7 @@ $content-width: 95%;
         max-width: calc(100% - #{$content-padding});
         ul {
           li {
-
+            font-size: 20px;
             &:hover {
 
             }
@@ -1038,7 +1061,7 @@ $content-width: 95%;
                 }
 
                 .author {
-                  padding: 10px 0;
+                  padding: 10px 0 0;
                   .author-name {
                     font-family: $font__main;
                     font-size: 18px;
@@ -1049,6 +1072,7 @@ $content-width: 95%;
                     font-family: $font__main;
                     font-size: 18px;
                     opacity: 0.5;
+                    margin-right: 5px;
                   }
                   img {
                     height: 24px;
@@ -1071,6 +1095,19 @@ $content-width: 95%;
         #image-upload-hidden {
           text-align: center;
         }
+
+        #how-i-did-modal{
+          #content{
+            padding-top: 0;
+            min-height: unset;
+          }
+
+          .close{
+            span{
+              font-size: 32px;
+            }
+          }
+        }
       }
 
       #upload-image-modal {
@@ -1089,6 +1126,8 @@ $content-width: 95%;
             img {
             }
           }
+
+
 
           .comment-input-container {
 
@@ -1126,6 +1165,9 @@ $content-width: 95%;
             i.icon-side-arrow {
               &:before {
                 left: 0;
+                position: unset;
+                line-height: 50px;
+                font-size: 11px;
               }
             }
           }
