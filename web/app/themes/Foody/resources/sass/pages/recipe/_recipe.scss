@@ -9,6 +9,7 @@ $content-width: 95%;
   max-width: $content-width;
   margin: 0 auto;
 }
+
 @import "../common/related-content";
 
 @import "../../common/show-more-simple";
@@ -376,11 +377,13 @@ $content-width: 95%;
           padding: 2px 12px;
           margin-left: 10px;
           margin-bottom: 10px;
-
-          &:hover {
-            border-color: $color__primary;
-          }
         }
+      }
+    }
+
+    .recipe-accessories, .recipe-techniques, .recipe-tags {
+      a {
+        pointer-events: none !important;
       }
     }
 
@@ -1097,14 +1100,14 @@ $content-width: 95%;
           text-align: center;
         }
 
-        #how-i-did-modal{
-          #content{
+        #how-i-did-modal {
+          #content {
             padding-top: 0;
             min-height: unset;
           }
 
-          .close{
-            span{
+          .close {
+            span {
               font-size: 32px;
             }
           }
@@ -1127,8 +1130,6 @@ $content-width: 95%;
             img {
             }
           }
-
-
 
           .comment-input-container {
 
@@ -1183,7 +1184,7 @@ $content-width: 95%;
 
     }
 
-    aside{
+    aside {
       @include related-content;
     }
   }

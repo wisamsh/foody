@@ -3,17 +3,15 @@
  */
 
 
-
-
-if(foodyGlobals.post && foodyGlobals.post .type == 'foody_recipe' ){
+if (foodyGlobals.post && foodyGlobals.post.type == 'foody_recipe') {
     window.scroller();
     updateRating();
 
     $('.foody-rating').on('rating:change', function (event, value, caption) {
-        if(foodyGlobals.loggedIn == 'false'){
+        if (foodyGlobals.loggedIn == 'false') {
             showLoginModal();
-            $(this).rating('update',0);
-        }else{
+            $(this).rating('update', 0);
+        } else {
             rating(value);
         }
 
@@ -65,7 +63,7 @@ if(foodyGlobals.post && foodyGlobals.post .type == 'foody_recipe' ){
             if (err) {
                 console.log(err);
             } else {
-                console.log('frs',response);
+                console.log('frs', response);
 
                 $('.recipe-details .rating-input').rating('update', response.data.rating);
 
@@ -124,7 +122,7 @@ if(foodyGlobals.post && foodyGlobals.post .type == 'foody_recipe' ){
     }
 
 
-    $('.must-log-in a, .comment-reply-login').on('click',function (e) {
+    $('.must-log-in a, .comment-reply-login').on('click', function (e) {
         e.preventDefault();
         showLoginModal();
     });
