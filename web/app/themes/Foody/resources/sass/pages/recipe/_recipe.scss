@@ -9,6 +9,7 @@ $content-width: 95%;
   max-width: $content-width;
   margin: 0 auto;
 }
+@import "../common/related-content";
 
 @import "../../common/show-more-simple";
 
@@ -1180,6 +1181,10 @@ $content-width: 95%;
         }
       }
 
+    }
+
+    aside{
+      @include related-content;
     }
   }
 }

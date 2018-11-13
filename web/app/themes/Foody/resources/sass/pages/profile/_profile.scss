@@ -108,16 +108,10 @@ $sidebar-width: 25%;
 
   .container-fluid {
 
-    aside {
-      width: $sidebar-width;
-      //noinspection CssInvalidPropertyValue
-      min-height: stretch;
-      border-left: 1px solid $color__divider;
-      border-right: 1px solid $color__divider;
-      background-color: #fff;
-      padding: 44px 10px;
-      position: relative;
-    }
+    @import "../../common/sidebar";
+
+    @include foody-sidebar($sidebar-width);
+
 
     .content {
       padding-top: 18px;
@@ -146,6 +140,11 @@ $sidebar-width: 25%;
               clip-path: circle();
               max-width: 90px;
               border-radius: 50%;
+
+              &.default-avatar{
+                border: none;
+                clip-path: unset;
+              }
             }
           }
 
@@ -535,10 +534,6 @@ Tablet landscape
 
       aside {
         display: none;
-
-        .foody-search-filter {
-          padding: 0 24px;
-        }
       }
 
       .content {

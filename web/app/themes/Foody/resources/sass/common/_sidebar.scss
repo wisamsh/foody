@@ -1,16 +1,235 @@
-.sidebar {
+$sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
 
-  .sidebar-content {
-    padding: 25px;
+@mixin foody-sidebar($sidebar-width) {
+  aside {
+    min-width: $sidebar-width;
+    width: $sidebar-width;
+    min-height: 100%;
+    border: solid 1px rgba(151, 151, 151, 0.3);
+    border-bottom: none;
+    border-top: none;
+    background-color: white;
+    padding-top: 60px;
+    position: relative;
+    padding-right: 0;
+    padding-left: 0;
 
-    .foody-accordion {
-
-      .checkbox {
-        label {
-
-          color: $color__text-primary-dark;
+    .widget {
+      &.widget_text {
+        .widgettitle {
+          font-size: 30px;
+          font-weight: 900;
+          letter-spacing: -0.1px;
+          text-align: right;
+          color: $color__primary;
         }
       }
+    }
+
+    .sidebar-content {
+      border: $sidebar-border;
+      border-bottom: none;
+      //position: absolute;
+      padding: 0;
+      height: fit-content;
+      min-height: fit-content;
+    }
+
+    li.widget, .sidebar-section {
+      padding: 25px 10px;
+      margin-top: 0;
+      margin-bottom: 0;
+      &:not(:last-child) {
+        border-bottom: $sidebar-border;
+      }
+
+      .widgettitle {
+        font-size: 1.5em;
+        color: $color__primary;
+      }
+    }
+
+    .fb-page, .fb-page span, .fb-page span iframe[style] {
+      width: 100% !important;
+    }
+
+    #accordion-foody-filter {
+
+      h5 {
+        + a {
+          font-family: $font__main;
+          font-size: 26px;
+          font-weight: 900;
+        }
+
+      }
+      .md-checkbox {
+        label {
+
+          font-family: $font__main;
+          font-size: 20px;
+          display: table-cell;
+          padding-right: 1em;
+
+          &:before, &:after {
+            font-size: .8em;
+          }
+
+          &:before {
+            border: 1px solid #3a3a3a;
+          }
+        }
+
+        input:checked {
+
+          + {
+            label {
+              font-weight: 900;
+            }
+          }
+        }
+      }
+    }
+
+    #accordion-categories-widget-accordion {
+
+      .main-title {
+        &:not(.collapsed){
+          margin-bottom: 20px;
+        }
+      }
+
+      #categories-widget-accordion {
+        padding: 0 2em;
+
+        .card-body {
+          padding: 0.45rem 0.45rem 0.45rem;
+
+          .category-accordion-item {
+            font-size: 20px;
+            font-weight: normal;
+            text-align: right;
+            margin: 10px 0;
+          }
+        }
+      }
+
+    }
+  }
+
+  @include breakpoint(mobileonly) {
+    aside {
+    }
+  }
+
+  @include breakpoint(mobile-l) {
+  }
+
+  @include breakpoint(tablet) {
+    aside {
+
+      .categories-accordion-widget {
+        display: none !important;
+      }
+
+      .widget {
+        display: none;
+        &:before {
+
+        }
+        &.widget_text {
+
+          .widgettitle {
+
+          }
+        }
+      }
+
+    }
+  }
+
+  @include breakpoint(tablet-l) {
+    aside {
+      min-width: $sidebar-width;
+
+      .widget {
+
+        &:before {
+
+        }
+        &.widget_text {
+
+          .widgettitle {
+
+          }
+        }
+      }
+
+      .sidebar-content {
+
+      }
+
+      li.widget, .sidebar-section {
+        padding: 10px;
+        &:not(:last-child) {
+
+        }
+
+        .widgettitle {
+
+        }
+      }
+
+      #accordion-foody-filter {
+
+        h5 {
+          + a {
+
+          }
+
+        }
+        .md-checkbox {
+          label {
+            display: table-cell;
+            padding-right: 1em;
+            &:before, &:after {
+
+            }
+
+            &:before {
+
+            }
+          }
+
+          input:checked {
+
+            + {
+              label {
+
+              }
+            }
+          }
+        }
+      }
+
+      #accordion-categories-widget-accordion {
+
+        .main-title {
+
+        }
+
+        #categories-widget-accordion {
+
+          .card-body {
+
+            .category-accordion-item {
+
+            }
+          }
+        }
+
+      }
+
     }
   }
 

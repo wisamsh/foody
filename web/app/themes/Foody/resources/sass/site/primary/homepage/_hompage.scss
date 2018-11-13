@@ -102,22 +102,24 @@ $sidebar-top-offset: 60px;
         width: calc(100% - #{$content-width});
         padding-right: 0;
 
+        @import "../../../common/sidebar";
+
+        @include foody-sidebar(100%);
+
         aside {
-          width: 100%;
           padding-right: 0;
+          padding-top: 0;
           left: 0;
           right: 0;
           bottom: 0;
           min-height: max-content;
           height: 100%;
+          border: none;
+          background-color: $color__background-screen;
 
           $input-height: 57px;
           $input-margin: 4px;
           $input-side-offset: 15px;
-
-          .fb-page, .fb-page span, .fb-page span iframe[style] {
-            width: 100% !important;
-          }
 
           @import "../../../common/foody-autocomplete";
 
@@ -163,14 +165,14 @@ $sidebar-top-offset: 60px;
             top: $sidebar-top-offset;
           }
 
-          .filter {
-            margin-top: 5px;
-            height: 100rem;
-            background-color: #fff;
-            margin-right: -15px;
-            padding: 0 15px;
-            box-shadow: -2px 1px 4px 0 rgba(0, 0, 0, 0.09);
-          }
+          //.filter {
+          //  margin-top: 5px;
+          //  height: 100rem;
+          //  background-color: #fff;
+          //  margin-right: -15px;
+          //  padding: 0 15px;
+          //  box-shadow: -2px 1px 4px 0 rgba(0, 0, 0, 0.09);
+          //}
         }
       }
 

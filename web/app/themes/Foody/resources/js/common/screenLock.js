@@ -15,13 +15,13 @@ module.exports = function (lock,target, overlay) {
         lockClasses = `${lockClasses} side-active`;
     }
 
-    let targetElement = document.querySelector(target);
+    let targetElement = $(target)[0];
 
     if (lock) {
-        disableBodyScroll(targetElement);
         jQuery('html,body').addClass(lockClasses);
+        disableBodyScroll(targetElement);
     } else {
-        enableBodyScroll(targetElement,options);
         jQuery('html,body').removeClass(lockClasses);
+        enableBodyScroll(targetElement,options);
     }
 };

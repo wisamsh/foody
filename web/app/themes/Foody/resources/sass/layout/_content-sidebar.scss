@@ -56,39 +56,43 @@ body[class~="post-template-content-with-sidebar"] {
     width: calc(100% - #{$sidebar-width});
   }
 
-  aside {
-    min-width: $sidebar-width;
-    min-height: 100%;
-    border: solid 1px rgba(151, 151, 151, 0.3);
-    border-bottom: none;
-    border-top: none;
-    background-color: white;
-    padding: 60px 20px 0;
-    position: relative;
-    .widget {
-      padding: 20px 15px 0;
+  @import "../common/sidebar";
 
-      &:before {
-        content: '';
-        width: 100%;
-        height: 1px;
-        display: inline-block;
-        background-color: rgba(151, 151, 151, .30);
-        margin-bottom: 15px;
-      }
-      &.widget_text {
+  @include foody-sidebar($sidebar-width);
+  //aside {
+  //  min-width: $sidebar-width;
+  //  min-height: 100%;
+  //  border: solid 1px rgba(151, 151, 151, 0.3);
+  //  border-bottom: none;
+  //  border-top: none;
+  //  background-color: white;
+  //  padding: 60px 10px 0;
+  //  position: relative;
+  //  .widget {
+  //   // padding: 20px 15px 0;
+  //
+  //    &:before {
+  //      content: '';
+  //      width: 100%;
+  //      height: 1px;
+  //      display: inline-block;
+  //      background-color: rgba(151, 151, 151, .30);
+  //      margin-bottom: 15px;
+  //    }
+  //    &.widget_text {
+  //
+  //      .widgettitle {
+  //        font-size: 30px;
+  //        font-weight: 900;
+  //        letter-spacing: -0.1px;
+  //        text-align: right;
+  //        color: $color__primary;
+  //      }
+  //    }
+  //  }
+  //
+  //}
 
-        .widgettitle {
-          font-size: 30px;
-          font-weight: 900;
-          letter-spacing: -0.1px;
-          text-align: right;
-          color: $color__primary;
-        }
-      }
-    }
-
-  }
 
   .details-container {
     padding: 10px 0;
