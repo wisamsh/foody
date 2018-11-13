@@ -62,13 +62,14 @@ class Foody_Profile
 
         if (isset($wp_session['favorites']) && !empty($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
 
-            $favorite_posts = array_filter($favorite_posts,function ($post){
-               return $post instanceof WP_Post;
-            });
+//            $favorite_posts = array_filter($favorite_posts,function ($post){
+//               return $post instanceof WP_Post;
+//            });
 
             $posts = [];
             foreach ($favorite_posts as $favorite_post) {
-                $posts[] = Foody_PostFactory::get_post(get_post($favorite_post));
+                $post = get_post($favorite_post);
+                $posts[] = Foody_Post::create($post);
             }
 
             echo '<h2 class="title">ספר המתכונים שלי</h2>';
@@ -182,9 +183,9 @@ class Foody_Profile
             $recipes = [];
             $favorite_posts = $wp_session['favorites'];
 
-
             foreach ($favorite_posts as $favorite_post) {
-                $recipes[] = Foody_PostFactory::get_post(get_post($favorite_post));
+                $post = get_post($favorite_post);
+                $recipes[] = Foody_Post::create($post);
             }
 
             $favorite_count = count($favorite_posts);

@@ -60,8 +60,6 @@ require_once get_template_directory() . "/inc/classes/class-foody-comments.php";
 require_once get_template_directory() . "/inc/classes/class-foody-how-i-did.php";
 require_once get_template_directory() . "/inc/classes/class-foody-article.php";
 require_once get_template_directory() . "/inc/classes/class-foody-page-content-factory.php";
-require_once get_template_directory() . "/inc/classes/class-foody-feed-factory.php";
-require_once get_template_directory() . "/inc/classes/class-foody-post-factory.php";
 require_once get_template_directory() . "/inc/classes/class-bootstrap-collapse-nav-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-channels-menu.php";
 require_once get_template_directory() . "/inc/classes/class-foody-author.php";
