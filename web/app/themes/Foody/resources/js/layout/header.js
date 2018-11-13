@@ -72,7 +72,7 @@ jQuery(document).ready(function ($) {
         let key = e.which;
         if (key == 13) {
             let search = $(e.target).val();
-            window.location.href = '?s=' + search;
+            window.location = '/?s=' + search;
             return false;
         }
     });

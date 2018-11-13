@@ -199,8 +199,8 @@ class Foody_User
             }
         }
 
-        if (empty($image) || 'gravatar.com' == $image) {
-            $image = $GLOBALS['images_dir'] . 'avatar.png';
+        if (!empty($image) || 'gravatar.com' == $image) {
+            $image = $GLOBALS['images_dir'] . 'avatar.svg';
             $image = "<img class='avatar' src='$image' >";
         }
 

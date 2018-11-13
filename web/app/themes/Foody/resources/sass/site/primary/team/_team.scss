@@ -2,11 +2,6 @@
 
 .page-template {
   &.team {
-
-    #content{
-      //padding-top: 0;
-    }
-
     .sort {
       padding: 10px 0;
       .foody-select {
@@ -61,14 +56,15 @@
 
   .page-template {
     &.team {
-      #content{
-        //padding-top: 30px;
-      }
       .team-listing {
         padding-right: 0;
         .author {
           .post-count {
             opacity: 1;
+          }
+
+          .author-name{
+            font-size: 22px;
           }
         }
       }
