@@ -117,8 +117,10 @@ class Foody_Footer
                 'title' => sprintf(__('Foody Israel') . ' %s', date('Y'))
             );
 
+            $moveo = file_get_contents(get_template_directory() . '/resources/images/moveo.svg');
+
             $items[0][] = array(
-                'title' => '<img src="' . $GLOBALS['images_dir'] . 'moveo.png' . '">',
+                'title' => $moveo, // '<img src="' . $GLOBALS['images_dir'] . 'moveo.svg' . '">',
                 'url' => 'https://moveo.group',
                 'target' => '_blank'
             );
