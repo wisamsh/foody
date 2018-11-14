@@ -11,7 +11,7 @@ class Foody_Footer
     // TODO remove debug
     private $debug = false;
 
-    private static $MAX_MENUS = 10;
+    private static $MAX_MENUS = 4;
 
     /**
      * Foody_Footer constructor.
@@ -51,37 +51,36 @@ class Foody_Footer
 
         ?>
 
-            <section class="row">
+        <section class="row">
 
-        <?php
+            <?php
 
-        if (!wp_is_mobile()) {
-            $this->display_pages_menu($footer_pages);
-        }
-
-
-        while (count($footer_links) > self::$MAX_MENUS) {
-            array_pop($footer_links);
-        }
+            if (!wp_is_mobile()) {
+                $this->display_pages_menu($footer_pages);
+            }
 
 
+            while (count($footer_links) > self::$MAX_MENUS) {
+                array_pop($footer_links);
+            }
 
-        foreach ($footer_links as $link_group) {
+
+            foreach ($footer_links as $link_group) {
 
 
-            $this->display_menu($link_group,'col');
-        }
+                $this->display_menu($link_group, 'col');
+            }
 
-        ?>
-            </section>
+            ?>
+        </section>
         <?php
 
     }
 
 
-    private function display_menu($menu_items,$classes = '')
+    private function display_menu($menu_items, $classes = '')
     {
-        echo '<ul class="menu '. $classes . '">';
+        echo '<ul class="menu ' . $classes . '">';
 
         $this->display_menu_items($menu_items);
 
