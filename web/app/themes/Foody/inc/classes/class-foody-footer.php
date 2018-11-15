@@ -9,6 +9,8 @@
 class Foody_Footer
 {
     // TODO remove debug
+    public $footer_pages;
+    public $footer_links;
     private $debug = false;
 
     private static $MAX_MENUS = 4;
@@ -21,31 +23,30 @@ class Foody_Footer
         if (wp_is_mobile()) {
             self::$MAX_MENUS = 2;
         }
+
+        $this->footer_pages = wp_get_nav_menu_items('footer-pages');
+        $this->footer_links = wp_get_nav_menu_items('footer-links');
     }
 
 
     public function menu()
     {
 
-        $footer_pages = wp_get_nav_menu_items('footer-pages');
-
-
-        $footer_links = wp_get_nav_menu_items('footer-links');
 
         if ($this->debug) {
-            $footer_links = array_merge($footer_links, $this->dummy_links(40));
+            $this->footer_links = array_merge($this->ooter_links, $this->dummy_links(40));
         }
 
 
         $chunk_size = 0;
-        $links_count = count($footer_links);
+        $links_count = count($this->footer_links);
         if ($links_count > 0) {
             $chunk_size = ceil($links_count / self::$MAX_MENUS);
         }
 
         // FEATURE allow control over the separate cols in the footer
         if ($chunk_size > 0) {
-            $footer_links = array_chunk($footer_links, $chunk_size);
+            $this->footer_links = array_chunk($this->footer_links, $chunk_size);
         }
 
 
@@ -56,16 +57,16 @@ class Foody_Footer
             <?php
 
             if (!wp_is_mobile()) {
-                $this->display_pages_menu($footer_pages);
+                $this->display_pages_menu($this->footer_pages);
             }
 
 
-            while (count($footer_links) > self::$MAX_MENUS) {
+            while (count($this->footer_links) > self::$MAX_MENUS) {
                 array_pop($footer_links);
             }
 
 
-            foreach ($footer_links as $link_group) {
+            foreach ($this->footer_links as $link_group) {
 
 
                 $this->display_menu($link_group, 'col');
@@ -87,28 +88,53 @@ class Foody_Footer
         echo '</ul>';
     }
 
-    private function display_pages_menu($menu_items)
+
+    public function newsletter()
+    {
+
+        ?>
+
+        <h4 class="newsletter-title">
+            <?php echo __('אל תפספסו את המתכונים החמים!', 'foody'); ?>
+        </h4>
+
+        <section class="newsletter">
+            <form class="row justify-content-between" method="post">
+                <div class="input-container col-9 col-lg-7">
+                    <input type="email" placeholder="<?php echo __('הכנס כתובת מייל', 'foody') ?>">
+
+                </div>
+                <button type="submit" class="col-3 col-lg-3 offset-lg-1">
+                    <?php echo __('הרשמה', 'foody') ?>
+                </button>
+            </form>
+        </section>
+
+        <?php
+    }
+
+    public function moveo()
+    {
+        $moveo = file_get_contents(get_template_directory() . '/resources/images/moveo.svg');
+
+        return array(
+            'title' => $moveo,
+            'url' => 'https://moveo.group',
+            'target' => '_blank',
+            'classes' => 'moveo'
+        );
+    }
+
+    public function display_pages_menu($menu_items)
     {
 
         ?>
         <ul class="menu col-4 row justify-content-between menu-pages">
-            <h4>
-                <?php echo __('אל תפספסו את המתכונים החמים!', 'foody'); ?>
-            </h4>
 
-            <section class="newsletter">
-                <form class="row justify-content-between" method="post">
-                    <div class="input-container col-7">
-                        <input type="email" placeholder="<?php echo __('הכנס כתובת מייל', 'foody') ?>">
-
-                    </div>
-                    <button type="submit" class="col-3 offset-1">
-                        <?php echo __('הרשמה', 'foody') ?>
-                    </button>
-                </form>
-            </section>
 
             <?php
+
+            $this->newsletter();
 
             $items = array_chunk($menu_items, count($menu_items) / 2);
 
@@ -117,13 +143,7 @@ class Foody_Footer
                 'title' => sprintf(__('Foody Israel') . ' %s', date('Y'))
             );
 
-            $moveo = file_get_contents(get_template_directory() . '/resources/images/moveo.svg');
-
-            $items[0][] = array(
-                'title' => $moveo, // '<img src="' . $GLOBALS['images_dir'] . 'moveo.svg' . '">',
-                'url' => 'https://moveo.group',
-                'target' => '_blank'
-            );
+            $items[0][] = $this->moveo();
 
 
             foreach ($items as $item) {
@@ -139,24 +159,26 @@ class Foody_Footer
         <?php
     }
 
-    private function display_menu_items($menu_items)
+    public function display_menu_items($menu_items)
     {
         foreach ($menu_items as $link) {
 
             $url = is_object($link) ? $link->url : (isset($link['url']) ? $link['url'] : '');
             $title = is_object($link) ? $link->title : $link['title'];
             $target = !is_object($link) && isset($link['target']) ? $link['target'] : '';
+            $classes = !is_object($link) && isset($link['classes']) ? $link['classes'] : '';
 
-            $this->display_menu_item($url, $title, $target);
+            $this->display_menu_item($url, $title, $target, $classes);
         }
 
     }
 
 
-    private function display_menu_item($url, $title, $target = '')
+    private function display_menu_item($url, $title, $target = '', $classes = '')
     {
         ?>
-        <li class="menu-item"><a <?php if ($target): ?> target="<?php echo $target ?>" <?php endif; ?>
+        <li class="menu-item <?php echo $classes ?>">
+            <a <?php if ($target): ?> target="<?php echo $target ?>" <?php endif; ?>
                     href="<?php echo $url ?>"><?php echo $title ?></a></li>
 
         <?php

@@ -85,9 +85,11 @@ require('./contact-us');
 jQuery(document).ready(function ($) {
 
     $('body').bootstrapMaterialDesign();
-    $.fn.selectpicker.Constructor.BootstrapVersion = '4';
-    $('.foody-select').selectpicker({dropdownAlignRight: true, style: 'foody-select',dropupAuto:false});
-    $('.foody-select').click();
+    // $.fn.selectpicker.Constructor.BootstrapVersion = '4';
+    $('.foody-select').selectpicker({dropdownAlignRight: true, style: 'foody-select',dropupAuto:false,width:'fit'});
+
+    setTimeout(()=>{ $('.foody-select').click();},1000);
+
     $('[data-toggle="popover"]').popover();
 
     $('.foody-rating').rating({

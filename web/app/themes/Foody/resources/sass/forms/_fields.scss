@@ -60,6 +60,7 @@ $mdb-checkbox-size: 15px;
 .dropdown {
   &.bootstrap-select {
     &.foody-select {
+      margin-left: 10px;
       z-index: 0;
       max-width: 220px;
       //noinspection CssInvalidPropertyValue
@@ -89,15 +90,19 @@ $mdb-checkbox-size: 15px;
       }
 
       .dropdown-toggle {
-
+        margin-bottom: 0;
         font-size: $dropdown-toggle-size;
-        height: $dropdown-toggle-size;
+        line-height: normal;
+        //height: $dropdown-toggle-size;
         &:after {
           color: $color__text-primary-dark;
           left: 0;
           position: absolute;
           border-right: 0.2em solid transparent;
           border-left: 0.2em solid transparent;
+          top: 50%;
+          transform: translateY(-50%) scale(0.8);
+          margin: -1px -5px;
         }
       }
 

@@ -51,7 +51,7 @@ $default_sort_options = [
         ?>
         <section class="grid-header row">
             <?php if (!empty($grid_header['title'])): ?>
-                <h2 class="title col">
+                <h2 class="title col-12 col-lg-6">
                     <?php echo $grid_header['title'] ?>
                 </h2>
             <?php endif; ?>
@@ -65,7 +65,7 @@ $default_sort_options = [
                 ];
                 ?>
 
-                <section class="grid-sort col">
+                <section class="grid-sort col-12 col-lg-6">
                     <?php foody_get_template_part(get_template_directory() . '/template-parts/common/foody-select.php', $sort_args); ?>
                 </section>
 

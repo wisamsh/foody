@@ -11,19 +11,37 @@
 $footer = new Foody_Footer();
 ?>
 
-	</div><!-- #content -->
+</div><!-- #content -->
 
-	<footer id="colophon" class="site-footer">
+<footer id="colophon" class="site-footer">
 
+    <section class="newsletter d-block d-lg-none">
         <?php
-
-        $footer->menu();
-
+        $footer->newsletter();
         ?>
 
-	</footer><!-- #colophon -->
-</div><!-- #page -->
+    </section>
 
+    <section class="social d-block d-lg-none">
+        <?php
+        foody_get_template_part(get_template_directory() . '/template-parts/footer-social-bar.php');
+        ?>
+    </section>
+
+    <?php
+
+    $footer->menu();
+
+    ?>
+
+<!--    <section class="footer-pages d-block d-lg-none">-->
+<!--        <ul>-->
+<!--            --><?php //$footer->display_menu_items(array_merge($footer->footer_pages, [$footer->moveo()])) ?>
+<!--        </ul>-->
+<!--    </section>-->
+
+</footer><!-- #colophon -->
+</div><!-- #page -->
 
 
 <?php wp_footer(); ?>

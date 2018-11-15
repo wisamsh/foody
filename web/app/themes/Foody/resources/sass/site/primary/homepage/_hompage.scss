@@ -48,7 +48,7 @@ $sidebar-top-offset: 60px;
       padding: 0 10px;
 
       > a {
-        &.col{
+        &.col {
           padding-left: 0;
           padding-right: 0;
         }
@@ -244,23 +244,32 @@ $sidebar-top-offset: 60px;
         height: auto;
       }
 
-      .categories-listing {
+      .categories-list-widget {
+        .title {
+          font-size: 24px;
+        }
+        .categories-listing {
 
-        padding: 0;
-        a.col {
           padding: 0;
-        }
-
-        .category-listing {
-          padding: 0 3px;
-          img {
-            clip-path: inset(0 round .3rem);
-          }
-          .categort-listing-title {
-
+          a.col {
+            padding: 0;
           }
 
+          .category-listing {
+            padding: 0 3px;
+            img {
+              clip-path: inset(0 round .3rem);
+            }
+            .categort-listing-title {
+              font-size: 18px;
+            }
+
+          }
         }
+      }
+
+      .team-title {
+        font-size: 24px;
       }
 
       .team-listing {
@@ -287,6 +296,20 @@ $sidebar-top-offset: 60px;
 
       .feed-container {
         padding-top: 10px;
+
+        .content-container{
+          margin-top: 0;
+          padding-right: 0;
+          padding-left: 0;
+
+          .foody-grid{
+            .grid-header{
+              .title{
+                font-size: 24px;
+              }
+            }
+          }
+        }
         .feed-header {
 
           .socials {
@@ -298,6 +321,8 @@ $sidebar-top-offset: 60px;
           }
 
         }
+
+
         aside {
 
           input[type="text"] {
@@ -361,8 +386,7 @@ $sidebar-top-offset: 60px;
         color: $color__primary;
         vertical-align: middle;
         display: inline-block;
-        line-height: 55px;
-
+        font-family: $font__bold;
         &:active, &:hover, &:focus {
           border: 0;
         }

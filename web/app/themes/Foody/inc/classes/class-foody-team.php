@@ -117,8 +117,8 @@ class FoodyTeam
     {
 
         $data = $this->list_authors($disply_args);
-        $title = '<h3 class="title"><a href="' . get_permalink(get_page_by_path('הנבחרת')) . '" >';
-        $title .= 'הנבחרת שלנו';
+        $title = '<h3 class="title team-title"><a href="' . get_permalink(get_page_by_path('הנבחרת')) . '" >';
+        $title .= 'הנבחרת';
         $title .= '</a></h3>';
         if (!$disply_args['show_title']) {
             $title = '';

@@ -24,7 +24,36 @@
     }
   }
 
-  .grid-sort{
-    margin-bottom: 15px;
+  .grid-sort {
+    //margin-bottom: 15px;
+  }
+}
+
+@include breakpoint(mobileonly) {
+  .foody-grid {
+    &.loading {
+    }
+
+    .show-more {
+
+      &.disabled {
+      }
+
+      img {
+      }
+      h4 {
+      }
+    }
+
+    .grid-header {
+
+      .title {
+        margin-bottom: 0;
+        font-size: 24px;
+      }
+      .grid-sort {
+      }
+    }
+
   }
 }
