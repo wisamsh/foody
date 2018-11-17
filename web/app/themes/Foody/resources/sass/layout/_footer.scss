@@ -185,5 +185,36 @@ footer.site-footer {
         }
       }
     }
+
+    .footer-pages-mobile {
+      ul {
+        margin: 0 0 5px;
+        padding: 0 5px;
+        list-style-type: none;
+        text-align: center;
+
+        li {
+          font-family: $font__assistant;
+          font-size: 18px;
+          font-weight: bold;
+          display: inline-block;
+
+          &:not(:first-child) {
+            &:before {
+              content: '\00a0\2022\00a0\00a0';
+             // margin-right: 1em;
+            }
+          }
+        }
+      }
+
+      .powered-by {
+        text-align: center;
+
+        svg {
+          width: 30%;
+        }
+      }
+    }
   }
 }

@@ -34,11 +34,16 @@ $footer = new Foody_Footer();
 
     ?>
 
-<!--    <section class="footer-pages d-block d-lg-none">-->
-<!--        <ul>-->
-<!--            --><?php //$footer->display_menu_items(array_merge($footer->footer_pages, [$footer->moveo()])) ?>
-<!--        </ul>-->
-<!--    </section>-->
+    <section class="footer-pages footer-pages-mobile d-block d-lg-none">
+        <ul>
+            <?php $footer->display_menu_items($footer->footer_pages) ?>
+        </ul>
+        <section class="powered-by">
+            <?php $footer->the_moveo() ?>
+        </section>
+
+
+    </section>
 
 </footer><!-- #colophon -->
 </div><!-- #page -->

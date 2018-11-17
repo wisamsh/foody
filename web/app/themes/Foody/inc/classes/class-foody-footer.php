@@ -115,7 +115,7 @@ class Foody_Footer
 
     public function moveo()
     {
-        $moveo = file_get_contents(get_template_directory() . '/resources/images/moveo.svg');
+        $moveo = $this->the_moveo(false);
 
         return array(
             'title' => $moveo,
@@ -123,6 +123,16 @@ class Foody_Footer
             'target' => '_blank',
             'classes' => 'moveo'
         );
+    }
+
+
+    public function the_moveo($echo = true){
+        $moveo = file_get_contents(get_template_directory() . '/resources/images/moveo.svg');
+        if ($echo){
+            echo $moveo;
+        }
+
+        return $moveo;
     }
 
     public function display_pages_menu($menu_items)
