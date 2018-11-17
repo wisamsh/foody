@@ -54,7 +54,7 @@ jQuery(document).ready(($) => {
                     event.stopPropagation();
                 });
 
-                toggleScreenLock(true,$mobileFilter,true);
+                toggleScreenLock(true, $mobileFilter, true);
                 filterShown = true;
             });
 
@@ -68,7 +68,7 @@ jQuery(document).ready(($) => {
 
         function closeMobileFilter(clear) {
             $mobileFilter.removeClass('open');
-            toggleScreenLock(false,$mobileFilter,true);
+            toggleScreenLock(false, $mobileFilter, true);
             document.removeEventListener('click', closeMobileFilter);
             filterShown = false;
             if (clear) {
@@ -93,9 +93,6 @@ jQuery(document).ready(($) => {
 
             if (op <= 0.2) {
                 op = 0;
-                $mobileFilterBtn.hide();
-            } else {
-                $mobileFilterBtn.show();
             }
             $mobileFilterBtn.css("opacity", op);
         });
