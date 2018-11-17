@@ -88,7 +88,7 @@ jQuery(document).ready(($) => {
         // and hides/shows based on scroll position to make sure
         // no content is blocked
         $(window).scroll(function () {
-            let threshold = 200; // number of pixels before bottom of page that you want to start fading
+            let threshold = 600; // number of pixels before bottom of page that you want to start fading
             let op = (($(document).height() - $(window).height()) - $(window).scrollTop()) / threshold;
 
             if (op <= 0.2) {
