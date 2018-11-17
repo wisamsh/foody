@@ -51,6 +51,14 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 
         let calculated = base * val;
         let text = calculated.toFixed(2);
+
+        let number = String(text).split('.');
+        if(number.length == 2){
+            let decimal = number[1];
+            if(decimal == '00'){
+                text = number[0];
+            }
+        }
         if (val == originalNumberOfDishes || reset) {
             text = $this.data('original');
         }

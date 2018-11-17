@@ -47,7 +47,13 @@ footer.site-footer {
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
             background-color: #ffffff;
             border: none;
-            font-family: $font__bold;
+            padding: 0 5px;
+            font-family:$font__assistant;
+
+            //noinspection CssInvalidPseudoSelector
+            &::placeholder{
+              font-family: $font__bold;
+            }
           }
         }
 
@@ -59,6 +65,7 @@ footer.site-footer {
           color: $color__primary;
           font-size: 1em;
           cursor: pointer;
+          margin-left: 0;
         }
       }
 
