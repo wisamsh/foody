@@ -2,8 +2,13 @@
  * Created by moveosoftware on 6/27/18.
  */
 
+let foodyAlert = require('../common/alerts');
 
 if (foodyGlobals.post && foodyGlobals.post.type == 'foody_recipe') {
+
+
+    let $ratingContainer = $('.recipe-rating');
+
     window.scroller();
     updateRating();
 
@@ -37,12 +42,28 @@ if (foodyGlobals.post && foodyGlobals.post.type == 'foody_recipe') {
 
         foodyAjax(settings, (err) => {
 
+            let message = 'הדירוג התקבל בהצלחה.תודה!';
+            let wrapperClasses = 'foody-message';
+
             if (err) {
-                // TODO handle
-                console.log(err);
+                message = 'אירעה שגיאה. אנא נסה/י שנית.';
+                wrapperClasses = `${wrapperClasses} error`;
             } else {
-                console.log('frs');
-                updateRating();
+                updateRating(true);
+            }
+
+            let $messageWrapper = $(`<div class="${wrapperClasses}">${message}</div>`).hide().fadeIn(300);
+
+            let wrapperClassesSelector = '.' + wrapperClasses.split(' ').join('.');
+            if ($(wrapperClassesSelector, $ratingContainer).length == 0) {
+
+                setTimeout(() => {
+                    $messageWrapper.fadeOut(300, function () {
+                        $(this).remove();
+                    })
+                }, 3000);
+                $ratingContainer.append($messageWrapper);
+
             }
         });
 

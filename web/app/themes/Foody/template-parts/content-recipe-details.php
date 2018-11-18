@@ -41,13 +41,13 @@ $foody_page = $template_args['page'];
 
                     ?>
                 </section>
-                <section class="d-none d-lg-block">
-                    <?php
-                    foody_get_template_part(
-                        get_template_directory() . '/template-parts/content-social-actions.php'
-                    )
-                    ?>
-                </section>
+<!--                <section class="d-none d-lg-block">-->
+<!--                    --><?php
+//                    foody_get_template_part(
+//                        get_template_directory() . '/template-parts/content-social-actions.php'
+//                    )
+//                    ?>
+<!--                </section>-->
 
             </div>
 
@@ -123,7 +123,7 @@ $foody_page = $template_args['page'];
     <?php
 
     ?>
-    <section class="d-block d-lg-none">
+    <section class="">
         <?php foody_get_template_part(get_template_directory() . '/template-parts/content-social-actions.php'); ?>
     </section>
     <?php

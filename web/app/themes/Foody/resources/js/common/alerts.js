@@ -20,7 +20,7 @@ if (!$alertPlaceholder.length) {
     $('body').append('<div id="alert-placeholder"></div>');
 }
 
-module.exports = function (level, message) {
+module.exports = function (level, message,container = '#content') {
 
     if (!levels.includes(level)) {
         level = levels[0];
@@ -28,7 +28,7 @@ module.exports = function (level, message) {
 
     let myAlert = `<div role="alert" class="alert foody-alert alert-dismissible alert-${level}"><span>${message}</span><a class="close" data-dismiss="alert">×</a></div>`;
 
-    $('#content').prepend(myAlert);
+    $(container).prepend(myAlert);
 
     let alertEl = $('.alert');
     alertEl.addClass('foody-show');

@@ -96,6 +96,14 @@ $content-width: 95%;
           }
         }
       }
+
+      section{
+        .social{
+          .essb_links{
+            float: right;
+          }
+        }
+      }
     }
 
     .recipe-overview {
@@ -2491,5 +2499,15 @@ $content-width: 95%;
       }
 
     }
+  }
+}
+
+
+.foody-message{
+  font-size: 20px;
+  font-family: $font__assistant;
+
+  &.error{
+    color: $color-red-error;
   }
 }
