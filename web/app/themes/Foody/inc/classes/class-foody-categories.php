@@ -58,6 +58,7 @@ class Foody_Categories
                     'categories' => $sub_categories,
                     'title' => $main_title,
                     'subtitle' => get_sub_field('subtitle'),
+                    'category' => get_sub_field('category'),
                     'cards_per_row' => $cards_per_row
                 );
 

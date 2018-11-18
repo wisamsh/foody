@@ -18,6 +18,13 @@ $cards_per_row = 12 / $cards_per_row;
 
 $column_class = '';// 'col-12 col-sm-' . $cards_per_row;
 
+$category = $template_args['category'];
+
+$link = get_term_link($category);
+if (is_wp_error($link)) {
+    $link = '';
+}
+
 ?>
 <div>
     <div class="card p-0">
@@ -26,11 +33,16 @@ $column_class = '';// 'col-12 col-sm-' . $cards_per_row;
              alt="<?php echo $template_args['title'] ?>">
         <div class="card-block">
             <h2 class="card-title">
-                <?php echo $template_args['title'] ?>
+                <a href="<?php echo $link ?>">
+                    <?php echo $template_args['title'] ?>
+                </a>
             </h2>
             <h3 class="card-subtitle">
                 <a href="<?php get_category_link($main_category_id) ?>">
-                    <?php echo $template_args['subtitle'] ?>
+                    <a href="<?php echo $link ?>">
+                        <?php echo $template_args['subtitle'] ?>
+                    </a>
+
                 </a>
             </h3>
             <section class="card-text">
