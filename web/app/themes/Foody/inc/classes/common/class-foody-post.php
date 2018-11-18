@@ -255,9 +255,55 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     public function the_sidebar_content()
     {
 
+        $this->the_sidebar_related_content('מתכונים נוספים','פלייליסטים קשורים');
+
+//        if (!isset($args['hide_playlists']) || $args['hide_playlists'] == false) {
+//            $playlists_args = array(
+//                'title' => 'פלייליסט',
+//                'selector' => 'related_playlists',
+//                'content_classes' => 'related-playlists',
+//                'template_args_func' => function (Foody_Playlist $item) {
+//                    return array(
+//                        'count' => $item->num_of_recipes
+//                    );
+//                }
+//            );
+//
+//            $playlists = $this->get_related_content_by_categories_and_custom('foody_playlist', 'related_playlists');
+//
+//            $this->related_content($playlists_args, $playlists);
+//        }
+//
+//        if (!isset($args['hide_recipes']) || $args['hide_recipes'] == false) {
+//            $recipes = $this->get_related_content_by_categories_and_custom('foody_recipe', 'related_recipes');
+//
+//            $recipes_args = array(
+//                'title' => 'מתכונים נוספים',
+//                'selector' => 'related_recipes',
+//                'content_classes' => 'related-recipes',
+//                'template_args_func' => function ($recipe) {
+//                    $foody_recipe = $recipe;
+//                    if (!$foody_recipe instanceof Foody_Recipe) {
+//
+//                        $foody_recipe = new Foody_Recipe($recipe);
+//                    }
+//                    return array(
+//                        'duration' => $foody_recipe->getDuration(),
+//                        'has_video' => $foody_recipe->has_video
+//                    );
+//                }
+//            );
+//
+//            $this->related_content($recipes_args, $recipes);
+//        }
+
+    }
+
+    private function the_sidebar_related_content($recipes_title, $playlist_title)
+    {
         if (!isset($args['hide_playlists']) || $args['hide_playlists'] == false) {
             $playlists_args = array(
-                'title' => 'פלייליסט',
+                'title' => $playlist_title,
                 'selector' => 'related_playlists',
                 'content_classes' => 'related-playlists',
                 'template_args_func' => function (Foody_Playlist $item) {
@@ -276,7 +322,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $recipes = $this->get_related_content_by_categories_and_custom('foody_recipe', 'related_recipes');
 
             $recipes_args = array(
-                'title' => 'מתכונים נוספים',
+                'title' => $recipes_title,
                 'selector' => 'related_recipes',
                 'content_classes' => 'related-recipes',
                 'template_args_func' => function ($recipe) {
@@ -355,7 +401,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         $items_to_fetch = self::$MAX__RELATED_ITEMS - count($posts);
 
 
-        if ($items_to_fetch < 0){
+        if ($items_to_fetch < 0) {
             $items_to_fetch = 0;
         }
 
@@ -389,37 +435,39 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_mobile_sidebar_content()
     {
-        $playlists_args = array(
-            'title' => 'מתכונים נוספים',
-            'selector' => 'related_playlists',
-            'content_classes' => 'related-playlists',
-            'template_args_func' => function (Foody_Playlist $item) {
-                return array(
-                    'count' => $item->num_of_recipes
-                );
-            }
-        );
+        $this->the_sidebar_related_content('','מתכונים נוספים');
 
-        $this->related_content($playlists_args);
-
-        $recipes_args = array(
-            'title' => '',
-            'selector' => 'related_recipes',
-            'content_classes' => 'related-recipes',
-            'template_args_func' => function ($recipe) {
-                $foody_recipe = $recipe;
-
-                if (!$foody_recipe instanceof Foody_Recipe) {
-                    $foody_recipe = new Foody_Recipe($recipe);
-                }
-                return array(
-                    'duration' => $foody_recipe->getDuration(),
-                    'has_video' => $foody_recipe->has_video
-                );
-            }
-        );
-
-        $this->related_content($recipes_args);
+//        $playlists_args = array(
+//            'title' => 'מתכונים נוספים',
+//            'selector' => 'related_playlists',
+//            'content_classes' => 'related-playlists',
+//            'template_args_func' => function (Foody_Playlist $item) {
+//                return array(
+//                    'count' => $item->num_of_recipes
+//                );
+//            }
+//        );
+//
+//        $this->related_content($playlists_args);
+//
+//        $recipes_args = array(
+//            'title' => '',
+//            'selector' => 'related_recipes',
+//            'content_classes' => 'related-recipes',
+//            'template_args_func' => function ($recipe) {
+//                $foody_recipe = $recipe;
+//
+//                if (!$foody_recipe instanceof Foody_Recipe) {
+//                    $foody_recipe = new Foody_Recipe($recipe);
+//                }
+//                return array(
+//                    'duration' => $foody_recipe->getDuration(),
+//                    'has_video' => $foody_recipe->has_video
+//                );
+//            }
+//        );
+//
+//        $this->related_content($recipes_args);
 
     }
 

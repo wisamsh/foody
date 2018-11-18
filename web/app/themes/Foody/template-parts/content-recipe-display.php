@@ -210,7 +210,7 @@ $recipe = $template_args['recipe'];
 
 </section>
 
-<section class="recipe-sidebar-mobile d-block d-sm-none">
+<section class="recipe-sidebar-mobile d-block d-lg-none">
     <?php $recipe->the_mobile_sidebar_content(); ?>
 </section>
 
