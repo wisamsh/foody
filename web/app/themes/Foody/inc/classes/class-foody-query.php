@@ -78,6 +78,9 @@ class Foody_Query
         if (empty($search_term)) {
             if (isset($_POST['filter']['search'])) {
                 $search_term = $_POST['filter']['search'];
+                global $wpdb;
+
+                $search_term = $wpdb->prepare($search_term,[]);
             }
         }
         $args = self::get_args([

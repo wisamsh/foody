@@ -42,7 +42,6 @@ if (is_wp_error($link)) {
                     <a href="<?php echo $link ?>">
                         <?php echo $template_args['subtitle'] ?>
                     </a>
-
                 </a>
             </h3>
             <section class="card-text">
