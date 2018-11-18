@@ -66,7 +66,7 @@ $foody_page = $template_args['page'];
                 <?php echo $foody_page->getDescription() ?>
             </div>
 
-            <section class="d-none d-lg-block">
+            <section class="d-none d-lg-block content-details-bullets-container">
                 <?php
 
 

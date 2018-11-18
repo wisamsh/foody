@@ -18,9 +18,15 @@ $content-width: 95%;
 
   article.content {
 
-    > section[class^="recipe-"] {
+    .title {
+      font-size: 36px;
+      margin-bottom: 0;
+    }
+
+    > section[class^="recipe-"], > .d-none.d-lg-block > section[class^="recipe-"] {
       margin-top: 20px;
       margin-bottom: 20px;
+
     }
 
     .details-container {
@@ -88,21 +94,32 @@ $content-width: 95%;
         }
       }
 
-      .btn-facebook-share {
-        a {
-          color: white;
-          &:hover {
-            color: white;
+      section {
+        .social {
+          display: flex;
+          .essb_links {
+            li {
+              margin-left: 5px !important;
+              a {
+                margin-right: 0;
+              }
+            }
+          }
+
+          .btn-facebook-share {
+            margin-right: 5px;
+            a {
+              color: white;
+              &:hover {
+                color: white;
+              }
+            }
           }
         }
       }
 
-      section{
-        .social{
-          .essb_links{
-            float: right;
-          }
-        }
+      .description, .content-details-bullets-container {
+        margin-right: -11.888888%;
       }
     }
 
@@ -404,6 +421,9 @@ $content-width: 95%;
           float: right;
           margin: 0;
           padding: 15px 0;
+          font-size: 36px;
+          font-family: $font__main;
+          font-weight: 900;
         }
 
         .add-image {
@@ -622,6 +642,12 @@ $content-width: 95%;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
       }
 
+      .comments-title {
+        font-size: 36px;
+        font-family: $font__main;
+        font-weight: 900;
+      }
+
     }
 
   }
@@ -747,37 +773,44 @@ $content-width: 95%;
             }
           }
 
-          .essb_links_list {
+          .social{
+            .essb_links_list {
 
-            .essb_item {
-              margin-left: 10px !important;
-              a {
-                width: 45px;
-                height: 45px;
-                border-radius: 50%;
+              .essb_item {
+                margin-left: 10px !important;
+                a {
+                  width: 45px;
+                  height: 45px;
+                  border-radius: 50%;
 
-                .essb_icon {
-                  width: 36px;
-                  height: 36px;
-                  border-radius: 0;
+                  .essb_icon {
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 0;
 
-                  &:before {
-                    font-size: 27px !important;
-                    left: -4px;
+                    &:before {
+                      font-size: 27px !important;
+                      left: 0;
+                    }
                   }
                 }
               }
             }
-          }
 
-          .btn-facebook {
-            padding: 0 20px;
-            height: 45px;
-            font-size: 18px;
+            .btn-facebook {
+              padding: 0 20px;
+              height: 45px;
+              font-size: 18px;
+              margin-right: auto;
+            }
           }
 
           .mobile-rating {
             margin-top: 10px;
+          }
+
+          .description, .content-details-bullets-container, .favorite-container {
+            margin-right: -25%;
           }
         }
       }
@@ -1042,6 +1075,10 @@ $content-width: 95%;
               i.icon-side-arrow {
                 &:before {
                   left: 0;
+                  position: unset;
+                  line-height: 50px;
+                  font-size: 11px;
+                  margin: 0;
                 }
               }
             }
@@ -1178,6 +1215,7 @@ $content-width: 95%;
                 position: unset;
                 line-height: 50px;
                 font-size: 11px;
+                margin: 0;
               }
             }
           }
@@ -2502,12 +2540,11 @@ $content-width: 95%;
   }
 }
 
-
-.foody-message{
+.foody-message {
   font-size: 20px;
   font-family: $font__assistant;
 
-  &.error{
+  &.error {
     color: $color-red-error;
   }
 }

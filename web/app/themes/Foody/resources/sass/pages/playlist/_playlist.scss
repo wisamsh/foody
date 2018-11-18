@@ -12,6 +12,7 @@
     &.nolist {
       margin-top: -60px;
       padding: 30px 0;
+      margin-bottom: 20px;
     }
 
     .title-container {
@@ -33,24 +34,27 @@
         position: relative;
         width: 100%;
         .duration {
+          display: flex;
           position: absolute;
-          right: 10px;
-          top: 10px;
+          right: 5px;
+          top: 5px;
           background-color: #fff;
           color: $color__primary;
-          border-radius: 12px;
+          border-radius: 9px;
           box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
-          padding: 3px 7.5px;
-
+          padding: 0 5px;
           i {
-            vertical-align: middle;
+            display: inline-flex;
+            place-items: center;
             &:before {
-              vertical-align: text-bottom;
+              font-size: 9px;
             }
           }
 
           span {
-            display: inline-block;
+            font-size: 15px;
+            margin-right: 3px;
+            margin-top: 0.7px;
           }
         }
       }
@@ -114,7 +118,6 @@
         .author-name {
           font-family: $font__assistant;
           font-size: 16px;
-          font-weight: 600;
           line-height: 1.06;
         }
       }
@@ -234,8 +237,7 @@
 
 }
 
-
-@include breakpoint(tablet){
+@include breakpoint(tablet) {
   .single-foody_playlist {
 
     .content {
@@ -300,12 +302,12 @@
 
             .author-name {
 
-              a{
+              a {
                 font-size: 1.5em;
               }
             }
 
-            .description{
+            .description {
               font-size: 1.7em;
             }
           }
