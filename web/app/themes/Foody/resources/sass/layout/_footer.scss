@@ -36,8 +36,13 @@ footer.site-footer {
         }
       }
 
+      .newsletter-title {
+        font-weight: 900;
+      }
+
       .newsletter {
         margin-bottom: 15px;
+
         .input-container {
           padding-right: 0;
 
@@ -48,11 +53,12 @@ footer.site-footer {
             background-color: #ffffff;
             border: none;
             padding: 0 5px;
-            font-family:$font__assistant;
+            font-family: $font__assistant;
 
             //noinspection CssInvalidPseudoSelector
-            &::placeholder{
-              font-family: $font__bold;
+            &::placeholder {
+              font-family: $font__main;
+              font-weight: 900;
             }
           }
         }
@@ -66,6 +72,7 @@ footer.site-footer {
           font-size: 1em;
           cursor: pointer;
           margin-left: 0;
+          font-weight: 900;
         }
       }
 
