@@ -37,7 +37,7 @@ $foody_how_i_did = new Foody_HowIDid();
 
         <?php
         $accordion_args = array(
-            'id' => 'how-i-did',
+            'id' => 'how-i-did-accordion',
             'title_classes' => 'how-i-did-title comments-title',
             'title' => $foody_how_i_did->get_the_title(),
             'content' => function () use ($foody_how_i_did) {

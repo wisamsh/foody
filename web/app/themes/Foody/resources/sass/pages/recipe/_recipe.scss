@@ -1068,7 +1068,7 @@ $content-width: 95%;
         margin: 0;
         max-width: 100%;
 
-        #accordion-how-i-did {
+        #accordion-how-i-did-accordion {
 
           .foody-accordion-title {
             h5 {
@@ -1232,6 +1232,22 @@ $content-width: 95%;
 
     aside {
       @include related-content;
+
+
+    }
+
+    .recipe-sidebar-mobile{
+      .related-content-container{
+        .related-content-title {
+          padding: 0;
+        }
+
+        ul{
+          &.related-content{
+            padding: 0;
+          }
+        }
+      }
     }
   }
 }
