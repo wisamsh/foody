@@ -380,6 +380,12 @@ class Foody_Recipe extends Foody_Post
 
     private function get_recipe_time($time_field)
     {
+        if (!isset($time_field['time'])){
+            $time_field['time'] = 0;
+        }
+        if (!isset($time_field['time_unit'])){
+            $time_field['time_unit'] = 'minutes';
+        }
         $time = $time_field['time'];
         $unit = trim($time_field['time_unit']);
 

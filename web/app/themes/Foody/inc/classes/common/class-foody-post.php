@@ -233,14 +233,24 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
         $primary = get_post_meta($this->post->ID, '_yoast_wpseo_primary_category', true);
 
-        if ($primary && is_numeric($primary) && intval($primary) > 0) {
-
-        } else {
+        if (!$primary || !is_numeric($primary) || intval($primary) <= 0) {
             /** @var WP_Term[] $categories */
-            $categories = wp_get_post_categories($this->id);
-            if (is_array($categories) && count($categories) > 0) {
-                $primary = $categories[0]->term_id;
+            $categories = wp_get_post_categories($this->id, ['fields' => 'all_with_object_id']);
+            if (!is_wp_error($categories)) {
+                if (is_array($categories)) {
+
+                    $categories = array_filter($categories, function ($category) {
+                        return $category instanceof WP_Term;
+                    });
+
+                    if (count($categories) > 0) {
+                        $first = $categories[0];
+                        $primary = $first->term_id;
+                    }
+
+                }
             }
+
 
         }
 
@@ -255,7 +265,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     public function the_sidebar_content()
     {
 
-        $this->the_sidebar_related_content('מתכונים נוספים','פלייליסטים קשורים');
+        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים');
 
 //        if (!isset($args['hide_playlists']) || $args['hide_playlists'] == false) {
 //            $playlists_args = array(
@@ -435,7 +445,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_mobile_sidebar_content()
     {
-        $this->the_sidebar_related_content('','מתכונים נוספים');
+        $this->the_sidebar_related_content('', 'מתכונים נוספים');
 
 //        $playlists_args = array(
 //            'title' => 'מתכונים נוספים',
