@@ -36,7 +36,12 @@ function foody_where_filter($where)
 add_filter('posts_where', 'foody_where_filter');
 
 
-function foody_search_user_by_name($name,$single=true)
+/**
+ * @param string $name user name to search
+ * @param bool $single whether to search fo a single user or multiple
+ * @return array|null|object|string single user id or an array of user ids.
+ */
+function foody_search_user_by_name($name, $single = true)
 {
     global $wpdb;
     $query =
@@ -76,10 +81,15 @@ function foody_search_user_by_name($name,$single=true)
 
     $query = $wpdb->prepare($query, $args);
 
-    if($single){
+    if ($single) {
         $result = $wpdb->get_var($query);
-    }else{
+    } else {
         $result = $wpdb->get_results($query);
+        if (!empty($result) && is_array($result)) {
+            $result = array_map(function ($user) {
+                return $user->user_id;
+            }, $result);
+        }
     }
 
     return $result;

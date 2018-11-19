@@ -38,10 +38,10 @@ function foody_ajax_autocomplete()
 
     if (is_array($authors) && count($authors) > 0) {
         foreach ($authors as $author) {
-            $user = get_user_by('ID', $author->user_id);
+            $user = get_user_by('ID', $author);
             $items[] = [
                 'name' => $user->display_name,
-                'link' => get_search_link($user->display_name)
+                'link' => Foody_Query::get_search_url($user->display_name)
             ];
         }
     }
