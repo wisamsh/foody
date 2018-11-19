@@ -114,6 +114,12 @@
           .tab-content {
             background-color: $color__background-body;
 
+            .foody-grid {
+              .grid-header {
+                justify-content: flex-end;
+              }
+            }
+
             .tab-pane {
 
               &.show {
@@ -185,10 +191,10 @@
                 display: none;
               }
 
-              .followers-count{
-                  font-family: $font__assistant;
-                  font-size: 18px;
-                  font-weight: normal;
+              .followers-count {
+                font-family: $font__assistant;
+                font-size: 18px;
+                font-weight: normal;
               }
             }
 
@@ -198,12 +204,12 @@
               }
             }
 
-            .social{
+            .social {
               padding: 0;
-              .essb_links{
+              .essb_links {
                 float: right;
 
-                .essb_links_list{
+                .essb_links_list {
                   .essb_item {
                     margin-left: 10px !important;
                     a {
@@ -225,7 +231,6 @@
                     }
                   }
                 }
-
 
               }
 
