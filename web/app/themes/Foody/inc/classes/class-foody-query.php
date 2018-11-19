@@ -5,11 +5,16 @@
  * User: moveosoftware
  * Date: 10/11/18
  * Time: 11:02 AM
+ *
+ *
+ * This singleton is responsible for providing
+ * handler functions related to querying the database using the @see WP_Query class.
+ *
  */
 class Foody_Query
 {
 
-    // TODO maybe remove the 'get_args' call in every func
+    // TODO remove the 'get_args' call in every func
 
 
     private static $default_args;
@@ -54,7 +59,6 @@ class Foody_Query
     {
         $args = self::get_args([
             'post_type' => ['foody_recipe', 'foody_playlist', 'post'],
-            'post_status' => 'publish', // TODO add to default args
             'cat' => $id
         ]);
 
@@ -80,7 +84,7 @@ class Foody_Query
                 $search_term = $_POST['filter']['search'];
                 global $wpdb;
 
-                $search_term = $wpdb->prepare($search_term,[]);
+                $search_term = $wpdb->prepare($search_term, []);
             }
         }
         $args = self::get_args([
@@ -88,6 +92,16 @@ class Foody_Query
             's' => $search_term
         ]);
 
+
+        return $args;
+    }
+
+    public function tag($id)
+    {
+        $args = self::get_args([
+            'post_type' => ['foody_recipe', 'foody_playlist', 'post'],
+            'tag_id' => $id
+        ]);
 
         return $args;
     }
@@ -134,6 +148,7 @@ class Foody_Query
         return $foody_args;
     }
 
+
     public function has_more_posts(WP_Query $query)
     {
         $current_page = intval($query->get('paged', 0));
@@ -153,7 +168,6 @@ class Foody_Query
 
         return $max > $current_page;
     }
-
 
     private function get_posts_per_page()
     {
@@ -188,9 +202,11 @@ class Foody_Query
     {
         $post_types = ['foody_playlist', 'foody_recipe'];
 
+        global $wpdb;
+
         $base = home_url();
 
-        $base = add_query_arg('s', $search_term, $base);
+        $base = add_query_arg('s', $wpdb->prepare($search_term, []), $base);
 
         foreach ($post_types as $post_type) {
             $base = add_query_arg('post_type', $post_type, $base);

@@ -38,7 +38,7 @@ require_once get_template_directory() . "/inc/classes/interfaces/interface-foody
 /*
  * Classes
  * */
-
+require_once get_template_directory() . "/inc/classes/common/class-foody-term.php";
 require_once get_template_directory() . "/inc/classes/common/class-foody-user.php";
 require_once get_template_directory() . "/inc/classes/class-header.php";
 require_once get_template_directory() . "/inc/classes/class-foody-footer.php";
@@ -71,6 +71,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-categories-acc
 require_once get_template_directory() . "/inc/classes/class-foody-query.php";
 require_once get_template_directory() . "/inc/classes/common/class-foody-analytics.php";
 require_once get_template_directory() . "/inc/classes/class-foody-sidebar.php";
+require_once get_template_directory() . "/inc/classes/class-foody-tag.php";
 
 
 /*

@@ -50,12 +50,16 @@ $default_sort_options = [
         $grid_header = $settings['header'];
         ?>
         <section class="grid-header row">
-            <?php if (!empty($grid_header['title'])): ?>
-                <h2 class="title col-12 col-lg-6">
-                    <?php echo $grid_header['title'] ?>
-                </h2>
-            <?php endif; ?>
-            <?php if (!empty($grid_header['sort']) && !empty($posts) ):
+
+            <h2 class="title col-12 col-lg-6">
+                <?php
+                if (!empty($grid_header['title'])) {
+                    echo $grid_header['title'];
+                }
+                ?>
+            </h2>
+
+            <?php if (!empty($grid_header['sort']) && !empty($posts)):
                 $sort = $grid_header['sort'];
                 $options = empty($sort['options']) ? $default_sort_options : $sort['options'];
                 $sort_args = [

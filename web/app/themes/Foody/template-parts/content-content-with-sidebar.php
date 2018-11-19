@@ -61,7 +61,7 @@ $featured_content_classes[] = 'featured-content-container';
                             $foody_page->the_content($foody_page);
 
                         endwhile; // End of the loop.
-                    } elseif (is_author() || is_search() || is_category()) {
+                    } elseif (is_author() || is_search() || is_category() || is_tag()) {
                         ?>
                         <section class="details-container">
                             <div class="featured-content-container">

@@ -5,7 +5,8 @@ body[class~="search"],
 body[class~="foody_channel-template-channel"],
 body[class~="single-foody_recipe"],
 body[class~="single-foody_playlist"],
-body[class~="post-template-content-with-sidebar"] {
+body[class~="post-template-content-with-sidebar"],
+body[class~="tag"]{
 
   #page {
     //background-color: white;
@@ -291,7 +292,8 @@ body[class~="post-template-content-with-sidebar"] {
   body[class~="category"],
   body[class~="search"],
   body[class~="foody_channel-template-channel"],
-  body[class~="post-template-content-with-sidebar"] {
+  body[class~="post-template-content-with-sidebar"],
+  body[class~="tag"]{
     $sidebar-width: 0;
     $content-width: 100%;
     article.content {
@@ -452,7 +454,8 @@ body[class~="post-template-content-with-sidebar"] {
   body[class~="foody_channel-template-channel"],
   body[class~="single-foody_recipe"],
   body[class~="single-foody_playlist"],
-  body[class~="post-template-content-with-sidebar"] {
+  body[class~="post-template-content-with-sidebar"],
+  body[class~="tag"]{
     .progress-wrapper {
 
       progress {
@@ -646,7 +649,8 @@ body[class~="post-template-content-with-sidebar"] {
   body[class~="foody_channel-template-channel"],
   body[class~="single-foody_recipe"],
   body[class~="single-foody_playlist"],
-  body[class~="post-template-content-with-sidebar"] {
+  body[class~="post-template-content-with-sidebar"],
+  body[class~="tag"]{
     $sidebar-width: 25%;
     .progress-wrapper {
 
@@ -828,7 +832,3 @@ body[class~="post-template-content-with-sidebar"] {
     }
   }
 }
-
-
-
-
