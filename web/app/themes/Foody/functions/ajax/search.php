@@ -34,9 +34,10 @@ function foody_ajax_autocomplete()
         }
     }
 
-    $authors = foody_search_user_by_name($search,false);
+    $authors = foody_search_user_by_name($search, false);
 
     if (is_array($authors) && count($authors) > 0) {
+        $authors = array_unique($authors);
         foreach ($authors as $author) {
             $user = get_user_by('ID', $author);
             $items[] = [
