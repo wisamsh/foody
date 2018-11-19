@@ -192,6 +192,9 @@ class SidebarFilter
             case 'tags':
             case 'limitations':
                 $title = get_term_field('name', $id, $this->type_to_taxonomy($type));
+                if (is_wp_error($title)){
+                    $title = '';
+                }
                 break;
 
             case 'ingredients':

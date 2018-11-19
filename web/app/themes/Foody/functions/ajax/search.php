@@ -18,37 +18,34 @@ function foody_ajax_autocomplete()
     $results = new WP_Query(array(
         'post_type' => array('foody_recipe'),
         'post_status' => 'publish',
-        'number' => get_option('posts_per_page'),
+        'posts_per_page' => 10,
         'orderby' => 'title',
         's' => $search,
     ));
 
 
-    $items = array();
+    $items = [];
     if (!empty($results->posts)) {
         foreach ($results->posts as $result) {
             $items[] = [
                 'name' => $result->post_title,
-                'link' => Foody_Query::get_search_url($result->post_title) //add_query_arg('s',$result->post_title,home_url())// get_search_link($result->post_title)
+                'link' => Foody_Query::get_search_url($result->post_title)
             ];
         }
     }
 
-//    $terms = get_terms('category', array(
-//        'name__like' => $search,
-//        'number' => 5,
-//        'hide_empty' => false // Optional
-//    ));
-//
-//    if (!is_wp_error($terms)) {
-//        /** @var WP_Term $term */
-//        foreach ($terms as $term) {
-//            $items[] = [
-//                'name' => $term->name,
-//                'link' => get_search_link($term->name)
-//            ];
-//        }
-//    }
+    $authors = foody_search_user_by_name($search,false);
+
+    if (is_array($authors) && count($authors) > 0) {
+        foreach ($authors as $author) {
+            $user = get_user_by('ID', $author->user_id);
+            $items[] = [
+                'name' => $user->display_name,
+                'link' => get_search_link($user->display_name)
+            ];
+        }
+    }
+
     wp_send_json_success($items);
 }
 
@@ -74,12 +71,12 @@ function foody_ajax_filter()
 
     $posts = $foody_search->query($filter);
 
-    $posts = array_map('Foody_Post::create',$posts);
+    $posts = array_map('Foody_Post::create', $posts);
 
     $grid = new FoodyGrid();
 
     // TODO pass cols
-    echo $grid->loop($posts,$options['cols'],false);
+    echo $grid->loop($posts, $options['cols'], false);
 
     die();
 
