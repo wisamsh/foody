@@ -148,7 +148,10 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
             'attr_title' => __('התנתק'),
             'target' => '',
             'xfn' => '',
-            'object' => null
+            'object' => null,
+            'current'=>false,
+            'current_item_ancestor'=>false,
+            'current_item_parent'=>false,
         ];
 
         $sorted_menu_items[]= $logout_item;
@@ -180,6 +183,9 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
 }
 
 add_filter('wp_nav_menu_objects', 'add_dynamic_menu_items', 10, 2);
+
+
+
 function foody_get_menu_item_with_inline_children($incremental_id, $children)
 {
     $inline_children = new stdClass();

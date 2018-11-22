@@ -31,7 +31,15 @@ $user = new Foody_User();
 
     <header id="masthead" class="site-header">
         <div class="socials d-none d-lg-block">
-            <?php $header->the_socials_bar() ?>
+
+            <section class="header-top-container  d-none d-lg-flex">
+                <?php $header->the_socials_bar() ?>
+
+                <div class="search-bar search-bar-container">
+                    <?php get_search_form(); ?>
+                </div>
+            </section>
+
         </div>
 
 
@@ -54,9 +62,7 @@ $user = new Foody_User();
 
                 </div><!-- .site-branding -->
 
-                <div class="search-bar search-bar-container d-none d-lg-block">
-                    <?php get_search_form(); ?>
-                </div>
+
 
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#foody-navbar-collapse"
@@ -125,7 +131,7 @@ $user = new Foody_User();
 
                 $nav_args = array(
                     'theme_location' => 'primary',
-                    'depth' => 2,
+                    'depth' => 3,
                     'container' => 'div',
                     'container_class' => 'collapse navbar-collapse',
                     'container_id' => 'foody-navbar-collapse',

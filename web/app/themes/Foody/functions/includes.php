@@ -72,6 +72,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-query.php";
 require_once get_template_directory() . "/inc/classes/common/class-foody-analytics.php";
 require_once get_template_directory() . "/inc/classes/class-foody-sidebar.php";
 require_once get_template_directory() . "/inc/classes/class-foody-tag.php";
+require_once get_template_directory() . '/inc/wp-bootstrap-navwalker.php';
 
 
 /*

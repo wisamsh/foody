@@ -76,7 +76,6 @@ function foody_ajax_filter()
 
     $grid = new FoodyGrid();
 
-    // TODO pass cols
     echo $grid->loop($posts, $options['cols'], false);
 
     die();

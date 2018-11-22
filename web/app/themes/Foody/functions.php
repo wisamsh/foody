@@ -181,8 +181,7 @@ require get_template_directory() . '/inc/template-functions.php';
  */
 require get_template_directory() . '/inc/customizer.php';
 
-// Register Custom Navigation Walker
-require_once get_template_directory() . '/inc/wp-bootstrap-navwalker.php';
+
 register_nav_menus(array(
     'primary' => __('Primary Menu', 'foody'),
 ));
