@@ -18,7 +18,7 @@ function foody_where_filter($where)
     global $wpdb;
     if (is_search()) {
         $search = get_query_var('s');
-        $search = esc_sql($search);
+//        $search = esc_sql($search);
         $author_id = foody_search_user_by_name($search);
 
         if ($author_id) {
@@ -45,7 +45,7 @@ function foody_search_user_by_name($name, $single = true)
 {
     global $wpdb;
 
-    $name = esc_sql($name);
+//    $name = esc_sql($name);
     $query =
         "SELECT user_id  
               FROM $wpdb->usermeta 

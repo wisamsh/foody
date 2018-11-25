@@ -122,3 +122,20 @@ function __search_by_title_only($search, $wp_query)
 
 add_filter('posts_search', '__search_by_title_only', 500, 2);
 
+
+//function livchem_search_filter($s) {
+//    return urldecode($s);
+//}
+//
+//add_filter('get_search_query', 'livchem_search_filter');
+//add_filter('the_search_query', 'livchem_search_filter');
+//
+//function livchem_query_vars_search_filter($query)
+//{
+//    if ($query->is_search && !is_admin()) {
+//        $query->query_vars['s'] = urldecode($query->query_vars['s']);
+//    }
+//
+//    return $query;
+//}
+//add_action('parse_query', 'livchem_query_vars_search_filter');

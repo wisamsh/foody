@@ -51,11 +51,24 @@ class Foody_SearchPage implements Foody_ContentWithSidebar
 
     public function the_results()
     {
+
+
         $args = $this->foody_query->get_query('search', [], true);
-
         $query = new WP_Query($args);
-
         $posts = $query->get_posts();
+
+
+        global $wp_query;
+//        $posts = [];
+//
+//        while (have_posts()){
+//            the_post();
+//            global $post;
+//
+//            $posts[]= $post;
+//        }
+
+
 
         $foody_posts = array_map('Foody_Post::create', $posts);
 
