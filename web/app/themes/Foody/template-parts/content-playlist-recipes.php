@@ -45,10 +45,8 @@ $hide_title = isset($template_args['hide_title']) && $template_args['hide_title'
 
         <li class="playlist-recipe-item row gutter-0 <?php echo $item_class ?>"
             data-video="<?php echo $recipe->video['id'] ?>">
-            <div class="image-container col-7 col-sm-6">
+            <div class="image-container col-7 col-sm-6 col-lg-10">
                 <a href="<?php echo $recipe->link ?>">
-
-
                     <figure class="tint">
 
                         <img src="<?php echo $recipe->getImage() ?>" alt="<?php echo $recipe->getTitle() ?>">
@@ -76,7 +74,7 @@ $hide_title = isset($template_args['hide_title']) && $template_args['hide_title'
                 </a>
             </div>
 
-            <div class="playlist-recipe-item-details col-5 col-sm-6">
+            <div class="playlist-recipe-item-details col-5 col-sm-6 col-lg-12">
                 <h3>
                     <a href="<?php echo $playlist->get_playlist_recipe_link($recipe) ?>">
                         <?php echo $recipe->getTitle() ?>
