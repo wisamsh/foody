@@ -1,5 +1,5 @@
 $social-icon-size: 21px;
-
+$header-height: 76px;
 header {
 
   .socials {
@@ -8,7 +8,7 @@ header {
 
       @include site-width();
 
-      height: 76px;
+      height: $header-height;
       justify-content: space-between;
       flex-direction: row-reverse;
       align-items: center;
@@ -47,7 +47,7 @@ header {
         $input-height: 39px;
         flex-grow: 1;
 
-        .algolia-autocomplete{
+        .algolia-autocomplete {
           width: 100%;
         }
 
@@ -446,9 +446,31 @@ header {
 
         &#menu-navbar {
           margin-left: 0;
+
+          > li {
+            &.children-shown {
+              //height: $header-height;
+
+              .menu-item-children-shown{
+                //line-height: calc(#{$header-height} - (.5rem * 2)) !important;
+              }
+
+
+              > .nav-link {
+                //@extend .menu-item-children-shown;
+              }
+
+              > .toggle-wrap{
+                > .nav-link {
+                  //@extend .menu-item-children-shown;
+                }
+              }
+            }
+          }
         }
 
         li {
+
           a {
             color: #3A3A3A;
             font-size: 25px;

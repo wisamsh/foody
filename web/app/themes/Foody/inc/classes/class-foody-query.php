@@ -79,6 +79,7 @@ class Foody_Query
     public function search()
     {
         $search_term = get_search_query();
+        $search_term = esc_sql($search_term);
         if (empty($search_term)) {
             if (isset($_POST['filter']['search'])) {
                 $search_term = $_POST['filter']['search'];
