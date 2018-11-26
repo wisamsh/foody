@@ -80,17 +80,17 @@ class Foody_Query
     {
         $search_term = get_search_query();
         $search_term = html_entity_decode($search_term);
+        $search_term = esc_sql($search_term);
+        $search_term = urldecode($search_term);
+        global $wpdb;
+        $search_term = $wpdb->esc_like($search_term);
         if (empty($search_term)) {
             if (isset($_POST['filter']['search'])) {
                 $search_term = $_POST['filter']['search'];
 
             }
         }
-//        if(!empty($search_term)){
-//            global $wpdb;
-//
-//            $search_term = $wpdb->prepare($search_term, []);
-//        }
+
         $args = self::get_args([
             'post_type' => ['foody_recipe', 'foody_playlist'],
             's' => $search_term

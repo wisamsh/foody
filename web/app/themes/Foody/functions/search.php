@@ -17,7 +17,8 @@ function foody_where_filter($where)
 {
     global $wpdb;
     if (is_search()) {
-        $search = get_query_var('s');
+        $search = get_search_query();
+        $search = $wpdb->esc_like($search);
 //        $search = esc_sql($search);
         $author_id = foody_search_user_by_name($search);
 
