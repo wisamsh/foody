@@ -334,18 +334,8 @@ header {
               }
             }
 
-            //&.show {
-            //
-            //  > .dropdown-menu {
-            //    //display: block;
-            //    opacity: 1;
-            //    transform: scale(1);
-            //  }
-            //}
-
             .dropdown-menu-innner {
               display: inline-block;
-              //padding: 0;
               margin: 0;
               a {
                 padding-bottom: 8px;
@@ -361,7 +351,6 @@ header {
                 min-height: 0;
                 font-weight: normal;
 
-                //padding: 3px 0 3px 5px;
                 &.dropdown-toggle {
                   @extend .dropdown-menu-item-parent;
                   padding-left: 0;
@@ -374,11 +363,14 @@ header {
           .nav-link {
             color: #3A3A3A99;
             font-size: 25px;
-            font-weight: 900;
             letter-spacing: -0.07px;
             line-height: 18px;
             text-align: center;
             text-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.5);
+
+            &:hover {
+              color: #3A3A3A;
+            }
             &.dropdown-toggle {
 
               &:after {
@@ -451,16 +443,15 @@ header {
             &.children-shown {
               //height: $header-height;
 
-              .menu-item-children-shown{
+              .menu-item-children-shown {
                 //line-height: calc(#{$header-height} - (.5rem * 2)) !important;
               }
-
 
               > .nav-link {
                 //@extend .menu-item-children-shown;
               }
 
-              > .toggle-wrap{
+              > .toggle-wrap {
                 > .nav-link {
                   //@extend .menu-item-children-shown;
                 }
@@ -582,6 +573,7 @@ header {
 
             > .toggle-wrap {
               display: flex;
+
               .sub-menu-toggle {
                 margin-right: auto;
                 margin-left: 10px;
@@ -622,6 +614,7 @@ header {
                 border-left: none;
                 text-align: right;
                 border-left: none;
+                font-weight: normal;
                 color: #3A3A3A;
                 font-size: 18px;
                 &.dropdown-item {
@@ -635,6 +628,8 @@ header {
 
               .toggle-wrap {
                 display: inline-flex;
+                padding-right: 0;
+                padding-left: 0;
 
                 &.open {
                   border-bottom: none;
@@ -728,7 +723,6 @@ header {
           .nav-link {
             color: #3A3A3A99;
             font-size: 25px;
-            font-weight: 900;
             letter-spacing: -0.07px;
             line-height: 18px;
             text-align: center;
@@ -764,6 +758,7 @@ header {
         button {
           background-color: transparent;
         }
+
         .btn {
           margin-bottom: 0;
 
@@ -843,7 +838,6 @@ header {
                 .nav-link:not(.dropdown-item) {
                   display: inline-block;
                   font-size: 24px;
-                  font-weight: 900;
                   color: $color__primary;
                 }
               }

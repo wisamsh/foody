@@ -163,7 +163,7 @@ jQuery(document).ready(function ($) {
 
     });
 
-    $dropdownMenu.on('hidden.bs.collapse', function (e) {
+    $dropdownMenu.on('hide.bs.collapse', function (e) {
 
         $(e.target).prev('.toggle-wrap').removeClass('open');
 
