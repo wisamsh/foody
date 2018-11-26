@@ -920,6 +920,28 @@ $content-width: 95%;
           }
 
         }
+
+        .foody-content{
+
+          ol {
+            list-style-type: none;
+            counter-reset: counter;
+            padding: 0;
+            margin: 0;
+
+            li {
+              margin: 5px 0;
+              &:before {
+                content: counter(counter) '.';
+                counter-increment: counter;
+                font-weight: bold;
+                margin-left: 5px;
+                display: inline-block;
+
+              }
+            }
+          }
+        }
       }
 
       .recipe-notes {
