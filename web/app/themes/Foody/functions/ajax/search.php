@@ -38,13 +38,16 @@ function foody_ajax_autocomplete()
 
     if (is_array($authors) && count($authors) > 0) {
         $authors = array_unique($authors);
-        foreach ($authors as $author) {
+        $authors = array_map(function ($author) {
             $user = get_user_by('ID', $author);
-            $items[] = [
+            return  [
                 'name' => $user->display_name,
                 'link' => Foody_Query::get_search_url($user->display_name)
             ];
-        }
+        }, $authors);
+
+        $items = array_merge($authors,$items);
+
     }
 
     wp_send_json_success($items);
@@ -121,21 +124,3 @@ function __search_by_title_only($search, $wp_query)
 }
 
 add_filter('posts_search', '__search_by_title_only', 500, 2);
-
-
-//function livchem_search_filter($s) {
-//    return urldecode($s);
-//}
-//
-//add_filter('get_search_query', 'livchem_search_filter');
-//add_filter('the_search_query', 'livchem_search_filter');
-//
-//function livchem_query_vars_search_filter($query)
-//{
-//    if ($query->is_search && !is_admin()) {
-//        $query->query_vars['s'] = urldecode($query->query_vars['s']);
-//    }
-//
-//    return $query;
-//}
-//add_action('parse_query', 'livchem_query_vars_search_filter');
