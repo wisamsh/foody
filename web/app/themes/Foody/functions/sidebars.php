@@ -21,6 +21,9 @@ function foody_sidebars()
         ), array(
             'id' => 'homepage-categories',
             'name' => 'Homepage Categories',
+        ), array(
+            'id' => 'foody-social',
+            'name' => 'Foody Social',
         )
     );
 

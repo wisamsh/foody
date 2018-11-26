@@ -86,5 +86,4 @@ $featured_content_classes[] = 'featured-content-container';
     </div><!-- #primary -->
 
 <?php
-//get_sidebar();
 get_footer();

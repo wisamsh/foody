@@ -19,9 +19,8 @@ function showSlider() {
         $('.homepage .team-listing .author').removeClass('col');
     }
     slider(teamSliderSelector, {
-        slidesToShow: 1,
-        rtl: true,
-        variableWidth: true,
+        slidesToShow: 5,
+        slidesToScroll: 5,
         arrows: false,
         slideSpacing: 10,
         mobileFirst: true,
@@ -36,16 +35,14 @@ function showSlider() {
                     slidesToShow: 4,
                     slidesToScroll: 7,
                     variableWidth: false,
-                    rtl: true,
                 }
             },
             {
-                breakpoint: 414,
+                breakpoint: 415,
                 settings: {
                     slidesToShow: 6,
-                    slidesToScroll: 5,
+                    slidesToScroll: 6,
                     variableWidth: false,
-                    rtl: true
                 }
             },
             // You can unslick at a given breakpoint now by adding:
