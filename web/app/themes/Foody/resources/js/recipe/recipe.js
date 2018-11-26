@@ -42,7 +42,7 @@ if (foodyGlobals.post && foodyGlobals.post.type == 'foody_recipe') {
 
         foodyAjax(settings, (err) => {
 
-            let message = 'הדירוג התקבל בהצלחה.תודה!';
+            let message = 'הדירוג התקבל בהצלחה. תודה!';
             let wrapperClasses = 'foody-message';
 
             if (err) {
