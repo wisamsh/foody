@@ -46,9 +46,8 @@ function foody_search_user_by_name($name, $single = true)
 {
     global $wpdb;
 
-//    $name = esc_sql($name);
     $query =
-        "SELECT user_id  
+        "SELECT user_id
               FROM $wpdb->usermeta 
               WHERE 
               ( meta_key='first_name' AND meta_value LIKE '%%%s%%' ) 
@@ -82,7 +81,23 @@ function foody_search_user_by_name($name, $single = true)
         $query = "$query $full_name_search";
     }
 
+    $query_authors = "AND user_id IN (SELECT user_id FROM $wpdb->usermeta WHERE meta_key = 'wp_capabilities' AND meta_value = 'a:1:{s:6:\"author\";b:1;}') ";
+
+
+
     $query = $wpdb->prepare($query, $args);
+
+    $result = $wpdb->get_results($query);
+
+
+
+    $result = array_map(function ($user) {
+        return $user->user_id;
+    }, $result);
+
+    $ids = implode(',',$result);
+
+    $query = "SELECT user_id from $wpdb->usermeta where user_id IN ($ids) and meta_value LIKE '%\"author\"%'";
 
     if ($single) {
         $result = $wpdb->get_var($query);

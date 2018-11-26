@@ -43,11 +43,13 @@ module.exports = function (selector, options) {
                 templates: {
                     suggestion: function (suggestion) {
                         console.log(suggestion);
+                        let link = '';
+                        if (suggestion.name != null) {
+                            let name = suggestion.name.replace(new RegExp('(' + currentQuery + ')', 'g'), '<span>$1</span>');
+                            link = '<a href="' + suggestion.link + '">' + name + ' </a>';
+                        }
 
-                        let name = suggestion.name.replace(new RegExp('(' + currentQuery + ')', 'g'), '<span>$1</span>');
-                        let link = '<a href="' + suggestion.link + '">' + name + ' </a>';
                         return link;
-                        // return suggestion._highlightResult.name.value;
                     }
                 }
             }
