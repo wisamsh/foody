@@ -19,7 +19,7 @@ function showSlider() {
         $('.homepage .team-listing .author').removeClass('col');
     }
     slider(teamSliderSelector, {
-        slidesToShow: 5,
+        slidesToShow: 5.5,
         slidesToScroll: 5,
         arrows: false,
         slideSpacing: 10,
