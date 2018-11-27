@@ -95,3 +95,14 @@ function wrap_content_images($content)
 }
 
 add_filter('the_content', 'wrap_content_images');
+
+
+function replace_em_dashes($content){
+
+    $content = str_replace('&ndash;','-',$content);
+
+    return $content;
+}
+
+
+add_filter('the_content', 'replace_em_dashes');

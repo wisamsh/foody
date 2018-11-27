@@ -134,6 +134,7 @@ $content-width: 95%;
           display: inline-block;
           font-family: $font__assistant;
           text-align: center;
+          line-height: normal;
           .key {
             color: $color__text-primary-dark;
             font-size: 24px;
@@ -144,7 +145,7 @@ $content-width: 95%;
           .value {
             color: $color__primary;
             font-size: 32px;
-            font-weight: bold;
+            font-weight: 900;
             font-family: $font__main;
           }
         }

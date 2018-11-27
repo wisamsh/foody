@@ -76,7 +76,7 @@ class Foody_SearchPage implements Foody_ContentWithSidebar
             'more' => $this->foody_query->has_more_posts($query),
             'header' => [
                 'sort' => true,
-                'title' => get_search_query()
+                'title' => ''
             ]
         ];
 

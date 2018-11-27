@@ -82,6 +82,7 @@ class Foody_Query
         $search_term = html_entity_decode($search_term);
         $search_term = esc_sql($search_term);
         $search_term = urldecode($search_term);
+
         global $wpdb;
         $search_term = $wpdb->esc_like($search_term);
         if (empty($search_term)) {

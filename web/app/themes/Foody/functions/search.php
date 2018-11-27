@@ -18,8 +18,8 @@ function foody_where_filter($where)
     global $wpdb;
     if (is_search()) {
         $search = get_search_query();
-        $search = $wpdb->esc_like($search);
-//        $search = esc_sql($search);
+//        $search = $wpdb->esc_like($search);
+////        $search = esc_sql($search);
         $author_id = foody_search_user_by_name($search);
 
         if ($author_id) {
@@ -91,24 +91,30 @@ function foody_search_user_by_name($name, $single = true)
 
 
 
-    $result = array_map(function ($user) {
-        return $user->user_id;
-    }, $result);
 
-    $ids = implode(',',$result);
 
-    $query = "SELECT user_id from $wpdb->usermeta where user_id IN ($ids) and meta_value LIKE '%\"author\"%'";
+    if(!empty($result)){
+        $result = array_map(function ($user) {
+            return $user->user_id;
+        }, $result);
 
-    if ($single) {
-        $result = $wpdb->get_var($query);
-    } else {
-        $result = $wpdb->get_results($query);
-        if (!empty($result) && is_array($result)) {
-            $result = array_map(function ($user) {
-                return $user->user_id;
-            }, $result);
+        $ids = implode(',',$result);
+
+        $query = "SELECT user_id from $wpdb->usermeta where user_id IN ($ids) and meta_value LIKE '%\"author\"%'";
+
+        if ($single) {
+            $result = $wpdb->get_var($query);
+        } else {
+            $result = $wpdb->get_results($query);
+            if (!empty($result) && is_array($result)) {
+                $result = array_map(function ($user) {
+                    return $user->user_id;
+                }, $result);
+            }
         }
     }
+
+
 
     return $result;
 }

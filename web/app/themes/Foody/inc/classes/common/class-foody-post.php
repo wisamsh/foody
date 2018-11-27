@@ -87,7 +87,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             }
 
 
-            $this->body = apply_filters('the_content', $post->post_content);
+            $this->body = apply_filters ('the_content', $post->post_content);
             $this->link = get_permalink($this->id);
 
         } else {
