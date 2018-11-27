@@ -21,7 +21,8 @@ class FoodyGrid
     private $supported_types = [
         'recipe',
         'playlist',
-//        'article'
+        'article',
+        'post',
     ];
 
 

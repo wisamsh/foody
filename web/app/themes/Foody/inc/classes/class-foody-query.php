@@ -50,7 +50,7 @@ class Foody_Query
     public function homepage()
     {
         $args = self::get_args([
-            'post_type' => ['foody_recipe', 'foody_playlist']
+            'post_type' => ['foody_recipe', 'foody_playlist','post']
         ]);
         return $args;
     }
@@ -93,7 +93,7 @@ class Foody_Query
         }
 
         $args = self::get_args([
-            'post_type' => ['foody_recipe', 'foody_playlist'],
+            'post_type' => ['foody_recipe', 'foody_playlist','post'],
             's' => $search_term
         ]);
 
@@ -205,7 +205,7 @@ class Foody_Query
 
     public static function get_search_url($search_term)
     {
-        $post_types = ['foody_playlist', 'foody_recipe'];
+        $post_types = ['foody_playlist', 'foody_recipe','post'];
 
         global $wpdb;
 
