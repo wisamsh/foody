@@ -8,7 +8,7 @@ module.exports = (function () {
         this.settings = settings;
         this.pageQuery = foodyGlobals.queryPage;
         this.TAG = 'PageContentPaging';
-        this.pathRegex = /page\/([1-9]+(\/)?$)/;
+        this.pathRegex = /page\/([0-9]+(\/)?$)/;
         this.init();
     };
 

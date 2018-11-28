@@ -465,7 +465,8 @@ class Foody_QueryBuilder
             'has_wildcard_key' => $this->has_wildcard_key,
             'post_type' => ['foody_recipe', 'foody_playlist'],
             'meta_query' => $this->meta_query_array,
-            'post__not_in' => $this->post__not_in
+            'post__not_in' => $this->post__not_in,
+            'post_status' => 'publish'
         ];
 
         if (!empty($this->categories__in)) {
