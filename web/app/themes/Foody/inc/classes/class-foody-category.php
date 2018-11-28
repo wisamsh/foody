@@ -133,7 +133,7 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
         return [
             'id' => 'category-feed',
             'header' => [
-                'title' => sprintf('מתכוני %s', $this->title)
+                'title' => $this->title
             ]
         ];
     }
