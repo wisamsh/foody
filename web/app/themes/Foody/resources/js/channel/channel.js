@@ -8,12 +8,14 @@ jQuery(document).ready(($) => {
     let recipesFilter = new FoodySearchFilter({
         selector: '.foody_channel-template #accordion-foody-filter',
         grid: '#channel-recipe-feed',
-        cols: 2
+        cols: 2,
+        page:'.foody_channel-template'
     });
     let playlistsFilter = new FoodySearchFilter({
         selector: '.foody_channel-template #accordion-foody-filter',
         grid: '#channel-playlist-feed',
-        cols: 2
+        cols: 2,
+        page:'.foody_channel-template'
     });
 
     // // search and filter pager

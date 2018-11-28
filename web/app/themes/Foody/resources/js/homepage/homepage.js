@@ -13,7 +13,8 @@ jQuery(document).ready(($) => {
         selector: '.homepage #accordion-foody-filter',
         grid: '#homepage-feed',
         cols: 2,
-        searchButton: '.show-recipes'
+        searchButton: '.show-recipes',
+        page:'.page-template-homepage'
     });
 
     // search and filter pager

@@ -6,7 +6,7 @@ let FoodyContentPaging = require('../common/page-content-paging');
 
 jQuery(document).ready(($) => {
 
-    let filter = new FoodySearchFilter({grid: '#tag-feed',cols:2});
+    let filter = new FoodySearchFilter({grid: '#tag-feed',cols:2,page:'body[class~=tag]'});
 
     new FoodyContentPaging({
         context: 'tag',

@@ -9,7 +9,8 @@ jQuery(document).ready(($) => {
     let recipesFilter = new FoodySearchFilter({
         selector: '.author #accordion-foody-filter',
         grid: '#author-recipe-feed',
-        cols: 2
+        cols: 2,
+        page:'body[class~=author]'
     });
     let playlistsFilter = new FoodySearchFilter({
         selector: '.author #accordion-foody-filter',

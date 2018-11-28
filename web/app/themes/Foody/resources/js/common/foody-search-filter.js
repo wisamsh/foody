@@ -40,12 +40,17 @@ module.exports = (function () {
     };
 
     FoodySearchFilter.prototype.attachChangeListener = function () {
-        let $checkboxes = $('input[type="checkbox"]', this.$filter);
+        let pageContainer = this.settings.page;
+        let $checkboxes = $('input[type="checkbox"]', pageContainer);
         let that = this;
         $checkboxes.on('change', function (e) {
             if (that.isLoading) {
                 return;
             }
+
+            console.log('check change: ' ,that.settings);
+
+
             e.preventDefault();
 
 
@@ -134,11 +139,10 @@ module.exports = (function () {
         let args = {
             // TODO get from input if needed
             search: search,
-            types: [],
-            context: []
+            types: []
         };
 
-        args.context = _.uniq(this.initialContext.concat(this.grid.getItems()));
+        // args.context = _.uniq(this.initialContext.concat(this.grid.getItems()));
 
 
         //noinspection JSPotentiallyInvalidUsageOfThis
@@ -148,10 +152,11 @@ module.exports = (function () {
             }
         }
 
-        if (!args.search && args.types.length == 0) {
-            args.context = this.initialContext;
-        }
+        // if (!args.search && args.types.length == 0) {
+        //     args.context = this.initialContext;
+        // }
 
+        console.log(args);
 
         return args;
 

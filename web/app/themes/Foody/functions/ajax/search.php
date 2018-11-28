@@ -40,13 +40,13 @@ function foody_ajax_autocomplete()
         $authors = array_unique($authors);
         $authors = array_map(function ($author) {
             $user = get_user_by('ID', $author);
-            return  [
+            return [
                 'name' => $user->display_name,
                 'link' => Foody_Query::get_search_url($user->display_name)
             ];
         }, $authors);
 
-        $items = array_merge($authors,$items);
+        $items = array_merge($authors, $items);
 
     }
 
@@ -58,7 +58,7 @@ add_action('wp_ajax_nopriv_search_site', 'foody_ajax_autocomplete');
 
 
 /**
- * Live autocomplete search.
+ * Sidebar filter
  *
  * @since 1.0.0
  */
@@ -79,7 +79,12 @@ function foody_ajax_filter()
 
     $grid = new FoodyGrid();
 
-    echo $grid->loop($posts, $options['cols'], false);
+    if (!empty($posts) && !empty(array_filter($posts, array($grid, 'is_post_displayable')))) {
+        echo $grid->loop($posts, $options['cols'], false);
+    } else {
+        foody_get_template_part(get_template_directory() . '/template-parts/no-results.php');
+    }
+
 
     die();
 

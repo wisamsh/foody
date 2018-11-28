@@ -135,6 +135,7 @@ jQuery(document).ready(($) => {
                 e.preventDefault();
                 return;
             }
+console.log('click check');
             let $input = $('input', this);
 
             let checked = $input.prop('checked') || false;
