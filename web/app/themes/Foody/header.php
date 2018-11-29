@@ -71,9 +71,11 @@ $user = new Foody_User();
                     <i class="navbar-toggler-icon icon-menu-mobile"></i>
                 </button>
 
-                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">
-                    <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>" alt="">
-                </button>
+
+
+<!--                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">-->
+<!--                    <img src="--><?php //echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?><!--" alt="">-->
+<!--                </button>-->
 
                 <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none">
 

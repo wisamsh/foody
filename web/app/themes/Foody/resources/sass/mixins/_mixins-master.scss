@@ -16,7 +16,7 @@
 // Font Face
 // =============================================================================
 
-@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg otf, $unicode-range: 'U+00-FF, U+980-9FF') {
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg otf, $unicode-range: null) {
   $src: null;
 
   $extmods: (
@@ -40,7 +40,10 @@
     font-style: $style;
     font-weight: $weight;
     src: $src;
-    unicode-range: $unicode-range;
+    //@if $unicode-range != null {
+    //  unicode-range: quote($unicode-range);
+    //}
+
   }
 }
 
@@ -111,7 +114,7 @@ BREAKPOINTS
   }
 }
 
-@mixin site-width(){
+@mixin site-width() {
   max-width: $site-width;
   margin: 0 auto;
 }
