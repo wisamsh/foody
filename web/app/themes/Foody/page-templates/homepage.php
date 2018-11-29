@@ -25,7 +25,12 @@ $homepage = new Foody_HomePage();
 
             <?php $homepage->categories_listing() ?>
 
-            <?php echo do_shortcode('[foody_team max="6" show_title="true"]') ?>
+            <?php
+
+            $num = wp_is_mobile() ? 4 : 6;
+            echo do_shortcode('[foody_team max="' . $num . '" show_title="true"]')
+
+            ?>
 
             <section class="feed-container row">
 

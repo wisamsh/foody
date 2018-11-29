@@ -1,3 +1,4 @@
+@charset "UTF-8";
 // =============================================================================
 // String Replace
 // =============================================================================
@@ -41,7 +42,8 @@
     font-weight: $weight;
     src: $src;
     //@if $unicode-range != null {
-    //  unicode-range: quote($unicode-range);
+      /* prettier-ignore */
+      unicode-range: $unicode-range;
     //}
 
   }

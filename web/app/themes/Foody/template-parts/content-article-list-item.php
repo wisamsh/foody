@@ -15,6 +15,17 @@ $article = $template_args['post'];
     <a href="<?php echo $article->link ?>">
         <div class="image-container main-image-container">
             <img class="article-item-image feed-item-image" src="<?php echo $article->getImage() ?>" alt="">
+
+            <?php if (!empty($label = $article->get_label())): ?>
+
+                <div class="recipe-label">
+                    <span>
+
+                    <?php echo $label ?>
+                    </span>
+                </div>
+
+            <?php endif; ?>
         </div>
     </a>
 

@@ -6,10 +6,8 @@
 jQuery(document).ready(($) => {
     showMoreList('.homepage .team-listing .author:last-child', 'הנבחרת');
     // if (foodyGlobals.isMobile) {
-    showSlider();
+    // showSlider();
     // }
-
-
 });
 
 
