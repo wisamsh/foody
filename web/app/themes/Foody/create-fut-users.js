@@ -44,7 +44,7 @@ function createWpUser(user, cb) {
 
     exec(createUserCmd, (err, stdout, stderr) => {
         if (err) {
-            cb(err);
+            cb();
             return;
         }
 
