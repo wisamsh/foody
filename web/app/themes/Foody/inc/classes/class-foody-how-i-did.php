@@ -39,7 +39,8 @@ class Foody_HowIDid
             'type__not_in' => array('comment', 'pings'),
             'type' => 'how_i_did',
             'number' => get_option('hid_per_page'),
-            'post_id' => get_the_ID()
+            'post_id' => get_the_ID(),
+            'orderby' => 'comment_date_gmt',
         );
 
         return $args;

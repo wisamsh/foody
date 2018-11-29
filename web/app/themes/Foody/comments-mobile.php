@@ -32,7 +32,7 @@ $foody_comments = new Foody_Comments();
             'count' => true
         )) > 0;
     // You can start editing here -- including this comment!
-    if ($have_comments) :
+//    if ($have_comments) :
         ?>
 
         <?php
@@ -86,7 +86,7 @@ $foody_comments = new Foody_Comments();
 
         foody_get_template_part(get_template_directory() . '/template-parts/common/accordion.php', $accordion_args);
 
-    endif; // Check for have_comments().
+//    endif; // Check for have_comments().
 
     ?>
 
