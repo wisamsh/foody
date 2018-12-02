@@ -56,7 +56,7 @@ function foody_submit_ajax_comment()
     $template_args = array(
         'comment' => $comment,
         'depth' => $comment_depth,
-        'max_depth'=>get_option('thread_comments_depth'),
+        'max_depth' => get_option('thread_comments_depth'),
         'reply_text' => __('הוסף תגובה', 'Foody')
     );
 
@@ -152,12 +152,16 @@ function foody_hid_loadmore_handler()
     // actually we must copy the params from wp_list_comments() used in our theme
     $foody_comments = new Foody_HowIDid();
 
-    $args = [];
+    $args = $foody_comments->get_args();
 
-    $current_page = $_POST['hidpage'];
+    $current_page = intval($_POST['hidpage']);
 
+    $max_pages = $foody_comments->get_page_count();
 
-    $args['offset'] = $current_page * get_option('hid_per_page');
+    $current_page = $max_pages - $current_page;
+
+    $per_page = intval(get_option('hid_per_page'));
+    $args['offset'] = $current_page * $per_page;
 
     $foody_comments->the_comments($args);
 
