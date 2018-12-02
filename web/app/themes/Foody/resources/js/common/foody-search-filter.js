@@ -48,7 +48,7 @@ module.exports = (function () {
                 return;
             }
 
-            console.log('check change: ' ,that.settings);
+            console.log('check change: ', that.settings);
 
 
             e.preventDefault();
@@ -141,7 +141,7 @@ module.exports = (function () {
             search: search,
             types: []
         };
-
+        // TODO remove once unnecessary
         // args.context = _.uniq(this.initialContext.concat(this.grid.getItems()));
 
 
@@ -152,11 +152,11 @@ module.exports = (function () {
             }
         }
 
+
+        // TODO remove once unnecessary
         // if (!args.search && args.types.length == 0) {
         //     args.context = this.initialContext;
         // }
-
-        console.log(args);
 
         return args;
 

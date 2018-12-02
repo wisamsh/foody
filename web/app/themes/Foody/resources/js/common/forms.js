@@ -43,7 +43,7 @@ window.formSubmit = function (settings) {
     }
 
     if (!settings.unbind) {
-        $form.on('submit',handler);
+        $form.on('submit', handler);
     }
 
     return handler;
@@ -58,7 +58,7 @@ window.formSubmitWithFiles = function (settings) {
     $form.submit(function (e) {
 
         e.preventDefault();
-        if(settings.onSubmit && typeof  settings.onSubmit == 'function'){
+        if (settings.onSubmit && typeof  settings.onSubmit == 'function') {
             settings.onSubmit();
         }
         let button = $('input[type="submit"]', $form);
@@ -110,7 +110,7 @@ window.formSubmitWithFiles = function (settings) {
                     // what to do after a comment has been added
                     button.removeClass('loadingform').prop('disabled', false).val('שלח');
 
-                    if(settings.complete && typeof  settings.complete == 'function'){
+                    if (settings.complete && typeof  settings.complete == 'function') {
                         settings.complete();
                     }
                 }
@@ -129,13 +129,14 @@ jQuery(document).ready(($) => {
     if ($checkboxes.length) {
 
 
-        $checkboxes.click(function (e) {
-
+        $checkboxes.on('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
             if ($(this).attr('disabled')) {
                 e.preventDefault();
                 return;
             }
-console.log('click check');
+            console.log('click check', e.target);
             let $input = $('input', this);
 
             let checked = $input.prop('checked') || false;
@@ -143,7 +144,7 @@ console.log('click check');
             checked = !checked;
 
             $input.prop('checked', checked);
-
+            $input.trigger("change");
         });
     }
 });
