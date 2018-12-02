@@ -22,7 +22,7 @@
     </div>
 
 <?php else: ?>
-    <div class=" social col p-0">
+    <div class="social col">
         <?php echo do_shortcode('[easy-social-share buttons="mail,pinterest,whatsapp" template="11" counters=0 style="icon" point_type="simple"]'); ?>
         <button class="btn btn-facebook  btn-facebook-share">
             <a target="popup"

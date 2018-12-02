@@ -6,7 +6,7 @@ body[class~="foody_channel-template-channel"],
 body[class~="single-foody_recipe"],
 body[class~="single-foody_playlist"],
 body[class~="post-template-content-with-sidebar"],
-body[class~="tag"]{
+body[class~="tag"] {
 
   #page {
     //background-color: white;
@@ -60,7 +60,6 @@ body[class~="tag"]{
   @import "../common/sidebar";
 
   @include foody-sidebar($sidebar-width);
-
 
   .details-container {
     padding: 10px 0;
@@ -116,55 +115,59 @@ body[class~="tag"]{
 
         h1 {
           margin: 0;
-          font-size: 2em;
+          font-size: 23px;
           font-family: $font__assistant-bold;
           font-weight: bold;
         }
 
-        .description {
-          font-size: 24px;
-          text-align: right;
-          line-height: normal;
-          padding: 10px 0;
+      }
+
+      .description {
+        text-align: right;
+        line-height: normal;
+        //padding: 10px 0;
+        font-family: $font__assistant;
+        font-size: 19px;
+        margin: 0;
+      }
+
+      .view-count {
+      }
+
+      ul.content-details-bullets {
+        padding: 0;
+        margin: 0;
+        overflow: auto;
+        display: flex;
+
+        li:not(:first-child):before {
+          content: "• ";
+          padding: 0 .5rem;
         }
 
-        .view-count {
-        }
+        li {
+          list-style-type: none;
+          display: inline-block;
+          font-size: 18px;
 
-        ul.content-details-bullets {
-          padding: 0;
-          margin: 0;
-          overflow: auto;
-          display: flex;
-
-          li:not(:first-child):before {
-            content: "• ";
-            padding: 0 .5rem;
-          }
-
-          li {
-            list-style-type: none;
-            display: inline-block;
-            font-size: 18px;
-
-            &.no-bullet {
-              flex-grow: 1;
-              &:before {
-                content: '';
-                padding: 0;
-              }
+          &.no-bullet {
+            flex-grow: 1;
+            &:before {
+              content: '';
+              padding: 0;
             }
           }
-
         }
 
-        .favorite {
-          text-align: left;
-          color: $color__primary;
+      }
 
-          i {
-            vertical-align: middle;
-          }
+      .favorite {
+        text-align: left;
+        color: $color__primary;
+        font-family: $font__assistant;
+
+        i {
+          vertical-align: middle;
         }
       }
 
@@ -260,7 +263,7 @@ body[class~="tag"]{
   body[class~="search"],
   body[class~="foody_channel-template-channel"],
   body[class~="post-template-content-with-sidebar"],
-  body[class~="tag"]{
+  body[class~="tag"] {
     $sidebar-width: 0;
     $content-width: 100%;
     article.content {
@@ -300,44 +303,6 @@ body[class~="tag"]{
           h1 {
           }
 
-          .description {
-            //margin-right: -25%;
-
-            .post-bullets-container {
-              padding: 10px 0;
-            }
-          }
-
-          .view-count {
-          }
-
-          ul.content-details-bullets {
-
-            li:not(:first-child):before {
-
-            }
-
-            li {
-
-              &.no-bullet {
-
-                &:before {
-
-                }
-              }
-            }
-
-          }
-
-          .favorite {
-
-            //margin-right: -25%;
-            text-align: right;
-            font-size: 18px;
-            i {
-
-            }
-          }
         }
 
         .social {
@@ -345,6 +310,7 @@ body[class~="tag"]{
           border-top: 1px solid $color__divider;
           .essb_links {
             float: right;
+            margin: 0;
             .essb_links_list {
 
               li {
@@ -403,6 +369,45 @@ body[class~="tag"]{
           }
         }
 
+        .description {
+          //margin-right: -25%;
+
+          .post-bullets-container {
+            //padding: 10px 0;
+          }
+        }
+
+        .view-count {
+        }
+
+        ul.content-details-bullets {
+
+          li:not(:first-child):before {
+
+          }
+
+          li {
+
+            &.no-bullet {
+
+              &:before {
+
+              }
+            }
+          }
+
+        }
+
+        .favorite {
+
+          //margin-right: -25%;
+          text-align: right;
+          font-size: 18px;
+          i {
+
+          }
+        }
+
         .favorite {
 
         }
@@ -422,7 +427,7 @@ body[class~="tag"]{
   body[class~="single-foody_recipe"],
   body[class~="single-foody_playlist"],
   body[class~="post-template-content-with-sidebar"],
-  body[class~="tag"]{
+  body[class~="tag"] {
     .progress-wrapper {
 
       progress {
@@ -617,7 +622,7 @@ body[class~="tag"]{
   body[class~="single-foody_recipe"],
   body[class~="single-foody_playlist"],
   body[class~="post-template-content-with-sidebar"],
-  body[class~="tag"]{
+  body[class~="tag"] {
     $sidebar-width: 25%;
     .progress-wrapper {
 

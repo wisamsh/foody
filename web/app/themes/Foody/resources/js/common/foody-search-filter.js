@@ -181,12 +181,12 @@ module.exports = (function () {
         }
         let that = this;
         that.loading();
-        foodyAjax(ajaxSettings, function (err, posts) {
+        foodyAjax(ajaxSettings, function (err, data) {
             that.stopLoading();
             if (err) {
                 console.log('err: ' + err);
             } else {
-                that.grid.refresh(posts);
+                that.grid.refresh(data.data);
             }
         });
 

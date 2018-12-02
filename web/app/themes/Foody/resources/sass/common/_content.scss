@@ -16,6 +16,13 @@
     margin: 0;
     text-align: right;
     font-family: $font__assistant;
-    font-size: 13pt;
+    font-size: 14pt;
   }
+
+  .wp-caption {
+    .wp-caption-text {
+      margin: 0;
+    }
+  }
+
 }

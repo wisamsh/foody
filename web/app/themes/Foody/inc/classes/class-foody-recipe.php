@@ -235,14 +235,6 @@ class Foody_Recipe extends Foody_Post
         $this->posts_bullets($posts, $title);
     }
 
-    public function the_tags()
-    {
-
-        $tags = wp_get_post_tags($this->post->ID);
-
-        foody_get_template_part(get_template_directory() . '/template-parts/content-tags.php', $tags);
-    }
-
     public function how_i_did()
     {
         $template = '/comments-how-i-did.php';
@@ -344,7 +336,7 @@ class Foody_Recipe extends Foody_Post
 
                 if (!empty($video_url)) {
                     $parts = explode('v=', $video_url);
-                    if(!empty($parts) && count($parts) > 1){
+                    if (!empty($parts) && count($parts) > 1) {
                         $query = explode('&', $parts[1]);
                         $video_id = $query[0];
 
@@ -380,10 +372,10 @@ class Foody_Recipe extends Foody_Post
 
     private function get_recipe_time($time_field)
     {
-        if (!isset($time_field['time'])){
+        if (!isset($time_field['time'])) {
             $time_field['time'] = 0;
         }
-        if (!isset($time_field['time_unit'])){
+        if (!isset($time_field['time_unit'])) {
             $time_field['time_unit'] = 'minutes';
         }
         $time = $time_field['time'];

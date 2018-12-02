@@ -27,8 +27,6 @@ module.exports = (function () {
     };
 
 
-
-
     FoodyGrid.prototype.loading = function () {
         this.$grid.css('opacity', '0.3');
         this.foodyLoader.attach();
@@ -43,9 +41,12 @@ module.exports = (function () {
     };
 
 
-    FoodyGrid.prototype.refresh = function (items) {
+    FoodyGrid.prototype.refresh = function (data) {
         this.$grid.empty();
-        this.$grid.append(items);
+        this.$grid.append(data.content);
+        if (!data.next) {
+            this.$loadMore.hide();
+        }
     };
 
     FoodyGrid.prototype.append = function (data) {

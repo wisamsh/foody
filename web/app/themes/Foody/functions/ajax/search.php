@@ -79,14 +79,20 @@ function foody_ajax_filter()
 
     $grid = new FoodyGrid();
 
+    $res = [
+        'next' => true
+    ];
+
+
     if (!empty($posts) && !empty(array_filter($posts, array($grid, 'is_post_displayable')))) {
-        echo $grid->loop($posts, $options['cols'], false);
+        $res['content'] = $grid->loop($posts, $options['cols'], false);
     } else {
-        foody_get_template_part(get_template_directory() . '/template-parts/no-results.php');
+        $res['content'] = foody_get_template_part(get_template_directory() . '/template-parts/no-results.php', ['return' => true]);
+        $res['next'] = false;
     }
 
 
-    die();
+    wp_send_json_success($res);
 
 }
 

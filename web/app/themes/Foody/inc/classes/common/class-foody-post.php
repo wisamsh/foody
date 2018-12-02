@@ -87,7 +87,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             }
 
 
-            $this->body = apply_filters ('the_content', $post->post_content);
+            $this->body = apply_filters('the_content', $post->post_content);
             $this->link = get_permalink($this->id);
 
         } else {
@@ -407,6 +407,25 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     }
 
     public abstract function the_details();
+
+    public function the_tags()
+    {
+        if ($this->has_tags()) {
+            $tags = wp_get_post_tags($this->post->ID);
+            foody_get_template_part(get_template_directory() . '/template-parts/content-tags.php', $tags);
+        }
+    }
+
+    public function has_tags()
+    {
+        $has_tags = false;
+        $tags = wp_get_post_tags($this->post->ID);
+        if (!is_wp_error($tags) && count($tags) > 0) {
+            $has_tags = true;
+        }
+
+        return $has_tags;
+    }
 
     function the_content($page)
     {
