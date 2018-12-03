@@ -248,14 +248,7 @@ class Foody_Recipe extends Foody_Post
         );
     }
 
-    public function comments()
-    {
-        $template = '';
-        if (wp_is_mobile()) {
-            $template = '/comments-mobile.php';
-        }
-        comments_template($template);
-    }
+
 
     public function to_json_schema()
     {

@@ -264,7 +264,7 @@ class Foody_Registration
 
         global $user;
         if (isset($user->roles) && is_array($user->roles)) {
-            if (!user_can($user,'subscriber')) {
+            if (!Foody_User::is_user_subscriber()) {
                 return admin_url();
             } else {
                 return $redirect_to;

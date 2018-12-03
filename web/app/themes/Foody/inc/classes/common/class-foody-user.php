@@ -253,4 +253,22 @@ class Foody_User
         return $closest;
     }
 
+
+    public static function is_user_subscriber()
+    {
+
+        $is_subscriber = false;
+        $user = wp_get_current_user();
+
+        if (user_can($user, 'subscriber')) {
+            $is_subscriber = true;
+        } elseif (isset($user->roles) && is_array($user->roles)) {
+            if (in_array('foody_fut_user', $user->roles) || in_array('subscriber', $user->roles)) {
+                $is_subscriber = true;
+            }
+        }
+
+        return $is_subscriber;
+    }
+
 }

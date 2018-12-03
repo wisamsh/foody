@@ -403,7 +403,16 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_mobile_sidebar_content()
     {
-        $this->the_sidebar_related_content('', 'מתכונים נוספים');
+        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים');
+    }
+
+    public function comments()
+    {
+        $template = '';
+        if (wp_is_mobile()) {
+            $template = '/comments-mobile.php';
+        }
+        comments_template($template);
     }
 
     public abstract function the_details();
