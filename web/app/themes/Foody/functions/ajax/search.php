@@ -80,7 +80,8 @@ function foody_ajax_filter()
     $grid = new FoodyGrid();
 
     $res = [
-        'next' => true
+        'next' => true,
+        'count' => count($posts)
     ];
 
 

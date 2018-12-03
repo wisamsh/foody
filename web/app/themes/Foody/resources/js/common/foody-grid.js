@@ -44,8 +44,10 @@ module.exports = (function () {
     FoodyGrid.prototype.refresh = function (data) {
         this.$grid.empty();
         this.$grid.append(data.content);
-        if (!data.next) {
+        if (data.count < foodyGlobals.postsPerPage) {
             this.$loadMore.hide();
+        } else {
+            this.$loadMore.show();
         }
     };
 
@@ -54,6 +56,8 @@ module.exports = (function () {
         this.$grid.append(items);
         if (!data.next) {
             this.$loadMore.hide();
+        } else {
+            this.$loadMore.show();
         }
     };
 

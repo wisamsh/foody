@@ -55,6 +55,7 @@ function foody_js_globals_main($vars)
     $vars['objectID'] = get_queried_object_id();
     $vars['title'] = get_the_title();
     $vars['type'] = get_page_type();
+    $vars['postsPerPage'] = get_option('posts_per_page');
     $vars['mixpanelToken'] = MIXPANEL_TOKEN;
 
 

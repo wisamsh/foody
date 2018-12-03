@@ -4,7 +4,7 @@
     font-family: $font__main;
     color: $color__primary;
     font-weight: 900;
-    font-size: 36px;
+    font-size: 30px;
   }
 
   h3, h4, h5, h6 {
@@ -22,7 +22,36 @@
   .wp-caption {
     .wp-caption-text {
       margin: 0;
+      line-height: normal;
+      margin-top: 5px;
+      font-weight: normal;
+      font-family: $font__assistant;
+      font-size: 16px;
     }
   }
 
+  a{
+    color: $color__primary;
+  }
+
+}
+
+@include breakpoint(mobileonly) {
+  .foody-content {
+    font-size: 14pt;
+    h2 {
+    }
+
+    h3, h4, h5, h6 {
+    }
+
+    p {
+    }
+
+    .wp-caption {
+      .wp-caption-text {
+      }
+    }
+
+  }
 }

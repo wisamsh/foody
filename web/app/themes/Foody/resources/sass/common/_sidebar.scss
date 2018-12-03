@@ -73,6 +73,7 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
 
           &:before, &:after {
             font-size: .8em;
+            top: 3px;
           }
 
           &:before {
@@ -84,7 +85,7 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
 
           + {
             label {
-              font-weight: 900;
+              font-weight: 600;
             }
           }
         }
@@ -94,7 +95,7 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
     #accordion-categories-widget-accordion {
 
       .main-title {
-        &:not(.collapsed){
+        &:not(.collapsed) {
           margin-bottom: 20px;
         }
       }

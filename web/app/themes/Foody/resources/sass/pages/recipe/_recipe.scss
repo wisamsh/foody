@@ -753,7 +753,7 @@ $content-width: 95%;
             }
 
             h1 {
-              font-size: 1.5em;
+              font-size: 1.8em;
             }
 
           }
@@ -819,6 +819,7 @@ $content-width: 95%;
 
           .description {
             padding: 0;
+            margin-top: 10px;
           }
 
           .description {
@@ -849,6 +850,7 @@ $content-width: 95%;
       }
 
       .recipe-overview {
+        margin-bottom: 0;
         .overview {
           padding: 10px 0;
           max-width: calc(100% - #{$content-padding});
@@ -1113,6 +1115,10 @@ $content-width: 95%;
       }
 
       .recipe-tags {
+
+        .title {
+          font-size: 26px;
+        }
         max-width: calc(100% - #{$content-padding});
         ul {
           li {
@@ -1299,8 +1305,15 @@ $content-width: 95%;
 
     .recipe-sidebar-mobile {
       .related-content-container {
+
+        padding-left: 0;
+        padding-right: 0;
+        max-width: 95%;
+        margin: 0 auto;
+
         .related-content-title {
           padding: 0;
+          font-size: 26px;
         }
 
         ul {
