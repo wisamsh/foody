@@ -246,8 +246,7 @@ class Foody_Registration
      */
     private function redirect_logged_in_user($redirect_to = null)
     {
-        $user = wp_get_current_user();
-        if (user_can($user, 'manage_options')) {
+        if (!Foody_User::is_user_subscriber()) {
             if ($redirect_to) {
                 wp_safe_redirect($redirect_to);
             } else {
@@ -261,17 +260,11 @@ class Foody_Registration
 
     public function redirect_admin($redirect_to, $request, $user)
     {
-
-        global $user;
-        if (isset($user->roles) && is_array($user->roles)) {
-            if (!Foody_User::is_user_subscriber()) {
-                return admin_url();
-            } else {
-                return $redirect_to;
-            }
-        } else {
-            return $redirect_to;
+        if (!Foody_User::is_user_subscriber()) {
+            $redirect_to = admin_url();
         }
+
+        return $redirect_to;
     }
 
 }

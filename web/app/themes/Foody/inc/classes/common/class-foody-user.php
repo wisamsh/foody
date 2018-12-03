@@ -258,7 +258,8 @@ class Foody_User
     {
 
         $is_subscriber = false;
-        $user = wp_get_current_user();
+
+        global $user;
 
         if (user_can($user, 'subscriber')) {
             $is_subscriber = true;
