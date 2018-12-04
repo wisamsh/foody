@@ -43,6 +43,16 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
     }
 
 
+    public function get_mobile_image(){
+        $mobile_image = get_field('homepage_image', $this->term->taxonomy . '_' . $this->term->term_id);
+        if(!$mobile_image){
+            $mobile_image = $this->get_image();
+        }
+
+        return $mobile_image;
+    }
+
+
     /**
      * Get array of sub categories
      * as Foody_Category objects

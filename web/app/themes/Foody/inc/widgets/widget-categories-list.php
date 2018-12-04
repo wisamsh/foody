@@ -72,6 +72,7 @@ class foody_Categories_List_Widget extends Foody_Widget
             foody_get_template_part(get_template_directory() . '/template-parts/content-category-listing.php', array(
                 'name' => $category->name,
                 'image' => $foody_category->get_image(),
+                'mobile_image' => $foody_category->get_mobile_image(),
                 'link' => $foody_category->link
             ));
 

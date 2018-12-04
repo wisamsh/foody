@@ -58,11 +58,14 @@ $sidebar-top-offset: 60px;
         padding: 0 5px;
         // TODO find ios fix
         //filter: drop-shadow(2px 2px 10px rgba(0, 0, 0, 0.3));
-
-        img {
-          clip-path: inset(0 round .5rem);
+        picture {
           width: 100%;
+          img {
+            clip-path: inset(0 round .5rem);
+            width: 100%;
+          }
         }
+
         .categort-listing-title {
           text-align: center;
           margin-top: 20px;
@@ -253,6 +256,7 @@ $sidebar-top-offset: 60px;
             img {
               clip-path: inset(0 round .3rem);
             }
+
             .categort-listing-title {
               font-size: 18px;
               margin-top: 5px;
