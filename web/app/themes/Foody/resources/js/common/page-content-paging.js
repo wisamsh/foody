@@ -59,7 +59,7 @@ module.exports = (function () {
                 return console.log(err);
             }
             that.filter.stopLoading();
-            that.grid.refresh(data.data.items);
+            that.grid.refresh(data.data);
         });
 
     };

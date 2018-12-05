@@ -14,7 +14,7 @@ $content-width: 95%;
 
 @import "../../common/show-more-simple";
 
-.single-foody_recipe,.post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
+.single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
 
   article.content {
 
@@ -658,6 +658,14 @@ $content-width: 95%;
         font-weight: 900;
       }
 
+      .must-log-in {
+        font-family: $font__assistant;
+        font-size: 20px;
+        a {
+          color: $color__primary;
+        }
+      }
+
     }
 
   }
@@ -667,7 +675,7 @@ $content-width: 95%;
   $sidebar-width: 0;
   $content-width: 100%;
   $content-padding: 20px;
-  .single-foody_recipe,.post-template-content-with-sidebar, .single-foody_playlist, .single-post {
+  .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .single-post {
 
     article.content {
       width: $content-width;
@@ -1329,7 +1337,7 @@ $content-width: 95%;
 
 @include breakpoint(mobile-l) {
 
-  .single-foody_recipe,.post-template-content-with-sidebar, .single-foody_playlist, .single-post {
+  .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .single-post {
 
     article.content {
 
@@ -2165,7 +2173,7 @@ $content-width: 95%;
 }
 
 @include breakpoint(tablet) {
-  .single-foody_recipe,.post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
+  .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
 
     article.content {
 

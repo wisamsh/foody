@@ -86,9 +86,9 @@ function foody_ajax_filter()
 
 
     if (!empty($posts) && !empty(array_filter($posts, array($grid, 'is_post_displayable')))) {
-        $res['content'] = $grid->loop($posts, $options['cols'], false);
+        $res['items'] = $grid->loop($posts, $options['cols'], false);
     } else {
-        $res['content'] = foody_get_template_part(get_template_directory() . '/template-parts/no-results.php', ['return' => true]);
+        $res['items'] = foody_get_template_part(get_template_directory() . '/template-parts/no-results.php', ['return' => true]);
         $res['next'] = false;
     }
 

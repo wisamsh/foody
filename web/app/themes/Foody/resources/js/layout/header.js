@@ -101,60 +101,60 @@ jQuery(document).ready(function ($) {
 
 
     let $dropdownMenu = $('.site-header .dropdown-menu');
-
-    $dropdownMenu.addClass('show');
-    $dropdownMenu.css(
-        {
-            opacity: 0
-        }
-    );
-
-    // all items inside a dropdown menu
-    let $dropdownItems = $('.dropdown-menu-innner, .dropdown-menu > .dropdown-toggle');
-
-
-    // group dropdown items by their left offset - their distance
-    // from the parent
-    let columns = _.groupBy($dropdownItems.toArray(), function (item) {
-        return jQuery(item).offset().left;
-    });
-
-
-    let columnsWidths = Object.keys(columns);
-
-    // if more than one column we
-    // need to remove the left border
-    // from the links
-    if (columnsWidths.length > 1) {
-
-
-        columnsWidths.forEach((column, i) => {
-            if (i > 0) {
-
-                let columnElements = columns[column];
-                // last column, remove border
-                if (i == columnsWidths.length - 1) {
-
-                    // remove border from the column
-                    // and the links inside it
-                    $(columnElements).each(function () {
-                        $(this).css('border', 'none');
-                        $('a,.toggle-wrap', this).css('border', 'none');
-                    });
-                }
-
-                // // all but first
-                // $('> a,.toggle-wrap', columnElements).each(function () {
-                //     $(this).css('padding-right', '8px');
-                // });
-
-            }
-        });
-
-    }
-
-    $dropdownMenu.attr('style', '');
-    $dropdownMenu.removeClass('show');
+    //
+    // $dropdownMenu.addClass('show');
+    // $dropdownMenu.css(
+    //     {
+    //         opacity: 0
+    //     }
+    // );
+    //
+    // // all items inside a dropdown menu
+    // let $dropdownItems = $('.dropdown-menu-innner, .dropdown-menu > .dropdown-toggle');
+    //
+    //
+    // // group dropdown items by their left offset - their distance
+    // // from the parent
+    // let columns = _.groupBy($dropdownItems.toArray(), function (item) {
+    //     return jQuery(item).offset().left;
+    // });
+    //
+    //
+    // let columnsWidths = Object.keys(columns);
+    //
+    // // if more than one column we
+    // // need to remove the left border
+    // // from the links
+    // if (columnsWidths.length > 1) {
+    //
+    //
+    //     columnsWidths.forEach((column, i) => {
+    //         if (i > 0) {
+    //
+    //             let columnElements = columns[column];
+    //             // last column, remove border
+    //             if (i == columnsWidths.length - 1) {
+    //
+    //                 // remove border from the column
+    //                 // and the links inside it
+    //                 $(columnElements).each(function () {
+    //                     $(this).css('border', 'none');
+    //                     $('a,.toggle-wrap', this).css('border', 'none');
+    //                 });
+    //             }
+    //
+    //             // // all but first
+    //             // $('> a,.toggle-wrap', columnElements).each(function () {
+    //             //     $(this).css('padding-right', '8px');
+    //             // });
+    //
+    //         }
+    //     });
+    //
+    // }
+    //
+    // $dropdownMenu.attr('style', '');
+    // $dropdownMenu.removeClass('show');
 
 
     $dropdownMenu.on('show.bs.collapse', function (e) {

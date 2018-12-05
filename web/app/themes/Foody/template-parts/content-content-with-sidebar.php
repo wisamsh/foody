@@ -42,7 +42,7 @@ $featured_content_classes[] = 'featured-content-container';
 
                 <article class="content">
                     <?php
-                    if (have_posts() && !is_search()) {
+                    if (have_posts() && !is_search() && is_single()) {
                         while (have_posts()) :
                             the_post();
                             foody_set_post_views($foody_page->getId());

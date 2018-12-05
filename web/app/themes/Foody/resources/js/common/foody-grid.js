@@ -43,7 +43,7 @@ module.exports = (function () {
 
     FoodyGrid.prototype.refresh = function (data) {
         this.$grid.empty();
-        this.$grid.append(data.content);
+        this.$grid.append(data.items);
         if (data.count < foodyGlobals.postsPerPage) {
             this.$loadMore.hide();
         } else {
