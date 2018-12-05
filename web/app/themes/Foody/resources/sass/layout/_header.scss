@@ -1,6 +1,22 @@
 $social-icon-size: 21px;
 $header-height: 76px;
+$run-height: 30px;
 header {
+
+  .run {
+    height: $run-height;
+    width: 100%;
+    text-align: center;
+    font-size: 21px;
+    color: white;
+    background-image: linear-gradient(77deg, #ec3849, #f35644);
+
+    &.run-desktop {
+      width: auto;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+  }
 
   .socials {
 
@@ -481,7 +497,7 @@ header {
 
   #content {
 
-    padding-top: 60px;
+    padding-top: 90px;
 
   }
 
@@ -492,9 +508,9 @@ header {
     z-index: 1;
 
     &.header-unpin {
-      transform: translateY(-60px);
+      transform: translateY(-90px);
       .logo-container-mobile {
-        transform: translateY(-30px);
+        transform: translateY(-60px);
       }
 
     }

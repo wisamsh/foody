@@ -30,6 +30,9 @@ $user = new Foody_User();
 <div id="page" class="site">
 
     <header id="masthead" class="site-header">
+        <div class="run d-block d-lg-none">
+            <?php echo __('בהרצה') ?>
+        </div>
         <div class="socials d-none d-lg-block">
 
             <section class="header-top-container  d-none d-lg-flex">
@@ -38,6 +41,10 @@ $user = new Foody_User();
                 <div class="search-bar search-bar-container">
                     <?php get_search_form(); ?>
                 </div>
+
+                <span class="run-desktop run">
+                    <?php echo __('בהרצה') ?>
+                </span>
             </section>
 
         </div>
@@ -63,7 +70,6 @@ $user = new Foody_User();
                 </div><!-- .site-branding -->
 
 
-
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#foody-navbar-collapse"
                         aria-controls="foody-navbar-collapse" aria-expanded="false"
@@ -72,10 +78,10 @@ $user = new Foody_User();
                 </button>
 
 
-
-<!--                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">-->
-<!--                    <img src="--><?php //echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?><!--" alt="">-->
-<!--                </button>-->
+                <!--                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">-->
+                <!--                    <img src="-->
+                <?php //echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?><!--" alt="">-->
+                <!--                </button>-->
 
                 <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none">
 
