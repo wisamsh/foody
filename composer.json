@@ -170,6 +170,18 @@
           "url": "https://github.com/willnorris/wordpress-hum/archive/master.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "joe-dolson/wp-accessibility",
+        "version": "1.6.4",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip"
+        }
+      }
     }
   ],
   "require": {

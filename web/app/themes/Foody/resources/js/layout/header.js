@@ -92,7 +92,7 @@ jQuery(document).ready(function ($) {
 
             let currentId = $(this).attr('id');
 
-            $('.dropdown-menu','.menu-item-has-children:not(#'+currentId+')').removeClass('show');
+            $('.dropdown-menu', '.menu-item-has-children:not(#' + currentId + ')').removeClass('show');
         }).mouseleave(function () {
             $(this).removeClass('show');
         });
@@ -170,10 +170,9 @@ jQuery(document).ready(function ($) {
     });
 
 
-
     /*
-    *
-    * TODO
+     *
+     * TODO
      if (foodyGlobals.isMobile === false || (foodyGlobals.isTablet && $(document).width() >= 1024)) {
      $('.menu-item-has-children').mouseenter(function () {
 
@@ -196,6 +195,6 @@ jQuery(document).ready(function ($) {
      });
 
      }
-    * */
+     * */
 
 });

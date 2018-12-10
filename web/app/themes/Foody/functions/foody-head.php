@@ -86,12 +86,13 @@ function is_tablet($vars)
 add_filter('foody_js_globals', 'is_tablet');
 
 
-function foody_override_og_image_size($size){
+function foody_override_og_image_size($size)
+{
 
     return 'thumbnail';
 }
 
-add_filter('wpseo_opengraph_image_size','foody_override_og_image_size',10,1);
+add_filter('wpseo_opengraph_image_size', 'foody_override_og_image_size', 10, 1);
 
 
 function foody_set_og_image()
@@ -114,3 +115,46 @@ function foody_set_og_image()
 }
 
 add_action('wp_head', 'foody_set_og_image');
+
+
+function foody_env_scripts()
+{
+    $scripts = [
+        'http://foody.moveodevelop.com' => [
+            "    (function(h,o,t,j,a,r){
+
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+
+        h._hjSettings={hjid:1114919,hjsv:6};
+
+        a=o.getElementsByTagName('head')[0];
+
+        r=o.createElement('script');r.async=1;
+
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+
+        a.appendChild(r);
+
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');"
+        ],
+        'http://foody.co.il' => [
+        ]
+    ];
+
+    if (isset($scripts[home_url()])) {
+        $env_scripts = $scripts[home_url()];
+
+        foreach ($env_scripts as $script) {
+
+            ?>
+            <script>
+
+                <?php echo $script ?>
+
+            </script>
+            <?php
+        }
+    }
+}
+
+add_action('wp_head', 'foody_env_scripts');

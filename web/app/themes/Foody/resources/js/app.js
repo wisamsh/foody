@@ -5,13 +5,13 @@
 window.env = require('dotenv').config();
 
 
-let IScroll = require('iscroll');
+// let IScroll = require('iscroll');
 // let $ = require('jquery');
 // require('jquery-drawer');
 require('jquery-validation');
 require('block-ui');
 require('autocomplete.js/src/jquery/plugin.js');
-require('bootstrap');
+// require('bootstrap');
 require('bootstrap-material-design');
 require('bootstrap-select');
 require('bootstrap-star-rating');
@@ -89,7 +89,6 @@ jQuery(document).ready(function ($) {
     // $.fn.selectpicker.Constructor.BootstrapVersion = '4';
     $('.foody-select').selectpicker({dropdownAlignRight: true, style: 'foody-select',dropupAuto:false,width:'fit'});
 
-    setTimeout(()=>{ $('.foody-select').click();},1000);
 
     $('[data-toggle="popover"]').popover();
 
