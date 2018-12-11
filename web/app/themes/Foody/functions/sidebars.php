@@ -43,5 +43,5 @@ add_action('widgets_init', 'foody_sidebars');
 add_action( 'after_setup_theme', 'register_my_menu' );
 function register_my_menu() {
 
-    register_nav_menu('categories', 'Categories Navigation');
+    register_nav_menu('categories',__('תפריט קטגוריות'));
 }
