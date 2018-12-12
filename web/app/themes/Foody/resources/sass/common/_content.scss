@@ -1,4 +1,9 @@
 .foody-content {
+  font-family: $font__assistant;
+
+  * {
+    font-family: $font__assistant;
+  }
 
   h2 {
     font-family: $font__main;
@@ -19,6 +24,10 @@
     font-size: 14pt;
   }
 
+  ul,ol{
+    font-size: 14pt;
+  }
+
   .wp-caption {
     .wp-caption-text {
       margin: 0;
@@ -30,14 +39,14 @@
     }
   }
 
-  a{
+  a {
     color: $color__primary;
   }
 
-  blockquote{
+  blockquote {
     margin: 0;
 
-    ol{
+    ol {
       margin: 0;
       padding: 0;
       font-family: $font__assistant;
