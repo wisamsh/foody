@@ -67,6 +67,7 @@ class Foody_Query
 
     public function author($id, $post_type)
     {
+        $id = intval($id);
         $args = self::get_args([
             'post_type' => $post_type,
             'author' => $id

@@ -139,7 +139,9 @@ module.exports = (function () {
         let args = {
             // TODO get from input if needed
             search: search,
-            types: []
+            types: [],
+            context: this.settings.context,
+            context_args: this.settings.contextArgs,
         };
         // TODO remove once unnecessary
         // args.context = _.uniq(this.initialContext.concat(this.grid.getItems()));

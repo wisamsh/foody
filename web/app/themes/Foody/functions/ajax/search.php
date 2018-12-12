@@ -71,7 +71,17 @@ function foody_ajax_filter()
     $filter = $_POST['data'];
     $options = $_POST['options'];
 
-    $foody_search = new Foody_Search();
+    $context_args = [];
+    if (isset($_POST['data']['context_args'])) {
+        $context_args = $_POST['data']['context_args'];
+        if (!is_array($context_args)) {
+            $context_args = [$context_args];
+        }
+    }
+
+    $context = $_POST['data']['context'];
+
+    $foody_search = new Foody_Search($context,$context_args);
 
     $posts = $foody_search->query($filter);
 

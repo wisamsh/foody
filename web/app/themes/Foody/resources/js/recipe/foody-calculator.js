@@ -76,5 +76,5 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
         $name.text(name);
 
         $this.text(text);
-    })
+    });
 }
