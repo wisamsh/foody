@@ -56,7 +56,7 @@ class Foody_CategoriesAccordion
     }
 
 
-    private function get_menu_args()
+    public function get_menu_args()
     {
 
 

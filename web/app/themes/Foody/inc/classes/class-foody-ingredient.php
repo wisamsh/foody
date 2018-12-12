@@ -30,6 +30,10 @@ class Foody_Ingredient extends Foody_Post
         '75' => '3/4',
     ];
 
+    public $plural_name;
+
+    public $singular_name;
+
     /**
      * Foody_Ingredient constructor.
      * @param $ingredient_post_id
@@ -41,6 +45,9 @@ class Foody_Ingredient extends Foody_Post
         parent::__construct($post);
         $this->amount = $amount;
         $this->unit = $unit;
+
+        $this->plural_name = get_field('plural_name', $this->id);
+        $this->singular_name = $this->getTitle();
 
     }
 
@@ -76,70 +83,40 @@ class Foody_Ingredient extends Foody_Post
         if ($this->amounts != null) {
 
             $length = count($this->amounts);
+
             $last = array_pop($this->amounts);
 
             $to_fraction = array($this, 'to_fraction');
+            $get_ingredient_data_attr = array($this, 'get_ingredient_data_attr');
 
-            $content = implode($this->amounts_delimiter, array_map(function ($amount) use ($to_fraction) {
+            $content = implode($this->amounts_delimiter, array_map(function ($amount) use ($to_fraction, $get_ingredient_data_attr) {
 
                 $display = call_user_func($to_fraction, $amount['amount']);
+                $data = call_user_func($get_ingredient_data_attr, $amount['amount'], $display);
                 return
-                    '<span dir="ltr" class="amount" data-amount="' . $amount['amount'] . '" data-original="' . $display . '">
+                    '<span dir="ltr" class="amount"' . $data . '>
                         ' . $display . '
                     </span>
                     <span class="unit">
                          ' . $amount['unit'] . '
                     </span>';
-
-//                return
-//                    '
-//                    <span dir="ltr" class="amount" data-amount="' . $amount['amount'] . '">
-//                        ' . $to_fraction($amount['amount']) . '
-//                    </span>
-//                    <span class="unit">
-//                         ' . $amount['unit'] . '
-//                    </span>
-//                    <span class="unit">
-//                        ' . $this->getTitle() . '
-//                    </span>
-//                ';
-
-
             }, $this->amounts));
-
 
             $unit_tax = $last['unit_tax'];
 
             $show_after_ingredient = get_field('show_after_ingredient', $unit_tax);
 
+
             $display = $this->to_fraction($last['amount']);
 
-            if ($show_after_ingredient) {
-                $ing_html = '
-                    <span dir="ltr" class="amount" data-amount="' . $last['amount'] . '" data-original="'.$display.'">
-                        ' . $display. '
-                    </span>
-                    <span class="unit">
-                        ' . $this->getTitle() . '
-                    </span>
-                    <span class="unit">
-                         ' . $last['unit'] . '
-                    </span>
-                ';
+            $amount = $last['amount'];
 
-            } else {
-                $ing_html = '
-                    <span dir="ltr" class="amount" data-amount="' . $last['amount'] . '" data-original="'.$display.'">
-                        ' . $display . '
-                    </span>
-                    <span class="unit">
-                         ' . $last['unit'] . '
-                    </span>
-                    <span class="unit">
-                        ' . $this->getTitle() . '
-                    </span>
-                ';
-            }
+            $title = $this->getTitle();
+
+            $unit = $last['unit'];
+
+            $ing_html = $this->get_ingredient_html($amount, $display, $unit, $title, $show_after_ingredient);
+
 
             if ($length > 1) {
                 $content .= $this->amounts_delimiter;
@@ -162,6 +139,51 @@ class Foody_Ingredient extends Foody_Post
             echo $content;
         }
         return $content;
+    }
+
+    private function get_ingredient_html($amount, $display, $unit, $title, $is_unit_after_title)
+    {
+
+        if (!empty($this->plural_name)) {
+            if (ceil($amount) > 1) {
+                $title = $this->plural_name;
+            }
+        }
+
+        $data = $this->get_ingredient_data_attr($amount, $display);
+
+        $amount_el = ' <span dir="ltr" class="amount" ' . $data . '>
+                        ' . $display . '
+                    </span>';
+
+        $unit_el = ' <span class="unit">
+                         ' . $unit . '
+                    </span>';
+
+        $name_el = '<span class="name">
+                        ' . $title . '
+                    </span>';
+
+        if ($is_unit_after_title) {
+            $amount_el .= $name_el;
+            $amount_el .= $unit_el;
+        } else {
+            $amount_el .= $unit_el;
+            $amount_el .= $name_el;
+        }
+
+        return $amount_el;
+    }
+
+
+    private function get_ingredient_data_attr($amount, $display)
+    {
+        return foody_array_to_data_attr([
+            'amount' => $amount,
+            'original' => $display,
+            'plural' => $this->plural_name,
+            'singular' => $this->singular_name
+        ]);
     }
 
 

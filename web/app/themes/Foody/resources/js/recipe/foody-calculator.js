@@ -49,19 +49,31 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
         let $this = $(this);
         let base = $this.data('amount') / originalNumberOfDishes;
 
+        let plural = $this.data('plural');
+        let singular = $this.data('singular');
+
         let calculated = base * val;
         let text = calculated.toFixed(2);
 
         let number = String(text).split('.');
-        if(number.length == 2){
+        if (number.length == 2) {
             let decimal = number[1];
-            if(decimal == '00'){
+            if (decimal == '00') {
                 text = number[0];
             }
         }
         if (val == originalNumberOfDishes || reset) {
             text = $this.data('original');
         }
+
+        let $name = $('span.name', $this.parent());
+
+        let name = singular;
+        if (Math.round(parseInt(text)) > 1) {
+            name = plural;
+        }
+
+        $name.text(name);
 
         $this.text(text);
     })
