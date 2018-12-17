@@ -267,7 +267,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים', $args = array());
     }
 
-    private function the_sidebar_related_content($recipes_title, $playlist_title)
+    private function the_sidebar_related_content($recipes_title, $playlist_title,$args= array())
     {
         if (!isset($args['hide_playlists']) || $args['hide_playlists'] == false) {
             $playlists_args = array(

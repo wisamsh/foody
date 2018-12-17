@@ -121,17 +121,29 @@ class SidebarFilter
     {
         $content = '';
         if (have_rows('filters_list', 'foody_search_options')) {
+
+            // a list of filtering sections
+            // as configured in Foody Search Options page
+            // in the admin
             $filters_list = get_field('filters_list', 'foody_search_options');
 
 
             $lists = array_map(function ($list) {
+
+                // type of the section
+                // see available types
+                // in class-foody-search.php
                 $type = $list['type'];
 
+                // title to show on top
+                // of this section
                 $list_title = $list['title'];
 
+                // the items in this section
                 $values = $list['values'];
 
                 $exclude_all = $list['exclude_all'];
+
 
 
                 $checkboxes = array_map(function ($value_arr) use ($type, $exclude_all) {
@@ -181,7 +193,7 @@ class SidebarFilter
     /**
      * @param $id
      * @param $type
-     * @return int|null|string|WP_Error
+     * @return null|string|WP_Error
      */
     private function get_item_title($id, $type)
     {
