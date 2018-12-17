@@ -83,16 +83,21 @@ jQuery(document).ready(function ($) {
 
 
     if (foodyGlobals.isMobile === false || (foodyGlobals.isTablet && $(document).width() >= 1024)) {
-        $('.menu-item-has-children').mouseenter(function () {
+        $('nav .nav-item').mouseenter(function () {
 
-            let $current = $('.dropdown-menu', $(this));
-            $current.addClass('show').mouseleave(function () {
-                $(this).removeClass('show');
-            });
+            if ($(this).hasClass('menu-item-has-children')) {
+                let $current = $('.dropdown-menu', $(this));
+                $current.addClass('show').mouseleave(function () {
+                    $(this).removeClass('show');
+                });
 
-            let currentId = $(this).attr('id');
+                let currentId = $(this).attr('id');
 
-            $('.dropdown-menu', '.menu-item-has-children:not(#' + currentId + ')').removeClass('show');
+                $('.dropdown-menu', '.menu-item-has-children:not(#' + currentId + ')').removeClass('show');
+            } else {
+                closeDropdowns();
+            }
+
         }).mouseleave(function () {
             $(this).removeClass('show');
         });
@@ -196,5 +201,17 @@ jQuery(document).ready(function ($) {
 
      }
      * */
+
+    $('header > nav,.logo-container-desktop').mouseleave(() => {
+        closeDropdowns();
+    });
+
+
+    function closeDropdowns() {
+
+        $dropdownMenu.each(function () {
+            $(this).removeClass('show');
+        })
+    }
 
 });

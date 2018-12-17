@@ -182,6 +182,18 @@
           "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "lester-chan/wp-postratings",
+        "version": "1.85",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wp-postratings.1.85.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -205,7 +217,8 @@
     "gagan-deep-singh/fix-image-rotation": "^2.1",
     "takayuki-miyoshi/contact-form-7": "^5.0",
     "arshid/contact-form-cfdb7": "1.2.4.1",
-    "anders-thorborgd/acf-image-crop-add-on": "^1.4"
+    "anders-thorborgd/acf-image-crop-add-on": "^1.4",
+    "lester-chan/wp-postratings": "^1.85"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

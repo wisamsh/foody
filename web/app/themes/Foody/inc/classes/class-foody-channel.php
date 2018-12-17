@@ -71,7 +71,7 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
         <?php
     }
 
-    public function the_sidebar_content()
+    public function the_sidebar_content($args = array())
     {
         dynamic_sidebar('foody-sidebar');
     }

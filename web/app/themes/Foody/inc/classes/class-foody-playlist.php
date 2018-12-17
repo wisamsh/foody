@@ -38,7 +38,7 @@ class Foody_Playlist extends Foody_Post
         $current_recipe->the_featured_content();
     }
 
-    public function the_sidebar_content()
+    public function the_sidebar_content($args = array())
     {
         foody_get_template_part(
             get_template_directory() . '/template-parts/content-playlist-recipes.php',
@@ -51,7 +51,7 @@ class Foody_Playlist extends Foody_Post
 
         $current_recipe = $this->get_current_recipe();
         if (!is_null($current_recipe)) {
-            $current_recipe->the_sidebar_content(['hide_playlists' => true]);
+            $current_recipe->the_sidebar_content(['hide_playlists' => true,'exclude'=>$this->id]);
         }
     }
 

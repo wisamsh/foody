@@ -262,9 +262,9 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         the_post_thumbnail('foody-main');
     }
 
-    public function the_sidebar_content()
+    public function the_sidebar_content($args = array())
     {
-        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים');
+        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים', $args = array());
     }
 
     private function the_sidebar_related_content($recipes_title, $playlist_title)
@@ -281,13 +281,13 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 }
             );
 
-            $playlists = $this->get_related_content_by_categories_and_custom('foody_playlist', 'related_playlists');
+            $playlists = $this->get_related_content_by_categories_and_custom('foody_playlist', 'related_playlists', $args);
 
             $this->related_content($playlists_args, $playlists);
         }
 
         if (!isset($args['hide_recipes']) || $args['hide_recipes'] == false) {
-            $recipes = $this->get_related_content_by_categories_and_custom('foody_recipe', 'related_recipes');
+            $recipes = $this->get_related_content_by_categories_and_custom('foody_recipe', 'related_recipes', $args);
 
             $recipes_args = array(
                 'title' => $recipes_title,
@@ -358,7 +358,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     }
 
-    private function get_related_content_by_categories_and_custom($post_type, $selector)
+    private function get_related_content_by_categories_and_custom($post_type, $selector, $args = array())
     {
         $posts = [];
         $related = get_field($selector, $this->id);
@@ -380,9 +380,14 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
             $posts_to_exclude[] = $this->id;
 
+            if (isset($args['exclude']) && is_array($args['exclude'])) {
+                $posts_to_exclude = array_merge($posts_to_exclude, $args['exclude']);
+            }
+
             $categories = [
                 $this->get_primary_category()
             ];
+
             if (!is_wp_error($categories)) {
 
                 $query = new WP_Query([

@@ -280,7 +280,7 @@ class Foody_Recipe extends Foody_Post
 
     public function the_sidebar_content($args = array())
     {
-        parent::the_sidebar_content();
+        parent::the_sidebar_content($args);
     }
 
     public function preview()
