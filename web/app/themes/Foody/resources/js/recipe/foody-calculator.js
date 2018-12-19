@@ -70,7 +70,9 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 
         let name = singular;
         if (Math.round(parseInt(text)) > 1) {
-            name = plural;
+            if(plural){
+                name = plural;
+            }
         }
 
         $name.text(name);
