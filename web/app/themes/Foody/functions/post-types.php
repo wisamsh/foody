@@ -289,7 +289,7 @@ function filter_post_type_link($link, $post)
         if (is_null($recipe_name)) {
             $recipes = posts_to_array('recipes', $post->ID);
             if (is_array($recipes) && count($recipes) > 0) {
-                if(is_numeric($recipes[0])){
+                if (is_numeric($recipes[0])) {
                     $recipes[0] = get_post($recipes[0]);
                 }
                 $recipe_name = $recipes[0]->post_name;
@@ -360,7 +360,7 @@ function custom_post_type_js_vars($single_template)
         return array_merge($js_vars, $vars);
     });
 
-
+    unset($foody_post);
     return $single_template;
 }
 

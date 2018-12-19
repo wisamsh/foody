@@ -105,5 +105,6 @@ jQuery(document).ready(function ($) {
     window.analytics = new FoodyAnalytics();
 
     analytics.view();
+    $('[data-toggle="tooltip"]').tooltip();
 
 });

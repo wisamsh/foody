@@ -6,9 +6,6 @@
  * Date: 6/28/18
  * Time: 7:32 PM
  */
-
-use Phospr\Fraction;
-
 class Foody_Ingredient extends Foody_Post
 {
 
@@ -33,6 +30,7 @@ class Foody_Ingredient extends Foody_Post
     public $plural_name;
 
     public $singular_name;
+    public $nutrients;
 
     /**
      * Foody_Ingredient constructor.
@@ -40,7 +38,7 @@ class Foody_Ingredient extends Foody_Post
      * @param $amount
      * @param $unit
      */
-    public function __construct($post, $amount = null, $unit = null)
+    public function __construct($post, $amount = null, $unit = null, $unit_taxonomy = null)
     {
         parent::__construct($post);
         $this->amount = $amount;
@@ -48,7 +46,9 @@ class Foody_Ingredient extends Foody_Post
 
         $this->plural_name = get_field('plural_name', $this->id);
         $this->singular_name = $this->getTitle();
+        $this->nutrients = get_field('nutrients', $this->id);
 
+        $this->unit_taxonomy = $unit_taxonomy;
     }
 
 
@@ -70,12 +70,12 @@ class Foody_Ingredient extends Foody_Post
 
     public function the_featured_content()
     {
-        // TODO: Implement the_featured_content() method.
+
     }
 
     public function the_sidebar_content($args = array())
     {
-        // TODO: Implement the_sidebar_content() method.
+
     }
 
     public function the_amounts($echo = true)
@@ -175,7 +175,6 @@ class Foody_Ingredient extends Foody_Post
         return $amount_el;
     }
 
-
     private function get_ingredient_data_attr($amount, $display)
     {
         return foody_array_to_data_attr([
@@ -185,7 +184,6 @@ class Foody_Ingredient extends Foody_Post
             'singular' => $this->singular_name
         ]);
     }
-
 
     private function to_fraction($dec)
     {
@@ -219,4 +217,61 @@ class Foody_Ingredient extends Foody_Post
     {
         // TODO: Implement the_details() method.
     }
+
+
+    /**
+     * @param $nutrient_name string
+     * @param $unit WP_Term
+     * @param $amount number
+     * @return float|int
+     */
+    public function get_nutrient_for_by_unit_and_amount($nutrient_name)
+    {
+
+        $value = 0;
+        if (!empty($this->amounts)) {
+            $unit = $this->amounts[0]['unit_tax'];
+            $amount = $this->amounts[0]['amount'];
+            if (!empty($this->nutrients) && is_array($this->nutrients)) {
+                $nutrients = array_filter($this->nutrients, function ($nutrient) use ($nutrient_name, $unit, $amount) {
+
+                    $valid = false;
+
+                    if ($unit instanceof WP_Term) {
+
+                        $valid = $nutrient['unit'] == $unit->term_id &&
+                            $nutrient['nutrient'] == $nutrient_name;
+                    }
+
+                    return $valid;
+                });
+
+                if (!empty($nutrients)) {
+                    $nutrient = array_shift($nutrients);
+                    $value = $nutrient['value'];
+                    $factor = 1;
+                    if ($unit->name == 'גרם') {
+                        $factor = 100;
+                    }
+
+                    $value = ($amount / $factor) * $value;
+                }
+            }
+        }
+
+
+        return $value;
+    }
+
+    public static function get_nutrients_options()
+    {
+        return get_field_object('field_5b62c59c35d88')['choices'];
+    }
+
+    function __clone()
+    {
+
+    }
+
+
 }

@@ -408,7 +408,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_mobile_sidebar_content()
     {
-        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים');
+        //$this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים');
     }
 
     public function comments()
@@ -531,4 +531,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return $label;
     }
 
+    public function get_id(){
+        return $this->id;
+    }
 }

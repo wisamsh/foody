@@ -6,6 +6,7 @@
  * Time: 11:52 AM
  */
 
+/** @noinspection PhpUndefinedVariableInspection */
 $nutritions = $template_args['nutritions'];
 $title = $template_args['title'];
 
@@ -28,7 +29,8 @@ $title = $template_args['title'];
                         <?php echo $values['name'] ?>
                     </span>
 
-                        <span class="value <?php echo $values['positive_negative'] ?>">
+<!--                        <span class="value --><?php //echo $values['positive_negative'] ?><!--">-->
+                        <span class="value">
                         <?php echo $values['value'] ?>
                     </span>
                     </div>
@@ -40,3 +42,14 @@ $title = $template_args['title'];
         <?php endforeach; ?>
     </div>
 </div>
+
+<!---->
+<!--<div class="disclaimer">-->
+<!---->
+<!--    <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"-->
+<!--    title="    --><?php //echo __('הערכים התזונתיים המופיעים במתכון חושבו על פי חומרי הגלם הספציפיים המופיעים וכל שינוי באופן הכנה, בסוג המוצר ו/או וחברת המצרך ו/או כמויות שונות יוביל לשינוי הערכים.
+//אתר פודי וחברת מדיפוד בע"מ אינן אחראיות לכל שינוי כאמור ו/או על השימוש במתכון ובאחריות המשתמש לבדוק את ערכים התזונתיים בעצמו בטרם השימוש במתכון.')?><!--"-->
+<!--    >-->
+<!--    Tooltip on bottom-->
+<!--    </button>-->
+<!--</div>-->

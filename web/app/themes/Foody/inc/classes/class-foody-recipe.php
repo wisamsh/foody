@@ -46,8 +46,6 @@ class Foody_Recipe extends Foody_Post
         } else {
             $this->duration = '2.45';
         }
-
-
     }
 
     /**
@@ -121,13 +119,33 @@ class Foody_Recipe extends Foody_Post
 
     public function the_ingredients()
     {
-        if ($this->post != null) {
 
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/content-recipe-ingredients.php',
-                $this->ingredients_groups
-            );
-        }
+        foody_get_template_part(
+            get_template_directory() . '/template-parts/content-recipe-ingredients.php',
+            [
+                'groups' => array_merge([], $this->get_the_ingredients_groups())
+            ]
+        );
+
+    }
+
+    /**
+     * A copy of $ingredients_groups
+     * @return array
+     */
+    public function get_the_ingredients_groups()
+    {
+        return array_map(function ($group) {
+
+            return [
+                'title' => $group['title'],
+                'ingredients' => array_map(function ($ingredient) {
+                    /** @var Foody_Ingredient $ingredient */
+                    return clone $ingredient;
+                }, $group['ingredients'])
+            ];
+
+        }, $this->ingredients_groups);
     }
 
     public function the_notes()
@@ -165,34 +183,34 @@ class Foody_Recipe extends Foody_Post
 
     public function the_nutrition()
     {
-        $nutritions = array();
+        $nutrients = array();
         $title = get_field('nutritions_title', $this->post->ID);
-        while (have_rows('nutritions', $this->post->ID)): the_row();
 
-            while (have_rows('nutrition', $this->post->ID)): the_row();
+        foreach (Foody_Ingredient::get_nutrients_options() as $nutrients_name => $nutrients_title) {
 
-                $value = get_sub_field('value');
-                $name = get_sub_field('name');
-                $positive_negative = get_sub_field('positive');
+            $item = ['name' => $nutrients_title, 'value' => 0];
+            foreach ($this->ingredients_groups as $group) {
 
-                $nutrition = array(
-                    'name' => $name,
-                    'value' => $value,
-                    'positive_negative' => $positive_negative
-                );
-                $nutritions[] = $nutrition;
+                foreach ($group['ingredients'] as $ingredient) {
 
-            endwhile;
+                    /** @var Foody_Ingredient $ingredient */
+                    $value = $ingredient->get_nutrient_for_by_unit_and_amount($nutrients_name);
+                    $item['value'] = $item['value'] + $value;
+                }
 
-        endwhile;
-        if (array_not_empty($nutritions)) {
-            $nutritions = array_chunk($nutritions, ceil(count($nutritions) / 3));
+            }
 
+            $nutrients[] = $item;
+        }
+
+
+        if (!empty($nutrients)) {
+            $nutrients = array_chunk($nutrients, ceil(count($nutrients) / 3));
 
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-nutritions.php',
                 [
-                    'nutritions' => $nutritions,
+                    'nutritions' => $nutrients,
                     'title' => $title
                 ]
             );
@@ -280,7 +298,7 @@ class Foody_Recipe extends Foody_Post
 
     public function the_sidebar_content($args = array())
     {
-        parent::the_sidebar_content($args);
+        //   parent::the_sidebar_content($args);
     }
 
     public function preview()
@@ -517,13 +535,13 @@ class Foody_Recipe extends Foody_Post
 
                         endwhile;
 
-                        if ($ingredient_post && $ingredient_post instanceof WP_Post) {
-                            $ingredient = new Foody_Ingredient($ingredient_post);
+//                        if ($ingredient_post && $ingredient_post instanceof WP_Post) {
+                        $ingredient = new Foody_Ingredient($ingredient_post);
 
-                            $ingredient->amounts = $amounts;
+                        $ingredient->amounts = $amounts;
 
-                            $this->ingredients_groups[$current_group]['ingredients'][] = $ingredient;
-                        }
+                        $this->ingredients_groups[$current_group]['ingredients'][] = $ingredient;
+//                        }
 
                     endwhile;
 
@@ -533,7 +551,6 @@ class Foody_Recipe extends Foody_Post
                 endwhile;
             endwhile;
         }
-
     }
 
     private function posts_bullets($array, $title)
@@ -585,7 +602,7 @@ class Foody_Recipe extends Foody_Post
     public function has_nutrients()
     {
         // TODO change check after implementing
-        return false;
+        return true;
     }
 
     public function calculator()
@@ -619,4 +636,6 @@ class Foody_Recipe extends Foody_Post
             );
         }
     }
+
+
 }

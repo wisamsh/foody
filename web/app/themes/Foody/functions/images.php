@@ -40,3 +40,16 @@ foreach ($sizes as $size) {
     add_image_size($size['name'], $size['width'], $size['height'], true);
 }
 
+add_filter('wpseo_opengraph_image_size', function ($size) {
+
+    $size = 'list-item';
+//    $size = 355;
+
+    return $size;
+});
+
+
+add_filter('wpseo_opengraph_image', function ($image) {
+
+    return $image;
+});
