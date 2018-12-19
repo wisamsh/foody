@@ -106,7 +106,7 @@ class Foody_Search
 
         $query_args = $this->foody_query->get_query($this->context, $this->context_args);
 
-        $wp_args = array_merge_recursive($wp_args, $query_args);
+        $wp_args = array_merge($wp_args, $query_args);
 
         $query = $this->query_builder
             ->build($wp_args);
@@ -464,6 +464,8 @@ class Foody_QueryBuilder
         $args = $this->get_args();
 
         $args = $this->resolve_query_conflicts($args,$wp_args);
+
+        $args['post_status'] = 'publish';
 
         $query = new WP_Query($args);
 

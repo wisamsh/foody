@@ -14,7 +14,9 @@ jQuery(document).ready(($) => {
         grid: '#homepage-feed',
         cols: 2,
         searchButton: '.show-recipes',
-        page:'.page-template-homepage'
+        page:'.page-template-homepage',
+        context: 'homepage',
+        contextArgs: [],
     });
 
     // search and filter pager
