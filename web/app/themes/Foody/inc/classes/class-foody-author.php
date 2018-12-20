@@ -41,6 +41,7 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
     function the_sidebar_content()
     {
         dynamic_sidebar('foody-sidebar');
+        dynamic_sidebar('foody-social');
     }
 
     function the_details()

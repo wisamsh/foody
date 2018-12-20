@@ -265,6 +265,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     public function the_sidebar_content($args = array())
     {
         $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים', $args = array());
+        dynamic_sidebar('foody-social');
     }
 
     private function the_sidebar_related_content($recipes_title, $playlist_title,$args= array())
@@ -408,7 +409,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_mobile_sidebar_content()
     {
-        //$this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים');
+        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים');
+//        dynamic_sidebar('foody-social');
     }
 
     public function comments()

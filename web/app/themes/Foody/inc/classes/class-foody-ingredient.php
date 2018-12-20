@@ -255,6 +255,9 @@ class Foody_Ingredient extends Foody_Post
                     }
 
                     $value = ($amount / $factor) * $value;
+
+                    $value = number_format((float)$value, 2, '.', '');
+
                 }
             }
         }

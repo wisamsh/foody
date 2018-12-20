@@ -20,6 +20,13 @@ class Foody_Sidebar
         add_action('template_redirect', array($this, 'handle_widgets'));
     }
 
+
+    /**
+     * Hides the filter widget based
+     * on a custom field using 'sidebars_widgets' hook
+     * @param $all_widgets
+     * @return mixed
+     */
     function hide_widgets($all_widgets)
     {
         $queried_object = get_queried_object();
@@ -54,6 +61,12 @@ class Foody_Sidebar
     {
 
     }
+
+    public function the_social_sidebar()
+    {
+        dynamic_sidebar('foody-social');
+    }
+
 }
 
 new Foody_Sidebar();

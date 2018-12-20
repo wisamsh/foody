@@ -458,6 +458,10 @@ $sidebar-top-offset: 60px;
           padding: 20px;
         }
 
+        li.widget {
+          display: none;
+        }
+
         .sidebar-content {
           border: none;
 

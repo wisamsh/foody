@@ -110,6 +110,7 @@ class Foody_HomePage
     public function filter()
     {
         dynamic_sidebar('foody-sidebar');
+
     }
 
     public function feed_query()
@@ -151,6 +152,7 @@ class Foody_HomePage
 
         echo "<div class=\"sidebar-content\">";
         dynamic_sidebar($sidebar_name);
+        dynamic_sidebar('foody-social');
         echo "</div></aside>";
     }
 

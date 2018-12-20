@@ -10,10 +10,35 @@
 $nutritions = $template_args['nutritions'];
 $title = $template_args['title'];
 
+$disclaimer = __(
+      "הערכים התזונתיים המופיעים במתכון חושבו על פי חומרי הגלם הספציפיים המופיעים וכל שינוי באופן הכנה, בסוג המוצר ו/או וחברת המצרך ו/או כמויות שונות יוביל לשינוי הערכים.
+אתר פודי וחברת מדיפוד בע\"מ אינן אחראיות לכל שינוי כאמור ו/או על השימוש במתכון ובאחריות המשתמש לבדוק את ערכים התזונתיים בעצמו בטרם השימוש במתכון."
+);
+
 ?>
 
 <h2 class="title">
     <?php echo $title ?>
+
+    <span class="glyphicon glyphicon-info-sign disclaimer" data-toggle="tooltip" data-placement="bottom"
+          title='<?php echo $disclaimer ?>'>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22px" height="22px" viewBox="0 0 22 22" version="1.1">
+        <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+        <title>Shape</title>
+        <desc>Created with Sketch.</desc>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Playlist-Page" transform="translate(-739.000000, -3712.000000)" fill="#ED3D48" fill-rule="nonzero" stroke="#ED3D48" stroke-width="0.799999952">
+                <g id="nutrition-copy" transform="translate(159.000000, 3707.000000)">
+                    <g id="np_info_1983617_FFFFFF" transform="translate(581.000000, 6.000000)">
+                        <path d="M10,20 C4.5,20 0,15.5 0,10 C0,4.5 4.5,0 10,0 C15.5,0 20,4.5 20,10 C20,15.5 15.5,20 10,20 Z M10,1.6664 C5.4164,1.6664 1.6664,5.4164 1.6664,10 C1.6664,14.5836 5.4164,18.3336 10,18.3336 C14.5836,18.3336 18.3336,14.5836 18.3336,10 C18.3336,5.4164 14.5836,1.6664 10,1.6664 Z M10,15.8328 C9.5,15.8328 9.1664,15.4992 9.1664,14.9992 L9.1664,9.1656 C9.1664,8.6656 9.5,8.332 10,8.332 C10.5,8.332 10.8336,8.6656 10.8336,9.1656 L10.8336,14.9992 C10.8336,15.4156 10.5,15.8328 10,15.8328 Z M10,4.7492 C10.5,4.7492 10.9164,5.1656 10.9164,5.6656 C10.9164,6.1656 10.5,6.582 10,6.582 C9.5,6.582 9.0836,6.1656 9.0836,5.6656 C9.0836,5.1656 9.5,4.7492 10,4.7492 Z" id="Shape"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </svg>
+    </span>
+
+
 </h2>
 
 <div class="nutrition-container">
@@ -29,7 +54,6 @@ $title = $template_args['title'];
                         <?php echo $values['name'] ?>
                     </span>
 
-<!--                        <span class="value --><?php //echo $values['positive_negative'] ?><!--">-->
                         <span class="value">
                         <?php echo $values['value'] ?>
                     </span>
@@ -42,14 +66,3 @@ $title = $template_args['title'];
         <?php endforeach; ?>
     </div>
 </div>
-
-<!---->
-<!--<div class="disclaimer">-->
-<!---->
-<!--    <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"-->
-<!--    title="    --><?php //echo __('הערכים התזונתיים המופיעים במתכון חושבו על פי חומרי הגלם הספציפיים המופיעים וכל שינוי באופן הכנה, בסוג המוצר ו/או וחברת המצרך ו/או כמויות שונות יוביל לשינוי הערכים.
-//אתר פודי וחברת מדיפוד בע"מ אינן אחראיות לכל שינוי כאמור ו/או על השימוש במתכון ובאחריות המשתמש לבדוק את ערכים התזונתיים בעצמו בטרם השימוש במתכון.')?><!--"-->
-<!--    >-->
-<!--    Tooltip on bottom-->
-<!--    </button>-->
-<!--</div>-->

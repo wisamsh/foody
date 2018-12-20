@@ -298,7 +298,7 @@ class Foody_Recipe extends Foody_Post
 
     public function the_sidebar_content($args = array())
     {
-        //   parent::the_sidebar_content($args);
+        parent::the_sidebar_content($args);
     }
 
     public function preview()
@@ -535,13 +535,13 @@ class Foody_Recipe extends Foody_Post
 
                         endwhile;
 
-//                        if ($ingredient_post && $ingredient_post instanceof WP_Post) {
-                        $ingredient = new Foody_Ingredient($ingredient_post);
+                        if ($ingredient_post && $ingredient_post instanceof WP_Post) {
+                            $ingredient = new Foody_Ingredient($ingredient_post);
 
-                        $ingredient->amounts = $amounts;
+                            $ingredient->amounts = $amounts;
 
-                        $this->ingredients_groups[$current_group]['ingredients'][] = $ingredient;
-//                        }
+                            $this->ingredients_groups[$current_group]['ingredients'][] = $ingredient;
+                        }
 
                     endwhile;
 

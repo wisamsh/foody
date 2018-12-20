@@ -59,6 +59,7 @@ abstract class Foody_Term
     function the_sidebar_content()
     {
         dynamic_sidebar('foody-sidebar');
+        dynamic_sidebar('foody-social');
     }
 
     /**

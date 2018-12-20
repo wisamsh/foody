@@ -355,6 +355,18 @@ $content-width: 95%;
             }
           }
         }
+
+
+
+
+      }
+
+
+
+      .disclaimer{
+        svg{
+          vertical-align: middle;
+        }
       }
     }
 
@@ -1056,7 +1068,7 @@ $content-width: 95%;
         .nutrition-container {
 
           .nutritions {
-
+            margin: 0;
             .nutrition {
               padding: 0 15px;
 
@@ -1064,12 +1076,12 @@ $content-width: 95%;
                 border-left: 0;
               }
 
+              .nutrition-row {
+                border-bottom: 1px solid rgba(151, 151, 151, 0.3);
+              }
+
               > div:not(.clearfix) {
                 padding: 5px 30px;
-                &.nutrition-row:not(:last-child) {
-                  border-bottom: 1px solid $color__divider;
-
-                }
 
                 .name {
 
@@ -1090,8 +1102,11 @@ $content-width: 95%;
               &:last-child {
                 padding-left: 15px;
 
-                div.nutrition-row:not(.clearfix) {
-                  border-bottom: none;
+                .nutrition-row {
+
+                  &:nth-last-child(2) {
+                    border-bottom: none;
+                  }
                 }
               }
             }
