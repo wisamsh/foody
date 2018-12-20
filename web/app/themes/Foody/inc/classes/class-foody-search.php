@@ -74,7 +74,10 @@ class Foody_Search
 
         $this->after_query();
 
-        return $posts;
+        return [
+            'posts'=>$posts,
+            'found' => $query->found_posts
+        ];
     }
 
 

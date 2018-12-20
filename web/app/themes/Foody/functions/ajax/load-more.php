@@ -79,7 +79,8 @@ function foody_ajax_load_more()
 
                 $response = [
                     'next' => $next && count($items) > 0,
-                    'items' => $items
+                    'items' => $items,
+                    'found' => $query->found_posts
                 ];
 
             }

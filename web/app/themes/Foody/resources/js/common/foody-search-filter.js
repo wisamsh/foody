@@ -188,7 +188,7 @@ module.exports = (function () {
             if (err) {
                 console.log('err: ' + err);
             } else {
-                that.grid.refresh(data.data);
+                that.grid.refresh(data.data,ajaxSettings.data.data.types.length == 0);
             }
         });
 

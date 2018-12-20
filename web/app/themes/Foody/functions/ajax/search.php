@@ -83,7 +83,9 @@ function foody_ajax_filter()
 
     $foody_search = new Foody_Search($context,$context_args);
 
-    $posts = $foody_search->query($filter);
+    $query = $foody_search->query($filter);
+
+    $posts = $query['posts'];
 
     $posts = array_map('Foody_Post::create', $posts);
 
@@ -91,7 +93,8 @@ function foody_ajax_filter()
 
     $res = [
         'next' => true,
-        'count' => count($posts)
+        'count' => count($posts),
+        'found' => $query['found']
     ];
 
 
