@@ -30,12 +30,15 @@ module.exports = (function () {
             //noinspection JSPotentiallyInvalidUsageOfThis
             this.searchFilter = this.buildInitialFilter();
             this.attachChangeListener();
-            if (settings.searchButton) {
-                let that = this;
-                $(settings.searchButton).on('click', function () {
-                    that.doQuery.call(that);
-                });
+            if (!settings.searchButton) {
+                settings.searchButton = '.show-recipes';
             }
+
+            let that = this;
+            $(settings.searchButton, $(settings.page)).on('click', function () {
+                that.doQuery.call(that);
+            });
+
         }
     };
 
@@ -188,7 +191,7 @@ module.exports = (function () {
             if (err) {
                 console.log('err: ' + err);
             } else {
-                that.grid.refresh(data.data,ajaxSettings.data.data.types.length == 0);
+                that.grid.refresh(data.data, ajaxSettings.data.data.types.length == 0);
             }
         });
 

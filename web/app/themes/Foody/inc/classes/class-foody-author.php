@@ -40,8 +40,13 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
     function the_sidebar_content()
     {
-        dynamic_sidebar('foody-sidebar');
+        $this->sidebar();
         dynamic_sidebar('foody-social');
+    }
+
+    public function sidebar()
+    {
+        dynamic_sidebar('foody-sidebar');
     }
 
     function the_details()
@@ -87,6 +92,12 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
         ];
 
         foody_get_template_part(get_template_directory() . '/template-parts/common/foody-tabs.php', $tabs);
+
+        // mobile filter
+        foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
+            'sidebar' => array($this, 'sidebar'),
+            'wrap' => true
+        ]);
     }
 
     function getId()

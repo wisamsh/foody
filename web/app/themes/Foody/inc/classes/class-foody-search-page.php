@@ -34,9 +34,14 @@ class Foody_SearchPage implements Foody_ContentWithSidebar
 
     }
 
+    public function sidebar(){
+        dynamic_sidebar('foody-sidebar');
+    }
+
     function the_sidebar_content()
     {
-        dynamic_sidebar('foody-sidebar');
+        $this->sidebar();
+        dynamic_sidebar('foody-social');
     }
 
     function the_details()
@@ -47,6 +52,12 @@ class Foody_SearchPage implements Foody_ContentWithSidebar
     function the_content($page)
     {
         foody_get_template_part(get_template_directory() . '/template-parts/search-results.php', ['search' => $this]);
+
+        // mobile filter
+        foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
+            'sidebar' => array($this, 'sidebar'),
+            'wrap' => true
+        ]);
     }
 
     public function the_results()

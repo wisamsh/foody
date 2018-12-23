@@ -39,7 +39,7 @@ class Foody_HomePage
         $posts = $this->get_featured_posts();
 
 
-        $this->grid->loop($posts,2,12,null,[],null,['image_size'=>'']);
+        $this->grid->loop($posts, 2, 12, null, [], null, ['image_size' => '']);
     }
 
     public function cover_photo()
@@ -147,9 +147,6 @@ class Foody_HomePage
 
         get_search_form();
 
-//        echo "<input name=\"search\" type=\"text\" class=\"search d-none d-lg-block\" title=\"search\" placeholder=\"חיפוש מתכון…\">";
-
-
         echo "<div class=\"sidebar-content\">";
         dynamic_sidebar($sidebar_name);
         dynamic_sidebar('foody-social');
@@ -167,7 +164,7 @@ class Foody_HomePage
 
         $featured = get_field('featured_items');
         $posts = [];
-        if(!empty($featured)){
+        if (!empty($featured)) {
 
             $posts = array_map(function ($row) {
 

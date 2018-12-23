@@ -117,6 +117,19 @@ function foody_set_og_image()
 add_action('wp_head', 'foody_set_og_image');
 
 
+function foody_hide_mobile_filter($vars)
+{
+    $queried_object = get_queried_object();
+    $show_filters = get_field('show_filters', $queried_object);
+    if ($show_filters === false) {
+        $vars['hideFilter'] = true;
+    }
+    return $vars;
+}
+
+add_filter('foody_js_globals', 'foody_hide_mobile_filter');
+
+
 function foody_env_scripts()
 {
     $scripts = [

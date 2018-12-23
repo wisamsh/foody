@@ -98,8 +98,6 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
 
 
     // === Foody_ContentWithSidebar === //
-
-
     function the_details()
     {
         bootstrap_breadcrumb();
@@ -113,6 +111,7 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
     function the_content($page)
     {
         parent::the_content($page);
+
     }
 
 

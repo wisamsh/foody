@@ -10,7 +10,9 @@ jQuery(document).ready(($) => {
     let filter = new FoodySearchFilter({
         grid: '#search-results',
         cols: 2,
-        page:'body[class~=search]'
+        page:'body[class~=search]',
+        context: 'search',
+        contextArgs: []
     });
 
     let searchPager = new FoodyContentPaging({

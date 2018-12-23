@@ -54,28 +54,35 @@ $homepage = new Foody_HomePage();
 
         </div>
 
-        <div class="filter-mobile d-block d-lg-none">
-            <button class="navbar-toggler filter-btn" type="button" data-toggle="drawer"
-                    data-target="#dw-p2">
-                <?php echo __('סינון', 'foody'); ?>
-            </button>
-        </div>
+        <?php
 
-        <div class="mobile-filter d-lg-none">
+            foody_get_template_part(get_template_directory() .'/template-parts/common/mobile-filter.php',[
+                    'sidebar'=>array($homepage,'sidebar')
+            ]);
+        ?>
 
-            <button type="button" class="close" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-
-            <?php $homepage->sidebar() ?>
-
-            <div class="show-recipes-container">
-
-                <button class="btn show-recipes">
-                    <?php echo __('הצג מתכונים', 'foody') ?>
-                </button>
-            </div>
-        </div>
+<!--        <div class="filter-mobile d-block d-lg-none">-->
+<!--            <button class="navbar-toggler filter-btn" type="button" data-toggle="drawer"-->
+<!--                    data-target="#dw-p2">-->
+<!--                --><?php //echo __('סינון', 'foody'); ?>
+<!--            </button>-->
+<!--        </div>-->
+<!---->
+<!--        <div class="mobile-filter d-lg-none">-->
+<!---->
+<!--            <button type="button" class="close" aria-label="Close">-->
+<!--                <span aria-hidden="true">&times;</span>-->
+<!--            </button>-->
+<!---->
+<!--            --><?php //$homepage->sidebar() ?>
+<!---->
+<!--            <div class="show-recipes-container">-->
+<!---->
+<!--                <button class="btn show-recipes">-->
+<!--                    --><?php //echo __('הצג מתכונים', 'foody') ?>
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
 
     </div>
 <?php

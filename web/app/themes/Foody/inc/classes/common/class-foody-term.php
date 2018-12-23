@@ -53,12 +53,16 @@ abstract class Foody_Term
     }
 
 
+    public function sidebar(){
+        dynamic_sidebar('foody-sidebar');
+    }
+
     /**
      * @see Foody_ContentWithSidebar interface
      */
     function the_sidebar_content()
     {
-        dynamic_sidebar('foody-sidebar');
+       $this->sidebar();
         dynamic_sidebar('foody-social');
     }
 
@@ -74,6 +78,13 @@ abstract class Foody_Term
         </div>
 
         <?php
+
+
+        foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
+            'sidebar' => array($this, 'sidebar'),
+            'wrap'=>true
+        ]);
+
 
     }
 
