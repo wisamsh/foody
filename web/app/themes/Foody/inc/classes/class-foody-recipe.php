@@ -199,7 +199,7 @@ class Foody_Recipe extends Foody_Post
                 }
 
             }
-
+            $item['data_name'] = $nutrients_name;
             $nutrients[] = $item;
         }
 

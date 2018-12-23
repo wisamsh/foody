@@ -152,6 +152,21 @@ class Foody_Ingredient extends Foody_Post
 
         $data = $this->get_ingredient_data_attr($amount, $display);
 
+        if (!empty($this->nutrients) && is_array($this->nutrients)) {
+            $nutrients_data = [];
+
+            $nutrients_names = self::get_nutrients_options();
+
+
+            foreach ($nutrients_names as $nutrient_name => $value) {
+
+                $nutrients_data[$nutrient_name] = $this->get_nutrient_for_by_unit_and_amount($nutrient_name);
+            }
+
+            $data .= ' ' . foody_array_to_data_attr($nutrients_data);
+        }
+
+
         $amount_el = ' <span dir="ltr" class="amount" ' . $data . '>
                         ' . $display . '
                     </span>';

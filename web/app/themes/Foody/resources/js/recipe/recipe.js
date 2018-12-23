@@ -10,6 +10,7 @@ if (foodyGlobals.post && foodyGlobals.post.type == 'foody_recipe') {
     let $ratingContainer = $('.recipe-rating');
 
     window.scroller();
+
     updateRating();
 
     $('.foody-rating').on('rating:change', function (event, value, caption) {

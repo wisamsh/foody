@@ -44,6 +44,9 @@ window.calculator = function (selector) {
 
 
 function updateIngredients($elements, originalNumberOfDishes, val, reset) {
+
+    updateNutrients(originalNumberOfDishes, val, reset);
+
     $elements.each(function () {
 
         let $this = $(this);
@@ -53,15 +56,7 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
         let singular = $this.data('singular');
 
         let calculated = base * val;
-        let text = calculated.toFixed(2);
-
-        let number = String(text).split('.');
-        if (number.length == 2) {
-            let decimal = number[1];
-            if (decimal == '00') {
-                text = number[0];
-            }
-        }
+        let text = prettyNumber(calculated);
         if (val == originalNumberOfDishes || reset) {
             text = $this.data('original');
         }
@@ -69,8 +64,8 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
         let $name = $('span.name', $this.parent());
 
         let name = singular;
-        if (Math.round(parseInt(text)) > 1) {
-            if(plural){
+        if (Math.ceil(parseInt(text)) > 1) {
+            if (plural) {
                 name = plural;
             }
         }
@@ -79,4 +74,52 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 
         $this.text(text);
     });
+}
+
+function updateNutrients(originalNumberOfDishes, val, reset) {
+    $('.nutrition-row').each(function () {
+
+        let $this = $(this);
+        let nutrient = $this.data('name');
+        let original = $this.data('original');
+
+        let totalValueForNutrient = 0;
+
+        if (val == originalNumberOfDishes || reset) {
+            totalValueForNutrient = parseFloat(original);
+        } else {
+            $('.ingredients .amount').each(function () {
+                let nutrientBaseValue = $(this).data(nutrient);
+                if (!nutrientBaseValue) {
+                    nutrientBaseValue = 0;
+                }
+
+                nutrientBaseValue = parseFloat(nutrientBaseValue);
+
+                nutrientBaseValue = nutrientBaseValue * val;
+
+
+                totalValueForNutrient += nutrientBaseValue;
+            });
+        }
+
+
+        $('.value', this).text(prettyNumber(totalValueForNutrient))
+
+    });
+}
+
+function prettyNumber(num) {
+
+    let text = num.toFixed(2);
+
+    let number = String(text).split('.');
+    if (number.length == 2) {
+        let decimal = number[1];
+        if (decimal == '00') {
+            text = number[0];
+        }
+    }
+
+    return text;
 }
