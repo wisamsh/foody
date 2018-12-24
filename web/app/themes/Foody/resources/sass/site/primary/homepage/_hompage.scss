@@ -42,7 +42,7 @@ $sidebar-top-offset: 60px;
       }
     }
 
-    .categories-listing {
+    .categories-listing, .promotion-listing {
 
       padding: 0 10px;
 
@@ -53,7 +53,17 @@ $sidebar-top-offset: 60px;
         }
       }
 
-      .category-listing {
+      .promoted-items {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          padding: 0;
+        }
+      }
+
+      .category-listing, .promotion-item-listing {
         padding: 0 5px;
         // TODO find ios fix
         //filter: drop-shadow(2px 2px 10px rgba(0, 0, 0, 0.3));
@@ -65,7 +75,7 @@ $sidebar-top-offset: 60px;
           }
         }
 
-        .categort-listing-title {
+        .categort-listing-title, .promotion-listing-title {
           text-align: center;
           margin-top: 20px;
           font-family: $font__main;
@@ -238,30 +248,66 @@ $sidebar-top-offset: 60px;
         height: auto;
       }
 
+      .promotion-listing {
+        padding-right: 0;
+
+        .title {
+          font-size: 24px;
+        }
+      }
+
       .categories-list-widget {
         .title {
           font-size: 24px;
           margin-bottom: 0;
         }
-        .categories-listing {
+        .categories-listing, .promotion-listing {
 
           padding: 0;
-          a.col {
+          a.col, li.col {
             padding: 0;
           }
 
-          .category-listing {
+          .category-listing, .promoted-item {
             padding: 0 3px;
             img {
               clip-path: inset(0 round .3rem);
             }
 
-            .categort-listing-title {
+            .categort-listing-title, .promotion-listing-title {
               font-size: 18px;
               margin-top: 5px;
             }
 
           }
+        }
+      }
+
+      .promotion-listing {
+
+        .title {
+          margin-bottom: 0;
+        }
+        padding: 0;
+        li.col {
+          padding: 0;
+        }
+
+        .promoted-item {
+
+          .promotion-item-listing {
+            padding: 0 3px;
+            img {
+              clip-path: inset(0 round .3rem);
+            }
+
+            .promotion-listing-title {
+              font-size: 18px;
+              margin-top: 5px;
+            }
+
+          }
+
         }
       }
 

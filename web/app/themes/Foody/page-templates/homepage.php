@@ -25,6 +25,9 @@ $homepage = new Foody_HomePage();
 
             <?php $homepage->categories_listing() ?>
 
+
+            <?php $homepage->promoted_items(); ?>
+
             <?php
 
             $num = wp_is_mobile() ? 4 : 6;

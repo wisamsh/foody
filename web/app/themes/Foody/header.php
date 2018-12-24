@@ -21,12 +21,14 @@ $user = new Foody_User();
     <meta name="theme-color" content="#ED3D48">
     <link rel="profile" href="http://gmpg.org/xfn/11">
 
+    <?php Foody_Header::google_tag_manager(); ?>
     <?php wp_head(); ?>
 
 </head>
 
 <body <?php body_class(); ?> dir="rtl">
 <div id="fb-root"></div>
+<?php Foody_Header::google_tag_manager_iframe(); ?>
 <div id="page" class="site">
 
     <header id="masthead" class="site-header">
