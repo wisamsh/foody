@@ -179,30 +179,32 @@ class Foody_HomePage
         return $posts;
     }
 
+    /**
+     * Displays promoted items groups
+     * in the homepage below featured categories
+     */
     public function promoted_items()
     {
         $promoted_groups = get_field('promoted_groups');
 
-
-        foreach ($promoted_groups as $promoted_group) {
-
-
-            $args = [
-                'title' => $promoted_group['title'],
-                'items' => array_map(function ($item) {
-                    return [
-                        'title' => $item['title'],
-                        'image' => $item['desktop_image']['url'],
-                        'mobile_image' => $item['mobile_image']['url'],
-                        'link' => $item['link']
-                    ];
-                }, $promoted_group['items'])
-            ];
+        if (!empty($promoted_groups)) {
+            foreach ($promoted_groups as $promoted_group) {
+                $args = [
+                    'title' => $promoted_group['title'],
+                    'items' => array_map(function ($item) {
+                        return [
+                            'title' => $item['title'],
+                            'image' => $item['desktop_image']['url'],
+                            'mobile_image' => $item['mobile_image']['url'],
+                            'link' => $item['link']
+                        ];
+                    }, $promoted_group['items'])
+                ];
 
 
-            foody_get_template_part(get_template_directory() . '/template-parts/content-promotions-listing.php', $args);
+                foody_get_template_part(get_template_directory() . '/template-parts/content-promotions-listing.php', $args);
 
+            }
         }
-
     }
 }
