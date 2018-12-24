@@ -9,8 +9,11 @@ jQuery(document).ready(($) => {
 
     let filter = new FoodySearchFilter({
         grid: '#search-results',
+        gridArgs: {
+            titleSelector: '.search .details-container .title'
+        },
         cols: 2,
-        page:'body[class~=search]',
+        page: 'body[class~=search]',
         context: 'search',
         contextArgs: []
     });

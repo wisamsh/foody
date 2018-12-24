@@ -13,7 +13,7 @@
         <?php
         global $wp_query;
         $count = $wp_query->found_posts;
-        printf('תוצאות חיפוש (%s):', $count);
+        printf('תוצאות חיפוש (%s)', $count);
         ?>
     </div>
     <h2 class="title">

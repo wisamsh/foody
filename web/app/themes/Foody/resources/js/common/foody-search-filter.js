@@ -15,7 +15,13 @@ module.exports = (function () {
 
     FoodySearchFilter.prototype.init = function (settings) {
         this.settings = settings;
-        this.grid = new FoodyGrid({selector: settings.grid});
+
+        let defaultGridArgs = {selector: settings.grid};
+        if(settings.gridArgs){
+            defaultGridArgs = _.extend(defaultGridArgs,settings.gridArgs);
+        }
+
+        this.grid = new FoodyGrid(defaultGridArgs);
 
         if (!settings.selector) {
             settings.selector = '#accordion-foody-filter';
@@ -137,7 +143,7 @@ module.exports = (function () {
          * */
 
 
-        search = search || '';
+        search = this._getQuery('s');
 
         let args = {
             // TODO get from input if needed
@@ -165,6 +171,11 @@ module.exports = (function () {
 
         return args;
 
+    };
+
+    FoodySearchFilter.prototype._getQuery = function (key) {
+        let urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(key);
     };
 
     FoodySearchFilter.prototype.doQuery = function () {

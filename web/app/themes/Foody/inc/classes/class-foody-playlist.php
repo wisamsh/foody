@@ -49,10 +49,13 @@ class Foody_Playlist extends Foody_Post
             ]
         );
 
-        $current_recipe = $this->get_current_recipe();
-        if (!is_null($current_recipe)) {
-            $current_recipe->the_sidebar_content(['hide_playlists' => true, 'exclude' => $this->id]);
+        if (empty($args['exclude'])) {
+            $args['exclude'] = [];
         }
+        $args['exclude'] = array_merge($args['exclude'], array_map(function ($recipe) {
+            return $recipe->id;
+        }, $this->recipes));
+        parent::the_sidebar_content($args);
     }
 
 

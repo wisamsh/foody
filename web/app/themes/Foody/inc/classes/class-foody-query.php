@@ -90,6 +90,9 @@ class Foody_Query
             if (isset($_POST['filter']['search'])) {
                 $search_term = $_POST['filter']['search'];
 
+            }elseif (isset($_POST['data']['search'])) {
+                $search_term = $_POST['data']['search'];
+
             }
         }
 

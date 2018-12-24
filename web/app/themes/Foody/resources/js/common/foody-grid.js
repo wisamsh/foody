@@ -16,8 +16,13 @@ module.exports = (function () {
         this.$parent.css('position', 'relative');
         this.foodyLoader = new FoodyLoader({container: this.$parent});
         this.$loadMore = $('.show-more', this.$parent);
-        this.$title = $('.grid-header .title', this.$parent);
-        console.log(this.$title);
+
+        let gridTitleSelector = settings.titleSelector;
+        if (!gridTitleSelector) {
+            this.$title = $('.grid-header .title', this.$parent);
+        } else {
+            this.$title = $(gridTitleSelector);
+        }
     };
 
     FoodyGrid.prototype.getItems = function () {
@@ -43,7 +48,7 @@ module.exports = (function () {
     };
 
 
-    FoodyGrid.prototype.refresh = function (data,revertTitle) {
+    FoodyGrid.prototype.refresh = function (data, revertTitle) {
         this.$grid.empty();
         this.$grid.append(data.items);
         if (data.count < foodyGlobals.postsPerPage) {
@@ -51,7 +56,7 @@ module.exports = (function () {
         } else {
             this.$loadMore.show();
         }
-        this.updatePostsFound(data.found,revertTitle);
+        this.updatePostsFound(data.found, revertTitle);
     };
 
     FoodyGrid.prototype.append = function (data) {
@@ -66,13 +71,13 @@ module.exports = (function () {
         // this.updatePostsFound(data.found);
     };
 
-    FoodyGrid.prototype.updatePostsFound = function (found,revertTitle) {
+    FoodyGrid.prototype.updatePostsFound = function (found, revertTitle) {
 
         let title = this.$title.text();
 
-        title = title.replace(/\([0-9]+\)/,'');
+        title = title.replace(/\([0-9]+\)/, '');
 
-        if(!revertTitle){
+        if (!revertTitle) {
             title = `${title} (${found})`;
         }
 
