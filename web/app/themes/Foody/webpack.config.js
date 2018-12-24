@@ -66,7 +66,8 @@ module.exports = env => {
             // common : "./resources/pages/common/index",
             // home: "./resources/pages/homepage/index",
             main: "./resources/js/app",
-            admin: "./resources/js/admin"
+            admin: "./resources/js/admin",
+            style:"./resources/sass/app.scss"
         },
         output: {
             // filename: '[name].js',

@@ -19,7 +19,7 @@ require('./plugins');
 
 
 require('slick-carousel');
-require('../sass/app.scss');
+// require('../sass/app.scss');
 window._ = require('underscore');
 window.Fraction = require('fractional').Fraction;
 window.lottie = require('lottie-web');

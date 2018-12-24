@@ -151,6 +151,9 @@ function foody_scripts()
     if (!is_admin()) {
         $asset = foody_get_versioned_asset('main');
         wp_enqueue_script('foody-script', $asset, false, false, false);
+
+        $style = foody_get_versioned_asset('style');
+        wp_enqueue_script('foody-style', $style, false, false, false);
     }
 
     if (is_page(get_page_by_title('הרשמה'))) {
