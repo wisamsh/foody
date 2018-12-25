@@ -64,7 +64,7 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
         let $name = $('span.name', $this.parent());
 
         let name = singular;
-        if (Math.ceil(parseInt(text)) > 1) {
+        if (Math.ceil(parseFloat(text)) > 1) {
             if (plural) {
                 name = plural;
             }
