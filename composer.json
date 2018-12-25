@@ -187,11 +187,11 @@
       "type": "package",
       "package": {
         "name": "lester-chan/wp-postratings",
-        "version": "1.85",
+        "version": "1.86.1",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/wp-postratings.1.85.zip"
+          "url": "https://downloads.wordpress.org/plugin/wp-postratings.1.86.1.zip"
         }
       }
     }

@@ -11,17 +11,17 @@ if (foodyGlobals.post && foodyGlobals.post.type == 'foody_recipe') {
 
     window.scroller();
 
-    updateRating();
+    // updateRating();
 
-    $('.foody-rating').on('rating:change', function (event, value, caption) {
-        if (foodyGlobals.loggedIn == 'false') {
-            showLoginModal();
-            $(this).rating('update', 0);
-        } else {
-            rating(value);
-        }
-
-    });
+    // $('.foody-rating').on('rating:change', function (event, value, caption) {
+    //     if (foodyGlobals.loggedIn == 'false') {
+    //         showLoginModal();
+    //         $(this).rating('update', 0);
+    //     } else {
+    //         rating(value);
+    //     }
+    //
+    // });
 
 
     function rating(value) {

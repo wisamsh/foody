@@ -637,5 +637,17 @@ class Foody_Recipe extends Foody_Post
         }
     }
 
+    public static function ratings()
+    {
+        if (function_exists('the_ratings')) {
+
+            ?>
+            <section class="ratings-wrapper">
+                <?php echo do_shortcode('[ratings]') ?>
+            </section>
+            <?php
+        }
+    }
+
 
 }

@@ -173,9 +173,9 @@ $recipe = $template_args['recipe'];
 <?php $recipe->the_notes() ?>
 
 
-<section class="recipe-rating box">
-    <?php $recipe->the_rating() ?>
-</section>
+<!--<section class="recipe-rating box">-->
+<!--    --><?php //$recipe->the_rating() ?>
+<!--</section>-->
 
 
 <?php if ($recipe->has_nutrients()): ?>

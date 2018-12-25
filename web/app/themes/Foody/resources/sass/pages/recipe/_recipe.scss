@@ -29,6 +29,23 @@ $content-width: 95%;
 
     }
 
+    .ratings-wrapper {
+      display: inline-flex;
+      align-items: center;
+      margin: 0 10px;
+      font-family: $font__assistant;
+      .post-ratings {
+        width: auto;
+
+        em {
+          vertical-align: middle;
+          strong {
+            margin-left: 1px;
+          }
+        }
+      }
+    }
+
     .details-container {
       background-color: white;
 
@@ -98,6 +115,7 @@ $content-width: 95%;
       section {
         .social {
           display: flex;
+          padding: 0;
           .essb_links {
             li {
               margin-left: 5px !important;
@@ -356,15 +374,10 @@ $content-width: 95%;
           }
         }
 
-
-
-
       }
 
-
-
-      .disclaimer{
-        svg{
+      .disclaimer {
+        svg {
           vertical-align: middle;
         }
       }
@@ -727,7 +740,17 @@ $content-width: 95%;
             }
           }
         }
+        .ratings-wrapper {
+          margin: 0;
+          font-size: 18px;
+          .post-ratings {
 
+            em {
+              strong {
+              }
+            }
+          }
+        }
         .featured-content-container {
 
           &.video-featured-content {
