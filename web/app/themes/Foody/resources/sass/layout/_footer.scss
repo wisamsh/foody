@@ -29,7 +29,7 @@ footer.site-footer {
         font-size: 15px;
         line-height: normal;
         text-align: right;
-        padding: 0 0 12px;
+        padding: 0 0 7px;
 
         a {
           color: inherit;
@@ -38,6 +38,7 @@ footer.site-footer {
 
       .newsletter-title {
         font-weight: 900;
+        font-size: 18px;
       }
 
       .newsletter {
@@ -47,7 +48,7 @@ footer.site-footer {
           padding-right: 0;
 
           input {
-            height: 44px;
+            height: 40px;
             border-radius: 3px;
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
             background-color: #ffffff;
@@ -58,7 +59,8 @@ footer.site-footer {
             //noinspection CssInvalidPseudoSelector
             &::placeholder {
               font-family: $font__main;
-              font-weight: 900;
+              font-size: 16px;
+              font-weight: normal;
             }
           }
         }
@@ -71,7 +73,6 @@ footer.site-footer {
           color: $color__primary;
           font-size: 1em;
           cursor: pointer;
-          margin-left: 0;
           font-weight: 900;
         }
       }
@@ -93,6 +94,7 @@ footer.site-footer {
 
     .menu-pages {
       padding-left: 30px;
+      width: 100%;
     }
   }
 }
@@ -112,6 +114,7 @@ footer.site-footer {
 
       .newsletter-title {
         color: #fff;
+        font-size: 20px;
       }
 
       .newsletter {

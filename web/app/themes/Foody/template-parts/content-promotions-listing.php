@@ -16,9 +16,9 @@ $max_mobile_items = 4;
 
 <section class="promotion-listing">
 
-    <h2 class="title">
+    <h3 class="title">
         <?php echo $title ?>
-    </h2>
+    </h3>
 
     <ul class="promoted-items d-flex flex-row">
 

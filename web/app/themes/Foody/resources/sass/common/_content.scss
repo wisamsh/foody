@@ -9,23 +9,27 @@
     font-family: $font__main;
     color: $color__primary;
     font-weight: 900;
-    font-size: 30px;
+    font-size: 24px;
   }
 
-  h3, h4, h5, h6 {
+  h3, h3, h4, h5, h6 {
     font-family: $font__assistant;
     font-weight: bold;
   }
 
-  p {
-    margin: 0;
-    text-align: right;
-    font-family: $font__assistant;
-    font-size: 14pt;
+  h3 {
+    font-weight: 500;
+    font-size: 23px;
   }
 
-  ul,ol{
-    font-size: 14pt;
+  p {
+    text-align: right;
+    font-family: $font__assistant;
+    font-size: $content-font-size;
+  }
+
+  ul, ol {
+    font-size: $content-font-size;
   }
 
   .wp-caption {

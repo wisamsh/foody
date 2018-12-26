@@ -28,6 +28,10 @@
       }
     }
 
+    #primary {
+      padding-top: 0;
+    }
+
     #content {
       > .container {
         padding-top: 15px;
@@ -63,7 +67,7 @@
             opacity: 1;
           }
 
-          .author-name{
+          .author-name {
             font-size: 22px;
           }
         }

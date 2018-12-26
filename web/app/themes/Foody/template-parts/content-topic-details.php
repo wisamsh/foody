@@ -68,7 +68,7 @@ $follow_btn_text = $is_followed ? __('עוקב') : __('עקוב');
             <div class="social d-none d-sm-block">
                 <?php
                 foody_get_template_part(
-                    get_template_directory() . '/template-parts/content-social-actions.php'
+                    get_template_directory() . '/template-parts/content-social-actions.php', ['hide_rating' => true]
                 )
                 ?>
             </div>

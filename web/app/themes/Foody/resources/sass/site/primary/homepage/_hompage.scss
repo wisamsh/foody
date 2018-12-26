@@ -44,7 +44,7 @@ $sidebar-top-offset: 60px;
 
     .categories-listing, .promotion-listing {
 
-      padding: 0 10px;
+      //padding: 0 10px;
 
       > a {
         &.col {
@@ -77,8 +77,8 @@ $sidebar-top-offset: 60px;
 
         .categort-listing-title, .promotion-listing-title {
           text-align: center;
-          margin-top: 20px;
           font-family: $font__main;
+          font-size: 21px;
         }
 
         .overlay {
@@ -116,9 +116,13 @@ $sidebar-top-offset: 60px;
 
       }
 
+      .grid-header {
+        align-items: center;
+      }
+
       .sidebar-container {
 
-        margin-top: 66px;
+        margin-top: 60px;
         width: calc(100% - #{$content-width});
         padding-right: 0;
 
@@ -137,7 +141,7 @@ $sidebar-top-offset: 60px;
           border: none;
           background-color: $color__background-screen;
 
-          $input-height: 57px;
+          $input-height: 50px;
           $input-margin: 4px;
           $input-side-offset: 15px;
 
@@ -160,7 +164,7 @@ $sidebar-top-offset: 60px;
 
                     //noinspection CssInvalidPseudoSelector
                     &::placeholder {
-                      font-size: 24px;
+                      font-size: 20px;
                       vertical-align: sub;
                       line-height: $input-height;
                       text-align: right;
@@ -228,6 +232,10 @@ $sidebar-top-offset: 60px;
       padding-left: 20px;
     }
   }
+
+  h3 {
+    font-size: 22px;
+  }
 }
 
 @include breakpoint(mobileonly) {
@@ -250,17 +258,10 @@ $sidebar-top-offset: 60px;
 
       .promotion-listing {
         padding-right: 0;
-
-        .title {
-          font-size: 24px;
-        }
       }
 
       .categories-list-widget {
-        .title {
-          font-size: 24px;
-          margin-bottom: 0;
-        }
+
         .categories-listing, .promotion-listing {
 
           padding: 0;
@@ -285,9 +286,6 @@ $sidebar-top-offset: 60px;
 
       .promotion-listing {
 
-        .title {
-          margin-bottom: 0;
-        }
         padding: 0;
         li.col {
           padding: 0;
@@ -309,11 +307,6 @@ $sidebar-top-offset: 60px;
           }
 
         }
-      }
-
-      .team-title {
-        font-size: 24px;
-        margin-bottom: 0;
       }
 
       .team-listing {
@@ -353,7 +346,6 @@ $sidebar-top-offset: 60px;
           .foody-grid {
             .grid-header {
               .title {
-                font-size: 24px;
                 line-height: normal;
               }
             }
@@ -414,136 +406,10 @@ $sidebar-top-offset: 60px;
       }
     }
 
-    //.filter-mobile {
-    //  height: 100px;
-    //  text-align: center;
-    //  line-height: 100px;
-    //  position: fixed;
-    //  bottom: 0;
-    //  left: 0;
-    //  right: 0;
-    //  margin: auto;
-    //  width: 140px;
-    //
-    //  .filter-btn {
-    //    height: 55px;
-    //    width: 140px;
-    //    border-radius: 28px;
-    //    background-color: #FFFFFF;
-    //    box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.13);
-    //    color: $color__primary;
-    //    vertical-align: middle;
-    //    display: inline-block;
-    //    font-family: $font__bold;
-    //    &:active, &:hover, &:focus {
-    //      border: 0;
-    //    }
-    //  }
-    //}
-    //
-    //.mobile-filter {
-    //
-    //  $show-recipes-button-height: 62px;
-    //  $show-recipes-button-margin: 18px;
-    //
-    //  position: fixed;
-    //  top: 0;
-    //  left: 0;
-    //  right: 0;
-    //  bottom: 0;
-    //  min-height: 100%;
-    //  width: 0;
-    //  transition: all .4s;
-    //  opacity: 0;
-    //  z-index: 9999999999999;
-    //  background-color: white;
-    //  overflow-y: scroll;
-    //  padding-bottom: $show-recipes-button-height + $show-recipes-button-margin;
-    //
-    //  .show-recipes-container {
-    //    position: fixed;
-    //    bottom: 0;
-    //    width: 80%;
-    //    display: none;
-    //    padding: 0 40px;
-    //    right: 0;
-    //    margin-bottom: 20px;
-    //    button {
-    //      background-image: linear-gradient(71deg, #ec3849, #f35644);
-    //      height: $show-recipes-button-height;
-    //      width: 100%;
-    //      font-size: 32px;
-    //      color: #ffffff;
-    //    }
-    //  }
-    //
-    //  &.open {
-    //    width: 80%;
-    //    opacity: 1;
-    //
-    //    button.close {
-    //      padding: 10px;
-    //      position: absolute;
-    //      left: 20px;
-    //      top: 10px;
-    //      z-index: 1;
-    //    }
-    //
-    //    .show-recipes-container {
-    //      display: block;
-    //      button {
-    //
-    //      }
-    //    }
-    //  }
-    //
-    //  aside {
-    //    padding-right: 0;
-    //
-    //    li.widget, .sidebar-section {
-    //      padding: 20px;
-    //    }
-    //
-    //    li.widget {
-    //      display: none;
-    //    }
-    //
-    //    .sidebar-content {
-    //      border: none;
-    //
-    //      #accordion-foody-filter {
-    //
-    //        #heading-foody-filter {
-    //          i {
-    //            display: none;
-    //          }
-    //
-    //          .main-title {
-    //            padding-right: 0;
-    //          }
-    //        }
-    //
-    //        #foody-filter {
-    //          margin-right: 0;
-    //
-    //          h5 {
-    //            i.arrow {
-    //              &:before {
-    //                left: 4.3em;
-    //              }
-    //            }
-    //          }
-    //
-    //          .card-body {
-    //            padding-right: 0;
-    //            padding-left: 0;
-    //          }
-    //        }
-    //      }
-    //    }
-    //  }
-    //
-    //}
+    h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
   }
 }
 

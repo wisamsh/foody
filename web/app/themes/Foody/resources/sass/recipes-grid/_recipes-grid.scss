@@ -24,8 +24,20 @@
     }
   }
 
-  .grid-sort {
-    //margin-bottom: 15px;
+  .grid-header {
+
+    .title {
+      font-size: 22px;
+    }
+
+    .grid-sort {
+
+      .foody-select {
+        button {
+          font-size: 18px;
+        }
+      }
+    }
   }
 
   .no-results {
@@ -59,6 +71,7 @@
       img {
       }
       h4 {
+        font-size: 20px;
       }
     }
 
@@ -66,9 +79,14 @@
 
       .title {
         margin-bottom: 0;
-        font-size: 24px;
       }
       .grid-sort {
+
+        .foody-select {
+          button {
+            font-size: 18px;
+          }
+        }
       }
     }
 

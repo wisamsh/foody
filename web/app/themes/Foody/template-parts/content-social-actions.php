@@ -17,6 +17,8 @@ $buttons_attr = implode(',', $buttons);
 
 $social_icons = do_shortcode('[easy-social-share buttons="' . $buttons_attr . '" template="11" counters=0 style="icon" point_type="simple"]');
 
+$show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rating'] == false;
+
 ?>
 
 
@@ -30,8 +32,10 @@ $social_icons = do_shortcode('[easy-social-share buttons="' . $buttons_attr . '"
         </a>
     </button>
 
-    <section class="d-none d-lg-inline-flex">
-        <?php Foody_Recipe::ratings() ?>
-    </section>
+    <?php if ($show_rating): ?>
+        <section class="d-none d-lg-inline-flex">
+            <?php Foody_Recipe::ratings() ?>
+        </section>
+    <?php endif; ?>
 </div>
 

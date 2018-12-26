@@ -23,7 +23,7 @@
     border: none;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
     transition: height .3s ease;
-    height: 88px;
+    height: 60px;
     margin-bottom: 10px;
 
     img.avatar {
@@ -32,6 +32,7 @@
       z-index: 100;
       right: 5px;
       top: 50%;
+      max-width: 45px;
       transform: translateY(-50%);
       transition: top .3s ease, transform .3s ease;
     }
@@ -121,6 +122,7 @@
       clip-path: circle();
       margin-left: 10px;
       vertical-align: baseline;
+      max-width: 40px;
     }
 
     .comment-body {
@@ -134,14 +136,14 @@
 
       .author {
         unicode-bidi: embed;
-        font-size: 22px;
+        font-size: 18px;
         font-weight: bold;
         margin-left: 5px;
       }
 
       time {
         opacity: 0.5;
-        font-size: 22px;
+        font-size: 18px;
       }
 
       p {
@@ -153,8 +155,8 @@
 
     .reply {
       margin-right: $avatar-size;
-      padding: 10px 20px 0;
-      font-size: 22px;
+      padding: 5px 20px 0;
+      font-size: 18px;
       font-weight: bold;
       opacity: 0.5;
     }

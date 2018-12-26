@@ -32,9 +32,10 @@
         display: inline-block;
         color: #fff;
         text-align: center;
-        padding: 0 3em 0 1.5em;
         transform: scale(.8);
         transform-origin: 10px;
+        background-position-y: center;
+        padding: 0 3em 15px 1.1em;
       }
     }
 
@@ -108,7 +109,7 @@
 
     h3 {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 21px;
       font-family: $font__assistant-bold;
       font-weight: bold;
     }
@@ -162,13 +163,16 @@
 
     .main-image-container {
       .recipe-label {
+
         span {
-          font-size: 31px;
+          font-size: 24px;
           padding: 0 3em 0 1.2em;
           transform: scale(0.6);
           transform-origin: 12px 0;
           top: 0;
+          background-position-y: unset;
         }
+
       }
 
       .duration {

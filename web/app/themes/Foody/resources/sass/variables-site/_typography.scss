@@ -8,16 +8,16 @@ $raanan-unicode-range: 'U+0021-0039';
 @include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperRegular', null, null, 'otf', $raanan-unicode-range);
 @include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperBlack', bold, null, 'otf', $raanan-unicode-range);
 @include font-face(Assistant, '../fonts/Assistant/Assistant-Regular', null, null, 'ttf');
-@include font-face(Assistant, '../fonts/Assistant/Assistant-Bold', bold, null, 'ttf');
-@include font-face(Assistant, '../fonts/Assistant/Assistant-ExtraBold', 800, null, 'ttf');
+@include font-face(Assistant, '../fonts/Assistant/Assistant-Bold', 700, null, 'ttf');
+@include font-face(Assistant, '../fonts/Assistant/Assistant-SemiBold', 500, null, 'ttf');
 
 $font__ariel-rounded: RaananSuper;
-$font__main: RaananSuper;
-$font__bold: RaananSuper;
+//$font__main: RaananSuper;
+//$font__bold: RaananSuper;
 
 // 	U+0000, U+007F, U+0590..U+05FF
-//$font__main: Assistant;
-//$font__bold: Assistant;
+$font__main: Assistant;
+$font__bold: Assistant;
 
 $font__assistant: Assistant;
 $font__assistant-bold: Assistant;
@@ -26,3 +26,5 @@ $font__assistant-extra-bold: Assistant;
 $font__pre: "Courier 10 Pitch", Courier, monospace;
 $font__line-height-body: 1.5;
 $font__line-height-pre: 1.6;
+
+$content-font-size: 17px;

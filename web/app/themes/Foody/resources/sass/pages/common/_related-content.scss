@@ -1,4 +1,4 @@
-@mixin related-content(){
+@mixin related-content() {
 
   .related-content-title {
     padding: 0 15px;
@@ -6,7 +6,7 @@
 
   .related-content {
 
-    &.nolist{
+    &.nolist {
       padding: 0 15px;
     }
     padding: 0 15px;
@@ -15,6 +15,7 @@
     .related-item {
       font-family: $font__assistant;
       padding-bottom: 20px;
+      line-height: normal;
 
       .image-container {
         position: relative;
@@ -30,7 +31,7 @@
           font-family: $font__assistant;
           font-size: 20px;
           font-weight: bold;
-          margin-bottom: 5px;
+          margin-bottom: 0;
         }
 
         .author-name {
@@ -39,8 +40,9 @@
         }
 
         .view-count, .author-name {
-          font-weight: 600;
-
+          display: inline-block;
+          font-weight: normal;
+          margin-bottom: 2px;
         }
       }
     }
@@ -81,25 +83,18 @@
 
   }
 
-  @include breakpoint(tablet-l){
+  @include breakpoint(tablet-l) {
     .related-content-title {
 
     }
 
     .related-content {
 
-
-
       .related-item {
-
-
 
         .image-container {
 
-
-
           img {
-
 
           }
         }
@@ -107,18 +102,13 @@
         .details {
           .post-title {
 
-
-
-
           }
 
           .author-name {
 
-
           }
 
           .view-count, .author-name {
-
 
           }
         }

@@ -14,11 +14,15 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
     padding-right: 0;
     padding-left: 0;
 
+    h3,h2{
+      font-size: 22px;
+    }
+
     .widget {
       &.widget_text {
 
         .widgettitle {
-          font-size: 28px;
+          font-size: 22px;
           font-weight: 900;
           letter-spacing: -0.1px;
           text-align: right;
@@ -76,7 +80,7 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
       h5 {
         + a {
           font-family: $font__main;
-          font-size: 26px;
+          font-size: 21px;
           font-weight: 900;
         }
 
@@ -85,7 +89,7 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
         label {
 
           font-family: $font__main;
-          font-size: 20px;
+          font-size: 1em;
           display: table-cell;
           padding-right: 1em;
 
@@ -113,9 +117,18 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
     #accordion-categories-widget-accordion, .navbar-nav {
 
       .main-title {
+        a {
+          > span {
+            padding-right: 10px;
+          }
+        }
         &:not(.collapsed) {
           //margin-bottom: 20px;
         }
+      }
+
+      #accordion-categories-widget-accordion-section {
+        padding-top: 0.25rem;
       }
 
       #categories-widget-accordion {
@@ -149,7 +162,7 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
       .menu-item {
         a {
           display: flex;
-          font-size: 20px;
+          font-size: 1em;
           line-height: normal;
           max-width: 95%;
           align-items: center;
@@ -163,7 +176,7 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
     .main-title {
       color: $color__primary;
       margin-bottom: 0;
-      font-size: 28px;
+      font-size: 22px;
       a {
         display: block;
         position: relative;

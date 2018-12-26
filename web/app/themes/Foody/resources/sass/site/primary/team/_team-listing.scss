@@ -40,8 +40,11 @@
       text-align: center;
       margin: 10px 0;
       font-family: $font__main;
+      font-weight: 500;
       //noinspection CssInvalidPropertyValue
       word-break: break-word;
+      color: $color__text-primary-dark;
+      font-size: 20px;
     }
 
   }
