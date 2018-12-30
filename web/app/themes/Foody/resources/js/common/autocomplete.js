@@ -56,8 +56,10 @@ module.exports = function (selector, options) {
 
 
     $('.search-bar label').on('click', function () {
-       let $prev = $(this).prev();
-        window.location.href = '?s=' + $('input[name="s"]',$prev).val();
+        let $prev = $(this).prev();
+        let searchTerm = $('input[name="s"]', $prev).val();
+        if (searchTerm && searchTerm.trim()) {
+            window.location.href = '?s=' + $('input[name="s"]', $prev).val();
+        }
     });
-
 };
