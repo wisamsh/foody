@@ -5,74 +5,63 @@
 
 $(document).ready(() => {
 
-    let $favorite = $('.favorite');
 
-    if ($favorite.length) {
+    $('body').on('click', '.favorite i', function () {
+        if (foodyGlobals.loggedIn == 'false') {
+            return showLoginModal();
+        }
+        let $this = $(this);
 
+        let $parent = $this.parent();
+        let postId = $parent.data('id');
+        let $item = $parent.closest('.grid-item');
 
-        $favorite.each(function () {
+        let itemTitle = $item.data('title');
 
+        if (postId) {
 
-            let $this = $(this);
+            let $icon = $this;
 
-            $('i',$this).on('click',() => {
-                if (foodyGlobals.loggedIn == 'false') {
-                    return showLoginModal();
-                }
+            let isAlreadyFavorite = $icon.hasClass('icon-favorite-pressed');
 
-                let postId = $this.data('id');
-                let $item = $this.closest('.grid-item');
+            toggleAllFavorites(postId, isAlreadyFavorite);
 
-                console.log('item',$item);
-
-                let itemTitle = $item.data('title');
-
-                if (postId) {
-
-                    let $icon = $('i', $this);
-
-                    let isAlreadyFavorite = $icon.hasClass('icon-favorite-pressed');
-
-                    toggleAllFavorites(postId, isAlreadyFavorite);
-
-                    analytics.event('add to favorites', {
-                        id: postId,
-                        title: itemTitle,
-                        favorite: !isAlreadyFavorite
-                    });
-
-
-                    $.ajax({
-                        type: 'POST',
-                        url: '/wp/wp-admin/admin-ajax.php', // admin-ajax.php URL
-                        data: {
-                            action: 'toggle_favorite',
-                            post_id: postId
-                        },
-                        error: function (request, status, error) {
-
-                            // TODO handle errors
-
-                            if (status == 500) {
-                                console.log('Error while adding comment');
-                            } else if (status == 'timeout') {
-                                console.log('Error: Server doesn\'t respond.');
-                            } else {
-                                showLoginModal();
-                            }
-                            // revert animations and favorite indication
-                            toggleAllFavorites(postId, !isAlreadyFavorite);
-                        },
-                        success: () => {
-                        },
-                        complete: function () {
-                        }
-                    })
-
-                }
+            analytics.event('add to favorites', {
+                id: postId,
+                title: itemTitle,
+                favorite: !isAlreadyFavorite
             });
-        });
-    }
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/wp/wp-admin/admin-ajax.php', // admin-ajax.php URL
+                data: {
+                    action: 'toggle_favorite',
+                    post_id: postId
+                },
+                error: function (request, status, error) {
+
+                    // TODO handle errors
+
+                    if (status == 500) {
+                        console.log('Error while adding comment');
+                    } else if (status == 'timeout') {
+                        console.log('Error: Server doesn\'t respond.');
+                    } else {
+                        showLoginModal();
+                    }
+                    // revert animations and favorite indication
+                    toggleAllFavorites(postId, !isAlreadyFavorite);
+                },
+                success: () => {
+                },
+                complete: function () {
+                }
+            })
+
+        }
+    });
 
 
     function toggleAllFavorites(postId, isAlreadyFavorite) {

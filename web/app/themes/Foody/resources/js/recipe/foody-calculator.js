@@ -57,11 +57,6 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 
         let calculated = base * val;
         let text = prettyNumber(calculated);
-        if (val == originalNumberOfDishes || reset) {
-            text = $this.data('original');
-        }
-
-        let $name = $('span.name', $this.parent());
 
         let name = singular;
         if (Math.ceil(parseFloat(text)) > 1) {
@@ -69,6 +64,14 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
                 name = plural;
             }
         }
+
+        if (val == originalNumberOfDishes || reset) {
+            text = $this.data('original');
+        }
+
+        let $name = $('span.name', $this.parent());
+
+
 
         $name.text(name);
 

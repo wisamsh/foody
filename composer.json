@@ -194,6 +194,18 @@
           "url": "https://downloads.wordpress.org/plugin/wp-postratings.1.86.1.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "mega-menu/quadmenu",
+        "version": "1.7.3",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/quadmenu.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -218,7 +230,8 @@
     "takayuki-miyoshi/contact-form-7": "^5.0",
     "arshid/contact-form-cfdb7": "1.2.4.1",
     "anders-thorborgd/acf-image-crop-add-on": "^1.4",
-    "lester-chan/wp-postratings": "^1.85"
+    "lester-chan/wp-postratings": "^1.85",
+    "mega-menu/quadmenu": "^1.7"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

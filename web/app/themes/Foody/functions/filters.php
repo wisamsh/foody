@@ -148,3 +148,44 @@ add_action('wp_head', 'foody_js_globals', -10000);
 //    return $user_query;
 //}
 
+
+/**
+ * @param $tag
+ * @param bool $priority
+ * @return bool
+ */
+function foody_remove_all_filters($tag, $priority = false)
+{
+    global $wp_filter;
+
+    if (isset($wp_filter[$tag])) {
+        $wp_filter[$tag]->remove_all_filters($priority);
+        if (!$wp_filter[$tag]->has_filters()) {
+            unset($wp_filter[$tag]);
+        }
+    }
+
+    return true;
+}
+
+
+function foody_add_filters_by_condition($filters, $callback, $callback_args = [])
+{
+
+    if (is_callable($callback)) {
+        $pass = call_user_func_array($callback, $callback_args);
+        if ($pass) {
+            foreach ($filters as $filter) {
+
+                if (!isset($filter['priority'])) {
+                    $filter['priority'] = 10;
+                }
+                if (!isset($filter['accepted_args'])) {
+                    $filter['accepted_args'] = 1;
+                }
+
+                add_filter($filter['tag'], $filter['callback'], $filter['priority'], $filter['accepted_args']);
+            }
+        }
+    }
+}
