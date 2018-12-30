@@ -67,30 +67,30 @@ header {
           width: 100%;
         }
 
-        input {
-          &.search {
-            width: 100%;
-            height: $input-height;
-            font-size: 20px;
-            text-align: right;
-            line-height: $input-height;
-            padding-right: 15px;
-
-            // Autoprefixer
-            //noinspection CssInvalidPseudoSelector
-            &::placeholder {
-              vertical-align: middle;
-              text-align: right;
-              direction: rtl;
-              opacity: 0.5;
-              font-family: $font__main;
-              font-size: 20px;
-              font-weight: normal;
-              color: var(--black);
-
-            }
-          }
-        }
+        //input {
+        //  &.search {
+        //    width: 100%;
+        //    height: $input-height;
+        //    font-size: 20px;
+        //    text-align: right;
+        //    line-height: $input-height;
+        //    padding-right: 15px;
+        //
+        //    // Autoprefixer
+        //    //noinspection CssInvalidPseudoSelector
+        //    &::placeholder {
+        //      vertical-align: middle;
+        //      text-align: right;
+        //      direction: rtl;
+        //      opacity: 0.5;
+        //      font-family: $font__main;
+        //      font-size: 20px;
+        //      font-weight: normal;
+        //      color: var(--black);
+        //
+        //    }
+        //  }
+        //}
 
       }
     }

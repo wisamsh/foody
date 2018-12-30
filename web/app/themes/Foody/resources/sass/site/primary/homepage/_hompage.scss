@@ -141,7 +141,7 @@ $sidebar-top-offset: 60px;
           border: none;
           background-color: $color__background-screen;
 
-          $input-height: 50px;
+          $input-height: 39px;
           $input-margin: 4px;
           $input-side-offset: 15px;
 
@@ -164,7 +164,7 @@ $sidebar-top-offset: 60px;
 
                     //noinspection CssInvalidPseudoSelector
                     &::placeholder {
-                      font-size: 20px;
+                      font-size: 18px;
                       vertical-align: sub;
                       line-height: $input-height;
                       text-align: right;

@@ -5,8 +5,6 @@ jQuery(document).ready(($) => {
 
     let $form = $('#login-form');
 
-    console.log('laskhflkashf');
-
     $.validator.addMethod(
         "emailOrUsername",
         function (value, element) {

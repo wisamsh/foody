@@ -13,5 +13,8 @@
         <input name="s" type="text" class="search search-autocomplete" placeholder="חיפוש מתכון…">
 <!--        <input type="hidden" name="post_type[]" value="foody_recipe"/>-->
 <!--        <input type="hidden" name="post_type[]" value="foody_playlist"/>-->
+        <label class="icon" for="textbox">
+            <img src="<?php echo $GLOBALS['images_dir'] .'icons/search-gray.png' ?>" />
+        </label>
     </div>
 </form>

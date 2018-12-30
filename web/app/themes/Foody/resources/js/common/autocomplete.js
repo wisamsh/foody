@@ -42,7 +42,6 @@ module.exports = function (selector, options) {
                 displayKey: 'name',
                 templates: {
                     suggestion: function (suggestion) {
-                        console.log(suggestion);
                         let link = '';
                         if (suggestion.name != null) {
                             let name = suggestion.name.replace(new RegExp('(' + currentQuery + ')', 'g'), '<span>$1</span>');
@@ -55,11 +54,10 @@ module.exports = function (selector, options) {
             }
         ]);
 
-    $autocompletInput.on('autocomplete:selected', function (event, item) {
 
-        // if (item) {
-        //     window.location.search.s = item.name;
-        // }
-
+    $('.search-bar label').on('click', function () {
+       let $prev = $(this).prev();
+        window.location.href = '?s=' + $('input[name="s"]',$prev).val();
     });
+
 };

@@ -47,10 +47,41 @@ div.checkbox {
   direction: ltr;
 }
 
-input {
-  &.search {
-    background: url(../images/icons/search-gray.png) no-repeat scroll 7px 50%;
-    padding-left: 30px;
+.search-bar{
+  position: relative;
+
+  input {
+    &.search {
+      width: 100%;
+      height: $input-height;
+      font-size: 20px;
+      text-align: right;
+      line-height: $input-height;
+      padding-right: 15px;
+
+      // Autoprefixer
+      //noinspection CssInvalidPseudoSelector
+      &::placeholder {
+        vertical-align: middle;
+        text-align: right;
+        direction: rtl;
+        opacity: 0.5;
+        font-family: $font__main;
+        font-size: 20px;
+        font-weight: normal;
+        color: var(--black);
+
+      }
+    }
+  }
+
+  label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 39px;
+    padding: 0 5px;
+    cursor: pointer;
   }
 }
 
