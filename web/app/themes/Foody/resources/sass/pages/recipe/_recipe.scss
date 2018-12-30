@@ -410,15 +410,21 @@ $content-width: 95%;
           font-size: $content-font-size;
           list-style-type: none;
           margin-left: 1em;
+          position: relative;
 
           &:before {
-            content: "·";
+            content: "\B7";
             vertical-align: sub;
             font-size: 35px;
             line-height: normal;
-            padding-left: 5px;
-            display: inline-block;
-            height: 0;
+            position: absolute;
+            top: -13.5px;
+            display: block;
+            padding-left: 10px;
+          }
+
+          a {
+            margin-right: 10px;
           }
         }
       }
@@ -1058,11 +1064,9 @@ $content-width: 95%;
         }
 
         ul {
-          margin-top: -15px;
           li {
             font-size: 18px;
             margin-left: .5em;
-            margin-bottom: -8px;
             &:before {
             }
           }

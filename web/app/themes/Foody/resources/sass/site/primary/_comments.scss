@@ -176,6 +176,29 @@
 }
 
 @include breakpoint(mobileonly) {
+
+  article{
+    &.content{
+      .comments, .recipe-comments {
+        .foody-accordion-title {
+          h5 {
+            i.icon-side-arrow {
+              &:before {
+                left: 0;
+                position: unset;
+                line-height: 50px;
+                font-size: 11px;
+                margin: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+
   .comment-content a {
 
   }
@@ -280,8 +303,7 @@
       .foody-comment {
         img.avatar {
 
-
-          .comment-body{
+          .comment-body {
             width: auto;
           }
         }

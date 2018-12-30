@@ -8,6 +8,7 @@
       width: 100%;
     }
   }
+
 }
 
 @include breakpoint(mobileonly) {
@@ -30,5 +31,6 @@
         }
       }
     }
+
   }
 }

@@ -189,7 +189,7 @@ $recipe = $template_args['recipe'];
 <?php endif; ?>
 
 
-<section class="recipe-categories">
+<section class="recipe-categories categories">
     <?php $recipe->the_categories() ?>
 </section>
 
@@ -203,7 +203,7 @@ $recipe = $template_args['recipe'];
 
 <?php if ($recipe->has_tags()): ?>
 
-    <section class="recipe-tags">
+    <section class="recipe-tags tags">
 
         <h2 class="title">
             <?php echo __('תגיות', 'foody') ?>
