@@ -108,4 +108,8 @@ jQuery(document).ready(function ($) {
         'container':'body'
     });
 
+    $('header .navbar-toggler').on('click',()=>{
+        $('.quadmenu-navbar-toggle').click();
+    })
+
 });

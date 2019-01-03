@@ -4,7 +4,7 @@
  *
  * @package WordPress
  * @subpackage Foody_WordPress
- * @since Malam WordPress 1.0
+ * @since Foody WordPress 1.0
  */
 
 

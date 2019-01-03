@@ -41,7 +41,7 @@ function user_role_menu_items_filter($sorted_menu_items, stdClass $args)
     return $sorted_menu_items;
 }
 
-add_filter('wp_nav_menu_objects', 'user_role_menu_items_filter', 10, 2);
+//add_filter('wp_nav_menu_objects', 'user_role_menu_items_filter', 10, 2);
 
 
 function mobile_only_menu_items_filter($sorted_menu_items, stdClass $args)
@@ -63,7 +63,7 @@ function mobile_only_menu_items_filter($sorted_menu_items, stdClass $args)
     return $sorted_menu_items;
 }
 
-add_filter('wp_nav_menu_objects', 'mobile_only_menu_items_filter', 10, 2);
+//add_filter('wp_nav_menu_objects', 'mobile_only_menu_items_filter', 10, 2);
 
 
 function foody_menu_items_classes($sorted_menu_items, stdClass $args)
@@ -82,7 +82,7 @@ function foody_menu_items_classes($sorted_menu_items, stdClass $args)
     return $sorted_menu_items;
 }
 
-add_filter('wp_nav_menu_objects', 'foody_menu_items_classes', 10, 2);
+//add_filter('wp_nav_menu_objects', 'foody_menu_items_classes', 10, 2);
 
 
 /**
@@ -128,6 +128,7 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
             $login_item,
             $signup_item
         ];
+
 
         $start_id = intval($args->menu->menu_id . strval(count($sorted_menu_items) + 1));
 
@@ -180,7 +181,7 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
     return $sorted_menu_items;
 }
 
-add_filter('wp_nav_menu_objects', 'add_dynamic_menu_items', 10, 2);
+//add_filter('wp_nav_menu_objects', 'add_dynamic_menu_items', 10, 2);
 
 
 function foody_get_menu_item_with_inline_children($incremental_id, $children)
@@ -269,7 +270,7 @@ function add_menu_items($items_html, $args)
 }
 
 
-add_filter('wp_nav_menu_items', 'add_menu_items', 10, 2);
+//add_filter('wp_nav_menu_items', 'add_menu_items', 10, 2);
 
 function foody_custom_walker(array $nav_menu_args, WP_Term $nav_menu, array $args, array $instance)
 {
@@ -300,55 +301,3 @@ function foody_categories_widget_title($title, $instance, $id_base)
 }
 
 add_filter('widget_title', 'foody_categories_widget_title', 10, 3);
-
-
-
-//$filters = [
-//    [
-//        'tag' => 'widget_nav_menu_args',
-//        'callback' => 'foody_custom_walker',
-//        'accepted_args' => 4
-//    ],
-//    [
-//        'tag' => 'wp_nav_menu_items',
-//        'callback' => 'add_menu_items',
-//        'accepted_args' => 2
-//    ],
-//    [
-//        'tag' => 'wp_nav_menu_objects',
-//        'callback' => 'add_dynamic_menu_items',
-//        'accepted_args' => 2
-//    ],
-//];
-//
-//foody_// add_filters_by_condition($filters, 'wp_is_mobile');
-
-//function foody_disable_quad_mobile($menu, $args)
-//{
-//    if (wp_is_mobile() && $args->theme_location == 'primary' && !isset($args->foody_quad_disable)) {
-//
-//        $args = array(
-//            'theme_location' => 'primary',
-//            'depth' => 3,
-//            'container' => 'div',
-//            'container_class' => 'collapse navbar-collapse',
-//            'container_id' => 'foody-navbar-collapse',
-//            'menu_class' => 'nav navbar-nav',
-//            'fallback_cb' => 'WP_Bootstrap_Navwalker::fallback',
-//            'before_menu' => '<div class="close-menu d-sm-none">תפריט</div>',
-//            'walker' => new WP_Bootstrap_Navwalker(),
-//            'echo' => false,
-//            'foody_quad_disable' => true
-//        );
-//
-//        global $quadmenu_active_locations;
-//
-//        unset($quadmenu_active_locations['primary']);
-//
-//        $menu = wp_nav_menu($args);
-//    }
-//
-//    return $menu;
-//}
-//
-//add_filter('wp_nav_menu', 'foody_disable_quad_mobile', 1000000000, 2);

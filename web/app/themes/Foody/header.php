@@ -51,6 +51,16 @@ $user = new Foody_User();
 
         </div>
 
+<!--        --><?php
+//
+//
+//        $nav_args = array(
+//            'theme_location' => 'primary',
+//        );
+//
+//        wp_nav_menu($nav_args);
+//        ?>
+
 
         <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg" role="navigation">
 
@@ -85,83 +95,24 @@ $user = new Foody_User();
                 <?php //echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?><!--" alt="">-->
                 <!--                </button>-->
 
+
+
+                <?php
+
+
+
+                $nav_args = array(
+                    'theme_location' => 'primary',
+                );
+
+                wp_nav_menu($nav_args);
+                ?>
+
                 <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none">
 
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="">
 
                 </button>
-
-                <!--                <div class="channels-nav">-->
-                <!--                    <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover"-->
-                <!--                            data-placement="bottom" data-html="true" data-content='-->
-                <?php //$channels->the_menu() ?><!--'>-->
-                <!--		                --><?php //echo foody_get_menu_title( 'channels-menu' ) ?>
-                <!--                    </button>-->
-                <!--                </div>-->
-
-                <?php
-
-                function my_nav_wrap($channels)
-                {
-                    $wrap = '<ul id="%1$s" class="%2$s">';
-                    $wrap .= '<li class="channels-nav">';
-                    $wrap .= '<button type="button" class="btn nav-link btn-channels-menu" data-container=".btn-channels-menu" data-toggle="popover"
-                             data-placement="bottom" data-html="true" data-trigger="hover" data-content=\'';
-                    $wrap .= $channels->get_the_menu() . '\'>';
-                    $wrap .= foody_get_menu_title("channels-menu");
-                    $wrap .= '<i class="icon-arrowleft"></i></button>';
-                    $wrap .= '</li>';
-                    $wrap .= '%3$s';
-                    $wrap .= '</ul>';
-
-                    return urldecode($wrap);
-                }
-
-                function mobile_nav_wrap($channels)
-                {
-                    $wrap = '<ul id="%1$s" class="%2$s">';
-                    $wrap .= '%3$s';
-                    $wrap .= '<li class="channels-nav">';
-//					$wrap .= '<button type="button" class="btn btn-secondary nav-link" data-toggle="modal" data-target="#modal">';
-//					$wrap .= foody_get_menu_title( "channels-menu" );
-//					$wrap .= '</button>';
-//					$wrap .= '<button type="button" class="btn btn-secondary nav-link btn-channels-menu" data-container="body" data-toggle="popover"
-//                             data-placement="bottom" data-html="true" data-content=\'';
-//					$wrap .= $channels->get_the_menu() . '\'>';
-//					$wrap .= foody_get_menu_title( "channels-menu" );
-                    $wrap .= '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#channels-menu" 
-                             aria-controls="channels-menu" aria-expanded="false" aria-label="Toggle navigation">';
-                    $wrap .= foody_get_menu_title("channels-menu");
-                    $wrap .= '</button>';
-                    $wrap .= '</li>';
-                    $wrap .= '</ul>';
-
-                    return urldecode($wrap);
-                }
-
-                $nav_args = array(
-                    'theme_location' => 'primary',
-                    'depth' => 3,
-                    'container' => 'div',
-                    'container_class' => 'collapse navbar-collapse',
-                    'container_id' => 'foody-navbar-collapse',
-                    'menu_class' => 'nav navbar-nav',
-                    'fallback_cb' => 'WP_Bootstrap_Navwalker::fallback',
-                    'before_menu' => '<div class="close-menu d-sm-none">תפריט</div>',
-                    'walker' => new WP_Bootstrap_Navwalker(),
-                );
-                $items_wrap = my_nav_wrap($channels);
-                if (wp_is_mobile()) {
-//					echo $channels->get_the_menu();
-                    //$nav_args['items_wrap'] = mobile_nav_wrap( $channels );
-                    $items_wrap = mobile_nav_wrap($channels);
-                }
-
-                //				$nav_args['items_wrap'] = $items_wrap;
-                wp_nav_menu($nav_args);
-
-                ?>
-
 
 
                 <?php if (is_user_logged_in()): ?>
@@ -172,8 +123,6 @@ $user = new Foody_User();
                         $link = is_user_logged_in() ? get_permalink(get_page_by_path('פרופיל-אישי')) : '';
                         ?>
                         <a href="<?php echo $link ?>">
-                            <!--                            <img class="avatar" src="-->
-                            <?php //echo $user->get_image() ?><!--" alt="">-->
                             <?php echo $user->get_image() ?>
                         </a>
                     </div>
