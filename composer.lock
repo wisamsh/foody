@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fcab5e63ad860d22e3c6258889fd188",
+    "content-hash": "70472c25c2f0ee908da8d4f50000b5ee",
     "packages": [
         {
             "name": "anders-thorborgd/acf-image-crop-add-on",
@@ -337,6 +337,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/quadmenu.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "mega-menu/quadmenu-divi",
+            "version": "1.1.8",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/quadmenu-divi.zip",
                 "reference": null,
                 "shasum": null
             },
