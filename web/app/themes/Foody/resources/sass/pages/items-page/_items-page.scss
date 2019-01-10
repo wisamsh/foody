@@ -1,7 +1,40 @@
 .page-template-items {
 
-  .site{
-    .site-content{
+  .site {
+    .site-content {
+
+      .grid {
+        .grid-header{
+          .foody-sort{
+            button{
+              font-size: 18px;
+            }
+          }
+        }
+        .grid-body {
+
+          .item {
+            .image-container {
+              $radius:3px;
+              box-shadow: rgba(0,0,0,0.4) 3px 2px 10px 0;
+              border-radius: $radius;
+              img {
+                border-radius: $radius;
+              }
+            }
+
+            .title{
+                font-family: $font__main;
+                font-size: 18px;
+                font-weight: 500;
+                line-height: normal;
+                text-align: center;
+                color: $color__text-primary-dark;
+            }
+          }
+
+        }
+      }
     }
   }
 }

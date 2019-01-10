@@ -10,7 +10,7 @@
 $items = $template_args['items'];
 
 $select_args = array(
-    'id' => 'team-sort',
+    'id' => 'items-sort',
     'placeholder' => 'סדר על פי',
     'options' => array(
         array(
@@ -34,11 +34,16 @@ $select_args = array(
         <?php foody_get_template_part(get_template_directory() . '/template-parts/common/foody-select.php', $select_args); ?>
     </div>
 
-    <section class="grid-body row">
+    <section class="grid-body row gutter-10">
 
-        <?php foreach ($items as $item){
-            foody_get_template_part(get_template_directory() . '/template-parts/content-items-page-item.php',$item);
-        } ?>
+        <?php
+        $i = 0;
+        foreach ($items as $item) {
+            $item['order'] = $i;
+            foody_get_template_part(get_template_directory() . '/template-parts/content-items-page-item.php', $item);
+            $i++;
+        }
+        ?>
 
 
     </section>

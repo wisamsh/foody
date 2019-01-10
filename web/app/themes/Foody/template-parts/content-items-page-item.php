@@ -11,11 +11,25 @@ $item = $template_args;
 
 $image = $item['image'];
 
+$title = $item['title'];
+
+$link = '';
+if(!empty($item['link'])){
+    if(is_array($item['link'])){
+        $link = $item['link']['url'];
+
+        if(empty($title)){
+            $title = $item['link']['title'];
+        }
+    }
+}
+
+
 
 ?>
 
-<div class="col-4 col-lg-3">
-    <a href="<?php echo $item['link'] ?>">
+<div class="col-4 col-lg-3 item" data-sort="<?php echo $title?>" data-order="<?php echo $item['order']?>">
+    <a href="<?php echo $link ?>">
 
         <?php if ($image): ?>
 
@@ -26,7 +40,7 @@ $image = $item['image'];
         <?php endif; ?>
 
         <h4 class="title">
-            <?php echo $item['title'] ?>
+            <?php echo $title ?>
         </h4>
     </a>
 </div>

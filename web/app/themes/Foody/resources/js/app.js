@@ -79,6 +79,7 @@ require('./login');
 require('./search');
 require('./contact-us');
 require('./tag');
+require('./items');
 
 
 

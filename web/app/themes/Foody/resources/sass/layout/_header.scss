@@ -118,6 +118,10 @@ header {
         background-color: white;
         border-radius: 50%;
       }
+
+      &[src$=".svg"]{
+        width: 100px;
+      }
     }
   }
 
@@ -546,6 +550,9 @@ header {
         border: 1.5px solid #fff;
         border-radius: 50%;
         background-color: #fff;
+        &[src$=".svg"]{
+          width: 60px;
+        }
       }
     }
 
