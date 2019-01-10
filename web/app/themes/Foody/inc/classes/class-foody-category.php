@@ -114,6 +114,13 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
 
     }
 
+    public function before_content(){
+        $cover_image = get_field('cover_image',$this->term->taxonomy . '_' . $this->term->term_id);
+        if(!empty($cover_image)){
+            foody_get_template_part(get_template_directory() . '/template-parts/content-cover-image.php',$cover_image);
+        }
+    }
+
 
     // === Foody_Term === //
 

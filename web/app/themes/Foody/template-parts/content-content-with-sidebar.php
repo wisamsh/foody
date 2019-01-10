@@ -14,9 +14,9 @@ $hide_progress = isset($template_args['hide_progress']) && $template_args['hide_
 $foody_page = Foody_PageContentFactory::get_instance()->get_page();
 
 
-if(method_exists($foody_page,'featured_content_classes')){
+if (method_exists($foody_page, 'featured_content_classes')) {
     $featured_content_classes = $foody_page->featured_content_classes();
-}else{
+} else {
     $featured_content_classes = [];
 }
 
@@ -33,6 +33,11 @@ $featured_content_classes[] = 'featured-content-container';
                     </div>
 
                 <?php endif; ?>
+
+                <?php if (method_exists($foody_page, 'before_content')){
+                    $foody_page->before_content();
+                } ?>
+
 
                 <aside class="col d-none d-lg-block">
 
