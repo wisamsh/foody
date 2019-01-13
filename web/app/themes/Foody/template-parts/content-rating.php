@@ -23,13 +23,16 @@ $show_value = foody_get_array_default($settings, 'show_value', false) && $rating
         דרגו את המנה
     </h4>
 <?php endif; ?>
-<div dir="ltr">
-    <input class="foody-rating" data-show-clear="false" data-show-caption="false" data-theme="krajee-svg"
-           data-disabled="<?php echo $disabled ?>" <?php echo $size ?>
-           type="text" value="<?php echo $rating ?>"/>
-    <?php if ($show_value): ?>
-        <span class="value">
-            <?php echo number_format($rating, 1) ?>
-        </span>
-    <?php endif; ?>
+<div>
+<!--    <input class="foody-rating" data-show-clear="false" data-show-caption="false" data-theme="krajee-svg"-->
+<!--           data-disabled="--><?php //echo $disabled ?><!--" --><?php //echo $size ?>
+<!--           type="text" value="--><?php //echo $rating ?><!--"/>-->
+<!--    --><?php //if ($show_value): ?>
+<!--        <span class="value">-->
+<!--            --><?php //echo number_format($rating, 1) ?>
+<!--        </span>-->
+<!--    --><?php //endif; ?>
+
+
+    <?php Foody_Recipe::ratings() ?>
 </div>

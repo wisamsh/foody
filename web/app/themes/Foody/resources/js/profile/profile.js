@@ -7,6 +7,9 @@ let FoodySearchFilter = require('../common/foody-search-filter');
 
 jQuery(document).ready(($) => {
 
+
+
+    // Followed topics list
     $('.managed-list li .close').click(function () {
 
         let $parent = $(this).parent('li');
@@ -47,18 +50,22 @@ jQuery(document).ready(($) => {
         })
     });
 
+
+    // Foody search and filter
     new FoodySearchFilter({
         selector: '.page-template-profile #accordion-foody-filter',
         grid: '.my-channels-grid',
-        cols: 2
+        cols: 1,
+        page:'.page-template-profile'
     });
     new FoodySearchFilter({
         selector: '.page-template-profile #accordion-foody-filter',
         grid: '.my-recipes-grid',
-        cols: 2
+        cols: 1,
+        page:'.page-template-profile'
     });
 
-
+    // Tab switch analytics
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
         let tab = $(e.target).attr('href');
@@ -113,7 +120,6 @@ jQuery(document).ready(($) => {
 
         if (foodyGlobals.isMobile) {
             let $mobileChannels = $('.profile-top .my-channels');
-            console.log(target);
             if (target == '#user-content') {
                 $mobileChannels.removeClass('d-none').addClass('d-block');
             } else {
@@ -123,7 +129,8 @@ jQuery(document).ready(($) => {
     });
 
 
-    let validator = $("#password-reset").validate({
+    // Change password form validation
+    $("#password-reset").validate({
         rules: {
             current_password: {
                 required: true,
@@ -135,7 +142,7 @@ jQuery(document).ready(($) => {
                 minlength: 8,
                 password: true,
             },
-            'password-confirmation': {
+            password_confirmation: {
                 required: true,
                 equalTo: '#password[name="password"]',
             }
@@ -153,32 +160,62 @@ jQuery(document).ready(($) => {
                 required: 'ווידוא סיסמא הינו שדה חובה',
                 equalTo: 'סיסמאות אינן תואמות',
             }
-        },submitHandler:function (form) {
+        }, submitHandler: function (form) {
             form.submit();
         }
     });
 
 
-    // let submitHandler = formSubmit({
-    //     form: '#password-reset',
-    //     ajaxUrl: '/wp/wp-admin/admin-ajax.php',
-    //     action: '&action=foody_change_password',
-    //     unbind: false,
-    //     ajaxSettings: {
-    //         beforeSend: function (xhr) {
-    //
-    //         },
-    //         error: function (request, status, error) {
-    //             console.log(error, request.responseJSON);
-    //         },
-    //         success: function () {
-    //             console.log('success');
-    //         },
-    //         complete: function () {
-    //
-    //         }
-    //     }
-    // });
+    let handler = formSubmit({
+        form: 'form#edit-user-details',
+        ajaxUrl: '/wp/wp-admin/admin-ajax.php',
+        action: '&action=foody_edit_user',
+        ajaxSettings: {
+            beforeSend: function (xhr) {
+
+            },
+            error: function (request, status, error) {
+                console.log(error, request.responseJSON);
+            },
+            success: function (data) {
+                console.log('success', data);
+            },
+            complete: function () {
+
+            }
+        }
+    });
+
+    let userDetailsValidator = $("form#edit-user-details").validate({
+        rules: {
+            first_name: {
+                required: true
+            },
+            last_name: {
+                required: true
+            },
+            phone_number: {
+                regex: /^((\+972|972)|0)( |-)?([1-468-9]( |-)?\d{7}|(5|7)[0-9]( |-)?\d{7})/
+            }
+        },
+        messages: {
+            first_name: {
+                required: 'שם פרטי הינו שדה חובה'
+            },
+            last_name: {
+                required: 'שם משפחה הינו שדה חובה'
+            },
+            phone_number: {
+                regex: 'מספר טלפון אינו תקין'
+            }
+        },
+        submitHandler: (form) => {
+            console.log('submitHandler');
+            form.submit();
+        }
+    });
+
+
 
 
 });

@@ -18,37 +18,38 @@ function foody_ajax_autocomplete()
     $results = new WP_Query(array(
         'post_type' => array('foody_recipe'),
         'post_status' => 'publish',
-        'number' => get_option('posts_per_page'),
+        'posts_per_page' => 10,
         'orderby' => 'title',
         's' => $search,
     ));
 
 
-    $items = array();
+    $items = [];
     if (!empty($results->posts)) {
         foreach ($results->posts as $result) {
             $items[] = [
                 'name' => $result->post_title,
-                'link' => get_search_link($result->post_title)
+                'link' => Foody_Query::get_search_url($result->post_title)
             ];
         }
     }
 
-    $terms = get_terms('category', array(
-        'name__like' => $search,
-        'number' => 5,
-        'hide_empty' => false // Optional
-    ));
+    $authors = foody_search_user_by_name($search, false);
 
-    if (!is_wp_error($terms)) {
-        /** @var WP_Term $term */
-        foreach ($terms as $term) {
-            $items[] = [
-                'name' => $term->name,
-                'link' => get_search_link($term->name)
+    if (is_array($authors) && count($authors) > 0) {
+        $authors = array_unique($authors);
+        $authors = array_map(function ($author) {
+            $user = get_user_by('ID', $author);
+            return [
+                'name' => $user->display_name,
+                'link' => Foody_Query::get_search_url($user->display_name)
             ];
-        }
+        }, $authors);
+
+        $items = array_merge($authors, $items);
+
     }
+
     wp_send_json_success($items);
 }
 
@@ -57,7 +58,7 @@ add_action('wp_ajax_nopriv_search_site', 'foody_ajax_autocomplete');
 
 
 /**
- * Live autocomplete search.
+ * Sidebar filter
  *
  * @since 1.0.0
  */
@@ -70,18 +71,42 @@ function foody_ajax_filter()
     $filter = $_POST['data'];
     $options = $_POST['options'];
 
-    $foody_search = new Foody_Search();
+    $context_args = [];
+    if (isset($_POST['data']['context_args'])) {
+        $context_args = $_POST['data']['context_args'];
+        if (!is_array($context_args)) {
+            $context_args = [$context_args];
+        }
+    }
 
-    $posts = $foody_search->query($filter);
+    $context = $_POST['data']['context'];
 
-    $posts = array_map('Foody_Post::create',$posts);
+    $foody_search = new Foody_Search($context,$context_args);
+
+    $query = $foody_search->query($filter);
+
+    $posts = $query['posts'];
+
+    $posts = array_map('Foody_Post::create', $posts);
 
     $grid = new FoodyGrid();
 
-    // TODO pass cols
-    echo $grid->loop($posts,$options['cols'],false);
+    $res = [
+        'next' => true,
+        'count' => count($posts),
+        'found' => $query['found']
+    ];
 
-    die();
+
+    if (!empty($posts) && !empty(array_filter($posts, array($grid, 'is_post_displayable')))) {
+        $res['items'] = $grid->loop($posts, $options['cols'], false);
+    } else {
+        $res['items'] = foody_get_template_part(get_template_directory() . '/template-parts/no-results.php', ['return' => true]);
+        $res['next'] = false;
+    }
+
+
+    wp_send_json_success($res);
 
 }
 
@@ -124,4 +149,3 @@ function __search_by_title_only($search, $wp_query)
 }
 
 add_filter('posts_search', '__search_by_title_only', 500, 2);
-

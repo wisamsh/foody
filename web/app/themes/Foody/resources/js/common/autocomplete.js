@@ -42,22 +42,24 @@ module.exports = function (selector, options) {
                 displayKey: 'name',
                 templates: {
                     suggestion: function (suggestion) {
-                        console.log(suggestion);
+                        let link = '';
+                        if (suggestion.name != null) {
+                            let name = suggestion.name.replace(new RegExp('(' + currentQuery + ')', 'g'), '<span>$1</span>');
+                            link = '<a href="' + suggestion.link + '">' + name + ' </a>';
+                        }
 
-                        let name = suggestion.name.replace(new RegExp('(' + currentQuery + ')', 'g'), '<span>$1</span>');
-                        let link = '<a href="' + suggestion.link + '">' + name + ' </a>';
                         return link;
-                        // return suggestion._highlightResult.name.value;
                     }
                 }
             }
         ]);
 
-    $autocompletInput.on('autocomplete:selected', function (event, item) {
 
-        // if (item) {
-        //     window.location.search.s = item.name;
-        // }
-
+    $('.search-bar label').on('click', function () {
+        let $prev = $(this).prev();
+        let searchTerm = $('input[name="s"]', $prev).val();
+        if (searchTerm && searchTerm.trim()) {
+            window.location.href = '?s=' + $('input[name="s"]', $prev).val();
+        }
     });
 };

@@ -2,30 +2,39 @@
  * Created by moveosoftware on 7/2/18.
  */
 
-$(document).ready(() => {
+jQuery(document).ready(($) => {
 
-    $commentForm = $('#commentform');
+   let $commentForm = $('#commentform');
 
 
     if ($commentForm.length) {
 
-        $parent = $('.commentform-element');
-        $comment = $('#comment', $parent);
+        let $parent = $('.commentform-element');
+        let $comment = $('#comment', $parent);
 
-        $comment.click(() => {
+
+
+
+
+        $comment.on('focusin',function (e) {
             if (foodyGlobals.loggedIn) {
-                $parent.add($commentForm).toggleClass('open');
+                $parent.add($commentForm).addClass('open');
             } else {
+                e.preventDefault();
                 showLoginModal();
             }
+
         });
+
+        // $comment.on('focusout',function () {
+        //     $parent.add($commentForm).removeClass('open');
+        // });
 
 
         let successCallback = function (addedCommentHTML) {
 
             let commentlist = $('.comment-list'),// comment list container
-                respond = $('#respond'),
-                cancelreplylink = $('#cancel-comment-reply-link');
+                respond = $('#respond');
 
             let $comment = $(addedCommentHTML);
             let approved = $('.waiting-approval', $comment).length == 0;
@@ -49,7 +58,8 @@ $(document).ready(() => {
                         $repondParent.append(addedCommentHTML);
                     }
                     // close respond form
-                    cancelreplylink.trigger("click");
+                    let cancelReplyLink = $('#cancel-comment-reply-link');
+                    cancelReplyLink.trigger("click");
                 } else {
                     // simple comment
                     commentlist.prepend(addedCommentHTML);
@@ -70,8 +80,9 @@ $(document).ready(() => {
         if (button.length == 0) {
             button = $(form + ' button[type="submit"]');
         }
+
         let validator;
-        let submitHandler = formSubmit({
+        formSubmit({
             form: form,
             ajaxUrl: '/wp/wp-admin/admin-ajax.php',
             action: '&action=ajaxcomments',
@@ -118,8 +129,8 @@ $(document).ready(() => {
 
         function attachCancelButton() {
 
-            $submitContainer = $('input[type="submit"]', $commentForm).parent();
-            $cancelButton = $('.cancel', $submitContainer);
+            let $submitContainer = $('input[type="submit"]', $commentForm).parent();
+            let $cancelButton = $('.cancel', $submitContainer);
 
             if (!$cancelButton.length) {
                 $cancelButton = $('<input class="cancel" type="button" value="ביטול"/>');
@@ -130,10 +141,13 @@ $(document).ready(() => {
                     $parent.add($commentForm).removeClass('open');
                     validator.resetForm();
                     $commentForm[0].reset();
+                    let cancelReplyLink = $('#cancel-comment-reply-link');
+                    cancelReplyLink.trigger("click");
                 });
             }
         }
 
+        // TODO remove duplication (how-i-did.js)
         function incrementCommentsCount(titleSelector) {
             let title = $(titleSelector).text();
             let matches = title.match(/\(([0-9]+)\)/);

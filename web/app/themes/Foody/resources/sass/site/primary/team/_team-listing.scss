@@ -40,8 +40,11 @@
       text-align: center;
       margin: 10px 0;
       font-family: $font__main;
+      font-weight: 500;
       //noinspection CssInvalidPropertyValue
       word-break: break-word;
+      color: $color__text-primary-dark;
+      font-size: 20px;
     }
 
   }
@@ -54,16 +57,16 @@
       text-align: center;
       .image-container {
 
-        $count-size: 2em;
+        $count-size: 29px;
 
         .post-count {
           height: $count-size;
           width: $count-size;
-          line-height: $count-size;
+          line-height: calc(#{$count-size} + 3px);
         }
       }
 
-      .author-name{
+      .author-name {
       }
     }
   }
@@ -71,18 +74,17 @@
 
 @include breakpoint(tablet-l) {
   .team-listing {
-    .team-grid-row{
+    .team-grid-row {
       justify-content: space-around;
       .author {
 
         .image-container {
 
-
           .post-count {
           }
         }
 
-        .author-name{
+        .author-name {
         }
       }
     }

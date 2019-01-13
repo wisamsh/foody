@@ -8,7 +8,7 @@
 
 $args = $template_args;
 /** @var WP_Comment $comment */
-$comment = $template_args['comment'];
+$comment = $args['comment'];
 
 if (!isset($args['max_depth'])) {
     $args['max_depth'] = 1;
@@ -17,6 +17,11 @@ if (!isset($args['max_depth'])) {
 if (!isset($args['depth'])) {
     $args['depth'] = 1;
 }
+
+$author = get_comment_author_email($comment);
+$user = get_user_by('email',$author);
+$username = $user->display_name;
+
 ?>
 
 <article id="div-comment-<?php comment_ID(); ?>"
@@ -32,7 +37,7 @@ if (!isset($args['depth'])) {
                     <?php echo __('ממתין לאישור','foody')?>
                 </div>
             <?php endif; ?>
-            <?php printf(__('%s'), sprintf('<span class="author">%s</span>', get_comment_author_link($comment))); ?>
+            <?php printf(__('%s'), sprintf('<span class="author">%s</span>', $username)); ?>
             <time>
                 <?php echo human_time_diff(get_comment_date('U'), date('U')) ?>
             </time>

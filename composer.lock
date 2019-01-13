@@ -4,14 +4,36 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e2ef977b5faf336d3371ce0554301ba",
+    "content-hash": "70472c25c2f0ee908da8d4f50000b5ee",
     "packages": [
+        {
+            "name": "anders-thorborgd/acf-image-crop-add-on",
+            "version": "1.4.12",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/acf-image-crop-add-on.1.4.12.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
         {
             "name": "andrewozz/tinymce-advanced",
             "version": "4.7.11",
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/tinymce-advanced.4.7.11.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "arshid/contact-form-cfdb7",
+            "version": "1.2.4.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/contact-form-cfdb7.1.2.4.1.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -299,6 +321,39 @@
             "time": "2018-01-29T14:49:29+00:00"
         },
         {
+            "name": "lester-chan/wp-postratings",
+            "version": "1.85",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-postratings.1.85.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "mega-menu/quadmenu",
+            "version": "1.7.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/quadmenu.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "mega-menu/quadmenu-divi",
+            "version": "1.1.8",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/quadmenu-divi.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "mixpanel/mixpanel-php",
             "version": "2.6.2",
             "source": {
@@ -572,6 +627,17 @@
             "description": "Allow registered users to upload & select their own avatars",
             "homepage": "https://github.com/stuttter/wp-user-avatars",
             "time": "2018-04-18T16:13:09+00:00"
+        },
+        {
+            "name": "takayuki-miyoshi/contact-form-7",
+            "version": "5.0.5",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/contact-form-7.5.0.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
         },
         {
             "name": "vlucas/phpdotenv",

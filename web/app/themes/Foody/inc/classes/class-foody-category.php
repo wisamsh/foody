@@ -6,21 +6,8 @@
  * Date: 6/2/18
  * Time: 3:34 PM
  */
-class Foody_Category implements Foody_ContentWithSidebar
+class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
 {
-    public $id;
-
-    public $link;
-
-    public $title;
-
-    public $category;
-
-
-    /**
-     * @var FoodyGrid
-     */
-    private $grid;
 
     /**
      * Foody_Category constructor.
@@ -28,15 +15,7 @@ class Foody_Category implements Foody_ContentWithSidebar
      */
     public function __construct($id)
     {
-        $this->id = $id;
-
-        $this->category = get_term($id);
-
-        $this->title = $this->category->name;
-
-        $this->link = get_term_link($id);
-
-        $this->grid = new FoodyGrid();
+        parent::__construct($id);
     }
 
 
@@ -47,8 +26,8 @@ class Foody_Category implements Foody_ContentWithSidebar
     public function get_image($size = 'list-item')
     {
         $image = '';
-        if ($this->category != null) {
-            $image = get_field('image', $this->category->taxonomy . '_' . $this->category->term_id);
+        if ($this->term != null) {
+            $image = get_field('image', $this->term->taxonomy . '_' . $this->term->term_id);
 
 
             if (is_array($image)) {
@@ -61,6 +40,16 @@ class Foody_Category implements Foody_ContentWithSidebar
         }
 
         return $image;
+    }
+
+
+    public function get_mobile_image(){
+        $mobile_image = get_field('homepage_image', $this->term->taxonomy . '_' . $this->term->term_id);
+        if(!$mobile_image){
+            $mobile_image = $this->get_image();
+        }
+
+        return $mobile_image;
     }
 
 
@@ -107,50 +96,8 @@ class Foody_Category implements Foody_ContentWithSidebar
         return $tree;
     }
 
-    function feed()
-    {
-
-        $foody_query = Foody_Query::get_instance();
-        $args = $foody_query->get_query('category', [$this->id], true);
-
-        $query = new WP_Query($args);
-
-        $posts = $query->get_posts();
-
-        $posts = array_map('post_to_foody_post', $posts);
-
-        $grid = [
-            'id' => 'category-feed',
-            'cols' => 3,
-            'posts' => $posts,
-            'more' => $foody_query->has_more_posts($query),
-            'header' => [
-                'sort' => true,
-                'title' => sprintf('מתכוני %s', $this->title)
-            ]
-        ];
-
-        foody_get_template_part(
-            get_template_directory() . '/template-parts/common/foody-grid.php',
-            $grid
-        );
-
-
-    }
-
 
     // === Foody_ContentWithSidebar === //
-
-    function the_featured_content()
-    {
-
-    }
-
-    function the_sidebar_content()
-    {
-        dynamic_sidebar('foody-sidebar');
-    }
-
     function the_details()
     {
         bootstrap_breadcrumb();
@@ -163,56 +110,47 @@ class Foody_Category implements Foody_ContentWithSidebar
 
     function the_content($page)
     {
-        $select_args = array(
-            'id' => 'sort-categories-posts',
-            'placeholder' => 'סדר על פי',
-            'options' => array(
-                array(
-                    'value' => 1,
-                    'label' => 'א-ת'
-                ),
-                array(
-                    'value' => -1,
-                    'label' => 'ת-א'
-                )
-            )
-        );
-
-        $gutter = wp_is_mobile() ? ' ' : ' gutter-30 '
-
-        ?>
-        <!--        <div class="container-fluid">-->
-        <!--            <div class="feed-header row--><?php //echo $gutter
-        ?><!--justify-content-space-between">-->
-        <!---->
-        <!--                <h2 class="title col-sm-6 col-8">-->
-        <!--                    --><?php //echo sprintf('מתכוני %s', $this->title)
-        ?>
-        <!--                </h2>-->
-        <!--                <div class="sort col-sm-6 col-4">-->
-        <!--                    --><?php
-//                    foody_get_template_part(
-//                        get_template_directory() . '/template-parts/common/foody-select.php',
-//                        $select_args
-//                    )
-//
-        ?>
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-
-
-        <div class="container-fluid feed-container">
-<!--            <div class="row gutter-3 foody-grid">-->
-                <?php $this->feed(); ?>
-<!--            </div>-->
-        </div>
-        <?php
+        parent::the_content($page);
 
     }
 
-    function getId()
+    public function before_content(){
+        $cover_image = get_field('cover_image',$this->term->taxonomy . '_' . $this->term->term_id);
+        if(!empty($cover_image)){
+            foody_get_template_part(get_template_directory() . '/template-parts/content-cover-image.php',$cover_image);
+        }
+    }
+
+
+    // === Foody_Term === //
+
+
+    /**
+     * Extending classes should implement the
+     * relevant query function in @see Foody_Query
+     * and return here the name of said function.
+     *
+     * @return string
+     */
+    protected function get_foody_query_handler()
     {
-        return $this->id;
+        return 'category';
+    }
+
+    /**
+     * Arguments will be merged with the default args (@see Foody_Term::feed()).
+     * Arguments will override default args.
+     * Note: returned arguments must contain the 'id' and 'header['title']'
+     * keys.
+     * @return array arguments to use in grid rendering.
+     */
+    protected function get_grid_args()
+    {
+        return [
+            'id' => 'category-feed',
+            'header' => [
+                'title' => $this->title
+            ]
+        ];
     }
 }

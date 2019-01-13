@@ -2,7 +2,6 @@
 
 .page-template {
   &.team {
-
     .sort {
       padding: 10px 0;
       .foody-select {
@@ -29,6 +28,10 @@
       }
     }
 
+    #primary {
+      padding-top: 0;
+    }
+
     #content {
       > .container {
         padding-top: 15px;
@@ -38,20 +41,17 @@
     .team-listing {
 
       .author {
-        opacity: .7;
-        transition: opacity .3s;
+        .post-count {
+          opacity: .7;
+          transition: opacity .3s;
+        }
 
         &:hover {
-          opacity: 1;
+          .post-count {
+            opacity: 1;
+          }
         }
       }
-    }
-
-    footer.site-footer{
-      max-width: 100%;
-      width: 100%;
-      border:none;
-      margin-right: 0;
     }
   }
 }
@@ -63,7 +63,13 @@
       .team-listing {
         padding-right: 0;
         .author {
-          opacity: 1;
+          .post-count {
+            opacity: 1;
+          }
+
+          .author-name {
+            font-size: 22px;
+          }
         }
       }
     }

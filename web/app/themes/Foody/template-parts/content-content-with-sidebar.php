@@ -14,9 +14,9 @@ $hide_progress = isset($template_args['hide_progress']) && $template_args['hide_
 $foody_page = Foody_PageContentFactory::get_instance()->get_page();
 
 
-if(method_exists($foody_page,'featured_content_classes')){
+if (method_exists($foody_page, 'featured_content_classes')) {
     $featured_content_classes = $foody_page->featured_content_classes();
-}else{
+} else {
     $featured_content_classes = [];
 }
 
@@ -34,6 +34,11 @@ $featured_content_classes[] = 'featured-content-container';
 
                 <?php endif; ?>
 
+                <?php if (method_exists($foody_page, 'before_content')){
+                    $foody_page->before_content();
+                } ?>
+
+
                 <aside class="col d-none d-lg-block">
 
                     <?php $foody_page->the_sidebar_content() ?>
@@ -42,7 +47,7 @@ $featured_content_classes[] = 'featured-content-container';
 
                 <article class="content">
                     <?php
-                    if (have_posts() && !is_search()) {
+                    if (have_posts() && !is_search() && is_single()) {
                         while (have_posts()) :
                             the_post();
                             foody_set_post_views($foody_page->getId());
@@ -61,7 +66,7 @@ $featured_content_classes[] = 'featured-content-container';
                             $foody_page->the_content($foody_page);
 
                         endwhile; // End of the loop.
-                    } elseif (is_author() || is_search() || is_category()) {
+                    } elseif (is_author() || is_search() || is_category() || is_tag()) {
                         ?>
                         <section class="details-container">
                             <div class="featured-content-container">
@@ -86,5 +91,4 @@ $featured_content_classes[] = 'featured-content-container';
     </div><!-- #primary -->
 
 <?php
-//get_sidebar();
 get_footer();

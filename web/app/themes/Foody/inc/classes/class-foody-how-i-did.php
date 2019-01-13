@@ -39,25 +39,31 @@ class Foody_HowIDid
             'type__not_in' => array('comment', 'pings'),
             'type' => 'how_i_did',
             'number' => get_option('hid_per_page'),
-            'post_id' => get_the_ID()
+            'post_id' => get_the_ID(),
+            'orderby' => 'comment_date_gmt',
         );
 
         return $args;
     }
 
     /**
+     * @param array $args
      */
     public function the_comments($args = [])
     {
         $args = array_merge($args, $this->get_args());
-
-        foody_get_template_part(get_template_directory() . '/template-parts/content-how-i-did-popup.php');
 
         $comments = get_comments($args);
 
         foreach ($comments as $comment) {
             foody_get_template_part(get_template_directory() . '/template-parts/content-comment-how-i-did.php', $comment);
         }
+    }
+
+
+    public function the_upload_popup()
+    {
+        foody_get_template_part(get_template_directory() . '/template-parts/content-how-i-did-popup.php');
     }
 
     /**
@@ -103,4 +109,5 @@ class Foody_HowIDid
         return $num_of_pages;
 
     }
+
 }

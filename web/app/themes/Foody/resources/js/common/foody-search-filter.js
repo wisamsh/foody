@@ -15,7 +15,13 @@ module.exports = (function () {
 
     FoodySearchFilter.prototype.init = function (settings) {
         this.settings = settings;
-        this.grid = new FoodyGrid({selector: settings.grid});
+
+        let defaultGridArgs = {selector: settings.grid};
+        if(settings.gridArgs){
+            defaultGridArgs = _.extend(defaultGridArgs,settings.gridArgs);
+        }
+
+        this.grid = new FoodyGrid(defaultGridArgs);
 
         if (!settings.selector) {
             settings.selector = '#accordion-foody-filter';
@@ -30,27 +36,36 @@ module.exports = (function () {
             //noinspection JSPotentiallyInvalidUsageOfThis
             this.searchFilter = this.buildInitialFilter();
             this.attachChangeListener();
-            if (settings.searchButton) {
-                let that = this;
-                $(settings.searchButton).on('click', function () {
-                    that.doQuery.call(that);
-                });
+            if (!settings.searchButton) {
+                settings.searchButton = '.show-recipes';
             }
+
+            let that = this;
+            $(settings.searchButton, $(settings.page)).on('click', function () {
+                that.doQuery.call(that);
+            });
+
         }
     };
 
     FoodySearchFilter.prototype.attachChangeListener = function () {
-        let $checkboxes = $('input[type="checkbox"]', this.$filter);
+        let pageContainer = this.settings.page;
+        let $checkboxes = $('input[type="checkbox"]', pageContainer);
         let that = this;
-        $checkboxes.change(function (e) {
+        $checkboxes.on('change', function (e) {
             if (that.isLoading) {
                 return;
             }
+
+            console.log('check change: ', that.settings);
+
+
             e.preventDefault();
 
 
             let data = $(this).data();
-            let key = data.type + '_' + this.name;
+            let groupKey = $(this).closest('.foody-accordion').attr('id');
+            let key = `${groupKey}_${data.type}_${this.name}`;
             if (this.checked) {
                 that.searchFilter[key] = that.getParsedInput(this);
             } else {
@@ -112,7 +127,7 @@ module.exports = (function () {
         };
     };
 
-    FoodySearchFilter.prototype.prepareFilterForQuery = function () {
+    FoodySearchFilter.prototype.prepareFilterForQuery = function (search) {
 
         /*
          * {
@@ -127,30 +142,40 @@ module.exports = (function () {
          * }
          * */
 
+
+        search = this._getQuery('s');
+
         let args = {
             // TODO get from input if needed
-            search: '',
+            search: search,
             types: [],
-            context: []
+            context: this.settings.context,
+            context_args: this.settings.contextArgs,
         };
-
-        if (this.grid) {
-            args.context = this.grid.getItems();
-        }
+        // TODO remove once unnecessary
+        // args.context = _.uniq(this.initialContext.concat(this.grid.getItems()));
 
 
+        //noinspection JSPotentiallyInvalidUsageOfThis
         for (let key in this.searchFilter) {
             if (this.searchFilter.hasOwnProperty(key)) {
                 args.types.push(this.searchFilter[key]);
             }
         }
 
-        if (!args.search && args.types.length == 0) {
-            args.context = this.initialContext;
-        }
+
+        // TODO remove once unnecessary
+        // if (!args.search && args.types.length == 0) {
+        //     args.context = this.initialContext;
+        // }
 
         return args;
 
+    };
+
+    FoodySearchFilter.prototype._getQuery = function (key) {
+        let urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(key);
     };
 
     FoodySearchFilter.prototype.doQuery = function () {
@@ -172,12 +197,12 @@ module.exports = (function () {
         }
         let that = this;
         that.loading();
-        foodyAjax(ajaxSettings, function (err, posts) {
+        foodyAjax(ajaxSettings, function (err, data) {
             that.stopLoading();
             if (err) {
                 console.log('err: ' + err);
             } else {
-                that.grid.refresh(posts);
+                that.grid.refresh(data.data, ajaxSettings.data.data.types.length == 0);
             }
         });
 

@@ -4,7 +4,7 @@
  *
  * @package WordPress
  * @subpackage Foody_WordPress
- * @since Malam WordPress 1.0
+ * @since Foody WordPress 1.0
  */
 
 
@@ -25,7 +25,15 @@ $homepage = new Foody_HomePage();
 
             <?php $homepage->categories_listing() ?>
 
-            <?php echo do_shortcode('[foody_team max="7" show_title="true"]') ?>
+
+            <?php $homepage->promoted_items(); ?>
+
+            <?php
+
+            $num = wp_is_mobile() ? 4 : 6;
+            echo do_shortcode('[foody_team max="' . $num . '" show_title="true"]')
+
+            ?>
 
             <section class="feed-container row">
 
@@ -49,28 +57,35 @@ $homepage = new Foody_HomePage();
 
         </div>
 
-        <div class="filter-mobile d-block d-lg-none">
-            <button class="navbar-toggler filter-btn" type="button" data-toggle="drawer"
-                    data-target="#dw-p2">
-                <?php echo __('סינון', 'foody'); ?>
-            </button>
-        </div>
+        <?php
 
-        <div class="mobile-filter d-lg-none">
+            foody_get_template_part(get_template_directory() .'/template-parts/common/mobile-filter.php',[
+                    'sidebar'=>array($homepage,'sidebar')
+            ]);
+        ?>
 
-            <button type="button" class="close" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-
-            <?php $homepage->sidebar() ?>
-
-            <div class="show-recipes-container">
-
-                <button class="btn show-recipes">
-                    <?php echo __('הצג מתכונים', 'foody') ?>
-                </button>
-            </div>
-        </div>
+<!--        <div class="filter-mobile d-block d-lg-none">-->
+<!--            <button class="navbar-toggler filter-btn" type="button" data-toggle="drawer"-->
+<!--                    data-target="#dw-p2">-->
+<!--                --><?php //echo __('סינון', 'foody'); ?>
+<!--            </button>-->
+<!--        </div>-->
+<!---->
+<!--        <div class="mobile-filter d-lg-none">-->
+<!---->
+<!--            <button type="button" class="close" aria-label="Close">-->
+<!--                <span aria-hidden="true">&times;</span>-->
+<!--            </button>-->
+<!---->
+<!--            --><?php //$homepage->sidebar() ?>
+<!---->
+<!--            <div class="show-recipes-container">-->
+<!---->
+<!--                <button class="btn show-recipes">-->
+<!--                    --><?php //echo __('הצג מתכונים', 'foody') ?>
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
 
     </div>
 <?php

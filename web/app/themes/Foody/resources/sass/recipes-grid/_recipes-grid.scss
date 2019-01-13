@@ -24,7 +24,71 @@
     }
   }
 
-  .grid-sort{
-    margin-bottom: 15px;
+  .grid-header {
+
+    .title {
+      font-size: 22px;
+    }
+
+    .grid-sort {
+
+      .foody-select {
+        button {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  .no-results {
+    text-align: center;
+    margin: 50px auto 0;
+
+    img {
+      width: 100px;
+    }
+
+    h2 {
+      margin-top: 20px;
+      color: $color__primary;
+      font-size: 24px;
+      font-weight: 900;
+      line-height: normal;
+    }
+  }
+}
+
+@include breakpoint(mobileonly) {
+  .foody-grid {
+    &.loading {
+    }
+
+    .show-more {
+
+      &.disabled {
+      }
+
+      img {
+      }
+      h4 {
+        font-size: 20px;
+      }
+    }
+
+    .grid-header {
+
+      .title {
+        margin-bottom: 0;
+      }
+      .grid-sort {
+
+        .foody-select {
+          button {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+
   }
 }

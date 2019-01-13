@@ -37,7 +37,7 @@ $next_class = $current_recipe_index == $playlist->num_of_recipes - 1 ? 'disabled
                 </h1>
             </div>
             <div class="actions row">
-                <button class="btn btn-prev col-1 <?php echo $prev_class ?>">
+                <button class="btn btn-prev col-1 offset-1 <?php echo $prev_class ?>">
                     <a href="<?php echo $playlist->prev() ?>">
                         <i class="icon-Backw"></i>
                     </a>

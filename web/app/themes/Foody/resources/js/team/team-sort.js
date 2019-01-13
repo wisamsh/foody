@@ -8,15 +8,18 @@ jQuery(document).ready(function () {
 
         let $parent = $('.team-listing');
         let parents = $('.team-grid-row', $parent);
-        let creators = $('.author', parents).toArray();
+        let creators = $('.author', $parent).toArray();
 
         let newOrder;
         let newValue = $(this).val();
 
         console.log('change', newValue);
+        console.log(creators);
         if (newValue) {
             newOrder = _.sortBy(creators, function (creator) {
-                return $(creator).data('name');
+                console.log(creator);
+                console.log($('> div', creator).attr('data-name'));
+                return $('> div', creator).attr('data-name');
             });
 
             if (newValue == -1) {
@@ -24,7 +27,7 @@ jQuery(document).ready(function () {
             }
         } else {
             newOrder = _.sortBy(creators, function (creator) {
-                return $(creator).data('order');
+                return parseInt($('> div', creator).attr('data-order'));
             });
         }
 

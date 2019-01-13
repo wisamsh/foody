@@ -40,3 +40,32 @@ foreach ($sizes as $size) {
     add_image_size($size['name'], $size['width'], $size['height'], true);
 }
 
+add_filter('wpseo_opengraph_image_size', function ($size) {
+
+    $size = 'large';
+//    $size = [1100,733];
+
+    return $size;
+});
+
+
+add_filter('wpseo_opengraph_image', function ($image) {
+
+    return $image;
+});
+
+function foody_mime_types($mimes) {
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+add_filter('upload_mimes', 'foody_mime_types');
+
+function foody_fix_svg_thumb_display() {
+    echo '
+    td.media-icon img[src$=".svg"], img[src$=".svg"].attachment-post-thumbnail { 
+      width: 100% !important; 
+      height: auto !important; 
+    }
+  ';
+}
+add_action('admin_head', 'foody_fix_svg_thumb_display');

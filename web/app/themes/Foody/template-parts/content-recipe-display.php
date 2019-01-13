@@ -126,6 +126,9 @@ $recipe = $template_args['recipe'];
 
 
 
+
+
+
 </script>
 
 <section class="recipe-overview">
@@ -141,15 +144,15 @@ $recipe = $template_args['recipe'];
 <section class="recipe-ingredients box">
 
     <div class="recipe-ingredients-top row justify-content-between">
-        <h2 class="title col-6">
+        <h2 class="title">
             <?php echo $recipe->the_ingredients_title() ?>
         </h2>
-
-        <div class="amount-container col-6">
+        <div class="amount-container">
             <?php $recipe->calculator(); ?>
         </div>
-
     </div>
+
+
 
     <div class="recipe-ingredients-container row">
 
@@ -166,29 +169,29 @@ $recipe = $template_args['recipe'];
 
 </section>
 
-<section class="recipe-notes box">
-    <?php $recipe->the_notes() ?>
-</section>
 
-<?php if ($recipe->has_notes()): ?>
+<?php $recipe->the_notes() ?>
 
-    <section class="recipe-rating box">
-        <?php $recipe->the_rating() ?>
+
+<!--<section class="recipe-rating box">-->
+<!--    --><?php //$recipe->the_rating() ?>
+<!--</section>-->
+
+
+<?php if ($recipe->has_nutrients()): ?>
+
+    <section class="recipe-nutrition box">
+
+        <?php $recipe->the_nutrition() ?>
+
     </section>
 
 <?php endif; ?>
 
 
-<?php if ($recipe->has_nutrients()): ?>
-
-<section class="recipe-nutrition box">
-
-    <?php $recipe->the_nutrition() ?>
-
+<section class="recipe-categories categories">
+    <?php $recipe->the_categories() ?>
 </section>
-
-<?php endif; ?>
-
 
 <section class="recipe-accessories">
     <?php $recipe->the_accessories() ?>
@@ -198,17 +201,21 @@ $recipe = $template_args['recipe'];
     <?php $recipe->the_techniques() ?>
 </section>
 
-<section class="recipe-tags">
+<?php if ($recipe->has_tags()): ?>
 
-    <h2 class="title">
-        תגיות
-    </h2>
+    <section class="recipe-tags tags">
 
-    <?php $recipe->the_tags() ?>
+        <h2 class="title">
+            <?php echo __('תגיות', 'foody') ?>
+        </h2>
 
-</section>
+        <?php $recipe->the_tags() ?>
 
-<section class="recipe-sidebar-mobile d-block d-sm-none">
+    </section>
+
+<?php endif; ?>
+
+<section class="recipe-sidebar-mobile d-block d-lg-none">
     <?php $recipe->the_mobile_sidebar_content(); ?>
 </section>
 

@@ -67,7 +67,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $this->title = get_the_title($post->ID);
             $this->view_count = view_count_display(foody_get_post_views($this->id), 0);
 
-            $post_author_id = get_post_field('post_author', $this->getId());
+            $post_author_id = get_post_field('post_author', $this->id);
 
 
             $user_avatars = get_the_author_meta('wp_user_avatars', $post_author_id);
@@ -78,7 +78,15 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 $this->author_image = $user_avatars['90'];
             }
 
-            $this->author_name = foody_posted_by(false, $post_author_id);
+            $author = get_user_by('ID', $post->post_author);
+
+            if ($author) {
+                $this->author_name = get_user_by('ID', $post->post_author)->display_name;
+            } else {
+                $this->author_name = '';
+            }
+
+
             $this->body = apply_filters('the_content', $post->post_content);
             $this->link = get_permalink($this->id);
 
@@ -222,17 +230,31 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function get_primary_category()
     {
-        if ($this->post != null) {
-            $term_list = wp_get_post_terms($this->post->ID, 'category', array("fields" => "names"));
-            foreach ($term_list as $term) {
-                if (get_post_meta($this->post->ID, '_yoast_wpseo_primary_category', true) == $term->term_id) {
-                    return $term;
+
+        $primary = get_post_meta($this->post->ID, '_yoast_wpseo_primary_category', true);
+
+        if (!$primary || !is_numeric($primary) || intval($primary) <= 0) {
+            /** @var WP_Term[] $categories */
+            $categories = wp_get_post_categories($this->id, ['fields' => 'all_with_object_id']);
+            if (!is_wp_error($categories)) {
+                if (is_array($categories)) {
+
+                    $categories = array_filter($categories, function ($category) {
+                        return $category instanceof WP_Term;
+                    });
+
+                    if (count($categories) > 0) {
+                        $first = $categories[0];
+                        $primary = $first->term_id;
+                    }
+
                 }
             }
-            return $term_list[0];
+
+
         }
 
-        return null;
+        return $primary;
     }
 
     public function the_featured_content()
@@ -240,12 +262,17 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         the_post_thumbnail('foody-main');
     }
 
-    public function the_sidebar_content()
+    public function the_sidebar_content($args = array())
     {
+        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים', $args = array());
+        dynamic_sidebar('foody-social');
+    }
 
+    private function the_sidebar_related_content($recipes_title, $playlist_title,$args= array())
+    {
         if (!isset($args['hide_playlists']) || $args['hide_playlists'] == false) {
             $playlists_args = array(
-                'title' => 'פלייליסט',
+                'title' => $playlist_title,
                 'selector' => 'related_playlists',
                 'content_classes' => 'related-playlists',
                 'template_args_func' => function (Foody_Playlist $item) {
@@ -255,16 +282,16 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 }
             );
 
-            $playlists = $this->get_related_content_by_categories_and_custom('foody_playlist', 'related_playlists');
+            $playlists = $this->get_related_content_by_categories_and_custom('foody_playlist', 'related_playlists', $args);
 
             $this->related_content($playlists_args, $playlists);
         }
 
         if (!isset($args['hide_recipes']) || $args['hide_recipes'] == false) {
-            $recipes = $this->get_related_content_by_categories_and_custom('foody_recipe', 'related_recipes');
+            $recipes = $this->get_related_content_by_categories_and_custom('foody_recipe', 'related_recipes', $args);
 
             $recipes_args = array(
-                'title' => 'מתכונים נוספים',
+                'title' => $recipes_title,
                 'selector' => 'related_recipes',
                 'content_classes' => 'related-recipes',
                 'template_args_func' => function ($recipe) {
@@ -332,18 +359,20 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     }
 
-    private function get_related_content_by_categories_and_custom($post_type, $selector)
+    private function get_related_content_by_categories_and_custom($post_type, $selector, $args = array())
     {
         $posts = [];
         $related = get_field($selector, $this->id);
         if (!empty($related)) {
-//            $posts = array_filter($related,function ($item){
-//                return $item->ID != $this->id;
-//            });
             $posts = $related;
         }
 
         $items_to_fetch = self::$MAX__RELATED_ITEMS - count($posts);
+
+
+        if ($items_to_fetch < 0) {
+            $items_to_fetch = 0;
+        }
 
         if ($items_to_fetch > 0) {
             $posts_to_exclude = array_map(function ($post) {
@@ -352,13 +381,20 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
             $posts_to_exclude[] = $this->id;
 
-            $categories = wp_get_post_categories($this->id);
+            if (isset($args['exclude']) && is_array($args['exclude'])) {
+                $posts_to_exclude = array_merge($posts_to_exclude, $args['exclude']);
+            }
+
+            $categories = [
+                $this->get_primary_category()
+            ];
+
             if (!is_wp_error($categories)) {
 
                 $query = new WP_Query([
                     'post_type' => $post_type,
                     'category__and' => $categories,
-                    'number' => $items_to_fetch,
+                    'posts_per_page' => $items_to_fetch,
                     'post_status' => 'publish',
                     'post__not_in' => $posts_to_exclude,
                     'orderby' => 'rand',
@@ -373,41 +409,39 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_mobile_sidebar_content()
     {
-        $playlists_args = array(
-            'title' => 'מתכונים נוספים',
-            'selector' => 'related_playlists',
-            'content_classes' => 'related-playlists',
-            'template_args_func' => function (Foody_Playlist $item) {
-                return array(
-                    'count' => $item->num_of_recipes
-                );
-            }
-        );
+        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים');
+//        dynamic_sidebar('foody-social');
+    }
 
-        $this->related_content($playlists_args);
-
-        $recipes_args = array(
-            'title' => '',
-            'selector' => 'related_recipes',
-            'content_classes' => 'related-recipes',
-            'template_args_func' => function ($recipe) {
-                $foody_recipe = $recipe;
-
-                if (!$foody_recipe instanceof Foody_Recipe) {
-                    $foody_recipe = new Foody_Recipe($recipe);
-                }
-                return array(
-                    'duration' => $foody_recipe->getDuration(),
-                    'has_video' => $foody_recipe->has_video
-                );
-            }
-        );
-
-        $this->related_content($recipes_args);
-
+    public function comments()
+    {
+        $template = '';
+        if (wp_is_mobile()) {
+            $template = '/comments-mobile.php';
+        }
+        comments_template($template);
     }
 
     public abstract function the_details();
+
+    public function the_tags()
+    {
+        if ($this->has_tags()) {
+            $tags = wp_get_post_tags($this->post->ID);
+            foody_get_template_part(get_template_directory() . '/template-parts/content-tags.php', $tags);
+        }
+    }
+
+    public function has_tags()
+    {
+        $has_tags = false;
+        $tags = wp_get_post_tags($this->post->ID);
+        if (!is_wp_error($tags) && count($tags) > 0) {
+            $has_tags = true;
+        }
+
+        return $has_tags;
+    }
 
     function the_content($page)
     {
@@ -487,4 +521,19 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return [];
     }
 
+
+    public function get_label()
+    {
+        $label = get_field('recipe_label', $this->post->ID);
+
+        if (empty($label)) {
+            $label = '';
+        }
+
+        return $label;
+    }
+
+    public function get_id(){
+        return $this->id;
+    }
 }

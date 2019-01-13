@@ -8,6 +8,7 @@ web/app/mu-plugins/*/
 web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
+web/app/themes/Foody/dist
 
 # WordPress
 web/wp
@@ -141,3 +142,4 @@ fabric.properties
 migration/tmp
 migration/vendor
 migration/bootstrap/cache
+web/app/themes/Foody/dist

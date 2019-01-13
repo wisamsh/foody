@@ -11,6 +11,8 @@ class Foody_User
     const META_KEY_FOLLOWED_AUTHORS = 'followed_authors';
     const META_KEY_FOLLOWED_CHANNELS = 'followed_channels';
 
+    public $favorites;
+
     /**
      * @var WP_User current logged in user
      */
@@ -34,6 +36,8 @@ class Foody_User
         }
 
         $this->user_id = $this->user->ID;
+
+        $this->favorites = get_user_meta($this->user_id, 'favorites', true);
 
     }
 
@@ -106,6 +110,36 @@ class Foody_User
             $this->get_followed_authors(),
             $this->get_followed_channels()
         );
+    }
+
+
+    /**
+     * Get an array of Foody_Post objects
+     * for the user's favorites posts
+     * @return Foody_Post[]
+     */
+    public function get_favorites()
+    {
+        $user_favorites = [];
+
+        if (!empty($this->favorites)) {
+
+            $posts = array_map('get_post', $this->favorites);
+            $posts = array_filter($posts, function ($post) {
+                $valid = false;
+
+                if (!empty($post)) {
+                    $valid = true;
+                }
+
+                return $valid;
+            });
+
+            $user_favorites = array_map('Foody_Post::create', $posts);
+        }
+
+        return $user_favorites;
+
     }
 
     /**
@@ -190,18 +224,18 @@ class Foody_User
                 }
 
                 $image = $user_images[$size];
-                if(!empty($image)){
+                if (!empty($image)) {
                     $image = "<img class='avatar' src='$image' >";
                 }
             } else {
-                $image = wsl_get_wp_user_custom_avatar('gravatar.com',$this->user->ID,$size,'','');
+                $image = wsl_get_wp_user_custom_avatar('gravatar.com', $this->user->ID, $size, '', '');
 
             }
         }
 
         if (empty($image) || 'gravatar.com' == $image) {
-            $image = $GLOBALS['images_dir'] . 'avatar.png';
-            $image = "<img class='avatar' src='$image' >";
+            $image = $GLOBALS['images_dir'] . 'avatar.svg';
+            $image = "<img class='avatar default-avatar' src='$image' >";
         }
 
         return $image;
@@ -217,6 +251,25 @@ class Foody_User
             }
         }
         return $closest;
+    }
+
+
+    public static function is_user_subscriber()
+    {
+
+        $is_subscriber = false;
+
+        global $user;
+
+        if (user_can($user, 'subscriber')) {
+            $is_subscriber = true;
+        } elseif (isset($user->roles) && is_array($user->roles)) {
+            if (in_array('foody_fut_user', $user->roles) || in_array('subscriber', $user->roles)) {
+                $is_subscriber = true;
+            }
+        }
+
+        return $is_subscriber;
     }
 
 }

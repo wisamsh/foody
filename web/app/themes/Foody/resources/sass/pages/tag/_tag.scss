@@ -1,0 +1,12 @@
+body[class~='tag'] {
+
+  article{
+    &.content{
+      .details-container{
+        padding-right: 15px;
+        background-color: $color__background-screen;
+      }
+    }
+  }
+
+}

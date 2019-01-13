@@ -39,9 +39,7 @@ class Foody_HomePage
         $posts = $this->get_featured_posts();
 
 
-        foreach ($posts as $post) {
-            $this->grid->draw($post, 2);
-        }
+        $this->grid->loop($posts, 2, 12, null, [], null, ['image_size' => '']);
     }
 
     public function cover_photo()
@@ -82,13 +80,18 @@ class Foody_HomePage
 
         $posts = array_map('Foody_Post::create', $posts);
 
+        if (wp_is_mobile()) {
+            $posts = array_merge($this->get_featured_posts(), $posts);
+        }
+
+        // debug
 //        for ($i=0;$i<100;$i++){
 //            $posts[]= $posts[0];
 //        }
 
         $grid = [
             'id' => 'homepage-feed',
-            'cols' => 3,
+            'cols' => 2,
             'posts' => $posts,
             'more' => $this->foody_query->has_more_posts($query),
             'header' => [
@@ -107,6 +110,7 @@ class Foody_HomePage
     public function filter()
     {
         dynamic_sidebar('foody-sidebar');
+
     }
 
     public function feed_query()
@@ -118,6 +122,10 @@ class Foody_HomePage
         $posts = $query->query($args);
 
         $posts = array_map('Foody_Post::create', $posts);
+
+        if (wp_is_mobile()) {
+            $posts = array_merge($this->get_featured_posts(), $posts);
+        }
 
 
         // debug a lot of feed items
@@ -139,11 +147,9 @@ class Foody_HomePage
 
         get_search_form();
 
-//        echo "<input name=\"search\" type=\"text\" class=\"search d-none d-lg-block\" title=\"search\" placeholder=\"חיפוש מתכון…\">";
-
-
         echo "<div class=\"sidebar-content\">";
         dynamic_sidebar($sidebar_name);
+        dynamic_sidebar('foody-social');
         echo "</div></aside>";
     }
 
@@ -152,12 +158,53 @@ class Foody_HomePage
         // TODO
     }
 
+
     private function get_featured_posts()
     {
-        $posts = array_map(function ($post) {
-            return new Foody_Recipe($post);
-        }, posts_to_array('featured_content'));
+
+        $featured = get_field('featured_items');
+        $posts = [];
+        if (!empty($featured)) {
+
+            $posts = array_map(function ($row) {
+
+                $foody_post = Foody_Post::create($row['post']);
+
+                $foody_post->setImage($row['image']['url']);
+
+                return $foody_post;
+            }, $featured);
+        }
 
         return $posts;
+    }
+
+    /**
+     * Displays promoted items groups
+     * in the homepage below featured categories
+     */
+    public function promoted_items()
+    {
+        $promoted_groups = get_field('promoted_groups');
+
+        if (!empty($promoted_groups)) {
+            foreach ($promoted_groups as $promoted_group) {
+                $args = [
+                    'title' => $promoted_group['title'],
+                    'items' => array_map(function ($item) {
+                        return [
+                            'title' => $item['title'],
+                            'image' => $item['desktop_image']['url'],
+                            'mobile_image' => $item['mobile_image']['url'],
+                            'link' => $item['link']
+                        ];
+                    }, $promoted_group['items'])
+                ];
+
+
+                foody_get_template_part(get_template_directory() . '/template-parts/content-promotions-listing.php', $args);
+
+            }
+        }
     }
 }

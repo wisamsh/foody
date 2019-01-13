@@ -1,4 +1,4 @@
-$sidebar-width: 22.5% !default;
+$sidebar-width: 25%;
 
 @mixin my-channels($width) {
   $my-channels-width: $width;
@@ -108,20 +108,10 @@ $sidebar-width: 22.5% !default;
 
   .container-fluid {
 
-    //noinspection CssInvalidPropertyValue
-    aside {
-      width: $sidebar-width;
-      min-height: stretch;
-      border-left: 1px solid $color__divider;
-      background-color: #fff;
-      padding: 44px 30px;
-      position: relative;
-      #foody-filter {
+    @import "../../common/sidebar";
 
-        padding-right: 30px;
+    @include foody-sidebar($sidebar-width);
 
-      }
-    }
 
     .content {
       padding-top: 18px;
@@ -150,6 +140,11 @@ $sidebar-width: 22.5% !default;
               clip-path: circle();
               max-width: 90px;
               border-radius: 50%;
+
+              &.default-avatar{
+                border: none;
+                clip-path: unset;
+              }
             }
           }
 
@@ -192,7 +187,7 @@ $sidebar-width: 22.5% !default;
           @include profile-tabs;
         }
 
-        $my-channels-width: 30%;
+        $my-channels-width: 45%;
         @include my-channels($my-channels-width);
 
         h2 {
@@ -272,7 +267,7 @@ $sidebar-width: 22.5% !default;
                   height: 53px;
                   border-radius: 3px;
                   font-family: $font__assistant;
-                  font-size: 18px;
+                  font-size: 16px;
                   font-weight: bold;
 
                   &.btn-primary {
@@ -320,16 +315,39 @@ $sidebar-width: 22.5% !default;
                 border: solid 2px #c1c1c1;
               }
             }
+
+            #password-help {
+              list-style-type: none;
+              padding: 0;
+              margin: 15px 0 0;
+
+              li {
+                font-family: $font__assistant;
+                display: inline-block;
+                list-style-type: none;
+                padding: 0 15px;
+                font-size: 16px;
+                color: #333a45;
+
+                &:before {
+                  content: '';
+                  display: inline-block;
+                  width: 8px;
+                  height: 8px;
+                  -moz-border-radius: 50%;
+                  -webkit-border-radius: 50%;
+                  border-radius: 50%;
+                  background-color: $color__primary;
+                  vertical-align: middle;
+                }
+              }
+            }
+
           }
 
         }
       }
     }
-  }
-
-  footer {
-    max-width: calc(100% - #{$sidebar-width});
-    margin-right: calc(#{$sidebar-width} - 1px);
   }
 }
 
@@ -516,10 +534,6 @@ Tablet landscape
 
       aside {
         display: none;
-
-        .foody-search-filter {
-          padding: 0 24px;
-        }
       }
 
       .content {
@@ -733,11 +747,6 @@ Tablet landscape
 
       }
 
-    }
-
-    footer {
-      max-width: 100%;
-      margin-right: 0;
     }
   }
 }

@@ -4,7 +4,7 @@
  *
  * @package WordPress
  * @subpackage Foody_WordPress
- * @since Malam WordPress 1.0
+ * @since Foody WordPress 1.0
  */
 
 get_header();
@@ -18,11 +18,11 @@ $image_left = get_field('left_image');
 
         <div class="row">
 
-            <div class="image-container image-container-right col">
+            <div class="image-container image-container-right col d-sm-none d-lg-block">
                 <img src=" <?php echo $image_right['url'] ?>" alt="<?php echo $image_right['alt'] ?>">
             </div>
 
-            <div class="content col-12 col-sm-6">
+            <div class="content col-12 col-lg-6">
                 <?php
 
                 the_content();
@@ -30,7 +30,7 @@ $image_left = get_field('left_image');
                 ?>
             </div>
 
-            <div class="image-container image-container-left col">
+            <div class="image-container image-container-left col d-sm-none d-lg-block">
                 <img src=" <?php echo $image_left['url'] ?>" alt="<?php echo $image_left['alt'] ?>">
             </div>
 

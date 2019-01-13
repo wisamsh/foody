@@ -8,6 +8,7 @@
 
 
 /** @var WP_Comment $comment */
+/** @noinspection PhpUndefinedVariableInspection */
 $comment = $template_args;
 
 $attachment_id = get_comment_meta($comment['comment_ID'], 'attachment', true);
@@ -15,11 +16,25 @@ $attachment_id = get_comment_meta($comment['comment_ID'], 'attachment', true);
 $image = wp_get_attachment_url($attachment_id);
 
 $author = get_user_by('email', $comment['comment_author_email']);
+$username = $author->display_name;
+
+$comments_per_page = get_option('hid_per_page', 2);
+
+$col_class = '';
+$cols = 12;
+
+if ($cols % $comments_per_page == 0) {
+    $col = $cols / $comments_per_page;
+    $col_class = "col-sm-$col";
+} else {
+    $col_class = 'col';
+}
 ?>
 
 
-<div class="col-sm-4 col-6 how-i-did">
+<div class="col-sm-4 <?php echo $col_class ?> how-i-did">
     <div class="image-container">
+        <!--suppress HtmlUnknownAnchorTarget -->
         <a class="how-i-did-modal-open" href="#how-i-did-modal" data-toggle="modal" data-image="<?php echo $image ?>"
            data-user="<?php echo $author->display_name ?>"
            data-content="<?php echo strip_tags(get_comment_text($comment['comment_ID'])); ?>">
@@ -32,7 +47,7 @@ $author = get_user_by('email', $comment['comment_author_email']);
         </div>
         <div class="col">
            <span class="username">
-                <?php printf(__('%s'), sprintf('<span class="author-name">%s</span>', get_comment_author_link($comment['comment_ID']))); ?>
+                <?php printf(__('%s'), sprintf('<span class="author-name">%s</span>', $username)); ?>
             </span>
             <time>
                 <?php echo human_time_diff(get_comment_date('U', $comment['comment_ID']), date('U')) ?>

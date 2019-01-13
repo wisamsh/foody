@@ -16,10 +16,14 @@ class Foody_Search
     const type_accessory = 'accessory';
     const type_tags = 'tag';
     const type_authors = 'author';
+    public $context;
+    public $context_args;
 
     private $types;
 
     private $query_builder;
+
+    private $foody_query;
 
     public $wildcards = [
         'ingredients_ingredients_groups_$_ingredients_$_ingredient' => 'ingredients_ingredients_groups_%_ingredients_%_ingredient'
@@ -38,9 +42,12 @@ class Foody_Search
     /**
      * Foody_Search constructor.
      */
-    public function __construct()
+    public function __construct($context, $context_args)
     {
         $this->query_builder = new Foody_QueryBuilder();
+        $this->foody_query = Foody_Query::get_instance();
+        $this->context = $context;
+        $this->context_args = $context_args;
     }
 
     public function query($args, $wp_args = [])
@@ -67,7 +74,10 @@ class Foody_Search
 
         $this->after_query();
 
-        return $posts;
+        return [
+            'posts'=>$posts,
+            'found' => $query->found_posts
+        ];
     }
 
 
@@ -96,6 +106,10 @@ class Foody_Search
         if (!empty($sort)) {
             $this->query_builder->sort($sort);
         }
+
+        $query_args = $this->foody_query->get_query($this->context, $this->context_args);
+
+        $wp_args = array_merge($wp_args, $query_args);
 
         $query = $this->query_builder
             ->build($wp_args);
@@ -452,7 +466,9 @@ class Foody_QueryBuilder
 
         $args = $this->get_args();
 
-        $args = array_merge_recursive($args, $wp_args);
+        $args = $this->resolve_query_conflicts($args,$wp_args);
+
+        $args['post_status'] = 'publish';
 
         $query = new WP_Query($args);
 
@@ -465,7 +481,8 @@ class Foody_QueryBuilder
             'has_wildcard_key' => $this->has_wildcard_key,
             'post_type' => ['foody_recipe', 'foody_playlist'],
             'meta_query' => $this->meta_query_array,
-            'post__not_in' => $this->post__not_in
+            'post__not_in' => $this->post__not_in,
+            'post_status' => 'publish'
         ];
 
         if (!empty($this->categories__in)) {
@@ -610,6 +627,23 @@ class Foody_QueryBuilder
                     break;
             }
         }
+    }
+
+    private function resolve_query_conflicts($args, $wp_args)
+    {
+        if(isset($wp_args['author'])){
+            unset($args['author__in']);
+        }
+
+        if(isset($wp_args['cat'])) {
+            unset($args['category__in']);
+            unset($args['category__not_in']);
+            unset($args['category__and']);
+        }
+
+        $args = array_merge_recursive($wp_args, $args);
+
+        return $args;
     }
 
 }

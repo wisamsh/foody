@@ -1,17 +1,30 @@
-@include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperRegular',null,null,'otf');
-@include font-face(RaananSuperBold, '../fonts/Raanan/RaanaSuperBlack',null,null,'otf');
-@include font-face(Assistant, '../fonts/Assistant/Assistant-Regular',null,null,'ttf');
-@include font-face(AssistantBold, '../fonts/Assistant/Assistant-Bold',null,null,'ttf');
+$raanan-unicode-range: 'U+0021-0039';
 
-@include font-face(ArielRounded, '../fonts/ArielRounded',null,null,'ttf');
+@include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperRegular', null, null, 'otf');
+@include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperBlack', bold, null, 'otf');
 
+@include font-face(RaananSuper, '../fonts/ArielRounded', null, null, 'ttf', 'U+41-5A, U+61-7A');
 
-$font__main: RaananSuper;
-$font__bold: RaananSuperBold;
+@include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperRegular', null, null, 'otf', $raanan-unicode-range);
+@include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperBlack', bold, null, 'otf', $raanan-unicode-range);
+@include font-face(Assistant, '../fonts/Assistant/Assistant-Regular', null, null, 'ttf');
+@include font-face(Assistant, '../fonts/Assistant/Assistant-Bold', 700, null, 'ttf');
+@include font-face(Assistant, '../fonts/Assistant/Assistant-SemiBold', 500, null, 'ttf');
+
+$font__ariel-rounded: RaananSuper;
+//$font__main: RaananSuper;
+//$font__bold: RaananSuper;
+
+// 	U+0000, U+007F, U+0590..U+05FF
+$font__main: Assistant;
+$font__bold: Assistant;
+
 $font__assistant: Assistant;
-$font__assistant-bold: AssistantBold;
-$font__ariel-rounded: ArielRounded;
-$font__code: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+$font__assistant-bold: Assistant;
+$font__assistant-extra-bold: Assistant;
+//$font__code: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
 $font__pre: "Courier 10 Pitch", Courier, monospace;
 $font__line-height-body: 1.5;
 $font__line-height-pre: 1.6;
+
+$content-font-size: 17px;

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 // =============================================================================
 // String Replace
 // =============================================================================
@@ -16,7 +17,7 @@
 // Font Face
 // =============================================================================
 
-@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg otf) {
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg otf, $unicode-range: null) {
   $src: null;
 
   $extmods: (
@@ -40,6 +41,11 @@
     font-style: $style;
     font-weight: $weight;
     src: $src;
+    //@if $unicode-range != null {
+      /* prettier-ignore */
+      unicode-range: $unicode-range;
+    //}
+
   }
 }
 
@@ -103,6 +109,14 @@ BREAKPOINTS
     @media (max-width: 768px) {
       @content;
     }
+  } @else if $point == mobile-l {
+    @media (min-width: 568px) and (max-width: 736px) {
+      @content;
+    }
   }
+}
 
+@mixin site-width() {
+  max-width: $site-width;
+  margin: 0 auto;
 }

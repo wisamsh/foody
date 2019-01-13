@@ -21,7 +21,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-categories1:before {
+
+
+.icon-Shape1:before {
+  content: "\e93a";
+  color: #fff;
+}
+.icon-Facebook:before {
+  content: "\e93b";
+  color: #fff;
+}
+.icon-404:before {
   content: "\e933";
   color: #ed3d48;
 }
@@ -29,20 +39,24 @@
   content: "\e934";
   color: #ed3d48;
 }
-.icon-recipies:before {
+.icon-sign:before {
   content: "\e935";
   color: #ed3d48;
 }
-.icon-sign:before {
+.icon-recipies:before {
   content: "\e936";
   color: #ed3d48;
 }
-.icon-team:before {
+.icon-tv:before {
   content: "\e937";
   color: #ed3d48;
 }
-.icon-tv:before {
+.icon-categories1:before {
   content: "\e938";
+  color: #ed3d48;
+}
+.icon-team:before {
+  content: "\e939";
   color: #ed3d48;
 }
 .icon-Asset-1:before {

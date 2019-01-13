@@ -1,1 +1,2 @@
+require('./footer');
 require('./header');

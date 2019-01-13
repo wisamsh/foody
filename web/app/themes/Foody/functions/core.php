@@ -1604,6 +1604,10 @@ function foody_get_menu_title($theme_location, $default_name = 'menu')
 function foody_get_array_default($array, $key, $default)
 {
     $val = $default;
+
+    if ($array instanceof stdClass) {
+        $array = get_object_vars($array);
+    }
     if (isset($array) && !empty($array)) {
         $val = isset($array[$key]) ? $array[$key] : $default;
     }
@@ -1613,6 +1617,7 @@ function foody_get_array_default($array, $key, $default)
 function array_not_empty($arr)
 {
     $not_empty = false;
+
     if (!is_null($arr) && !empty($arr)) {
         $filtered = array_filter($arr, function ($var) {
             return !is_null($var) && $var;

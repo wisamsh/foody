@@ -43,7 +43,9 @@ $playlist = $template_args['post'];
             </h3>
             <ul>
                 <li>
-                    <?php echo $playlist->getAuthorName() ?>
+                    <a href="<?php echo $playlist->get_author_link() ?>">
+                        <?php echo $playlist->getAuthorName() ?>
+                    </a>
                 </li>
                 <li>
                     <?php echo $playlist->getViewCount() ?>

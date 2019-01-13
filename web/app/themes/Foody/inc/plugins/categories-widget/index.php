@@ -22,7 +22,7 @@ class list_categories_widget extends WP_Widget {
 	/** @see WP_Widget::widget -- do not rename this */
 	function widget($args, $instance) {
 		extract( $args );
-		$title 		= apply_filters('widget_title', $instance['title']); // the widget title
+		$title 		= apply_filters('widget_title', $instance['title'],$instance,$this->id_base); // the widget title
 		$number 	= $instance['number']; // the number of categories to show
 		$taxonomy 	= $instance['taxonomy']; // the taxonomy to display
 

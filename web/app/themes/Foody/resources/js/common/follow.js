@@ -15,8 +15,8 @@ $(document).ready(() => {
 
             let $this = $(this);
 
-            $this.click(() => {
-                if (!foodyGlobals.loggedIn) {
+            $this.on('click',() => {
+                if (foodyGlobals.loggedIn == 'false') {
                     return showLoginModal();
                 }
                 let topicId = $this.data('id');
@@ -53,7 +53,7 @@ $(document).ready(() => {
                             } else if (error.status == 'timeout') {
                                 console.log('Error: Server doesn\'t respond.');
                             } else {
-                                alert('please sign in');
+                                showLoginModal();
                             }
                             // revert animations and favorite indication
                             toggleAllFollowed(topicId, !isAlreadyFollowed);

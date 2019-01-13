@@ -1,19 +1,14 @@
 .single-post {
   .foody-content {
-    max-width: 70%;
+    max-width: 90%;
     margin: 0 auto;
     padding: 20px 0;
 
     .wp-caption {
       width: 100%;
-      img {
-        &[class*="wp-image-"] {
-          width: 100%;
-          height: auto;
-        }
-      }
     }
   }
+
 }
 
 @include breakpoint(mobileonly) {
@@ -31,9 +26,11 @@
         max-width: 100vw;
         img {
           &[class*="wp-image-"] {
+            width: 100%;
           }
         }
       }
     }
+
   }
 }

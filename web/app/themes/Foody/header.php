@@ -17,45 +17,70 @@ $user = new Foody_User();
 <html <?php language_attributes(); ?> dir="rtl">
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#ED3D48">
     <link rel="profile" href="http://gmpg.org/xfn/11">
 
+    <?php Foody_Header::google_tag_manager(); ?>
     <?php wp_head(); ?>
 
 </head>
 
 <body <?php body_class(); ?> dir="rtl">
 <div id="fb-root"></div>
+<?php Foody_Header::google_tag_manager_iframe(); ?>
 <div id="page" class="site">
 
     <header id="masthead" class="site-header">
-        <div class="socials d-none d-lg-block">
-            <?php $header->the_socials_bar() ?>
+        <div class="run d-block d-lg-none">
+            <?php echo __('בהרצה') ?>
         </div>
-        <div class="site-branding">
-            <div class="logo-container d-none d-lg-block">
-                <div class="logo-container-desktop">
-                    <?php the_custom_logo() ?>
+        <div class="socials d-none d-lg-block">
+
+            <section class="header-top-container  d-none d-lg-flex">
+                <?php $header->the_socials_bar() ?>
+
+                <div class="search-bar search-bar-container">
+                    <?php get_search_form(); ?>
                 </div>
 
+                <span class="run-desktop run">
+                    <?php echo __('בהרצה') ?>
+                </span>
+            </section>
 
-            </div>
+        </div>
 
-            <div class="logo-container-mobile d-block d-lg-none">
-                <?php echo get_logo_with_size('60', '60'); ?>
-            </div>
+        <!--        --><?php
+        //
+        //
+        //        $nav_args = array(
+        //            'theme_location' => 'primary',
+        //        );
+        //
+        //        wp_nav_menu($nav_args);
+        //        ?>
 
-        </div><!-- .site-branding -->
 
         <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg" role="navigation">
 
-            <!-- TODO change this to bootstrap offsets            -->
             <div class="container-fluid foody-navbar-container">
 
-                <div class="search-bar d-none d-lg-block">
-                    <?php get_search_form(); ?>
-                </div>
+                <div class="site-branding">
+                    <div class="logo-container d-none d-lg-block">
+                        <div class="logo-container-desktop">
+                            <?php the_custom_logo() ?>
+                        </div>
+
+
+                    </div>
+
+                    <div class="logo-container-mobile d-block d-lg-none">
+                        <?php echo get_logo_with_size('60', '60'); ?>
+                    </div>
+
+                </div><!-- .site-branding -->
+
 
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#foody-navbar-collapse"
@@ -64,109 +89,36 @@ $user = new Foody_User();
                     <i class="navbar-toggler-icon icon-menu-mobile"></i>
                 </button>
 
-                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">
-                    <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>" alt="">
-                </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none">
 
-                </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none">
+                <!--                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">-->
+                <!--                    <img src="-->
+                <?php //echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?><!--" alt="">-->
+                <!--                </button>-->
 
-                </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none">
 
-                </button>
-                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none">
+                <?php
+                $nav_args = array(
+                    'theme_location' => 'primary',
+                );
 
-                </button>
+                wp_nav_menu($nav_args);
+                ?>
+
                 <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none">
 
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="">
 
                 </button>
 
-                <!--                <div class="channels-nav">-->
-                <!--                    <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover"-->
-                <!--                            data-placement="bottom" data-html="true" data-content='-->
-                <?php //$channels->the_menu() ?><!--'>-->
-                <!--		                --><?php //echo foody_get_menu_title( 'channels-menu' ) ?>
-                <!--                    </button>-->
-                <!--                </div>-->
-
-                <?php
-
-                function my_nav_wrap($channels)
-                {
-                    $wrap = '<ul id="%1$s" class="%2$s">';
-                    $wrap .= '<li class="channels-nav">';
-                    $wrap .= '<button type="button" class="btn nav-link btn-channels-menu" data-container=".btn-channels-menu" data-toggle="popover"
-                             data-placement="bottom" data-html="true" data-trigger="hover" data-content=\'';
-                    $wrap .= $channels->get_the_menu() . '\'>';
-                    $wrap .= foody_get_menu_title("channels-menu");
-                    $wrap .= '<i class="icon-arrowleft"></i></button>';
-                    $wrap .= '</li>';
-                    $wrap .= '%3$s';
-                    $wrap .= '</ul>';
-
-                    return urldecode($wrap);
-                }
-
-                function mobile_nav_wrap($channels)
-                {
-                    $wrap = '<ul id="%1$s" class="%2$s">';
-                    $wrap .= '%3$s';
-                    $wrap .= '<li class="channels-nav">';
-//					$wrap .= '<button type="button" class="btn btn-secondary nav-link" data-toggle="modal" data-target="#modal">';
-//					$wrap .= foody_get_menu_title( "channels-menu" );
-//					$wrap .= '</button>';
-//					$wrap .= '<button type="button" class="btn btn-secondary nav-link btn-channels-menu" data-container="body" data-toggle="popover"
-//                             data-placement="bottom" data-html="true" data-content=\'';
-//					$wrap .= $channels->get_the_menu() . '\'>';
-//					$wrap .= foody_get_menu_title( "channels-menu" );
-                    $wrap .= '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#channels-menu" 
-                             aria-controls="channels-menu" aria-expanded="false" aria-label="Toggle navigation">';
-                    $wrap .= foody_get_menu_title("channels-menu");
-                    $wrap .= '</button>';
-                    $wrap .= '</li>';
-                    $wrap .= '</ul>';
-
-                    return urldecode($wrap);
-                }
-
-                $nav_args = array(
-                    'theme_location' => 'primary',
-                    'depth' => 2,
-                    'container' => 'div',
-                    'container_class' => 'collapse navbar-collapse',
-                    'container_id' => 'foody-navbar-collapse',
-                    'menu_class' => 'nav navbar-nav',
-                    'fallback_cb' => 'WP_Bootstrap_Navwalker::fallback',
-                    'before_menu' => '<div class="close-menu d-sm-none">תפריט</div>',
-                    'walker' => new WP_Bootstrap_Navwalker(),
-                );
-                $items_wrap = my_nav_wrap($channels);
-                if (wp_is_mobile()) {
-//					echo $channels->get_the_menu();
-                    //$nav_args['items_wrap'] = mobile_nav_wrap( $channels );
-                    $items_wrap = mobile_nav_wrap($channels);
-                }
-
-                //				$nav_args['items_wrap'] = $items_wrap;
-                wp_nav_menu($nav_args);
-
-                ?>
-
-
 
                 <?php if (is_user_logged_in()): ?>
 
-                    <div class="d-none d-lg-block">
+                    <div class="d-none d-lg-block profile-picture-container">
 
                         <?php
                         $link = is_user_logged_in() ? get_permalink(get_page_by_path('פרופיל-אישי')) : '';
                         ?>
                         <a href="<?php echo $link ?>">
-<!--                            <img class="avatar" src="--><?php //echo $user->get_image() ?><!--" alt="">-->
                             <?php echo $user->get_image() ?>
                         </a>
                     </div>
@@ -200,21 +152,5 @@ $user = new Foody_User();
         <!-- #site-navigation -->
     </header><!-- #masthead -->
 
-
-    <?php
-    if (!is_user_logged_in()) {
-        $login_popup_args = [
-            'id' => 'login-modal',
-            'body' => do_shortcode('[foody-login]'),
-            'btn_approve_classes' => 'hide',
-            'btn_cancel_classes' => 'hide',
-            'title' => '',
-            'hide_buttons' => true
-        ];
-
-        foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', $login_popup_args);
-    }
-
-    ?>
     <div id="content" class="site-content">
 

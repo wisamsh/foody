@@ -58,16 +58,6 @@
       }
     }
   }
-
-  footer{
-    &.site-footer{
-      position: initial !important;
-      margin-right: 0;
-      width: 100%;
-      max-width:100%;
-      border: none;
-    }
-  }
 }
 
 @include breakpoint(mobileonly) {

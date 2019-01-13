@@ -41,8 +41,7 @@ function user_role_menu_items_filter($sorted_menu_items, stdClass $args)
     return $sorted_menu_items;
 }
 
-add_filter('wp_nav_menu_objects', 'user_role_menu_items_filter', 10, 2);
-
+//add_filter('wp_nav_menu_objects', 'user_role_menu_items_filter', 10, 2);
 
 
 function mobile_only_menu_items_filter($sorted_menu_items, stdClass $args)
@@ -64,8 +63,7 @@ function mobile_only_menu_items_filter($sorted_menu_items, stdClass $args)
     return $sorted_menu_items;
 }
 
-add_filter('wp_nav_menu_objects', 'mobile_only_menu_items_filter', 10, 2);
-
+//add_filter('wp_nav_menu_objects', 'mobile_only_menu_items_filter', 10, 2);
 
 
 function foody_menu_items_classes($sorted_menu_items, stdClass $args)
@@ -84,8 +82,7 @@ function foody_menu_items_classes($sorted_menu_items, stdClass $args)
     return $sorted_menu_items;
 }
 
-add_filter('wp_nav_menu_objects', 'foody_menu_items_classes', 10, 2);
-
+//add_filter('wp_nav_menu_objects', 'foody_menu_items_classes', 10, 2);
 
 
 /**
@@ -132,13 +129,15 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
             $signup_item
         ];
 
+
         $start_id = intval($args->menu->menu_id . strval(count($sorted_menu_items) + 1));
 
         $items_to_add = foody_get_menu_item_with_inline_children($start_id, $inline_children);
 
         $sorted_menu_items = array_merge($sorted_menu_items, $items_to_add);
-    }elseif(  $args->theme_location == 'primary' &&
-        is_user_logged_in()){
+    } elseif ($args->theme_location == 'primary' &&
+        is_user_logged_in()
+    ) {
 
         $logout_item = (object)[
             'ID' => PHP_INT_MAX - 1,
@@ -148,10 +147,13 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
             'attr_title' => __('התנתק'),
             'target' => '',
             'xfn' => '',
-            'object' => null
+            'object' => null,
+            'current' => false,
+            'current_item_ancestor' => false,
+            'current_item_parent' => false,
         ];
 
-        $sorted_menu_items[]= $logout_item;
+        $sorted_menu_items[] = $logout_item;
     }
 
     if ($args->theme_location == 'primary' && wp_is_mobile()) {
@@ -179,7 +181,9 @@ function add_dynamic_menu_items($sorted_menu_items, $args)
     return $sorted_menu_items;
 }
 
-add_filter('wp_nav_menu_objects', 'add_dynamic_menu_items', 10, 2);
+//add_filter('wp_nav_menu_objects', 'add_dynamic_menu_items', 10, 2);
+
+
 function foody_get_menu_item_with_inline_children($incremental_id, $children)
 {
     $inline_children = new stdClass();
@@ -237,8 +241,63 @@ function add_menu_items($items_html, $args)
 
     // FEATURE maybe add profile avatar and tv menu here
 
+    if ($args->theme_location == 'categories') {
+
+        $categories_accordion = new Foody_CategoriesAccordion();
+        $before = "  
+          <h2 class=\"title main-title\">
+        
+                    <a href=\"#" . $categories_accordion->container_id . "-section\" data-toggle=\"collapse\" aria-expanded=\"true\"
+                       aria-controls=\"" . $categories_accordion->container_id . "-section\">
+                        <i class=\"icon-categories\"></i>
+                        <span>
+                        " . $args->menu->name . "
+                    </span>
+        
+                        <i class=\"icon-side-arrow\"></i>
+        
+                    </a>
+          </h2>
+          <section id=\"" . $categories_accordion->container_id . "-section\" class=\"sidebar-categories show\">
+        ";
+
+        $after = "</section>";
+
+        $items_html = $before . $items_html . $after;
+    }
+
     return $items_html;
 }
 
 
-add_filter('wp_nav_menu_items', 'add_menu_items', 10, 2);
+//add_filter('wp_nav_menu_items', 'add_menu_items', 10, 2);
+
+function foody_custom_walker(array $nav_menu_args, WP_Term $nav_menu, array $args, array $instance)
+{
+
+
+    if ($args['id'] == 'foody-sidebar') {
+
+        $categories_accordion = new Foody_CategoriesAccordion();
+        $nav_menu_args = array_merge($nav_menu_args, $categories_accordion->get_menu_args());
+//
+//        $nav_menu_args['menu_before'] = '<section class="sidebar-categories sidebar-section">';
+//        $nav_menu_args['menu_after'] = '</section>';
+    }
+
+    return $nav_menu_args;
+}
+
+add_filter('widget_nav_menu_args', 'foody_custom_walker', 10, 4);
+
+function foody_categories_widget_title($title, $instance, $id_base)
+{
+
+    if ('nav_menu' == $id_base) {
+        $title = '';
+    }
+
+    return $title;
+}
+
+add_filter('widget_title', 'foody_categories_widget_title', 10, 3);

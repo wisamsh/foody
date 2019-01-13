@@ -23,7 +23,7 @@ $foody_how_i_did = new Foody_HowIDid();
 
 ?>
 
-<div id="comments how-i-did" class="comments-area">
+<div id="how-i-did" class="comments-area">
 
     <?php
 
@@ -51,7 +51,7 @@ $foody_how_i_did = new Foody_HowIDid();
                              תעלו תמונה להשוויץ
                         </span>
                 </label>
-                <input id="attachment" type="file" name="attachment" accept="image/*">
+                <input id="attachment" type="file" name="attachment" capture="filesystem" accept="image/*">
                 <input id="comment" type="hidden" name="comment">
                 <input name="post_id" type="hidden" value="<?php echo get_the_ID() ?>">
             </form>
@@ -66,6 +66,8 @@ $foody_how_i_did = new Foody_HowIDid();
     ?>
 
     <?php if ($have_comments) : ?>
+
+        <?php $foody_how_i_did->the_upload_popup(); ?>
         <ol id="how-i-did-list" class="row gutter-1 how-i-did-list">
             <?php
             $foody_how_i_did->the_comments();
@@ -81,7 +83,7 @@ $foody_how_i_did = new Foody_HowIDid();
             set_query_var('hid_page', $page);
         }
 
-        if ($page > 0) {
+        if ($page > 1) {
 
             foody_get_template_part(
                 get_template_directory() . '/template-parts/common/show-more-simple.php',

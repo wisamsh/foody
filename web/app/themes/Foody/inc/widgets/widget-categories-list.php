@@ -49,7 +49,7 @@ class foody_Categories_List_Widget extends Foody_Widget
 
     protected function display($args, $instance)
     {
-        $title = apply_filters('widget_title', $instance['title']);
+        $title = apply_filters('widget_title', $instance['title'],$instance,$this->id_base);
         $title = '<h3 class="title"> <a href="' . get_permalink(get_page_by_path('קטגוריות')) . '">' . $title . '</a></h3>';
         echo $title;
         $categories = get_field('categories', 'widget_' . $this->id);
@@ -72,6 +72,7 @@ class foody_Categories_List_Widget extends Foody_Widget
             foody_get_template_part(get_template_directory() . '/template-parts/content-category-listing.php', array(
                 'name' => $category->name,
                 'image' => $foody_category->get_image(),
+                'mobile_image' => $foody_category->get_mobile_image(),
                 'link' => $foody_category->link
             ));
 

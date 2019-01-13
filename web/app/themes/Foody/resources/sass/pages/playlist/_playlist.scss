@@ -12,6 +12,7 @@
     &.nolist {
       margin-top: -60px;
       padding: 30px 0;
+      margin-bottom: 20px;
     }
 
     .title-container {
@@ -33,24 +34,27 @@
         position: relative;
         width: 100%;
         .duration {
+          display: flex;
           position: absolute;
-          right: 10px;
-          top: 10px;
+          right: 5px;
+          top: 5px;
           background-color: #fff;
           color: $color__primary;
-          border-radius: 12px;
+          border-radius: 9px;
           box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
-          padding: 3px 7.5px;
-
+          padding: 0 5px;
           i {
-            vertical-align: middle;
+            display: inline-flex;
+            place-items: center;
             &:before {
-              vertical-align: text-bottom;
+              font-size: 9px;
             }
           }
 
           span {
-            display: inline-block;
+            font-size: 15px;
+            margin-right: 3px;
+            margin-top: 0.7px;
           }
         }
       }
@@ -93,8 +97,6 @@
 
       .image-container {
 
-        padding-left: 5px;
-
         img {
           width: 100%;
           clip-path: inset(0 round 3px);
@@ -102,7 +104,7 @@
       }
 
       .playlist-recipe-item-details {
-        padding-right: 5px;
+
         h3 {
           font-family: $font__assistant;
           font-size: 18px;
@@ -114,7 +116,6 @@
         .author-name {
           font-family: $font__assistant;
           font-size: 16px;
-          font-weight: 600;
           line-height: 1.06;
         }
       }
@@ -154,11 +155,12 @@
         .actions {
 
           .btn {
-            font-size: 16px;
+            font-size: 22px;
           }
 
           .btn-prev {
             margin-right: 35px;
+            margin-left: 20px;
           }
 
           .count {
@@ -174,14 +176,14 @@
       }
 
       .btn-show-recipe {
-        height: 60px;
+        height: 50px;
         margin: 0;
         background-color: red;
         width: 100%;
         border-radius: 3px;
         background-image: linear-gradient(76deg, #ec3849, #f35644);
         color: white;
-        text-align: right;
+        text-align: center;
         padding: 0 64px;
 
         a {
@@ -190,11 +192,12 @@
             position: absolute;
             transform: translateY(25%);
             left: 60px;
+            display: none;
           }
 
           span {
             text-align: right;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
           }
         }
@@ -234,8 +237,7 @@
 
 }
 
-
-@include breakpoint(tablet){
+@include breakpoint(tablet) {
   .single-foody_playlist {
 
     .content {
@@ -300,12 +302,12 @@
 
             .author-name {
 
-              a{
+              a {
                 font-size: 1.5em;
               }
             }
 
-            .description{
+            .description {
               font-size: 1.7em;
             }
           }

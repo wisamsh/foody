@@ -2,8 +2,8 @@ body[class~='search'] {
 
   .content {
     .details-container {
-      padding-right: 20px;
-      padding-left: 20px;
+      padding-right: 15px;
+      padding-left: 15px;
       text-align: right;
       padding-bottom: 0;
 
@@ -16,6 +16,9 @@ body[class~='search'] {
         text-align: right;
       }
 
+      .title{
+        font-size: 26px;
+      }
     }
 
     .search-results-header {
@@ -74,6 +77,12 @@ body[class~='search'] {
   body[class~='search'] {
     #page {
       position: initial;
+
+      .content{
+        .search-results{
+          padding-top: 15px;
+        }
+      }
     }
 
     footer {

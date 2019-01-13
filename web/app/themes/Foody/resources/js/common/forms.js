@@ -43,7 +43,7 @@ window.formSubmit = function (settings) {
     }
 
     if (!settings.unbind) {
-        $form.submit(handler);
+        $form.on('submit', handler);
     }
 
     return handler;
@@ -58,6 +58,9 @@ window.formSubmitWithFiles = function (settings) {
     $form.submit(function (e) {
 
         e.preventDefault();
+        if (settings.onSubmit && typeof  settings.onSubmit == 'function') {
+            settings.onSubmit();
+        }
         let button = $('input[type="submit"]', $form);
         if (button.length == 0) {
             button = $('button[type="submit"]', $form);
@@ -87,7 +90,7 @@ window.formSubmitWithFiles = function (settings) {
                 contentType: false,
                 beforeSend: function (xhr) {
                     // what to do just after the form has been submitted
-                    button.addClass('loadingform').val('Loading...');
+                    button.addClass('loadingform').prop('disabled', true).val('Loading...');
                 },
                 error: function (request, status, error) {
                     if (status == 500) {
@@ -105,7 +108,11 @@ window.formSubmitWithFiles = function (settings) {
                 success: settings.success,
                 complete: function () {
                     // what to do after a comment has been added
-                    button.removeClass('loadingform').val('שלח');
+                    button.removeClass('loadingform').prop('disabled', false).val('שלח');
+
+                    if (settings.complete && typeof  settings.complete == 'function') {
+                        settings.complete();
+                    }
                 }
             });
         }
@@ -122,12 +129,14 @@ jQuery(document).ready(($) => {
     if ($checkboxes.length) {
 
 
-        $checkboxes.click(function (e) {
-
+        $checkboxes.on('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
             if ($(this).attr('disabled')) {
                 e.preventDefault();
                 return;
             }
+            console.log('click check', e.target);
             let $input = $('input', this);
 
             let checked = $input.prop('checked') || false;
@@ -135,7 +144,7 @@ jQuery(document).ready(($) => {
             checked = !checked;
 
             $input.prop('checked', checked);
-
+            $input.trigger("change");
         });
     }
 });

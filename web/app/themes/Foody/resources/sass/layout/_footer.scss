@@ -1,25 +1,21 @@
-$sidebar-width:21%;
-
+$sidebar-width: 21%;
 
 footer.site-footer {
   background-color: rgba(58, 58, 58, 0.05);
   padding: 25px 42px;
 
-  width: calc(100% - #{$sidebar-width});
-  margin-right: calc(#{$sidebar-width} - 1px);
-  //position: absolute;
+  @include site-width();
+
   left: 0;
   bottom: 0;
   height: auto;
   right: 0;
-  border-right: 1px solid hsla(0,0%,59%,.3);
 
   ul {
     &.menu {
       font-family: $font__assistant;
-      height: 100%;
-      display: inline-block;
-      float: right;
+      //display: inline-block;
+      //float: right;
       list-style-type: none;
       padding: 0 10px;
       font-size: 15px;
@@ -33,24 +29,162 @@ footer.site-footer {
         font-size: 15px;
         line-height: normal;
         text-align: right;
-        padding: 0;
+        padding: 0 0 7px;
 
         a {
           color: inherit;
         }
       }
+
+      .newsletter-title {
+        font-weight: 900;
+        font-size: 18px;
+      }
+
+      .newsletter {
+        margin-bottom: 15px;
+
+        .input-container {
+          padding-right: 0;
+
+          input {
+            height: 40px;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+            background-color: #ffffff;
+            border: none;
+            padding: 0 5px;
+            font-family: $font__assistant;
+
+            //noinspection CssInvalidPseudoSelector
+            &::placeholder {
+              font-family: $font__main;
+              font-size: 16px;
+              font-weight: normal;
+            }
+          }
+        }
+
+        button[type="submit"] {
+          border-radius: 3px;
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+          background-color: #ffffff;
+          border: none;
+          color: $color__primary;
+          font-size: 1em;
+          cursor: pointer;
+          font-weight: 900;
+        }
+      }
+
+      &.pages-menu {
+        border-left: none;
+
+        &:nth-child(odd) {
+          padding-left: 2rem;
+          padding-right: 0;
+        }
+        &:nth-child(even) {
+          padding-right: 2rem;
+          padding-left: 0;
+        }
+      }
+
+    }
+
+    .menu-pages {
+      padding-left: 30px;
+      width: 100%;
     }
   }
 }
 
 @include breakpoint(mobileonly) {
   footer.site-footer {
-    padding: 15px;
+    padding: 0;
     width: 100%;
     max-width: 100%;
     margin-right: 0;
     position: initial !important;
     border: none;
+
+    > .newsletter {
+      background-image: linear-gradient(67deg, #ec3849, #f35644);
+      padding: 15px;
+
+      .newsletter-title {
+        color: #fff;
+        font-size: 20px;
+      }
+
+      .newsletter {
+        form {
+          .newsletter-input {
+            padding: 12px;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+            background-color: #ffffff;
+            border: none;
+            font-size: 18px;
+          }
+
+          .input-container {
+            padding-right: 0;
+            input[type="email"] {
+              @extend .newsletter-input;
+              width: 100%;
+
+              //noinspection CssInvalidPseudoSelector
+              &::placeholder {
+                opacity: 0.5;
+                font-size: 18px;
+                font-weight: normal;
+                font-family: $font__main;
+
+              }
+            }
+          }
+
+          button {
+            @extend .newsletter-input;
+            color: $color__primary;
+            font-weight: 900;
+          }
+
+        }
+      }
+
+    }
+
+    .social {
+      padding: 15px 15px 0;
+
+      + .row {
+        padding: 15px;
+        margin: 0;
+      }
+
+      display: flex;
+      flex-flow: row-reverse;
+      text-align: right;
+      justify-content: flex-end;
+
+      .follow-us {
+        opacity: 0.7;
+        font-family: $font__assistant;
+        font-size: 18px;
+        color: var(--black);
+        margin-bottom: 10px;
+      }
+
+      i {
+        span {
+          &:before {
+            font-size: 25px;
+          }
+        }
+      }
+    }
 
     ul {
       &.menu {
@@ -65,6 +199,36 @@ footer.site-footer {
           line-height: 1.3rem;
           a {
           }
+        }
+      }
+    }
+
+    .footer-pages-mobile {
+      ul {
+        margin: 0 0 5px;
+        padding: 0 5px;
+        list-style-type: none;
+        text-align: center;
+
+        li {
+          font-family: $font__assistant;
+          font-size: 18px;
+          font-weight: bold;
+          display: inline-block;
+
+          &:not(:first-child) {
+            &:before {
+              content: '\00a0\2022\00a0\00a0';
+            }
+          }
+        }
+      }
+
+      .powered-by {
+        text-align: center;
+
+        svg {
+          width: 30%;
         }
       }
     }

@@ -10,17 +10,19 @@
 function foody_sidebars()
 {
 
-
     $sidebars = array(
         array(
             'id' => 'foody-sidebar',
             'name' => 'Foody Sidebar',
-        ),array(
+        ), array(
             'id' => 'foody-sidebar-mobile',
             'name' => 'Foody Mobile Sidebar',
         ), array(
             'id' => 'homepage-categories',
             'name' => 'Homepage Categories',
+        ), array(
+            'id' => 'foody-social',
+            'name' => 'פודי Social',
         )
     );
 
@@ -36,9 +38,9 @@ function foody_sidebars()
 add_action('widgets_init', 'foody_sidebars');
 
 
-
-add_action( 'after_setup_theme', 'register_my_menu' );
-function register_my_menu() {
-
-    register_nav_menu('categories', 'Categories Navigation');
+function foody_register_menu()
+{
+    register_nav_menu('categories', __('תפריט קטגוריות'));
 }
+
+add_action('after_setup_theme', 'foody_register_menu');

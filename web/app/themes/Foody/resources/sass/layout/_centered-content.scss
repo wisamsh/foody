@@ -1,0 +1,14 @@
+.page-template-centered-content {
+  #content {
+    //padding-top: 30px;
+    background-color: white;
+  }
+}
+
+@include breakpoint(mobileonly) {
+  .page-template-centered-content {
+    #content {
+      //padding-top: 40px;
+    }
+  }
+}

@@ -109,6 +109,16 @@ if (!function_exists('essb_rs_mailform_code')) {
 		$code .= '		
 var essb_mailform_opened = false;
 function essb_open_mailform(unique_id) {
+    
+    
+    function popitup(url,windowName) {
+           newwindow=window.open(url,windowName,\'height=500,width=500\');
+           if (window.focus) {newwindow.focus()}
+           return false;
+         }
+    return popitup(\'mailto:?subject=\'+document.title+\'&body=\'+window.location.href,\'mailto\');
+    
+    
 	jQuery.fn.extend({
 		center: function () {
 			return this.each(function() {

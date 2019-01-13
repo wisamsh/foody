@@ -38,7 +38,7 @@ require_once get_template_directory() . "/inc/classes/interfaces/interface-foody
 /*
  * Classes
  * */
-
+require_once get_template_directory() . "/inc/classes/common/class-foody-term.php";
 require_once get_template_directory() . "/inc/classes/common/class-foody-user.php";
 require_once get_template_directory() . "/inc/classes/class-header.php";
 require_once get_template_directory() . "/inc/classes/class-foody-footer.php";
@@ -60,8 +60,6 @@ require_once get_template_directory() . "/inc/classes/class-foody-comments.php";
 require_once get_template_directory() . "/inc/classes/class-foody-how-i-did.php";
 require_once get_template_directory() . "/inc/classes/class-foody-article.php";
 require_once get_template_directory() . "/inc/classes/class-foody-page-content-factory.php";
-require_once get_template_directory() . "/inc/classes/class-foody-feed-factory.php";
-require_once get_template_directory() . "/inc/classes/class-foody-post-factory.php";
 require_once get_template_directory() . "/inc/classes/class-bootstrap-collapse-nav-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-channels-menu.php";
 require_once get_template_directory() . "/inc/classes/class-foody-author.php";
@@ -72,6 +70,13 @@ require_once get_template_directory() . "/inc/classes/class-foody-registration.p
 require_once get_template_directory() . "/inc/classes/class-foody-categories-accordion-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-query.php";
 require_once get_template_directory() . "/inc/classes/common/class-foody-analytics.php";
+require_once get_template_directory() . "/inc/classes/class-foody-sidebar.php";
+require_once get_template_directory() . "/inc/classes/class-foody-tag.php";
+require_once get_template_directory() . "/inc/classes/class-foody-categories-accordion.php";
+require_once get_template_directory() . '/inc/wp-bootstrap-navwalker.php';
+require_once get_template_directory() . '/inc/class-foody-collapse-navwalker.php';
+require_once get_template_directory() . '/inc/class-foody-bootstrap-accordion-navwalker.php';
+require_once get_template_directory() . '/inc/classes/class-foody-items-page.php';
 
 
 /*
@@ -107,6 +112,8 @@ require_once get_template_directory() . "/functions/redirects.php";
 require_once get_template_directory() . "/functions/menus.php";
 require_once get_template_directory() . "/functions/registration.php";
 require_once get_template_directory() . "/functions/foody-head.php";
+require_once get_template_directory() . "/functions/search.php";
+require_once get_template_directory() . "/functions/foody-fut.php";
 
 
 /*

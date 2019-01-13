@@ -61,9 +61,15 @@ class Foody_Profile
         global $wp_session;
 
         if (isset($wp_session['favorites']) && !empty($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
+
+//            $favorite_posts = array_filter($favorite_posts,function ($post){
+//               return $post instanceof WP_Post;
+//            });
+
             $posts = [];
             foreach ($favorite_posts as $favorite_post) {
-                $posts[] = Foody_PostFactory::get_post(get_post($favorite_post));
+                $post = get_post($favorite_post);
+                $posts[] = Foody_Post::create($post);
             }
 
             echo '<h2 class="title">ספר המתכונים שלי</h2>';
@@ -71,13 +77,9 @@ class Foody_Profile
 
             $grid_args = [
                 'id' => 'my-recipes-grid',
-//                'responsive' => [
-//                    'tablet_l' => 'col-lg-12',
-//                    'tablet' => 'col-md-6',
-//                ],
                 'posts' => $posts,
                 'more' => false,
-                'cols' => 2
+                'cols' => 1
             ];
 
             foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
@@ -107,13 +109,9 @@ class Foody_Profile
 
         $grid_args = [
             'id' => 'my-channels-grid',
-//            'responsive' => [
-//                'tablet_l' => 'col-lg-12',
-//                'tablet' => 'col-md-6',
-//            ],
             'posts' => $posts,
             'more' => false,
-            'cols' => 2
+            'cols' => 1
         ];
 
         foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
@@ -185,9 +183,9 @@ class Foody_Profile
             $recipes = [];
             $favorite_posts = $wp_session['favorites'];
 
-
             foreach ($favorite_posts as $favorite_post) {
-                $recipes[] = Foody_PostFactory::get_post(get_post($favorite_post));
+                $post = get_post($favorite_post);
+                $recipes[] = Foody_Post::create($post);
             }
 
             $favorite_count = count($favorite_posts);

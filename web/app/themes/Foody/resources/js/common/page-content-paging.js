@@ -8,7 +8,7 @@ module.exports = (function () {
         this.settings = settings;
         this.pageQuery = foodyGlobals.queryPage;
         this.TAG = 'PageContentPaging';
-        this.pathRegex = /page\/([1-9]+(\/)?$)/;
+        this.pathRegex = /page\/([0-9]+(\/)?$)/;
         this.init();
     };
 
@@ -32,10 +32,10 @@ module.exports = (function () {
 
     PageContentPaging.prototype.attachSort = function (sort) {
 
-        let $sort = $(sort);
+        this.$sort = $(sort);
 
         let that = this;
-        $sort.on('changed.bs.select', function () {
+        this.$sort.on('changed.bs.select', function () {
             let val = $(this).val();
             if (val) {
                 that.sort(val);
@@ -48,7 +48,7 @@ module.exports = (function () {
 
     PageContentPaging.prototype.sort = function (sort) {
 
-        let ajaxSettings = this._prepareQuery(sort);
+        let ajaxSettings = this._prepareQuery(sort, false, true);
 
         this.filter.loading();
         let that = this;
@@ -59,7 +59,7 @@ module.exports = (function () {
                 return console.log(err);
             }
             that.filter.stopLoading();
-            that.grid.refresh(data.data.items);
+            that.grid.refresh(data.data);
         });
 
     };
@@ -67,8 +67,12 @@ module.exports = (function () {
 
     PageContentPaging.prototype.loadMore = function () {
 
+        let sort = '';
+        if (this.settings.sort) {
+            sort = this.$sort.val();
+        }
 
-        let ajaxSettings = this._prepareQuery();
+        let ajaxSettings = this._prepareQuery(sort, true);
 
         this.filter.loading();
         let that = this;
@@ -80,41 +84,56 @@ module.exports = (function () {
             }
             that.filter.stopLoading();
             that.grid.append(data.data);
-            that.updateQuery(page);
+            that.updateQuery(ajaxSettings.data.page);
         });
     };
 
-
-    PageContentPaging.prototype._prepareQuery = function (sort) {
+    /**
+     * Creates the ajax request to use in paging and sorting
+     * actions.
+     * @param sort String current sorting method
+     * @param loadMore Boolean should the query increment current page
+     * @param ranged Boolean if true skip,offset will be used to fetch items until current page.
+     * Otherwise will only fetch next page
+     * @return ajax request object
+     * */
+    PageContentPaging.prototype._prepareQuery = function (sort, loadMore, ranged) {
         let page = this.getPageFromSearch();
 
-        page++;
+
+        if (loadMore) {
+            page++;
+        }
         let ajaxSettings = {
             action: 'load_more',
             data: {
                 context: this.settings.context,
                 page: page,
-                filter: this.filter.prepareFilterForQuery(),
+                filter: this.filter.prepareFilterForQuery(this._getQuery('s')),
                 context_args: this.settings.contextArgs,
-                cols: this.filter.cols
+                cols: this.filter.cols,
+                ranged: ranged
             }
         };
 
         if (sort) {
             ajaxSettings.data.sort = sort;
-            ajaxSettings.data.page--;
         }
+
 
         return ajaxSettings;
 
     };
 
-    PageContentPaging.prototype.updateQuery = function (page) {
+    PageContentPaging.prototype.updateQuery = function (currentPage) {
         if (history.pushState) {
-
-            let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + this.pageQuery + '=' + page;
+            console.log(this.pageQuery, currentPage);
+            let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + this.pageQuery + '=' + currentPage;
             if (window.location.pathname == '/' || this.pathRegex.test(window.location.pathname)) {
-                newurl = window.location.protocol + "//" + window.location.host + '/' + this.pageQuery + '/' + page;
+
+                newurl = window.location.protocol + "//" + window.location.host + '/' + this.pageQuery + '/' + currentPage;
+                let urlParams = new URLSearchParams(window.location.search);
+                newurl = `${newurl}?${urlParams.toString()}`;
             }
             window.history.pushState({path: newurl}, '', newurl);
         }
@@ -122,30 +141,34 @@ module.exports = (function () {
 
     PageContentPaging.prototype.getPageFromSearch = function () {
 
-        let urlParams = new URLSearchParams(window.location.search);
-        let page = urlParams.get(this.pageQuery);
-        if (!page) {
+        let currentPage = this._getQuery(this.pageQuery);
+        if (!currentPage) {
             let path = window.location.pathname;
             if (path == '/' || this.pathRegex.test(path)) {
 
 
                 let matches = path.match(this.pathRegex);
                 if (matches && matches.length) {
-                    page = matches[1];
-                    page = parseInt(page);
+                    currentPage = matches[1];
+                    currentPage = parseInt(currentPage);
                 }
 
-                if (!page || isNaN(page)) {
-                    page = 1;
+                if (!currentPage || isNaN(currentPage)) {
+                    currentPage = 1;
                 }
             }
         }
 
-        if (!page) {
-            page = 1;
+        if (!currentPage) {
+            currentPage = 1;
         }
 
-        return page;
+        return currentPage;
+    };
+
+    PageContentPaging.prototype._getQuery = function (key) {
+        let urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(key);
     };
 
     PageContentPaging.prototype.log = function (logStr) {

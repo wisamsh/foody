@@ -2,7 +2,7 @@
 
   .foody-accordion-content {
     .card-body {
-      padding: 0.85rem 0.45rem 0.45rem;
+      padding: 0.25rem 0.45rem 0.45rem;
     }
 
     i + .main-title {
@@ -15,10 +15,10 @@
 
         width: 100%;
         color: $color__text-main;
-        font-size: 22px;
+        font-size: 20px;
         font-weight: 900;
         letter-spacing: -0.06px;
-        line-height: 23px;
+        //line-height: 23px;
         display: inline-flex;
         flex-grow: 1;
 
@@ -33,7 +33,7 @@
 
         &.main-title {
           color: $color__primary;
-          font-size: 1.4em;
+          font-size: 22px;
           padding-right: 10px;
         }
 
@@ -54,7 +54,7 @@
         &:before {
           font-size: 7px;
           position: absolute;
-          left: 5em;
+          left: 3em;
           line-height: normal;
           transform: translateY(100%);
           transition: transform .3s;

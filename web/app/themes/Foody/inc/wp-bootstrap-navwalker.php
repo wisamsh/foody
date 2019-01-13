@@ -37,12 +37,17 @@ if (!class_exists('WP_Bootstrap_Navwalker')) {
     class WP_Bootstrap_Navwalker extends Walker_Nav_Menu
     {
 
+        public static $BS_MAX_DEPTH = 2;
+        public static $BS_DROPDOWN_MANUAL_DEPTH = 1;
+
         /**
          * @since       1.0.0
          * @access      public
          * @var type    bool
          */
         private $dropdown = false;
+
+        private $current_dropdown = '';
 
         /**
          * Starts the list before the elements are added.
@@ -55,6 +60,21 @@ if (!class_exists('WP_Bootstrap_Navwalker')) {
          * @param int $depth Depth of menu item. Used for padding.
          * @param stdClass $args An object of wp_nav_menu() arguments.
          */
+//        public function start_lvl(&$output, $depth = 0, $args = array())
+//        {
+//            if (isset($args->item_spacing) && 'discard' === $args->item_spacing) {
+//                $t = '';
+//                $n = '';
+//            } else {
+//                $t = "\t";
+//                $n = "\n";
+//            }
+//
+//            $this->dropdown = true;
+////            $output .= $n . str_repeat($t, $depth) . '<div class="dropdown-menu" role="menu">' . $n;
+//            $output .= $n . str_repeat($t, $depth) . '<div class="foody-menu-children" >' . $n;
+//        }
+
         public function start_lvl(&$output, $depth = 0, $args = array())
         {
             if (isset($args->item_spacing) && 'discard' === $args->item_spacing) {
@@ -65,8 +85,14 @@ if (!class_exists('WP_Bootstrap_Navwalker')) {
                 $n = "\n";
             }
 
-            $this->dropdown = true;
-            $output .= $n . str_repeat($t, $depth) . '<div class="dropdown-menu" role="menu">' . $n;
+            if ($depth >= WP_Bootstrap_Navwalker::$BS_DROPDOWN_MANUAL_DEPTH) {
+
+                $output .= $n . str_repeat($t, $depth) . '<ul class="dropdown-menu-innner collapse" role="menu" id="' . $this->current_dropdown . '" >' . $n;
+//                $output         .= $n . str_repeat( $t, $depth )  . $n;
+            } else {
+                $this->dropdown = true;
+                $output .= $n . str_repeat($t, $depth) . '<div data-toggle="false" class="dropdown-menu collapse collapsed" role="menu" id="' . $this->current_dropdown . '">' . $n;
+            }
         }
 
         /**
@@ -80,6 +106,20 @@ if (!class_exists('WP_Bootstrap_Navwalker')) {
          * @param int $depth Depth of menu item. Used for padding.
          * @param stdClass $args An object of wp_nav_menu() arguments.
          */
+//        public function end_lvl(&$output, $depth = 0, $args = array())
+//        {
+//            if (isset($args->item_spacing) && 'discard' === $args->item_spacing) {
+//                $t = '';
+//                $n = '';
+//            } else {
+//                $t = "\t";
+//                $n = "\n";
+//            }
+//
+//            $this->dropdown = false;
+//            $output .= $n . str_repeat($t, $depth) . '</div>' . $n;
+//        }
+
         public function end_lvl(&$output, $depth = 0, $args = array())
         {
             if (isset($args->item_spacing) && 'discard' === $args->item_spacing) {
@@ -90,8 +130,13 @@ if (!class_exists('WP_Bootstrap_Navwalker')) {
                 $n = "\n";
             }
 
-            $this->dropdown = false;
-            $output .= $n . str_repeat($t, $depth) . '</div>' . $n;
+            if ($depth >= WP_Bootstrap_Navwalker::$BS_DROPDOWN_MANUAL_DEPTH) {
+                $output .= $n . str_repeat($t, $depth) . '</ul>' . $n;
+//                $output         .= $n . str_repeat( $t, $depth ) . $n;
+            } else {
+                $this->dropdown = false;
+                $output .= $n . str_repeat($t, $depth) . '</div>' . $n;
+            }
         }
 
         /**
@@ -133,10 +178,12 @@ if (!class_exists('WP_Bootstrap_Navwalker')) {
 
             if ($args->walker->has_children) {
                 $classes[] = 'dropdown';
+                $classes[] = 'parent';
             }
 
             if (0 < $depth) {
                 $classes[] = 'dropdown-menu';
+                $classes[] = 'parent';
             }
 
             /**
@@ -276,9 +323,9 @@ if (!class_exists('WP_Bootstrap_Navwalker')) {
             $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args, $depth);
 
             if ($args->walker->has_children) {
-                $atts['data-toggle'] = 'dropdown';
-                $atts['aria-haspopup'] = 'true';
-                $atts['aria-expanded'] = 'false';
+//                $atts['data-toggle'] = 'dropdown';
+//                $atts['aria-haspopup'] = 'true';
+//                $atts['aria-expanded'] = 'false';
             }
 
             $attributes = '';
@@ -318,19 +365,35 @@ if (!class_exists('WP_Bootstrap_Navwalker')) {
             // meaning a dropdown should
             // be rendered
             if (0 < $depth) {
-                $item_classes = array_diff($item_classes, ['nav-link']);
+//                $item_classes = array_diff($item_classes, ['nav-link']);
                 $item_classes[] = 'dropdown-item';
             }
 
             $icon = get_field('icon', $item);
 
-            if ($icon && wp_is_mobile()) {
-                $item_output .= "<i class='$icon'></i>";
+            if ($args->walker->has_children) {
+                $item_output .= '<div class="toggle-wrap">';
             }
+
+//            if ($icon && wp_is_mobile()) {
+//                $item_output .= "<i class='$icon'></i>";
+//            }
+
+
 
             $item_output .= '<a class="' . implode(' ', $item_classes) . '" ' . $attributes . '>';
             $item_output .= $args->link_before . $title . $args->link_after;
+            if ($args->walker->has_children) {
+                $this->current_dropdown = uniqid();
+                $item_output .= '<a href="#' . $this->current_dropdown . '" data-toggle="collapse" class="d-inline d-lg-none sub-menu-toggle collapsed" aria-expanded="false" aria-controls="#' . $this->current_dropdown . '">';
+                $item_output .= '<i class="icon-side-arrow"></i>';
+                $item_output .= '</a>';
+            }
             $item_output .= '</a>';
+
+            if ($args->walker->has_children) {
+                $item_output .= '</div>';
+            }
 
             return $item_output;
         }
@@ -391,7 +454,6 @@ if (!class_exists('WP_Bootstrap_Navwalker')) {
                 }
             }
         }
-
 
 
     }

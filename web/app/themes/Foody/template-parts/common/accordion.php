@@ -71,7 +71,7 @@ $collapse_classes[] = $start_state;
         </div>
 
         <div id="<?php echo $id ?>" class="collapse <?php foody_el_classes($collapse_classes) ?>" role="tabpanel"
-             aria-labelledby="heading-<?php echo $id ?>" data-parent="#accordion-<?php echo $id ?>">
+             aria-labelledby="heading-<?php echo $id ?>">
             <div class="card-body">
                 <?php
                 if (is_callable($content)) {

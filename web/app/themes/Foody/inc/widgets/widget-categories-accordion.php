@@ -39,7 +39,7 @@ class Foody_CategoriesAccordionWidget extends Foody_Widget
 
     protected function display($args, $instance)
     {
-        echo $this->categories_tree_to_accordion();
+        echo $this->categories_tree_to_accordion($args);
     }
 
 
@@ -53,7 +53,7 @@ class Foody_CategoriesAccordionWidget extends Foody_Widget
      *
      * @return string|null
      */
-    private function categories_tree_to_accordion()
+    private function categories_tree_to_accordion($args)
     {
 
         $categories = get_categories([
@@ -70,7 +70,8 @@ class Foody_CategoriesAccordionWidget extends Foody_Widget
             'return' => true,
             'content' => '',
             'title_classes' => 'main-title category-title',
-            'title_icon' => 'icon-categories'
+            'title_icon' => 'icon-categories',
+            'start_state' => $args['name'] == 'Foody Sidebar' ? 'show' : 'hide'
         );
 
         foreach ($categories as $category) {
@@ -130,7 +131,7 @@ class Foody_CategoriesAccordionWidget extends Foody_Widget
         }
     }
 
-    private function get_accordion_item($category,$classes = '')
+    private function get_accordion_item($category, $classes = '')
     {
         $link = get_term_link($category->term_id);
 

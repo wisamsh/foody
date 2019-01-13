@@ -14,9 +14,9 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
         parent::the_featured_content();
     }
 
-    public function the_sidebar_content()
+    public function the_sidebar_content($args = array())
     {
-        parent::the_sidebar_content();
+        parent::the_sidebar_content($args);
     }
 
     public function the_details()
@@ -24,7 +24,8 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
         foody_get_template_part(
             get_template_directory() . '/template-parts/content-recipe-details.php',
             [
-                'page' => $this
+                'page' => $this,
+                'show_favorite' => false
             ]
         );
     }

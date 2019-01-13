@@ -6,6 +6,18 @@
     color: #ED3D48;
     top: 50%;
     left: 50%;
+    font-weight: normal;
     transform: translate(-50%, -50%);
+    font-family: $font__main;
+  }
+}
+
+
+@include breakpoint(mobileonly){
+
+  .show-more-list {
+    .show-more-list-overlay {
+      font-size: 18px !important;
+    }
   }
 }

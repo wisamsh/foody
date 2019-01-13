@@ -10,6 +10,10 @@
   color: $color__primary;
 }
 
+#cancel-comment-reply-link {
+  display: none !important;
+}
+
 .comment-form {
 
   .commentform-element {
@@ -19,7 +23,7 @@
     border: none;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
     transition: height .3s ease;
-    height: 88px;
+    height: 60px;
     margin-bottom: 10px;
 
     img.avatar {
@@ -28,6 +32,7 @@
       z-index: 100;
       right: 5px;
       top: 50%;
+      max-width: 45px;
       transform: translateY(-50%);
       transition: top .3s ease, transform .3s ease;
     }
@@ -67,8 +72,12 @@
     }
   }
 
-  .form-submit {
+  #comment-error {
+    padding-right: 5px;
+  }
 
+  .form-submit {
+    text-align: left;
     display: none;
     margin-bottom: 10px;
 
@@ -113,6 +122,7 @@
       clip-path: circle();
       margin-left: 10px;
       vertical-align: baseline;
+      max-width: 40px;
     }
 
     .comment-body {
@@ -126,14 +136,14 @@
 
       .author {
         unicode-bidi: embed;
-        font-size: 22px;
+        font-size: 18px;
         font-weight: bold;
         margin-left: 5px;
       }
 
       time {
         opacity: 0.5;
-        font-size: 22px;
+        font-size: 18px;
       }
 
       p {
@@ -145,8 +155,8 @@
 
     .reply {
       margin-right: $avatar-size;
-      padding: 10px 20px 0;
-      font-size: 22px;
+      padding: 5px 20px 0;
+      font-size: 18px;
       font-weight: bold;
       opacity: 0.5;
     }
@@ -165,8 +175,30 @@
 
 }
 
+@include breakpoint(mobileonly) {
 
-@include breakpoint(mobileonly){
+  article{
+    &.content{
+      .comments, .recipe-comments {
+        .foody-accordion-title {
+          h5 {
+            i.icon-side-arrow {
+              &:before {
+                left: 0;
+                position: unset;
+                line-height: 50px;
+                font-size: 11px;
+                margin: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+
   .comment-content a {
 
   }
@@ -182,7 +214,8 @@
   .comment-form {
 
     .commentform-element {
-
+      height: unset;
+      padding: 20px 0;
       img.avatar {
 
       }
@@ -192,12 +225,16 @@
       }
 
       #comment {
+
+        &::placeholder {
+          font-size: 18px;
+        }
       }
 
       &.open {
 
         #comment {
-
+          line-height: unset;
         }
 
         img.avatar {
@@ -231,21 +268,21 @@
 
     padding-left: 0;
 
-
     .foody-comment {
-
+      padding-bottom: 0;
       img.avatar {
 
       }
 
       .comment-body {
-
+        padding: 10px;
+        vertical-align: top;
         .author {
-
+          font-size: 18px;
         }
 
         time {
-
+          font-size: 18px;
         }
 
         p {
@@ -255,7 +292,8 @@
       }
 
       .reply {
-
+        font-size: 18px;
+        padding-top: 5px;
       }
 
     }
@@ -265,6 +303,9 @@
       .foody-comment {
         img.avatar {
 
+          .comment-body {
+            width: auto;
+          }
         }
       }
     }

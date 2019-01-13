@@ -1,10 +1,10 @@
 @import "related-content";
+@include related-content;
 
 .related-content-container {
 
   .related-content {
     &.related-playlists {
-      padding: 0 15px;
       margin-bottom: 15px;
       .related-item {
 
@@ -58,7 +58,6 @@
 
   .related-content {
     &.related-recipes {
-      padding: 15px;
 
       .related-item {
 
@@ -103,11 +102,11 @@
 @include breakpoint(mobileonly) {
 
   .related-content-container {
-
+    padding: 0 20px;
     &.related-recipes {
 
       .related-content-title {
-        display: none;
+        //display: none;
       }
 
       .related-recipes {

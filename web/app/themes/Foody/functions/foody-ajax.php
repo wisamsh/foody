@@ -34,5 +34,5 @@ require_once get_template_directory() . '/functions/ajax/favorites.php';
 require_once get_template_directory() . '/functions/ajax/follow.php';
 require_once get_template_directory() . '/functions/ajax/search.php';
 require_once get_template_directory() . '/functions/ajax/load-more.php';
-require_once get_template_directory() . '/functions/ajax/change-password.php';
+require_once get_template_directory() . '/functions/ajax/edit-user.php';
 //require_once get_template_directory() . '/functions/ajax/duplicate-titles.php';

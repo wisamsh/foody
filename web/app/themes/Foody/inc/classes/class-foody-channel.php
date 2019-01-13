@@ -38,7 +38,7 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
 
         $grid = [
             'id' => $id,
-            'cols' => 3,
+            'cols' => 2,
             'posts' => $posts,
             'classes' => [
                 "channel-$type-grid"
@@ -71,7 +71,13 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
         <?php
     }
 
-    public function the_sidebar_content()
+    function the_sidebar_content($args = array())
+    {
+        $this->sidebar();
+        dynamic_sidebar('foody-social');
+    }
+
+    public function sidebar()
     {
         dynamic_sidebar('foody-sidebar');
     }
@@ -116,6 +122,13 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
         ];
 
         foody_get_template_part(get_template_directory() . '/template-parts/common/foody-tabs.php', $tabs);
+
+        // mobile filter
+        foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
+            'sidebar' => array($this, 'sidebar'),
+            'wrap' => true
+        ]);
+
     }
 
     // Foody_Topic

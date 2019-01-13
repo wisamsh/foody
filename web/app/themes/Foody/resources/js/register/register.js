@@ -67,11 +67,11 @@ jQuery(document).ready(($) => {
     });
 
 
-    $('.btn-google').on('click', () => {
+    $('.content-with-images .btn-google').on('click', () => {
         $('a[data-provider="Google"]')[0].click();
     });
 
-    $('.btn-facebook').on('click', () => {
+    $('.content-with-images .btn-facebook').on('click', () => {
         $('a[data-provider="Facebook"]')[0].click();
     });
 

@@ -4,7 +4,20 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+var HashPlugin = require('hash-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+// the path(s) that should be cleaned
+let pathsToClean = [
+    'dist'
+];
+
+// the clean options to use
+let cleanOptions = {
+    root:     path.resolve(__dirname, ''),
+    verbose:  true,
+    dry:      false
+};
 
 module.exports = env => {
 
@@ -45,17 +58,20 @@ module.exports = env => {
                     return getPath('css/[name].css').replace('css/js', 'css');
                 },
                 allChunks: true
-            })
+            }),
+            new HashPlugin({ path: './build', fileName: 'version-hash.txt' }),
+            new CleanWebpackPlugin(pathsToClean, cleanOptions)
         ],
         entry: {
             // common : "./resources/pages/common/index",
             // home: "./resources/pages/homepage/index",
             main: "./resources/js/app",
-            admin: "./resources/js/admin"
+            admin: "./resources/js/admin",
+            style:"./resources/sass/app.scss"
         },
         output: {
             // filename: '[name].js',
-            filename: '[name].js',
+            filename: '[name].[hash].js',
             path: path.resolve(__dirname, 'dist'),
             // publicPath: '/resources'
         },
@@ -114,6 +130,16 @@ module.exports = env => {
                         loader: 'file-loader',
                         options: {name: '[name].[ext]'},
                     }]
+                },
+                {
+                    test: /\.js$/, //Regular expression
+                    exclude: /(node_modules|bower_components)/,//excluded node_modules
+                    use: {
+                        loader: "babel-loader",
+                        options: {
+                            presets: ["@babel/preset-env"]  //Preset used for env setup
+                        }
+                    }
                 }
             ]
         },
