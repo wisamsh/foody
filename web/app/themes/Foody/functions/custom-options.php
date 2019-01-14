@@ -9,7 +9,8 @@
 register_setting('discussion','hid_per_page');
 
 
-$page_name = __('הגדרות חיפוש - פודי', 'foody');
+$page_name_search_options = __('הגדרות חיפוש - פודי', 'foody');
+$page_name_purchase_buttons = __('כפתורי רכישה', 'foody');
 
 /** @var array $options_pages
  * All ACF Options Pages.
@@ -19,10 +20,16 @@ $page_name = __('הגדרות חיפוש - פודי', 'foody');
  */
 $options_pages = array(
     array(
-        'page_title' => $page_name,
-        'menu_title' => $page_name,
+        'page_title' => $page_name_search_options,
+        'menu_title' => $page_name_search_options,
         'menu_slug' => 'foody-search-options.php',
         'post_id' => 'foody_search_options',
+    ),
+    array(
+        'page_title' => $page_name_purchase_buttons,
+        'menu_title' => $page_name_purchase_buttons,
+        'menu_slug' => 'foody-purchase-options.php',
+        'post_id' => 'foody_purchase_options',
     )
 );
 

@@ -31,7 +31,7 @@ function foody_non_logged_redirect()
     $slug = urldecode(get_post_field('post_name', get_post()));
 
     if (in_array($slug, $restricted_pages) && !is_user_logged_in()) {
-        wp_redirect(home_url());
+        wp_redirect(wp_login_url());
         die();
     }
 }

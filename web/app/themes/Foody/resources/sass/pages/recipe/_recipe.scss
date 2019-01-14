@@ -141,6 +141,30 @@ $content-width: 95%;
       }
     }
 
+    .purchase-buttons {
+      display: inline-flex;
+      padding: 0;
+      align-items: center;
+      margin: 0 auto 0 0;
+
+      li{
+        padding: 0;
+        &:nth-child(n+2){
+          display: none;
+        }
+      }
+
+      button {
+        width: 175px;
+        height: 40px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      img{
+        border-radius: 3px;
+      }
+    }
+
     .recipe-overview {
       margin-top: 0 !important;
       margin-bottom: 0 !important;
@@ -1002,6 +1026,29 @@ $content-width: 95%;
             }
           }
 
+        }
+      }
+
+      .recipe-purchase-buttons {
+        max-width: calc(100% - 15px);
+        margin: 0 auto;
+      }
+      .purchase-buttons {
+        display: flex;
+        margin-right: 0;
+        justify-content: space-around;
+
+        li{
+
+          &:nth-child(n+1){
+            display: initial;
+          }
+
+          margin-bottom: 5px;
+          button {
+            height: 50px;
+            width: 100%;
+          }
         }
       }
 

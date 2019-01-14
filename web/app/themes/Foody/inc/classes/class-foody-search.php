@@ -61,7 +61,7 @@ class Foody_Search
         *  'types':[{
         *      type:'categories|ingredients|techniques|accessories|limitations|tags',
         *      exclude:false,
-        *      id:8
+        *      value:8
         *  }]
         * }
         * */
@@ -85,7 +85,9 @@ class Foody_Search
      * Get wp query
      * @param array $args
      * @param array $wp_args
+     * @param string $sort
      * @return WP_Query
+     * @throws Exception
      */
     public function build_query($args, $wp_args = [], $sort = '')
     {
@@ -145,15 +147,19 @@ class Foody_Search
         // has values
         if (!empty($values)) {
 
-            if (isset($this->types_aliases[$type]) || in_array($type, array_values($this->types_aliases))) {
-
-                // type alias corresponds
-                // to builder method.
-                // Example: type->ingredient, method->ingredients
+            // type alias corresponds
+            // to builder method.
+            // Example: type->ingredient, method->ingredients
+            if (isset($this->types_aliases[$type])){
                 $fn = $this->types_aliases[$type];
-                if (is_null($fn)) {
-                    $fn = $type;
-                }
+            }elseif (in_array($type, array_values($this->types_aliases))){
+                $fn = $type;
+            }
+
+            if (isset($fn) ) {
+//                if (is_null($fn)) {
+//                    $fn = $type;
+//                }
                 if (method_exists($this->query_builder, $fn)) {
                     call_user_func(array($this->query_builder, $fn), $values);
                 } else {
@@ -258,9 +264,9 @@ class Foody_QueryBuilder
     {
         foreach ($categories_args as $category_arg) {
             if (isset($category_arg['exclude']) && $category_arg['exclude'] != "false") {
-                $this->categories__not_in[] = $category_arg['id'];
+                $this->categories__not_in[] = $category_arg['value'];
             } else {
-                $this->categories__in[] = $category_arg['id'];
+                $this->categories__in[] = $category_arg['value'];
             }
         }
 
@@ -284,7 +290,7 @@ class Foody_QueryBuilder
 
 
             $values = array_map(function ($ingredient) {
-                return $ingredient['id'];
+                return $ingredient['value'];
             }, $ingredients_to_exclude);
 
 
@@ -330,7 +336,7 @@ class Foody_QueryBuilder
 
         if (!empty($ingredients_to_include)) {
             $values = array_map(function ($ingredient) {
-                return $ingredient['id'];
+                return $ingredient['value'];
             }, $ingredients_to_include);
             $this->has_wildcard_key = true;
             $this->meta_query_array[] = [
@@ -385,13 +391,13 @@ class Foody_QueryBuilder
 
         if (!empty($parsed['exclude'])) {
             $this->tags__not_in = array_map(function ($arg) {
-                return $arg['id'];
+                return $arg['value'];
             }, $parsed['exclude']);
         }
 
         if (!empty($parsed['include'])) {
             $this->tags__in = array_map(function ($arg) {
-                return $arg['id'];
+                return $arg['value'];
             }, $parsed['include']);
         }
 
@@ -430,13 +436,13 @@ class Foody_QueryBuilder
 
         if (count($parsed['exclude']) > 0) {
             $this->author__not_in = array_map(function ($author) {
-                return $author['id'];
+                return $author['value'];
             }, $parsed['exclude']);
         }
 
         if (count($parsed['include']) > 0) {
             $this->author__in = array_map(function ($author) {
-                return $author['id'];
+                return $author['value'];
             }, $parsed['include']);
         }
 
@@ -560,7 +566,7 @@ class Foody_QueryBuilder
                 $meta_query[] = [
                     'key' => $key,
                     'compare' => 'NOT LIKE',
-                    'value' => '"' . $item['id'] . '"'
+                    'value' => '"' . $item['value'] . '"'
                 ];
             }
         }
@@ -575,7 +581,7 @@ class Foody_QueryBuilder
                 $meta_query[] = [
                     'key' => $key,
                     'compare' => 'LIKE',
-                    'value' => '"' . $item['id'] . '"'
+                    'value' => '"' . $item['value'] . '"'
                 ];
             }
         }

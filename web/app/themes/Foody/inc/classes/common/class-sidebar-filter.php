@@ -139,40 +139,8 @@ class SidebarFilter
                 // of this section
                 $list_title = $list['title'];
 
-                // the items in this section
-                $values = $list['values'];
 
-                $exclude_all = $list['exclude_all'];
-
-
-
-                $checkboxes = array_map(function ($value_arr) use ($type, $exclude_all) {
-
-                    $exclude = $value_arr['exclude'] || $exclude_all;
-
-                    $exclude = $exclude ? 'true' : 'false';
-
-                    $checkbox_item = [
-                        'type' => $type,
-                        'value' => $value_arr['value'],
-                        'exclude' => $exclude,
-                        'title' => $value_arr['title']
-                    ];
-
-                    $switch_type = $value_arr['switch_type'];
-
-                    if ($switch_type) {
-                        $item_type = $value_arr['value_group'];
-                        $checkbox_item['type'] = $item_type['type'];
-                        $checkbox_item['value'] = $item_type['value'];
-                    }
-
-                    if (empty($checkbox_item['title'])) {
-                        $checkbox_item['title'] = $this->get_item_title($checkbox_item['value'], $checkbox_item['type']);
-                    }
-
-                    return $checkbox_item;
-                }, $values);
+                $checkboxes = self::parse_search_args($list);
 
                 return [
                     'title' => $list_title,
@@ -191,11 +159,58 @@ class SidebarFilter
     }
 
     /**
+     * @param array $list
+     * @param SidebarFilter $_this
+     * @return array filter items
+     */
+    public static function parse_search_args($list)
+    {
+
+        // type of the section
+        // see available types
+        // in class-foody-search.php
+        $type = $list['type'];
+
+        // the items in this section
+        $values = $list['values'];
+
+        $exclude_all = $list['exclude_all'];
+
+        return array_map(function ($value_arr) use ($type, $exclude_all) {
+
+            $exclude = $value_arr['exclude'] || $exclude_all;
+
+            $exclude = $exclude ? 'true' : 'false';
+
+            $checkbox_item = [
+                'type' => $type,
+                'value' => $value_arr['value'],
+                'exclude' => $exclude,
+                'title' => $value_arr['title']
+            ];
+
+            $switch_type = $value_arr['switch_type'];
+
+            if ($switch_type) {
+                $item_type = $value_arr['value_group'];
+                $checkbox_item['type'] = $item_type['type'];
+                $checkbox_item['value'] = $item_type['value'];
+            }
+
+            if (empty($checkbox_item['title'])) {
+                $checkbox_item['title'] = self::get_item_title($checkbox_item['value'], $checkbox_item['type']);
+            }
+
+            return $checkbox_item;
+        }, $values);
+    }
+
+    /**
      * @param $id
      * @param $type
      * @return null|string|WP_Error
      */
-    private function get_item_title($id, $type)
+    private static function get_item_title($id, $type)
     {
 
         $title = '';
@@ -203,8 +218,8 @@ class SidebarFilter
             case 'categories':
             case 'tags':
             case 'limitations':
-                $title = get_term_field('name', $id, $this->type_to_taxonomy($type));
-                if (is_wp_error($title)){
+                $title = get_term_field('name', $id, self::type_to_taxonomy($type));
+                if (is_wp_error($title)) {
                     $title = '';
                 }
                 break;
@@ -226,7 +241,7 @@ class SidebarFilter
      * @param $type
      * @return string
      */
-    private function type_to_taxonomy($type)
+    private static function type_to_taxonomy($type)
     {
         $tax = '';
         switch ($type) {

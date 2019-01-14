@@ -96,6 +96,12 @@ $sidebar-top-offset: 60px;
     .team-listing {
       border-bottom: 1px solid $color__divider;
       margin: 0;
+
+      .author {
+        .author-name {
+          margin-top: 0;
+        }
+      }
     }
 
     .feed-container {

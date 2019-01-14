@@ -161,6 +161,10 @@ $recipe = $template_args['recipe'];
 
 </section>
 
+<section class="recipe-purchase-buttons d-block d-lg-none">
+    <?php $recipe->the_purchase_buttons(); ?>
+</section>
+
 <section class="recipe-content">
 
     <div class="content-container">

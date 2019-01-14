@@ -57,27 +57,27 @@ $show_favorite = foody_get_array_default($template_args, 'show_favorite', true);
             'show_favorite' => $show_favorite
         );
 
-//        if ($foody_page->has_rating()) {
-//            $rating_args = [
-//                'value' => get_post_rating($foody_page->id),
-//                'disabled' => true,
-//                'hide_title' => true,
-//                'size' => 'data-size="xs"',
-//                'show_value' => true,
-//                'return' => true
-//            ];
-//
-//            $rating = foody_get_template_part(
-//                get_template_directory() . '/template-parts/content-rating.php',
-//                $rating_args
-//            );
-//
-//            $rating = do_shortcode('[ratings]');
-//
-//            $args['dynamic'] = [
-//                $rating
-//            ];
-//        }
+        //        if ($foody_page->has_rating()) {
+        //            $rating_args = [
+        //                'value' => get_post_rating($foody_page->id),
+        //                'disabled' => true,
+        //                'hide_title' => true,
+        //                'size' => 'data-size="xs"',
+        //                'show_value' => true,
+        //                'return' => true
+        //            ];
+        //
+        //            $rating = foody_get_template_part(
+        //                get_template_directory() . '/template-parts/content-rating.php',
+        //                $rating_args
+        //            );
+        //
+        //            $rating = do_shortcode('[ratings]');
+        //
+        //            $args['dynamic'] = [
+        //                $rating
+        //            ];
+        //        }
 
         foody_get_template_part(get_template_directory() . '/template-parts/content-post-bullets.php', $args);
 
@@ -100,10 +100,8 @@ $show_favorite = foody_get_array_default($template_args, 'show_favorite', true);
     <?php endif; ?>
 
     <section class="">
-        <?php foody_get_template_part(get_template_directory() . '/template-parts/content-social-actions.php'); ?>
+        <?php foody_get_template_part(get_template_directory() . '/template-parts/content-social-actions.php', ['recipe' => $foody_page]); ?>
     </section>
-    <?php
 
-    ?>
 
 </div>

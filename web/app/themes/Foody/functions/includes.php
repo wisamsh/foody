@@ -77,6 +77,7 @@ require_once get_template_directory() . '/inc/wp-bootstrap-navwalker.php';
 require_once get_template_directory() . '/inc/class-foody-collapse-navwalker.php';
 require_once get_template_directory() . '/inc/class-foody-bootstrap-accordion-navwalker.php';
 require_once get_template_directory() . '/inc/classes/class-foody-items-page.php';
+require_once get_template_directory() . '/inc/classes/class-foody-purchase-buttons.php';
 
 
 /*

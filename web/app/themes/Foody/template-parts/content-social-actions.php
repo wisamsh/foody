@@ -8,6 +8,10 @@
 
 $buttons = ['mail', 'pinterest', 'whatsapp'];
 
+/** @noinspection PhpUndefinedVariableInspection */
+/** @var Foody_Recipe $recipe */
+$recipe = $template_args['recipe'];
+
 if (!wp_is_mobile()) {
     array_unshift($buttons, 'print');
 }
@@ -37,5 +41,11 @@ $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rat
             <?php Foody_Recipe::ratings() ?>
         </section>
     <?php endif; ?>
+
+
+
+    <?php
+    $recipe->the_purchase_buttons('d-none d-lg-flex');
+    ?>
 </div>
 

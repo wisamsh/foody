@@ -50,7 +50,7 @@ class Foody_Query
     public function homepage()
     {
         $args = self::get_args([
-            'post_type' => ['foody_recipe', 'foody_playlist','post']
+            'post_type' => ['foody_recipe', 'foody_playlist', 'post']
         ]);
         return $args;
     }
@@ -90,14 +90,14 @@ class Foody_Query
             if (isset($_POST['filter']['search'])) {
                 $search_term = $_POST['filter']['search'];
 
-            }elseif (isset($_POST['data']['search'])) {
+            } elseif (isset($_POST['data']['search'])) {
                 $search_term = $_POST['data']['search'];
 
             }
         }
 
         $args = self::get_args([
-            'post_type' => ['foody_recipe', 'foody_playlist','post'],
+            'post_type' => ['foody_recipe', 'foody_playlist', 'post'],
             's' => $search_term
         ]);
 
@@ -115,7 +115,22 @@ class Foody_Query
         return $args;
     }
 
+    public function purchase_buttons($post_id)
+    {
+        return self::get_args([
+            'post__in' => [
+                $post_id
+            ]
+        ]);
+    }
 
+
+    /**
+     * @param $context
+     * @param array $context_args
+     * @param bool $ranged
+     * @return mixed|WP_Error
+     */
     public function get_query($context, $context_args = [], $ranged = false)
     {
         if (method_exists($this, $context)) {
@@ -183,7 +198,7 @@ class Foody_Query
         return intval(get_option('posts_per_page'));
     }
 
-    private function get_args($args)
+    private function get_args($args = [])
     {
         return array_merge(
             self::$default_args,
@@ -209,7 +224,7 @@ class Foody_Query
 
     public static function get_search_url($search_term)
     {
-        $post_types = ['foody_playlist', 'foody_recipe','post'];
+        $post_types = ['foody_playlist', 'foody_recipe', 'post'];
 
         global $wpdb;
 

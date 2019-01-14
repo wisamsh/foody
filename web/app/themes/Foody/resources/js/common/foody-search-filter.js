@@ -123,7 +123,7 @@ module.exports = (function () {
         return {
             type: data.type,
             exclude: data.exclude,
-            id: data.value
+            value: data.value
         };
     };
 
