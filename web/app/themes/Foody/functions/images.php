@@ -62,18 +62,6 @@ function foody_mime_types($mimes)
 
 add_filter('upload_mimes', 'foody_mime_types');
 
-function foody_fix_svg_thumb_display()
-{
-    echo '
-    td.media-icon img[src$=".svg"], img[src$=".svg"].attachment-post-thumbnail { 
-      width: 100% !important; 
-      height: auto !important; 
-    }
-  ';
-}
-
-add_action('admin_head', 'foody_fix_svg_thumb_display');
-
 function foody_normalize_image($image)
 {
     if (!is_array($image)) {
