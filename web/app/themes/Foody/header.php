@@ -44,9 +44,16 @@ $user = new Foody_User();
                     <?php get_search_form(); ?>
                 </div>
 
-                <span class="run-desktop run">
-                    <?php echo __('בהרצה') ?>
-                </span>
+                <!--                <span class="run-desktop run">-->
+                <!--                    --><?php //echo __('בהרצה') ?>
+                <!--                </span>-->
+                <?php if (!wp_is_mobile()): ?>
+                    <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility">
+                        <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
+                             alt="<?php echo __('נגישות') ?>">
+                        <div id="accessibility-container"></div>
+                    </button>
+                <?php endif; ?>
             </section>
 
         </div>
@@ -79,10 +86,11 @@ $user = new Foody_User();
                 </button>
 
 
-                <!--                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">-->
-                <!--                    <img src="-->
-                <?php //echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?><!--" alt="">-->
-                <!--                </button>-->
+                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">
+                    <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
+                         alt="<?php echo __('נגישות') ?>">
+                    <div id="accessibility-container"></div>
+                </button>
 
 
                 <?php
