@@ -10,27 +10,6 @@
 /** @var Foody_Topic $topic */
 $topic = $template_args['topic'];
 
-$is_followed = false;
-global $wp_session;
-if (isset($wp_session["followed_{$topic->get_type()}"])) {
-
-    $followed = $wp_session["followed_{$topic->get_type()}"];
-
-    if ($followed && is_array($followed)) {
-        if (in_array($topic->get_id(), $followed)) {
-            $is_followed = true;
-        }
-    }
-
-}
-
-$follow_btn_class = 'btn btn-primary btn-follow';
-if ($is_followed) {
-    $follow_btn_class .= ' followed';
-}
-
-
-$follow_btn_text = $is_followed ? __('עוקב') : __('עקוב');
 ?>
 
 
@@ -55,16 +34,12 @@ $follow_btn_text = $is_followed ? __('עוקב') : __('עקוב');
             </span>
         </div>
         <div class="follow">
-            <button class="<?php echo $follow_btn_class ?>"
-                    data-id="<?php echo $topic->get_id() ?>"
-                    data-followed="<?php echo $is_followed ? 'true' : 'false' ?>"
-                    data-topic="followed_<?php echo $topic->get_type() ?>">
-
-                <i class="icon-Shape"></i>
-                <span>
-                    <?php echo $follow_btn_text ?>
-                </span>
-            </button>
+            <?php
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/content-follow-button.php',
+                ['topic' => $topic, 'classes' => 'd-none d-lg-inline']
+            );
+            ?>
             <div class="social d-none d-sm-block">
                 <?php
                 foody_get_template_part(
@@ -74,10 +49,16 @@ $follow_btn_text = $is_followed ? __('עוקב') : __('עקוב');
             </div>
         </div>
 
-        <div class="social d-block d-sm-none col-12">
+        <div class="social d-block d-lg-none col-12">
             <?php
             foody_get_template_part(
-                get_template_directory() . '/template-parts/content-social-actions.php'
+                get_template_directory() . '/template-parts/content-social-actions.php',
+                [
+                    'extra_content' => foody_get_template_part(
+                        get_template_directory() . '/template-parts/content-follow-button.php',
+                        ['topic' => $topic, 'classes' => '','return'=>true]
+                    )
+                ]
             )
             ?>
         </div>

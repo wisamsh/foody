@@ -26,7 +26,7 @@
         </i>
     </a>
     <span class="follow-us">
-        <?php echo __('עיקבו אחרינו', 'foody') ?>
+        <?php echo __('עקבו אחרינו', 'foody') ?>
     </span>
 
 </section>

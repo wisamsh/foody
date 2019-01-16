@@ -100,7 +100,13 @@ $show_favorite = foody_get_array_default($template_args, 'show_favorite', true);
     <?php endif; ?>
 
     <section class="">
-        <?php foody_get_template_part(get_template_directory() . '/template-parts/content-social-actions.php', ['recipe' => $foody_page]); ?>
+        <?php foody_get_template_part(
+            get_template_directory() . '/template-parts/content-social-actions.php',
+            [
+                'extra_content' => $foody_page->the_purchase_buttons('d-none d-lg-flex', false)
+            ]
+        );
+        ?>
     </section>
 
 

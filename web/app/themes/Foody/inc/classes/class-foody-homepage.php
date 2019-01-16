@@ -84,11 +84,6 @@ class Foody_HomePage
             $posts = array_merge($this->get_featured_posts(), $posts);
         }
 
-        // debug
-//        for ($i=0;$i<100;$i++){
-//            $posts[]= $posts[0];
-//        }
-
         $grid = [
             'id' => 'homepage-feed',
             'cols' => 2,
@@ -110,7 +105,6 @@ class Foody_HomePage
     public function filter()
     {
         dynamic_sidebar('foody-sidebar');
-
     }
 
     public function feed_query()
@@ -126,12 +120,6 @@ class Foody_HomePage
         if (wp_is_mobile()) {
             $posts = array_merge($this->get_featured_posts(), $posts);
         }
-
-
-        // debug a lot of feed items
-        // make sure to disable when not
-        // in dev
-        //$posts = array_fill(count($posts)-1,18,$posts[0]);
 
         return $posts;
     }
@@ -151,11 +139,6 @@ class Foody_HomePage
         dynamic_sidebar($sidebar_name);
         dynamic_sidebar('foody-social');
         echo "</div></aside>";
-    }
-
-    private function get_featured_categories()
-    {
-        // TODO
     }
 
 

@@ -51,17 +51,6 @@ $user = new Foody_User();
 
         </div>
 
-        <!--        --><?php
-        //
-        //
-        //        $nav_args = array(
-        //            'theme_location' => 'primary',
-        //        );
-        //
-        //        wp_nav_menu($nav_args);
-        //        ?>
-
-
         <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg" role="navigation">
 
             <div class="container-fluid foody-navbar-container">

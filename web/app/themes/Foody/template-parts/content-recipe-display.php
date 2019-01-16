@@ -152,8 +152,6 @@ $recipe = $template_args['recipe'];
         </div>
     </div>
 
-
-
     <div class="recipe-ingredients-container row">
 
         <?php $recipe->the_ingredients() ?>
@@ -219,10 +217,6 @@ $recipe = $template_args['recipe'];
 
 <?php endif; ?>
 
-<section class="recipe-sidebar-mobile d-block d-lg-none">
-    <?php $recipe->the_mobile_sidebar_content(); ?>
-</section>
-
 <section class="recipe-how-i-did">
     <?php $recipe->how_i_did(); ?>
 
@@ -230,6 +224,11 @@ $recipe = $template_args['recipe'];
 
 <section class="recipe-comments">
     <?php $recipe->comments(); ?>
+</section>
+
+
+<section class="recipe-sidebar-mobile d-block d-lg-none">
+    <?php $recipe->the_mobile_sidebar_content(); ?>
 </section>
 
 

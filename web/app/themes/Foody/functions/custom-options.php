@@ -24,12 +24,14 @@ $options_pages = array(
         'menu_title' => $page_name_search_options,
         'menu_slug' => 'foody-search-options.php',
         'post_id' => 'foody_search_options',
+        'icon_url' => 'dashicons-search'
     ),
     array(
         'page_title' => $page_name_purchase_buttons,
         'menu_title' => $page_name_purchase_buttons,
         'menu_slug' => 'foody-purchase-options.php',
         'post_id' => 'foody_purchase_options',
+        'icon_url' => 'dashicons-cart'
     )
 );
 

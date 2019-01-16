@@ -43,7 +43,7 @@ class Foody_PurchaseButtons
     {
         if (!empty($button['image'])) {
             $images = [
-               'mobile_image' =>  $button['image']
+                'mobile_image' => $button['image']
             ];
             if (!empty($button['desktop_image'])) {
                 $images['image'] = $button['desktop_image'];
@@ -75,33 +75,35 @@ class Foody_PurchaseButtons
     public function get_buttons_for_post($post)
     {
         $buttons = [];
+        if (!empty($this->options)) {
+            // only allow button with defined filters
+            $options = array_filter($this->options, function ($option) {
+                return !empty($option['filters_list']);
+            });
 
-        // only allow button with defined filters
-        $options = array_filter($this->options, function ($option) {
-            return !empty($option['filters_list']);
-        });
+            foreach ($options as $option) {
 
-        foreach ($options as $option) {
+                // only first filters section
+                // is relevant
+                $args = [
+                    'types' => SidebarFilter::parse_search_args($option['filters_list'][0])
+                ];
 
-            // only first filters section
-            // is relevant
-            $args = [
-                'types' => SidebarFilter::parse_search_args($option['filters_list'][0])
-            ];
+                // purchase_buttons will invoke purchase_buttons ffn
+                // in class Foody_Query
+                $foody_search = new Foody_Search('purchase_buttons', ['id' => $post]);
 
-            // purchase_buttons will invoke purchase_buttons ffn
-            // in class Foody_Query
-            $foody_search = new Foody_Search('purchase_buttons', ['id' => $post]);
+                $result = $foody_search->query($args);
 
-            $result = $foody_search->query($args);
-
-            // $post exists in query, add
-            // button options to buttons
-            if (!empty($result['posts'])) {
-                $copy = array_merge_recursive([], $option);
-                unset($copy['filters_list']);
-                $buttons[] = $copy;
+                // $post exists in query, add
+                // button options to buttons
+                if (!empty($result['posts'])) {
+                    $copy = array_merge_recursive([], $option);
+                    unset($copy['filters_list']);
+                    $buttons[] = $copy;
+                }
             }
+
         }
 
         return $buttons;

@@ -102,6 +102,16 @@ $sidebar-width: 25%;
     background-color: white;
   }
 
+  .crop-container {
+    width: 100%;
+    .cropper-container {
+      margin: 0 auto;
+    }
+    img {
+      width: 100%;
+    }
+  }
+
   #main {
     background-color: $color__background-screen;
   }
@@ -111,7 +121,6 @@ $sidebar-width: 25%;
     @import "../../common/sidebar";
 
     @include foody-sidebar($sidebar-width);
-
 
     .content {
       padding-top: 18px;
@@ -133,17 +142,27 @@ $sidebar-width: 25%;
           margin-left: 0;
           .image-container {
             margin-left: 22px;
+            position: relative;
 
-            img {
+            .avatar {
               border: 2px solid $color__primary;
               -webkit-clip-path: circle();
               clip-path: circle();
               max-width: 90px;
               border-radius: 50%;
 
-              &.default-avatar{
+              &.default-avatar {
                 border: none;
                 clip-path: unset;
+              }
+            }
+
+            form {
+              position: absolute;
+              bottom: -3px;
+              right: 15px;
+              label {
+                margin: 0;
               }
             }
           }

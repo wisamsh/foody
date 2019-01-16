@@ -458,12 +458,15 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         );
     }
 
-    public function the_purchase_buttons($classes = '')
+    public function the_purchase_buttons($classes = '', $echo = true)
     {
         $foody_purchase_buttons = Foody_PurchaseButtons::get_instance();
         $buttons = $foody_purchase_buttons->get_buttons_for_post($this->id);
         if (!empty($buttons)) {
-            foody_get_template_part(get_template_directory() . '/template-parts/content-purchase-buttons.php', ['classes' => $classes, 'buttons' => $buttons]);
+           return foody_get_template_part(
+                get_template_directory() . '/template-parts/content-purchase-buttons.php',
+                ['classes' => $classes, 'buttons' => $buttons, 'return' => !$echo]
+            );
         }
     }
 

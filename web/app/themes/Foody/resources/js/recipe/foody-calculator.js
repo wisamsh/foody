@@ -65,12 +65,11 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
             }
         }
 
-        if (val == originalNumberOfDishes || reset) {
+        if (val === originalNumberOfDishes || reset) {
             text = $this.data('original');
         }
 
         let $name = $('span.name', $this.parent());
-
 
 
         $name.text(name);
@@ -88,7 +87,7 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
 
         let totalValueForNutrient = 0;
 
-        if (val == originalNumberOfDishes || reset) {
+        if (val === originalNumberOfDishes || reset) {
             totalValueForNutrient = parseFloat(original);
         } else {
             $('.ingredients .amount').each(function () {
@@ -105,21 +104,26 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
                 totalValueForNutrient += nutrientBaseValue;
             });
         }
+        let decimals = 0;
+        if (nutrient === 'protein') {
+            decimals = 1;
+        }
 
-
-        $('.value', this).text(prettyNumber(totalValueForNutrient))
+        $('.value', this).text(prettyNumber(totalValueForNutrient,decimals))
 
     });
 }
 
-function prettyNumber(num) {
-
-    let text = num.toFixed(2);
+function prettyNumber(num, decimals) {
+    if (decimals === undefined) {
+        decimals = 2;
+    }
+    let text = num.toFixed(decimals);
 
     let number = String(text).split('.');
-    if (number.length == 2) {
+    if (number.length === 2) {
         let decimal = number[1];
-        if (decimal == '00') {
+        if (decimal === '00') {
             text = number[0];
         }
     }

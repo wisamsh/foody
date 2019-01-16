@@ -108,7 +108,7 @@ $foody_how_i_did = new Foody_HowIDid();
         foody_get_template_part(
             get_template_directory() . '/template-parts/content-image-upload-modal.php',
             array(
-                'title' => 'תיראו מה יצא לי'
+                'title' => 'תראו מה יצא לי'
             ));
         ?>
 

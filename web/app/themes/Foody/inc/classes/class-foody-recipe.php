@@ -200,6 +200,11 @@ class Foody_Recipe extends Foody_Post
 
             }
             $item['data_name'] = $nutrients_name;
+            $decimals = 0;
+            if($nutrients_name == 'protein'){
+                $decimals = 1;
+            }
+            $item['value'] = number_format($item['value'],$decimals,'.','');
             $nutrients[] = $item;
         }
 

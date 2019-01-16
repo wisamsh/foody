@@ -4,7 +4,11 @@
 
 let toggleFollowed = require('../common/follow');
 let FoodySearchFilter = require('../common/foody-search-filter');
-
+require('cropperjs');
+require('cropperjs/dist/cropper.min.css');
+require('jquery-cropper');
+let FoodyLoader = require('../common/foody-loader');
+let readUrl = require('../common/image-reader');
 jQuery(document).ready(($) => {
 
 
@@ -56,13 +60,14 @@ jQuery(document).ready(($) => {
         selector: '.page-template-profile #accordion-foody-filter',
         grid: '.my-channels-grid',
         cols: 1,
-        page:'.page-template-profile'
+        page: '.page-template-profile'
     });
+
     new FoodySearchFilter({
         selector: '.page-template-profile #accordion-foody-filter',
         grid: '.my-recipes-grid',
         cols: 1,
-        page:'.page-template-profile'
+        page: '.page-template-profile'
     });
 
     // Tab switch analytics
@@ -166,7 +171,7 @@ jQuery(document).ready(($) => {
     });
 
 
-    let handler = formSubmit({
+    formSubmit({
         form: 'form#edit-user-details',
         ajaxUrl: '/wp/wp-admin/admin-ajax.php',
         action: '&action=foody_edit_user',
@@ -186,7 +191,7 @@ jQuery(document).ready(($) => {
         }
     });
 
-    let userDetailsValidator = $("form#edit-user-details").validate({
+    $("form#edit-user-details").validate({
         rules: {
             first_name: {
                 required: true
@@ -216,6 +221,108 @@ jQuery(document).ready(($) => {
     });
 
 
+    let $uploadModal = $('#profile-pic-upload-modal');
+
+    $('#upload-photo-input').on('change', function () {
+
+        readUrl(this, $('img', $uploadModal), function () {
+            let options = {
+                aspectRatio: 1,
+                checkCrossOrigin: false,
+                minContainerHeight: 300,
+                minContainerWidth: 414,
+                minCanvasWidth: 100,
+                // viewMode: 3,
+                ready: () => {
+                    // $('.cropper-container').css('width', '100%');
+                }
+            };
+            $uploadModal.modal('show');
+
+            // let cropper =  new Cropper($('#cropped-image',$uploadModal)[0], options);
+            $('#cropped-image').on('load', function () {
+                $(this).cropper(options);
+            });
+
+
+            // cropper($('#cropped-image',$uploadModal));
+        });
+    });
+
+    $uploadModal.on('hide.bs.modal', function () {
+
+    });
+
+    $('.btn-approve', $uploadModal).on('click', function () {
+
+        let cropper = $('#cropped-image').data('cropper');
+        let data = {
+            image: cropper.getCroppedCanvas().toDataURL()
+        };
+
+        console.log(data);
+
+        upload(data);
+    });
+
+    function upload(data) {
+
+        let image = data.image;
+        // Split the base64 string in data and contentType
+        let block = image.split(";");
+        // Get the content type
+        let contentType = block[0].split(":")[1];// In this case "image/gif"
+        // get the real base64 content of the file
+        let realData = block[1].split(",")[1];// In this case "iVBORw0KGg...."
+
+        // Convert to blob
+        let blob = b64toBlob(realData, contentType);
+
+        // Create a FormData and append the file
+        let fd = new FormData();
+        fd.append("photo", blob);
+        $.ajax({
+            url: "/wp/wp-admin/admin-ajax.php?action=foody_edit_profile_picture",
+            data: fd,// the formData function is available in almost all new browsers.
+            type: "POST",
+            contentType: false,
+            processData: false,
+            cache: false,
+            dataType: "json", // Change this according to your response from the server.
+            error: function (err) {
+                console.error(err);
+            },
+            success: function (data) {
+                console.log(data);
+            },
+            complete: function () {
+                console.log("Request finished.");
+            }
+        });
+    }
+
+    function b64toBlob(b64Data, contentType, sliceSize) {
+        contentType = contentType || '';
+        sliceSize = sliceSize || 512;
+
+        let byteCharacters = atob(b64Data);
+        let byteArrays = [];
+
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            let slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            let byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            let byteArray = new Uint8Array(byteNumbers);
+
+            byteArrays.push(byteArray);
+        }
+
+        return new Blob(byteArrays, {type: contentType});
+    }
 
 
 });

@@ -8,9 +8,7 @@
 
 $buttons = ['mail', 'pinterest', 'whatsapp'];
 
-/** @noinspection PhpUndefinedVariableInspection */
-/** @var Foody_Recipe $recipe */
-$recipe = $template_args['recipe'];
+
 
 if (!wp_is_mobile()) {
     array_unshift($buttons, 'print');
@@ -21,6 +19,7 @@ $buttons_attr = implode(',', $buttons);
 
 $social_icons = do_shortcode('[easy-social-share buttons="' . $buttons_attr . '" template="11" counters=0 style="icon" point_type="simple"]');
 
+/** @noinspection PhpUndefinedVariableInspection */
 $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rating'] == false;
 
 ?>
@@ -45,7 +44,11 @@ $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rat
 
 
     <?php
-    $recipe->the_purchase_buttons('d-none d-lg-flex');
+    if(isset($template_args['extra_content'])){
+
+        echo $template_args['extra_content'];
+    }
+
     ?>
 </div>
 

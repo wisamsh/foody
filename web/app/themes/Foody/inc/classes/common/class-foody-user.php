@@ -222,14 +222,14 @@ class Foody_User
                         $size = $this->get_closest($size, $available_sizes);
                     }
                 }
-
-                $image = $user_images[$size];
-                if (!empty($image)) {
-                    $image = "<img class='avatar' src='$image' >";
+                if (isset($user_images[$size])) {
+                    $image = $user_images[$size];
+                    if (!empty($image)) {
+                        $image = "<img class='avatar' src='$image' >";
+                    }
                 }
             } else {
                 $image = wsl_get_wp_user_custom_avatar('gravatar.com', $this->user->ID, $size, '', '');
-
             }
         }
 

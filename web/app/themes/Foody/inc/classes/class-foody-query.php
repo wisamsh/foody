@@ -30,7 +30,8 @@ class Foody_Query
     {
         self::$default_args = [
             'posts_per_page' => get_option('posts_per_page'),
-            'post_status' => 'publish'
+            'post_status' => 'publish',
+            'post_type' => ['foody_recipe', 'foody_playlist', 'post']
         ];
         if (is_front_page()) {
             self::$page = 'page';
@@ -49,16 +50,13 @@ class Foody_Query
 
     public function homepage()
     {
-        $args = self::get_args([
-            'post_type' => ['foody_recipe', 'foody_playlist', 'post']
-        ]);
+        $args = self::get_args();
         return $args;
     }
 
     public function category($id)
     {
         $args = self::get_args([
-            'post_type' => ['foody_recipe', 'foody_playlist', 'post'],
             'cat' => $id
         ]);
 
@@ -108,7 +106,6 @@ class Foody_Query
     public function tag($id)
     {
         $args = self::get_args([
-            'post_type' => ['foody_recipe', 'foody_playlist', 'post'],
             'tag_id' => $id
         ]);
 

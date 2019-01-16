@@ -43,7 +43,11 @@
           }
 
           .follow {
-            button {
+
+          }
+          button {
+
+            &.btn-follow {
               padding: 0 20px;
               background-color: $color__primary;
               color: white;
@@ -74,6 +78,7 @@
                 }
               }
             }
+
           }
 
           @import "../../common/social-bar";
@@ -197,9 +202,13 @@
               }
             }
 
-            .follow {
-              button {
-
+            button {
+              &.btn-follow {
+                padding: 0 15px;
+                height: 32px;
+                font-size: 18px;
+                margin: 1em;
+                vertical-align: text-top;
               }
             }
 
