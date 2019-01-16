@@ -7,7 +7,8 @@
  */
 
 the_content();
-global $foody_page;
+/** @var Foody_Article $foody_page */
+$foody_page = Foody_PageContentFactory::get_instance()->get_page();;
 ?>
 
 
@@ -38,6 +39,11 @@ if (!empty($tags)) {
     <?php
 }
 ?>
+
+<section class="newsletter">
+    <?php $foody_page->newsletter(); ?>
+
+</section>
 
 <section class="comments section">
     <?php

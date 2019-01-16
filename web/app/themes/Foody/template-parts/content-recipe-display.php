@@ -217,6 +217,11 @@ $recipe = $template_args['recipe'];
 
 <?php endif; ?>
 
+<section class="newsletter">
+    <?php $recipe->newsletter(); ?>
+
+</section>
+
 <section class="recipe-how-i-did">
     <?php $recipe->how_i_did(); ?>
 

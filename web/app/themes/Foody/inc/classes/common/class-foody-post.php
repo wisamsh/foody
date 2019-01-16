@@ -470,6 +470,13 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         }
     }
 
+    public function newsletter(){
+        foody_get_template_part(get_template_directory() . '/template-parts/content-newsletter.php',[
+            'button_classes' =>'col-2',
+            'input_classes' =>'col-10'
+        ]);
+    }
+
     /**
      * @return int
      */
