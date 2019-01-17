@@ -17,7 +17,7 @@ $sidebar-width: 25%;
         .managed-list-item {
           padding: 12.5px 0;
           margin: 0;
-          font-size: 24px;
+          font-size: 16px;
           font-family: $font__bold;
 
           img {
@@ -212,7 +212,7 @@ $sidebar-width: 25%;
         h2 {
           &.title {
             padding-top: 30px;
-            font-size: 32px;
+            font-size: 24px;
           }
         }
 
@@ -692,6 +692,18 @@ Tablet landscape
             &.title {
               padding-top: 30px;
               font-size: 32px;
+            }
+          }
+          .user-content {
+            .nav {
+              padding: 0;
+              justify-content: space-around;
+              .nav-item {
+                margin-left: 0;
+                a {
+                  font-size: 16px;
+                }
+              }
             }
           }
 

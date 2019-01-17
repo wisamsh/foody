@@ -41,9 +41,11 @@ $show_favorite = foody_get_array_default($template_args, 'show_favorite', true);
 
             ?>
         </section>
-        <section class="d-block d-lg-none">
-            <?php Foody_Recipe::ratings() ?>
-        </section>
+        <?php if (wp_is_mobile()): ?>
+            <section class="d-block d-lg-none">
+                <?php Foody_Recipe::ratings() ?>
+            </section>
+        <?php endif; ?>
         <?php echo $foody_page->getDescription() ?>
 
     </div>
@@ -56,28 +58,6 @@ $show_favorite = foody_get_array_default($template_args, 'show_favorite', true);
             'foody_page' => $foody_page,
             'show_favorite' => $show_favorite
         );
-
-        //        if ($foody_page->has_rating()) {
-        //            $rating_args = [
-        //                'value' => get_post_rating($foody_page->id),
-        //                'disabled' => true,
-        //                'hide_title' => true,
-        //                'size' => 'data-size="xs"',
-        //                'show_value' => true,
-        //                'return' => true
-        //            ];
-        //
-        //            $rating = foody_get_template_part(
-        //                get_template_directory() . '/template-parts/content-rating.php',
-        //                $rating_args
-        //            );
-        //
-        //            $rating = do_shortcode('[ratings]');
-        //
-        //            $args['dynamic'] = [
-        //                $rating
-        //            ];
-        //        }
 
         foody_get_template_part(get_template_directory() . '/template-parts/content-post-bullets.php', $args);
 

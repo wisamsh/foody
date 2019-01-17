@@ -9,6 +9,12 @@
     }
   }
 
+  a{
+    &:visited{
+      color: $color__primary;
+    }
+  }
+
 }
 
 @include breakpoint(mobileonly) {
