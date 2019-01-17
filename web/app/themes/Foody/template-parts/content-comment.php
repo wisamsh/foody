@@ -34,7 +34,7 @@ $username = $user->display_name;
         <div class="comment-body" id="comment-body-<?php echo $comment->comment_ID ?>">
             <?php if (!$comment->comment_approved): ?>
                 <div class="waiting-approval title">
-                    <?php echo __('ממתין לאישור','foody')?>
+                    <?php echo __('תודה על התגובה! ממש בקרוב היא תיבדק ותעלה לאתר','foody')?>
                 </div>
             <?php endif; ?>
             <?php printf(__('%s'), sprintf('<span class="author">%s</span>', $username)); ?>
