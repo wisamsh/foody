@@ -4,7 +4,9 @@
 
 let FoodyLoader = require('../common/foody-loader');
 let readUrl = require('./image-reader');
-
+require('cropperjs');
+require('cropperjs/dist/cropper.min.css');
+require('jquery-cropper');
 $(document).ready(() => {
 
 
@@ -70,7 +72,7 @@ $(document).ready(() => {
     $attachment.on('change', function (e) {
 
         let $modal = $('#upload-image-modal');
-        $modal.modal('show');
+
 
         readUrl(this, $('img', $modal));
     });

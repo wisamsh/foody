@@ -18,7 +18,7 @@
 
 <div id="page" class="site">
 
-    <header id="masthead" class="site-header">
+    <header id="masthead" class="site-header no-print">
 
 
         <?php

@@ -76,7 +76,7 @@ class Foody_HowIDid
 
         $title = sprintf(
         /* translators: 1: comment count number, 2: title. */
-            esc_html(_nx('תיראו מה יצא לי (%s)', 'תיראו מה יצא לי (%s)', $foody_comment_count, 'comments title', 'foody')),
+            esc_html(_nx('תראו מה יצא לי (%s)', 'תראו מה יצא לי (%s)', $foody_comment_count, 'comments title', 'foody')),
             number_format_i18n($foody_comment_count)
         );
 

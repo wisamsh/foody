@@ -217,22 +217,22 @@ $recipe = $template_args['recipe'];
 
 <?php endif; ?>
 
-<section class="newsletter">
+<section class="newsletter no-print">
     <?php $recipe->newsletter(); ?>
 
 </section>
 
-<section class="recipe-how-i-did">
+<section class="recipe-how-i-did no-print">
     <?php $recipe->how_i_did(); ?>
 
 </section>
 
-<section class="recipe-comments">
+<section class="recipe-comments no-print">
     <?php $recipe->comments(); ?>
 </section>
 
 
-<section class="recipe-sidebar-mobile d-block d-lg-none">
+<section class="recipe-sidebar-mobile d-block d-lg-none no-print">
     <?php $recipe->the_mobile_sidebar_content(); ?>
 </section>
 

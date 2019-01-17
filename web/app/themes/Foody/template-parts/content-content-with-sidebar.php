@@ -28,7 +28,7 @@ $featured_content_classes[] = 'featured-content-container';
         <main id="main" class="site-main">
             <div class="row m-0">
                 <?php if (!$hide_progress): ?>
-                    <div class="progress-wrapper">
+                    <div class="progress-wrapper no-print">
                         <progress dir="ltr"></progress>
                     </div>
 
@@ -39,7 +39,7 @@ $featured_content_classes[] = 'featured-content-container';
                 } ?>
 
 
-                <aside class="col d-none d-lg-block">
+                <aside class="col d-none d-lg-block no-print">
 
                     <?php $foody_page->the_sidebar_content() ?>
 

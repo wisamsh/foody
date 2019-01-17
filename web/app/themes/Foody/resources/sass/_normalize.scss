@@ -490,3 +490,24 @@ figure {
     min-height: calc(100% - 60px);
   }
 }
+
+@media print
+{
+  .no-print, .no-print *, .d-block, .d-block *, .d-flex, .d-flex *, .d-inline-flex, .d-inline-flex *, .favorite,.purchase-buttons
+  {
+    display: none !important;
+  }
+
+  article.content{
+    margin: 0 auto;
+  }
+
+  .description{
+    word-break: break-word;
+    max-width: 75%;
+  }
+}
+
+* {
+  -webkit-print-color-adjust: exact;
+}

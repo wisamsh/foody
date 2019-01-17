@@ -231,21 +231,14 @@ jQuery(document).ready(($) => {
                 checkCrossOrigin: false,
                 minContainerHeight: 300,
                 minContainerWidth: 414,
-                minCanvasWidth: 100,
-                // viewMode: 3,
-                ready: () => {
-                    // $('.cropper-container').css('width', '100%');
-                }
+                minCanvasWidth: 100
             };
             $uploadModal.modal('show');
 
-            // let cropper =  new Cropper($('#cropped-image',$uploadModal)[0], options);
             $('#cropped-image').on('load', function () {
                 $(this).cropper(options);
             });
 
-
-            // cropper($('#cropped-image',$uploadModal));
         });
     });
 

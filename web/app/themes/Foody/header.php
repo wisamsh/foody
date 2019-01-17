@@ -31,7 +31,7 @@ $user = new Foody_User();
 <?php Foody_Header::google_tag_manager_iframe(); ?>
 <div id="page" class="site">
 
-    <header id="masthead" class="site-header">
+    <header id="masthead" class="site-header no-print">
         <div class="run d-block d-lg-none">
             <?php echo __('בהרצה') ?>
         </div>
