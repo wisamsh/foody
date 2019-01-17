@@ -40,6 +40,7 @@ header {
       right: unset;
       border: 1px solid #fff;
       border-radius: $button-radius;
+      position: absolute;
       .a11y-toolbar-list-item {
 
         display: inline-block;
@@ -179,23 +180,36 @@ header {
     }
   }
 
+  #quadmenu {
+    &.quadmenu-is-horizontal {
+      .quadmenu-navbar-nav {
+        li {
 
-
-  #quadmenu{
-    &.quadmenu-is-horizontal{
-      .quadmenu-navbar-nav{
-        li:not(.quadmenu-dropdown-menu){
-          &.quadmenu-item{
-            >a{
-              &.hoverintent{
-                >.quadmenu-item-content{
-                  padding-right: 0;
-                  >.quadmenu-caret{
-                    left: -10px;
+          &:not(.quadmenu-dropdown-menu) {
+            &.quadmenu-item {
+              > a {
+                &.hoverintent {
+                  > .quadmenu-item-content {
+                    padding-right: 0;
+                    > .quadmenu-caret {
+                      left: -10px;
+                    }
                   }
                 }
               }
             }
+          }
+          &.quadmenu-dropdown {
+
+            .quadmenu-dropdown-menu {
+              max-width: 250px;
+              .quadmenu-item-content {
+                .quadmenu-text {
+                  word-break: break-word;
+                }
+              }
+            }
+
           }
         }
       }
