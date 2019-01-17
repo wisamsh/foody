@@ -301,3 +301,11 @@ function foody_categories_widget_title($title, $instance, $id_base)
 }
 
 add_filter('widget_title', 'foody_categories_widget_title', 10, 3);
+
+add_filter('quadmenu_nav_menu_item_fields', 'my_hook_default_options_themes',10, 2);
+
+function my_hook_default_options_themes($settings, $menu_obj) {
+
+    $settings['dropdown']['default'] = 'left';
+    return $settings;
+}

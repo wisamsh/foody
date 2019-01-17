@@ -27,6 +27,7 @@ header {
     display: none;
     width: 0;
     transition: width .3s;
+    position: relative;
     &.open {
       width: auto;
       display: initial;
@@ -178,26 +179,28 @@ header {
     }
   }
 
-  //#quadmenu{
-  //  &.quadmenu-is-horizontal{
-  //    .quadmenu-navbar-nav{
-  //      li{
-  //        &.quadmenu-item{
-  //          >a{
-  //            &.hoverintent{
-  //              >.quadmenu-item-content{
-  //                padding-right: 0;
-  //                >.quadmenu-caret{
-  //                  left: -10px;
-  //                }
-  //              }
-  //            }
-  //          }
-  //        }
-  //      }
-  //    }
-  //  }
-  //}
+
+
+  #quadmenu{
+    &.quadmenu-is-horizontal{
+      .quadmenu-navbar-nav{
+        li:not(.quadmenu-dropdown-menu){
+          &.quadmenu-item{
+            >a{
+              &.hoverintent{
+                >.quadmenu-item-content{
+                  padding-right: 0;
+                  >.quadmenu-caret{
+                    left: -10px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
   .foody-dropdown-menu {
     width: 100%;
