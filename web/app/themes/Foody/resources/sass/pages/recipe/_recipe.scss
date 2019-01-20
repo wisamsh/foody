@@ -182,6 +182,17 @@ $content-width: 95%;
               }
             }
           }
+
+          .essb_link_facebook {
+
+            a {
+              background-color: $color__facebook !important;
+
+              &:hover {
+                background-color: $color__facebook;
+              }
+            }
+          }
         }
       }
 

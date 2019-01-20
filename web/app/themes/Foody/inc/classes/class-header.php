@@ -99,7 +99,7 @@ class Foody_Header
             </g>
         </svg>
         <style>
-            body.contrast svg g{
+            body.contrast svg path{
                 stroke:white;
             }
         </style>

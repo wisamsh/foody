@@ -491,20 +491,51 @@ figure {
   }
 }
 
-@media print
-{
-  .no-print, .no-print *, .d-block, .d-block *, .d-flex, .d-flex *, .d-inline-flex, .d-inline-flex *, .favorite,.purchase-buttons
-  {
+.print-image {
+  display: none;
+}
+
+@media print {
+  .no-print,
+  .no-print *,
+  .d-block,
+  .d-block *,
+  .d-flex,
+  .d-flex *,
+  .d-inline-flex,
+  .d-inline-flex *,
+  .favorite,
+  .purchase-buttons {
     display: none !important;
   }
 
-  article.content{
+  .d-flex:not(.d-lg-block){
+    display: flex !important;
+  }
+  .d-flex:not(.d-lg-block) *{
+    display: initial !important;
+  }
+
+  article.content {
     margin: 0 auto;
   }
 
-  .description{
+  .description {
     word-break: break-word;
     max-width: 75%;
+  }
+
+  .print-image {
+    display: initial;
+  }
+
+  .video-featured-content {
+    padding: 0;
+    height: auto;
+  }
+
+  #content {
+    max-width: 100% !important;
   }
 }
 

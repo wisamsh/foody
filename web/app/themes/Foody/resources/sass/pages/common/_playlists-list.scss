@@ -77,9 +77,9 @@
             > time {
               font-family: $font__main;
               position: absolute;
-              top: 50%;
-              transform: translateY(-47.8%);
               left: 0.4em;
+              font-size: smaller;
+              top: 4px;
             }
 
             i {
@@ -89,7 +89,8 @@
               right: 0.4em;
 
               &:before {
-                font-size: 12px
+                font-size: 10px;
+                vertical-align: middle;
               }
             }
           }

@@ -1,5 +1,5 @@
 .social {
-  .essb_links {
+  .essb_links.essb_template_round-retina {
     float: left;
     .essb_links_list {
 
@@ -18,6 +18,15 @@
 
             &:hover {
               background-color: #75b73b;
+            }
+          }
+        }
+        &.essb_link_facebook {
+           a {
+            background-color: $color__facebook !important;
+
+            &:hover {
+              background-color: $color__facebook;
             }
           }
         }

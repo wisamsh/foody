@@ -40,12 +40,12 @@ if (!empty($tags)) {
 }
 ?>
 
-<section class="newsletter">
+<section class="newsletter no-print">
     <?php $foody_page->newsletter(); ?>
 
 </section>
 
-<section class="comments section">
+<section class="comments section no-print">
     <?php
 
     $template = '';
