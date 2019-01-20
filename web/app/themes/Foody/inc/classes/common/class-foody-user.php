@@ -145,6 +145,7 @@ class Foody_User
     /**
      * @param int $offset
      * @param int $limit
+     * @param bool $count
      * @return array|null|object
      */
     public function get_followed_content($offset = 0, $limit = 10, $count = false)

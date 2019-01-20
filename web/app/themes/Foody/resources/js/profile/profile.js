@@ -60,14 +60,18 @@ jQuery(document).ready(($) => {
         selector: '.page-template-profile #accordion-foody-filter',
         grid: '.my-channels-grid',
         cols: 1,
-        page: '.page-template-profile'
+        page: '.page-template-profile',
+        context:'profile',
+        contextArgs:['channels']
     });
 
     new FoodySearchFilter({
         selector: '.page-template-profile #accordion-foody-filter',
         grid: '.my-recipes-grid',
         cols: 1,
-        page: '.page-template-profile'
+        page: '.page-template-profile',
+        context:'profile',
+        contextArgs:['favorites']
     });
 
     // Tab switch analytics

@@ -8,14 +8,13 @@
  *
  *
  * This singleton is responsible for providing
- * handler functions related to querying the database using the @see WP_Query class.
- *
+ * handler methods related to querying the database using the @see WP_Query class.
+ * Each method adds the relevant query for its context.
+ * For example, the method @see Foody_Query::category() ads a 'cat' query to the final
+ * query that will finally be executed.
  */
 class Foody_Query
 {
-
-    // TODO remove the 'get_args' call in every func
-
 
     private static $default_args;
 
@@ -120,6 +119,27 @@ class Foody_Query
             ]
         ]);
     }
+    public function profile($content_type)
+    {
+        $user = new Foody_User();
+        if(!$user->user->ID){
+            return [];
+        }
+
+        if($content_type == 'favorites'){
+            $posts = $user->favorites;
+        }elseif($content_type == 'channels'){
+            $posts = $user->get_followed_content();
+        }
+
+        if(!isset($posts)){
+            return [];
+        }
+
+        return self::get_args([
+            'post__in' => $posts
+        ]);
+    }
 
 
     /**
@@ -168,7 +188,6 @@ class Foody_Query
 
         return $foody_args;
     }
-
 
     public function has_more_posts(WP_Query $query)
     {
