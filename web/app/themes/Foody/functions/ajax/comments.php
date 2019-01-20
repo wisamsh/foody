@@ -101,7 +101,6 @@ function foody_submit_ajax_how_i_did()
 
 
     $user = wp_get_current_user();
-
     $image = media_handle_upload('attachment', get_the_ID());
 
     if (is_wp_error($image)) {

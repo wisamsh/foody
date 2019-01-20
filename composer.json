@@ -231,7 +231,8 @@
     "arshid/contact-form-cfdb7": "1.2.4.1",
     "anders-thorborgd/acf-image-crop-add-on": "^1.4",
     "lester-chan/wp-postratings": "^1.85",
-    "mega-menu/quadmenu": "^1.7"
+    "mega-menu/quadmenu": "^1.7",
+    "miljar/php-exif": "^0.6.4"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

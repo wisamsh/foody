@@ -10,7 +10,6 @@ require('jquery-cropper');
 $(document).ready(() => {
 
 
-
     let howIDidForm = 'form#image-upload-form';
     let $commentForm = $(howIDidForm);
     let $uploadModal = $('#upload-image-modal');
@@ -34,7 +33,6 @@ $(document).ready(() => {
         $commentForm[0].reset();
         $boundForm[0].reset();
         $uploadModal.modal('hide');
-
 
 
         incrementCommentsCount('#how-i-did .comments-title');
@@ -74,8 +72,44 @@ $(document).ready(() => {
         let $modal = $('#upload-image-modal');
         $modal.modal('show');
 
-        readUrl(this, $('img', $modal));
+        let $modalImage = $('img', $modal);
+
+        readUrl(this, $modalImage);
+
+        fixExifOrientation($modalImage);
     });
+
+
+    function fixExifOrientation($img) {
+        $img.on('load', function () {
+            EXIF.getData($img[0], function () {
+                console.log('Exif=', EXIF.getTag(this, "Orientation"));
+                switch (parseInt(EXIF.getTag(this, "Orientation"))) {
+                    case 2:
+                        $img.addClass('flip');
+                        break;
+                    case 3:
+                        $img.addClass('rotate-180');
+                        break;
+                    case 4:
+                        $img.addClass('flip-and-rotate-180');
+                        break;
+                    case 5:
+                        $img.addClass('flip-and-rotate-270');
+                        break;
+                    case 6:
+                        $img.addClass('rotate-90');
+                        break;
+                    case 7:
+                        $img.addClass('flip-and-rotate-90');
+                        break;
+                    case 8:
+                        $img.addClass('rotate-270');
+                        break;
+                }
+            });
+        });
+    }
 
 
     let inputsToBind = [
@@ -102,7 +136,7 @@ $(document).ready(() => {
         ajaxUrl: '/wp/wp-admin/admin-ajax.php',
         action: 'ajaxhow_i_did',
         onSubmit: function () {
-            $formContainer.block({message:''});
+            $formContainer.block({message: ''});
             loader.attach.call(loader);
             submitButton.prop('disabled', true);
         },
