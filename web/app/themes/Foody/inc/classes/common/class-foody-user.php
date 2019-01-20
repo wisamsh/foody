@@ -39,6 +39,7 @@ class Foody_User
 
         $this->favorites = get_user_meta($this->user_id, 'favorites', true);
 
+
     }
 
     /**
@@ -133,6 +134,10 @@ class Foody_User
                 }
 
                 return $valid;
+            });
+
+            usort($posts,function ($post_a,$post_b){
+                return strtotime($post_b->post_date_gmt) - strtotime($post_a->post_date_gmt);
             });
 
             $user_favorites = array_map('Foody_Post::create', $posts);

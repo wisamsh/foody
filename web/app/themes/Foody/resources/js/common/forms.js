@@ -127,8 +127,6 @@ jQuery(document).ready(($) => {
     let $checkboxes = $('.md-checkbox');
 
     if ($checkboxes.length) {
-
-
         $checkboxes.on('click', function (e) {
             e.stopPropagation();
             e.preventDefault();
@@ -136,7 +134,6 @@ jQuery(document).ready(($) => {
                 e.preventDefault();
                 return;
             }
-            console.log('click check', e.target);
             let $input = $('input', this);
 
             let checked = $input.prop('checked') || false;

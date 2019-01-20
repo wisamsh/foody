@@ -119,26 +119,48 @@ class Foody_Query
             ]
         ]);
     }
+
     public function profile($content_type)
     {
         $user = new Foody_User();
-        if(!$user->user->ID){
+
+        if (!$user->user->ID) {
             return [];
         }
 
-        if($content_type == 'favorites'){
+        $args = [];
+
+        if ($content_type == 'favorites') {
             $posts = $user->favorites;
-        }elseif($content_type == 'channels'){
+            if (!empty($posts)) {
+                $posts = array_map('intval', array_values($posts));
+                $args['posts_per_page'] = count($posts);
+            }
+        } elseif ($content_type == 'channels') {
             $posts = $user->get_followed_content();
+            if (!empty($posts)) {
+                $posts = array_map(function ($post) {
+                    $retval = $post;
+                    if ($post instanceof WP_Post || $post instanceof stdClass) {
+                        $retval = $post->ID;
+                    }
+                    return $retval;
+                }, $posts);
+            }
         }
 
-        if(!isset($posts)){
+        if (!isset($posts)) {
             return [];
         }
 
-        return self::get_args([
-            'post__in' => $posts
+        $args = array_merge($args,[
+            'post__in' => $posts,
+            'post_type' => ['foody_recipe', 'foody_playlist'],
+            'orderby' => 'date',
+            'order' => 'DESC'
         ]);
+
+        return self::get_args($args);
     }
 
 

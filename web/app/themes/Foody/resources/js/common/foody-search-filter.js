@@ -57,11 +57,7 @@ module.exports = (function () {
                 return;
             }
 
-            console.log('check change: ', that.settings);
-
-
             e.preventDefault();
-
 
             let data = $(this).data();
             let groupKey = $(this).closest('.foody-accordion').attr('id');
@@ -96,7 +92,6 @@ module.exports = (function () {
     };
 
     FoodySearchFilter.prototype.toggleCheckboxes = function (disable) {
-
         let attr = disable ? 'disable' : null;
         let $checkboxes = $('.md-checkbox', this.$filter);
         $checkboxes.attr('disabled', attr);

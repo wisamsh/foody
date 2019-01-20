@@ -58,7 +58,7 @@ jQuery(document).ready(($) => {
     // Foody search and filter
     new FoodySearchFilter({
         selector: '.page-template-profile #accordion-foody-filter',
-        grid: '.my-channels-grid',
+        grid: '#my-channels-grid',
         cols: 1,
         page: '.page-template-profile',
         context:'profile',
@@ -67,7 +67,7 @@ jQuery(document).ready(($) => {
 
     new FoodySearchFilter({
         selector: '.page-template-profile #accordion-foody-filter',
-        grid: '.my-recipes-grid',
+        grid: '#my-recipes-grid',
         cols: 1,
         page: '.page-template-profile',
         context:'profile',

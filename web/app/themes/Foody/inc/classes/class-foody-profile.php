@@ -60,24 +60,18 @@ class Foody_Profile
     {
         global $wp_session;
 
-        if (isset($wp_session['favorites']) && !empty($wp_session['favorites']) && count($favorite_posts = $wp_session['favorites']) > 0) {
+        $favorites = $this->foody_user->get_favorites();
 
-//            $favorite_posts = array_filter($favorite_posts,function ($post){
-//               return $post instanceof WP_Post;
-//            });
+        if (!empty($favorites)) {
 
-            $posts = [];
-            foreach ($favorite_posts as $favorite_post) {
-                $post = get_post($favorite_post);
-                $posts[] = Foody_Post::create($post);
-            }
+
 
             echo '<h2 class="title">ספר המתכונים שלי</h2>';
 
 
             $grid_args = [
                 'id' => 'my-recipes-grid',
-                'posts' => $posts,
+                'posts' => $favorites,
                 'more' => false,
                 'cols' => 1
             ];
