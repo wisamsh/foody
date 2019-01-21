@@ -77,50 +77,6 @@ if (is_array($sub_categories)):
 
                 </a>
             </li>
-            <li class="foody-slider-item category-slider-item">
-                <a href="<?php echo $sub_category->link ?>">
-                    <div>
-                        <img src="<?php echo $sub_category->get_image() ?>" alt="<?php echo $sub_category->title ?>">
-                    </div>
-                    <h4 class="title category-title">
-                        <?php echo $sub_category->title ?>
-                    </h4>
-
-                </a>
-            </li>
-            <li class="foody-slider-item category-slider-item">
-                <a href="<?php echo $sub_category->link ?>">
-                    <div>
-                        <img src="<?php echo $sub_category->get_image() ?>" alt="<?php echo $sub_category->title ?>">
-                    </div>
-                    <h4 class="title category-title">
-                        <?php echo $sub_category->title ?>
-                    </h4>
-
-                </a>
-            </li>
-            <li class="foody-slider-item category-slider-item">
-                <a href="<?php echo $sub_category->link ?>">
-                    <div>
-                        <img src="<?php echo $sub_category->get_image() ?>" alt="<?php echo $sub_category->title ?>">
-                    </div>
-                    <h4 class="title category-title">
-                        <?php echo $sub_category->title ?>
-                    </h4>
-
-                </a>
-            </li>
-            <li class="foody-slider-item category-slider-item">
-                <a href="<?php echo $sub_category->link ?>">
-                    <div>
-                        <img src="<?php echo $sub_category->get_image() ?>" alt="<?php echo $sub_category->title ?>">
-                    </div>
-                    <h4 class="title category-title">
-                        <?php echo $sub_category->title ?>
-                    </h4>
-
-                </a>
-            </li>
 
         <?php endforeach; ?>
     </ul>
