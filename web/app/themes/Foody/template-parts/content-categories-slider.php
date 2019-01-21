@@ -21,7 +21,7 @@ $category = $template_args['category'];
 $sub_categories = $category->get_sub_categories();
 if (is_array($sub_categories)):
 
-    $count = count($sub_categories);
+    $count = ceil(count($sub_categories) / 2);
 
     $slider_data = [
         'slidesToShow' => 4,
