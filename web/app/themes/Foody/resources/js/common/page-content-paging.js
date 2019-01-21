@@ -13,9 +13,6 @@ module.exports = (function () {
         this.pathRegex = /page\/([0-9]+(\/)?$)/;
         this.init();
         this.locationUtils = new FoodyLocationUtils();
-        window.onpopstate = function(event) {
-            alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
-        };
     };
 
     PageContentPaging.prototype.init = function () {

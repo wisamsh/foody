@@ -117,7 +117,7 @@ class Foody_Search
 
         $query_args = [];
 
-        if (!isset($args['after_foody_query']) && $args['after_foody_query'] == false) {
+        if (!isset($args['after_foody_query']) || $args['after_foody_query'] == false) {
             unset($args['after_foody_query']);
             $query_args = $this->foody_query->get_query($this->context, $this->context_args);
         }
@@ -248,12 +248,13 @@ class Foody_QueryBuilder
     public $meta_key;
     public $meta_type;
 
+
     private $meta_query_array = [];
 
     private $categories__in = [];
-    private $categories__not_in = [];
+    private $categories__and;
 
-    private $tags__in = [];
+    private $tag__and = [];
     private $tags__not_in = [];
 
     private $post__not_in = [];
@@ -279,9 +280,9 @@ class Foody_QueryBuilder
     {
         foreach ($categories_args as $category_arg) {
             if (isset($category_arg['exclude']) && $category_arg['exclude'] != "false") {
-                $this->categories__not_in[] = $category_arg['value'];
+                $this->categories__and[] = $category_arg['value'];
             } else {
-                $this->categories__in[] = $category_arg['value'];
+                $this->categories__and[] = $category_arg['value'];
             }
         }
 
@@ -411,7 +412,7 @@ class Foody_QueryBuilder
         }
 
         if (!empty($parsed['include'])) {
-            $this->tags__in = array_map(function ($arg) {
+            $this->tag__and = array_map(function ($arg) {
                 return $arg['value'];
             }, $parsed['include']);
         }
@@ -512,19 +513,13 @@ class Foody_QueryBuilder
             'post_status' => 'publish'
         ];
 
-        if (!empty($this->categories__in)) {
-            $args['category__and'] = $this->categories__in;
+        if (!empty($this->categories__and)) {
+            $args['category__and'] = $this->categories__and;
         }
 
-
-        if (!empty($this->categories__not_in)) {
-            $args['category__not_in'] = $this->categories__not_in;
+        if (!empty($this->tag__and)) {
+            $args['tag__and'] = $this->tag__and;
         }
-
-        if (!empty($this->tags__in)) {
-            $args['tags__in'] = $this->tags__in;
-        }
-
 
         if (!empty($this->tags__not_in)) {
             $args['tags__not_in'] = $this->tags__not_in;
@@ -670,7 +665,9 @@ class Foody_QueryBuilder
             if (!isset($args['category__and'])) {
                 $args['category__and'] = [];
             }
-            $args['category__and'] = array_merge($args['category__and'], $args['cat']);
+            $args['category__and'][] = $args['cat'];
+
+            $args['category__and'] = array_unique($args['category__and']);
             unset($args['cat']);
         }
 
