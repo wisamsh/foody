@@ -15,23 +15,23 @@ $sidebar-top-offset: 60px;
     padding-top: 15px;
     .featured {
 
-      .recipe-item-details {
-        .image-container {
-
-          & + section {
-            padding-right: 0;
-          }
-
-          img {
-            margin: 0 auto;
-            display: block;
-          }
-        }
-      }
-
-      img.recipe-item-image {
-        width: 100%;
-      }
+      //.recipe-item-details {
+      //  .image-container {
+      //
+      //    & + section {
+      //      padding-right: 0;
+      //    }
+      //
+      //    img {
+      //      margin: 0 auto;
+      //      display: block;
+      //    }
+      //  }
+      //}
+      //
+      //img.recipe-item-image {
+      //  width: 100%;
+      //}
 
     }
 

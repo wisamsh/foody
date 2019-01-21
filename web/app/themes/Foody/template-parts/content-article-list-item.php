@@ -29,37 +29,38 @@ $article = $template_args['post'];
         </div>
     </a>
 
+    <section class="feed-item-details-container">
+        <section class="article-item-details  d-flex">
+            <div class="image-container col-12 nopadding">
+                <a href="<?php echo $article->get_author_link() ?>">
+                    <img src="<?php echo $article->getAuthorImage() ?>" alt="">
+                </a>
+                <ul>
+                    <li>
+                        <a href="<?php echo $article->get_author_link() ?>">
+                            <?php echo $article->getAuthorName() ?>
+                        </a>
+                    </li>
+                    <li>
+                        <?php echo $article->getViewCount() ?>
+                    </li>
+                    <li>
+                        <?php echo $article->getPostedOn() ?>
+                    </li>
+                </ul>
+            </div>
 
-    <section class="article-item-details  d-flex">
-        <div class="image-container col-1 nopadding">
-            <a href="<?php echo $article->get_author_link() ?>">
-                <img src="<?php echo $article->getAuthorImage() ?>" alt="">
-            </a>
-        </div>
-        <section class="col-11">
+        </section>
+        <section>
             <h3>
                 <a href="<?php echo $article->link ?>">
                     <?php echo $article->getTitle() ?>
                 </a>
             </h3>
-            <ul>
-                <li>
-                    <a href="<?php echo $article->get_author_link() ?>">
-                        <?php echo $article->getAuthorName() ?>
-                    </a>
-                </li>
-                <li>
-                    <?php echo $article->getViewCount() ?>
-                </li>
-                <li>
-                    <?php echo $article->getPostedOn() ?>
-                </li>
-            </ul>
+
             <div class="description">
                 <?php echo $article->getDescription() ?>
             </div>
         </section>
-
-
     </section>
 </div>
