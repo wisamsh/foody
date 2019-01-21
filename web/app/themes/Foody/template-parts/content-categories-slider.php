@@ -28,7 +28,7 @@ if (is_array($sub_categories)):
         'rtl' => true,
         'prevArrow' => '<i class="icon-arrowleft prev"></i>',
         'nextArrow' => '<i class="icon-arrowleft next"></i>',
-        'slidesToScroll' => 3,
+        'slidesToScroll' => $count,
         'infinite' => false,
         'responsive' => [
             [
@@ -66,6 +66,50 @@ if (is_array($sub_categories)):
 
         foreach ($sub_categories as $sub_category):?>
 
+            <li class="foody-slider-item category-slider-item">
+                <a href="<?php echo $sub_category->link ?>">
+                    <div>
+                        <img src="<?php echo $sub_category->get_image() ?>" alt="<?php echo $sub_category->title ?>">
+                    </div>
+                    <h4 class="title category-title">
+                        <?php echo $sub_category->title ?>
+                    </h4>
+
+                </a>
+            </li>
+            <li class="foody-slider-item category-slider-item">
+                <a href="<?php echo $sub_category->link ?>">
+                    <div>
+                        <img src="<?php echo $sub_category->get_image() ?>" alt="<?php echo $sub_category->title ?>">
+                    </div>
+                    <h4 class="title category-title">
+                        <?php echo $sub_category->title ?>
+                    </h4>
+
+                </a>
+            </li>
+            <li class="foody-slider-item category-slider-item">
+                <a href="<?php echo $sub_category->link ?>">
+                    <div>
+                        <img src="<?php echo $sub_category->get_image() ?>" alt="<?php echo $sub_category->title ?>">
+                    </div>
+                    <h4 class="title category-title">
+                        <?php echo $sub_category->title ?>
+                    </h4>
+
+                </a>
+            </li>
+            <li class="foody-slider-item category-slider-item">
+                <a href="<?php echo $sub_category->link ?>">
+                    <div>
+                        <img src="<?php echo $sub_category->get_image() ?>" alt="<?php echo $sub_category->title ?>">
+                    </div>
+                    <h4 class="title category-title">
+                        <?php echo $sub_category->title ?>
+                    </h4>
+
+                </a>
+            </li>
             <li class="foody-slider-item category-slider-item">
                 <a href="<?php echo $sub_category->link ?>">
                     <div>

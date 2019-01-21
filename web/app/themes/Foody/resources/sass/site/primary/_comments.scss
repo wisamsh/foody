@@ -50,6 +50,10 @@
       font-size: 22px;
       font-family: $font__assistant;
 
+      &::placeholder {
+        font-weight: 900;
+        font-size: 19px;
+      }
     }
 
     &.open {
@@ -177,8 +181,8 @@
 
 @include breakpoint(mobileonly) {
 
-  article{
-    &.content{
+  article {
+    &.content {
       .comments, .recipe-comments {
         .foody-accordion-title {
           h5 {
@@ -196,8 +200,6 @@
       }
     }
   }
-
-
 
   .comment-content a {
 

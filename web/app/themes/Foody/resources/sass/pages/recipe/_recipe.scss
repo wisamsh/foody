@@ -68,7 +68,7 @@ $content-width: 95%;
   article.content {
 
     .title, h2 {
-      font-size: 24px;
+      font-size: 20px;
       margin-bottom: 0;
     }
 
@@ -184,7 +184,7 @@ $content-width: 95%;
           }
 
           .essb_link_facebook {
-
+            ///#4A4A4A
             a {
               background-color: $color__facebook !important;
 
@@ -207,9 +207,9 @@ $content-width: 95%;
       align-items: center;
       margin: 0 auto 0 0;
 
-      li{
+      li {
         padding: 0;
-        &:nth-child(n+2){
+        &:nth-child(n+2) {
           display: none;
         }
       }
@@ -220,7 +220,7 @@ $content-width: 95%;
         font-size: 16px;
         font-weight: bold;
       }
-      img{
+      img {
         border-radius: 3px;
       }
     }
@@ -268,19 +268,18 @@ $content-width: 95%;
       font-family: $font__assistant;
       padding: 10px 0;
       margin-top: 0;
-
+      $input-height: 35px;
       > .recipe-ingredients-top {
         @include max-width-section;
 
         .title {
-          line-height: normal;
+          line-height: $input-height;
           padding-right: 0;
         }
 
         .amount-container {
           padding-left: 0;
           align-self: center;
-          $input-height: 44px;
 
           .foody-select {
 
@@ -300,7 +299,7 @@ $content-width: 95%;
           }
 
           label {
-            font-size: 24px;
+            font-size: 17px;
             padding-left: 12px;
             line-height: $input-height;
             vertical-align: middle;
@@ -328,11 +327,13 @@ $content-width: 95%;
         margin: 0 auto;
         .ingredients-group {
           display: inline-block;
-
+          &:nth-child(n+3) {
+            margin-top: 10px;
+          }
           .ingredients-group-title {
             font-family: $font__assistant;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 17px;
             max-width: 80%;
           }
 
@@ -379,7 +380,7 @@ $content-width: 95%;
 
         .note {
           font-family: $font__assistant;
-          font-size: 22px;
+          font-size: 17px;
         }
       }
     }
@@ -429,7 +430,7 @@ $content-width: 95%;
         .nutritions {
           font-family: $font__assistant;
           .nutrition {
-            padding: 20px 35px 20px 20px;
+            padding: 10px 35px 10px 20px;
             &:not(:last-child) {
               border-left: 1px solid $color__divider;
             }
@@ -1053,6 +1054,10 @@ $content-width: 95%;
         .recipe-ingredients-container {
           max-width: calc(100% - #{$content-padding});
           .ingredients-group {
+            &:nth-child(n+3) {
+              margin-top: 0;
+            }
+
             &:not(:last-child) {
               margin-bottom: 15px;
             }
@@ -1093,14 +1098,15 @@ $content-width: 95%;
         max-width: calc(100% - 15px);
         margin: 0 auto;
       }
+
       .purchase-buttons {
         display: flex;
         margin-right: 0;
         justify-content: space-around;
 
-        li{
+        li {
 
-          &:nth-child(n+1){
+          &:nth-child(n+1) {
             display: initial;
           }
 

@@ -270,7 +270,7 @@ function add_menu_items($items_html, $args)
 }
 
 
-//add_filter('wp_nav_menu_items', 'add_menu_items', 10, 2);
+add_filter('wp_nav_menu_items', 'add_menu_items', 10, 2);
 
 function foody_custom_walker(array $nav_menu_args, WP_Term $nav_menu, array $args, array $instance)
 {

@@ -105,7 +105,8 @@ body[class~="tag"] {
 
           text-align: right;
           padding: 0;
-
+          display: flex;
+          align-self: center;
           img {
             width: 52px;
             border-radius: 50%;
@@ -128,7 +129,7 @@ body[class~="tag"] {
         //padding: 10px 0;
         font-family: $font__assistant;
         font-size: 19px;
-        margin: 0;
+        margin-top: 5px;
       }
 
       .view-count {
