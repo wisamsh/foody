@@ -37,8 +37,6 @@ class Foody_HomePage
         }
 
         $posts = $this->get_featured_posts();
-
-
         $this->grid->loop($posts, 2, 12, null, [], null, ['image_size' => '']);
     }
 
@@ -54,7 +52,6 @@ class Foody_HomePage
 
     public function team()
     {
-
         $data = $this->team->list_authors();
         echo '<h3 class="title">הנבחרת שלנו</h3>';
         echo '<div class="team-listing row" data-count="' . $data['count'] . '" dir="rtl">';

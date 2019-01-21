@@ -41,6 +41,8 @@ class Foody_Search
 
     /**
      * Foody_Search constructor.
+     * @param $context string
+     * @param $context_args array
      */
     public function __construct($context, $context_args)
     {
@@ -50,22 +52,25 @@ class Foody_Search
         $this->context_args = $context_args;
     }
 
+
+    /**
+     * Queries the database for the relevant page and filter.
+     * @param array $args filter arguments. example:
+     * {
+     *  search:'search term',
+     *  'types':[{
+     *      type:'categories|ingredients|techniques|accessories|limitations|tags',
+     *      exclude:false,
+     *      value:8
+     *  }]
+     * }
+     *
+     * @param array $wp_args
+     * @return array ['posts'=>array,'found'=>int] posts from WP_Query and number in db.
+     * @throws Exception
+     */
     public function query($args, $wp_args = [])
     {
-        /*
-         * args:
-        * {
-        *  search:'asfgag',
-        *  posts ids to include in the filter
-        *  context:[1,3,56],
-        *  'types':[{
-        *      type:'categories|ingredients|techniques|accessories|limitations|tags',
-        *      exclude:false,
-        *      value:8
-        *  }]
-        * }
-        * */
-
         $query = $this->build_query($args, $wp_args);
 
         $this->before_query();
@@ -75,7 +80,7 @@ class Foody_Search
         $this->after_query();
 
         return [
-            'posts'=>$posts,
+            'posts' => $posts,
             'found' => $query->found_posts
         ];
     }
@@ -86,10 +91,11 @@ class Foody_Search
      * @param array $args
      * @param array $wp_args
      * @param string $sort
+     * @param bool $raw
      * @return WP_Query
      * @throws Exception
      */
-    public function build_query($args, $wp_args = [], $sort = '')
+    public function build_query($args, $wp_args = [], $sort = '', $raw = false)
     {
         $this->types = group_by($args['types'], 'type');
 
@@ -109,13 +115,18 @@ class Foody_Search
             $this->query_builder->sort($sort);
         }
 
-        $query_args = $this->foody_query->get_query($this->context, $this->context_args);
+        $query_args = [];
+
+        if (!isset($args['after_foody_query']) && $args['after_foody_query'] == false) {
+            unset($args['after_foody_query']);
+            $query_args = $this->foody_query->get_query($this->context, $this->context_args);
+        }
+
 
         $wp_args = array_merge($wp_args, $query_args);
 
         $query = $this->query_builder
-            ->build($wp_args);
-
+            ->build($wp_args, $raw);
 
         return $query;
     }
@@ -139,6 +150,10 @@ class Foody_Search
 
     }
 
+    /**
+     * @param $type string one of types constants
+     * @throws Exception if no builder method is defined for $type
+     */
     private function maybe_add_to_query($type)
     {
         $values = $this->get_values_for_type($type);
@@ -150,13 +165,13 @@ class Foody_Search
             // type alias corresponds
             // to builder method.
             // Example: type->ingredient, method->ingredients
-            if (isset($this->types_aliases[$type])){
+            if (isset($this->types_aliases[$type])) {
                 $fn = $this->types_aliases[$type];
-            }elseif (in_array($type, array_values($this->types_aliases))){
+            } elseif (in_array($type, array_values($this->types_aliases))) {
                 $fn = $type;
             }
 
-            if (isset($fn) ) {
+            if (isset($fn)) {
 //                if (is_null($fn)) {
 //                    $fn = $type;
 //                }
@@ -465,18 +480,24 @@ class Foody_QueryBuilder
      * Creates a WP_Query instance
      * built from the passed args
      *
-     * @return WP_Query
+     * @param array $wp_args default args for WP_Query
+     * @param bool $raw
+     * @return WP_Query|array if $raw is true, returns the args array instead of WP_Query
      */
-    public function build($wp_args = [])
+    public function build($wp_args = [], $raw = false)
     {
 
         $args = $this->get_args();
 
-        $args = $this->resolve_query_conflicts($args,$wp_args);
+        $args = $this->resolve_query_conflicts($args, $wp_args);
 
         $args['post_status'] = 'publish';
 
-        $query = new WP_Query($args);
+        if (!$raw) {
+            $query = new WP_Query($args);
+        } else {
+            $query = $args;
+        }
 
         return $query;
     }
@@ -637,17 +658,21 @@ class Foody_QueryBuilder
 
     private function resolve_query_conflicts($args, $wp_args)
     {
-        if(isset($wp_args['author'])){
-            unset($args['author__in']);
-        }
-
-        if(isset($wp_args['cat'])) {
-            unset($args['category__in']);
-            unset($args['category__not_in']);
-            unset($args['category__and']);
-        }
-
         $args = array_merge_recursive($wp_args, $args);
+
+        if (isset($args['author'])) {
+            unset($args['author__in']);
+        } elseif (isset($args['author__in'])) {
+            unset($args['author__not_in']);
+        }
+
+        if (isset($args['cat'])) {
+            if (!isset($args['category__and'])) {
+                $args['category__and'] = [];
+            }
+            $args['category__and'] = array_merge($args['category__and'], $args['cat']);
+            unset($args['cat']);
+        }
 
         return $args;
     }

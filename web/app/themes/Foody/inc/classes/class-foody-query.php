@@ -22,6 +22,18 @@ class Foody_Query
 
     public static $page = 'page';
 
+    public static $query_prefix = 'fd_';
+
+    public static $query_params = [
+        'in' => 'ingredients',
+        'ca' => 'categories',
+        'te' => 'techniques',
+        'li' => 'limitations',
+        'ac' => 'accessories',
+        'ta' => 'tags',
+        'au' => 'authors'
+    ];
+
     /**
      * Foody_Query constructor.
      */
@@ -37,6 +49,88 @@ class Foody_Query
         }
     }
 
+    public static function get_query_params()
+    {
+        $ret_val = [];
+        foreach (self::$query_params as $query_param => $type) {
+            $ret_val[self::$query_prefix . $query_param] = $type;
+        }
+        return $ret_val;
+    }
+
+    private function parse_query_args($context, $context_args)
+    {
+        $query_args = array_keys(self::$query_params);
+        $foody_search = new Foody_Search($context, $context_args);
+
+        $args = [
+            'types' => [],
+            'after_foody_query' => true
+        ];
+
+        foreach ($query_args as $query_arg) {
+            $value = $this->foody_get_query_arg($query_arg);
+            if (!empty($value)) {
+                $args['types'] = array_merge($this->parse_query_values($query_arg), $args['types']);
+            }
+        }
+
+        return $foody_search->build_query($args, [], '', true);
+    }
+
+    private function foody_get_query_arg($key)
+    {
+        $value = '';
+
+        if (isset($_GET[self::$query_prefix . $key])) {
+            $value = $_GET[self::$query_prefix . $key];
+        }
+
+        return $value;
+    }
+
+    private function parse_query_values($query_arg)
+    {
+        $values = $this->array_query_string_to_array($query_arg);
+        $type = self::$query_params[$query_arg];
+
+        $filter_items = array_map(function ($value) use ($type) {
+
+            $exclude = strpos($value, '-');
+            $filter_value = abs(intval($value));
+            return [
+                'type' => $type,
+                'value' => $filter_value,
+                'exclude' => $exclude
+            ];
+        }, $values);
+
+        return $filter_items;
+    }
+
+    /**
+     * @param $key string key in $_GET
+     * @param string $delimiter used to separate multiple values, defaults to ','
+     * @return array
+     */
+    private function array_query_string_to_array($key, $delimiter = ',')
+    {
+        $arr = [];
+        $value = $this->foody_get_query_arg($key);
+        if (!empty($value)) {
+            $arr = array_map(function ($val) {
+                return trim($val);
+            }, explode($delimiter, $value));
+            if (is_array($arr) && !empty($arr)) {
+                $arr = array_filter($arr, function ($value) {
+                    return !empty($value) && is_numeric($value);
+                });
+            }
+        }
+
+        return $arr;
+    }
+
     public static function get_instance()
     {
         if (is_null(self::$instance)) {
@@ -45,7 +139,6 @@ class Foody_Query
 
         return self::$instance;
     }
-
 
     public function homepage()
     {
@@ -153,7 +246,7 @@ class Foody_Query
             return [];
         }
 
-        $args = array_merge($args,[
+        $args = array_merge($args, [
             'post__in' => $posts,
             'post_type' => ['foody_recipe', 'foody_playlist'],
             'orderby' => 'date',
@@ -208,6 +301,8 @@ class Foody_Query
             $foody_args = new WP_Error("invalid context: $context");
         }
 
+        $filter_args = $this->parse_query_args($context, $context_args);
+        $foody_args = array_merge($foody_args, $filter_args);
         return $foody_args;
     }
 

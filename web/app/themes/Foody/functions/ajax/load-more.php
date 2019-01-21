@@ -36,7 +36,6 @@ function foody_ajax_load_more()
             }
             $context = $_POST['context'];
 
-
             $page = $_POST['page'];
 
             $ranged = isset($_POST['ranged']) && $_POST['ranged'];

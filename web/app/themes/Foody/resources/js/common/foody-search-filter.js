@@ -3,10 +3,9 @@
  */
 
 let FoodyGrid = require('./foody-grid');
+let FoodyLocationUtils = require('./foody-location-utils');
 
 module.exports = (function () {
-
-    this.searchFilter = {};
 
 
     function FoodySearchFilter(settings) {
@@ -15,10 +14,11 @@ module.exports = (function () {
 
     FoodySearchFilter.prototype.init = function (settings) {
         this.settings = settings;
-
+        this.locationUtils = new FoodyLocationUtils();
+        this.searchFilter = {};
         let defaultGridArgs = {selector: settings.grid};
-        if(settings.gridArgs){
-            defaultGridArgs = _.extend(defaultGridArgs,settings.gridArgs);
+        if (settings.gridArgs) {
+            defaultGridArgs = _.extend(defaultGridArgs, settings.gridArgs);
         }
 
         this.grid = new FoodyGrid(defaultGridArgs);
@@ -29,12 +29,9 @@ module.exports = (function () {
 
         this.cols = settings.cols;
         this.$filter = $(settings.selector);
-        this.initialContext = this.grid.getItems();
 
         if (this.$filter.length) {
-
-            //noinspection JSPotentiallyInvalidUsageOfThis
-            this.searchFilter = this.buildInitialFilter();
+            this.buildInitialFilter();
             this.attachChangeListener();
             if (!settings.searchButton) {
                 settings.searchButton = '.show-recipes';
@@ -100,15 +97,35 @@ module.exports = (function () {
     FoodySearchFilter.prototype.buildInitialFilter = function () {
 
         let $checkboxes = $('input[type="checkbox"]', this.$filter);
-        let searchFilter = {};
         let that = this;
+
+        foodyGlobals.queryArgs = foodyGlobals.queryArgs || {};
+
+        this.searchFilter = {};
+
+        for (let key in foodyGlobals.queryArgs) {
+            if (foodyGlobals.queryArgs.hasOwnProperty(key)) {
+                let type = foodyGlobals.queryArgs[key];
+                this._updateFilterByQuery(type, this.locationUtils.getQuery(key));
+            }
+        }
+
         $checkboxes.each(function () {
             if (this.checked) {
                 that.searchFilter[this.name] = that.getParsedInput(this);
             }
         });
+    };
 
-        return searchFilter;
+    FoodySearchFilter.prototype._updateFilterByQuery = function (type, valuesStr) {
+        if (valuesStr) {
+            valuesStr.split(',').forEach((value) => {
+                let exclude = value.indexOf('-') !== -1;
+                let valueNumeric = Math.abs(parseInt(value));
+                let $checkbox = $(`input[type="checkbox"][data-exclude="${exclude}"][data-type="${type}"][data-value="${valueNumeric}"]`);
+                $checkbox.prop('checked', true);
+            });
+        }
     };
 
     FoodySearchFilter.prototype.getParsedInput = function (checkbox) {
@@ -126,9 +143,7 @@ module.exports = (function () {
 
         /*
          * {
-         *  search:'asfgag',
-         *  posts ids to include in the filter
-         *  context:[1,3,56],
+         *  search:'search term',
          *  'types':[{
          *      type:'categories|ingredients|techniques|accessories|limitations|tags',
          *      exclude:false,
@@ -136,41 +151,22 @@ module.exports = (function () {
          *  }]
          * }
          * */
-
-
-        search = this._getQuery('s');
-
+        search = this.locationUtils.getQuery('s');
         let args = {
-            // TODO get from input if needed
             search: search,
             types: [],
             context: this.settings.context,
             context_args: this.settings.contextArgs,
         };
-        // TODO remove once unnecessary
-        // args.context = _.uniq(this.initialContext.concat(this.grid.getItems()));
 
-
-        //noinspection JSPotentiallyInvalidUsageOfThis
         for (let key in this.searchFilter) {
             if (this.searchFilter.hasOwnProperty(key)) {
                 args.types.push(this.searchFilter[key]);
             }
         }
 
-
-        // TODO remove once unnecessary
-        // if (!args.search && args.types.length == 0) {
-        //     args.context = this.initialContext;
-        // }
-
         return args;
 
-    };
-
-    FoodySearchFilter.prototype._getQuery = function (key) {
-        let urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(key);
     };
 
     FoodySearchFilter.prototype.doQuery = function () {
@@ -187,7 +183,7 @@ module.exports = (function () {
             }
         };
 
-        if (this.settings.onQuery && typeof  this.settings.onQuery == 'function') {
+        if (this.settings.onQuery && typeof  this.settings.onQuery === 'function') {
             this.settings.onQuery();
         }
         let that = this;
@@ -197,12 +193,46 @@ module.exports = (function () {
             if (err) {
                 console.log('err: ' + err);
             } else {
-                that.grid.refresh(data.data, ajaxSettings.data.data.types.length == 0);
+                that.grid.refresh(data.data, ajaxSettings.data.data.types.length === 0);
+                that._updateUri();
             }
         });
 
     };
 
+    FoodySearchFilter.prototype._updateUri = function () {
+
+        let pageContainer = this.settings.page;
+        let $checkedCheckboxes = $('input[type="checkbox"]:checked', pageContainer);
+
+        let types = _.groupBy($checkedCheckboxes.toArray(), function (el) {
+            return $(el).data('type');
+        });
+
+        let urlParams = new URLSearchParams();
+
+        for (let key in types) {
+            if (types.hasOwnProperty(key)) {
+
+                let queryArg = _.invert(foodyGlobals.queryArgs)[key];
+
+                let filterItems = types[key].map((el) => {
+                    let data = $(el).data();
+                    let {exclude, value} = data;
+
+                    if (exclude) {
+                        value *= -1;
+                    }
+                    return value;
+                });
+
+                urlParams.set(queryArg, filterItems.join(','));
+            }
+        }
+
+        this.locationUtils.updateHistory(null, urlParams.toString())
+
+    };
 
     return FoodySearchFilter;
 
