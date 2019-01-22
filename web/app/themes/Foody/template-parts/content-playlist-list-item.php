@@ -29,6 +29,17 @@ $playlist = $template_args['post'];
     </a>
 
     <section class="feed-item-details-container">
+        <section class="title-container">
+            <h3>
+                <a href="<?php echo $playlist->link ?>">
+                    <?php echo $playlist->getTitle() ?>
+                </a>
+            </h3>
+
+            <div class="description">
+                <?php echo $playlist->getDescription() ?>
+            </div>
+        </section>
         <section class="playlist-item-details  d-flex">
             <div class="image-container col-12 nopadding">
                 <a href="<?php echo $playlist->get_author_link() ?>">
@@ -49,17 +60,6 @@ $playlist = $template_args['post'];
                 </ul>
             </div>
 
-        </section>
-        <section>
-            <h3>
-                <a href="<?php echo $playlist->link ?>">
-                    <?php echo $playlist->getTitle() ?>
-                </a>
-            </h3>
-
-            <div class="description">
-                <?php echo $playlist->getDescription() ?>
-            </div>
         </section>
     </section>
 </div>

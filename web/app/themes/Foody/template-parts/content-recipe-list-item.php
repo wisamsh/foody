@@ -42,28 +42,7 @@ $image_size = isset($args['image_size']) ? $args['image_size'] : 'list-item';
         </div>
     </a>
     <section class="feed-item-details-container">
-        <section class="recipe-item-details  d-flex">
-            <div class="image-container col-12 nopadding">
-                <a href="<?php echo $recipe->get_author_link() ?>">
-                    <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
-                </a>
-                <ul>
-                    <li>
-                        <a href="<?php echo $recipe->get_author_link() ?>">
-                            <?php echo $recipe->getAuthorName() ?>
-                        </a>
-                    </li>
-                    <li>
-                        <?php echo $recipe->getViewCount() ?>
-                    </li>
-                    <li>
-                        <?php echo $recipe->getPostedOn() ?>
-                    </li>
-                </ul>
-            </div>
-
-        </section>
-        <section>
+        <section class="title-container">
             <h3>
                 <a href="<?php echo $recipe->link ?>">
                     <?php echo $recipe->getTitle() ?>
@@ -73,17 +52,36 @@ $image_size = isset($args['image_size']) ? $args['image_size'] : 'list-item';
             <div class="description">
                 <?php echo $recipe->getDescription() ?>
             </div>
-
-            <?php
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/common/favorite.php',
-                array(
-                    'id' => $recipe->id,
-                    'post' => $recipe
-                )
-            );
-            ?>
         </section>
+    </section>
+    <section class="recipe-item-details  d-flex">
+        <div class="image-container col-12 nopadding">
+            <a href="<?php echo $recipe->get_author_link() ?>">
+                <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
+            </a>
+            <ul>
+                <li>
+                    <a href="<?php echo $recipe->get_author_link() ?>">
+                        <?php echo $recipe->getAuthorName() ?>
+                    </a>
+                </li>
+                <li>
+                    <?php echo $recipe->getViewCount() ?>
+                </li>
+                <li class="favorite-container">
+                    <?php
+                    foody_get_template_part(
+                        get_template_directory() . '/template-parts/common/favorite.php',
+                        array(
+                            'id' => $recipe->id,
+                            'post' => $recipe
+                        )
+                    );
+                    ?>
+                </li>
+            </ul>
+        </div>
+
     </section>
 </div>
 

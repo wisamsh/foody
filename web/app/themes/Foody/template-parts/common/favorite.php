@@ -14,13 +14,14 @@ $post_id = $foody_post->id;
 
 $favorite = [
     'icon' => 'icon-heart',
-    'text' => 'הוספה למועדפים'
+    'text' => ''
 ];
 
 if ($foody_post->favorite) {
     $favorite = [
         'icon' => 'icon-favorite-pressed',
-        'text' => 'נשמר במועדפים'
+//        'text' => 'נשמר במועדפים'
+        'text' => ''
     ];
 }
 

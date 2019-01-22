@@ -86,19 +86,8 @@ function is_tablet($vars)
 add_filter('foody_js_globals', 'is_tablet');
 
 
-//function foody_override_og_image_size($size)
-//{
-//
-//    return 'thumbnail';
-//}
-//
-//add_filter('wpseo_opengraph_image_size', 'foody_override_og_image_size', 10, 1);
-
-
 function foody_set_og_image()
 {
-
-
     if (is_author()) {
 
         $author = new Foody_Author();
@@ -171,3 +160,32 @@ function foody_env_scripts()
 }
 
 add_action('wp_head', 'foody_env_scripts');
+
+function foody_category_pagination()
+{
+    if (is_category()) {
+        $page = 1;
+        if (isset($_GET['page'])) {
+            $page = $_GET['page'];
+        }
+
+        global $wp_query;
+        $max_pages = $wp_query->max_num_pages;
+
+        $prev = $page - 1;
+        $next = $page + 1;
+
+        $link = get_term_link(get_queried_object_id());
+        if ($prev > 0) {
+            $href = $link . "?page=" . $prev;
+            echo '<link id="pagination-prev" rel="prev" href="' . $href . '">';
+        }
+
+        if ($next <= $max_pages) {
+            $href = $link . "?page=" . $next;
+            echo '<link id="pagination-next" rel="prev" href="' . $href . '">';
+        }
+    }
+}
+
+add_action('wp_head', 'foody_category_pagination');

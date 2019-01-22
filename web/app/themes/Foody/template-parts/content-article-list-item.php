@@ -30,6 +30,18 @@ $article = $template_args['post'];
     </a>
 
     <section class="feed-item-details-container">
+
+        <section class="title-container">
+            <h3>
+                <a href="<?php echo $article->link ?>">
+                    <?php echo $article->getTitle() ?>
+                </a>
+            </h3>
+
+            <div class="description">
+                <?php echo $article->getDescription() ?>
+            </div>
+        </section>
         <section class="article-item-details  d-flex">
             <div class="image-container col-12 nopadding">
                 <a href="<?php echo $article->get_author_link() ?>">
@@ -44,23 +56,12 @@ $article = $template_args['post'];
                     <li>
                         <?php echo $article->getViewCount() ?>
                     </li>
-                    <li>
-                        <?php echo $article->getPostedOn() ?>
-                    </li>
+<!--                    <li>-->
+<!--                        --><?php //echo $article->getPostedOn() ?>
+<!--                    </li>-->
                 </ul>
             </div>
 
-        </section>
-        <section>
-            <h3>
-                <a href="<?php echo $article->link ?>">
-                    <?php echo $article->getTitle() ?>
-                </a>
-            </h3>
-
-            <div class="description">
-                <?php echo $article->getDescription() ?>
-            </div>
         </section>
     </section>
 </div>
