@@ -206,6 +206,18 @@
           "url": "https://downloads.wordpress.org/plugin/quadmenu.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "delicious-brains/amazon-s3-and-cloudfront",
+        "version": "2.0.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.2.0.1.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -232,7 +244,8 @@
     "anders-thorborgd/acf-image-crop-add-on": "^1.4",
     "lester-chan/wp-postratings": "^1.85",
     "mega-menu/quadmenu": "^1.7",
-    "miljar/php-exif": "^0.6.4"
+    "miljar/php-exif": "^0.6.4",
+    "delicious-brains/amazon-s3-and-cloudfront": "^2.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

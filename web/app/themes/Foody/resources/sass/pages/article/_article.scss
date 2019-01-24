@@ -5,17 +5,21 @@
     padding: 20px 0;
 
     .wp-caption {
-      width: 100%;
+      &:not(.alignleft) {
+        &:not(.alignright) {
+          width: 100%;
+        }
+      }
     }
   }
 
-  a{
-    &:visited{
+  a {
+    &:visited {
       color: $color__primary;
     }
   }
 
-  .comments{
+  .comments {
     max-width: 95%;
     margin: 0 auto;
   }
@@ -42,7 +46,7 @@
         }
       }
     }
-    .comments{
+    .comments {
       max-width: 95%;
       margin: 0 auto;
     }

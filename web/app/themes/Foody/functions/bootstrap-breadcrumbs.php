@@ -42,10 +42,12 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
             $foody_post = Foody_Post::create(get_post());
             if(!empty($foody_post)){
                 $cat= $foody_post->get_primary_category();
+                if(!empty($cat))
                 $category = new Foody_Category($cat);
                 $term = $category->term;
-                echo '<li><a href="' .get_term_link($term->term_id) . '">' . $term->name . '</a></li>';
-
+                if(!is_wp_error($term)){
+                    echo '<li><a href="' .get_term_link($term->term_id) . '">' . $term->name . '</a></li>';
+                }
             }
 
             echo '<li class="active"><a>' . get_the_title() . '</a></li>';

@@ -111,6 +111,10 @@ jQuery(document).ready(function ($) {
 
     $('header .navbar-toggler').on('click',()=>{
         $('.quadmenu-navbar-toggle').click();
+    });
+
+    $('body').on('click','.tooltip .close',function () {
+        $(this).closest('.tooltip').tooltip('hide')
     })
 
 });

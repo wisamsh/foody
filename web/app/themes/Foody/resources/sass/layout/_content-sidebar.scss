@@ -154,39 +154,40 @@ body[class~="tag"] {
 
             li {
 
-              &:not(:first-child):before {
-                //content: '';
-              }
-
               box-shadow: none;
 
               &.essb_link_whatsapp {
 
                 a {
-                  background-color: #75b73b !important;
-
                   &:hover {
-                    background-color: #75b73b;
+                    background-color: #75b73b !important;
                   }
                 }
               }
               &.essb_link_pinterest {
 
                 a {
-                  background-color: #c8232c !important;
 
                   &:hover {
-                    background-color: #c8232c;
+                    background-color: #c8232c !important;
                   }
                 }
               }
               &.essb_link_mail, &.essb_link_print {
 
                 a {
-                  background-color: #3a3a3a !important;
+                  &:hover {
+                    background-color: #3a3a3a !important;
+                  }
+                }
+              }
+
+              &.essb_link_facebook {
+
+                a {
 
                   &:hover {
-                    background-color: #3a3a3a;
+                    background-color: $color__facebook !important;
                   }
                 }
               }

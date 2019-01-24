@@ -65,6 +65,34 @@ $content-width: 95%;
 
 .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
 
+  .tooltip {
+    margin-top: -4px;
+    .tooltip-inner {
+      background: white;
+      box-shadow: rgba(0, 0, 0, 0.3) 0 3px 10px;
+      color: $color__text-primary-dark;
+      font-family: $font__assistant;
+      padding: 10px 20px 20px;
+
+      .close {
+        float: none !important;
+        text-align: left;
+        display: block;
+        color: $color__text-primary-dark;
+        opacity: 1;
+      }
+      div {
+        text-align: right;
+      }
+    }
+
+    .arrow {
+      &:before {
+        border-bottom-color: #fff;
+      }
+    }
+  }
+
   article.content {
 
     .title, h2 {
@@ -173,23 +201,12 @@ $content-width: 95%;
             }
           }
 
-          .btn-facebook-share {
-            margin-right: 5px;
+          .essb_item {
             a {
-              color: white;
-              &:hover {
-                color: white;
-              }
-            }
-          }
-
-          .essb_link_facebook {
-            ///#4A4A4A
-            a {
-              background-color: $color__facebook !important;
+              background-color: $color__social !important;
 
               &:hover {
-                background-color: $color__facebook;
+                //background-color: $color__social !important;
               }
             }
           }
@@ -342,7 +359,7 @@ $content-width: 95%;
             list-style-type: none;
             margin-bottom: 0;
             // TODO var text size
-            font-size: 14pt;
+            font-size: 17px;
             li {
             }
 
@@ -1172,7 +1189,7 @@ $content-width: 95%;
 
         .title {
           margin-bottom: 0;
-          font-size: 26px;
+          font-size: 20px;
           margin-top: 20px;
         }
 
@@ -1287,7 +1304,7 @@ $content-width: 95%;
       .recipe-tags {
 
         .title {
-          font-size: 26px;
+          font-size: 20px;
         }
         max-width: calc(100% - #{$content-padding});
         ul {
