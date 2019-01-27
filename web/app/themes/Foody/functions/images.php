@@ -310,3 +310,12 @@ function transfer_iptc_exif_to_image( $image_info, $destination_image, $original
     return false;
 
 }
+
+//add_filter('wp_get_attachment_url', 'clrs_get_attachment_url', 10, 2);
+
+//function clrs_get_attachment_url($url, $post_id) {
+//    // Do what you want to $url
+//
+//    $url = str_replace(home_url() . '/app/uploads','https://s3-eu-west-1.amazonaws.com/foody-media/app',$url);
+//    return $url;
+//}
