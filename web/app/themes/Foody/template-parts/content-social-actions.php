@@ -6,7 +6,7 @@
  * Time: 1:16 PM
  */
 
-$buttons = ['mail', 'pinterest', 'whatsapp','facebook'];
+$buttons = ['gmail', 'pinterest', 'whatsapp','facebook'];
 
 
 

@@ -309,3 +309,14 @@ function my_hook_default_options_themes($settings, $menu_obj) {
     $settings['dropdown']['default'] = 'left';
     return $settings;
 }
+
+
+function foody_remove_item_description($sorted_menu_items, stdClass $args){
+    foreach ($sorted_menu_items as $sorted_menu_item) {
+        unset($sorted_menu_item->description);
+    }
+
+    return $sorted_menu_items;
+}
+
+add_filter('wp_nav_menu_objects', 'foody_remove_item_description', 10, 2);

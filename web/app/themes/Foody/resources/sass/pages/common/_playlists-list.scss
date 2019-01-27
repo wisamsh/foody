@@ -71,8 +71,9 @@
             border-radius: 1em;
             color: $color__primary;
             display: flex;
+            //noinspection CssInvalidPropertyValue
             place-items: center;
-            padding: 0.8em 1.5em;
+            padding: 0.8em 1.6em;
 
             > time {
               font-family: $font__main;

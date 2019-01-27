@@ -62,7 +62,9 @@
         .post-count {
           height: $count-size;
           width: $count-size;
-          line-height: calc(#{$count-size} + 3px);
+          line-height: calc(#{$count-size} + 2px);
+          font-size: 17px;
+          font-weight: 500;
         }
       }
 

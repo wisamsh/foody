@@ -14,9 +14,12 @@ window.calculator = function (selector) {
 
     let originalNumberOfDishes = parseInt($numberOfDishes.data('amount'));
 
-    $numberOfDishes.on('click',function () {
-        $(this).val(null);
-    });
+    if(foodyGlobals.isMobile){
+        $numberOfDishes.on('click',function (e) {
+            $(this).val(null);
+        });
+    }
+
 
     $numberOfDishes.on('change keyup paste', function () {
 

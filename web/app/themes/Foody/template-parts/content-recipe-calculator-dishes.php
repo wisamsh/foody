@@ -13,7 +13,7 @@ $recipe = $template_args['recipe'];
 <label for="number-of-dishes">
     <?php echo $recipe->amount_for ?>
 </label>
-<input name="amount" type="number" id="number-of-dishes" min="1" pattern="\d*"
+<input name="amount" type="number" id="number-of-dishes" min="1" inputmode="numeric" pattern="[0-9]*"
        value="<?php echo $recipe->getNumberOfDishes() ?>"
        data-amount="<?php echo $recipe->getNumberOfDishes() ?>"
 >
