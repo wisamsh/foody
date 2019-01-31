@@ -22,13 +22,13 @@ class Foody_Registration
     public function __construct()
     {
         add_action('login_form_register', array($this, 'do_register_user'));
-//        add_action('login_form_login', array($this, 'redirect_to_custom_login'));
+        add_action('login_form_login', array($this, 'redirect_to_custom_login'));
         add_filter("login_redirect", array($this, 'redirect_admin'), 10, 3);
 
-        add_filter('login_url', function (/** @noinspection PhpUnusedParameterInspection */
-            $url, $redirect, $force_reauth) {
-            return home_url('התחברות');
-        }, 10, 3);
+//        add_filter('login_url', function (/** @noinspection PhpUnusedParameterInspection */
+//            $url, $redirect, $force_reauth) {
+//            return home_url('התחברות');
+//        }, 10, 3);
     }
 
     private function register_user($user_data)
