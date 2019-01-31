@@ -34,7 +34,7 @@ $featured_content_classes[] = 'featured-content-container';
 
                 <?php endif; ?>
 
-                <?php if (method_exists($foody_page, 'before_content')){
+                <?php if (method_exists($foody_page, 'before_content')) {
                     $foody_page->before_content();
                 } ?>
 
@@ -64,6 +64,7 @@ $featured_content_classes[] = 'featured-content-container';
                             <?php
 
                             $foody_page->the_content($foody_page);
+                            Foody_Seo::seo();
 
                         endwhile; // End of the loop.
                     } elseif (is_author() || is_search() || is_category() || is_tag()) {
@@ -79,7 +80,7 @@ $featured_content_classes[] = 'featured-content-container';
                         <?php
 
                         $foody_page->the_content($foody_page);
-
+                        Foody_Seo::seo();
                     }
 
                     ?>
@@ -88,6 +89,7 @@ $featured_content_classes[] = 'featured-content-container';
             </div>
 
         </main><!-- #main -->
+
     </div><!-- #primary -->
 
 <?php

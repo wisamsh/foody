@@ -11,6 +11,12 @@ $sidebar-top-offset: 60px;
     }
   }
 
+  #seo{
+    left: 0;
+    padding-right: 0;
+    max-width: 100%;
+  }
+
   .content {
     padding-top: 15px;
     .featured {
@@ -227,6 +233,10 @@ $sidebar-top-offset: 60px;
 
 @include breakpoint(mobileonly) {
   .homepage {
+
+    #seo{
+      position: initial;
+    }
 
     .cover-image {
 

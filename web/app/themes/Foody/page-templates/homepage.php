@@ -51,6 +51,7 @@ $homepage = new Foody_HomePage();
 
                 </section>
 
+                <?php Foody_Seo::seo() ?>
 
             </section>
 

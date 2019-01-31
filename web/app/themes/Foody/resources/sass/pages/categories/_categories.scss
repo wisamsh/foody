@@ -57,6 +57,11 @@
       }
     }
   }
+
+  #seo{
+    position: initial;
+    width:100%;
+  }
 }
 
 @include breakpoint(mobileonly) {

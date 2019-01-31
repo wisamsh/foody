@@ -121,4 +121,10 @@ jQuery(document).ready(function ($) {
 
     foodyFormMessage('.newsletter');
 
+    let $seo = $('#seo');
+
+    if($seo.length){
+        let height = $seo.height();
+        $('article.content').css('padding-bottom',height + 'px');
+    }
 });

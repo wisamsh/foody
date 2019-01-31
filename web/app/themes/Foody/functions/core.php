@@ -1705,3 +1705,15 @@ function foody_array_to_data_attr($data)
 
     return $data_attrs;
 }
+
+function foody_normalize_content($content)
+{
+    $content = apply_filters('the_content', $content);
+
+    $content = apply_filters('the_content', $content);
+    $content = str_replace('&nbsp;', " ", $content);
+    $content = preg_replace('/\s+/', ' ', $content);
+
+    return $content;
+
+}

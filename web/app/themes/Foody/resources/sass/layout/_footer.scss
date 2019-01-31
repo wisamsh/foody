@@ -1,5 +1,18 @@
 $sidebar-width: 21%;
 
+.seo{
+  width: calc(960px - #{$sidebar-width});
+  text-align: right;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
+  position: absolute;
+  bottom: 0;
+  padding: 5px 20px 5px 0;
+  max-width: 100%;
+  word-break: break-word;
+}
+
 footer.site-footer {
   background-color: rgba(58, 58, 58, 0.05);
   padding: 25px 42px;

@@ -14,9 +14,8 @@ $conversions = $template_args['conversions'];
 
 $options = array_map(function ($conversion) {
 
-    // TODO remove after checking with the Krut
     if(empty($conversion['pan'])){
-        $conversion['pan'] = $conversion['תבנית'];
+        return null;
     }
 
     return [
@@ -25,6 +24,10 @@ $options = array_map(function ($conversion) {
     ];
 
 }, $conversions);
+
+$options = array_filter($options,function ($conv){
+    return !empty($conv);
+});
 
 array_unshift($options, [
     'value' => 1,

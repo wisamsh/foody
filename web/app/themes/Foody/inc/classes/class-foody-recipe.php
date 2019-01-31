@@ -310,9 +310,10 @@ class Foody_Recipe extends Foody_Post
     {
         $content = get_field('preview', $this->post->ID,false);
 
-        $content = apply_filters('the_content',$content);
-        $content = str_replace('&nbsp;', " ", $content);
-        $content = preg_replace('/\s+/', ' ', $content);
+        if(!empty($content)){
+            $content = foody_normalize_content($content);
+        }
+
         echo $content;
     }
 
