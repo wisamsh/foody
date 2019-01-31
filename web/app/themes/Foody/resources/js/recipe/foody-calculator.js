@@ -72,7 +72,8 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
             }
         }
 
-        if (val === originalNumberOfDishes || reset) {
+        // noinspection EqualityComparisonWithCoercionJS
+        if (val == originalNumberOfDishes || reset) {
             text = $this.data('original');
         }
 

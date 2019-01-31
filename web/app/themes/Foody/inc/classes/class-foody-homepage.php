@@ -89,7 +89,8 @@ class Foody_HomePage
             'header' => [
                 'sort' => true,
                 'title' => __('ההמלצות שלנו', 'foody')
-            ]
+            ],
+            'title_el' => 'h2'
         ];
 
         foody_get_template_part(
@@ -137,7 +138,6 @@ class Foody_HomePage
         dynamic_sidebar('foody-social');
         echo "</div></aside>";
     }
-
 
     private function get_featured_posts()
     {

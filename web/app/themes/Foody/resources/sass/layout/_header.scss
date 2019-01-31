@@ -21,6 +21,14 @@ header {
   button {
     &.accessibility {
       z-index: 2;
+
+      i{
+        &:before{
+          color: $color__primary;
+          font-size: 18px;
+          vertical-align: middle;
+        }
+      }
     }
   }
 

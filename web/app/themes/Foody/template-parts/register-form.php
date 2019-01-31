@@ -6,15 +6,21 @@
  * Time: 5:59 PM
  */
 
+$failed = !empty(isset($_GET['register-errors']));
+
+$classes = 'register';
+if ($failed) {
+    $classes = "$classes failed";
+}
 ?>
 
 <h2>הגיע הזמן שנכיר</h2>
 <p>
-    <?php echo __('הרשמו לאתר כדי להגיב, להעלות תמונות של הבישולים שלכם ולהרכיב לעצמם ספר מתכונים אישי עם כל המתכונים שהכי אהבתם.')?>
+    <?php echo __('הרשמו לאתר כדי להגיב, להעלות תמונות של הבישולים שלכם ולהרכיב לעצמם ספר מתכונים אישי עם כל המתכונים שהכי אהבתם.') ?>
 </p>
 <p>משתמש רשום?&nbsp;
     <span style="color: #ed3d48;">
-        <a style="color: #ed3d48;" href="<?php echo get_permalink(get_page_by_path('התחברות'))?>">התחבר</a>
+        <a style="color: #ed3d48;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>">התחבר</a>
     </span>
 </p>
 <p>&nbsp;</p>
@@ -23,25 +29,25 @@
 echo do_shortcode('[wordpress_social_login]');
 ?>
 
-<section class="register">
+<section class="<?php echo $classes ?>">
 
     <div class="container-fluid">
 
         <div class="row">
 
             <div class="row col-12 justify-content-between gutter-0 buttons">
-                    <button class="btn btn-google col-12 col-sm-5">
+                <button class="btn btn-google col-12 col-sm-5">
                                 <span>
                                     <?php echo __('כניסה דרך גוגל', 'foody') ?>
                                 </span>
-                        <i class="icon-Shape1"></i>
-                    </button>
-                    <button class="btn btn-facebook col-12 col-sm-5">
+                    <i class="icon-Shape1"></i>
+                </button>
+                <button class="btn btn-facebook col-12 col-sm-5">
                                 <span>
                                     <?php echo __('הירשמו דרך פייסבוק', 'foody') ?>
                                 </span>
-                        <i class="icon-Facebook"></i>
-                    </button>
+                    <i class="icon-Facebook"></i>
+                </button>
             </div>
 
             <div class="row col-12 justify-content-between gutter-0 dividers">
@@ -57,7 +63,17 @@ echo do_shortcode('[wordpress_social_login]');
             </div>
 
             <form id="register-form" action="<?php echo wp_registration_url(); ?>" class="row" method="post">
-
+                <?php if (isset($_GET['register-errors']) && $_GET['register-errors'] == 'email_exists') : ?>
+                    <div role="alert" class="alert foody-alert alert-dismissible alert-danger login-failed-alert">
+                        <span><?php echo __('כתובת המייל כבר קיימת במערכת.', 'foody'); ?></span>
+                        <a href="<?php echo wp_login_url() ?>">
+                            <?php echo __('התחבר') ?>
+                        </a>
+                        <a class="close" data-dismiss="alert">
+                            ×
+                        </a>
+                    </div>
+                <?php endif; ?>
                 <div class="form-group col-12 required-input">
                     <label for="email">
                         <?php echo __('כתובת מייל', 'foody') ?>

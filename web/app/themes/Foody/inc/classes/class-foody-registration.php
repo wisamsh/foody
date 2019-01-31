@@ -22,10 +22,13 @@ class Foody_Registration
     public function __construct()
     {
         add_action('login_form_register', array($this, 'do_register_user'));
-        add_action('login_form_login', array($this, 'redirect_to_custom_login'));
+//        add_action('login_form_login', array($this, 'redirect_to_custom_login'));
         add_filter("login_redirect", array($this, 'redirect_admin'), 10, 3);
 
-
+        add_filter('login_url', function (/** @noinspection PhpUnusedParameterInspection */
+            $url, $redirect, $force_reauth) {
+            return home_url('התחברות');
+        }, 10, 3);
     }
 
     private function register_user($user_data)
@@ -55,7 +58,7 @@ class Foody_Registration
         }
 
         /** @noinspection PhpUndefinedVariableInspection */
-        $user_data = array(
+        $user_data_db = array(
             'user_login' => $email,
             'user_email' => $email,
             'user_pass' => $password,
@@ -64,7 +67,7 @@ class Foody_Registration
             'nickname' => $first_name,
         );
 
-        $user_id = wp_insert_user($user_data);
+        $user_id = wp_insert_user($user_data_db);
         if (!is_wp_error($user_id)) {
             /** @noinspection PhpUndefinedVariableInspection */
             update_user_meta($user_id, 'phone_number', $phone_number);

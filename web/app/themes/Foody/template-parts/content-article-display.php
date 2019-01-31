@@ -12,7 +12,7 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();;
 ?>
 
 
-<section class="categories section">
+<section class="categories section no-print">
     <h2 class="title">
         <?php echo __('קטגוריות') ?>
     </h2>
@@ -26,7 +26,7 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();;
 $tags = wp_get_post_tags(get_the_ID());
 if (!empty($tags)) {
     ?>
-    <section class="tags section">
+    <section class="tags section no-print">
         <h2 class="title">
             <?php echo __('תגיות', 'foody') ?>
         </h2>

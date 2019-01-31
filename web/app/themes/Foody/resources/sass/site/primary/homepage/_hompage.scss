@@ -14,25 +14,6 @@ $sidebar-top-offset: 60px;
   .content {
     padding-top: 15px;
     .featured {
-
-      //.recipe-item-details {
-      //  .image-container {
-      //
-      //    & + section {
-      //      padding-right: 0;
-      //    }
-      //
-      //    img {
-      //      margin: 0 auto;
-      //      display: block;
-      //    }
-      //  }
-      //}
-      //
-      //img.recipe-item-image {
-      //  width: 100%;
-      //}
-
     }
 
     .title {
@@ -239,7 +220,7 @@ $sidebar-top-offset: 60px;
     }
   }
 
-  h3 {
+  h1,h2,h3 {
     font-size: 22px;
   }
 }

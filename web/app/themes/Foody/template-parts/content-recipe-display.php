@@ -177,7 +177,7 @@ $recipe = $template_args['recipe'];
 
 <?php if ($recipe->has_nutrients()): ?>
 
-    <section class="recipe-nutrition box">
+    <section class="recipe-nutrition box no-print">
 
         <?php $recipe->the_nutrition() ?>
 
@@ -186,7 +186,7 @@ $recipe = $template_args['recipe'];
 <?php endif; ?>
 
 
-<section class="recipe-categories categories">
+<section class="recipe-categories categories no-print">
     <?php $recipe->the_categories() ?>
 </section>
 
@@ -200,7 +200,7 @@ $recipe = $template_args['recipe'];
 
 <?php if ($recipe->has_tags()): ?>
 
-    <section class="recipe-tags tags">
+    <section class="recipe-tags tags no-print">
 
         <h2 class="title">
             <?php echo __('תגיות', 'foody') ?>

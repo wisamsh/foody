@@ -49,8 +49,6 @@ $user = new Foody_User();
                 <!--                </span>-->
                 <?php if (!wp_is_mobile()): ?>
                     <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility">
-<!--                        <img src="--><?php //echo $GLOBALS['images_dir'] . 'accessibility.svg' ?><!--"-->
-<!--                             alt="--><?php //echo __('נגישות') ?><!--">-->
                         <?php $header->accessibility(); ?>
                         <div id="accessibility-container"></div>
                     </button>
