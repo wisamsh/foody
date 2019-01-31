@@ -44,9 +44,8 @@ footer.site-footer {
       .newsletter {
         margin-bottom: 15px;
 
-        .input-container {
-          padding-right: 0;
-
+        p {
+          margin: 0;
           input {
             height: 40px;
             border-radius: 3px;
@@ -56,24 +55,29 @@ footer.site-footer {
             padding: 0 5px;
             font-family: $font__assistant;
 
+            &[type="email"] {
+              width: 60%;
+              margin-left: 10px;
+            }
+
             //noinspection CssInvalidPseudoSelector
             &::placeholder {
               font-family: $font__main;
               font-size: 16px;
               font-weight: normal;
             }
-          }
-        }
 
-        button[type="submit"] {
-          border-radius: 3px;
-          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-          background-color: #ffffff;
-          border: none;
-          color: $color__primary;
-          font-size: 1em;
-          cursor: pointer;
-          font-weight: 900;
+            &[type="submit"] {
+              border-radius: 3px;
+              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+              background-color: #ffffff;
+              border: none;
+              color: $color__primary;
+              font-size: 1em;
+              cursor: pointer;
+              font-weight: 900;
+            }
+          }
         }
       }
 
@@ -117,41 +121,43 @@ footer.site-footer {
         font-size: 20px;
       }
 
-      .newsletter {
-        form {
-          .newsletter-input {
-            padding: 12px;
-            border-radius: 3px;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-            background-color: #ffffff;
-            border: none;
-            font-size: 18px;
-          }
+      //.newsletter {
+      form {
+        .newsletter-input {
+          height: 40px;
+          padding: 12px;
+          border-radius: 3px;
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+          background-color: #ffffff;
+          border: none;
+          font-size: 18px;
+        }
 
-          .input-container {
-            padding-right: 0;
-            input[type="email"] {
-              @extend .newsletter-input;
-              width: 100%;
+        p {
+          margin: 0;
+          text-align: right;
+          input[type="email"] {
+            @extend .newsletter-input;
+            width: 70%;
+            margin-left: 10px;
+            //noinspection CssInvalidPseudoSelector
+            &::placeholder {
+              opacity: 0.5;
+              font-size: 18px;
+              font-weight: normal;
+              font-family: $font__main;
 
-              //noinspection CssInvalidPseudoSelector
-              &::placeholder {
-                opacity: 0.5;
-                font-size: 18px;
-                font-weight: normal;
-                font-family: $font__main;
-
-              }
             }
           }
 
-          button {
+          input[type="submit"] {
             @extend .newsletter-input;
             color: $color__primary;
             font-weight: 900;
           }
-
         }
+
+        //}
       }
 
     }

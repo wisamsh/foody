@@ -79,16 +79,16 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
                 'classes' => 'show active',
                 'link_classes' => 'active'
             ],
-            [
-                'title' => sprintf(__('פלייליסטים (%s)'), $playlists['count']),
-                'target' => 'playlists-tab-pane',
-                'content' =>
-                    $this->get_posts_grid(
-                        $playlists['posts'],
-                        'playlist',
-                        $playlists['more']
-                    )
-            ]
+//            [
+//                'title' => sprintf(__('פלייליסטים (%s)'), $playlists['count']),
+//                'target' => 'playlists-tab-pane',
+//                'content' =>
+//                    $this->get_posts_grid(
+//                        $playlists['posts'],
+//                        'playlist',
+//                        $playlists['more']
+//                    )
+//            ]
         ];
 
         foody_get_template_part(get_template_directory() . '/template-parts/common/foody-tabs.php', $tabs);

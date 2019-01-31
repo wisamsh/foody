@@ -17,13 +17,14 @@ $button_classes = foody_get_array_default($template_args,'button_classes','col-3
 </h4>
 
 <section class="newsletter">
-    <form class="row justify-content-between" method="post">
-        <div class="input-container <?php echo $input_classes?>">
-            <input type="email" placeholder="<?php echo __('הכנס כתובת מייל', 'foody') ?>">
-
-        </div>
-        <button type="submit" class="<?php echo $button_classes?>">
-            <?php echo __('הרשמה', 'foody') ?>
-        </button>
-    </form>
+    <?php echo do_shortcode('[contact-form-7 id="3101" title="ניוזלטר"]')?>
+<!--    <form class="row justify-content-between" method="post">-->
+<!--        <div class="input-container --><?php //echo $input_classes?><!--">-->
+<!--            <input type="email" placeholder="--><?php //echo __('הכנס כתובת מייל', 'foody') ?><!--">-->
+<!---->
+<!--        </div>-->
+<!--        <button type="submit" class="--><?php //echo $button_classes?><!--">-->
+<!--            --><?php //echo __('הרשמה', 'foody') ?>
+<!--        </button>-->
+<!--    </form>-->
 </section>

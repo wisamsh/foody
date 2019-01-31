@@ -110,15 +110,15 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
                 'classes' => 'show active',
                 'link_classes' => 'active'
             ],
-            [
-                'title' => sprintf(__('פלייליסטים (%s)'), $playlists['count']),
-                'target' => 'playlists-tab-pane',
-                'content' =>
-                    $this->get_posts_grid(
-                        $playlists['posts'],
-                        'playlist'
-                    )
-            ]
+//            [
+//                'title' => sprintf(__('פלייליסטים (%s)'), $playlists['count']),
+//                'target' => 'playlists-tab-pane',
+//                'content' =>
+//                    $this->get_posts_grid(
+//                        $playlists['posts'],
+//                        'playlist'
+//                    )
+//            ]
         ];
 
         foody_get_template_part(get_template_directory() . '/template-parts/common/foody-tabs.php', $tabs);

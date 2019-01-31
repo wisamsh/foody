@@ -140,7 +140,7 @@ class FoodyTeam
                 ),
                 'return' => true
             );
-            $sort = '<div class="sort">' .
+            $sort = '<div class="sort team-sort">' .
                 foody_get_template_part(get_template_directory() . '/template-parts/common/foody-select.php', $select_args) .
                 '</div>';
         }

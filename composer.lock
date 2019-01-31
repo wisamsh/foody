@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0966e01e982a8d2202ad38d763908054",
+    "content-hash": "6454b06c4b6661158198fa660335b577",
     "packages": [
         {
             "name": "anders-thorborgd/acf-image-crop-add-on",
@@ -792,6 +792,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/wordpress-seo.9.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "zaus-atlanticbt-spkane/forms-3rdparty-integration",
+            "version": "1.7.8",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/forms-3rdparty-integration.zip",
                 "reference": null,
                 "shasum": null
             },

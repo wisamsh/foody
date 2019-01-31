@@ -218,6 +218,18 @@
           "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.2.0.1.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "zaus-atlanticbt-spkane/forms-3rdparty-integration",
+        "version": "1.7.8",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/forms-3rdparty-integration.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -245,7 +257,8 @@
     "lester-chan/wp-postratings": "^1.85",
     "mega-menu/quadmenu": "^1.7",
     "miljar/php-exif": "^0.6.4",
-    "delicious-brains/amazon-s3-and-cloudfront": "^2.0"
+    "delicious-brains/amazon-s3-and-cloudfront": "^2.0",
+    "zaus-atlanticbt-spkane/forms-3rdparty-integration": "^1.7"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

@@ -246,12 +246,12 @@ class Foody_Query
             return [];
         }
 
-        $args = array_merge($args, [
+        $args = array_merge([
             'post__in' => $posts,
-            'post_type' => ['foody_recipe', 'foody_playlist'],
+//            'post_type' => ['foody_recipe', 'foody_playlist'],
             'orderby' => 'date',
             'order' => 'DESC'
-        ]);
+        ], $args);
 
         return self::get_args($args);
     }
@@ -302,7 +302,7 @@ class Foody_Query
         }
 
         $filter_args = $this->parse_query_args($context, $context_args);
-        $foody_args = array_merge($foody_args, $filter_args);
+        $foody_args = array_merge($filter_args, $foody_args);
         return $foody_args;
     }
 

@@ -81,6 +81,8 @@ require('./contact-us');
 require('./tag');
 require('./items');
 
+window.foodyFormMessage = require('./common/cf7-messages');
+
 
 
 jQuery(document).ready(function ($) {
@@ -115,6 +117,8 @@ jQuery(document).ready(function ($) {
 
     $('body').on('click','.tooltip .close',function () {
         $(this).closest('.tooltip').tooltip('hide')
-    })
+    });
+
+    foodyFormMessage('.newsletter');
 
 });

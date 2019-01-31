@@ -3,13 +3,18 @@
 .page-template {
   &.team {
     .sort {
-      padding: 10px 0;
+      padding: 5px 0 10px;
       .foody-select {
         width: 120px;
+
+        a{
+          color: $color__text-primary-dark;
+        }
 
         .btn {
           &.dropdown-toggle {
             z-index: 0;
+            font-size: 18px;
 
             &:after {
               top: 50%;

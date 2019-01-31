@@ -201,10 +201,10 @@ class Foody_Recipe extends Foody_Post
             }
             $item['data_name'] = $nutrients_name;
             $decimals = 0;
-            if($nutrients_name == 'protein'){
+            if ($nutrients_name == 'protein') {
                 $decimals = 1;
             }
-            $item['value'] = number_format($item['value'],$decimals,'.','');
+            $item['value'] = number_format($item['value'], $decimals, '.', '');
             $nutrients[] = $item;
         }
 
@@ -308,7 +308,12 @@ class Foody_Recipe extends Foody_Post
 
     public function preview()
     {
-        the_field('preview', $this->post->ID);
+        $content = get_field('preview', $this->post->ID,false);
+
+        $content = apply_filters('the_content',$content);
+        $content = str_replace('&nbsp;', " ", $content);
+        $content = preg_replace('/\s+/', ' ', $content);
+        echo $content;
     }
 
     public function the_ingredients_title()

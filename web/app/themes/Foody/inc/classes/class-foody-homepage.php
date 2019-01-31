@@ -53,7 +53,7 @@ class Foody_HomePage
     public function team()
     {
         $data = $this->team->list_authors();
-        echo '<h3 class="title">הנבחרת שלנו</h3>';
+        echo '<h1 class="title">הנבחרת שלנו</h1>';
         echo '<div class="team-listing row" data-count="' . $data['count'] . '" dir="rtl">';
 
         echo $data['content'];
