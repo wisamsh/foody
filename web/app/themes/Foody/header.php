@@ -44,9 +44,6 @@ $user = new Foody_User();
                     <?php get_search_form(); ?>
                 </div>
 
-                <!--                <span class="run-desktop run">-->
-                <!--                    --><?php //echo __('בהרצה') ?>
-                <!--                </span>-->
                 <?php if (!wp_is_mobile()): ?>
                     <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility">
                         <?php $header->accessibility(); ?>
@@ -91,7 +88,6 @@ $user = new Foody_User();
                     <div id="accessibility-container"></div>
                 </button>
 
-
                 <?php
                 $nav_args = array(
                     'theme_location' => 'primary',
@@ -99,6 +95,8 @@ $user = new Foody_User();
 
                 wp_nav_menu($nav_args);
                 ?>
+
+                <?php Foody_Social::whatsapp(['d-block', 'd-lg-none']) ?>
 
                 <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none">
 
@@ -149,4 +147,5 @@ $user = new Foody_User();
     </header><!-- #masthead -->
 
     <div id="content" class="site-content">
+        <?php Foody_Social::whatsapp(['d-none', 'd-lg-block', 'floating']) ?>
 

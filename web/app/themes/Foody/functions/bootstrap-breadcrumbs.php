@@ -40,19 +40,15 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
         if (is_single() && !is_category() && !is_page()) {
 
             $foody_post = Foody_Post::create(get_post());
-            if(!empty($foody_post)){
-                $cat= $foody_post->get_primary_category();
-                if(!empty($cat))
-                $category = new Foody_Category($cat);
+            if (!empty($foody_post)) {
+                $cat = $foody_post->get_primary_category();
+                if (!empty($cat))
+                    $category = new Foody_Category($cat);
                 $term = $category->term;
-                if(!is_wp_error($term)){
-                    echo '<li><a href="' .get_term_link($term->term_id) . '">' . $term->name . '</a></li>';
+                if (!is_wp_error($term)) {
+                    echo '<li><a href="' . get_term_link($term->term_id) . '">' . $term->name . '</a></li>';
                 }
             }
-
-            echo '<li class="active"><a>' . get_the_title() . '</a></li>';
-
-
         }
         if (is_category()) {
 
@@ -109,7 +105,7 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
         } elseif (is_404()) {
             echo '<li class="active">404</li>';
         } elseif (is_tag()) {
-            echo '<li class="active">'. get_term(get_queried_object_id())->name .'</li>';
+            echo '<li class="active">' . get_term(get_queried_object_id())->name . '</li>';
         }
         echo '</ol>';
     }

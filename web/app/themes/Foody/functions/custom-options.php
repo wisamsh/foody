@@ -6,8 +6,9 @@
  * Time: 11:51 AM
  */
 
-register_setting('discussion','hid_per_page');
-
+register_setting('discussion', 'hid_per_page');
+register_setting('discussion', 'whatsapp_phone_number_toggle');
+register_setting('discussion', 'whatsapp_phone_number');
 
 $page_name_search_options = __('הגדרות חיפוש - פודי', 'foody');
 $page_name_purchase_buttons = __('כפתורי רכישה', 'foody');
@@ -105,21 +106,38 @@ function validate_args($args)
 }
 
 
-function custom_options()
+function foody_custom_options()
 {
-
-    register_setting('discussion', 'hid_per_page');
-
-    add_settings_field('hid_per_page', __('מספר ״איך יצא לי״ בעמוד'), 'foody_custom_options_callback', 'discussion');
-
-    function foody_custom_options_callback()
+    // number of how i did per page
+    add_settings_field('hid_per_page', __('מספר ״איך יצא לי״ בעמוד'), 'foody_hid_per_page_callback', 'discussion');
+    function foody_hid_per_page_callback()
     {
-
         $options = get_option('hid_per_page', 3);
 
-        echo '<input type="number" id="hid_per_page" name="hid_per_page" value="' . $options . '"></input>';
+        echo '<input type="number" id="hid_per_page" name="hid_per_page" value="' . $options . '">';
+
+    }
+
+    // WhatsApp business phone number
+    add_settings_field('whatsapp_phone_number', __('מספר טלפון (WhatsApp)'), 'foody_whatsapp_phone_number_callback', 'discussion');
+    function foody_whatsapp_phone_number_callback()
+    {
+
+        $options = get_option('whatsapp_phone_number');
+
+        echo '<input type="tel" id="whatsapp_phone_number" name="whatsapp_phone_number" value="' . $options . '">';
+
+    }
+
+    // WhatsApp business toggle
+    add_settings_field('whatsapp_phone_number_toggle', __('הצג WhatsApp'), 'foody_whatsapp_phone_number_toggle_callback', 'discussion');
+    function foody_whatsapp_phone_number_toggle_callback()
+    {
+        $options = get_option('whatsapp_phone_number_toggle', false);
+        $checked = $options ? 'checked' : '';
+        echo '<input ' . $checked . ' type="checkbox" id="whatsapp_phone_number_toggle" name="whatsapp_phone_number_toggle">';
 
     }
 }
 
-add_action('admin_init', 'custom_options');
+add_action('admin_init', 'foody_custom_options');

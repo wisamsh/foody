@@ -4,8 +4,19 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6454b06c4b6661158198fa660335b577",
+    "content-hash": "76b383949adb23690ede73377357bd97",
     "packages": [
+        {
+            "name": "alexandre-caporal/wp-whatsapp-chat",
+            "version": "3.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-whatsapp-chat.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
         {
             "name": "anders-thorborgd/acf-image-crop-add-on",
             "version": "1.4.12",
