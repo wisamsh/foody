@@ -200,6 +200,7 @@ class Foody_Recipe extends Foody_Post
 
             }
             $item['data_name'] = $nutrients_name;
+            $item['unit'] = Foody_Ingredient::get_nutrient_unit($nutrients_name);
             $decimals = 0;
             if ($nutrients_name == 'protein') {
                 $decimals = 1;

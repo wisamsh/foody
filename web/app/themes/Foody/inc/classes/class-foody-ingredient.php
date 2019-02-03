@@ -283,7 +283,31 @@ class Foody_Ingredient extends Foody_Post
 
     public static function get_nutrients_options()
     {
-        return get_field_object('field_5b62c59c35d88')['choices'];
+        $nutrients = get_field_object('field_5b62c59c35d88')['choices'];
+        unset($nutrients['sugar']);
+        return $nutrients;
+    }
+
+    /**
+     * @param $nutrient
+     * @return string
+     */
+    public static function get_nutrient_unit($nutrient)
+    {
+        $nutrients = self::get_nutrients_options();
+        $gram = __('גרם');
+        $nutrients['calories'] = __('קק״ל');
+        $nutrients['carbohydrates'] = $gram;
+        $nutrients['fats'] = $gram;
+        $nutrients['protein'] = $gram;
+        $nutrients['sodium'] = __('מ״ג');
+
+        $unit = '';
+
+        if (isset($nutrients[$nutrient])) {
+            $unit = $nutrients[$nutrient];
+        }
+        return $unit;
     }
 
     function __clone()
