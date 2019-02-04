@@ -656,6 +656,16 @@ header {
       }
     }
 
+    #quadmenu {
+      .quadmenu-navbar-collapse {
+        &.collapse {
+          &.in {
+            height: 100vh;
+          }
+        }
+      }
+    }
+
     nav {
       &.navbar.navbar-light {
         height: 60px;
@@ -904,7 +914,6 @@ header {
           &.btn-search {
             //margin-right: auto;
           }
-
 
         }
 

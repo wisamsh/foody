@@ -247,6 +247,7 @@ body[class~="tag"] {
       li:not(:first-child):before {
         content: "• ";
         padding: 0 .5rem;
+        color: $color__primary;
       }
 
       li {

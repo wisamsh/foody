@@ -14,8 +14,8 @@ window.calculator = function (selector) {
 
     let originalNumberOfDishes = parseInt($numberOfDishes.data('amount'));
 
-    if(foodyGlobals.isMobile){
-        $numberOfDishes.on('click',function (e) {
+    if (foodyGlobals.isMobile) {
+        $numberOfDishes.on('click', function (e) {
             $(this).val(null);
         });
     }
@@ -81,8 +81,9 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 
 
         $name.text(name);
-
-        $this.text(text);
+        if (parseFloat(text) > 0) {
+            $this.text(text);
+        }
     });
 }
 
@@ -117,7 +118,9 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
             decimals = 1;
         }
 
-        $('.value', this).text(prettyNumber(totalValueForNutrient,decimals))
+        if (totalValueForNutrient > 0) {
+            $('.value', this).text(prettyNumber(totalValueForNutrient, decimals))
+        }
 
     });
 }
