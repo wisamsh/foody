@@ -233,6 +233,11 @@ class Foody_User
                     if (!empty($image)) {
                         $image = "<img class='avatar' src='$image' >";
                     }
+                }elseif(isset($user_images['full'])){
+                    $image = $user_images['full'];
+                    if (!empty($image)) {
+                        $image = "<img class='avatar' src='$image' >";
+                    }
                 }
             } else {
                 $image = wsl_get_wp_user_custom_avatar('gravatar.com', $this->user->ID, $size, '', '');

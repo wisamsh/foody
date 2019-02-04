@@ -4,19 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "76b383949adb23690ede73377357bd97",
+    "content-hash": "4f09418218d16a7a54602dfe79fdcaf8",
     "packages": [
-        {
-            "name": "alexandre-caporal/wp-whatsapp-chat",
-            "version": "3.1",
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-whatsapp-chat.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin"
-        },
         {
             "name": "anders-thorborgd/acf-image-crop-add-on",
             "version": "1.4.12",
@@ -187,6 +176,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9MTMxNzg3fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTIzIDEyOjE1OjI5",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "flippercode/wp-user-avatar",
+            "version": "2.1.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-user-avatar.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -821,6 +821,17 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "alexandre-caporal/wp-whatsapp-chat",
+            "version": "3.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-whatsapp-chat.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
         {
             "name": "delicious-brains/amazon-web-services",
             "version": "1.0.5",

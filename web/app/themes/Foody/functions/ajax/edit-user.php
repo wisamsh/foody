@@ -78,11 +78,6 @@ function foody_edit_profile_picture()
     $id = get_current_user_id();
 
     $avatar = wp_handle_upload($_FILES['photo'], array(
-        'mimes' => array(
-            'jpg|jpeg|jpe' => 'image/jpeg',
-            'gif' => 'image/gif',
-            'png' => 'image/png',
-        ),
         'test_form' => false,
         'unique_filename_callback' => 'wp_user_avatars_unique_filename_callback'
     ));

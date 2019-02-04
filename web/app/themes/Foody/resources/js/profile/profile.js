@@ -61,8 +61,8 @@ jQuery(document).ready(($) => {
         grid: '#my-channels-grid',
         cols: 1,
         page: '.page-template-profile',
-        context:'profile',
-        contextArgs:['channels']
+        context: 'profile',
+        contextArgs: ['channels']
     });
 
     new FoodySearchFilter({
@@ -70,8 +70,8 @@ jQuery(document).ready(($) => {
         grid: '#my-recipes-grid',
         cols: 1,
         page: '.page-template-profile',
-        context:'profile',
-        contextArgs:['favorites']
+        context: 'profile',
+        contextArgs: ['favorites']
     });
 
     // Tab switch analytics
@@ -269,57 +269,58 @@ jQuery(document).ready(($) => {
         let block = image.split(";");
         // Get the content type
         let contentType = block[0].split(":")[1];// In this case "image/gif"
-        // get the real base64 content of the file
-        let realData = block[1].split(",")[1];// In this case "iVBORw0KGg...."
 
-        // Convert to blob
-        let blob = b64toBlob(realData, contentType);
+        let loader = new FoodyLoader({container:$('.modal-body',$uploadModal)});
+        loader.attach();
 
-        // Create a FormData and append the file
-        let fd = new FormData();
-        fd.append("photo", blob);
-        $.ajax({
-            url: "/wp/wp-admin/admin-ajax.php?action=foody_edit_profile_picture",
-            data: fd,// the formData function is available in almost all new browsers.
-            type: "POST",
-            contentType: false,
-            processData: false,
-            cache: false,
-            dataType: "json", // Change this according to your response from the server.
-            error: function (err) {
-                console.error(err);
-            },
-            success: function (data) {
-                console.log(data);
-            },
-            complete: function () {
-                console.log("Request finished.");
-            }
+        $uploadModal.block({message:''});
+        srcToFile(
+            image,
+            'photo.' + contentType.split('/')[1],
+            contentType
+        ).then(function (file) {
+
+            // Create a FormData and append the file
+            let fd = new FormData();
+            fd.append("photo", file);
+            $.ajax({
+                url: "/wp/wp-admin/admin-ajax.php?action=foody_edit_profile_picture",
+                data: fd,// the formData function is available in almost all new browsers.
+                type: "POST",
+                contentType: false,
+                processData: false,
+                cache: false,
+                dataType: "json", // Change this according to your response from the server.
+                error: function (err) {
+                    console.error(err);
+                },
+                success: function (data) {
+                    console.log(data);
+
+                    let url = data.data.url;
+                    $('.profile-picture-container img').attr('src', url);
+                    $('.profile-top .user-details img.avatar').attr('src', url);
+                    $uploadModal.modal('hide');
+                },
+                complete: function () {
+                    loader.detach();
+                    $uploadModal.unblock();
+                }
+            });
         });
+
+
     }
 
-    function b64toBlob(b64Data, contentType, sliceSize) {
-        contentType = contentType || '';
-        sliceSize = sliceSize || 512;
-
-        let byteCharacters = atob(b64Data);
-        let byteArrays = [];
-
-        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-            let slice = byteCharacters.slice(offset, offset + sliceSize);
-
-            let byteNumbers = new Array(slice.length);
-            for (let i = 0; i < slice.length; i++) {
-                byteNumbers[i] = slice.charCodeAt(i);
-            }
-
-            let byteArray = new Uint8Array(byteNumbers);
-
-            byteArrays.push(byteArray);
-        }
-
-        return new Blob(byteArrays, {type: contentType});
+    function srcToFile(src, fileName, mimeType) {
+        return (fetch(src)
+                .then(function (res) {
+                    return res.arrayBuffer();
+                })
+                .then(function (buf) {
+                    return new File([buf], fileName, {type: mimeType});
+                })
+        );
     }
-
 
 });

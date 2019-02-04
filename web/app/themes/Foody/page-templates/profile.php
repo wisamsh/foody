@@ -35,16 +35,16 @@ get_header(); ?>
                                     <div class="d-inline-block image-container col-2">
                                         <?php echo $foody_profile->get_image() ?>
 
-                                        <!--                                        <form id="upload-photo" action="">-->
-                                        <!--                                            <label for="upload-photo-input">-->
-                                        <!--                                                <img src="-->
-                                        <?php //echo get_template_directory_uri() . '/resources/images/upload-photo.svg' ?><!--"-->
-                                        <!--                                                     alt="-->
-                                        <?php //echo __('העלה תמונה') ?><!--">-->
-                                        <!--                                            </label>-->
-                                        <!--                                            <input type="file" name="photo" id="upload-photo-input"-->
-                                        <!--                                                   style="display: none" accept="image/*">-->
-                                        <!--                                        </form>-->
+                                        <form id="upload-photo" action="">
+                                            <label for="upload-photo-input">
+                                                <img src="
+                                        <?php echo get_template_directory_uri() . '/resources/images/upload-photo.svg' ?>"
+                                                     alt="
+                                        <?php echo __('העלה תמונה') ?>">
+                                            </label>
+                                            <input type="file" name="photo" id="upload-photo-input"
+                                                   style="display: none" accept="image/*">
+                                        </form>
                                         <?php
                                         foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', [
                                             'id' => 'profile-pic-upload-modal',

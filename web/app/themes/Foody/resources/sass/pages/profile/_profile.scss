@@ -99,13 +99,14 @@ $sidebar-width: 25%;
 .page-template-profile {
 
   #page {
-    background-color: white;
+    //background-color: white;
   }
 
   .crop-container {
     width: 100%;
     .cropper-container {
       margin: 0 auto;
+      max-width: 100%;
     }
     img {
       width: 100%;
@@ -189,6 +190,12 @@ $sidebar-width: 25%;
                 color: #b0b0b0;
               }
             }
+          }
+        }
+
+        #upload-photo {
+          label {
+            cursor: pointer;
           }
         }
       }
@@ -679,6 +686,14 @@ Tablet landscape
 
                 &.active {
                 }
+              }
+            }
+          }
+
+          #upload-photo {
+            label {
+              img {
+                width: 30px;
               }
             }
           }
