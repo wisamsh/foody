@@ -130,7 +130,7 @@ abstract class Foody_Term
             'header' => [
                 'sort' => true
             ],
-            'title_el'=>'h1'
+//            'title_el'=>'h1'
         ];
 
         $grid = array_merge_recursive($grid_args, $grid);

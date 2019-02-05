@@ -59,7 +59,7 @@ $content-width: 95%;
             font-size: 35px;
             line-height: normal;
             position: absolute;
-            top: -13.5px;
+            top: -12.5px;
             display: block;
             padding-left: 10px;
           }
@@ -75,6 +75,7 @@ $content-width: 95%;
       background-color: #d8d8d8;
       padding: 10px 20px;
       margin-bottom: 10px;
+
       .newsletter {
         padding: 0;
         margin-bottom: 0;
@@ -89,7 +90,7 @@ $content-width: 95%;
       p {
         margin: 0;
         text-align: right;
-        input {
+        input:not([type="checkbox"]) {
           border: none;
           height: 40px;
           box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
@@ -115,7 +116,7 @@ $content-width: 95%;
         }
       }
 
-      .foody-form-message{
+      .foody-form-message {
         text-align: right;
 
       }
@@ -182,6 +183,18 @@ $content-width: 95%;
     .content {
       .newsletter {
         margin-bottom: 0;
+
+        .wpcf7-acceptance {
+
+          span {
+            &.wpcf7-list-item {
+
+            }
+          }
+        }
+        .accept-label {
+          color: initial;
+        }
 
         h4 {
         }

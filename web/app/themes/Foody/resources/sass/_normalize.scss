@@ -565,19 +565,18 @@ figure {
 
 #whatsapp {
 
-  &:hover{
+  &:hover {
     background-color: transparent;
     border-color: transparent;
   }
 
-  &:active{
+  &:active {
     box-shadow: none;
   }
 
-  .ripple-container{
+  .ripple-container {
     display: none;
   }
-
 
   &.floating {
     position: fixed;
@@ -585,15 +584,15 @@ figure {
     height: 48px;
     bottom: 20px;
     right: 20px;
-
-    i{
-      &:before{
+    z-index: 2;
+    i {
+      &:before {
         font-size: 50px;
       }
     }
   }
 }
 
-.essb-customizer-toggle{
+.essb-customizer-toggle {
   display: none !important;
 }
