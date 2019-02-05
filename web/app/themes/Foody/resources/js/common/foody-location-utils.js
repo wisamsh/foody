@@ -15,7 +15,7 @@ module.exports = (function () {
 
 
             let {protocol, pathname, host} = window.location;
-            if (search === null) {
+            if (search == null) {
                 search = window.location.search;
             }
 

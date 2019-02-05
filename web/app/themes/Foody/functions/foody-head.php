@@ -189,3 +189,13 @@ function foody_category_pagination()
 }
 
 add_action('wp_head', 'foody_category_pagination');
+
+
+function add_filter_query_arg($vars)
+{
+    $vars['filterQueryArg'] = Foody_Query::$filter_query_arg;
+
+    return $vars;
+}
+
+add_filter('foody_js_globals', 'add_filter_query_arg');

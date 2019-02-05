@@ -34,6 +34,8 @@ class Foody_Query
         'au' => 'authors'
     ];
 
+    public static $filter_query_arg = 'filter';
+
     /**
      * Foody_Query constructor.
      */
@@ -60,20 +62,20 @@ class Foody_Query
 
     private function parse_query_args($context, $context_args)
     {
-        $query_args = array_keys(self::$query_params);
+//        $query_args = array_keys(self::$query_params);
         $foody_search = new Foody_Search($context, $context_args);
 
         $args = [
-            'types' => [],
+            'types' => $this->_parse_query_values(),
             'after_foody_query' => true
         ];
 
-        foreach ($query_args as $query_arg) {
-            $value = $this->foody_get_query_arg($query_arg);
-            if (!empty($value)) {
-                $args['types'] = array_merge($this->parse_query_values($query_arg), $args['types']);
-            }
-        }
+//        foreach ($query_args as $query_arg) {
+//            $value = $this->foody_get_query_arg($query_arg);
+//            if (!empty($value)) {
+//                $args['types'] = array_merge($this->parse_query_values($query_arg), $args['types']);
+//            }
+//        }
 
         return $foody_search->build_query($args, [], '', true);
     }
@@ -82,11 +84,47 @@ class Foody_Query
     {
         $value = '';
 
-        if (isset($_GET[self::$query_prefix . $key])) {
-            $value = $_GET[self::$query_prefix . $key];
+        if (isset($_GET[$key])) {
+            $value = $_GET[$key];
         }
 
         return $value;
+    }
+
+    private function _parse_query_values()
+    {
+        // return value
+        $filter_types = [];
+
+        $filter_value = $this->array_query_string_to_array(self::$filter_query_arg);
+        if (!empty($filter_value)) {
+            $filter_options = get_field('filters_list', 'foody_search_options');
+            $all_options = [];
+
+            foreach ($filter_options as $filter_option) {
+                if (!empty($filter_option) && !empty($filter_option['values'])) {
+                    foreach ($filter_option['values'] as $key => $value) {
+                        $filter_option['values'][$key]['type'] = $filter_option['type'];
+                        $filter_option['values'][$key]['exclude'] = $filter_option['values'][$key]['exclude'] || $filter_option['exclude_all'];
+                    }
+                    $all_options = array_merge($all_options, $filter_option['values']);
+                }
+            }
+
+            foreach ($filter_value as $value) {
+                $filter_option = foody_array_find($all_options, function ($filter_item) use ($value) {
+                    return $filter_item && $filter_item['title'] == $value;
+                });
+
+                if (!empty($filter_option)) {
+                    $filter_types[] = $filter_option;
+                }
+            }
+
+
+        }
+
+        return $filter_types;
     }
 
     private function parse_query_values($query_arg)
@@ -123,7 +161,7 @@ class Foody_Query
             }, explode($delimiter, $value));
             if (is_array($arr) && !empty($arr)) {
                 $arr = array_filter($arr, function ($value) {
-                    return !empty($value) && is_numeric($value);
+                    return !empty($value);
                 });
             }
         }

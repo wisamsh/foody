@@ -12,6 +12,11 @@ module.exports = (function () {
         this.init(settings);
     }
 
+    /**
+     * Init properties and set initial
+     * filter.
+     * Sets a change listener on filter checkboxes
+     * */
     FoodySearchFilter.prototype.init = function (settings) {
         this.settings = settings;
         this.locationUtils = new FoodyLocationUtils();
@@ -79,7 +84,6 @@ module.exports = (function () {
         this.isLoading = true;
         this.toggleCheckboxes(true);
         this.grid.loading();
-
     };
 
     FoodySearchFilter.prototype.stopLoading = function () {
@@ -90,25 +94,22 @@ module.exports = (function () {
 
     FoodySearchFilter.prototype.toggleCheckboxes = function (disable) {
         let attr = disable ? 'disable' : null;
-        let $checkboxes = $('.md-checkbox', this.$filter);
+        let $checkboxes = $('.md-checkbox', this.settings.page);
         $checkboxes.attr('disabled', attr);
     };
 
     FoodySearchFilter.prototype.buildInitialFilter = function () {
 
-        let $checkboxes = $('input[type="checkbox"]', this.$filter);
+        let $checkboxes = $('input[type="checkbox"]', this.settings.page);
         let that = this;
 
         foodyGlobals.queryArgs = foodyGlobals.queryArgs || {};
 
         this.searchFilter = {};
 
-        for (let key in foodyGlobals.queryArgs) {
-            if (foodyGlobals.queryArgs.hasOwnProperty(key)) {
-                let type = foodyGlobals.queryArgs[key];
-                this._updateFilterByQuery(type, this.locationUtils.getQuery(key));
-            }
-        }
+        let key = foodyGlobals.filterQueryArg;
+
+        this._updateFilterByQuery(this.locationUtils.getQuery(key));
 
         $checkboxes.each(function () {
             if (this.checked) {
@@ -117,13 +118,16 @@ module.exports = (function () {
         });
     };
 
-    FoodySearchFilter.prototype._updateFilterByQuery = function (type, valuesStr) {
+    FoodySearchFilter.prototype._updateFilterByQuery = function (valuesStr) {
         if (valuesStr) {
+            let that = this;
             valuesStr.split(',').forEach((value) => {
-                let exclude = value.indexOf('-') !== -1;
-                let valueNumeric = Math.abs(parseInt(value));
-                let $checkbox = $(`input[type="checkbox"][data-exclude="${exclude}"][data-type="${type}"][data-value="${valueNumeric}"]`);
-                $checkbox.prop('checked', true);
+                $('.md-checkbox label:visible',that.settings.page).filter(function () {
+                    return $(this).text().trim() === value.trim();
+                }).each(function () {
+                    let $checkbox = $(this).prev('input[type="checkbox"]');
+                    $checkbox.prop('checked', true);
+                });
             });
         }
     };
@@ -197,7 +201,6 @@ module.exports = (function () {
                 that._updateUri();
             }
         });
-
     };
 
     FoodySearchFilter.prototype._updateUri = function () {
@@ -205,29 +208,27 @@ module.exports = (function () {
         let pageContainer = this.settings.page;
         let $checkedCheckboxes = $('input[type="checkbox"]:checked', pageContainer);
 
-        let types = _.groupBy($checkedCheckboxes.toArray(), function (el) {
-            return $(el).data('type');
-        });
-
         let urlParams = new URLSearchParams();
 
-        for (let key in types) {
-            if (types.hasOwnProperty(key)) {
+        // noinspection JSUnresolvedVariable
+        let queryArg = foodyGlobals.filterQueryArg;
 
-                let queryArg = _.invert(foodyGlobals.queryArgs)[key];
-
-                let filterItems = types[key].map((el) => {
-                    let data = $(el).data();
-                    let {exclude, value} = data;
-
-                    if (exclude) {
-                        value *= -1;
-                    }
-                    return value;
-                });
-
-                urlParams.set(queryArg, filterItems.join(','));
+        let filterItems = $checkedCheckboxes.toArray().map((el) => {
+            let $label = $(`label[for="${el.id}"]`);
+            let filterTitle = '';
+            if ($label.length) {
+                filterTitle = $label.text().trim();
             }
+            return filterTitle;
+        });
+
+        console.log(filterItems);
+
+        filterItems = filterItems.filter((item) => item);
+        if (filterItems && filterItems.length) {
+            urlParams.set(queryArg, filterItems.join(','));
+        } else {
+            urlParams.delete(queryArg);
         }
 
         this.locationUtils.updateHistory(null, urlParams.toString())
