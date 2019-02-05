@@ -228,6 +228,16 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         $this->title = $title;
     }
 
+    public function get_primary_category_name(){
+        $term_id = $this->get_primary_category();
+        $name = '';
+        if(is_numeric($term_id)){
+            $name = get_term_field('name',$term_id,'category');
+        }
+
+        return $name;
+    }
+
     public function get_primary_category()
     {
 

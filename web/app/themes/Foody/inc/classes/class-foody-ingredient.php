@@ -106,7 +106,6 @@ class Foody_Ingredient extends Foody_Post
 
             $show_after_ingredient = get_field('show_after_ingredient', $unit_tax);
 
-
             $display = $this->to_fraction($last['amount']);
 
             $amount = $last['amount'];
@@ -141,7 +140,7 @@ class Foody_Ingredient extends Foody_Post
         return $content;
     }
 
-    private function get_ingredient_html($amount, $display, $unit, $title, $is_unit_after_title)
+    public function get_ingredient_html($amount, $display, $unit, $title, $is_unit_after_title)
     {
 
         if (!empty($this->plural_name)) {
