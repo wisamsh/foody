@@ -19,9 +19,7 @@ $recipe = $template_args['recipe'];
       "@context": "http://schema.org/",
       "@type": "Recipe",
       "name": "<?php echo get_the_title() ?>",
-      "image": [
-        "<?php echo $recipe->getImage() ?>",
-        ],
+      "image": "<?php echo $recipe->getImage() ?>",
       "author": {
         "@type": "Person",
         "name": "<?php echo $recipe->getAuthorName() ?>"
