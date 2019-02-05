@@ -217,14 +217,14 @@ module.exports = (function () {
             let $label = $(`label[for="${el.id}"]`);
             let filterTitle = '';
             if ($label.length) {
-                filterTitle = $label.text().trim();
+                filterTitle = $label.text().replace(/\s+/g,' ');
+                filterTitle = filterTitle.trim();
             }
             return filterTitle;
         });
 
-        console.log(filterItems);
-
         filterItems = filterItems.filter((item) => item);
+
         if (filterItems && filterItems.length) {
             urlParams.set(queryArg, filterItems.join(','));
         } else {

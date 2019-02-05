@@ -93,7 +93,7 @@ class SidebarFilter
 
         foreach ($list['checkboxes'] as $checkbox) {
             $item = $this->engine->render($template, array(
-                'id' => $accordion_args['id'] . '_' . $checkbox['value'],
+                'id' => $accordion_args['id'] . '_' . $checkbox['value'] . '_' . $checkbox['exclude'],
                 'exclude' => $checkbox['exclude'],
                 'value' => $checkbox['value'],
                 'type' => $checkbox['type'],
