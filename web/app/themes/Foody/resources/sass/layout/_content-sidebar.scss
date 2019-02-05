@@ -8,6 +8,10 @@ body[class~="single-foody_playlist"],
 body[class~="post-template-content-with-sidebar"],
 body[class~="tag"] {
 
+  .seo{
+    max-width: 70%;
+  }
+
   #page {
     //background-color: white;
   }
@@ -280,6 +284,10 @@ body[class~="tag"] {
   body[class~="tag"] {
     $sidebar-width: 100%;
     $content-width: 100%;
+
+    .seo{
+      max-width: $content-width;
+    }
     article.content {
       width: $content-width;
       margin-bottom: 0;

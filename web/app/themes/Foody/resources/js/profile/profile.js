@@ -285,12 +285,12 @@ jQuery(document).ready(($) => {
             fd.append("photo", file);
             $.ajax({
                 url: "/wp/wp-admin/admin-ajax.php?action=foody_edit_profile_picture",
-                data: fd,// the formData function is available in almost all new browsers.
+                data: fd,
                 type: "POST",
                 contentType: false,
                 processData: false,
                 cache: false,
-                dataType: "json", // Change this according to your response from the server.
+                dataType: "json",
                 error: function (err) {
                     console.error(err);
                 },
@@ -299,7 +299,7 @@ jQuery(document).ready(($) => {
 
                     let url = data.data.url;
                     $('.profile-picture-container img').attr('src', url);
-                    $('.profile-top .user-details img.avatar').attr('src', url);
+                    $('.profile-top .user-details .image-container img.avatar').attr('src', url);
                     $uploadModal.modal('hide');
                 },
                 complete: function () {

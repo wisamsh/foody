@@ -114,7 +114,7 @@ class Foody_Ingredient extends Foody_Post
             $title = $this->getTitle();
 
             $unit = $last['unit'];
-
+            $this->amounts[] = $last;
             $ing_html = $this->get_ingredient_html($amount, $display, $unit, $title, $show_after_ingredient);
 
 
@@ -230,7 +230,7 @@ class Foody_Ingredient extends Foody_Post
 
     public function the_details()
     {
-        // TODO: Implement the_details() method.
+
     }
 
 
@@ -247,6 +247,7 @@ class Foody_Ingredient extends Foody_Post
         if (!empty($this->amounts)) {
             $unit = $this->amounts[0]['unit_tax'];
             $amount = $this->amounts[0]['amount'];
+
             if (!empty($this->nutrients) && is_array($this->nutrients)) {
                 $nutrients = array_filter($this->nutrients, function ($nutrient) use ($nutrient_name, $unit, $amount) {
 
@@ -269,9 +270,11 @@ class Foody_Ingredient extends Foody_Post
                         $factor = 100;
                     }
 
+                    $amount = floatval($amount);
+                    $value = floatval($value);
                     $value = ($amount / $factor) * $value;
 
-                    $value = number_format((float)$value, 2, '.', '');
+                    $value = (float)$value;
 
                 }
             }

@@ -94,23 +94,29 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
         let nutrient = $this.data('name');
         let original = $this.data('original');
 
+        val = parseInt(val);
         let totalValueForNutrient = 0;
-
+        originalNumberOfDishes = parseInt(originalNumberOfDishes);
         if (val === originalNumberOfDishes || reset) {
             totalValueForNutrient = parseFloat(original);
         } else {
             $('.ingredients .amount').each(function () {
-                let nutrientBaseValue = $(this).data(nutrient);
+                let nutrientBaseValue = $(this).attr(`data-${nutrient}`);
+                console.log('nutrientBaseValue ', nutrientBaseValue);
                 if (!nutrientBaseValue) {
                     nutrientBaseValue = 0;
                 }
 
                 nutrientBaseValue = parseFloat(nutrientBaseValue);
+                if (nutrientBaseValue) {
+                    nutrientBaseValue = nutrientBaseValue * val;
+                }
 
-                nutrientBaseValue = nutrientBaseValue * val;
+                if (nutrientBaseValue) {
+                    totalValueForNutrient += nutrientBaseValue;
+                }
 
-
-                totalValueForNutrient += nutrientBaseValue;
+                console.log('totalValueForNutrient for ' + nutrient, totalValueForNutrient);
             });
         }
         let decimals = 0;

@@ -3,6 +3,10 @@ $feed-header-height: 60px;
 $sidebar-top-offset: 60px;
 .homepage {
 
+
+  .seo{
+    max-width: $content-width;
+  }
   .cover-image {
     img {
       background-size: cover;
@@ -234,6 +238,9 @@ $sidebar-top-offset: 60px;
 @include breakpoint(mobileonly) {
   .homepage {
 
+    .seo{
+      max-width: 100%;
+    }
     #seo{
       position: initial;
     }
