@@ -503,7 +503,8 @@ class Foody_Recipe extends Foody_Post
                             $unit_field = get_sub_field('unit');
                             $unit = get_term($unit_field, 'units');
                             $amount = get_sub_field('amount');
-                            if (!is_wp_error($unit)) {
+                            if (!is_wp_error($unit) && $unit instanceof WP_Term) {
+
                                 $unit_name = $unit->name;
 
                                 if ($amount > 1) {
@@ -644,7 +645,7 @@ class Foody_Recipe extends Foody_Post
     {
         $json = [
             "@type" => "NutritionInformation",
-            'calories' => isset( $this->nutrients['calories']) ?  $this->nutrients['calories'] : '',
+            'calories' => isset($this->nutrients['calories']) ? $this->nutrients['calories'] : '',
             'carbohydrateContent' => isset($this->nutrients['carbohydrates']) ? $this->nutrients['carbohydrates'] : '',
             'fatContent' => isset($this->nutrients['fats']) ? $this->nutrients['fats'] : '',
             'proteinContent' => isset($this->nutrients['protein']) ? $this->nutrients['protein'] : '',
