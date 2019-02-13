@@ -107,13 +107,17 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
     private function get_author_content($type)
     {
-
         $args = $this->foody_query->get_query('author', [
             $this->getId(),
             $type
         ], true);
 
-        $count = count_user_posts($this->author->ID, $type);
+        $post_types = [
+            $type,
+            'post'
+        ];
+
+        $count = count_user_posts($this->author->ID, $post_types);
 
 
         $query = new WP_Query($args);

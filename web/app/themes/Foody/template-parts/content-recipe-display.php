@@ -35,24 +35,6 @@ $recipe = $template_args['recipe'];
       "recipeIngredient": <?php echo $recipe->get_ingredients_jsonld()?>
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
 <section class="recipe-overview">
@@ -99,7 +81,7 @@ $recipe = $template_args['recipe'];
 <?php $recipe->the_notes() ?>
 
 
-<?php if ($recipe->has_nutrients()): ?>
+<?php if ($recipe->has_nutrients() && false): ?>
 
     <section class="recipe-nutrition box no-print">
 

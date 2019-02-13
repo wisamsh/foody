@@ -228,11 +228,12 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         $this->title = $title;
     }
 
-    public function get_primary_category_name(){
+    public function get_primary_category_name()
+    {
         $term_id = $this->get_primary_category();
         $name = '';
-        if(is_numeric($term_id)){
-            $name = get_term_field('name',$term_id,'category');
+        if (is_numeric($term_id)) {
+            $name = get_term_field('name', $term_id, 'category');
         }
 
         return $name;
@@ -473,17 +474,18 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         $foody_purchase_buttons = Foody_PurchaseButtons::get_instance();
         $buttons = $foody_purchase_buttons->get_buttons_for_post($this->id);
         if (!empty($buttons)) {
-           return foody_get_template_part(
+            return foody_get_template_part(
                 get_template_directory() . '/template-parts/content-purchase-buttons.php',
                 ['classes' => $classes, 'buttons' => $buttons, 'return' => !$echo]
             );
         }
     }
 
-    public function newsletter(){
-        foody_get_template_part(get_template_directory() . '/template-parts/content-newsletter.php',[
-            'button_classes' =>'col-2',
-            'input_classes' =>'col-10'
+    public function newsletter()
+    {
+        foody_get_template_part(get_template_directory() . '/template-parts/content-newsletter.php', [
+            'button_classes' => 'col-2',
+            'input_classes' => 'col-10'
         ]);
     }
 
@@ -505,6 +507,9 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
      */
     public static function create($post)
     {
+        if (is_numeric($post)) {
+            $post = get_post($post);
+        }
         if ($post instanceof stdClass) {
             $post = new WP_Post($post);
         }

@@ -169,6 +169,8 @@ class FoodyMigrate extends Command
 
         } elseif ($this->argument('action') == 'migrate-full') {
             $this->processFullMigration();
+        } elseif ($this->argument('action') == 'tools') {
+            $this->handleTools();
         } else {
             $this->info("\n\n\n                Foody migration tool.\n\nFor usage instructions see the repository readme.md");
         }
@@ -817,13 +819,13 @@ class FoodyMigrate extends Command
                                 $row['unit'] = $item['unit'];
                             }
 
-                            if(!empty($existing) && is_array($existing)){
-                                $duplicates = array_filter($existing,function ($existing_row) use ($row){
+                            if (!empty($existing) && is_array($existing)) {
+                                $duplicates = array_filter($existing, function ($existing_row) use ($row) {
                                     return $existing_row['nutrient'] == $row['nutrient'] && isset($row['unit']) && $row['unit'] == $existing_row['unit'];
                                 });
                             }
 
-                            if(empty($duplicates)){
+                            if (empty($duplicates)) {
                                 $success = add_row('nutrients', $row, $ingredient_id);
                                 if (!$success) {
                                     $this->error("failed to add $name to $post_name");
@@ -1498,5 +1500,47 @@ class FoodyMigrate extends Command
         file_put_contents(base_path('logs/error.log'), $string . PHP_EOL, FILE_APPEND);
 
         parent::error($string, $verbosity);
+    }
+
+    private function handleTools()
+    {
+        $data = file(base_path("data/rev-recipes.tsv"), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+
+        foreach ($data as $line) {
+            $recipes = preg_split('/\t/', $line);
+
+
+            $new_recipes = [];
+            foreach ($recipes as $recipe) {
+                if (!empty($recipe)) {
+
+                    $recipe = preg_replace('/http:\/\/foody.moveodevelop.com\/wp\/wp-admin\/post.php\?post=([0-9]+)&action=edit/', '$1', $recipe);
+
+                    $id = $recipe;
+                    if(is_numeric($recipe)){
+                        global $wpdb;
+
+                        $posts=  $wpdb->get_results('SELECT * from wp_posts where ID = ' .$recipe );
+
+                        if (count($posts) == 1) {
+                            $id = $posts[0]->post_parent;
+                            if($id <= 0){
+                                $id = $posts[0]->ID;
+                            }
+                        }
+                    }
+
+                    $new_recipes[] = "http://foody.moveodevelop.com/wp/wp-admin/post.php?post=$id&action=edit";
+
+                } else {
+                    throw new Exception('asgasf');
+                }
+            }
+
+            $new_data = implode("\t", $new_recipes);
+            file_put_contents(base_path('data/rev-recipes-2.tsv'), $new_data, FILE_APPEND);
+            file_put_contents(base_path('data/rev-recipes-2.tsv'), PHP_EOL, FILE_APPEND);
+        }
     }
 }

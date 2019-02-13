@@ -141,3 +141,20 @@ function foody_custom_options()
 }
 
 add_action('admin_init', 'foody_custom_options');
+
+
+function add_units_columns($columns)
+{
+    $columns['foo'] = 'Foo';
+    return $columns;
+}
+
+//add_filter('manage_edit-units_columns', 'add_units_columns');
+//
+//function add_units_column_content($content)
+//{
+//    $content = 'test';
+//    return $content;
+//}
+//
+//add_filter('manage_units_custom_column', 'add_units_column_content');

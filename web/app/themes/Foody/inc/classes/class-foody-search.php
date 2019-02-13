@@ -139,7 +139,6 @@ class Foody_Search
         }
     }
 
-
     public function after_query()
     {
         // remove filter to prevent query
@@ -251,7 +250,7 @@ class Foody_QueryBuilder
 
     private $meta_query_array = [];
 
-    private $categories__in = [];
+    private $categories__not_in = [];
     private $categories__and;
 
     private $tag__and = [];
@@ -280,7 +279,7 @@ class Foody_QueryBuilder
     {
         foreach ($categories_args as $category_arg) {
             if (isset($category_arg['exclude']) && $category_arg['exclude'] != "false") {
-                $this->categories__and[] = $category_arg['value'];
+                $this->categories__not_in[] = $category_arg['value'];
             } else {
                 $this->categories__and[] = $category_arg['value'];
             }
@@ -515,6 +514,9 @@ class Foody_QueryBuilder
 
         if (!empty($this->categories__and)) {
             $args['category__and'] = $this->categories__and;
+        }
+        if (!empty($this->categories__not_in)) {
+            $args['category__not_in'] = $this->categories__not_in;
         }
 
         if (!empty($this->tag__and)) {

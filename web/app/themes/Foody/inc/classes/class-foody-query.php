@@ -105,6 +105,9 @@ class Foody_Query
                 if (!empty($filter_option) && !empty($filter_option['values'])) {
                     foreach ($filter_option['values'] as $key => $value) {
                         $filter_option['values'][$key]['type'] = $filter_option['type'];
+                        if (!empty($filter_option['values'][$key]['value_group'])) {
+                            $filter_option['values'][$key]['type'] = $filter_option['values'][$key]['value_group']['type'];
+                        }
                         $filter_option['values'][$key]['exclude'] = $filter_option['values'][$key]['exclude'] || $filter_option['exclude_all'];
                     }
                     $all_options = array_merge($all_options, $filter_option['values']);
@@ -113,10 +116,15 @@ class Foody_Query
 
             foreach ($filter_value as $value) {
                 $filter_option = foody_array_find($all_options, function ($filter_item) use ($value) {
-                    return $filter_item && $filter_item['title'] == $value;
+                    return $filter_item && $filter_item['title'] == urldecode($value);
                 });
 
                 if (!empty($filter_option)) {
+                    if (empty($filter_option['value'])) {
+                        if (!empty($filter_option['value_group']['value'])) {
+                            $filter_option['value'] = $filter_option['value_group']['value'];
+                        }
+                    }
                     $filter_types[] = $filter_option;
                 }
             }
@@ -196,8 +204,12 @@ class Foody_Query
     public function author($id, $post_type)
     {
         $id = intval($id);
+        $post_types = [
+            $post_type,
+            'post'
+        ];
         $args = self::get_args([
-            'post_type' => $post_type,
+            'post_type' => $post_types,
             'author' => $id
         ]);
 
@@ -294,56 +306,6 @@ class Foody_Query
         return self::get_args($args);
     }
 
-
-    /**
-     * @param $context
-     * @param array $context_args
-     * @param bool $ranged
-     * @return mixed|WP_Error
-     */
-    public function get_query($context, $context_args = [], $ranged = false)
-    {
-        if (method_exists($this, $context)) {
-            $fn = array($this, $context);
-            if ($context == 'homepage') {
-                $foody_args = call_user_func($fn);
-            } else {
-                if (!is_array($context_args)) {
-                    $context_args = array($context_args);
-                }
-                $foody_args = call_user_func_array($fn, $context_args);
-            }
-
-            $page = get_query_var('paged');
-
-
-            if (!$page) {
-                if (isset($_REQUEST['page'])) {
-                    $page = $_REQUEST['page'];
-                } else {
-                    $page = $this->get_param('page');
-                    if (!$page) {
-                        $page = 1;
-                    }
-                }
-            }
-
-            $foody_args['paged'] = $page;
-
-            if ($ranged) {
-                $foody_args['posts_per_page'] = $this->get_posts_per_page() * $page;
-                $foody_args['paged'] = 0;
-            }
-
-        } else {
-            $foody_args = new WP_Error("invalid context: $context");
-        }
-
-        $filter_args = $this->parse_query_args($context, $context_args);
-        $foody_args = array_merge($filter_args, $foody_args);
-        return $foody_args;
-    }
-
     public function has_more_posts(WP_Query $query)
     {
         $current_page = intval($query->get('paged', 0));
@@ -408,6 +370,56 @@ class Foody_Query
         }
 
         return $base;
+    }
+
+
+    /**
+     * @param $context
+     * @param array $context_args
+     * @param bool $ranged
+     * @return mixed|WP_Error
+     */
+    public function get_query($context, $context_args = [], $ranged = false)
+    {
+        if (method_exists($this, $context)) {
+            $fn = array($this, $context);
+            if ($context == 'homepage') {
+                $foody_args = call_user_func($fn);
+            } else {
+                if (!is_array($context_args)) {
+                    $context_args = array($context_args);
+                }
+                $foody_args = call_user_func_array($fn, $context_args);
+            }
+
+            $page = get_query_var('paged');
+
+
+            if (!$page) {
+                if (isset($_REQUEST['page'])) {
+                    $page = $_REQUEST['page'];
+                } else {
+                    $page = $this->get_param('page');
+                    if (!$page) {
+                        $page = 1;
+                    }
+                }
+            }
+
+            $foody_args['paged'] = $page;
+
+            if ($ranged) {
+                $foody_args['posts_per_page'] = $this->get_posts_per_page() * $page;
+                $foody_args['paged'] = 0;
+            }
+
+        } else {
+            $foody_args = new WP_Error("invalid context: $context");
+        }
+
+        $filter_args = $this->parse_query_args($context, $context_args);
+        $foody_args = array_merge($filter_args, $foody_args);
+        return $foody_args;
     }
 
 }

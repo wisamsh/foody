@@ -169,6 +169,7 @@ class FoodyTeam
 
     /**
      * @param $author WP_User author to display
+     * @return bool|false|string
      */
     private function get_author_template($author, $show_count = false, $order)
     {
@@ -196,7 +197,7 @@ class FoodyTeam
         );
 
         if ($show_count) {
-            $author_data['post_count'] = foody_count_posts_by_user($author->ID, ['foody_playlist', 'foody_recipe']);
+            $author_data['post_count'] = foody_count_posts_by_user($author->ID, ['foody_playlist', 'foody_recipe','post']);
         }
 
         return foody_get_template_part(get_template_directory() . '/template-parts/content-author-listing.php', $author_data);
