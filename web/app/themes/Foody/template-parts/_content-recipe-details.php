@@ -42,7 +42,7 @@ $show_favorite = foody_get_array_default($template_args, 'show_favorite', true);
                     'foody_page' => $foody_page,
                     'show_favorite' => $show_favorite,
                     'hide' => [
-                        'views' => wp_is_mobile()
+                        'views' => true // wp_is_mobile()
                     ]
                 );
 
