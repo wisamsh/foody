@@ -22,7 +22,7 @@ $sub_categories = $category->get_sub_categories();
 if (is_array($sub_categories)):
 
     $count = ceil(count($sub_categories) / 3);
-
+    $count = 3;
     $slider_data = [
         'slidesToShow' => 4,
         'rtl' => true,
@@ -60,6 +60,11 @@ if (is_array($sub_categories)):
 
     ?>
 
+    <script>
+        console.log(<?php echo json_encode($slider_data)?>);
+    </script>
+
+<!--    <ul class="foody-slider categories-slider" data-slick='--><?php //echo json_encode($slider_data, ENT_QUOTES) ?><!--'>-->
     <ul class="foody-slider categories-slider" data-slick='<?php echo json_encode($slider_data, ENT_QUOTES) ?>'>
         <?php
 

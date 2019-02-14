@@ -44,6 +44,10 @@ $user = new Foody_User();
                     <?php get_search_form(); ?>
                 </div>
 
+                <span class="run-desktop run">
+                    <?php echo __('בהרצה') ?>
+                </span>
+
                 <?php if (!wp_is_mobile()): ?>
                     <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility">
                         <?php $header->accessibility(); ?>
@@ -63,8 +67,6 @@ $user = new Foody_User();
                         <div class="logo-container-desktop">
                             <?php the_custom_logo() ?>
                         </div>
-
-
                     </div>
 
                     <div class="logo-container-mobile d-block d-lg-none">
@@ -120,7 +122,6 @@ $user = new Foody_User();
                 <?php endif; ?>
 
             </div>
-
         </nav>
 
         <div class="search-overlay d-lg-none">

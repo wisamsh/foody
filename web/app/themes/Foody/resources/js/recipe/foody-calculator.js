@@ -20,18 +20,14 @@ window.calculator = function (selector) {
         });
     }
 
-
-    $numberOfDishes.on('change keyup paste', function () {
-
+    $numberOfDishes.on('input',function(){
         let val = $(this).val();
 
         if (originalNumberOfDishes <= 0 || val <= 0) {
             return;
         }
 
-
         updateIngredients($elements, originalNumberOfDishes, val);
-
     });
 
 
@@ -46,6 +42,8 @@ window.calculator = function (selector) {
         updateIngredients($elements, 1, val, original);
 
     });
+
+
 
 };
 
