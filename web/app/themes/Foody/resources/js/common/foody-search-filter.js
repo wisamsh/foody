@@ -122,7 +122,7 @@ module.exports = (function () {
         if (valuesStr) {
             let that = this;
             valuesStr.split(',').forEach((value) => {
-                $('.md-checkbox label:visible',that.settings.page).filter(function () {
+                $('.md-checkbox label:visible', that.settings.page).filter(function () {
                     return $(this).text().trim() === value.trim();
                 }).each(function () {
                     let $checkbox = $(this).prev('input[type="checkbox"]');
@@ -135,7 +135,6 @@ module.exports = (function () {
     FoodySearchFilter.prototype.getParsedInput = function (checkbox) {
 
         let data = $(checkbox).data();
-
         return {
             type: data.type,
             exclude: data.exclude,
@@ -165,8 +164,6 @@ module.exports = (function () {
 
         for (let key in this.searchFilter) {
             if (this.searchFilter.hasOwnProperty(key)) {
-                let filterItemToAdd = this.searchFilter[key];
-                filterItemToAdd.exclude =  filterItemToAdd.exclude === "true";
                 args.types.push(this.searchFilter[key]);
             }
         }
@@ -219,7 +216,7 @@ module.exports = (function () {
             let $label = $(`label[for="${el.id}"]`);
             let filterTitle = '';
             if ($label.length) {
-                filterTitle = $label.text().replace(/\s+/g,' ');
+                filterTitle = $label.text().replace(/\s+/g, ' ');
                 filterTitle = filterTitle.trim();
             }
             return filterTitle;
