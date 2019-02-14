@@ -210,7 +210,7 @@ class SidebarFilter
      * @param $type
      * @return null|string|WP_Error
      */
-    private static function get_item_title($id, $type)
+    public static function get_item_title($id, $type)
     {
 
         $title = '';

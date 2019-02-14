@@ -103,7 +103,6 @@ class Foody_Search
             $this->maybe_add_to_query($type);
         }
 
-
         if (isset($args['context'])) {
             if (is_array($args['context'])) {
                 $args['context'] = array_map('intval', $args['context']);

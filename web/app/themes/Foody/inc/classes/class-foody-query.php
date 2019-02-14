@@ -108,7 +108,19 @@ class Foody_Query
                         if (!empty($filter_option['values'][$key]['value_group'])) {
                             $filter_option['values'][$key]['type'] = $filter_option['values'][$key]['value_group']['type'];
                         }
+                        if (empty($filter_option['values'][$key]['value'])) {
+                            if (!empty($filter_option['values'][$key]['value_group'])) {
+                                $filter_option['values'][$key]['value'] = $filter_option['values'][$key]['value_group']['value'];
+                            }
+                        }
                         $filter_option['values'][$key]['exclude'] = $filter_option['values'][$key]['exclude'] || $filter_option['exclude_all'];
+
+                        if (empty($filter_option['values'][$key]['title'])) {
+                            $id  = $filter_option['values'][$key]['value'];
+                            $item_type  = $filter_option['values'][$key]['type'];
+
+                            $filter_option['values'][$key]['title'] = SidebarFilter::get_item_title($id,$item_type);
+                        }
                     }
                     $all_options = array_merge($all_options, $filter_option['values']);
                 }

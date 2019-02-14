@@ -139,7 +139,7 @@ function foody_env_scripts()
 
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');"
         ],
-        'http://foody.co.il' => [
+        'https://foody.co.il' => [
         ]
     ];
 

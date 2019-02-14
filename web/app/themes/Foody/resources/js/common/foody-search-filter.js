@@ -72,6 +72,8 @@ module.exports = (function () {
                 }
             }
 
+            console.log('filter',that.searchFilter);
+
             if (foodyGlobals.isMobile === false || (foodyGlobals.isTablet && $(document).width() >= 1024)) {
                 that.doQuery();
             }
@@ -168,6 +170,8 @@ module.exports = (function () {
                 args.types.push(this.searchFilter[key]);
             }
         }
+
+        console.log('filter for q',this.searchFilter);
 
         return args;
 

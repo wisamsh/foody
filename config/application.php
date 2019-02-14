@@ -31,6 +31,9 @@ if (file_exists($env_config)) {
     require_once $env_config;
 }
 
+// Foody related
+define('FOODY_PAGE','fp');
+
 /**
  * URLs
  */
