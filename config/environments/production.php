@@ -5,7 +5,7 @@ define('WP_DEBUG_DISPLAY', false);
 define('SCRIPT_DEBUG', false);
 /** Disable all file modifications including updates and update notifications */
 define('DISALLOW_FILE_MODS', true);
-define('GOOGLE_TAG_MANAGE_ID','GTM-KQK843H');
+define('GOOGLE_TAG_MANAGER_ID','GTM-KQK843H');
 
 
 // TODO change to production details

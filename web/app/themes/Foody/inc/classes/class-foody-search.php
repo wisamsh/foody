@@ -277,7 +277,7 @@ class Foody_QueryBuilder
     public function categories($categories_args)
     {
         foreach ($categories_args as $category_arg) {
-            if (isset($category_arg['exclude']) && $category_arg['exclude'] != "false") {
+            if (isset($category_arg['exclude']) && $category_arg['exclude'] == "true") {
                 $this->categories__not_in[] = $category_arg['value'];
             } else {
                 $this->categories__and[] = $category_arg['value'];

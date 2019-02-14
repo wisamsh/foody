@@ -101,20 +101,38 @@ class Foody_Query
             $filter_options = get_field('filters_list', 'foody_search_options');
             $all_options = [];
 
+            // iterate all filter options set in
+            // Foody search settings
+            // 1st loop is for filter sections
             foreach ($filter_options as $filter_option) {
+                // safety
                 if (!empty($filter_option) && !empty($filter_option['values'])) {
+                    // 2nd loop - filter items in each section
                     foreach ($filter_option['values'] as $key => $value) {
+
+                        // this is the general list type (the type assigned to the entire list)
                         $filter_option['values'][$key]['type'] = $filter_option['type'];
-                        if (!empty($filter_option['values'][$key]['value_group'])) {
+
+                        // if 'value_group' is set it means 'switch type'
+                        // was used in order to override the general list type ($filter_option['type']), so
+                        // here we assign the proper type to the item
+                        if (!empty($filter_option['values'][$key]['value_group']) && !empty($filter_option['values'][$key]['switch_type']) ) {
                             $filter_option['values'][$key]['type'] = $filter_option['values'][$key]['value_group']['type'];
                         }
+                        // if 'value' is not set -> use value from the 'value_group';
                         if (empty($filter_option['values'][$key]['value'])) {
                             if (!empty($filter_option['values'][$key]['value_group'])) {
                                 $filter_option['values'][$key]['value'] = $filter_option['values'][$key]['value_group']['value'];
                             }
                         }
+
+                        // exclude if item is set to exclude or if the entire list
+                        // is set to exclude (negative search)
                         $filter_option['values'][$key]['exclude'] = $filter_option['values'][$key]['exclude'] || $filter_option['exclude_all'];
 
+                        // if no title is set -> use the title from the
+                        // entity itself (e.g category,limitation,author, etc).
+                        // See SidebarFilter::get_item_title for more details
                         if (empty($filter_option['values'][$key]['title'])) {
                             $id  = $filter_option['values'][$key]['value'];
                             $item_type  = $filter_option['values'][$key]['type'];
@@ -122,11 +140,15 @@ class Foody_Query
                             $filter_option['values'][$key]['title'] = SidebarFilter::get_item_title($id,$item_type);
                         }
                     }
+                    // create a flat array from parsed options
                     $all_options = array_merge($all_options, $filter_option['values']);
                 }
             }
 
+            // iterate filter arguments passed from url ($_GET)
             foreach ($filter_value as $value) {
+
+                // match filter item by title
                 $filter_option = foody_array_find($all_options, function ($filter_item) use ($value) {
                     return $filter_item && $filter_item['title'] == urldecode($value);
                 });
@@ -141,6 +163,13 @@ class Foody_Query
                 }
             }
 
+            $bad_value = foody_array_find($filter_types,function ($item){
+                return empty($item) || empty($item['value']) || empty($item['type']) || empty($item['title']);
+            });
+
+            if(!empty($bad_value)){
+                throw new Exception('bad filter value' . strval($bad_value));
+            }
 
         }
 

@@ -167,6 +167,8 @@ module.exports = (function () {
 
         for (let key in this.searchFilter) {
             if (this.searchFilter.hasOwnProperty(key)) {
+                let filterItemToAdd = this.searchFilter[key];
+                filterItemToAdd.exclude =  filterItemToAdd.exclude === "true";
                 args.types.push(this.searchFilter[key]);
             }
         }
