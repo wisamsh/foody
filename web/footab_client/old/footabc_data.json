@@ -1,0 +1,10 @@
+{
+  "name" : "Foody Taboola Client",
+  "slug" : "footab_client",
+  "download_url" : "https://foody.co.il/footab_client/footab_client.zip",
+  "version" : "1.0.2",
+  "author" : "Uri Chachick",
+  "sections" : {
+    "description" : "A plugin to easily install the foody taboola options"
+  }
+}
