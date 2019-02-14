@@ -5,6 +5,7 @@ web/app/mu-plugins/*/
 !web/app/mu-plugins/wordpress-social-login
 !web/app/mu-plugins/easy-social-share-buttons3
 !web/app/mu-plugins/foody-rating
+!web/app/mu-plugins/footab
 web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
