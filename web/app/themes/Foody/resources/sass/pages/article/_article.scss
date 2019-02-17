@@ -1,0 +1,54 @@
+.single-post {
+  .foody-content {
+    max-width: 95%;
+    margin: 0 auto;
+    padding: 20px 0;
+
+    .wp-caption {
+      &:not(.alignleft) {
+        &:not(.alignright) {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  a {
+    &:visited {
+      color: $color__primary;
+    }
+  }
+
+  .comments {
+    max-width: 95%;
+    margin: 0 auto;
+  }
+
+}
+
+@include breakpoint(mobileonly) {
+  .single-post {
+    .foody-content {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+
+      .wp-caption {
+        margin-left: -20px;
+        margin-right: -20px;
+
+        width: 100vw;
+        max-width: 100vw;
+        img {
+          &[class*="wp-image-"] {
+            width: 100%;
+          }
+        }
+      }
+    }
+    .comments {
+      max-width: 95%;
+      margin: 0 auto;
+    }
+  }
+}

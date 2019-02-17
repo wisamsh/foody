@@ -2,9 +2,14 @@
 web/app/plugins/*
 !web/app/plugins/.gitkeep
 web/app/mu-plugins/*/
+!web/app/mu-plugins/wordpress-social-login
+!web/app/mu-plugins/easy-social-share-buttons3
+!web/app/mu-plugins/foody-rating
+!web/app/mu-plugins/footab
 web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
+web/app/themes/Foody/dist
 
 # WordPress
 web/wp
@@ -134,3 +139,8 @@ fabric.properties
 
 # Editor-based Rest Client
 .idea/httpRequests
+.idea
+migration/tmp
+migration/vendor
+migration/bootstrap/cache
+web/app/themes/Foody/dist

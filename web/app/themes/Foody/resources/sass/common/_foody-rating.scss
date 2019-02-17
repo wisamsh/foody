@@ -1,0 +1,15 @@
+.foody-rating-container{
+  .filled-stars {
+    -webkit-text-stroke: unset;
+    text-shadow: none;
+  }
+
+  .star {
+    i {
+      &:before {
+        font-size: 28px;
+        padding: 0 10px;
+      }
+    }
+  }
+}

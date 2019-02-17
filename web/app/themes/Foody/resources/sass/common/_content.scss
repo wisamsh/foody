@@ -1,0 +1,92 @@
+.foody-content {
+  font-family: $font__assistant;
+
+  * {
+    font-family: $font__assistant;
+  }
+
+  p:last-of-type{
+    margin-bottom: 0;
+  }
+
+  h2 {
+    font-family: $font__main;
+    color: $color__primary;
+    font-weight: 900;
+    font-size: 24px;
+  }
+
+  h3, h3, h4, h5, h6 {
+    font-family: $font__assistant;
+    font-weight: bold;
+  }
+
+  h3 {
+    font-weight: 500;
+    font-size: 23px;
+  }
+
+  p {
+    text-align: right;
+    font-family: $font__assistant;
+    font-size: $content-font-size;
+  }
+
+  ul, ol {
+    font-size: $content-font-size;
+    padding: 0;
+    margin: 0;
+    list-style-position: inside;
+  }
+
+  .wp-caption {
+    .wp-caption-text {
+      margin: 0;
+      line-height: normal;
+      margin-top: 5px;
+      font-weight: normal;
+      font-family: $font__assistant;
+      font-size: 16px;
+    }
+  }
+
+  a {
+    color: $color__primary;
+    &:visited {
+      color: $color__primary;
+    }
+  }
+
+  blockquote {
+    margin: 0;
+
+    ol {
+      margin: 0;
+      padding: 0;
+      font-family: $font__assistant;
+      font-size: 14pt;
+      list-style-position: inside;
+    }
+  }
+
+}
+
+@include breakpoint(mobileonly) {
+  .foody-content {
+    font-size: 14pt;
+    h2 {
+    }
+
+    h3, h4, h5, h6 {
+    }
+
+    p {
+    }
+
+    .wp-caption {
+      .wp-caption-text {
+      }
+    }
+
+  }
+}

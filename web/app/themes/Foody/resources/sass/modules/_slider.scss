@@ -1,0 +1,44 @@
+.foody-arrow {
+
+  top: 25%;
+  position: absolute;
+  background-color: #fff;
+  width: 47px;
+  height: 47px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 47px;
+  z-index: $zindex-dropdown;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+  cursor: pointer;
+
+  &.foody-slider-prev {
+    left: 0;
+
+    img{
+      transform: rotate(180deg);
+    }
+  }
+
+  &.foody-slider-next {
+    right: 0;
+  }
+}
+
+@include breakpoint(mobileonly){
+  .foody-arrow {
+
+    display: none !important;
+
+    &.foody-slider-prev {
+      img{
+
+      }
+    }
+
+    &.foody-slider-next {
+
+    }
+  }
+}
+

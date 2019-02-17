@@ -1,28 +1,23 @@
 {
-  "name": "roots/bedrock",
+  "name": "moveo/Foody",
   "type": "project",
-  "license": "MIT",
-  "description": "WordPress boilerplate with modern development tools, easier configuration, and an improved folder structure",
-  "homepage": "https://roots.io/bedrock/",
+  "description": "Foody WordPress Theme",
+  "homepage": "https://foody.co.il/",
   "authors": [
     {
-      "name": "Scott Walkinshaw",
-      "email": "scott.walkinshaw@gmail.com",
-      "homepage": "https://github.com/swalkinshaw"
-    },
-    {
-      "name": "Ben Word",
-      "email": "ben@benword.com",
-      "homepage": "https://github.com/retlehs"
+      "name": "Matan Zari",
+      "email": "zari@moveo.co.il",
+      "homepage": "https://github.com/zariMatan"
     }
   ],
   "keywords": [
-    "bedrock", "roots", "wordpress", "stack", "composer", "vagrant", "wp"
+    "moveo",
+    "foody",
+    "wordpress",
+    "stack",
+    "composer",
+    "wp"
   ],
-  "support": {
-    "issues": "https://github.com/roots/bedrock/issues",
-    "forum": "https://discourse.roots.io/category/bedrock"
-  },
   "config": {
     "preferred-install": "dist"
   },
@@ -30,25 +25,267 @@
     {
       "type": "composer",
       "url": "https://wpackagist.org"
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "elliotcondon/advanced-custom-fields-pro",
+        "version": "5.6.10",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9MTMxNzg3fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTIzIDEyOjE1OjI5"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "andrewozz/tinymce-advanced",
+        "version": "4.7.11",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/tinymce-advanced.4.7.11.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "smash-baloon/instagram-feed",
+        "version": "1.10.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.10.1.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "abdullah-irfan/whitelist",
+        "version": "3.5",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/fifthsegment-whitelist.3.5.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "yoast/wordpress-seo",
+        "version": "9.5",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wordpress-seo.9.5.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "saurabhshukla-yapapaya/widgets-in-menu",
+        "version": "1.0.0",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/widgets-in-menu.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "joe-dolson/wp-accessibility",
+        "version": "1.6.4",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "gagan-deep-singh/fix-image-rotation",
+        "version": "2.1.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/fix-image-rotation.2.1.1.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "takayuki-miyoshi/contact-form-7",
+        "version": "5.0.5",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/contact-form-7.5.0.5.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "arshid/contact-form-cfdb7",
+        "version": "1.2.4.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/contact-form-cfdb7.1.2.4.1.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "anders-thorborgd/acf-image-crop-add-on",
+        "version": "1.4.12",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/acf-image-crop-add-on.1.4.12.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "willnorris/wordpress-hum",
+        "version": "1.0.0",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/willnorris/wordpress-hum/archive/master.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "joe-dolson/wp-accessibility",
+        "version": "1.6.4",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "lester-chan/wp-postratings",
+        "version": "1.86.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wp-postratings.1.86.1.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "mega-menu/quadmenu",
+        "version": "1.7.3",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/quadmenu.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "delicious-brains/amazon-s3-and-cloudfront",
+        "version": "2.0.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.2.0.1.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "zaus-atlanticbt-spkane/forms-3rdparty-integration",
+        "version": "1.7.8",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/forms-3rdparty-integration.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "flippercode/wp-user-avatar",
+        "version": "2.1.6",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wp-user-avatar.zip"
+        }
+      }
     }
   ],
   "require": {
     "php": ">=5.6",
     "composer/installers": "^1.4",
     "vlucas/phpdotenv": "^2.0.1",
-    "johnpbloch/wordpress": "4.9.5",
+    "johnpbloch/wordpress": "4.9.7",
     "oscarotero/env": "^1.1.0",
     "roots/wp-password-bcrypt": "1.0.0",
-    "roots/multisite-url-fixer": "^1.1"
+    "roots/multisite-url-fixer": "^1.1",
+    "stuttter/wp-user-avatars": "^1.4",
+    "elliotcondon/advanced-custom-fields-pro": "^5.6",
+    "andrewozz/tinymce-advanced": "^4.7",
+    "xamin/handlebars.php": "^0.10.4",
+    "phospr/fraction": "^1.2",
+    "smash-baloon/instagram-feed": "^1.10",
+    "yoast/wordpress-seo": "9.5",
+    "saurabhshukla-yapapaya/widgets-in-menu": "^1.0",
+    "mixpanel/mixpanel-php": "^2.6",
+    "joe-dolson/wp-accessibility": "^1.6",
+    "gagan-deep-singh/fix-image-rotation": "^2.1",
+    "takayuki-miyoshi/contact-form-7": "^5.0",
+    "arshid/contact-form-cfdb7": "1.2.4.1",
+    "anders-thorborgd/acf-image-crop-add-on": "^1.4",
+    "lester-chan/wp-postratings": "^1.85",
+    "mega-menu/quadmenu": "^1.7",
+    "miljar/php-exif": "^0.6.4",
+    "delicious-brains/amazon-s3-and-cloudfront": "^2.0",
+    "zaus-atlanticbt-spkane/forms-3rdparty-integration": "^1.7",
+    "flippercode/wp-user-avatar": "^2.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"
   },
   "extra": {
     "installer-paths": {
-      "web/app/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
-      "web/app/plugins/{$name}/": ["type:wordpress-plugin"],
-      "web/app/themes/{$name}/": ["type:wordpress-theme"]
+      "web/app/mu-plugins/{$name}/": [
+        "type:wordpress-muplugin"
+      ],
+      "web/app/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "web/app/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
     },
     "wordpress-install-dir": "web/wp"
   },

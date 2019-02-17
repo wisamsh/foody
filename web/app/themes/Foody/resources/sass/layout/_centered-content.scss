@@ -1,0 +1,19 @@
+.page-template-centered-content {
+  #content {
+    //padding-top: 30px;
+    background-color: white;
+
+    #seo{
+      position: initial;
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(mobileonly) {
+  .page-template-centered-content {
+    #content {
+      //padding-top: 40px;
+    }
+  }
+}

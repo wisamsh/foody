@@ -1,0 +1,126 @@
+@import "related-content";
+@include related-content;
+
+.related-content-container {
+
+  .related-content {
+    &.related-playlists {
+      margin-bottom: 15px;
+      .related-item {
+
+        .image-container {
+
+          img {
+          }
+
+          .playlist-count {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, .9);
+            text-align: center;
+            color: $color__primary;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 10px;
+
+            i {
+              margin-bottom: 10px;
+              &:before {
+                font-size: 26px;
+              }
+            }
+
+            .count {
+              font-size: 15px;
+            }
+          }
+        }
+
+        .playlist-details {
+          .post-title {
+
+          }
+
+          .author-name {
+
+          }
+
+          .view-count, .author-name {
+
+          }
+        }
+      }
+    }
+  }
+
+  .related-content {
+    &.related-recipes {
+
+      .related-item {
+
+        .image-container {
+
+          .duration {
+            position: absolute;
+            top: 0;
+            background-color: white;
+            margin: 5px;
+            border-radius: 1em;
+            color: $color__primary;
+            display: flex;
+            //noinspection CssInvalidPropertyValue
+            place-items: center;
+            padding: 0.8em 1.6em;
+
+            > time {
+              font-family: $font__main;
+              position: absolute;
+              left: 0.4em;
+              font-size: smaller;
+              top: 4px;
+            }
+
+            i {
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              right: 0.4em;
+
+              &:before {
+                font-size: 10px;
+                vertical-align: middle;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(mobileonly) {
+
+  .related-content-container {
+    padding: 0 20px;
+    &.related-recipes {
+
+      .related-content-title {
+        //display: none;
+      }
+
+      .related-recipes {
+        padding-top: 0;
+      }
+
+    }
+
+    &.related-playlists {
+      .related-playlists {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

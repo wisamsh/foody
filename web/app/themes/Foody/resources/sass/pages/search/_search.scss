@@ -1,0 +1,93 @@
+body[class~='search'] {
+
+  .content {
+    .details-container {
+      padding-right: 15px;
+      padding-left: 15px;
+      text-align: right;
+      padding-bottom: 0;
+
+      .search-results-count {
+        line-height: normal;
+        margin-top: 5px;
+        opacity: 0.5;
+        font-size: 18px;
+        letter-spacing: -0.1px;
+        text-align: right;
+      }
+
+      .title{
+        font-size: 26px;
+      }
+    }
+
+    .search-results-header {
+      margin-bottom: 20px;
+      .container-fluid {
+        min-height: 0;
+        padding: 0 20px;
+      }
+
+      h1 {
+        margin: 0;
+      }
+
+      .foody-select {
+        &.foody-sort {
+          margin-left: 20px;
+          button {
+            width: 50%;
+          }
+        }
+      }
+    }
+
+    .search-results {
+      max-width: 100%;
+      padding: 0 18px;
+      .recipe-item-container {
+        .recipe-item {
+          .recipe-item-image {
+            width: 100%;
+            //height: auto;
+            //max-height: 270px;
+          }
+        }
+      }
+
+      .no-results {
+        margin: 0 auto;
+        text-align: center;
+
+        h2 {
+          font-size: 32px;
+          font-weight: 900;
+          text-align: center;
+          color: $color__primary;
+          margin: 1em 0;
+        }
+
+      }
+    }
+
+  }
+}
+
+@include breakpoint(mobileonly) {
+  body[class~='search'] {
+    #page {
+      position: initial;
+
+      .content{
+        .search-results{
+          padding-top: 15px;
+        }
+      }
+    }
+
+    footer {
+      position: absolute !important;
+      bottom: unset;
+    }
+  }
+}

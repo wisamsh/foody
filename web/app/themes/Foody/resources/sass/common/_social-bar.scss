@@ -1,0 +1,85 @@
+.social {
+  .essb_links.essb_template_round-retina {
+    float: left;
+    .essb_links_list {
+
+      li {
+
+        &:not(:first-child):before {
+          //content: '';
+        }
+
+        box-shadow: none;
+
+        &.essb_link_whatsapp {
+
+          a {
+            background-color: #75b73b !important;
+
+            &:hover {
+              background-color: #75b73b;
+            }
+          }
+        }
+        &.essb_link_facebook {
+           a {
+            background-color: $color__facebook !important;
+
+            &:hover {
+              background-color: $color__facebook;
+            }
+          }
+        }
+        &.essb_link_pinterest {
+
+          a {
+            background-color: #c8232c !important;
+
+            &:hover {
+              background-color: #c8232c;
+            }
+          }
+        }
+        &.essb_link_mail, &.essb_link_print {
+
+          a {
+            background-color: #3a3a3a !important;
+
+            &:hover {
+              background-color: #3a3a3a;
+            }
+          }
+        }
+        a {
+
+          .essb_network_name {
+          }
+
+          .essb_icon {
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+
+            &:before {
+              top: 4px;
+              left: 4px;
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  .btn-facebook {
+    margin: 18px 2px;
+    background-color: $color__facebook;
+    font-family: $font__assistant;
+    color: white;
+    padding: 0 5px;
+    font-size: 15px;
+    font-weight: bold;
+    height: 26px;
+  }
+}

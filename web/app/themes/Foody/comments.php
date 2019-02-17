@@ -15,61 +15,84 @@
  * the visitor has not yet entered the password we will
  * return early without loading the comments.
  */
-if ( post_password_required() ) {
-	return;
+if (post_password_required()) {
+    return;
 }
+
+$foody_comments = new Foody_Comments();
+
 ?>
 
 <div id="comments" class="comments-area">
 
-	<?php
-	// You can start editing here -- including this comment!
-	if ( have_comments() ) :
-		?>
-		<h2 class="comments-title">
-			<?php
-			$foody_comment_count = get_comments_number();
-			if ( '1' === $foody_comment_count ) {
-				printf(
-					/* translators: 1: title. */
-					esc_html__( 'One thought on &ldquo;%1$s&rdquo;', 'foody' ),
-					'<span>' . get_the_title() . '</span>'
-				);
-			} else {
-				printf( // WPCS: XSS OK.
-					/* translators: 1: comment count number, 2: title. */
-					esc_html( _nx( '%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $foody_comment_count, 'comments title', 'foody' ) ),
-					number_format_i18n( $foody_comment_count ),
-					'<span>' . get_the_title() . '</span>'
-				);
-			}
-			?>
-		</h2><!-- .comments-title -->
+    <?php
 
-		<?php the_comments_navigation(); ?>
+    $have_comments = get_comments(array(
+            'type' => 'comment',
+            'count' => true
+        )) > 0;
+    // You can start editing here -- including this comment!
+    //
+    ?>
+    <h2 class="comments-title">
+        <?php
 
-		<ol class="comment-list">
-			<?php
-			wp_list_comments( array(
-				'style'      => 'ol',
-				'short_ping' => true,
-			) );
-			?>
-		</ol><!-- .comment-list -->
+        $foody_comments->the_title();
 
-		<?php
-		the_comments_navigation();
+        ?>
+    </h2><!-- .comments-title -->
 
-		// If comments are closed and there are comments, let's leave a little note, shall we?
-		if ( ! comments_open() ) :
-			?>
-			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'foody' ); ?></p>
-			<?php
-		endif;
+    <?php
 
-	endif; // Check for have_comments().
+    $foody_comments->the_comments_form();
 
-	comment_form();
-	?>
+    ?>
+
+    <?php if ($have_comments) : ?>
+        <ol id="comments-list" class="comment-list">
+            <?php
+            $foody_comments->list_comments();
+            ?>
+        </ol><!-- .comment-list -->
+
+
+        <?php
+        $cpage = get_query_var('cpage', 1);
+
+
+        if ($cpage > 1) {
+
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/common/show-more-simple.php',
+                array(
+                    'context' => 'comments-list'
+                )
+            );
+
+            echo '
+                <script>
+                if(!ajaxurl){
+                    var ajaxurl = \'' . site_url('wp-admin/admin-ajax.php') . '\';
+                    var parent_post_id = ' . get_the_ID() . '
+                }
+                let cpage = ' . $cpage . '
+                </script>';
+        }
+    endif; // Check for have_comments().
+    ?>
+
+
+
+    <?php
+
+    // If comments are closed and there are comments, let's leave a little note, shall we?
+    if (!comments_open()) :
+        ?>
+        <p class="no-comments"><?php esc_html_e('תגובות נסגרו ע״י אדמין', 'foody'); ?></p>
+        <?php
+    endif;
+
+
+    ?>
 
 </div><!-- #comments -->

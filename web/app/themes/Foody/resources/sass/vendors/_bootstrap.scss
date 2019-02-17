@@ -1,0 +1,15 @@
+/*--------------------------------------------------------------
+ # Bootstrap
+ --------------------------------------------------------------*/
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+$theme-colors: (
+        "primary":$color__text-primary-dark,
+        "danger": #ff4136,
+        "dark":$color__text-primary-dark
+);
+
+@import "~bootstrap/scss/bootstrap";
+@import "~startbootstrap-simple-sidebar/css/simple-sidebar";
+@import "~bootstrap-material-design/scss/bootstrap-material-design";

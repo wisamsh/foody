@@ -1,0 +1,376 @@
+$sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
+
+@mixin foody-sidebar($sidebar-width) {
+  aside {
+    min-width: $sidebar-width;
+    width: $sidebar-width;
+    min-height: 100%;
+    border: solid 1px rgba(151, 151, 151, 0.3);
+    border-bottom: none;
+    border-top: none;
+    background-color: white;
+    padding-top: 60px;
+    position: relative;
+    padding-right: 0;
+    padding-left: 0;
+
+    h3,h2{
+      font-size: 22px;
+    }
+
+    .widget {
+      &.widget_text {
+
+        .widgettitle {
+          font-size: 22px;
+          font-weight: 900;
+          letter-spacing: -0.1px;
+          text-align: right;
+          color: $color__primary;
+        }
+      }
+
+      &.widget_nav_menu {
+        padding: 10px;
+        .categories-widget-accordion-menu {
+          margin: 0;
+          padding: 0;
+
+          .sidebar-categories {
+
+            > li {
+              padding-right: 2em;
+            }
+
+          }
+
+        }
+      }
+    }
+
+    .sidebar-content {
+      border: $sidebar-border;
+      border-bottom: none;
+      //position: absolute;
+      padding: 0;
+      height: fit-content;
+      min-height: fit-content;
+    }
+
+    li.widget, .sidebar-section {
+      padding: 10px;
+      margin-top: 0;
+      margin-bottom: 0;
+      &:not(:last-child) {
+        border-bottom: $sidebar-border;
+      }
+
+      .widgettitle {
+        font-size: 28px;
+        color: $color__primary;
+      }
+    }
+
+    .fb-page, .fb-page span, .fb-page span iframe[style] {
+      width: 100% !important;
+    }
+
+    #accordion-foody-filter {
+
+      h5 {
+        + a {
+          font-family: $font__main;
+          font-size: 21px;
+          font-weight: 900;
+        }
+
+      }
+      .md-checkbox {
+        label {
+
+          font-family: $font__main;
+          font-size: 1em;
+          display: table-cell;
+          padding-right: 1em;
+
+          &:before, &:after {
+            font-size: .8em;
+            top: 3px;
+          }
+
+          &:before {
+            border: 1px solid #3a3a3a;
+          }
+        }
+
+        input:checked {
+
+          + {
+            label {
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+
+    #accordion-categories-widget-accordion, .navbar-nav {
+
+      .main-title {
+        a {
+          > span {
+            padding-right: 10px;
+          }
+        }
+        &:not(.collapsed) {
+          //margin-bottom: 20px;
+        }
+      }
+
+      #accordion-categories-widget-accordion-section {
+        padding-top: 0.25rem;
+      }
+
+      #categories-widget-accordion {
+        padding: 0 2em;
+
+        .card-body {
+          padding: 0.45rem 0.45rem 0.45rem;
+
+          .category-accordion-item {
+            font-size: 20px;
+            font-weight: normal;
+            text-align: right;
+            margin: 0.2em 0;
+            line-height: normal;
+          }
+        }
+      }
+
+    }
+
+    .categories-widget-accordion-menu {
+      padding: 0;
+      margin: 0 2em 0 0;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-right: 1em;
+      margin: 0;
+
+      .menu-item {
+        a {
+          display: flex;
+          font-size: 1em;
+          line-height: normal;
+          max-width: 95%;
+          align-items: center;
+          &:hover, &:focus, &:active {
+            color: $color__text-primary-dark;
+          }
+        }
+      }
+    }
+
+    .main-title {
+      color: $color__primary;
+      margin-bottom: 0;
+      font-size: 22px;
+      a {
+        display: block;
+        position: relative;
+        i {
+
+          &.icon-side-arrow {
+            position: absolute;
+            left: 9px;
+            &:before {
+              vertical-align: middle;
+            }
+          }
+        }
+      }
+
+      span {
+        color: $color__primary;
+      }
+    }
+
+    i {
+
+      &.icon-categories {
+
+        &:before {
+          font-size: 18px;
+        }
+      }
+
+      &.icon-side-arrow {
+        margin-right: auto;
+
+        &:before {
+          display: inline-block;
+          font-size: 6px;
+          transition: transform .3s;
+          color: $color__text-primary-dark;
+          vertical-align: super;
+        }
+      }
+    }
+
+    a {
+      i {
+
+        &.icon-side-arrow {
+
+          &:before {
+            transform: rotate(180deg);
+          }
+        }
+      }
+      &:not(.collapsed) {
+        i {
+
+          &.icon-side-arrow {
+
+            &:before {
+              transform: rotate(360deg);
+            }
+          }
+        }
+      }
+      //}
+    }
+  }
+
+  @include breakpoint(mobileonly) {
+    aside {
+      #accordion-categories-widget-accordion {
+        display: none;
+      }
+
+      .sidebar-content {
+        border: none;
+        .sidebar-section {
+          &:not(:last-child) {
+            border: none;
+          }
+        }
+      }
+
+    }
+  }
+
+  @include breakpoint(mobile-l) {
+  }
+
+  @include breakpoint(tablet) {
+    aside {
+
+      .categories-accordion-widget {
+        display: none !important;
+      }
+
+      .widget {
+        display: none;
+        &:before {
+
+        }
+        &.widget_text {
+
+          .widgettitle {
+
+          }
+        }
+      }
+
+    }
+  }
+
+  @include breakpoint(tablet-l) {
+    aside {
+      min-width: $sidebar-width;
+
+      .widget {
+
+        &:before {
+
+        }
+        &.widget_text {
+
+          .widgettitle {
+
+          }
+        }
+      }
+
+      .sidebar-content {
+
+      }
+
+      li.widget, .sidebar-section {
+        padding: 10px;
+        &:not(:last-child) {
+
+        }
+
+        .widgettitle {
+
+        }
+      }
+
+      #accordion-foody-filter {
+
+        h5 {
+          + a {
+
+          }
+
+        }
+        .md-checkbox {
+          label {
+            display: table-cell;
+            padding-right: 1em;
+            &:before, &:after {
+
+            }
+
+            &:before {
+
+            }
+          }
+
+          input:checked {
+
+            + {
+              label {
+
+              }
+            }
+          }
+        }
+      }
+
+      #accordion-categories-widget-accordion {
+
+        .main-title {
+
+        }
+
+        #categories-widget-accordion {
+
+          .card-body {
+
+            .category-accordion-item {
+
+            }
+          }
+        }
+
+      }
+
+    }
+  }
+
+}

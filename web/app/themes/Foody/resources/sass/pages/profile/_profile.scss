@@ -1,0 +1,798 @@
+$sidebar-width: 25%;
+
+@mixin my-channels($width) {
+  $my-channels-width: $width;
+  .my-channels {
+    max-width: $my-channels-width;
+    .channels {
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+      padding: 0 20px;
+
+      .managed-list {
+        list-style-type: none;
+        margin: 0;
+        padding: 10px 0;
+
+        .managed-list-item {
+          padding: 12.5px 0;
+          margin: 0;
+          font-size: 16px;
+          font-family: $font__bold;
+
+          img {
+            clip-path: circle();
+            margin-left: 14px;
+            width: 52px;
+          }
+
+          .close {
+            display: none;
+            float: left;
+            line-height: 52px;
+
+            > span {
+              font-size: 2rem;
+            }
+          }
+
+          &:hover {
+            .close {
+              display: inline-block;
+            }
+          }
+
+        }
+      }
+    }
+
+    .no-followed-topics {
+      text-align: center;
+      padding: 20px 0;
+      h5 {
+        font-family: $font__main;
+        font-size: 24px;
+        font-weight: 900;
+        text-align: center;
+      }
+
+      p {
+        font-family: $font__assistant;
+        font-size: 18px;
+        text-align: center;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+@mixin profile-tabs() {
+  .nav {
+    background: white;
+    .nav-item {
+      margin-left: 30px;
+      a {
+        font-size: 24px;
+        font-weight: 900;
+        letter-spacing: -0.1px;
+        text-align: center;
+        color: $color__primary;
+        padding: 10px;
+
+        &:not(.active) {
+          color: $color__text-primary-light;
+          &:hover {
+            border-color: $color__primary;
+            opacity: .6;
+            color: $color__primary;
+          }
+        }
+
+        &.active {
+          border-color: $color__primary;
+        }
+      }
+    }
+  }
+}
+
+.page-template-profile {
+
+  #page {
+    //background-color: white;
+  }
+
+  .crop-container {
+    width: 100%;
+    .cropper-container {
+      margin: 0 auto;
+      max-width: 100%;
+    }
+    img {
+      width: 100%;
+    }
+  }
+
+  #main {
+    background-color: $color__background-screen;
+  }
+
+  .container-fluid {
+
+    @import "../../common/sidebar";
+
+    @include foody-sidebar($sidebar-width);
+
+    .content {
+      padding-top: 18px;
+      width: calc(100% - #{$sidebar-width});
+      background-color: #fff;
+
+      .breadcrumb {
+        padding-right: 40px;
+      }
+
+      .profile-top {
+
+        .user-details {
+          text-align: right;
+          padding-top: 23px;
+          padding-bottom: 31px;
+          padding-right: 40px;
+          place-items: center;
+          margin-left: 0;
+          .image-container {
+            margin-left: 22px;
+            position: relative;
+
+            .avatar {
+              border: 2px solid $color__primary;
+              -webkit-clip-path: circle();
+              clip-path: circle();
+              max-width: 90px;
+              border-radius: 50%;
+
+              &.default-avatar {
+                border: none;
+                clip-path: unset;
+              }
+            }
+
+            form {
+              position: absolute;
+              bottom: -3px;
+              right: 15px;
+              label {
+                margin: 0;
+              }
+            }
+          }
+
+          .name-email {
+            .email {
+              font-size: 15px;
+            }
+
+            .edit {
+              color: $color__text-primary-light;
+            }
+          }
+
+          ul.nav {
+            padding: 0;
+            margin: 0;
+
+            li {
+              margin-left: 1em;
+              a {
+                font-size: 18px;
+                font-weight: bold;
+                color: #b0b0b0;
+              }
+            }
+          }
+        }
+
+        #upload-photo {
+          label {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .profile-content {
+        background-color: $color__background-screen;
+        padding: 0;
+        min-height: 0;
+
+        .tab-pane {
+          width: 100%;
+        }
+
+        .user-content {
+          @include profile-tabs;
+        }
+
+        $my-channels-width: 45%;
+        @include my-channels($my-channels-width);
+
+        h2 {
+          &.title {
+            padding-top: 30px;
+            font-size: 24px;
+          }
+        }
+
+        .user-content {
+
+          &.show {
+            display: flex;
+          }
+          .tab-content {
+            padding: 0;
+            max-width: calc(100% - #{$my-channels-width});
+
+            .no-recipes {
+              text-align: center;
+              padding: 50px 0;
+
+              .title {
+                margin: 15px 0;
+                text-align: center;
+              }
+
+              p {
+                font-family: $font__assistant;
+                font-size: 18px;
+                margin-bottom: 0;
+              }
+            }
+
+            .tab-pane {
+              padding: 0 17px;
+              text-align: right;
+
+              .grid-item {
+                display: inline-block;
+
+                .feed-item-image {
+                  width: 100%;
+                }
+              }
+
+            }
+          }
+        }
+
+        .edit-user-details, .change-password {
+          background: white;
+          border-top: solid 1px #B3979797;
+          padding-right: 11.33333%;
+          padding-top: 25px;
+
+          .profile-form {
+            max-width: 50%;
+
+            h4 {
+              font-family: $font__assistant;
+              font-weight: bold;
+            }
+
+            .form-group {
+              text-align: right;
+              padding-bottom: 0;
+              padding-top: 20px;
+              padding-right: 0;
+              margin-bottom: 0;
+
+              &.form-submit {
+
+                button {
+
+                  width: 100%;
+                  height: 53px;
+                  border-radius: 3px;
+                  font-family: $font__assistant;
+                  font-size: 16px;
+                  font-weight: bold;
+
+                  &.btn-primary {
+                    background-image: linear-gradient(66deg, #ec3849, #f35644);
+                    color: #fff;
+                  }
+
+                  &.btn-cancel {
+                    border: solid 1px $color__primary;
+                    background-image: none;
+                    background-color: #ffffff;
+                    color: $color__primary;
+                  }
+
+                }
+
+                ul {
+                  li {
+                    width: 100%;
+                    font-family: $font__assistant;
+                    font-size: 18px;
+                    font-weight: bold;
+                  }
+                }
+              }
+
+              label {
+                position: initial;
+                display: block;
+                font-family: $font__assistant;
+                font-size: 18px;
+                font-weight: bold;
+                color: #333a45;
+
+                span {
+                  font-weight: normal;
+                }
+
+              }
+
+              input {
+                width: 100%;
+                height: 53px;
+                border-radius: 3px;
+                border: solid 2px #c1c1c1;
+              }
+            }
+
+            #password-help {
+              list-style-type: none;
+              padding: 0;
+              margin: 15px 0 0;
+
+              li {
+                font-family: $font__assistant;
+                display: inline-block;
+                list-style-type: none;
+                padding: 0 15px;
+                font-size: 16px;
+                color: #333a45;
+
+                &:before {
+                  content: '';
+                  display: inline-block;
+                  width: 8px;
+                  height: 8px;
+                  -moz-border-radius: 50%;
+                  -webkit-border-radius: 50%;
+                  border-radius: 50%;
+                  background-color: $color__primary;
+                  vertical-align: middle;
+                }
+              }
+            }
+
+          }
+
+        }
+      }
+    }
+  }
+}
+
+/*
+Tablet landscape
+*/
+
+@include breakpoint(tablet-l) {
+
+  .page-template-profile {
+
+    .container-fluid {
+
+      aside {
+
+        .foody-search-filter {
+        }
+      }
+
+      .content {
+        padding-top: 18px;
+        width: calc(100% - #{$sidebar-width});
+        background-color: #fff;
+
+        .breadcrumb {
+          padding-right: 15px;
+        }
+
+        .profile-top {
+
+          .user-details {
+            text-align: right;
+            padding-top: 23px;
+            padding-bottom: 0;
+            padding-right: 0;
+            margin: 0;
+
+            $my-channels-width: 100%;
+            @include my-channels($my-channels-width);
+
+            .my-channels {
+              padding: 20px;
+              margin-top: 15px;
+              background-color: $color__background-screen;
+
+              ul, .channels {
+                background-color: $color__background-screen;
+              }
+
+              ul.managed-list {
+                padding-top: 0;
+                padding-bottom: 0;
+              }
+
+              h2 {
+                font-size: 24px;
+                margin-bottom: 0;
+              }
+
+              .channels {
+
+                box-shadow: none;
+                padding-right: 0;
+
+                .managed-list {
+
+                  .managed-list-item {
+
+                    img {
+
+                    }
+
+                    .close {
+                      display: inline-block;
+
+                      > span {
+
+                      }
+                    }
+
+                    &:hover {
+                      .close {
+
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+
+            h1 {
+              margin-bottom: -4px !important;
+            }
+
+            .image-container {
+              margin-right: 20px;
+              img {
+                width: 70px;
+              }
+            }
+
+            .name-email {
+              place-self: flex-end;
+              .email {
+
+              }
+
+              .edit {
+                color: $color__text-primary-light;
+              }
+            }
+          }
+
+          .nav {
+            .nav-item {
+              a {
+
+                &:not(.active) {
+
+                  &:hover {
+
+                  }
+                }
+
+                &.active {
+                }
+              }
+            }
+          }
+        }
+
+        .profile-content {
+          background-color: $color__background-screen;
+          padding: 0;
+          min-height: 0;
+
+          h2 {
+            &.title {
+              padding-top: 30px;
+              font-size: 32px;
+            }
+          }
+
+          .tab-content {
+            padding: 0;
+            min-width: 100%;
+
+            .tab-pane {
+              padding: 0 17px;
+              h2 {
+                font-size: 24px;
+                padding: 16px 0;
+                margin-bottom: 0;
+              }
+
+              .recipe-item-container {
+                display: inline-block;
+                float: right;
+
+                .recipe-item-image {
+                }
+              }
+            }
+          }
+
+        }
+
+      }
+
+    }
+
+    footer {
+    }
+  }
+}
+
+@include breakpoint(mobileonly) {
+  $sidebar-width: 0px;
+
+  .page-template-profile {
+
+    .container-fluid {
+
+      aside {
+        display: none;
+      }
+
+      .content {
+        padding-top: 18px;
+        width: calc(100% - #{$sidebar-width});
+        background-color: #fff;
+
+        .breadcrumb {
+          padding-right: 15px;
+        }
+
+        .profile-top {
+
+          .user-details {
+            text-align: right;
+            padding-top: 23px;
+            padding-bottom: 0;
+            padding-right: 0;
+            margin: 0;
+
+            $my-channels-width: 100%;
+            @include my-channels($my-channels-width);
+
+            .my-channels {
+              padding: 20px;
+              margin-top: 15px;
+              background-color: $color__background-screen;
+
+              ul, .channels {
+                background-color: $color__background-screen;
+              }
+
+              ul.managed-list {
+                padding-top: 0;
+                padding-bottom: 0;
+              }
+
+              h2 {
+                font-size: 24px;
+                margin-bottom: 0;
+              }
+
+              .channels {
+
+                box-shadow: none;
+                padding-right: 0;
+
+                .managed-list {
+
+                  .managed-list-item {
+
+                    img {
+
+                    }
+
+                    .close {
+                      display: inline-block;
+
+                      > span {
+
+                      }
+                    }
+
+                    &:hover {
+                      .close {
+
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+
+            h1 {
+              margin-bottom: -4px !important;
+            }
+
+            .image-container {
+              //margin-right: 20px;
+              margin-left: 0;
+              margin-right: 0;
+              img {
+                width: 70px;
+              }
+            }
+
+            .name-email {
+              place-self: flex-end;
+              margin-right: 20px;
+              .email {
+
+              }
+
+              .edit {
+                color: $color__text-primary-light;
+              }
+
+              ul.nav {
+                li {
+                  width: auto;
+                }
+              }
+            }
+          }
+
+          .nav {
+            padding: 0;
+            margin: 0;
+            .nav-item {
+              margin-left: 0;
+              padding: 0;
+              width: 50%;
+              a {
+                text-align: center;
+                padding: 16px 0;
+
+                &:not(.active) {
+
+                  &:hover {
+
+                  }
+                }
+
+                &.active {
+                }
+              }
+            }
+          }
+
+          #upload-photo {
+            label {
+              img {
+                width: 30px;
+              }
+            }
+          }
+        }
+
+        .profile-content {
+          background-color: $color__background-screen;
+          padding: 0;
+
+          h2 {
+            &.title {
+              padding-top: 30px;
+              font-size: 32px;
+            }
+          }
+          .user-content {
+            .nav {
+              padding: 0;
+              justify-content: space-around;
+              .nav-item {
+                margin-left: 0;
+                a {
+                  font-size: 16px;
+                }
+              }
+            }
+          }
+
+          .tab-content {
+            padding: 0;
+            min-width: 100%;
+
+            .tab-pane {
+              padding: 0 17px;
+              h2 {
+                font-size: 24px;
+                padding: 16px 0;
+                margin-bottom: 0;
+              }
+              .recipe-item-container {
+                display: inline-block;
+                float: right;
+
+                .recipe-item-image {
+                  //min-height: 272px;
+                }
+              }
+            }
+          }
+
+          .edit-user-details, .change-password {
+            background: white;
+            border-top: solid 1px #B3979797;
+            padding: 20px;
+            margin-top: 20px;
+
+            .profile-form {
+              max-width: 100%;
+
+              h4 {
+              }
+
+              .form-group {
+
+                &.form-submit {
+
+                  button {
+
+                    &.btn-primary {
+                    }
+
+                    &.btn-cancel {
+                    }
+
+                  }
+
+                  ul {
+                    li {
+                    }
+                  }
+                }
+
+                label {
+
+                  span {
+                  }
+
+                }
+
+                input {
+                }
+              }
+            }
+
+          }
+        }
+
+      }
+
+    }
+  }
+}

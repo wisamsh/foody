@@ -1,0 +1,30 @@
+.load-more {
+  display: block;
+  text-align: center;
+  color: $color__primary;
+  font-size: 22px;
+  font-family: $font__assistant;
+  cursor: pointer;
+
+  i {
+    height: 100%;
+    vertical-align: middle;
+    line-height: normal;
+
+    &:before {
+      font-size: 6px;
+      display: inline-block;
+      vertical-align: super;
+    }
+  }
+}
+
+@include breakpoint(mobileonly){
+  .load-more {
+    font-family: $font__main;
+
+    i {
+      display: none;
+    }
+  }
+}

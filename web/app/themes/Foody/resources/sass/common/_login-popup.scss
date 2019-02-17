@@ -1,0 +1,21 @@
+#login-modal{
+
+
+  h2{
+    color: $color__primary;
+  }
+
+  p{
+    font-family:$font__assistant;
+    margin: 0;
+  }
+
+  span,p,a{
+    text-align: right;
+    font-family:$font__assistant;
+  }
+
+  form{
+    margin-top: 1em;
+  }
+}

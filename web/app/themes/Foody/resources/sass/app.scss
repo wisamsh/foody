@@ -19,10 +19,10 @@ Underscores is distributed under the terms of the GNU GPL v2 or later.
 Normalizing styles have been helped along thanks to the fine work of
 Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 */
-
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
+# Bootstrap
 # Normalize
 # Typography
 # Elements
@@ -41,9 +41,41 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 # Media
 	## Captions
 	## Galleries
+
+
 --------------------------------------------------------------*/
-@import "variables-site/variables-site";
 @import "mixins/mixins-master";
+@import "variables-site/variables-site";
+/*--------------------------------------------------------------
+# Bootstrap
+--------------------------------------------------------------*/
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+$theme-colors: (
+        "primary":$color__text-primary-dark,
+        "danger": #ff4136,
+        "dark":$color__text-primary-dark
+);
+
+//$grid-breakpoints: (
+//        xs: 0,
+//        sm: 1024px,
+//        md: 1080px,
+//        lg: 1200px,
+//        xl:1920px
+//);
+
+//@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap-material-design/scss/bootstrap-material-design";
+
+@import "plugins/pure-drawer/pure-drawer";
+
+/*--------------------------------------------------------------
+# Slick
+--------------------------------------------------------------*/
+
+@import "~slick-carousel/slick/slick.scss";
 
 /*--------------------------------------------------------------
 # Normalize
@@ -51,10 +83,23 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 @import "normalize";
 
 /*--------------------------------------------------------------
+# Common
+--------------------------------------------------------------*/
+@import "common/common";
+
+/*--------------------------------------------------------------
+# Layout
+--------------------------------------------------------------*/
+@import "layout/header";
+@import "layout/footer";
+@import "layout/content-sidebar";
+@import "layout/centered-content";
+
+/*--------------------------------------------------------------
 # Typography
 --------------------------------------------------------------*/
 @import "typography/typography";
-
+@import "typography/_icons";
 /*--------------------------------------------------------------
 # Elements
 --------------------------------------------------------------*/
@@ -69,21 +114,36 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 # Navigation
 --------------------------------------------------------------*/
 @import "navigation/navigation";
+//
+///*--------------------------------------------------------------
+//# Accessibility
+//--------------------------------------------------------------*/
+//@import "modules/accessibility";
+//
+///*--------------------------------------------------------------
+//# Alignments
+//--------------------------------------------------------------*/
+//@import "modules/alignments";
+//
+///*--------------------------------------------------------------
+//# Clearings
+//--------------------------------------------------------------*/
+//@import "modules/clearings";
 
 /*--------------------------------------------------------------
-# Accessibility
+# Slider
 --------------------------------------------------------------*/
-@import "modules/accessibility";
+@import "modules/slider";
 
 /*--------------------------------------------------------------
-# Alignments
+# Show More List
 --------------------------------------------------------------*/
-@import "modules/alignments";
+@import "modules/show-more-list";
 
 /*--------------------------------------------------------------
-# Clearings
+# Accordion
 --------------------------------------------------------------*/
-@import "modules/clearings";
+@import "modules/accordion";
 
 /*--------------------------------------------------------------
 # Widgets
@@ -93,14 +153,75 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 /*--------------------------------------------------------------
 # Content
 --------------------------------------------------------------*/
-@import "site/site";
+
+@import "site/primary/comments";
+//@import "site/site";
 
 /*--------------------------------------------------------------
 # Infinite scroll
 --------------------------------------------------------------*/
-@import "modules/infinite-scroll";
+//@import "modules/infinite-scroll";
 
 /*--------------------------------------------------------------
 # Media
 --------------------------------------------------------------*/
-@import "media/media";
+//@import "media/media";
+
+/*--------------------------------------------------------------
+# Pages
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Homepage
+--------------------------------------------------------------*/
+@import "site/primary/homepage/hompage";
+
+/*--------------------------------------------------------------
+# Team
+--------------------------------------------------------------*/
+@import "site/primary/team/team";
+
+/*--------------------------------------------------------------
+# Pages
+--------------------------------------------------------------*/
+@import "pages/pages";
+
+/*--------------------------------------------------------------
+# Recipes Grid
+--------------------------------------------------------------*/
+@import "recipes-grid/recipes-grid";
+@import "recipes-grid/recipe-grid-item";
+
+@media (max-width: 768px) {
+  .navbar-collapse {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    height: 100vh;
+    width: 100%;
+    background-color: #fff;
+    opacity: 0;
+  }
+  .navbar-collapse.collapsing {
+    -webkit-transition: right .3s linear, opacity .3s linear;
+    -o-transition: right .3s linear, opacity .3s linear;
+    -moz-transition: right .3s linear, opacity .3s linear;
+    transition: right .3s linear, opacity .3s linear;
+    right: -50%;
+    opacity: 0;
+    z-index: $zindex-top;
+  }
+
+  .navbar-collapse.show {
+    right: 0;
+    z-index: $zindex-top;
+    -webkit-transition: right .3s linear, opacity .3s linear;
+    -o-transition: right .3s linear, opacity .3s linear;
+    -moz-transition: right .3s linear, opacity .3s linear;
+    transition: right .3s linear, opacity .3s linear;
+    opacity: 1;
+  }
+}

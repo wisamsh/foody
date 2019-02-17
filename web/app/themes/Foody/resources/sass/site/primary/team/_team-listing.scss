@@ -1,0 +1,96 @@
+.team-listing {
+  padding-right: 10px;
+  border-bottom: 0;
+  .slick-slide {
+    height: auto;
+    width: 90px;
+  }
+
+  .author {
+    text-align: center;
+    max-width: 20%;
+    .image-container {
+      position: relative;
+      img {
+        margin: 0 auto;
+        clip-path: circle();
+        width: 167px;
+      }
+
+      $count-size: 53px;
+
+      .post-count {
+        height: $count-size;
+        width: $count-size;
+        line-height: $count-size;
+        border-radius: 50%;
+        background-color: #FFFFFF;
+        box-shadow: -2px 1px 4px 0 rgba(0, 0, 0, 0.17);
+        color: $color__primary;
+        display: inline-block;
+        position: absolute;
+        bottom: 0;
+        margin-right: 5px;
+        right: 0;
+        font-size: 22px;
+      }
+    }
+
+    .author-name {
+      text-align: center;
+      font-family: $font__main;
+      font-weight: 500;
+      //noinspection CssInvalidPropertyValue
+      word-break: break-word;
+      color: $color__text-primary-dark;
+      font-size: 20px;
+      margin: 0 0 10px;
+    }
+
+  }
+}
+
+@include breakpoint(mobileonly) {
+  .team-listing {
+    .author {
+      max-width: initial;
+      text-align: center;
+      .image-container {
+
+        $count-size: 29px;
+
+        .post-count {
+          height: $count-size;
+          width: $count-size;
+          line-height: calc(#{$count-size} + 2px);
+          font-size: 17px;
+          font-weight: 500;
+        }
+      }
+
+      .author-name {
+
+      }
+    }
+  }
+}
+
+@include breakpoint(tablet-l) {
+  .team-listing {
+    .team-grid-row {
+      justify-content: space-around;
+      .author {
+
+        .image-container {
+
+          .post-count {
+          }
+        }
+
+        .author-name {
+        }
+      }
+    }
+
+  }
+}

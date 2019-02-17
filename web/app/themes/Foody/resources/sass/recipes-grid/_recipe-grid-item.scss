@@ -1,0 +1,237 @@
+.recipe-item, .playlist-item, .article-item {
+
+  .recipe-item-image, .playlist-item-image, .article-item-image {
+    clip-path: inset(0 round .2em);
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .main-image-container {
+    // TODO find ios fix
+    //filter: drop-shadow(2px 4px 2px rgba(0, 0, 0, .15));
+    box-shadow: -1px 2px 4px 0px rgba(0, 0, 0, 0.08);
+    position: relative;
+
+    $label-size: 84px;
+    $label-fold-size: 13px;
+    .recipe-label {
+      position: absolute;
+
+      top: 10px;
+      left: -$label-fold-size;
+      display: block;
+      min-height: $label-size;
+      line-height: $label-size;
+
+      span {
+        font-family: $font__main;
+        background: url('../images/label.svg') no-repeat;
+        font-size: 25px;
+        font-weight: 900;
+        position: relative;
+        display: inline-block;
+        color: #fff;
+        text-align: center;
+        transform: scale(.8);
+        transform-origin: 10px;
+        background-position-y: center;
+        padding: 0 3em 15px 1.1em;
+      }
+    }
+
+    .duration {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background-color: #fff;
+      color: $color__primary;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+      padding: 3px 7.5px;
+
+      i {
+        vertical-align: middle;
+        &:before {
+          vertical-align: text-bottom;
+        }
+      }
+
+      span {
+        display: inline-block;
+      }
+    }
+
+    .playlist-count {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, .9);
+      text-align: center;
+      color: $color__primary;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-right: none;
+      border-radius: 3px 0 0 3px;
+
+      i {
+        margin-bottom: 10px;
+        &:before {
+          font-size: 26px;
+        }
+      }
+
+      .count {
+        font-size: 15px;
+      }
+    }
+  }
+
+  .feed-item-details-container {
+    padding: 0 5px;
+  }
+
+  .title-container {
+    margin-top: 10px;
+  }
+
+  .recipe-item-details, .playlist-item-details, .article-item-details {
+    font-family: $font__assistant;
+    padding: 0 0 5px;
+    .image-container {
+
+      text-align: right;
+      margin-left: 10px;
+      padding: 0;
+      margin-bottom: 8px;
+
+      img {
+        width: 40px;
+        border-radius: 50%;
+        max-width: unset;
+      }
+      ul {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+      }
+    }
+
+    .view-count {
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      overflow: auto;
+      width: calc(100% - 60px);
+      li {
+        list-style-type: none;
+        display: inline-block;
+        font-size: 1rem;
+        line-height: normal;
+        vertical-align: middle;
+
+        &:nth-child(2) {
+          &:before {
+            content: "• ";
+            padding: 0 .5rem;
+            font-weight: 900;
+            color: $color__primary;
+          }
+        }
+
+        &.favorite-container {
+          float: left;
+        }
+      }
+    }
+
+  }
+  h3 {
+    margin: 0;
+    font-size: 21px;
+    font-family: $font__assistant-bold;
+    font-weight: bold;
+  }
+  .description {
+    font-size: 1rem;
+    text-align: right;
+    line-height: normal;
+    padding-bottom: 5px;
+  }
+  .favorite {
+    text-align: right;
+    color: $color__primary;
+
+    i {
+      cursor: pointer;
+      vertical-align: middle;
+    }
+  }
+
+}
+
+@include breakpoint(mobileonly) {
+  .recipe-item, .article-item {
+
+    .recipe-item-image {
+
+    }
+
+    .main-image-container {
+      .recipe-label {
+
+        span {
+          font-size: 24px;
+          padding: 0 3em 0 1.2em;
+          transform: scale(0.6);
+          transform-origin: 12px 0;
+          top: 0;
+          background-position-y: unset;
+        }
+
+      }
+
+      .duration {
+
+        i:before {
+
+        }
+
+        span {
+
+        }
+      }
+    }
+
+    .recipe-item-details {
+
+      .image-container {
+
+        img {
+
+        }
+      }
+
+      h3 {
+        font-size: 1.4rem;
+      }
+
+      .description {
+
+      }
+
+      ul {
+        li {
+        }
+
+        li:not(:first-child):before {
+        }
+      }
+    }
+  }
+}

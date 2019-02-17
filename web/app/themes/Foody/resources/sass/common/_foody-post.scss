@@ -1,0 +1,215 @@
+$content-width: 95%;
+
+@mixin max-width-section() {
+  max-width: $content-width;
+  margin: 0 auto;
+}
+
+.single {
+
+  .content {
+    .tags {
+      @include max-width-section;
+
+      .title {
+        margin-bottom: 10px;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          display: inline-block;
+          border-radius: 2rem;
+          border: solid 1px #3a3a3a;
+          font-family: $font__assistant;
+          font-size: $content-font-size;
+          text-align: center;
+          padding: 2px 12px;
+          margin-left: 10px;
+          margin-bottom: 10px;
+        }
+      }
+    }
+
+    .categories {
+      @include max-width-section;
+
+      ul {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        flex-flow: row;
+        flex-wrap: wrap;
+        line-height: normal;
+
+        li {
+          font-family: $font__assistant;
+          font-size: $content-font-size;
+          list-style-type: none;
+          margin-left: 1em;
+          position: relative;
+
+          &:before {
+            content: "\B7";
+            vertical-align: sub;
+            font-size: 35px;
+            line-height: normal;
+            position: absolute;
+            top: -12.5px;
+            display: block;
+            padding-left: 10px;
+          }
+
+          a {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+
+    .newsletter {
+      background-color: #d8d8d8;
+      padding: 10px 20px;
+      margin-bottom: 10px;
+
+      .newsletter {
+        padding: 0;
+        margin-bottom: 0;
+      }
+      h4 {
+        font-size: 16px;
+        font-weight: 500;
+        text-align: right;
+        color: $color__primary;
+      }
+
+      p {
+        margin: 0;
+        text-align: right;
+        input:not([type="checkbox"]) {
+          border: none;
+          height: 40px;
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+          background-color: #ffffff;
+
+          &[type="email"] {
+            width: 70%;
+            margin-left: 10px;
+          }
+          &[type="submit"] {
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            color: $color__primary;
+            font-weight: 900;
+          }
+
+          &::placeholder {
+            opacity: 0.5;
+            font-size: 12px;
+            text-align: right;
+            color: #4a4a4a;
+          }
+        }
+      }
+
+      .foody-form-message {
+        text-align: right;
+
+      }
+    }
+
+    .section {
+
+      margin-bottom: 10px;
+
+      h2.title {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+@include breakpoint(mobileonly) {
+
+  $content-width: 100%;
+
+  .single {
+
+    .foody-content {
+      padding-bottom: 0;
+    }
+
+    .tags {
+      @include max-width-section;
+
+      .title {
+      }
+
+      ul {
+
+        li {
+        }
+      }
+    }
+
+    .categories {
+      @include max-width-section;
+
+      ul {
+
+        li {
+          &:before {
+          }
+
+          a {
+          }
+        }
+      }
+    }
+
+    .section {
+      margin: 0;
+      padding: 0 20px;
+
+      &.comments {
+        padding: initial;
+      }
+    }
+
+    .content {
+      .newsletter {
+        margin-bottom: 0;
+
+        .wpcf7-acceptance {
+
+          span {
+            &.wpcf7-list-item {
+
+            }
+          }
+        }
+        .accept-label {
+          color: initial;
+        }
+
+        h4 {
+        }
+
+        .input-container {
+          input {
+
+            &::placeholder {
+            }
+          }
+        }
+
+        button {
+        }
+      }
+    }
+  }
+}

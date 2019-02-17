@@ -1,0 +1,79 @@
+/* ACF "half-repeater" class, display repeaters in horizontal columns */
+.half-repeater .acf-repeater tr.acf-row:not(.acf-clone) {
+  display: inline-block !important;
+  width: 50% !important;
+}
+
+.half-repeater .acf-repeater tr.acf-row:not(.acf-clone) td.acf-fields {
+  width: 100%;
+}
+
+.acf-field {
+  min-height: 0 !important;
+}
+
+.q-repeater .acf-repeater tr.acf-row:not(.acf-clone) {
+  display: inline-block !important;
+  width: 25% !important;
+}
+
+.q-repeater .acf-repeater tr.acf-row:not(.acf-clone) td.acf-fields {
+  width: 100%;
+}
+
+.acf-row-handle .acf-icon {
+  z-index: 4000;
+}
+
+.acf-actions {
+  .acf-button {
+    &.disabled {
+      display: none;
+    }
+  }
+}
+
+.acf-field-repeater[data-name="amounts"] {
+
+  > .acf-label {
+    display: inline-block;
+    max-width: 10%;
+
+    + .acf-input {
+      display: inline-block;
+      min-width: 90%;
+    }
+  }
+
+  .acf-field{
+    padding: 5px;
+  }
+
+  [data-name="unit"], [data-name="amount"] {
+
+    .acf-label {
+      display: inline-block;
+      max-width: 25%;
+      vertical-align: sub;
+    }
+
+    .acf-input {
+      display: inline-block;
+      width: 75%;
+    }
+  }
+
+}
+
+.acf-field-post-object[data-name="ingredient"] {
+
+  > .acf-label {
+    display: inline-block;
+    max-width: 10%;
+
+    + .acf-input {
+      display: inline-block;
+      min-width: 90%;
+    }
+  }
+}

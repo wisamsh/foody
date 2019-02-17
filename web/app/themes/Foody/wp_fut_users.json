@@ -1,0 +1,322 @@
+[
+  {
+    "name": "נטלי לוין",
+    "email": "homets@gmail.com",
+    "role": "editor",
+    "firstName": "נטלי",
+    "lastName": "לוין",
+    "password": "LBqLpSCbnzic"
+  },
+  {
+    "name": "אפרת ליכטנשטט",
+    "email": "Lichtenstadt@gmail.com",
+    "role": "editor",
+    "firstName": "אפרת",
+    "lastName": "ליכטנשטט",
+    "password": "waAOydqFEqvl"
+  },
+  {
+    "name": "עז תלם",
+    "email": "oztelem@gmail.com",
+    "role": "editor",
+    "firstName": "עז",
+    "lastName": "תלם",
+    "password": "uMzNi3PJiZsc"
+  },
+  {
+    "name": "אולגה טוכשר",
+    "email": "otuksher@gmail.com",
+    "role": "editor",
+    "firstName": "אולגה",
+    "lastName": "טוכשר",
+    "password": "HFFQXUJ5Vjxg"
+  },
+  {
+    "name": "רותם ליברזון",
+    "email": "lrottem@gmail.com",
+    "role": "editor",
+    "firstName": "רותם",
+    "lastName": "ליברזון",
+    "password": "yJUrbeeXKPp5"
+  },
+  {
+    "name": "יונית צוקרמן",
+    "email": "Yonitz323@gmail.com",
+    "role": "editor",
+    "firstName": "יונית",
+    "lastName": "צוקרמן",
+    "password": "7bpwnMuaR29N"
+  },
+  {
+    "name": "אושר אידלמן",
+    "email": "osher@unusualclassics.com",
+    "role": "editor",
+    "firstName": "אושר",
+    "lastName": "אידלמן",
+    "password": "Ppcq1PiyiJEG"
+  },
+  {
+    "name": "אודי ברקן",
+    "email": "udi@unusualclassics.com",
+    "role": "editor",
+    "firstName": "אודי",
+    "lastName": "ברקן",
+    "password": "ICE3zRcjhMsf"
+  },
+  {
+    "name": "אינס ינאי",
+    "email": "shilatyanai@gmail.com",
+    "role": "editor",
+    "firstName": "אינס",
+    "lastName": "ינאי",
+    "password": "q0cGkR4oJZgS"
+  },
+  {
+    "name": "אלון שבו",
+    "email": "shabo.alon@gmail.com",
+    "role": "editor",
+    "firstName": "אלון",
+    "lastName": "שבו",
+    "password": "oPc1C9EtsmJy"
+  },
+  {
+    "name": "רות אופק",
+    "email": "offek.ruth@gmail.com",
+    "role": "editor",
+    "firstName": "רות",
+    "lastName": "אופק",
+    "password": "XmurT2tKJ2ng"
+  },
+  {
+    "name": "שר פיטנס",
+    "email": "shersher00@gmail.com",
+    "role": "editor",
+    "firstName": "שר",
+    "lastName": "פיטנס",
+    "password": "BAlkwWADrnud"
+  },
+  {
+    "name": "שרית נובק",
+    "email": "misspetel@gmail.com",
+    "role": "editor",
+    "firstName": "שרית",
+    "lastName": "נובק",
+    "password": "JzXNQxCFjyqz"
+  },
+  {
+    "name": "שני הלוי",
+    "email": "shani.halevy@gmail.com",
+    "role": "foody_fut_user",
+    "firstName": "שני",
+    "lastName": "הלוי",
+    "password": "JOCWjF0ozZvP"
+  },
+  {
+    "name": "נמרוד גנישר",
+    "email": "nimrod@nimrodgenisher.com",
+    "role": "foody_fut_user",
+    "firstName": "נמרוד",
+    "lastName": "גנישר",
+    "password": "05JKV0s6G1iM"
+  },
+  {
+    "name": "רינת יגאל",
+    "email": "rinat@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "רינת",
+    "lastName": "יגאל",
+    "password": "UIbh4RuE6m3C"
+  },
+  {
+    "name": "הילה ברייטמן",
+    "email": "hillab@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "הילה",
+    "lastName": "ברייטמן",
+    "password": "O84ggKEFQh0z"
+  },
+  {
+    "name": "ענבל סינגר",
+    "email": "inbals@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "ענבל",
+    "lastName": "סינגר",
+    "password": "e9keC7Lrm7BW"
+  },
+  {
+    "name": "מיטל פרץ",
+    "email": "meitalc@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "מיטל",
+    "lastName": "פרץ",
+    "password": "JkofcIefDM4s"
+  },
+  {
+    "name": "שני יקוט שלג",
+    "email": "shanis@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "שני",
+    "lastName": "יקוט שלג",
+    "password": "4EzH9Km9P2XQ"
+  },
+  {
+    "name": "רבקה המעצבת",
+    "email": "graphic@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "רבקה",
+    "lastName": "המעצבת",
+    "password": "ht8ZiQ3irhSi"
+  },
+  {
+    "name": "בן דיאמנט",
+    "email": "bend@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "בן",
+    "lastName": "דיאמנט",
+    "password": "UYnvmFYSdZQp"
+  },
+  {
+    "name": "חן אדר",
+    "email": "chena@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "חן",
+    "lastName": "אדר",
+    "password": "V3aQld9woiOK"
+  },
+  {
+    "name": "בר נוצני",
+    "email": "barn@medioc.o.il",
+    "role": "foody_fut_user",
+    "firstName": "בר",
+    "lastName": "נוצני",
+    "password": "tQnzO7sw1q1Y"
+  },
+  {
+    "name": "נוי מיכאל",
+    "email": "noim@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "נוי",
+    "lastName": "מיכאל",
+    "password": "sJx6DE6DdJ3L"
+  },
+  {
+    "name": "אסנת אבן איתן",
+    "email": "osnate@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "אסנת",
+    "lastName": "אבן איתן",
+    "password": "90cIqDlbJNrJ"
+  },
+  {
+    "name": "ג'ולי מזרחי",
+    "email": "juli@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "ג'ולי",
+    "lastName": "מזרחי",
+    "password": "f5Gm9yfHbNtY"
+  },
+  {
+    "name": "טלי מירב",
+    "email": "talim@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "טלי",
+    "lastName": "מירב",
+    "password": "R4XAnuriMvOY"
+  },
+  {
+    "name": "יעל גוטליב",
+    "email": "yael@alincontent.co.il",
+    "role": "foody_fut_user",
+    "firstName": "יעל",
+    "lastName": "גוטליב",
+    "password": "LEdk2YBm3qYH"
+  },
+  {
+    "name": "הדס אינפלס",
+    "email": "hadasi@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "הדס",
+    "lastName": "אינפלס",
+    "password": "UNSV4hw5wPb7"
+  },
+  {
+    "name": "מורן כהן",
+    "email": "moran@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "מורן",
+    "lastName": "כהן",
+    "password": "2Y5rlW2a9TZC"
+  },
+  {
+    "name": "תמר ירום",
+    "email": "tamary@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "תמר",
+    "lastName": "ירום",
+    "password": "wuyXXnYiyWHG"
+  },
+  {
+    "name": "תמר שוורצברד",
+    "email": "tamars@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "תמר",
+    "lastName": "שוורצברד",
+    "password": "RgGQBgA1XuJH"
+  },
+  {
+    "name": "רותם עופר",
+    "email": "rotem@alincontent.co.il",
+    "role": "foody_fut_user",
+    "firstName": "רותם",
+    "lastName": "עופר",
+    "password": "5Ntxbn1O9EvD"
+  },
+  {
+    "name": "שיר רן",
+    "email": "office@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "שיר",
+    "lastName": "רן",
+    "password": "xUfCgk1WyQqW"
+  },
+  {
+    "name": "מורן SEONE",
+    "email": "moran@seone.co.il",
+    "role": "foody_fut_user",
+    "firstName": "מורן",
+    "lastName": "SEONE",
+    "password": "VVw2O5A5ex34"
+  },
+  {
+    "name": "יואב SEONE",
+    "email": "yoav@seone.co.il",
+    "role": "foody_fut_user",
+    "firstName": "יואב",
+    "lastName": "SEONE",
+    "password": "F18culNFsfJw"
+  },
+  {
+    "name": "צופיה SEONE",
+    "email": "tsofia@seone.co.il",
+    "role": "foody_fut_user",
+    "firstName": "צופיה",
+    "lastName": "SEONE",
+    "password": "R6FMzCI6i0os"
+  },
+  {
+    "name": "מיקי צימט",
+    "email": "miki@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "מיקי",
+    "lastName": "צימט",
+    "password": "NjB071w553UU"
+  },
+  {
+    "name": "מאיה שלו",
+    "email": "maya@medio.co.il",
+    "role": "foody_fut_user",
+    "firstName": "מאיה",
+    "lastName": "שלו",
+    "password": "D8sREMbkbVGE"
+  }
+]
