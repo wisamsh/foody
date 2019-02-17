@@ -131,12 +131,11 @@ echo do_shortcode('[wordpress_social_login]');
                     <input type="tel" id="phone-number" name="phone_number">
                 </div>
 
-                <div class="md-checkbox col-12">
-                    <input id="check-terms" type="checkbox" checked name="terms" required>
-                    <label for="check-terms">
-                        <?php echo __('בהרשמתי אני מסכים למסירת פרטים , נדרש קופי למדיניות פריטיות ') ?>
-                    </label>
-                </div>
+<!--                <div class="md-checkbox col-12">-->
+<!--                    <input id="check-terms" type="checkbox" checked name="terms" required>-->
+<!--                    <label for="check-terms">-->
+<!--                    </label>-->
+<!--                </div>-->
                 <div class="md-checkbox col-12">
                     <input id="check-marketing" type="checkbox" checked name="marketing">
                     <label for="check-marketing">

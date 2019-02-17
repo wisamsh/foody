@@ -20,7 +20,12 @@ $global_uploads_dir = '/home/ubuntu/uploads';
 $app_uploads_dir = $app_dir . '/web/app/uploads';
 
 $release = 'release_' . date('YmdHis');
-$servers = ['local' => '127.0.0.1', 'dev' => 'ubuntu@foody-dev.moveodevelop.com', 'medio-dev' => 'ubuntu@foody.moveodevelop.com'];
+$servers = [
+    'local' => '127.0.0.1',
+    'dev' => 'ubuntu@foody-dev.moveodevelop.com',
+    'medio-dev' => 'ubuntu@foody.moveodevelop.com',
+    'production' => ['ubuntu@ec2-34-253-214-81.eu-west-1.compute.amazonaws.com','ubuntu@ec2-34-245-51-22.eu-west-1.compute.amazonaws.com']
+];
 
 if (!isset($branch)){
     $branch = 'staging';
