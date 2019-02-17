@@ -59,7 +59,8 @@ class Foody_Categories
                     'title' => $main_title,
                     'subtitle' => get_sub_field('subtitle'),
                     'category' => get_sub_field('category'),
-                    'cards_per_row' => $cards_per_row
+                    'cards_per_row' => $cards_per_row,
+                    'image' =>  get_sub_field('image'),
                 );
 
                 foody_get_template_part(get_template_directory() . '/template-parts/content-top-level-category-card.php', $args);

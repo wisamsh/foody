@@ -37,22 +37,19 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
         //display home link
         home_item();
 
-//        if (is_single() && !is_category() && !is_page()) {
-//
-//            $category = get_the_category();
-//            $category_name_and_link = get_primary_category($category);
-//            $category_id = $category[0]->ID;
-//            $category_name = $category[0]->cat_name;
-//            if ($category_name_and_link != null) {
-//                $category_id = $category_name_and_link['id'];
-//                $category_name = $category_name_and_link['name'];
-//            }
-//
-//            $subCategory = new Foody_Category($category_id, $category);
-//            $subCategoryParentId = $subCategory->parent($category_name);
-//            echo '<li><a href="' . get_permalink($subCategoryParentId) . '">' . get_the_title($subCategoryParentId) . '</a></li>';
-//            echo '<li class="active"><a href="' . get_category_link($category_id) . '">' . $category_name . '</a></li>';
-//        }
+        if (is_single() && !is_category() && !is_page()) {
+
+            $foody_post = Foody_Post::create(get_post());
+            if (!empty($foody_post)) {
+                $cat = $foody_post->get_primary_category();
+                if (!empty($cat))
+                    $category = new Foody_Category($cat);
+                $term = $category->term;
+                if (!is_wp_error($term)) {
+                    echo '<li><a href="' . get_term_link($term->term_id) . '">' . $term->name . '</a></li>';
+                }
+            }
+        }
         if (is_category()) {
 
             $category = new Foody_Category(get_queried_object_id());
@@ -108,7 +105,7 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
         } elseif (is_404()) {
             echo '<li class="active">404</li>';
         } elseif (is_tag()) {
-            echo '<li class="active">'. get_term(get_queried_object_id())->name .'</li>';
+            echo '<li class="active">' . get_term(get_queried_object_id())->name . '</li>';
         }
         echo '</ol>';
     }

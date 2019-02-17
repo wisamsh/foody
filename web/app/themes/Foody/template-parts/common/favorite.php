@@ -12,6 +12,8 @@
 $foody_post = $template_args['post'];
 $post_id = $foody_post->id;
 
+$show_text = !empty($template_args['show_text']);
+
 $favorite = [
     'icon' => 'icon-heart',
     'text' => 'הוספה למועדפים'
@@ -30,7 +32,9 @@ if ($foody_post->favorite) {
     <i class="<?php echo $favorite['icon'] ?>">
 
     </i>
-    <span>
-        <?php echo $favorite['text'] ?>
-    </span>
+    <?php if ($show_text): ?>
+        <span>
+            <?php echo $favorite['text'] ?>
+        </span>
+    <?php endif; ?>
 </div>

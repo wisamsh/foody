@@ -106,7 +106,6 @@ class Foody_Ingredient extends Foody_Post
 
             $show_after_ingredient = get_field('show_after_ingredient', $unit_tax);
 
-
             $display = $this->to_fraction($last['amount']);
 
             $amount = $last['amount'];
@@ -114,7 +113,7 @@ class Foody_Ingredient extends Foody_Post
             $title = $this->getTitle();
 
             $unit = $last['unit'];
-
+            $this->amounts[] = $last;
             $ing_html = $this->get_ingredient_html($amount, $display, $unit, $title, $show_after_ingredient);
 
 
@@ -141,7 +140,7 @@ class Foody_Ingredient extends Foody_Post
         return $content;
     }
 
-    private function get_ingredient_html($amount, $display, $unit, $title, $is_unit_after_title)
+    public function get_ingredient_html($amount, $display, $unit, $title, $is_unit_after_title)
     {
 
         if (!empty($this->plural_name)) {
@@ -230,7 +229,7 @@ class Foody_Ingredient extends Foody_Post
 
     public function the_details()
     {
-        // TODO: Implement the_details() method.
+
     }
 
 
@@ -247,6 +246,7 @@ class Foody_Ingredient extends Foody_Post
         if (!empty($this->amounts)) {
             $unit = $this->amounts[0]['unit_tax'];
             $amount = $this->amounts[0]['amount'];
+
             if (!empty($this->nutrients) && is_array($this->nutrients)) {
                 $nutrients = array_filter($this->nutrients, function ($nutrient) use ($nutrient_name, $unit, $amount) {
 
@@ -269,9 +269,11 @@ class Foody_Ingredient extends Foody_Post
                         $factor = 100;
                     }
 
+                    $amount = floatval($amount);
+                    $value = floatval($value);
                     $value = ($amount / $factor) * $value;
 
-                    $value = number_format((float)$value, 2, '.', '');
+                    $value = (float)$value;
 
                 }
             }
@@ -283,7 +285,31 @@ class Foody_Ingredient extends Foody_Post
 
     public static function get_nutrients_options()
     {
-        return get_field_object('field_5b62c59c35d88')['choices'];
+        $nutrients = get_field_object('field_5b62c59c35d88')['choices'];
+        unset($nutrients['sugar']);
+        return $nutrients;
+    }
+
+    /**
+     * @param $nutrient
+     * @return string
+     */
+    public static function get_nutrient_unit($nutrient)
+    {
+        $nutrients = self::get_nutrients_options();
+        $gram = __('גרם');
+        $nutrients['calories'] = __('קק״ל');
+        $nutrients['carbohydrates'] = $gram;
+        $nutrients['fats'] = $gram;
+        $nutrients['protein'] = $gram;
+        $nutrients['sodium'] = __('מ״ג');
+
+        $unit = '';
+
+        if (isset($nutrients[$nutrient])) {
+            $unit = $nutrients[$nutrient];
+        }
+        return $unit;
     }
 
     function __clone()

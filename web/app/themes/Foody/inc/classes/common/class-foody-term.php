@@ -129,7 +129,8 @@ abstract class Foody_Term
             'more' => $foody_query->has_more_posts($query),
             'header' => [
                 'sort' => true
-            ]
+            ],
+//            'title_el'=>'h1'
         ];
 
         $grid = array_merge_recursive($grid_args, $grid);

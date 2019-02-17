@@ -14,12 +14,89 @@ $content-width: 95%;
 
 @import "../../common/show-more-simple";
 
+.rotate-90 {
+  -moz-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.rotate-180 {
+  -moz-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.rotate-270 {
+  -moz-transform: rotate(270deg);
+  -webkit-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+
+.flip {
+  -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.flip-and-rotate-90 {
+  -moz-transform: rotate(90deg) scaleX(-1);
+  -webkit-transform: rotate(90deg) scaleX(-1);
+  -o-transform: rotate(90deg) scaleX(-1);
+  transform: rotate(90deg) scaleX(-1);
+}
+
+.flip-and-rotate-180 {
+  -moz-transform: rotate(180deg) scaleX(-1);
+  -webkit-transform: rotate(180deg) scaleX(-1);
+  -o-transform: rotate(180deg) scaleX(-1);
+  transform: rotate(180deg) scaleX(-1);
+}
+
+.flip-and-rotate-270 {
+  -moz-transform: rotate(270deg) scaleX(-1);
+  -webkit-transform: rotate(270deg) scaleX(-1);
+  -o-transform: rotate(270deg) scaleX(-1);
+  transform: rotate(270deg) scaleX(-1);
+}
+
 .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
+
+  .tooltip {
+    margin-top: -4px;
+    .tooltip-inner {
+      background: white;
+      box-shadow: rgba(0, 0, 0, 0.3) 0 3px 10px;
+      color: $color__text-primary-dark;
+      font-family: $font__assistant;
+      padding: 10px 20px 20px;
+
+      .close {
+        float: none !important;
+        text-align: left;
+        display: block;
+        color: $color__text-primary-dark;
+        opacity: 1;
+      }
+      div {
+        text-align: right;
+      }
+    }
+
+    .arrow {
+      &:before {
+        border-bottom-color: #fff;
+      }
+    }
+  }
 
   article.content {
 
     .title, h2 {
-      font-size: 24px;
+      font-size: 20px;
       margin-bottom: 0;
     }
 
@@ -124,12 +201,12 @@ $content-width: 95%;
             }
           }
 
-          .btn-facebook-share {
-            margin-right: 5px;
+          .essb_item {
             a {
-              color: white;
+              background-color: $color__social !important;
+
               &:hover {
-                color: white;
+                //background-color: $color__social !important;
               }
             }
           }
@@ -138,6 +215,68 @@ $content-width: 95%;
 
       .description, .content-details-bullets-container {
         //margin-right: -11.888888%;
+      }
+
+      .content-details-bullets-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+
+        .wrapper {
+          margin-right: 5px;
+          .rating-container {
+            text-align: right;
+
+            .ratings-wrapper {
+              margin: 0;
+            }
+          }
+        }
+
+        .content-details-bullets {
+
+          li {
+            font-size: 18px;
+          }
+          &:after {
+
+          }
+        }
+      }
+
+      h1 {
+        margin: 0;
+        font-weight: 900;
+        line-height: 1.03;
+      }
+
+      .description {
+        margin: 0 0 10px;
+        font-size: 18px;
+      }
+    }
+
+    .purchase-buttons {
+      display: inline-flex;
+      padding: 0;
+      align-items: center;
+      margin: 0 auto 0 0;
+
+      li {
+        padding: 0;
+        &:nth-child(n+2) {
+          display: none;
+        }
+      }
+
+      button {
+        width: 175px;
+        height: 40px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      img {
+        border-radius: 3px;
       }
     }
 
@@ -175,6 +314,12 @@ $content-width: 95%;
         font-family: $font__assistant;
         font-size: 24px;
         text-align: right;
+        margin-bottom: 0;
+        margin-top: 0;
+
+        p {
+          margin-bottom: 0;
+        }
       }
     }
 
@@ -184,19 +329,18 @@ $content-width: 95%;
       font-family: $font__assistant;
       padding: 10px 0;
       margin-top: 0;
-
+      $input-height: 35px;
       > .recipe-ingredients-top {
         @include max-width-section;
 
         .title {
-          line-height: normal;
+          line-height: $input-height;
           padding-right: 0;
         }
 
         .amount-container {
           padding-left: 0;
           align-self: center;
-          $input-height: 44px;
 
           .foody-select {
 
@@ -216,7 +360,7 @@ $content-width: 95%;
           }
 
           label {
-            font-size: 24px;
+            font-size: 17px;
             padding-left: 12px;
             line-height: $input-height;
             vertical-align: middle;
@@ -244,11 +388,13 @@ $content-width: 95%;
         margin: 0 auto;
         .ingredients-group {
           display: inline-block;
-
+          &:nth-child(n+3) {
+            margin-top: 10px;
+          }
           .ingredients-group-title {
             font-family: $font__assistant;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 17px;
             max-width: 80%;
           }
 
@@ -257,7 +403,7 @@ $content-width: 95%;
             list-style-type: none;
             margin-bottom: 0;
             // TODO var text size
-            font-size: 14pt;
+            font-size: 17px;
             li {
             }
 
@@ -292,10 +438,10 @@ $content-width: 95%;
       }
 
       .notes {
-
+        margin: 0;
         .note {
           font-family: $font__assistant;
-          font-size: 22px;
+          font-size: 17px;
         }
       }
     }
@@ -345,7 +491,7 @@ $content-width: 95%;
         .nutritions {
           font-family: $font__assistant;
           .nutrition {
-            padding: 20px 35px 20px 20px;
+            padding: 10px 35px 10px 20px;
             &:not(:last-child) {
               border-left: 1px solid $color__divider;
             }
@@ -418,7 +564,7 @@ $content-width: 95%;
             font-size: 35px;
             line-height: normal;
             position: absolute;
-            top: -13.5px;
+            top: -12.5px;
             display: block;
             padding-left: 10px;
           }
@@ -805,7 +951,7 @@ $content-width: 95%;
             .image-container {
 
               img {
-                //margin-top: .8rem;
+
               }
             }
 
@@ -871,16 +1017,7 @@ $content-width: 95%;
           }
 
           .description, .content-details-bullets-container, .favorite-container {
-            //margin-right: -25%;
-          }
 
-          .description {
-            padding: 0;
-            margin-top: 10px;
-          }
-
-          .description {
-            font-size: 20px;
           }
 
           .view-count {
@@ -903,6 +1040,28 @@ $content-width: 95%;
 
             }
           }
+
+          .content-details-bullets-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 0;
+            align-items: center;
+          }
+
+          h1 {
+            margin: 0;
+            font-weight: 900;
+            line-height: 1.03;
+          }
+
+          .description {
+            margin: 0 0 10px;
+            font-size: 18px;
+          }
+        }
+
+        .social{
+          justify-content: space-between;
         }
       }
 
@@ -969,6 +1128,10 @@ $content-width: 95%;
         .recipe-ingredients-container {
           max-width: calc(100% - #{$content-padding});
           .ingredients-group {
+            &:nth-child(n+3) {
+              margin-top: 0;
+            }
+
             &:not(:last-child) {
               margin-bottom: 15px;
             }
@@ -1002,6 +1165,30 @@ $content-width: 95%;
             }
           }
 
+        }
+      }
+
+      .recipe-purchase-buttons {
+        max-width: calc(100% - 15px);
+        margin: 0 auto;
+      }
+
+      .purchase-buttons {
+        display: flex;
+        margin-right: 0;
+        justify-content: space-around;
+
+        li {
+
+          &:nth-child(n+1) {
+            display: initial;
+          }
+
+          margin-bottom: 5px;
+          button {
+            height: 50px;
+            width: 100%;
+          }
         }
       }
 
@@ -1059,7 +1246,7 @@ $content-width: 95%;
 
         .title {
           margin-bottom: 0;
-          font-size: 26px;
+          font-size: 20px;
           margin-top: 20px;
         }
 
@@ -1174,7 +1361,7 @@ $content-width: 95%;
       .recipe-tags {
 
         .title {
-          font-size: 26px;
+          font-size: 20px;
         }
         max-width: calc(100% - #{$content-padding});
         ul {

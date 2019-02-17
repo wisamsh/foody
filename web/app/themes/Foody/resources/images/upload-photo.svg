@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="34px" viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>AB0F10E6-FB80-482F-B2A9-708C6CD45B9B</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="20.8605763%" y1="93.8700798%" x2="79.4205851%" y2="6.44437892%" id="linearGradient-1">
+            <stop stop-color="#EC3849" offset="0%"></stop>
+            <stop stop-color="#F35644" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Contact-us" transform="translate(-938.000000, -221.000000)">
+            <g id="Camera" transform="translate(938.000000, 221.000000)">
+                <g id="Group">
+                    <circle id="Oval-7" fill="url(#linearGradient-1)" cx="17" cy="17" r="17"></circle>
+                    <path d="M14.7857256,9.0000471 C14.6788144,8.99915339 14.6151983,9.06611772 14.5807405,9.12147523 L13.5133929,11.2857645 L9.80952381,11.2857645 C8.81109643,11.2857645 8,12.1053957 8,13.1143292 L8,23.1714353 C8,24.1803687 8.81109643,25 9.80952381,25 L25.1904762,25 C26.1889036,25 27,24.1803687 27,23.1714353 L27,13.1143292 C27,12.1053957 26.1889036,11.2857645 25.1904762,11.2857645 L21.4866071,11.2857645 L20.4192595,9.12147523 C20.3803819,9.04736807 20.2973293,8.99826197 20.2142744,9.0000471 L14.7857256,9.0000471 Z M17.5000113,13.8000295 C15.1295351,13.8000295 13.2023923,15.7473367 13.2023923,18.1428708 C13.2023923,20.5384049 15.129422,22.4857121 17.5000113,22.4857121 C19.8706006,22.4857121 21.7976304,20.5384049 21.7976304,18.1428708 C21.7976304,15.7473367 19.8706006,13.8000295 17.5000113,13.8000295 Z" id="Fill-1" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

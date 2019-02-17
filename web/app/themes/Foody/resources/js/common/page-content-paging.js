@@ -2,6 +2,8 @@
  * Created by moveosoftware on 10/11/18.
  */
 
+let FoodyLocationUtils = require('./foody-location-utils');
+
 module.exports = (function () {
 
     let PageContentPaging = function (settings) {
@@ -10,6 +12,7 @@ module.exports = (function () {
         this.TAG = 'PageContentPaging';
         this.pathRegex = /page\/([0-9]+(\/)?$)/;
         this.init();
+        this.locationUtils = new FoodyLocationUtils();
     };
 
     PageContentPaging.prototype.init = function () {
@@ -64,7 +67,6 @@ module.exports = (function () {
 
     };
 
-
     PageContentPaging.prototype.loadMore = function () {
 
         let sort = '';
@@ -84,7 +86,7 @@ module.exports = (function () {
             }
             that.filter.stopLoading();
             that.grid.append(data.data);
-            that.updateQuery(ajaxSettings.data.page);
+            that.locationUtils.updateHistory(ajaxSettings.data.page)
         });
     };
 
@@ -109,7 +111,7 @@ module.exports = (function () {
             data: {
                 context: this.settings.context,
                 page: page,
-                filter: this.filter.prepareFilterForQuery(this._getQuery('s')),
+                filter: this.filter.prepareFilterForQuery(this.locationUtils.getQuery('s')),
                 context_args: this.settings.contextArgs,
                 cols: this.filter.cols,
                 ranged: ranged
@@ -127,26 +129,23 @@ module.exports = (function () {
 
     PageContentPaging.prototype.updateQuery = function (currentPage) {
         if (history.pushState) {
-            console.log(this.pageQuery, currentPage);
-            let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + this.pageQuery + '=' + currentPage;
-            if (window.location.pathname == '/' || this.pathRegex.test(window.location.pathname)) {
-
-                newurl = window.location.protocol + "//" + window.location.host + '/' + this.pageQuery + '/' + currentPage;
+            let newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + this.pageQuery + '=' + currentPage;
+            if (window.location.pathname === '/' || this.pathRegex.test(window.location.pathname)) {
+                newUrl = window.location.protocol + "//" + window.location.host + '/' + this.pageQuery + '/' + currentPage;
                 let urlParams = new URLSearchParams(window.location.search);
-                newurl = `${newurl}?${urlParams.toString()}`;
+                newUrl = `${newUrl}?${urlParams.toString()}`;
             }
-            window.history.pushState({path: newurl}, '', newurl);
+
+            window.history.pushState({path: newUrl}, '', newUrl);
         }
     };
 
     PageContentPaging.prototype.getPageFromSearch = function () {
 
-        let currentPage = this._getQuery(this.pageQuery);
+        let currentPage = this.locationUtils.getQuery(this.pageQuery);
         if (!currentPage) {
             let path = window.location.pathname;
-            if (path == '/' || this.pathRegex.test(path)) {
-
-
+            if (path === '/' || this.pathRegex.test(path)) {
                 let matches = path.match(this.pathRegex);
                 if (matches && matches.length) {
                     currentPage = matches[1];
@@ -164,11 +163,6 @@ module.exports = (function () {
         }
 
         return currentPage;
-    };
-
-    PageContentPaging.prototype._getQuery = function (key) {
-        let urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(key);
     };
 
     PageContentPaging.prototype.log = function (logStr) {

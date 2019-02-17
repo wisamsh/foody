@@ -39,6 +39,8 @@ $default_sort_options = [
     ]
 ];
 
+$title_el = foody_get_array_default($template_args,'title_el','h3');
+
 
 ?>
 
@@ -51,13 +53,13 @@ $default_sort_options = [
         ?>
         <section class="grid-header row">
 
-            <h3 class="title col-12 col-lg-6">
+            <<?php echo $title_el?> class="title col-12 col-lg-6">
                 <?php
                 if (!empty($grid_header['title'])) {
                     echo $grid_header['title'];
                 }
                 ?>
-            </h3>
+            </<?php echo $title_el?>>
 
             <?php if (!empty($grid_header['sort']) && !empty($posts)):
                 $sort = $grid_header['sort'];

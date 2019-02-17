@@ -69,3 +69,32 @@ function foody_edit_user()
 add_action('wp_ajax_foody_edit_user', 'foody_edit_user');
 
 
+function foody_edit_profile_picture()
+{
+    if (!is_user_logged_in()) {
+        wp_send_json_error(['message' => 'Not Authorized'], 401);
+    }
+
+    $id = get_current_user_id();
+
+    $avatar = wp_handle_upload($_FILES['photo'], array(
+        'test_form' => false,
+        'unique_filename_callback' => 'wp_user_avatars_unique_filename_callback'
+    ));
+
+    if (empty($avatar)) {
+        wp_send_json_error(['message' => 'Upload Failed'], 500);
+    }
+
+    if (function_exists('wp_user_avatars_update_avatar')) {
+        wp_user_avatars_update_avatar($id, $avatar['url']);
+        wp_send_json_success($avatar);
+    } else {
+        wp_send_json_error(['message' => 'User Avatars is Disabled'], 502);
+    }
+
+}
+
+add_action('wp_ajax_foody_edit_profile_picture', 'foody_edit_profile_picture');
+
+

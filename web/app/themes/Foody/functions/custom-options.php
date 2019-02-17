@@ -6,10 +6,12 @@
  * Time: 11:51 AM
  */
 
-register_setting('discussion','hid_per_page');
+register_setting('discussion', 'hid_per_page');
+register_setting('discussion', 'whatsapp_phone_number_toggle');
+register_setting('discussion', 'whatsapp_phone_number');
 
-
-$page_name = __('הגדרות חיפוש - פודי', 'foody');
+$page_name_search_options = __('הגדרות חיפוש - פודי', 'foody');
+$page_name_purchase_buttons = __('כפתורי רכישה', 'foody');
 
 /** @var array $options_pages
  * All ACF Options Pages.
@@ -19,10 +21,18 @@ $page_name = __('הגדרות חיפוש - פודי', 'foody');
  */
 $options_pages = array(
     array(
-        'page_title' => $page_name,
-        'menu_title' => $page_name,
+        'page_title' => $page_name_search_options,
+        'menu_title' => $page_name_search_options,
         'menu_slug' => 'foody-search-options.php',
         'post_id' => 'foody_search_options',
+        'icon_url' => 'dashicons-search'
+    ),
+    array(
+        'page_title' => $page_name_purchase_buttons,
+        'menu_title' => $page_name_purchase_buttons,
+        'menu_slug' => 'foody-purchase-options.php',
+        'post_id' => 'foody_purchase_options',
+        'icon_url' => 'dashicons-cart'
     )
 );
 
@@ -96,21 +106,55 @@ function validate_args($args)
 }
 
 
-function custom_options()
+function foody_custom_options()
 {
-
-    register_setting('discussion', 'hid_per_page');
-
-    add_settings_field('hid_per_page', __('מספר ״איך יצא לי״ בעמוד'), 'foody_custom_options_callback', 'discussion');
-
-    function foody_custom_options_callback()
+    // number of how i did per page
+    add_settings_field('hid_per_page', __('מספר ״איך יצא לי״ בעמוד'), 'foody_hid_per_page_callback', 'discussion');
+    function foody_hid_per_page_callback()
     {
-
         $options = get_option('hid_per_page', 3);
 
-        echo '<input type="number" id="hid_per_page" name="hid_per_page" value="' . $options . '"></input>';
+        echo '<input type="number" id="hid_per_page" name="hid_per_page" value="' . $options . '">';
+
+    }
+
+    // WhatsApp business phone number
+    add_settings_field('whatsapp_phone_number', __('מספר טלפון (WhatsApp)'), 'foody_whatsapp_phone_number_callback', 'discussion');
+    function foody_whatsapp_phone_number_callback()
+    {
+
+        $options = get_option('whatsapp_phone_number');
+
+        echo '<input type="tel" id="whatsapp_phone_number" name="whatsapp_phone_number" value="' . $options . '">';
+
+    }
+
+    // WhatsApp business toggle
+    add_settings_field('whatsapp_phone_number_toggle', __('הצג WhatsApp'), 'foody_whatsapp_phone_number_toggle_callback', 'discussion');
+    function foody_whatsapp_phone_number_toggle_callback()
+    {
+        $options = get_option('whatsapp_phone_number_toggle', false);
+        $checked = $options ? 'checked' : '';
+        echo '<input ' . $checked . ' type="checkbox" id="whatsapp_phone_number_toggle" name="whatsapp_phone_number_toggle">';
 
     }
 }
 
-add_action('admin_init', 'custom_options');
+add_action('admin_init', 'foody_custom_options');
+
+
+function add_units_columns($columns)
+{
+    $columns['foo'] = 'Foo';
+    return $columns;
+}
+
+//add_filter('manage_edit-units_columns', 'add_units_columns');
+//
+//function add_units_column_content($content)
+//{
+//    $content = 'test';
+//    return $content;
+//}
+//
+//add_filter('manage_units_custom_column', 'add_units_column_content');

@@ -8,6 +8,10 @@ body[class~="single-foody_playlist"],
 body[class~="post-template-content-with-sidebar"],
 body[class~="tag"] {
 
+  .seo{
+    max-width: 70%;
+  }
+
   #page {
     //background-color: white;
   }
@@ -105,7 +109,8 @@ body[class~="tag"] {
 
           text-align: right;
           padding: 0;
-
+          display: flex;
+          align-self: center;
           img {
             width: 52px;
             border-radius: 50%;
@@ -128,7 +133,7 @@ body[class~="tag"] {
         //padding: 10px 0;
         font-family: $font__assistant;
         font-size: 19px;
-        margin: 0;
+        margin-top: 5px;
       }
 
       .view-count {
@@ -153,39 +158,40 @@ body[class~="tag"] {
 
             li {
 
-              &:not(:first-child):before {
-                //content: '';
-              }
-
               box-shadow: none;
 
               &.essb_link_whatsapp {
 
                 a {
-                  background-color: #75b73b !important;
-
                   &:hover {
-                    background-color: #75b73b;
+                    background-color: #75b73b !important;
                   }
                 }
               }
               &.essb_link_pinterest {
 
                 a {
-                  background-color: #c8232c !important;
 
                   &:hover {
-                    background-color: #c8232c;
+                    background-color: #c8232c !important;
                   }
                 }
               }
               &.essb_link_mail, &.essb_link_print {
 
                 a {
-                  background-color: #3a3a3a !important;
+                  &:hover {
+                    background-color: #3a3a3a !important;
+                  }
+                }
+              }
+
+              &.essb_link_facebook {
+
+                a {
 
                   &:hover {
-                    background-color: #3a3a3a;
+                    background-color: $color__facebook !important;
                   }
                 }
               }
@@ -245,6 +251,7 @@ body[class~="tag"] {
       li:not(:first-child):before {
         content: "• ";
         padding: 0 .5rem;
+        color: $color__primary;
       }
 
       li {
@@ -277,6 +284,11 @@ body[class~="tag"] {
   body[class~="tag"] {
     $sidebar-width: 100%;
     $content-width: 100%;
+
+    .seo{
+      max-width: $content-width;
+      padding: 0 10px 10px;
+    }
     article.content {
       width: $content-width;
       margin-bottom: 0;

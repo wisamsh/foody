@@ -10,41 +10,6 @@
 /** @var Foody_Category $category */
 $category = $template_args['category'];
 
-$slider_data = [
-    'slidesToShow' => 4,
-    'rtl' => true,
-    'prevArrow' => '<i class="icon-arrowleft prev"></i>',
-    'nextArrow' => '<i class="icon-arrowleft next"></i>',
-    'slidesToScroll' => 3,
-    'infinite' => false,
-    'responsive' => [
-        [
-            'breakpoint' => 1441,
-            'settings' => [
-                'slidesToShow' => 5,
-                'arrows' => false,
-                'slidesToScroll' => 1
-            ]
-        ],
-        [
-            'breakpoint' => 1025,
-            'settings' => [
-                'slidesToShow' => 5,
-                'arrows' => false,
-                'slidesToScroll' => 1
-            ]
-        ],
-        [
-            'breakpoint' => 415,
-            'settings' => [
-                'slidesToShow' => 3,
-                'arrows' => false,
-                'slidesToScroll' => 1
-            ]
-        ]
-    ]
-]
-
 ?>
 
     <h1 class="title">
@@ -55,8 +20,51 @@ $slider_data = [
 /** @var Foody_Category[] $sub_categories */
 $sub_categories = $category->get_sub_categories();
 if (is_array($sub_categories)):
+
+    $count = ceil(count($sub_categories) / 3);
+    $count = 3;
+    $slider_data = [
+        'slidesToShow' => 4,
+        'rtl' => true,
+        'prevArrow' => '<i class="icon-arrowleft prev"></i>',
+        'nextArrow' => '<i class="icon-arrowleft next"></i>',
+        'slidesToScroll' => $count,
+        'infinite' => false,
+        'responsive' => [
+            [
+                'breakpoint' => 1441,
+                'settings' => [
+                    'slidesToShow' => 5,
+                    'arrows' => false,
+                    'slidesToScroll' => $count
+                ]
+            ],
+            [
+                'breakpoint' => 1025,
+                'settings' => [
+                    'slidesToShow' => 5,
+                    'arrows' => false,
+                    'slidesToScroll' => $count
+                ]
+            ],
+            [
+                'breakpoint' => 415,
+                'settings' => [
+                    'slidesToShow' => 3,
+                    'arrows' => false,
+                    'slidesToScroll' => $count
+                ]
+            ]
+        ]
+    ]
+
     ?>
 
+    <script>
+        console.log(<?php echo json_encode($slider_data)?>);
+    </script>
+
+<!--    <ul class="foody-slider categories-slider" data-slick='--><?php //echo json_encode($slider_data, ENT_QUOTES) ?><!--'>-->
     <ul class="foody-slider categories-slider" data-slick='<?php echo json_encode($slider_data, ENT_QUOTES) ?>'>
         <?php
 
@@ -74,7 +82,6 @@ if (is_array($sub_categories)):
 
                 </a>
             </li>
-
 
         <?php endforeach; ?>
     </ul>

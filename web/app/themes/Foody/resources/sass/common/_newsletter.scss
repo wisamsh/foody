@@ -1,0 +1,14 @@
+.newsletter {
+  .wpcf7-acceptance {
+
+    span {
+      .wpcf7-list-item {
+        margin: 0;
+      }
+    }
+    + label {
+      max-width: 80%;
+      display: inline-block;
+    }
+  }
+}

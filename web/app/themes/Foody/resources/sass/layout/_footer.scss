@@ -1,5 +1,35 @@
 $sidebar-width: 21%;
 
+.seo {
+  width: calc(960px - #{$sidebar-width});
+  text-align: right;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
+  position: absolute;
+  bottom: 0;
+  padding: 5px 20px 5px 0;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.newsletter {
+  .wpcf7-acceptance {
+
+    span {
+      &.wpcf7-list-item {
+        margin: 0;
+      }
+    }
+  }
+  .accept-label {
+    max-width: 85%;
+    display: inline-block;
+    font-size: 14px;
+  }
+
+}
+
 footer.site-footer {
   background-color: rgba(58, 58, 58, 0.05);
   padding: 25px 42px;
@@ -44,9 +74,8 @@ footer.site-footer {
       .newsletter {
         margin-bottom: 15px;
 
-        .input-container {
-          padding-right: 0;
-
+        p {
+          margin: 0;
           input {
             height: 40px;
             border-radius: 3px;
@@ -56,24 +85,29 @@ footer.site-footer {
             padding: 0 5px;
             font-family: $font__assistant;
 
+            &[type="email"] {
+              width: 60%;
+              margin-left: 10px;
+            }
+
             //noinspection CssInvalidPseudoSelector
             &::placeholder {
               font-family: $font__main;
               font-size: 16px;
               font-weight: normal;
             }
-          }
-        }
 
-        button[type="submit"] {
-          border-radius: 3px;
-          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-          background-color: #ffffff;
-          border: none;
-          color: $color__primary;
-          font-size: 1em;
-          cursor: pointer;
-          font-weight: 900;
+            &[type="submit"] {
+              border-radius: 3px;
+              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+              background-color: #ffffff;
+              border: none;
+              color: $color__primary;
+              font-size: 1em;
+              cursor: pointer;
+              font-weight: 900;
+            }
+          }
         }
       }
 
@@ -100,6 +134,28 @@ footer.site-footer {
 }
 
 @include breakpoint(mobileonly) {
+
+  .newsletter {
+    .ajax-loader{
+      display: none;
+    }
+
+    .wpcf7-acceptance {
+
+      span {
+        &.wpcf7-list-item {
+
+        }
+      }
+    }
+    .accept-label {
+
+      vertical-align: middle;
+      color: white;
+      margin-top: 5px;
+    }
+
+  }
   footer.site-footer {
     padding: 0;
     width: 100%;
@@ -117,41 +173,43 @@ footer.site-footer {
         font-size: 20px;
       }
 
-      .newsletter {
-        form {
-          .newsletter-input {
-            padding: 12px;
-            border-radius: 3px;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-            background-color: #ffffff;
-            border: none;
-            font-size: 18px;
-          }
+      //.newsletter {
+      form {
+        .newsletter-input {
+          height: 40px;
+          padding: 12px;
+          border-radius: 3px;
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+          background-color: #ffffff;
+          border: none;
+          font-size: 18px;
+        }
 
-          .input-container {
-            padding-right: 0;
-            input[type="email"] {
-              @extend .newsletter-input;
-              width: 100%;
+        p {
+          margin: 0;
+          text-align: right;
+          input[type="email"] {
+            @extend .newsletter-input;
+            width: 70%;
+            margin-left: 10px;
+            //noinspection CssInvalidPseudoSelector
+            &::placeholder {
+              opacity: 0.5;
+              font-size: 18px;
+              font-weight: normal;
+              font-family: $font__main;
 
-              //noinspection CssInvalidPseudoSelector
-              &::placeholder {
-                opacity: 0.5;
-                font-size: 18px;
-                font-weight: normal;
-                font-family: $font__main;
-
-              }
             }
           }
 
-          button {
+          input[type="submit"] {
             @extend .newsletter-input;
             color: $color__primary;
             font-weight: 900;
           }
-
         }
+
+        //}
       }
 
     }

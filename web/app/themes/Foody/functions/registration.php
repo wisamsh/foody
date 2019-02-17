@@ -34,8 +34,6 @@ function auto_login_new_user($user_id)
     Foody_Analytics::get_instance()->user_register();
 
     wp_redirect($redirect_url);
-
-    exit;
 }
 
 add_action('user_register', 'auto_login_new_user');

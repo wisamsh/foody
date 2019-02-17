@@ -25,11 +25,18 @@ if (file_exists($root_dir . '/.env')) {
  */
 define('WP_ENV', env('WP_ENV') ?: 'production');
 
+if(WP_ENV == 'production' || WP_ENV == 'medio-development'){
+    $_SERVER['HTTPS']='on';
+}
+
 $env_config = __DIR__ . '/environments/' . WP_ENV . '.php';
 
 if (file_exists($env_config)) {
     require_once $env_config;
 }
+
+// Foody related
+define('FOODY_PAGE','fp');
 
 /**
  * URLs
@@ -82,3 +89,9 @@ if (!defined('ABSPATH')) {
 }
 
 define( 'WP_ALLOW_MULTISITE', true );
+//define('MULTISITE', true);
+//define('SUBDOMAIN_INSTALL', true);
+//define('DOMAIN_CURRENT_SITE', 'foody.co.il');
+//define('PATH_CURRENT_SITE', '/');
+//define('SITE_ID_CURRENT_SITE', 1);
+//define('BLOG_ID_CURRENT_SITE', 1);

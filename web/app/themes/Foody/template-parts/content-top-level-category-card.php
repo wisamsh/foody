@@ -8,6 +8,12 @@
 $main_category_id = $template_args['id'];
 $foody_category = new Foody_Category($main_category_id);
 
+$image = $template_args['image'];
+if(empty($image)){
+    $image = $foody_category->get_image();
+}else{
+    $image = $image['url'];
+}
 
 $cards_per_row = $template_args['cards_per_row'];
 if ($cards_per_row <= 0) {
@@ -29,7 +35,7 @@ if (is_wp_error($link)) {
 <div>
     <div class="card p-0">
         <img class="card-img-top img-fluid"
-             src="<?php echo $foody_category->get_image() ?>"
+             src="<?php echo $image ?>"
              alt="<?php echo $template_args['title'] ?>">
         <div class="card-block">
             <h2 class="card-title">

@@ -92,25 +92,7 @@ class Foody_Footer
     public function newsletter()
     {
 
-        ?>
-
-        <h4 class="newsletter-title">
-            <?php echo __('אל תפספסו את המתכונים החמים!', 'foody'); ?>
-        </h4>
-
-        <section class="newsletter">
-            <form class="row justify-content-between" method="post">
-                <div class="input-container col-9 col-lg-7">
-                    <input type="email" placeholder="<?php echo __('הכנס כתובת מייל', 'foody') ?>">
-
-                </div>
-                <button type="submit" class="col-3 col-lg-3 offset-lg-1">
-                    <?php echo __('הרשמה', 'foody') ?>
-                </button>
-            </form>
-        </section>
-
-        <?php
+        foody_get_template_part(get_template_directory() . '/template-parts/content-newsletter.php');
     }
 
     public function moveo()

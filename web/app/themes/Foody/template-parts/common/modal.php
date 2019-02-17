@@ -6,11 +6,13 @@
  * Time: 2:41 PM
  */
 
+/** @noinspection PhpUndefinedVariableInspection */
 $modal = $template_args;
 
 $btn_approve = foody_get_array_default($modal, 'btn_approve', __('אישור', 'foody'));
 $btn_cancel = foody_get_array_default($modal, 'btn_cancel', __('ביטול', 'foody'));
 
+$dialog_classes = foody_get_array_default($modal, 'dialog_classes', '');
 $btn_approve_classes = foody_get_array_default($modal, 'btn_approve_classes', 'btn-approve');
 $btn_cancel_classes = foody_get_array_default($modal, 'btn_cancel_classes', 'btn-cancel');
 
@@ -23,7 +25,9 @@ $hide_buttons = isset($modal['hide_buttons']) && $modal['hide_buttons'];
 
 
 <div class="modal fade" tabindex="-1" role="dialog" id="<?php echo $id ?>">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog <?php if (!empty($dialog_classes)) {
+        echo $dialog_classes;
+    } ?>" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">

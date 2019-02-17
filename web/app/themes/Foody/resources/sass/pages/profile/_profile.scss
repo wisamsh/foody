@@ -17,7 +17,7 @@ $sidebar-width: 25%;
         .managed-list-item {
           padding: 12.5px 0;
           margin: 0;
-          font-size: 24px;
+          font-size: 16px;
           font-family: $font__bold;
 
           img {
@@ -99,7 +99,18 @@ $sidebar-width: 25%;
 .page-template-profile {
 
   #page {
-    background-color: white;
+    //background-color: white;
+  }
+
+  .crop-container {
+    width: 100%;
+    .cropper-container {
+      margin: 0 auto;
+      max-width: 100%;
+    }
+    img {
+      width: 100%;
+    }
   }
 
   #main {
@@ -111,7 +122,6 @@ $sidebar-width: 25%;
     @import "../../common/sidebar";
 
     @include foody-sidebar($sidebar-width);
-
 
     .content {
       padding-top: 18px;
@@ -133,17 +143,27 @@ $sidebar-width: 25%;
           margin-left: 0;
           .image-container {
             margin-left: 22px;
+            position: relative;
 
-            img {
+            .avatar {
               border: 2px solid $color__primary;
               -webkit-clip-path: circle();
               clip-path: circle();
               max-width: 90px;
               border-radius: 50%;
 
-              &.default-avatar{
+              &.default-avatar {
                 border: none;
                 clip-path: unset;
+              }
+            }
+
+            form {
+              position: absolute;
+              bottom: -3px;
+              right: 15px;
+              label {
+                margin: 0;
               }
             }
           }
@@ -172,6 +192,12 @@ $sidebar-width: 25%;
             }
           }
         }
+
+        #upload-photo {
+          label {
+            cursor: pointer;
+          }
+        }
       }
 
       .profile-content {
@@ -193,7 +219,7 @@ $sidebar-width: 25%;
         h2 {
           &.title {
             padding-top: 30px;
-            font-size: 32px;
+            font-size: 24px;
           }
         }
 
@@ -663,6 +689,14 @@ Tablet landscape
               }
             }
           }
+
+          #upload-photo {
+            label {
+              img {
+                width: 30px;
+              }
+            }
+          }
         }
 
         .profile-content {
@@ -673,6 +707,18 @@ Tablet landscape
             &.title {
               padding-top: 30px;
               font-size: 32px;
+            }
+          }
+          .user-content {
+            .nav {
+              padding: 0;
+              justify-content: space-around;
+              .nav-item {
+                margin-left: 0;
+                a {
+                  font-size: 16px;
+                }
+              }
             }
           }
 

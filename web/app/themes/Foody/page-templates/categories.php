@@ -24,6 +24,8 @@ $categories = new Foody_Categories();
                 <?php echo the_title('<h1 class="title mt-0 mb-0">', '</h1>') ?>
 
                 <?php $categories->display(); ?>
+
+                <?php Foody_Seo::seo() ?>
             </div><!-- #content -->
         </div><!-- #primary -->
     </div><!-- #main-content -->

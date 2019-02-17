@@ -17,7 +17,7 @@ class FoodyMigrate extends Command
      *
      * @var string
      */
-    protected $signature = 'foody {action?} {--taxonomy} {--categories} {--users} {--limitations} {--db-ingredients} {--recipes} {--accessories} {--techniques} {--ingredients} {--units} {--pans}';
+    protected $signature = 'foody {action?} {--nutrients} {--taxonomy} {--categories} {--users} {--limitations} {--db-ingredients} {--recipes} {--accessories} {--techniques} {--ingredients} {--units} {--pans}';
 
     /**
      * The console command description.
@@ -169,6 +169,8 @@ class FoodyMigrate extends Command
 
         } elseif ($this->argument('action') == 'migrate-full') {
             $this->processFullMigration();
+        } elseif ($this->argument('action') == 'tools') {
+            $this->handleTools();
         } else {
             $this->info("\n\n\n                Foody migration tool.\n\nFor usage instructions see the repository readme.md");
         }
@@ -241,6 +243,10 @@ class FoodyMigrate extends Command
 
         if ($this->option('users')) {
             $this->processUsers();
+        }
+
+        if ($this->option('nutrients')) {
+            $this->addNutrientsToIngredients();
         }
     }
 
@@ -659,9 +665,9 @@ class FoodyMigrate extends Command
                         && (!isset($ingredient['AlternativeIngredient']) || trim($ingredient['AlternativeIngredient']) == '')
                     ) {
                         $ingredient['AlternativeAmountType'] = trim($ingredient['AlternativeAmountType']);
-                        if($ingredient['AlternativeAmountType'] == 'מ'){
+                        if ($ingredient['AlternativeAmountType'] == 'מ') {
                             $ingredient['AlternativeAmountType'] = 'מ"ל';
-                        }elseif ($ingredient['AlternativeAmountType'] == 'ק'){
+                        } elseif ($ingredient['AlternativeAmountType'] == 'ק') {
                             $ingredient['AlternativeAmountType'] = 'ק"ג';
                         }
 
@@ -730,7 +736,7 @@ class FoodyMigrate extends Command
     {
         $this->info("\n\nConverting and importing ingredients...\n\n");
 
-        $nutrients = $this->getNutritions();
+        $nutrients = $this->getNutrients();
 
 
         if ($this->debug) {
@@ -770,6 +776,68 @@ class FoodyMigrate extends Command
 
                     add_row('nutrients', $row, $post_id);
                 }
+            }
+
+            $bar->advance();
+        }
+
+        $bar->finish();
+    }
+
+    public function addNutrientsToIngredients()
+    {
+        $nutrients = $this->getNutrients('nutrients-new.json');
+
+        $bar = $this->output->createProgressBar(count($nutrients));
+
+        foreach ($nutrients as $nutrient_group) {
+            $nutrient = $nutrient_group[0];
+
+            $post_name = trim($nutrient['ingredient']);
+
+            $posts = $this->get_posts_by_names([$post_name], 'foody_ingredient');
+            if (empty($posts) || have_rows('nutrients', $posts[0])) {
+                $posts = $this->get_post_by_title($post_name, 'foody_ingredient');
+            }
+
+            if (!empty($posts)) {
+                $ingredient_id = $posts[0];
+
+                $has_nutrients = have_rows('nutrients', $ingredient_id);
+
+                if (!$has_nutrients) {
+
+                    $existing = get_field('nutrients', $ingredient_id);
+                    foreach ($nutrient_group as $item) {
+                        foreach ($item['nutrients'] as $name => $nutrient_val) {
+
+                            $row = [
+                                'value' => $nutrient_val,
+                                'nutrient' => $name
+                            ];
+                            if (isset($item['unit'])) {
+                                $row['unit'] = $item['unit'];
+                            }
+
+                            if (!empty($existing) && is_array($existing)) {
+                                $duplicates = array_filter($existing, function ($existing_row) use ($row) {
+                                    return $existing_row['nutrient'] == $row['nutrient'] && isset($row['unit']) && $row['unit'] == $existing_row['unit'];
+                                });
+                            }
+
+                            if (empty($duplicates)) {
+                                $success = add_row('nutrients', $row, $ingredient_id);
+                                if (!$success) {
+                                    $this->error("failed to add $name to $post_name");
+                                } else {
+                                    $this->info("added $name to $post_name", null, "nutrients", false);
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                $this->error("ingredient $post_name not found in database");
             }
 
             $bar->advance();
@@ -881,6 +949,25 @@ class FoodyMigrate extends Command
         $this->insertTerms('category', 'categories');
     }
 
+    public function checkNutrients()
+    {
+
+
+    }
+
+    public function findEmptyNutrients()
+    {
+        $query = "SELECT post_title,ID FROM wp_posts where ID not in (
+            SELECT post_id FROM wp_postmeta where meta_key = 'nutrients_0_nutrient'
+          ) 
+          and post_type = 'foody_ingredient'
+          order by ID";
+
+        global $wpdb;
+
+        $results = $wpdb->query($query);
+    }
+
     /**
      * @param $termType string valid taxonomy type
      * @param $source_file string file name to read data from
@@ -979,30 +1066,30 @@ class FoodyMigrate extends Command
     /**
      * Get nutritional values from json
      *
+     * @param string $file
      * @return array|mixed|object
      */
-    private function getNutritions()
+    private function getNutrients($file = 'nutrients.json')
     {
-        $nutritions = json_decode(file_get_contents(base_path('data/nutrients.json')), true);
+        $nutrients = json_decode(file_get_contents(base_path("data/$file")), true);
 
-        $nutritions = array_filter($nutritions, function ($nutrition) {
+        $nutrients = array_filter($nutrients, function ($nutrition) {
             return $nutrition != null && isset($nutrition['רכיב']) && $nutrition['רכיב'] != '';
         });
 
+        $nutrients = array_map(function ($nutrient) {
 
-        $nutritions = array_map(function ($nutrition) {
-
-            $unit = get_term_by('name', trim($nutrition['יחידת מידה']), 'units');
+            $unit = get_term_by('name', trim($nutrient['יחידת מידה']), 'units');
             $ret_val = [
                 'nutrients' => [
-                    'calories' => $this->defaultVal($nutrition['קלוריות']),
-                    'fats' => $this->defaultVal($nutrition['שומן']),
-                    'sodium' => $this->defaultVal($nutrition['נתרן']),
-                    'carbohydrates' => $this->defaultVal($nutrition['פחמימות']),
-                    'sugar' => $this->defaultVal($nutrition['סוכר']),
-                    'protein' => $this->defaultVal($nutrition['חלבון'])
+                    'calories' => $this->defaultVal($nutrient['קלוריות']),
+                    'fats' => $this->defaultVal($nutrient['שומן']),
+                    'sodium' => $this->defaultVal($nutrient['נתרן']),
+                    'carbohydrates' => $this->defaultVal($nutrient['פחמימות']),
+                    'sugar' => $this->defaultVal($nutrient['סוכר']),
+                    'protein' => $this->defaultVal($nutrient['חלבון'])
                 ],
-                'ingredient' => $nutrition['רכיב']
+                'ingredient' => $nutrient['רכיב']
             ];
 
             if (!is_wp_error($unit) && !is_null($unit) && is_object($unit)) {
@@ -1011,12 +1098,12 @@ class FoodyMigrate extends Command
 
             return $ret_val;
 
-        }, $nutritions);
+        }, $nutrients);
 
 
-        $nutritions = $this->_group_by($nutritions, 'ingredient');
+        $nutrients = $this->_group_by($nutrients, 'ingredient');
 
-        return $nutritions;
+        return $nutrients;
     }
 
     /**
@@ -1177,9 +1264,28 @@ class FoodyMigrate extends Command
 
         $query = new WP_Query($args);
         $posts = $query->get_posts();
-        if (count($posts) != count($names)) {
-            $this->error('posts count does not match names count');
+//        if (count($posts) != count($names)) {
+//            $this->error('posts count does not match names count');
+//        }
+        return array_map(function ($post) {
+            return $post->ID;
+        }, $posts);
+    }
+
+    public function get_post_by_title($title, $type)
+    {
+        if (empty($title)) {
+            return [];
         }
+
+        $args = [
+            'title' => trim($title),
+            'post_type' => $type
+        ];
+
+        $query = new WP_Query($args);
+        $posts = $query->get_posts();
+
         return array_map(function ($post) {
             return $post->ID;
         }, $posts);
@@ -1370,11 +1476,18 @@ class FoodyMigrate extends Command
     /**
      * @param string $string
      * @param null $verbosity
+     * @param string $file
+     * @param bool $print
      */
-    public function info($string, $verbosity = null)
+    public function info($string, $verbosity = null, $file = '', $print = true)
     {
         $string = "\n$string\n";
-        parent::info($string, $verbosity);
+        if (!empty($file)) {
+            file_put_contents(base_path("logs/$file.log"), $string . PHP_EOL, FILE_APPEND);
+        }
+        if ($print) {
+            parent::info($string, $verbosity);
+        }
     }
 
 
@@ -1387,5 +1500,47 @@ class FoodyMigrate extends Command
         file_put_contents(base_path('logs/error.log'), $string . PHP_EOL, FILE_APPEND);
 
         parent::error($string, $verbosity);
+    }
+
+    private function handleTools()
+    {
+        $data = file(base_path("data/rev-recipes.tsv"), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+
+        foreach ($data as $line) {
+            $recipes = preg_split('/\t/', $line);
+
+
+            $new_recipes = [];
+            foreach ($recipes as $recipe) {
+                if (!empty($recipe)) {
+
+                    $recipe = preg_replace('/http:\/\/foody.moveodevelop.com\/wp\/wp-admin\/post.php\?post=([0-9]+)&action=edit/', '$1', $recipe);
+
+                    $id = $recipe;
+                    if(is_numeric($recipe)){
+                        global $wpdb;
+
+                        $posts=  $wpdb->get_results('SELECT * from wp_posts where ID = ' .$recipe );
+
+                        if (count($posts) == 1) {
+                            $id = $posts[0]->post_parent;
+                            if($id <= 0){
+                                $id = $posts[0]->ID;
+                            }
+                        }
+                    }
+
+                    $new_recipes[] = "http://foody.moveodevelop.com/wp/wp-admin/post.php?post=$id&action=edit";
+
+                } else {
+                    throw new Exception('asgasf');
+                }
+            }
+
+            $new_data = implode("\t", $new_recipes);
+            file_put_contents(base_path('data/rev-recipes-2.tsv'), $new_data, FILE_APPEND);
+            file_put_contents(base_path('data/rev-recipes-2.tsv'), PHP_EOL, FILE_APPEND);
+        }
     }
 }

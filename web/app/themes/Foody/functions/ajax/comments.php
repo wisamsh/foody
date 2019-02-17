@@ -68,10 +68,9 @@ function foody_submit_ajax_comment()
 }
 
 
-add_action('wp_ajax_cloadmore', 'foody_comments_loadmore_handler'); // wp_ajax_{action}
-add_action('wp_ajax_nopriv_cloadmore', 'foody_comments_loadmore_handler'); // wp_ajax_nopriv_{action}
-
-function foody_comments_loadmore_handler()
+add_action('wp_ajax_cloadmore', 'foody_comments_load_more_handler'); // wp_ajax_{action}
+add_action('wp_ajax_nopriv_cloadmore', 'foody_comments_load_more_handler'); // wp_ajax_nopriv_{action}
+function foody_comments_load_more_handler()
 {
 
     // maybe it isn't the best way to declare global $post variable, but it is simple and works perfectly!
@@ -101,7 +100,6 @@ function foody_submit_ajax_how_i_did()
 
 
     $user = wp_get_current_user();
-
     $image = media_handle_upload('attachment', get_the_ID());
 
     if (is_wp_error($image)) {

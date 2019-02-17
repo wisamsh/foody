@@ -31,7 +31,7 @@ $user = new Foody_User();
 <?php Foody_Header::google_tag_manager_iframe(); ?>
 <div id="page" class="site">
 
-    <header id="masthead" class="site-header">
+    <header id="masthead" class="site-header no-print">
         <div class="run d-block d-lg-none">
             <?php echo __('בהרצה') ?>
         </div>
@@ -47,20 +47,16 @@ $user = new Foody_User();
                 <span class="run-desktop run">
                     <?php echo __('בהרצה') ?>
                 </span>
+
+                <?php if (!wp_is_mobile()): ?>
+                    <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility">
+                        <?php $header->accessibility(); ?>
+                        <div id="accessibility-container"></div>
+                    </button>
+                <?php endif; ?>
             </section>
 
         </div>
-
-        <!--        --><?php
-        //
-        //
-        //        $nav_args = array(
-        //            'theme_location' => 'primary',
-        //        );
-        //
-        //        wp_nav_menu($nav_args);
-        //        ?>
-
 
         <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg" role="navigation">
 
@@ -71,8 +67,6 @@ $user = new Foody_User();
                         <div class="logo-container-desktop">
                             <?php the_custom_logo() ?>
                         </div>
-
-
                     </div>
 
                     <div class="logo-container-mobile d-block d-lg-none">
@@ -90,11 +84,11 @@ $user = new Foody_User();
                 </button>
 
 
-                <!--                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">-->
-                <!--                    <img src="-->
-                <?php //echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?><!--" alt="">-->
-                <!--                </button>-->
-
+                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">
+                    <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
+                         alt="<?php echo __('נגישות') ?>">
+                    <div id="accessibility-container"></div>
+                </button>
 
                 <?php
                 $nav_args = array(
@@ -103,6 +97,8 @@ $user = new Foody_User();
 
                 wp_nav_menu($nav_args);
                 ?>
+
+                <?php Foody_Social::whatsapp(['d-block', 'd-lg-none']) ?>
 
                 <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none">
 
@@ -126,7 +122,6 @@ $user = new Foody_User();
                 <?php endif; ?>
 
             </div>
-
         </nav>
 
         <div class="search-overlay d-lg-none">
@@ -153,4 +148,5 @@ $user = new Foody_User();
     </header><!-- #masthead -->
 
     <div id="content" class="site-content">
+        <?php Foody_Social::whatsapp(['d-none', 'd-lg-block', 'floating']) ?>
 

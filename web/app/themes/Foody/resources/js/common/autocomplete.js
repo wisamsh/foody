@@ -62,4 +62,17 @@ module.exports = function (selector, options) {
             window.location.href = '?s=' + $('input[name="s"]', $prev).val();
         }
     });
+
+    $autocompletInput.keydown((e) => {
+        let key = e.which;
+        if (key === 13) {
+            let search = $(e.target).val();
+            if (search) {
+                window.location = '/?s=' + search;
+            }
+            e.preventDefault();
+            return false;
+        }
+
+    });
 };

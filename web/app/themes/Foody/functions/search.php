@@ -18,8 +18,6 @@ function foody_where_filter($where)
     global $wpdb;
     if (is_search()) {
         $search = get_search_query();
-//        $search = $wpdb->esc_like($search);
-////        $search = esc_sql($search);
         $author_id = foody_search_user_by_name($search);
 
         if ($author_id) {
@@ -118,3 +116,4 @@ function foody_search_user_by_name($name, $single = true)
 
     return $result;
 }
+

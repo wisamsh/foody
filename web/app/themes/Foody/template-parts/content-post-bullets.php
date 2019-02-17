@@ -13,37 +13,32 @@ $foody_page = $template_args['foody_page'];
 
 $dynamic = !empty($template_args['dynamic']) ? $template_args['dynamic'] : [];
 
+if (!empty($template_args['hide'])) {
+    $hide_views = empty($template_args['hide']['views']);
+    $hide_date = empty($template_args['hide']['date']);
+}
+
 ?>
 
 <ul class="content-details-bullets">
     <li>
         <?php echo $foody_page->getAuthorName() ?>
     </li>
-    <li>
-        <?php echo $foody_page->getViewCount() ?>
-    </li>
-    <li>
-        <?php echo $foody_page->getPostedOn() ?>
-    </li>
+    <?php if (!empty($hide_views)): ?>
+        <li>
+            <?php echo $foody_page->getViewCount() ?>
+        </li>
+    <?php endif; ?>
 
+    <?php if (!empty($hide_date)): ?>
+        <li>
+            <?php echo $foody_page->getPostedOn() ?>
+        </li>
+    <?php endif; ?>
     <?php foreach ($dynamic as $item): ?>
         <li>
             <?php echo $item; ?>
         </li>
     <?php endforeach; ?>
-
-    <?php if (isset($template_args['show_favorite']) && $template_args['show_favorite']): ?>
-
-        <li class="no-bullet d-none d-xl-inline-block">
-            <?php
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/common/favorite.php',
-                array(
-                    'post' => $foody_page
-                )
-            )
-            ?>
-        </li>
-
-    <?php endif; ?>
 </ul>
+

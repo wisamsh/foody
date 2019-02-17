@@ -14,17 +14,20 @@ window.calculator = function (selector) {
 
     let originalNumberOfDishes = parseInt($numberOfDishes.data('amount'));
 
-    $numberOfDishes.on('change keyup paste', function () {
+    if (foodyGlobals.isMobile) {
+        $numberOfDishes.on('click', function (e) {
+            $(this).val(null);
+        });
+    }
 
+    $numberOfDishes.on('input',function(){
         let val = $(this).val();
 
         if (originalNumberOfDishes <= 0 || val <= 0) {
             return;
         }
 
-
         updateIngredients($elements, originalNumberOfDishes, val);
-
     });
 
 
@@ -39,6 +42,8 @@ window.calculator = function (selector) {
         updateIngredients($elements, 1, val, original);
 
     });
+
+
 
 };
 
@@ -65,6 +70,7 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
             }
         }
 
+        // noinspection EqualityComparisonWithCoercionJS
         if (val == originalNumberOfDishes || reset) {
             text = $this.data('original');
         }
@@ -72,10 +78,10 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
         let $name = $('span.name', $this.parent());
 
 
-
         $name.text(name);
-
-        $this.text(text);
+        if (parseFloat(text) > 0) {
+            $this.text(text);
+        }
     });
 }
 
@@ -86,40 +92,53 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
         let nutrient = $this.data('name');
         let original = $this.data('original');
 
+        val = parseInt(val);
         let totalValueForNutrient = 0;
-
-        if (val == originalNumberOfDishes || reset) {
+        originalNumberOfDishes = parseInt(originalNumberOfDishes);
+        if (val === originalNumberOfDishes || reset) {
             totalValueForNutrient = parseFloat(original);
         } else {
             $('.ingredients .amount').each(function () {
-                let nutrientBaseValue = $(this).data(nutrient);
+                let nutrientBaseValue = $(this).attr(`data-${nutrient}`);
+                console.log('nutrientBaseValue ', nutrientBaseValue);
                 if (!nutrientBaseValue) {
                     nutrientBaseValue = 0;
                 }
 
                 nutrientBaseValue = parseFloat(nutrientBaseValue);
+                if (nutrientBaseValue) {
+                    nutrientBaseValue = nutrientBaseValue * val;
+                }
 
-                nutrientBaseValue = nutrientBaseValue * val;
+                if (nutrientBaseValue) {
+                    totalValueForNutrient += nutrientBaseValue;
+                }
 
-
-                totalValueForNutrient += nutrientBaseValue;
+                console.log('totalValueForNutrient for ' + nutrient, totalValueForNutrient);
             });
         }
+        let decimals = 0;
+        if (nutrient === 'protein') {
+            decimals = 1;
+        }
 
-
-        $('.value', this).text(prettyNumber(totalValueForNutrient))
+        if (totalValueForNutrient > 0) {
+            $('.value', this).text(prettyNumber(totalValueForNutrient, decimals))
+        }
 
     });
 }
 
-function prettyNumber(num) {
-
-    let text = num.toFixed(2);
+function prettyNumber(num, decimals) {
+    if (decimals === undefined) {
+        decimals = 2;
+    }
+    let text = num.toFixed(decimals);
 
     let number = String(text).split('.');
-    if (number.length == 2) {
+    if (number.length === 2) {
         let decimal = number[1];
-        if (decimal == '00') {
+        if (decimal === '00') {
             text = number[0];
         }
     }

@@ -15,6 +15,9 @@ module.exports = (function () {
 
 
     FoodyLoader.prototype.attach = function () {
+        if(this.$container.is(':hidden')){
+            return;
+        }
         this.$container.append(this.$loaderElement);
 
         lottie.loadAnimation({
@@ -30,6 +33,9 @@ module.exports = (function () {
 
 
     FoodyLoader.prototype.detach = function () {
+        if(this.$container.is(':hidden')){
+            return;
+        }
         lottie.destroy();
         this.$loaderElement.detach();
     };

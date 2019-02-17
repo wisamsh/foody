@@ -1700,8 +1700,30 @@ function foody_array_to_data_attr($data)
     }
     $data_attrs = '';
     foreach ($data as $key => $value) {
-        $data_attrs .= " data-$key='$value'";
+//        $data_attrs .= " data-$key='$value'";
+
+        $data_attrs.= ' data-'.$key.'='.'"'.$value.'"';
     }
 
     return $data_attrs;
+}
+
+function foody_normalize_content($content)
+{
+    $content = apply_filters('the_content', $content);
+
+    $content = apply_filters('the_content', $content);
+    $content = str_replace('&nbsp;', " ", $content);
+    $content = preg_replace('/\s+/', ' ', $content);
+
+    return $content;
+
+}
+
+function foody_array_find($xs, $f) {
+    foreach ($xs as $x) {
+        if (call_user_func($f, $x) === true)
+            return $x;
+    }
+    return null;
 }

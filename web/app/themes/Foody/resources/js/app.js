@@ -81,6 +81,8 @@ require('./contact-us');
 require('./tag');
 require('./items');
 
+window.foodyFormMessage = require('./common/cf7-messages');
+
 
 
 jQuery(document).ready(function ($) {
@@ -111,6 +113,18 @@ jQuery(document).ready(function ($) {
 
     $('header .navbar-toggler').on('click',()=>{
         $('.quadmenu-navbar-toggle').click();
-    })
+    });
 
+    $('body').on('click','.tooltip .close',function () {
+        $(this).closest('.tooltip').tooltip('hide')
+    });
+
+    foodyFormMessage('.newsletter');
+
+    let $seo = $('#seo');
+
+    if($seo.length){
+        let height = $seo.height();
+        $('article.content').css('padding-bottom',height + 'px');
+    }
 });

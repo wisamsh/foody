@@ -7,11 +7,12 @@
  */
 
 the_content();
-global $foody_page;
+/** @var Foody_Article $foody_page */
+$foody_page = Foody_PageContentFactory::get_instance()->get_page();;
 ?>
 
 
-<section class="categories section">
+<section class="categories section no-print">
     <h2 class="title">
         <?php echo __('קטגוריות') ?>
     </h2>
@@ -25,7 +26,7 @@ global $foody_page;
 $tags = wp_get_post_tags(get_the_ID());
 if (!empty($tags)) {
     ?>
-    <section class="tags section">
+    <section class="tags section no-print">
         <h2 class="title">
             <?php echo __('תגיות', 'foody') ?>
         </h2>
@@ -39,7 +40,12 @@ if (!empty($tags)) {
 }
 ?>
 
-<section class="comments section">
+<section class="newsletter no-print">
+    <?php $foody_page->newsletter(); ?>
+
+</section>
+
+<section class="comments section no-print">
     <?php
 
     $template = '';

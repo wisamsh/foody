@@ -7,24 +7,19 @@ let foodyAlert = require('../common/alerts');
 
 jQuery(document).ready(($) => {
 
-    let wpcf7Elm = document.querySelector('.wpcf7');
+    let wpcf7Elm = document.querySelector('.page-template-centered-content .wpcf7');
 
-    let $form = $('.wpcf7');
 
-    if($form.length){
+    if (wpcf7Elm) {
         wpcf7Elm.addEventListener('wpcf7submit', function (event) {
 
             let details = event.detail.apiResponse;
-
-            console.log(event);
             event.preventDefault();
 
-            if(details.status == 'mail_sent'){
-                foodyAlert('success',details.message);
+            if (details.status === 'mail_sent') {
+                foodyAlert('success', details.message);
             }
 
         }, false);
     }
-
-
 });

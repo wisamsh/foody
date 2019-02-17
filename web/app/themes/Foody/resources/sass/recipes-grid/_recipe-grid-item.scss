@@ -90,34 +90,34 @@
     }
   }
 
+  .feed-item-details-container {
+    padding: 0 5px;
+  }
+
+  .title-container {
+    margin-top: 10px;
+  }
+
   .recipe-item-details, .playlist-item-details, .article-item-details {
     font-family: $font__assistant;
-    padding: 10px 5px;
+    padding: 0 0 5px;
     .image-container {
 
       text-align: right;
       margin-left: 10px;
-      margin-top: 10px;
       padding: 0;
+      margin-bottom: 8px;
 
       img {
         width: 40px;
         border-radius: 50%;
         max-width: unset;
       }
-    }
-
-    h3 {
-      margin: 0;
-      font-size: 21px;
-      font-family: $font__assistant-bold;
-      font-weight: bold;
-    }
-
-    .description {
-      font-size: 1rem;
-      text-align: right;
-      line-height: normal;
+      ul {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+      }
     }
 
     .view-count {
@@ -127,28 +127,49 @@
       padding: 0;
       margin: 0;
       overflow: auto;
-
+      width: calc(100% - 60px);
       li {
         list-style-type: none;
         display: inline-block;
         font-size: 1rem;
-      }
+        line-height: normal;
+        vertical-align: middle;
 
-      li:not(:first-child):before {
-        content: "• ";
-        padding: 0 .5rem;
+        &:nth-child(2) {
+          &:before {
+            content: "• ";
+            padding: 0 .5rem;
+            font-weight: 900;
+            color: $color__primary;
+          }
+        }
+
+        &.favorite-container {
+          float: left;
+        }
       }
     }
 
-    .favorite {
-      text-align: right;
-      color: $color__primary;
-      padding: 5px 0;
+  }
+  h3 {
+    margin: 0;
+    font-size: 21px;
+    font-family: $font__assistant-bold;
+    font-weight: bold;
+  }
+  .description {
+    font-size: 1rem;
+    text-align: right;
+    line-height: normal;
+    padding-bottom: 5px;
+  }
+  .favorite {
+    text-align: right;
+    color: $color__primary;
 
-      i {
-        cursor: pointer;
-        vertical-align: middle;
-      }
+    i {
+      cursor: pointer;
+      vertical-align: middle;
     }
   }
 

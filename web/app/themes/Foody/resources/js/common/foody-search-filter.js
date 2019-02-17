@@ -3,22 +3,27 @@
  */
 
 let FoodyGrid = require('./foody-grid');
+let FoodyLocationUtils = require('./foody-location-utils');
 
 module.exports = (function () {
-
-    this.searchFilter = {};
 
 
     function FoodySearchFilter(settings) {
         this.init(settings);
     }
 
+    /**
+     * Init properties and set initial
+     * filter.
+     * Sets a change listener on filter checkboxes
+     * */
     FoodySearchFilter.prototype.init = function (settings) {
         this.settings = settings;
-
+        this.locationUtils = new FoodyLocationUtils();
+        this.searchFilter = {};
         let defaultGridArgs = {selector: settings.grid};
-        if(settings.gridArgs){
-            defaultGridArgs = _.extend(defaultGridArgs,settings.gridArgs);
+        if (settings.gridArgs) {
+            defaultGridArgs = _.extend(defaultGridArgs, settings.gridArgs);
         }
 
         this.grid = new FoodyGrid(defaultGridArgs);
@@ -29,12 +34,9 @@ module.exports = (function () {
 
         this.cols = settings.cols;
         this.$filter = $(settings.selector);
-        this.initialContext = this.grid.getItems();
 
         if (this.$filter.length) {
-
-            //noinspection JSPotentiallyInvalidUsageOfThis
-            this.searchFilter = this.buildInitialFilter();
+            this.buildInitialFilter();
             this.attachChangeListener();
             if (!settings.searchButton) {
                 settings.searchButton = '.show-recipes';
@@ -57,11 +59,7 @@ module.exports = (function () {
                 return;
             }
 
-            console.log('check change: ', that.settings);
-
-
             e.preventDefault();
-
 
             let data = $(this).data();
             let groupKey = $(this).closest('.foody-accordion').attr('id');
@@ -86,7 +84,6 @@ module.exports = (function () {
         this.isLoading = true;
         this.toggleCheckboxes(true);
         this.grid.loading();
-
     };
 
     FoodySearchFilter.prototype.stopLoading = function () {
@@ -96,34 +93,52 @@ module.exports = (function () {
     };
 
     FoodySearchFilter.prototype.toggleCheckboxes = function (disable) {
-
         let attr = disable ? 'disable' : null;
-        let $checkboxes = $('.md-checkbox', this.$filter);
+        let $checkboxes = $('.md-checkbox', this.settings.page);
         $checkboxes.attr('disabled', attr);
     };
 
     FoodySearchFilter.prototype.buildInitialFilter = function () {
 
-        let $checkboxes = $('input[type="checkbox"]', this.$filter);
-        let searchFilter = {};
+        let $checkboxes = $('input[type="checkbox"]', this.settings.page);
         let that = this;
+
+        foodyGlobals.queryArgs = foodyGlobals.queryArgs || {};
+
+        this.searchFilter = {};
+
+        let key = foodyGlobals.filterQueryArg;
+
+        this._updateFilterByQuery(this.locationUtils.getQuery(key));
+
         $checkboxes.each(function () {
             if (this.checked) {
                 that.searchFilter[this.name] = that.getParsedInput(this);
             }
         });
+    };
 
-        return searchFilter;
+    FoodySearchFilter.prototype._updateFilterByQuery = function (valuesStr) {
+        if (valuesStr) {
+            let that = this;
+            valuesStr.split(',').forEach((value) => {
+                $('.md-checkbox label:visible', that.settings.page).filter(function () {
+                    return $(this).text().trim() === value.trim();
+                }).each(function () {
+                    let $checkbox = $(this).prev('input[type="checkbox"]');
+                    $checkbox.prop('checked', true);
+                });
+            });
+        }
     };
 
     FoodySearchFilter.prototype.getParsedInput = function (checkbox) {
 
         let data = $(checkbox).data();
-
         return {
             type: data.type,
             exclude: data.exclude,
-            id: data.value
+            value: data.value
         };
     };
 
@@ -131,9 +146,7 @@ module.exports = (function () {
 
         /*
          * {
-         *  search:'asfgag',
-         *  posts ids to include in the filter
-         *  context:[1,3,56],
+         *  search:'search term',
          *  'types':[{
          *      type:'categories|ingredients|techniques|accessories|limitations|tags',
          *      exclude:false,
@@ -141,41 +154,22 @@ module.exports = (function () {
          *  }]
          * }
          * */
-
-
-        search = this._getQuery('s');
-
+        search = this.locationUtils.getQuery('s');
         let args = {
-            // TODO get from input if needed
             search: search,
             types: [],
             context: this.settings.context,
             context_args: this.settings.contextArgs,
         };
-        // TODO remove once unnecessary
-        // args.context = _.uniq(this.initialContext.concat(this.grid.getItems()));
 
-
-        //noinspection JSPotentiallyInvalidUsageOfThis
         for (let key in this.searchFilter) {
             if (this.searchFilter.hasOwnProperty(key)) {
                 args.types.push(this.searchFilter[key]);
             }
         }
 
-
-        // TODO remove once unnecessary
-        // if (!args.search && args.types.length == 0) {
-        //     args.context = this.initialContext;
-        // }
-
         return args;
 
-    };
-
-    FoodySearchFilter.prototype._getQuery = function (key) {
-        let urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(key);
     };
 
     FoodySearchFilter.prototype.doQuery = function () {
@@ -192,7 +186,7 @@ module.exports = (function () {
             }
         };
 
-        if (this.settings.onQuery && typeof  this.settings.onQuery == 'function') {
+        if (this.settings.onQuery && typeof  this.settings.onQuery === 'function') {
             this.settings.onQuery();
         }
         let that = this;
@@ -202,12 +196,43 @@ module.exports = (function () {
             if (err) {
                 console.log('err: ' + err);
             } else {
-                that.grid.refresh(data.data, ajaxSettings.data.data.types.length == 0);
+                that.grid.refresh(data.data, ajaxSettings.data.data.types.length === 0);
+                that._updateUri();
             }
         });
-
     };
 
+    FoodySearchFilter.prototype._updateUri = function () {
+
+        let pageContainer = this.settings.page;
+        let $checkedCheckboxes = $('input[type="checkbox"]:checked', pageContainer);
+
+        let urlParams = new URLSearchParams();
+
+        // noinspection JSUnresolvedVariable
+        let queryArg = foodyGlobals.filterQueryArg;
+
+        let filterItems = $checkedCheckboxes.toArray().map((el) => {
+            let $label = $(`label[for="${el.id}"]`);
+            let filterTitle = '';
+            if ($label.length) {
+                filterTitle = $label.text().replace(/\s+/g, ' ');
+                filterTitle = filterTitle.trim();
+            }
+            return filterTitle;
+        });
+
+        filterItems = filterItems.filter((item) => item);
+
+        if (filterItems && filterItems.length) {
+            urlParams.set(queryArg, filterItems.join(','));
+        } else {
+            urlParams.delete(queryArg);
+        }
+
+        this.locationUtils.updateHistory(null, urlParams.toString())
+
+    };
 
     return FoodySearchFilter;
 

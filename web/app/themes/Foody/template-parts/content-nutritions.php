@@ -15,18 +15,21 @@ $disclaimer = __(
 אתר פודי וחברת מדיפוד בע\"מ אינן אחראיות לכל שינוי כאמור ו/או על השימוש במתכון ובאחריות המשתמש לבדוק את ערכים התזונתיים בעצמו בטרם השימוש במתכון."
 );
 
+$disclaimer = sprintf('<div> <span class="close">&times;</span><div>%s</div></div>', $disclaimer);
+
+
 ?>
 
 <h2 class="title">
     <?php echo $title ?>
 
     <span class="glyphicon glyphicon-info-sign disclaimer" data-toggle="tooltip" data-placement="bottom"
-          title='<?php echo $disclaimer ?>'>
+          title='<?php echo $disclaimer ?>' data-content="<?php echo esc_html($disclaimer) ?>" data-html="true">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22px"
                  height="22px" viewBox="0 0 22 22" version="1.1">
         <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
-        <title>Shape</title>
-        <desc>Created with Sketch.</desc>
+        <title>מידע נוסף</title>
+        <desc>מידע נוסף</desc>
         <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <g id="Playlist-Page" transform="translate(-739.000000, -3712.000000)" fill="#ED3D48" fill-rule="nonzero"
                stroke="#ED3D48" stroke-width="0.799999952">
@@ -51,15 +54,19 @@ $disclaimer = __(
 
             <div class="col-sm-4 col-12 nutrition">
 
-                <?php foreach ($nutrition as $values): ?>
-                    <div class="nutrition-row" data-name="<?php echo $values['data_name'] ?>" data-original=" <?php echo $values['value'] ?>">
+                <?php foreach ($nutrition as $item): ?>
+                    <div class="nutrition-row" data-name="<?php echo $item['data_name'] ?>"
+                         data-original=" <?php echo $item['value'] ?>">
                     <span class="name">
-                        <?php echo $values['name'] ?>
+                        <?php echo $item['name'] ?>
                     </span>
 
                         <span class="value">
-                        <?php echo $values['value'] ?>
+                        <?php echo $item['value'] ?>
                     </span>
+                        <span class="unit">
+                            <?php echo $item['unit'] ?>
+                        </span>
                     </div>
                     <div class="clearfix"></div>
 

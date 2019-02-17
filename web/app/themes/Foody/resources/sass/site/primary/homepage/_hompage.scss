@@ -3,6 +3,10 @@ $feed-header-height: 60px;
 $sidebar-top-offset: 60px;
 .homepage {
 
+
+  .seo{
+    max-width: $content-width;
+  }
   .cover-image {
     img {
       background-size: cover;
@@ -11,28 +15,15 @@ $sidebar-top-offset: 60px;
     }
   }
 
+  #seo{
+    left: 0;
+    padding-right: 0;
+    max-width: 100%;
+  }
+
   .content {
     padding-top: 15px;
     .featured {
-
-      .recipe-item-details {
-        .image-container {
-
-          & + section {
-            padding-right: 0;
-          }
-
-          img {
-            margin: 0 auto;
-            display: block;
-          }
-        }
-      }
-
-      img.recipe-item-image {
-        width: 100%;
-      }
-
     }
 
     .title {
@@ -96,6 +87,12 @@ $sidebar-top-offset: 60px;
     .team-listing {
       border-bottom: 1px solid $color__divider;
       margin: 0;
+
+      .author {
+        .author-name {
+          margin-top: 0;
+        }
+      }
     }
 
     .feed-container {
@@ -233,13 +230,20 @@ $sidebar-top-offset: 60px;
     }
   }
 
-  h3 {
+  h1,h2,h3 {
     font-size: 22px;
   }
 }
 
 @include breakpoint(mobileonly) {
   .homepage {
+
+    .seo{
+      max-width: 100%;
+    }
+    #seo{
+      position: initial;
+    }
 
     .cover-image {
 

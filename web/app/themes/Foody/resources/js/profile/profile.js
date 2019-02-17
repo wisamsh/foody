@@ -4,7 +4,11 @@
 
 let toggleFollowed = require('../common/follow');
 let FoodySearchFilter = require('../common/foody-search-filter');
-
+require('cropperjs');
+require('cropperjs/dist/cropper.min.css');
+require('jquery-cropper');
+let FoodyLoader = require('../common/foody-loader');
+let readUrl = require('../common/image-reader');
 jQuery(document).ready(($) => {
 
 
@@ -54,15 +58,20 @@ jQuery(document).ready(($) => {
     // Foody search and filter
     new FoodySearchFilter({
         selector: '.page-template-profile #accordion-foody-filter',
-        grid: '.my-channels-grid',
+        grid: '#my-channels-grid',
         cols: 1,
-        page:'.page-template-profile'
+        page: '.page-template-profile',
+        context: 'profile',
+        contextArgs: ['channels']
     });
+
     new FoodySearchFilter({
         selector: '.page-template-profile #accordion-foody-filter',
-        grid: '.my-recipes-grid',
+        grid: '#my-recipes-grid',
         cols: 1,
-        page:'.page-template-profile'
+        page: '.page-template-profile',
+        context: 'profile',
+        contextArgs: ['favorites']
     });
 
     // Tab switch analytics
@@ -166,7 +175,7 @@ jQuery(document).ready(($) => {
     });
 
 
-    let handler = formSubmit({
+    formSubmit({
         form: 'form#edit-user-details',
         ajaxUrl: '/wp/wp-admin/admin-ajax.php',
         action: '&action=foody_edit_user',
@@ -186,7 +195,7 @@ jQuery(document).ready(($) => {
         }
     });
 
-    let userDetailsValidator = $("form#edit-user-details").validate({
+    $("form#edit-user-details").validate({
         rules: {
             first_name: {
                 required: true
@@ -216,6 +225,102 @@ jQuery(document).ready(($) => {
     });
 
 
+    let $uploadModal = $('#profile-pic-upload-modal');
 
+    $('#upload-photo-input').on('change', function () {
+
+        readUrl(this, $('img', $uploadModal), function () {
+            let options = {
+                aspectRatio: 1,
+                checkCrossOrigin: false,
+                minContainerHeight: 300,
+                minContainerWidth: 414,
+                minCanvasWidth: 100
+            };
+            $uploadModal.modal('show');
+
+            $('#cropped-image').on('load', function () {
+                $(this).cropper(options);
+            });
+
+        });
+    });
+
+    $uploadModal.on('hide.bs.modal', function () {
+
+    });
+
+    $('.btn-approve', $uploadModal).on('click', function () {
+
+        let cropper = $('#cropped-image').data('cropper');
+        let data = {
+            image: cropper.getCroppedCanvas().toDataURL()
+        };
+
+        console.log(data);
+
+        upload(data);
+    });
+
+    function upload(data) {
+
+        let image = data.image;
+        // Split the base64 string in data and contentType
+        let block = image.split(";");
+        // Get the content type
+        let contentType = block[0].split(":")[1];// In this case "image/gif"
+
+        let loader = new FoodyLoader({container:$('.modal-body',$uploadModal)});
+        loader.attach();
+
+        $uploadModal.block({message:''});
+        srcToFile(
+            image,
+            'photo.' + contentType.split('/')[1],
+            contentType
+        ).then(function (file) {
+
+            // Create a FormData and append the file
+            let fd = new FormData();
+            fd.append("photo", file);
+            $.ajax({
+                url: "/wp/wp-admin/admin-ajax.php?action=foody_edit_profile_picture",
+                data: fd,
+                type: "POST",
+                contentType: false,
+                processData: false,
+                cache: false,
+                dataType: "json",
+                error: function (err) {
+                    console.error(err);
+                },
+                success: function (data) {
+                    console.log(data);
+
+                    let url = data.data.url;
+                    $('.profile-picture-container img').attr('src', url);
+                    $('.profile-top .user-details .image-container img.avatar').attr('src', url);
+                    $uploadModal.modal('hide');
+                },
+                complete: function () {
+                    loader.detach();
+                    $uploadModal.unblock();
+                }
+            });
+        });
+
+
+    }
+
+    function srcToFile(src, fileName, mimeType) {
+        return (fetch(src)
+                .then(function (res) {
+                    return res.arrayBuffer();
+                })
+                .then(function (buf) {
+                    return new File([buf], fileName, {type: mimeType});
+                })
+        );
+    }
 
 });

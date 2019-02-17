@@ -1,12 +1,27 @@
 .single-post {
   .foody-content {
-    max-width: 90%;
+    max-width: 95%;
     margin: 0 auto;
     padding: 20px 0;
 
     .wp-caption {
-      width: 100%;
+      &:not(.alignleft) {
+        &:not(.alignright) {
+          width: 100%;
+        }
+      }
     }
+  }
+
+  a {
+    &:visited {
+      color: $color__primary;
+    }
+  }
+
+  .comments {
+    max-width: 95%;
+    margin: 0 auto;
   }
 
 }
@@ -31,6 +46,9 @@
         }
       }
     }
-
+    .comments {
+      max-width: 95%;
+      margin: 0 auto;
+    }
   }
 }

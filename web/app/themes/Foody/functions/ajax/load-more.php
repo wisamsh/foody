@@ -36,7 +36,6 @@ function foody_ajax_load_more()
             }
             $context = $_POST['context'];
 
-
             $page = $_POST['page'];
 
             $ranged = isset($_POST['ranged']) && $_POST['ranged'];
@@ -61,7 +60,7 @@ function foody_ajax_load_more()
 
                 $query = $foody_search->build_query($filter, $page_args, $sort);
 
-                $next = $query->max_num_pages >= $page;
+                $next = $query->max_num_pages > $page;
 
                 $foody_search->before_query();
 

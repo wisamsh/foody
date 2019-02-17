@@ -1,5 +1,12 @@
-let sort = require('../common/sort');
+let sorter = require('../common/sort');
 
 jQuery(document).ready(($)=>{
-    sort('.grid-body','.item');
+   let sort  = sorter('.grid-body','.item');
+
+
+    let sortVal = $('#items-sort').val();
+    if(sortVal){
+        sort(sortVal,'.grid-body','.item');
+    }
+
 });

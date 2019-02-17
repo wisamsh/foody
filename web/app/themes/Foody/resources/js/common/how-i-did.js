@@ -3,10 +3,11 @@
  */
 
 let FoodyLoader = require('../common/foody-loader');
-
-
+let readUrl = require('./image-reader');
+require('cropperjs');
+require('cropperjs/dist/cropper.min.css');
+require('jquery-cropper');
 $(document).ready(() => {
-
 
 
     let howIDidForm = 'form#image-upload-form';
@@ -32,7 +33,6 @@ $(document).ready(() => {
         $commentForm[0].reset();
         $boundForm[0].reset();
         $uploadModal.modal('hide');
-
 
 
         incrementCommentsCount('#how-i-did .comments-title');
@@ -72,102 +72,43 @@ $(document).ready(() => {
         let $modal = $('#upload-image-modal');
         $modal.modal('show');
 
-        readURL(this, $('img', $modal));
+        let $modalImage = $('img', $modal);
+
+        readUrl(this, $modalImage);
+
+        fixExifOrientation($modalImage);
     });
 
-    // convert file to image
-    function readURL(input, img) {
 
-        if (input.files && input.files[0]) {
-            let reader = new FileReader();
-
-            reader.onload = function (e) {
-                $(img).attr('src', e.target.result);
-            };
-
-            // reader.onloadend = function (e) {
-            //
-            //     // Update an image tag with loaded image source
-            //     $(img).attr('src', e.target.result);
-            //     // Use EXIF library to handle the loaded image exif orientation
-            //     EXIF.getData(input.files[0], function () {
-            //
-            //         // // Fetch image tag
-            //         // let img = $(img).get(0);
-            //         // Fetch canvas
-            //         let canvas = document.createElement('canvas');
-            //         // run orientation on img in canvas
-            //         orientation(img[0], canvas);
-            //     });
-            // };
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    // handle mobile image orientation
-    function orientation(img, canvas) {
-
-        // Set variables
-        let ctx = canvas.getContext("2d");
-        let exifOrientation = '';
-        let width = img.width,
-            height = img.height;
-
-        console.log(width);
-        console.log(height);
-
-        // Check orientation in EXIF metadatas
-        EXIF.getData(img, function () {
-            let allMetaData = EXIF.getAllTags(this);
-            exifOrientation = allMetaData.Orientation;
-            console.log('Exif orientation: ' + exifOrientation);
+    function fixExifOrientation($img) {
+        $img.on('load', function () {
+            EXIF.getData($img[0], function () {
+                console.log('Exif=', EXIF.getTag(this, "Orientation"));
+                switch (parseInt(EXIF.getTag(this, "Orientation"))) {
+                    case 2:
+                        $img.addClass('flip');
+                        break;
+                    case 3:
+                        $img.addClass('rotate-180');
+                        break;
+                    case 4:
+                        $img.addClass('flip-and-rotate-180');
+                        break;
+                    case 5:
+                        $img.addClass('flip-and-rotate-270');
+                        break;
+                    case 6:
+                        $img.addClass('rotate-90');
+                        break;
+                    case 7:
+                        $img.addClass('flip-and-rotate-90');
+                        break;
+                    case 8:
+                        $img.addClass('rotate-270');
+                        break;
+                }
+            });
         });
-
-        // set proper canvas dimensions before transform & export
-        if (jQuery.inArray(exifOrientation, [5, 6, 7, 8]) > -1) {
-            //noinspection JSSuspiciousNameCombination
-            canvas.width = height;
-            //noinspection JSSuspiciousNameCombination
-            canvas.height = width;
-        } else {
-            canvas.width = width;
-            canvas.height = height;
-        }
-
-        // transform context before drawing image
-        switch (exifOrientation) {
-            case 2:
-                ctx.transform(-1, 0, 0, 1, width, 0);
-                break;
-            case 3:
-                ctx.transform(-1, 0, 0, -1, width, height);
-                break;
-            case 4:
-                ctx.transform(1, 0, 0, -1, 0, height);
-                break;
-            case 5:
-                ctx.transform(0, 1, 1, 0, 0, 0);
-                break;
-            case 6:
-                ctx.transform(0, 1, -1, 0, height, 0);
-                break;
-            case 7:
-                ctx.transform(0, -1, -1, 0, height, width);
-                break;
-            case 8:
-                ctx.transform(0, -1, 1, 0, 0, width);
-                break;
-            default:
-                ctx.transform(1, 0, 0, 1, 0, 0);
-        }
-
-        // Draw img into canvas
-        ctx.drawImage(img, 0, 0, width, height);
-
-        $(img).attr('src', canvas.toDataURL());
-        img = null;
-        canvas = null;
     }
 
 
@@ -195,7 +136,7 @@ $(document).ready(() => {
         ajaxUrl: '/wp/wp-admin/admin-ajax.php',
         action: 'ajaxhow_i_did',
         onSubmit: function () {
-            $formContainer.block({message:''});
+            $formContainer.block({message: ''});
             loader.attach.call(loader);
             submitButton.prop('disabled', true);
         },

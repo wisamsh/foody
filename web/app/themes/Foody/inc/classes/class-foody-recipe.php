@@ -13,6 +13,7 @@ class Foody_Recipe extends Foody_Post
 
     public $amount_for;
     public $has_video;
+    public $nutrients;
 
     private $duration;
 
@@ -26,7 +27,7 @@ class Foody_Recipe extends Foody_Post
 
     private $ingredients_count;
 
-    private $number_of_dishes;
+    public $number_of_dishes;
 
     private $debug = false;
 
@@ -183,29 +184,12 @@ class Foody_Recipe extends Foody_Post
 
     public function the_nutrition()
     {
-        $nutrients = array();
+
         $title = get_field('nutritions_title', $this->post->ID);
 
-        foreach (Foody_Ingredient::get_nutrients_options() as $nutrients_name => $nutrients_title) {
 
-            $item = ['name' => $nutrients_title, 'value' => 0];
-            foreach ($this->ingredients_groups as $group) {
-
-                foreach ($group['ingredients'] as $ingredient) {
-
-                    /** @var Foody_Ingredient $ingredient */
-                    $value = $ingredient->get_nutrient_for_by_unit_and_amount($nutrients_name);
-                    $item['value'] = $item['value'] + $value;
-                }
-
-            }
-            $item['data_name'] = $nutrients_name;
-            $nutrients[] = $item;
-        }
-
-
-        if (!empty($nutrients)) {
-            $nutrients = array_chunk($nutrients, ceil(count($nutrients) / 3));
+        if (!empty($this->nutrients)) {
+            $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
 
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-nutritions.php',
@@ -216,7 +200,6 @@ class Foody_Recipe extends Foody_Post
             );
 
         }
-
     }
 
     public function the_categories()
@@ -303,7 +286,13 @@ class Foody_Recipe extends Foody_Post
 
     public function preview()
     {
-        the_field('preview', $this->post->ID);
+        $content = get_field('preview', $this->post->ID, false);
+
+        if (!empty($content)) {
+            $content = foody_normalize_content($content);
+        }
+
+        echo $content;
     }
 
     public function the_ingredients_title()
@@ -321,6 +310,7 @@ class Foody_Recipe extends Foody_Post
         $this->init_video();
         $this->init_ingredients();
         $this->init_overview();
+        $this->init_nutrients();
     }
 
     private function ingredients_to_string()
@@ -513,7 +503,8 @@ class Foody_Recipe extends Foody_Post
                             $unit_field = get_sub_field('unit');
                             $unit = get_term($unit_field, 'units');
                             $amount = get_sub_field('amount');
-                            if (!is_wp_error($unit)) {
+                            if (!is_wp_error($unit) && $unit instanceof WP_Term) {
+
                                 $unit_name = $unit->name;
 
                                 if ($amount > 1) {
@@ -572,7 +563,7 @@ class Foody_Recipe extends Foody_Post
     public function the_details()
     {
         foody_get_template_part(
-            get_template_directory() . '/template-parts/content-recipe-details.php',
+            get_template_directory() . '/template-parts/_content-recipe-details.php',
             [
                 'page' => $this
             ]
@@ -647,6 +638,68 @@ class Foody_Recipe extends Foody_Post
             </section>
             <?php
         }
+    }
+
+
+    public function get_jsonld_nutrients()
+    {
+        $json = [
+            "@type" => "NutritionInformation",
+            'calories' => isset($this->nutrients['calories']) ? $this->nutrients['calories'] : '',
+            'carbohydrateContent' => isset($this->nutrients['carbohydrates']) ? $this->nutrients['carbohydrates'] : '',
+            'fatContent' => isset($this->nutrients['fats']) ? $this->nutrients['fats'] : '',
+            'proteinContent' => isset($this->nutrients['protein']) ? $this->nutrients['protein'] : '',
+            'sodiumContent' => isset($this->nutrients['sodium']) ? $this->nutrients['sodium'] : '',
+        ];
+
+        return json_encode($json);
+    }
+
+    private function init_nutrients()
+    {
+        $nutrients = array();
+
+        foreach (Foody_Ingredient::get_nutrients_options() as $nutrients_name => $nutrients_title) {
+
+            $item = ['name' => $nutrients_title, 'value' => 0];
+            foreach ($this->ingredients_groups as $group) {
+
+                foreach ($group['ingredients'] as $ingredient) {
+
+                    /** @var Foody_Ingredient $ingredient */
+                    $value = $ingredient->get_nutrient_for_by_unit_and_amount($nutrients_name);
+                    $item['value'] = $item['value'] + $value;
+                }
+
+            }
+            $item['data_name'] = $nutrients_name;
+            $item['unit'] = Foody_Ingredient::get_nutrient_unit($nutrients_name);
+            $decimals = 0;
+            if ($nutrients_name == 'protein') {
+                $decimals = 1;
+            }
+            $item['value'] = number_format($item['value'], $decimals, '.', '');
+            $nutrients[] = $item;
+        }
+
+        $this->nutrients = $nutrients;
+
+    }
+
+    public function get_ingredients_jsonld()
+    {
+        $text = [];
+//        if(!empty($this->ingredients_groups)){
+//            foreach ($this->ingredients_groups as $ingredients_group) {
+//                foreach ($ingredients_group['ingredients'] as $ingredient) {
+//                    if($ingredient instanceof Foody_Ingredient){
+//                        $text[]= $ingredient->get_ingredient_html()
+//                    }
+//                }
+//            }
+//        }
+
+        return json_encode($text);
     }
 
 

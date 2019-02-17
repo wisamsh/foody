@@ -39,6 +39,7 @@ class Foody_User
 
         $this->favorites = get_user_meta($this->user_id, 'favorites', true);
 
+
     }
 
     /**
@@ -135,6 +136,10 @@ class Foody_User
                 return $valid;
             });
 
+            usort($posts,function ($post_a,$post_b){
+                return strtotime($post_b->post_date_gmt) - strtotime($post_a->post_date_gmt);
+            });
+
             $user_favorites = array_map('Foody_Post::create', $posts);
         }
 
@@ -145,6 +150,7 @@ class Foody_User
     /**
      * @param int $offset
      * @param int $limit
+     * @param bool $count
      * @return array|null|object
      */
     public function get_followed_content($offset = 0, $limit = 10, $count = false)
@@ -222,14 +228,19 @@ class Foody_User
                         $size = $this->get_closest($size, $available_sizes);
                     }
                 }
-
-                $image = $user_images[$size];
-                if (!empty($image)) {
-                    $image = "<img class='avatar' src='$image' >";
+                if (isset($user_images[$size])) {
+                    $image = $user_images[$size];
+                    if (!empty($image)) {
+                        $image = "<img class='avatar' src='$image' >";
+                    }
+                }elseif(isset($user_images['full'])){
+                    $image = $user_images['full'];
+                    if (!empty($image)) {
+                        $image = "<img class='avatar' src='$image' >";
+                    }
                 }
             } else {
                 $image = wsl_get_wp_user_custom_avatar('gravatar.com', $this->user->ID, $size, '', '');
-
             }
         }
 

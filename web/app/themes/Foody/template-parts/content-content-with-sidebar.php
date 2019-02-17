@@ -28,18 +28,18 @@ $featured_content_classes[] = 'featured-content-container';
         <main id="main" class="site-main">
             <div class="row m-0">
                 <?php if (!$hide_progress): ?>
-                    <div class="progress-wrapper">
+                    <div class="progress-wrapper no-print">
                         <progress dir="ltr"></progress>
                     </div>
 
                 <?php endif; ?>
 
-                <?php if (method_exists($foody_page, 'before_content')){
+                <?php if (method_exists($foody_page, 'before_content')) {
                     $foody_page->before_content();
                 } ?>
 
 
-                <aside class="col d-none d-lg-block">
+                <aside class="col d-none d-lg-block no-print">
 
                     <?php $foody_page->the_sidebar_content() ?>
 
@@ -64,6 +64,7 @@ $featured_content_classes[] = 'featured-content-container';
                             <?php
 
                             $foody_page->the_content($foody_page);
+                            Foody_Seo::seo();
 
                         endwhile; // End of the loop.
                     } elseif (is_author() || is_search() || is_category() || is_tag()) {
@@ -79,7 +80,7 @@ $featured_content_classes[] = 'featured-content-container';
                         <?php
 
                         $foody_page->the_content($foody_page);
-
+                        Foody_Seo::seo();
                     }
 
                     ?>
@@ -88,6 +89,7 @@ $featured_content_classes[] = 'featured-content-container';
             </div>
 
         </main><!-- #main -->
+
     </div><!-- #primary -->
 
 <?php

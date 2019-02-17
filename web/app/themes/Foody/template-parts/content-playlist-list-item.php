@@ -28,38 +28,39 @@ $playlist = $template_args['post'];
         </div>
     </a>
 
-
-    <section class="playlist-item-details  d-flex">
-        <div class="image-container col-1 nopadding">
-            <a href="<?php echo $playlist->get_author_link() ?>">
-                <img src="<?php echo $playlist->getAuthorImage() ?>" alt="">
-            </a>
-        </div>
-        <section class="col-11">
+    <section class="feed-item-details-container">
+        <section class="title-container">
             <h3>
                 <a href="<?php echo $playlist->link ?>">
                     <?php echo $playlist->getTitle() ?>
                 </a>
             </h3>
-            <ul>
-                <li>
-                    <a href="<?php echo $playlist->get_author_link() ?>">
-                        <?php echo $playlist->getAuthorName() ?>
-                    </a>
-                </li>
-                <li>
-                    <?php echo $playlist->getViewCount() ?>
-                </li>
-                <li>
-                    <?php echo $playlist->getPostedOn() ?>
-                </li>
-            </ul>
+
             <div class="description">
                 <?php echo $playlist->getDescription() ?>
             </div>
         </section>
+        <section class="playlist-item-details  d-flex">
+            <div class="image-container col-12 nopadding">
+                <a href="<?php echo $playlist->get_author_link() ?>">
+                    <img src="<?php echo $playlist->getAuthorImage() ?>" alt="">
+                </a>
+                <ul>
+                    <li>
+                        <a href="<?php echo $playlist->get_author_link() ?>">
+                            <?php echo $playlist->getAuthorName() ?>
+                        </a>
+                    </li>
+                    <li>
+                        <?php echo $playlist->getViewCount() ?>
+                    </li>
+                    <li>
+                        <?php echo $playlist->getPostedOn() ?>
+                    </li>
+                </ul>
+            </div>
 
-
+        </section>
     </section>
 </div>
 

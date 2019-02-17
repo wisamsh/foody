@@ -16,19 +16,20 @@ body[class~="category"] {
       margin-bottom: 10px;
     }
     .categories-slider {
-
+      z-index: 0;
       .slick-track {
         margin: 0;
       }
 
       i.slick-arrow {
-        background: white;
+        background: #fff;
         border-radius: 50%;
         position: absolute;
         right: 24px;
-        padding: 15px;
-        z-index: 200;
-        top: 45px;
+        padding: 12px 15px;
+        z-index: 1;
+        top: 30px;
+        cursor: pointer;
 
         &:before {
           color: $color__primary;
@@ -87,7 +88,7 @@ body[class~="category"] {
       padding-right: 20px;
       padding-left: 20px;
 
-      .foody-grid{
+      .foody-grid {
         margin-top: 20px;
         .feed-item {
           .feed-item-image {
@@ -95,7 +96,6 @@ body[class~="category"] {
           }
         }
       }
-
 
     }
   }
@@ -148,7 +148,7 @@ body[class~="category"] {
             }
 
             .category-title {
-              font-size: 24px;
+              font-size: 18px;
               text-align: center;
               font-weight: normal;
               color: $color__text-primary-dark;

@@ -9,11 +9,14 @@
  * @package Foody
  */
 $footer = new Foody_Footer();
+
 ?>
 
 </div><!-- #content -->
 
-<footer id="colophon" class="site-footer">
+<footer id="colophon" class="site-footer no-print">
+
+
 
     <section class="newsletter d-block d-lg-none">
         <?php

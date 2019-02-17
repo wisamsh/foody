@@ -5,6 +5,10 @@
     font-family: $font__assistant;
   }
 
+  p:last-of-type{
+    margin-bottom: 0;
+  }
+
   h2 {
     font-family: $font__main;
     color: $color__primary;
@@ -30,6 +34,9 @@
 
   ul, ol {
     font-size: $content-font-size;
+    padding: 0;
+    margin: 0;
+    list-style-position: inside;
   }
 
   .wp-caption {
@@ -45,6 +52,9 @@
 
   a {
     color: $color__primary;
+    &:visited {
+      color: $color__primary;
+    }
   }
 
   blockquote {

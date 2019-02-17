@@ -270,7 +270,7 @@ function add_menu_items($items_html, $args)
 }
 
 
-//add_filter('wp_nav_menu_items', 'add_menu_items', 10, 2);
+add_filter('wp_nav_menu_items', 'add_menu_items', 10, 2);
 
 function foody_custom_walker(array $nav_menu_args, WP_Term $nav_menu, array $args, array $instance)
 {
@@ -301,3 +301,22 @@ function foody_categories_widget_title($title, $instance, $id_base)
 }
 
 add_filter('widget_title', 'foody_categories_widget_title', 10, 3);
+
+add_filter('quadmenu_nav_menu_item_fields', 'my_hook_default_options_themes',10, 2);
+
+function my_hook_default_options_themes($settings, $menu_obj) {
+
+    $settings['dropdown']['default'] = 'left';
+    return $settings;
+}
+
+
+function foody_remove_item_description($sorted_menu_items, stdClass $args){
+    foreach ($sorted_menu_items as $sorted_menu_item) {
+        unset($sorted_menu_item->description);
+    }
+
+    return $sorted_menu_items;
+}
+
+add_filter('wp_nav_menu_objects', 'foody_remove_item_description', 10, 2);

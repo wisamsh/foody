@@ -79,16 +79,16 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
                 'classes' => 'show active',
                 'link_classes' => 'active'
             ],
-            [
-                'title' => sprintf(__('פלייליסטים (%s)'), $playlists['count']),
-                'target' => 'playlists-tab-pane',
-                'content' =>
-                    $this->get_posts_grid(
-                        $playlists['posts'],
-                        'playlist',
-                        $playlists['more']
-                    )
-            ]
+//            [
+//                'title' => sprintf(__('פלייליסטים (%s)'), $playlists['count']),
+//                'target' => 'playlists-tab-pane',
+//                'content' =>
+//                    $this->get_posts_grid(
+//                        $playlists['posts'],
+//                        'playlist',
+//                        $playlists['more']
+//                    )
+//            ]
         ];
 
         foody_get_template_part(get_template_directory() . '/template-parts/common/foody-tabs.php', $tabs);
@@ -107,13 +107,17 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
     private function get_author_content($type)
     {
-
         $args = $this->foody_query->get_query('author', [
             $this->getId(),
             $type
         ], true);
 
-        $count = count_user_posts($this->author->ID, $type);
+        $post_types = [
+            $type,
+            'post'
+        ];
+
+        $count = count_user_posts($this->author->ID, $post_types);
 
 
         $query = new WP_Query($args);

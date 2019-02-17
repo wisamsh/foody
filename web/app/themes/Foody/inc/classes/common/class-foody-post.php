@@ -228,6 +228,17 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         $this->title = $title;
     }
 
+    public function get_primary_category_name()
+    {
+        $term_id = $this->get_primary_category();
+        $name = '';
+        if (is_numeric($term_id)) {
+            $name = get_term_field('name', $term_id, 'category');
+        }
+
+        return $name;
+    }
+
     public function get_primary_category()
     {
 
@@ -268,7 +279,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         dynamic_sidebar('foody-social');
     }
 
-    private function the_sidebar_related_content($recipes_title, $playlist_title,$args= array())
+    private function the_sidebar_related_content($recipes_title, $playlist_title, $args = array())
     {
         if (!isset($args['hide_playlists']) || $args['hide_playlists'] == false) {
             $playlists_args = array(
@@ -458,6 +469,26 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         );
     }
 
+    public function the_purchase_buttons($classes = '', $echo = true)
+    {
+        $foody_purchase_buttons = Foody_PurchaseButtons::get_instance();
+        $buttons = $foody_purchase_buttons->get_buttons_for_post($this->id);
+        if (!empty($buttons)) {
+            return foody_get_template_part(
+                get_template_directory() . '/template-parts/content-purchase-buttons.php',
+                ['classes' => $classes, 'buttons' => $buttons, 'return' => !$echo]
+            );
+        }
+    }
+
+    public function newsletter()
+    {
+        foody_get_template_part(get_template_directory() . '/template-parts/content-newsletter.php', [
+            'button_classes' => 'col-2',
+            'input_classes' => 'col-10'
+        ]);
+    }
+
     /**
      * @return int
      */
@@ -476,6 +507,9 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
      */
     public static function create($post)
     {
+        if (is_numeric($post)) {
+            $post = get_post($post);
+        }
         if ($post instanceof stdClass) {
             $post = new WP_Post($post);
         }
@@ -533,7 +567,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return $label;
     }
 
-    public function get_id(){
+    public function get_id()
+    {
         return $this->id;
     }
 }
