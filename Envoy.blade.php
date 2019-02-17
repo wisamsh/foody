@@ -24,7 +24,7 @@ $servers = [
     'local' => '127.0.0.1',
     'dev' => 'ubuntu@foody-dev.moveodevelop.com',
     'medio-dev' => 'ubuntu@foody.moveodevelop.com',
-    'production' => ['ubuntu@ec2-34-253-214-81.eu-west-1.compute.amazonaws.com','ubuntu@ec2-34-245-51-22.eu-west-1.compute.amazonaws.com']
+    'production' => ['ubuntu@34.253.214.81','ubuntu@34.245.51.22']
 ];
 
 if (!isset($branch)){
