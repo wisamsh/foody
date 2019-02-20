@@ -30,7 +30,7 @@ module.exports = (function () {
                 }
             } else {
                 if (page !== null) {
-                    urlSearchParams.append(this.pageQuery, page);
+                    urlSearchParams.set(this.pageQuery, page);
                 }
                 url = `${url}${pathname}`;
             }
