@@ -102,6 +102,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $this->author_name = "ישראל אהרוני";
             $this->link = get_permalink();
         }
+
+        add_filter('wpseo_robots', [$this, 'shouldIndexPost']);
     }
 
     /**
@@ -570,5 +572,45 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     public function get_id()
     {
         return $this->id;
+    }
+
+    /*
+     * Post robots index logic
+     * */
+
+
+    /**
+     * Checks if this post should be exposed to
+     * search engines.
+     * @return bool
+     */
+    public function shouldIndexPost($robotsstr)
+    {
+        if (is_single() && get_the_ID() === $this->id) {
+            $should_index = true;
+            $post_author_id = get_post_field('post_author', $this->id);
+
+            $no_index_author = get_field('no_index', "user_$post_author_id");
+
+            // acf field on author is
+            // set to 'no index'
+            if ($no_index_author) {
+
+
+                $post_index_override = get_post_meta($this->id, '_yoast_wpseo_meta-robots-noindex', true);
+
+                // if this field is false (0 or doesn't exist)
+                // this post is set to no OR the default for the post type.
+                // This means that if we pass the condition
+                // this post is explicitly set to 'YES'
+                $should_index = $post_index_override != false;
+            }
+
+            if (!$should_index) {
+                $robotsstr = "noindex,follow";
+            }
+        }
+
+        return $robotsstr;
     }
 }
