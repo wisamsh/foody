@@ -270,6 +270,260 @@ class Foody_Registration
         return $redirect_to;
     }
 
+
+    public function register_custom_password_reset()
+    {
+        // Information needed for creating the plugin's pages
+        $page_definitions = array(
+            'שכחתי-סיסמא' => array(
+                'title' => __('שׁכחת סיסמא?', 'personalize-login'),
+                'content' => '[custom-password-lost-form]'
+            ),
+            'שינוי-סיסמא' => array(
+                'title' => __('בחירת סיסמא חדשה', 'personalize-login'),
+                'content' => '[custom-password-reset-form]'
+            )
+        );
+
+        foreach ($page_definitions as $slug => $page) {
+            // Check that the page doesn't exist already
+            $query = new WP_Query('pagename=' . $slug);
+            if (!$query->have_posts()) {
+                // Add the page using the data from the array above
+                wp_insert_post(
+                    array(
+                        'post_content' => $page['content'],
+                        'post_name' => $slug,
+                        'post_title' => $page['title'],
+                        'post_status' => 'publish',
+                        'post_type' => 'page',
+                        'ping_status' => 'closed',
+                        'comment_status' => 'closed',
+                    )
+                );
+            }
+        }
+
+        add_action('login_form_lostpassword', array($this, 'redirect_to_custom_lost_password'));
+
+        add_shortcode('custom-password-lost-form', array($this, 'render_password_lost_form'));
+
+        add_action('login_form_lostpassword', array($this, 'do_password_lost'));
+
+        add_filter('retrieve_password_message', array($this, 'foody_replace_retrieve_password_message'), 10, 4);
+
+        add_action('login_form_rp', array($this, 'redirect_to_custom_password_reset'));
+        add_action('login_form_resetpass', array($this, 'redirect_to_custom_password_reset'));
+        add_shortcode('custom-password-reset-form', array($this, 'render_password_reset_form'));
+
+        add_action('login_form_rp', array($this, 'do_password_reset'));
+        add_action('login_form_resetpass', array($this, 'do_password_reset'));
+    }
+
+
+    public function foody_replace_retrieve_password_message($message, $key, $user_login, $user_data)
+    {
+        // Create new message
+        $msg = __('שלום!', 'personalize-login') . "\r\n\r\n";
+        $msg .= sprintf(__('ביקשת לאפס סיסמא עבור כתובת המייל %s.', 'foody'), $user_login) . "\r\n\r\n";
+        $msg .= __("אם חלה טעות, או שלא ביקשת לאפס סיסמא - התעלמ/י ממייל זה.", 'foody') . "\r\n\r\n";
+        $msg .= __('על מנת לאפס את הסיסמא, היכנס/י לכתובת הבאה:', 'foody') . "\r\n\r\n";
+        $msg .= site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login') . "\r\n\r\n";
+        $msg .= __('תודה!', 'foody') . "\r\n";
+        return $msg;
+    }
+
+
+    /**
+     * Initiates password reset.
+     */
+    public function do_password_lost()
+    {
+        if ('POST' == $_SERVER['REQUEST_METHOD']) {
+            $errors = retrieve_password();
+            if (is_wp_error($errors)) {
+                // Errors found
+                $redirect_url = home_url('שכחתי-סיסמא');
+                $redirect_url = add_query_arg('errors', join(',', $errors->get_error_codes()), $redirect_url);
+            } else {
+                // Email sent
+                $redirect_url = home_url('התחברות');
+                $redirect_url = add_query_arg('checkemail', 'confirm', $redirect_url);
+            }
+
+            wp_redirect($redirect_url);
+            exit;
+        }
+    }
+
+    /**
+     * A shortcode for rendering the form used to initiate the password reset.
+     *
+     * @param  array $attributes Shortcode attributes.
+     * @param  string $content The text content for shortcode. Not used.
+     *
+     * @return string  The shortcode output
+     */
+    public function render_password_lost_form($attributes, $content = null)
+    {
+        // Parse shortcode attributes
+        $default_attributes = array('show_title' => false);
+        $attributes = shortcode_atts($default_attributes, $attributes);
+
+        if (is_user_logged_in()) {
+            return __('You are already signed in.', 'personalize-login');
+        } else {
+            return $this->get_template_html('password_lost_form', $attributes);
+        }
+    }
+
+    public function render_password_reset_form($attributes, $content = null)
+    {
+        // Parse shortcode attributes
+        $default_attributes = array('show_title' => false);
+        $attributes = shortcode_atts($default_attributes, $attributes);
+
+        if (is_user_logged_in()) {
+            return __('You are already signed in.', 'personalize-login');
+        } else {
+            if (isset($_REQUEST['login']) && isset($_REQUEST['key'])) {
+                $attributes['login'] = $_REQUEST['login'];
+                $attributes['key'] = $_REQUEST['key'];
+
+                // Error messages
+                $errors = array();
+                if (isset($_REQUEST['error'])) {
+                    $error_codes = explode(',', $_REQUEST['error']);
+
+                    foreach ($error_codes as $code) {
+                        $errors [] = $this->get_error_message($code);
+                    }
+                }
+                $attributes['errors'] = $errors;
+
+                return $this->get_template_html('password_reset_form', $attributes);
+            } else {
+                return __('לינק אינו תקין', 'foody');
+            }
+        }
+    }
+
+    public function redirect_to_custom_lost_password()
+    {
+        if ('GET' == $_SERVER['REQUEST_METHOD']) {
+            if (is_user_logged_in()) {
+                $this->redirect_logged_in_user();
+                exit;
+            }
+
+            wp_redirect(home_url('שכחתי-סיסמא'));
+            exit;
+        }
+    }
+
+    public function redirect_to_custom_password_reset()
+    {
+        if ('GET' == $_SERVER['REQUEST_METHOD']) {
+            // Verify key / login combo
+            $user = check_password_reset_key($_REQUEST['key'], $_REQUEST['login']);
+            if (!$user || is_wp_error($user)) {
+                if ($user && $user->get_error_code() === 'expired_key') {
+                    wp_redirect(home_url('התחברות?login=expiredkey'));
+                } else {
+                    wp_redirect(home_url('התחברות?login=invalidkey'));
+                }
+                exit;
+            }
+
+            $redirect_url = home_url('שינוי-סיסמא');
+            $redirect_url = add_query_arg('login', esc_attr($_REQUEST['login']), $redirect_url);
+            $redirect_url = add_query_arg('key', esc_attr($_REQUEST['key']), $redirect_url);
+
+            wp_redirect($redirect_url);
+            exit;
+        }
+    }
+
+    /**
+     * Renders the contents of the given template to a string and returns it.
+     *
+     * @param string $template_name The name of the template to render (without .php)
+     * @param array $attributes The PHP variables for the template
+     *
+     * @return string               The contents of the template.
+     */
+    private function get_template_html($template_name, $attributes = null)
+    {
+        if (!$attributes) {
+            $attributes = array();
+        }
+
+        ob_start();
+
+        require('template-parts/' . $template_name . '.php');
+
+        $html = ob_get_contents();
+        ob_end_clean();
+
+        return $html;
+    }
+
+    /**
+     * Resets the user's password if the password reset form was submitted.
+     */
+    public function do_password_reset()
+    {
+        if ('POST' == $_SERVER['REQUEST_METHOD']) {
+            $rp_key = $_REQUEST['rp_key'];
+            $rp_login = $_REQUEST['rp_login'];
+
+            $user = check_password_reset_key($rp_key, $rp_login);
+
+            if (!$user || is_wp_error($user)) {
+                if ($user && $user->get_error_code() === 'expired_key') {
+                    wp_redirect(home_url('התחברות?login=expiredkey'));
+                } else {
+                    wp_redirect(home_url('התחברות?login=invalidkey'));
+                }
+                exit;
+            }
+
+            if (isset($_POST['pass1'])) {
+                if ($_POST['pass1'] != $_POST['pass2']) {
+                    // Passwords don't match
+                    $redirect_url = home_url('שינוי-סיסמא');
+
+                    $redirect_url = add_query_arg('key', $rp_key, $redirect_url);
+                    $redirect_url = add_query_arg('login', $rp_login, $redirect_url);
+                    $redirect_url = add_query_arg('error', 'password_reset_mismatch', $redirect_url);
+
+                    wp_redirect($redirect_url);
+                    exit;
+                }
+
+                if (empty($_POST['pass1'])) {
+                    // Password is empty
+                    $redirect_url = home_url('שינוי-סיסמא');
+
+                    $redirect_url = add_query_arg('key', $rp_key, $redirect_url);
+                    $redirect_url = add_query_arg('login', $rp_login, $redirect_url);
+                    $redirect_url = add_query_arg('error', 'password_reset_empty', $redirect_url);
+
+                    wp_redirect($redirect_url);
+                    exit;
+                }
+
+                // Parameter checks OK, reset password
+                reset_password($user, $_POST['pass1']);
+                wp_redirect(home_url('התחברות?password=changed'));
+            } else {
+                echo "אירעה שגיאה";
+            }
+
+            exit;
+        }
+    }
+
 }
 
 new Foody_Registration();

@@ -11,11 +11,13 @@ if (isset($_GET['login'])) {
     $login_status = $_GET['login'];
 }
 
+$foody_lost_password = isset($_REQUEST['checkemail']) && $_REQUEST['checkemail'] == 'confirm' && false;
+
 ?>
 
 <h2>התחברות</h2>
 <p>
-    <?php echo __('התחברו ותתחילו להנות ממגוון עצום של תכנים קולינריים ומתכונים עם אלפי שעות וידאו, להרכיב לעצמכם ספר מתכונים אישי עם המתכונים שהכי אהבתם, לשתף בתמונות, להגיב ולשאול שאלות.')?>
+    <?php echo __('התחברו ותתחילו להנות ממגוון עצום של תכנים קולינריים ומתכונים עם אלפי שעות וידאו, להרכיב לעצמכם ספר מתכונים אישי עם המתכונים שהכי אהבתם, לשתף בתמונות, להגיב ולשאול שאלות.') ?>
 </p>
 <p>
     <span>
@@ -64,12 +66,23 @@ echo do_shortcode('[wordpress_social_login]');
             </div>
 
             <form id="login-form" action="<?php echo wp_login_url(home_url()); ?>" class="row" method="post">
+
                 <div role="alert" class="alert foody-alert alert-dismissible alert-danger login-failed-alert">
                     <span><?php echo __('התחברות נכשלה. אנא ודא/י את כתובת המייל והסיסמא', 'foody'); ?></span>
                     <a class="close" data-dismiss="alert">
                         ×
                     </a>
                 </div>
+
+                <?php if ($foody_lost_password): ?>
+                    <div role="alert" class="alert foody-alert alert-dismissible alert-success login-change-passsword">
+                        <span><?php echo __('לינק איפוס סיסמא נשלח לכתובת שהוזנה', 'foody'); ?></span>
+                        <a class="close" data-dismiss="alert">
+                            ×
+                        </a>
+                    </div>
+                <?php endif; ?>
+
                 <div class="form-group col-12 required-input">
                     <label for="email">
                         <?php echo __('כתובת מייל', 'foody') ?>
