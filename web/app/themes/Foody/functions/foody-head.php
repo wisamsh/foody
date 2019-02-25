@@ -68,6 +68,13 @@ function foody_js_globals_main($vars)
         ];
     }
 
+    $queried_object = get_queried_object();
+    if (is_category() || is_tag()) {
+        $vars['title'] = $queried_object->name;
+    } elseif (is_author()) {
+        $vars['title'] = $queried_object->data->display_name;
+    }
+
 
     return $vars;
 }

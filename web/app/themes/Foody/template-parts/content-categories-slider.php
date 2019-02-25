@@ -59,15 +59,8 @@ if (is_array($sub_categories)):
     ]
 
     ?>
-
-    <script>
-        console.log(<?php echo json_encode($slider_data)?>);
-    </script>
-
-<!--    <ul class="foody-slider categories-slider" data-slick='--><?php //echo json_encode($slider_data, ENT_QUOTES) ?><!--'>-->
     <ul class="foody-slider categories-slider" data-slick='<?php echo json_encode($slider_data, ENT_QUOTES) ?>'>
         <?php
-
 
         foreach ($sub_categories as $sub_category):?>
 

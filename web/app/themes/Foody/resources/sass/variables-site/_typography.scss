@@ -12,7 +12,7 @@ $raanan-unicode-range: 'U+0021-0039';
 @include font-face(Assistant, '../fonts/Assistant/Assistant-SemiBold', 500, null, 'ttf');
 
 $font__ariel-rounded: RaananSuper;
-//$font__main: RaananSuper;
+$font__raanan: RaananSuper;
 //$font__bold: RaananSuper;
 
 // 	U+0000, U+007F, U+0590..U+05FF

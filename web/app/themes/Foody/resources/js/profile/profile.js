@@ -159,15 +159,17 @@ jQuery(document).ready(($) => {
         messages: {
             current_password: {
                 required: 'סיסמא נוכחית הינו שדה חובה',
-                password: 'סיסמא אינה תקינה'
+                password: 'סיסמא אינה תקינה',
+                minlength: 'יש להזין לפחות 8 תווים'
             },
             password: {
                 required: 'סיסמא חדשה הינו שדה חובה',
-                password: 'סיסמא אינה תקינה'
+                password: 'סיסמא אינה תקינה',
+                minlength: 'יש להזין לפחות 8 תווים'
             },
             password_confirmation: {
                 required: 'ווידוא סיסמא הינו שדה חובה',
-                equalTo: 'סיסמאות אינן תואמות',
+                equalTo: 'סיסמאות אינן תואמות'
             }
         }, submitHandler: function (form) {
             form.submit();

@@ -44,7 +44,7 @@ jQuery(document).ready(($) => {
             }, {"breakpoint": 415, "settings": {"slidesToShow": 3, "arrows": false, "slidesToScroll": 3}}]
         };
 
-        $slider.slick(options);
+        // $slider.slick(options);
     }
 
 
