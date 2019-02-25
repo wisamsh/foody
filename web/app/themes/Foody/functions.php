@@ -218,3 +218,10 @@ function foody_get_versioned_asset($name)
     return get_template_directory_uri() . "/dist/$name.$assets_version.js";
 
 }
+
+function add_async_attribute($tag, $handle) {
+    if ( 'foody-script' !== $handle )
+        return $tag;
+    return str_replace( ' src', ' defer="defer" async="async" src', $tag );
+}
+add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
