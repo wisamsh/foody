@@ -149,12 +149,17 @@ function foody_scripts()
 //    }
 
     if (!is_admin()) {
-        $style = foody_get_versioned_asset('style');
-        wp_enqueue_script('foody-style', $style, false, false, false);
 
-        $asset = foody_get_versioned_asset('main');
-        wp_enqueue_script('foody-script', $asset, false, false, false);
+//        if (is_front_page() || is_home()) {
+//            $homepage = foody_get_versioned_asset('homepage');
+//            wp_enqueue_script('foody-script', $homepage, false, false, false);
+//        }else{
+            $style = foody_get_versioned_asset('style');
+            wp_enqueue_script('foody-style', $style, false, false, false);
 
+            $asset = foody_get_versioned_asset('main');
+            wp_enqueue_script('foody-script', $asset, false, false, false);
+//        }
     }
 
     if (is_page(get_page_by_title('הרשמה'))) {
@@ -219,9 +224,11 @@ function foody_get_versioned_asset($name)
 
 }
 
-function add_async_attribute($tag, $handle) {
-    if ( 'foody-script' !== $handle )
+function add_async_attribute($tag, $handle)
+{
+    if ('foody-script' !== $handle)
         return $tag;
-    return str_replace( ' src', ' defer="defer" async="async" src', $tag );
+    return str_replace(' src', ' defer="defer" async="async" src', $tag);
 }
+
 add_filter('script_loader_tag', 'add_async_attribute', 10, 2);

@@ -46,7 +46,18 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
                     $category = new Foody_Category($cat);
                 $term = $category->term;
                 if (!is_wp_error($term)) {
-                    echo '<li><a href="' . get_term_link($term->term_id) . '">' . $term->name . '</a></li>';
+//                    echo '<li><a href="' . get_term_link($term->term_id) . '">' . $term->name . '</a></li>';
+                    $separator = '@';
+                    $categories_html = get_category_parents($term->term_id, true, $separator);
+                    if (!empty($categories_html)) {
+                        $categories = explode($separator, $categories_html);
+                        $categories = array_filter($categories, function ($cat) use ($separator) {
+                            return $cat && trim($cat) != $separator;
+                        });
+                        foreach ($categories as $parent_category) {
+                            echo "<li>$parent_category</li>";
+                        }
+                    }
                 }
             }
         }

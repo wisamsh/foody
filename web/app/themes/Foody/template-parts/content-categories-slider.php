@@ -12,9 +12,9 @@ $category = $template_args['category'];
 
 ?>
 
-    <h1 class="title">
+    <h2 class="title">
         <?php echo sprintf('קטגוריות %s', $category->title) ?>
-    </h1>
+    </h2>
 
 <?php
 /** @var Foody_Category[] $sub_categories */

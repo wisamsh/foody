@@ -1,15 +1,17 @@
+@import "../mixins/mixins-master";
+
 $raanan-unicode-range: 'U+0021-0039';
 
-@include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperRegular', null, null, 'otf');
-@include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperBlack', bold, null, 'otf');
+@include font-face(RaananSuper, '/fonts/Raanan/RaanaSuperRegular', null, null, 'otf');
+@include font-face(RaananSuper, '/fonts/Raanan/RaanaSuperBlack', bold, null, 'otf');
 
-@include font-face(RaananSuper, '../fonts/ArielRounded', null, null, 'ttf', 'U+41-5A, U+61-7A');
+@include font-face(RaananSuper, '/fonts/ArielRounded', null, null, 'ttf', 'U+41-5A, U+61-7A');
 
-@include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperRegular', null, null, 'otf', $raanan-unicode-range);
-@include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperBlack', bold, null, 'otf', $raanan-unicode-range);
-@include font-face(Assistant, '../fonts/Assistant/Assistant-Regular', null, null, 'ttf');
-@include font-face(Assistant, '../fonts/Assistant/Assistant-Bold', 700, null, 'ttf');
-@include font-face(Assistant, '../fonts/Assistant/Assistant-SemiBold', 500, null, 'ttf');
+@include font-face(RaananSuper, '/fonts/Raanan/RaanaSuperRegular', null, null, 'otf', $raanan-unicode-range);
+@include font-face(RaananSuper, '/fonts/Raanan/RaanaSuperBlack', bold, null, 'otf', $raanan-unicode-range);
+@include font-face(Assistant, '/fonts/Assistant/Assistant-Regular', null, null, 'ttf');
+@include font-face(Assistant, '/fonts/Assistant/Assistant-Bold', 700, null, 'ttf');
+@include font-face(Assistant, '/fonts/Assistant/Assistant-SemiBold', 500, null, 'ttf');
 
 $font__ariel-rounded: RaananSuper;
 $font__raanan: RaananSuper;
