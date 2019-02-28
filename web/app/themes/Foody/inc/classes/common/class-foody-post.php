@@ -584,7 +584,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
      * search engines.
      * @return bool
      */
-    public function shouldIndexPost($robotsstr)
+    public function shouldIndexPost($robots_str)
     {
         if (is_single() && get_the_ID() === $this->id) {
             $should_index = true;
@@ -607,10 +607,10 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             }
 
             if (!$should_index) {
-                $robotsstr = "noindex,follow";
+                $robots_str = "noindex,follow";
             }
         }
 
-        return $robotsstr;
+        return $robots_str;
     }
 }

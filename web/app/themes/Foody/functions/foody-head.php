@@ -190,7 +190,7 @@ function foody_category_pagination()
 
         if ($next <= $max_pages) {
             $href = $link . "?page=" . $next;
-            echo '<link id="pagination-next" rel="prev" href="' . $href . '">';
+            echo '<link id="pagination-next" rel="next" href="' . $href . '">';
         }
     }
 }

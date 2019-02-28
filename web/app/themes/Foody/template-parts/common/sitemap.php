@@ -44,7 +44,7 @@
         // Add categories you'd like to exclude in the exclude here
         $cats = get_categories('exclude=');
         foreach ($cats as $cat) {
-            echo "<li><h3>" . $cat->cat_name . "</h3>";
+            echo "<li><h3><a href='" . get_term_link($cat->term_id) . "'>" . $cat->cat_name . "</a></h3>";
             echo "<ul>";
             query_posts('posts_per_page=-1&cat=' . $cat->cat_ID);
             while (have_posts()) {
@@ -71,7 +71,7 @@
         echo '<h2>' . $pt->labels->name . '</h2>';
         echo '<ul>';
 
-        query_posts('post_type=' . $post_type . '&posts_per_page=-1');
+        query_posts('post_type=' . $post_type . '&posts_per_page=-1&post_status=publish');
         while (have_posts()) {
             the_post();
             echo '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
@@ -85,11 +85,17 @@
 </section>
 
 <style>
-    .sitemap ul{
-        padding-right: 40px;
+    .sitemap ul {
+        padding-right: 20px;
         list-style-type: none;
     }
-    .sitemap a:visited,.sitemap a{
-        color:#4a4a4a
+
+    .sitemap a:visited, .sitemap a {
+        color: #4a4a4a
+    }
+
+    .sitemap h3 {
+        font-size: 17px;
+        font-weight: normal;
     }
 </style>
