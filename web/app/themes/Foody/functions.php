@@ -132,7 +132,7 @@ function foody_scripts()
 {
 
     wp_enqueue_script('jquery');
-    wp_enqueue_style('foody-style', get_stylesheet_uri());
+//    wp_enqueue_style('foody-style', get_stylesheet_uri());
 
 
     wp_enqueue_script('foody-navigation', get_template_directory_uri() . '/resources/js/navigation.js', array(), '20151215', true);
@@ -169,6 +169,14 @@ function foody_scripts()
 }
 
 add_action('wp_enqueue_scripts', 'foody_scripts');
+
+add_action( 'wp_print_styles',     'my_deregister_styles', 100000000000 );
+
+function my_deregister_styles()    {
+    wp_deregister_style( 'dashicons' );
+    wp_dequeue_style( 'fontawesome' );
+    wp_deregister_style( 'fontawesome' );
+}
 
 /**
  * Implement the Custom Header feature.
