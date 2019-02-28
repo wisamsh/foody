@@ -25,7 +25,7 @@ class Foody_Seo
             if (is_author()) {
                 $post_id = "user_$object_id";
             } elseif (is_category() || is_tag()) {
-                $tax = is_category() ? 'category' : 'tag';
+                $tax = is_category() ? 'category' : 'post_tag';
                 $post_id = "{$tax}_$object_id";
             }
 

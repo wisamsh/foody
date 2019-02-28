@@ -14,10 +14,6 @@ class FoodyGrid
     private $is_in_loop = false;
     private $current_item = 0;
 
-    private $items_for_type = [
-        'Foody_Recipe' => ''
-    ];
-
     private $supported_types = [
         'recipe',
         'playlist',
@@ -114,7 +110,7 @@ class FoodyGrid
      * @param string $type
      * @return string
      */
-    public function loop($posts, $cols, $echo = true, $type = null, $data_attrs = [], $responsive = null,$args = [])
+    public function loop($posts, $cols, $echo = true, $type = null, $data_attrs = [], $responsive = null, $args = [])
     {
         $items = '';
         $this->is_in_loop = true;
@@ -131,7 +127,7 @@ class FoodyGrid
                 }
             }
 
-            $items .= $this->draw($post, $cols, 12, $echo, $type, $responsive,$args);
+            $items .= $this->draw($post, $cols, 12, $echo, $type, $responsive, $args);
             $this->current_item++;
             if ($reset_type) {
                 $reset_type = false;
