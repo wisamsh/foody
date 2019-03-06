@@ -1633,8 +1633,13 @@ function array_not_empty($arr)
 function group_by($array, $key)
 {
     $return = array();
-    foreach ($array as $val) {
-        $return[$val[$key]][] = $val;
+    if(is_array($array)){
+        foreach ($array as $val) {
+            if(is_callable($key)){
+                $key = call_user_func($key,$val);
+            }
+            $return[$val[$key]][] = $val;
+        }
     }
     return $return;
 }
