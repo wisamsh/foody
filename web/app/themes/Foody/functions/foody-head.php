@@ -174,10 +174,26 @@ function foody_category_pagination()
         $page = 1;
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
+            if(!is_numeric($page)){
+                $page = 1;
+            }
         }
 
-        global $wp_query;
-        $max_pages = $wp_query->max_num_pages;
+        $posts_per_page = get_option('posts_per_page');
+        $q = new WP_Query([
+            'post_type' => ['foody_recipe', 'foody_playlist'],
+            'post_status' => 'publish',
+            'cat' => get_queried_object_id(),
+        ]);
+
+        $posts_count = $q->found_posts;
+        if (is_numeric($posts_count)) {
+            $posts_count = intval($posts_count);
+        } else {
+            $posts_count = 0;
+        }
+
+        $max_pages = $posts_count / $posts_per_page;
 
         $prev = $page - 1;
         $next = $page + 1;
@@ -190,7 +206,7 @@ function foody_category_pagination()
 
         if ($next <= $max_pages) {
             $href = $link . "?page=" . $next;
-            echo '<link id="pagination-next" rel="prev" href="' . $href . '">';
+            echo '<link id="pagination-next" rel="next" href="' . $href . '">';
         }
     }
 }

@@ -241,14 +241,17 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return $name;
     }
 
-    public function get_primary_category()
+    public function get_primary_category($post_id = false)
     {
+        if (!$post_id) {
+            $post_id = $this->id;
+        }
 
         $primary = get_post_meta($this->post->ID, '_yoast_wpseo_primary_category', true);
 
         if (!$primary || !is_numeric($primary) || intval($primary) <= 0) {
             /** @var WP_Term[] $categories */
-            $categories = wp_get_post_categories($this->id, ['fields' => 'all_with_object_id']);
+            $categories = wp_get_post_categories($post_id, ['fields' => 'all_with_object_id']);
             if (!is_wp_error($categories)) {
                 if (is_array($categories)) {
 
@@ -584,7 +587,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
      * search engines.
      * @return bool
      */
-    public function shouldIndexPost($robotsstr)
+    public function shouldIndexPost($robots_str)
     {
         if (is_single() && get_the_ID() === $this->id) {
             $should_index = true;
@@ -607,10 +610,10 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             }
 
             if (!$should_index) {
-                $robotsstr = "noindex,follow";
+                $robots_str = "noindex,follow";
             }
         }
 
-        return $robotsstr;
+        return $robots_str;
     }
 }

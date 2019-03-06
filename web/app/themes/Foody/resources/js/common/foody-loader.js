@@ -4,6 +4,7 @@
 
 
 let json = require('../../lottie/loader.js');
+let lottie = require('lottie-web/build/player/lottie.min');
 
 module.exports = (function () {
 
