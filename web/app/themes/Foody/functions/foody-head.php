@@ -174,7 +174,7 @@ function foody_category_pagination()
         $page = 1;
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
-            if(!is_numeric($page)){
+            if (!is_numeric($page)) {
                 $page = 1;
             }
         }
@@ -222,3 +222,22 @@ function add_filter_query_arg($vars)
 }
 
 add_filter('foody_js_globals', 'add_filter_query_arg');
+
+function foody_style_placeholder()
+{
+    ?>
+    <style>
+        body{
+            -webkit-transition: opacity .15s;
+            -moz-transition: opacity .15s;
+            -ms-transition: opacity .15s;
+            -o-transition: opacity .15s;
+            transition: opacity .15s;
+            opacity: 0;
+        }
+    </style>
+    <?php
+}
+
+
+add_action('wp_head', 'foody_style_placeholder');
