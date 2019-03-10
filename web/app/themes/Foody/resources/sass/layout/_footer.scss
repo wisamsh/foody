@@ -277,6 +277,8 @@ footer.site-footer {
           &:not(:first-child) {
             &:before {
               content: '\00a0\2022\00a0\00a0';
+              position: relative;
+              left: -8px;
             }
           }
         }
