@@ -163,7 +163,7 @@ function foody_scripts()
 //            wp_enqueue_script('foody-script', $homepage, false, false, false);
 //        }else{
         $style = foody_get_versioned_asset('style');
-        wp_enqueue_script('foody-style', $style, false, false, false);
+        wp_enqueue_script('foody-style', $style, false, false, true);
 
         $asset = foody_get_versioned_asset('main');
         wp_enqueue_script('foody-script', $asset, false, false, true);
@@ -243,7 +243,7 @@ function foody_get_versioned_asset($name)
 
 function add_async_attribute($tag, $handle)
 {
-    if ('foody-script' !== $handle)
+    if ('foody-script' !== $handle && 'foody-script' !== $handle)
         return $tag;
     return str_replace(' src', ' defer="defer" async="async" src', $tag);
 }
