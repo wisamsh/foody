@@ -207,7 +207,7 @@ if (!function_exists('essb_device_select')) {
 }
 
 
-if (!function_exists('essb_stylebuilder_css_files')) {
+if (!function_exists('essb_stylebuilder_css_filess')) {
 	function essb_stylebuilder_css_files() {
 		$files = array();
 

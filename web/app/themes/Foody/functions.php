@@ -131,16 +131,16 @@ add_action('widgets_init', 'foody_widgets_init');
 function foody_scripts()
 {
 
-    wp_enqueue_script('jquery');
-//    wp_enqueue_style('foody-style', get_stylesheet_uri());
-
+    wp_enqueue_script('jquery','',[],true,true);
+//    wp_denqueue_style('foody-style', get_stylesheet_uri());
+wp_dequeue_style('foody-style');
 
     wp_enqueue_script('foody-navigation', get_template_directory_uri() . '/resources/js/navigation.js', array(), '20151215', true);
 
     wp_enqueue_script('foody-skip-link-focus-fix', get_template_directory_uri() . '/resources/js/skip-link-focus-fix.js', array(), '20151215', true);
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {
-        wp_enqueue_script('comment-reply', false, false, true);
+        wp_enqueue_script('comment-reply', false, false, true,true);
     }
 
 
@@ -241,3 +241,17 @@ function add_async_attribute($tag, $handle)
 }
 
 add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
+
+function essb_stylebuilder_css_filess(){
+
+}
+
+remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+remove_action( 'wp_print_styles', 'print_emoji_styles' );
+remove_action( 'admin_print_styles', 'print_emoji_styles' );
+
+add_action( 'wp_print_styles', 'wps_deregister_styles', 100 );
+function wps_deregister_styles() {
+    wp_deregister_style( 'contact-form-7' );
+}
