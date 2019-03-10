@@ -58,13 +58,13 @@ jQuery(document).ready(function ($) {
     }
 });
 
-// require('./forms');
-// require('./foody-ajax');
-// require('./comments');
-// require('./how-i-did');
-// require('./favorites');
-// require('./follow');
-// require('./sort');
-// require('./foody-search-filter');
-// require('./social');
-// require('./mobile-filter');
+require('./forms');
+require('./foody-ajax');
+require('./comments');
+require('./how-i-did');
+require('./favorites');
+require('./follow');
+require('./sort');
+require('./foody-search-filter');
+require('./social');
+require('./mobile-filter');
