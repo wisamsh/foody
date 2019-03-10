@@ -14,7 +14,6 @@ require('autocomplete.js/src/jquery/plugin.js');
 // require('bootstrap');
 require('bootstrap-material-design');
 require('bootstrap-select');
-require('bootstrap-star-rating');
 require('./plugins');
 
 
