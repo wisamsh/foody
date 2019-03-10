@@ -158,7 +158,7 @@ function foody_scripts()
         wp_enqueue_script('foody-style', $style, false, false, false);
 
         $asset = foody_get_versioned_asset('main');
-        wp_enqueue_script('foody-script', $asset, false, false, false);
+        wp_enqueue_script('foody-script', $asset, false, false, true);
 //        }
     }
 
