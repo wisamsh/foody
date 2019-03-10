@@ -125,15 +125,23 @@ function foody_widgets_init()
 
 add_action('widgets_init', 'foody_widgets_init');
 
+// include custom jQuery
+function shapeSpace_include_custom_jquery() {
+
+    wp_deregister_script('jquery');
+    wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', array(), null, true);
+
+}
+add_action('wp_enqueue_scripts', 'shapeSpace_include_custom_jquery');
+
 /**
  * Enqueue scripts and styles.
  */
 function foody_scripts()
 {
 
-    wp_enqueue_script('jquery','',[],true,true);
+//    wp_enqueue_script('jquery','',[],true,true);
 //    wp_denqueue_style('foody-style', get_stylesheet_uri());
-wp_dequeue_style('foody-style');
 
     wp_enqueue_script('foody-navigation', get_template_directory_uri() . '/resources/js/navigation.js', array(), '20151215', true);
 
