@@ -37,7 +37,7 @@ jQuery(document).ready(($) => {
             "infinite": false,
             "responsive": [{
                 "breakpoint": 1441,
-                "settings": {"slidesToShow": 5, "arrows": false, "slidesToScroll": 3}
+                "settings": {"slidesToShow": 5, "arrows": true, "slidesToScroll": 3}
             }, {
                 "breakpoint": 1025,
                 "settings": {"slidesToShow": 5, "arrows": false, "slidesToScroll": 3}
