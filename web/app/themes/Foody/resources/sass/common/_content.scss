@@ -41,12 +41,17 @@
 
   .wp-caption {
     .wp-caption-text {
-      margin: 0;
       line-height: normal;
-      margin-top: 5px;
+      margin: 5px 0 0;
       font-weight: normal;
       font-family: $font__assistant;
       font-size: 16px;
+    }
+
+    &.aligncenter{
+      .wp-caption-text {
+        text-align: center;
+      }
     }
   }
 
@@ -84,6 +89,7 @@
     }
 
     .wp-caption {
+      margin: 0;
       .wp-caption-text {
       }
     }

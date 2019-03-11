@@ -304,6 +304,15 @@ class Foody_Ingredient extends Foody_Post
         $nutrients['protein'] = $gram;
         $nutrients['sodium'] = __('מ״ג');
 
+        // TODO update units
+        $nutrients['saturated_fat'] = $gram;
+        $nutrients['cholesterol'] = $gram;
+        $nutrients['calcium'] = $gram;
+        $nutrients['iron'] = $gram;
+        $nutrients['potassium'] = $gram;
+        $nutrients['zinc'] = $gram;
+        $nutrients['fibers'] = $gram;
+
         $unit = '';
 
         if (isset($nutrients[$nutrient])) {

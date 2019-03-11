@@ -54,6 +54,8 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
                         $categories = array_filter($categories, function ($cat) use ($separator) {
                             return $cat && trim($cat) != $separator;
                         });
+
+                        echo "<li><a href='" . get_permalink(get_page_by_path('קטגוריות')) . "'> " . __('קטגוריות') . " </a> </li>";
                         foreach ($categories as $parent_category) {
                             echo "<li>$parent_category</li>";
                         }

@@ -134,7 +134,7 @@ abstract class Foody_Term
             'title_el' => 'h1'
         ];
 
-        $grid = array_merge_recursive($grid_args, $grid);
+        $grid = array_replace_recursive( $grid,$grid_args);
 
         foody_get_template_part(
             get_template_directory() . '/template-parts/common/foody-grid.php',
