@@ -414,9 +414,9 @@ class Foody_Query
 
         $base = add_query_arg('s', $wpdb->prepare($search_term, []), $base);
 
-        foreach ($post_types as $post_type) {
-            $base = add_query_arg('post_type', $post_type, $base);
-        }
+//        foreach ($post_types as $post_type) {
+//            $base = add_query_arg('post_type', $post_type, $base);
+//        }
 
         return $base;
     }

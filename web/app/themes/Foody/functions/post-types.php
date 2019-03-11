@@ -333,7 +333,7 @@ function my_pre_get_posts(WP_Query $query)
         return;
 
     if (is_search() && $query->is_main_query()) {
-        $query->set('post_type', ['foody_recipe']);
+        $query->set('post_type', ['foody_recipe','post']);
     }
 
 }
