@@ -1,3 +1,4 @@
+// noinspection JSUnresolvedFunction
 /**
  * Created by moveosoftware on 5/4/18.
  */
@@ -14,7 +15,6 @@ require('autocomplete.js/src/jquery/plugin.js');
 // require('bootstrap');
 require('bootstrap-material-design');
 require('bootstrap-select');
-require('bootstrap-star-rating');
 require('./plugins');
 
 
@@ -37,7 +37,7 @@ $.validator.addMethod(
         let hasNumbers = /[0-9]+/.test(value);
         let nonEn = /[^a-z0-9]/i.test(value);
 
-        return hasNumbers && nonEn == false;
+        return hasNumbers && nonEn === false;
     }
 );
 
@@ -87,18 +87,13 @@ window.foodyFormMessage = require('./common/cf7-messages');
 
 jQuery(document).ready(function ($) {
 
-    $('body').bootstrapMaterialDesign();
+    let $body = $('body');
+    // noinspection JSUnresolvedFunction
+    $body.bootstrapMaterialDesign();
     // $.fn.selectpicker.Constructor.BootstrapVersion = '4';
     $('.foody-select').selectpicker({dropdownAlignRight: true, style: 'foody-select',dropupAuto:false,width:'fit'});
 
-
     $('[data-toggle="popover"]').popover();
-
-    $('.foody-rating').rating({
-        filledStar: '<i class="icon-big-star-rank filled"></i>',
-        emptyStar: '<i class="icon-big-star-rank"></i>',
-        containerClass: 'foody-rating-container'
-    });
 
     $('.foody-slider').slick();
 
@@ -107,6 +102,7 @@ jQuery(document).ready(function ($) {
     window.analytics = new FoodyAnalytics();
 
     analytics.view();
+
     $('[data-toggle="tooltip"]').tooltip({
         'container':'body'
     });
@@ -115,7 +111,7 @@ jQuery(document).ready(function ($) {
         $('.quadmenu-navbar-toggle').click();
     });
 
-    $('body').on('click','.tooltip .close',function () {
+    $body.on('click','.tooltip .close',function () {
         $(this).closest('.tooltip').tooltip('hide')
     });
 

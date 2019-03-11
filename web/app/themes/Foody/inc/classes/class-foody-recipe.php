@@ -12,14 +12,10 @@ class Foody_Recipe extends Foody_Post
     public $ingredients_title;
 
     public $amount_for;
-    public $has_video;
+
     public $nutrients;
 
     private $duration;
-
-    public $video;
-
-    private $sponsership;
 
     private $overview;
 
@@ -29,11 +25,10 @@ class Foody_Recipe extends Foody_Post
 
     public $number_of_dishes;
 
-    private $debug = false;
-
 
     /**
      * Recipe constructor.
+     * @param WP_Post|null $post
      */
     public function __construct(WP_Post $post = null)
     {
@@ -79,32 +74,6 @@ class Foody_Recipe extends Foody_Post
     public function setDuration(string $duration)
     {
         $this->duration = $duration;
-    }
-
-    public function the_video_box()
-    {
-        if ($this->post != null) {
-            if (have_rows('video', $this->post->ID)) {
-                while (have_rows('video', $this->post->ID)): the_row();
-                    $video_url = get_sub_field('url');
-
-                    if ($video_url) {
-                        $parts = explode('v=', $video_url);
-                        $query = explode('&', $parts[1]);
-                        $video_id = $query[0];
-                        $args = array(
-                            'id' => $video_id
-                        );
-                        foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
-                    } else {
-                        parent::the_featured_content();
-                    }
-
-                endwhile;
-            } else {
-                parent::the_featured_content();
-            }
-        }
     }
 
     public function the_overview()
@@ -253,6 +222,7 @@ class Foody_Recipe extends Foody_Post
     public function to_json_schema()
     {
         // TODO
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $schema = array(
             "@context" => "http://schema.org/",
             "@type" => "Recipe",
@@ -325,34 +295,6 @@ class Foody_Recipe extends Foody_Post
         return array_map(function (Foody_Ingredient $ing) {
             return $ing->__toString();
         }, $ingredients);
-    }
-
-    private function init_video()
-    {
-        if (have_rows('video', $this->post->ID)) {
-            while (have_rows('video', $this->post->ID)): the_row();
-
-                $video_url = get_sub_field('url');
-
-                if (!empty($video_url)) {
-                    $parts = explode('v=', $video_url);
-                    if (!empty($parts) && count($parts) > 1) {
-                        $query = explode('&', $parts[1]);
-                        $video_id = $query[0];
-
-
-                        $this->video = array(
-                            'id' => $video_id,
-                            'url' => $video_url,
-                            'duration' => get_sub_field('duration')
-                        );
-                        $this->has_video = true;
-                    }
-                }
-
-            endwhile;
-        }
-
     }
 
     private function init_overview()
