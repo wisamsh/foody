@@ -282,7 +282,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_featured_content()
     {
-        the_post_thumbnail('foody-main');
+        $this->the_video_box();
     }
 
     public function the_sidebar_content($args = array())
@@ -639,8 +639,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 while (have_rows('video', $this->post->ID)): the_row();
                     $video_url = get_sub_field('url');
 
-                    if ($video_url) {
-                        $parts = explode('v=', $video_url);
+                    if ($video_url && count($parts = explode('v=', $video_url)) > 1) {
+
                         $query = explode('&', $parts[1]);
                         $video_id = $query[0];
                         $args = array(
@@ -648,12 +648,12 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                         );
                         foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
                     } else {
-                        $this->the_featured_content();
+                        the_post_thumbnail('foody-main');
                     }
 
                 endwhile;
             } else {
-                $this->the_featured_content();
+                the_post_thumbnail('foody-main');
             }
         }
     }
