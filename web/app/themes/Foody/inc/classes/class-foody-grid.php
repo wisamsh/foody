@@ -39,7 +39,7 @@ class FoodyGrid
      * @param string $type
      * @param null $responsive
      * @return string the item html
-     * @throws Error if 12 is not divided by col_num
+     * @throws Exception
      */
     public function draw($post, $col_num, $col_num_mobile = 12, $echo = true, $type = 'recipe', $responsive = null, $args = [])
     {
@@ -49,7 +49,7 @@ class FoodyGrid
         if ($col_num == 0) {
             $col_num = self::NONE;
         } elseif (12 % $col_num != 0) {
-            throw new Error("RecipesGrid:  invalid col_num $col_num");
+            throw new Exception("RecipesGrid:  invalid col_num $col_num");
         }
 
         if (is_null($responsive)) {
