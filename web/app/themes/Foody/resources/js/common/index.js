@@ -23,12 +23,6 @@ jQuery(document).ready(function ($) {
 
     $('[data-toggle="popover"]').popover();
 
-    $('.foody-rating').rating({
-        filledStar: '<i class="icon-big-star-rank filled"></i>',
-        emptyStar: '<i class="icon-big-star-rank"></i>',
-        containerClass: 'foody-rating-container'
-    });
-
     $('.foody-slider').slick();
 
     let FoodyAnalytics = require('./analytics');
