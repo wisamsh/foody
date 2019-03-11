@@ -25,10 +25,12 @@ if (file_exists($root_dir . '/.env')) {
  */
 define('WP_ENV', env('WP_ENV') ?: 'production');
 
-if (WP_ENV == 'production' || WP_ENV == 'medio-development' && strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
+if (
+    WP_ENV == 'production'
+    || (WP_ENV == 'medio-development' && isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false)) {
     $_SERVER['HTTPS'] = 'on';
 }
-define( 'WPCF7_LOAD_CSS', false );
+define('WPCF7_LOAD_CSS', false);
 $env_config = __DIR__ . '/environments/' . WP_ENV . '.php';
 
 if (file_exists($env_config)) {

@@ -15,8 +15,6 @@ class Foody_Recipe extends Foody_Post
 
     public $nutrients;
 
-    private $duration;
-
     private $overview;
 
     private $ingredients_groups;
@@ -58,14 +56,6 @@ class Foody_Recipe extends Foody_Post
     public function setNumberOfDishes($number_of_dishes)
     {
         $this->number_of_dishes = $number_of_dishes;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDuration(): string
-    {
-        return $this->duration ?? '';
     }
 
     /**

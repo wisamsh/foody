@@ -37,6 +37,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public $video;
 
+    protected $duration;
+
     public static $MAX__RELATED_ITEMS = 3;
 
     public $post;
@@ -59,6 +61,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         if ($post != null) {
             $this->post = $post;
             $this->id = $post->ID;
+            $this->init_video();
             global $wp_session;
             if (isset($wp_session['favorites']) && is_array($wp_session['favorites']) && in_array($this->id, $wp_session['favorites'])) {
                 $this->favorite = true;
@@ -681,5 +684,13 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             endwhile;
         }
 
+    }
+
+    /**
+     * @return string
+     */
+    public function getDuration(): string
+    {
+        return $this->duration ?? '';
     }
 }
