@@ -4,7 +4,23 @@
 jQuery(document).ready(($) => {
 
     let $form = $('#login-form');
+    $.validator.addMethod(
+        "regex",
+        function (value, element, regexp) {
+            return this.optional(element) || regexp.test(value);
+        }
+    );
 
+    $.validator.addMethod(
+        "password",
+        function (value) {
+
+            let hasNumbers = /[0-9]+/.test(value);
+            let nonEn = /[^a-z0-9]/i.test(value);
+
+            return hasNumbers && nonEn === false;
+        }
+    );
     $.validator.addMethod(
         "emailOrUsername",
         function (value, element) {
