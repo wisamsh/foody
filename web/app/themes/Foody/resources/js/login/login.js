@@ -48,11 +48,11 @@ jQuery(document).ready(($) => {
     });
 
 
-    $('.content-with-images .btn-google').on('click', () => {
+    $('.login .btn-google').on('click', () => {
         $('a[data-provider="Google"]')[0].click();
     });
 
-    $('.content-with-images .btn-facebook').on('click', () => {
+    $('.login .btn-facebook').on('click', () => {
         $('a[data-provider="Facebook"]')[0].click();
     });
 });
