@@ -35,7 +35,7 @@ if (is_array($sub_categories)):
                 'breakpoint' => 1441,
                 'settings' => [
                     'slidesToShow' => 5,
-                    'arrows' => false,
+                    'arrows' => true,
                     'slidesToScroll' => $count
                 ]
             ],
@@ -43,9 +43,17 @@ if (is_array($sub_categories)):
                 'breakpoint' => 1025,
                 'settings' => [
                     'slidesToShow' => 5,
-                    'arrows' => false,
+                    'arrows' => true,
                     'slidesToScroll' => $count
                 ]
+            ],
+            [
+		        'breakpoint' => 768,
+		        'settings' => [
+			        'slidesToShow' => 5,
+			        'arrows' => false,
+			        'slidesToScroll' => $count
+		        ]
             ],
             [
                 'breakpoint' => 415,
