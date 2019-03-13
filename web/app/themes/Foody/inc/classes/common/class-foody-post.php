@@ -691,6 +691,12 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
      */
     public function getDuration(): string
     {
-        return $this->duration ?? '';
+        $duration = $this->duration;
+        if (empty($duration)) {
+            if (!empty($this->video['duration'])) {
+                $duration = $this->video['duration'];
+            }
+        }
+        return $duration;
     }
 }

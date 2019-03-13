@@ -236,7 +236,7 @@ module.exports = (function () {
     };
 
     FoodySearchFilter.prototype._scrollToFilterTopTitle = function () {
-        let delta = 100
+        let delta = 100;
         if (foodyGlobals.isMobile === false || (foodyGlobals.isTablet && $(document).width() >= 1024)) {
             delta = 30;
         }

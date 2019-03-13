@@ -4,23 +4,20 @@
  */
 
 window.env = require('dotenv').config();
-
-
-// let IScroll = require('iscroll');
-// let $ = require('jquery');
-// require('jquery-drawer');
-require('jquery-validation');
+require('jquery-validation/dist/jquery.validate.min');
 require('block-ui');
-require('autocomplete.js/src/jquery/plugin.js');
-// require('bootstrap');
-require('bootstrap-material-design');
-require('bootstrap-select');
-require('./plugins');
-
-
+require('autocomplete.js/dist/autocomplete.jquery.min');
+require('bootstrap-material-design/dist/js/bootstrap-material-design.min');
+require('bootstrap-select/dist/js/bootstrap-select.min');
 require('slick-carousel');
-window._ = require('underscore');
-window.Fraction = require('fractional').Fraction;
+window._ = require('underscore/underscore-min');
+window.foodyFormMessage = require('./common/cf7-messages');
+
+// require('autocomplete.js/src/jquery/plugin.js');
+
+
+
+// window.Fraction = require('fractional').Fraction;
 window.lottie = require('lottie-web');
 
 $.validator.addMethod(
@@ -81,9 +78,6 @@ require('./contact-us');
 require('./tag');
 require('./items');
 
-window.foodyFormMessage = require('./common/cf7-messages');
-
-
 
 jQuery(document).ready(function ($) {
 
@@ -91,7 +85,7 @@ jQuery(document).ready(function ($) {
     // noinspection JSUnresolvedFunction
     $body.bootstrapMaterialDesign();
     // $.fn.selectpicker.Constructor.BootstrapVersion = '4';
-    $('.foody-select').selectpicker({dropdownAlignRight: true, style: 'foody-select',dropupAuto:false,width:'fit'});
+    $('.foody-select').selectpicker({dropdownAlignRight: true, style: 'foody-select', dropupAuto: false, width: 'fit'});
 
     $('[data-toggle="popover"]').popover();
 
@@ -104,14 +98,14 @@ jQuery(document).ready(function ($) {
     analytics.view();
 
     $('[data-toggle="tooltip"]').tooltip({
-        'container':'body'
+        'container': 'body'
     });
 
-    $('header .navbar-toggler').on('click',()=>{
+    $('header .navbar-toggler').on('click', () => {
         $('.quadmenu-navbar-toggle').click();
     });
 
-    $body.on('click','.tooltip .close',function () {
+    $body.on('click', '.tooltip .close', function () {
         $(this).closest('.tooltip').tooltip('hide')
     });
 
@@ -119,8 +113,8 @@ jQuery(document).ready(function ($) {
 
     let $seo = $('#seo');
 
-    if($seo.length){
+    if ($seo.length) {
         let height = $seo.height();
-        $('article.content').css('padding-bottom',height + 'px');
+        $('article.content').css('padding-bottom', height + 'px');
     }
 });
