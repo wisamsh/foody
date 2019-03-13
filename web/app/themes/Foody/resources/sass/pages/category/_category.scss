@@ -130,7 +130,12 @@ body[class~="category"] {
       .categories-slider {
         margin-right: 15px;
         padding: 0;
-        i.slick-arrow {
+
+          .slick-list {
+            padding: 0 0 0 30px;
+          }
+
+          i.slick-arrow {
 
           &:before {
 
