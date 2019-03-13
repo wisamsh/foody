@@ -25,6 +25,16 @@ function foody_customize_register( $wp_customize ) {
 			'render_callback' => 'foody_customize_partial_blogdescription',
 		) );
 	}
+
+//    $wp_customize->add_setting( 'header_link' , array(
+//        'default'   => '',
+//        'transport' => 'refresh',
+//    ) );
+
+//    $wp_customize->add_section( 'foody_cover_link' , array(
+//        'title'      => __('לינק קאבר','foody'),
+//        'priority'   => 30,
+//    ) );
 }
 add_action( 'customize_register', 'foody_customize_register' );
 

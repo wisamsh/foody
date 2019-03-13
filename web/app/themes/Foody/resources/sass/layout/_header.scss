@@ -18,6 +18,7 @@ header {
       border-radius: 3px;
     }
   }
+
   button {
     &.accessibility {
       z-index: 2;
@@ -192,14 +193,35 @@ header {
   #quadmenu {
     &.quadmenu-is-horizontal {
       .quadmenu-navbar-nav {
+
+        .quadmenu-dropdown-menu {
+          li {
+            a {
+              .quadmenu-item-content {
+                padding: 10px;
+                text-align: right;
+                .quadmenu-text {
+
+                }
+              }
+            }
+          }
+        }
         li {
+          &.bold {
+            a {
+              .quadmenu-item-content {
+                font-weight: 900;
+              }
+            }
+          }
 
           &:not(.quadmenu-dropdown-menu) {
             &.quadmenu-item {
               > a {
                 &.hoverintent {
                   > .quadmenu-item-content {
-                    padding-right: 0;
+                    //padding-right: 0;
                     > .quadmenu-caret {
                       left: -10px;
                     }
@@ -1109,7 +1131,21 @@ header {
           .quadmenu-navbar-header {
             display: none;
           }
+
+          .quadmenu-navbar-nav {
+
+            .quadmenu-item-content {
+              text-align: right !important;
+
+              .quadmenu-caret {
+                left: 0 !important;
+              }
+            }
+            
+          }
+
         }
+
       }
 
     }
