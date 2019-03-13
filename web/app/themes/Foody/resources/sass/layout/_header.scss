@@ -247,6 +247,10 @@ header {
     }
   }
 
+  #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
+    padding-right: 0;
+  }
+
   .foody-dropdown-menu {
     width: 100%;
     border-radius: 3px;
@@ -1141,11 +1145,9 @@ header {
                 left: 0 !important;
               }
             }
-            
+
           }
-
         }
-
       }
 
     }
