@@ -25,6 +25,15 @@ $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rat
 
 
 <div class=" social col">
+    <div class="description social-title">
+		<?php
+		if (get_post_type() == 'foody_recipe') {
+			echo __('שתפו את המתכון');
+		} else if (get_post_type() == 'post') {
+			echo __('שתפו את הכתבה');
+		}
+		?>
+    </div>
     <?php echo $social_icons ?>
 
     <?php if (wp_is_mobile() && is_single() && in_array(get_post_type(),['foody_recipe','post'])): ?>
