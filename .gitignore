@@ -147,3 +147,5 @@ migration/vendor
 migration/bootstrap/cache
 web/app/themes/Foody/dist
 .env1
+uploads.zip
+stats.json
