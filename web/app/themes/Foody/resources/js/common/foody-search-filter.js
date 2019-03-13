@@ -189,6 +189,7 @@ module.exports = (function () {
         if (this.settings.onQuery && typeof  this.settings.onQuery === 'function') {
             this.settings.onQuery();
         }
+        this._scrollToFilterTopTitle();
         let that = this;
         that.loading();
         foodyAjax(ajaxSettings, function (err, data) {
@@ -232,6 +233,17 @@ module.exports = (function () {
 
         this.locationUtils.updateHistory(null, urlParams.toString())
 
+    };
+
+    FoodySearchFilter.prototype._scrollToFilterTopTitle = function () {
+        let delta = 100
+        if (foodyGlobals.isMobile === false || (foodyGlobals.isTablet && $(document).width() >= 1024)) {
+            delta = 30;
+        }
+        let titleLocation = this.grid.$title.offset().top - delta;
+        $([document.documentElement, document.body]).animate({
+            scrollTop: titleLocation
+        }, 700);
     };
 
     return FoodySearchFilter;
