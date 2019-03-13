@@ -6,31 +6,37 @@
  * Time: 11:38 AM
  */
 
+$sent = isset($_GET['checkemail']) && $_GET['checkemail'] == 'confirm';
 ?>
 
 <div id="password-lost-form" class="widecolumn">
-    <?php if ($attributes['show_title']) : ?>
-        <h3><?php _e('Forgot Your Password?', 'personalize-login'); ?></h3>
-    <?php endif; ?>
+
 
     <p>
         <?php
-        _e(
-            "הזן כתובת מייל לשליחת לינק איפוס סיסמא",
-            'foody'
-        );
+
+        if ($sent){
+            _e('אימייל נשלח לכתובת שצויינה. אנא בדוק/י את תיבת המייל הנכנס', 'foody');
+        }else{
+            _e(
+                "הזן כתובת מייל לשליחת לינק איפוס סיסמא",
+                'foody'
+            );
+        }
         ?>
     </p>
 
     <form id="lostpasswordform" action="<?php echo wp_lostpassword_url(); ?>" method="post">
-        <p class="form-row">
+        <p class="required-input">
             <label for="user_login"><?php _e('אימייל', 'foody'); ?>
-                <input type="text" name="user_login" id="user_login">
+            </label>
+            <input type="text" name="user_login" id="user_login">
         </p>
 
-        <p class="lostpassword-submit">
-            <input type="submit" name="submit" class="lostpassword-button"
-                   value="<?php _e('שלח', 'foody'); ?>"/>
+        <p class="lostpassword-submit form-group">
+            <button type="submit" name="submit" class="lostpassword-button btn btn-primary">
+                <?php _e('שלח', 'foody'); ?>
+            </button>
         </p>
     </form>
 </div>

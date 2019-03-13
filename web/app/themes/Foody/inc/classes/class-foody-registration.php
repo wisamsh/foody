@@ -24,7 +24,8 @@ class Foody_Registration
         add_action('login_form_register', array($this, 'do_register_user'));
         add_action('login_form_login', array($this, 'redirect_to_custom_login'));
         add_filter("login_redirect", array($this, 'redirect_admin'), 10, 3);
-
+        add_filter( 'wp_mail_content_type', array($this,'foody_wp_email_content_type') );
+        $this->register_custom_password_reset();
 //        add_filter('login_url', function (/** @noinspection PhpUnusedParameterInspection */
 //            $url, $redirect, $force_reauth) {
 //            return home_url('התחברות');
@@ -276,7 +277,7 @@ class Foody_Registration
         // Information needed for creating the plugin's pages
         $page_definitions = array(
             'שכחתי-סיסמא' => array(
-                'title' => __('שׁכחת סיסמא?', 'personalize-login'),
+                'title' => __('שכחת סיסמא?', 'personalize-login'),
                 'content' => '[custom-password-lost-form]'
             ),
             'שינוי-סיסמא' => array(
@@ -290,7 +291,7 @@ class Foody_Registration
             $query = new WP_Query('pagename=' . $slug);
             if (!$query->have_posts()) {
                 // Add the page using the data from the array above
-                wp_insert_post(
+               $id =  wp_insert_post(
                     array(
                         'post_content' => $page['content'],
                         'post_name' => $slug,
@@ -301,6 +302,10 @@ class Foody_Registration
                         'comment_status' => 'closed',
                     )
                 );
+
+               if(!is_wp_error($id)){
+                   update_post_meta( $id, '_wp_page_template', 'page-templates/centered-content.php' );
+               }
             }
         }
 
@@ -323,13 +328,16 @@ class Foody_Registration
 
     public function foody_replace_retrieve_password_message($message, $key, $user_login, $user_data)
     {
+        $GLOBALS["use_html_content_type"] = TRUE;
         // Create new message
-        $msg = __('שלום!', 'personalize-login') . "\r\n\r\n";
-        $msg .= sprintf(__('ביקשת לאפס סיסמא עבור כתובת המייל %s.', 'foody'), $user_login) . "\r\n\r\n";
-        $msg .= __("אם חלה טעות, או שלא ביקשת לאפס סיסמא - התעלמ/י ממייל זה.", 'foody') . "\r\n\r\n";
-        $msg .= __('על מנת לאפס את הסיסמא, היכנס/י לכתובת הבאה:', 'foody') . "\r\n\r\n";
-        $msg .= site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login') . "\r\n\r\n";
+        $msg = '<div dir="rtl" style="text-align: right">';
+        $msg .= __('שלום!', 'personalize-login') . "<br>";
+        $msg .= sprintf(__('ביקשת לאפס סיסמא עבור כתובת המייל %s.', 'foody'), $user_login) . "<br>";
+        $msg .= __("אם חלה טעות, או שלא ביקשת לאפס סיסמא - התעלמ/י ממייל זה.", 'foody') . "<br>";
+        $msg .= __('על מנת לאפס את הסיסמא, היכנס/י לכתובת הבאה:', 'foody') . "<br>";
+        $msg .= site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login') . "<br>";
         $msg .= __('תודה!', 'foody') . "\r\n";
+        $msg .= '</div>';
         return $msg;
     }
 
@@ -340,16 +348,10 @@ class Foody_Registration
     public function do_password_lost()
     {
         if ('POST' == $_SERVER['REQUEST_METHOD']) {
-            $errors = retrieve_password();
-            if (is_wp_error($errors)) {
-                // Errors found
-                $redirect_url = home_url('שכחתי-סיסמא');
-                $redirect_url = add_query_arg('errors', join(',', $errors->get_error_codes()), $redirect_url);
-            } else {
-                // Email sent
-                $redirect_url = home_url('התחברות');
-                $redirect_url = add_query_arg('checkemail', 'confirm', $redirect_url);
-            }
+            retrieve_password();
+
+            $redirect_url = home_url('שכחתי-סיסמא');
+            $redirect_url = add_query_arg('checkemail', 'confirm', $redirect_url);
 
             wp_redirect($redirect_url);
             exit;
@@ -460,7 +462,7 @@ class Foody_Registration
 
         ob_start();
 
-        require('template-parts/' . $template_name . '.php');
+        require(get_template_directory() . '/template-parts/' . $template_name . '.php');
 
         $html = ob_get_contents();
         ob_end_clean();
@@ -521,6 +523,14 @@ class Foody_Registration
             }
 
             exit;
+        }
+    }
+
+    function foody_wp_email_content_type() {
+        if($GLOBALS["use_html_content_type"]){
+            return 'text/html';
+        }else{
+            return 'text/plain';
         }
     }
 
