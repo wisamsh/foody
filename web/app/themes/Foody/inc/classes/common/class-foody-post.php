@@ -686,9 +686,6 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     }
 
-    /**
-     * @return string
-     */
     public function getDuration(): string
     {
         $duration = $this->duration;
