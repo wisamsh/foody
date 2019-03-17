@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "351cc3ffff847f0a8e8d108391d312b1",
+    "content-hash": "a50b3b6909abbed386cc052cceee8b03",
     "packages": [
         {
             "name": "anders-thorborgd/acf-image-crop-add-on",
@@ -176,6 +176,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://wpgoplugins.com/index.php?eddfile=5753%3A805%3A3%3A1&ttl=1554470076&file=3&token=caca7216c2184b90d85d0244e7416ae2",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "delicious-brains-inc/wp-ses",
+            "version": "0.8.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-ses.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1161,7 +1172,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6"
+        "php": ">=5.6",
+        "ext-json": "*"
     },
     "platform-dev": []
 }
