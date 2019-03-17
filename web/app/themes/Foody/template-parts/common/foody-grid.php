@@ -15,7 +15,7 @@ $posts = $settings['posts'];
 $cols = $settings['cols'];
 $more = $settings['more'];
 $classes = foody_get_array_default($settings, 'classes', []);
-$responsive = foody_get_array_default($settings, 'responsive', null);;
+$responsive = foody_get_array_default($settings, 'responsive', null);
 $default_sort_options = [
     [
         'value' => 'popular_desc',
@@ -38,7 +38,7 @@ $default_sort_options = [
         'label' => 'ת-א'
     ]
 ];
-
+$item_args = foody_get_array_default($settings, 'item_args', []);
 $title_el = foody_get_array_default($template_args,'title_el','h3');
 
 
@@ -80,7 +80,7 @@ $title_el = foody_get_array_default($template_args,'title_el','h3');
     <?php endif; ?>
 
     <section class="row" id="<?php echo $id ?>">
-        <?php $grid->loop($posts, $cols, true, null, [], $responsive) ?>
+        <?php $grid->loop($posts, $cols, true, null, [], $responsive,$item_args) ?>
     </section>
 
     <?php if (!empty($posts) && $more && $grid->is_displayable($posts)): ?>

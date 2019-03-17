@@ -24,7 +24,7 @@ class Foody_Registration
         add_action('login_form_register', array($this, 'do_register_user'));
         add_action('login_form_login', array($this, 'redirect_to_custom_login'));
         add_filter("login_redirect", array($this, 'redirect_admin'), 10, 3);
-        add_filter( 'wp_mail_content_type', array($this,'foody_wp_email_content_type') );
+        add_filter('wp_mail_content_type', array($this, 'foody_wp_email_content_type'));
         $this->register_custom_password_reset();
 //        add_filter('login_url', function (/** @noinspection PhpUnusedParameterInspection */
 //            $url, $redirect, $force_reauth) {
@@ -291,7 +291,7 @@ class Foody_Registration
             $query = new WP_Query('pagename=' . $slug);
             if (!$query->have_posts()) {
                 // Add the page using the data from the array above
-               $id =  wp_insert_post(
+                $id = wp_insert_post(
                     array(
                         'post_content' => $page['content'],
                         'post_name' => $slug,
@@ -303,9 +303,9 @@ class Foody_Registration
                     )
                 );
 
-               if(!is_wp_error($id)){
-                   update_post_meta( $id, '_wp_page_template', 'page-templates/centered-content.php' );
-               }
+                if (!is_wp_error($id)) {
+                    update_post_meta($id, '_wp_page_template', 'page-templates/centered-content.php');
+                }
             }
         }
 
@@ -526,10 +526,11 @@ class Foody_Registration
         }
     }
 
-    function foody_wp_email_content_type() {
-        if($GLOBALS["use_html_content_type"]){
+    function foody_wp_email_content_type()
+    {
+        if (isset($GLOBALS["use_html_content_type"]) && $GLOBALS["use_html_content_type"]) {
             return 'text/html';
-        }else{
+        } else {
             return 'text/plain';
         }
     }

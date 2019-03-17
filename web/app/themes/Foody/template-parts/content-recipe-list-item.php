@@ -10,7 +10,7 @@
 /** @noinspection PhpUndefinedVariableInspection */
 $recipe = $template_args['post'];
 $args = foody_get_array_default($template_args, 'args', []);
-
+$title_el = foody_get_array_default($args, 'title_el', 'h3');
 $image_size = isset($args['image_size']) ? $args['image_size'] : 'list-item';
 ?>
 
@@ -43,11 +43,11 @@ $image_size = isset($args['image_size']) ? $args['image_size'] : 'list-item';
     </a>
     <section class="feed-item-details-container">
         <section class="title-container">
-            <h3>
+            <<?php echo $title_el?>>
                 <a href="<?php echo $recipe->link ?>">
                     <?php echo $recipe->getTitle() ?>
                 </a>
-            </h3>
+            </<?php echo $title_el?>>
 
             <div class="description">
                 <?php echo $recipe->getDescription() ?>

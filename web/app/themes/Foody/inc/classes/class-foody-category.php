@@ -21,6 +21,7 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
 
     /**
      * Get the category image (ACF Field)
+     * @param string $size
      * @return mixed|null|string
      */
     public function get_image($size = 'list-item')

@@ -38,6 +38,7 @@ class FoodyGrid
      * @param bool $echo
      * @param string $type
      * @param null $responsive
+     * @param array $args
      * @return string the item html
      * @throws Exception
      */
@@ -108,7 +109,11 @@ class FoodyGrid
      * @param $cols
      * @param bool $echo
      * @param string $type
+     * @param array $data_attrs
+     * @param null $responsive
+     * @param array $args
      * @return string
+     * @throws Exception
      */
     public function loop($posts, $cols, $echo = true, $type = null, $data_attrs = [], $responsive = null, $args = [])
     {
