@@ -35,6 +35,7 @@ $user = new Foody_User();
         <div class="run d-block d-lg-none">
             <?php echo __('בהרצה') ?>
         </div>
+
         <div class="socials d-none d-lg-block">
 
             <section class="header-top-container  d-none d-lg-flex">

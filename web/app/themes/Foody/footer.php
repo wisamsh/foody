@@ -14,6 +14,11 @@ $footer = new Foody_Footer();
 
 </div><!-- #content -->
 
+<?php if (is_admin()): ?>
+<div dir="rtl" style="text-align: right; max-width: 960px;margin: 0 auto;">
+    <?php edit_post_link(__('ערוך')); ?>
+</div>
+<?php endif; ?>
 <footer id="colophon" class="site-footer no-print">
 
 

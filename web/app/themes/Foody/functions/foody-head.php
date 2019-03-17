@@ -189,7 +189,9 @@ function foody_page_content_pagination()
                 $page = 1;
             }
         }
-
+        if (empty($page)) {
+            $page = 1;
+        }
         $args = [
             'post_type' => ['foody_recipe', 'foody_playlist', 'post'],
             'post_status' => 'publish',
