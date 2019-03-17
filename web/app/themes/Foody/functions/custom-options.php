@@ -146,9 +146,6 @@ function foody_custom_options()
     {
         $content = get_option('foody_404_text', '');
         wp_editor( $content, 'foody_404_text', $settings = array('textarea_rows'=> '10') );
-
-//        echo '<textarea cols="50" rows="10" id="foody_404_text" name="foody_404_text">'.$option.'</textarea>';
-
     }
 }
 

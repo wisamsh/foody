@@ -179,10 +179,10 @@ function foody_env_scripts()
 
 add_action('wp_head', 'foody_env_scripts');
 
-function foody_category_pagination()
+function foody_page_content_pagination()
 {
-    if (is_category()) {
-        $page = 1;
+    if (is_category() || is_home() || is_front_page()) {
+        $page = get_query_var('page');
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
             if (!is_numeric($page)) {
@@ -190,12 +190,21 @@ function foody_category_pagination()
             }
         }
 
-        $posts_per_page = get_option('posts_per_page');
-        $q = new WP_Query([
-            'post_type' => ['foody_recipe', 'foody_playlist'],
+        $args = [
+            'post_type' => ['foody_recipe', 'foody_playlist', 'post'],
             'post_status' => 'publish',
-            'cat' => get_queried_object_id(),
-        ]);
+            'fields' => 'ids'
+        ];
+
+        $posts_per_page = get_option('posts_per_page');
+        $link = home_url();
+
+        if (is_category()) {
+            $args['cat'] = get_queried_object_id();
+            $link = get_term_link(get_queried_object_id());
+        }
+
+        $q = new WP_Query($args);
 
         $posts_count = $q->found_posts;
         if (is_numeric($posts_count)) {
@@ -208,21 +217,23 @@ function foody_category_pagination()
 
         $prev = $page - 1;
         $next = $page + 1;
-
-        $link = get_term_link(get_queried_object_id());
+        $q_or_path = '/page/';
+        if (is_category()) {
+            $q_or_path = '?page=';
+        }
         if ($prev > 0) {
-            $href = $link . "?page=" . $prev;
+            $href = $link . $q_or_path . $prev;
             echo '<link id="pagination-prev" rel="prev" href="' . $href . '">';
         }
 
         if ($next <= $max_pages) {
-            $href = $link . "?page=" . $next;
+            $href = $link . $q_or_path . $next;
             echo '<link id="pagination-next" rel="next" href="' . $href . '">';
         }
     }
 }
 
-add_action('wp_head', 'foody_category_pagination');
+add_action('wp_head', 'foody_page_content_pagination');
 
 
 function add_filter_query_arg($vars)
