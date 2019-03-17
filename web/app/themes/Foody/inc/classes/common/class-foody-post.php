@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpIllegalStringOffsetInspection */
 
 /**
  * Created by PhpStorm.
@@ -33,8 +33,13 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public $favorite = false;
 
-    public static $MAX__RELATED_ITEMS = 3;
+    public $has_video;
 
+    public $video;
+
+    protected $duration;
+
+    public static $MAX__RELATED_ITEMS = 3;
 
     public $post;
 
@@ -56,6 +61,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         if ($post != null) {
             $this->post = $post;
             $this->id = $post->ID;
+            $this->init_video();
             global $wp_session;
             if (isset($wp_session['favorites']) && is_array($wp_session['favorites']) && in_array($this->id, $wp_session['favorites'])) {
                 $this->favorite = true;
@@ -175,6 +181,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     }
 
     /**
+     * @param null|string|int $size registered image size
      * @return mixed
      */
     public function getImage($size = null)
@@ -275,7 +282,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_featured_content()
     {
-        the_post_thumbnail('foody-main');
+        $this->the_video_box();
     }
 
     public function the_sidebar_content($args = array())
@@ -478,12 +485,15 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     {
         $foody_purchase_buttons = Foody_PurchaseButtons::get_instance();
         $buttons = $foody_purchase_buttons->get_buttons_for_post($this->id);
+        $content = '';
         if (!empty($buttons)) {
-            return foody_get_template_part(
+            $content = foody_get_template_part(
                 get_template_directory() . '/template-parts/content-purchase-buttons.php',
                 ['classes' => $classes, 'buttons' => $buttons, 'return' => !$echo]
             );
         }
+
+        return $content;
     }
 
     public function newsletter()
@@ -557,7 +567,11 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function featured_content_classes()
     {
-        return [];
+        $classes = [];
+        if ($this->has_video) {
+            $classes[] = 'video-featured-content';
+        }
+        return $classes;
     }
 
 
@@ -585,6 +599,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     /**
      * Checks if this post should be exposed to
      * search engines.
+     * @param $robots_str string value for robots meta tag
      * @return bool
      */
     public function shouldIndexPost($robots_str)
@@ -615,5 +630,70 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         }
 
         return $robots_str;
+    }
+
+    public function the_video_box()
+    {
+        if ($this->post != null) {
+            if (have_rows('video', $this->post->ID)) {
+                while (have_rows('video', $this->post->ID)): the_row();
+                    $video_url = get_sub_field('url');
+
+                    if ($video_url && count($parts = explode('v=', $video_url)) > 1) {
+
+                        $query = explode('&', $parts[1]);
+                        $video_id = $query[0];
+                        $args = array(
+                            'id' => $video_id
+                        );
+                        foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
+                    } else {
+                        the_post_thumbnail('foody-main');
+                    }
+
+                endwhile;
+            } else {
+                the_post_thumbnail('foody-main');
+            }
+        }
+    }
+
+    protected function init_video()
+    {
+        if (have_rows('video', $this->post->ID)) {
+            while (have_rows('video', $this->post->ID)): the_row();
+
+                $video_url = get_sub_field('url');
+
+                if (!empty($video_url)) {
+                    $parts = explode('v=', $video_url);
+                    if (!empty($parts) && count($parts) > 1) {
+                        $query = explode('&', $parts[1]);
+                        $video_id = $query[0];
+
+
+                        $this->video = array(
+                            'id' => $video_id,
+                            'url' => $video_url,
+                            'duration' => get_sub_field('duration')
+                        );
+                        $this->has_video = true;
+                    }
+                }
+
+            endwhile;
+        }
+
+    }
+
+    public function getDuration()
+    {
+        $duration = $this->duration;
+        if (empty($duration)) {
+            if (!empty($this->video['duration'])) {
+                $duration = $this->video['duration'];
+            }
+        }
+        return $duration;
     }
 }

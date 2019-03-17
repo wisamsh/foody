@@ -14,7 +14,7 @@
         &.essb_link_whatsapp {
 
           a {
-            background-color: #75b73b !important;
+            background-color: $color__social !important;
 
             &:hover {
               background-color: #75b73b;
@@ -23,7 +23,7 @@
         }
         &.essb_link_facebook {
            a {
-            background-color: $color__facebook !important;
+             background-color: $color__social !important;
 
             &:hover {
               background-color: $color__facebook;
@@ -33,7 +33,7 @@
         &.essb_link_pinterest {
 
           a {
-            background-color: #c8232c !important;
+            background-color: $color__social !important;
 
             &:hover {
               background-color: #c8232c;
@@ -43,7 +43,7 @@
         &.essb_link_mail, &.essb_link_print {
 
           a {
-            background-color: #3a3a3a !important;
+            background-color: $color__social !important;
 
             &:hover {
               background-color: #3a3a3a;

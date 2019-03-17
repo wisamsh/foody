@@ -26,6 +26,18 @@ $article = $template_args['post'];
                 </div>
 
             <?php endif; ?>
+            <?php if ($article->video != null): ?>
+                <div class="duration">
+                    <i class="icon icon-timeplay">
+
+                    </i>
+                    <span>
+                        <?php echo $article->getDuration() ?>
+                    </span>
+
+
+                </div>
+            <?php endif; ?>
         </div>
     </a>
 

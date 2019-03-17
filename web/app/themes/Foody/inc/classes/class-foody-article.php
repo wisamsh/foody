@@ -11,7 +11,7 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
 
     public function the_featured_content()
     {
-        parent::the_featured_content();
+        $this->the_video_box();
     }
 
     public function the_sidebar_content($args = array())

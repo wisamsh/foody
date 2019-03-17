@@ -148,6 +148,7 @@ class Foody_HomePage
 
             $posts = array_map(function ($row) {
 
+                // WP_Post
                 $foody_post = Foody_Post::create($row['post']);
 
                 $foody_post->setImage($row['image']['url']);

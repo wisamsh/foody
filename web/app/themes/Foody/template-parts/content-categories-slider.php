@@ -12,9 +12,9 @@ $category = $template_args['category'];
 
 ?>
 
-    <h2 class="title">
+    <h1 class="title">
         <?php echo sprintf('קטגוריות %s', $category->title) ?>
-    </h2>
+    </h1>
 
 <?php
 /** @var Foody_Category[] $sub_categories */
@@ -22,7 +22,7 @@ $sub_categories = $category->get_sub_categories();
 if (is_array($sub_categories)):
 
     $count = ceil(count($sub_categories) / 3);
-    $count = 3;
+    $count = min(3,count($sub_categories));
     $slider_data = [
         'slidesToShow' => 4,
         'rtl' => true,
@@ -35,7 +35,7 @@ if (is_array($sub_categories)):
                 'breakpoint' => 1441,
                 'settings' => [
                     'slidesToShow' => 5,
-                    'arrows' => false,
+                    'arrows' => true,
                     'slidesToScroll' => $count
                 ]
             ],
@@ -43,9 +43,17 @@ if (is_array($sub_categories)):
                 'breakpoint' => 1025,
                 'settings' => [
                     'slidesToShow' => 5,
-                    'arrows' => false,
+                    'arrows' => true,
                     'slidesToScroll' => $count
                 ]
+            ],
+            [
+		        'breakpoint' => 768,
+		        'settings' => [
+			        'slidesToShow' => 5,
+			        'arrows' => false,
+			        'slidesToScroll' => $count
+		        ]
             ],
             [
                 'breakpoint' => 415,
@@ -59,7 +67,7 @@ if (is_array($sub_categories)):
     ]
 
     ?>
-    <ul class="foody-slider categories-slider" data-slick='<?php echo json_encode($slider_data, ENT_QUOTES) ?>'>
+    <ul class="categories-slider" data-slick='<?php echo json_encode($slider_data, ENT_QUOTES) ?>'>
         <?php
 
         foreach ($sub_categories as $sub_category):?>

@@ -11,10 +11,12 @@
 /** @noinspection PhpUndefinedVariableInspection */
 /** @var Foody_Recipe $recipe */
 $recipe = $template_args['recipe'];
+
+//      "nutrition": <?php echo $recipe->get_jsonld_nutrients(),
 ?>
 
 
-<script type="application/ld+json">
+<script type="application/ld+json" id="recipe-schema">
      {
       "@context": "http://schema.org/",
       "@type": "Recipe",
@@ -26,12 +28,11 @@ $recipe = $template_args['recipe'];
       },
       "datePublished": "<?php echo get_the_date('Y-m-d') ?>",
       "description": "<?php echo $recipe->getDescription() ?>",
-      "cookTime": "PT30M",
-      "totalTime": "PT50M",
+      "cookTime": "<?php echo $recipe->time_to_iso8601_duration('preparation_time')?>",
+      "totalTime": "<?php echo $recipe->time_to_iso8601_duration('total_time')?>",
       "keywords": "<?php echo implode(',', wp_get_post_tags()) ?>",
       "recipeYield": "<?php echo $recipe->number_of_dishes ?>",
       "recipeCategory": "<?php echo $recipe->get_primary_category_name() ?>",
-      "nutrition": <?php echo $recipe->get_jsonld_nutrients() ?>,
       "recipeIngredient": <?php echo $recipe->get_ingredients_jsonld()?>
 }
 

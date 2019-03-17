@@ -298,11 +298,20 @@ class Foody_Ingredient extends Foody_Post
     {
         $nutrients = self::get_nutrients_options();
         $gram = __('גרם');
+        $m_gram = __('מ״ג');
         $nutrients['calories'] = __('קק״ל');
         $nutrients['carbohydrates'] = $gram;
         $nutrients['fats'] = $gram;
         $nutrients['protein'] = $gram;
-        $nutrients['sodium'] = __('מ״ג');
+        $nutrients['sodium'] = $m_gram;
+
+        $nutrients['fibers'] = $gram;
+        $nutrients['saturated_fat'] = $gram;
+        $nutrients['cholesterol'] = $m_gram;
+        $nutrients['calcium'] = $m_gram;
+        $nutrients['iron'] = $m_gram;
+        $nutrients['potassium'] = $m_gram;
+        $nutrients['zinc'] = $m_gram;
 
         $unit = '';
 

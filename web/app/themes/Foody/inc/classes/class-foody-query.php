@@ -116,7 +116,7 @@ class Foody_Query
                         // if 'value_group' is set it means 'switch type'
                         // was used in order to override the general list type ($filter_option['type']), so
                         // here we assign the proper type to the item
-                        if (!empty($filter_option['values'][$key]['value_group']) && !empty($filter_option['values'][$key]['switch_type']) ) {
+                        if (!empty($filter_option['values'][$key]['value_group']) && !empty($filter_option['values'][$key]['switch_type'])) {
                             $filter_option['values'][$key]['type'] = $filter_option['values'][$key]['value_group']['type'];
                         }
                         // if 'value' is not set -> use value from the 'value_group';
@@ -134,10 +134,10 @@ class Foody_Query
                         // entity itself (e.g category,limitation,author, etc).
                         // See SidebarFilter::get_item_title for more details
                         if (empty($filter_option['values'][$key]['title'])) {
-                            $id  = $filter_option['values'][$key]['value'];
-                            $item_type  = $filter_option['values'][$key]['type'];
+                            $id = $filter_option['values'][$key]['value'];
+                            $item_type = $filter_option['values'][$key]['type'];
 
-                            $filter_option['values'][$key]['title'] = SidebarFilter::get_item_title($id,$item_type);
+                            $filter_option['values'][$key]['title'] = SidebarFilter::get_item_title($id, $item_type);
                         }
                     }
                     // create a flat array from parsed options
@@ -163,11 +163,11 @@ class Foody_Query
                 }
             }
 
-            $bad_value = foody_array_find($filter_types,function ($item){
+            $bad_value = foody_array_find($filter_types, function ($item) {
                 return empty($item) || empty($item['value']) || empty($item['type']) || empty($item['title']);
             });
 
-            if(!empty($bad_value)){
+            if (!empty($bad_value)) {
                 throw new Exception('bad filter value' . strval($bad_value));
             }
 
@@ -230,6 +230,14 @@ class Foody_Query
     public function homepage()
     {
         $args = self::get_args();
+
+        $featured = get_field('featured_items',get_option('page_on_front'));
+        if (!empty($featured)) {
+            $args['post__not_in'] = array_map(function ($row) {
+                return $row['post']->ID;
+            }, $featured);
+        }
+
         return $args;
     }
 
@@ -406,9 +414,9 @@ class Foody_Query
 
         $base = add_query_arg('s', $wpdb->prepare($search_term, []), $base);
 
-        foreach ($post_types as $post_type) {
-            $base = add_query_arg('post_type', $post_type, $base);
-        }
+//        foreach ($post_types as $post_type) {
+//            $base = add_query_arg('post_type', $post_type, $base);
+//        }
 
         return $base;
     }

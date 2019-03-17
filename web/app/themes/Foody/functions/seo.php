@@ -26,3 +26,15 @@ function foody_handle_no_index($robots_str)
 
     return $robots_str;
 }
+
+
+add_filter('wpseo_metadesc', 'foody_set_meta_desc');
+function foody_set_meta_desc($desc)
+{
+    if (is_tag()) {
+        $name = get_term_field('name', get_queried_object_id());
+        $desc = sprintf("%s - כל המתכונים והכתבות הכי מעניינות וטעימות. פודי, הצטרפו לפודי - קהילת האוכל הגדולה של ישראל.", $name);
+    }
+
+    return $desc;
+}

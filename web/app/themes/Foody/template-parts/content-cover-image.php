@@ -7,17 +7,33 @@
  */
 
 
-if(isset($template_args)){
+if (isset($template_args)) {
     $image = $template_args;
 }
 
-if(empty($image)){
+if (empty($image)) {
     $image = get_header_image();
-}else{
+} else {
     $image = $image['url'];
 }
+
+$link = get_field('cover_link');
+if (!empty($link)) {
+    $a = '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
+}
+
 ?>
 
 <div class="cover-image">
+    <?php if (isset($a)) {
+        echo $a;
+    } ?>
+
+
     <img src="<?php echo $image ?>" alt="">
+
+    <?php if (isset($a)) {
+        echo '</a>';
+    } ?>
+
 </div>

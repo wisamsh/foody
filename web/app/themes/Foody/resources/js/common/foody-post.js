@@ -1,17 +1,9 @@
-/**
- * Created by moveosoftware on 6/27/18.
- */
-
-// noinspection ES6ModulesDependencies
-if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGlobals.post.type == 'post')) {
-
-    window.scroller();
-
+jQuery(document).ready(($)=>{
     let $video = $('.featured-content-container #video');
 
     if ($video && $video.length) {
 
-        if ($('.single-foody_recipe').length || $('.single-post').length) {
+        if ($('.single-foody_recipe').length) {
 
             let videoId = $video.data('video-id');
             let ytPlayer = require('../common/youtubePlayer');
@@ -53,20 +45,4 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
 
 
     }
-
-
-    $('.must-log-in a, .comment-reply-login').on('click', function (e) {
-        e.preventDefault();
-        showLoginModal();
-    });
-
-}
-
-
-
-
-
-
-
-
-
+});

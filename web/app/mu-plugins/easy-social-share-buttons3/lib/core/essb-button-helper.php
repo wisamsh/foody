@@ -651,7 +651,9 @@ function essb_get_share_address($network, $share = array(), $salt = '', $amp_end
                 $share['mail_body'] = '';
             }
 
-            $share['mail_body'] = wp_get_shortlink();// get_permalink();
+            $share['mail_body'] = 'מתכון מומלץ מפודי';
+
+            $share['mail_body'] .= wp_get_shortlink();// get_permalink();
             $share['mail_body'] = str_replace('"', '%22', $share['mail_body']);
             $share['mail_body'] = str_replace("'", '%27', $share['mail_body']);
             $share['mail_body'] = str_replace('&amp;', '%26', $share['mail_body']);
@@ -699,6 +701,8 @@ function essb_get_share_address($network, $share = array(), $salt = '', $amp_end
             break;
 
         case 'gmail' :
+            $share['url'] = '  מתכון מומלץ מפודי:'. "\r\n" . $share['url'];
+
             $url = sprintf('https://mail.google.com/mail/u/0/?view=cm&fs=1&su=%2$s&body=%1$s&ui=2&tf=1', $share ['url'], $share ['title']);
             break;
 

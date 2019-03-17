@@ -52,7 +52,7 @@ module.exports = (function () {
 
     FoodySearchFilter.prototype.attachChangeListener = function () {
         let pageContainer = this.settings.page;
-        let $checkboxes = $('input[type="checkbox"]', pageContainer);
+        let $checkboxes = $('aside input[type="checkbox"]', pageContainer);
         let that = this;
         $checkboxes.on('change', function (e) {
             if (that.isLoading) {
@@ -94,13 +94,13 @@ module.exports = (function () {
 
     FoodySearchFilter.prototype.toggleCheckboxes = function (disable) {
         let attr = disable ? 'disable' : null;
-        let $checkboxes = $('.md-checkbox', this.settings.page);
+        let $checkboxes = $('aside .md-checkbox', this.settings.page);
         $checkboxes.attr('disabled', attr);
     };
 
     FoodySearchFilter.prototype.buildInitialFilter = function () {
 
-        let $checkboxes = $('input[type="checkbox"]', this.settings.page);
+        let $checkboxes = $('aside .foody-search-filter input[type="checkbox"]', this.settings.page);
         let that = this;
 
         foodyGlobals.queryArgs = foodyGlobals.queryArgs || {};
@@ -122,7 +122,7 @@ module.exports = (function () {
         if (valuesStr) {
             let that = this;
             valuesStr.split(',').forEach((value) => {
-                $('.md-checkbox label:visible', that.settings.page).filter(function () {
+                $('aside .foody-search-filter .md-checkbox label:visible', that.settings.page).filter(function () {
                     return $(this).text().trim() === value.trim();
                 }).each(function () {
                     let $checkbox = $(this).prev('input[type="checkbox"]');
@@ -189,6 +189,7 @@ module.exports = (function () {
         if (this.settings.onQuery && typeof  this.settings.onQuery === 'function') {
             this.settings.onQuery();
         }
+        this._scrollToFilterTopTitle();
         let that = this;
         that.loading();
         foodyAjax(ajaxSettings, function (err, data) {
@@ -205,7 +206,7 @@ module.exports = (function () {
     FoodySearchFilter.prototype._updateUri = function () {
 
         let pageContainer = this.settings.page;
-        let $checkedCheckboxes = $('input[type="checkbox"]:checked', pageContainer);
+        let $checkedCheckboxes = $('aside .foody-search-filter input[type="checkbox"]:checked', pageContainer);
 
         let urlParams = new URLSearchParams();
 
@@ -232,6 +233,17 @@ module.exports = (function () {
 
         this.locationUtils.updateHistory(null, urlParams.toString())
 
+    };
+
+    FoodySearchFilter.prototype._scrollToFilterTopTitle = function () {
+        let delta = 100;
+        if (foodyGlobals.isMobile === false || (foodyGlobals.isTablet && $(document).width() >= 1024)) {
+            delta = 30;
+        }
+        let titleLocation = this.grid.$title.offset().top - delta;
+        $([document.documentElement, document.body]).animate({
+            scrollTop: titleLocation
+        }, 700);
     };
 
     return FoodySearchFilter;

@@ -20,7 +20,7 @@ class Foody_SearchPage implements Foody_ContentWithSidebar
         function search_filter(WP_Query $query)
         {
             if ($query->is_search) {
-                $query->set('post_type', ['foody_recipe', 'foody_playlist']);
+                $query->set('post_type', ['foody_recipe', 'foody_playlist','post']);
             }
             return $query;
         }

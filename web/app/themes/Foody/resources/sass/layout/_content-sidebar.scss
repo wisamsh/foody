@@ -152,6 +152,11 @@ body[class~="tag"] {
       }
 
       .social {
+        .social-title {
+          margin: 1em;
+          margin-right: 0;
+          line-height: 28px;
+        }
         .essb_links {
           float: left;
           .essb_links_list {
@@ -332,6 +337,10 @@ body[class~="tag"] {
         .social {
           margin-top: 10px;
           border-top: 1px solid $color__divider;
+          flex-flow: row wrap;
+          .social-title {
+            width: 100%;
+          }
           .essb_links {
             float: right;
             margin: 0;

@@ -147,6 +147,17 @@ function foody_env_scripts()
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');"
         ],
         'https://foody.co.il' => [
+            "<!-- Hotjar Tracking Code for https://foody.co.il -->
+            <script>
+            (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:1225841,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+            </script>"
         ]
     ];
 
@@ -174,7 +185,7 @@ function foody_category_pagination()
         $page = 1;
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
-            if(!is_numeric($page)){
+            if (!is_numeric($page)) {
                 $page = 1;
             }
         }
@@ -222,3 +233,22 @@ function add_filter_query_arg($vars)
 }
 
 add_filter('foody_js_globals', 'add_filter_query_arg');
+
+function foody_style_placeholder()
+{
+    ?>
+    <style>
+        body {
+            -webkit-transition: opacity .15s;
+            -moz-transition: opacity .15s;
+            -ms-transition: opacity .15s;
+            -o-transition: opacity .15s;
+            transition: opacity .15s;
+            opacity: 0;
+        }
+    </style>
+    <?php
+}
+
+
+add_action('wp_head', 'foody_style_placeholder');

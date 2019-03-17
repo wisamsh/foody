@@ -22,14 +22,16 @@ class FoodyTeam
     public function list_authors($display_args = array())
     {
 
-        $num_of_authors = $display_args['max'];
+
 
         if (sizeof($display_args) == 0) {
             $display_args = array(
                 'display' => 'row',
-                'show_count' => false
+                'show_count' => false,
+	            'max' => 6
             );
         }
+	    $num_of_authors = $display_args['max'];
 
         $show_count = $display_args['show_count'];
         $display = $display_args['display'];
