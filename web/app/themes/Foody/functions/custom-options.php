@@ -9,6 +9,7 @@
 register_setting('discussion', 'hid_per_page');
 register_setting('discussion', 'whatsapp_phone_number_toggle');
 register_setting('discussion', 'whatsapp_phone_number');
+register_setting('general', 'foody_404_text');
 
 $page_name_search_options = __('הגדרות חיפוש - פודי', 'foody');
 $page_name_purchase_buttons = __('כפתורי רכישה', 'foody');
@@ -136,6 +137,17 @@ function foody_custom_options()
         $options = get_option('whatsapp_phone_number_toggle', false);
         $checked = $options ? 'checked' : '';
         echo '<input ' . $checked . ' type="checkbox" id="whatsapp_phone_number_toggle" name="whatsapp_phone_number_toggle">';
+
+    }
+
+    // WhatsApp business toggle
+    add_settings_field('foody_404_text', __('טקסט 404'), 'foody_404_text_callback', 'general');
+    function foody_404_text_callback()
+    {
+        $content = get_option('foody_404_text', '');
+        wp_editor( $content, 'foody_404_text', $settings = array('textarea_rows'=> '10') );
+
+//        echo '<textarea cols="50" rows="10" id="foody_404_text" name="foody_404_text">'.$option.'</textarea>';
 
     }
 }
