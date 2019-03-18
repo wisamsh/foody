@@ -109,7 +109,7 @@ jQuery(document).ready(function ($) {
         $(this).closest('.tooltip').tooltip('hide')
     });
 
-    foodyFormMessage('.newsletter');
+    // foodyFormMessage('.newsletter');
 
     let $seo = $('#seo');
 
