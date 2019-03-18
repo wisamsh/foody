@@ -77,3 +77,18 @@
     }
   }
 }
+
+#edittag {
+  max-width: 100%;
+}
+
+#edittag .acf-fields.-left > .acf-field {
+  padding-left: 0;
+  padding-right: 220px;
+}
+.acf-fields.-left > .acf-field {
+  padding: 15px 0;
+}
+.acf-fields > .acf-field:first-child {
+  border-top-width: 0;
+}

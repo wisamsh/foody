@@ -98,6 +98,7 @@ class Foody_Query
 
         $filter_value = $this->array_query_string_to_array(self::$filter_query_arg);
         if (!empty($filter_value)) {
+            // TODO change post id to be relevant to current page
             $filter_options = get_field('filters_list', 'foody_search_options');
             $all_options = [];
 

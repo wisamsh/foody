@@ -18,6 +18,8 @@ class SidebarFilter
 
     private $engine;
 
+    private $filters_post_id = self::FILTER_OPTIONS_ID;
+
     /**
      * SidebarFilter constructor.
      */
@@ -32,12 +34,17 @@ class SidebarFilter
         return $this->the_filter(false);
     }
 
+    public function load_filters_id()
+    {
+        // load filters specific to current page
+        $this->filters_post_id = get_filters_id();
+    }
+
     public function the_filter($echo = true)
     {
-
-        $title = get_field('title', self::FILTER_OPTIONS_ID);
+        $this->load_filters_id();
+        $title = get_field('title', $this->filters_post_id);
         $accordion_id = 'foody-filter';
-
 
         $main_accordion_args = array(
             'title' => $title,
@@ -120,12 +127,12 @@ class SidebarFilter
     public function get_accordion_content()
     {
         $content = '';
-        if (have_rows('filters_list', 'foody_search_options')) {
+        if (have_rows('filters_list', $this->filters_post_id)) {
 
             // a list of filtering sections
             // as configured in Foody Search Options page
             // in the admin
-            $filters_list = get_field('filters_list', 'foody_search_options');
+            $filters_list = get_field('filters_list', $this->filters_post_id);
 
 
             $lists = array_map(function ($list) {
