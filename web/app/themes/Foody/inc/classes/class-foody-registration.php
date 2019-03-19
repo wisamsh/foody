@@ -25,7 +25,7 @@ class Foody_Registration
         add_action('login_form_login', array($this, 'redirect_to_custom_login'));
         add_filter("login_redirect", array($this, 'redirect_admin'), 10, 3);
         add_filter('wp_mail_content_type', array($this, 'foody_wp_email_content_type'));
-//        $this->register_custom_password_reset();
+        $this->register_custom_password_reset();
 //        add_filter('login_url', function (/** @noinspection PhpUnusedParameterInspection */
 //            $url, $redirect, $force_reauth) {
 //            return home_url('התחברות');
