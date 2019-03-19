@@ -158,5 +158,11 @@ function get_filters_id()
         $filters_post_id = SidebarFilter::FILTER_OPTIONS_ID;
     }
 
+    if ($filters_post_id != SidebarFilter::FILTER_OPTIONS_ID) {
+        if (!have_rows('filters_list', $filters_post_id)) {
+            $filters_post_id = SidebarFilter::FILTER_OPTIONS_ID;
+        }
+    }
+
     return $filters_post_id;
 }
