@@ -53,6 +53,7 @@ class Foody_Comments
                     get_template_directory() . '/template-parts/comment_form.php',
                     array('return' => true)
                 ),
+                'fields' => [],
                 'title_reply' => '',
                 'comment_notes_before' => '',
                 'label_submit' => __('שלח', 'WordPress'),
@@ -62,7 +63,7 @@ class Foody_Comments
 
     public function the_title($echo = true)
     {
-        $foody_comment_count = get_comments(array('count' => true, 'type' => 'comment', 'post_id' => get_the_ID()));
+        $foody_comment_count = get_comments(array('status' => 'approve', 'count' => true, 'type' => 'comment', 'post_id' => get_the_ID()));
 
         $title = sprintf(
         /* translators: 1: comment count number, 2: title. */
