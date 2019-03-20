@@ -7,7 +7,7 @@
  */
 
 add_action('wp_ajax_ajaxcomments', 'foody_submit_ajax_comment');
-
+add_action('wp_ajax_nopriv_ajaxcomments', 'foody_submit_ajax_comment');
 function foody_submit_ajax_comment()
 {
     /*

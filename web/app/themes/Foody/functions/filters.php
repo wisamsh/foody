@@ -32,9 +32,11 @@ add_filter('the_content', 'foody_content_filter');
  */
 function foody_comment_form_fields($fields)
 {
-    $fields['email'] = '';  //remove default email input
+    if (is_user_logged_in()) {
+	    $fields['email']  = '';  //remove default email input
+	    $fields['author'] = '';//remove default author input
+    }
     $fields['url'] = '';  //remove default url input
-    $fields['author'] = '';//remove default author input
     return $fields;
 }
 
