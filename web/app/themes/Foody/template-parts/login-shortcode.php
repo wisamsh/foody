@@ -105,7 +105,7 @@ echo do_shortcode('[wordpress_social_login]');
                 </div>
 
                 <div class="form-group col-6">
-                    <a class="forgot-password" href="">
+                    <a class="forgot-password" href="<?php echo wp_lostpassword_url() ?>">
                         <?php echo __('שכחת סיסמא?', 'foody') ?>
                     </a>
                 </div>

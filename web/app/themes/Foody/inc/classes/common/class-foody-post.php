@@ -287,7 +287,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_sidebar_content($args = array())
     {
-        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים', $args = array());
+        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים', $args = array('hide_playlists'=>true));
         dynamic_sidebar('foody-social');
     }
 
@@ -386,9 +386,13 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     {
         $posts = [];
         $related = get_field($selector, $this->id);
-        if (!empty($related)) {
+        if (!empty($related) && is_array($related)) {
             $posts = $related;
         }
+
+        $posts = array_filter($posts,function ($post){
+           return $post instanceof WP_Post && $post->ping_status === 'publish';
+        });
 
         $items_to_fetch = self::$MAX__RELATED_ITEMS - count($posts);
 
