@@ -8,7 +8,9 @@
 /** @var Foody_Article $article */
 /** @noinspection PhpUndefinedVariableInspection */
 $article = $template_args['post'];
-
+//$args = foody_get_array_default($template_args, 'args', []);
+//$title_el = foody_get_array_default($args, 'title_el', 'h2');
+//$image_size = isset($args['image_size']) ? $args['image_size'] : 'list-item';
 ?>
 
 <div class="article-item feed-item">
