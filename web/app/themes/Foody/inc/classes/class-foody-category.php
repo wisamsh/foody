@@ -160,7 +160,7 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
             'header' => [
                 'title' => $this->title
             ],
-            'title_el' => $this->has_sub_categories() ? 'h3' : 'h1'
+            'title_el' => $this->has_sub_categories() ? 'h2' : 'h1'
         ];
     }
 }
