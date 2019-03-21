@@ -401,6 +401,7 @@ class Foody_QueryBuilder
         if (empty($tags)) {
             return $this;
         }
+
         $parsed = $this->parse_args($tags);
 
         if (!empty($parsed['exclude'])) {
@@ -670,6 +671,17 @@ class Foody_QueryBuilder
 
             $args['category__and'] = array_unique($args['category__and']);
             unset($args['cat']);
+        }
+
+        if (isset($args['tag_id'])) {
+            if (empty($this->tag__and)) {
+                $this->tag__and = [];
+            }
+
+            $this->tag__and[] = $args['tag_id'];
+            unset($args['tag_id']);
+
+            $args['tag__and'] = $this->tag__and;
         }
 
         return $args;
