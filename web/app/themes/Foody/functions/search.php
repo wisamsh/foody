@@ -152,7 +152,7 @@ function get_filters_id()
         $filters_post_id = $term->taxonomy . '_' . $term->term_id;
     } elseif (is_author()) {
         $filters_post_id = "user_$id";
-    } elseif (is_single('foody_channel')) {
+    } elseif (is_single()) {
         $filters_post_id = $id;
     } else {
         $filters_post_id = SidebarFilter::FILTER_OPTIONS_ID;

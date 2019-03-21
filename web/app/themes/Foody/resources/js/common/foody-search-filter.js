@@ -210,6 +210,14 @@ module.exports = (function () {
 
         let urlParams = new URLSearchParams();
 
+        if(location.search){
+
+
+            let searchUrlParams = new URLSearchParams(location.search);
+
+            urlParams.set('s',searchUrlParams.get('s'));
+        }
+
         // noinspection JSUnresolvedVariable
         let queryArg = foodyGlobals.filterQueryArg;
 
@@ -230,6 +238,8 @@ module.exports = (function () {
         } else {
             urlParams.delete(queryArg);
         }
+
+
 
         this.locationUtils.updateHistory(null, urlParams.toString())
 
