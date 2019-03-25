@@ -51,7 +51,7 @@ function get_page_type()
 function foody_js_globals_main($vars)
 {
 
-    $vars['queryPage'] = Foody_Query::$page;
+    $vars['queryPage'] = apply_filters('foody_page_query_var',Foody_Query::$page);
     $vars['objectID'] = get_queried_object_id();
     $vars['title'] = get_the_title();
     $vars['type'] = get_page_type();
@@ -253,3 +253,18 @@ function foody_style_placeholder()
 
 
 add_action('wp_head', 'foody_style_placeholder');
+
+
+function add_bg_class($classes){
+
+    $bg_image = get_field('background_image',get_queried_object_id());
+
+    $has_background = !empty($bg_image);
+
+    $bg_class = $has_background ? 'has-background' : '';
+
+    $classes[]= $bg_class;
+
+    return $classes;
+}
+add_filter('body_class','add_bg_class');

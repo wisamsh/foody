@@ -83,7 +83,7 @@ $title_el = foody_get_array_default($template_args, 'title_el', 'h3');
     <?php if (!empty($posts) && $grid->is_displayable($posts)): ?>
         <?php $grid->loop($posts, $cols, true, null, [], $responsive, $item_args) ?>
     <?php else: ?>
-        <?php foody_get_template_part(get_template_directory() .'/template-parts/no-results.php') ?>
+        <?php foody_get_template_part(get_template_directory() . '/template-parts/no-results.php') ?>
     <?php endif; ?>
 </section>
 

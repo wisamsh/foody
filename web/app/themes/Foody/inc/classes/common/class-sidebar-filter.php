@@ -165,6 +165,22 @@ class SidebarFilter
         return $content;
     }
 
+
+    public static function parse_search_args_array($lists)
+    {
+
+        $lists = array_map('SidebarFilter::parse_search_args', $lists);
+        $types = [];
+
+        foreach ($lists as $list) {
+            foreach ($list as $item) {
+                $types[] = $item;
+            }
+        }
+
+        return $types;
+    }
+
     /**
      * @param array $list
      * @param SidebarFilter $_this

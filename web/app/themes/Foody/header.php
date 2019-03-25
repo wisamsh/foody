@@ -27,6 +27,20 @@ $user = new Foody_User();
 </head>
 
 <body <?php body_class(); ?> dir="rtl">
+<?php //do_action('foody_after_body') ?>
+
+<?php
+
+$background_image = get_field('background_image', get_queried_object_id());
+
+if (!empty($background_image)) {
+    ?>
+    <img class="body-background" src="<?php echo $background_image['url'] ?>"
+         alt="<?php echo $background_image['alt'] ?>">
+    <?php
+}
+?>
+
 <div id="fb-root"></div>
 <?php Foody_Header::google_tag_manager_iframe(); ?>
 <div id="page" class="site">

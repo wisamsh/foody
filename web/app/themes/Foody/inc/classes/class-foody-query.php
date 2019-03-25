@@ -48,6 +48,8 @@ class Foody_Query
         ];
         if (is_front_page()) {
             self::$page = 'page';
+        } else {
+            self::$page = apply_filters('foody_page_query_var', self::$page);
         }
     }
 
@@ -62,20 +64,11 @@ class Foody_Query
 
     private function parse_query_args($context, $context_args)
     {
-//        $query_args = array_keys(self::$query_params);
         $foody_search = new Foody_Search($context, $context_args);
-
         $args = [
             'types' => $this->_parse_query_values(),
             'after_foody_query' => true
         ];
-
-//        foreach ($query_args as $query_arg) {
-//            $value = $this->foody_get_query_arg($query_arg);
-//            if (!empty($value)) {
-//                $args['types'] = array_merge($this->parse_query_values($query_arg), $args['types']);
-//            }
-//        }
 
         return $foody_search->build_query($args, [], '', true);
     }
@@ -99,7 +92,7 @@ class Foody_Query
         $filter_value = $this->array_query_string_to_array(self::$filter_query_arg);
         if (!empty($filter_value)) {
             // TODO change post id to be relevant to current page
-            $filter_options = get_field('filters_list', 'foody_search_options');
+            $filter_options = get_field('filters_list', get_filters_id());
             $all_options = [];
 
             // iterate all filter options set in
@@ -232,7 +225,7 @@ class Foody_Query
     {
         $args = self::get_args();
 
-        $featured = get_field('featured_items',get_option('page_on_front'));
+        $featured = get_field('featured_items', get_option('page_on_front'));
         if (!empty($featured)) {
             $args['post__not_in'] = array_map(function ($row) {
                 return $row['post']->ID;
@@ -266,6 +259,42 @@ class Foody_Query
         return $args;
     }
 
+    public function feed_channel()
+    {
+        return self::get_args();
+    }
+
+    public function foody_filter($filter_post_id)
+    {
+
+        $filter = get_field('filters_list', $filter_post_id);
+
+        $types = SidebarFilter::parse_search_args_array($filter);
+
+        $args = [
+            'types' => $types,
+            'sort' => 'popular_desc',
+            'after_foody_query' => true
+        ];
+
+        $foody_search = new Foody_Search('foody_filter');
+
+        $posts = $foody_search->query($args,['posts_per_page'=>-1])['posts'];
+
+        if (is_array($posts)) {
+            $posts = array_filter($posts, function ($post) {
+                return $post instanceof WP_Post;
+            });
+
+            $posts = array_map(function ($post) {
+                return $post->ID;
+            }, $posts);
+        }
+
+        return self::get_args([
+            'post__in' => $posts
+        ]);
+    }
 
     public function search()
     {
@@ -446,10 +475,10 @@ class Foody_Query
 
 
             if (!$page) {
-                if (isset($_REQUEST['page'])) {
-                    $page = $_REQUEST['page'];
+                if (isset($_REQUEST[self::$page])) {
+                    $page = $_REQUEST[self::$page];
                 } else {
-                    $page = $this->get_param('page');
+                    $page = $this->get_param(self::$page);
                     if (!$page) {
                         $page = 1;
                     }

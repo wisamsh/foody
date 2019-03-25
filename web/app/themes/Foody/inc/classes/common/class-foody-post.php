@@ -542,6 +542,12 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             case 'foody_playlist':
                 $foody_post = new Foody_Playlist($post);
                 break;
+            case 'foody_feed_channel':
+                $foody_post = new Foody_Feed_Channel($post);
+                break;
+            case 'foody_filter':
+                $foody_post = new Foody_Feed_Filter($post);
+                break;
             default:
                 $foody_post = new Foody_Article($post);
                 break;

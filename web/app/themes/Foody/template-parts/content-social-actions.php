@@ -32,6 +32,8 @@ $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rat
                 echo __('שתפו את המתכון');
             } else if (get_post_type() == 'post') {
                 echo __('שתפו את הכתבה');
+            } else if (get_post_type() == 'foody_feed_channel') {
+                echo __('שתפו את הערוץ');
             }
             ?>
         </div>

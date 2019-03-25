@@ -2,7 +2,27 @@ $social-icon-size: 21px;
 $header-height: 76px;
 $run-height: 30px;
 
+body {
+  &.has-background {
+    header {
+      .socials {
+        background-color: $color__background-screen;
+      }
+    }
+  }
+}
+
+.body-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
 header {
+
+
 
   .run {
     height: $run-height;
@@ -639,6 +659,10 @@ header {
 }
 
 @include breakpoint(mobileonly) {
+
+  .body-background {
+    display: none;
+  }
 
   #content {
     padding-top: 90px;

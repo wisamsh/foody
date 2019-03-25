@@ -123,12 +123,15 @@ function foody_filters_acf_load_value($value)
 {
 
     if (empty($value)) {
-        // no values set for filters lists,
-        // load default values from global search settings (foody_search_settings)
-        // see Sidebar_Filter for more details.
-        $global_search_settings = get_field('filters_list', 'foody_search_options', false);
-        $value = $global_search_settings;
 
+        $post_type = get_post_type();
+        if(is_category() || is_tag() || $post_type == 'foody_channel' || is_author()){
+            // no values set for filters lists,
+            // load default values from global search settings (foody_search_settings)
+            // see Sidebar_Filter for more details.
+            $global_search_settings = get_field('filters_list', 'foody_search_options', false);
+            $value = $global_search_settings;
+        }
     }
 
     return $value;
@@ -152,7 +155,7 @@ function get_filters_id()
         $filters_post_id = $term->taxonomy . '_' . $term->term_id;
     } elseif (is_author()) {
         $filters_post_id = "user_$id";
-    } elseif (is_single()) {
+    } elseif (is_single() && get_post_type() == 'foody_channel') {
         $filters_post_id = $id;
     } else {
         $filters_post_id = SidebarFilter::FILTER_OPTIONS_ID;

@@ -16,6 +16,4 @@ foody_get_template_part(
     [
         'recipe' => $recipe
     ]
-)
-
-?>
+);

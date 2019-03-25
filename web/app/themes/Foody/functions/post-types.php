@@ -59,6 +59,30 @@ function register_post_types()
                 'slug' => 'channel',
                 'with_front' => true
             )
+        ),
+        'feed_channel' => array(
+            'id' => 'feed_channel',
+            'name' => 'מתחמי פידים',
+            'singular_name' => 'מתחם פידים',
+            'taxonomies' => array(),
+            'show_ui' => true,
+            'rewrite' => array(
+                'slug' => 'areas',
+                'with_front' => true
+            )
+        ),
+        'filter' => array(
+            'id' => 'filter',
+            'name' => 'פילטרים',
+            'singular_name' => 'פילטר',
+            'taxonomies' => array(),
+            'supports' => array('title', 'revisions'),
+            'unsupported' => array('editor'),
+            'show_ui' => true,
+            'rewrite' => array(
+                'slug' => 'feed/filter',
+                'with_front' => true
+            )
         )
     );
 
@@ -99,10 +123,16 @@ function register_post_types()
             'post-formats'
         );
 
+
         foreach ($supported_features as $feature) {
             add_post_type_support(strtolower('foody_' . $type['id']), $feature);
         }
 
+        if (!empty($type['unsupported']) && is_array($type['unsupported'])) {
+            foreach ($type['unsupported'] as $f) {
+                remove_post_type_support(strtolower('foody_' . $type['id']), $f);
+            }
+        }
     }
 }
 
@@ -119,6 +149,7 @@ function foody_remove_page_template()
     $custom_content_post_types = array(
         'foody_recipe',
         'foody_playlist',
+        'foody_feed_channel',
         'post'
     );
 
@@ -333,7 +364,7 @@ function my_pre_get_posts(WP_Query $query)
         return;
 
     if (is_search() && $query->is_main_query()) {
-        $query->set('post_type', ['foody_recipe','post']);
+        $query->set('post_type', ['foody_recipe', 'post']);
     }
 
 }
@@ -365,3 +396,15 @@ function custom_post_type_js_vars($single_template)
 }
 
 add_filter('single_template', 'custom_post_type_js_vars');
+
+
+add_filter('foody_page_query_var', 'foody_set_custom_page_var');
+
+function foody_set_custom_page_var($page)
+{
+    if (get_post_type() == 'foody_filter') {
+        $page = 'foody-page';
+    }
+
+    return $page;
+}
