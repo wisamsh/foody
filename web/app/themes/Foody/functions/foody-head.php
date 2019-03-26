@@ -257,7 +257,7 @@ add_action('wp_head', 'foody_style_placeholder');
 
 function add_bg_class($classes){
 
-    $bg_image = get_field('background_image',get_queried_object_id());
+    $bg_image = foody_get_background_image();
 
     $has_background = !empty($bg_image);
 

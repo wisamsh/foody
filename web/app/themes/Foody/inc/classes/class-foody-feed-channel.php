@@ -312,6 +312,83 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic
             });
 
             $items = array_map(function ($item) {
+
+                /**
+                 * @var $title
+                 * @var $image
+                 * @var $mobile_image
+                 * @var $link
+                 * @var $title
+                 * @var $post WP_Post
+                 */
+                extract($item);
+
+
+                $foody_post = Foody_Post::create($post);
+
+                if (!empty($title)) {
+                    $foody_post->setTitle($title);
+                }
+
+                if (!empty($image)) {
+
+                    $foody_post->setImage($image['url']);
+                }
+
+
+                if (!empty($link)) {
+                    $foody_post->link = $link['url'];
+                }
+
+
+                return $foody_post;
+
+            }, $items);
+
+            $grid_args = [
+                'id' => uniqid(),
+                'more' => false,
+                'cols' => 2,
+                'posts' => $items,
+                'return' => true
+            ];
+
+            $items_content = foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
+
+            $items_content = "<section class='categories-block-content categories-listing row'>$items_content</section>";
+
+            $title = $block['title'];
+
+            $see_more_text = $block['see_more_text'];
+            $see_more_link = $block['see_more_link'];
+
+            if (empty($see_more_link)) {
+                $see_more_link = ['url' => ''];
+            }
+
+            $block_options['title'] = $title;
+            $block_options['see_more_text'] = $see_more_text;
+            $block_options['see_more_link'] = $see_more_link['url'];
+            $block_options['content'] = $items_content;
+        }
+
+        return $block_options;
+    }
+
+    private function _draw_manual_block($block)
+    {
+
+        $items = $block['items'];
+
+        $block_options = [];
+
+        if (!empty($items) && is_array($items)) {
+
+            $items = array_filter($items, function ($item) {
+                return $item['post'] instanceof WP_Post;
+            });
+
+            $items = array_map(function ($item) {
                 return Foody_Post::create($item['post']);
             }, $items);
 

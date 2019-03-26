@@ -31,7 +31,7 @@ $user = new Foody_User();
 
 <?php
 
-$background_image = get_field('background_image', get_queried_object_id());
+$background_image = foody_get_background_image();
 
 if (!empty($background_image)) {
     ?>
