@@ -375,52 +375,6 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic
         return $block_options;
     }
 
-    private function _draw_manual_block($block)
-    {
-
-        $items = $block['items'];
-
-        $block_options = [];
-
-        if (!empty($items) && is_array($items)) {
-
-            $items = array_filter($items, function ($item) {
-                return $item['post'] instanceof WP_Post;
-            });
-
-            $items = array_map(function ($item) {
-                return Foody_Post::create($item['post']);
-            }, $items);
-
-            $grid_args = [
-                'id' => uniqid(),
-                'posts' => $items,
-                'more' => false,
-                'cols' => 2,
-                'return' => true
-            ];
-
-            $content = foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
-
-            $title = $block['title'];
-
-            $see_more_text = $block['see_more_text'];
-            $see_more_link = $block['see_more_link'];
-
-            if (empty($see_more_link)) {
-                $see_more_link = ['url' => ''];
-            }
-
-            $block_options['title'] = $title;
-            $block_options['see_more_text'] = $see_more_text;
-            $block_options['see_more_link'] = $see_more_link['url'];
-            $block_options['content'] = $content;
-        }
-
-        return $block_options;
-    }
-
-
     /**
      * Outputs a generic block html structure.
      * @param $block_options array
@@ -443,12 +397,14 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic
                     <h2 class="block-title title col">
                         <?php echo $title ?>
                     </h2>
-                    <h3 class="block-see-more title col">
-                        <a href=" <?php echo $see_more_link ?>">
-                            <?php echo $see_more_text ?>
-                        </a>
-                        <i class="icon-arrowleft"></i>
-                    </h3>
+                    <?php if (!empty($see_more_link) || !empty($see_more_text)): ?>
+                        <h3 class="block-see-more title col">
+                            <a href=" <?php echo $see_more_link ?>">
+                                <?php echo $see_more_text ?>
+                            </a>
+                            <i class="icon-arrowleft"></i>
+                        </h3>
+                    <?php endif; ?>
                 </section>
             <?php endif; ?>
             <section class="block-content">
