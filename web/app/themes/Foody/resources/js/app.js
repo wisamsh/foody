@@ -78,6 +78,9 @@ require('./contact-us');
 require('./tag');
 require('./items');
 
+// Tag Manager
+const TagManager = require('./common/tag-manager');
+window.tagManager = new TagManager();
 
 jQuery(document).ready(function ($) {
 
