@@ -79,6 +79,9 @@ require('./tag');
 require('./items');
 require('./feed-filter');
 
+// Tag Manager
+const TagManager = require('./common/tag-manager');
+window.tagManager = new TagManager();
 
 jQuery(document).ready(function ($) {
 
