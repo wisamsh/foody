@@ -653,8 +653,8 @@ class Foody_Recipe extends Foody_Post
                 foreach ($group['ingredients'] as $ingredient) {
 
                     /** @var Foody_Ingredient $ingredient */
-                    $value = $ingredient->get_nutrient_for_by_unit_and_amount($nutrients_name);
-                    $item['value'] = $item['value'] + $value;
+	                $value = $ingredient->get_nutrient_data_by_unit_and_amount($nutrients_name);
+	                $item['value'] = $item['value'] + $value;
                 }
 
             }
