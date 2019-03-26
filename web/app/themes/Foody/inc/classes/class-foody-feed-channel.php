@@ -397,7 +397,7 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic
                     <h2 class="block-title title col">
                         <?php echo $title ?>
                     </h2>
-                    <?php if (!empty($see_more_link) || !empty($see_more_text)): ?>
+                    <?php if (!empty($see_more_link) && !empty($see_more_text)): ?>
                         <h3 class="block-see-more title col">
                             <a href=" <?php echo $see_more_link ?>">
                                 <?php echo $see_more_text ?>
