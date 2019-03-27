@@ -82,7 +82,7 @@ $recipe = $template_args['recipe'];
 <?php $recipe->the_notes() ?>
 
 
-<?php if ($recipe->has_nutrients() && false): ?>
+<?php if ($recipe->has_nutrients()): ?>
 
     <section class="recipe-nutrition box no-print">
 
