@@ -161,6 +161,11 @@ function foody_scripts()
         $asset = foody_get_versioned_asset('main');
         wp_enqueue_script('foody-script', $asset, false, false, true);
 //        }
+
+        if(is_page_template('e-book.php')){
+            $ebook = foody_get_versioned_asset('ebook');
+            wp_enqueue_script('foody-script', $ebook, false, false, true);
+        }
     }
 
     if (is_page(get_page_by_title('הרשמה'))) {
@@ -256,3 +261,24 @@ add_action( 'wp_print_styles', 'wps_deregister_styles', 100 );
 function wps_deregister_styles() {
     wp_deregister_style( 'contact-form-7' );
 }
+
+// The callback function for the action hook bellow
+function any_script_in_footer()
+{
+    // Call the list with all the registered scripts
+    global $wp_scripts;
+
+    if ( isset ( $wp_scripts->registered ) && ! empty ( $wp_scripts->registered ) && is_array( $wp_scripts->registered ) ) {
+        foreach ( $wp_scripts->registered as $idx => $script ) {
+            if ( isset( $wp_scripts->registered[ $idx ]->extra ) && is_array( $wp_scripts->registered[ $idx ]->extra ) ) {
+
+                // Set any of the scripts to belong in the footer group
+                $wp_scripts->registered[ $idx ]->extra[ 'group' ] = 1;
+            }
+        }
+    }
+}
+
+// Call the callback function with the `wp_print_scripts` hook at the very end
+// of the callbacks cue
+add_action('wp_print_scripts', 'any_script_in_footer', 1000);

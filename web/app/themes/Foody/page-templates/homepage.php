@@ -10,7 +10,6 @@
 
 get_header();
 
-
 $homepage = new Foody_HomePage();
 ?>
 

@@ -70,8 +70,17 @@ class Foody_Registration
 
         $user_id = wp_insert_user($user_data_db);
         if (!is_wp_error($user_id)) {
+
+            if (!empty($user_data['marketing'])) {
+                update_user_meta($user_id, 'marketing', true);
+            }
+
             /** @noinspection PhpUndefinedVariableInspection */
             update_user_meta($user_id, 'phone_number', $phone_number);
+            if (!empty($user_data['e_book']) && !empty($user_data['marketing'])) {
+                Foody_Mailer::send('e book', 'e-book', $email);
+                update_user_meta($user_id, 'e_book', true);
+            }
         }
 //        wp_new_user_notification($user_id, $password);
 
@@ -119,10 +128,11 @@ class Foody_Registration
                         $phone_number = sanitize_text_field($_POST['phone_number']);
                         $terms = sanitize_text_field($_POST['terms']);
                         $marketing = sanitize_text_field($_POST['marketing']);
+                        $e_book = sanitize_text_field($_POST['e-book']);
                     }
 
 
-                    $vars = ['email', 'first_name', 'last_name', 'password', 'phone_number', 'terms', 'marketing'];
+                    $vars = ['email', 'first_name', 'last_name', 'password', 'phone_number', 'terms', 'marketing', 'e_book'];
 
                     $user_data = compact('user_data', $vars);
 

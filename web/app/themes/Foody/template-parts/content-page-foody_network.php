@@ -128,9 +128,9 @@
 
         <section class="form">
             <div class="container">
-                <h2 class="form_title">
+                <h3 class="form_title">
                     <?php the_field('fn_form_title'); ?>
-                </h2>
+                </h3>
                 <div class="form_wrapper">
                     <?php
                     $form_object = get_field('fn_form');
