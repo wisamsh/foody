@@ -847,12 +847,13 @@ extract($template_args);
                                                 <td class="mcnImageContent" valign="top"
                                                     style="padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0; text-align:center;">
 
-
-                                                    <img align="center" alt=""
-                                                         src="<?php echo $GLOBALS['images_dir'] . 'e-book-email-desktop.png' ?>"
-                                                         width="564"
-                                                         style="max-width:800px; padding-bottom: 0; display: inline !important; vertical-align: bottom;"
-                                                         class="mcnImage">
+                                                    <a href="https://s3-eu-west-1.amazonaws.com/foody-media/Ebook+Foody+Final.pdf" download="download">
+                                                        <img align="center" alt="<?php echo __('ספר מתכונים לפסח')?>"
+                                                             src="<?php echo $GLOBALS['images_dir'] . 'e-book-email-desktop.png' ?>"
+                                                             width="564"
+                                                             style="max-width:800px; padding-bottom: 0; display: inline !important; vertical-align: bottom;"
+                                                             class="mcnImage">
+                                                    </a>
                                                 </td>
                                             </tr>
                                             </tbody>

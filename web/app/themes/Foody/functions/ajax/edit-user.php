@@ -127,7 +127,9 @@ function foody_edit_user_approvals()
     if (!empty($errors->errors)) {
         wp_send_json_error($errors);
     } else {
-        wp_send_json_success(get_user_by('ID', get_current_user_id()));
+        $user = get_user_by('ID', get_current_user_id());
+        Foody_Mailer::send('e book', 'e-book', $user->user_email);
+        wp_send_json_success();
     }
 
 

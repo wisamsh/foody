@@ -64,8 +64,7 @@ jQuery(document).ready(($) => {
                         e_book:$('#approvals #check-e-book').val(),
                     }
                 }, function (err, data) {
-                    console.log('err', err);
-                    console.log('data', data);
+                    $approvalsPopup.modal('hide');
                 });
             }
         });
