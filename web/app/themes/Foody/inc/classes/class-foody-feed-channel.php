@@ -315,6 +315,7 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic
 
                 /**
                  * @var $title
+                 * @var $secondary_text
                  * @var $image
                  * @var $mobile_image
                  * @var $link
@@ -338,6 +339,10 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic
 
                 if (!empty($link)) {
                     $foody_post->link = $link['url'];
+                }
+
+                if (!empty($secondary_text)) {
+                    $foody_post->setDescription($secondary_text);
                 }
 
 
