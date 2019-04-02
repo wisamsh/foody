@@ -163,5 +163,11 @@ if (!empty($background_image)) {
     </header><!-- #masthead -->
 
     <div id="content" class="site-content">
-        <?php Foody_Social::whatsapp(['d-none', 'd-lg-block', 'floating']) ?>
+        <?php
+        if (wp_is_mobile()) {
+            Foody_Social::whatsapp(['d-lg-block', 'floating', 'whatsapp-mobile']);
+        } else {
+            Foody_Social::whatsapp(['d-none', 'd-lg-block', 'floating']);
+        }
+        ?>
 

@@ -1014,11 +1014,13 @@ header {
 
           &.btn-search {
             //margin-right: auto;
+            margin-right: auto;
           }
 
         }
 
         #whatsapp {
+          display: none !important;
           border: none;
           margin-right: auto;
           margin-left: 20px;
