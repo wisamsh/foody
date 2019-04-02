@@ -67,12 +67,12 @@ $homepage = new Foody_HomePage();
     </div>
 
 <?php
-    $is_social = Foody_User::is_current_user_social();
-    $seen_approvals = Foody_User::has_user_seen_approvals();
+$is_social = Foody_User::is_current_user_social();
+$seen_approvals = Foody_User::has_user_seen_approvals();
 
-    if($is_social && !$seen_approvals){
-        $homepage->the_approvals_popup();
-    }
+if ($is_social && !$seen_approvals) {
+    $homepage->the_approvals_popup();
+}
 ?>
 <?php
 get_footer();

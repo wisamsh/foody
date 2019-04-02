@@ -10,14 +10,18 @@ $sidebar-top-offset: 60px;
     padding-top: 0;
     padding-bottom: 0;
   }
+
+  .modal-footer{
+    display: none;
+  }
+
   form {
     .md-checkbox label:not(.error) {
       display: table-cell;
     }
 
     input[type='submit'] {
-      float: right;
-      margin-top: 10px;
+      margin: 10px auto 0;
       border-radius: 6px;
       background-image: linear-gradient(71deg, #ec3849, #f35644);
       font-family: $font__assistant;

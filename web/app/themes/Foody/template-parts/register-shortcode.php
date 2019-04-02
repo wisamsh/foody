@@ -24,5 +24,3 @@ if (!is_null($action) && is_user_logged_in()) {
 }
 
 foody_get_template_part(get_template_directory() . "/template-parts/$template", $args);
-
-
