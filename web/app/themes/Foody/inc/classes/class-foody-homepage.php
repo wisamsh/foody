@@ -151,7 +151,14 @@ class Foody_HomePage
                 // WP_Post
                 $foody_post = Foody_Post::create($row['post']);
 
-                $foody_post->setImage($row['image']['url']);
+                if (!empty($row['image']['url'])) {
+                    $foody_post->setImage($row['image']['url']);
+                }
+
+                if (!empty($row['secondary_text'])) {
+                    $foody_post->setDescription($row['secondary_text']);
+                }
+
 
                 return $foody_post;
             }, $featured);
@@ -196,10 +203,10 @@ class Foody_HomePage
         $registration_page = get_page_by_title('הרשמה');
         $show = get_field('show', $registration_page);
 
-        if(!$approved_marketing || (!$approved_e_book && $show)){
+        if (!$approved_marketing || (!$approved_e_book && $show)) {
             $modal_args = [
                 'id' => 'approvals-modal',
-                'title' =>'',
+                'title' => '',
                 'hide_buttons' => true,
                 'body' => foody_get_template_part(get_template_directory() . '/template-parts/content_approvals_popup.php', ['return' => true])
             ];
