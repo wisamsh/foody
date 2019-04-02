@@ -9,7 +9,6 @@
 
 
 get_header();
-Foody_Mailer::send('sub','e-book','zari@moveo.co.il');
 $homepage = new Foody_HomePage();
 ?>
 
