@@ -31,7 +31,7 @@ jQuery(document).ready(($) => {
     });
 
     let numOfDishes = jQuery('#number-of-dishes');
-    let defaultNumOfDishes = numOfDishes[0].defaultValue;
+    let defaultNumOfDishes = numOfDishes && numOfDishes.length && numOfDishes[0].defaultValue;
     numOfDishes.on("change", null, function () {
         eventCallback(event, 'מתכון', 'שינוי מספר מנות', defaultNumOfDishes, 'מספר מנות', this.value);
     });
@@ -42,7 +42,6 @@ jQuery(document).ready(($) => {
         let recipeName = this.innerText.trim();
         let position = jQuery(this).parent().parent().parent().index() + 1;
         eventCallback(event, 'מתכון', 'בחירת מתכון נוסף', recipeName, 'מיקום', position);
-
     });
 
     relatedRecipes.delegate('a .image-container', 'click', function () {
