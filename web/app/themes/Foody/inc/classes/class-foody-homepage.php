@@ -203,10 +203,10 @@ class Foody_HomePage
         $registration_page = get_page_by_title('הרשמה');
         $show = get_field('show', $registration_page);
 
-        $referer = isset($_REQUEST['referer']) ? $_REQUEST['referer'] : '';
+        $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
         $registration = get_permalink(get_page_by_title('הרשמה'));
 
-        if ((!$approved_marketing || (!$approved_e_book && $show) ) && ($referer == $registration)) {
+        if ((!$approved_marketing || (!$approved_e_book && $show)) && ($referer == $registration)) {
             $modal_args = [
                 'id' => 'approvals-modal',
                 'title' => '',
