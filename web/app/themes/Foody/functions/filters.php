@@ -82,6 +82,8 @@ add_filter('show_admin_bar', '__return_false');
  */
 function foody_js_globals()
 {
+    global $wp_session;
+
     if (!is_admin()) {
         // Hookable
         $vars = apply_filters('foody_js_globals', []);
@@ -89,6 +91,12 @@ function foody_js_globals()
         $vars['ajax'] = admin_url('admin-ajax.php');
         $vars['loggedIn'] = is_user_logged_in() ? 'true' : 'false';
         $vars['imagesUri'] = $GLOBALS['images_dir'];
+
+        //TODO: Ask Zari
+        $vars['userRecipesCount'] = 0;
+        if (is_user_logged_in()) {
+            $vars['userRecipesCount'] = empty($wp_session['favorites']) ? 0 : count($wp_session['favorites']);
+        }
 
         $js = wp_json_encode($vars);
 
