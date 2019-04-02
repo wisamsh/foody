@@ -1,12 +1,41 @@
 @import "../../../mixins/mixins-master";
 @import "../../../variables-site/variables-site";
+
 $content-width: 75%;
 $feed-header-height: 60px;
 $sidebar-top-offset: 60px;
+
+#approvals-modal {
+  .modal-body {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  form {
+    .md-checkbox label:not(.error) {
+      display: table-cell;
+    }
+
+    input[type='submit'] {
+      float: right;
+      margin-top: 10px;
+      border-radius: 6px;
+      background-image: linear-gradient(71deg, #ec3849, #f35644);
+      font-family: $font__assistant;
+      font-size: 23px;
+      font-weight: bold;
+      line-height: normal;
+      letter-spacing: -0.2px;
+      text-align: center;
+      color: #ffffff;
+      display: block;
+      padding: 4px 30px;
+    }
+  }
+}
+
 .homepage {
 
-
-  .seo{
+  .seo {
     max-width: $content-width;
   }
   .cover-image {
@@ -17,7 +46,7 @@ $sidebar-top-offset: 60px;
     }
   }
 
-  #seo{
+  #seo {
     left: 0;
     padding-right: 0;
     max-width: 100%;
@@ -232,7 +261,7 @@ $sidebar-top-offset: 60px;
     }
   }
 
-  h1,h2,h3 {
+  h1, h2, h3 {
     font-size: 22px;
   }
 }
@@ -240,10 +269,10 @@ $sidebar-top-offset: 60px;
 @include breakpoint(mobileonly) {
   .homepage {
 
-    .seo{
+    .seo {
       max-width: 100%;
     }
-    #seo{
+    #seo {
       position: initial;
     }
 

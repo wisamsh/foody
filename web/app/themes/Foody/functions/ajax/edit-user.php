@@ -98,3 +98,41 @@ function foody_edit_profile_picture()
 add_action('wp_ajax_foody_edit_profile_picture', 'foody_edit_profile_picture');
 
 
+function foody_edit_user_approvals()
+{
+
+    $errors = new WP_Error();
+
+
+    if (!is_user_logged_in()) {
+        $errors->add(401, 'unauthorized');
+    } else {
+
+        $markting = isset($_POST['marketing']) ? true : false;
+        $e_book = isset($_POST['e_book']) ? true : false;
+
+
+        $ID = get_current_user_id();
+
+        $resultMarketing = update_user_meta($ID, 'marketing', $markting);
+        $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
+
+
+        if ($resultMarketing === false || $resultMarketingEbook === false) {
+            $errors->add(500, 'error updating user');
+        }
+
+    }
+
+    if (!empty($errors->errors)) {
+        wp_send_json_error($errors);
+    } else {
+        wp_send_json_success(get_user_by('ID', get_current_user_id()));
+    }
+
+
+}
+
+add_action('wp_ajax_foody_edit_user_approvals', 'foody_edit_user_approvals');
+
+

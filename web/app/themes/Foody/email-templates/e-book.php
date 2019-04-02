@@ -849,7 +849,7 @@ extract($template_args);
 
 
                                                     <img align="center" alt=""
-                                                         src="https://gallery.mailchimp.com/1706942e9433bfa07142851a7/images/521e58a3-4eec-4000-9e82-d8b9542875a3.jpeg"
+                                                         src="<?php echo $GLOBALS['images_dir'] . 'e-book-email-desktop.png' ?>"
                                                          width="564"
                                                          style="max-width:800px; padding-bottom: 0; display: inline !important; vertical-align: bottom;"
                                                          class="mcnImage">

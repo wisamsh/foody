@@ -134,12 +134,13 @@ add_action('wp', function () {
     }
 });
 
-add_action( 'wp_login_failed', 'foody_login_fail' );  // hook failed login
-function foody_login_fail( $username ) {
+add_action('wp_login_failed', 'foody_login_fail');  // hook failed login
+function foody_login_fail($username)
+{
     $referrer = $_SERVER['HTTP_REFERER'];  // where did the post submission come from?
     // if there's a valid referrer, and it's not the default log-in screen
-    if ( !empty($referrer) && !strstr($referrer,'wp-login') && !strstr($referrer,'wp-admin') ) {
-        wp_redirect(home_url('התחברות') . "/?login=failed&l=$username" );  // let's append some information (login=failed) to the URL for the theme to use
+    if (!empty($referrer) && !strstr($referrer, 'wp-login') && !strstr($referrer, 'wp-admin')) {
+        wp_redirect(home_url('התחברות') . "/?login=failed&l=$username");  // let's append some information (login=failed) to the URL for the theme to use
         exit;
     }
 }
@@ -149,3 +150,15 @@ function foody_login_fail( $username ) {
 //    return $request;
 //}
 //add_filter('login_redirect', 'wpse125952_redirect_to_request', 10, 3);
+
+add_action('wp_login', 'track_user_logins', 10, 2);
+function track_user_logins($user_login, $user)
+{
+    if ($login_amount = get_user_meta($user->id, 'login_amount', true)) {
+        // They've Logged In Before, increment existing total by 1
+        update_user_meta($user->id, 'login_amount', ++$login_amount);
+    } else {
+        // First Login, set it to 1
+        update_user_meta($user->id, 'login_amount', 1);
+    }
+}

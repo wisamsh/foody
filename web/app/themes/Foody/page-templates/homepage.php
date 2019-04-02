@@ -9,7 +9,7 @@
 
 
 get_header();
-
+Foody_Mailer::send('sub','e-book','zari@moveo.co.il');
 $homepage = new Foody_HomePage();
 ?>
 
@@ -59,12 +59,21 @@ $homepage = new Foody_HomePage();
 
         <?php
 
-            foody_get_template_part(get_template_directory() .'/template-parts/common/mobile-filter.php',[
-                    'sidebar'=>array($homepage,'sidebar')
-            ]);
+        foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
+            'sidebar' => array($homepage, 'sidebar')
+        ]);
 
         ?>
 
     </div>
+
+<?php
+    $is_social = Foody_User::is_current_user_social();
+    $seen_approvals = Foody_User::has_user_seen_approvals();
+
+    if($is_social && !$seen_approvals){
+        $homepage->the_approvals_popup();
+    }
+?>
 <?php
 get_footer();
