@@ -7,6 +7,7 @@ jQuery(document).ready(($) => {
     // mobile filter handlers
     if (foodyGlobals.isMobile) {
         let $mobileFilterBtn = $('.filter-mobile');
+        let $mobileWhatsappIcon = $('#whatsapp.whatsapp-mobile');
         if (foodyGlobals.hideFilter) {
             $mobileFilterBtn.remove();
         } else {
@@ -78,6 +79,8 @@ jQuery(document).ready(($) => {
                 }
                 $mobileFilterBtn.css("opacity", op);
                 $mobileFilterBtn.css("pointer-events", pointerEvents);
+                $mobileWhatsappIcon.css("opacity", op);
+                $mobileWhatsappIcon.css("pointer-events", pointerEvents);
             });
 
 
