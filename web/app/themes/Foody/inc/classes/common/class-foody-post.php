@@ -17,7 +17,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     private $description;
 
-    private $description_mobile;
+    public $description_mobile;
 
     private $title;
 

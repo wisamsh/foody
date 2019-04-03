@@ -10,6 +10,8 @@
 if (isset($template_args)) {
     if (!isset($template_args['image'])) {
         $image = $template_args;
+    }else{
+        $image = $template_args['image'];
     }
 }
 
