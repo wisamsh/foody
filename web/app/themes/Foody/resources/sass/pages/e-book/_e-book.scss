@@ -41,20 +41,25 @@
       }
     }
 
-    .foody-content{
+    .foody-content {
       padding-top: 20px;
     }
   }
 
 }
 
-@include breakpoint(mobileonly){
+@include breakpoint(mobileonly) {
   .page-template-e-book {
 
     #primary {
 
-      .cta {
+      picture {
+        img {
+          width: 100%;
+        }
+      }
 
+      .cta {
 
         &.cta-float {
           margin-top: 20px;
@@ -68,7 +73,7 @@
         font-size: 28px;
       }
 
-      h2{
+      h2 {
         font-size: 22px;
       }
 
@@ -81,7 +86,7 @@
         }
       }
 
-      .foody-content{
+      .foody-content {
         padding: 0 15px;
       }
     }
