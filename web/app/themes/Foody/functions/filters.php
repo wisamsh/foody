@@ -89,7 +89,7 @@ function foody_js_globals()
         $vars = apply_filters('foody_js_globals', []);
         $vars['isMobile'] = wp_is_mobile();
         $vars['ajax'] = admin_url('admin-ajax.php');
-        $vars['loggedIn'] = is_user_logged_in() ? 'true' : 'false';
+        $vars['loggedIn'] = is_user_logged_in();
         $vars['imagesUri'] = $GLOBALS['images_dir'];
         $vars['messages'] = foody_js_messages();
 
