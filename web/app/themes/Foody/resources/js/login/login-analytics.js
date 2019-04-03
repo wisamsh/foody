@@ -9,16 +9,18 @@ jQuery(document).ready(($) => {
         let userRecipeAmount = foodyGlobals['userRecipesCount'];
 
         /**
-         * Un-Logged User
+         * Un-Logged User social logins
          */
         let socialLinks = jQuery('.foody-content .wp-social-login-widget');
         let googleButton = socialLinks.siblings('.login').find('.btn-google');
         let facebookButton = socialLinks.siblings('.login').find('.btn-facebook');
 
+        // Google Login
         googleButton.click((event) => {
             eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'גוגל');
         });
 
+        // Facebook Login
         facebookButton.click((event) => {
             eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'פייסבוק');
         });
@@ -32,15 +34,26 @@ jQuery(document).ready(($) => {
             });
         }
 
+        /**
+         * Login submit
+         */
         if (jQuery('#login-form').length) {
             jQuery('#login-form').on('submit', null, (event) => {
                 eventCallback(event, 'הזדהות', 'לחיצה להזדהות', 'אתר');
             });
         }
 
+        /**
+         * Login Failure
+         */
+        if (jQuery('#login-form .foody-alert.login-failed-alert:visible').length) {
+            if (jQuery('#login-form .foody-alert.login-failed-alert:visible').css('opacity') != 0) {
+                let errorMessage = jQuery('#login-form .foody-alert.login-failed-alert:visible span').text().trim();
+                eventCallback(event, 'הזדהות', 'הזדהות נכשלה', 'אתר', 'הודעה', errorMessage);
+            }
+        }
+
         //TODO:: Put this to work after login
-        // eventCallback(event, 'הזדהות', 'הזדהות נכשלה', 'אתר');
-        // let loginErrorMessage = jQuery('#login-form').find('span').text();
         // eventCallback(event, 'הזדהות', 'הזדהות הצליחה', 'אתר', 'הודעה', loginErrorMessage);
 
 
