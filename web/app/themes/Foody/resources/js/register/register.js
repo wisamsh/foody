@@ -79,7 +79,7 @@ jQuery(document).ready(($) => {
             'password-confirmation': 'סיסמאות אינן תואמות',
             phone_number: 'מספר טלפון נייד אינו תקין',
             terms: 'אנא אשר/י את תנאי השימוש',
-            marketing: 'נשמח לשלוח לך את ספר המתכונים, אבל קודם יש לאשר קבלת דואר מאתר Foody'
+            marketing: foodyGlobals.messages.registration.eBookError
         },
         errorPlacement: function (error, element) {
             if (element.attr("type") == "checkbox") {

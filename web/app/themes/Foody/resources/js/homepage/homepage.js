@@ -45,7 +45,7 @@ jQuery(document).ready(($) => {
                 }
             },
             messages: {
-                marketing: 'נשמח לשלוח לך את ספר המתכונים, אבל קודם יש לאשר קבלת דואר מאתר Foody'
+                marketing: foodyGlobals.messages.registration.eBookError
             },
             errorPlacement: function (error, element) {
                 if (element.attr("type") == "checkbox") {

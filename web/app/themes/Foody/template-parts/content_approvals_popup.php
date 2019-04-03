@@ -8,7 +8,7 @@
 
 $approved_marketing = get_user_meta(get_current_user_id(), 'marketing', true);
 $registration_page = get_page_by_title('הרשמה');
-$show = get_field('show', $registration_page)
+$show = get_field('show', $registration_page);
 
 ?>
 <form id="approvals" method="post">
@@ -41,5 +41,3 @@ $show = get_field('show', $registration_page)
     <input class="btn btn-primary" type="submit" value="<?php echo __('הירשם') ?>">
 
 </form>
-
-

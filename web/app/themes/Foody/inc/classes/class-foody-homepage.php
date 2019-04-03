@@ -159,6 +159,9 @@ class Foody_HomePage
                     $foody_post->setDescription($row['secondary_text']);
                 }
 
+                if (!empty($row['link'])) {
+                    $foody_post->link = $row['link']['url'];
+                }
 
                 return $foody_post;
             }, $featured);
