@@ -3,56 +3,38 @@
  */
 
 jQuery(document).ready(($) => {
-    /**
-     * Un-Logged User
-     */
-    let socialLinks = jQuery('.foody-content .wp-social-login-widget');
-    let googleButton = socialLinks.siblings('.login').find('.btn-google');
-    let facebookButton = socialLinks.siblings('.login').find('.btn-facebook');
 
-    googleButton.click((event) => {
-        eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'גוגל');
-    });
+    if (foodyGlobals['type'] == 'profile') {
+        /**
+         * Logged User
+         */
+        let userRecipeAmount = foodyGlobals['userRecipesCount'];
+        //TODO:: Change Selectors
+        let userChannels = jQuery('#user-content > .my-channels > .channels > ul.managed-list');
+        userChannels.delegate('li.managed-list-item', 'click', function (event) {
+            let channelName = jQuery(this).find("a").text().trim();
+            eventCallback(event, 'אזור אישי', 'בחירת ערוץ', channelName, "מתכונים", userRecipeAmount);
+        });
 
-    facebookButton.click((event) => {
-        eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'פייסבוק');
-    });
+        /**
+         * My recipes click
+         */
+        let userRecipes = jQuery('#my-recipes-grid');
+        userRecipes.delegate('.recipe-item-container .recipe-item', 'click', function (event) {
+            let recipeName = jQuery(this).find(".grid-item-title > a").text().trim();
+            eventCallback(event, 'אזור אישי', 'בחירת מתכון', recipeName, "מתכונים", userRecipeAmount);
+        });
 
-    //TODO:: Put this to work after login
-    // eventCallback(event, 'הזדהות', 'לחיצה להזדהות', 'אתר');
-    // eventCallback(event, 'הזדהות', 'הזדהות נכשלה', 'אתר');
-    // let loginErrorMessage = jQuery('#login-form').find('span').text();
-    // eventCallback(event, 'הזדהות', 'הזדהות הצליחה', 'אתר', 'הודעה', loginErrorMessage);
-
-
-    /**
-     * Logged User
-     */
-    let userRecipeAmount = foodyGlobals.userRecipesCount;
-    //TODO:: Change Selectors
-    let userChannels = jQuery('#user-content > section > section > ul');
-    userChannels.delegate('li', 'click', function () {
-        let channelName = jQuery(this).find("a").text().trim();
-        eventCallback(event, 'אזור אישי', 'בחירת ערוץ', channelName, "מתכונים", userRecipeAmount);
-    });
-
-    //TODO:: Change Selectors
-    let userRecipes = jQuery('#my-recipes-grid');
-    userRecipes.delegate('div > div', 'click', function () {
-        let recipeName = jQuery(this).find(".grid-item-title > a").text().trim();
-        eventCallback(event, 'אזור אישי', 'בחירת מתכון', recipeName, "מתכונים", userRecipeAmount);
-    });
-
-    /**
-     * Is Login or Profile ?
-     */
-    let isLoggedIn = foodyGlobals.loggedIn;
-    // if (isLoggedIn) {
-    //     eventCallback(event, 'אזור אישי', 'טעינה', 'מזוהה', "מתכונים", userRecipeAmount);
-    // } else {
-    //     eventCallback(event, 'אזור אישי', 'טעינה', 'לא מזוהה', "מתכונים", "0");  //TODO:: Check this ?
-    // }
-
+        /**
+         * Is Login or Profile ?
+         */
+        let isLoggedIn = foodyGlobals['loggedIn'];
+        if (isLoggedIn) {
+            eventCallback('', 'אזור אישי', 'טעינה', 'מזוהה', "מתכונים", userRecipeAmount);
+        } else {
+            eventCallback('', 'אזור אישי', 'טעינה', 'לא מזוהה', "מתכונים", userRecipeAmount);
+        }
+    }
 });
 
 
@@ -67,13 +49,16 @@ jQuery(document).ready(($) => {
  */
 function eventCallback(event, category, action, label, cdDesc, cdValue) {
 
+    /**
+     * Logged in user ID
+     */
+    let customerID = foodyGlobals['loggedInUser'] ? foodyGlobals['loggedInUser'] : '';
+
     tagManager.pushDataLayer(
         category,
         action,
         label,
-        '',
-        '',
-        '',
+        customerID,
         '',
         '',
         '',
