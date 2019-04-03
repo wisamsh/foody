@@ -571,7 +571,10 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return [
             'ID' => $this->post->ID,
             'type' => $this->post->post_type,
-            'title' => $this->title
+            'title' => $this->title,
+	        'author_name' => $this->author_name,
+	        'view_count' => foody_get_post_views($this->id),
+            'has_video' => $this->has_video
         ];
     }
 

@@ -92,10 +92,10 @@ function foody_js_globals()
         $vars['loggedIn'] = is_user_logged_in() ? 'true' : 'false';
         $vars['imagesUri'] = $GLOBALS['images_dir'];
 
-        //TODO: Ask Zari
         $vars['userRecipesCount'] = 0;
         if (is_user_logged_in()) {
             $vars['userRecipesCount'] = empty($wp_session['favorites']) ? 0 : count($wp_session['favorites']);
+	        $vars['loggedInUser']= wp_get_current_user()->ID;
         }
 
         $js = wp_json_encode($vars);
