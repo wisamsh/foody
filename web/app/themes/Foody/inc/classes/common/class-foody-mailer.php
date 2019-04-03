@@ -14,7 +14,6 @@ class Foody_Mailer
     {
         $headers = [];
         if ($is_html) {
-
             $body = foody_get_template_part(get_template_directory() . "/email-templates/$body.php", ['subject' => $subject, 'return' => true]);
             $headers[] = 'Content-Type: text/html; charset=UTF-8';
             $GLOBALS["use_html_content_type"] = true;

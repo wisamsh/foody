@@ -79,7 +79,7 @@ class Foody_Registration
             update_user_meta($user_id, 'phone_number', $phone_number);
             update_user_meta($user_id, 'seen_approvals', true);
             if (!empty($user_data['e_book']) && !empty($user_data['marketing'])) {
-                Foody_Mailer::send('e book', 'e-book', $email);
+                Foody_Mailer::send(__('איזה כיף לך! קבלת את ספר המתכונים של FOODY לפסח'), 'e-book', $email);
                 update_user_meta($user_id, 'e_book', true);
             }
         }
