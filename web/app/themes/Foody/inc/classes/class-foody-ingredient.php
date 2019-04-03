@@ -267,7 +267,7 @@ class Foody_Ingredient extends Foody_Post
                     $nutrient = array_shift($nutrients);
                     $value = $nutrient['value'];
                     $factor = 1;
-                    if ($unit->name == 'גרם') {
+                    if ($unit->name == 'גרם' || $unit->name == 'מ"ל') {
                         $factor = 100;
                     }
 
@@ -295,41 +295,54 @@ class Foody_Ingredient extends Foody_Post
 	public function get_nutrient_data_by_unit_and_amount($nutrient_name)
 	{
 		$value = 0;
+		$unit_name = '';
 
 		if ( ! empty( $this->amounts ) ) {
 			$amounts = $this->amounts[0];
-			$unit   = !empty($amounts['unit']) ? $amounts['unit_tax'] : $amounts['unit'];
-			$amount = $amounts['amount'];
+			$unit    = ! empty( $amounts['unit'] ) ? $amounts['unit_tax'] : $amounts['unit'];
+			$amount  = $amounts['amount'];
 
+			if ( $unit instanceof WP_Term ) {
+				$unit_name = get_term_field( 'slug', $unit->term_id, 'units' );
+			}
 
-			if ( ! empty( $this->nutrients_conversion ) && is_array( $this->nutrients_conversion ) ) {
-				$nutrients = array_filter($this->nutrients_conversion, function ($nutrient) use ($nutrient_name, $unit, $amount) {
+			if ( ( ! empty( $this->nutrients_conversion ) && is_array( $this->nutrients_conversion ) ) ) {
+				$nutrients = array_filter( $this->nutrients_conversion, function ( $nutrient ) use ( $nutrient_name, $unit, $amount, $unit_name ) {
 					$valid = false;
 
-					if ($unit instanceof WP_Term) {
+					if ( $unit instanceof WP_Term ) {
 						$valid = $nutrient['unit'] == $unit->term_id;
-					} else if (empty($unit)) {
+					} else if ( empty( $unit ) ) {
 						$valid = true;
 					}
 
 					return $valid;
-				});
+				} );
 
+			} else if ( urldecode( $unit_name ) == 'גרם' || urldecode( $unit_name ) == 'מל' ) {
+				$value = 1;
+			}
+
+			if ( ! empty( $nutrients ) || ( urldecode( $unit_name ) == 'גרם' || urldecode( $unit_name ) == 'מל' ) ) {
 
 				if ( ! empty( $nutrients ) ) {
 					$nutrient = array_shift( $nutrients );
 					$value    = $nutrient['grams'];
-					$grams = $this->get_nutrient_grams_by_unit($nutrient_name);
-					$factor = 100;// per 100 Grams
-
-					$amount = floatval($amount);
-					$value = floatval($value);
-					$grams_value = ($value / $factor) * $grams;
-					$value = $amount  * $grams_value;
-
-					$value = (float)$value;
-
 				}
+
+				$grams  = $this->get_nutrient_grams_by_unit( $nutrient_name );
+				$factor = 100;// per 100 Grams
+
+				$amount = floatval( $amount );
+				$value  = floatval( $value );
+				if ( ! empty( $amounts['unit'] ) && ( $amounts['unit'] == 'גרם' || $amounts['unit'] == 'מ"ל' ) ) {
+					$value = 1;
+				}
+				$grams_value = ( $value / $factor ) * $grams;
+				$value       = $amount * $grams_value;
+
+				$value = (float) $value;
+
 			}
 		}
 
@@ -358,9 +371,10 @@ class Foody_Ingredient extends Foody_Post
 
 					if ($unit instanceof WP_Term) {
 
-						// Only Grams by id 31
-						$valid = $nutrient['unit'] == 31 &&
-						$nutrient['nutrient'] == $nutrient_name;
+						$unit_name = get_term_field( 'slug', $nutrient['unit'], 'units' );
+						$valid     = ( urldecode( $unit_name ) == 'גרם' ||
+						               urldecode( $unit_name ) == 'מל' ) &&
+						             $nutrient['nutrient'] == $nutrient_name;
 					} else if (empty($unit)){
 						$valid = true;
 					}
