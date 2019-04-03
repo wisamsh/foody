@@ -24,7 +24,7 @@ $foody_lost_password = isset($_REQUEST['checkemail']) && $_REQUEST['checkemail']
     משתמש חדש?
 </span>
 
-    <a href="<?php echo get_permalink(get_page_by_path('הרשמה')) ?>">הירשם</a>
+    <a class="go-to-register" href="<?php echo get_permalink(get_page_by_path('הרשמה')) ?>">הירשם</a>
 
 </p>
 <?php

@@ -1,12 +1,11 @@
 /**
  * Created by moveosoftware on 10/29/18.
  */
-jQuery(document).ready(($)=>{
-    let signupButton = jQuery("#wpcf7-f10340-o2 > form > p > input");
+jQuery(document).ready(($) => {
+    let newsletterForm = jQuery(".site-footer .newsletter .wpcf7-form");
 
-    signupButton.click((event) => {
-        //TODO:: check if email was enter properly before sending the event
-        eventCallback(event, 'קטגוריה'); //TODO:: CREATE THIS FUNC getCategory()
+    newsletterForm.on('wpcf7:submit', null, (event) => {
+        eventCallback(event, foodyGlobals['title'], 'לחיצה לרישום לדיוור', '', 'מיקום', 'פוטר');
     });
 
 });
@@ -16,15 +15,23 @@ jQuery(document).ready(($)=>{
  * Handle events and fire analytics dataLayer.push
  * @param event
  * @param category
+ * @param action
+ * @param label
+ * @param cdDesc
+ * @param cdValue
  */
-function eventCallback(event, category) {
+function eventCallback(event, category, action, label, cdDesc, cdValue) {
+    debugger;
+    /**
+     * Logged in user ID
+     */
+    let customerID = foodyGlobals['loggedInUser'] ? foodyGlobals['loggedInUser'] : '';
+
     tagManager.pushDataLayer(
-        '',
-        'לחיצה על רישום לדיוור',
-        '',
-        '',
-        '',
-        '',
+        category,
+        action,
+        label,
+        customerID,
         '',
         '',
         '',
@@ -34,8 +41,8 @@ function eventCallback(event, category) {
         '',
         '',
         '',
-        'מיקום', //TODO:: CHECK THIS ??
-        'פוטר',
+        cdDesc,
+        cdValue,
         ''
     );
 }

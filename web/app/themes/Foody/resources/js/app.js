@@ -78,6 +78,7 @@ require('./contact-us');
 require('./tag');
 require('./items');
 require('./feed-filter');
+require('./general-pages');
 
 // Tag Manager
 const TagManager = require('./common/tag-manager');
