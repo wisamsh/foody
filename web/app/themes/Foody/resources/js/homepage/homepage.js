@@ -73,5 +73,20 @@ jQuery(document).ready(($) => {
                 });
             }
         });
+
+        // $approvalsPopup.on('hide.bs.modal', function () {
+        //     let ajaxSettings = {
+        //         action: 'foody_edit_user_approvals_viewed',
+        //         data: {
+        //             'seen_approvals': true
+        //         }
+        //     };
+        //
+        //     foodyAjax(ajaxSettings,function (err) {
+        //         if (err){
+        //             console.log(err);
+        //         }
+        //     })
+        // })
     }
 });

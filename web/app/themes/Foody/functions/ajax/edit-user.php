@@ -138,3 +138,35 @@ function foody_edit_user_approvals()
 add_action('wp_ajax_foody_edit_user_approvals', 'foody_edit_user_approvals');
 
 
+function foody_edit_user_approvals_viewed()
+{
+
+    $errors = new WP_Error();
+
+    if (!is_user_logged_in()) {
+        $errors->add(401, 'unauthorized');
+    } else {
+
+        $seen_approvals = isset($_POST['seen_approvals']) ? true : false;
+        $ID = get_current_user_id();
+
+        $resultSeen = update_user_meta($ID, 'seen_approvals', $seen_approvals);
+
+
+        if ($resultSeen === false) {
+            $errors->add(500, 'error updating user');
+        }
+
+    }
+
+    if (!empty($errors->errors)) {
+        wp_send_json_error($errors);
+    } else {
+        $user = get_user_by('ID', get_current_user_id());
+        wp_send_json_success($user);
+    }
+}
+
+add_action('wp_ajax_foody_edit_user_approvals_viewed', 'foody_edit_user_approvals_viewed');
+
+

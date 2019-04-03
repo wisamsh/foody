@@ -146,6 +146,9 @@ class Foody_Recipe extends Foody_Post
 
         $title = get_field('nutritions_title', $this->post->ID);
 
+        if (empty($title)) {
+            $title = __('ערכים תזונתיים');
+        }
 
         if (!empty($this->nutrients)) {
             $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
