@@ -212,14 +212,6 @@ class Foody_HomePage
         $registration_page = get_page_by_title('הרשמה');
         $show = get_field('show', $registration_page);
 
-        $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-        $referer = strtolower($referer);
-        $referer = preg_replace('/\?.*/', '', $referer);
-        $registration = get_permalink(get_page_by_title('הרשמה'));
-        $login = get_permalink(get_page_by_title('התחברות'));
-        $registration = strtolower($registration);
-        $login = strtolower($login);
-
         $login_amount = get_user_meta(get_current_user_id(),'login_amount',true);
 
         if ((!$approved_marketing || (!$approved_e_book && $show)) && $login_amount <= 1) {

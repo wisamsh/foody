@@ -49,6 +49,5 @@ function foody_parse_checkbox($key){
         }
     }
 
-
     return $checked;
 }

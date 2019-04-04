@@ -64,8 +64,8 @@ jQuery(document).ready(($) => {
                 foodyAjax({
                     action: 'foody_edit_user_approvals',
                     data: {
-                        marketing: $('#approvals #check-marketing').val(),
-                        e_book: $('#approvals #check-e-book').val(),
+                        marketing: $('#approvals #check-marketing').prop('checked'),
+                        e_book: $('#approvals #check-e-book').prop('checked')
                     }
                 }, function () {
                     $body.unblock();
