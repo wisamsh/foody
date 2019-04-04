@@ -148,7 +148,7 @@ function foody_edit_user_approvals_viewed()
     $errors = new WP_Error();
 
 
-    $seen_approvals = foody_parse_checkbox('seen_approvals');
+    $seen_approvals = isset($_POST['seen_approvals']) ? $_POST['seen_approvals'] : false;
     $ID = get_current_user_id();
 
     $resultSeen = update_user_meta($ID, 'seen_approvals', $seen_approvals);
