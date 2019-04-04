@@ -31,14 +31,6 @@ jQuery(document).ready(($) => {
     if ($approvalsPopup.length) {
         $approvalsPopup.modal('show');
 
-        // $('#approvals .md-checkbox label').on('click', function () {
-        //     let $input = $(this).prev('input[type="checkbox"]');
-        //     let checked = $input.prop('checked');
-        //     // $input.prop('checked', checked);
-        //     console.log(checked);
-        //
-        // });
-
         let $form = $("form#approvals");
         $form.validate({
             rules: {
@@ -66,8 +58,8 @@ jQuery(document).ready(($) => {
                 foodyAjax({
                     action: 'foody_edit_user_approvals',
                     data: {
-                        marketing: $('#approvals #check-marketing').prop('checked'),
-                        e_book: $('#approvals #check-e-book').prop('checked')
+                        marketing: $('#approvals #check-marketing',$approvalsPopup).prop('checked'),
+                        e_book: $('#approvals #check-e-book',$approvalsPopup).prop('checked')
                     }
                 }, function () {
                     $body.unblock();
