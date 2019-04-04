@@ -104,33 +104,30 @@ function foody_edit_user_approvals()
     $errors = new WP_Error();
 
 
-    if (!is_user_logged_in()) {
-        $errors->add(401, 'unauthorized');
-    } else {
-
-        $marketing = foody_parse_checkbox('marketing');
-        $e_book = foody_parse_checkbox('e_book');
+    $marketing = foody_parse_checkbox('marketing');
+    $e_book = foody_parse_checkbox('e_book');
 
 
-        $ID = get_current_user_id();
+    $ID = get_current_user_id();
 
-        if (!empty($marketing)) {
-
-            $resultMarketing = update_user_meta($ID, 'marketing', $marketing);
-        }
-        if (!empty($e_book)) {
-            $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
-        }
-
-
-        if (isset($resultMarketing) && $resultMarketing === false || isset($resultMarketingEbook) && $resultMarketingEbook === false) {
-            $errors->add(500, 'error updating user');
-        }
-
+    if (!empty($marketing)) {
+        $resultMarketing = update_user_meta($ID, 'marketing', $marketing);
+    }
+    if (!empty($e_book)) {
+        $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
     }
 
+
+    if (
+        isset($resultMarketing) && $resultMarketing === false ||
+        isset($resultMarketingEbook) && $resultMarketingEbook === false
+    ) {
+        $errors->add(500, 'error updating user');
+    }
+
+
     if (!empty($errors->errors)) {
-        wp_send_json_error($errors);
+        wp_send_json_error($errors, 400);
     } else {
         $user = get_user_by('ID', get_current_user_id());
         if (isset($resultMarketingEbook) && !empty($e_book)) {
@@ -138,8 +135,6 @@ function foody_edit_user_approvals()
         }
         wp_send_json_success();
     }
-
-
 }
 
 add_action('wp_ajax_foody_edit_user_approvals', 'foody_edit_user_approvals');
@@ -150,20 +145,14 @@ function foody_edit_user_approvals_viewed()
 
     $errors = new WP_Error();
 
-    if (!is_user_logged_in()) {
-        $errors->add(401, 'unauthorized');
-    } else {
 
-        $seen_approvals = foody_parse_checkbox('seen_approvals');
-        $ID = get_current_user_id();
+    $seen_approvals = foody_parse_checkbox('seen_approvals');
+    $ID = get_current_user_id();
 
-        $resultSeen = update_user_meta($ID, 'seen_approvals', $seen_approvals);
+    $resultSeen = update_user_meta($ID, 'seen_approvals', $seen_approvals);
 
-
-        if ($resultSeen === false) {
-            $errors->add(500, 'error updating user');
-        }
-
+    if ($resultSeen === false) {
+        $errors->add(500, 'error updating user');
     }
 
     if (!empty($errors->errors)) {
