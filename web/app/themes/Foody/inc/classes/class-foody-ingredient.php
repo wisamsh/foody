@@ -372,6 +372,11 @@ class Foody_Ingredient extends Foody_Post
 					if ($unit instanceof WP_Term) {
 
 						$unit_name = get_term_field( 'slug', $nutrient['unit'], 'units' );
+
+						if(is_wp_error($unit_name) || empty($unit_name)){
+							$unit_name = '';
+						}
+
 						$valid     = ( urldecode( $unit_name ) == 'גרם' ||
 						               urldecode( $unit_name ) == 'מל' ) &&
 						             $nutrient['nutrient'] == $nutrient_name;
