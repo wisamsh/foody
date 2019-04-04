@@ -16,11 +16,13 @@ if (!is_null($action) && is_user_logged_in()) {
 
     $user = get_user_by('ID', $user_id);
     $template = 'login-welcome.php';
-    $args = [
-        'profile' => [
-            'username' => $user->display_name
-        ]
-    ];
+	$args = [
+		'profile'   => [
+			'username' => $user->display_name
+		],
+		'marketing' => get_user_meta( $user_id, 'marketing', true ),
+		'e-book'    => get_user_meta( $user_id, 'e_book', true )
+	];
 }
 
 foody_get_template_part(get_template_directory() . "/template-parts/$template", $args);

@@ -1,6 +1,7 @@
 /**
  * Created by omerfishman on 3/26/19.
  */
+let FoodyLocationUtils = require('../common/foody-location-utils');
 
 jQuery(document).ready(($) => {
 
@@ -8,7 +9,7 @@ jQuery(document).ready(($) => {
 
         let userRecipeAmount = foodyGlobals['userRecipesCount'];
         /**
-         * Un-Logged User
+         * Un-Logged User Social Registration
          */
         let socialLinks = jQuery('.foody-content .wp-social-login-widget');
         let googleButton = socialLinks.siblings('.login').find('.btn-google');
@@ -22,9 +23,46 @@ jQuery(document).ready(($) => {
             eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'פייסבוק');
         });
 
-        $("#register-form").on('submit', null, (event) => {
-            let withMarketing = jQuery(event.target).find('#check-marketing').prop('checked');
-            let withEBook = jQuery(event.target).find('#check-e-book').prop('checked');
+        /**
+         * Registration Submit
+         */
+        if (jQuery('#register-form').length) {
+            $("#register-form").on('submit', null, (event) => {
+                let withMarketing = jQuery(event.target).find('#check-marketing').prop('checked');
+                let withEBook = jQuery(event.target).find('#check-e-book').prop('checked');
+                let marketingAnalyticsText = 'לא נרשם';
+                if (withMarketing) {
+                    marketingAnalyticsText = 'נרשם';
+                    if (withEBook) {
+                        marketingAnalyticsText = 'נרשם פלוס ספר';
+                    }
+                } else if (withEBook) {
+                    marketingAnalyticsText = 'לא נרשם פלוס ספר';
+                }
+
+                eventCallback(event, 'רישום לאתר', 'לחיצה לסיום רישום', 'אתר', 'רישום לדיוור', marketingAnalyticsText);
+
+                /**
+                 * Registration Fail
+                 */
+                if (jQuery('#register-form').find('label.error:visible').length) {
+                    let errorLabels = jQuery('#register-form').find('label.error:visible').map(function(){
+                        return jQuery(this).text() + ' ';
+                    }).get().join();
+
+                    eventCallback(event, 'רישום לאתר', 'רישום נכשל', 'אתר', 'הודעה', errorLabels);
+                }
+            });
+        }
+
+        /**
+         * Successful Registration
+         */
+        let locationUtils = new FoodyLocationUtils();
+        let registered = locationUtils.getQuery('registered');
+        if (registered == 1 && foodyGlobals['loggedIn']) {
+            let withMarketing = jQuery('.welcome .marketing-approved').val().trim();
+            let withEBook = jQuery('.welcome .e-book-approved').val().trim();
             let marketingAnalyticsText = 'לא נרשם';
             if (withMarketing) {
                 marketingAnalyticsText = 'נרשם';
@@ -35,8 +73,8 @@ jQuery(document).ready(($) => {
                 marketingAnalyticsText = 'לא נרשם פלוס ספר';
             }
 
-            eventCallback(event, 'רישום לאתר', 'לחיצה לסיום רישום', 'אתר', 'רישום לדיוור', marketingAnalyticsText);
-        });
+            eventCallback(event, 'רישום לאתר', 'רישום הצליח', 'אתר', 'רישום לדיוור', marketingAnalyticsText);
+        }
 
         /**
          * Is Login or Profile ?
@@ -55,7 +93,7 @@ jQuery(document).ready(($) => {
     if (jQuery('#approvals').length) {
         eventCallback('', 'רישום לאתר', 'טעינת פופאפ רישום לדיוור', 'גוגל | פייסבוק');
 
-        $('#register-form').on('submit', null, (event) => {
+        $('#approvals').on('submit', null, (event) => {
 
             let withMarketing = jQuery(event.target).find('#check-marketing').prop('checked');
             let withEBook = jQuery(event.target).find('#check-e-book').prop('checked');
@@ -71,6 +109,7 @@ jQuery(document).ready(($) => {
 
             eventCallback(event, 'רישום לאתר', 'לחיצה לסיום רישום', 'גוגל | פייסבוק', 'רישום לדיוור', marketingAnalyticsText);
         });
+    //    TODO: Succes & Failure
     }
 });
 
