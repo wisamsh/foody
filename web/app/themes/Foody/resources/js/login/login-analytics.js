@@ -53,7 +53,9 @@ jQuery(document).ready(($) => {
             }
         }
 
-        //TODO:: Put this to work after login
+        /**
+         * Login Success - TODO
+         */
         // eventCallback(event, 'הזדהות', 'הזדהות הצליחה', 'אתר', 'הודעה', loginErrorMessage);
 
 
