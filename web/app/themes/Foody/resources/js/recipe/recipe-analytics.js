@@ -9,7 +9,17 @@ jQuery(document).ready(($) => {
         /**
          * Page Load
          */
-        eventCallback(null,'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', foodyGlobals['author_name']);//TODO: Publisher
+        eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', foodyGlobals['author_name']);//TODO: Publisher
+
+
+        /**
+         * Breadcrumbs click
+         */
+        let breadcrumbs = jQuery('.details-container .breadcrumb');
+        breadcrumbs.delegate('li', 'click', function (event) {
+            let breadcrumb = jQuery(this).find('a').text().trim();
+            eventCallback(event, 'מתכון', 'מעבר לקטגוריה', breadcrumb, 'מיקום', 'פירורי לחם');
+        });
 
         /**
          * Add/Remove favorite recipe
@@ -40,7 +50,7 @@ jQuery(document).ready(($) => {
         /**
          * Social shares
          */
-        let socialShareList = jQuery('.details-container .social').find('ul');
+        let socialShareList = jQuery('.details-container .social .essb_links').find('ul');
         socialShareList.delegate('li', 'click', function (event) {
             let sharingPlatform = this.className.substring(this.className.lastIndexOf('_') + 1, this.className.lastIndexOf(' '));
             eventCallback(event, 'מתכון', 'שיתוף', sharingPlatform);
@@ -62,14 +72,14 @@ jQuery(document).ready(($) => {
         relatedRecipes.each((index, relatedRecipe) => {
             jQuery(relatedRecipe).find('.post-title a').click((event) => {
                 let recipeName = jQuery(event.target).text().trim();
-                let position = $('.details .post-title a').index(event.target)
+                let position = $('.details .post-title a').index(event.target);
                 eventCallback(event, 'מתכון', 'בחירת מתכון נוסף', recipeName, 'מיקום', position);
             });
 
             jQuery(relatedRecipe).find('a .image-container').click((event) => {
                 let recipeName = jQuery(event.target).parent().parent().find('.details .post-title a').text().trim();
                 // let position = jQuery(this).parent().parent().index() + 1;
-                let position = $('a .image-container').index(event.target)
+                let position = $('a .image-container').index(event.target);
                 eventCallback(event, 'מתכון', 'בחירת מתכון נוסף', recipeName, 'מיקום', position);
             });
         });
@@ -80,18 +90,101 @@ jQuery(document).ready(($) => {
         let categoriesHeader = jQuery('#main .sidebar-section');
         categoriesHeader.on('click', null, function (event) {
             if (jQuery('#categoriesHeader-widget-accordion').is(":hidden")) {
-                eventCallback(event, 'מתכון', 'פתיחת תפריט קטגוריות')
+                eventCallback(event, 'מתכון', 'פתיחת תפריט קטגוריות');
             }
         });
 
         /**
-         * Category click
+         * Side bar category click
          */
-        let categoriesList = jQuery(document.getElementsByClassName("category-accordion-item"));
-        categoriesList.on('click', null, function (event) {
+        let sideCategoriesList = jQuery(document.getElementsByClassName("category-accordion-item"));
+        sideCategoriesList.on('click', null, function (event) {
             let catName = jQuery(this).find('a').text().trim();
-            eventCallback(event, 'מתכון', 'מעבר לקטגוריה', catName, 'מיקום', 'תפריט ימין')
-        })
+            eventCallback(event, 'מתכון', 'מעבר לקטגוריה', catName, 'מיקום', 'תפריט ימין');
+        });
+
+        /**
+         * Bottom category click
+         */
+        let bottomCategories = jQuery('.recipe-categories .post-categories');
+        bottomCategories.delegate('li', 'click', function (event) {
+            let catName = jQuery(this).find('a').text().trim();
+            eventCallback(event, 'מתכון', 'מעבר לקטגוריה', catName, 'מיקום', 'פוטר');
+        });
+
+        /**
+         * Bottom tags click
+         */
+        let bottomTags = jQuery('.recipe-tags .post-tags');
+        bottomTags.delegate('li', 'click', function (event) {
+            let tagName = jQuery(this).find('a').text().trim();
+            eventCallback(event, 'מתכון', 'לחיצה על תגיות', tagName, 'מיקום', 'פוטר');
+        });
+
+        /**
+         * Newsletter registration
+         */
+        let newsletterSubmitBtn = jQuery('#wpcf7-f10340-p10877-o1 > form')
+        newsletterSubmitBtn.submit((event) => {
+            eventCallback(event, 'מתכון', 'לחיצה על רישום לדיוור', foodyGlobals['title'], 'מיקום', 'פוטר');
+        });
+
+        /**
+         * Add photo button
+         */
+        let addImage = jQuery('#image-upload-hidden');
+        addImage.click((event) => {
+            if (event.target.id !== 'attachment') {
+                eventCallback(event, 'מתכון', 'לחיצה על מצלמה', '', 'מיקום', 'פוטר');
+            }
+        });
+
+        /**
+         * Add photo approve button
+         */
+        let apprvoeAddingimage = jQuery('#image-upload-form > button.btn.btn-primary.btn-approve');
+        apprvoeAddingimage.click((event) => {
+            eventCallback(event, 'מתכון', 'העלאת תמונה', '', 'מיקום', 'פוטר');
+        });
+
+        /**
+         * Add comment
+         */
+        let addCommentBtn = jQuery('#submit');
+        addCommentBtn.click((event) => {
+            eventCallback(event, 'מתכון', 'הוספת תגובה', '', 'מיקום', 'פוטר');
+        });
+
+        /**
+         * Purchase button
+         */
+        let purchaseBtn = jQuery(document.getElementsByClassName('purchase-button-container'));
+        purchaseBtn.delegate('a', 'click', function (event) {
+            debugger;
+            let buttonText = this.innerText;
+            eventCallback(event, 'מתכון', 'לחיצה לרכישה', buttonText, 'מיקום', 'עליון');
+        });
+
+        /**
+         * Scroll listener
+         */
+        $(window).scroll(function (e) {
+            const scrollTop = $(window).scrollTop();
+            const docHeight = $(document).height();
+            const winHeight = $(window).height();
+            const scrollPercent = (scrollTop) / (docHeight - winHeight);
+            const scrollPercentRounded = Math.round(scrollPercent * 100);
+            let toLog = false;
+            if (scrollPercentRounded === 0 || scrollPercentRounded === 25 ||
+                scrollPercentRounded === 50 || scrollPercentRounded === 75 || scrollPercentRounded === 100) {
+                toLog = true;
+            }
+            if (toLog) {
+                eventCallback(event, 'מתכון', 'גלילה', scrollPercentRounded + '%', '', '');
+
+            }
+        });
+
     }
 });
 
