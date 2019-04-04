@@ -107,20 +107,22 @@ function foody_edit_user_approvals()
     $marketing = foody_parse_checkbox('marketing');
     $e_book = foody_parse_checkbox('e_book');
 
+    $marketing = isset($_POST['marketing']) ? $_POST['marketing'] : false;
+    $e_book = isset($_POST['e_book']) ? $_POST['e_book'] : false;
+
 
     $ID = get_current_user_id();
 
     if (!empty($marketing)) {
         $resultMarketing = update_user_meta($ID, 'marketing', $marketing);
     }
-    if (!empty($e_book)) {
-        $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
-    }
+    $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
 
 
     if (
-        isset($resultMarketing) && $resultMarketing === false ||
-        isset($resultMarketingEbook) && $resultMarketingEbook === false
+        (isset($resultMarketing) &&
+            $resultMarketing === false) ||
+        $resultMarketingEbook === false
     ) {
         $errors->add(500, 'error updating user');
     }
@@ -133,7 +135,7 @@ function foody_edit_user_approvals()
         if (isset($resultMarketingEbook) && !empty($e_book)) {
             Foody_Mailer::send(__('איזה כיף לך! קיבלת את ספר מתכוני הפסח של FOODY'), 'e-book', $user->user_email);
         }
-        wp_send_json_success();
+        wp_send_json_success(['ebook' => $e_book]);
     }
 }
 
