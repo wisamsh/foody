@@ -31,11 +31,13 @@ jQuery(document).ready(($) => {
     if ($approvalsPopup.length) {
         $approvalsPopup.modal('show');
 
-        $('#approvals .md-checkbox label').on('click', function () {
-            let $input = $(this).prev('input[type="checkbox"]');
-            let checked = $input.prop('checked');
-            $input.prop('checked', checked);
-        });
+        // $('#approvals .md-checkbox label').on('click', function () {
+        //     let $input = $(this).prev('input[type="checkbox"]');
+        //     let checked = $input.prop('checked');
+        //     // $input.prop('checked', checked);
+        //     console.log(checked);
+        //
+        // });
 
         let $form = $("form#approvals");
         $form.validate({
