@@ -31,6 +31,7 @@ jQuery(document).ready(($) => {
     if ($approvalsPopup.length) {
         $approvalsPopup.modal('show');
 
+        $('#approvals .md-checkbox label input[type="checkbox"]').prop('checked',true);
         $('#approvals .md-checkbox label').on('click', function () {
             let $input = $(this).prev('input[type="checkbox"]');
             let checked = $input.prop('checked');
@@ -83,9 +84,7 @@ jQuery(document).ready(($) => {
             };
 
             foodyAjax(ajaxSettings,function (err) {
-                if (err){
-                    console.log(err);
-                }
+                if (err){}
             })
         });
     }
