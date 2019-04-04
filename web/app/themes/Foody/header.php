@@ -27,6 +27,20 @@ $user = new Foody_User();
 </head>
 
 <body <?php body_class(); ?> dir="rtl">
+<?php //do_action('foody_after_body') ?>
+
+<?php
+
+$background_image = foody_get_background_image();
+
+if (!empty($background_image)) {
+    ?>
+    <img class="body-background" src="<?php echo $background_image['url'] ?>"
+         alt="<?php echo $background_image['alt'] ?>">
+    <?php
+}
+?>
+
 <div id="fb-root"></div>
 <?php Foody_Header::google_tag_manager_iframe(); ?>
 <div id="page" class="site">
@@ -35,6 +49,7 @@ $user = new Foody_User();
         <div class="run d-block d-lg-none">
             <?php echo __('בהרצה') ?>
         </div>
+
         <div class="socials d-none d-lg-block">
 
             <section class="header-top-container  d-none d-lg-flex">
@@ -148,5 +163,11 @@ $user = new Foody_User();
     </header><!-- #masthead -->
 
     <div id="content" class="site-content">
-        <?php Foody_Social::whatsapp(['d-none', 'd-lg-block', 'floating']) ?>
+        <?php
+        if (wp_is_mobile()) {
+            Foody_Social::whatsapp(['d-lg-block', 'floating', 'whatsapp-mobile']);
+        } else {
+            Foody_Social::whatsapp(['d-none', 'd-lg-block', 'floating']);
+        }
+        ?>
 

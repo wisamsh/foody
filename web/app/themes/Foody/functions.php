@@ -141,7 +141,7 @@ function foody_scripts()
     wp_enqueue_script('foody-skip-link-focus-fix', get_template_directory_uri() . '/resources/js/skip-link-focus-fix.js', array(), '20151215', true);
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {
-        wp_enqueue_script('comment-reply', false, false, true,true);
+        wp_enqueue_script('comment-reply', false, false, true, true);
     }
 
 
@@ -160,6 +160,11 @@ function foody_scripts()
 
         $asset = foody_get_versioned_asset('main');
         wp_enqueue_script('foody-script', $asset, false, false, true);
+//        }
+//        $page_template = get_page_template_slug();
+//        if ($page_template == 'page-templates/e-book.php') {
+//            $ebook = foody_get_versioned_asset('ebook');
+//            wp_enqueue_script('foody-style', $ebook, false, false, true);
 //        }
     }
 
@@ -236,23 +241,48 @@ function foody_get_versioned_asset($name)
 
 function add_async_attribute($tag, $handle)
 {
-    if ('foody-script' !== $handle && 'foody-script' !== $handle)
+    if ('foody-script' !== $handle)
         return $tag;
-    return str_replace(' src', ' defer="defer" async="async" src', $tag);
+    return str_replace(' src', ' async="async" src', $tag);
 }
 
 add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
 
-function essb_stylebuilder_css_filess(){
+function essb_stylebuilder_css_filess()
+{
 
 }
 
-remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
-remove_action( 'wp_print_styles', 'print_emoji_styles' );
-remove_action( 'admin_print_styles', 'print_emoji_styles' );
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('admin_print_scripts', 'print_emoji_detection_script');
+remove_action('wp_print_styles', 'print_emoji_styles');
+remove_action('admin_print_styles', 'print_emoji_styles');
 
-add_action( 'wp_print_styles', 'wps_deregister_styles', 100 );
-function wps_deregister_styles() {
-    wp_deregister_style( 'contact-form-7' );
+add_action('wp_print_styles', 'wps_deregister_styles', 100);
+function wps_deregister_styles()
+{
+    wp_deregister_style('contact-form-7');
 }
+
+// The callback function for the action hook bellow
+function any_script_in_footer()
+{
+    if(!is_admin()){
+        // Call the list with all the registered scripts
+        global $wp_scripts;
+
+        if (isset ($wp_scripts->registered) && !empty ($wp_scripts->registered) && is_array($wp_scripts->registered)) {
+            foreach ($wp_scripts->registered as $idx => $script) {
+                if (isset($wp_scripts->registered[$idx]->extra) && is_array($wp_scripts->registered[$idx]->extra)) {
+
+                    // Set any of the scripts to belong in the footer group
+                    $wp_scripts->registered[$idx]->extra['group'] = 1;
+                }
+            }
+        }
+    }
+}
+
+// Call the callback function with the `wp_print_scripts` hook at the very end
+// of the callbacks cue
+//add_action('wp_print_scripts', 'any_script_in_footer', 10000000000000);

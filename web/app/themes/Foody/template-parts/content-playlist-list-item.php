@@ -9,7 +9,9 @@
 /** @var Foody_Playlist $playlist */
 /** @noinspection PhpUndefinedVariableInspection */
 $playlist = $template_args['post'];
-
+$args = foody_get_array_default($template_args, 'args', []);
+$title_el = foody_get_array_default($args, 'title_el', 'h2');
+$image_size = isset($args['image_size']) ? $args['image_size'] : 'list-item';
 ?>
 
 
@@ -30,11 +32,11 @@ $playlist = $template_args['post'];
 
     <section class="feed-item-details-container">
         <section class="title-container">
-            <h3>
+            <<?php echo $title_el?> class="grid-item-title">
                 <a href="<?php echo $playlist->link ?>">
                     <?php echo $playlist->getTitle() ?>
                 </a>
-            </h3>
+            </<?php echo $title_el?>>
 
             <div class="description">
                 <?php echo $playlist->getDescription() ?>

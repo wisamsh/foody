@@ -77,7 +77,12 @@ require('./search');
 require('./contact-us');
 require('./tag');
 require('./items');
+require('./feed-filter');
+require('./general-pages');
 
+// Tag Manager
+const TagManager = require('./common/tag-manager');
+window.tagManager = new TagManager();
 
 jQuery(document).ready(function ($) {
 
@@ -108,8 +113,6 @@ jQuery(document).ready(function ($) {
     $body.on('click', '.tooltip .close', function () {
         $(this).closest('.tooltip').tooltip('hide')
     });
-
-    foodyFormMessage('.newsletter');
 
     let $seo = $('#seo');
 

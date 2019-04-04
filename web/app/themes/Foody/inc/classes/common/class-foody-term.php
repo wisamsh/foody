@@ -131,10 +131,13 @@ abstract class Foody_Term
             'header' => [
                 'sort' => true
             ],
-            'title_el' => 'h1'
+            'title_el' => 'h1',
+//            'item_args' => [
+//                'title_el' => 'h2'
+//            ]
         ];
 
-        $grid = array_replace_recursive( $grid,$grid_args);
+        $grid = array_replace_recursive($grid, $grid_args);
 
         foody_get_template_part(
             get_template_directory() . '/template-parts/common/foody-grid.php',

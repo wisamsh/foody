@@ -24,7 +24,7 @@ $foody_lost_password = isset($_REQUEST['checkemail']) && $_REQUEST['checkemail']
     משתמש חדש?
 </span>
 
-    <a href="<?php echo get_permalink(get_page_by_path('הרשמה')) ?>">הירשם</a>
+    <a class="go-to-register" href="<?php echo get_permalink(get_page_by_path('הרשמה')) ?>">הירשם</a>
 
 </p>
 <?php
@@ -105,7 +105,7 @@ echo do_shortcode('[wordpress_social_login]');
                 </div>
 
                 <div class="form-group col-6">
-                    <a class="forgot-password" href="<?php echo wp_lostpassword_url(); ?>">
+                    <a class="forgot-password" href="<?php echo wp_lostpassword_url() ?>">
                         <?php echo __('שכחת סיסמא?', 'foody') ?>
                     </a>
                 </div>

@@ -23,7 +23,7 @@ $labels = array(
         <div class="key">
             <?php echo $labels[$key] ?>
         </div>
-        <div class="value">
+        <div class="value <?php echo $key ?>">
             <?php echo $value ?>
         </div>
     </li>

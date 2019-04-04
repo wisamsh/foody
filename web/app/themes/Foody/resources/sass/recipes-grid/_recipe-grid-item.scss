@@ -12,7 +12,7 @@
     box-shadow: -1px 2px 4px 0px rgba(0, 0, 0, 0.08);
     position: relative;
 
-    $label-size: 84px;
+    $label-size: 25px;
     $label-fold-size: 13px;
     .recipe-label {
       position: absolute;
@@ -35,7 +35,8 @@
         transform: scale(.8);
         transform-origin: 10px;
         background-position-y: center;
-        padding: 0 3em 15px 1.1em;
+        padding: 10px 2em 25px 1.5em;
+        width: 220px;
       }
     }
 
@@ -151,7 +152,14 @@
     }
 
   }
-  h3 {
+  //h3 {
+  //  margin: 0;
+  //  font-size: 21px;
+  //  font-family: $font__assistant-bold;
+  //  font-weight: bold;
+  //}
+
+  .grid-item-title {
     margin: 0;
     font-size: 21px;
     font-family: $font__assistant-bold;

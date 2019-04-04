@@ -24,7 +24,7 @@ class Foody_Registration
         add_action('login_form_register', array($this, 'do_register_user'));
         add_action('login_form_login', array($this, 'redirect_to_custom_login'));
         add_filter("login_redirect", array($this, 'redirect_admin'), 10, 3);
-        add_filter( 'wp_mail_content_type', array($this,'foody_wp_email_content_type') );
+        add_filter('wp_mail_content_type', array($this, 'foody_wp_email_content_type'));
         $this->register_custom_password_reset();
 //        add_filter('login_url', function (/** @noinspection PhpUnusedParameterInspection */
 //            $url, $redirect, $force_reauth) {
@@ -70,8 +70,18 @@ class Foody_Registration
 
         $user_id = wp_insert_user($user_data_db);
         if (!is_wp_error($user_id)) {
+
+            if (!empty($user_data['marketing'])) {
+                update_user_meta($user_id, 'marketing', true);
+            }
+
             /** @noinspection PhpUndefinedVariableInspection */
             update_user_meta($user_id, 'phone_number', $phone_number);
+            update_user_meta($user_id, 'seen_approvals', true);
+            if (!empty($user_data['e_book']) && !empty($user_data['marketing'])) {
+                Foody_Mailer::send(__('איזה כיף לך! קיבלת את ספר מתכוני הפסח של FOODY'), 'e-book', $email);
+                update_user_meta($user_id, 'e_book', true);
+            }
         }
 //        wp_new_user_notification($user_id, $password);
 
@@ -119,10 +129,11 @@ class Foody_Registration
                         $phone_number = sanitize_text_field($_POST['phone_number']);
                         $terms = sanitize_text_field($_POST['terms']);
                         $marketing = sanitize_text_field($_POST['marketing']);
+                        $e_book = sanitize_text_field($_POST['e-book']);
                     }
 
 
-                    $vars = ['email', 'first_name', 'last_name', 'password', 'phone_number', 'terms', 'marketing'];
+                    $vars = ['email', 'first_name', 'last_name', 'password', 'phone_number', 'terms', 'marketing', 'e_book'];
 
                     $user_data = compact('user_data', $vars);
 
@@ -134,6 +145,7 @@ class Foody_Registration
                         $redirect_url = add_query_arg('register-errors', $errors, $redirect_url);
                     } else {
                         // Success, redirect to home page.
+                        $redirect_url = home_url('הרשמה');
                         $redirect_url = add_query_arg('registered', true, $redirect_url);
                     }
                 }
@@ -291,7 +303,7 @@ class Foody_Registration
             $query = new WP_Query('pagename=' . $slug);
             if (!$query->have_posts()) {
                 // Add the page using the data from the array above
-               $id =  wp_insert_post(
+                $id = wp_insert_post(
                     array(
                         'post_content' => $page['content'],
                         'post_name' => $slug,
@@ -303,9 +315,9 @@ class Foody_Registration
                     )
                 );
 
-               if(!is_wp_error($id)){
-                   update_post_meta( $id, '_wp_page_template', 'page-templates/centered-content.php' );
-               }
+                if (!is_wp_error($id)) {
+                    update_post_meta($id, '_wp_page_template', 'page-templates/centered-content.php');
+                }
             }
         }
 
@@ -526,10 +538,11 @@ class Foody_Registration
         }
     }
 
-    function foody_wp_email_content_type() {
-        if($GLOBALS["use_html_content_type"]){
+    function foody_wp_email_content_type()
+    {
+        if (isset($GLOBALS["use_html_content_type"]) && $GLOBALS["use_html_content_type"]) {
             return 'text/html';
-        }else{
+        } else {
             return 'text/plain';
         }
     }

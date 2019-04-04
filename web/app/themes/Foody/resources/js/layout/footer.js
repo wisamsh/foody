@@ -9,5 +9,5 @@ jQuery(document).ready(($)=>{
     // // footer.style.marginTop = Math.abs(space);
     //
     // $('footer').css('marginTop',Math.abs(space) + 'px')
-
+    
 });

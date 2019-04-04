@@ -26,7 +26,7 @@ $homepage = new Foody_HomePage();
 
 
                     <h2 class="title not-found-title">
-						<?php echo __( 'אופס… העמוד לא נמצא<br> אבל אולי יעניין אותך גם… ', 'foody' ); ?>
+						<?php echo get_option('foody_404_text',__( 'אופס… העמוד לא נמצא<br> אבל אולי יעניין אותך גם… ', 'foody' )); ?>
                     </h2>
 
 

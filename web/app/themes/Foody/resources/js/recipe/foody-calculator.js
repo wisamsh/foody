@@ -20,7 +20,7 @@ window.calculator = function (selector) {
         });
     }
 
-    $numberOfDishes.on('input',function(){
+    $numberOfDishes.on('input', function () {
         let val = $(this).val();
 
         if (originalNumberOfDishes <= 0 || val <= 0) {
@@ -44,13 +44,12 @@ window.calculator = function (selector) {
     });
 
 
-
 };
 
 
 function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 
-    updateNutrients(originalNumberOfDishes, val, reset);
+    // updateNutrients(originalNumberOfDishes, val, reset);
 
     $elements.each(function () {
 

@@ -32,9 +32,11 @@ add_filter('the_content', 'foody_content_filter');
  */
 function foody_comment_form_fields($fields)
 {
-    $fields['email'] = '';  //remove default email input
+    if (is_user_logged_in()) {
+        $fields['email'] = '';  //remove default email input
+        $fields['author'] = '';//remove default author input
+    }
     $fields['url'] = '';  //remove default url input
-    $fields['author'] = '';//remove default author input
     return $fields;
 }
 
@@ -80,13 +82,22 @@ add_filter('show_admin_bar', '__return_false');
  */
 function foody_js_globals()
 {
+    global $wp_session;
+
     if (!is_admin()) {
         // Hookable
         $vars = apply_filters('foody_js_globals', []);
         $vars['isMobile'] = wp_is_mobile();
         $vars['ajax'] = admin_url('admin-ajax.php');
-        $vars['loggedIn'] = is_user_logged_in() ? 'true' : 'false';
+        $vars['loggedIn'] = is_user_logged_in();
         $vars['imagesUri'] = $GLOBALS['images_dir'];
+        $vars['messages'] = foody_js_messages();
+
+        $vars['userRecipesCount'] = 0;
+        if (is_user_logged_in()) {
+            $vars['userRecipesCount'] = empty($wp_session['favorites']) ? 0 : count($wp_session['favorites']);
+            $vars['loggedInUser'] = wp_get_current_user()->ID;
+        }
 
         $js = wp_json_encode($vars);
 
@@ -97,6 +108,12 @@ function foody_js_globals()
 
         <?php
     }
+}
+
+function foody_js_messages()
+{
+    $messages = apply_filters('foody_js_messages', ['general' => []]);
+    return $messages;
 }
 
 add_action('wp_head', 'foody_js_globals', -10000);

@@ -77,6 +77,7 @@ module.exports = env => {
             main: "./resources/js/app",
             admin: "./resources/js/admin",
             style: "./resources/sass/app.scss",
+            // ebook: "./resources/sass/pages/e-book/e-book.scss",
             // homepage: './resources/js/entries/homepage.js',
             // common: './resources/js/entries/common.js',
         },

@@ -265,6 +265,18 @@
           "url": "https://wpgoplugins.com/index.php?eddfile=5753%3A805%3A3%3A1&ttl=1554470076&file=3&token=caca7216c2184b90d85d0244e7416ae2"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "delicious-brains-inc/wp-ses",
+        "version": "0.8.2",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wp-ses.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -298,7 +310,8 @@
     "tony-archambeau/wp-sitemap-page": "^1.6",
     "david-gwyer/simple-sitemap": "^2.6",
     "david-gwyer/simple-sitemap-pro": "^2.6",
-    "ext-json": "*"
+    "ext-json": "*",
+    "delicious-brains-inc/wp-ses": "^0.8.2"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

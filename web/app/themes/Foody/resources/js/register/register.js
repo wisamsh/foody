@@ -16,6 +16,7 @@ jQuery(document).ready(($) => {
         }
     );
 
+
     $.validator.addMethod(
         "password",
         function (value) {
@@ -27,7 +28,14 @@ jQuery(document).ready(($) => {
         }
     );
 
-    let validator = $("#register-form").validate({
+
+    $('#register-form .md-checkbox label').on('click', function () {
+        let $input = $(this).prev('input[type="checkbox"]');
+        let checked = $input.prop('checked');
+        $input.prop('checked', checked);
+    });
+
+    $("#register-form").validate({
         rules: {
             email: {
                 required: true,
@@ -58,6 +66,9 @@ jQuery(document).ready(($) => {
             },
             terms: {
                 required: true
+            },
+            marketing: {
+                required: '#check-e-book:checked'
             }
         },
         messages: {
@@ -67,7 +78,8 @@ jQuery(document).ready(($) => {
             password: 'סיסמא אינה תקינה',
             'password-confirmation': 'סיסמאות אינן תואמות',
             phone_number: 'מספר טלפון נייד אינו תקין',
-            terms: 'אנא אשר/י את תנאי השימוש'
+            terms: 'אנא אשר/י את תנאי השימוש',
+            marketing: foodyGlobals.messages.registration.eBookError
         },
         errorPlacement: function (error, element) {
             if (element.attr("type") == "checkbox") {

@@ -17,7 +17,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     private $description;
 
-    private $description_mobile;
+    public $description_mobile;
 
     private $title;
 
@@ -287,7 +287,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_sidebar_content($args = array())
     {
-        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים', $args = array());
+        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים', $args = array('hide_playlists'=>true));
         dynamic_sidebar('foody-social');
     }
 
@@ -386,9 +386,13 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     {
         $posts = [];
         $related = get_field($selector, $this->id);
-        if (!empty($related)) {
+        if (!empty($related) && is_array($related)) {
             $posts = $related;
         }
+
+        $posts = array_filter($posts,function ($post){
+           return $post instanceof WP_Post && $post->ping_status === 'publish';
+        });
 
         $items_to_fetch = self::$MAX__RELATED_ITEMS - count($posts);
 
@@ -538,6 +542,12 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             case 'foody_playlist':
                 $foody_post = new Foody_Playlist($post);
                 break;
+            case 'foody_feed_channel':
+                $foody_post = new Foody_Feed_Channel($post);
+                break;
+            case 'foody_filter':
+                $foody_post = new Foody_Feed_Filter($post);
+                break;
             default:
                 $foody_post = new Foody_Article($post);
                 break;
@@ -561,7 +571,10 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return [
             'ID' => $this->post->ID,
             'type' => $this->post->post_type,
-            'title' => $this->title
+            'title' => $this->title,
+	        'author_name' => $this->author_name,
+	        'view_count' => foody_get_post_views($this->id),
+            'has_video' => $this->has_video
         ];
     }
 

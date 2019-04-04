@@ -44,6 +44,16 @@
             width: 100%;
           }
         }
+        &.aligncenter {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        &.alignnone {
+          width: 100vw;
+        }
+        .wp-caption-text {
+          text-align: center;
+        }
       }
     }
     .comments {

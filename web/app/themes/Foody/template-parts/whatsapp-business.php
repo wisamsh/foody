@@ -19,7 +19,7 @@ $classes = array_merge($classes, $def_classes);
         <?php if (!wp_is_mobile()): ?>
             <i class="icon-whatsapp"></i>
         <?php else: ?>
-            <img src="<?php echo $GLOBALS['images_dir'] . 'whatsapp-icon.svg' ?>" alt="">
+            <img class="whatsapp-icon-image" src="<?php echo $GLOBALS['images_dir'] . 'whatsapp-icon.svg' ?>" alt="">
         <?php endif; ?>
     </a>
 </button>

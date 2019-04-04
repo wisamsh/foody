@@ -67,6 +67,48 @@
         top: 0;
       }
     }
+
+    &.anonymous-comment {
+      height: 190px;
+      margin-bottom: 50px; //80px;
+      padding: 1px 65px 0 10px;
+      text-align: right;
+
+      img.avatar {
+        top: 20%;
+      }
+
+      #comment {
+        border-radius: 3px;
+        border: solid 1px #d8d8d8;
+        height: auto;
+        margin-top: 10px;
+        padding: 0 10px;
+      }
+
+      #author-name, #author-email {
+        display: block;
+        margin-top: 10px;
+        padding-right: 10px;
+        padding-left: 10px;
+        border-radius: 3px;
+        border: solid 1px #d8d8d8;
+      }
+
+      &.open {
+        margin-bottom: 0;
+        height: 230px;
+
+        img.avatar {
+          top: 0;
+        }
+
+        #comment {
+          height: 130px;
+          margin-bottom: 15px;
+        }
+      }
+    }
   }
 
   &.open {
@@ -84,6 +126,7 @@
     text-align: left;
     display: none;
     margin-bottom: 10px;
+    margin-left: 10px;
 
     input[type="submit"], input[type="button"] {
       font-family: $font__assistant;
@@ -112,11 +155,10 @@
 .comment-list {
 
   padding-right: 5px;
-  padding-left: 60px;
-
   margin: 0;
 
   .foody-comment {
+    position: relative;
     font-family: $font__assistant;
     padding: 10px 0;
     $avatar-size: 70px;
@@ -127,6 +169,8 @@
       margin-left: 10px;
       vertical-align: baseline;
       max-width: 40px;
+      position: absolute;
+      top: 40px;
     }
 
     .comment-body {
@@ -135,8 +179,8 @@
       border-radius: 8px;
       background-color: #ffffff;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
-      display: inline-block;
-      width: calc(100% - #{$avatar-size});
+      display: block;
+      margin-right: 60px;
 
       .author {
         unicode-bidi: embed;
@@ -155,6 +199,18 @@
         overflow-wrap: break-word;
       }
 
+      &.waiting-for-approval {
+        margin-bottom: 30px;
+
+        .waiting-comment-approval-image-container {
+          text-align: center;
+        }
+
+        .waiting-approval {
+          text-align: center;
+          margin-top: 15px;
+        }
+      }
     }
 
     .reply {
@@ -221,6 +277,7 @@
 
       #comment-error {
         padding: 0 70px;
+        padding-right: 10px;
         text-align: right;
         font-size: 1rem;
         font-weight: normal;
@@ -241,6 +298,10 @@
         }
       }
 
+      #author-name, #author-email {
+        width: 100%;
+      }
+
       &.open {
 
         #comment {
@@ -248,6 +309,21 @@
         }
 
         img.avatar {
+        }
+      }
+
+      &.anonymous-comment {
+        height: 200px;
+        padding: 1px 60px 10px 10px;
+        margin-bottom: 30px;
+
+        &.open {
+          height: 240px;
+          margin-bottom: 0;
+
+          #comment {
+            height: 143px;
+          }
         }
       }
     }
@@ -287,6 +363,7 @@
       .comment-body {
         padding: 10px;
         vertical-align: top;
+        margin-right: 50px;
         .author {
           font-size: 18px;
         }

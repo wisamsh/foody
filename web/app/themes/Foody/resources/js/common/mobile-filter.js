@@ -7,6 +7,7 @@ jQuery(document).ready(($) => {
     // mobile filter handlers
     if (foodyGlobals.isMobile) {
         let $mobileFilterBtn = $('.filter-mobile');
+        let $mobileWhatsappIcon = $('#whatsapp.whatsapp-mobile');
         if (foodyGlobals.hideFilter) {
             $mobileFilterBtn.remove();
         } else {
@@ -70,11 +71,16 @@ jQuery(document).ready(($) => {
             $(window).scroll(function () {
                 let threshold = 600; // number of pixels before bottom of page that you want to start fading
                 let op = (($(document).height() - $(window).height()) - $(window).scrollTop()) / threshold;
+                let pointerEvents = "all";
 
                 if (op <= 0.2) {
                     op = 0;
+                    pointerEvents = "none"
                 }
                 $mobileFilterBtn.css("opacity", op);
+                $mobileFilterBtn.css("pointer-events", pointerEvents);
+                $mobileWhatsappIcon.css("opacity", op);
+                $mobileWhatsappIcon.css("pointer-events", pointerEvents);
             });
 
 

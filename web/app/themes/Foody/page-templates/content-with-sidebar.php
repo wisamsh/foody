@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: Content With Sidebar
- * Template Post Type: post, foody_recipe, foody_article, foody_playlist
+ * Template Post Type: post, foody_recipe, foody_article, foody_playlist, foody_feed_channel, foody_filter
  *
  *
  * Created by PhpStorm.

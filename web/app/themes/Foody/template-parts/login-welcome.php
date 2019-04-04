@@ -12,7 +12,9 @@ $image_left = get_field('left_image', $page);
 
 $profile = $template_args['profile'];
 
-$username = $profile['username'];
+$username  = $profile['username'];
+$marketing = $template_args['marketing'];
+$eBook     = $template_args['e-book'];
 
 ?>
 
@@ -24,7 +26,10 @@ $username = $profile['username'];
 
     <h2>
         <?php echo sprintf(__('%s, נעים להכיר!'), $username) ?>
+        <br>
     </h2>
+    <input class="marketing-approved" type="hidden" value="<?php echo $marketing ?>">
+    <input class="e-book-approved" type="hidden" value="<?php echo $eBook ?>">
 
     <p>
         <?php

@@ -593,6 +593,22 @@ figure {
   }
 }
 
+@include breakpoint(mobileonly) {
+  #whatsapp {
+    &.floating {
+      right: auto;
+      left: 0;
+      width: 80px;
+      height: 80px;
+      bottom: 5px;
+
+      img.whatsapp-icon-image {
+        width: 100%;
+      }
+    }
+  }
+}
+
 .essb-customizer-toggle {
   display: none !important;
 }
