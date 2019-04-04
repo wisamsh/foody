@@ -108,17 +108,22 @@ function foody_edit_user_approvals()
         $errors->add(401, 'unauthorized');
     } else {
 
-        $markting = isset($_POST['marketing']) ? true : false;
-        $e_book = isset($_POST['e_book']) ? true : false;
+        $marketing = foody_parse_checkbox('marketing');
+        $e_book = foody_parse_checkbox('e_book');
 
 
         $ID = get_current_user_id();
 
-        $resultMarketing = update_user_meta($ID, 'marketing', $markting);
-        $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
+        if (!empty($marketing)) {
+
+            $resultMarketing = update_user_meta($ID, 'marketing', $marketing);
+        }
+        if (!empty($e_book)) {
+            $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
+        }
 
 
-        if ($resultMarketing === false || $resultMarketingEbook === false) {
+        if (isset($resultMarketing) && $resultMarketing === false || isset($resultMarketingEbook) && $resultMarketingEbook === false) {
             $errors->add(500, 'error updating user');
         }
 
@@ -147,7 +152,7 @@ function foody_edit_user_approvals_viewed()
         $errors->add(401, 'unauthorized');
     } else {
 
-        $seen_approvals = isset($_POST['seen_approvals']) ? true : false;
+        $seen_approvals = foody_parse_checkbox('seen_approvals');
         $ID = get_current_user_id();
 
         $resultSeen = update_user_meta($ID, 'seen_approvals', $seen_approvals);

@@ -36,3 +36,19 @@ require_once get_template_directory() . '/functions/ajax/search.php';
 require_once get_template_directory() . '/functions/ajax/load-more.php';
 require_once get_template_directory() . '/functions/ajax/edit-user.php';
 //require_once get_template_directory() . '/functions/ajax/duplicate-titles.php';
+
+function foody_parse_checkbox($key){
+    $checked = false;
+
+    if(isset($_POST[$key])){
+        $value = $_POST[$key];
+        if($value === 'on'){
+            $checked = true;
+        }elseif ($value === true || $value === 1){
+            $checked = true;
+        }
+    }
+
+
+    return $checked;
+}
