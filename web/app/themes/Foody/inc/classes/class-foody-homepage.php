@@ -214,7 +214,7 @@ class Foody_HomePage
 
         $login_amount = get_user_meta(get_current_user_id(),'login_amount',true);
 
-//        if ((!$approved_marketing || (!$approved_e_book && $show)) && $login_amount <= 1) {
+        if ((!$approved_marketing || (!$approved_e_book && $show)) && $login_amount <= 1) {
             $modal_args = [
                 'id' => 'approvals-modal',
                 'title' => '',
@@ -223,6 +223,6 @@ class Foody_HomePage
             ];
 
             foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', $modal_args);
-//        }
+        }
     }
 }
