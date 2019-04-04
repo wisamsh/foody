@@ -24,13 +24,15 @@ module.exports = (function () {
 
             if (this._isHome()) {
                 if (page !== null) {
-                    url = `${url}/${this.pageQuery}/${page}`
+                    url = `${url}/${this.pageQuery}/${page}`;
+                    this.toggleSeo(page);
                 } else {
                     url = `${url}${pathname}`;
                 }
             } else {
                 if (page !== null) {
-                    urlSearchParams.append(this.pageQuery, page);
+                    urlSearchParams.set(this.pageQuery, page);
+                    this.toggleSeo(page);
                 }
                 url = `${url}${pathname}`;
             }
@@ -53,6 +55,15 @@ module.exports = (function () {
         let urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(key);
     };
+
+
+    FoodyLocationUtils.prototype.toggleSeo = function (page) {
+
+        if(page && page > 1){
+            $('#seo').remove();
+        }
+    };
+
 
     return FoodyLocationUtils;
 

@@ -131,17 +131,31 @@ echo do_shortcode('[wordpress_social_login]');
                     <input type="tel" id="phone-number" name="phone_number">
                 </div>
 
-<!--                <div class="md-checkbox col-12">-->
-<!--                    <input id="check-terms" type="checkbox" checked name="terms" required>-->
-<!--                    <label for="check-terms">-->
-<!--                    </label>-->
-<!--                </div>-->
+                <!--                <div class="md-checkbox col-12">-->
+                <!--                    <input id="check-terms" type="checkbox" checked name="terms" required>-->
+                <!--                    <label for="check-terms">-->
+                <!--                    </label>-->
+                <!--                </div>-->
                 <div class="md-checkbox col-12">
                     <input id="check-marketing" type="checkbox" checked name="marketing">
                     <label for="check-marketing">
                         <?php echo __('הריני לאשר בזה קבלת דואר מאתר Foody הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר') ?>
                     </label>
                 </div>
+                <?php if (get_field('show')): ?>
+                    <div class="md-checkbox col-12">
+                        <input id="check-e-book" type="checkbox" checked name="e-book">
+                        <label for="check-e-book">
+                            <?php
+                            $text  = get_field('text');
+                            if(empty($text)){
+                                $text = __('ברצוני לקבל את ספר המתכונים לפסח');
+                            }
+                            echo $text;
+                            ?>
+                        </label>
+                    </div>
+                <?php endif; ?>
                 <!--suppress JSUnusedLocalSymbols -->
                 <script>
                     function captchaCallback(token) {

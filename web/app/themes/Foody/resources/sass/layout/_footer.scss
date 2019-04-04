@@ -1,5 +1,13 @@
 $sidebar-width: 21%;
 
+body {
+  &.has-background {
+    footer {
+      background-color: $color__background-screen;
+    }
+  }
+}
+
 .seo {
   width: calc(960px - #{$sidebar-width});
   text-align: right;
@@ -136,7 +144,7 @@ footer.site-footer {
 @include breakpoint(mobileonly) {
 
   .newsletter {
-    .ajax-loader{
+    .ajax-loader {
       display: none;
     }
 
@@ -277,6 +285,8 @@ footer.site-footer {
           &:not(:first-child) {
             &:before {
               content: '\00a0\2022\00a0\00a0';
+              position: relative;
+              left: -8px;
             }
           }
         }

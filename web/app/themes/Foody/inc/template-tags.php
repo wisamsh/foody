@@ -16,15 +16,13 @@ if (!function_exists('foody_posted_on')) :
         $format = 'd.m.y';
         $time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
         if (get_the_time($format, $post) !== get_the_modified_time($format, $post)) {
-            $time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
+            $time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time>';
         }
 
 
         $time_string = sprintf($time_string,
             esc_attr(get_the_date($format, $post)),
-            esc_html(get_the_date($format, $post)),
-            esc_attr(get_the_modified_date($format, $post)),
-            esc_html(get_the_modified_date($format, $post))
+            esc_html(get_the_date($format, $post))
         );
 
 
@@ -35,6 +33,7 @@ if (!function_exists('foody_posted_on')) :
         );
 
         $posted_on = '<span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
+
         if ($echo) {
             echo $posted_on;
         } else {
@@ -167,7 +166,7 @@ if (!function_exists('foody_post_thumbnail')) :
                 ?>
             </a>
 
-            <?php
+        <?php
         endif; // End is_singular().
     }
 endif;
@@ -205,7 +204,7 @@ if (!function_exists('foody_post_thumbnail')) :
                 ?>
             </a>
 
-            <?php
+        <?php
         endif; // End is_singular().
     }
 endif;

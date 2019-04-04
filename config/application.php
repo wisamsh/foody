@@ -13,6 +13,7 @@ Env::init();
 /**
  * Use Dotenv to set required environment variables and load .env file in root
  */
+/** @noinspection PhpUndefinedClassInspection */
 $dotenv = new Dotenv\Dotenv($root_dir);
 if (file_exists($root_dir . '/.env')) {
     $dotenv->load();
@@ -25,18 +26,21 @@ if (file_exists($root_dir . '/.env')) {
  */
 define('WP_ENV', env('WP_ENV') ?: 'production');
 
-if(WP_ENV == 'production' || WP_ENV == 'medio-development'){
-    $_SERVER['HTTPS']='on';
+if (
+    WP_ENV == 'production'
+    || (WP_ENV == 'medio-development' && isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false)) {
+    $_SERVER['HTTPS'] = 'on';
 }
-
+define('WPCF7_LOAD_CSS', false);
 $env_config = __DIR__ . '/environments/' . WP_ENV . '.php';
 
 if (file_exists($env_config)) {
+    /** @noinspection PhpIncludeInspection */
     require_once $env_config;
 }
 
 // Foody related
-define('FOODY_PAGE','fp');
+define('FOODY_PAGE', 'fp');
 
 /**
  * URLs
@@ -88,7 +92,7 @@ if (!defined('ABSPATH')) {
     define('ABSPATH', $webroot_dir . '/wp/');
 }
 
-define( 'WP_ALLOW_MULTISITE', true );
+define('WP_ALLOW_MULTISITE', true);
 //define('MULTISITE', true);
 //define('SUBDOMAIN_INSTALL', true);
 //define('DOMAIN_CURRENT_SITE', 'foody.co.il');

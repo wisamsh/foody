@@ -51,20 +51,22 @@ aside {
     position: fixed;
     bottom: 0;
     left: 0;
-    right: 0;
-    margin: auto;
+    right: 15px;
     width: 140px;
 
     .filter-btn {
       height: 55px;
-      width: 140px;
-      border-radius: 28px;
-      background-color: #FFFFFF;
+      width: 55px;
+      border-radius: 50%;
+      background-image: linear-gradient(34deg, #ec3849, #f35644);
       box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.13);
-      color: $color__primary;
+      color: #fff;
       vertical-align: middle;
       display: inline-block;
       font-family: $font__bold;
+      position: fixed;
+      bottom: 22px;
+      right: 15px;
       &:active, &:hover, &:focus {
         border: 0;
       }

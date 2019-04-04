@@ -8,6 +8,8 @@
  */
 
 get_header();
+
+$homepage = new Foody_HomePage();
 ?>
 
     <div id="primary" class="content-area">
@@ -18,15 +20,56 @@ get_header();
                 <div class="page-content">
 
 
-                    <div class="image-container">
+                    <div class="image-container not-found-image">
                         <img src="<?php echo $GLOBALS['images_dir'] . '404.svg' ?>" alt="">
                     </div>
 
 
-                    <h2 class="title">
-                        <?php echo __('אופס! נראה שהדף אינו זמין!','foody'); ?>
+                    <h2 class="title not-found-title">
+						<?php echo get_option('foody_404_text',__( 'אופס… העמוד לא נמצא<br> אבל אולי יעניין אותך גם… ', 'foody' )); ?>
                     </h2>
 
+
+                    <div class="homepage">
+
+
+                        <div class="content">
+
+							<?php $homepage->promoted_items(); ?>
+
+							<?php
+
+							$num = wp_is_mobile() ? 4 : 6;
+							echo do_shortcode( '[foody_team max="' . $num . '" show_title="true"]' )
+
+							?>
+
+                            <section class="feed-container row">
+
+
+                                <section class="sidebar-container d-none d-lg-block">
+									<?php
+									echo "<aside class=\"sidebar col pl-0\">";
+
+									echo "<div class=\"sidebar-content\">";
+									dynamic_sidebar( 'foody-social' );
+									echo "</div></aside>";
+									?>
+                                </section>
+
+
+                                <section class="content-container col-lg-9 col-12">
+
+									<?php $homepage->feed(); ?>
+
+                                </section>
+
+                            </section>
+
+
+                        </div>
+
+                    </div>
                 </div><!-- .page-content -->
             </section><!-- .error-404 -->
 

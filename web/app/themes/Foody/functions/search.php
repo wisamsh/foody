@@ -82,21 +82,17 @@ function foody_search_user_by_name($name, $single = true)
     $query_authors = "AND user_id IN (SELECT user_id FROM $wpdb->usermeta WHERE meta_key = 'wp_capabilities' AND meta_value = 'a:1:{s:6:\"author\";b:1;}') ";
 
 
-
     $query = $wpdb->prepare($query, $args);
 
     $result = $wpdb->get_results($query);
 
 
-
-
-
-    if(!empty($result)){
+    if (!empty($result)) {
         $result = array_map(function ($user) {
             return $user->user_id;
         }, $result);
 
-        $ids = implode(',',$result);
+        $ids = implode(',', $result);
 
         $query = "SELECT user_id from $wpdb->usermeta where user_id IN ($ids) and meta_value LIKE '%\"author\"%'";
 
@@ -113,7 +109,63 @@ function foody_search_user_by_name($name, $single = true)
     }
 
 
-
     return $result;
 }
 
+
+/**
+ * Loads values from ACF field 'filters_list'
+ * set in the custom options page 'Foody search options'
+ * @param $value mixed current field value
+ * @return mixed|null
+ */
+function foody_filters_acf_load_value($value)
+{
+
+    if (empty($value)) {
+
+        $post_type = get_post_type();
+        if(is_category() || is_tag() || $post_type == 'foody_channel' || is_author()){
+            // no values set for filters lists,
+            // load default values from global search settings (foody_search_settings)
+            // see Sidebar_Filter for more details.
+            $global_search_settings = get_field('filters_list', 'foody_search_options', false);
+            $value = $global_search_settings;
+        }
+    }
+
+    return $value;
+}
+
+add_filter('acf/load_value/name=filters_list', 'foody_filters_acf_load_value', 1000, 1);
+
+
+/**
+ *  Get the ACF post_id for the current
+ * page, Defaults to Sidebar_Filter::FILTER_OPTIONS_ID
+ * @return int|string
+ */
+function get_filters_id()
+{
+    // load filters specific to current page
+    $id = get_queried_object_id();
+    if (is_category() || is_tag()) {
+        /** @var WP_Term $term */
+        $term = get_queried_object();
+        $filters_post_id = $term->taxonomy . '_' . $term->term_id;
+    } elseif (is_author()) {
+        $filters_post_id = "user_$id";
+    } elseif (is_single() && get_post_type() == 'foody_channel') {
+        $filters_post_id = $id;
+    } else {
+        $filters_post_id = SidebarFilter::FILTER_OPTIONS_ID;
+    }
+
+    if ($filters_post_id != SidebarFilter::FILTER_OPTIONS_ID) {
+        if (!have_rows('filters_list', $filters_post_id)) {
+            $filters_post_id = SidebarFilter::FILTER_OPTIONS_ID;
+        }
+    }
+
+    return $filters_post_id;
+}

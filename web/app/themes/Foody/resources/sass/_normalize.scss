@@ -1,12 +1,12 @@
 /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
-
 /* Document
 	 ========================================================================== */
-
 /**
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
+@import "variables-site/variables-site";
+@import "mixins/mixins-master";
 
 :root {
   --app-height: 100%;
@@ -54,7 +54,7 @@ body {
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
   min-height: fit-content;
-
+  opacity: 1 !important;
   &.contrast {
     header {
       .accessibility {
@@ -588,6 +588,22 @@ figure {
     i {
       &:before {
         font-size: 50px;
+      }
+    }
+  }
+}
+
+@include breakpoint(mobileonly) {
+  #whatsapp {
+    &.floating {
+      right: auto;
+      left: 0;
+      width: 80px;
+      height: 80px;
+      bottom: 5px;
+
+      img.whatsapp-icon-image {
+        width: 100%;
       }
     }
   }

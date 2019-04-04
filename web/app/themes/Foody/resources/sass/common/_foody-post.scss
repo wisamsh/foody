@@ -8,7 +8,7 @@ $content-width: 95%;
 .single {
 
   .content {
-    .tags {
+    .tags, .categories {
       @include max-width-section;
 
       .title {
@@ -30,43 +30,6 @@ $content-width: 95%;
           padding: 2px 12px;
           margin-left: 10px;
           margin-bottom: 10px;
-        }
-      }
-    }
-
-    .categories {
-      @include max-width-section;
-
-      ul {
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: row;
-        flex-flow: row;
-        flex-wrap: wrap;
-        line-height: normal;
-
-        li {
-          font-family: $font__assistant;
-          font-size: $content-font-size;
-          list-style-type: none;
-          margin-left: 1em;
-          position: relative;
-
-          &:before {
-            content: "\B7";
-            vertical-align: sub;
-            font-size: 35px;
-            line-height: normal;
-            position: absolute;
-            top: -12.5px;
-            display: block;
-            padding-left: 10px;
-          }
-
-          a {
-            margin-right: 10px;
-          }
         }
       }
     }

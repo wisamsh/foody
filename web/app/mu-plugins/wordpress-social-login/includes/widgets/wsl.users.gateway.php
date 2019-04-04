@@ -57,7 +57,7 @@ function wsl_process_login_new_users_gateway($provider, $redirect_to, $hybridaut
     $change_username = get_option('wsl_settings_bouncer_profile_completion_change_username');
     $extra_fields = get_option('wsl_settings_bouncer_profile_completion_hook_extra_fields');
 
-    if (isset($_REQUEST["bouncer_account_linking"])) {
+    if (isset($_REQUEST["bouncer_account_linking"]) && false) {
         if ($linking_enabled == 2) {
             return wsl_process_login_render_notice_page(_wsl__("Not tonight.", 'wordpress-social-login'));
         }
@@ -86,8 +86,7 @@ function wsl_process_login_new_users_gateway($provider, $redirect_to, $hybridaut
 
             $shall_pass = true;
         }
-    }
-    elseif (isset($_REQUEST["bouncer_profile_completion"])) {
+    } elseif (isset($_REQUEST["bouncer_profile_completion"]) && false) {
         // Bouncer::Profile Completion enabled?
         // > if not enabled we just let the user pass
         if ($require_email == 2 && $change_username == 2 && $extra_fields == 2) {
@@ -170,7 +169,7 @@ function wsl_process_login_new_users_gateway($provider, $redirect_to, $hybridaut
             }
         }
     }
-
+    $shall_pass = true;
     if ($shall_pass == false) {
         $provider_name = wsl_get_provider_name_by_id($provider);
 //        foody_get_template_part(get_template_directory() . '/template-parts/login-welcome.php', [

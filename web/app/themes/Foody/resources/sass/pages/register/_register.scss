@@ -213,6 +213,12 @@
       line-height: 53px;
       font-family: $font__assistant;
       font-weight: bold;
+      &:visited {
+        color: #fff;
+      }
+      &:hover {
+        color: #fff;
+      }
     }
 
   }

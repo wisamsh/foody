@@ -1633,8 +1633,13 @@ function array_not_empty($arr)
 function group_by($array, $key)
 {
     $return = array();
-    foreach ($array as $val) {
-        $return[$val[$key]][] = $val;
+    if (is_array($array)) {
+        foreach ($array as $val) {
+            if (is_callable($key)) {
+                $key = call_user_func($key, $val);
+            }
+            $return[$val[$key]][] = $val;
+        }
     }
     return $return;
 }
@@ -1702,7 +1707,7 @@ function foody_array_to_data_attr($data)
     foreach ($data as $key => $value) {
 //        $data_attrs .= " data-$key='$value'";
 
-        $data_attrs.= ' data-'.$key.'='.'"'.$value.'"';
+        $data_attrs .= ' data-' . $key . '=' . '"' . $value . '"';
     }
 
     return $data_attrs;
@@ -1710,9 +1715,16 @@ function foody_array_to_data_attr($data)
 
 function foody_normalize_content($content)
 {
-    $content = apply_filters('the_content', $content);
+    if(function_exists('footabc_add_code_to_content')){
+        remove_filter('the_content','footabc_add_code_to_content');
+    }
 
     $content = apply_filters('the_content', $content);
+
+    if(function_exists('footabc_add_code_to_content')){
+        add_filter('the_content','footabc_add_code_to_content');
+    }
+
     $content = str_replace('&nbsp;', " ", $content);
     $content = preg_replace('/\s+/', ' ', $content);
 
@@ -1720,7 +1732,8 @@ function foody_normalize_content($content)
 
 }
 
-function foody_array_find($xs, $f) {
+function foody_array_find($xs, $f)
+{
     foreach ($xs as $x) {
         if (call_user_func($f, $x) === true)
             return $x;

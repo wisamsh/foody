@@ -3,7 +3,7 @@
  */
 
 // require('./star-rating/js/star-rating');
-require('./star-rating/css/star-rating.scss');
-
-require('./star-rating/themes/krajee-svg/theme');
-require('./star-rating/themes/krajee-svg/theme.scss');
+// require('./star-rating/css/star-rating.scss');
+//
+// require('./star-rating/themes/krajee-svg/theme');
+// require('./star-rating/themes/krajee-svg/theme.scss');

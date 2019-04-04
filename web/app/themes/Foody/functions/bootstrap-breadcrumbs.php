@@ -42,12 +42,32 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
             $foody_post = Foody_Post::create(get_post());
             if (!empty($foody_post)) {
                 $cat = $foody_post->get_primary_category();
-                if (!empty($cat))
+                if (!empty($cat)) {
                     $category = new Foody_Category($cat);
-                $term = $category->term;
-                if (!is_wp_error($term)) {
-                    echo '<li><a href="' . get_term_link($term->term_id) . '">' . $term->name . '</a></li>';
+                    $term = $category->term;
+                    if (!is_wp_error($term)) {
+//                    echo '<li><a href="' . get_term_link($term->term_id) . '">' . $term->name . '</a></li>';
+                        $separator = '@';
+                        $categories_html = get_category_parents($term->term_id, true, $separator);
+                        if (!empty($categories_html)) {
+                            $categories = explode($separator, $categories_html);
+                            $categories = array_filter($categories, function ($cat) use ($separator) {
+                                return $cat && trim($cat) != $separator;
+                            });
+
+                            echo "<li><a href='" . get_permalink(get_page_by_path('קטגוריות')) . "'> " . __('קטגוריות') . " </a> </li>";
+                            foreach ($categories as $parent_category) {
+                                echo "<li>$parent_category</li>";
+                            }
+                        }
+                    }
                 }
+
+                $post_type = get_post_type();
+                if ($post_type != 'foody_recipe' && $post_type != 'post') {
+                    echo '<li class="active">' . get_the_title() . '</li>';
+                }
+
             }
         }
         if (is_category()) {

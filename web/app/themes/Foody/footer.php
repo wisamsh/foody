@@ -14,8 +14,14 @@ $footer = new Foody_Footer();
 
 </div><!-- #content -->
 
+<?php if (!empty($edit_link = get_edit_post_link())): ?>
+    <div dir="rtl" style="text-align: right; max-width: 960px;margin: 0 auto;">
+        <a href="<?php echo $edit_link ?>">
+            <?php echo __('ערוך') ?>
+        </a>
+    </div>
+<?php endif; ?>
 <footer id="colophon" class="site-footer no-print">
-
 
 
     <section class="newsletter d-block d-lg-none">
@@ -64,7 +70,6 @@ if (!is_user_logged_in()) {
 
     foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', $login_popup_args);
 }
-
 ?>
 
 <?php wp_footer(); ?>

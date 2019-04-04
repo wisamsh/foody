@@ -53,7 +53,8 @@ abstract class Foody_Term
     }
 
 
-    public function sidebar(){
+    public function sidebar()
+    {
         dynamic_sidebar('foody-sidebar');
     }
 
@@ -62,7 +63,7 @@ abstract class Foody_Term
      */
     function the_sidebar_content()
     {
-       $this->sidebar();
+        $this->sidebar();
         dynamic_sidebar('foody-social');
     }
 
@@ -82,7 +83,7 @@ abstract class Foody_Term
 
         foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
             'sidebar' => array($this, 'sidebar'),
-            'wrap'=>true
+            'wrap' => true
         ]);
 
 
@@ -130,10 +131,13 @@ abstract class Foody_Term
             'header' => [
                 'sort' => true
             ],
-//            'title_el'=>'h1'
+            'title_el' => 'h1',
+//            'item_args' => [
+//                'title_el' => 'h2'
+//            ]
         ];
 
-        $grid = array_merge_recursive($grid_args, $grid);
+        $grid = array_replace_recursive($grid, $grid_args);
 
         foody_get_template_part(
             get_template_directory() . '/template-parts/common/foody-grid.php',

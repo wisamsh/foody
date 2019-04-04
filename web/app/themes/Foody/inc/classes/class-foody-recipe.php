@@ -12,14 +12,8 @@ class Foody_Recipe extends Foody_Post
     public $ingredients_title;
 
     public $amount_for;
-    public $has_video;
+
     public $nutrients;
-
-    private $duration;
-
-    public $video;
-
-    private $sponsership;
 
     private $overview;
 
@@ -29,11 +23,10 @@ class Foody_Recipe extends Foody_Post
 
     public $number_of_dishes;
 
-    private $debug = false;
-
 
     /**
      * Recipe constructor.
+     * @param WP_Post|null $post
      */
     public function __construct(WP_Post $post = null)
     {
@@ -66,45 +59,11 @@ class Foody_Recipe extends Foody_Post
     }
 
     /**
-     * @return string
-     */
-    public function getDuration(): string
-    {
-        return $this->duration ?? '';
-    }
-
-    /**
      * @param string $duration
      */
     public function setDuration(string $duration)
     {
         $this->duration = $duration;
-    }
-
-    public function the_video_box()
-    {
-        if ($this->post != null) {
-            if (have_rows('video', $this->post->ID)) {
-                while (have_rows('video', $this->post->ID)): the_row();
-                    $video_url = get_sub_field('url');
-
-                    if ($video_url) {
-                        $parts = explode('v=', $video_url);
-                        $query = explode('&', $parts[1]);
-                        $video_id = $query[0];
-                        $args = array(
-                            'id' => $video_id
-                        );
-                        foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
-                    } else {
-                        parent::the_featured_content();
-                    }
-
-                endwhile;
-            } else {
-                parent::the_featured_content();
-            }
-        }
     }
 
     public function the_overview()
@@ -187,6 +146,9 @@ class Foody_Recipe extends Foody_Post
 
         $title = get_field('nutritions_title', $this->post->ID);
 
+        if (empty($title)) {
+            $title = __('ערכים תזונתיים');
+        }
 
         if (!empty($this->nutrients)) {
             $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
@@ -253,6 +215,7 @@ class Foody_Recipe extends Foody_Post
     public function to_json_schema()
     {
         // TODO
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $schema = array(
             "@context" => "http://schema.org/",
             "@type" => "Recipe",
@@ -274,10 +237,10 @@ class Foody_Recipe extends Foody_Post
         );
     }
 
-    public function the_featured_content()
-    {
-        $this->the_video_box();
-    }
+//    public function the_featured_content()
+//    {
+//        $this->the_video_box();
+//    }
 
     public function the_sidebar_content($args = array())
     {
@@ -327,34 +290,6 @@ class Foody_Recipe extends Foody_Post
         }, $ingredients);
     }
 
-    private function init_video()
-    {
-        if (have_rows('video', $this->post->ID)) {
-            while (have_rows('video', $this->post->ID)): the_row();
-
-                $video_url = get_sub_field('url');
-
-                if (!empty($video_url)) {
-                    $parts = explode('v=', $video_url);
-                    if (!empty($parts) && count($parts) > 1) {
-                        $query = explode('&', $parts[1]);
-                        $video_id = $query[0];
-
-
-                        $this->video = array(
-                            'id' => $video_id,
-                            'url' => $video_url,
-                            'duration' => get_sub_field('duration')
-                        );
-                        $this->has_video = true;
-                    }
-                }
-
-            endwhile;
-        }
-
-    }
-
     private function init_overview()
     {
         $overview = get_field('overview', $this->post->ID);
@@ -370,8 +305,44 @@ class Foody_Recipe extends Foody_Post
 
     }
 
-    private function get_recipe_time($time_field)
+    public function duration8601($second)
     {
+        $h = intval($second / 3600);
+        $m = intval(($second - $h * 3600) / 60);
+        $s = $second - ($h * 3600 + $m * 60);
+        $ret = 'PT';
+        if ($h)
+            $ret .= $h . 'H';
+        if ($m)
+            $ret .= $m . 'M';
+        if ((!$h && !$m) || $s)
+            $ret .= $s . 'S';
+        return $ret;
+    }
+
+    public function time_to_iso8601_duration($time_field)
+    {
+        $str = '';
+        $overview = get_field('overview', $this->id);
+
+        $field = $overview[$time_field];
+        if (!isset($field['unit'])) {
+            $field['unit'] = 'minutes';
+        }
+        $m = $this->unit_to_minutes($field['unit'], $field['time']);
+        if (is_numeric($m)) {
+            $s = $m * 60;
+            $str = $this->duration8601($s);
+        }
+        return $str;
+    }
+
+    private function get_recipe_time($time_field, $local = true)
+    {
+        if (!$local) {
+            global $locale;
+            $locale = 'en_US';
+        }
         if (!isset($time_field['time'])) {
             $time_field['time'] = 0;
         }
@@ -389,7 +360,7 @@ class Foody_Recipe extends Foody_Post
         if (!empty($times['days'])) {
             $unit = 'days';
             $singular = 'day';
-            $recipe_time = sprintf(_n("%s $singular", "%s $unit", trim($times['days'])), number_format_i18n(intval($times['days'])));
+            $recipe_time = sprintf(_n("%s $singular", "%s $unit", trim($times['days'])), $this->format_recipe_time($local, intval($times['days'])));
         }
 
         if (!empty($times['hours'])) {
@@ -400,7 +371,7 @@ class Foody_Recipe extends Foody_Post
                 $recipe_time .= ', ';
             }
 
-            $hours_str = sprintf(_n("%s $singular", "%s $unit", trim($times['hours'])), number_format_i18n(intval($times['hours'])));
+            $hours_str = sprintf(_n("%s $singular", "%s $unit", trim($times['hours'])), $this->format_recipe_time($local, intval($times['hours'])));
             if (strcmp($hours_str, 'שעה 1') == 0) {
                 $hours_str = 'שעה';
             } elseif (strcmp($hours_str, '2 שעות') == 0) {
@@ -412,14 +383,32 @@ class Foody_Recipe extends Foody_Post
         if (!empty($times['minutes'])) {
             $unit = 'דקות';
             $singular = 'דקה';
-            $minutes_time = sprintf(_n("%s $singular", "%s $unit", trim($times['minutes'])), number_format_i18n(intval($times['minutes'])));
+            if (!$local) {
+                $unit = 'Minutes';
+                $singular = 'Minute';
+            }
+
+            $minutes_time = sprintf(_n("%s $singular", "%s $unit", trim($times['minutes'])), $this->format_recipe_time($local, intval($times['minutes'])));
             if (!empty($recipe_time)) {
                 $recipe_time .= __(' ו-');
             }
             $recipe_time .= $minutes_time;
+
+            global $locale;
+            $locale = 'iw_IL';
         }
 
         return $recipe_time;
+    }
+
+    private function format_recipe_time($local, $time)
+    {
+        $retval = number_format_i18n($time);
+        if (!$local) {
+            $retval = number_format($time);
+        }
+
+        return $retval;
     }
 
     private function unit_to_minutes($unit, $time)
@@ -659,27 +648,42 @@ class Foody_Recipe extends Foody_Post
     {
         $nutrients = array();
 
+
+        $excluded_nutrients = [
+            'fibers',
+            'saturated_fat',
+            'cholesterol',
+            'calcium',
+            'iron',
+            'potassium',
+            'zinc',
+            'sugar'
+        ];
+
         foreach (Foody_Ingredient::get_nutrients_options() as $nutrients_name => $nutrients_title) {
 
-            $item = ['name' => $nutrients_title, 'value' => 0];
-            foreach ($this->ingredients_groups as $group) {
+            if (!in_array($nutrients_name, $excluded_nutrients)) {
+                $item = ['name' => $nutrients_title, 'value' => 0];
+                foreach ($this->ingredients_groups as $group) {
 
-                foreach ($group['ingredients'] as $ingredient) {
+                    foreach ($group['ingredients'] as $ingredient) {
 
-                    /** @var Foody_Ingredient $ingredient */
-                    $value = $ingredient->get_nutrient_for_by_unit_and_amount($nutrients_name);
-                    $item['value'] = $item['value'] + $value;
+                        /** @var Foody_Ingredient $ingredient */
+                        $value = $ingredient->get_nutrient_data_by_unit_and_amount($nutrients_name);
+                        $item['value'] = $item['value'] + $value;
+                    }
+
                 }
+                $item['data_name'] = $nutrients_name;
+                $item['unit'] = Foody_Ingredient::get_nutrient_unit($nutrients_name);
+                $decimals = 0;
+                if ($nutrients_name == 'protein') {
+                    $decimals = 1;
+                }
+                $item['value'] = number_format($item['value'], $decimals, '.', '');
+                $nutrients[] = $item;
+            }
 
-            }
-            $item['data_name'] = $nutrients_name;
-            $item['unit'] = Foody_Ingredient::get_nutrient_unit($nutrients_name);
-            $decimals = 0;
-            if ($nutrients_name == 'protein') {
-                $decimals = 1;
-            }
-            $item['value'] = number_format($item['value'], $decimals, '.', '');
-            $nutrients[] = $item;
         }
 
         $this->nutrients = $nutrients;
@@ -689,17 +693,26 @@ class Foody_Recipe extends Foody_Post
     public function get_ingredients_jsonld()
     {
         $text = [];
-//        if(!empty($this->ingredients_groups)){
-//            foreach ($this->ingredients_groups as $ingredients_group) {
-//                foreach ($ingredients_group['ingredients'] as $ingredient) {
-//                    if($ingredient instanceof Foody_Ingredient){
-//                        $text[]= $ingredient->get_ingredient_html()
-//                    }
-//                }
-//            }
-//        }
+        if (!empty($this->ingredients_groups)) {
+            foreach ($this->ingredients_groups as $ingredients_group) {
+                foreach ($ingredients_group['ingredients'] as $ingredient) {
+                    if ($ingredient instanceof Foody_Ingredient) {
 
-        return json_encode($text);
+                        $ingredient_amounts_html = $ingredient->the_amounts(false);
+
+                        if (!empty($ingredient_amounts_html) && !is_wp_error($ingredient_amounts_html)) {
+                            $ingredient_amounts = strip_tags($ingredient_amounts_html);
+                            $ingredient_amounts = preg_replace('/\s+/', ' ', $ingredient_amounts);
+                            $ingredient_amounts = trim($ingredient_amounts);
+
+                            $text[] = $ingredient_amounts;
+                        }
+                    }
+                }
+            }
+        }
+
+        return json_encode($text, JSON_UNESCAPED_UNICODE);
     }
 
 

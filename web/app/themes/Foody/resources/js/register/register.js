@@ -9,7 +9,33 @@ jQuery(document).ready(($) => {
         return $.trim(value);
     };
 
-    let validator = $("#register-form").validate({
+    $.validator.addMethod(
+        "regex",
+        function (value, element, regexp) {
+            return this.optional(element) || regexp.test(value);
+        }
+    );
+
+
+    $.validator.addMethod(
+        "password",
+        function (value) {
+
+            let hasNumbers = /[0-9]+/.test(value);
+            let nonEn = /[^a-z0-9]/i.test(value);
+
+            return hasNumbers && nonEn === false;
+        }
+    );
+
+
+    $('#register-form .md-checkbox label').on('click', function () {
+        let $input = $(this).prev('input[type="checkbox"]');
+        let checked = $input.prop('checked');
+        $input.prop('checked', checked);
+    });
+
+    $("#register-form").validate({
         rules: {
             email: {
                 required: true,
@@ -40,6 +66,9 @@ jQuery(document).ready(($) => {
             },
             terms: {
                 required: true
+            },
+            marketing: {
+                required: '#check-e-book:checked'
             }
         },
         messages: {
@@ -49,7 +78,8 @@ jQuery(document).ready(($) => {
             password: 'סיסמא אינה תקינה',
             'password-confirmation': 'סיסמאות אינן תואמות',
             phone_number: 'מספר טלפון נייד אינו תקין',
-            terms: 'אנא אשר/י את תנאי השימוש'
+            terms: 'אנא אשר/י את תנאי השימוש',
+            marketing: foodyGlobals.messages.registration.eBookError
         },
         errorPlacement: function (error, element) {
             if (element.attr("type") == "checkbox") {

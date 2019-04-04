@@ -67,3 +67,27 @@ function add_input_debug_preview() {
     echo '<input type="hidden" name="debug_preview" value="debug_preview">';
 }
 
+
+/**
+ * Removes the -left css class from acf inputs
+ * which causes bad RTL display
+ */
+function foody_acf_input_admin_footer() {
+
+    ?>
+    <script type="text/javascript">
+        (function($) {
+
+
+            $('.-left').each(function () {
+                $(this).removeClass('-left');
+            });
+
+        })(jQuery);
+    </script>
+    <?php
+
+}
+
+add_action('acf/input/admin_footer', 'foody_acf_input_admin_footer');
+

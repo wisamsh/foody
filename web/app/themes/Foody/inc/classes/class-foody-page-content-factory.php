@@ -53,13 +53,17 @@ class Foody_PageContentFactory
                 case 'foody_recipe':
                     $page = new Foody_Recipe($post);
                     break;
-
                 case 'foody_channel':
                     $page = new Foody_Channel($post);
                     break;
-
                 case 'foody_playlist':
                     $page = new Foody_Playlist($post);
+                    break;
+                case 'foody_feed_channel':
+                    $page = new Foody_Feed_Channel($post);
+                    break;
+                case 'foody_filter':
+                    $page = new Foody_Feed_Filter($post);
                     break;
                 default:
                     $page = new Foody_Article($post);

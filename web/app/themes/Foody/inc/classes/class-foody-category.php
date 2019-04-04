@@ -21,6 +21,7 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
 
     /**
      * Get the category image (ACF Field)
+     * @param string $size
      * @return mixed|null|string
      */
     public function get_image($size = 'list-item')
@@ -43,9 +44,10 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
     }
 
 
-    public function get_mobile_image(){
+    public function get_mobile_image()
+    {
         $mobile_image = get_field('homepage_image', $this->term->taxonomy . '_' . $this->term->term_id);
-        if(!$mobile_image){
+        if (!$mobile_image) {
             $mobile_image = $this->get_image();
         }
 
@@ -70,6 +72,13 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
         }
 
         return $sub_categories;
+    }
+
+    public function has_sub_categories()
+    {
+        $parent_id = get_queried_object_id();
+        $wp_categories = get_categories(['parent' => $parent_id, 'hide_empty' => false]);
+        return !empty($wp_categories);
     }
 
 
@@ -111,13 +120,13 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
     function the_content($page)
     {
         parent::the_content($page);
-
     }
 
-    public function before_content(){
-        $cover_image = get_field('cover_image',$this->term->taxonomy . '_' . $this->term->term_id);
-        if(!empty($cover_image)){
-            foody_get_template_part(get_template_directory() . '/template-parts/content-cover-image.php',$cover_image);
+    public function before_content()
+    {
+        $cover_image = get_field('cover_image', $this->term->taxonomy . '_' . $this->term->term_id);
+        if (!empty($cover_image)) {
+            foody_get_template_part(get_template_directory() . '/template-parts/content-cover-image.php', $cover_image);
         }
     }
 
@@ -150,7 +159,8 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar
             'id' => 'category-feed',
             'header' => [
                 'title' => $this->title
-            ]
+            ],
+            'title_el' => $this->has_sub_categories() ? 'h2' : 'h1'
         ];
     }
 }

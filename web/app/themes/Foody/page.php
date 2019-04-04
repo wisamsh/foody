@@ -30,6 +30,8 @@ get_header();
 			endif;
 
 		endwhile; // End of the loop.
+
+        edit_post_link(__('ערוך'))
 		?>
 
 		</main><!-- #main -->

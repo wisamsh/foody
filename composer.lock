@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f09418218d16a7a54602dfe79fdcaf8",
+    "content-hash": "a50b3b6909abbed386cc052cceee8b03",
     "packages": [
         {
             "name": "anders-thorborgd/acf-image-crop-add-on",
@@ -158,6 +158,39 @@
                 "zikula"
             ],
             "time": "2017-12-29T09:13:20+00:00"
+        },
+        {
+            "name": "david-gwyer/simple-sitemap",
+            "version": "2.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/simple-sitemap.2.6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "david-gwyer/simple-sitemap-pro",
+            "version": "2.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://wpgoplugins.com/index.php?eddfile=5753%3A805%3A3%3A1&ttl=1554470076&file=3&token=caca7216c2184b90d85d0244e7416ae2",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "delicious-brains-inc/wp-ses",
+            "version": "0.8.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-ses.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
         },
         {
             "name": "delicious-brains/amazon-s3-and-cloudfront",
@@ -706,6 +739,17 @@
             "type": "wordpress-plugin"
         },
         {
+            "name": "tony-archambeau/wp-sitemap-page",
+            "version": "1.6.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-sitemap-page.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v2.5.0",
             "source": {
@@ -1128,7 +1172,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6"
+        "php": ">=5.6",
+        "ext-json": "*"
     },
     "platform-dev": []
 }

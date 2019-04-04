@@ -16,7 +16,7 @@ jQuery(document).ready(($) => {
         ],
     });
 
-    let categoryPager = new FoodyContentPaging({
+    new FoodyContentPaging({
         context: 'category',
         contextArgs: [
             foodyGlobals.objectID
@@ -28,23 +28,9 @@ jQuery(document).ready(($) => {
     let $slider = $('.categories-slider');
 
     if ($slider.length) {
-        let options = {
-            "slidesToShow": 4,
-            "rtl": true,
-            "prevArrow": "<i class=\"icon-arrowleft prev\"></i>",
-            "nextArrow": "<i class=\"icon-arrowleft next\"></i>",
-            "slidesToScroll": 3,
-            "infinite": false,
-            "responsive": [{
-                "breakpoint": 1441,
-                "settings": {"slidesToShow": 5, "arrows": false, "slidesToScroll": 3}
-            }, {
-                "breakpoint": 1025,
-                "settings": {"slidesToShow": 5, "arrows": false, "slidesToScroll": 3}
-            }, {"breakpoint": 415, "settings": {"slidesToShow": 3, "arrows": false, "slidesToScroll": 3}}]
-        };
-
-        $slider.slick(options);
+        // options loaded as data attribute.
+        // see template-parts/content-category-slider.php
+        $slider.slick();
     }
 
 

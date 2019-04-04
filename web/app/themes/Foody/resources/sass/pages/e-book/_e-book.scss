@@ -1,0 +1,95 @@
+.page-template-e-book {
+
+  #primary {
+
+    .cta {
+      width: 160px;
+      border-radius: 6px;
+      background-image: linear-gradient(71deg, #ec3849, #f35644);
+      font-family: $font__assistant;
+      font-size: 23px;
+      font-weight: bold;
+      line-height: normal;
+      letter-spacing: -0.2px;
+      text-align: center;
+      color: #ffffff;
+      margin: 0 auto;
+      display: block;
+      padding: 4px 30px;
+
+      &.cta-float {
+        margin-top: -60px;
+      }
+      &:not(.cta-float) {
+        margin-bottom: 20px;
+      }
+    }
+
+    h1 {
+      color: $color__primary;
+
+    }
+
+    figure {
+      h3 {
+        font-size: 22px;
+        margin-top: 10px;
+      }
+
+      .description {
+        font-size: 17px;
+      }
+    }
+
+    .foody-content {
+      padding-top: 20px;
+    }
+  }
+
+}
+
+@include breakpoint(mobileonly) {
+  .page-template-e-book {
+
+    #primary {
+
+      picture {
+        img {
+          width: 100%;
+        }
+      }
+
+      .cta {
+
+        &.cta-float {
+          margin-top: 20px;
+        }
+        &:not(.cta-float) {
+
+        }
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      figure {
+        padding: 0;
+        h3 {
+        }
+
+        .description {
+        }
+      }
+
+      .foody-content {
+        padding: 0 15px;
+      }
+    }
+
+  }
+}

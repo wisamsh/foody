@@ -47,7 +47,7 @@ div.checkbox {
   direction: ltr;
 }
 
-.search-bar{
+.search-bar {
   position: relative;
 
   input {
@@ -75,7 +75,7 @@ div.checkbox {
     }
   }
 
-  label{
+  label {
     position: absolute;
     top: 0;
     left: 0;
@@ -299,7 +299,13 @@ label.error {
 }
 
 .wpcf7-response-output {
-  display: none !important;
+  //display: none !important;
+}
+
+.wpcf7 {
+  .screen-reader-response {
+    display: none !important;
+  }
 }
 
 .wpcf7-not-valid-tip {

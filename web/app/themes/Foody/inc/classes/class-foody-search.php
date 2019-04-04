@@ -44,7 +44,7 @@ class Foody_Search
      * @param $context string
      * @param $context_args array
      */
-    public function __construct($context, $context_args)
+    public function __construct($context, $context_args = [])
     {
         $this->query_builder = new Foody_QueryBuilder();
         $this->foody_query = Foody_Query::get_instance();
@@ -107,6 +107,12 @@ class Foody_Search
             if (is_array($args['context'])) {
                 $args['context'] = array_map('intval', $args['context']);
                 $this->query_builder->context($args['context']);
+            }
+        }
+
+        if(empty($sort)){
+            if (!empty($args['sort'])){
+                $sort = $args['sort'];
             }
         }
 
@@ -401,6 +407,7 @@ class Foody_QueryBuilder
         if (empty($tags)) {
             return $this;
         }
+
         $parsed = $this->parse_args($tags);
 
         if (!empty($parsed['exclude'])) {
@@ -670,6 +677,17 @@ class Foody_QueryBuilder
 
             $args['category__and'] = array_unique($args['category__and']);
             unset($args['cat']);
+        }
+
+        if (isset($args['tag_id'])) {
+            if (empty($this->tag__and)) {
+                $this->tag__and = [];
+            }
+
+            $this->tag__and[] = $args['tag_id'];
+            unset($args['tag_id']);
+
+            $args['tag__and'] = $this->tag__and;
         }
 
         return $args;

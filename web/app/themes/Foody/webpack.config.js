@@ -6,7 +6,8 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HashPlugin = require('hash-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 // the path(s) that should be cleaned
 let pathsToClean = [
     'dist'
@@ -14,9 +15,9 @@ let pathsToClean = [
 
 // the clean options to use
 let cleanOptions = {
-    root:     path.resolve(__dirname, ''),
-    verbose:  true,
-    dry:      false
+    root: path.resolve(__dirname, ''),
+    verbose: true,
+    dry: false
 };
 
 module.exports = env => {
@@ -42,7 +43,15 @@ module.exports = env => {
                         reuseExistingChunk: true
                     }
                 }
-            }
+            },
+            minimizer:[
+                new UglifyJsPlugin({
+                    cache: true,
+                    parallel: true,
+                    sourceMap: false // set to true if you want JS source maps
+                }),
+                new OptimizeCSSAssetsPlugin({})
+            ]
         },
         plugins: [
             new webpack.ProvidePlugin({
@@ -59,7 +68,7 @@ module.exports = env => {
                 },
                 allChunks: true
             }),
-            new HashPlugin({ path: './build', fileName: 'version-hash.txt' }),
+            new HashPlugin({path: './build', fileName: 'version-hash.txt'}),
             new CleanWebpackPlugin(pathsToClean, cleanOptions)
         ],
         entry: {
@@ -67,13 +76,16 @@ module.exports = env => {
             // home: "./resources/pages/homepage/index",
             main: "./resources/js/app",
             admin: "./resources/js/admin",
-            style:"./resources/sass/app.scss"
+            style: "./resources/sass/app.scss",
+            // ebook: "./resources/sass/pages/e-book/e-book.scss",
+            // homepage: './resources/js/entries/homepage.js',
+            // common: './resources/js/entries/common.js',
         },
         output: {
             // filename: '[name].js',
             filename: '[name].[hash].js',
             path: path.resolve(__dirname, 'dist'),
-            // publicPath: '/resources'
+            publicPath: path.resolve(__dirname, 'resources')
         },
         mode: 'development',
         module: {

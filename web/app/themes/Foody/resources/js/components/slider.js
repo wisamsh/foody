@@ -36,5 +36,5 @@ window.slider = function (selector, options) {
 
     }
 
-    $selector.slick(options);
+    $selector.not('.slick-initialized').slick(options);
 };

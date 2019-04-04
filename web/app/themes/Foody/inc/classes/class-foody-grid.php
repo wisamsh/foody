@@ -14,10 +14,6 @@ class FoodyGrid
     private $is_in_loop = false;
     private $current_item = 0;
 
-    private $items_for_type = [
-        'Foody_Recipe' => ''
-    ];
-
     private $supported_types = [
         'recipe',
         'playlist',
@@ -42,8 +38,9 @@ class FoodyGrid
      * @param bool $echo
      * @param string $type
      * @param null $responsive
+     * @param array $args
      * @return string the item html
-     * @throws Error if 12 is not divided by col_num
+     * @throws Exception
      */
     public function draw($post, $col_num, $col_num_mobile = 12, $echo = true, $type = 'recipe', $responsive = null, $args = [])
     {
@@ -53,7 +50,7 @@ class FoodyGrid
         if ($col_num == 0) {
             $col_num = self::NONE;
         } elseif (12 % $col_num != 0) {
-            throw new Error("RecipesGrid:  invalid col_num $col_num");
+            throw new Exception("RecipesGrid:  invalid col_num $col_num");
         }
 
         if (is_null($responsive)) {
@@ -112,9 +109,13 @@ class FoodyGrid
      * @param $cols
      * @param bool $echo
      * @param string $type
+     * @param array $data_attrs
+     * @param null $responsive
+     * @param array $args
      * @return string
+     * @throws Exception
      */
-    public function loop($posts, $cols, $echo = true, $type = null, $data_attrs = [], $responsive = null,$args = [])
+    public function loop($posts, $cols, $echo = true, $type = null, $data_attrs = [], $responsive = null, $args = [])
     {
         $items = '';
         $this->is_in_loop = true;
@@ -131,7 +132,7 @@ class FoodyGrid
                 }
             }
 
-            $items .= $this->draw($post, $cols, 12, $echo, $type, $responsive,$args);
+            $items .= $this->draw($post, $cols, 12, $echo, $type, $responsive, $args);
             $this->current_item++;
             if ($reset_type) {
                 $reset_type = false;

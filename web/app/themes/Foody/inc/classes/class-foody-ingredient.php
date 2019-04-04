@@ -31,6 +31,7 @@ class Foody_Ingredient extends Foody_Post
 
     public $singular_name;
     public $nutrients;
+    public $nutrients_conversion;
 
     /**
      * Foody_Ingredient constructor.
@@ -47,6 +48,7 @@ class Foody_Ingredient extends Foody_Post
         $this->plural_name = get_field('plural_name', $this->id);
         $this->singular_name = $this->getTitle();
         $this->nutrients = get_field('nutrients', $this->id);
+        $this->nutrients_conversion = get_field('nutrients_conversion', $this->id);
 
         $this->unit_taxonomy = $unit_taxonomy;
     }
@@ -265,7 +267,7 @@ class Foody_Ingredient extends Foody_Post
                     $nutrient = array_shift($nutrients);
                     $value = $nutrient['value'];
                     $factor = 1;
-                    if ($unit->name == 'גרם') {
+                    if ($unit->name == 'גרם' || $unit->name == 'מ"ל') {
                         $factor = 100;
                     }
 
@@ -283,7 +285,121 @@ class Foody_Ingredient extends Foody_Post
         return $value;
     }
 
-    public static function get_nutrients_options()
+	/**
+	 * Retreive ingredient nutritional data using nutrients_conversion table
+	 * @param $nutrient_name string
+	 * @param $unit WP_Term
+	 * @param $amount number
+	 * @return float|int
+	 */
+	public function get_nutrient_data_by_unit_and_amount($nutrient_name)
+	{
+		$value = 0;
+		$unit_name = '';
+
+		if ( ! empty( $this->amounts ) ) {
+			$amounts = $this->amounts[0];
+			$unit    = ! empty( $amounts['unit'] ) ? $amounts['unit_tax'] : $amounts['unit'];
+			$amount  = $amounts['amount'];
+
+			if ( $unit instanceof WP_Term ) {
+				$unit_name = get_term_field( 'slug', $unit->term_id, 'units' );
+			}
+
+			if ( ( ! empty( $this->nutrients_conversion ) && is_array( $this->nutrients_conversion ) ) ) {
+				$nutrients = array_filter( $this->nutrients_conversion, function ( $nutrient ) use ( $nutrient_name, $unit, $amount, $unit_name ) {
+					$valid = false;
+
+					if ( $unit instanceof WP_Term ) {
+						$valid = $nutrient['unit'] == $unit->term_id;
+					} else if ( empty( $unit ) ) {
+						$valid = true;
+					}
+
+					return $valid;
+				} );
+
+			} else if ( urldecode( $unit_name ) == 'גרם' || urldecode( $unit_name ) == 'מל' ) {
+				$value = 1;
+			}
+
+			if ( ! empty( $nutrients ) || ( urldecode( $unit_name ) == 'גרם' || urldecode( $unit_name ) == 'מל' ) ) {
+
+				if ( ! empty( $nutrients ) ) {
+					$nutrient = array_shift( $nutrients );
+					$value    = $nutrient['grams'];
+				}
+
+				$grams  = $this->get_nutrient_grams_by_unit( $nutrient_name );
+				$factor = 100;// per 100 Grams
+
+				$amount = floatval( $amount );
+				$value  = floatval( $value );
+				if ( ! empty( $amounts['unit'] ) && ( $amounts['unit'] == 'גרם' || $amounts['unit'] == 'מ"ל' ) ) {
+					$value = 1;
+				}
+				$grams_value = ( $value / $factor ) * $grams;
+				$value       = $amount * $grams_value;
+
+				$value = (float) $value;
+
+			}
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Retreive nutrient grams value
+	 * @param $nutrient_name string
+	 * @param $unit WP_Term
+	 * @param $amount number
+	 * @return float|int
+	 */
+	public function get_nutrient_grams_by_unit($nutrient_name)
+	{
+		$value = 0;
+		if (!empty($this->amounts)) {
+			$amounts = $this->amounts[0];
+			$unit   = !empty($amounts['unit']) ? $amounts['unit_tax'] : $amounts['unit'];
+			$amount = $amounts['amount'];
+
+			if (!empty($this->nutrients) && is_array($this->nutrients)) {
+				$nutrients = array_filter($this->nutrients, function ($nutrient) use ($nutrient_name, $unit, $amount) {
+
+					$valid = false;
+
+					if ($unit instanceof WP_Term) {
+
+						$unit_name = get_term_field( 'slug', $nutrient['unit'], 'units' );
+
+						if(is_wp_error($unit_name) || empty($unit_name)){
+							$unit_name = '';
+						}
+
+						$valid     = ( urldecode( $unit_name ) == 'גרם' ||
+						               urldecode( $unit_name ) == 'מל' ) &&
+						             $nutrient['nutrient'] == $nutrient_name;
+					} else if (empty($unit)){
+						$valid = true;
+					}
+
+					return $valid;
+				});
+
+				if (!empty($nutrients)) {
+                    $nutrient = array_shift($nutrients);
+                    $value = $nutrient['value'];
+				}
+			}
+		}
+
+
+		return $value;
+	}
+
+
+	public static function get_nutrients_options()
     {
         $nutrients = get_field_object('field_5b62c59c35d88')['choices'];
         unset($nutrients['sugar']);
@@ -298,11 +414,20 @@ class Foody_Ingredient extends Foody_Post
     {
         $nutrients = self::get_nutrients_options();
         $gram = __('גרם');
+        $m_gram = __('מ״ג');
         $nutrients['calories'] = __('קק״ל');
         $nutrients['carbohydrates'] = $gram;
         $nutrients['fats'] = $gram;
         $nutrients['protein'] = $gram;
-        $nutrients['sodium'] = __('מ״ג');
+        $nutrients['sodium'] = $m_gram;
+
+        $nutrients['fibers'] = $gram;
+        $nutrients['saturated_fat'] = $gram;
+        $nutrients['cholesterol'] = $m_gram;
+        $nutrients['calcium'] = $m_gram;
+        $nutrients['iron'] = $m_gram;
+        $nutrients['potassium'] = $m_gram;
+        $nutrients['zinc'] = $m_gram;
 
         $unit = '';
 

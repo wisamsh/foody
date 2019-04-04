@@ -1,0 +1,227 @@
+.foody_feed_channel-template {
+
+  .details-container {
+
+    h1 {
+      font-size: 24px;
+      padding-right: 15px;
+      margin: 0 0 10px;
+    }
+
+    .breadcrumb {
+      padding-right: 15px;
+    }
+    .featured-content-container {
+      display: none;
+    }
+  }
+
+  .feed-channel-details {
+    margin: 0;
+    align-items: center;
+    padding: 0 15px;
+
+    .socials {
+      .social {
+        padding-right: 0;
+        flex-direction: row;
+        display: flex;
+        align-items: center;
+
+        .social-title {
+          margin-left: 10px;
+          font-size: 15px;
+        }
+
+        .essb_links {
+          margin: 0;
+          li {
+            margin-left: 5px !important;
+            a {
+              margin-right: 0;
+            }
+          }
+        }
+
+        .essb_links_list {
+          .essb_item {
+            margin-left: 5px !important;
+            a {
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+
+              .essb_icon {
+                width: 30px;
+                height: 30px;
+                border-radius: 0;
+
+                &:before {
+                  color: white;
+                  font-size: 18px !important;
+                  left: 6px !important;
+                  top: 6px;
+                }
+              }
+            }
+          }
+        }
+
+        .essb_item {
+          a {
+            background-color: $color__social !important;
+
+            &:hover {
+              //background-color: $color__social !important;
+            }
+          }
+        }
+      }
+    }
+
+    .follow {
+      margin-right: auto;
+      display: none;
+    }
+  }
+
+  article {
+    &.content {
+      background-color: white;
+
+      .block-container {
+        padding: 0 15px;
+
+        &:last-of-type {
+          padding-bottom: 10px;
+        }
+
+        .block-header {
+          align-items: center;
+          .block-title {
+            text-align: right;
+            font-size: 20px;
+          }
+
+          .block-see-more {
+            text-align: left;
+            font-size: 15px;
+
+            .icon-arrowleft {
+              font-size: 10px;
+            }
+          }
+        }
+
+        .block-content {
+          @import "../common/categories-listing";
+
+          .categories-block-content {
+            margin: 0;
+
+            .category-listing {
+              .categort-listing-title {
+                font-size: 16px;
+              }
+
+            }
+          }
+
+          @import "../common/foody-banner";
+        }
+      }
+    }
+  }
+
+}
+
+@include breakpoint(mobileonly) {
+  .foody_feed_channel-template {
+
+    .details-container {
+
+      .featured-content-container {
+      }
+    }
+
+    .feed-channel-details {
+
+      .socials {
+        .social {
+
+          .social-title {
+          }
+
+          .essb_links {
+            li {
+              a {
+              }
+            }
+          }
+
+          .essb_links_list {
+            .essb_item {
+              a {
+
+                .essb_icon {
+
+                  &:before {
+                  }
+                }
+              }
+            }
+          }
+
+          .essb_item {
+            a {
+
+              &:hover {
+              }
+            }
+          }
+        }
+      }
+
+      .follow {
+
+      }
+    }
+
+    article {
+      &.content {
+
+        .block-container {
+
+          &:last-of-type {
+
+          }
+
+          .block-header {
+
+            .block-title {
+              padding-left: 0;
+            }
+
+            .block-see-more {
+              padding-right: 0;
+
+              .icon-arrowleft {
+              }
+            }
+          }
+
+          .block-content {
+
+            .categories-block-content {
+
+              .categort-listing-title {
+              }
+            }
+
+          }
+        }
+      }
+    }
+
+  }
+}

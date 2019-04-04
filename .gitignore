@@ -1,6 +1,8 @@
 # Application
 web/app/plugins/*
 !web/app/plugins/.gitkeep
+!web/app/plugins/gravityforms
+!web/app/plugins/Gravity-Forms-ACF-Field-master
 web/app/mu-plugins/*/
 !web/app/mu-plugins/wordpress-social-login
 !web/app/mu-plugins/easy-social-share-buttons3
@@ -144,3 +146,6 @@ migration/tmp
 migration/vendor
 migration/bootstrap/cache
 web/app/themes/Foody/dist
+.env1
+uploads.zip
+stats.json

@@ -8,7 +8,9 @@
 /** @var Foody_Article $article */
 /** @noinspection PhpUndefinedVariableInspection */
 $article = $template_args['post'];
-
+$args = foody_get_array_default($template_args, 'args', []);
+$title_el = foody_get_array_default($args, 'title_el', 'h2');
+$image_size = isset($args['image_size']) ? $args['image_size'] : 'list-item';
 ?>
 
 <div class="article-item feed-item">
@@ -26,17 +28,29 @@ $article = $template_args['post'];
                 </div>
 
             <?php endif; ?>
+            <?php if ($article->video != null): ?>
+                <div class="duration">
+                    <i class="icon icon-timeplay">
+
+                    </i>
+                    <span>
+                        <?php echo $article->getDuration() ?>
+                    </span>
+
+
+                </div>
+            <?php endif; ?>
         </div>
     </a>
 
     <section class="feed-item-details-container">
 
         <section class="title-container">
-            <h3>
+            <<?php echo $title_el?> class="grid-item-title">
                 <a href="<?php echo $article->link ?>">
                     <?php echo $article->getTitle() ?>
                 </a>
-            </h3>
+            </<?php echo $title_el?>>
 
             <div class="description">
                 <?php echo $article->getDescription() ?>

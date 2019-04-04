@@ -136,7 +136,7 @@ class Foody_User
                 return $valid;
             });
 
-            usort($posts,function ($post_a,$post_b){
+            usort($posts, function ($post_a, $post_b) {
                 return strtotime($post_b->post_date_gmt) - strtotime($post_a->post_date_gmt);
             });
 
@@ -233,7 +233,7 @@ class Foody_User
                     if (!empty($image)) {
                         $image = "<img class='avatar' src='$image' >";
                     }
-                }elseif(isset($user_images['full'])){
+                } elseif (isset($user_images['full'])) {
                     $image = $user_images['full'];
                     if (!empty($image)) {
                         $image = "<img class='avatar' src='$image' >";
@@ -283,4 +283,48 @@ class Foody_User
         return $is_subscriber;
     }
 
+    public static function is_current_user_social()
+    {
+        $is_social_user = false;
+
+        if (is_user_logged_in()) {
+            $user_id = get_current_user_id();
+            $social = get_user_meta($user_id, 'wsl_current_provider', true);
+            $is_social_user = !empty($social);
+        }
+
+        return $is_social_user;
+    }
+
+    public static function has_user_seen_approvals()
+    {
+        $has_user_seen_approvals = false;
+
+        if (is_user_logged_in()) {
+            $user_id = get_current_user_id();
+            $seen_approvals = get_user_meta($user_id, 'seen_approvals', true);
+            $has_user_seen_approvals = !empty($seen_approvals);
+        }
+
+        return $has_user_seen_approvals;
+    }
+
+    public static function is_first_login()
+    {
+
+        $is_first_login = false;
+        if (is_user_logged_in()) {
+            $login_amount = get_user_meta(get_current_user_id(), 'login_amount', true);
+            $is_first_login = $login_amount <= 1;
+        }
+        return $is_first_login;
+    }
+
+    public static function user_has_meta($meta_key){
+        $value = false;
+        if (is_user_logged_in()) {
+            $value = get_user_meta(get_current_user_id(), $meta_key, true) == true;
+        }
+        return $value;
+    }
 }

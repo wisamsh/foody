@@ -74,13 +74,23 @@ body[class~="category"] {
 
     }
 
-    .feed-header {
-      padding: 0 20px;
+    .grid-header {
+      padding: 0 15px;
 
+      h1 {
+        margin-right: 0;
+      }
+      h3,h2 {
+        padding-right: 0;
+      }
       .sort {
         .bootstrap-select {
           width: 120px;
         }
+      }
+
+      .title {
+        margin-top: 0;
       }
     }
 
@@ -120,7 +130,12 @@ body[class~="category"] {
       .categories-slider {
         margin-right: 15px;
         padding: 0;
-        i.slick-arrow {
+
+          .slick-list {
+            padding: 0 0 0 30px;
+          }
+
+          i.slick-arrow {
 
           &:before {
 

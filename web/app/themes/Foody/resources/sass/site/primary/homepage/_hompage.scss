@@ -1,10 +1,45 @@
+@import "../../../mixins/mixins-master";
+@import "../../../variables-site/variables-site";
+
 $content-width: 75%;
 $feed-header-height: 60px;
 $sidebar-top-offset: 60px;
+
+#approvals-modal {
+  .modal-body {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .modal-footer{
+    display: none;
+  }
+
+  form {
+    .md-checkbox label:not(.error) {
+      display: table-cell;
+    }
+
+    input[type='submit'] {
+      margin: 10px auto 0;
+      border-radius: 6px;
+      background-image: linear-gradient(71deg, #ec3849, #f35644);
+      font-family: $font__assistant;
+      font-size: 23px;
+      font-weight: bold;
+      line-height: normal;
+      letter-spacing: -0.2px;
+      text-align: center;
+      color: #ffffff;
+      display: block;
+      padding: 4px 30px;
+    }
+  }
+}
+
 .homepage {
 
-
-  .seo{
+  .seo {
     max-width: $content-width;
   }
   .cover-image {
@@ -15,7 +50,7 @@ $sidebar-top-offset: 60px;
     }
   }
 
-  #seo{
+  #seo {
     left: 0;
     padding-right: 0;
     max-width: 100%;
@@ -33,57 +68,57 @@ $sidebar-top-offset: 60px;
       }
     }
 
-    .categories-listing, .promotion-listing {
-
-      //padding: 0 10px;
-
-      > a {
-        &.col {
-          padding-left: 0;
-          padding-right: 0;
-        }
-      }
-
-      .promoted-items {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-
-        li {
-          padding: 0;
-        }
-      }
-
-      .category-listing, .promotion-item-listing {
-        padding: 0 5px;
-        // TODO find ios fix
-        //filter: drop-shadow(2px 2px 10px rgba(0, 0, 0, 0.3));
-        picture {
-          width: 100%;
-          img {
-            clip-path: inset(0 round .5rem);
-            width: 100%;
-          }
-        }
-
-        .categort-listing-title, .promotion-listing-title {
-          text-align: center;
-          font-family: $font__main;
-          font-size: 21px;
-        }
-
-        .overlay {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          left: 0;
-          font-size: 2rem;
-          text-align: center;
-          color: $color__primary;
-        }
-      }
-    }
-
+    //.categories-listing, .promotion-listing {
+    //
+    //  //padding: 0 10px;
+    //
+    //  > a {
+    //    &.col {
+    //      padding-left: 0;
+    //      padding-right: 0;
+    //    }
+    //  }
+    //
+    //  .promoted-items {
+    //    list-style-type: none;
+    //    padding: 0;
+    //    margin: 0;
+    //
+    //    li {
+    //      padding: 0;
+    //    }
+    //  }
+    //
+    //  .category-listing, .promotion-item-listing {
+    //    padding: 0 5px;
+    //    // TODO find ios fix
+    //    //filter: drop-shadow(2px 2px 10px rgba(0, 0, 0, 0.3));
+    //    picture {
+    //      width: 100%;
+    //      img {
+    //        clip-path: inset(0 round .5rem);
+    //        width: 100%;
+    //      }
+    //    }
+    //
+    //    .categort-listing-title, .promotion-listing-title {
+    //      text-align: center;
+    //      font-family: $font__main;
+    //      font-size: 21px;
+    //    }
+    //
+    //    .overlay {
+    //      position: absolute;
+    //      width: 100%;
+    //      height: 100%;
+    //      left: 0;
+    //      font-size: 2rem;
+    //      text-align: center;
+    //      color: $color__primary;
+    //    }
+    //  }
+    //}
+    @import "../../../pages/common/categories-listing";
     .team-listing {
       border-bottom: 1px solid $color__divider;
       margin: 0;
@@ -230,7 +265,7 @@ $sidebar-top-offset: 60px;
     }
   }
 
-  h1,h2,h3 {
+  h1, h2, h3 {
     font-size: 22px;
   }
 }
@@ -238,10 +273,10 @@ $sidebar-top-offset: 60px;
 @include breakpoint(mobileonly) {
   .homepage {
 
-    .seo{
+    .seo {
       max-width: 100%;
     }
-    #seo{
+    #seo {
       position: initial;
     }
 

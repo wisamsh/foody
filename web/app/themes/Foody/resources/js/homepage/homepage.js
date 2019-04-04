@@ -14,7 +14,7 @@ jQuery(document).ready(($) => {
         grid: '#homepage-feed',
         cols: 2,
         searchButton: '.show-recipes',
-        page:'.page-template-homepage',
+        page: '.page-template-homepage',
         context: 'homepage',
         contextArgs: [],
     });
@@ -26,4 +26,59 @@ jQuery(document).ready(($) => {
         filter: filter,
         sort: '#sort-homepage-feed'
     });
+
+    let $approvalsPopup = $('#approvals-modal');
+    if ($approvalsPopup.length) {
+        $approvalsPopup.modal('show');
+
+        let $form = $("form#approvals");
+        $form.validate({
+            rules: {
+                marketing: {
+                    required: '#check-e-book:checked'
+                }
+            },
+            messages: {
+                marketing: foodyGlobals.messages.registration.eBookError
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("type") == "checkbox") {
+                    let parent = $(element).parent('.md-checkbox');
+                    error.insertBefore(parent);
+                }
+                else {
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function (form) {
+
+                let $body = $('.modal-content', $approvalsPopup);
+                $body.block({message: ''});
+
+                foodyAjax({
+                    action: 'foody_edit_user_approvals',
+                    data: {
+                        marketing: $('#approvals #check-marketing',$approvalsPopup).prop('checked'),
+                        e_book: $('#approvals #check-e-book',$approvalsPopup).prop('checked')
+                    }
+                }, function () {
+                    $body.unblock();
+                    $approvalsPopup.modal('hide');
+                });
+            }
+        });
+
+        $approvalsPopup.on('hide.bs.modal', function () {
+            let ajaxSettings = {
+                action: 'foody_edit_user_approvals_viewed',
+                data: {
+                    'seen_approvals': true
+                }
+            };
+
+            foodyAjax(ajaxSettings,function (err) {
+                if (err){}
+            })
+        });
+    }
 });
