@@ -134,7 +134,7 @@ function foody_edit_user_approvals()
     } else {
         $user = get_user_by('ID', get_current_user_id());
         if (isset($resultMarketingEbook) && !empty($e_book)) {
-            Foody_Mailer::send(__('איזה כיף לך! קבלת את ספר המתכונים של FOODY לפסח'), 'e-book', $user->user_email);
+            Foody_Mailer::send(__('איזה כיף לך! קיבלת את ספר מתכוני הפסח של FOODY'), 'e-book', $user->user_email);
         }
         wp_send_json_success();
     }
