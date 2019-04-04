@@ -21,7 +21,7 @@ jQuery(document).ready(($) => {
  * @param cdValue
  */
 function eventCallback(event, category, action, label, cdDesc, cdValue) {
-    debugger;
+
     /**
      * Logged in user ID
      */
