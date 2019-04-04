@@ -45,9 +45,9 @@ if(isset($template_args['mobile_image'])){
 
 
     <picture>
-        <source media="(min-width: 415px)" srcset="<?php echo $image; ?>"
+        <source media="(min-width: 800px)" srcset="<?php echo $image; ?>"
         ">
-        <source media="(max-width: 414px)"
+        <source media="(max-width: 799px)"
                 srcset="<?php echo $mobile_image; ?>"
         ">
         <img src="<?php echo $image ?>">
