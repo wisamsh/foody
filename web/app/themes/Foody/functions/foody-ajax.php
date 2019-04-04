@@ -44,7 +44,7 @@ function foody_parse_checkbox($key){
         $value = $_POST[$key];
         if($value === 'on'){
             $checked = 1;
-        }elseif ($value === true || $value === 1){
+        }elseif ($value === true ||  $value == "1"){
             $checked = 1;
         }
     }
