@@ -113,7 +113,7 @@ function foody_edit_user_approvals()
 
     if (!empty($marketing)) {
         $resultMarketing = update_user_meta($ID, 'marketing', $marketing);
-        if (!empty($user) && $user->ID != -0) {
+        if (!empty($user) && $user->ID != 0) {
             foody_register_newsletter($user->user_email);
         }
     }
