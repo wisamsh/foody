@@ -49,7 +49,7 @@ window.calculator = function (selector) {
 
 function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 
-    // updateNutrients(originalNumberOfDishes, val, reset);
+    updateNutrients(originalNumberOfDishes, val, reset);
 
     $elements.each(function () {
 
@@ -85,6 +85,9 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 }
 
 function updateNutrients(originalNumberOfDishes, val, reset) {
+    // Update header amount title
+    $('.nutrients-header-dishes-amount').text(val);
+
     $('.nutrition-row').each(function () {
 
         let $this = $(this);
@@ -105,6 +108,11 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
                 }
 
                 nutrientBaseValue = parseFloat(nutrientBaseValue);
+
+                // Divide by original num of dishes to retrieve one dish
+                nutrientBaseValue = nutrientBaseValue / originalNumberOfDishes;
+
+                // Dish value times new val
                 if (nutrientBaseValue) {
                     nutrientBaseValue = nutrientBaseValue * val;
                 }
@@ -122,7 +130,7 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
         }
 
         if (totalValueForNutrient > 0) {
-            $('.value', this).text(prettyNumber(totalValueForNutrient, decimals))
+            $('.chosen-dishes-nutrition .value', this).text(prettyNumber(totalValueForNutrient, decimals))
         }
 
     });

@@ -47,7 +47,12 @@ class Foody_Recipe extends Foody_Post
      */
     public function getNumberOfDishes()
     {
-        return $this->number_of_dishes;
+	    $slices = $this->get_pan_slices();
+	    if ( $slices != 0 ) {
+		    return $slices;
+	    } else {
+		    return $this->number_of_dishes;
+	    }
     }
 
     /**
@@ -157,7 +162,9 @@ class Foody_Recipe extends Foody_Post
                 get_template_directory() . '/template-parts/content-nutritions.php',
                 [
                     'nutritions' => $nutrients,
-                    'title' => $title
+                    'title' => $title,
+                    'dishes_amount' => $this->getNumberOfDishes(),
+                    'dishes_title' => $this->the_amount_title()
                 ]
             );
 
@@ -170,6 +177,14 @@ class Foody_Recipe extends Foody_Post
         echo get_the_category_list('', '', $this->getId());
     }
 
+	public function the_amount_title()
+    {
+		if ( $this->get_pan_slices() != 0 ) {
+			return [ 'plural' => 'פרוסות', 'singular' => 'פרוסה' ];
+		} else {
+			return [ 'plural' => 'מנות', 'singular' => 'מנה' ];
+		}
+	}
 
     public function the_accessories()
     {
@@ -467,6 +482,12 @@ class Foody_Recipe extends Foody_Post
                 if (empty($this->number_of_dishes)) {
                     $this->number_of_dishes = 1;
                 }
+
+                // Pan slices
+                $this->number_of_dishes = get_sub_field('number_of_dishes');
+                if (empty($this->number_of_dishes)) {
+                    $this->number_of_dishes = 1;
+                }
                 $this->amount_for = get_sub_field('amount_for');
                 $this->ingredients_title = get_sub_field('title');
                 $current_group = 0;
@@ -617,6 +638,18 @@ class Foody_Recipe extends Foody_Post
         }
     }
 
+    public function get_pan_slices()
+    {
+	    $slices = 0;
+
+	    $pan = get_field('ingredients_pan', $this->id);
+	    if ($pan) {
+		    $pan    = get_term( $pan, 'pans' );
+		    $slices = get_field( 'slices', $pan );
+	    }
+	    return $slices;
+    }
+
     public static function ratings()
     {
         if (function_exists('the_ratings')) {
@@ -663,7 +696,7 @@ class Foody_Recipe extends Foody_Post
         foreach (Foody_Ingredient::get_nutrients_options() as $nutrients_name => $nutrients_title) {
 
             if (!in_array($nutrients_name, $excluded_nutrients)) {
-                $item = ['name' => $nutrients_title, 'value' => 0];
+                $item = ['name' => $nutrients_title, 'value' => 0, 'valuePerDish' => 0];
                 foreach ($this->ingredients_groups as $group) {
 
                     foreach ($group['ingredients'] as $ingredient) {
@@ -680,6 +713,8 @@ class Foody_Recipe extends Foody_Post
                 if ($nutrients_name == 'protein') {
                     $decimals = 1;
                 }
+                $item['valuePerDish'] = $item['value'] / $this->getNumberOfDishes();
+                $item['valuePerDish'] = number_format($item['valuePerDish'], $decimals, '.', '');
                 $item['value'] = number_format($item['value'], $decimals, '.', '');
                 $nutrients[] = $item;
             }

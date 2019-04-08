@@ -161,7 +161,7 @@ class Foody_Ingredient extends Foody_Post
 
             foreach ($nutrients_names as $nutrient_name => $value) {
 
-                $nutrients_data[$nutrient_name] = $this->get_nutrient_for_by_unit_and_amount($nutrient_name);
+                $nutrients_data[$nutrient_name] = $this->get_nutrient_data_by_unit_and_amount($nutrient_name);
             }
 
             $data .= ' ' . foody_array_to_data_attr($nutrients_data);
