@@ -162,3 +162,16 @@ function track_user_logins($user_login, $user)
         update_user_meta($user->id, 'login_amount', 1);
     }
 }
+
+add_filter('auth_cookie_expiration', 'foody_authentication_expiration');
+function foody_authentication_expiration($expire_in)
+{
+    // 1 year in seconds
+    $expire_in_a_year = 31556926;
+
+    if (Foody_User::is_user_subscriber()) {
+        $expire_in = $expire_in_a_year;
+    }
+
+    return $expire_in;
+}

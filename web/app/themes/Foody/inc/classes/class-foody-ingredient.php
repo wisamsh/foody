@@ -455,6 +455,12 @@ class Foody_Ingredient extends Foody_Post
     }
 
 
+    /**
+     * Checks if a commercial brand
+     * should be displayed in this ingredient's html
+     * representation
+     * @return mixed|null|void
+     */
     private function get_sponsor()
     {
         $sponsor_to_return = null;
@@ -469,24 +475,24 @@ class Foody_Ingredient extends Foody_Post
                     $filter = $filter['filter'];
                     $value = $filter['value_' . $filter['type']];
 
-                    if($value){
+                    if ($value) {
                         switch ($filter['type']) {
                             case 'author':
                                 /** @var WP_User $value */
                                 if ($post->post_author == $value->ID) {
-                                    $sponsor_to_return =  $sponsor;
+                                    $sponsor_to_return = $sponsor;
                                 }
                                 break;
                             case 'category':
                                 /** @var WP_Term $value */
                                 if (in_category($value->term_id, $post)) {
-                                    $sponsor_to_return =  $sponsor;
+                                    $sponsor_to_return = $sponsor;
                                 }
                                 break;
                             case 'tag':
                                 /** @var WP_Term $value */
                                 if (has_tag($value->term_id, $post)) {
-                                    $sponsor_to_return =  $sponsor;
+                                    $sponsor_to_return = $sponsor;
                                 }
                                 break;
                             case 'channel':
@@ -500,7 +506,7 @@ class Foody_Ingredient extends Foody_Post
                                     }, $channel_recipes);
 
                                     if (in_array($this->recipe_id, $channel_recipes)) {
-                                        $sponsor_to_return =  $sponsor;
+                                        $sponsor_to_return = $sponsor;
                                     }
                                 }
                                 break;
