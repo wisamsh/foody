@@ -16,25 +16,22 @@ jQuery(document).ready(($) => {
             if (form.find('#check-marketing').length == 0 && form.find('#check-e-book').length == 0) {
                 window.location.href = '/';
             } else {
-                let withMarketing = form.find('#check-marketing').prop('checked');
-                let withEBook = form.find('#check-e-book').prop('checked');
-
-                let marketingAnalyticsText = 'לא נרשם';
-                if (withMarketing) {
-                    marketingAnalyticsText = 'נרשם';
-                    if (withEBook) {
-                        marketingAnalyticsText = 'נרשם פלוס ספר';
-                    }
-                } else if (withEBook) {
-                    marketingAnalyticsText = 'לא נרשם פלוס ספר';
-                }
-
                 form.on('submit', null, (event) => {
+                    let withMarketing = form.find('#check-marketing').prop('checked');
+                    let withEBook = form.find('#check-e-book').prop('checked');
+                    let marketingAnalyticsText = 'לא נרשם';
+                    if (withMarketing) {
+                        marketingAnalyticsText = 'נרשם';
+                        if (withEBook) {
+                            marketingAnalyticsText = 'נרשם פלוס ספר';
+                        }
+                    } else if (withEBook) {
+                        marketingAnalyticsText = 'לא נרשם פלוס ספר';
+                    }
                     eventCallback(event, 'רישום לאתר', 'לחיצה לסיום רישום', foodyGlobals['user']['social_type'], 'רישום לדיוור', marketingAnalyticsText);
                 });
             }
         }
-
     }
 });
 
