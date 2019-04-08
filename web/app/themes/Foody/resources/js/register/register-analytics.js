@@ -87,30 +87,6 @@ jQuery(document).ready(($) => {
         }
     }
 
-    /**
-     * On Social Registration completion
-     */
-    if (jQuery('#approvals').length) {
-        eventCallback('', 'רישום לאתר', 'טעינת פופאפ רישום לדיוור', 'גוגל | פייסבוק');
-
-        $('#approvals').on('submit', null, (event) => {
-
-            let withMarketing = jQuery(event.target).find('#check-marketing').prop('checked');
-            let withEBook = jQuery(event.target).find('#check-e-book').prop('checked');
-            let marketingAnalyticsText = 'לא נרשם';
-            if (withMarketing) {
-                marketingAnalyticsText = 'נרשם';
-                if (withEBook) {
-                    marketingAnalyticsText = 'נרשם פלוס ספר';
-                }
-            } else if (withEBook) {
-                marketingAnalyticsText = 'לא נרשם פלוס ספר';
-            }
-
-            eventCallback(event, 'רישום לאתר', 'לחיצה לסיום רישום', 'גוגל | פייסבוק', 'רישום לדיוור', marketingAnalyticsText);
-        });
-    //    TODO: Succes & Failure
-    }
 });
 
 
