@@ -73,6 +73,7 @@ class Foody_Registration
 
             if (!empty($user_data['marketing'])) {
                 update_user_meta($user_id, 'marketing', true);
+                foody_register_newsletter($email);
             }
 
             /** @noinspection PhpUndefinedVariableInspection */

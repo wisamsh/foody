@@ -109,9 +109,15 @@ function foody_edit_user_approvals()
 
     $ID = get_current_user_id();
 
+    $user = wp_get_current_user();
+
     if (!empty($marketing)) {
         $resultMarketing = update_user_meta($ID, 'marketing', $marketing);
+        if (!empty($user) && $user->ID != -0) {
+            foody_register_newsletter($user->user_email);
+        }
     }
+
     $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
     update_user_meta($ID, 'seen_approvals', true);
 
