@@ -38,6 +38,14 @@ $register_link = get_permalink(get_page_by_title('הרשמה'))
                     <?php echo __('להרשמה') ?>
                 </a>
 
+                <div class="text-center share-text">
+                    <?php echo _('שתפו') ?>
+                </div>
+
+                <?php
+                foody_get_template_part(get_template_directory() . '/template-parts/content-social-actions.php', ['exclude' => ['print']]);
+                ?>
+
                 <?php the_content(); ?>
 
                 <section class="container pl-sm-0 pr-sm-0">

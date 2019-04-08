@@ -28,7 +28,7 @@ if (empty($welcome_text)) {
         <?php echo $welcome_text; ?>
     </div>
     <form id="approvals" method="post">
-        <?php if (Foody_User::user_has_meta('marketing')): ?>
+        <?php if (!Foody_User::user_has_meta('marketing')): ?>
             <div class="md-checkbox col-12">
                 <input id="check-marketing" type="checkbox" checked name="marketing">
                 <label for="check-marketing">
