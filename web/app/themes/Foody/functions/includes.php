@@ -122,6 +122,7 @@ require_once get_template_directory() . "/functions/foody-fut.php";
 require_once get_template_directory() . "/functions/seo.php";
 require_once get_template_directory() . "/functions/theme.php";
 require_once get_template_directory() . "/functions/client-messages.php";
+require_once get_template_directory() . "/functions/cookies.php";
 
 
 /*
