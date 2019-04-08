@@ -122,6 +122,7 @@ require_once get_template_directory() . "/functions/foody-fut.php";
 require_once get_template_directory() . "/functions/seo.php";
 require_once get_template_directory() . "/functions/theme.php";
 require_once get_template_directory() . "/functions/client-messages.php";
+require_once get_template_directory() . "/functions/pages.php";
 
 
 /*
@@ -131,6 +132,7 @@ require_once get_template_directory() . "/inc/shortcodes/shortcode-team.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-register.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-login.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-foody-sitemap.php";
+require_once get_template_directory() . "/inc/shortcodes/shortcode-approvals.php";
 
 
 

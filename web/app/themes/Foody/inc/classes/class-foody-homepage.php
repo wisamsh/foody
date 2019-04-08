@@ -198,31 +198,9 @@ class Foody_HomePage
                     }, $promoted_group['items'])
                 ];
 
-
                 foody_get_template_part(get_template_directory() . '/template-parts/content-promotions-listing.php', $args);
 
             }
-        }
-    }
-
-    public function the_approvals_popup()
-    {
-        $approved_marketing = Foody_User::user_has_meta('marketing');
-        $approved_e_book = Foody_User::user_has_meta('e_book');
-        $registration_page = get_page_by_title('הרשמה');
-        $show = get_field('show', $registration_page);
-
-        $login_amount = get_user_meta(get_current_user_id(),'login_amount',true);
-
-        if ((!$approved_marketing || (!$approved_e_book && $show)) && $login_amount <= 1) {
-            $modal_args = [
-                'id' => 'approvals-modal',
-                'title' => '',
-                'hide_buttons' => true,
-                'body' => foody_get_template_part(get_template_directory() . '/template-parts/content_approvals_popup.php', ['return' => true])
-            ];
-
-            foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', $modal_args);
         }
     }
 }
