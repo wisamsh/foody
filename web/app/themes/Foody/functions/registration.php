@@ -169,10 +169,18 @@ function foody_register_newsletter($email)
     $curl = curl_init();
 
     $base_url = get_viplus_url();
-    $base_url = "$base_url&email=$email&viplists=489261&exists=merge";
+
+    $query = http_build_query([
+        'email' => $email,
+        'apikey' => VIPLUS_KEY,
+        'viplists' => 489261,
+        'exists' => 'merge'
+    ]);
+
+    $url = "$base_url?$query";
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => $base_url,
+        CURLOPT_URL => $url,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -182,19 +190,24 @@ function foody_register_newsletter($email)
         CURLOPT_POSTFIELDS => ""
     ));
 
-//    $response = curl_exec($curl);
-//    $err = curl_error($curl);
+    $response = curl_exec($curl);
+
+    $valid_responses = [
+        'OkUpdated',
+        'OkInserted'
+    ];
 
     curl_close($curl);
 
-//    if ($err) {
-//        echo "cURL Error #:" . $err;
-//    } else {
-//        echo $response;
-//    }
+    $user = get_user_by('email', $email);
+
+    $result = in_array($response,$valid_responses);
+
+    update_user_meta($user->ID, 'newsletter', $result);
+
 }
 
 function get_viplus_url()
 {
-    return VIPLUS_BASE_URL . "?apikey=" . VIPLUS_KEY;
+    return VIPLUS_BASE_URL;
 }
