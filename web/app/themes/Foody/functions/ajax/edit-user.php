@@ -109,7 +109,7 @@ function foody_edit_user_approvals()
 
     $ID = get_current_user_id();
 
-    $user = wp_get_current_user();
+    $user = get_user_by('ID', $ID);
 
     if (!empty($marketing)) {
         $resultMarketing = update_user_meta($ID, 'marketing', $marketing);
