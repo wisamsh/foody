@@ -617,13 +617,16 @@ class Foody_Recipe extends Foody_Post
             if ($pan) {
                 $pan = get_term($pan, 'pans');
                 $conversions = get_field('conversions', $pan);
+                $slices = get_field('slices', $pan);
+
                 if (!empty($conversions)) {
 
                     foody_get_template_part(
                         get_template_directory() . '/template-parts/content-recipe-calculator-pans.php',
                         [
                             'pan' => $pan,
-                            'conversions' => $conversions
+                            'conversions' => $conversions,
+                            'slices' => $slices
                         ]
                     );
 

@@ -8,9 +8,9 @@
 
 /** @noinspection PhpUndefinedVariableInspection */
 /** @var WP_Term $pan */
-$pan = $template_args['pan'];
+$pan         = $template_args['pan'];
 $conversions = $template_args['conversions'];
-
+$slices      = $template_args['slices'];
 
 $options = array_map(function ($conversion) {
 
@@ -20,7 +20,10 @@ $options = array_map(function ($conversion) {
 
     return [
         'value' => $conversion['conversion_rate'],
-        'label' => get_term($conversion['pan'])->name
+        'label' => get_term( $conversion['pan'] )->name,
+        'data'  => [
+            'slices'   => get_field( 'slices', $conversion['pan'] )
+        ]
     ];
 
 }, $conversions);
@@ -34,7 +37,8 @@ array_unshift($options, [
     'label' => $pan->name,
     'selected' => true,
     'data' => [
-        'original' => true
+        'original' => true,
+        'slices' => $slices
     ]
 ]);
 

@@ -39,7 +39,12 @@ window.calculator = function (selector) {
 
         let original = $option.data('original');
 
-        updateIngredients($elements, 1, val, original);
+        let originalSlices = $(this).find('option[data-original=1]').data('slices');
+        let slices = $option.data('slices');
+        if (!slices) {
+            slices = 1;
+        }
+        updateIngredients($elements, originalSlices, slices, original);
 
     });
 
