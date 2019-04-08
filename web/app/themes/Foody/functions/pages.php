@@ -11,7 +11,7 @@
 $page_definitions = array(
     'השלמת-רישום' => array(
         'title' => __('השלמת רישום', 'foody'),
-        'content' => '[foody-approvals]',
+        'content' => '[foody-approvals redirect="true"]',
         'template' => 'content-with-images'
     )
 );

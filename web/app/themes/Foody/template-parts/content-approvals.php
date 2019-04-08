@@ -10,7 +10,11 @@ $approved_marketing = get_user_meta(get_current_user_id(), 'marketing', true);
 $registration_page = get_page_by_title('הרשמה');
 $show = get_field('show', $registration_page);
 
-$welcome_text = get_field('welcome_text',$registration_page);
+$welcome_text = get_field('welcome_text', $registration_page);
+
+$redirect = isset($template_args['redirect']);
+
+
 if (empty($welcome_text)) {
     $welcome_text = __('איזה כיף! אתם כבר רשומים לאתר Foody! אשרו קבלת דיוור וספר מתכונים מפנק לפסח יחכה לכם במייל איתו נרשמתם', 'foody');
 }
@@ -49,7 +53,9 @@ if (empty($welcome_text)) {
                 </label>
             </div>
         <?php endif; ?>
-
+        <?php if ($redirect): ?>
+            <input type="hidden" name="redirect" value="1">
+        <?php endif; ?>
         <input class="btn btn-primary" type="submit" value="<?php echo __('הירשם') ?>">
 
     </form>

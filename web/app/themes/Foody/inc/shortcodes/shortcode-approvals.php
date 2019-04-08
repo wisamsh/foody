@@ -8,7 +8,12 @@
 
 function foody_approvals_shortcode($atts)
 {
-    $display = foody_get_template_part(get_template_directory() . '/template-parts/content-approvals.php', ['return' => true]);
+    if(empty($atts)){
+        $atts = [];
+    }
+    $atts['return'] = true;
+
+    $display = foody_get_template_part(get_template_directory() . '/template-parts/content-approvals.php', $atts);
     return $display;
 }
 

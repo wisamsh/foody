@@ -32,6 +32,11 @@ jQuery(document).ready(($) => {
                     }
                 }, function () {
                     $approvalsContainer.unblock();
+                    let $redirect = $('input[name="redirect"]');
+                    // noinspection EqualityComparisonWithCoercionJS
+                    if ($redirect.length && $redirect.val() == 1) {
+                        window.location.href = '/';
+                    }
                 });
             }
         });
