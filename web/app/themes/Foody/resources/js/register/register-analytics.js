@@ -16,11 +16,11 @@ jQuery(document).ready(($) => {
         let facebookButton = socialLinks.siblings('.login').find('.btn-facebook');
 
         googleButton.click((event) => {
-            eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'גוגל');
+            eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'Google');
         });
 
         facebookButton.click((event) => {
-            eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'פייסבוק');
+            eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'Facebook');
         });
 
         /**
