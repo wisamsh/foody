@@ -234,7 +234,17 @@
                         &:before {
                           font-size: 18px !important;
                           left: 2px !important;
-                          top: 6px;
+                          top: 6px !important;
+                        }
+                        &.essb_icon_pinterest {
+                          &:before {
+                            top: 7px !important;
+                          }
+                        }
+                        &.essb_icon_whatsapp {
+                          &:before {
+                            top: 5px !important;
+                          }
                         }
                       }
                     }
