@@ -34,7 +34,8 @@
                         }
                         ?>
                         <section class="advantage">
-                            <div class="icon"><img src="<?php echo $icon['url']; ?>" alt="<?php echo $icon['alt']; ?>"></div>
+                            <div class="icon"><img src="<?php echo $icon['url']; ?>" alt="<?php echo $icon['alt']; ?>">
+                            </div>
                             <h3 class="title<?php echo $hclass; ?>"><?php the_sub_field('title') ?></h3>
                             <div class="content"><?php the_sub_field('content') ?></div>
                         </section>
@@ -102,7 +103,9 @@
                                     <div class="logo_inner">
                                         <?php if (get_sub_field('link')) {
                                             ?>
-                                            <a href="<?php echo get_sub_field('link'); ?>"><img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>"></a>
+                                            <a href="<?php echo get_sub_field('link'); ?>"><img
+                                                        src="<?php echo $logo['url']; ?>"
+                                                        alt="<?php echo $logo['alt']; ?>"></a>
                                             <?php
                                         } else {
                                             ?>
@@ -143,13 +146,17 @@
 
         <section class="bottom_image">
             <div class="container">
-                <h2><?php the_field('fn_bottom_image_title'); ?></h2>
+                <h3><?php the_field('fn_bottom_image_title'); ?></h3>
                 <?php
                 $d_image = get_field('fn_bottom_image');
                 $m_image = get_field('fn_bottom_image_mobile');
                 ?>
-                <div class="bottom_image_desktop"><img src="<?php echo $d_image['url']; ?>" alt="<?php echo $d_image['alt']; ?>"></div>
-                <div class="bottom_image_mobile"><img src="<?php echo $m_image['url']; ?>" alt="<?php echo $m_image['alt']; ?>"></div>
+                <div class="bottom_image_desktop">
+                    <img src="<?php echo $d_image['url']; ?>" alt="<?php echo $d_image['alt']; ?>">
+                </div>
+                <div class="bottom_image_mobile">
+                    <img src="<?php echo $m_image['url']; ?>" alt="<?php echo $m_image['alt']; ?>">
+                </div>
             </div>
         </section>
 

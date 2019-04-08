@@ -27,8 +27,9 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic
     public function before_content()
     {
         $cover_image = get_field('cover_image');
+        $mobile_image = get_field('mobile_cover_image');
 
-        foody_get_template_part(get_template_directory() . '/template-parts/content-cover-image.php', $cover_image);
+        foody_get_template_part(get_template_directory() . '/template-parts/content-cover-image.php', ['image'=>$cover_image,'mobile_image'=>$mobile_image]);
     }
 
     public function the_details()

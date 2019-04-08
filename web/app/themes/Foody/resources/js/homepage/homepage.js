@@ -31,12 +31,6 @@ jQuery(document).ready(($) => {
     if ($approvalsPopup.length) {
         $approvalsPopup.modal('show');
 
-        $('#approvals .md-checkbox label').on('click', function () {
-            let $input = $(this).prev('input[type="checkbox"]');
-            let checked = $input.prop('checked');
-            $input.prop('checked', checked);
-        });
-
         let $form = $("form#approvals");
         $form.validate({
             rules: {
@@ -45,7 +39,7 @@ jQuery(document).ready(($) => {
                 }
             },
             messages: {
-                marketing: 'נשמח לשלוח לך את ספר המתכונים, אבל קודם יש לאשר קבלת דואר מאתר Foody'
+                marketing: foodyGlobals.messages.registration.eBookError
             },
             errorPlacement: function (error, element) {
                 if (element.attr("type") == "checkbox") {
@@ -64,14 +58,27 @@ jQuery(document).ready(($) => {
                 foodyAjax({
                     action: 'foody_edit_user_approvals',
                     data: {
-                        marketing: $('#approvals #check-marketing').val(),
-                        e_book: $('#approvals #check-e-book').val(),
+                        marketing: $('#approvals #check-marketing',$approvalsPopup).prop('checked'),
+                        e_book: $('#approvals #check-e-book',$approvalsPopup).prop('checked')
                     }
                 }, function () {
                     $body.unblock();
                     $approvalsPopup.modal('hide');
                 });
             }
+        });
+
+        $approvalsPopup.on('hide.bs.modal', function () {
+            let ajaxSettings = {
+                action: 'foody_edit_user_approvals_viewed',
+                data: {
+                    'seen_approvals': true
+                }
+            };
+
+            foodyAjax(ajaxSettings,function (err) {
+                if (err){}
+            })
         });
     }
 });

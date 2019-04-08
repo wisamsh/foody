@@ -847,7 +847,7 @@ extract($template_args);
                                                 <td class="mcnImageContent" valign="top"
                                                     style="padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0; text-align:center;">
 
-                                                    <a href="https://s3-eu-west-1.amazonaws.com/foody-media/Ebook+Foody+Final.pdf" download="download">
+                                                    <a href="https://s3-eu-west-1.amazonaws.com/foody-media/FOODY-Passover-Ebook-2019.pdf" download="download">
                                                         <img align="center" alt="<?php echo __('ספר מתכונים לפסח')?>"
                                                              src="<?php echo $GLOBALS['images_dir'] . 'e-book-email-desktop.png' ?>"
                                                              width="564"

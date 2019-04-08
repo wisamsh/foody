@@ -104,37 +104,67 @@ function foody_edit_user_approvals()
     $errors = new WP_Error();
 
 
-    if (!is_user_logged_in()) {
-        $errors->add(401, 'unauthorized');
+    $marketing = foody_parse_checkbox('marketing');
+    $e_book = foody_parse_checkbox('e_book');
+
+    $marketing = isset($_POST['marketing']) ? $_POST['marketing'] : false;
+    $e_book = isset($_POST['e_book']) ? $_POST['e_book'] : false;
+
+
+    $ID = get_current_user_id();
+
+    if (!empty($marketing)) {
+        $resultMarketing = update_user_meta($ID, 'marketing', $marketing);
+    }
+    $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
+
+
+    if (
+        (isset($resultMarketing) &&
+            $resultMarketing === false) ||
+        $resultMarketingEbook === false
+    ) {
+        $errors->add(500, 'error updating user');
+    }
+
+
+    if (!empty($errors->errors)) {
+        wp_send_json_error($errors, 400);
     } else {
-
-        $markting = isset($_POST['marketing']) ? true : false;
-        $e_book = isset($_POST['e_book']) ? true : false;
-
-
-        $ID = get_current_user_id();
-
-        $resultMarketing = update_user_meta($ID, 'marketing', $markting);
-        $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
-
-
-        if ($resultMarketing === false || $resultMarketingEbook === false) {
-            $errors->add(500, 'error updating user');
+        $user = get_user_by('ID', get_current_user_id());
+        if ($e_book === "true" || $e_book === true) {
+            Foody_Mailer::send(__('איזה כיף לך! קיבלת את ספר מתכוני הפסח של FOODY'), 'e-book', $user->user_email);
         }
+        wp_send_json_success(['ebook' => $e_book]);
+    }
+}
 
+add_action('wp_ajax_foody_edit_user_approvals', 'foody_edit_user_approvals');
+
+
+function foody_edit_user_approvals_viewed()
+{
+
+    $errors = new WP_Error();
+
+
+    $seen_approvals = isset($_POST['seen_approvals']) ? $_POST['seen_approvals'] : false;
+    $ID = get_current_user_id();
+
+    $resultSeen = update_user_meta($ID, 'seen_approvals', $seen_approvals);
+
+    if ($resultSeen === false) {
+        $errors->add(500, 'error updating user');
     }
 
     if (!empty($errors->errors)) {
         wp_send_json_error($errors);
     } else {
         $user = get_user_by('ID', get_current_user_id());
-        Foody_Mailer::send('e book', 'e-book', $user->user_email);
-        wp_send_json_success();
+        wp_send_json_success($user);
     }
-
-
 }
 
-add_action('wp_ajax_foody_edit_user_approvals', 'foody_edit_user_approvals');
+add_action('wp_ajax_foody_edit_user_approvals_viewed', 'foody_edit_user_approvals_viewed');
 
 

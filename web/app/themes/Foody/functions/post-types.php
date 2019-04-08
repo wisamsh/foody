@@ -236,6 +236,44 @@ function limitations_init()
 
 add_action('init', 'limitations_init');
 
+function sponsors_init()
+{
+
+    $labels = array(
+        'name' => __('חברות מסחריות', 'foody'),
+        'singular_name' => __('חברה מסחרית', 'foody'),
+        'search_items' => __('חפש חברות מסחריות', 'foody'),
+        'all_items' => __('כל החברות המסחריות', 'foody'),
+        'edit_item' => __('ערוך חברה מסחרית', 'foody'),
+        'update_item' => __('עדכן חברה מסחרית', 'foody'),
+        'add_new_item' => __('הוסף חברה מסחרית', 'foody'),
+        'not_found' => __('לא נמצאו חברות מסחריות', 'foody'),
+        'menu_name' => __('חברות מסחריות', 'foody'),
+    );
+
+    // create a new taxonomy
+    register_taxonomy(
+        'sponsors',
+        ['foody_recipe'],
+        array(
+            'labels' => $labels,
+            'public' => false,
+            'rewrite' => false,
+            'show_ui' => true,
+
+            'capabilities' => array(
+                'assign_terms' => 'edit_posts',
+                'edit_terms' => 'publish_posts',
+                'show_ui' => true,
+                'show_in_menu' =>true,
+                'show_in_nav_menus' =>true
+            )
+        )
+    );
+}
+
+add_action('init', 'sponsors_init');
+
 
 /**
  * Retrieves all custom foody

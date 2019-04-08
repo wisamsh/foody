@@ -146,6 +146,9 @@ class Foody_Recipe extends Foody_Post
 
         $title = get_field('nutritions_title', $this->post->ID);
 
+        if (empty($title)) {
+            $title = __('ערכים תזונתיים');
+        }
 
         if (!empty($this->nutrients)) {
             $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
@@ -323,7 +326,7 @@ class Foody_Recipe extends Foody_Post
         $overview = get_field('overview', $this->id);
 
         $field = $overview[$time_field];
-        if(!isset($field['unit'])){
+        if (!isset($field['unit'])) {
             $field['unit'] = 'minutes';
         }
         $m = $this->unit_to_minutes($field['unit'], $field['time']);
@@ -645,27 +648,42 @@ class Foody_Recipe extends Foody_Post
     {
         $nutrients = array();
 
+
+        $excluded_nutrients = [
+            'fibers',
+            'saturated_fat',
+            'cholesterol',
+            'calcium',
+            'iron',
+            'potassium',
+            'zinc',
+            'sugar'
+        ];
+
         foreach (Foody_Ingredient::get_nutrients_options() as $nutrients_name => $nutrients_title) {
 
-            $item = ['name' => $nutrients_title, 'value' => 0];
-            foreach ($this->ingredients_groups as $group) {
+            if (!in_array($nutrients_name, $excluded_nutrients)) {
+                $item = ['name' => $nutrients_title, 'value' => 0];
+                foreach ($this->ingredients_groups as $group) {
 
-                foreach ($group['ingredients'] as $ingredient) {
+                    foreach ($group['ingredients'] as $ingredient) {
 
-                    /** @var Foody_Ingredient $ingredient */
-	                $value = $ingredient->get_nutrient_data_by_unit_and_amount($nutrients_name);
-	                $item['value'] = $item['value'] + $value;
+                        /** @var Foody_Ingredient $ingredient */
+                        $value = $ingredient->get_nutrient_data_by_unit_and_amount($nutrients_name);
+                        $item['value'] = $item['value'] + $value;
+                    }
+
                 }
+                $item['data_name'] = $nutrients_name;
+                $item['unit'] = Foody_Ingredient::get_nutrient_unit($nutrients_name);
+                $decimals = 0;
+                if ($nutrients_name == 'protein') {
+                    $decimals = 1;
+                }
+                $item['value'] = number_format($item['value'], $decimals, '.', '');
+                $nutrients[] = $item;
+            }
 
-            }
-            $item['data_name'] = $nutrients_name;
-            $item['unit'] = Foody_Ingredient::get_nutrient_unit($nutrients_name);
-            $decimals = 0;
-            if ($nutrients_name == 'protein') {
-                $decimals = 1;
-            }
-            $item['value'] = number_format($item['value'], $decimals, '.', '');
-            $nutrients[] = $item;
         }
 
         $this->nutrients = $nutrients;

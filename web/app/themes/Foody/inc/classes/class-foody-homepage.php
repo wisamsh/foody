@@ -157,8 +157,17 @@ class Foody_HomePage
 
                 if (!empty($row['secondary_text'])) {
                     $foody_post->setDescription($row['secondary_text']);
+                    $foody_post->description_mobile = $row['secondary_text'];
                 }
 
+                if (!empty($row['secondary_text_mobile'])) {
+                    $foody_post->description_mobile = $row['secondary_text_mobile'];
+                }
+
+
+                if (!empty($row['link'])) {
+                    $foody_post->link = $row['link']['url'];
+                }
 
                 return $foody_post;
             }, $featured);
@@ -203,12 +212,9 @@ class Foody_HomePage
         $registration_page = get_page_by_title('הרשמה');
         $show = get_field('show', $registration_page);
 
-        $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-        $referer = strtolower($referer);
-        $registration = get_permalink(get_page_by_title('הרשמה'));
-        $registration = add_query_arg('registered', 1, $registration);
-        $registration = strtolower($registration);
-        if ((!$approved_marketing || (!$approved_e_book && $show)) && ($referer == $registration)) {
+        $login_amount = get_user_meta(get_current_user_id(),'login_amount',true);
+
+        if ((!$approved_marketing || (!$approved_e_book && $show)) && $login_amount <= 1) {
             $modal_args = [
                 'id' => 'approvals-modal',
                 'title' => '',
