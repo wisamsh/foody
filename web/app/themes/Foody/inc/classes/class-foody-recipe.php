@@ -171,6 +171,30 @@ class Foody_Recipe extends Foody_Post
         }
     }
 
+    public function the_sponsor()
+    {
+
+	    $sponsor_id   = get_field( 'sponsor', $this->post->ID );
+	    $sponsor_text = get_field( 'sponsor_text', $this->post->ID );
+
+	    $sponsor      = get_term_field( 'name', $sponsor_id );
+	    $sponsor_link = get_term_by('link', 'sponsors' );
+
+	    var_dump( $sponsor_link );
+	    if ( ! empty( $sponsor ) ) {
+
+		    foody_get_template_part(
+			    get_template_directory() . '/template-parts/content-recipe-sponsor.php',
+			    [
+				    'sponsor'      => $sponsor,
+				    'sponsor_link' => $sponsor_link,
+				    'sponsor_text' => $sponsor_text,
+			    ]
+		    );
+
+	    }
+    }
+
     public function the_categories()
     {
         echo '<h2 class="title">' . __('קטגוריות') . '</h2>';
