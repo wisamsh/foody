@@ -103,10 +103,6 @@ function foody_edit_user_approvals()
 
     $errors = new WP_Error();
 
-
-    $marketing = foody_parse_checkbox('marketing');
-    $e_book = foody_parse_checkbox('e_book');
-
     $marketing = isset($_POST['marketing']) ? $_POST['marketing'] : false;
     $e_book = isset($_POST['e_book']) ? $_POST['e_book'] : false;
 
@@ -117,6 +113,7 @@ function foody_edit_user_approvals()
         $resultMarketing = update_user_meta($ID, 'marketing', $marketing);
     }
     $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
+    update_user_meta($ID, 'seen_approvals', true);
 
 
     if (
