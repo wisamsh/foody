@@ -25,8 +25,6 @@ $register_link = get_permalink(get_page_by_title('הרשמה'))
 
         <div id="primary" class="content-area">
             <div id="contentt" class="site-content" role="main">
-
-
                 <picture>
                     <source media="(min-width: 415px)" srcset="<?php echo $image ?>">
                     <source media="(max-width: 414px)"
