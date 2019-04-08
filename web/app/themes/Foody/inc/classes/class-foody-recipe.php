@@ -170,7 +170,6 @@ class Foody_Recipe extends Foody_Post
         echo get_the_category_list('', '', $this->getId());
     }
 
-
     public function the_accessories()
     {
         $posts = [];
@@ -210,7 +209,6 @@ class Foody_Recipe extends Foody_Post
             $template
         );
     }
-
 
     public function to_json_schema()
     {
@@ -519,7 +517,7 @@ class Foody_Recipe extends Foody_Post
                             $ingredient = new Foody_Ingredient($ingredient_post);
 
                             $ingredient->amounts = $amounts;
-
+                            $ingredient->recipe_id = $this->id;
                             $this->ingredients_groups[$current_group]['ingredients'][] = $ingredient;
                         }
 
