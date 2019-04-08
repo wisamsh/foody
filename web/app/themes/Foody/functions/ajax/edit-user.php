@@ -118,6 +118,14 @@ function foody_edit_user_approvals()
         }
     }
 
+    if(empty($marketing)){
+        $marketing = get_user_meta($ID,'marketing',true);
+    }
+
+    if ($marketing && !empty($user) && $user->ID != 0) {
+        foody_register_newsletter($user->user_email);
+    }
+
     $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
     update_user_meta($ID, 'seen_approvals', true);
 
