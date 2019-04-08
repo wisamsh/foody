@@ -56,7 +56,7 @@ if (empty($welcome_text)) {
         <?php if ($redirect): ?>
             <input type="hidden" name="redirect" value="1">
         <?php endif; ?>
-        <input class="btn btn-primary" type="submit" value="<?php echo __('הירשם') ?>">
+        <input class="btn btn-primary" type="submit" value="<?php echo __('סיום הרשמה') ?>">
 
     </form>
 </section>
