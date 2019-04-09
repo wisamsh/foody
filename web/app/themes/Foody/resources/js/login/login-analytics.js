@@ -17,12 +17,12 @@ jQuery(document).ready(($) => {
 
         // Google Login
         googleButton.click((event) => {
-            eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'גוגל');
+            eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'Google');
         });
 
         // Facebook Login
         facebookButton.click((event) => {
-            eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'פייסבוק');
+            eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'Facebook');
         });
 
         /**

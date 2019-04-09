@@ -103,20 +103,31 @@ function foody_edit_user_approvals()
 
     $errors = new WP_Error();
 
-
-    $marketing = foody_parse_checkbox('marketing');
-    $e_book = foody_parse_checkbox('e_book');
-
     $marketing = isset($_POST['marketing']) ? $_POST['marketing'] : false;
     $e_book = isset($_POST['e_book']) ? $_POST['e_book'] : false;
 
 
     $ID = get_current_user_id();
 
+    $user = get_user_by('ID', $ID);
+
     if (!empty($marketing)) {
         $resultMarketing = update_user_meta($ID, 'marketing', $marketing);
+        if (!empty($user) && $user->ID != 0) {
+            foody_register_newsletter($user->user_email);
+        }
     }
+
+    if(empty($marketing)){
+        $marketing = get_user_meta($ID,'marketing',true);
+    }
+
+    if ($marketing && !empty($user) && $user->ID != 0) {
+        foody_register_newsletter($user->user_email);
+    }
+
     $resultMarketingEbook = update_user_meta($ID, 'e_book', $e_book);
+    update_user_meta($ID, 'seen_approvals', true);
 
 
     if (

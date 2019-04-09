@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpComposerExtensionStubsInspection */
 /**
  * Created by PhpStorm.
  * User: moveosoftware
@@ -174,4 +174,53 @@ function foody_authentication_expiration($expire_in)
     }
 
     return $expire_in;
+}
+
+function foody_register_newsletter($email)
+{
+
+    $curl = curl_init();
+
+    $base_url = get_viplus_url();
+
+    $query = http_build_query([
+        'email' => $email,
+        'apikey' => VIPLUS_KEY,
+        'viplists' => 489261,
+        'exists' => 'merge'
+    ]);
+
+    $url = "$base_url?$query";
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_POSTFIELDS => ""
+    ));
+
+    $response = curl_exec($curl);
+
+    $valid_responses = [
+        'OkUpdated',
+        'OkInserted'
+    ];
+
+    curl_close($curl);
+
+    $user = get_user_by('email', $email);
+
+    $result = in_array($response,$valid_responses);
+
+    update_user_meta($user->ID, 'newsletter', $result);
+
+}
+
+function get_viplus_url()
+{
+    return VIPLUS_BASE_URL;
 }

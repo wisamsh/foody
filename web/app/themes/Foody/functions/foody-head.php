@@ -233,6 +233,23 @@ function add_filter_query_arg($vars)
     return $vars;
 }
 
+add_filter('foody_js_globals', 'add_user_data_globals');
+
+function add_user_data_globals($vars)
+{
+	if ( is_user_logged_in() ) {
+		$user_id = get_current_user_id();
+		$social  = get_user_meta( $user_id, 'wsl_current_provider', true );
+		if ( ! empty( $social ) ) {
+			$vars['user'] = [
+				'social_type' => $social
+			];
+		}
+	}
+
+	return $vars;
+}
+
 add_filter('foody_js_globals', 'add_filter_query_arg');
 
 function foody_style_placeholder()
