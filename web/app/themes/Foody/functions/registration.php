@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpComposerExtensionStubsInspection */
 /**
  * Created by PhpStorm.
  * User: moveosoftware
@@ -161,4 +161,66 @@ function track_user_logins($user_login, $user)
         // First Login, set it to 1
         update_user_meta($user->id, 'login_amount', 1);
     }
+}
+
+add_filter('auth_cookie_expiration', 'foody_authentication_expiration');
+function foody_authentication_expiration($expire_in)
+{
+    // 1 year in seconds
+    $expire_in_a_year = 31556926;
+
+    if (Foody_User::is_user_subscriber()) {
+        $expire_in = $expire_in_a_year;
+    }
+
+    return $expire_in;
+}
+
+function foody_register_newsletter($email)
+{
+
+    $curl = curl_init();
+
+    $base_url = get_viplus_url();
+
+    $query = http_build_query([
+        'email' => $email,
+        'apikey' => VIPLUS_KEY,
+        'viplists' => 489261,
+        'exists' => 'merge'
+    ]);
+
+    $url = "$base_url?$query";
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_POSTFIELDS => ""
+    ));
+
+    $response = curl_exec($curl);
+
+    $valid_responses = [
+        'OkUpdated',
+        'OkInserted'
+    ];
+
+    curl_close($curl);
+
+    $user = get_user_by('email', $email);
+
+    $result = in_array($response,$valid_responses);
+
+    update_user_meta($user->ID, 'newsletter', $result);
+
+}
+
+function get_viplus_url()
+{
+    return VIPLUS_BASE_URL;
 }

@@ -12,13 +12,24 @@ $buttons = ['gmail', 'pinterest', 'whatsapp', 'facebook'];
 if (!wp_is_mobile()) {
     array_unshift($buttons, 'print');
 }
+/** @noinspection PhpUndefinedVariableInspection */
+if (isset($template_args['exclude']) && is_array($template_args['exclude'])) {
+    $buttons_tmp = [];
+    foreach ($buttons as $button) {
+        if (!in_array($button, $template_args['exclude'])) {
+            $buttons_tmp[] = $button;
+        }
+    }
 
+    $buttons = $buttons_tmp;
+
+}
 
 $buttons_attr = implode(',', $buttons);
 
 $social_icons = do_shortcode('[easy-social-share buttons="' . $buttons_attr . '" template="11" counters=0 style="icon" point_type="simple"]');
 
-/** @noinspection PhpUndefinedVariableInspection */
+
 $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rating'] == false;
 
 ?>

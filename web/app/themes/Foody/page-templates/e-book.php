@@ -25,8 +25,6 @@ $register_link = get_permalink(get_page_by_title('הרשמה'))
 
         <div id="primary" class="content-area">
             <div id="contentt" class="site-content" role="main">
-
-
                 <picture>
                     <source media="(min-width: 415px)" srcset="<?php echo $image ?>">
                     <source media="(max-width: 414px)"
@@ -37,6 +35,14 @@ $register_link = get_permalink(get_page_by_title('הרשמה'))
                 <a class="btn btn-primary cta cta-float" href="<?php echo $register_link ?>">
                     <?php echo __('להרשמה') ?>
                 </a>
+
+                <div class="text-center share-text">
+                    <?php echo _('שתפו') ?>
+                </div>
+
+                <?php
+                foody_get_template_part(get_template_directory() . '/template-parts/content-social-actions.php', ['exclude' => ['print']]);
+                ?>
 
                 <?php the_content(); ?>
 

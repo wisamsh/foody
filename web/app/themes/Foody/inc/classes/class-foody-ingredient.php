@@ -32,6 +32,7 @@ class Foody_Ingredient extends Foody_Post
     public $singular_name;
     public $nutrients;
     public $nutrients_conversion;
+    public $recipe_id;
 
     /**
      * Foody_Ingredient constructor.
@@ -161,7 +162,7 @@ class Foody_Ingredient extends Foody_Post
 
             foreach ($nutrients_names as $nutrient_name => $value) {
 
-                $nutrients_data[$nutrient_name] = $this->get_nutrient_for_by_unit_and_amount($nutrient_name);
+                $nutrients_data[$nutrient_name] = $this->get_nutrient_data_by_unit_and_amount($nutrient_name);
             }
 
             $data .= ' ' . foody_array_to_data_attr($nutrients_data);
@@ -186,6 +187,17 @@ class Foody_Ingredient extends Foody_Post
         } else {
             $amount_el .= $unit_el;
             $amount_el .= $name_el;
+        }
+
+        /** @var WP_Term $sponsor */
+        $sponsor = $this->get_sponsor();
+        if (!empty($sponsor)) {
+            $image = get_field('logo', $sponsor->taxonomy . '_' . $sponsor->term_id);
+            $amount_el .= '<div class="sponsored-by">';
+            if (!empty($image)) {
+                $amount_el .= '<img src="' . $image['url'] . '" alt="' . $image['alt'] . '">';
+            }
+            $amount_el .= '<span>' . $sponsor->name . '</span></div>';
         }
 
         return $amount_el;
@@ -285,121 +297,121 @@ class Foody_Ingredient extends Foody_Post
         return $value;
     }
 
-	/**
-	 * Retreive ingredient nutritional data using nutrients_conversion table
-	 * @param $nutrient_name string
-	 * @param $unit WP_Term
-	 * @param $amount number
-	 * @return float|int
-	 */
-	public function get_nutrient_data_by_unit_and_amount($nutrient_name)
-	{
-		$value = 0;
-		$unit_name = '';
+    /**
+     * Retreive ingredient nutritional data using nutrients_conversion table
+     * @param $nutrient_name string
+     * @param $unit WP_Term
+     * @param $amount number
+     * @return float|int
+     */
+    public function get_nutrient_data_by_unit_and_amount($nutrient_name)
+    {
+        $value = 0;
+        $unit_name = '';
 
-		if ( ! empty( $this->amounts ) ) {
-			$amounts = $this->amounts[0];
-			$unit    = ! empty( $amounts['unit'] ) ? $amounts['unit_tax'] : $amounts['unit'];
-			$amount  = $amounts['amount'];
+        if (!empty($this->amounts)) {
+            $amounts = $this->amounts[0];
+            $unit = !empty($amounts['unit']) ? $amounts['unit_tax'] : $amounts['unit'];
+            $amount = $amounts['amount'];
 
-			if ( $unit instanceof WP_Term ) {
-				$unit_name = get_term_field( 'slug', $unit->term_id, 'units' );
-			}
+            if ($unit instanceof WP_Term) {
+                $unit_name = get_term_field('slug', $unit->term_id, 'units');
+            }
 
-			if ( ( ! empty( $this->nutrients_conversion ) && is_array( $this->nutrients_conversion ) ) ) {
-				$nutrients = array_filter( $this->nutrients_conversion, function ( $nutrient ) use ( $nutrient_name, $unit, $amount, $unit_name ) {
-					$valid = false;
+            if ((!empty($this->nutrients_conversion) && is_array($this->nutrients_conversion))) {
+                $nutrients = array_filter($this->nutrients_conversion, function ($nutrient) use ($nutrient_name, $unit, $amount, $unit_name) {
+                    $valid = false;
 
-					if ( $unit instanceof WP_Term ) {
-						$valid = $nutrient['unit'] == $unit->term_id;
-					} else if ( empty( $unit ) ) {
-						$valid = true;
-					}
+                    if ($unit instanceof WP_Term) {
+                        $valid = $nutrient['unit'] == $unit->term_id;
+                    } else if (empty($unit)) {
+                        $valid = true;
+                    }
 
-					return $valid;
-				} );
+                    return $valid;
+                });
 
-			} else if ( urldecode( $unit_name ) == 'גרם' || urldecode( $unit_name ) == 'מל' ) {
-				$value = 1;
-			}
+            } else if (urldecode($unit_name) == 'גרם' || urldecode($unit_name) == 'מל') {
+                $value = 1;
+            }
 
-			if ( ! empty( $nutrients ) || ( urldecode( $unit_name ) == 'גרם' || urldecode( $unit_name ) == 'מל' ) ) {
+            if (!empty($nutrients) || (urldecode($unit_name) == 'גרם' || urldecode($unit_name) == 'מל')) {
 
-				if ( ! empty( $nutrients ) ) {
-					$nutrient = array_shift( $nutrients );
-					$value    = $nutrient['grams'];
-				}
+                if (!empty($nutrients)) {
+                    $nutrient = array_shift($nutrients);
+                    $value = $nutrient['grams'];
+                }
 
-				$grams  = $this->get_nutrient_grams_by_unit( $nutrient_name );
-				$factor = 100;// per 100 Grams
+                $grams = $this->get_nutrient_grams_by_unit($nutrient_name);
+                $factor = 100;// per 100 Grams
 
-				$amount = floatval( $amount );
-				$value  = floatval( $value );
-				if ( ! empty( $amounts['unit'] ) && ( $amounts['unit'] == 'גרם' || $amounts['unit'] == 'מ"ל' ) ) {
-					$value = 1;
-				}
-				$grams_value = ( $value / $factor ) * $grams;
-				$value       = $amount * $grams_value;
+                $amount = floatval($amount);
+                $value = floatval($value);
+                if (!empty($amounts['unit']) && ($amounts['unit'] == 'גרם' || $amounts['unit'] == 'מ"ל')) {
+                    $value = 1;
+                }
+                $grams_value = ($value / $factor) * $grams;
+                $value = $amount * $grams_value;
 
-				$value = (float) $value;
+                $value = (float)$value;
 
-			}
-		}
+            }
+        }
 
-		return $value;
-	}
+        return $value;
+    }
 
-	/**
-	 * Retreive nutrient grams value
-	 * @param $nutrient_name string
-	 * @param $unit WP_Term
-	 * @param $amount number
-	 * @return float|int
-	 */
-	public function get_nutrient_grams_by_unit($nutrient_name)
-	{
-		$value = 0;
-		if (!empty($this->amounts)) {
-			$amounts = $this->amounts[0];
-			$unit   = !empty($amounts['unit']) ? $amounts['unit_tax'] : $amounts['unit'];
-			$amount = $amounts['amount'];
+    /**
+     * Retreive nutrient grams value
+     * @param $nutrient_name string
+     * @param $unit WP_Term
+     * @param $amount number
+     * @return float|int
+     */
+    public function get_nutrient_grams_by_unit($nutrient_name)
+    {
+        $value = 0;
+        if (!empty($this->amounts)) {
+            $amounts = $this->amounts[0];
+            $unit = !empty($amounts['unit']) ? $amounts['unit_tax'] : $amounts['unit'];
+            $amount = $amounts['amount'];
 
-			if (!empty($this->nutrients) && is_array($this->nutrients)) {
-				$nutrients = array_filter($this->nutrients, function ($nutrient) use ($nutrient_name, $unit, $amount) {
+            if (!empty($this->nutrients) && is_array($this->nutrients)) {
+                $nutrients = array_filter($this->nutrients, function ($nutrient) use ($nutrient_name, $unit, $amount) {
 
-					$valid = false;
+                    $valid = false;
 
-					if ($unit instanceof WP_Term) {
+                    if ($unit instanceof WP_Term) {
 
-						$unit_name = get_term_field( 'slug', $nutrient['unit'], 'units' );
+                        $unit_name = get_term_field('slug', $nutrient['unit'], 'units');
 
-						if(is_wp_error($unit_name) || empty($unit_name)){
-							$unit_name = '';
-						}
+                        if (is_wp_error($unit_name) || empty($unit_name)) {
+                            $unit_name = '';
+                        }
 
-						$valid     = ( urldecode( $unit_name ) == 'גרם' ||
-						               urldecode( $unit_name ) == 'מל' ) &&
-						             $nutrient['nutrient'] == $nutrient_name;
-					} else if (empty($unit)){
-						$valid = true;
-					}
+                        $valid = (urldecode($unit_name) == 'גרם' ||
+                                urldecode($unit_name) == 'מל') &&
+                            $nutrient['nutrient'] == $nutrient_name;
+                    } else if (empty($unit)) {
+                        $valid = true;
+                    }
 
-					return $valid;
-				});
+                    return $valid;
+                });
 
-				if (!empty($nutrients)) {
+                if (!empty($nutrients)) {
                     $nutrient = array_shift($nutrients);
                     $value = $nutrient['value'];
-				}
-			}
-		}
+                }
+            }
+        }
 
 
-		return $value;
-	}
+        return $value;
+    }
 
 
-	public static function get_nutrients_options()
+    public static function get_nutrients_options()
     {
         $nutrients = get_field_object('field_5b62c59c35d88')['choices'];
         unset($nutrients['sugar']);
@@ -442,5 +454,70 @@ class Foody_Ingredient extends Foody_Post
 
     }
 
+
+    /**
+     * Checks if a commercial brand
+     * should be displayed in this ingredient's html
+     * representation
+     * @return mixed|null|void
+     */
+    private function get_sponsor()
+    {
+        $sponsor_to_return = null;
+        if (!empty($sponsor = get_field('sponsor', $this->id))) {
+
+            $filters = get_field('filters', $this->id);
+            if (!empty($filters)) {
+
+                $post = get_post($this->recipe_id);
+
+                foreach ($filters as $filter) {
+                    $filter = $filter['filter'];
+                    $value = $filter['value_' . $filter['type']];
+
+                    if ($value) {
+                        switch ($filter['type']) {
+                            case 'author':
+                                /** @var WP_User $value */
+                                if ($post->post_author == $value->ID) {
+                                    $sponsor_to_return = $sponsor;
+                                }
+                                break;
+                            case 'category':
+                                /** @var WP_Term $value */
+                                if (in_category($value->term_id, $post)) {
+                                    $sponsor_to_return = $sponsor;
+                                }
+                                break;
+                            case 'tag':
+                                /** @var WP_Term $value */
+                                if (has_tag($value->term_id, $post)) {
+                                    $sponsor_to_return = $sponsor;
+                                }
+                                break;
+                            case 'channel':
+                                /** @var WP_Post $value */
+                                $channel_recipes = get_field('related_recipes', $value);
+
+                                if (!empty($channel_recipes) && is_array($channel_recipes)) {
+
+                                    $channel_recipes = array_map(function ($post) {
+                                        return $post->ID;
+                                    }, $channel_recipes);
+
+                                    if (in_array($this->recipe_id, $channel_recipes)) {
+                                        $sponsor_to_return = $sponsor;
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return $sponsor_to_return;
+    }
 
 }

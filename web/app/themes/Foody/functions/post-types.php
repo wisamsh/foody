@@ -248,7 +248,7 @@ function sponsors_init()
         'update_item' => __('עדכן חברה מסחרית', 'foody'),
         'add_new_item' => __('הוסף חברה מסחרית', 'foody'),
         'not_found' => __('לא נמצאו חברות מסחריות', 'foody'),
-        'menu_name' => __('חברות מסחריות', 'foody'),
+        'menu_name' => __('חברות מסחריות', 'foody')
     );
 
     // create a new taxonomy
