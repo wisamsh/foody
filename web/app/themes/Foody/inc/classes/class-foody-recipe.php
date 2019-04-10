@@ -167,10 +167,10 @@ class Foody_Recipe extends Foody_Post {
 		$sponsor      = get_field( 'sponsor', $this->post->ID );
 		$sponsor_text = get_field( 'sponsor_text', $this->post->ID );
 
-		$sponsor_name = $sponsor->name;
-		$sponsor_link = get_field( 'link', $sponsor->taxonomy . '_' . $sponsor->term_id );
-
 		if ( ! empty( $sponsor ) ) {
+
+			$sponsor_name = $sponsor->name;
+			$sponsor_link = get_field( 'link', $sponsor->taxonomy . '_' . $sponsor->term_id );
 
 			foody_get_template_part(
 				get_template_directory() . '/template-parts/content-recipe-sponsor.php',
