@@ -81,7 +81,7 @@ $recipe = $template_args['recipe'];
 
 <?php $recipe->the_notes() ?>
 
-<section class="recipe-sponsor box no-print">
+<section class="recipe-sponsor-container box no-print">
 
     <?php $recipe->the_sponsor() ?>
 
