@@ -3,7 +3,7 @@
 }
 
 h1.channels-menu-title {
-  color: $color__primary;
+  color: var(--color__primary);
   margin: 0 -15px;
   padding: 15px;
   color: white;
@@ -136,7 +136,7 @@ header nav.navbar.navbar-light .navbar-nav .nav-link.btn-channels-menu:hover {
     padding-left: 30px;
   }
   h1.channels-menu-title {
-    color: $color__primary;
+    color: var(--color__primary);
     background-image: none;
     margin-bottom: 0;
     width: 100%;

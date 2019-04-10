@@ -70,7 +70,7 @@ $content-width: 95%;
     .tooltip-inner {
       background: white;
       box-shadow: rgba(0, 0, 0, 0.3) 0 3px 10px;
-      color: $color__text-primary-dark;
+      color: var(--color__text-primary-dark);
       font-family: $font__assistant;
       padding: 10px 20px 20px;
 
@@ -78,7 +78,7 @@ $content-width: 95%;
         float: none !important;
         text-align: left;
         display: block;
-        color: $color__text-primary-dark;
+        color: var(--color__text-primary-dark);
         opacity: 1;
       }
       div {
@@ -203,10 +203,10 @@ $content-width: 95%;
 
           .essb_item {
             a {
-              background-color: $color__social !important;
+              background-color: var(--color__social) !important;
 
               &:hover {
-                //background-color: $color__social !important;
+                //background-color: var(--color__social) !important;
               }
             }
           }
@@ -296,13 +296,13 @@ $content-width: 95%;
           line-height: normal;
           .key {
             // TODO change size
-            color: $color__text-primary-dark;
+            color: var(--color__text-primary-dark);
             font-size: 22px;
 
           }
 
           .value {
-            color: $color__primary;
+            color: var(--color__primary);
             font-size: 21px;
             font-family: $font__main;
           }
@@ -376,7 +376,7 @@ $content-width: 95%;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
-            color: $color__primary;
+            color: var(--color__primary);
           }
 
         }
@@ -429,7 +429,7 @@ $content-width: 95%;
 
           ul {
 
-            border: 1px solid $color__divider;
+            border: 1px solid var(--color__divider);
             margin: 0;
 
             li {
@@ -455,7 +455,7 @@ $content-width: 95%;
 
                 > span {
                   font-size: 15px;
-                  color: $color__primary;
+                  color: var(--color__primary);
                 }
 
                 > img {
@@ -584,7 +584,7 @@ $content-width: 95%;
                   color: #66c264;
                 }
                 &.negative {
-                  color: $color__primary;
+                  color: var(--color__primary);
                 }
               }
 
@@ -717,7 +717,7 @@ $content-width: 95%;
           border-radius: 3px;
           background-color: #ffffff;
           box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
-          color: $color__primary;
+          color: var(--color__primary);
           font-size: 22px;
           display: inline-block;
 
@@ -736,7 +736,7 @@ $content-width: 95%;
           }
 
           .icon-camera {
-            color: $color__primary;
+            color: var(--color__primary);
             vertical-align: middle;
             margin-left: 10px;
 
@@ -901,14 +901,14 @@ $content-width: 95%;
           border-radius: 0;
 
           &.btn-approve {
-            color: $color__primary;
+            color: var(--color__primary);
             font-weight: bold;
             padding-right: 10px;
           }
 
           &.btn-cancel {
             padding-left: 10px;
-            border-left: 1px solid $color__divider;
+            border-left: 1px solid var(--color__divider);
           }
 
         }
@@ -938,7 +938,7 @@ $content-width: 95%;
         font-family: $font__assistant;
         font-size: 20px;
         a {
-          color: $color__primary;
+          color: var(--color__primary);
         }
       }
 
@@ -1166,7 +1166,7 @@ $content-width: 95%;
             //padding-bottom: 20px;
             &:nth-child(odd) {
 
-              border-left: 1px solid $color__divider;
+              border-left: 1px solid var(--color__divider);
             }
 
             .key {
@@ -1234,7 +1234,7 @@ $content-width: 95%;
 
             ul {
 
-              border: 1px solid $color__divider;
+              border: 1px solid var(--color__divider);
               margin: 0;
 
               li {

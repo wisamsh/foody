@@ -45,7 +45,7 @@ if (file_exists($env_config)) {
 
 // Foody related
 define('FOODY_PAGE', 'fp');
-
+define('COOKIE_DOMAIN', false);
 /**
  * URLs
  */

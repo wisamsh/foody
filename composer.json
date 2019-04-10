@@ -65,18 +65,6 @@
     {
       "type": "package",
       "package": {
-        "name": "abdullah-irfan/whitelist",
-        "version": "3.5",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/fifthsegment-whitelist.3.5.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
         "name": "yoast/wordpress-seo",
         "version": "9.5",
         "type": "wordpress-plugin",
@@ -89,36 +77,12 @@
     {
       "type": "package",
       "package": {
-        "name": "saurabhshukla-yapapaya/widgets-in-menu",
-        "version": "1.0.0",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/widgets-in-menu.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
         "name": "joe-dolson/wp-accessibility",
         "version": "1.6.4",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
           "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "gagan-deep-singh/fix-image-rotation",
-        "version": "2.1.1",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/fix-image-rotation.2.1.1.zip"
         }
       }
     },
@@ -155,30 +119,6 @@
         "dist": {
           "type": "zip",
           "url": "https://downloads.wordpress.org/plugin/acf-image-crop-add-on.1.4.12.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "willnorris/wordpress-hum",
-        "version": "1.0.0",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://github.com/willnorris/wordpress-hum/archive/master.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "joe-dolson/wp-accessibility",
-        "version": "1.6.4",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip"
         }
       }
     },
@@ -245,36 +185,24 @@
     {
       "type": "package",
       "package": {
-        "name": "tony-archambeau/wp-sitemap-page",
-        "version": "1.6.1",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/wp-sitemap-page.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "david-gwyer/simple-sitemap-pro",
-        "version": "2.1",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://wpgoplugins.com/index.php?eddfile=5753%3A805%3A3%3A1&ttl=1554470076&file=3&token=caca7216c2184b90d85d0244e7416ae2"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
         "name": "delicious-brains-inc/wp-ses",
         "version": "0.8.2",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
           "url": "https://downloads.wordpress.org/plugin/wp-ses.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "wordpressdotorg/wordpress-importer",
+        "version": "0.6.4",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wordpress-importer.0.6.4.zip"
         }
       }
     }
@@ -297,7 +225,6 @@
     "saurabhshukla-yapapaya/widgets-in-menu": "^1.0",
     "mixpanel/mixpanel-php": "^2.6",
     "joe-dolson/wp-accessibility": "^1.6",
-    "gagan-deep-singh/fix-image-rotation": "^2.1",
     "takayuki-miyoshi/contact-form-7": "^5.0",
     "arshid/contact-form-cfdb7": "1.2.4.1",
     "anders-thorborgd/acf-image-crop-add-on": "^1.4",
@@ -307,11 +234,9 @@
     "delicious-brains/amazon-s3-and-cloudfront": "^2.0",
     "zaus-atlanticbt-spkane/forms-3rdparty-integration": "^1.7",
     "flippercode/wp-user-avatar": "^2.1",
-    "tony-archambeau/wp-sitemap-page": "^1.6",
-    "david-gwyer/simple-sitemap": "^2.6",
-    "david-gwyer/simple-sitemap-pro": "^2.6",
     "ext-json": "*",
-    "delicious-brains-inc/wp-ses": "^0.8.2"
+    "delicious-brains-inc/wp-ses": "^0.8.2",
+    "wordpressdotorg/wordpress-importer": "^0.6.4"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

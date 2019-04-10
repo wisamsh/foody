@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a50b3b6909abbed386cc052cceee8b03",
+    "content-hash": "8c8fde9b138e8bf7722f9766369b127a",
     "packages": [
         {
             "name": "anders-thorborgd/acf-image-crop-add-on",
@@ -160,28 +160,6 @@
             "time": "2017-12-29T09:13:20+00:00"
         },
         {
-            "name": "david-gwyer/simple-sitemap",
-            "version": "2.6",
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/simple-sitemap.2.6.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin"
-        },
-        {
-            "name": "david-gwyer/simple-sitemap-pro",
-            "version": "2.6",
-            "dist": {
-                "type": "zip",
-                "url": "https://wpgoplugins.com/index.php?eddfile=5753%3A805%3A3%3A1&ttl=1554470076&file=3&token=caca7216c2184b90d85d0244e7416ae2",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin"
-        },
-        {
             "name": "delicious-brains-inc/wp-ses",
             "version": "0.8.2",
             "dist": {
@@ -220,17 +198,6 @@
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/wp-user-avatar.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin"
-        },
-        {
-            "name": "gagan-deep-singh/fix-image-rotation",
-            "version": "2.1.1",
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/fix-image-rotation.2.1.1.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -739,17 +706,6 @@
             "type": "wordpress-plugin"
         },
         {
-            "name": "tony-archambeau/wp-sitemap-page",
-            "version": "1.6.1",
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-sitemap-page.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin"
-        },
-        {
             "name": "vlucas/phpdotenv",
             "version": "v2.5.0",
             "source": {
@@ -798,6 +754,17 @@
                 "environment"
             ],
             "time": "2018-07-01T10:25:50+00:00"
+        },
+        {
+            "name": "wordpressdotorg/wordpress-importer",
+            "version": "0.6.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wordpress-importer.0.6.4.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
         },
         {
             "name": "xamin/handlebars.php",
@@ -877,11 +844,44 @@
             "type": "wordpress-plugin"
         },
         {
+            "name": "david-gwyer/simple-sitemap",
+            "version": "2.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/simple-sitemap.2.6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "david-gwyer/simple-sitemap-pro",
+            "version": "2.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://wpgoplugins.com/index.php?eddfile=5753%3A805%3A3%3A1&ttl=1554470076&file=3&token=caca7216c2184b90d85d0244e7416ae2",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "delicious-brains/amazon-web-services",
             "version": "1.0.5",
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/amazon-web-services.1.0.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "gagan-deep-singh/fix-image-rotation",
+            "version": "2.1.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/fix-image-rotation.2.1.1.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -970,6 +970,17 @@
                 "standards"
             ],
             "time": "2018-06-06T23:58:19+00:00"
+        },
+        {
+            "name": "tony-archambeau/wp-sitemap-page",
+            "version": "1.6.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-sitemap-page.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
         },
         {
             "name": "xrstf/composer-php52",

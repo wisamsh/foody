@@ -4,9 +4,9 @@ input[type="reset"],
 input[type="submit"],
 input[type="submit"] {
   border: 1px solid;
-  border-color: $color__border-button;
+  border-color: var(--color__border-button);
   border-radius: 3px;
-  background: $color__background-button;
+  background: var(--color__background-button);
   color: rgba(0, 0, 0, .8);
   @include font-size(0.75);
   line-height: 1;

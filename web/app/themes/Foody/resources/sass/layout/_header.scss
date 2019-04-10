@@ -6,7 +6,7 @@ body {
   &.has-background {
     header {
       .socials {
-        background-color: $color__background-screen;
+        background-color: var(--color__background-screen);
       }
     }
   }
@@ -45,7 +45,7 @@ header {
 
       i {
         &:before {
-          color: $color__primary;
+          color: var(--color__primary);
           font-size: 18px;
           vertical-align: middle;
         }
@@ -91,7 +91,7 @@ header {
         button {
           border-radius: 0;
           border: none;
-          background-color: $color__primary;
+          background-color: var(--color__primary);
           .aticon {
             &:before {
               color: white;
@@ -119,7 +119,7 @@ header {
         display: flex;
 
         flex-direction: row-reverse;
-        background-color: $color__background-screen;
+        background-color: var(--color__background-screen);
 
         a, > span {
           margin-right: 10px;
@@ -328,7 +328,7 @@ header {
       background-color: white;
       width: 100vw;
       height: 60px;
-      color: $color__primary;
+      color: var(--color__primary);
       position: relative;
       border: solid 1px rgba(151, 151, 151, 0.4);
 
@@ -354,7 +354,7 @@ header {
         position: absolute;
         line-height: 60px;
         font-weight: bold;
-        color: $color__primary;
+        color: var(--color__primary);
         top: 0;
         left: 20px;
         padding: 0 10px;
@@ -547,7 +547,7 @@ header {
 
           .login-signup {
             .nav-link, .nav-link-separator {
-              color: $color__primary;
+              color: var(--color__primary);
             }
           }
 
@@ -560,7 +560,7 @@ header {
         .avatar {
           clip-path: circle();
           border-radius: 50%;
-          border: 2px solid $color__primary;
+          border: 2px solid var(--color__primary);
           max-width: 52px;
 
           &.default-avatar {
@@ -912,7 +912,7 @@ header {
                       &:before {
                         transition: transform .3s;
                         font-size: 8px;
-                        color: $color__text-primary-dark !important;
+                        color: var(--color__text-primary-dark) !important;
                       }
                     }
 
@@ -997,7 +997,7 @@ header {
           .navbar-toggler-icon {
             background-image: none;
             &:before {
-              color: $color__primary;
+              color: var(--color__primary);
               display: inline-block;
               padding-top: 4px;
             }
@@ -1109,7 +1109,7 @@ header {
                 .nav-link:not(.dropdown-item) {
                   display: inline-block;
                   font-size: 24px;
-                  color: $color__primary;
+                  color: var(--color__primary);
                 }
               }
 
@@ -1119,7 +1119,7 @@ header {
 
               i {
                 &:before {
-                  color: $color__primary;
+                  color: var(--color__primary);
                 }
               }
 
@@ -1141,7 +1141,7 @@ header {
 
                 .arrow {
                   &:before {
-                    color: $color__text-primary-dark;
+                    color: var(--color__text-primary-dark);
                     left: 3em;
                   }
                 }

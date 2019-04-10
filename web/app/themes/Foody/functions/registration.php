@@ -154,12 +154,12 @@ function foody_login_fail($username)
 add_action('wp_login', 'track_user_logins', 10, 2);
 function track_user_logins($user_login, $user)
 {
-    if ($login_amount = get_user_meta($user->id, 'login_amount', true)) {
+    if ($login_amount = get_user_meta($user->ID, 'login_amount', true)) {
         // They've Logged In Before, increment existing total by 1
-        update_user_meta($user->id, 'login_amount', ++$login_amount);
+        update_user_meta($user->ID, 'login_amount', ++$login_amount);
     } else {
         // First Login, set it to 1
-        update_user_meta($user->id, 'login_amount', 1);
+        update_user_meta($user->ID, 'login_amount', 1);
     }
 }
 

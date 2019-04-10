@@ -38,14 +38,14 @@
         margin-top: 0;
         a {
           color: white !important;
-          background-color: $color__primary !important;
+          background-color: var(--color__primary) !important;
         }
 
       }
     }
 
     h1 {
-      color: $color__primary;
+      color: var(--color__primary);
 
     }
 
