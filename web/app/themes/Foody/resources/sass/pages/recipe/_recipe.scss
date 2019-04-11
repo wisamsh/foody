@@ -413,6 +413,23 @@ $content-width: 95%;
               }
             }
           }
+          .ingredients-group-list {
+            .ingredients {
+              .ingredient-container {
+                display: inline-block;
+
+                .ingredient-data {
+                  display: inline-block;
+                  vertical-align: top;
+
+                  .comment {
+                    font-size: 15px;
+                    color: $color__primary;
+                  }
+                }
+              }
+            }
+          }
         }
         .ingredients-group {
           &:nth-child(n+3) {
