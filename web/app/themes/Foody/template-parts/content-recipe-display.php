@@ -81,6 +81,11 @@ $recipe = $template_args['recipe'];
 
 <?php $recipe->the_notes() ?>
 
+<section class="recipe-sponsor-container box no-print">
+
+    <?php $recipe->the_sponsor() ?>
+
+</section>
 
 <?php if ($recipe->has_nutrients()): ?>
 

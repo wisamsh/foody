@@ -193,11 +193,26 @@ class Foody_Ingredient extends Foody_Post
         $sponsor = $this->get_sponsor();
         if (!empty($sponsor)) {
             $image = get_field('logo', $sponsor->taxonomy . '_' . $sponsor->term_id);
+            $link = get_field('link', $sponsor->taxonomy . '_' . $sponsor->term_id);
+            $text = get_field('text', $this->id);
+
+            if (!empty($link)) {
+                $target = '';
+                if (!empty($link['target'])) {
+                    $target = 'target="' . $link['target'] . '"';
+                }
+                $amount_el .= '<a href="' . $link['url'] . '" ' . $target . ' >';
+            }
             $amount_el .= '<div class="sponsored-by">';
             if (!empty($image)) {
                 $amount_el .= '<img src="' . $image['url'] . '" alt="' . $image['alt'] . '">';
             }
-            $amount_el .= '<span>' . $sponsor->name . '</span></div>';
+            if (!empty($text)) {
+                $amount_el .= '<span>' . $text . '</span></div>';
+            }
+            if (!empty($link)) {
+                $amount_el .= '</a>';
+            }
         }
 
         return $amount_el;
