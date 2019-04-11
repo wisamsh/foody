@@ -38,7 +38,7 @@ echo do_shortcode('[wordpress_social_login]');
             <div class="row col-12 justify-content-between gutter-0 buttons">
                 <button class="btn btn-google col-12 col-sm-5">
                                 <span>
-                                    <?php echo __('כניסה דרך גוגל', 'foody') ?>
+                                    <?php echo __('הירשמו דרך גוגל', 'foody') ?>
                                 </span>
                     <i class="icon-Shape1"></i>
                 </button>
