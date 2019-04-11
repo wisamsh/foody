@@ -12,14 +12,14 @@ $wrap = isset($template_args['wrap']) && $template_args['wrap'];
 ?>
 
 
-<div class="filter-mobile d-block d-lg-none">
+<div class="filter-mobile d-block d-lg-none no-print">
     <button class="navbar-toggler filter-btn" type="button" data-toggle="drawer"
             data-target="#dw-p2">
         <?php echo __('סינון', 'foody'); ?>
     </button>
 </div>
 
-<div class="mobile-filter d-lg-none">
+<div class="mobile-filter d-lg-none no-print">
 
     <button type="button" class="close" aria-label="Close">
         <span aria-hidden="true">&times;</span>
