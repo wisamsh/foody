@@ -12,8 +12,8 @@ jQuery(document).ready(($) => {
          * Un-Logged User Social Registration
          */
         let socialLinks = jQuery('.foody-content .wp-social-login-widget');
-        let googleButton = socialLinks.siblings('.login').find('.btn-google');
-        let facebookButton = socialLinks.siblings('.login').find('.btn-facebook');
+        let googleButton = socialLinks.siblings('.register').find('.btn-google');
+        let facebookButton = socialLinks.siblings('.register').find('.btn-facebook');
 
         googleButton.click((event) => {
             eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'Google');
