@@ -271,7 +271,7 @@ class Foody_User
         $is_subscriber = false;
 
         global $user;
-        if (!empty($user) && $user->ID > 0) {
+        if (!empty($user) && !is_wp_error($user) && $user->ID > 0) {
             if (user_can($user, 'subscriber')) {
                 $is_subscriber = true;
             } elseif (isset($user->roles) && is_array($user->roles)) {
@@ -280,7 +280,7 @@ class Foody_User
                 }
             }
         }
-        
+
         return $is_subscriber;
     }
 
