@@ -15,6 +15,8 @@ class Foody_Ingredient extends Foody_Post
 
     public $amounts;
 
+    public $comment;
+
     public $amounts_delimiter = ' <b> או </b> ';
 
     public $unit_taxonomy;
@@ -168,11 +170,12 @@ class Foody_Ingredient extends Foody_Post
             $data .= ' ' . foody_array_to_data_attr($nutrients_data);
         }
 
-
-        $amount_el = ' <span dir="ltr" class="amount" ' . $data . '>
+	    $amount_el = '<span class="ingredient-container">';
+        $amount_el .= ' <span dir="ltr" class="amount" ' . $data . '>
                         ' . $display . '
                     </span>';
 
+	    $amount_el .= '<span class="ingredient-data">';
         $unit_el = ' <span class="unit">
                          ' . $unit . '
                     </span>';
@@ -189,6 +192,12 @@ class Foody_Ingredient extends Foody_Post
             $amount_el .= $name_el;
         }
 
+	    // Add ingredient comment
+	    if ( ! empty( $this->comment) ) {
+		    $amount_el .= '<div class="comment">' . $this->comment . '</div>';
+	    }
+	    $amount_el .= '</span></span>';
+
         /** @var WP_Term $sponsor */
         $sponsor = $this->get_sponsor();
         if (!empty($sponsor)) {
@@ -203,12 +212,12 @@ class Foody_Ingredient extends Foody_Post
                 }
                 $amount_el .= '<a href="' . $link['url'] . '" ' . $target . ' >';
             }
-            $amount_el .= '<div class="sponsored-by">';
+            $amount_el .= '<span class="sponsored-by">';
             if (!empty($image)) {
                 $amount_el .= '<img src="' . $image['url'] . '" alt="' . $image['alt'] . '">';
             }
             if (!empty($text)) {
-                $amount_el .= '<span>' . $text . '</span></div>';
+                $amount_el .= '<span>' . $text . '</span></span>';
             }
             if (!empty($link)) {
                 $amount_el .= '</a>';
