@@ -245,7 +245,10 @@ class Foody_Ingredient extends Foody_Post {
 					$whole = '';
 				}
 
-				return $whole . ' ' . $this->fractions[ $fraction[1] ];
+				// Use fractions only when exists
+				if ( ! empty( $this->fractions[ $fraction[1] ] ) ) {
+					return $whole . ' ' . $this->fractions[ $fraction[1] ];
+				}
 			}
 		}
 

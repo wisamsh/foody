@@ -134,6 +134,7 @@ require_once get_template_directory() . "/inc/shortcodes/shortcode-register.php"
 require_once get_template_directory() . "/inc/shortcodes/shortcode-login.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-foody-sitemap.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-approvals.php";
+require_once get_template_directory() . "/inc/shortcodes/shortcode-recipe.php";
 
 
 
