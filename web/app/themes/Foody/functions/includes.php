@@ -124,7 +124,6 @@ require_once get_template_directory() . "/functions/theme.php";
 require_once get_template_directory() . "/functions/client-messages.php";
 require_once get_template_directory() . "/functions/cookies.php";
 require_once get_template_directory() . "/functions/pages.php";
-require_once get_template_directory() . "/functions/white-label/includes.php";
 
 
 /*

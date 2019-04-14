@@ -10,7 +10,7 @@
 
 get_header();
 $homepage = new Foody_HomePage();
-
+Foody_WhiteLabelDuplicator::duplicateCategory(6, 2);
 ?>
 
     <div class="homepage">

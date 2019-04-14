@@ -8,6 +8,7 @@ web/app/mu-plugins/*/
 !web/app/mu-plugins/easy-social-share-buttons3
 !web/app/mu-plugins/foody-rating
 !web/app/mu-plugins/footab
+!web/app/mu-plugins/foody-white-label
 web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
