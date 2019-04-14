@@ -124,8 +124,16 @@ function foody_filters_acf_load_value($value)
 
     if (empty($value)) {
 
-        $post_type = get_post_type();
-        if(is_category() || is_tag() || $post_type == 'foody_channel' || is_author()){
+        $screen = get_current_screen();
+
+        $relevant_screens = [
+            'edit-category',
+            'foody_channel',
+            'user-edit',
+            'edit-post_tag'
+        ];
+
+        if (in_array($screen->id, $relevant_screens)) {
             // no values set for filters lists,
             // load default values from global search settings (foody_search_settings)
             // see Sidebar_Filter for more details.
