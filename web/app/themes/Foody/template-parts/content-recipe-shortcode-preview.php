@@ -15,8 +15,8 @@ $show_favorite = foody_get_array_default( $template_args, 'show_favorite', true 
 
     <div class="details-container">
 
-        <div class="video-featured-content featured-content-container">
-            <?php $foody_page->the_featured_content() ?>
+        <div class="featured-content-container<?php echo $foody_page->has_video ? ' video-featured-content' : '' ?>">
+			<?php $foody_page->the_featured_content() ?>
         </div>
 
         <div class="details container">
