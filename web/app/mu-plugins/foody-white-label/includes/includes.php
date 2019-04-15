@@ -7,3 +7,5 @@
  */
 
 require_once plugin_dir_path(__FILE__) . '/class-foody-white-label-duplicator.php';
+require_once PLUGIN_DIR . 'foody-importer/foody-importer.php';
+require_once PLUGIN_DIR . 'commands/includes.php';

@@ -87,6 +87,6 @@ function run_foody_white_label()
 
 }
 
-if (is_multisite() && is_main_site()) {
+if (is_multisite() ) {
     run_foody_white_label();
 }
