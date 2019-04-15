@@ -40,6 +40,9 @@ window.calculator = function (selector) {
         let original = $option.data('original');
 
         let originalSlices = $(this).find('option[data-original=1]').data('slices');
+        if (!originalSlices) {
+            originalSlices = 1;
+        }
         let slices = $option.data('slices');
         if (!slices) {
             slices = 1;
