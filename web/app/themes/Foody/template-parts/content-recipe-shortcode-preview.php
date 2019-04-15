@@ -14,7 +14,10 @@ $show_favorite = foody_get_array_default( $template_args, 'show_favorite', true 
 <div class="recipe-shortcode-container">
 
     <div class="details-container">
-		<?php $foody_page->the_featured_content() ?>
+
+        <div class="video-featured-content featured-content-container">
+            <?php $foody_page->the_featured_content() ?>
+        </div>
 
         <div class="details container">
 

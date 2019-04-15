@@ -266,6 +266,11 @@ $content-width: 95%;
         > img {
           width: 100%;
         }
+        .featured-content-container {
+          &.video-featured-content {
+            margin: 0;
+          }
+        }
         .details.container {
           padding-top: 10px;
           .recipe-title {
