@@ -263,6 +263,7 @@ $content-width: 95%;
       .details-container {
         padding-top: 0;
         opacity: 0.7;
+        pointer-events: none;
         > img {
           width: 100%;
         }
@@ -279,6 +280,11 @@ $content-width: 95%;
             line-height: 1.03;
             font-size: 2rem;
             text-align: right;
+          }
+          .recipe-details {
+            .content-details-bullets-container {
+              align-items: unset;
+            }
           }
         }
       }
