@@ -129,7 +129,7 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
                 console.log('totalValueForNutrient for ' + nutrient, totalValueForNutrient);
             });
         }
-        let decimals = 0;
+        let decimals = 1;
         if (nutrient === 'protein') {
             decimals = 1;
         }
