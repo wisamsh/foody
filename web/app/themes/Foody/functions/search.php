@@ -122,7 +122,7 @@ function foody_search_user_by_name($name, $single = true)
 function foody_filters_acf_load_value($value)
 {
 
-    if (empty($value)) {
+    if (empty($value) && is_admin()) {
 
         $screen = get_current_screen();
 
