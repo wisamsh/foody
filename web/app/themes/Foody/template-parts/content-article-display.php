@@ -55,3 +55,7 @@ if (!empty($tags)) {
     comments_template($template);
     ?>
 </section>
+
+<section class="footab-container">
+    <?php echo footabc_add_code_to_content(); ?>
+</section>
