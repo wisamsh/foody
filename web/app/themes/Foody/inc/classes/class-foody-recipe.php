@@ -678,13 +678,13 @@ class Foody_Recipe extends Foody_Post {
 
 
 		$excluded_nutrients = [
-			'fibers',
-			'saturated_fat',
-			'cholesterol',
-			'calcium',
-			'iron',
-			'potassium',
-			'zinc',
+//			'fibers',
+//			'saturated_fat',
+//			'cholesterol',
+//			'calcium',
+//			'iron',
+//			'potassium',
+//			'zinc',
 			'sugar'
 		];
 

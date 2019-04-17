@@ -14,7 +14,10 @@ $show_favorite = foody_get_array_default( $template_args, 'show_favorite', true 
 <div class="recipe-shortcode-container">
 
     <div class="details-container">
-		<?php $foody_page->the_featured_content() ?>
+
+        <div class="<?php echo $foody_page->has_video ? ' video-featured-content featured-content-container' : '' ?>">
+			<?php $foody_page->the_featured_content() ?>
+        </div>
 
         <div class="details container">
 
@@ -51,11 +54,11 @@ $show_favorite = foody_get_array_default( $template_args, 'show_favorite', true 
 						foody_get_template_part( get_template_directory() . '/template-parts/content-post-bullets.php', $args );
 
 						?>
-						<?php if ( ! wp_is_mobile() ): ?>
-                            <section class="rating-container d-none d-lg-block">
-								<?php Foody_Recipe::ratings() ?>
-                            </section>
-						<?php endif; ?>
+
+                        <section class="rating-container d-block d-lg-block">
+							<?php Foody_Recipe::ratings() ?>
+                        </section>
+
                     </section>
 
 					<?php if ( $show_favorite ): ?>

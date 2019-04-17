@@ -271,12 +271,13 @@ class Foody_User
         $is_subscriber = false;
 
         global $user;
-
-        if (user_can($user, 'subscriber')) {
-            $is_subscriber = true;
-        } elseif (isset($user->roles) && is_array($user->roles)) {
-            if (in_array('foody_fut_user', $user->roles) || in_array('subscriber', $user->roles)) {
+        if (!empty($user) && !is_wp_error($user) && $user->ID > 0) {
+            if (user_can($user, 'subscriber')) {
                 $is_subscriber = true;
+            } elseif (isset($user->roles) && is_array($user->roles)) {
+                if (in_array('foody_fut_user', $user->roles) || in_array('subscriber', $user->roles)) {
+                    $is_subscriber = true;
+                }
             }
         }
 
@@ -320,7 +321,8 @@ class Foody_User
         return $is_first_login;
     }
 
-    public static function user_has_meta($meta_key){
+    public static function user_has_meta($meta_key)
+    {
         $value = false;
         if (is_user_logged_in()) {
             $value = get_user_meta(get_current_user_id(), $meta_key, true) == true;
