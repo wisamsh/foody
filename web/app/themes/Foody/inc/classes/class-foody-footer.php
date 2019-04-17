@@ -184,31 +184,14 @@ class Foody_Footer
                         feedbackLink: '',
                         showAllActions: false,
                         keyNavStrong: false,
-                        hideMobile: false,
-                        hideTrigger: false,
+                        hideMobile: true,
+                        hideTrigger: true,
                         language: 'he',
                         focusInnerColor: '#ed3d48',
                         focusOuterColor: '#ff7216',
                         leadColor: '#ed3d48',
                         triggerColor: '#ed3d48',
-                        size: 'big',
-                        position: 'right',
-                        triggerRadius: '5px',
-                        triggerPositionX: 'right',
-                        triggerPositionY: 'top',
-                        triggerIcon: 'default',
-                        triggerSize: 'medium',
-                        triggerOffsetX: 20,
-                        triggerOffsetY: 20,
                         usefulLinks: {},
-                        mobile: {
-                            triggerSize: 'small',
-                            triggerPositionX: 'right',
-                            triggerPositionY: 'center',
-                            triggerOffsetX: 0,
-                            triggerOffsetY: 0,
-                            triggerRadius: '0'
-                        }
                     });
                 };
             }(document, 'script'));
