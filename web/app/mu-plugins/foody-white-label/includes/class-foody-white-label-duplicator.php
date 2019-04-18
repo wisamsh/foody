@@ -28,6 +28,21 @@ class Foody_WhiteLabelDuplicator
         return self::$instance;
     }
 
+    public static function whiteLabelCreate($newBlogId)
+    {
+        // TODO change output to logger
+        try {
+            $output = export_import_foody_wp($newBlogId);
+            if (class_exists('Foody_Import') && Foody_Import::isDebug()) {
+                var_dump($output);
+            }
+        } catch (Exception $e) {
+            if (class_exists('Foody_Import') && Foody_Import::isDebug()) {
+                echo $e->getMessage();
+            }
+        }
+    }
+
 
     public static function duplicateCategory($categoryId, $blogId)
     {
@@ -60,6 +75,22 @@ class Foody_WhiteLabelDuplicator
 
 
     /**
+     * @param $source_post WP_Post
+     * @param $postType string
+     */
+    private static function getPostDataForType($source_post, $postType)
+    {
+        $data = [
+            'post_title' => $source_post->post_title,
+            'post_status' => 'draft',
+            'post_type' => $source_post->post_type,
+            'post_author' => 1,
+            'post_content' => $source_post->post_content
+        ];
+    }
+
+
+    /**
      * Duplicates a post & its meta and returns the new duplicated Post ID
      * @param  WP_Post $old_post The Post you want to clone
      * @param $blogId int blog id to copy the post into
@@ -76,7 +107,7 @@ class Foody_WhiteLabelDuplicator
             'post_content' => $old_post->post_content
         );
 
-        if ($with_media){
+        if ($with_media) {
             $post_thumbnail_id = get_post_thumbnail_id($old_post->ID);
             if (!empty($post_thumbnail_id)) {
                 $image_url = wp_get_attachment_image_src($post_thumbnail_id, 'full');
@@ -93,6 +124,21 @@ class Foody_WhiteLabelDuplicator
 
         switch_to_blog($blogId);
 
+        $meta_data_to_exclude = [
+            ''
+        ];
+
+        $meta_data_to_include = [
+            'ingredients',
+            'preview',
+            'tags',
+            'video',
+            'notes',
+            '[categories]',
+            '[accessories]',
+            '[techniques]',
+        ];
+
         // add post to destination blog
         $new_post_id = wp_insert_post($post);
         if (!is_wp_error($new_post_id)) {
@@ -106,7 +152,16 @@ class Foody_WhiteLabelDuplicator
             if (!empty($image_url)) {
                 // Add Featured Image to Post
                 $upload_dir = wp_upload_dir(); // Set upload folder
-                $image_data = file_get_contents($image_url); // Get image data
+
+                global $wp_version;
+                add_filter('block_local_requests', '__return_false');
+                $image_data = wp_remote_get($image_url,
+                    [
+                        'timeout' => 10, 'sslverify' => false,
+                        'httpversion' => '1.0',
+                        'user-agent' => 'WordPress/' . $wp_version . '; ' . home_url(),
+                    ]
+                ); // Get image data
                 $filename = basename($image_url); // Create image file name
 
                 // Check folder permission and define file location
