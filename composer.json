@@ -149,18 +149,6 @@
     {
       "type": "package",
       "package": {
-        "name": "anders-thorborgd/acf-image-crop-add-on",
-        "version": "1.4.12",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/acf-image-crop-add-on.1.4.12.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
         "name": "willnorris/wordpress-hum",
         "version": "1.0.0",
         "type": "wordpress-plugin",
@@ -300,7 +288,6 @@
     "gagan-deep-singh/fix-image-rotation": "^2.1",
     "takayuki-miyoshi/contact-form-7": "^5.0",
     "arshid/contact-form-cfdb7": "1.2.4.1",
-    "anders-thorborgd/acf-image-crop-add-on": "^1.4",
     "lester-chan/wp-postratings": "^1.85",
     "mega-menu/quadmenu": "^1.7",
     "miljar/php-exif": "^0.6.4",
