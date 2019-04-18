@@ -68,23 +68,4 @@ jQuery(document).ready(function ($) {
         $('#login-modal').modal('show');
     };
 
-    let accessibilityOpen = false;
-
-    let $accessibilityContainer = $('#accessibility-container');
-
-    $('.navbar-btn.accessibility').on('click',function (e) {
-        e.stopPropagation();
-        $accessibilityContainer.toggleClass('open');
-        accessibilityOpen =  $accessibilityContainer.hasClass('open');
-    });
-
-    window.addEventListener('click',function (e) {
-        if(accessibilityOpen && e.target.id !== 'accessibility-container'){
-            $accessibilityContainer.removeClass('open');
-            return false;
-        }
-
-        return true
-    });
-
 });
