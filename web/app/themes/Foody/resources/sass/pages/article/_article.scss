@@ -24,6 +24,9 @@
     margin: 0 auto;
   }
 
+  .footab-container {
+    padding: 0 15px;
+  }
 }
 
 @include breakpoint(mobileonly) {
@@ -58,6 +61,12 @@
     }
     .comments {
       max-width: 95%;
+      margin: 0 auto;
+    }
+
+    .footab-container {
+      padding: 0;
+      width: calc(100% - 20px);
       margin: 0 auto;
     }
   }
