@@ -23,6 +23,7 @@ $release = 'release_' . date('YmdHis');
 $servers = [
     'local' => '127.0.0.1',
     'dev' => 'ubuntu@foody-dev.moveodevelop.com',
+    'mu-dev' => 'ubuntu@mu.foody-dev.moveodevelop.com',
     'medio-dev' => 'ubuntu@foody.moveodevelop.com',
     'prod1' => 'ubuntu@34.253.214.81',
     'prod2' => 'ubuntu@34.245.51.22'
