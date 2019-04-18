@@ -5,6 +5,12 @@
  * Date: 4/15/19
  * Time: 1:44 PM
  */
+
+/**
+ * @var $foody_logger Foody_WhiteLabelLogger
+ */
+global $foody_logger;
+
 /** @noinspection PhpUnusedParameterInspection */
 define('WXR_VERSION', '1.2');
 /**
@@ -90,6 +96,7 @@ function export_import_foody_wp($newBlogId)
             // post found by source post title, skip.
             if (($post_in_dest instanceof WP_Post) === true && $post_in_dest->ID > 0) {
                 $skip = true;
+                Foody_WhiteLabelLogger::info("skipping $type, id: {$post->ID}");
             }
         }
 

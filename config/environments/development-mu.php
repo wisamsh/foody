@@ -1,5 +1,11 @@
 <?php
-/** Development */
+/**
+ * Created by PhpStorm.
+ * User: moveosoftware
+ * Date: 4/18/19
+ * Time: 3:35 PM
+ */
+
 define('SAVEQUERIES', true);
 define('WP_DEBUG', true);
 define('SCRIPT_DEBUG', true);
@@ -12,3 +18,11 @@ define('GOOGLE_APP_ID', '589726890032-lplp2v2oa8prujvo03jda02b7cramucc.apps.goog
 define('GOOGLE_CAPTCHA_SECRET', '6Lc7eXIUAAAAAKG_OzJR3AblE0ADojSuiOD10hq5');
 define('MIXPANEL_TOKEN','4f106af7ed1ff172ef5bf5a29d7af3af');
 define('GOOGLE_TAG_MANAGER_ID','GTM-M2SBXJF');
+
+define('MULTISITE', true);
+define('SUBDOMAIN_INSTALL', true);
+define('DOMAIN_CURRENT_SITE', str_replace('http://','',env('WP_HOME')));
+define('PATH_CURRENT_SITE', '/');
+define('SITE_ID_CURRENT_SITE', 1);
+define('BLOG_ID_CURRENT_SITE', 1);
+define( 'WP_DEFAULT_THEME', 'foody');

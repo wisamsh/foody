@@ -237,7 +237,8 @@
     "ext-json": "*",
     "delicious-brains-inc/wp-ses": "^0.8.2",
     "wordpressdotorg/wordpress-importer": "^0.6.4",
-    "ext-curl": "*"
+    "ext-curl": "*",
+    "monolog/monolog": "^1.24"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

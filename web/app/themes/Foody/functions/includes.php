@@ -124,7 +124,7 @@ require_once get_template_directory() . "/functions/theme.php";
 require_once get_template_directory() . "/functions/client-messages.php";
 require_once get_template_directory() . "/functions/cookies.php";
 require_once get_template_directory() . "/functions/pages.php";
-if (defined('WP_ENV') && in_array(WP_ENV,['local'])){
+if (defined('WP_ENV') && in_array(WP_ENV,['local','development-mu'])){
     require_once get_template_directory() . "/functions/debug.php";
 }
 
