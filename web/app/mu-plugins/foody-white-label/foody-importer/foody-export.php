@@ -347,8 +347,7 @@ function export_import_foody_wp($newBlogId)
             foody_category_description($c);
             foody_term_meta($c); ?>
         </wp:category>
-    <?php endforeach;
-        unset($cats); ?>
+    <?php endforeach; unset($cats); ?>
         <?php
         $content = ob_get_contents();
         ob_end_clean();
@@ -395,7 +394,7 @@ function export_import_foody_wp($newBlogId)
         // posts
 
         ?>
-        <?php if ($post_ids) {
+        <?php if ($post_ids && false) {
         /**
          * @global WP_Query $wp_query
          */
@@ -514,6 +513,8 @@ function export_import_foody_wp($newBlogId)
 
         unset($post_ids);
     }
+
+        // footer
         ob_start();
         ?>
         </channel>
@@ -522,6 +523,8 @@ function export_import_foody_wp($newBlogId)
         $content = ob_get_contents();
         ob_end_clean();
         fwrite($fh, $content);
+
+        // close file handler
         fclose($fh);
 
         return $file_name;
@@ -548,6 +551,7 @@ function export_import_foody_wp($newBlogId)
         }
 
     } else {
+        Foody_WhiteLabelLogger::error('invalid data to import');
         throw new Exception('invalid data to import');
     }
 }
