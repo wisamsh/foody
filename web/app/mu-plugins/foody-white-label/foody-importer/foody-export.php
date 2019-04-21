@@ -6,11 +6,6 @@
  * Time: 1:44 PM
  */
 
-/**
- * @var $foody_logger Foody_WhiteLabelLogger
- */
-global $foody_logger;
-
 /** @noinspection PhpUnusedParameterInspection */
 define('WXR_VERSION', '1.2');
 /**
@@ -212,8 +207,10 @@ function export_import_foody_wp($newBlogId)
             return;
         $terms = wp_get_object_terms($post->ID, $taxonomies);
 
-        foreach ((array)$terms as $term) {
-            echo "\t\t<category domain=\"{$term->taxonomy}\" nicename=\"{$term->slug}\">" . foody_cdata($term->name) . "</category>\n";
+        if (!is_wp_error($terms)) {
+            foreach ((array)$terms as $term) {
+                echo "\t\t<category domain=\"{$term->taxonomy}\" nicename=\"{$term->slug}\">" . foody_cdata($term->name) . "</category>\n";
+            }
         }
     }
 
@@ -226,7 +223,7 @@ function export_import_foody_wp($newBlogId)
      */
     function foody_term_name($term)
     {
-        if (empty($term->name))
+        if (empty($term) || empty($term->name))
             return;
 
         echo '<wp:term_name>' . foody_cdata($term->name) . "</wp:term_name>\n";
@@ -317,7 +314,16 @@ function export_import_foody_wp($newBlogId)
     }
 
 
-    function write_foody_wxr($newBlogId, $cats, $tags, $terms, $post_ids,$wpdb)
+    /**
+     * @param $newBlogId
+     * @param $cats
+     * @param $tags
+     * @param $terms
+     * @param $post_ids
+     * @param $wpdb wpdb
+     * @return string
+     */
+    function write_foody_wxr($newBlogId, $cats, $tags, $terms, $post_ids, $wpdb)
     {
         $date = str_replace(' ', '-', date('d.m.Y H:i:s'));
         $file_name = plugin_dir_path(__FILE__) . "/exports/foody-wl-export-blog-$newBlogId-{$date}.xml";
@@ -477,7 +483,9 @@ function export_import_foody_wp($newBlogId)
                             <?php
                             // get all post meta from db
                             $post_meta = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post->ID));
-
+                            if (!is_array($post_meta)) {
+                                $post_meta = [];
+                            }
                             // add meta for source post in main site
                             $source_post_meta = new stdClass();
                             $source_post_meta->meta_key = 'source_post';
@@ -516,7 +524,7 @@ function export_import_foody_wp($newBlogId)
 
             $posts_items_content = ob_get_contents();
             ob_end_clean();
-            if (!empty($posts_items_content)){
+            if (!empty($posts_items_content)) {
                 fwrite($fh, $posts_items_content);
             }
 
@@ -545,7 +553,7 @@ function export_import_foody_wp($newBlogId)
     }
 
 
-    $export_file = write_foody_wxr($newBlogId, $cats, $tags, $terms, $post_ids,$wpdb);
+    $export_file = write_foody_wxr($newBlogId, $cats, $tags, $terms, $post_ids, $wpdb);
 
 
     /**
