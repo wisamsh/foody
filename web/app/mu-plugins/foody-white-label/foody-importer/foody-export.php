@@ -24,12 +24,11 @@ define('WXR_VERSION', '1.2');
  *
  *
  * @param $newBlogId int newly create blog to import content into
- * @return false|string
  * @throws Exception
  */
 function export_import_foody_wp($newBlogId)
 {
-    global $wpdb, $post;
+    global $wpdb;
 
     // Add more types if relevant
     $post_types = [
@@ -394,13 +393,15 @@ function export_import_foody_wp($newBlogId)
         fwrite($fh, $content);
 
         // posts
-        ob_start();
+
         ?>
         <?php if ($post_ids) {
         /**
          * @global WP_Query $wp_query
          */
         global $wp_query, $wpdb;
+
+        ob_start();
 
         // Fake being in the loop.
         $wp_query->in_the_loop = true;
@@ -499,13 +500,14 @@ function export_import_foody_wp($newBlogId)
                 <?php
             }
         }
-    }
-        unset($post_ids); ?>
-        <?php
+
         $content = ob_get_contents();
         ob_end_clean();
         fwrite($fh, $content);
 
+
+        unset($post_ids);
+    }
         ob_start();
         ?>
         </channel>
@@ -542,15 +544,6 @@ function export_import_foody_wp($newBlogId)
         }
 
     } else {
-        if (Foody_Import::isDebug()) {
-            var_dump($output);
-        }
-
         throw new Exception('invalid data to import');
-
-
     }
-
-    return $output;
-
 }

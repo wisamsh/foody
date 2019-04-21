@@ -54,6 +54,10 @@ class Foody_WhiteLabelLogger
         }
     }
 
+    /**
+     * @param \Monolog\Handler\HandlerInterface|null $handler
+     * @throws Exception
+     */
     public static function init(\Monolog\Handler\HandlerInterface $handler = null)
     {
         if (empty($handler)) {
@@ -64,6 +68,9 @@ class Foody_WhiteLabelLogger
         try {
             self::$log->pushHandler($handler);
         } catch (Exception $e) {
+            if (defined('WP_DEBUG') && WP_DEBUG){
+                throw $e;
+            }
         }
     }
 
