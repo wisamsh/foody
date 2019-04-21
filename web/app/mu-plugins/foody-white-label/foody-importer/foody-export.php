@@ -491,10 +491,10 @@ function export_import_foody_wp($newBlogId)
                                 $post_meta = [];
                             }
                             // add meta for source post in main site
-                            $source_post_meta = new stdClass();
-                            $source_post_meta->meta_key = 'source_post';
-                            $source_post_meta->meta_value = $post->ID;
-                            $post_meta[] = $source_post_meta;
+//                            $source_post_meta = new stdClass();
+//                            $source_post_meta->meta_key = 'source_post';
+//                            $source_post_meta->meta_value = $post->ID;
+//                            $post_meta[] = $source_post_meta;
                             foreach ($post_meta as $meta) :
                                 /**
                                  * Filters whether to selectively skip post meta used for WXR exports.
@@ -525,7 +525,6 @@ function export_import_foody_wp($newBlogId)
                 Foody_WhiteLabelLogger::error($e->getMessage(), ['error' => $e]);
             }
 
-
             $posts_items_content = ob_get_contents();
             ob_end_clean();
             if (!empty($posts_items_content)) {
@@ -541,14 +540,8 @@ function export_import_foody_wp($newBlogId)
     }
 
         // footer
-        ob_start();
-        ?>
-        </channel>
-        </rss>
-        <?php
-        $content = ob_get_contents();
-        ob_end_clean();
-        fwrite($fh, $content);
+        $footer = '</channel></rss>';
+        fwrite($fh, $footer);
 
         // close file handler
         fclose($fh);
