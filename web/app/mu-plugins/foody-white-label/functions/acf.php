@@ -42,7 +42,14 @@ if (!is_main_site()) {
 
             if (in_array($tax, $global_taxonomies)) {
                 $current_terms = array_map(function ($term) use ($tax) {
+
+                    // try to get the term from the current
+                    // blog's database
                     $current_term = get_term($term, $tax);
+
+                    // if we receive error or empty value
+                    // try to find the value by the source id
+                    // in the main site's database
                     if (is_wp_error($current_term) || empty($current_term)) {
                         $args = array(
                             'hide_empty' => false, // also retrieve terms which are not used yet
@@ -53,9 +60,14 @@ if (!is_main_site()) {
                                     'compare' => '='
                                 )
                             ),
-                            'taxonomy' => $tax,
+                            'taxonomy' => $tax
                         );
+
+                        $current = get_current_blog_id();
+                        switch_to_blog(get_main_site_id());
                         $terms = get_terms($args);
+                        switch_to_blog($current);
+
                         if (!empty($terms)) {
                             $term = $terms[0];
                             if ($term instanceof WP_Term) {
@@ -66,7 +78,9 @@ if (!is_main_site()) {
 
                     return $term;
                 }, $value);
-                $value = $current_terms;
+                if (!empty($current_terms)) {
+                    $value = $current_terms;
+                }
             }
 
             if (isset($single) && $single) {

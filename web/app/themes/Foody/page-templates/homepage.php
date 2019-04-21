@@ -9,7 +9,7 @@
 
 
 get_header();
-
+//Foody_WhiteLabelDuplicator::duplicateCategory(6, 2);
 $homepage = new Foody_HomePage();
 ?>
 

@@ -720,7 +720,7 @@ if (class_exists('WP_Importer')) {
          */
         function parse($data)
         {
-            $parser = new WXR_Parser();
+            $parser = new Foody_WhiteLabelWXRParser();
             return $parser->parse($data);
         }
 
