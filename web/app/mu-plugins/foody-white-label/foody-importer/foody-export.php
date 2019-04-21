@@ -422,17 +422,20 @@ function export_import_foody_wp($newBlogId)
                 $is_sticky = is_sticky($post->ID) ? 1 : 0;
                 ?>
                 <item>
-                    <title><?php
+                    <title>
+                        <?php
                         /** This filter is documented in wp-includes/feed.php */
                         echo apply_filters('the_title_rss', $post->post_title);
-                        ?></title>
+                        ?>
+                    </title>
                     <!--suppress HtmlExtraClosingTag -->
                     <link><?php the_permalink_rss() ?></link>
                     <pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_post_time('Y-m-d H:i:s', true), false); ?></pubDate>
                     <dc:creator><?php echo foody_cdata(get_the_author_meta('login')); ?></dc:creator>
                     <guid isPermaLink="false"><?php the_guid(); ?></guid>
                     <description></description>
-                    <content:encoded><?php
+                    <content:encoded>
+                        <?php
                         /**
                          * Filters the post content used for WXR exports.
                          *
@@ -441,8 +444,10 @@ function export_import_foody_wp($newBlogId)
                          * @param string $post_content Content of the current post.
                          */
                         echo foody_cdata(apply_filters('the_content_export', $post->post_content));
-                        ?></content:encoded>
-                    <excerpt:encoded><?php
+                        ?>
+                    </content:encoded>
+                    <excerpt:encoded>
+                        <?php
                         /**
                          * Filters the post excerpt used for WXR exports.
                          *
@@ -451,7 +456,8 @@ function export_import_foody_wp($newBlogId)
                          * @param string $post_excerpt Excerpt for the current post.
                          */
                         echo foody_cdata(apply_filters('the_excerpt_export', $post->post_excerpt));
-                        ?></excerpt:encoded>
+                        ?>
+                    </excerpt:encoded>
                     <wp:post_id><?php echo intval($post->ID); ?></wp:post_id>
                     <wp:post_date><?php echo foody_cdata($post->post_date); ?></wp:post_date>
                     <wp:post_date_gmt><?php echo foody_cdata($post->post_date_gmt); ?></wp:post_date_gmt>
