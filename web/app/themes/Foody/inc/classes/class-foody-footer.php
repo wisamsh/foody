@@ -45,7 +45,7 @@ class Foody_Footer
         }
 
         // FEATURE allow control over the separate cols in the footer
-        if ($chunk_size > 0) {
+        if ($chunk_size > 0 && !empty($this->footer_links)) {
             $this->footer_links = array_chunk($this->footer_links, $chunk_size);
         }
 
@@ -108,9 +108,10 @@ class Foody_Footer
     }
 
 
-    public function the_moveo($echo = true){
+    public function the_moveo($echo = true)
+    {
         $moveo = file_get_contents(get_template_directory() . '/resources/images/moveo.svg');
-        if ($echo){
+        if ($echo) {
             echo $moveo;
         }
 
@@ -127,13 +128,17 @@ class Foody_Footer
             <?php
 
             $this->newsletter();
-
+            if (empty($menu_items)) {
+                $menu_items = [];
+            }
             $items = array_chunk($menu_items, count($menu_items) / 2);
 
+            if (count($items) > 1){
+                $items[1][] = array(
+                    'title' => sprintf(__('Foody Israel') . ' %s', date('Y'))
+                );
+            }
 
-            $items[1][] = array(
-                'title' => sprintf(__('Foody Israel') . ' %s', date('Y'))
-            );
 
             $items[0][] = $this->moveo();
 

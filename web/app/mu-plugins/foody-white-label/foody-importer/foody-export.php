@@ -350,9 +350,9 @@ function export_import_foody_wp($newBlogId)
     <?php endforeach;
         unset($cats); ?>
         <?php
-        $content = ob_get_contents();
+        $categories_content = ob_get_contents();
         ob_end_clean();
-        fwrite($fh, $content);
+        fwrite($fh, $categories_content);
 
         // tags
         ob_start();
@@ -368,9 +368,9 @@ function export_import_foody_wp($newBlogId)
     <?php endforeach;
         unset($tags); ?>
         <?php
-        $content = ob_get_contents();
+        $tags_content = ob_get_contents();
         ob_end_clean();
-        fwrite($fh, $content);
+        fwrite($fh, $tags_content);
 
         // custom taxonomies
         ob_start();
@@ -388,9 +388,9 @@ function export_import_foody_wp($newBlogId)
     <?php endforeach;
         unset($terms); ?>
         <?php
-        $content = ob_get_contents();
+        $terms_content = ob_get_contents();
         ob_end_clean();
-        fwrite($fh, $content);
+        fwrite($fh, $terms_content);
 
         // posts
 
@@ -408,114 +408,122 @@ function export_import_foody_wp($newBlogId)
             // Fake being in the loop.
             $wp_query->in_the_loop = true;
 
-            // Fetch 20 posts at a time rather than loading the entire table into memory.
-            while ($next_posts = array_splice($post_ids, 0, 20)) {
-                $where = 'WHERE ID IN (' . join(',', $next_posts) . ')';
-                $posts = $wpdb->get_results("SELECT * FROM {$wpdb->posts} $where");
+            try {
+                // Fetch 20 posts at a time rather than loading the entire table into memory.
+                while ($next_posts = array_splice($post_ids, 0, 20)) {
+                    $where = 'WHERE ID IN (' . join(',', $next_posts) . ')';
+                    $posts = $wpdb->get_results("SELECT * FROM {$wpdb->posts} $where");
 
-                // Begin Loop.
-                foreach ($posts as $post) {
-                    setup_postdata($post);
-                    // skip post if filter returns true
+                    // Begin Loop.
+                    foreach ($posts as $post) {
+                        setup_postdata($post);
+                        // skip post if filter returns true
 //                    if (apply_filters('foody_export_skip_post', false, $post, $newBlogId)) {
 //                        continue;
 //                    }
 
-                    $is_sticky = is_sticky($post->ID) ? 1 : 0;
-                    ?>
-                    <item>
-                        <title>
+                        $is_sticky = is_sticky($post->ID) ? 1 : 0;
+                        ?>
+                        <item>
+                            <title>
+                                <?php
+                                /** This filter is documented in wp-includes/feed.php */
+                                echo apply_filters('the_title_rss', $post->post_title);
+                                ?>
+                            </title>
+                            <!--suppress HtmlExtraClosingTag -->
+                            <link><?php the_permalink_rss() ?></link>
+                            <pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_post_time('Y-m-d H:i:s', true), false); ?></pubDate>
+                            <dc:creator><?php echo foody_cdata(get_the_author_meta('login')); ?></dc:creator>
+                            <guid isPermaLink="false"><?php the_guid(); ?></guid>
+                            <description></description>
+                            <content:encoded>
+                                <?php
+                                /**
+                                 * Filters the post content used for WXR exports.
+                                 *
+                                 * @since 2.5.0
+                                 *
+                                 * @param string $post_content Content of the current post.
+                                 */
+                                echo foody_cdata(apply_filters('the_content_export', $post->post_content));
+                                ?>
+                            </content:encoded>
+                            <excerpt:encoded>
+                                <?php
+                                /**
+                                 * Filters the post excerpt used for WXR exports.
+                                 *
+                                 * @since 2.6.0
+                                 *
+                                 * @param string $post_excerpt Excerpt for the current post.
+                                 */
+                                echo foody_cdata(apply_filters('the_excerpt_export', $post->post_excerpt));
+                                ?>
+                            </excerpt:encoded>
+                            <wp:post_id><?php echo intval($post->ID); ?></wp:post_id>
+                            <wp:post_date><?php echo foody_cdata($post->post_date); ?></wp:post_date>
+                            <wp:post_date_gmt><?php echo foody_cdata($post->post_date_gmt); ?></wp:post_date_gmt>
+                            <wp:comment_status><?php echo foody_cdata($post->comment_status); ?></wp:comment_status>
+                            <wp:ping_status><?php echo foody_cdata($post->ping_status); ?></wp:ping_status>
+                            <wp:post_name><?php echo foody_cdata($post->post_name); ?></wp:post_name>
+                            <wp:status><?php echo foody_cdata($post->post_status); ?></wp:status>
+                            <wp:post_parent><?php echo intval($post->post_parent); ?></wp:post_parent>
+                            <wp:menu_order><?php echo intval($post->menu_order); ?></wp:menu_order>
+                            <wp:post_type><?php echo foody_cdata($post->post_type); ?></wp:post_type>
+                            <wp:post_password><?php echo foody_cdata($post->post_password); ?></wp:post_password>
+                            <wp:is_sticky><?php echo intval($is_sticky); ?></wp:is_sticky>
+                            <?php foody_post_taxonomy(); ?>
                             <?php
-                            /** This filter is documented in wp-includes/feed.php */
-                            echo apply_filters('the_title_rss', $post->post_title);
-                            ?>
-                        </title>
-                        <!--suppress HtmlExtraClosingTag -->
-                        <link><?php the_permalink_rss() ?></link>
-                        <pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_post_time('Y-m-d H:i:s', true), false); ?></pubDate>
-                        <dc:creator><?php echo foody_cdata(get_the_author_meta('login')); ?></dc:creator>
-                        <guid isPermaLink="false"><?php the_guid(); ?></guid>
-                        <description></description>
-                        <content:encoded>
-                            <?php
-                            /**
-                             * Filters the post content used for WXR exports.
-                             *
-                             * @since 2.5.0
-                             *
-                             * @param string $post_content Content of the current post.
-                             */
-                            echo foody_cdata(apply_filters('the_content_export', $post->post_content));
-                            ?>
-                        </content:encoded>
-                        <excerpt:encoded>
-                            <?php
-                            /**
-                             * Filters the post excerpt used for WXR exports.
-                             *
-                             * @since 2.6.0
-                             *
-                             * @param string $post_excerpt Excerpt for the current post.
-                             */
-                            echo foody_cdata(apply_filters('the_excerpt_export', $post->post_excerpt));
-                            ?>
-                        </excerpt:encoded>
-                        <wp:post_id><?php echo intval($post->ID); ?></wp:post_id>
-                        <wp:post_date><?php echo foody_cdata($post->post_date); ?></wp:post_date>
-                        <wp:post_date_gmt><?php echo foody_cdata($post->post_date_gmt); ?></wp:post_date_gmt>
-                        <wp:comment_status><?php echo foody_cdata($post->comment_status); ?></wp:comment_status>
-                        <wp:ping_status><?php echo foody_cdata($post->ping_status); ?></wp:ping_status>
-                        <wp:post_name><?php echo foody_cdata($post->post_name); ?></wp:post_name>
-                        <wp:status><?php echo foody_cdata($post->post_status); ?></wp:status>
-                        <wp:post_parent><?php echo intval($post->post_parent); ?></wp:post_parent>
-                        <wp:menu_order><?php echo intval($post->menu_order); ?></wp:menu_order>
-                        <wp:post_type><?php echo foody_cdata($post->post_type); ?></wp:post_type>
-                        <wp:post_password><?php echo foody_cdata($post->post_password); ?></wp:post_password>
-                        <wp:is_sticky><?php echo intval($is_sticky); ?></wp:is_sticky>
-                        <?php foody_post_taxonomy(); ?>
+                            // get all post meta from db
+                            $post_meta = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post->ID));
+
+                            // add meta for source post in main site
+                            $source_post_meta = new stdClass();
+                            $source_post_meta->meta_key = 'source_post';
+                            $source_post_meta->meta_value = $post->ID;
+                            $post_meta[] = $source_post_meta;
+                            foreach ($post_meta as $meta) :
+                                /**
+                                 * Filters whether to selectively skip post meta used for WXR exports.
+                                 *
+                                 * Returning a truthy value to the filter will skip the current meta
+                                 * object from being exported.
+                                 *
+                                 * @since 3.3.0
+                                 *
+                                 * @param bool $skip Whether to skip the current post meta. Default false.
+                                 * @param string $meta_key Current meta key.
+                                 * @param object $meta Current meta object.
+                                 */
+                                if (apply_filters('foody_export_skip_postmeta', false, $meta->meta_key, $meta))
+                                    continue;
+                                ?>
+                                <wp:postmeta>
+                                    <wp:meta_key><?php echo foody_cdata($meta->meta_key); ?></wp:meta_key>
+                                    <wp:meta_value><?php echo foody_cdata($meta->meta_value); ?></wp:meta_value>
+                                </wp:postmeta>
+                            <?php endforeach; ?>
+
+                        </item>
                         <?php
-                        // get all post meta from db
-                        $post_meta = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post->ID));
-
-                        // add meta for source post in main site
-                        $source_post_meta = new stdClass();
-                        $source_post_meta->meta_key = 'source_post';
-                        $source_post_meta->meta_value = $post->ID;
-                        $post_meta[] = $source_post_meta;
-                        foreach ($post_meta as $meta) :
-                            /**
-                             * Filters whether to selectively skip post meta used for WXR exports.
-                             *
-                             * Returning a truthy value to the filter will skip the current meta
-                             * object from being exported.
-                             *
-                             * @since 3.3.0
-                             *
-                             * @param bool $skip Whether to skip the current post meta. Default false.
-                             * @param string $meta_key Current meta key.
-                             * @param object $meta Current meta object.
-                             */
-                            if (apply_filters('foody_export_skip_postmeta', false, $meta->meta_key, $meta))
-                                continue;
-                            ?>
-                            <wp:postmeta>
-                                <wp:meta_key><?php echo foody_cdata($meta->meta_key); ?></wp:meta_key>
-                                <wp:meta_value><?php echo foody_cdata($meta->meta_value); ?></wp:meta_value>
-                            </wp:postmeta>
-                        <?php endforeach; ?>
-
-                    </item>
-                    <?php
+                    }
                 }
+            } catch (Exception $e) {
+                Foody_WhiteLabelLogger::error($e->getMessage(), ['error' => $e]);
             }
 
-            $content = ob_get_contents();
+
+            $posts_items_content = ob_get_contents();
             ob_end_clean();
-            fwrite($fh, $content);
+            if (!empty($posts_items_content)){
+                fwrite($fh, $posts_items_content);
+            }
+
 
             unset($post_ids);
         } catch (Exception $e) {
-                Foody_WhiteLabelLogger::error($e->getMessage(),['error'=>$e]);
+            Foody_WhiteLabelLogger::error($e->getMessage(), ['error' => $e]);
         }
 
     }
