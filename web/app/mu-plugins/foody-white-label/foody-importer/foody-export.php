@@ -107,12 +107,14 @@ function export_import_foody_wp($newBlogId)
      */
     function foody_cdata($str)
     {
-        if (!seems_utf8($str)) {
-            $str = utf8_encode($str);
-        }
-        // $str = ent2ncr(esc_html($str));
-        $str = '<![CDATA[' . str_replace(']]>', ']]]]><![CDATA[>', $str) . ']]>';
+        if (!empty($str)){
+            if (!seems_utf8($str)) {
+                $str = utf8_encode($str);
+            }
+            // $str = ent2ncr(esc_html($str));
 
+            $str = '<![CDATA[' . str_replace(']]>', ']]]]><![CDATA[>', $str) . ']]>';
+        }
         return $str;
     }
 
@@ -276,7 +278,9 @@ function export_import_foody_wp($newBlogId)
              * @param object $meta Current meta object.
              */
             if (!apply_filters('foody_export_skip_termmeta', false, $meta->meta_key, $meta)) {
-                printf("\t\t<wp:termmeta>\n\t\t\t<wp:meta_key>%s</wp:meta_key>\n\t\t\t<wp:meta_value>%s</wp:meta_value>\n\t\t</wp:termmeta>\n", foody_cdata($meta->meta_key), foody_cdata($meta->meta_value));
+                $meta_key = foody_cdata($meta->meta_key);
+                $meta_value = foody_cdata($meta->meta_value);
+                echo "\t\t<wp:termmeta>\n\t\t\t<wp:meta_key>$meta_key</wp:meta_key>\n\t\t\t<wp:meta_value>$meta_value</wp:meta_value>\n\t\t</wp:termmeta>\n";
             }
         }
     }
