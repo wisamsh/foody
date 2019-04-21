@@ -417,9 +417,9 @@ function export_import_foody_wp($newBlogId)
                 foreach ($posts as $post) {
                     setup_postdata($post);
                     // skip post if filter returns true
-                    if (apply_filters('foody_export_skip_post', false, $post, $newBlogId)) {
-                        continue;
-                    }
+//                    if (apply_filters('foody_export_skip_post', false, $post, $newBlogId)) {
+//                        continue;
+//                    }
 
                     $is_sticky = is_sticky($post->ID) ? 1 : 0;
                     ?>
