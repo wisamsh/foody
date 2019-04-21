@@ -27,7 +27,7 @@ class Foody_WhiteLabelLogger
     public function __construct()
     {
         if (defined('WP_ENV') && WP_ENV != 'production') {
-            if (self::$log == null){
+            if (self::$log == null) {
                 throw new Exception('Foody_WhiteLabelLogger: instantiated before init() ');
             }
         }
@@ -35,23 +35,30 @@ class Foody_WhiteLabelLogger
 
     public static function error($message, $context = [])
     {
+        $processed = false;
         if (self::$log) {
-            self::$log->error($message, $context);
+            $processed = self::$log->error($message, $context);
         }
+
+        return $processed;
     }
 
     public static function warning($message, $context = [])
     {
+        $processed = false;
         if (self::$log) {
-            self::$log->warning($message, $context);
+            $processed = self::$log->warning($message, $context);
         }
+        return $processed;
     }
 
     public static function info($message, $context = [])
     {
+        $processed = false;
         if (self::$log) {
-            self::$log->info($message, $context);
+            $processed = self::$log->info($message, $context);
         }
+        return $processed;
     }
 
     /**
@@ -61,14 +68,14 @@ class Foody_WhiteLabelLogger
     public static function init(\Monolog\Handler\HandlerInterface $handler = null)
     {
         if (empty($handler)) {
-            $handler = new StreamHandler(FOODY_LOGGER_PATH . 'logs.log', Monolog\Logger::WARNING);
+            $handler = new StreamHandler(FOODY_LOGGER_PATH . 'logs.log');
         }
         // create a log channel
         self::$log = new Logger(self::NAME);
         try {
             self::$log->pushHandler($handler);
         } catch (Exception $e) {
-            if (defined('WP_DEBUG') && WP_DEBUG){
+            if (defined('WP_DEBUG') && WP_DEBUG) {
                 throw $e;
             }
         }
