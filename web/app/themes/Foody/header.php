@@ -31,13 +31,12 @@ $user = new Foody_User();
 
 <?php
 
-$background_image = foody_get_background_image();
-
-if (!empty($background_image)) {
+if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image'])) {
     ?>
-    <img class="body-background" src="<?php echo $background_image['url'] ?>"
-         alt="<?php echo $background_image['alt'] ?>">
+    <img class="body-background" src="<?php echo $_SESSION['background_image']['url'] ?>"
+         alt="<?php echo $_SESSION['background_image']['alt'] ?>">
     <?php
+	unset($_SESSION['background_image']);
 }
 ?>
 
