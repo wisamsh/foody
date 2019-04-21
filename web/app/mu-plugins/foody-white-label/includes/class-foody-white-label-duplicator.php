@@ -36,10 +36,8 @@ class Foody_WhiteLabelDuplicator
             $output = export_import_foody_wp($newBlogId);
             if (empty($output)) {
                 Foody_WhiteLabelLogger::error('empty export data', ['blog' => $newBlogId]);
-            }
-            if (class_exists('Foody_Import') && Foody_Import::isDebug()) {
-                // TODO remove
-                var_dump($output);
+            }else{
+                Foody_WhiteLabelLogger::info('created export file');
             }
         } catch (Exception $e) {
             if (class_exists('Foody_Import') && Foody_Import::isDebug()) {

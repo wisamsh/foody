@@ -14,6 +14,7 @@ function foody_debug_admin_actions()
         try {
             new Foody_WhiteLabelDuplicatorTask();
         } catch (Exception $e) {
+            Foody_WhiteLabelLogger::error($e->getMessage(),['error'=>$e]);
         }
     }
 }
