@@ -319,7 +319,7 @@ function export_import_foody_wp($newBlogId)
 
     function write_foody_wxr($newBlogId, $cats, $tags, $terms, $post_ids)
     {
-        $date = date('d.m.Y');
+        $date = str_replace(' ','-',date('d.m.Y H:i:s'));
         $file_name = plugin_dir_path(__FILE__) . "/exports/foody-wl-export-blog-$newBlogId-{$date}.xml";
         $fh = fopen($file_name, 'a') or die("can't open file");
 
@@ -538,9 +538,7 @@ function export_import_foody_wp($newBlogId)
 
             restore_current_blog();
         } catch (Exception $e) {
-            if (Foody_Import::isDebug()) {
-                Foody_WhiteLabelLogger::info("error exporting to $export_file", ['error' => $e]);
-            }
+            Foody_WhiteLabelLogger::info("error exporting to $export_file", ['error' => $e]);
         }
 
     } else {
