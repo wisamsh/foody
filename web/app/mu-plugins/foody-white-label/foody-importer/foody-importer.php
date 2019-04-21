@@ -11,7 +11,7 @@ License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2
 */
 
 /** Display verbose errors */
-define('IMPORT_DEBUG', defined('WP_DEBUG') && WP_DEBUG);
+define('FOODY_IMPORT_DEBUG', defined('WP_DEBUG') && WP_DEBUG);
 
 // Load Importer API
 require_once ABSPATH . 'wp-admin/includes/import.php';
@@ -64,7 +64,7 @@ if (class_exists('WP_Importer')) {
 
         public static function isDebug()
         {
-            return defined(IMPORT_DEBUG) && IMPORT_DEBUG;
+            return defined(FOODY_IMPORT_DEBUG) && FOODY_IMPORT_DEBUG;
         }
 
         /**
