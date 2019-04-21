@@ -816,6 +816,9 @@ if (class_exists('WP_Importer')) {
     }
 
 } // class_exists( 'WP_Importer' )
+else {
+    Foody_WhiteLabelLogger::error('WP Importer class not found');
+}
 
 function foody_importer_init()
 {
