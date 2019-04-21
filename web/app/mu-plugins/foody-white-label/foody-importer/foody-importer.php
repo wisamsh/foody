@@ -136,6 +136,7 @@ if (class_exists('WP_Importer')) {
                 echo '<p><strong>' . __('Sorry, there has been an error.', 'wordpress-importer') . '</strong><br />';
                 echo esc_html($import_data->get_error_message()) . '</p>';
                 $this->footer();
+                Foody_WhiteLabelLogger::error('invalid export file', ['error' => $import_data]);
                 die();
             }
 
