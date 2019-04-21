@@ -65,11 +65,10 @@ class Foody_Footer
                 array_pop($footer_links);
             }
 
-
-            foreach ($this->footer_links as $link_group) {
-
-
-                $this->display_menu($link_group, 'col');
+            if (!empty($this->footer_links)){
+                foreach ($this->footer_links as $link_group) {
+                    $this->display_menu($link_group, 'col');
+                }
             }
 
             ?>
@@ -134,13 +133,16 @@ class Foody_Footer
             $items = array_chunk($menu_items, count($menu_items) / 2);
 
             if (count($items) > 1){
+
+                $items[0][] = $this->moveo();
+
                 $items[1][] = array(
                     'title' => sprintf(__('Foody Israel') . ' %s', date('Y'))
                 );
             }
 
 
-            $items[0][] = $this->moveo();
+
 
 
             foreach ($items as $item) {

@@ -9,8 +9,6 @@
 
 
 get_header();
-//Foody_WhiteLabelDuplicator::duplicateCategory(6, 2);
-echo Foody_WhiteLabelLogger::info('test') == false;
 $homepage = new Foody_HomePage();
 ?>
 

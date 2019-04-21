@@ -317,7 +317,7 @@ function export_import_foody_wp($newBlogId)
     }
 
 
-    function write_foody_wxr($newBlogId, $cats, $tags, $terms, $post_ids)
+    function write_foody_wxr($newBlogId, $cats, $tags, $terms, $post_ids,$wpdb)
     {
         $date = str_replace(' ', '-', date('d.m.Y H:i:s'));
         $file_name = plugin_dir_path(__FILE__) . "/exports/foody-wl-export-blog-$newBlogId-{$date}.xml";
@@ -401,7 +401,7 @@ function export_import_foody_wp($newBlogId)
             /**
              * @global WP_Query $wp_query
              */
-            global $wp_query, $wpdb;
+            global $wp_query;
 
             ob_start();
 
@@ -545,7 +545,7 @@ function export_import_foody_wp($newBlogId)
     }
 
 
-    $export_file = write_foody_wxr($newBlogId, $cats, $tags, $terms, $post_ids);
+    $export_file = write_foody_wxr($newBlogId, $cats, $tags, $terms, $post_ids,$wpdb);
 
 
     /**
