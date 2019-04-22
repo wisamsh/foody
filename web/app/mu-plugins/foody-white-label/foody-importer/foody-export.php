@@ -126,7 +126,7 @@ function foody_get_export_post($post){
         <wp:post_type>'. foody_cdata($post->post_type).'</wp:post_type>
         <wp:post_password>'. foody_cdata($post->post_password).'</wp:post_password>
         <wp:is_sticky>'. intval($is_sticky).'</wp:is_sticky>
-        '. foody_post_taxonomy(false);
+        '. foody_post_taxonomy($post,false);
 
 
         // get all post meta from db
@@ -295,9 +295,8 @@ function foody_tag_description($tag)
 * @param bool $echo
 * @return string
 */
-function foody_post_taxonomy($echo = true)
+function foody_post_taxonomy($post,$echo = true)
 {
-    $post = get_post();
     $content = '';
     $taxonomies = get_object_taxonomies($post->post_type);
     if (empty($taxonomies)){
