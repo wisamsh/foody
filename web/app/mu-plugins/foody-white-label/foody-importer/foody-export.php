@@ -476,8 +476,7 @@ function export_import_foody_wp($newBlogId)
             foody_tag_description($t);
             foody_term_meta($t); ?>
         </wp:tag>
-    <?php endforeach;
-        unset($tags); ?>
+        <?php endforeach; unset($tags); ?>
         <?php
         $tags_content = ob_get_contents();
         ob_end_clean();
@@ -496,8 +495,7 @@ function export_import_foody_wp($newBlogId)
             foody_term_description($t);
             foody_term_meta($t); ?>
         </wp:term>
-    <?php endforeach;
-        unset($terms); ?>
+    <?php endforeach; unset($terms); ?>
         <?php
         $terms_content = ob_get_contents();
         ob_end_clean();
@@ -505,8 +503,7 @@ function export_import_foody_wp($newBlogId)
 
         // posts
 
-        ?>
-        <?php if ($post_ids) {
+        if ($post_ids) {
 
         try {
             /**
@@ -538,6 +535,7 @@ function export_import_foody_wp($newBlogId)
             } catch (Exception $e) {
                 Foody_WhiteLabelLogger::error($e->getMessage(), ['error' => $e]);
             }
+           $wp_query->in_the_loop = false;
             unset($post_ids);
         } catch (Exception $e) {
             Foody_WhiteLabelLogger::error($e->getMessage(), ['error' => $e]);
