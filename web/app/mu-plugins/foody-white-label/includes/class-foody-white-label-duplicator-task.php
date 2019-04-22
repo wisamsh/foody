@@ -29,11 +29,11 @@ class Foody_WhiteLabelDuplicatorTask extends WP_Async_Task
      */
     protected function run_action()
     {
-        if (is_multisite() && is_main_site()) {
-            $max_execution_time = ini_get('max_execution_time');
-            ini_set('max_execution_time', 300);
-            Foody_WhiteLabelDuplicator::whiteLabelCreate(2);
-            ini_set('max_execution_time', $max_execution_time);
-        }
+//        if (is_multisite() && is_main_site()) {
+//            $max_execution_time = ini_get('max_execution_time');
+//            ini_set('max_execution_time', 300);
+//            Foody_WhiteLabelDuplicator::whiteLabelCreate(2);
+//            ini_set('max_execution_time', $max_execution_time);
+//        }
     }
 }
