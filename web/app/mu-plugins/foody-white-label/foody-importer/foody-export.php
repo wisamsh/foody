@@ -444,15 +444,15 @@ function export_import_foody_wp($newBlogId)
 
         ob_start();
         get_wxr_head();
-        $content = ob_get_contents();
+        $head_content = ob_get_contents();
         ob_end_clean();
-        fwrite($fh, $content);
+        fwrite($fh, $head_content);
 
         ob_start();
         get_wxr_channel_head();
-        $content = ob_get_contents();
+        $channel_head_content = ob_get_contents();
         ob_end_clean();
-        fwrite($fh, $content);
+        fwrite($fh, $channel_head_content);
 
         // categories
         ob_start();
@@ -536,8 +536,8 @@ function export_import_foody_wp($newBlogId)
 //                        continue;
 //                    }
 
-                        $content = foody_get_export_post($post);
-                        fwrite($fh, $content);
+                        $posts_content = foody_get_export_post($post);
+                        fwrite($fh, $posts_content);
                     }
                 }
             } catch (Exception $e) {
@@ -592,7 +592,7 @@ function export_import_foody_wp($newBlogId)
 
         global $wpdb;
         $is_sticky = is_sticky($post->ID) ? 1 : 0;
-        $content = '<item>
+        $post_content = '<item>
                             <title>'.apply_filters("the_title_rss", $post->post_title) .
                             '</title>
                             <link>'.apply_filters("the_permalink_rss",get_permalink()).'</link>
@@ -643,14 +643,14 @@ function export_import_foody_wp($newBlogId)
                                 if (apply_filters('foody_export_skip_postmeta', false, $meta->meta_key, $meta))
                                     continue;
 
-                                $content .= '<wp:postmeta>
+                                $post_content .= '<wp:postmeta>
                                 <wp:meta_key>'. foody_cdata($meta->meta_key).'</wp:meta_key>
                                 <wp:meta_value>'. foody_cdata($meta->meta_value).'</wp:meta_value>
                                 </wp:postmeta>';
 
                                 endforeach;
 
-        $content .=  '</item>';
+        $post_content .=  '</item>';
 
-        return $content;
+        return $post_content;
     }
