@@ -5,7 +5,7 @@
  * Date: 4/15/19
  * Time: 1:44 PM
  */
-
+error_reporting(E_ALL);
 define('WXR_VERSION', '1.2');
 /**
  * Generates the WXR export file for download.
