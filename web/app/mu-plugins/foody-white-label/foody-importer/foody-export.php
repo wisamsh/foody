@@ -531,6 +531,7 @@ function write_foody_wxr($newBlogId, $cats, $tags, $terms, $post_ids, $wpdb)
             $where = 'WHERE ID IN (' . join(',', $next_posts) . ')';
             $posts = $wpdb->get_results("SELECT * FROM {$wpdb->posts} $where");
             $posts_content = array_map('foody_get_export_post',$posts);
+            $posts_content = implode("\n",$posts_content);
             file_put_contents($file_name,$posts_content,FILE_APPEND);
             unset($posts_content);
         }
