@@ -527,18 +527,8 @@ function export_import_foody_wp($newBlogId)
                 while ($next_posts = array_splice($post_ids, 0, 20)) {
                     $where = 'WHERE ID IN (' . join(',', $next_posts) . ')';
                     $posts = $wpdb->get_results("SELECT * FROM {$wpdb->posts} $where");
-
-                    // Begin Loop.
-                    foreach ($posts as $post) {
-                        setup_postdata($post);
-                        // skip post if filter returns true
-//                    if (apply_filters('foody_export_skip_post', false, $post, $newBlogId)) {
-//                        continue;
-//                    }
-
-                        $posts_content = foody_get_export_post($post);
-                        fwrite($fh, $posts_content);
-                    }
+                    $posts_content = array_map('foody_get_export_post',$posts);
+                    fwrite($fh, implode('',$posts_content));
                 }
             } catch (Exception $e) {
                 Foody_WhiteLabelLogger::error($e->getMessage(), ['error' => $e]);
