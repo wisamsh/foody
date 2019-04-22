@@ -320,9 +320,9 @@ function export_import_foody_wp($newBlogId)
     /**
 * @param $wpdb wpdb
 */
-    function foody_export_post($wpdb){
+    function foody_export_post(){
 
-
+        global $wpdb;
         $post = get_post();
         $is_sticky = is_sticky($post->ID) ? 1 : 0;
         ob_start();
@@ -379,7 +379,7 @@ function export_import_foody_wp($newBlogId)
                             <?php foody_post_taxonomy(); ?>
                             <?php
                             // get all post meta from db
-                            $post_meta = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post->ID));
+                            $post_meta = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->postmeta} WHERE post_id = %d", $post->ID));
 //                            if (!is_array($post_meta)) {
 //                                $post_meta = [];
 //                            }
@@ -532,7 +532,7 @@ function export_import_foody_wp($newBlogId)
 //                        continue;
 //                    }
 
-                        $content = foody_export_post($wpdb);
+                        $content = foody_export_post();
                         fwrite($fh, $content);
                     }
                 }
