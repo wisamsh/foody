@@ -320,10 +320,9 @@ function export_import_foody_wp($newBlogId)
     /**
 * @param $wpdb wpdb
 */
-    function foody_export_post(){
+    function foody_export_post($post){
 
         global $wpdb;
-        $post = get_post();
         $is_sticky = is_sticky($post->ID) ? 1 : 0;
         ob_start();
         ?>
@@ -532,7 +531,7 @@ function export_import_foody_wp($newBlogId)
 //                        continue;
 //                    }
 
-                        $content = foody_export_post();
+                        $content = foody_export_post($post);
                         fwrite($fh, $content);
                     }
                 }
