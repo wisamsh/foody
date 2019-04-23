@@ -94,6 +94,7 @@ require_once get_template_directory() . "/inc/widgets/class-foody-widget.php";
 require_once get_template_directory() . "/inc/widgets/widget-categories-list.php";
 require_once get_template_directory() . "/inc/widgets/widget-search-filter.php";
 require_once get_template_directory() . "/inc/widgets/widget-categories-accordion.php";
+require_once get_template_directory() . "/inc/widgets/widget-product.php";
 
 
 /*
