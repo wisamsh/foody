@@ -339,9 +339,9 @@ if (class_exists('WP_Importer')) {
          */
         function process_posts()
         {
-            $this->posts = apply_filters('wp_import_posts', $this->posts);
+//            $this->posts = apply_filters('wp_import_posts', $this->posts);
 
-            foreach ($this->posts as $post) {
+            while (($post = array_shift($this->posts))){
                 $post = apply_filters('wp_import_post_data_raw', $post);
 
                 if (!post_type_exists($post['post_type'])) {
@@ -505,7 +505,6 @@ if (class_exists('WP_Importer')) {
                     }
                 }
             }
-
             unset($this->posts);
         }
 
