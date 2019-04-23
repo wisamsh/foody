@@ -1,0 +1,144 @@
+.brands-slider {
+  z-index: 0;
+  margin-left: 0;
+  padding: 1rem 3rem;
+  visibility: hidden;
+  height: 0;
+
+  &.slick-initialized {
+    visibility: visible;
+    height: auto;
+  }
+
+  .slick-track {
+    margin: 0;
+    display: flex;
+  }
+
+  i.slick-arrow {
+    position: absolute;
+    right: -2rem;
+    padding: 15px;
+    z-index: 1;
+    top: 40px;
+    cursor: pointer;
+
+    &:before {
+      color: var(--color__primary);
+      font-size: 22px;
+    }
+
+    &.next {
+      right: initial;
+      left: -2rem;
+    }
+
+    &.prev {
+      &:before {
+        transform: rotate(180deg);
+        display: inline-block;
+      }
+    }
+  }
+
+  .slick-slide {
+    display: flex;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+
+    //TODO: make border
+    &.slick-active:nth-child(1),
+    &.slick-active:nth-child(2) {
+
+      > div {
+        border-left: 2px solid #000;
+        padding-left: 4rem;
+      }
+    }
+
+    .brands-slider-item {
+
+      div {
+        //filter: drop-shadow(2px 4px 2px rgba(0, 0, 0, 0.15));
+        padding-left: 5px;
+
+        img {
+          width: 100%;
+          clip-path: inset(0 round 4px);
+        }
+      }
+
+      .category-title {
+        font-size: 21px;
+        text-align: center;
+        font-weight: normal;
+        color: var(--color__text-primary-dark);
+      }
+
+    }
+  }
+
+}
+
+@include breakpoint(mobileonly) {
+
+  .brands-slider {
+    margin-right: 15px;
+    padding: 0 0 20px 0;
+
+    .slick-list {
+      padding: 0 0 0 30px;
+    }
+
+    i.slick-arrow {
+      top: 0;
+
+      &:before {
+
+      }
+
+      &.next {
+        left: -15px;
+      }
+
+      &.prev {
+        right: -25px;
+
+        &:before {
+
+        }
+      }
+    }
+
+    .slick-slide {
+      //TODO: make better border
+      &.slick-active:nth-child(1),
+      &.slick-active:nth-child(2) {
+
+        > div {
+          border-left: none;
+          padding-left: 0;
+        }
+      }
+      .brands-slider-item {
+
+        div {
+
+          img {
+          }
+        }
+
+        .category-title {
+          font-size: 18px;
+          text-align: center;
+          font-weight: normal;
+          color: var(--color__text-primary-dark);
+        }
+
+      }
+    }
+
+  }
+
+}

@@ -1,0 +1,888 @@
+@import "../../../mixins/mixins-master";
+@import "../../../variables-site/variables-site";
+@import "brands";
+
+$content-width: 75%;
+$feed-header-height: 60px;
+$sidebar-top-offset: 60px;
+
+#approvals-modal {
+  .modal-body {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .modal-footer {
+    display: none;
+  }
+
+  form {
+    .md-checkbox label:not(.error) {
+      display: table-cell;
+    }
+
+    input[type='submit'] {
+      margin: 10px auto 0;
+      border-radius: 6px;
+      background-image: linear-gradient(71deg, #ec3849, #f35644);
+      font-family: $font__assistant;
+      font-size: 23px;
+      font-weight: bold;
+      line-height: normal;
+      letter-spacing: -0.2px;
+      text-align: center;
+      color: #ffffff;
+      display: block;
+      padding: 4px 30px;
+    }
+  }
+}
+
+.page-template-white-label-homepage {
+
+  header {
+    .logo-container {
+      position: static;
+      top: 0;
+      right: 0;
+      margin-left: 10px;
+
+      .logo-container-desktop {
+        img {
+          &.custom-logo {
+            border-radius: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .site-content {
+    background: white;
+
+    .homepage {
+
+      .brands-container {
+        background-color: rgba(173, 173, 173, 0.2);
+        padding: 0 3rem;
+
+        .title {
+          padding: 0.67em 0;
+          margin: 0;
+          color: #080909;
+        }
+      }
+
+      .seo {
+        max-width: $content-width;
+      }
+
+      .cover-image {
+        img {
+          background-size: cover;
+          width: 100%;
+          max-height: 250px;
+        }
+      }
+
+      #seo {
+        left: 0;
+        padding-right: 0;
+        max-width: 100%;
+      }
+
+      .content {
+        padding-top: 15px;
+
+        .featured {
+        }
+
+        .title {
+
+          a {
+            color: var(--color__primary);
+          }
+        }
+
+        .team-listing {
+          border-bottom: 1px solid var(--color__divider);
+          margin: 0;
+
+          .author {
+            .author-name {
+              margin-top: 0;
+            }
+          }
+        }
+
+        .feed-container {
+          max-width: 100%;
+          margin: 0 auto;
+
+          .feed-header {
+            height: $feed-header-height;
+            width: 100%;
+
+            .title {
+              width: $content-width;
+              max-width: $content-width;
+              flex: 0 0 $content-width;
+              line-height: $feed-header-height;
+              padding: 0 15px;
+              margin-bottom: 0;
+            }
+
+          }
+
+          .grid-header {
+            align-items: center;
+          }
+
+          .sidebar-container {
+
+            margin-top: 60px;
+            width: calc(100% - #{$content-width});
+            padding-right: 0;
+
+            @import "../../../common/sidebar";
+
+            @include foody-sidebar(100%);
+
+            aside {
+              padding-right: 0;
+              padding-top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              min-height: max-content;
+              height: 100%;
+              border: none;
+              background-color: var(--color__background-screen);
+
+              $input-height: 39px;
+              $input-margin: 4px;
+              $input-side-offset: 15px;
+
+              @import "../../../common/foody-autocomplete";
+
+              .foody-search-form {
+
+                .search-bar {
+                  transition: all .25s;
+
+                  .algolia-autocomplete {
+                    width: 100%;
+
+                    input {
+                      &.search {
+                        width: 100%;
+                        height: $input-height;
+                        margin-bottom: $input-margin;
+                        text-align: right;
+                        direction: rtl;
+
+                        //noinspection CssInvalidPseudoSelector
+                        &::placeholder {
+                          font-size: 18px;
+                          vertical-align: sub;
+                          line-height: $input-height;
+                          text-align: right;
+                          direction: rtl;
+                        }
+                      }
+                    }
+                  }
+                }
+
+                .foody-dropdown-menu {
+                  width: calc(100% - #{$input-side-offset});
+                  margin-right: 15px;
+                  margin-top: 0;
+                }
+              }
+
+              .sidebar-content {
+                min-height: calc(100% - #{$sidebar-top-offset});
+                left: 0;
+                right: 0;
+                bottom: 0;
+                top: $sidebar-top-offset;
+              }
+            }
+          }
+
+          .content-container {
+            margin-top: 20px;
+
+            article {
+
+              &.feed {
+                margin: 0;
+              }
+
+              &.feed, &.recommended-container {
+
+                .slick-slide {
+                  height: auto;
+
+                  .col-sm-12 {
+                    padding: 0 3px;
+                  }
+                }
+
+                img {
+                  &.recipe-item-image {
+                    width: 100%;
+                  }
+                }
+              }
+
+            }
+
+            .block-container {
+              padding: 10px 15px;
+
+              &:last-of-type {
+                padding-bottom: 10px;
+              }
+
+              .block-header {
+                align-items: center;
+
+                .block-title {
+                  text-align: right;
+                  font-size: 20px;
+                }
+
+                .block-see-more {
+                  text-align: left;
+                  font-size: 15px;
+
+                  .icon-arrowleft {
+                    font-size: 10px;
+                  }
+                }
+              }
+
+              .block-content {
+                @import "../../../pages/common/categories-listing";
+
+                .categories-block-content {
+                  margin: 0;
+
+                  .category-listing {
+                    .categort-listing-title {
+                      font-size: 16px;
+                    }
+
+                  }
+                }
+
+                @import "../../../pages/common/foody-banner";
+              }
+            }
+
+            @import "foody_product";
+          }
+        }
+      }
+
+      .filter {
+        input[type="text"] {
+          margin-bottom: 15px;
+        }
+
+        .filters {
+          padding-left: 20px;
+        }
+      }
+
+      h1, h2, h3 {
+        font-size: 22px;
+      }
+    }
+  }
+
+}
+
+@include breakpoint(mobileonly) {
+  .page-template-white-label-homepage {
+    .site-content {
+
+      .homepage {
+
+        .brands-container {
+          padding: 0 15px;
+        }
+
+        .seo {
+          max-width: 100%;
+        }
+
+        #seo {
+          position: initial;
+        }
+
+        .cover-image {
+
+          img {
+          }
+        }
+
+        .content {
+          padding-left: 15px;
+          padding-right: 15px;
+          padding-top: 15px;
+
+          &.container-fluid {
+            padding: 10px;
+            height: auto;
+          }
+
+          .promotion-listing {
+            padding-right: 0;
+          }
+
+          .categories-list-widget {
+
+            .categories-listing, .promotion-listing {
+
+              padding: 0;
+
+              a.col, li.col {
+                padding: 0;
+              }
+
+              .category-listing, .promoted-item {
+                padding: 0 3px;
+
+                img {
+                  clip-path: inset(0 round .3rem);
+                }
+
+                .categort-listing-title, .promotion-listing-title {
+                  font-size: 18px;
+                  margin-top: 5px;
+                }
+
+              }
+            }
+          }
+
+          .promotion-listing {
+
+            padding: 0;
+
+            li.col {
+              padding: 0;
+            }
+
+            .promoted-item {
+
+              .promotion-item-listing {
+                padding: 0 3px;
+
+                img {
+                  clip-path: inset(0 round .3rem);
+                }
+
+                .promotion-listing-title {
+                  font-size: 18px;
+                  margin-top: 5px;
+                }
+
+              }
+
+            }
+          }
+
+          .team-listing {
+            padding-right: 0;
+            border-bottom: 0;
+
+            .slick-slide {
+              height: auto;
+            }
+
+            .author {
+              padding: 0;
+
+              img {
+                width: 80px;
+              }
+
+              h4 {
+                font-size: 18px;
+                //noinspection CssInvalidPropertyValue
+                word-break: break-word;
+                margin-bottom: 0;
+              }
+
+              .author-name {
+                margin: 5px 0;
+              }
+            }
+          }
+
+          .feed-container {
+            padding-top: 10px;
+
+            .content-container {
+              margin-top: 0;
+              padding-right: 0;
+              padding-left: 0;
+
+              .foody-grid {
+                .grid-header {
+                  .title {
+                    line-height: normal;
+                  }
+                }
+              }
+            }
+
+            .feed-header {
+
+              .socials {
+
+              }
+
+              .h3 {
+
+              }
+
+            }
+
+            aside {
+
+              input[type="text"] {
+
+              }
+            }
+
+            .content-container {
+              max-width: 100%;
+              flex: 0 0 100%;
+              margin-bottom: 0;
+
+              article {
+
+                &.feed {
+                  .show-more {
+                    //padding-bottom: 100px;
+                  }
+                }
+
+                &.feed, &.recommended-container {
+                  img {
+                    &.recipe-item-image {
+                      //min-height: 210px;
+                    }
+                  }
+                }
+
+              }
+            }
+
+          }
+        }
+
+        .filter {
+          input[type="text"] {
+
+          }
+
+          .filters {
+
+          }
+        }
+
+        h3 {
+          font-size: 22px;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(tablet) {
+  .page-template-white-label-homepage {
+    .homepage {
+
+      .cover-image {
+
+        img {
+        }
+      }
+
+      .content {
+
+        &.container-fluid {
+        }
+
+        .categories-listing {
+
+          a.col {
+          }
+
+          .category-listing {
+            img {
+            }
+
+            .categort-listing-title {
+
+            }
+
+          }
+        }
+
+        .team-listing {
+          .slick-slide {
+          }
+
+          .author {
+
+            img {
+              width: 167px;
+            }
+
+            h4 {
+            }
+          }
+        }
+
+        .feed-container {
+          .feed-header {
+
+            .socials {
+
+            }
+
+            .h3 {
+
+            }
+
+          }
+
+          aside {
+
+            input[type="text"] {
+
+            }
+          }
+
+          .content-container {
+            article {
+
+              &.feed {
+                .show-more {
+                }
+              }
+
+              &.feed, &.recommended-container {
+                img {
+                  &.recipe-item-image {
+                  }
+                }
+              }
+
+            }
+          }
+
+        }
+      }
+
+      .filter {
+        input[type="text"] {
+
+        }
+
+        .filters {
+
+        }
+      }
+
+      .filter-mobile {
+
+        .filter-btn {
+
+          &:active, &:hover, &:focus {
+          }
+        }
+      }
+
+      .mobile-filter {
+        .show-recipes-container {
+          button {
+          }
+        }
+
+        &.open {
+
+          button.close {
+          }
+
+          .show-recipes-container {
+            button {
+
+            }
+          }
+        }
+
+        aside {
+          height: 95%;
+          overflow-y: scroll;
+
+          li.widget, .sidebar-section {
+          }
+
+          li.widget, .categories-accordion-widget {
+            display: none !important;
+          }
+
+          .sidebar-content {
+            height: 100%;
+
+            .foody-search-filter {
+              height: 100%;
+              border-bottom: 0;
+            }
+
+            #accordion-foody-filter {
+
+              #heading-foody-filter {
+                i {
+                }
+
+                .main-title {
+                }
+              }
+
+              #foody-filter {
+
+                h5 {
+                  i.arrow {
+                    &:before {
+                    }
+                  }
+                }
+
+                .card-body {
+                }
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+}
+
+@include breakpoint(tablet-landscape) {
+  .page-template-white-label-homepage {
+    .homepage {
+
+      .cover-image {
+
+        img {
+        }
+      }
+
+      .content {
+
+        &.container-fluid {
+        }
+
+        .categories-listing {
+
+          a.col {
+          }
+
+          .category-listing {
+            img {
+            }
+
+            .categort-listing-title {
+
+            }
+
+          }
+        }
+
+        .team-listing {
+          .slick-slide {
+            width: unset;
+          }
+
+          .author {
+            max-width: unset;
+
+            img {
+            }
+
+            h4 {
+            }
+          }
+        }
+
+        .feed-container {
+          .feed-header {
+
+            .socials {
+
+            }
+
+            .h3 {
+
+            }
+
+          }
+
+          aside {
+
+            input[type="text"] {
+
+            }
+
+            .sidebar-content {
+            }
+          }
+
+          .content-container {
+            article {
+
+              &.feed {
+                .show-more {
+                }
+              }
+
+              &.feed, &.recommended-container {
+                img {
+                  &.recipe-item-image {
+                  }
+                }
+              }
+
+            }
+          }
+
+        }
+      }
+
+      .filter {
+        input[type="text"] {
+
+        }
+
+        .filters {
+
+        }
+      }
+
+      .filter-mobile {
+
+        .filter-btn {
+
+          &:active, &:hover, &:focus {
+          }
+        }
+      }
+
+      .mobile-filter {
+        .show-recipes-container {
+          button {
+          }
+        }
+
+        &.open {
+
+          button.close {
+          }
+
+          .show-recipes-container {
+            button {
+
+            }
+          }
+        }
+
+        aside {
+
+          li.widget, .sidebar-section {
+          }
+
+          .sidebar-content {
+
+            #accordion-foody-filter {
+
+              #heading-foody-filter {
+                i {
+                }
+
+                .main-title {
+                }
+              }
+
+              #foody-filter {
+
+                h5 {
+                  i.arrow {
+                    &:before {
+                    }
+                  }
+                }
+
+                .card-body {
+                }
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+  .page-template-homepage {
+    footer.site-footer {
+    }
+  }
+}
+
+// TODO move to relevant files
+
+#filter-sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* top layer */
+  z-index: 9999;
+}
+
+.overlay {
+  /* full screen */
+  width: 100vw;
+  height: 100vh;
+  /* transparent black */
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  /* middle layer, i.e. appears below the sidebar */
+  z-index: 9998;
+}
+
+#dismiss {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  /* top right corner of the sidebar */
+  top: 10px;
+  right: 10px;
+}
+

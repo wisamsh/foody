@@ -13,6 +13,9 @@ if (isset($template_args)) {
     }else{
         $image = $template_args['image'];
     }
+	if (isset($template_args['link'])) {
+		$link = $template_args['link'];
+	}
 }
 
 if (empty($image)) {
@@ -21,9 +24,11 @@ if (empty($image)) {
     $image = $image['url'];
 }
 
-$link = get_field('cover_link');
-if (!empty($link)) {
-    $a = '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
+if ( empty( $link ) ) {
+	$link = get_field( 'cover_link' );
+}
+if ( ! empty( $link ) ) {
+	$a = '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
 }
 
 $mobile_image = $image;

@@ -42,9 +42,11 @@ require_once get_template_directory() . "/inc/classes/common/class-foody-term.ph
 require_once get_template_directory() . "/inc/classes/common/class-foody-user.php";
 require_once get_template_directory() . "/inc/classes/class-header.php";
 require_once get_template_directory() . "/inc/classes/class-foody-footer.php";
+require_once get_template_directory() . "/inc/classes/class-foody-blocks.php";
 require_once get_template_directory() . "/inc/classes/class-foody-comment-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-how-i-did-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-homepage.php";
+require_once get_template_directory() . "/inc/classes/class-foody-white-label-homepage.php";
 require_once get_template_directory() . "/inc/classes/class-foody-category.php";
 require_once get_template_directory() . "/inc/classes/class-foody-categories.php";
 require_once get_template_directory() . "/inc/classes/class-foody-team.php";
