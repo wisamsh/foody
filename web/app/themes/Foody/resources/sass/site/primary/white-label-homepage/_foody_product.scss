@@ -1,0 +1,36 @@
+.product-container {
+  text-align: right;
+  padding: 15px;
+
+  .foody-product-item {
+    .product-content {
+      display: inline-block;
+      vertical-align: middle;
+      width: 60%;
+      padding-right: 20px;
+      padding-top: 10px;
+      .product-title {
+        font-weight: bold;
+      }
+
+      .product-subtitle {
+        font-size: 1rem;
+        padding-bottom: 5px;
+      }
+    }
+
+    .product-link {
+      background-image: linear-gradient(74deg, #f84444, #ff527c);
+      color: #ffffff;
+      display: inline-block;
+      vertical-align: bottom;
+      width: 25%;
+      margin-right: 14%;
+      padding: 13px 0;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 3px;
+    }
+  }
+}
