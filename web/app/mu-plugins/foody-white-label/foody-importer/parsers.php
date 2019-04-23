@@ -9,20 +9,24 @@
 /**
  * WordPress Importer class for managing parsing of WXR files.
  */
-class WXR_Parser
+class Foody_WhiteLabelWXRParser
 {
     function parse($file)
     {
         // Attempt to use proper XML parsers first
         if (extension_loaded('simplexml')) {
-            $parser = new WXR_Parser_SimpleXML;
+            $parser = new Foody_WXR_Parser_SimpleXML;
             $result = $parser->parse($file);
 
             // If SimpleXML succeeds or this is an invalid WXR file then return the results
-            if (!is_wp_error($result) || 'SimpleXML_parse_error' != $result->get_error_code())
+            if (!is_wp_error($result) || 'SimpleXML_parse_error' != $result->get_error_code()) {
                 return $result;
+            } else {
+                Foody_WhiteLabelLogger::error('There was an error when reading this WXR file', ['error' => $result]);
+            }
+
         } else if (extension_loaded('xml')) {
-            $parser = new WXR_Parser_XML;
+            $parser = new Foody_WXR_Parser_XML;
             $result = $parser->parse($file);
 
             // If XMLParser succeeds or this is an invalid WXR file then return the results
@@ -31,7 +35,8 @@ class WXR_Parser
         }
 
         // We have a malformed XML file, so display the error and fallthrough to regex
-        if (isset($result) && defined('IMPORT_DEBUG') && IMPORT_DEBUG) {
+        if (isset($result) && defined('FOODY_IMPORT_DEBUG') && FOODY_IMPORT_DEBUG) {
+            Foody_WhiteLabelLogger::error('There was an error when reading this WXR file', ['error' => $result]);
             echo '<pre>';
             if ('SimpleXML_parse_error' == $result->get_error_code()) {
                 foreach ($result->get_error_data() as $error)
@@ -43,10 +48,11 @@ class WXR_Parser
             echo '</pre>';
             echo '<p><strong>' . __('There was an error when reading this WXR file', 'wordpress-importer') . '</strong><br />';
             echo __('Details are shown above. The importer will now try again with a different parser...', 'wordpress-importer') . '</p>';
+
         }
 
         // use regular expressions if nothing else available or this is bad XML
-        $parser = new WXR_Parser_Regex;
+        $parser = new Foody_WXR_Parser_Regex;
         return $parser->parse($file);
     }
 }
@@ -54,9 +60,9 @@ class WXR_Parser
 /**
  * WXR Parser that makes use of the SimpleXML PHP extension.
  */
-class WXR_Parser_SimpleXML
+class Foody_WXR_Parser_SimpleXML
 {
-    function parse($data)
+    function parse($file)
     {
         $authors = $posts = $categories = $tags = $terms = array();
 
@@ -67,7 +73,7 @@ class WXR_Parser_SimpleXML
         if (function_exists('libxml_disable_entity_loader')) {
             $old_value = libxml_disable_entity_loader(true);
         }
-        $success = $dom->loadXML($data);
+        $success = $dom->loadXML(file_get_contents($file));
         if (!is_null($old_value)) {
             libxml_disable_entity_loader($old_value);
         }
@@ -271,7 +277,7 @@ class WXR_Parser_SimpleXML
 /**
  * WXR Parser that makes use of the XML Parser PHP extension.
  */
-class WXR_Parser_XML
+class Foody_WXR_Parser_XML
 {
     var $wp_tags = array(
         'wp:post_id', 'wp:post_date', 'wp:post_date_gmt', 'wp:comment_status', 'wp:ping_status', 'wp:attachment_url',
@@ -287,7 +293,7 @@ class WXR_Parser_XML
         'wp:comment_approved', 'wp:comment_type', 'wp:comment_parent', 'wp:comment_user_id',
     );
 
-    function parse($data)
+    function parse($file)
     {
         $this->wxr_version = $this->in_post = $this->cdata = $this->data = $this->sub_data = $this->in_tag = $this->in_sub_tag = false;
         $this->authors = $this->posts = $this->term = $this->category = $this->tag = array();
@@ -299,7 +305,7 @@ class WXR_Parser_XML
         xml_set_character_data_handler($xml, 'cdata');
         xml_set_element_handler($xml, 'tag_open', 'tag_close');
 
-        if (!xml_parse($xml, $data, true)) {
+        if (!xml_parse($xml, file_get_contents($file), true)) {
             $current_line = xml_get_current_line_number($xml);
             $current_column = xml_get_current_column_number($xml);
             $error_code = xml_get_error_code($xml);
@@ -450,7 +456,7 @@ class WXR_Parser_XML
 /**
  * WXR Parser that uses regular expressions. Fallback for installs without an XML parser.
  */
-class WXR_Parser_Regex
+class Foody_WXR_Parser_Regex
 {
     var $authors = array();
     var $posts = array();
@@ -477,52 +483,55 @@ class WXR_Parser_Regex
             'wp:term' => array('terms', array($this, 'process_term')),
         );
 
-        $lines = explode("\n", $file);
-        while (($line = array_shift($lines))) {
-            $importline = rtrim($line);
+        $fp = $this->fopen($file, 'r');
+        if ($fp) {
+            while (!$this->feof($fp)) {
+                $importline = rtrim($this->fgets($fp));
 
-            if (!$wxr_version && preg_match('|<wp:wxr_version>(\d+\.\d+)</wp:wxr_version>|', $importline, $version))
-                $wxr_version = $version[1];
+                if (!$wxr_version && preg_match('|<wp:wxr_version>(\d+\.\d+)</wp:wxr_version>|', $importline, $version))
+                    $wxr_version = $version[1];
 
-            if (false !== strpos($importline, '<wp:base_site_url>')) {
-                preg_match('|<wp:base_site_url>(.*?)</wp:base_site_url>|is', $importline, $url);
-                $this->base_url = $url[1];
-                continue;
-            }
+                if (false !== strpos($importline, '<wp:base_site_url>')) {
+                    preg_match('|<wp:base_site_url>(.*?)</wp:base_site_url>|is', $importline, $url);
+                    $this->base_url = $url[1];
+                    continue;
+                }
 
-            if (false !== strpos($importline, '<wp:author>')) {
-                preg_match('|<wp:author>(.*?)</wp:author>|is', $importline, $author);
-                $a = $this->process_author($author[1]);
-                $this->authors[$a['author_login']] = $a;
-                continue;
-            }
+                if (false !== strpos($importline, '<wp:author>')) {
+                    preg_match('|<wp:author>(.*?)</wp:author>|is', $importline, $author);
+                    $a = $this->process_author($author[1]);
+                    $this->authors[$a['author_login']] = $a;
+                    continue;
+                }
 
-            foreach ($multiline_tags as $tag => $handler) {
-                // Handle multi-line tags on a singular line
-                if (preg_match('|<' . $tag . '>(.*?)</' . $tag . '>|is', $importline, $matches)) {
-                    $this->{$handler[0]}[] = call_user_func($handler[1], $matches[1]);
+                foreach ($multiline_tags as $tag => $handler) {
+                    // Handle multi-line tags on a singular line
+                    if (preg_match('|<' . $tag . '>(.*?)</' . $tag . '>|is', $importline, $matches)) {
+                        $this->{$handler[0]}[] = call_user_func($handler[1], $matches[1]);
 
-                } elseif (false !== ($pos = strpos($importline, "<$tag>"))) {
-                    // Take note of any content after the opening tag
-                    $multiline_content = trim(substr($importline, $pos + strlen($tag) + 2));
+                    } elseif (false !== ($pos = strpos($importline, "<$tag>"))) {
+                        // Take note of any content after the opening tag
+                        $multiline_content = trim(substr($importline, $pos + strlen($tag) + 2));
 
-                    // We don't want to have this line added to `$is_multiline` below.
-                    $importline = '';
-                    $in_multiline = $tag;
+                        // We don't want to have this line added to `$is_multiline` below.
+                        $importline = '';
+                        $in_multiline = $tag;
 
-                } elseif (false !== ($pos = strpos($importline, "</$tag>"))) {
-                    $in_multiline = false;
-                    $multiline_content .= trim(substr($importline, 0, $pos));
+                    } elseif (false !== ($pos = strpos($importline, "</$tag>"))) {
+                        $in_multiline = false;
+                        $multiline_content .= trim(substr($importline, 0, $pos));
 
-                    $this->{$handler[0]}[] = call_user_func($handler[1], $multiline_content);
+                        $this->{$handler[0]}[] = call_user_func($handler[1], $multiline_content);
+                    }
+                }
+
+                if ($in_multiline && $importline) {
+                    $multiline_content .= $importline . "\n";
                 }
             }
 
-            if ($in_multiline && $importline) {
-                $multiline_content .= $importline . "\n";
-            }
+            $this->fclose($fp);
         }
-
 
         if (!$wxr_version)
             return new WP_Error('WXR_parse_error', __('This does not appear to be a WXR file, missing/invalid WXR version number', 'wordpress-importer'));

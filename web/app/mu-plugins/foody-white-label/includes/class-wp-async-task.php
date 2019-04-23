@@ -161,7 +161,19 @@ if ( ! class_exists( 'WP_Async_Task' ) ) {
                 if ( ! is_user_logged_in() ) {
                     $this->action = "nopriv_$this->action";
                 }
+
+                set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
+                    // error was suppressed with the @-operator
+                    if (0 === error_reporting()) {
+                        return false;
+                    }
+
+                    throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+                });
+
                 $this->run_action();
+
+                restore_error_handler();
             }
 
             add_filter( 'wp_die_handler', function() { die(); } );

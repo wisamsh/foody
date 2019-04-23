@@ -15,10 +15,4 @@ require_once PLUGIN_DIR . 'foody-importer/foody-importer.php';
 require_once PLUGIN_DIR . 'foody-importer/foody-export.php';
 require_once PLUGIN_DIR . 'commands/includes.php';
 
-
 Foody_WhiteLabelLogger::init();
-
-global $foody_logger;
-
-/** @noinspection PhpUnhandledExceptionInspection */
-$foody_logger = new Foody_WhiteLabelLogger();

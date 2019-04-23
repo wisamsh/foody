@@ -31,21 +31,14 @@ class Foody_WhiteLabelDuplicator
 
     public static function whiteLabelCreate($newBlogId)
     {
+        Foody_WhiteLabelLogger::info('start export import');
         // TODO change output to logger
         try {
-            $output = export_import_foody_wp($newBlogId);
-            if (empty($output)) {
-                Foody_WhiteLabelLogger::error('empty export data', ['blog' => $newBlogId]);
-            }
-            if (class_exists('Foody_Import') && Foody_Import::isDebug()) {
-                // TODO remove
-                var_dump($output);
-            }
+            export_import_foody_wp($newBlogId);
         } catch (Exception $e) {
-            if (class_exists('Foody_Import') && Foody_Import::isDebug()) {
-                echo $e->getMessage();
-                Foody_WhiteLabelLogger::error($e->getMessage(), ['blog' => $newBlogId, 'location' => get_class()]);
-            }
+//            if (class_exists('Foody_Import') && Foody_Import::isDebug()) {
+            Foody_WhiteLabelLogger::error($e->getMessage(), ['blog' => $newBlogId, 'location' => get_class()]);
+//            }
         }
     }
 

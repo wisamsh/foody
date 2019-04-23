@@ -11,7 +11,7 @@ License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2
 */
 
 /** Display verbose errors */
-define('IMPORT_DEBUG', defined('WP_DEBUG') && WP_DEBUG);
+define('FOODY_IMPORT_DEBUG', defined('WP_DEBUG') && WP_DEBUG);
 
 // Load Importer API
 require_once ABSPATH . 'wp-admin/includes/import.php';
@@ -64,7 +64,7 @@ if (class_exists('WP_Importer')) {
 
         public static function isDebug()
         {
-            return defined(IMPORT_DEBUG) && IMPORT_DEBUG;
+            return defined(FOODY_IMPORT_DEBUG) && FOODY_IMPORT_DEBUG;
         }
 
         /**
@@ -133,6 +133,7 @@ if (class_exists('WP_Importer')) {
             $import_data = $this->parse($data);
 
             if (is_wp_error($import_data)) {
+                Foody_WhiteLabelLogger::error('invalid export file', ['error' => $import_data]);
                 echo '<p><strong>' . __('Sorry, there has been an error.', 'wordpress-importer') . '</strong><br />';
                 echo esc_html($import_data->get_error_message()) . '</p>';
                 $this->footer();
@@ -720,7 +721,7 @@ if (class_exists('WP_Importer')) {
          */
         function parse($data)
         {
-            $parser = new WXR_Parser();
+            $parser = new Foody_WhiteLabelWXRParser();
             return $parser->parse($data);
         }
 
@@ -816,6 +817,9 @@ if (class_exists('WP_Importer')) {
     }
 
 } // class_exists( 'WP_Importer' )
+else {
+    Foody_WhiteLabelLogger::error('WP Importer class not found');
+}
 
 function foody_importer_init()
 {

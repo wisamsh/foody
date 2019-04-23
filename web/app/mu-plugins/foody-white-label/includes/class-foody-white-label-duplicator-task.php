@@ -36,7 +36,4 @@ class Foody_WhiteLabelDuplicatorTask extends WP_Async_Task
             ini_set('max_execution_time', $max_execution_time);
         }
     }
-
-
-
 }

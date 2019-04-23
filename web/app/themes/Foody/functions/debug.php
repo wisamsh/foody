@@ -11,7 +11,10 @@ add_action('admin_init', 'foody_debug_admin_actions');
 function foody_debug_admin_actions()
 {
     if (is_multisite() && is_main_site()) {
-        new Foody_WhiteLabelDuplicatorTask();
-        //Foody_WhiteLabelDuplicator::duplicateCategory(6, 2);
+        try {
+            new Foody_WhiteLabelDuplicatorTask();
+        } catch (Exception $e) {
+            Foody_WhiteLabelLogger::error($e->getMessage(),['error'=>$e]);
+        }
     }
 }
