@@ -83,8 +83,8 @@ function export_import_foody_wp($newBlogId)
             $url = str_replace('http://','',$url);
             $url = str_replace('https://','',$url);
             // > /dev/null &
-            $result = exec("wp import --file='$export_file' --authors='skip' --url='$url' ");
-            
+            $result = exec("wp import $export_file --authors='skip' --url='$url' ");
+
             Foody_WhiteLabelLogger::info("wp import command finished",['result'=>$result]);
 
 //            restore_current_blog();
