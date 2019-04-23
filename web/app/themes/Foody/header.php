@@ -9,7 +9,6 @@
  * @package Foody
  */
 $header = new Foody_Header();
-$channels = new Foody_Channels_Menu();
 $user = new Foody_User();
 
 ?>
@@ -151,12 +150,6 @@ if (!empty($background_image)) {
             </div>
 
         </div>
-
-        <?php
-        if (wp_is_mobile()) {
-            echo $channels->get_the_menu();
-        }
-        ?>
 
 
         <!-- #site-navigation -->
