@@ -147,6 +147,8 @@ if (class_exists('WP_Importer')) {
             $this->tags = $import_data['tags'];
             $this->base_url = esc_url($import_data['base_url']);
 
+            unset($import_data);
+
             wp_defer_term_counting(true);
             wp_defer_comment_counting(true);
 
@@ -377,7 +379,7 @@ if (class_exists('WP_Importer')) {
                 if ($post_exists && get_post_type($post_exists) == $post['post_type']) {
                     printf(__('%s &#8220;%s&#8221; already exists.', 'wordpress-importer'), $post_type_object->labels->singular_name, esc_html($post['post_title']));
                     echo '<br />';
-                    $comment_post_ID = $post_id = $post_exists;
+                    $post_id = $post_exists;
                     $this->processed_posts[intval($post['post_id'])] = intval($post_exists);
                 } else {
                     $post_parent = (int)$post['post_parent'];
@@ -415,7 +417,7 @@ if (class_exists('WP_Importer')) {
                     $postdata = wp_slash($postdata);
 
 
-                    $comment_post_ID = $post_id = wp_insert_post($postdata, true);
+                    $post_id = wp_insert_post($postdata, true);
                     do_action('wp_import_insert_post', $post_id, $original_post_ID, $postdata, $post);
 
 
