@@ -26,17 +26,96 @@ function foody_customize_register( $wp_customize ) {
 		) );
 	}
 
-//    $wp_customize->add_setting( 'header_link' , array(
-//        'default'   => '',
-//        'transport' => 'refresh',
-//    ) );
+	// Foody alternative logo link
+	$wp_customize->add_setting(
+		'foody_logo_link',
+		array(
+			'capability'        => 'edit_theme_options',
+			'sanitize_callback' => 'foody_sanitize_url'
+		)
+	);
 
-//    $wp_customize->add_section( 'foody_cover_link' , array(
-//        'title'      => __('לינק קאבר','foody'),
-//        'priority'   => 30,
-//    ) );
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'foody_logo_link',
+		array(
+			'label'       => __( 'קישור לוגו', 'foody' ),
+			'description' => __( 'קישור חלופי ללוגו', 'foody' ),
+			'settings'    => 'foody_logo_link',
+			'priority'    => 10,
+			'section'     => 'title_tagline',
+			'type'        => 'url',
+			'input_attrs' => array(
+				'placeholder' => get_home_url(),
+			)
+		)
+	) );
+
+	//	Remove default color pickers
+	$wp_customize->remove_control('background_color');
+	$wp_customize->remove_control('header_textcolor');
+
+	// Add color picker - titles
+	$wp_customize->add_setting( 'foody_title_color' , array(
+		'transport'   => 'refresh',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'foody_title_color', array(
+		'label'      => __( 'כותרות ראשיות', 'foody' ),
+		'section'    => 'colors',
+		'settings'   => 'foody_title_color',
+	) ) );
+
+	// Add color picker - subtitles
+	$wp_customize->add_setting( 'foody_subtitle_color' , array(
+		'transport'   => 'refresh',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'foody_subtitle_color', array(
+		'label'      => __( 'כותרות משניות', 'foody' ),
+		'section'    => 'colors',
+		'settings'   => 'foody_subtitle_color',
+	) ) );
+
+	// Add color picker - texts
+	$wp_customize->add_setting( 'foody_text_color' , array(
+		'transport'   => 'refresh',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'foody_text_color', array(
+		'label'      => __( 'טקסט רץ', 'foody' ),
+		'section'    => 'colors',
+		'settings'   => 'foody_text_color',
+	) ) );
+
+	// Add color picker - links
+	$wp_customize->add_setting( 'foody_links_color' , array(
+		'transport'   => 'refresh',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'foody_links_color', array(
+		'label'      => __( 'טקסט קישור', 'foody' ),
+		'section'    => 'colors',
+		'settings'   => 'foody_links_color',
+	) ) );
+
+	// Add color picker - hover links
+	$wp_customize->add_setting( 'foody_links_hover_color' , array(
+		'transport'   => 'refresh',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'foody_links_hover_color', array(
+		'label'      => __( 'טקסט קישור בריחוף', 'foody' ),
+		'section'    => 'colors',
+		'settings'   => 'foody_links_hover_color',
+	) ) );
 }
+
 add_action( 'customize_register', 'foody_customize_register' );
+
+function foody_sanitize_url( $url ) {
+	return esc_url_raw( $url );
+}
 
 /**
  * Render the site title for the selective refresh partial.
@@ -57,9 +136,19 @@ function foody_customize_partial_blogdescription() {
 }
 
 /**
+ * Render the site tagline for the selective refresh partial.
+ *
+ * @return void
+ */
+function foody_customize_partial_logo_link() {
+	bloginfo( 'logo_link' );
+}
+
+/**
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function foody_customize_preview_js() {
 	wp_enqueue_script( 'foody-customizer', get_template_directory_uri() . '/resources/js/customizer.js', array( 'customize-preview' ), '20151215', true );
 }
+
 add_action( 'customize_preview_init', 'foody_customize_preview_js' );
