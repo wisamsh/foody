@@ -12,7 +12,7 @@ function foody_debug_admin_actions()
 {
     if (is_multisite() && is_main_site()) {
         try {
-            new Foody_WhiteLabelDuplicatorTask();
+//            new Foody_WhiteLabelDuplicatorTask();
 //            function do_this_in_ten_seconds()
 //            {
 //                $max_execution_time = ini_get('max_execution_time');

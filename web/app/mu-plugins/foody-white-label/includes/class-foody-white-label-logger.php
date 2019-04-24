@@ -33,6 +33,14 @@ class Foody_WhiteLabelLogger
         }
     }
 
+    public static function exception(Exception $e)
+    {
+        $message = $e->getMessage();
+        $context = ['error' => $e];
+        self::error($message, $context);
+    }
+
+
     public static function error($message, $context = [])
     {
         $processed = false;

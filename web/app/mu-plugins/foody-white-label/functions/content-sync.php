@@ -30,11 +30,13 @@ function foody_show_sync_fields()
     ?>
     <fieldset disabled>
 
-    <?php
-    foody_get_template_part(PLUGIN_DIR . 'template-parts/content-sync.php',['wrap'=>'tr']);
-    ?>
+        <?php
+        foody_get_template_part(PLUGIN_DIR . 'template-parts/content-sync.php', ['wrap' => 'tr']);
+        ?>
 
     </fieldset>
     <?php
 
 }
+
+
