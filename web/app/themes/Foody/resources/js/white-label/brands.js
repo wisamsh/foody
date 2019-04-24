@@ -8,7 +8,7 @@ jQuery(document).ready(($) => {
 
     if ($slider.length) {
         // options loaded as data attribute.
-        // see template-parts/content-category-slider.php
+        // see template-parts/white-label/content-brands-slider.php
         $slider.slick();
     }
 

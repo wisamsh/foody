@@ -50,14 +50,6 @@ if ( is_array( $brands ) ):
 					'arrows'         => true,
 					'slidesToScroll' => 1
 				]
-			],
-			[
-				'breakpoint' => 415,
-				'settings'   => [
-					'slidesToShow'   => 1,
-					'arrows'         => true,
-					'slidesToScroll' => 1
-				]
 			]
 		]
 	];
@@ -69,7 +61,7 @@ if ( is_array( $brands ) ):
 
 		foreach ( $brands as $brand ): ?>
 
-            <li class="foody-slider-item brands-slider-item">
+            <li class="foody-slider-item brands-slider-item" title="<?php echo isset($brand['image']['title']) ? $brand['image']['title'] :''?>">
 				<?php if ( ! empty( $brand['link'] ) ) {
 					echo '<a href="' . $brand['link']['url'] . '" target="' . $brand['link']['target'] . '">';
 				} ?>

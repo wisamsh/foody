@@ -9,6 +9,7 @@
       width: 60%;
       padding-right: 20px;
       padding-top: 10px;
+
       .product-title {
         font-weight: bold;
       }
@@ -26,11 +27,29 @@
       vertical-align: bottom;
       width: 25%;
       margin-right: 14%;
-      padding: 13px 0;
+      padding: 10px 0;
       text-align: center;
       font-size: 1.1rem;
       font-weight: bold;
       border-radius: 3px;
+    }
+  }
+}
+
+@include breakpoint(mobileonly) {
+  .product-container {
+    .foody-product-item {
+      .product-content {
+        width: 100%;
+        display: block;
+        padding-right: 10px;
+      }
+
+      .product-link {
+        display: block;
+        margin: 10px auto 0;
+        width: 50%;
+      }
     }
   }
 }

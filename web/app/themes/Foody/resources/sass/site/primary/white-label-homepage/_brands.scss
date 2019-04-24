@@ -1,9 +1,8 @@
 .brands-slider {
   z-index: 0;
-  margin-left: 0;
-  padding: 1rem 3rem;
+  padding: 1rem 3rem 1rem 5rem;
   visibility: hidden;
-  height: 0;
+  height: 120px;
 
   &.slick-initialized {
     visibility: visible;
@@ -20,7 +19,7 @@
     right: -2rem;
     padding: 15px;
     z-index: 1;
-    top: 40px;
+    top: 15px;
     cursor: pointer;
 
     &:before {
@@ -46,36 +45,30 @@
     height: auto;
     align-items: center;
     justify-content: center;
-
-    //TODO: make border
-    &.slick-active:nth-child(1),
-    &.slick-active:nth-child(2) {
-
-      > div {
-        border-left: 2px solid #000;
-        padding-left: 4rem;
-      }
-    }
+    position: relative;
 
     .brands-slider-item {
 
-      div {
-        //filter: drop-shadow(2px 4px 2px rgba(0, 0, 0, 0.15));
-        padding-left: 5px;
-
-        img {
-          width: 100%;
-          clip-path: inset(0 round 4px);
-        }
+      img {
+        max-width: 200px;
+        width: 100%;
+        clip-path: inset(0 round 4px);
       }
 
-      .category-title {
-        font-size: 21px;
-        text-align: center;
-        font-weight: normal;
-        color: var(--color__text-primary-dark);
-      }
+    }
 
+    &[aria-hidden=false].slick-active > div:after {
+      content: "";
+      width: 2px;
+      height: 100%;
+      background-color: black;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    &[aria-hidden=false].slick-active:last-child > div:after {
+      width: 0;
     }
   }
 
@@ -85,14 +78,16 @@
 
   .brands-slider {
     margin-right: 15px;
-    padding: 0 0 20px 0;
+    margin-left: 10px;
+    padding: 20px 10px 20px 0;
+    height: 90px;
 
     .slick-list {
       padding: 0 0 0 30px;
     }
 
     i.slick-arrow {
-      top: 0;
+      top: 20px;
 
       &:before {
 
@@ -112,28 +107,17 @@
     }
 
     .slick-slide {
-      //TODO: make better border
-      &.slick-active:nth-child(1),
-      &.slick-active:nth-child(2) {
 
-        > div {
-          border-left: none;
-          padding-left: 0;
-        }
+      &[aria-hidden=false].slick-active > div:after {
+        width: 0;
       }
+
       .brands-slider-item {
+        vertical-align: middle;
 
-        div {
-
-          img {
-          }
-        }
-
-        .category-title {
-          font-size: 18px;
-          text-align: center;
-          font-weight: normal;
-          color: var(--color__text-primary-dark);
+        img {
+          max-width: 110px;
+          margin: 0 auto;
         }
 
       }
