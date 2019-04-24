@@ -84,6 +84,7 @@ function run_foody_white_label()
 
     $plugin = new Foody_White_Label();
     $plugin->run();
+//    Foody_WhiteLabelPostMapping::createTable();
 
 }
 

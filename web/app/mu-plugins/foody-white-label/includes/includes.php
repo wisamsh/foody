@@ -10,6 +10,7 @@ require_once plugin_dir_path(__FILE__) . '/class-wp-async-task.php';
 require_once plugin_dir_path(__FILE__) . '/class-foody-white-label-duplicator.php';
 require_once plugin_dir_path(__FILE__) . '/class-foody-white-label-duplicator-task.php';
 require_once plugin_dir_path(__FILE__) . '/class-foody-white-label-logger.php';
+require_once plugin_dir_path(__FILE__) . '/class-foody-white-label-post-mapping.php';
 
 require_once PLUGIN_DIR . 'foody-importer/foody-importer.php';
 require_once PLUGIN_DIR . 'foody-importer/foody-export.php';
