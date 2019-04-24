@@ -10,37 +10,40 @@
 
 /**
  * Wrap content with foody class
+ *
  * @param $content
+ *
  * @return mixed
  */
-function foody_content_filter($content)
-{
+function foody_content_filter( $content ) {
 
-    $content_class = 'foody-content';
+	$content_class = 'foody-content';
 
-    return '<div class="' . $content_class . '">' . $content . '</div>';
+	return '<div class="' . $content_class . '">' . $content . '</div>';
 
 }
 
-add_filter('the_content', 'foody_content_filter');
+add_filter( 'the_content', 'foody_content_filter' );
 
 
 /**
  * Remove fields from comment form
+ *
  * @param $fields
+ *
  * @return mixed
  */
-function foody_comment_form_fields($fields)
-{
-    if (is_user_logged_in()) {
-        $fields['email'] = '';  //remove default email input
-        $fields['author'] = '';//remove default author input
-    }
-    $fields['url'] = '';  //remove default url input
-    return $fields;
+function foody_comment_form_fields( $fields ) {
+	if ( is_user_logged_in() ) {
+		$fields['email']  = '';  //remove default email input
+		$fields['author'] = '';//remove default author input
+	}
+	$fields['url'] = '';  //remove default url input
+
+	return $fields;
 }
 
-add_filter('comment_form_default_fields', 'foody_comment_form_fields');
+add_filter( 'comment_form_default_fields', 'foody_comment_form_fields' );
 
 
 /**
@@ -49,24 +52,25 @@ add_filter('comment_form_default_fields', 'foody_comment_form_fields');
  * Used to make sure the relevant
  * post types are rendered with Foody's
  * custom templates.
+ *
  * @param $template
+ *
  * @return string
  */
-function default_page_template($template)
-{
-    if (is_singular(array('post', 'foody_recipe', 'foody_playlist'))) {
-        $default_template = locate_template(array('page-templates/content-with-sidebar.php'));
-        if ('' != $default_template) {
-            $template = $default_template;
-        }
-    }
+function default_page_template( $template ) {
+	if ( is_singular( array( 'post', 'foody_recipe', 'foody_playlist' ) ) ) {
+		$default_template = locate_template( array( 'page-templates/content-with-sidebar.php' ) );
+		if ( '' != $default_template ) {
+			$template = $default_template;
+		}
+	}
 
-    return $template;
+	return $template;
 }
 
-add_filter('template_include', 'default_page_template', 10);
+add_filter( 'template_include', 'default_page_template', 10 );
 
-add_filter('show_admin_bar', '__return_false');
+add_filter( 'show_admin_bar', '__return_false' );
 
 
 /*
@@ -80,43 +84,42 @@ add_filter('show_admin_bar', '__return_false');
  * usage: add_filter('foody_js_globals',function($vars))
  * where vars is an array.
  */
-function foody_js_globals()
-{
-    global $wp_session;
+function foody_js_globals() {
+	global $wp_session;
 
-    if (!is_admin()) {
-        // Hookable
-        $vars = apply_filters('foody_js_globals', []);
-        $vars['isMobile'] = wp_is_mobile();
-        $vars['ajax'] = admin_url('admin-ajax.php');
-        $vars['loggedIn'] = is_user_logged_in();
-        $vars['imagesUri'] = $GLOBALS['images_dir'];
-        $vars['messages'] = foody_js_messages();
+	if ( ! is_admin() ) {
+		// Hookable
+		$vars              = apply_filters( 'foody_js_globals', [] );
+		$vars['isMobile']  = wp_is_mobile();
+		$vars['ajax']      = admin_url( 'admin-ajax.php' );
+		$vars['loggedIn']  = is_user_logged_in();
+		$vars['imagesUri'] = $GLOBALS['images_dir'];
+		$vars['messages']  = foody_js_messages();
 
-        $vars['userRecipesCount'] = 0;
-        if (is_user_logged_in()) {
-            $vars['userRecipesCount'] = empty($wp_session['favorites']) ? 0 : count($wp_session['favorites']);
-            $vars['loggedInUser'] = wp_get_current_user()->ID;
-        }
+		$vars['userRecipesCount'] = 0;
+		if ( is_user_logged_in() ) {
+			$vars['userRecipesCount'] = empty( $wp_session['favorites'] ) ? 0 : count( $wp_session['favorites'] );
+			$vars['loggedInUser']     = wp_get_current_user()->ID;
+		}
 
-        $js = wp_json_encode($vars);
+		$js = wp_json_encode( $vars );
 
-        ?>
+		?>
         <script>
             foodyGlobals = <?php echo $js?>;
         </script>
 
-        <?php
-    }
+		<?php
+	}
 }
 
-function foody_js_messages()
-{
-    $messages = apply_filters('foody_js_messages', ['general' => []]);
-    return $messages;
+function foody_js_messages() {
+	$messages = apply_filters( 'foody_js_messages', [ 'general' => [] ] );
+
+	return $messages;
 }
 
-add_action('wp_head', 'foody_js_globals', -10000);
+add_action( 'wp_head', 'foody_js_globals', - 10000 );
 
 ///**
 // * Include posts from authors in the search results where
@@ -169,40 +172,74 @@ add_action('wp_head', 'foody_js_globals', -10000);
 /**
  * @param $tag
  * @param bool $priority
+ *
  * @return bool
  */
-function foody_remove_all_filters($tag, $priority = false)
-{
-    global $wp_filter;
+function foody_remove_all_filters( $tag, $priority = false ) {
+	global $wp_filter;
 
-    if (isset($wp_filter[$tag])) {
-        $wp_filter[$tag]->remove_all_filters($priority);
-        if (!$wp_filter[$tag]->has_filters()) {
-            unset($wp_filter[$tag]);
-        }
-    }
+	if ( isset( $wp_filter[ $tag ] ) ) {
+		$wp_filter[ $tag ]->remove_all_filters( $priority );
+		if ( ! $wp_filter[ $tag ]->has_filters() ) {
+			unset( $wp_filter[ $tag ] );
+		}
+	}
 
-    return true;
+	return true;
 }
 
 
-function foody_add_filters_by_condition($filters, $callback, $callback_args = [])
-{
+function foody_add_filters_by_condition( $filters, $callback, $callback_args = [] ) {
 
-    if (is_callable($callback)) {
-        $pass = call_user_func_array($callback, $callback_args);
-        if ($pass) {
-            foreach ($filters as $filter) {
+	if ( is_callable( $callback ) ) {
+		$pass = call_user_func_array( $callback, $callback_args );
+		if ( $pass ) {
+			foreach ( $filters as $filter ) {
 
-                if (!isset($filter['priority'])) {
-                    $filter['priority'] = 10;
-                }
-                if (!isset($filter['accepted_args'])) {
-                    $filter['accepted_args'] = 1;
-                }
+				if ( ! isset( $filter['priority'] ) ) {
+					$filter['priority'] = 10;
+				}
+				if ( ! isset( $filter['accepted_args'] ) ) {
+					$filter['accepted_args'] = 1;
+				}
 
-                add_filter($filter['tag'], $filter['callback'], $filter['priority'], $filter['accepted_args']);
-            }
-        }
-    }
+				add_filter( $filter['tag'], $filter['callback'], $filter['priority'], $filter['accepted_args'] );
+			}
+		}
+	}
 }
+
+
+function foody_custom_logo_link() {
+
+	$custom_logo_id = get_theme_mod( 'custom_logo' );
+    $site_url = get_home_url();
+    $custom_site_url = get_theme_mod('foody_logo_link');
+	if (isset($custom_site_url)) {
+	    $site_url = $custom_site_url;
+    }
+
+
+	if ( $custom_logo_id ) {
+		$custom_logo_attr = array(
+			'class'    => 'custom-logo',
+			'itemprop' => 'logo',
+		);
+
+		$image_alt = get_post_meta( $custom_logo_id, '_wp_attachment_image_alt', true );
+		if ( empty( $image_alt ) ) {
+			$custom_logo_attr['alt'] = get_bloginfo( 'name', 'display' );
+		}
+
+		$html = sprintf( '<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url">%2$s</a>',
+			esc_url( $site_url ),
+			wp_get_attachment_image( $custom_logo_id, 'full', false, $custom_logo_attr )
+		);
+
+	}
+
+	// Return
+	return $html;
+}
+
+add_filter( 'get_custom_logo', 'foody_custom_logo_link' );
