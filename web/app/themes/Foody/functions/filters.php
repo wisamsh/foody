@@ -219,7 +219,7 @@ function foody_custom_logo_link() {
 	    $site_url = $custom_site_url;
     }
 
-
+    $html = "";
 	if ( $custom_logo_id ) {
 		$custom_logo_attr = array(
 			'class'    => 'custom-logo',
