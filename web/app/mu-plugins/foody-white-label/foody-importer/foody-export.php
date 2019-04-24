@@ -74,12 +74,20 @@ function export_import_foody_wp($newBlogId)
      */
     if (!empty($export_file)) {
         try {
-            switch_to_blog($newBlogId);
+//            switch_to_blog($newBlogId);
+//
+//            $importer = new Foody_Import();
+//            $importer->import($export_file);
 
-            $importer = new Foody_Import();
-            $importer->import($export_file);
+            $url = get_site_url($newBlogId);
+            $url = str_replace('http://','',$url);
+            $url = str_replace('https://','',$url);
+            // > /dev/null &
+            $result = exec("wp import $export_file --authors='skip' --url='$url' ");
 
-            restore_current_blog();
+            Foody_WhiteLabelLogger::info("wp import command finished",['result'=>$result]);
+
+//            restore_current_blog();
         } catch (Exception $e) {
             Foody_WhiteLabelLogger::info("error exporting to $export_file", ['error' => $e]);
         }
