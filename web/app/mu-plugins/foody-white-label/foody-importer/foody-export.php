@@ -74,20 +74,21 @@ function export_import_foody_wp($newBlogId)
      */
     if (!empty($export_file)) {
         try {
-//            switch_to_blog($newBlogId);
-//
-//            $importer = new Foody_Import();
-//            $importer->import($export_file);
 
-            $url = get_site_url($newBlogId);
-            $url = str_replace('http://','',$url);
-            $url = str_replace('https://','',$url);
-            // > /dev/null &
-            $result = exec("wp import $export_file --authors='skip' --url='$url' ");
+            // get site url for new blog
+            switch_to_blog($newBlogId);
+            $url = get_option('siteurl');
+            restore_current_blog();
+
+            // use wp cli to import the created export file
+            $cmd = "wp import $export_file --url=\"$url\" --authors=\"skip\" "; // add this to run in background: > /dev/null &
+
+            Foody_WhiteLabelLogger::info("starting wp import with command: $cmd");
+
+            $result = exec($cmd);
 
             Foody_WhiteLabelLogger::info("wp import command finished",['result'=>$result]);
 
-//            restore_current_blog();
         } catch (Exception $e) {
             Foody_WhiteLabelLogger::info("error exporting to $export_file", ['error' => $e]);
         }

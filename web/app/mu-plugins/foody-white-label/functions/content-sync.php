@@ -23,3 +23,20 @@ function foody_show_sync_meta_box()
 {
     foody_get_template_part(PLUGIN_DIR . 'template-parts/content-sync.php');
 }
+
+add_action('edit_category_form_fields', 'foody_show_sync_fields');
+function foody_show_sync_fields()
+{
+    ?>
+    <fieldset disabled>
+
+        <?php
+        foody_get_template_part(PLUGIN_DIR . 'template-parts/content-sync.php', ['wrap' => 'tr']);
+        ?>
+
+    </fieldset>
+    <?php
+
+}
+
+
