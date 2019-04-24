@@ -62,6 +62,7 @@ require('./layout');
  * */
 
 require('./homepage');
+require('./white-label');
 
 require('./team');
 
