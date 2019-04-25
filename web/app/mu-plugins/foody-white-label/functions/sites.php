@@ -85,3 +85,12 @@ function foody_profile_update_action( $user_id ) {
 }
 
 //if (get_user_meta($current_user->ID, 'pass_data_' . $site->id, true)) {
+
+
+function foody_is_registration_open() {
+    if (is_multisite()) {
+	    return get_option( 'nsur_join_site_enabled' );
+    } else {
+        return get_option( 'users_can_register' );
+    }
+}

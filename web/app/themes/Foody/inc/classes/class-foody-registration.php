@@ -100,7 +100,7 @@ class Foody_Registration
         if ('POST' == $_SERVER['REQUEST_METHOD']) {
             $redirect_url = home_url('הרשמה');
 
-            if (!get_option('users_can_register')) {
+            if (!foody_is_registration_open()) {
                 // Registration closed, display error
                 $redirect_url = add_query_arg('register-errors', 'closed', $redirect_url);
             } elseif (!$this->verify_recaptcha()) {
