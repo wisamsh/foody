@@ -130,8 +130,11 @@ class Foody_White_Label_Loader
             add_action($hook['hook'], array($hook['component'], $hook['callback']), $hook['priority'], $hook['accepted_args']);
         }
 
-        require_once PLUGIN_DIR . 'functions/includes.php';
         require_once PLUGIN_DIR . 'includes/includes.php';
+        require_once PLUGIN_DIR . 'functions/includes.php';
+
+
+        Foody_WhiteLabelPostMapping::createTable();
     }
 
 }
