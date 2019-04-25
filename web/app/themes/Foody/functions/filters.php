@@ -212,14 +212,14 @@ function foody_add_filters_by_condition( $filters, $callback, $callback_args = [
 
 function foody_custom_logo_link() {
 
-	$custom_logo_id = get_theme_mod( 'custom_logo' );
-    $site_url = get_home_url();
-    $custom_site_url = get_theme_mod('foody_logo_link');
-	if (isset($custom_site_url)) {
-	    $site_url = $custom_site_url;
-    }
+	$custom_logo_id  = get_theme_mod( 'custom_logo' );
+	$site_url        = get_home_url();
+	$custom_site_url = get_theme_mod( 'foody_logo_link' );
+	if ( isset( $custom_site_url ) && ! empty( $custom_site_url ) ) {
+		$site_url = $custom_site_url;
+	}
 
-    $html = "";
+	$html = "";
 	if ( $custom_logo_id ) {
 		$custom_logo_attr = array(
 			'class'    => 'custom-logo',
