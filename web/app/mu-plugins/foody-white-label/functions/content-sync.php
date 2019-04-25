@@ -60,10 +60,17 @@ if (is_main_site()) {
         }
 
 
-
     }
 
     add_action('save_post', 'foody_update_post_in_sites');
+}
+
+if (is_main_site()) {
+    try {
+        new Foody_WhiteLabelTermDuplicatorTask();
+    } catch (Exception $e) {
+        Foody_WhiteLabelLogger::exception($e);
+    }
 }
 
 

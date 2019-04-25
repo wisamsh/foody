@@ -26,7 +26,9 @@ function export_import_foody_wp($newBlogId)
 
     // Add more types if relevant
     $post_types = [
-        'foody_ingredient'
+        'foody_ingredient',
+        'foody_technique',
+        'foody_accessory'
     ];
 
     $esses = array_fill(0, count($post_types), '%s');
