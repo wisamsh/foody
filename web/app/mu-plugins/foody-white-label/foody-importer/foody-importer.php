@@ -15,6 +15,7 @@ define('FOODY_IMPORT_DEBUG', defined('WP_DEBUG') && WP_DEBUG);
 
 // Load Importer API
 require_once ABSPATH . 'wp-admin/includes/import.php';
+require_once PLUGIN_DIR . 'foody-importer/functions.php';
 
 if (!class_exists('WP_Importer')) {
     $class_wp_importer = ABSPATH . 'wp-admin/includes/class-wp-importer.php';
@@ -341,7 +342,7 @@ if (class_exists('WP_Importer')) {
         {
 //            $this->posts = apply_filters('wp_import_posts', $this->posts);
 
-            while (($post = array_shift($this->posts))){
+            while (($post = array_shift($this->posts))) {
                 $post = apply_filters('wp_import_post_data_raw', $post);
 
                 if (!post_type_exists($post['post_type'])) {
@@ -499,6 +500,7 @@ if (class_exists('WP_Importer')) {
                             if (!$value)
                                 $value = maybe_unserialize($meta['value']);
 
+                            $value = apply_filters('foody_import_post_meta_value', $post_id, $key, $value, get_current_blog_id());
                             add_post_meta($post_id, $key, $value);
                             do_action('import_post_meta', $post_id, $key, $value);
                         }

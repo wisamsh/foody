@@ -539,6 +539,8 @@ class Foody_Recipe extends Foody_Post {
 						if ( $ingredient_post && $ingredient_post instanceof WP_Post ) {
 							$ingredient = new Foody_Ingredient( $ingredient_post );
 
+							$ingredient->comment = get_sub_field( 'comment' );
+
 							$ingredient->amounts = $amounts;
 
 							$this->ingredients_groups[ $current_group ]['ingredients'][] = $ingredient;
@@ -676,13 +678,13 @@ class Foody_Recipe extends Foody_Post {
 
 
 		$excluded_nutrients = [
-			'fibers',
-			'saturated_fat',
-			'cholesterol',
-			'calcium',
-			'iron',
-			'potassium',
-			'zinc',
+//			'fibers',
+//			'saturated_fat',
+//			'cholesterol',
+//			'calcium',
+//			'iron',
+//			'potassium',
+//			'zinc',
 			'sugar'
 		];
 
@@ -702,7 +704,7 @@ class Foody_Recipe extends Foody_Post {
 				}
 				$item['data_name'] = $nutrients_name;
 				$item['unit']      = Foody_Ingredient::get_nutrient_unit( $nutrients_name );
-				$decimals          = 0;
+				$decimals          = 1;
 				if ( $nutrients_name == 'protein' ) {
 					$decimals = 1;
 				}

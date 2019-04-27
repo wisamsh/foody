@@ -1,0 +1,21 @@
+.edit-tags-php {
+  &.taxonomy-category,
+  &.taxonomy-post_tag {
+    #col-container {
+      &.wp-clearfix {
+        display: flex;
+        flex-direction: column-reverse;
+
+        #col-left {
+          float: right;
+          width: 90%;
+        }
+
+        #col-right {
+          float: left;
+          width: 100%;
+        }
+      }
+    }
+  }
+}

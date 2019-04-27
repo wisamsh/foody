@@ -13,17 +13,8 @@ jQuery(document).ready(($) => {
         let $comment = $('#comment', $parent);
 
 
-
-
-
-        $comment.on('focusin',function (e) {
-            if (foodyGlobals.loggedIn) {
-                $parent.add($commentForm).addClass('open');
-            } else {
-                e.preventDefault();
-                showLoginModal();
-            }
-
+        $comment.on('focusin', function (e) {
+            $parent.add($commentForm).addClass('open');
         });
 
         // $comment.on('focusout',function () {

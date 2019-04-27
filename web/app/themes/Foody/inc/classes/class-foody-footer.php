@@ -172,6 +172,39 @@ class Foody_Footer
 
     }
 
+    public function add_nagish_li_script()
+    {
+	    ?>
+        <script>(function (document, tag) {
+                var script = document.createElement(tag);
+                var element = document.getElementsByTagName('body')[0];
+                script.src = 'https://accessibeapp.com/api/v1/assets/js/accessibe.js';
+                script.async = true;
+                script.defer = true;
+                (typeof element === 'undefined' ? document.getElementsByTagName('html')[0] : element).appendChild(script);
+                script.onload = function () {
+                    AccessiBe.init({
+                        clientId: 1105,
+                        clientKey: 'CTr7CLASmMyt02TnLnNs',
+                        wlbl: 'Nagishly',
+                        statementLink: '',
+                        feedbackLink: '',
+                        showAllActions: false,
+                        keyNavStrong: false,
+                        hideMobile: true,
+                        hideTrigger: true,
+                        language: 'he',
+                        focusInnerColor: '#ed3d48',
+                        focusOuterColor: '#ff7216',
+                        leadColor: '#ed3d48',
+                        triggerColor: '#ed3d48',
+                        usefulLinks: {},
+                    });
+                };
+            }(document, 'script'));
+            </script>
+	    <?php
+    }
 
     private function display_menu_item($url, $title, $target = '', $classes = '')
     {

@@ -56,6 +56,7 @@ define('WP_SITEURL', env('WP_SITEURL'));
  * Custom Content Directory
  */
 define('CONTENT_DIR', '/app');
+define('WEB_ROOT', $webroot_dir);
 define('WP_CONTENT_DIR', $webroot_dir . CONTENT_DIR);
 define('WP_CONTENT_URL', WP_HOME . CONTENT_DIR);
 

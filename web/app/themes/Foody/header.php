@@ -63,7 +63,7 @@ if (!empty($background_image)) {
                 </span>
 
                 <?php if (!wp_is_mobile()): ?>
-                    <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility">
+                    <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility" data-accessibe="trigger">
                         <?php $header->accessibility(); ?>
                         <div id="accessibility-container"></div>
                     </button>
@@ -98,7 +98,7 @@ if (!empty($background_image)) {
                 </button>
 
 
-                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">
+                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility" data-accessibe="trigger">
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
                          alt="<?php echo __('נגישות') ?>">
                     <div id="accessibility-container"></div>

@@ -88,12 +88,9 @@ add_action('wp', function () {
         $errors = foody_form_validation($required);
 
         if (!empty($errors)) {
-            var_dump($errors);
-
         } else {
             if (!is_user_logged_in()) {
                 $error = ['message' => "unauthorized"];
-                var_dump($error);
             } else {
                 $user = wp_get_current_user();
 
@@ -127,7 +124,6 @@ add_action('wp', function () {
                     $error = [
                         'message' => 'invalid password'
                     ];
-                    var_dump($error);
                 }
             }
         }

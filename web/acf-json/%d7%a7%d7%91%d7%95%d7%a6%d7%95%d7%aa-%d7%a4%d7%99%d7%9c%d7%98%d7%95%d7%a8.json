@@ -1,0 +1,784 @@
+[
+    {
+        "ID": false,
+        "key": "group_5bb093bc3edbd",
+        "title": "קבוצות פילטור",
+        "fields": [
+            {
+                "key": "field_5bb09557fb073",
+                "label": "כותרת",
+                "name": "title",
+                "type": "text",
+                "instructions": "כותרת ראשית לווידג׳ט הסינון. לדוגמא ״סינון״.\r\nלא להתבלבל עם כותרת של רשימה בתוך הווידג׳ט כמו ״מטבח״",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "סינון",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_5bb0957bfb074",
+                "label": "רשימת פילטור",
+                "name": "filters_list",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": 0,
+                "max": 0,
+                "layout": "block",
+                "button_label": "",
+                "sub_fields": [
+                    {
+                        "key": "field_5bb095abfb075",
+                        "label": "כותרת",
+                        "name": "title",
+                        "type": "text",
+                        "instructions": "לדוגמה: מטבח",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_5bb095ecfb077",
+                        "label": "סוג רשימה",
+                        "name": "type",
+                        "type": "select",
+                        "instructions": "בחר סוג פילטור (קטגוריה, תגית, מצרך וכו׳)",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "choices": {
+                            "categories": "קטגוריות",
+                            "ingredients": "מצרכים",
+                            "accessories": "אביזרים",
+                            "techniques": "טכניקות",
+                            "tags": "תגיות",
+                            "limitations": "מגבלות",
+                            "authors": "יוצרים"
+                        },
+                        "default_value": [],
+                        "allow_null": 1,
+                        "multiple": 0,
+                        "ui": 0,
+                        "ajax": 0,
+                        "return_format": "value",
+                        "placeholder": ""
+                    },
+                    {
+                        "key": "field_5bb095d6fb076",
+                        "label": "ערכים",
+                        "name": "values",
+                        "type": "repeater",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "collapsed": "",
+                        "min": 0,
+                        "max": 0,
+                        "layout": "table",
+                        "button_label": "",
+                        "sub_fields": [
+                            {
+                                "key": "field_5bb097d2c6724",
+                                "label": "כותרת",
+                                "name": "title",
+                                "type": "text",
+                                "instructions": "כותרת אופציונלית. במידה ושדה זה לא מוזן הכותרת תילקח מהאובייקט הנבחר.",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "maxlength": ""
+                            },
+                            {
+                                "key": "field_5bb09644fb079",
+                                "label": "קטגוריה",
+                                "name": "value",
+                                "type": "taxonomy",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_5bb095ecfb077",
+                                            "operator": "==",
+                                            "value": "categories"
+                                        },
+                                        {
+                                            "field": "field_5bb0bdc898232",
+                                            "operator": "!=",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "taxonomy": "category",
+                                "field_type": "select",
+                                "allow_null": 0,
+                                "add_term": 1,
+                                "save_terms": 0,
+                                "load_terms": 0,
+                                "return_format": "id",
+                                "multiple": 0
+                            },
+                            {
+                                "key": "field_5bb0967b8d4f5",
+                                "label": "מצרך",
+                                "name": "value",
+                                "type": "post_object",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_5bb095ecfb077",
+                                            "operator": "==",
+                                            "value": "ingredients"
+                                        },
+                                        {
+                                            "field": "field_5bb0bdc898232",
+                                            "operator": "!=",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "post_type": [
+                                    "foody_ingredient"
+                                ],
+                                "taxonomy": [],
+                                "allow_null": 0,
+                                "multiple": 0,
+                                "return_format": "id",
+                                "ui": 1
+                            },
+                            {
+                                "key": "field_5bb096f715682",
+                                "label": "טכניקה",
+                                "name": "value",
+                                "type": "post_object",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_5bb095ecfb077",
+                                            "operator": "==",
+                                            "value": "techniques"
+                                        },
+                                        {
+                                            "field": "field_5bb0bdc898232",
+                                            "operator": "!=",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "post_type": [
+                                    "foody_technique"
+                                ],
+                                "taxonomy": [],
+                                "allow_null": 0,
+                                "multiple": 0,
+                                "return_format": "object",
+                                "ui": 1
+                            },
+                            {
+                                "key": "field_5bb0972f15683",
+                                "label": "אביזר",
+                                "name": "value",
+                                "type": "post_object",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_5bb095ecfb077",
+                                            "operator": "==",
+                                            "value": "accessories"
+                                        },
+                                        {
+                                            "field": "field_5bb0bdc898232",
+                                            "operator": "!=",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "post_type": [
+                                    "foody_accessory"
+                                ],
+                                "taxonomy": [],
+                                "allow_null": 0,
+                                "multiple": 0,
+                                "return_format": "object",
+                                "ui": 1
+                            },
+                            {
+                                "key": "field_5bb0975315684",
+                                "label": "מגבלה",
+                                "name": "value",
+                                "type": "taxonomy",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_5bb095ecfb077",
+                                            "operator": "==",
+                                            "value": "limitations"
+                                        },
+                                        {
+                                            "field": "field_5bb0bdc898232",
+                                            "operator": "!=",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "taxonomy": "limitations",
+                                "field_type": "select",
+                                "allow_null": 0,
+                                "add_term": 1,
+                                "save_terms": 0,
+                                "load_terms": 0,
+                                "return_format": "id",
+                                "multiple": 0
+                            },
+                            {
+                                "key": "field_5bb0979015685",
+                                "label": "תגית",
+                                "name": "value",
+                                "type": "taxonomy",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_5bb095ecfb077",
+                                            "operator": "==",
+                                            "value": "tags"
+                                        },
+                                        {
+                                            "field": "field_5bb0bdc898232",
+                                            "operator": "!=",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "taxonomy": "post_tag",
+                                "field_type": "select",
+                                "allow_null": 0,
+                                "add_term": 1,
+                                "save_terms": 0,
+                                "load_terms": 0,
+                                "return_format": "id",
+                                "multiple": 0
+                            },
+                            {
+                                "key": "field_5bb09835c6725",
+                                "label": "שלילה מהחיפוש",
+                                "name": "exclude",
+                                "type": "true_false",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "message": "",
+                                "default_value": 0,
+                                "ui": 0,
+                                "ui_on_text": "",
+                                "ui_off_text": ""
+                            },
+                            {
+                                "key": "field_5bb0b6f26b186",
+                                "label": "ערך",
+                                "name": "value_group",
+                                "type": "group",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_5bb0bdc898232",
+                                            "operator": "==",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "layout": "row",
+                                "sub_fields": [
+                                    {
+                                        "key": "field_5bb0b8516b188",
+                                        "label": "סוג אייטם",
+                                        "name": "type",
+                                        "type": "select",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": 0,
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "choices": {
+                                            "categories": "קטגוריות",
+                                            "ingredients": "מצרכים",
+                                            "accessories": "אביזרים",
+                                            "techniques": "טכניקות",
+                                            "tags": "תגיות",
+                                            "limitations": "מגבלות",
+                                            "authors": "יוצרים"
+                                        },
+                                        "default_value": [],
+                                        "allow_null": 1,
+                                        "multiple": 0,
+                                        "ui": 0,
+                                        "ajax": 0,
+                                        "return_format": "value",
+                                        "placeholder": ""
+                                    },
+                                    {
+                                        "key": "field_5bb0b70b6b187",
+                                        "label": "קטגוריה",
+                                        "name": "value",
+                                        "type": "taxonomy",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": [
+                                            [
+                                                {
+                                                    "field": "field_5bb0b8516b188",
+                                                    "operator": "==",
+                                                    "value": "categories"
+                                                }
+                                            ]
+                                        ],
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "taxonomy": "category",
+                                        "field_type": "select",
+                                        "allow_null": 0,
+                                        "add_term": 1,
+                                        "save_terms": 0,
+                                        "load_terms": 0,
+                                        "return_format": "id",
+                                        "multiple": 0
+                                    },
+                                    {
+                                        "key": "field_5bb0b8bb6b189",
+                                        "label": "מצרך",
+                                        "name": "value",
+                                        "type": "post_object",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": [
+                                            [
+                                                {
+                                                    "field": "field_5bb0b8516b188",
+                                                    "operator": "==",
+                                                    "value": "ingredients"
+                                                },
+                                                {
+                                                    "field": "field_5bb0bdc898232",
+                                                    "operator": "==",
+                                                    "value": "1"
+                                                }
+                                            ]
+                                        ],
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "post_type": [
+                                            "foody_ingredient"
+                                        ],
+                                        "taxonomy": [],
+                                        "allow_null": 0,
+                                        "multiple": 0,
+                                        "return_format": "id",
+                                        "ui": 1
+                                    },
+                                    {
+                                        "key": "field_5bb0ce285748a",
+                                        "label": "אביזר",
+                                        "name": "value",
+                                        "type": "post_object",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": [
+                                            [
+                                                {
+                                                    "field": "field_5bb0b8516b188",
+                                                    "operator": "==",
+                                                    "value": "accessories"
+                                                },
+                                                {
+                                                    "field": "field_5bb0bdc898232",
+                                                    "operator": "==",
+                                                    "value": "1"
+                                                }
+                                            ]
+                                        ],
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "post_type": [
+                                            "foody_accessory"
+                                        ],
+                                        "taxonomy": [],
+                                        "allow_null": 0,
+                                        "multiple": 0,
+                                        "return_format": "id",
+                                        "ui": 1
+                                    },
+                                    {
+                                        "key": "field_5bb0ce725748b",
+                                        "label": "טכניקה",
+                                        "name": "value",
+                                        "type": "post_object",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": [
+                                            [
+                                                {
+                                                    "field": "field_5bb0b8516b188",
+                                                    "operator": "==",
+                                                    "value": "techniques"
+                                                },
+                                                {
+                                                    "field": "field_5bb0bdc898232",
+                                                    "operator": "==",
+                                                    "value": "1"
+                                                }
+                                            ]
+                                        ],
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "post_type": [
+                                            "foody_technique"
+                                        ],
+                                        "taxonomy": [],
+                                        "allow_null": 0,
+                                        "multiple": 0,
+                                        "return_format": "id",
+                                        "ui": 1
+                                    },
+                                    {
+                                        "key": "field_5bb0ce925748c",
+                                        "label": "תגית",
+                                        "name": "value",
+                                        "type": "taxonomy",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": [
+                                            [
+                                                {
+                                                    "field": "field_5bb0b8516b188",
+                                                    "operator": "==",
+                                                    "value": "tags"
+                                                },
+                                                {
+                                                    "field": "field_5bb0bdc898232",
+                                                    "operator": "==",
+                                                    "value": "1"
+                                                }
+                                            ]
+                                        ],
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "taxonomy": "post_tag",
+                                        "field_type": "select",
+                                        "allow_null": 0,
+                                        "add_term": 1,
+                                        "save_terms": 0,
+                                        "load_terms": 0,
+                                        "return_format": "id",
+                                        "multiple": 0
+                                    },
+                                    {
+                                        "key": "field_5bb0cf2c5748d",
+                                        "label": "מגבלה",
+                                        "name": "value",
+                                        "type": "taxonomy",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": [
+                                            [
+                                                {
+                                                    "field": "field_5bb0b8516b188",
+                                                    "operator": "==",
+                                                    "value": "limitations"
+                                                },
+                                                {
+                                                    "field": "field_5bb0bdc898232",
+                                                    "operator": "==",
+                                                    "value": "1"
+                                                }
+                                            ]
+                                        ],
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "taxonomy": "limitations",
+                                        "field_type": "select",
+                                        "allow_null": 0,
+                                        "add_term": 1,
+                                        "save_terms": 0,
+                                        "load_terms": 0,
+                                        "return_format": "id",
+                                        "multiple": 0
+                                    },
+                                    {
+                                        "key": "field_5bbb77bf14b29",
+                                        "label": "יוצר",
+                                        "name": "value",
+                                        "type": "user",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": [
+                                            [
+                                                {
+                                                    "field": "field_5bb0b8516b188",
+                                                    "operator": "==",
+                                                    "value": "authors"
+                                                },
+                                                {
+                                                    "field": "field_5bb0bdc898232",
+                                                    "operator": "==",
+                                                    "value": "1"
+                                                }
+                                            ]
+                                        ],
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "role": [
+                                            "author"
+                                        ],
+                                        "allow_null": 0,
+                                        "multiple": 0,
+                                        "return_format": "id"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "field_5bb0bdc898232",
+                                "label": "החלף סוג",
+                                "name": "switch_type",
+                                "type": "true_false",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "message": "",
+                                "default_value": 0,
+                                "ui": 0,
+                                "ui_on_text": "",
+                                "ui_off_text": ""
+                            },
+                            {
+                                "key": "field_5bbb76fb14b24",
+                                "label": "יוצר",
+                                "name": "value",
+                                "type": "user",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_5bb095ecfb077",
+                                            "operator": "==",
+                                            "value": "authors"
+                                        },
+                                        {
+                                            "field": "field_5bb0bdc898232",
+                                            "operator": "!=",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "role": [
+                                    "author"
+                                ],
+                                "allow_null": 0,
+                                "multiple": 0,
+                                "return_format": "id"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "field_5bb09871c6726",
+                        "label": "שלילה מהחיפוש (כל הרשימה)",
+                        "name": "exclude_all",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 0,
+                        "ui": 0,
+                        "ui_on_text": "",
+                        "ui_off_text": ""
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "options_page",
+                    "operator": "==",
+                    "value": "foody-search-options.php"
+                }
+            ],
+            [
+                {
+                    "param": "taxonomy",
+                    "operator": "==",
+                    "value": "category"
+                }
+            ],
+            [
+                {
+                    "param": "user_form",
+                    "operator": "==",
+                    "value": "edit"
+                }
+            ],
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "foody_channel"
+                }
+            ],
+            [
+                {
+                    "param": "taxonomy",
+                    "operator": "==",
+                    "value": "post_tag"
+                }
+            ],
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "foody_filter"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": "",
+        "_valid": 1
+    }
+]

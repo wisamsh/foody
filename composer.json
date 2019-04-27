@@ -205,6 +205,18 @@
           "url": "https://downloads.wordpress.org/plugin/wordpress-importer.0.6.4.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "hoppinger/advanced-custom-fields-wpcli",
+        "version": "3.0",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/hoppinger/advanced-custom-fields-wpcli/archive/master.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -238,7 +250,8 @@
     "delicious-brains-inc/wp-ses": "^0.8.2",
     "wordpressdotorg/wordpress-importer": "^0.6.4",
     "ext-curl": "*",
-    "monolog/monolog": "^1.24"
+    "monolog/monolog": "^1.24",
+    "hoppinger/advanced-custom-fields-wpcli": "^3.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

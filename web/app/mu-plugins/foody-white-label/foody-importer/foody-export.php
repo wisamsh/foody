@@ -84,12 +84,12 @@ function export_import_foody_wp($newBlogId)
 
             // use wp cli to import the created export file
             $cmd = "wp import $export_file --url=\"$url\" --authors=\"skip\" "; // add this to run in background: > /dev/null &
-
-            Foody_WhiteLabelLogger::info("starting wp import with command: $cmd");
+            $cmd = "wp foody import $export_file --url=\"$url\"";
+            Foody_WhiteLabelLogger::info("starting wp foody import with command: $cmd");
 
             $result = exec($cmd);
 
-            Foody_WhiteLabelLogger::info("wp import command finished",['result'=>$result]);
+            Foody_WhiteLabelLogger::info("wp foody import command finished",['result'=>$result]);
 
         } catch (Exception $e) {
             Foody_WhiteLabelLogger::info("error exporting to $export_file", ['error' => $e]);

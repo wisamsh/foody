@@ -155,6 +155,10 @@ class Foody_HomePage
                     $foody_post->setImage($row['image']['url']);
                 }
 
+                if (!empty($row['title'])) {
+                    $foody_post->setTitle($row['title']);
+                }
+
                 if (!empty($row['secondary_text'])) {
                     $foody_post->setDescription($row['secondary_text']);
                     $foody_post->description_mobile = $row['secondary_text'];
@@ -163,7 +167,6 @@ class Foody_HomePage
                 if (!empty($row['secondary_text_mobile'])) {
                     $foody_post->description_mobile = $row['secondary_text_mobile'];
                 }
-
 
                 if (!empty($row['link'])) {
                     $foody_post->link = $row['link']['url'];

@@ -50,7 +50,7 @@ module.exports = function (selector, youtubeId) {
     let options = foodyGlobals.isMobile ? videoSizes.mobile : videoSizes.desktop;
 
     options = _.extend(defaultOptions, options);
-    player = YouTubePlayer($(selector)[0], options);
+    player = YouTubePlayer(jQuery(selector)[0], JSON.parse(JSON.stringify(options)));
 
     // 'cueVideoById' is queued until the player is ready to receive API calls.
     player.cueVideoById(youtubeId);

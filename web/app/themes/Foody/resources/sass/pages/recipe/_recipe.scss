@@ -256,6 +256,49 @@ $content-width: 95%;
       }
     }
 
+    .recipe-shortcode-container {
+      border: solid 2px #979797;
+      border-radius: 7px;
+
+      .details-container {
+        padding-top: 0;
+        opacity: 0.7;
+        pointer-events: none;
+        > img {
+          width: 100%;
+        }
+        .featured-content-container {
+          &.video-featured-content {
+            margin: 0;
+          }
+        }
+        .details.container {
+          padding-top: 10px;
+          .recipe-title {
+            margin-bottom: 5px;
+            font-weight: 900;
+            line-height: 1.03;
+            font-size: 2rem;
+            text-align: right;
+          }
+          .recipe-details {
+            .content-details-bullets-container {
+              align-items: unset;
+            }
+          }
+        }
+      }
+
+      .shortcode-recipe-link {
+        font-size: 1.5rem;
+        font-weight: 800;
+        text-align: center;
+        color: $color__primary;
+        padding-top: 7px;
+        padding-bottom: 10px;
+      }
+    }
+
     .purchase-buttons {
       display: inline-flex;
       padding: 0;
@@ -410,6 +453,23 @@ $content-width: 95%;
             span {
               &.amount {
                 display: inline-block;
+              }
+            }
+          }
+          .ingredients-group-list {
+            .ingredients {
+              .ingredient-container {
+                display: inline-block;
+
+                .ingredient-data {
+                  display: inline-block;
+                  vertical-align: top;
+
+                  .comment {
+                    font-size: 15px;
+                    color: $color__primary;
+                  }
+                }
               }
             }
           }
@@ -953,6 +1013,9 @@ $content-width: 95%;
 
     }
 
+    .footab-container {
+      padding: 0 15px;
+    }
   }
 }
 
@@ -1163,6 +1226,13 @@ $content-width: 95%;
 
         .social {
           justify-content: space-between;
+        }
+      }
+
+      .recipe-shortcode-container {
+
+        .shortcode-recipe-link {
+          font-size: 20px;
         }
       }
 
@@ -1638,6 +1708,11 @@ $content-width: 95%;
         }
       }
 
+      .footab-container {
+        padding: 0;
+        width: calc(100% - 20px);
+        margin: 0 auto;
+      }
     }
 
     aside {

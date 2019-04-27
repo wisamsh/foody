@@ -68,10 +68,8 @@ if (is_main_site()) {
 if (is_main_site()) {
     try {
         new Foody_WhiteLabelTermDuplicatorTask();
+        new Foody_WhiteLabelAuthorDuplicatorTask();
     } catch (Exception $e) {
         Foody_WhiteLabelLogger::exception($e);
     }
 }
-
-
-

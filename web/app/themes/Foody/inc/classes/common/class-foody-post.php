@@ -657,16 +657,17 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                         $query = explode('&', $parts[1]);
                         $video_id = $query[0];
                         $args = array(
-                            'id' => $video_id
+                            'id' => $video_id,
+	                        'post_id' => $this->id
                         );
                         foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
                     } else {
-                        the_post_thumbnail('foody-main');
+	                    echo get_the_post_thumbnail($this->id, 'foody-main');
                     }
 
                 endwhile;
             } else {
-                the_post_thumbnail('foody-main');
+            	echo get_the_post_thumbnail($this->id, 'foody-main');
             }
         }
     }
