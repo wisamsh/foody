@@ -19,7 +19,7 @@ class Foody_WhiteLabelDuplicator
      */
     private function __construct()
     {
-        require_once PLUGIN_DIR .'foody-importer/functions.php';
+        require_once PLUGIN_DIR . 'foody-importer/functions.php';
     }
 
     public static function getInstance()
@@ -30,6 +30,11 @@ class Foody_WhiteLabelDuplicator
         return self::$instance;
     }
 
+    /**
+     * Called when a new blog is created.
+     * Duplicates core data to the new site.
+     * @param $newBlogId
+     */
     public static function whiteLabelCreate($newBlogId)
     {
         Foody_WhiteLabelLogger::info('start export import');
@@ -41,6 +46,12 @@ class Foody_WhiteLabelDuplicator
     }
 
 
+    /**
+     * Duplicate posts by category
+     * @param $categoryId
+     * @param $blogId
+     * @return array
+     */
     public static function duplicateCategory($categoryId, $blogId)
     {
         $args = self::getArgs([
@@ -52,6 +63,12 @@ class Foody_WhiteLabelDuplicator
         return self::duplicateByQuery($args, $blogId, $duplicationArgs);
     }
 
+    /**
+     * Duplicate author's posts
+     * @param $authorId
+     * @param $blogId
+     * @return array
+     */
     public static function duplicateAuthor($authorId, $blogId)
     {
         $args = self::getArgs([
@@ -62,6 +79,12 @@ class Foody_WhiteLabelDuplicator
     }
 
 
+    /**
+     * Duplicate posts by tag
+     * @param $tagId
+     * @param $blogId
+     * @return array
+     */
     public static function duplicateTag($tagId, $blogId)
     {
         $args = self::getArgs([
@@ -71,6 +94,14 @@ class Foody_WhiteLabelDuplicator
         return self::duplicateByQuery($args, $blogId);
     }
 
+
+    /**
+     * Duplicate posts by wp_query args
+     * @param $args array
+     * @param $blogId int
+     * @param $duplicationArgs array
+     * @return array
+     */
     private static function duplicateByQuery($args, $blogId, $duplicationArgs = [])
     {
         $query = new WP_Query($args);
@@ -132,106 +163,115 @@ class Foody_WhiteLabelDuplicator
 
         switch_to_blog($blogId);
 
-        if (post_exists($old_post->post_title, '', $old_post->post_date)) {
-            return;
-        }
-
-        $copy_techniques = isset($duplicationArgs['copy_techniques']) && $duplicationArgs['copy_techniques'];
-        $copy_accessories = isset($duplicationArgs['copy_accessories']) && $duplicationArgs['copy_accessories'];
+        $new_post_id = 0;
+        if (!post_exists($old_post->post_title)) {
+            $copy_techniques = isset($duplicationArgs['copy_techniques']) && $duplicationArgs['copy_techniques'];
+            $copy_accessories = isset($duplicationArgs['copy_accessories']) && $duplicationArgs['copy_accessories'];
 
 
-        // add post to destination blog
-        $new_post_id = wp_insert_post($post);
-        if (!is_wp_error($new_post_id)) {
-            // copy post metadata
-            foreach ($meta_data as $key => $values) {
+            // add post to destination blog
+            $new_post_id = wp_insert_post($post);
+            if (!is_wp_error($new_post_id)) {
+                // copy post metadata
+                foreach ($meta_data as $key => $values) {
 
-                if (preg_match('/techniques/', $key)) {
-                    if (!$copy_techniques) {
-                        continue;
+                    if (preg_match('/techniques/', $key)) {
+                        if (!$copy_techniques) {
+                            continue;
+                        }
+                    } elseif (preg_match('/accessories/', $key)) {
+                        if (!$copy_accessories) {
+                            continue;
+                        }
+                    }
+
+                    foreach ($values as $value) {
+                        $value = apply_filters('foody_import_post_meta_value', $old_post->ID, $key, $value, $blogId);
+                        add_post_meta($new_post_id, $key, $value);
                     }
                 }
-                if (preg_match('/accessories/', $key)) {
-                    if (!$copy_accessories) {
-                        continue;
-                    }
-                }
 
-                foreach ($values as $value) {
-                    $value = apply_filters('foody_import_post_meta_value', $old_post->ID, $key, $value, $blogId);
-                    add_post_meta($new_post_id, $key, $value);
-                }
-            }
+                if (!empty($image_url)) {
+                    // Add Featured Image to Post
+                    $upload_dir = wp_upload_dir(); // Set upload folder
 
-            if (!empty($image_url)) {
-                // Add Featured Image to Post
-                $upload_dir = wp_upload_dir(); // Set upload folder
-
-                global $wp_version;
-                add_filter('block_local_requests', '__return_false');
-                $image_data = wp_remote_get($image_url,
-                    [
-                        'timeout' => 10, 'sslverify' => false,
-                        'httpversion' => '1.0',
-                        'user-agent' => 'WordPress/' . $wp_version . '; ' . home_url(),
-                    ]
-                ); // Get image data
-                $filename = basename($image_url); // Create image file name
-
-                // Check folder permission and define file location
-                if (wp_mkdir_p($upload_dir['path'])) {
-                    $file = $upload_dir['path'] . '/' . $filename;
-                } else {
-                    $file = $upload_dir['basedir'] . '/' . $filename;
-                }
-
-                // Create the image  file on the server
-                $result = file_put_contents($file, $image_data);
-
-                if ($result !== false) {
-                    // Check image file type
-                    $wp_file_type = wp_check_filetype($filename, null);
-
-                    // Set attachment data
-                    $attachment = array(
-                        'post_mime_type' => $wp_file_type['type'],
-                        'post_title' => sanitize_file_name($filename),
-                        'post_content' => '',
-                        'post_status' => 'inherit'
+                    global $wp_version;
+                    add_filter('block_local_requests', '__return_false');
+                    // Get image data
+                    $image_data = wp_remote_get($image_url,
+                        [
+                            'timeout' => 10, 'sslverify' => false,
+                            'httpversion' => '1.0',
+                            'user-agent' => 'WordPress/' . $wp_version . '; ' . home_url(),
+                        ]
                     );
+                    $filename = basename($image_url); // Create image file name
 
-                    // Create the attachment
-                    $attach_id = wp_insert_attachment($attachment, $file, $new_post_id);
+                    // Check folder permission and define file location
+                    if (wp_mkdir_p($upload_dir['path'])) {
+                        $file = $upload_dir['path'] . '/' . $filename;
+                    } else {
+                        $file = $upload_dir['basedir'] . '/' . $filename;
+                    }
 
-                    // Include image.php
-                    require_once(ABSPATH . 'wp-admin/includes/image.php');
+                    // Create the image  file on the server
+                    $result = file_put_contents($file, $image_data);
 
-                    // Define attachment metadata
-                    $attach_data = wp_generate_attachment_metadata($attach_id, $file);
+                    if ($result !== false) {
+                        // Check image file type
+                        $wp_file_type = wp_check_filetype($filename, null);
 
-                    // Assign metadata to attachment
-                    wp_update_attachment_metadata($attach_id, $attach_data);
+                        // Set attachment data
+                        $attachment = array(
+                            'post_mime_type' => $wp_file_type['type'],
+                            'post_title' => sanitize_file_name($filename),
+                            'post_content' => '',
+                            'post_status' => 'inherit'
+                        );
 
-                    // And finally assign featured image to post
-                    set_post_thumbnail($new_post_id, $attach_id);
+                        // Create the attachment
+                        $attach_id = wp_insert_attachment($attachment, $file, $new_post_id);
+
+                        // Include image.php
+                        require_once(ABSPATH . 'wp-admin/includes/image.php');
+
+                        // Define attachment metadata
+                        $attach_data = wp_generate_attachment_metadata($attach_id, $file);
+
+                        // Assign metadata to attachment
+                        wp_update_attachment_metadata($attach_id, $attach_data);
+
+                        // And finally assign featured image to post
+                        set_post_thumbnail($new_post_id, $attach_id);
+                    }
                 }
+
+                $copy_categories = isset($duplicationArgs['copy_categories']) && $duplicationArgs['copy_categories'];
+
+                if ($copy_categories) {
+                    $destination_categories = self::getDestinationCategories($categories);
+                    wp_set_post_categories($new_post_id, $destination_categories);
+                }
+
+                Foody_WhiteLabelPostMapping::add($old_post->ID, $blogId);
+            } else {
+                Foody_WhiteLabelLogger::error(__CLASS__ . "::duplicate: error inserting post", ['error' => $new_post_id]);
             }
-
-            $copy_categories = isset($duplicationArgs['copy_categories']) && $duplicationArgs['copy_categories'];
-
-            if ($copy_categories) {
-                $destination_categories = self::getDestinationCategories($categories);
-                wp_set_post_categories($new_post_id, $destination_categories);
-            }
-
-            Foody_WhiteLabelPostMapping::add($old_post->ID, $blogId);
+        } else {
+            Foody_WhiteLabelLogger::info("post type {$old_post->post_type} with id {$old_post->ID} already exists");
         }
 
         // switch back to main site
-        switch_to_blog(BLOG_ID_CURRENT_SITE);
+        restore_current_blog();
         return $new_post_id;
     }
 
+
+    /**
+     * Get default wp_query args for post duplication
+     * @param array $args
+     * @return array
+     */
     private static function getArgs($args = [])
     {
         $default_args = [
