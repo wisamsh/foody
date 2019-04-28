@@ -35,8 +35,16 @@ if (defined('WP_CLI') && WP_CLI) {
 
         public function test($args)
         {
-            $res = get_field_object('ingredients_ingredients_groups_0_ingredients_0_amounts_0_unit', 65);
-            WP_CLI::success($args[0]);
+            $post_thumbnail_id = get_post_thumbnail_id(65);
+            if (!empty($post_thumbnail_id)) {
+                $image_url = wp_get_attachment_image_src($post_thumbnail_id, 'full');
+                if (!empty($image_url)) {
+                    $image_url = $image_url[0];
+                    WP_CLI::success($image_url);
+                }else{
+                    WP_CLI::error('no image');
+                }
+            }
         }
     }
 

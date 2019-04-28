@@ -164,7 +164,7 @@ class Foody_WhiteLabelDuplicator
         switch_to_blog($blogId);
 
         $new_post_id = 0;
-        if (!post_exists($old_post->post_title)) {
+//        if (!post_exists($old_post->post_title)) {
             $copy_techniques = isset($duplicationArgs['copy_techniques']) && $duplicationArgs['copy_techniques'];
             $copy_accessories = isset($duplicationArgs['copy_accessories']) && $duplicationArgs['copy_accessories'];
 
@@ -192,8 +192,8 @@ class Foody_WhiteLabelDuplicator
                 }
 
                 if (!empty($image_url)) {
-                    $attach_id = self::upload_image($old_post->ID,$image_url);
-                    if (!empty($attach_id) && is_numeric($attach_id)){
+                    $attach_id = self::upload_image($old_post->ID, $image_url);
+                    if (!empty($attach_id) && is_numeric($attach_id)) {
                         // And finally assign featured image to post
                         set_post_thumbnail($new_post_id, $attach_id);
                     }
@@ -210,9 +210,9 @@ class Foody_WhiteLabelDuplicator
             } else {
                 Foody_WhiteLabelLogger::error(__CLASS__ . "::duplicate: error inserting post", ['error' => $new_post_id]);
             }
-        } else {
-            Foody_WhiteLabelLogger::info("post type {$old_post->post_type} with id {$old_post->ID} already exists");
-        }
+//        } else {
+//            Foody_WhiteLabelLogger::info("post type {$old_post->post_type} with id {$old_post->ID} already exists");
+//        }
 
         // switch back to main site
         restore_current_blog();
