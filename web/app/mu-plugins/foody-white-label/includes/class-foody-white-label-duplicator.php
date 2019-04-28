@@ -134,6 +134,11 @@ class Foody_WhiteLabelDuplicator
      */
     private static function duplicate($old_post, $blogId, $duplicationArgs = [])
     {
+        // return if already exists in blog
+        if (Foody_WhiteLabelPostMapping::existsInBlog($old_post->ID, $blogId)) {
+            Foody_WhiteLabelLogger::info("post type {$old_post->post_type} with id {$old_post->ID} already exists");
+            return 0;
+        }
         $defaultArgs = ['with_media' => true];
         $duplicationArgs = array_merge($defaultArgs, $duplicationArgs);
 
@@ -163,56 +168,52 @@ class Foody_WhiteLabelDuplicator
 
         switch_to_blog($blogId);
 
-        $new_post_id = 0;
-//        if (!post_exists($old_post->post_title)) {
-            $copy_techniques = isset($duplicationArgs['copy_techniques']) && $duplicationArgs['copy_techniques'];
-            $copy_accessories = isset($duplicationArgs['copy_accessories']) && $duplicationArgs['copy_accessories'];
+        $copy_techniques = isset($duplicationArgs['copy_techniques']) && $duplicationArgs['copy_techniques'];
+        $copy_accessories = isset($duplicationArgs['copy_accessories']) && $duplicationArgs['copy_accessories'];
 
 
-            // add post to destination blog
-            $new_post_id = wp_insert_post($post);
-            if (!is_wp_error($new_post_id)) {
-                // copy post metadata
-                foreach ($meta_data as $key => $values) {
+        // add post to destination blog
+        $new_post_id = wp_insert_post($post);
+        if (!is_wp_error($new_post_id)) {
+            // copy post metadata
+            foreach ($meta_data as $key => $values) {
 
-                    if (preg_match('/techniques/', $key)) {
-                        if (!$copy_techniques) {
-                            continue;
-                        }
-                    } elseif (preg_match('/accessories/', $key)) {
-                        if (!$copy_accessories) {
-                            continue;
-                        }
+                if (preg_match('/techniques/', $key)) {
+                    if (!$copy_techniques) {
+                        continue;
                     }
-
-                    foreach ($values as $value) {
-                        $value = apply_filters('foody_import_post_meta_value', $old_post->ID, $key, $value, $blogId);
-                        add_post_meta($new_post_id, $key, $value);
+                } elseif (preg_match('/accessories/', $key)) {
+                    if (!$copy_accessories) {
+                        continue;
                     }
                 }
 
-                if (!empty($image_url)) {
-                    $attach_id = self::upload_image($old_post->ID, $image_url);
-                    if (!empty($attach_id) && is_numeric($attach_id)) {
-                        // And finally assign featured image to post
-                        set_post_thumbnail($new_post_id, $attach_id);
-                    }
+                foreach ($values as $value) {
+                    $value = apply_filters('foody_import_post_meta_value', $old_post->ID, $key, $value, $blogId);
+                    add_post_meta($new_post_id, $key, $value);
                 }
-
-                $copy_categories = isset($duplicationArgs['copy_categories']) && $duplicationArgs['copy_categories'];
-
-                if ($copy_categories) {
-                    $destination_categories = self::getDestinationCategories($categories);
-                    wp_set_post_categories($new_post_id, $destination_categories);
-                }
-
-                Foody_WhiteLabelPostMapping::add($old_post->ID, $blogId);
-            } else {
-                Foody_WhiteLabelLogger::error(__CLASS__ . "::duplicate: error inserting post", ['error' => $new_post_id]);
             }
-//        } else {
-//            Foody_WhiteLabelLogger::info("post type {$old_post->post_type} with id {$old_post->ID} already exists");
-//        }
+
+            if (!empty($image_url)) {
+                $attach_id = self::upload_image($old_post->ID, $image_url);
+                if (!empty($attach_id) && is_numeric($attach_id)) {
+                    // And finally assign featured image to post
+                    set_post_thumbnail($new_post_id, $attach_id);
+                }
+            }
+
+            $copy_categories = isset($duplicationArgs['copy_categories']) && $duplicationArgs['copy_categories'];
+
+            if ($copy_categories) {
+                $destination_categories = self::getDestinationCategories($categories);
+                wp_set_post_categories($new_post_id, $destination_categories);
+            }
+
+            Foody_WhiteLabelPostMapping::add($old_post->ID, $blogId);
+        } else {
+            Foody_WhiteLabelLogger::error(__CLASS__ . "::duplicate: error inserting post", ['error' => $new_post_id]);
+        }
+
 
         // switch back to main site
         restore_current_blog();

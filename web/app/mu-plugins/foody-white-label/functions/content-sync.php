@@ -39,32 +39,7 @@ function foody_show_sync_fields()
 
 }
 
-if (is_main_site()) {
-    function foody_update_post_in_sites($post_id)
-    {
-        // If this is just a revision, don't update.
-        if (wp_is_post_revision($post_id)) {
-            return;
-        }
-
-        $synced_post_types = [
-            'foody_ingredient',
-            'foody_recipe',
-            'post'
-        ];
-
-        $current_post_type = get_post_type($post_id);
-
-        if (!in_array($current_post_type, $synced_post_types)) {
-            return;
-        }
-
-
-    }
-
-    add_action('save_post', 'foody_update_post_in_sites');
-}
-
+// async blog creation hook
 add_action('wp_async_wpmu_new_blog', 'foody_do_duplicate_site', 10, 1);
 function foody_do_duplicate_site($blog_id)
 {
@@ -74,6 +49,7 @@ function foody_do_duplicate_site($blog_id)
     ini_set('max_execution_time', $max_execution_time);
 }
 
+// load async tasks
 if (is_main_site()) {
     function foody_init_async_tasks()
     {
@@ -89,5 +65,7 @@ if (is_main_site()) {
     add_action('plugins_loaded', 'foody_init_async_tasks');
 }
 
+if (is_main_site()) {
 
+}
 
