@@ -33,10 +33,7 @@ class Foody_WhiteLabelDuplicatorTask extends WP_Async_Task
     {
         $blog_id = isset($_POST['blog_id']) ? $_POST['blog_id'] : 0;
         if (!empty($blog_id)) {
-            $max_execution_time = ini_get('max_execution_time');
-            ini_set('max_execution_time', 300);
-            Foody_WhiteLabelDuplicator::whiteLabelCreate($blog_id);
-            ini_set('max_execution_time', $max_execution_time);
+            do_action( "wp_async_$this->action", $blog_id );
         } else {
             Foody_WhiteLabelLogger::warning("content duplicator task called with invalid blog id", $_POST);
         }
