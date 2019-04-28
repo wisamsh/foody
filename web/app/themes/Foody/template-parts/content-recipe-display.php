@@ -143,5 +143,8 @@ $recipe = $template_args['recipe'];
     <?php $recipe->the_mobile_sidebar_content(); ?>
 </section>
 
+<section class="footab-container">
+    <?php echo footabc_add_code_to_content(); ?>
+</section>
 
 

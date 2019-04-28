@@ -74,5 +74,7 @@ if (!is_user_logged_in()) {
 
 <?php wp_footer(); ?>
 
+<?php $footer->add_nagish_li_script() ?>
+
 </body>
 </html>

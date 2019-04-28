@@ -40,6 +40,9 @@ window.calculator = function (selector) {
         let original = $option.data('original');
 
         let originalSlices = $(this).find('option[data-original=1]').data('slices');
+        if (!originalSlices) {
+            originalSlices = 1;
+        }
         let slices = $option.data('slices');
         if (!slices) {
             slices = 1;
@@ -129,7 +132,7 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
                 console.log('totalValueForNutrient for ' + nutrient, totalValueForNutrient);
             });
         }
-        let decimals = 0;
+        let decimals = 1;
         if (nutrient === 'protein') {
             decimals = 1;
         }

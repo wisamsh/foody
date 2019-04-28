@@ -40,13 +40,13 @@ echo do_shortcode('[wordpress_social_login]');
 
                 <button class="btn btn-google col-12 col-sm-5">
                     <span>
-                        <?php echo __('כניסה דרך גוגל', 'foody') ?>
+                        <?php echo __('התחברו דרך גוגל', 'foody') ?>
                     </span>
                     <i class="icon-Shape1"></i>
                 </button>
                 <button class="btn btn-facebook col-12 col-sm-5">
                     <span>
-                        <?php echo __('הירשמו דרך פייסבוק', 'foody') ?>
+                        <?php echo __('התחברו דרך פייסבוק', 'foody') ?>
                     </span>
                     <i class="icon-Facebook"></i>
                 </button>

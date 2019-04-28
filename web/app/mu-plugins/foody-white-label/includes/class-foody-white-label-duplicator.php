@@ -19,6 +19,7 @@ class Foody_WhiteLabelDuplicator
      */
     private function __construct()
     {
+        require_once PLUGIN_DIR .'foody-importer/functions.php';
     }
 
     public static function getInstance()
@@ -131,6 +132,10 @@ class Foody_WhiteLabelDuplicator
 
         switch_to_blog($blogId);
 
+        if (post_exists($old_post->post_title, '', $old_post->post_date)) {
+            return;
+        }
+
         $copy_techniques = isset($duplicationArgs['copy_techniques']) && $duplicationArgs['copy_techniques'];
         $copy_accessories = isset($duplicationArgs['copy_accessories']) && $duplicationArgs['copy_accessories'];
 
@@ -153,6 +158,7 @@ class Foody_WhiteLabelDuplicator
                 }
 
                 foreach ($values as $value) {
+                    $value = apply_filters('foody_import_post_meta_value', $old_post->ID, $key, $value, $blogId);
                     add_post_meta($new_post_id, $key, $value);
                 }
             }
