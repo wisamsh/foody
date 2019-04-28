@@ -39,9 +39,3 @@ class Foody_WhiteLabelDuplicatorTask extends WP_Async_Task
         }
     }
 }
-
-try {
-    new Foody_WhiteLabelDuplicatorTask();
-} catch (Exception $e) {
-    Foody_WhiteLabelLogger::exception($e);
-}

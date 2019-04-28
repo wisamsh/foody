@@ -75,10 +75,19 @@ function foody_do_duplicate_site($blog_id)
 }
 
 if (is_main_site()) {
-    try {
-        new Foody_WhiteLabelTermDuplicatorTask();
-        new Foody_WhiteLabelAuthorDuplicatorTask();
-    } catch (Exception $e) {
-        Foody_WhiteLabelLogger::exception($e);
+    function foody_init_async_tasks()
+    {
+        try {
+            new Foody_WhiteLabelDuplicatorTask();
+            new Foody_WhiteLabelTermDuplicatorTask();
+            new Foody_WhiteLabelAuthorDuplicatorTask();
+        } catch (Exception $e) {
+            Foody_WhiteLabelLogger::exception($e);
+        }
     }
+
+    add_action('plugins_loaded', 'foody_init_async_tasks');
 }
+
+
+
