@@ -65,11 +65,29 @@ if (is_main_site()) {
     add_action('save_post', 'foody_update_post_in_sites');
 }
 
-if (is_main_site()) {
-    try {
-        new Foody_WhiteLabelTermDuplicatorTask();
-        new Foody_WhiteLabelAuthorDuplicatorTask();
-    } catch (Exception $e) {
-        Foody_WhiteLabelLogger::exception($e);
-    }
+add_action('wp_async_wpmu_new_blog', 'foody_do_duplicate_site', 10, 1);
+function foody_do_duplicate_site($blog_id)
+{
+    $max_execution_time = ini_get('max_execution_time');
+    ini_set('max_execution_time', 300);
+    Foody_WhiteLabelDuplicator::whiteLabelCreate($blog_id);
+    ini_set('max_execution_time', $max_execution_time);
 }
+
+if (is_main_site()) {
+    function foody_init_async_tasks()
+    {
+        try {
+            new Foody_WhiteLabelDuplicatorTask();
+            new Foody_WhiteLabelTermDuplicatorTask();
+            new Foody_WhiteLabelAuthorDuplicatorTask();
+        } catch (Exception $e) {
+            Foody_WhiteLabelLogger::exception($e);
+        }
+    }
+
+    add_action('plugins_loaded', 'foody_init_async_tasks');
+}
+
+
+
