@@ -103,7 +103,7 @@ class Foody_WhiteLabelDuplicator
      */
     private static function duplicate($old_post, $blogId, $duplicationArgs = [])
     {
-        $defaultArgs = ['with_media' => false];
+        $defaultArgs = ['with_media' => true];
         $duplicationArgs = array_merge($defaultArgs, $duplicationArgs);
 
         $post = array(

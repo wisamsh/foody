@@ -71,7 +71,7 @@ class Foody_WhiteLabelTermDuplicatorTask extends WP_Async_Task
                     $copied = get_term_meta($term_id, $copied_to_key, true);
 
                     // if not already copied
-//                    if (empty($copied)) {
+                    if (empty($copied)) {
                         if ($taxonomy == 'post_tag') {
                             $result = Foody_WhiteLabelDuplicator::duplicateTag($term_id, $site);
                         } elseif ($taxonomy == 'category') {
@@ -81,7 +81,7 @@ class Foody_WhiteLabelTermDuplicatorTask extends WP_Async_Task
                         if (!empty($result)) {
                             update_term_meta($term_id, $copied_to_key, true);
                         }
-//                    }
+                    }
                 }
             }
         }

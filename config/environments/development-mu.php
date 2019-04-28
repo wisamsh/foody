@@ -21,8 +21,10 @@ define('GOOGLE_TAG_MANAGER_ID','GTM-M2SBXJF');
 
 define('MULTISITE', true);
 define('SUBDOMAIN_INSTALL', true);
-define('DOMAIN_CURRENT_SITE', str_replace('http://','',env('WP_HOME')));
+
+
+define('DOMAIN_CURRENT_SITE', preg_replace('/http(s?):\/\//','',env('WP_HOME')));
 define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
-define( 'WP_DEFAULT_THEME', 'foody');
+define( 'WP_DEFAULT_THEME', 'Foody');

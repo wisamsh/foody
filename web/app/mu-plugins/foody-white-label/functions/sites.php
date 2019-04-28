@@ -75,6 +75,7 @@ add_action('edit_user_profile_update', 'foody_profile_update_action');
 
 function foody_profile_update_action($user_id)
 {
+    $user = get_user_by('ID', $user_id);
     if (is_admin() && in_array('author', (array)$user->roles)) {
 
         $args = ['site__not_in' => [get_main_site_id()]];
