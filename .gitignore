@@ -9,6 +9,7 @@ web/app/mu-plugins/*/
 !web/app/mu-plugins/foody-rating
 !web/app/mu-plugins/footab
 !web/app/mu-plugins/footab_client_foody
+!web/app/mu-plugins/acf-image-crop-add-on
 web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
