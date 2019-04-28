@@ -192,55 +192,8 @@ class Foody_WhiteLabelDuplicator
                 }
 
                 if (!empty($image_url)) {
-                    // Add Featured Image to Post
-                    $upload_dir = wp_upload_dir(); // Set upload folder
-
-                    global $wp_version;
-                    add_filter('block_local_requests', '__return_false');
-                    // Get image data
-                    $image_data = wp_remote_get($image_url,
-                        [
-                            'timeout' => 10, 'sslverify' => false,
-                            'httpversion' => '1.0',
-                            'user-agent' => 'WordPress/' . $wp_version . '; ' . home_url(),
-                        ]
-                    );
-                    $filename = basename($image_url); // Create image file name
-
-                    // Check folder permission and define file location
-                    if (wp_mkdir_p($upload_dir['path'])) {
-                        $file = $upload_dir['path'] . '/' . $filename;
-                    } else {
-                        $file = $upload_dir['basedir'] . '/' . $filename;
-                    }
-
-                    // Create the image  file on the server
-                    $result = file_put_contents($file, $image_data);
-
-                    if ($result !== false) {
-                        // Check image file type
-                        $wp_file_type = wp_check_filetype($filename, null);
-
-                        // Set attachment data
-                        $attachment = array(
-                            'post_mime_type' => $wp_file_type['type'],
-                            'post_title' => sanitize_file_name($filename),
-                            'post_content' => '',
-                            'post_status' => 'inherit'
-                        );
-
-                        // Create the attachment
-                        $attach_id = wp_insert_attachment($attachment, $file, $new_post_id);
-
-                        // Include image.php
-                        require_once(ABSPATH . 'wp-admin/includes/image.php');
-
-                        // Define attachment metadata
-                        $attach_data = wp_generate_attachment_metadata($attach_id, $file);
-
-                        // Assign metadata to attachment
-                        wp_update_attachment_metadata($attach_id, $attach_data);
-
+                    $attach_id = self::upload_image($old_post->ID,$image_url);
+                    if (!empty($attach_id) && is_numeric($attach_id)){
                         // And finally assign featured image to post
                         set_post_thumbnail($new_post_id, $attach_id);
                     }
@@ -266,6 +219,83 @@ class Foody_WhiteLabelDuplicator
         return $new_post_id;
     }
 
+
+    /**
+     * Upload an image to WP's media library
+     * from a url and attach it to the post
+     * @param $postID
+     * @param $url
+     * @param string $alt
+     * @return int|null|object|\WP_Error
+     */
+    private static function upload_image($postID, $url)
+    {
+
+        if (!$postID || !is_numeric($postID)) {
+            return new \WP_Error("invalid post id: $postID");
+        }
+
+        try {
+            $wp_path = ABSPATH;
+            /** @noinspection PhpIncludeInspection */
+            require_once("{$wp_path}wp-admin/includes/image.php");
+            /** @noinspection PhpIncludeInspection */
+            require_once("{$wp_path}wp-admin/includes/file.php");
+            /** @noinspection PhpIncludeInspection */
+            require_once("{$wp_path}wp-admin/includes/media.php");
+
+            wp_mkdir_p(PLUGIN_DIR . '/tpm');
+            $tmp = wp_tempnam('', PLUGIN_DIR . '/tpm');
+
+            $ext = pathinfo($url, PATHINFO_EXTENSION);
+
+            $tmp = str_replace('.tmp', '.' . $ext, $tmp);
+
+            $file = file_put_contents($tmp, file_get_contents($url));
+
+
+            $id = null;
+            if ($file) {
+                $desc = '';
+                $file_array = array();
+
+                // Set variables for storage
+                // fix file filename for query strings
+                preg_match('/[^\?]+\.(jpg|jpe|jpeg|gif|png)/i', $url, $matches);
+                $file_array['name'] = basename($matches[0]);
+                $file_array['name'] = pathinfo($file_array['name'], PATHINFO_FILENAME) . '.' . pathinfo($file_array['name'], PATHINFO_EXTENSION);
+                $file_array['tmp_name'] = $tmp;
+                $file_array['name'] = $tmp;
+
+                // If error storing temporarily, unlink
+                if (is_wp_error($tmp)) {
+                    @unlink($file_array['tmp_name']);
+                    $file_array['tmp_name'] = '';
+                }
+
+                // do the validation and storage stuff
+                $id = media_handle_sideload($file_array, $postID, $desc);
+
+
+                // If error storing permanently, unlink
+                if (is_wp_error($id)) {
+                    @unlink($file_array['tmp_name']);
+                    return $id;
+                }
+                @unlink($file_array['tmp_name']);
+
+                $image_meta = array(
+                    'ID' => $id,            // Specify the image (ID) to be updated
+                );
+
+                wp_update_post($image_meta);
+            }
+
+            return $id;
+        } catch (Exception $e) {
+            return new \WP_Error($e->getMessage());
+        }
+    }
 
     /**
      * Get default wp_query args for post duplication
