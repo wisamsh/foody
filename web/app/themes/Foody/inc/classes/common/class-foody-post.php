@@ -285,6 +285,13 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         $this->the_video_box();
     }
 
+	public function get_featured_content_credit() {
+		$credit = get_post_meta($this->post->ID, 'featured_image_credit', true);
+		if (!empty($credit)) {
+			return $credit;
+		}
+	}
+
     public function the_sidebar_content($args = array())
     {
         $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים', $args = array('hide_playlists'=>true));
