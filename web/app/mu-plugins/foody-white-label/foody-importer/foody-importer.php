@@ -176,6 +176,9 @@ if (class_exists('WP_Importer')) {
             echo '<p>' . __('Remember to update the passwords and roles of imported users.', 'wordpress-importer') . '</p>';
 
             do_action('import_end');
+            switch_to_blog(1);
+            update_option('foody_site_duplication_in_progress',false);
+            restore_current_blog();
         }
 
         /**

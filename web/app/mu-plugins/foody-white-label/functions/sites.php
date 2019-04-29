@@ -87,5 +87,3 @@ function foody_profile_update_action($user_id)
         }
     }
 }
-
-//if (get_user_meta($current_user->ID, 'pass_data_' . $site->id, true)) {

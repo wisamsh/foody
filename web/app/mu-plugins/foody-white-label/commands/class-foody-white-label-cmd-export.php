@@ -35,16 +35,17 @@ if (defined('WP_CLI') && WP_CLI) {
 
         public function test($args)
         {
-            $post_thumbnail_id = get_post_thumbnail_id(65);
-            if (!empty($post_thumbnail_id)) {
-                $image_url = wp_get_attachment_image_src($post_thumbnail_id, 'full');
-                if (!empty($image_url)) {
-                    $image_url = $image_url[0];
-                    WP_CLI::success($image_url);
-                }else{
-                    WP_CLI::error('no image');
-                }
+            $total = isset( $assoc_args ) && array_key_exists( 'total', $assoc_args ) ? absint( $assoc_args[ 'total' ] ) : 100;
+            WP_CLI::line( 'Starting Example' );
+            $progress = \WP_CLI\Utils\make_progress_bar( 'Progress Bar', $total );
+            $i        = 0;
+            while ( $i < $total ) {
+                $progress->tick();
+                sleep(1); // Remove this from your production code, only here to slow down the process so you can see it work.
+                $i++;
             }
+            $progress->finish();
+            WP_CLI::line( 'Example Complete' );
         }
     }
 

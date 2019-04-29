@@ -14,3 +14,4 @@ if (is_main_site()){
 
 require_once plugin_dir_path(__FILE__) . "acf.php";
 require_once plugin_dir_path(__FILE__) . "http.php";
+require_once plugin_dir_path(__FILE__) . "admin.php";

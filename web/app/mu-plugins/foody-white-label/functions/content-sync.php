@@ -43,6 +43,7 @@ function foody_show_sync_fields()
 add_action('wp_async_wpmu_new_blog', 'foody_do_duplicate_site', 10, 1);
 function foody_do_duplicate_site($blog_id)
 {
+    update_option('foody_site_duplication_in_progress',true);
     $max_execution_time = ini_get('max_execution_time');
     ini_set('max_execution_time', 300);
     Foody_WhiteLabelDuplicator::whiteLabelCreate($blog_id);
