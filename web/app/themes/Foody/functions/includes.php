@@ -45,6 +45,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-footer.php";
 require_once get_template_directory() . "/inc/classes/class-foody-comment-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-how-i-did-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-homepage.php";
+require_once get_template_directory() . "/inc/classes/class-foody-campaign.php";
 require_once get_template_directory() . "/inc/classes/class-foody-category.php";
 require_once get_template_directory() . "/inc/classes/class-foody-categories.php";
 require_once get_template_directory() . "/inc/classes/class-foody-team.php";

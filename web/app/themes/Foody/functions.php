@@ -162,7 +162,7 @@ function foody_scripts()
         wp_enqueue_script('foody-script', $asset, false, false, true);
 //        }
 //        $page_template = get_page_template_slug();
-//        if ($page_template == 'page-templates/e-book.php') {
+//        if ($page_template == 'page-templates/foody-campaign.php') {
 //            $ebook = foody_get_versioned_asset('ebook');
 //            wp_enqueue_script('foody-style', $ebook, false, false, true);
 //        }

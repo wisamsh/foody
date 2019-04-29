@@ -42,6 +42,8 @@ function get_page_type()
 
         $type = 'team';
 
+    } elseif ( is_page_template( 'page-templates/foody-campaign.php' ) ) {
+	    $type = 'campaign';
     }
 
     return $type;
@@ -92,6 +94,16 @@ function is_tablet($vars)
 
 add_filter('foody_js_globals', 'is_tablet');
 
+
+function campaign_name( $vars ) {
+	if ( get_page_type() == 'campaign' ) {
+		$vars['campaign_name'] = get_field( 'campaign_name' );
+	}
+
+	return $vars;
+}
+
+add_filter( 'foody_js_globals', 'campaign_name' );
 
 function foody_set_og_image()
 {
