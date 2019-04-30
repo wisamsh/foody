@@ -15,7 +15,6 @@ function foody_get($url)
 {
 
     if (WP_ENV == 'local'){
-//        $ip = file_get_contents('https://ipecho.net/plain');
         $local_url = str_replace(WP_HOME,'localhost',$url);
         $ch = curl_init($local_url);
         if (strpos(WP_HOME,$url) !== false){

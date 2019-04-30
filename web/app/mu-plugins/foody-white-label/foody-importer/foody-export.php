@@ -22,14 +22,9 @@ define('WXR_VERSION', '1.2');
  */
 function export_import_foody_wp($newBlogId)
 {
-    global $wpdb;
-
+    global $wpdb, $foody_auto_synced_post_types;
     // Add more types if relevant
-    $post_types = [
-        'foody_ingredient',
-        'foody_technique',
-        'foody_accessory'
-    ];
+    $post_types = $foody_auto_synced_post_types;
 
     $esses = array_fill(0, count($post_types), '%s');
     $where = $wpdb->prepare("{$wpdb->posts}.post_type IN (" . implode(',', $esses) . ')', $post_types);

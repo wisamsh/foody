@@ -7,9 +7,9 @@
  */
 
 
-if (is_main_site()){
+if (is_main_site()) {
     require_once plugin_dir_path(__FILE__) . "content-sync.php";
-	require_once plugin_dir_path(__FILE__) . "sites.php";
+    require_once plugin_dir_path(__FILE__) . "sites.php";
 }
 
 require_once plugin_dir_path(__FILE__) . "acf.php";

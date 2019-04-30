@@ -43,7 +43,7 @@ function foody_show_sync_fields()
 add_action('wp_async_wpmu_new_blog', 'foody_do_duplicate_site', 10, 1);
 function foody_do_duplicate_site($blog_id)
 {
-    update_option('foody_site_duplication_in_progress',true);
+    update_option('foody_site_duplication_in_progress', true);
     $max_execution_time = ini_get('max_execution_time');
     ini_set('max_execution_time', 300);
     Foody_WhiteLabelDuplicator::whiteLabelCreate($blog_id);
@@ -68,5 +68,104 @@ if (is_main_site()) {
 
 if (is_main_site()) {
 
+//    global $foody_auto_synced_post_types;
+//
+//    foreach ($foody_auto_synced_post_types as $foody_auto_synced_post_type) {
+//        add_action("save_post_$foody_auto_synced_post_type", 'foody_auto_sync_post', 10, 2);
+//    }
+
+    add_action('wp_insert_post', 'foody_auto_sync_post', 10, 2);
+    function foody_auto_sync_post($post_id, $post_object)
+    {
+        global $foody_auto_synced_post_types;
+
+        if (!in_array($post_object->post_type, $foody_auto_synced_post_types)) {
+            return;
+        }
+
+        // Check to see if we are autosaving
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+
+        if (defined('DOING_AJAX') && DOING_AJAX) {
+            return;
+        }
+
+        if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+            return;
+        }
+
+        if (in_array($post_object->post_status, array('auto-draft', 'inherit'))) {
+            return;
+        }
+
+        // auto sync on main site only
+        if (get_current_blog_id() != get_main_site_id()) {
+            return;
+        }
+
+        $sites = get_sites(['site__not_in' => get_main_site_id()]);
+
+        /** @var WP_Site $site */
+        foreach ($sites as $site) {
+            Foody_WhiteLabelDuplicator::duplicate($post_object, $site->blog_id);
+        }
+    }
+
+    function foody_auto_sync_term($term_id, $tt_id, $taxonomy)
+    {
+        // auto sync on main site only
+        if (get_current_blog_id() != get_main_site_id()) {
+            return;
+        }
+
+        $term = get_term($term_id, $taxonomy);
+        $sites = get_sites(['site__not_in' => get_main_site_id()]);
+
+        /** @var WP_Site $site */
+        foreach ($sites as $site) {
+            Foody_WhiteLabelDuplicator::duplicateTerm($term, $site->blog_id);
+        }
+    }
+
+    add_action('edit_term', 'foody_auto_sync_term', 0, 3);
 }
 
+
+add_action('wp_async_term_edit', 'foody_copy_posts_by_term',10,2);
+function foody_copy_posts_by_term($term_id, $taxonomy)
+{
+    $duplicatedTerms = [
+        'category',
+        'post_tag'
+    ];
+
+    // if this taxonomy can be duplicated
+    if (in_array($taxonomy, $duplicatedTerms)) {
+        $sites = get_sites(['fields' => 'ids', 'site__not_in' => get_main_site_id()]);
+
+        foreach ($sites as $site) {
+            $term_duplication_key = "pass_data_$site";
+            $copy = get_term_meta($term_id, $term_duplication_key, true);
+
+            if (!empty($copy)) {
+                $copied_to_key = "copied_to_$site";
+                $copied = get_term_meta($term_id, $copied_to_key, true);
+
+                // if not already copied
+                if (empty($copied)) {
+                    if ($taxonomy == 'post_tag') {
+                        $result = Foody_WhiteLabelDuplicator::duplicateTag($term_id, $site);
+                    } elseif ($taxonomy == 'category') {
+                        $result = Foody_WhiteLabelDuplicator::duplicateCategory($term_id, $site);
+                    }
+
+                    if (!empty($result)) {
+                        update_term_meta($term_id, $copied_to_key, true);
+                    }
+                }
+            }
+        }
+    }
+}

@@ -132,13 +132,9 @@ class Foody_WhiteLabelDuplicator
      * @param array $duplicationArgs
      * @return int The duplicated Post ID
      */
-    private static function duplicate($old_post, $blogId, $duplicationArgs = [])
+    public static function duplicate($old_post, $blogId, $duplicationArgs = [])
     {
-        // return if already exists in blog
-        if (Foody_WhiteLabelPostMapping::existsInBlog($old_post->ID, $blogId)) {
-            Foody_WhiteLabelLogger::info("post type {$old_post->post_type} with id {$old_post->ID} already exists");
-            return 0;
-        }
+        remove_action("wp_insert_post", 'foody_auto_sync_post');
         $defaultArgs = ['with_media' => true];
         $duplicationArgs = array_merge($defaultArgs, $duplicationArgs);
 
@@ -149,6 +145,22 @@ class Foody_WhiteLabelDuplicator
             'post_author' => 1,
             'post_content' => $old_post->post_content
         );
+
+        switch_to_blog($blogId);
+
+        $post_in_blog = get_page_by_title($old_post->post_title, OBJECT, $old_post->post_type);
+
+        switch_to_blog(get_main_site_id());
+
+        $exists = ($post_in_blog instanceof WP_Post);
+
+        // if this post already exists add it's
+        // ID to post data so wp_insert_post handle this op
+        // as an update
+        if ($exists) {
+            $post['ID'] = $post_in_blog->ID;
+            $post['post_status'] = $post_in_blog->post_status;
+        }
 
         if ($duplicationArgs['with_media']) {
             $post_thumbnail_id = get_post_thumbnail_id($old_post->ID);
@@ -174,6 +186,7 @@ class Foody_WhiteLabelDuplicator
 
         // add post to destination blog
         $new_post_id = wp_insert_post($post);
+
         if (!is_wp_error($new_post_id)) {
             // copy post metadata
             foreach ($meta_data as $key => $values) {
@@ -190,7 +203,7 @@ class Foody_WhiteLabelDuplicator
 
                 foreach ($values as $value) {
                     $value = apply_filters('foody_import_post_meta_value', $old_post->ID, $key, $value, $blogId);
-                    add_post_meta($new_post_id, $key, $value);
+                    update_post_meta($new_post_id, $key, $value);
                 }
             }
 
@@ -216,8 +229,69 @@ class Foody_WhiteLabelDuplicator
 
 
         // switch back to main site
-        restore_current_blog();
+        switch_to_blog(get_main_site_id());
+        add_action("wp_insert_post", 'foody_auto_sync_post', 10, 2);
         return $new_post_id;
+    }
+
+    /**
+     * @param $term_object WP_Term
+     * @param $blogId
+     */
+    public static function duplicateTerm($term_object, $blogId)
+    {
+        $slug = $term_object->slug;
+        $tax = $term_object->taxonomy;
+        $term_meta = get_term_meta($term_object->term_id);
+        remove_action('edit_term', 'foody_auto_sync_term', 0);
+        $blogId = (int)$blogId;
+        switch_to_blog($blogId);
+        // if the term already exists in the correct taxonomy leave it alone
+        $term_id = term_exists($slug, $tax);
+        if ($term_id) {
+            self::process_term_meta($term_id['term_id'], $term_object->term_id, $term_object->taxonomy, $term_meta, $blogId);
+            return;
+        }
+
+        if (empty($term_object->parent)) {
+            $parent = 0;
+        } else {
+            $parent = term_exists($term_object->parent, $term_object->taxonomy);
+            if (is_array($parent)) $parent = $parent['term_id'];
+        }
+
+//        $term = wp_slash($term);
+        $description = isset($term_object->description) ? $term_object->description : '';
+        $termarr = array('slug' => $term_object->slug, 'description' => $description, 'parent' => intval($parent));
+
+        $id = wp_insert_term($term_object->name, $term_object->taxonomy, $termarr);
+        if (!is_wp_error($id)) {
+            self::process_term_meta($id['term_id'], $term_object->term_id, $term_object->taxonomy, $term_meta, $blogId);
+        }
+        switch_to_blog(get_main_site_id());
+        add_action('edit_term', 'foody_auto_sync_term', 0, 3);
+    }
+
+    /**
+     * @param $term_id
+     * @param $tax
+     * @param $meta array
+     * @param $blog_id
+     */
+    public static function process_term_meta($term_id, $old_term_id, $tax, $meta, $blog_id)
+    {
+        foreach ($meta as $key => $value) {
+
+            if (is_array($value)) {
+                $value = $value[0];
+            }
+
+            // post_id for acf
+            $post_id = "{$tax}_{$old_term_id}";
+            $value = maybe_unserialize($value);
+            $value = apply_filters('foody_import_post_meta_value', $post_id, $key, $value, $blog_id);
+            update_term_meta($term_id, $key, $value);
+        }
     }
 
 
@@ -226,16 +300,10 @@ class Foody_WhiteLabelDuplicator
      * from a url and attach it to the post
      * @param $postID
      * @param $url
-     * @param string $alt
      * @return int|null|object|\WP_Error
      */
-    private static function upload_image($postID, $url)
+    public static function upload_image($postID, $url)
     {
-
-        if (!$postID || !is_numeric($postID)) {
-            return new \WP_Error("invalid post id: $postID");
-        }
-
         try {
             $wp_path = ABSPATH;
             /** @noinspection PhpIncludeInspection */
@@ -245,8 +313,8 @@ class Foody_WhiteLabelDuplicator
             /** @noinspection PhpIncludeInspection */
             require_once("{$wp_path}wp-admin/includes/media.php");
 
-            wp_mkdir_p(PLUGIN_DIR . '/tpm');
-            $tmp = wp_tempnam('', PLUGIN_DIR . '/tpm');
+            wp_mkdir_p(PLUGIN_DIR . '/tmp');
+            $tmp = wp_tempnam('', PLUGIN_DIR . '/tmp/');
 
             $ext = pathinfo($url, PATHINFO_EXTENSION);
 
@@ -275,8 +343,22 @@ class Foody_WhiteLabelDuplicator
                 }
 
                 // do the validation and storage stuff
-                $id = media_handle_sideload($file_array, $postID, $desc);
-
+                if (!is_null($postID)) {
+                    $id = media_handle_sideload($file_array, $postID, $desc);
+                } else {
+                    $wp_file = wp_handle_sideload($file_array);
+                    if (isset($wp_file['error'])) {
+                        $id = new WP_Error('upload_error', $wp_file['error']);
+                    } else {
+                        $attachment_url = $wp_file['url'];
+                        $type = $wp_file['type'];
+                        $wp_file = $wp_file['file'];
+                        $title = preg_replace('/\\.[^.]+$/', '', basename($wp_file));
+                        $parent = 0;
+                        $attachment = array('post_mime_type' => $type, 'guid' => $attachment_url, 'post_parent' => $parent, 'post_title' => $title, 'post_content' => '');
+                        $id = wp_insert_attachment($attachment, $wp_file, $parent);
+                    }
+                }
 
                 // If error storing permanently, unlink
                 if (is_wp_error($id)) {
