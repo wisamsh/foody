@@ -155,7 +155,7 @@ function foody_change_image_meta($post_id, $key, $value, $field, $blog_id)
             if (is_numeric($attachment_id)) {
                 $value = (int)$attachment_id;
             } elseif (is_wp_error($attachment_id)) {
-                Foody_WhiteLabelLogger::error($attachment_id->get_error_message(), ['error' => $attachment_id]);
+                Foody_WhiteLabelLogger::error($attachment_id->get_error_message(), array_merge(['error' => $attachment_id], $attachment_id->error_data));
             }
         } else {
             Foody_WhiteLabelLogger::warning("empty image value for post: $post_id");
