@@ -67,13 +67,6 @@ if (is_main_site()) {
 }
 
 if (is_main_site()) {
-
-//    global $foody_auto_synced_post_types;
-//
-//    foreach ($foody_auto_synced_post_types as $foody_auto_synced_post_type) {
-//        add_action("save_post_$foody_auto_synced_post_type", 'foody_auto_sync_post', 10, 2);
-//    }
-
     add_action('wp_insert_post', 'foody_auto_sync_post', 10, 2);
     function foody_auto_sync_post($post_id, $post_object)
     {
@@ -133,7 +126,7 @@ if (is_main_site()) {
 }
 
 
-add_action('wp_async_term_edit', 'foody_copy_posts_by_term',10,2);
+add_action('wp_async_term_edit', 'foody_copy_posts_by_term', 10, 2);
 function foody_copy_posts_by_term($term_id, $taxonomy)
 {
     $duplicatedTerms = [

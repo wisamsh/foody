@@ -8,6 +8,13 @@
 
 add_filter('foody_import_post_meta_value', 'foody_handle_post_meta_value', 10, 4);
 
+/**
+ * @param $post_id
+ * @param $key
+ * @param $value
+ * @param $blog_id
+ * @return mixed
+ */
 function foody_handle_post_meta_value($post_id, $key, $value, $blog_id)
 {
     switch_to_blog(1);
@@ -35,6 +42,20 @@ function foody_handle_post_meta_value($post_id, $key, $value, $blog_id)
     return $value;
 }
 
+/*
+ * functions based on acf field types.
+ * all functions have the naming convention "foody_change_{$field->type}_meta"
+ * */
+
+
+/**
+ * @param $post_id
+ * @param $key
+ * @param $value
+ * @param $field
+ * @param $blog_id
+ * @return int
+ */
 function foody_change_taxonomy_meta($post_id, $key, $value, $field, $blog_id)
 {
 
@@ -62,6 +83,14 @@ function foody_change_taxonomy_meta($post_id, $key, $value, $field, $blog_id)
     return $value;
 }
 
+/**
+ * @param $post_id
+ * @param $key
+ * @param $value
+ * @param $field
+ * @param $blog_id
+ * @return int
+ */
 function foody_change_post_object_meta($post_id, $key, $value, $field, $blog_id)
 {
     if (!empty($value)) {
@@ -88,17 +117,38 @@ function foody_change_post_object_meta($post_id, $key, $value, $field, $blog_id)
     return $value;
 }
 
+/**
+ * @param $post_id
+ * @param $key
+ * @param $value
+ * @param $field
+ * @param $blog_id
+ * @return int
+ */
 function foody_change_image_crop_meta($post_id, $key, $value, $field, $blog_id)
 {
     return foody_change_image_meta($post_id, $key, $value, $field, $blog_id);
 }
 
+/**
+ * @param $post_id
+ * @param $key
+ * @param $value
+ * @param $field
+ * @param $blog_id
+ * @return int
+ */
 function foody_change_image_meta($post_id, $key, $value, $field, $blog_id)
 {
-    if (!empty($value) && is_numeric($value)) {
+    if (!empty($value)) {
+
+        $value_to_change = $value;
+        if (!is_numeric($value_to_change) && is_array($value_to_change)) {
+            $value_to_change = $value_to_change['ID'];
+        }
 
         switch_to_blog(1);
-        $url = wp_get_attachment_url($value);
+        $url = wp_get_attachment_url($value_to_change);
         restore_current_blog();
         if (!empty($url)) {
             $attachment_id = Foody_WhiteLabelDuplicator::upload_image(null, $url);
@@ -107,6 +157,8 @@ function foody_change_image_meta($post_id, $key, $value, $field, $blog_id)
             } elseif (is_wp_error($attachment_id)) {
                 Foody_WhiteLabelLogger::error($attachment_id->get_error_message(), ['error' => $attachment_id]);
             }
+        } else {
+            Foody_WhiteLabelLogger::warning("empty image value for post: $post_id");
         }
     }
 

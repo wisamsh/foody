@@ -376,6 +376,7 @@ class Foody_WhiteLabelDuplicator
 
             return $id;
         } catch (Exception $e) {
+            Foody_WhiteLabelLogger::exception($e);
             return new \WP_Error($e->getMessage());
         }
     }
