@@ -122,7 +122,7 @@ if (is_main_site()) {
         }
     }
 
-    add_action('edit_term', 'foody_auto_sync_term', 0, 3);
+    add_action('edit_term', 'foody_auto_sync_term', 10, 3);
 }
 
 

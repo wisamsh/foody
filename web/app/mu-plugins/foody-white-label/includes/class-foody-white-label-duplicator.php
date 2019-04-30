@@ -243,13 +243,14 @@ class Foody_WhiteLabelDuplicator
         $slug = $term_object->slug;
         $tax = $term_object->taxonomy;
         $term_meta = get_term_meta($term_object->term_id);
-        remove_action('edit_term', 'foody_auto_sync_term', 0);
+        remove_action('edit_term', 'foody_auto_sync_term', 10);
         $blogId = (int)$blogId;
         switch_to_blog($blogId);
         // if the term already exists in the correct taxonomy leave it alone
         $term_id = term_exists($slug, $tax);
         if ($term_id) {
             self::process_term_meta($term_id['term_id'], $term_object->term_id, $term_object->taxonomy, $term_meta, $blogId);
+            switch_to_blog(get_main_site_id());
             return;
         }
 
@@ -268,6 +269,7 @@ class Foody_WhiteLabelDuplicator
         if (!is_wp_error($id)) {
             self::process_term_meta($id['term_id'], $term_object->term_id, $term_object->taxonomy, $term_meta, $blogId);
         }
+
         switch_to_blog(get_main_site_id());
         add_action('edit_term', 'foody_auto_sync_term', 0, 3);
     }
@@ -320,7 +322,7 @@ class Foody_WhiteLabelDuplicator
 
             $tmp = str_replace('.tmp', '.' . $ext, $tmp);
 
-            $file = file_put_contents($tmp, file_get_contents($url));
+            $file = file_put_contents($tmp, foody_get($url));
 
 
             $id = null;

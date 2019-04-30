@@ -127,7 +127,16 @@ function foody_change_post_object_meta($post_id, $key, $value, $field, $blog_id)
  */
 function foody_change_image_crop_meta($post_id, $key, $value, $field, $blog_id)
 {
-    return foody_change_image_meta($post_id, $key, $value, $field, $blog_id);
+    /**
+     * in acf-image-crop the value is saved like this:
+     * {"original_image":"2865","cropped_image":2923}
+    */
+    $parsed = json_decode($value);
+    $new_value = [];
+    foreach ($parsed as $image_type => $attachment_id) {
+        $new_value[$image_type] = foody_change_image_meta($post_id, $key, $attachment_id, $field, $blog_id);
+    }
+    return json_encode($new_value);
 }
 
 /**
@@ -155,7 +164,10 @@ function foody_change_image_meta($post_id, $key, $value, $field, $blog_id)
             if (is_numeric($attachment_id)) {
                 $value = (int)$attachment_id;
             } elseif (is_wp_error($attachment_id)) {
-                Foody_WhiteLabelLogger::error($attachment_id->get_error_message(), array_merge(['error' => $attachment_id], $attachment_id->error_data));
+                Foody_WhiteLabelLogger::error(
+                    $attachment_id->get_error_message(),
+                    array_merge(['error' => $attachment_id], $attachment_id->error_data)
+                );
             }
         } else {
             Foody_WhiteLabelLogger::warning("empty image value for post: $post_id");
