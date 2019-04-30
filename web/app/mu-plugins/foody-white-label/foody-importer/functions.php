@@ -149,7 +149,7 @@ function foody_change_image_meta($post_id, $key, $value, $field, $blog_id)
 
         switch_to_blog(1);
         $url = wp_get_attachment_url($value_to_change);
-        restore_current_blog();
+        switch_to_blog($blog_id);
         if (!empty($url)) {
             $attachment_id = Foody_WhiteLabelDuplicator::upload_image(null, $url);
             if (is_numeric($attachment_id)) {

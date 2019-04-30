@@ -346,7 +346,7 @@ class Foody_WhiteLabelDuplicator
                 if (!is_null($postID)) {
                     $id = media_handle_sideload($file_array, $postID, $desc);
                 } else {
-                    $wp_file = wp_handle_sideload($file_array);
+                    $wp_file = wp_handle_sideload($file_array, ['test_form' => false]);
                     if (isset($wp_file['error'])) {
                         $id = new WP_Error('upload_error', $wp_file['error']);
                     } else {
