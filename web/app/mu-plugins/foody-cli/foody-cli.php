@@ -28,18 +28,20 @@ if (defined('WP_CLI') && WP_CLI) {
             $plugins = json_decode($data);
 
             $plugins = array_filter($plugins, function ($plugin) {
-                return in_array($plugin['status'], ['active', 'active-network']);
+                return in_array($plugin->status, ['active', 'active-network']);
             });
 
             $results = [];
             foreach ($plugins as $plugin) {
 
-                $status = $plugin['status'];
-                $name = $plugin['name'];
+                $status = $plugin->status;
+                $name = $plugin->name;
 
                 $activation_type = $status == 'active-network' ? '--network' : '';
                 $cmd = "wp plugin activate $name $activation_type";
                 $results[] = exec($cmd);
+
+//                WP_CLI::runcommand
             }
 
             WP_CLI::success('plugins successfully activated');

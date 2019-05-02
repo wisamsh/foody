@@ -92,7 +92,7 @@ sudo chmod -R ug+rwx {{ $release }};
 
 cd {{ $release_dir }}/{{ $release }};
 
-wp foody-cli activate_plugins ~/plugins-export.json
+wp foody-cli activate_plugins ~/plugins-export.json --require=web/app/mu-plugins/foody-cli/foody-cli.php
 
 echo 'Updating symlinks...'
 sudo ln -nfs {{ $release_dir }}/{{ $release }} {{ $app_dir }};
