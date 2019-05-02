@@ -598,8 +598,10 @@ class Foody_Recipe extends Foody_Post {
 	}
 
 	public function has_nutrients() {
-		// TODO change check after implementing
-		return true;
+		$show_nutrients = get_theme_mod( 'foody_show_ingredients_conversion' );
+		// TODO change check to also check for nutrients availability
+
+		return $show_nutrients;
 	}
 
 	public function calculator() {
