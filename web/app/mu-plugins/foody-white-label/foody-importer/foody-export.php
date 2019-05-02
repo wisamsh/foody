@@ -8,7 +8,7 @@
 error_reporting(E_ALL);
 define('WXR_VERSION', '1.2');
 /**
- * Generates the WXR export file for download.
+ * Generates the WXR export file for import.
  *
  * Default behavior is to export all content, however, note that post content will only
  * be exported for post types with the `can_export` argument enabled. Any posts with the
@@ -75,11 +75,18 @@ function export_import_foody_wp($newBlogId)
             $url = get_option('siteurl');
             restore_current_blog();
 
-            // use wp cli to import the created export file
-            $cmd = "wp foody import $export_file --url=\"$url\" > /dev/null &";
-            Foody_WhiteLabelLogger::info("starting wp foody import with command: $cmd");
-            $result = exec($cmd);
+            /**
+            * use wp cli to import the created export file.
+            * @see Foody_WhiteLabelCmdExport::import()
+            */
+            $foody_import_cmd = "wp foody import $export_file --url=\"$url\" > /dev/null &";
+
+            Foody_WhiteLabelLogger::info("starting wp foody import with command: $foody_import_cmd");
+            $result = exec($foody_import_cmd);
             Foody_WhiteLabelLogger::info("wp foody import command finished",['result'=>$result]);
+
+            // duplicate acf field groups to new blog
+            foody_copy_acf($url);
 
         } catch (Exception $e) {
             Foody_WhiteLabelLogger::info("error exporting to $export_file", ['error' => $e]);
@@ -92,6 +99,65 @@ function export_import_foody_wp($newBlogId)
 }
 
 
+/**
+* Copies all acf field groups from the main site to the new blog
+* @param $destination_blog_url string the new blog url
+*/
+function foody_copy_acf($destination_blog_url){
+
+    // acf cli plugin activation for network
+    // this needs to be done in order to use
+    // the cli on the new blog
+    $acf_activate_cmd = "wp plugin activate --network advanced-custom-fields-wpcli";
+
+    // path to use for exported acf json
+    $export_path = PLUGIN_DIR . 'acf-exports';
+
+    // always use main site url for export.
+    // this means no new custom fields can be added to the site
+    $main_site_url = foody_get_main_site_url();
+
+    // export command
+    $acf_export_cmd = "wp acf export --export_path=$export_path --url=$main_site_url";
+
+    /**
+    * when using wp acf import with the --all option the cli
+    * iterates over the directories listed in @see \ACFWPCLI\CLI::$paths
+    * This filter overrides (priority 100000) the path provided by foody in order
+    * to prevent importing from the wrong directory
+    */
+    add_filter('acfwpcli_fieldgroup_paths',function ($paths) use ($export_path){
+        $paths['foody'] = $export_path;
+    },100000,1);
+
+    // import command uses the destination blog's url
+    $acf_import_cmd = "wp acf import --all --url=$destination_blog_url";
+
+    /*
+     * Run start
+     * */
+
+    Foody_WhiteLabelLogger::info("starting acf copy to blog: $destination_blog_url");
+
+    // activate plugin network wide.
+    // doesn't matter if it's already activated
+    exec($acf_activate_cmd);
+    // clear previous exports
+    clear_directory($export_path);
+    // export to export directory
+    exec($acf_export_cmd);
+    // import to destination blog.
+    exec($acf_import_cmd);
+
+    Foody_WhiteLabelLogger::info("finished acf copy to blog: $destination_blog_url");
+}
+
+
+/**
+ * Creates the wxr xml string for the provided post.
+* @param $post WP_Post
+* @return string wxr representation of $post
+*/
 function foody_get_export_post($post){
 
         global $wpdb;

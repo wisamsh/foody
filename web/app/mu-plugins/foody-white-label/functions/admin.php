@@ -71,6 +71,73 @@ add_action('wp_ajax_foody_duplication_progress', 'foody_duplication_progress');
 function foody_duplication_progress()
 {
     $duplication_in_progress = get_option('foody_site_duplication_in_progress');
-
     wp_send_json_success(['in_progress' => $duplication_in_progress]);
+}
+
+
+if (is_main_site()) {
+
+    add_action('add_meta_boxes_foody_recipe', 'add_post_mapping_box');
+    add_action('add_meta_boxes_post', 'add_post_mapping_box');
+
+    /**
+     * @param $post WP_Post
+     */
+    function add_post_mapping_box($post)
+    {
+
+        add_meta_box(
+            'foody-post-mapping',
+            __('מופעים באתרים נוספים'),
+            'foody_show_post_mappings',
+            $post->post_type,
+            'side',
+            'high'
+        );
+    }
+
+    /**
+     * Shows the list of occurrences of
+     * this post in other blogs.
+     * Shows a list of edit links to the post in the relevant blogs.
+     */
+    function foody_show_post_mappings()
+    {
+        global $post;
+
+        $sites = Foody_WhiteLabelPostMapping::getByPost($post->ID);
+        if (!empty($sites)) {
+            ?>
+            <ul>
+                <?php foreach ($sites as $site):
+
+                    // sub site id
+                    $blog_id = $site['blog_id'];
+
+                    switch_to_blog($blog_id);
+
+                    $link = admin_url('post.php?post=' . $site['destination_post_id']) . '&action=edit';
+
+                    switch_to_blog(get_main_site_id());
+
+                    ?>
+                    <li>
+                        <a href="<?php echo $link ?>">
+                            <?php
+                            printf(__('צפה בתוכן זה ב- %s'), (get_site($blog_id))->blogname);
+                            ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+
+            <?php
+        } else {
+            ?>
+            <b>
+                <?php echo __('תוכן זה לא קיים באתר משנה') ?>
+            </b>
+            <?php
+        }
+    }
 }

@@ -225,10 +225,12 @@ class Foody_WhiteLabelDuplicator
 
             if ($copy_categories) {
                 $destination_categories = self::getDestinationCategories($categories);
-                $res = wp_set_post_categories($new_post_id, $destination_categories);
+                wp_set_post_categories($new_post_id, $destination_categories);
             }
 
-            Foody_WhiteLabelPostMapping::add($old_post->ID, $blogId);
+            switch_to_blog(get_main_site_id());
+            Foody_WhiteLabelPostMapping::add($old_post->ID, $new_post_id, $blogId);
+            restore_current_blog();
         } else {
             Foody_WhiteLabelLogger::error(__CLASS__ . "::duplicate: error inserting post", ['error' => $new_post_id]);
         }

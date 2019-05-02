@@ -19,6 +19,7 @@ class Foody_WhiteLabelPostMapping
         $sql = "CREATE TABLE " . self::$table_name . "  (
               `ID` BIGINT(20) NOT NULL,
               `post_id` BIGINT(20) NOT NULL,
+              `destination_post_id` BIGINT(20) NOT NULL,
               `blog_id` BIGINT(20) NOT NULL,
               `source` BIGINT(20) NULL,
               `source_type` VARCHAR(20) NULL,
@@ -28,11 +29,12 @@ class Foody_WhiteLabelPostMapping
         dbDelta($sql);
     }
 
-    public static function add($post_id, $blog_id)
+    public static function add($post_id, $destination_id, $blog_id)
     {
         global $wpdb;
         return $wpdb->insert(self::$table_name, [
             'post_id' => $post_id,
+            'destination_post_id' => $destination_id,
             'blog_id' => $blog_id
         ]);
     }
