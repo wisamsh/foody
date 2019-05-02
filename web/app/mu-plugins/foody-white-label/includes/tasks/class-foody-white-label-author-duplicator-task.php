@@ -48,36 +48,9 @@ class Foody_WhiteLabelAuthorDuplicatorTask extends WP_Async_Task
      */
     protected function run_action()
     {
-        $duplicatedRoles = [
-            'author'
-        ];
 
         $user_id = $_POST['user_id'];
 
-        $user = get_user_by('ID', $user_id);
-
-
-        // if this taxonomy can be duplicated
-        if (count(array_intersect($user->roles, $duplicatedRoles)) > 0) {
-            $sites = get_sites(['fields' => 'ids']);
-
-            foreach ($sites as $site) {
-                $term_duplication_key = "pass_data_$site";
-                $copy = get_user_meta($user_id, $term_duplication_key, true);
-
-                if (!empty($copy)) {
-                    $copied_to_key = "copied_to_$site";
-                    $copied = get_term_meta($user_id, $copied_to_key, true);
-
-                    // if not already copied
-                    if (empty($copied)) {
-                        $result = Foody_WhiteLabelDuplicator::duplicateAuthor($user_id, $site);
-                        if (!empty($result)) {
-                            update_user_meta($user_id, $copied_to_key, true);
-                        }
-                    }
-                }
-            }
-        }
+        do_action("wp_async_$this->action", $user_id);
     }
 }

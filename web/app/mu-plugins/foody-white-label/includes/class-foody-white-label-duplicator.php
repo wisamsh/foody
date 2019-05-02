@@ -50,15 +50,14 @@ class Foody_WhiteLabelDuplicator
      * Duplicate posts by category
      * @param $categoryId
      * @param $blogId
+     * @param array $duplicationArgs
      * @return array
      */
-    public static function duplicateCategory($categoryId, $blogId)
+    public static function duplicateCategory($categoryId, $blogId, $duplicationArgs = [])
     {
         $args = self::getArgs([
             'cat' => $categoryId,
         ]);
-
-        $duplicationArgs = [];
 
         return self::duplicateByQuery($args, $blogId, $duplicationArgs);
     }
@@ -67,15 +66,16 @@ class Foody_WhiteLabelDuplicator
      * Duplicate author's posts
      * @param $authorId
      * @param $blogId
+     * @param array $duplicationArgs
      * @return array
      */
-    public static function duplicateAuthor($authorId, $blogId)
+    public static function duplicateAuthor($authorId, $blogId, $duplicationArgs = [])
     {
         $args = self::getArgs([
             'author' => $authorId,
         ]);
 
-        return self::duplicateByQuery($args, $blogId);
+        return self::duplicateByQuery($args, $blogId, $duplicationArgs);
     }
 
 
@@ -83,15 +83,16 @@ class Foody_WhiteLabelDuplicator
      * Duplicate posts by tag
      * @param $tagId
      * @param $blogId
+     * @param array $duplicationArgs
      * @return array
      */
-    public static function duplicateTag($tagId, $blogId)
+    public static function duplicateTag($tagId, $blogId, $duplicationArgs = [])
     {
         $args = self::getArgs([
             'tag' => $tagId,
         ]);
 
-        return self::duplicateByQuery($args, $blogId);
+        return self::duplicateByQuery($args, $blogId, $duplicationArgs);
     }
 
 
@@ -149,7 +150,6 @@ class Foody_WhiteLabelDuplicator
         switch_to_blog($blogId);
 
         $post_in_blog = get_page_by_title($old_post->post_title, OBJECT, $old_post->post_type);
-
         switch_to_blog(get_main_site_id());
 
         $exists = ($post_in_blog instanceof WP_Post);
@@ -158,8 +158,7 @@ class Foody_WhiteLabelDuplicator
         // ID to post data so wp_insert_post handle this op
         // as an update
         if ($exists) {
-            $post['ID'] = $post_in_blog->ID;
-            $post['post_status'] = $post_in_blog->post_status;
+            return 0;
         }
 
         if ($duplicationArgs['with_media']) {
@@ -176,7 +175,14 @@ class Foody_WhiteLabelDuplicator
         // to destination blog
         $meta_data = get_post_custom($old_post->ID);
 
-        $categories = wp_get_post_categories($old_post->ID);
+        $categories = wp_get_post_categories($old_post->ID, ['hide_empty' => false]);
+
+        $categories = array_map(function ($category) {
+            if (is_numeric($category)) {
+                $category = get_term($category);
+            }
+            return $category;
+        }, $categories);
 
         switch_to_blog($blogId);
 
@@ -219,7 +225,7 @@ class Foody_WhiteLabelDuplicator
 
             if ($copy_categories) {
                 $destination_categories = self::getDestinationCategories($categories);
-                wp_set_post_categories($new_post_id, $destination_categories);
+                $res = wp_set_post_categories($new_post_id, $destination_categories);
             }
 
             Foody_WhiteLabelPostMapping::add($old_post->ID, $blogId);
@@ -303,6 +309,7 @@ class Foody_WhiteLabelDuplicator
      * @param $postID
      * @param $url
      * @return int|null|object|\WP_Error
+     * @throws Exception when env is local
      */
     public static function upload_image($postID, $url)
     {
@@ -413,7 +420,7 @@ class Foody_WhiteLabelDuplicator
             return $category->name;
         }, $categories);
 
-        $destination_categories = get_terms(['name' => $source_categories_names]);
+        $destination_categories = get_terms(['name' => $source_categories_names, 'hide_empty' => false, 'fields' => 'ids']);
 
         return $destination_categories;
     }

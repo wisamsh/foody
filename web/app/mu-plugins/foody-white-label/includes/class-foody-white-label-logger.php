@@ -33,11 +33,18 @@ class Foody_WhiteLabelLogger
         }
     }
 
+    /**
+     * @param Exception $e
+     * @throws Exception
+     */
     public static function exception(Exception $e)
     {
         $message = $e->getMessage();
         $context = ['error' => $e];
         self::error($message, $context);
+        if (WP_ENV == 'local'){
+            throw $e;
+        }
     }
 
 

@@ -31,10 +31,16 @@ class Foody_Footer
 
     public function menu()
     {
+        if (empty($this->footer_pages)){
+            $this->footer_pages = [];
+        }
 
+        if (empty($this->footer_links)){
+            $this->footer_links = [];
+        }
 
         if ($this->debug) {
-            $this->footer_links = array_merge($this->ooter_links, $this->dummy_links(40));
+            $this->footer_links = array_merge($this->footer_links, $this->dummy_links(40));
         }
 
 
@@ -128,7 +134,7 @@ class Foody_Footer
 
             $this->newsletter();
             if (empty($menu_items)) {
-                $menu_items = [];
+                return;
             }
             $items = array_chunk($menu_items, count($menu_items) / 2);
 

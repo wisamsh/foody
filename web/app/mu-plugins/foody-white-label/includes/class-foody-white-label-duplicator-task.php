@@ -1,6 +1,11 @@
 <?php /** @noinspection PhpUndefinedClassInspection */
 
 /**
+ * This class is responsible for duplicating
+ * core data to a newly created blog.
+ * See mu-plugins/foody-white-label/includes/globals.php
+ * for the list of automatically synced data types (post types and terms taxonomies)
+ *
  * Created by PhpStorm.
  * User: moveosoftware
  * Date: 4/17/19
@@ -33,9 +38,9 @@ class Foody_WhiteLabelDuplicatorTask extends WP_Async_Task
     {
         $blog_id = isset($_POST['blog_id']) ? $_POST['blog_id'] : 0;
         if (!empty($blog_id)) {
-            do_action( "wp_async_$this->action", $blog_id );
+            do_action("wp_async_$this->action", $blog_id);
         } else {
-            Foody_WhiteLabelLogger::warning("content duplicator task called with invalid blog id", $_POST);
+            Foody_WhiteLabelLogger::error("content duplicator task called with invalid blog id", $_POST);
         }
     }
 }

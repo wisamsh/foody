@@ -12,3 +12,11 @@ $foody_auto_synced_post_types = [
     'foody_technique',
     'foody_accessory'
 ];
+
+
+global $foody_auto_synced_taxonomies;
+$foody_auto_synced_taxonomies = [
+    'pans',
+    'units',
+    'limitations'
+];

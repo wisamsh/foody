@@ -8,6 +8,10 @@
 
 
 if ( ! class_exists( 'WP_Async_Task' ) ) {
+
+    /**
+     * @see https://github.com/techcrunch/wp-async-task
+    */
     abstract class WP_Async_Task {
 
         /**
