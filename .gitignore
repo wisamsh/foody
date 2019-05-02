@@ -10,6 +10,7 @@ web/app/mu-plugins/*/
 !web/app/mu-plugins/footab
 !web/app/mu-plugins/foody-white-label
 !web/app/mu-plugins/foody-cli
+!web/app/mu-plugins/advanced-custom-fields-wpcli
 web/app/mu-plugins/foody-white-label/foody-importer/tmp
 !web/app/mu-plugins/footab_client_foody
 web/app/upgrade
