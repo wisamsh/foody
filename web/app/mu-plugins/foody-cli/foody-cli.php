@@ -40,8 +40,6 @@ if (defined('WP_CLI') && WP_CLI) {
                 $activation_type = $status == 'active-network' ? '--network' : '';
                 $cmd = "wp plugin activate $name $activation_type";
                 $results[] = exec($cmd);
-
-//                WP_CLI::runcommand
             }
 
             WP_CLI::success('plugins successfully activated');
