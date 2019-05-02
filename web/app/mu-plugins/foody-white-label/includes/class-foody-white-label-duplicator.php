@@ -132,6 +132,7 @@ class Foody_WhiteLabelDuplicator
      * @param $blogId int blog id to copy the post into
      * @param array $duplicationArgs
      * @return int The duplicated Post ID
+     * @throws Exception
      */
     public static function duplicate($old_post, $blogId, $duplicationArgs = [])
     {
@@ -230,7 +231,7 @@ class Foody_WhiteLabelDuplicator
 
             switch_to_blog(get_main_site_id());
             Foody_WhiteLabelPostMapping::add($old_post->ID, $new_post_id, $blogId);
-            restore_current_blog();
+            switch_to_blog($blogId);
         } else {
             Foody_WhiteLabelLogger::error(__CLASS__ . "::duplicate: error inserting post", ['error' => $new_post_id]);
         }
