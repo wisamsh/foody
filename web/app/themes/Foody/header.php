@@ -121,7 +121,7 @@ if (!empty($background_image)) {
                 </button>
 
 
-                <?php if (is_user_logged_in()): ?>
+                <?php if (is_user_logged_in() && foody_is_registration_open()): ?>
 
                     <div class="d-none d-lg-block profile-picture-container">
 

@@ -220,3 +220,10 @@ function get_viplus_url()
 {
     return VIPLUS_BASE_URL;
 }
+
+
+if ( ! function_exists( 'foody_is_registration_open' ) ) {
+	function foody_is_registration_open() {
+		return get_option('users_can_register');
+	}
+}

@@ -98,3 +98,11 @@ function foody_set_permalink_structure($blog_id)
     $wp_rewrite->flush_rules();
     restore_current_blog();
 }
+
+function foody_is_registration_open() {
+	if ( is_multisite() ) {
+		return get_option( 'nsur_join_site_enabled' );
+	} else {
+		return get_option( 'users_can_register' );
+	}
+}

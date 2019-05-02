@@ -47,12 +47,13 @@ if (!empty($tags)) {
 
 <section class="comments section no-print">
     <?php
-
-    $template = '';
-    if (wp_is_mobile()) {
-        $template = '/comments-mobile.php';
+    if ( is_comments_open( $foody_page->id ) ) {
+	    $template = '';
+	    if ( wp_is_mobile() ) {
+		    $template = '/comments-mobile.php';
+	    }
+	    comments_template( $template );
     }
-    comments_template($template);
     ?>
 </section>
 <?php if (function_exists('footabc_add_code_to_content')): ?>

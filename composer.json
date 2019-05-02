@@ -65,6 +65,18 @@
     {
       "type": "package",
       "package": {
+        "name": "justinticktock/network-subsite-user-registration",
+        "version": "2.5",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/network-subsite-user-registration.2.5.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
         "name": "yoast/wordpress-seo",
         "version": "9.5",
         "type": "wordpress-plugin",
@@ -251,6 +263,7 @@
     "wordpressdotorg/wordpress-importer": "^0.6.4",
     "ext-curl": "*",
     "monolog/monolog": "^1.24",
+    "justinticktock/network-subsite-user-registration": "^2.5"
     "hoppinger/advanced-custom-fields-wpcli": "^3.0"
   },
   "require-dev": {

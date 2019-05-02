@@ -440,14 +440,16 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 //        dynamic_sidebar('foody-social');
     }
 
-    public function comments()
-    {
-        $template = '';
-        if (wp_is_mobile()) {
-            $template = '/comments-mobile.php';
-        }
-        comments_template($template);
-    }
+	public function comments()
+	{
+		if ( is_comments_open( $this->id ) ) {
+			$template = '';
+			if ( wp_is_mobile() ) {
+				$template = '/comments-mobile.php';
+			}
+			comments_template( $template );
+		}
+	}
 
     public abstract function the_details();
 

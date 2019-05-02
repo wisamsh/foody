@@ -143,7 +143,7 @@ $sidebar-top-offset: 60px;
 
             margin-top: 60px;
             width: calc(100% - #{$content-width});
-            padding-right: 0;
+            padding-right: 20px;
 
             @import "../../../common/sidebar";
 
@@ -158,7 +158,7 @@ $sidebar-top-offset: 60px;
               min-height: max-content;
               height: 100%;
               border: none;
-              background-color: var(--color__background-screen);
+              background-color: white;
 
               $input-height: 39px;
               $input-margin: 4px;
