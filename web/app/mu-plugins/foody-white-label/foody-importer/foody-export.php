@@ -22,14 +22,9 @@ define('WXR_VERSION', '1.2');
  */
 function export_import_foody_wp($newBlogId)
 {
-    global $wpdb;
-
+    global $wpdb, $foody_auto_synced_post_types;
     // Add more types if relevant
-    $post_types = [
-        'foody_ingredient',
-        'foody_technique',
-        'foody_accessory'
-    ];
+    $post_types = $foody_auto_synced_post_types;
 
     $esses = array_fill(0, count($post_types), '%s');
     $where = $wpdb->prepare("{$wpdb->posts}.post_type IN (" . implode(',', $esses) . ')', $post_types);
@@ -64,8 +59,6 @@ function export_import_foody_wp($newBlogId)
 
     unset($categories, $custom_taxonomies, $custom_terms);
 
-    add_filter('foody_export_skip_post', 'foody_skip_post_import', 10, 3);
-
     // Actual export starting
     $export_file = write_foody_wxr($newBlogId, $cats, $tags, $terms, $post_ids, $wpdb);
 
@@ -83,12 +76,9 @@ function export_import_foody_wp($newBlogId)
             restore_current_blog();
 
             // use wp cli to import the created export file
-            $cmd = "wp import $export_file --url=\"$url\" --authors=\"skip\" "; // add this to run in background: > /dev/null &
-            $cmd = "wp foody import $export_file --url=\"$url\"";
+            $cmd = "wp foody import $export_file --url=\"$url\" > /dev/null &";
             Foody_WhiteLabelLogger::info("starting wp foody import with command: $cmd");
-
             $result = exec($cmd);
-
             Foody_WhiteLabelLogger::info("wp foody import command finished",['result'=>$result]);
 
         } catch (Exception $e) {
@@ -170,37 +160,6 @@ function foody_get_export_post($post){
         return $post_content;
     }
 
-/**
- * @param $skip boolean
- * @param $post WP_Post
- * @param $destination_blog_id int
- * @return boolean
- */
-function foody_skip_post_import($skip, $post, $destination_blog_id)
-{
-    $type = $post->post_type;
-
-    $unique_title_post_types = [
-        'foody_ingredient'
-    ];
-
-    // if this post type has unique titles
-    // check if it already exists in destination blog
-    if (in_array($type, $unique_title_post_types)) {
-
-        switch_to_blog($destination_blog_id);
-        $post_in_dest = get_page_by_title($post->post_title, OBJECT, $type);
-
-        restore_current_blog();
-        // post found by source post title, skip.
-        if (($post_in_dest instanceof WP_Post) === true && $post_in_dest->ID > 0) {
-            $skip = true;
-            Foody_WhiteLabelLogger::info("skipping $type, id: {$post->ID}");
-        }
-    }
-
-    return $skip;
-}
 /**
  * Wrap given string in XML CDATA tag.
  *

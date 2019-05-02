@@ -16,7 +16,7 @@ class Foody_WhiteLabelPostMapping
         self::$table_name = $wpdb->prefix . 'foody_post_mapping';
         $charset_collate = $wpdb->get_charset_collate();
 
-            $sql = "CREATE TABLE " . self::$table_name . "  (
+        $sql = "CREATE TABLE " . self::$table_name . "  (
               `ID` BIGINT(20) NOT NULL,
               `post_id` BIGINT(20) NOT NULL,
               `blog_id` BIGINT(20) NOT NULL,
@@ -27,7 +27,6 @@ class Foody_WhiteLabelPostMapping
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
     }
-
 
     public static function add($post_id, $blog_id)
     {
@@ -54,6 +53,15 @@ class Foody_WhiteLabelPostMapping
         $results = $wpdb->get_results("SELECT * from " . self::$table_name . " where post_id = $post_id", ARRAY_A);
 
         return $results;
+    }
+
+    public static function existsInBlog($post_id, $blog)
+    {
+        global $wpdb;
+
+        $results = $wpdb->get_results("SELECT * from " . self::$table_name . " where post_id = $post_id and blog_id = $blog", ARRAY_A);
+
+        return !empty($results);
     }
 
     public static function insertManyToBlog($posts, $blog_id)

@@ -35,8 +35,17 @@ if (defined('WP_CLI') && WP_CLI) {
 
         public function test($args)
         {
-            $res = get_field_object('ingredients_ingredients_groups_0_ingredients_0_amounts_0_unit', 65);
-            WP_CLI::success($args[0]);
+            $total = isset( $assoc_args ) && array_key_exists( 'total', $assoc_args ) ? absint( $assoc_args[ 'total' ] ) : 100;
+            WP_CLI::line( 'Starting Example' );
+            $progress = \WP_CLI\Utils\make_progress_bar( 'Progress Bar', $total );
+            $i        = 0;
+            while ( $i < $total ) {
+                $progress->tick();
+                sleep(1); // Remove this from your production code, only here to slow down the process so you can see it work.
+                $i++;
+            }
+            $progress->finish();
+            WP_CLI::line( 'Example Complete' );
         }
     }
 

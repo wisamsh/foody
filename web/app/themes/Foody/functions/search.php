@@ -137,8 +137,10 @@ function foody_filters_acf_load_value($value)
             // no values set for filters lists,
             // load default values from global search settings (foody_search_settings)
             // see Sidebar_Filter for more details.
+            remove_filter('acf/load_value/name=filters_list', 'foody_filters_acf_load_value',1000);
             $global_search_settings = get_field('filters_list', 'foody_search_options', false);
             $value = $global_search_settings;
+            add_filter('acf/load_value/name=filters_list', 'foody_filters_acf_load_value', 1000, 1);
         }
     }
 

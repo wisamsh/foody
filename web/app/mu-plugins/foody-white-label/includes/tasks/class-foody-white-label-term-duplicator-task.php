@@ -50,40 +50,8 @@ class Foody_WhiteLabelTermDuplicatorTask extends WP_Async_Task
      */
     protected function run_action()
     {
-        $duplicatedTerms = [
-            'category',
-            'post_tag'
-        ];
-
         $term_id = $_POST['term_id'];
         $taxonomy = $_POST['taxonomy'];
-
-        // if this taxonomy can be duplicated
-        if (in_array($taxonomy, $duplicatedTerms)) {
-            $sites = get_sites(['fields' => 'ids']);
-
-            foreach ($sites as $site) {
-                $term_duplication_key = "pass_data_$site";
-                $copy = get_term_meta($term_id, $term_duplication_key, true);
-
-                if (!empty($copy)) {
-                    $copied_to_key = "copied_to_$site";
-                    $copied = get_term_meta($term_id, $copied_to_key, true);
-
-                    // if not already copied
-                    if (empty($copied)) {
-                        if ($taxonomy == 'post_tag') {
-                            $result = Foody_WhiteLabelDuplicator::duplicateTag($term_id, $site);
-                        } elseif ($taxonomy == 'category') {
-                            $result = Foody_WhiteLabelDuplicator::duplicateCategory($term_id, $site);
-                        }
-
-                        if (!empty($result)) {
-                            update_term_meta($term_id, $copied_to_key, true);
-                        }
-                    }
-                }
-            }
-        }
+        do_action("wp_async_$this->action", $term_id, $taxonomy);
     }
 }

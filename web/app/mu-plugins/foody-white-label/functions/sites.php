@@ -73,9 +73,10 @@ function foody_profile_edit_action($user)
 add_action('personal_options_update', 'foody_profile_update_action');
 add_action('edit_user_profile_update', 'foody_profile_update_action');
 
-function foody_profile_update_action( $user_id ) {
+function foody_profile_update_action($user_id)
+{
     $user = get_user_by('ID', $user_id);
-	if ( is_admin() && in_array( 'author', (array) $user->roles ) ) {
+    if (is_admin() && in_array('author', (array)$user->roles)) {
 
         $args = ['site__not_in' => [get_main_site_id()]];
         $sites = get_sites($args);
@@ -87,8 +88,16 @@ function foody_profile_update_action( $user_id ) {
     }
 }
 
-//if (get_user_meta($current_user->ID, 'pass_data_' . $site->id, true)) {
+add_action('wpmu_new_blog', 'foody_set_permalink_structure', 10);
 
+function foody_set_permalink_structure($blog_id)
+{
+    switch_to_blog($blog_id);
+    global $wp_rewrite;
+    $wp_rewrite->set_permalink_structure('/%postname%/');
+    $wp_rewrite->flush_rules();
+    restore_current_blog();
+}
 
 function foody_is_registration_open() {
 	if ( is_multisite() ) {
