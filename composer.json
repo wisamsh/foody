@@ -263,7 +263,7 @@
     "wordpressdotorg/wordpress-importer": "^0.6.4",
     "ext-curl": "*",
     "monolog/monolog": "^1.24",
-    "justinticktock/network-subsite-user-registration": "^2.5"
+    "justinticktock/network-subsite-user-registration": "^2.5",
     "hoppinger/advanced-custom-fields-wpcli": "^3.0"
   },
   "require-dev": {
