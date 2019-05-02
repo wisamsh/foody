@@ -10,6 +10,10 @@ register_setting('discussion', 'hid_per_page');
 register_setting('discussion', 'whatsapp_phone_number_toggle');
 register_setting('discussion', 'whatsapp_phone_number');
 register_setting('general', 'foody_404_text');
+register_setting('general', 'foody_conversion_table_link_show');
+register_setting('general', 'foody_conversion_table_link');
+register_setting('general', 'foody_conversion_table_link_target');
+register_setting('general', 'foody_conversion_table_link_text');
 
 $page_name_search_options = __('הגדרות חיפוש - פודי', 'foody');
 $page_name_purchase_buttons = __('כפתורי רכישה', 'foody');
@@ -147,15 +151,66 @@ function foody_custom_options()
         $content = get_option('foody_404_text', '');
         wp_editor( $content, 'foody_404_text', $settings = array('textarea_rows'=> '10') );
     }
+
+	// General Foody settings
+	add_settings_section(
+		'foody_general_settings',
+		'הגדרות אתר כלליות',
+		'foody_settings_section_description',
+		'general'
+	);
+
+	// Should show Ingredients
+	add_settings_field( 'foody_conversion_table_link_show', __( 'הצגת קישור לטבלת המרות', 'foody' ), 'foody_conversion_table_link_show_callback', 'general', 'foody_general_settings' );
+	add_settings_field( 'foody_conversion_table_link', __( 'קישור לטבלת המרות', 'foody' ), 'foody_conversion_table_link_callback', 'general', 'foody_general_settings' );
+	add_settings_field( 'foody_conversion_table_link_target', __( 'פתח טבלת המרות בחלון חדש', 'foody' ), 'foody_conversion_table_link_target_callback', 'general', 'foody_general_settings' );
+	add_settings_field( 'foody_conversion_table_link_text', __( 'טקסט קישור לטבלת המרות', 'foody' ), 'foody_conversion_table_link_text_callback', 'general', 'foody_general_settings' );
+
 }
 
 add_action('admin_init', 'foody_custom_options');
+
+// Show foody_conversion_table_link_show field
+function foody_conversion_table_link_show_callback() {
+	$options = get_option( 'foody_conversion_table_link_show', false );
+	$checked = $options ? 'checked' : '';
+	echo '<input ' . $checked . ' type="checkbox" id="foody_conversion_table_link_show" name="foody_conversion_table_link_show">';
+}
+
+// Show foody_conversion_table_link field
+function foody_conversion_table_link_callback() {
+	$options = get_option( 'foody_conversion_table_link', false );
+	echo '<input type="url" size="50" id="foody_conversion_table_link" name="foody_conversion_table_link" value="' . $options . '">';
+}
+
+// Show foody_conversion_table_link_target field
+function foody_conversion_table_link_target_callback() {
+	$options = get_option( 'foody_conversion_table_link_target', false );
+	$checked = $options ? 'checked' : '';
+	echo '<input ' . $checked . ' type="checkbox" id="foody_conversion_table_link_target" name="foody_conversion_table_link_target">';
+}
+
+// Show foody_conversion_table_link_text field
+function foody_conversion_table_link_text_callback() {
+	$options = get_option( 'foody_conversion_table_link_text', false );
+	echo '<input type="text" size="25" id="foody_conversion_table_link_text" name="foody_conversion_table_link_text" value="' . $options . '">';
+}
 
 
 function add_units_columns($columns)
 {
     $columns['foo'] = 'Foo';
     return $columns;
+}
+
+function foody_settings_section_description()
+{
+	echo '';
+}
+
+
+function foody_sanitize_url( $url ) {
+	return esc_url_raw( $url );
 }
 
 //add_filter('manage_edit-units_columns', 'add_units_columns');

@@ -97,6 +97,9 @@ $recipe = $template_args['recipe'];
 
 <?php endif; ?>
 
+<section class="conversion-table-link no-print">
+    <?php $recipe->the_conversion_table_link() ?>
+</section>
 
 <section class="recipe-categories categories no-print">
     <?php $recipe->the_categories() ?>

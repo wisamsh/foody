@@ -184,6 +184,19 @@ class Foody_Recipe extends Foody_Post {
 		}
 	}
 
+	public function the_conversion_table_link() {
+		$show = get_option( 'foody_conversion_table_link_show', false );
+		if ( $show ) {
+			$link      = get_option( 'foody_conversion_table_link', false );
+			$target    = get_option( 'foody_conversion_table_link_target', false ) ? '_blank' : '_self';
+			$link_text = get_option( 'foody_conversion_table_link_text', false );
+
+			echo '<a href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
+		} else {
+			echo '';
+		}
+	}
+
 	public function the_categories() {
 		echo '<h2 class="title">' . __( 'קטגוריות' ) . '</h2>';
 		echo get_the_category_list( '', '', $this->getId() );
