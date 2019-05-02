@@ -141,7 +141,9 @@ function foody_copy_acf($destination_blog_url){
 
     // activate plugin network wide.
     // doesn't matter if it's already activated
-    exec($acf_activate_cmd);
+    $result = exec($acf_activate_cmd);
+    Foody_WhiteLabelLogger::info("acf activation result",$result);
+
     // clear previous exports
     clear_directory($export_path);
     // export to export directory
