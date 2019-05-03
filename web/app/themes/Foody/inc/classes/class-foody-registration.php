@@ -244,14 +244,21 @@ class Foody_Registration
                 exit;
             }
 
-            // The rest are redirected to the login page
-            $login_url = home_url('התחברות');
-            if (!empty($redirect_to)) {
-                $login_url = add_query_arg('redirect_to', $redirect_to, $login_url);
-            }
+            $login_page = get_page_by_title('התחברות', OBJECT, 'page');
+            switch_to_blog(get_main_site_id());
 
-            wp_redirect($login_url);
-            exit;
+            $exists = ($login_page instanceof WP_Post);
+
+            if ($exists){
+                // The rest are redirected to the login page
+                $login_url = home_url('התחברות');
+                if (!empty($redirect_to)) {
+                    $login_url = add_query_arg('redirect_to', $redirect_to, $login_url);
+                }
+
+                wp_redirect($login_url);
+                exit;
+            }
         }
     }
 

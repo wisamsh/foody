@@ -17,12 +17,18 @@ if (!defined('WPINC'))
 
 define('ESSB3_SELF_ENABLED', false);
 
-$main_site_domain = (get_site(get_main_site_id()))->domain;
-$current_site_domain = (get_site(get_current_blog_id()))->domain;
+if (is_multisite()){
+    $main_site_domain = (get_site(get_main_site_id()))->domain;
+    $current_site_domain = (get_site(get_current_blog_id()))->domain;
+    $plugin_path = str_replace($main_site_domain, $current_site_domain, WPMU_PLUGIN_URL);
+}else{
+    $plugin_path = WPMU_PLUGIN_URL;
+}
+
 
 define('ESSB3_VERSION', '5.5.2');
 define('ESSB3_PLUGIN_ROOT', dirname(__FILE__) . '/');
-define('ESSB3_PLUGIN_URL', str_replace($main_site_domain, $current_site_domain, WPMU_PLUGIN_URL) . '/' . basename(dirname(__FILE__)));
+define('ESSB3_PLUGIN_URL', $plugin_path . '/' . basename(dirname(__FILE__)));
 define('ESSB3_PLUGIN_BASE_NAME', plugin_basename(__FILE__));
 define('ESSB3_OPTIONS_NAME', 'easy-social-share-buttons3');
 define('ESSB3_WPML_OPTIONS_NAME', 'easy-social-share-buttons3-wpml');
