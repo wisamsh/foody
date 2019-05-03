@@ -33,9 +33,9 @@ class Foody_WhiteLabelLogger
         }
     }
 
+    /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * @param Exception $e
-     * @throws Exception
      */
     public static function exception(Exception $e)
     {
@@ -43,6 +43,7 @@ class Foody_WhiteLabelLogger
         $context = ['error' => $e];
         self::error($message, $context);
         if (WP_ENV == 'local'){
+            /** @noinspection PhpUnhandledExceptionInspection */
             throw $e;
         }
     }

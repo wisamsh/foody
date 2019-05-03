@@ -32,11 +32,17 @@ class Foody_WhiteLabelPostMapping
     public static function add($post_id, $destination_id, $blog_id)
     {
         global $wpdb;
-        return $wpdb->insert(self::$table_name, [
+        $result = $wpdb->insert(self::$table_name, [
             'post_id' => $post_id,
             'destination_post_id' => $destination_id,
             'blog_id' => $blog_id
         ]);
+
+        if ($result === false) {
+            Foody_WhiteLabelLogger::error("Error inserting to foody_post_mapping: $wpdb->last_error", $wpdb->last_result);
+        }
+
+        return $result;
     }
 
     public static function remove($post_id, $blog_id)

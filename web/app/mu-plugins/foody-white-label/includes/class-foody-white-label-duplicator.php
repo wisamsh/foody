@@ -112,12 +112,19 @@ class Foody_WhiteLabelDuplicator
         $failed = [];
 
         foreach ($posts as $post) {
-            $result = self::duplicate($post, $blogId, $duplicationArgs);
-            if (is_wp_error($result)) {
-                $failed[] = $result;
-            } else {
-                $success++;
+            try {
+                $result = self::duplicate($post, $blogId, $duplicationArgs);
+                if (is_wp_error($result)) {
+                    $failed[] = $result;
+                    Foody_WhiteLabelLogger::error($result->get_error_message(), $result);
+                } else {
+                    $success++;
+                }
+            } catch (Exception $e) {
+                /** @noinspection PhpUnhandledExceptionInspection */
+                Foody_WhiteLabelLogger::exception($e);
             }
+
         }
 
         return [
@@ -131,7 +138,7 @@ class Foody_WhiteLabelDuplicator
      * @param  WP_Post $old_post The Post you want to clone
      * @param $blogId int blog id to copy the post into
      * @param array $duplicationArgs
-     * @return int The duplicated Post ID
+     * @return int|WP_Error The duplicated Post ID
      * @throws Exception
      */
     public static function duplicate($old_post, $blogId, $duplicationArgs = [])

@@ -51,6 +51,7 @@ if (is_main_site()) {
      * @see $foody_auto_synced_post_types
      * @param $post_id
      * @param $post_object
+     * @throws Exception
      */
     function foody_auto_sync_post($post_id, $post_object)
     {
