@@ -243,15 +243,17 @@ class Foody_Recipe extends Foody_Post
 
     public function how_i_did()
     {
-        $template = '/comments-how-i-did.php';
+	    if ( is_comments_open( $this->id ) ) {
+		    $template = '/comments-how-i-did.php';
 
-        if (wp_is_mobile()) {
-            $template = '/comments-how-i-did-mobile.php';
-        }
+		    if ( wp_is_mobile() ) {
+			    $template = '/comments-how-i-did-mobile.php';
+		    }
 
-        comments_template(
-            $template
-        );
+		    comments_template(
+			    $template
+		    );
+	    }
     }
 
 
@@ -638,8 +640,10 @@ class Foody_Recipe extends Foody_Post
 
     public function has_nutrients()
     {
-        // TODO change check after implementing
-        return true;
+	    $show_nutrients = get_option( 'foody_show_ingredients_conversion' );
+	    // TODO change check to also check for nutrients availability
+
+	    return $show_nutrients;
     }
 
     public function calculator()

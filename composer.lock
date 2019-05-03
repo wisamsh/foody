@@ -4,19 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff02caf62915baeb6f8eaa3f8a675cff",
+    "content-hash": "641b65d1fdf916a6b5e06e1fd2776204",
     "packages": [
-        {
-            "name": "anders-thorborgd/acf-image-crop-add-on",
-            "version": "1.4.12",
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/acf-image-crop-add-on.1.4.12.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin"
-        },
         {
             "name": "andrewozz/tinymce-advanced",
             "version": "4.7.11",
@@ -198,6 +187,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/wp-user-avatar.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "hoppinger/advanced-custom-fields-wpcli",
+            "version": "3.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/hoppinger/advanced-custom-fields-wpcli/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
