@@ -125,12 +125,24 @@
     {
       "type": "package",
       "package": {
-        "name": "anders-thorborgd/acf-image-crop-add-on",
-        "version": "1.4.12",
+        "name": "willnorris/wordpress-hum",
+        "version": "1.0.0",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/acf-image-crop-add-on.1.4.12.zip"
+          "url": "https://github.com/willnorris/wordpress-hum/archive/master.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "joe-dolson/wp-accessibility",
+        "version": "1.6.4",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip"
         }
       }
     },
@@ -238,7 +250,6 @@
     "joe-dolson/wp-accessibility": "^1.6",
     "takayuki-miyoshi/contact-form-7": "^5.0",
     "arshid/contact-form-cfdb7": "1.2.4.1",
-    "anders-thorborgd/acf-image-crop-add-on": "^1.4",
     "lester-chan/wp-postratings": "^1.85",
     "mega-menu/quadmenu": "^1.7",
     "miljar/php-exif": "^0.6.4",

@@ -13,6 +13,7 @@ web/app/mu-plugins/*/
 !web/app/mu-plugins/advanced-custom-fields-wpcli
 web/app/mu-plugins/foody-white-label/foody-importer/tmp
 !web/app/mu-plugins/footab_client_foody
+!web/app/mu-plugins/acf-image-crop-add-on
 web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
