@@ -17,7 +17,7 @@ class Foody_WhiteLabelPostMapping
         $charset_collate = $wpdb->get_charset_collate();
 
         $sql = "CREATE TABLE " . self::$table_name . "  (
-              `ID` BIGINT(20) NOT NULL,
+              `ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
               `post_id` BIGINT(20) NOT NULL,
               `destination_post_id` BIGINT(20) NOT NULL,
               `blog_id` BIGINT(20) NOT NULL,
