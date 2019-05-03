@@ -245,8 +245,6 @@ class Foody_Registration
             }
 
             $login_page = get_page_by_title('התחברות', OBJECT, 'page');
-            switch_to_blog(get_main_site_id());
-
             $exists = ($login_page instanceof WP_Post);
 
             if ($exists){

@@ -38,6 +38,9 @@ if (defined('WP_CLI') && WP_CLI) {
                 $name = $plugin->name;
 
                 $activation_type = $status == 'active-network' ? '--network' : '';
+                if (!is_multisite()){
+                    $activation_type = '';
+                }
                 $cmd = "wp plugin activate $name $activation_type";
                 $results[] = exec($cmd);
             }
