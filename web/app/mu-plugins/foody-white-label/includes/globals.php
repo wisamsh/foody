@@ -21,5 +21,8 @@ $foody_auto_synced_taxonomies = [
     'limitations'
 ];
 
-global /** @var Foody_WhiteLabelTermDuplicatorProcess $term_duplicator_process */
-$term_duplicator_process;
+/** @var Foody_WhiteLabelTermDuplicatorProcess $term_duplicator_process */
+global $term_duplicator_process;
+
+/** @var Foody_WhiteLabelAuthorDuplicatorProcess $author_duplicator_process */
+global $author_duplicator_process;

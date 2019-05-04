@@ -35,10 +35,10 @@ if (is_main_site()) {
     {
         try {
             new Foody_WhiteLabelDuplicatorTask();
-//            new Foody_WhiteLabelTermDuplicatorTask();
-//            new Foody_WhiteLabelAuthorDuplicatorTask();
             global $term_duplicator_process;
             $term_duplicator_process = new Foody_WhiteLabelTermDuplicatorProcess();
+            global $author_duplicator_process;
+            $author_duplicator_process = new Foody_WhiteLabelAuthorDuplicatorProcess();
         } catch (Exception $e) {
             Foody_WhiteLabelLogger::exception($e);
         }
@@ -131,6 +131,7 @@ if (is_main_site()) {
      * Copy posts by term to a specific blog
      * @param $term_id
      * @param $taxonomy
+     * @throws Exception only locally
      */
     function foody_copy_posts_by_term($term_id,$tt_id, $taxonomy)
     {
@@ -147,49 +148,22 @@ if (is_main_site()) {
     }
 
     // Copy author posts
-    add_action('wp_async_edit_user_profile_update', 'foody_copy_posts_by_author');
+    add_action('edit_user_profile_update', 'foody_copy_posts_by_author');
     /**
      * Copy posts by authors to a specific blog
      * @param $user_id
+     * @throws Exception only locally
      */
     function foody_copy_posts_by_author($user_id)
     {
-        $user = get_user_by('ID', $user_id);
-
-        $duplicatedRoles = [
-            'author'
-        ];
-
-        // run duplication only for relevant user roles
-        $user_has_relevant_role = count(array_intersect($user->roles, $duplicatedRoles)) > 0;
-        if ($user_has_relevant_role) {
-
-            // get custom field
-            $sites_to_copy_to = get_field_object('sites', "user_$user_id");
-
-            if (!empty($sites_to_copy_to)) {
-
-                foreach ($sites_to_copy_to as $site_to_copy_to) {
-
-                    // see ./acf.php for info about the
-                    // 'foody_sites' key with acf select field
-                    // and the dynamic population of the field
-                    $blog_id = $site_to_copy_to['foody_sites'];
-
-                    $copied_to_key = "copied_to_$blog_id";
-
-                    $copied = get_user_meta($user_id, $copied_to_key, true);
-
-                    // don't run if already copied
-                    if (empty($copied)) {
-                        $result = Foody_WhiteLabelDuplicator::duplicateAuthor($user_id, $blog_id, $site_to_copy_to);
-                        if (!empty($result['success'])) {
-                            update_user_meta($user_id, $copied_to_key, true);
-                        }
-                    }
-                }
-
-            }
+        global $author_duplicator_process;
+        try{
+            $author_duplicator_process
+                ->push_to_queue(['user_id' => $user_id])
+                ->save()
+                ->dispatch();
+        }catch (Exception $e){
+            Foody_WhiteLabelLogger::exception($e);
         }
 
     }

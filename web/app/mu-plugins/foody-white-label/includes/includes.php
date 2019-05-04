@@ -5,8 +5,9 @@
  * Date: 4/14/19
  * Time: 3:42 PM
  */
-
-require_once plugin_dir_path(__FILE__) . '/wp-background-processing/wp-background-processing.php';
+if (!class_exists('WP_Background_Process')) {
+    require_once plugin_dir_path(__FILE__) . '/wp-background-processing/wp-background-processing.php';
+}
 require_once plugin_dir_path(__FILE__) . '/class-wp-async-task.php';
 require_once plugin_dir_path(__FILE__) . '/tasks/class-foody-white-label-term-duplicator-task.php';
 require_once plugin_dir_path(__FILE__) . '/tasks/class-foody-white-label-author-duplicator-task.php';
