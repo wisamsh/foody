@@ -20,3 +20,6 @@ $foody_auto_synced_taxonomies = [
     'units',
     'limitations'
 ];
+
+global /** @var Foody_WhiteLabelTermDuplicatorProcess $term_duplicator_process */
+$term_duplicator_process;
