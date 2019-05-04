@@ -126,7 +126,7 @@ if (is_main_site()) {
     }
 
     // copy term posts
-    add_action('edit_term', 'foody_copy_posts_by_term', 10, 2);
+    add_action('edit_term', 'foody_copy_posts_by_term', 10, 3);
     /**
      * Copy posts by term to a specific blog
      * @param $term_id
