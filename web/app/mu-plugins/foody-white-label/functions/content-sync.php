@@ -135,10 +135,15 @@ if (is_main_site()) {
     function foody_copy_posts_by_term($term_id, $taxonomy)
     {
         global $term_duplicator_process;
-        $term_duplicator_process
-            ->push_to_queue(['taxonomy' => $taxonomy, 'term_id' => $term_id])
-            ->save()
-            ->dispatch();
+        try{
+            $term_duplicator_process
+                ->push_to_queue(['taxonomy' => $taxonomy, 'term_id' => $term_id])
+                ->save()
+                ->dispatch();
+        }catch (Exception $e){
+            Foody_WhiteLabelLogger::exception($e);
+        }
+
     }
 
     // Copy author posts

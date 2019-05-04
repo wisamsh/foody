@@ -75,44 +75,48 @@ class Foody_WhiteLabelTermDuplicatorProcess extends WP_Background_Process
      * @param mixed $item Queue item to iterate over.
      *
      * @return mixed
+     * @throws Exception
      */
     protected function task($item)
     {
-        /**
-         * @var $taxonomy
-         * @var $term_id
-         */
-        extract($item);
+        try {
+            $taxonomy = $item['taxonomy'];
+            $term_id = $item['term_id'];
 
-        $duplicatedTerms = [
-            'category',
-            'post_tag'
-        ];
+            Foody_WhiteLabelLogger::info("starting task {$this->action}", $item);
 
-        // if this taxonomy can be duplicated
-        if (in_array($taxonomy, $duplicatedTerms)) {
+            $duplicatedTerms = [
+                'category',
+                'post_tag'
+            ];
 
-            $sites_to_copy_to = get_field('sites', "{$taxonomy}_$term_id");
+            // if this taxonomy can be duplicated
+            if (in_array($taxonomy, $duplicatedTerms)) {
 
-            if (!empty($sites_to_copy_to)) {
+                $sites_to_copy_to = get_field('sites', "{$taxonomy}_$term_id");
 
-                foreach ($sites_to_copy_to as $site_to_copy_to) {
-                    $blog_id = $site_to_copy_to['foody_sites'];
-                    $copied_to_key = "copied_to_$blog_id";
-                    $copied = get_term_meta($term_id, $copied_to_key, true);
-                    if (empty($copied)) {
-                        if ($taxonomy == 'post_tag') {
-                            $result = Foody_WhiteLabelDuplicator::duplicateTag($term_id, $blog_id, $site_to_copy_to);
-                        } elseif ($taxonomy == 'category') {
-                            $result = Foody_WhiteLabelDuplicator::duplicateCategory($term_id, $blog_id, $site_to_copy_to);
-                        }
+                if (!empty($sites_to_copy_to)) {
 
-                        if (!empty($result['success'])) {
-                            update_term_meta($term_id, $copied_to_key, true);
+                    foreach ($sites_to_copy_to as $site_to_copy_to) {
+                        $blog_id = $site_to_copy_to['foody_sites'];
+                        $copied_to_key = "copied_to_$blog_id";
+                        $copied = get_term_meta($term_id, $copied_to_key, true);
+                        if (empty($copied)) {
+                            if ($taxonomy == 'post_tag') {
+                                $result = Foody_WhiteLabelDuplicator::duplicateTag($term_id, $blog_id, $site_to_copy_to);
+                            } elseif ($taxonomy == 'category') {
+                                $result = Foody_WhiteLabelDuplicator::duplicateCategory($term_id, $blog_id, $site_to_copy_to);
+                            }
+
+                            if (!empty($result['success'])) {
+                                update_term_meta($term_id, $copied_to_key, true);
+                            }
                         }
                     }
                 }
             }
+        } catch (Exception $e) {
+            Foody_WhiteLabelLogger::exception($e);
         }
 
         return false;
