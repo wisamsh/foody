@@ -132,7 +132,7 @@ if (is_main_site()) {
      * @param $term_id
      * @param $taxonomy
      */
-    function foody_copy_posts_by_term($term_id, $taxonomy)
+    function foody_copy_posts_by_term($term_id,$tt_id, $taxonomy)
     {
         global $term_duplicator_process;
         try{
