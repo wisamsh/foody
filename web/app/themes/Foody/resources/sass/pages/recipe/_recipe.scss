@@ -147,6 +147,9 @@ $content-width: 95%;
           width: 100%;
         }
       }
+      .feature-content-credit {
+        text-align: center;
+      }
       .favorite {
         i {
           cursor: pointer;
@@ -692,6 +695,19 @@ $content-width: 95%;
         svg {
           vertical-align: middle;
         }
+      }
+    }
+
+    .conversion-table-link {
+      text-align: center;
+      margin: 20px 0;
+
+      a {
+        border-radius: 3px;
+        background-image: linear-gradient(77deg, #ec3849, #f35644);
+        padding: 5px 20px;
+        display: inline-block;
+        color: white;
       }
     }
 
