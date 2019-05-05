@@ -240,6 +240,10 @@ class Foody_WhiteLabelDuplicator
                 wp_set_post_categories($new_post_id, $destination_categories);
             }
 
+            if (!empty($duplicationArgsWithDefaults['index'])){
+                update_post_meta($new_post_id,'foody_index',1);
+            }
+
             switch_to_blog(get_main_site_id());
             Foody_WhiteLabelPostMapping::add($old_post->ID, $new_post_id, $blogId);
             switch_to_blog($blogId);
