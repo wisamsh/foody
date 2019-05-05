@@ -72,7 +72,7 @@ class Foody_WhiteLabelDuplicator
     public static function duplicateAuthor($authorId, $blogId, $duplicationArgs = [])
     {
         $args = self::getArgs([
-            'author' => $authorId,
+            'author' => $authorId
         ]);
 
         return self::duplicateByQuery($args, $blogId, $duplicationArgs);
@@ -145,6 +145,10 @@ class Foody_WhiteLabelDuplicator
     {
         remove_action("wp_insert_post", 'foody_auto_sync_post');
         $defaultArgs = ['with_media' => true];
+        if (!is_array($duplicationArgs)) {
+            Foody_WhiteLabelLogger::warning("invalid duplication args", $duplicationArgs);
+            $duplicationArgs = [];
+        }
         $duplicationArgsWithDefaults = array_merge($defaultArgs, $duplicationArgs);
 
         $post = array(

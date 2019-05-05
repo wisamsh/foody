@@ -40,7 +40,7 @@ class Foody_WhiteLabelAuthorDuplicatorProcess extends WP_Background_Process
         if ($user_has_relevant_role) {
 
             // get custom field
-            $sites_to_copy_to = get_field_object('sites', "user_$user_id");
+            $sites_to_copy_to = get_field('sites', "user_$user_id");
 
             if (!empty($sites_to_copy_to)) {
 
