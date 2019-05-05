@@ -646,7 +646,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             if (!$should_index) {
                 $robots_str = "noindex,follow";
 
-                if (WP_ENV != 'production' && class_exists('Foody_WhiteLabelLogger')){
+                if (WP_ENV != 'production' && class_exists('Foody_WhiteLabelLogger')) {
                     Foody_WhiteLabelLogger::info("setting no index for post {$this->id}");
                 }
             }
