@@ -1,7 +1,7 @@
 .load-more {
   display: block;
   text-align: center;
-  color: $color__primary;
+  color: var(--color__primary);
   font-size: 22px;
   font-family: $font__assistant;
   cursor: pointer;

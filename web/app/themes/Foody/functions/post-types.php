@@ -35,6 +35,7 @@ function register_post_types()
             'taxonomies' => array('category', 'post_tag'),
             'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
             'show_ui' => true,
+            'show_in_menu' => is_main_site()
         ),
         'playlist' => array(
             'id' => 'playlist',
@@ -97,6 +98,12 @@ function register_post_types()
             'has_archive' => true,
             'capability_type' => 'post'
         );
+
+        if (!isset($type['show_in_menu'])) {
+            $type['show_in_menu'] = true;
+        }
+
+        $args['show_in_menu'] = $type['show_in_menu'];
 
         if (isset($type['rewrite'])) {
             $args['rewrite'] = $type['rewrite'];
@@ -265,8 +272,8 @@ function sponsors_init()
                 'assign_terms' => 'edit_posts',
                 'edit_terms' => 'publish_posts',
                 'show_ui' => true,
-                'show_in_menu' =>true,
-                'show_in_nav_menus' =>true
+                'show_in_menu' => true,
+                'show_in_nav_menus' => true
             )
         )
     );

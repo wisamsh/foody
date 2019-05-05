@@ -7,7 +7,7 @@
 }
 
 .comments-title {
-  color: $color__primary;
+  color: var(--color__primary);
 }
 
 #cancel-comment-reply-link {
@@ -142,12 +142,12 @@
 
     input[type="submit"] {
       font-weight: bold;
-      color: $color__primary;
+      color: var(--color__primary);
     }
 
     input.cancel {
-      color: $color__text-primary-light;
-      border-left: 1px solid $color__text-primary-light;
+      color: var(--color__text-primary-light);
+      border-left: 1px solid var(--color__text-primary-light);
     }
   }
 }

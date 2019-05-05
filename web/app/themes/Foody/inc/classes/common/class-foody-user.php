@@ -281,6 +281,7 @@ class Foody_User
             }
         }
 
+
         return $is_subscriber;
     }
 

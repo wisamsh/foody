@@ -10,6 +10,7 @@ register_setting('discussion', 'hid_per_page');
 register_setting('discussion', 'whatsapp_phone_number_toggle');
 register_setting('discussion', 'whatsapp_phone_number');
 register_setting('general', 'foody_404_text');
+register_setting( 'general', 'foody_show_ingredients_conversion' );
 register_setting('general', 'foody_conversion_table_link_show');
 register_setting('general', 'foody_conversion_table_link');
 register_setting('general', 'foody_conversion_table_link_target');
@@ -166,6 +167,9 @@ function foody_custom_options()
 	add_settings_field( 'foody_conversion_table_link_target', __( 'פתח טבלת המרות בחלון חדש', 'foody' ), 'foody_conversion_table_link_target_callback', 'general', 'foody_general_settings' );
 	add_settings_field( 'foody_conversion_table_link_text', __( 'טקסט קישור לטבלת המרות', 'foody' ), 'foody_conversion_table_link_text_callback', 'general', 'foody_general_settings' );
 
+	// Should show Ingredients
+	add_settings_field( 'foody_show_ingredients_conversion', __( 'הצגת טבלת ערכים תזונתיים', 'foody' ), 'foody_show_ingredients_callback', 'general', 'foody_general_settings' );
+
 }
 
 add_action('admin_init', 'foody_custom_options');
@@ -203,11 +207,15 @@ function add_units_columns($columns)
     return $columns;
 }
 
-function foody_settings_section_description()
-{
+function foody_settings_section_description() {
 	echo '';
 }
 
+function foody_show_ingredients_callback() {
+	$options = get_option( 'foody_show_ingredients_conversion', false );
+	$checked = $options ? 'checked' : '';
+	echo '<input ' . $checked . ' type="checkbox" id="foody_show_ingredients_conversion" name="foody_show_ingredients_conversion">';
+}
 
 function foody_sanitize_url( $url ) {
 	return esc_url_raw( $url );

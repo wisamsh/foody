@@ -1,0 +1,83 @@
+[
+    {
+        "ID": false,
+        "key": "group_5b56e1e363a5c",
+        "title": "הגדרות",
+        "fields": [
+            {
+                "key": "field_5b05845e531db",
+                "label": "הגדרות",
+                "name": "settings",
+                "type": "group",
+                "instructions": "Display settings",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "key": "field_5b058481531dc",
+                        "label": "הצג לייקים",
+                        "name": "show_likes",
+                        "type": "true_false",
+                        "instructions": "Show\/hide likes display",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 1,
+                        "ui": 0,
+                        "ui_on_text": "",
+                        "ui_off_text": ""
+                    },
+                    {
+                        "key": "field_5b0584a0531dd",
+                        "label": "הצג צפיות",
+                        "name": "show_rating",
+                        "type": "true_false",
+                        "instructions": "Show\/hide rating display",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 1,
+                        "ui": 0,
+                        "ui_on_text": "",
+                        "ui_off_text": ""
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "foody_recipe"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": "",
+        "_valid": 1,
+        "local": "php"
+    }
+]

@@ -32,7 +32,7 @@ body[class~="category"] {
         cursor: pointer;
 
         &:before {
-          color: $color__primary;
+          color: var(--color__primary);
         }
 
         &.next {
@@ -66,7 +66,7 @@ body[class~="category"] {
             font-size: 21px;
             text-align: center;
             font-weight: normal;
-            color: $color__text-primary-dark;
+            color: var(--color__text-primary-dark);
           }
 
         }
@@ -166,7 +166,7 @@ body[class~="category"] {
               font-size: 18px;
               text-align: center;
               font-weight: normal;
-              color: $color__text-primary-dark;
+              color: var(--color__text-primary-dark);
             }
 
           }

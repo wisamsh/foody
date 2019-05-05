@@ -64,7 +64,7 @@ $sidebar-top-offset: 60px;
     .title {
 
       a {
-        color: $color__primary;
+        color: var(--color__primary);
       }
     }
 
@@ -114,13 +114,13 @@ $sidebar-top-offset: 60px;
     //      left: 0;
     //      font-size: 2rem;
     //      text-align: center;
-    //      color: $color__primary;
+    //      color: var(--color__primary);
     //    }
     //  }
     //}
     @import "../../../pages/common/categories-listing";
     .team-listing {
-      border-bottom: 1px solid $color__divider;
+      border-bottom: 1px solid var(--color__divider);
       margin: 0;
 
       .author {
@@ -171,7 +171,7 @@ $sidebar-top-offset: 60px;
           min-height: max-content;
           height: 100%;
           border: none;
-          background-color: $color__background-screen;
+          background-color: var(--color__background-screen);
 
           $input-height: 39px;
           $input-margin: 4px;

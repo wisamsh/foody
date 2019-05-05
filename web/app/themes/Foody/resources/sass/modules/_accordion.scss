@@ -14,7 +14,7 @@
       a[data-toggle="collapse"] {
 
         width: 100%;
-        color: $color__text-main;
+        color: var(--color__text-main);
         font-size: 20px;
         font-weight: 900;
         letter-spacing: -0.06px;
@@ -28,11 +28,11 @@
           left: 0;
           line-height: normal;
           transform: translateY(100%);
-          color: $color__text-main;
+          color: var(--color__text-main);
         }
 
         &.main-title {
-          color: $color__primary;
+          color: var(--color__primary);
           font-size: 22px;
           padding-right: 10px;
         }
@@ -58,7 +58,7 @@
           line-height: normal;
           transform: translateY(100%);
           transition: transform .3s;
-          color: $color__text-main;;
+          color: var(--color__text-main);;
           cursor: pointer;
         }
       }

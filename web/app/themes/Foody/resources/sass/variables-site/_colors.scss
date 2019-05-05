@@ -5,15 +5,14 @@ $color__background-button: #e6e6e6;
 $color__background-pre: #eee;
 $color__background-ins: #fff9c0;
 
-
 $color__primary: #ED3D48;
 $color__primary-gradient: linear-gradient(180deg, #F35644 0%, #EC3849 100%);
 
-$color__text-screen:unquote("#653A3A3A");
+$color__text-screen: unquote("#653A3A3A");
 $color__text-title: $color__primary;
-$color__text-primary:unquote("#653A3A3A");
+$color__text-primary: unquote("#653A3A3A");
 $color__text-primary-dark: #3A3A3A;
-$color__text-primary-light: rgba(58,58,58,.5);
+$color__text-primary-light: rgba(58, 58, 58, .5);
 $color__text-input: #666;
 $color__text-input-focus: #111;
 $color__link: $color__text-primary-dark;
@@ -21,15 +20,53 @@ $color__link-visited: $color__text-primary-dark;
 $color__link-hover: $color__primary;
 $color__text-main: #404040;
 $color__facebook: #3B5998;
-$color__social:#4A4A4A;
+$color__social: #4A4A4A;
 
 $color__border-button: #ccc #ccc #bbb;
 $color__border-button-hover: #ccc #bbb #aaa;
 $color__border-button-focus: #aaa #bbb #bbb;
 $color__border-input: #ccc;
 $color__border-abbr: #666;
-$color__divider:rgba(151, 151, 151, 0.3);
+$color__divider: rgba(151, 151, 151, 0.3);
 
+$color__checkbox-checked: $color__text-primary-dark;
+$color__checkbox-unchecked: #fff;
 
-$color__checkbox-checked:$color__text-primary-dark;
-$color__checkbox-unchecked:#fff;
+$colors: (
+        color__background-body:#{$color__background-body},
+        color__background-screen:#{$color__background-screen},
+        color__background-hr:#{$color__background-hr},
+        color__background-button:#{$color__background-button},
+        color__background-pre:#{$color__background-pre},
+        color__background-ins:#{$color__background-ins},
+        color__primary:#{$color__primary},
+        color__primary-gradient:#{$color__primary-gradient},
+        color__text-screen:unquote("#653A3A3A"),
+        color__text-title:#{$color__text-title},
+        color__text-primary:unquote("#653A3A3A"),
+        color__text-primary-dark:#{$color__text-primary-dark},
+        color__text-primary-light:#{$color__text-primary-light},
+        color__text-input:#{$color__text-input},
+        color__text-input-focus:#{$color__text-input-focus},
+        color__link:#{$color__link},
+        color__link-visited:#{$color__link-visited},
+        color__link-hover:#{$color__link-hover},
+        color__text-main:#{$color__text-main},
+        color__facebook:#{$color__facebook},
+        color__social: unquote("#4A4A4A"),
+        color__border-button:#{$color__border-button},
+        color__border-button-hover:#{$color__border-button-hover},
+        color__border-button-focus:#{$color__border-button-focus},
+        color__border-input:#{$color__border-input},
+        color__border-abbr:#{$color__border-abbr},
+        color__divider:#{$color__divider},
+        color__checkbox-checked:#{$color__checkbox-checked},
+        color__checkbox-unchecked:#{$color__checkbox-unchecked}
+);
+
+:root {
+  // each item in color map
+  @each $name, $color in $colors {
+    --#{$name}: #{$color};
+  }
+}

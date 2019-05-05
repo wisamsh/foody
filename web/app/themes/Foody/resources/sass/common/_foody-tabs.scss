@@ -7,21 +7,21 @@
         font-weight: 500;
         letter-spacing: -0.1px;
         text-align: center;
-        color: $color__primary;
+        color: var(--color__primary);
         padding: 10px;
         white-space: nowrap;
 
         &:not(.active) {
-          color: $color__text-primary-light;
+          color: var(--color__text-primary-light);
           &:hover {
-            border-color: $color__primary;
+            border-color: var(--color__primary);
             opacity: .6;
-            color: $color__primary;
+            color: var(--color__primary);
           }
         }
 
         &.active {
-          border-color: $color__primary;
+          border-color: var(--color__primary);
         }
       }
     }

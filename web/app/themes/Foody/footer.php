@@ -33,7 +33,22 @@ $footer = new Foody_Footer();
 
     <section class="social d-block d-lg-none">
         <?php
-        foody_get_template_part(get_template_directory() . '/template-parts/footer-social-bar.php');
+        $show_instagram = get_theme_mod( 'foody_show_social_instagram' );
+        $instagram_link = get_theme_mod( 'foody_social_instagram' );
+        $show_facebook  = get_theme_mod( 'foody_show_social_facebook' );
+        $facebook_link  = get_theme_mod( 'foody_social_facebook' );
+        $show_youtube   = get_theme_mod( 'foody_show_social_youtube' );
+        $youtube_link   = get_theme_mod( 'foody_social_youtube' );
+        foody_get_template_part( get_template_directory() . '/template-parts/footer-social-bar.php',
+	        [
+		        'show_instagram' => $show_instagram,
+		        'show_facebook'  => $show_facebook,
+		        'show_youtube'   => $show_youtube,
+		        'instagram_link' => $instagram_link,
+		        'facebook_link'  => $facebook_link,
+		        'youtube_link'   => $youtube_link
+	        ]
+        );
         ?>
     </section>
 

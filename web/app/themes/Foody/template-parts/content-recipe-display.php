@@ -28,13 +28,14 @@ $recipe = $template_args['recipe'];
       },
       "datePublished": "<?php echo get_the_date('Y-m-d') ?>",
       "description": "<?php echo $recipe->getDescription() ?>",
-      "cookTime": "<?php echo $recipe->time_to_iso8601_duration('preparation_time')?>",
-      "totalTime": "<?php echo $recipe->time_to_iso8601_duration('total_time')?>",
+      "cookTime": "<?php echo $recipe->time_to_iso8601_duration('preparation_time') ?>",
+      "totalTime": "<?php echo $recipe->time_to_iso8601_duration('total_time') ?>",
       "keywords": "<?php echo implode(',', wp_get_post_tags()) ?>",
       "recipeYield": "<?php echo $recipe->number_of_dishes ?>",
       "recipeCategory": "<?php echo $recipe->get_primary_category_name() ?>",
-      "recipeIngredient": <?php echo $recipe->get_ingredients_jsonld()?>
+      "recipeIngredient": <?php echo $recipe->get_ingredients_jsonld() ?>
 }
+
 
 </script>
 
@@ -146,8 +147,10 @@ $recipe = $template_args['recipe'];
     <?php $recipe->the_mobile_sidebar_content(); ?>
 </section>
 
-<section class="footab-container">
-    <?php echo footabc_add_code_to_content(); ?>
-</section>
+<?php if (function_exists('footabc_add_code_to_content')): ?>
+    <section class="footab-container">
+        <?php echo footabc_add_code_to_content(); ?>
+    </section>
+<?php endif; ?>
 
 

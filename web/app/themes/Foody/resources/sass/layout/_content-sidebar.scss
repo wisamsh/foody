@@ -19,7 +19,7 @@ body[class~="tag"] {
   }
 
   #main {
-    background-color: $color__background-screen;
+    background-color: var(--color__background-screen);
   }
 
   $sidebar-width: 25%;
@@ -42,7 +42,7 @@ body[class~="tag"] {
       display: inline;
 
       &::-moz-progress-bar {
-        background-color: $color__primary;
+        background-color: var(--color__primary);
       }
 
       &::-webkit-progress-bar {
@@ -50,11 +50,11 @@ body[class~="tag"] {
       }
 
       &::-webkit-progress-value {
-        background-color: $color__primary;
+        background-color: var(--color__primary);
       }
 
       &::-ms-fill {
-        background-color: $color__primary;
+        background-color: var(--color__primary);
       }
     }
   }
@@ -89,7 +89,7 @@ body[class~="tag"] {
       .post-categories {
         padding: 0;
         margin: 0;
-        color: $color__text-primary-light;
+        color: var(--color__text-primary-light);
         list-style-type: none;
 
         li {
@@ -145,7 +145,7 @@ body[class~="tag"] {
 
       .favorite {
         text-align: left;
-        color: $color__primary;
+        color: var(--color__primary);
         font-family: $font__assistant;
 
         i {
@@ -198,7 +198,7 @@ body[class~="tag"] {
                 a {
 
                   &:hover {
-                    background-color: $color__facebook !important;
+                    background-color: var(--color__facebook) !important;
                   }
                 }
               }
@@ -226,7 +226,7 @@ body[class~="tag"] {
 
         .btn-facebook {
           margin: 18px 2px;
-          background-color: $color__facebook;
+          background-color: var(--color__facebook);
           font-family: $font__assistant;
           color: white;
           padding: 0 10px;
@@ -258,7 +258,7 @@ body[class~="tag"] {
       li:not(:first-child):before {
         content: "• ";
         padding: 0 .5rem;
-        color: $color__primary;
+        color: var(--color__primary);
       }
 
       li {
@@ -340,7 +340,7 @@ body[class~="tag"] {
 
         .social {
           margin-top: 10px;
-          border-top: 1px solid $color__divider;
+          border-top: 1px solid var(--color__divider);
           flex-flow: row wrap;
           .social-title {
             width: 100%;

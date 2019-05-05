@@ -20,7 +20,7 @@
             bottom: 0;
             background-color: rgba(255, 255, 255, .9);
             text-align: center;
-            color: $color__primary;
+            color: var(--color__primary);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -69,7 +69,7 @@
             background-color: white;
             margin: 5px;
             border-radius: 1em;
-            color: $color__primary;
+            color: var(--color__primary);
             display: flex;
             //noinspection CssInvalidPropertyValue
             place-items: center;

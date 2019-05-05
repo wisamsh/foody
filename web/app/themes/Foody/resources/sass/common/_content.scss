@@ -11,7 +11,7 @@
 
   h2 {
     font-family: $font__main;
-    color: $color__primary;
+    color: var(--color__primary);
     font-weight: 900;
     font-size: 24px;
   }
@@ -57,9 +57,9 @@
   }
 
   a {
-    color: $color__primary;
+    color: var(--color__primary);
     &:visited {
-      color: $color__primary;
+      color: var(--color__primary);
     }
   }
 

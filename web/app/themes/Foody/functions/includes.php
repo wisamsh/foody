@@ -42,9 +42,11 @@ require_once get_template_directory() . "/inc/classes/common/class-foody-term.ph
 require_once get_template_directory() . "/inc/classes/common/class-foody-user.php";
 require_once get_template_directory() . "/inc/classes/class-header.php";
 require_once get_template_directory() . "/inc/classes/class-foody-footer.php";
+require_once get_template_directory() . "/inc/classes/class-foody-blocks.php";
 require_once get_template_directory() . "/inc/classes/class-foody-comment-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-how-i-did-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-homepage.php";
+require_once get_template_directory() . "/inc/classes/class-foody-white-label-homepage.php";
 require_once get_template_directory() . "/inc/classes/class-foody-campaign.php";
 require_once get_template_directory() . "/inc/classes/class-foody-category.php";
 require_once get_template_directory() . "/inc/classes/class-foody-categories.php";
@@ -93,6 +95,7 @@ require_once get_template_directory() . "/inc/widgets/class-foody-widget.php";
 require_once get_template_directory() . "/inc/widgets/widget-categories-list.php";
 require_once get_template_directory() . "/inc/widgets/widget-search-filter.php";
 require_once get_template_directory() . "/inc/widgets/widget-categories-accordion.php";
+require_once get_template_directory() . "/inc/widgets/widget-product.php";
 
 
 /*
@@ -125,6 +128,10 @@ require_once get_template_directory() . "/functions/theme.php";
 require_once get_template_directory() . "/functions/client-messages.php";
 require_once get_template_directory() . "/functions/cookies.php";
 require_once get_template_directory() . "/functions/pages.php";
+if (defined('WP_ENV') && in_array(WP_ENV,['local','development-mu'])){
+    require_once get_template_directory() . "/functions/debug.php";
+}
+
 
 
 /*

@@ -18,11 +18,12 @@ $db_backup_dir = '/var/www/db_backups';
 $app_dir = '/var/www/html';
 $global_uploads_dir = '/home/ubuntu/uploads';
 $app_uploads_dir = $app_dir . '/web/app/uploads';
-
-$release = 'release_' . date('YmdHis');
+$deploy_date = date('YmdHis');
+$release = 'release_' . $deploy_date;
 $servers = [
     'local' => '127.0.0.1',
     'dev' => 'ubuntu@foody-dev.moveodevelop.com',
+    'mu-dev' => 'ubuntu@mu.foody-dev.moveodevelop.com',
     'medio-dev' => 'ubuntu@foody.moveodevelop.com',
     'prod1' => 'ubuntu@34.253.214.81',
     'prod2' => 'ubuntu@34.245.51.22'
@@ -52,6 +53,10 @@ tar -czf assets-{{ $release }}.tar.gz dist
 scp assets-{{  $release }}.tar.gz {{ $servers[$target] }}:~
 scp ./build/version-hash.txt {{ $servers[$target] }}:~
 rm -rf assets-{{  $release }}.tar.gz
+
+wp plugin list --format=json > ./plugins-export.json
+scp ./plugins-export.json {{ $servers[$target] }}:~
+rm ./plugins-export.json
 @endtask
 
 
@@ -79,12 +84,15 @@ mv version-hash.txt {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}/build/
 
 cd {{ $release_dir }}/{{ $release }};
 
-
 echo 'Setting permissions...'
 cd {{ $release_dir }};
 
 sudo chgrp -R www-data {{ $release }};
 sudo chmod -R ug+rwx {{ $release }};
+
+cd {{ $release_dir }}/{{ $release }};
+
+wp foody-cli activate_plugins ~/plugins-export.json --require=web/app/mu-plugins/foody-cli/foody-cli.php
 
 echo 'Updating symlinks...'
 sudo ln -nfs {{ $release_dir }}/{{ $release }} {{ $app_dir }};

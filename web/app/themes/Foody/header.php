@@ -9,7 +9,6 @@
  * @package Foody
  */
 $header = new Foody_Header();
-$channels = new Foody_Channels_Menu();
 $user = new Foody_User();
 
 ?>
@@ -121,7 +120,7 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
                 </button>
 
 
-                <?php if (is_user_logged_in()): ?>
+                <?php if (is_user_logged_in() && foody_is_registration_open()): ?>
 
                     <div class="d-none d-lg-block profile-picture-container">
 
@@ -150,12 +149,6 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
             </div>
 
         </div>
-
-        <?php
-        if (wp_is_mobile()) {
-            echo $channels->get_the_menu();
-        }
-        ?>
 
 
         <!-- #site-navigation -->
