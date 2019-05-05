@@ -66,12 +66,17 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 
         let plural = $this.data('plural');
         let singular = $this.data('singular');
+        let unit = $this.data('unit');
+        if (!unit) {
+            unit = '';
+        }
 
         let calculated = base * val;
         let text = prettyNumber(calculated);
 
         let name = singular;
-        if (Math.ceil(parseFloat(text)) > 1) {
+
+        if (Math.ceil(parseFloat(text)) > 1 || (Math.ceil(parseFloat(text)) > 0 && unit == 'ק"ג')) {
             if (plural) {
                 name = plural;
             }

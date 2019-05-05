@@ -144,12 +144,13 @@ class Foody_Ingredient extends Foody_Post {
 	public function get_ingredient_html( $amount, $display, $unit, $title, $is_unit_after_title ) {
 
 		if ( ! empty( $this->plural_name ) ) {
-			if ( ceil( $amount ) > 1 ) {
+			if ( ceil( $amount ) > 1 || (ceil( $amount ) > 0 && $unit == 'ק"ג') ) {
 				$title = $this->plural_name;
 			}
 		}
 
 		$data = $this->get_ingredient_data_attr( $amount, $display );
+		$data .= ' ' . foody_array_to_data_attr( [ 'unit' => $unit ] );
 
 		if ( ! empty( $this->nutrients ) && is_array( $this->nutrients ) ) {
 			$nutrients_data = [];
