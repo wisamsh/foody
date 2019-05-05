@@ -25,6 +25,8 @@ class Foody_WhiteLabelAuthorDuplicatorProcess extends WP_Background_Process
      */
     protected function task($item)
     {
+        Foody_WhiteLabelLogger::info("starting task {$this->action}", $item);
+
         $user_id = $item['user_id'];
 
         $user = get_user_by('ID', $user_id);

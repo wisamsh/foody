@@ -145,7 +145,7 @@ class Foody_WhiteLabelDuplicator
     {
         remove_action("wp_insert_post", 'foody_auto_sync_post');
         $defaultArgs = ['with_media' => true];
-        $duplicationArgs = array_merge($defaultArgs, $duplicationArgs);
+        $duplicationArgsWithDefaults = array_merge($defaultArgs, $duplicationArgs);
 
         $post = array(
             'post_title' => $old_post->post_title,
@@ -169,7 +169,7 @@ class Foody_WhiteLabelDuplicator
             return 0;
         }
 
-        if ($duplicationArgs['with_media']) {
+        if ($duplicationArgsWithDefaults['with_media']) {
             $post_thumbnail_id = get_post_thumbnail_id($old_post->ID);
             if (!empty($post_thumbnail_id)) {
                 $image_url = wp_get_attachment_image_src($post_thumbnail_id, 'full');
@@ -194,8 +194,8 @@ class Foody_WhiteLabelDuplicator
 
         switch_to_blog($blogId);
 
-        $copy_techniques = isset($duplicationArgs['copy_techniques']) && $duplicationArgs['copy_techniques'];
-        $copy_accessories = isset($duplicationArgs['copy_accessories']) && $duplicationArgs['copy_accessories'];
+        $copy_techniques = isset($duplicationArgsWithDefaults['copy_techniques']) && $duplicationArgsWithDefaults['copy_techniques'];
+        $copy_accessories = isset($duplicationArgsWithDefaults['copy_accessories']) && $duplicationArgsWithDefaults['copy_accessories'];
 
 
         // add post to destination blog
@@ -229,7 +229,7 @@ class Foody_WhiteLabelDuplicator
                 }
             }
 
-            $copy_categories = isset($duplicationArgs['copy_categories']) && $duplicationArgs['copy_categories'];
+            $copy_categories = isset($duplicationArgsWithDefaults['copy_categories']) && $duplicationArgsWithDefaults['copy_categories'];
 
             if ($copy_categories) {
                 $destination_categories = self::getDestinationCategories($categories);
