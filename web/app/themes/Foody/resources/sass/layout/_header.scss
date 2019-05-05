@@ -10,6 +10,11 @@ body {
       }
     }
   }
+
+  // Fix Nagish-li fixed menu
+  .accessibe-quicknav-default.accessibe-rtl.accessibe-ready {
+    display: none;
+  }
 }
 
 .body-background {
