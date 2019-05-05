@@ -217,10 +217,6 @@ function foody_show_ingredients_callback() {
 	echo '<input ' . $checked . ' type="checkbox" id="foody_show_ingredients_conversion" name="foody_show_ingredients_conversion">';
 }
 
-function foody_sanitize_url( $url ) {
-	return esc_url_raw( $url );
-}
-
 //add_filter('manage_edit-units_columns', 'add_units_columns');
 //
 //function add_units_column_content($content)
