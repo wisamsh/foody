@@ -91,13 +91,13 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
     function the_content($page)
     {
         $recipes = $this->get_channel_content('related_recipes', Foody_Recipe::class);
-        $playlists = $this->get_channel_content('related_playlists', Foody_Playlist::class);
+//        $playlists = $this->get_channel_content('related_playlists', Foody_Playlist::class);
 
         $query = new WP_Query();
 
         $args = $this->foody_query->get_query('channel', [
             $this->id
-        ]);
+        ],true);
 
         $posts = $query->query($args);
 
