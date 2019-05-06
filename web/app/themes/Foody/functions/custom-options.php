@@ -15,9 +15,10 @@ register_setting('general', 'foody_conversion_table_link_show');
 register_setting('general', 'foody_conversion_table_link');
 register_setting('general', 'foody_conversion_table_link_target');
 register_setting('general', 'foody_conversion_table_link_text');
+register_setting('general', 'foody_google_tag_manager_id');
 
-$page_name_search_options = __('הגדרות חיפוש - פודי', 'foody');
-$page_name_purchase_buttons = __('כפתורי רכישה', 'foody');
+$page_name_search_options   = __( 'הגדרות חיפוש - פודי', 'foody' );
+$page_name_purchase_buttons = __( 'כפתורי רכישה', 'foody' );
 
 /** @var array $options_pages
  * All ACF Options Pages.
@@ -26,20 +27,20 @@ $page_name_purchase_buttons = __('כפתורי רכישה', 'foody');
  * If post_id is not set, default will be 'options'
  */
 $options_pages = array(
-    array(
-        'page_title' => $page_name_search_options,
-        'menu_title' => $page_name_search_options,
-        'menu_slug' => 'foody-search-options.php',
-        'post_id' => 'foody_search_options',
-        'icon_url' => 'dashicons-search'
-    ),
-    array(
-        'page_title' => $page_name_purchase_buttons,
-        'menu_title' => $page_name_purchase_buttons,
-        'menu_slug' => 'foody-purchase-options.php',
-        'post_id' => 'foody_purchase_options',
-        'icon_url' => 'dashicons-cart'
-    )
+	array(
+		'page_title' => $page_name_search_options,
+		'menu_title' => $page_name_search_options,
+		'menu_slug'  => 'foody-search-options.php',
+		'post_id'    => 'foody_search_options',
+		'icon_url'   => 'dashicons-search'
+	),
+	array(
+		'page_title' => $page_name_purchase_buttons,
+		'menu_title' => $page_name_purchase_buttons,
+		'menu_slug'  => 'foody-purchase-options.php',
+		'post_id'    => 'foody_purchase_options',
+		'icon_url'   => 'dashicons-cart'
+	)
 );
 
 
@@ -49,47 +50,47 @@ $options_pages = array(
  * set in @see $options_pages
  */
 $default_args = array(
-    /* (int|string) The position in the menu order this menu should appear.
-    WARNING: if two menu items use the same position attribute, one of the items may be overwritten so that only one item displays!
-    Risk of conflict can be reduced by using decimal instead of integer values, e.g. '63.3' instead of 63 (must use quotes).
-    Defaults to bottom of utility menu items */
-    'position' => false,
+	/* (int|string) The position in the menu order this menu should appear.
+	WARNING: if two menu items use the same position attribute, one of the items may be overwritten so that only one item displays!
+	Risk of conflict can be reduced by using decimal instead of integer values, e.g. '63.3' instead of 63 (must use quotes).
+	Defaults to bottom of utility menu items */
+	'position'        => false,
 
-    /* (string) The slug of another WP admin page. if set, this will become a child page. */
-    'parent_slug' => '',
+	/* (string) The slug of another WP admin page. if set, this will become a child page. */
+	'parent_slug'     => '',
 
-    /* (string) The icon class for this menu. Defaults to default WordPress gear.
-    Read more about dashicons here: https://developer.wordpress.org/resource/dashicons/ */
-    'icon_url' => false,
+	/* (string) The icon class for this menu. Defaults to default WordPress gear.
+	Read more about dashicons here: https://developer.wordpress.org/resource/dashicons/ */
+	'icon_url'        => false,
 
-    /* (boolean) If set to true, this options page will redirect to the first child page (if a child page exists).
-    If set to false, this parent page will appear alongside any child pages. Defaults to true */
-    'redirect' => true,
+	/* (boolean) If set to true, this options page will redirect to the first child page (if a child page exists).
+	If set to false, this parent page will appear alongside any child pages. Defaults to true */
+	'redirect'        => true,
 
-    /* (int|string) The '$post_id' to save/load data to/from. Can be set to a numeric post ID (123), or a string ('user_2').
-    Defaults to 'options'. Added in v5.2.7 */
-    'post_id' => 'options',
+	/* (int|string) The '$post_id' to save/load data to/from. Can be set to a numeric post ID (123), or a string ('user_2').
+	Defaults to 'options'. Added in v5.2.7 */
+	'post_id'         => 'options',
 
-    /* (boolean)  Whether to load the option (values saved from this options page) when WordPress starts up.
-    Defaults to false. Added in v5.2.8. */
-    'autoload' => false,
+	/* (boolean)  Whether to load the option (values saved from this options page) when WordPress starts up.
+	Defaults to false. Added in v5.2.8. */
+	'autoload'        => false,
 
-    /* (string) The update button text. Added in v5.3.7. */
-    'update_button' => __('Update', 'acf'),
+	/* (string) The update button text. Added in v5.3.7. */
+	'update_button'   => __( 'Update', 'acf' ),
 
-    /* (string) The message shown above the form on submit. Added in v5.6.0. */
-    'updated_message' => __("Options Updated", 'acf'),
+	/* (string) The message shown above the form on submit. Added in v5.6.0. */
+	'updated_message' => __( "Options Updated", 'acf' ),
 
 );
 
 
-if (function_exists('acf_add_options_page')) {
-    foreach ($options_pages as $options_page_args) {
-        if (validate_args($options_page_args)) {
-            $args = array_merge($default_args, $options_page_args);
-            acf_add_options_page($args);
-        }
-    }
+if ( function_exists( 'acf_add_options_page' ) ) {
+	foreach ( $options_pages as $options_page_args ) {
+		if ( validate_args( $options_page_args ) ) {
+			$args = array_merge( $default_args, $options_page_args );
+			acf_add_options_page( $args );
+		}
+	}
 }
 
 
@@ -99,59 +100,54 @@ if (function_exists('acf_add_options_page')) {
  * @param $args array specific arguments to a page
  * @return bool true if required arguments are set
  */
-function validate_args($args)
-{
-    $valid = false;
-    if ($args != null) {
-        if (isset($args['page_title']) && isset($args['menu_title']) && isset($args['menu_slug'])) {
-            $valid = true;
-        }
-    }
+function validate_args( $args ) {
+	$valid = false;
+	if ( $args != null ) {
+		if ( isset( $args['page_title'] ) && isset( $args['menu_title'] ) && isset( $args['menu_slug'] ) ) {
+			$valid = true;
+		}
+	}
 
-    return $valid;
+	return $valid;
 }
 
 
-function foody_custom_options()
-{
-    // number of how i did per page
-    add_settings_field('hid_per_page', __('מספר ״איך יצא לי״ בעמוד'), 'foody_hid_per_page_callback', 'discussion');
-    function foody_hid_per_page_callback()
-    {
-        $options = get_option('hid_per_page', 3);
+function foody_custom_options() {
+	// number of how i did per page
+	add_settings_field( 'hid_per_page', __( 'מספר ״איך יצא לי״ בעמוד' ), 'foody_hid_per_page_callback', 'discussion' );
+	function foody_hid_per_page_callback() {
+		$options = get_option( 'hid_per_page', 3 );
 
-        echo '<input type="number" id="hid_per_page" name="hid_per_page" value="' . $options . '">';
+		echo '<input type="number" id="hid_per_page" name="hid_per_page" value="' . $options . '">';
 
-    }
+	}
 
-    // WhatsApp business phone number
-    add_settings_field('whatsapp_phone_number', __('מספר טלפון (WhatsApp)'), 'foody_whatsapp_phone_number_callback', 'discussion');
-    function foody_whatsapp_phone_number_callback()
-    {
+	// WhatsApp business phone number
+	add_settings_field( 'whatsapp_phone_number', __( 'מספר טלפון (WhatsApp)' ), 'foody_whatsapp_phone_number_callback', 'discussion' );
+	function foody_whatsapp_phone_number_callback() {
 
-        $options = get_option('whatsapp_phone_number');
+		$options = get_option( 'whatsapp_phone_number' );
 
-        echo '<input type="tel" id="whatsapp_phone_number" name="whatsapp_phone_number" value="' . $options . '">';
+		echo '<input type="tel" id="whatsapp_phone_number" name="whatsapp_phone_number" value="' . $options . '">';
 
-    }
+	}
 
-    // WhatsApp business toggle
-    add_settings_field('whatsapp_phone_number_toggle', __('הצג WhatsApp'), 'foody_whatsapp_phone_number_toggle_callback', 'discussion');
-    function foody_whatsapp_phone_number_toggle_callback()
-    {
-        $options = get_option('whatsapp_phone_number_toggle', false);
-        $checked = $options ? 'checked' : '';
-        echo '<input ' . $checked . ' type="checkbox" id="whatsapp_phone_number_toggle" name="whatsapp_phone_number_toggle">';
+	// WhatsApp business toggle
+	add_settings_field( 'whatsapp_phone_number_toggle', __( 'הצג WhatsApp' ), 'foody_whatsapp_phone_number_toggle_callback', 'discussion' );
+	function foody_whatsapp_phone_number_toggle_callback() {
+		$options = get_option( 'whatsapp_phone_number_toggle', false );
+		$checked = $options ? 'checked' : '';
+		echo '<input ' . $checked . ' type="checkbox" id="whatsapp_phone_number_toggle" name="whatsapp_phone_number_toggle">';
 
-    }
+	}
 
-    // WhatsApp business toggle
-    add_settings_field('foody_404_text', __('טקסט 404'), 'foody_404_text_callback', 'general');
-    function foody_404_text_callback()
-    {
-        $content = get_option('foody_404_text', '');
-        wp_editor( $content, 'foody_404_text', $settings = array('textarea_rows'=> '10') );
-    }
+	// WhatsApp business toggle
+	add_settings_field( 'foody_404_text', __( 'טקסט 404' ), 'foody_404_text_callback', 'general' );
+	function foody_404_text_callback() {
+		$content = get_option( 'foody_404_text', '' );
+		wp_editor( $content, 'foody_404_text', $settings = array( 'textarea_rows' => '10' ) );
+	}
+
 
 	// General Foody settings
 	add_settings_section(
@@ -170,9 +166,12 @@ function foody_custom_options()
 	// Should show Ingredients
 	add_settings_field( 'foody_show_ingredients_conversion', __( 'הצגת טבלת ערכים תזונתיים', 'foody' ), 'foody_show_ingredients_callback', 'general', 'foody_general_settings' );
 
+    // Google tag manager id
+    add_settings_field('foody_google_tag_manager_id', __('מזהה Google Tag Manager', 'foody'), 'foody_show_tag_manager_callback', 'general', 'foody_general_settings');
+
 }
 
-add_action('admin_init', 'foody_custom_options');
+add_action( 'admin_init', 'foody_custom_options' );
 
 // Show foody_conversion_table_link_show field
 function foody_conversion_table_link_show_callback() {
@@ -200,11 +199,10 @@ function foody_conversion_table_link_text_callback() {
 	echo '<input type="text" size="25" id="foody_conversion_table_link_text" name="foody_conversion_table_link_text" value="' . $options . '">';
 }
 
+function add_units_columns( $columns ) {
+	$columns['foo'] = 'Foo';
 
-function add_units_columns($columns)
-{
-    $columns['foo'] = 'Foo';
-    return $columns;
+	return $columns;
 }
 
 function foody_settings_section_description() {
@@ -217,6 +215,12 @@ function foody_show_ingredients_callback() {
 	echo '<input ' . $checked . ' type="checkbox" id="foody_show_ingredients_conversion" name="foody_show_ingredients_conversion">';
 }
 
+
+function foody_show_tag_manager_callback()
+{
+    $options = get_option('foody_google_tag_manager_id', false);
+    echo '<input value="' . $options . '"type="text" id="foody_google_tag_manager_id" name="foody_google_tag_manager_id">';
+}
 //add_filter('manage_edit-units_columns', 'add_units_columns');
 //
 //function add_units_column_content($content)
