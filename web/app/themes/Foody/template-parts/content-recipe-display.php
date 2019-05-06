@@ -67,6 +67,10 @@ $recipe = $template_args['recipe'];
 
 </section>
 
+<section class="conversion-table-link no-print">
+	<?php $recipe->the_conversion_table_link() ?>
+</section>
+
 <section class="recipe-purchase-buttons d-block d-lg-none">
     <?php $recipe->the_purchase_buttons(); ?>
 </section>
@@ -97,10 +101,6 @@ $recipe = $template_args['recipe'];
     </section>
 
 <?php endif; ?>
-
-<section class="conversion-table-link no-print">
-    <?php $recipe->the_conversion_table_link() ?>
-</section>
 
 <section class="recipe-categories categories no-print">
     <?php $recipe->the_categories() ?>
