@@ -93,6 +93,44 @@ if (is_main_site()) {
         }
     }
 
+
+//    add_action('save_post', 'foody_sync_post_by_query', 10, 3);
+//
+//    function foody_sync_post_by_query($post_id, $post, $update)
+//    {
+//
+//        if (!in_array($post->post_type, ['foody_recipe', 'post', 'foody_playlist'])) {
+//            return;
+//        }
+//
+//        $sites = get_sites(['site__not_in' => get_main_site_id()]);
+//
+//        /** @var WP_Site $site */
+//        foreach ($sites as $site) {
+//
+//            $should_sync = false;
+//
+//            $post_categories = wp_get_post_categories($post_id);
+//
+//            $copied_to_site_key = "copied_to_{$site->blog_id}";
+//
+//            foreach ($post_categories as $post_category) {
+//
+//                if (get_term_meta($post_category, $copied_to_site_key, true)) {
+//                    $should_sync = true;
+//                    break;
+//                }
+//            }
+//
+//            if (!$should_sync){
+//
+//            }
+//
+//            Foody_WhiteLabelDuplicator::duplicate($post, $site->blog_id);
+//        }
+//    }
+
+
     // auto sync core Foody taxonomies
     add_action('edit_term', 'foody_auto_sync_term', 10, 3);
     /**
@@ -133,15 +171,15 @@ if (is_main_site()) {
      * @param $taxonomy
      * @throws Exception only locally
      */
-    function foody_copy_posts_by_term($term_id,$tt_id, $taxonomy)
+    function foody_copy_posts_by_term($term_id, $tt_id, $taxonomy)
     {
         global $term_duplicator_process;
-        try{
+        try {
             $term_duplicator_process
                 ->push_to_queue(['taxonomy' => $taxonomy, 'term_id' => $term_id])
                 ->save()
                 ->dispatch();
-        }catch (Exception $e){
+        } catch (Exception $e) {
             Foody_WhiteLabelLogger::exception($e);
         }
 
@@ -157,12 +195,12 @@ if (is_main_site()) {
     function foody_copy_posts_by_author($user_id)
     {
         global $author_duplicator_process;
-        try{
+        try {
             $author_duplicator_process
                 ->push_to_queue(['user_id' => $user_id])
                 ->save()
                 ->dispatch();
-        }catch (Exception $e){
+        } catch (Exception $e) {
             Foody_WhiteLabelLogger::exception($e);
         }
 
