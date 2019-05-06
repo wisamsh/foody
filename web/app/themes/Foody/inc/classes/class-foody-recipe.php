@@ -611,8 +611,10 @@ class Foody_Recipe extends Foody_Post {
 	}
 
 	public function has_nutrients() {
-		// TODO change check after implementing
-		return true;
+		$show_nutrients = get_option( 'foody_show_ingredients_conversion' );
+		// TODO change check to also check for nutrients availability
+
+		return $show_nutrients;
 	}
 
 	public function calculator() {
@@ -627,18 +629,18 @@ class Foody_Recipe extends Foody_Post {
 				$conversions = get_field( 'conversions', $pan );
 				$slices      = get_field( 'slices', $pan );
 
-				if ( ! empty( $conversions ) ) {
-
-					foody_get_template_part(
-						get_template_directory() . '/template-parts/content-recipe-calculator-pans.php',
-						[
-							'pan'         => $pan,
-							'conversions' => $conversions,
-							'slices'      => $slices
-						]
-					);
-
+				if ( empty( $conversions ) ) {
+					$conversions = [];
 				}
+
+				foody_get_template_part(
+					get_template_directory() . '/template-parts/content-recipe-calculator-pans.php',
+					[
+						'pan'         => $pan,
+						'conversions' => $conversions,
+						'slices'      => $slices
+					]
+				);
 			}
 
 		} else {
