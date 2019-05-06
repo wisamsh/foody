@@ -33,7 +33,8 @@ jQuery(document).ready(($) => {
             foodyGlobals.objectID,
             'foody_recipe'
         ],
-        filter: recipesFilter
+        filter: recipesFilter,
+        sort: '#channel-recipe-feed'
     });
     //
     // let playlistsPager = new FoodyContentPaging({
