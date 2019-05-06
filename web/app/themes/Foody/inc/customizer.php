@@ -76,33 +76,6 @@ function foody_customize_register( $wp_customize ) {
 	add_social_link_setting( $wp_customize, 'instagram', 'אינסטגרם', 'https://www.instagram.com/foody_israel', 3 );
 	add_social_link_setting( $wp_customize, 'facebook', 'פייסבוק', 'https://www.facebook.com/FoodyIL/', 5 );
 
-	// Add Foody general section
-	$wp_customize->add_section( 'foody_general_settings', array(
-		'title'    => __( 'הגדרות אתר כלליות', 'foody' ),
-		'priority' => 31,
-	) );
-
-	// Custom Show Youtube
-	$wp_customize->add_setting(
-		'foody_show_ingredients_conversion',
-		array(
-			'default'    => '',
-			'capability' => 'edit_theme_options',
-		)
-	);
-
-	$wp_customize->add_control( new WP_Customize_Control(
-		$wp_customize,
-		'foody_show_ingredients_conversion',
-		array(
-			'label'       => __( 'הצג טבלת ערכים תזונתיים', 'foody' ),
-			'description' => __( '', 'foody' ),
-			'settings'    => 'foody_show_ingredients_conversion',
-			'priority'    => 1,
-			'section'     => 'foody_general_settings',
-			'type'        => 'checkbox'
-		)
-	) );
 }
 
 add_action( 'customize_register', 'foody_customize_register' );
