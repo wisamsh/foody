@@ -43,6 +43,7 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
             'classes' => [
                 "channel-$type-grid"
             ],
+            'more' => true,
             'header' => [
                 'sort' => true,
                 'title' => $title
@@ -54,8 +55,6 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
             get_template_directory() . '/template-parts/common/foody-grid.php',
             $grid
         );
-
-//        return $grid_content;
     }
 
     public function the_featured_content()
