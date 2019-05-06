@@ -229,18 +229,6 @@
           "url": "https://downloads.wordpress.org/plugin/wordpress-importer.0.6.4.zip"
         }
       }
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "hoppinger/advanced-custom-fields-wpcli",
-        "version": "3.0",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://github.com/hoppinger/advanced-custom-fields-wpcli/archive/master.zip"
-        }
-      }
     }
   ],
   "require": {
