@@ -9,24 +9,32 @@ jQuery(document).ready(($) => {
         selector: '.foody_channel-template #accordion-foody-filter',
         grid: '#channel-recipe-feed',
         cols: 2,
-        page:'.foody_channel-template'
+        page: '.foody_channel-template',
+        context: 'channel',
+        contextArgs: [
+            foodyGlobals.objectID
+        ]
     });
-    let playlistsFilter = new FoodySearchFilter({
-        selector: '.foody_channel-template #accordion-foody-filter',
-        grid: '#channel-playlist-feed',
-        cols: 2,
-        page:'.foody_channel-template'
-    });
-
-    // // search and filter pager
-    // let recipesPager = new FoodyContentPaging({
+    // let playlistsFilter = new FoodySearchFilter({
+    //     selector: '.foody_channel-template #accordion-foody-filter',
+    //     grid: '#channel-playlist-feed',
+    //     cols: 2,
+    //     page: '.foody_channel-template',
     //     context: 'channel',
     //     contextArgs: [
-    //         foodyGlobals.objectID,
-    //         'foody_recipe'
-    //     ],
-    //     filter: recipesFilter
+    //         foodyGlobals.objectID
+    //     ]
     // });
+
+    // search and filter pager
+    let recipesPager = new FoodyContentPaging({
+        context: 'channel',
+        contextArgs: [
+            foodyGlobals.objectID,
+            'foody_recipe'
+        ],
+        filter: recipesFilter
+    });
     //
     // let playlistsPager = new FoodyContentPaging({
     //     context: 'channel',

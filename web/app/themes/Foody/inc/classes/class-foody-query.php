@@ -170,25 +170,6 @@ class Foody_Query
         return $filter_types;
     }
 
-    private function parse_query_values($query_arg)
-    {
-        $values = $this->array_query_string_to_array($query_arg);
-        $type = self::$query_params[$query_arg];
-
-        $filter_items = array_map(function ($value) use ($type) {
-
-            $exclude = strpos($value, '-');
-            $filter_value = abs(intval($value));
-            return [
-                'type' => $type,
-                'value' => $filter_value,
-                'exclude' => $exclude
-            ];
-        }, $values);
-
-        return $filter_items;
-    }
-
     /**
      * @param $key string key in $_GET
      * @param string $delimiter used to separate multiple values, defaults to ','
@@ -279,7 +260,7 @@ class Foody_Query
 
         $foody_search = new Foody_Search('foody_filter');
 
-        $posts = $foody_search->query($args,['posts_per_page'=>-1])['posts'];
+        $posts = $foody_search->query($args, ['posts_per_page' => -1])['posts'];
 
         if (is_array($posts)) {
             $posts = array_filter($posts, function ($post) {
@@ -381,6 +362,38 @@ class Foody_Query
             'orderby' => 'date',
             'order' => 'DESC'
         ], $args);
+
+        return self::get_args($args);
+    }
+
+    public function channel($channel_id)
+    {
+        $posts = get_field('related_recipes', $channel_id);
+
+        if (empty($posts)) {
+            $posts = [];
+        }
+
+        return $this->post_ids($posts);
+    }
+
+    public function post_ids($ids)
+    {
+        $ids = array_map(function ($id) {
+            if ($id instanceof WP_Post) {
+                $id = $id->ID;
+            } elseif (is_array($id)) {
+                if (isset($id['ID'])) {
+                    $id = $id['ID'];
+                }
+            }
+            return $id;
+        }, $ids);
+
+        $ids = array_filter($ids, 'is_numeric');
+        $args = [
+            'post__in' => $ids
+        ];
 
         return self::get_args($args);
     }
