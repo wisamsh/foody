@@ -26,14 +26,14 @@ add_filter('wsl_hook_alter_provider_scope', 'wsl_change_default_permissons', 10,
  */
 function auto_login_new_user($user_id)
 {
-    wp_set_current_user($user_id);
-    wp_set_auth_cookie($user_id);
-    $redirect_url = home_url('הרשמה');
-    $redirect_url = add_query_arg('registered', true, $redirect_url);
-
-    Foody_Analytics::get_instance()->user_register();
-
-    wp_redirect($redirect_url);
+    if (!is_admin()) {
+        wp_set_current_user($user_id);
+        wp_set_auth_cookie($user_id);
+        $redirect_url = home_url('הרשמה');
+        $redirect_url = add_query_arg('registered', true, $redirect_url);
+        Foody_Analytics::get_instance()->user_register();
+        wp_redirect($redirect_url);
+    }
 }
 
 add_action('user_register', 'auto_login_new_user');
@@ -159,13 +159,13 @@ function track_user_logins($user_login, $user)
     }
 }
 
-add_filter('auth_cookie_expiration', 'foody_authentication_expiration');
+add_filter('auth_cookie_expiration', 'foody_authentication_expiration', 100000, 1);
 function foody_authentication_expiration($expire_in)
 {
     // 1 year in seconds
     $expire_in_a_year = 31556926;
 
-    if (Foody_User::is_user_subscriber()) {
+    if (current_user_can('upload_files') == false) {
         $expire_in = $expire_in_a_year;
     }
 
@@ -210,7 +210,7 @@ function foody_register_newsletter($email)
 
     $user = get_user_by('email', $email);
 
-    $result = in_array($response,$valid_responses);
+    $result = in_array($response, $valid_responses);
 
     update_user_meta($user->ID, 'newsletter', $result);
 
@@ -222,8 +222,9 @@ function get_viplus_url()
 }
 
 
-if ( ! function_exists( 'foody_is_registration_open' ) ) {
-	function foody_is_registration_open() {
-		return get_option('users_can_register');
-	}
+if (!function_exists('foody_is_registration_open')) {
+    function foody_is_registration_open()
+    {
+        return get_option('users_can_register');
+    }
 }
