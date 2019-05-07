@@ -314,3 +314,28 @@ function transfer_iptc_exif_to_image( $image_info, $destination_image, $original
     return false;
 
 }
+
+function foody_add_featured_image_credit( $form_fields, $post ) {
+
+	// Add a Credit field
+	$form_fields["featured_image_credit"] = array(
+		'label' => __( 'קרדיט', 'foody' ),
+		'input' => 'text',
+		"value" => esc_attr( get_post_meta( $post->ID, 'featured_image_credit', true ) )
+	);
+
+	return $form_fields;
+}
+
+add_filter( 'attachment_fields_to_edit', 'foody_add_featured_image_credit', null, 2 );
+
+
+function foody_save_featured_image_credit( $post, $attachment ) {
+	if ( isset( $attachment['featured_image_credit'] ) ) {
+		update_post_meta( $post['ID'], 'featured_image_credit', esc_attr( $attachment['featured_image_credit'] ) );
+	}
+
+	return $post;
+}
+
+add_filter( 'attachment_fields_to_save', 'foody_save_featured_image_credit', null, 2 );
