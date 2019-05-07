@@ -89,7 +89,7 @@ class Foody_WhiteLabelDuplicator
     public static function duplicateTag($tagId, $blogId, $duplicationArgs = [])
     {
         $args = self::getArgs([
-            'tag' => $tagId,
+            'tag_id' => $tagId,
         ]);
 
         return self::duplicateByQuery($args, $blogId, $duplicationArgs);
@@ -97,6 +97,7 @@ class Foody_WhiteLabelDuplicator
 
 
     /**
+     * @noinspection PhpDocMissingThrowsInspection
      * Duplicate posts by wp_query args
      * @param $args array
      * @param $blogId int
