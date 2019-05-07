@@ -13,18 +13,19 @@ $conversions = $template_args['conversions'];
 $slices      = $template_args['slices'];
 
 $options = array_map(function ($conversion) {
+    if ( ! empty( $conversion ) ) {
+        if ( empty( $conversion['pan'] ) ) {
+            return null;
+        }
 
-    if(empty($conversion['pan'])){
-        return null;
+        return [
+            'value' => $conversion['conversion_rate'],
+            'label' => get_term( $conversion['pan'] )->name,
+            'data'  => [
+                'slices' => get_field( 'slices', $conversion['pan'] )
+            ]
+        ];
     }
-
-    return [
-        'value' => $conversion['conversion_rate'],
-        'label' => get_term( $conversion['pan'] )->name,
-        'data'  => [
-            'slices'   => get_field( 'slices', $conversion['pan'] )
-        ]
-    ];
 
 }, $conversions);
 

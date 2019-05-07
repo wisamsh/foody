@@ -285,9 +285,16 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         $this->the_video_box();
     }
 
+	public function get_featured_content_credit() {
+		$credit = get_post_meta($this->post->ID, 'featured_image_credit', true);
+		if (!empty($credit)) {
+			return $credit;
+		}
+	}
+
     public function the_sidebar_content($args = array())
     {
-        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים', $args = array('hide_playlists'=>true));
+        $this->the_sidebar_related_content('מתכונים נוספים', 'פלייליסטים קשורים', $args = array('hide_playlists' => true));
         dynamic_sidebar('foody-social');
     }
 
@@ -390,8 +397,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $posts = $related;
         }
 
-        $posts = array_filter($posts,function ($post){
-           return $post instanceof WP_Post && $post->ping_status === 'publish';
+        $posts = array_filter($posts, function ($post) {
+            return $post instanceof WP_Post && $post->ping_status === 'publish';
         });
 
         $items_to_fetch = self::$MAX__RELATED_ITEMS - count($posts);
@@ -442,11 +449,13 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function comments()
     {
-        $template = '';
-        if (wp_is_mobile()) {
-            $template = '/comments-mobile.php';
+        if (is_comments_open($this->id)) {
+            $template = '';
+            if (wp_is_mobile()) {
+                $template = '/comments-mobile.php';
+            }
+            comments_template($template);
         }
-        comments_template($template);
     }
 
     public abstract function the_details();
@@ -572,8 +581,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             'ID' => $this->post->ID,
             'type' => $this->post->post_type,
             'title' => $this->title,
-	        'author_name' => $this->author_name,
-	        'view_count' => foody_get_post_views($this->id),
+            'author_name' => $this->author_name,
+            'view_count' => foody_get_post_views($this->id),
             'has_video' => $this->has_video
         ];
     }
@@ -623,11 +632,15 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
             $no_index_author = get_field('no_index', "user_$post_author_id");
 
+            if (is_multisite()) {
+                $should_index = get_post_meta($this->id, 'foody_index', true);
+            }
+
             // acf field on author is
             // set to 'no index'
-            if ($no_index_author) {
-
-
+            // and post meta custom foody index
+            // is true
+            if ($no_index_author && $should_index) {
                 $post_index_override = get_post_meta($this->id, '_yoast_wpseo_meta-robots-noindex', true);
 
                 // if this field is false (0 or doesn't exist)
@@ -639,6 +652,10 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
             if (!$should_index) {
                 $robots_str = "noindex,follow";
+
+                if (WP_ENV != 'production' && class_exists('Foody_WhiteLabelLogger')) {
+                    Foody_WhiteLabelLogger::info("setting no index for post {$this->id}");
+                }
             }
         }
 
@@ -657,16 +674,17 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                         $query = explode('&', $parts[1]);
                         $video_id = $query[0];
                         $args = array(
-                            'id' => $video_id
+                            'id' => $video_id,
+                            'post_id' => $this->id
                         );
                         foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
                     } else {
-                        the_post_thumbnail('foody-main');
+                        echo get_the_post_thumbnail($this->id, 'foody-main');
                     }
 
                 endwhile;
             } else {
-                the_post_thumbnail('foody-main');
+                echo get_the_post_thumbnail($this->id, 'foody-main');
             }
         }
     }

@@ -63,7 +63,7 @@ body[class~='search'] {
           font-size: 32px;
           font-weight: 900;
           text-align: center;
-          color: $color__primary;
+          color: var(--color__primary);
           margin: 1em 0;
         }
 

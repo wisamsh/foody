@@ -3,7 +3,7 @@ $sidebar-width: 21%;
 body {
   &.has-background {
     footer {
-      background-color: $color__background-screen;
+      background-color: var(--color__background-screen);
     }
   }
 }
@@ -60,7 +60,7 @@ footer.site-footer {
       margin: 0;
 
       &:not(:last-child) {
-        border-left: solid 1px $color__divider;
+        border-left: solid 1px var(--color__divider);
       }
 
       li {
@@ -110,7 +110,7 @@ footer.site-footer {
               box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
               background-color: #ffffff;
               border: none;
-              color: $color__primary;
+              color: var(--color__primary);
               font-size: 1em;
               cursor: pointer;
               font-weight: 900;
@@ -212,7 +212,7 @@ footer.site-footer {
 
           input[type="submit"] {
             @extend .newsletter-input;
-            color: $color__primary;
+            color: var(--color__primary);
             font-weight: 900;
           }
         }

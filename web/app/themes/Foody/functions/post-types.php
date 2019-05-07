@@ -21,12 +21,14 @@ function register_post_types()
         'accessory' => array(
             'id' => 'accessory',
             'name' => 'אביזרים',
-            'singular_name' => 'אביזר'
+            'singular_name' => 'אביזר',
+            'show_in_menu' => is_main_site()
         ),
         'technique' => array(
             'id' => 'technique',
             'name' => 'טכניקות',
-            'singular_name' => 'טכניקה'
+            'singular_name' => 'טכניקה',
+            'show_in_menu' => is_main_site()
         ),
         'ingredient' => array(
             'id' => 'ingredient',
@@ -35,6 +37,7 @@ function register_post_types()
             'taxonomies' => array('category', 'post_tag'),
             'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
             'show_ui' => true,
+            'show_in_menu' => is_main_site()
         ),
         'playlist' => array(
             'id' => 'playlist',
@@ -97,6 +100,12 @@ function register_post_types()
             'has_archive' => true,
             'capability_type' => 'post'
         );
+
+        if (!isset($type['show_in_menu'])) {
+            $type['show_in_menu'] = true;
+        }
+
+        $args['show_in_menu'] = $type['show_in_menu'];
 
         if (isset($type['rewrite'])) {
             $args['rewrite'] = $type['rewrite'];
@@ -206,7 +215,8 @@ function pans_init()
             'capabilities' => array(
                 'assign_terms' => 'edit_posts',
                 'edit_terms' => 'publish_posts',
-                'show_ui' => true
+                'show_ui' => true,
+                'show_in_menu' => is_main_site()
             )
         )
     );
@@ -228,7 +238,8 @@ function limitations_init()
             'capabilities' => array(
                 'assign_terms' => 'edit_posts',
                 'edit_terms' => 'publish_posts',
-                'show_ui' => true
+                'show_ui' => true,
+                'show_in_menu' => is_main_site()
             )
         )
     );
@@ -260,13 +271,14 @@ function sponsors_init()
             'public' => false,
             'rewrite' => false,
             'show_ui' => true,
-
+            'show_in_menu' => is_main_site(),
+            'show_in_nav_menus' => is_main_site(),
             'capabilities' => array(
                 'assign_terms' => 'edit_posts',
                 'edit_terms' => 'publish_posts',
                 'show_ui' => true,
-                'show_in_menu' =>true,
-                'show_in_nav_menus' =>true
+                'show_in_menu' => is_main_site(),
+                'show_in_nav_menus' => is_main_site(),
             )
         )
     );
@@ -446,3 +458,33 @@ function foody_set_custom_page_var($page)
 
     return $page;
 }
+
+function foody_add_featured_image_credit( $content, $post_id ) {
+	if ( get_post_type() == 'foody_recipe' || get_post_type() == 'post' ) {
+		$field_id    = 'featured_image_credit';
+		$field_value = esc_attr( get_post_meta( $post_id, $field_id, true ) );
+		$field_text  = esc_html__( 'קרדיט', 'foody' );
+
+		$field_label = sprintf(
+			'<p><h4 for="%1$s">%3$s</h4><input type="text" name="%1$s" id="%1$s" value="%2$s" ></p>',
+			$field_id, $field_value, $field_text
+		);
+
+		return $content .= $field_label;
+	} else {
+		return $content;
+	}
+}
+
+add_filter( 'admin_post_thumbnail_html', 'foody_add_featured_image_credit', 10, 2 );
+
+function foody_save_featured_image_credit( $post_ID, $post, $update ) {
+	if ( get_post_type() == 'foody_recipe' || get_post_type() == 'post' ) {
+		$field_id    = 'featured_image_credit';
+		$field_value = isset( $_REQUEST[ $field_id ] ) ? $_REQUEST[ $field_id ] : '';
+
+		update_post_meta( $post_ID, $field_id, $field_value );
+	}
+}
+
+add_action( 'save_post', 'foody_save_featured_image_credit', 10, 3 );

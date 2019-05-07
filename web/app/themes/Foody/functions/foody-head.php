@@ -8,129 +8,138 @@
  * Time: 11:15 PM
  */
 
-add_action('wp_head', 'Foody_Header::facebook_init');
+add_action( 'wp_head', 'Foody_Header::facebook_init' );
 
 
-function get_page_type()
-{
+function get_page_type() {
 
-    $type = 'article';
+	$type = 'article';
 
-    if (is_home() || is_front_page()) {
-        $type = 'home';
-    } elseif (is_category()) {
-        $type = 'category';
-    } elseif (is_search()) {
-        $type = 'search';
-    } elseif (is_author()) {
-        $type = 'author';
-    } elseif (is_single()) {
-        $post_type = get_post_type();
+	if ( is_home() || is_front_page() ) {
+		$type = 'home';
+	} elseif ( is_category() ) {
+		$type = 'category';
+	} elseif ( is_search() ) {
+		$type = 'search';
+	} elseif ( is_author() ) {
+		$type = 'author';
+	} elseif ( is_single() ) {
+		$post_type = get_post_type();
 
-        if (!empty($post_type) && $post_type != 'post') {
-            $type = str_replace('foody_', '', $post_type);
-        }
-    } elseif (is_page_template('page-templates/categories.php')) {
+		if ( ! empty( $post_type ) && $post_type != 'post' ) {
+			$type = str_replace( 'foody_', '', $post_type );
+		}
+	} elseif ( is_page_template( 'page-templates/categories.php' ) ) {
 
-        $type = 'categories';
+		$type = 'categories';
 
-    } elseif (is_page_template('page-templates/profile.php')) {
+	} elseif ( is_page_template( 'page-templates/profile.php' ) ) {
 
-        $type = 'profile';
+		$type = 'profile';
 
-    } elseif (is_page('הנבחרת שלנו')) {
+	} elseif ( is_page( 'הנבחרת שלנו' ) ) {
 
-        $type = 'team';
+		$type = 'team';
 
+    } elseif ( is_page_template( 'page-templates/foody-campaign.php' ) ) {
+	    $type = 'campaign';
     }
 
-    return $type;
+	return $type;
 }
 
 
-function foody_js_globals_main($vars)
-{
+function foody_js_globals_main( $vars ) {
 
-    $vars['queryPage'] = apply_filters('foody_page_query_var',Foody_Query::$page);
-    $vars['objectID'] = get_queried_object_id();
-    $vars['title'] = get_the_title();
-    $vars['type'] = get_page_type();
-    $vars['postsPerPage'] = get_option('posts_per_page');
-    $vars['mixpanelToken'] = MIXPANEL_TOKEN;
-
-
-    if (is_single()) {
-
-        $vars['post'] = [
-            'ID' => get_the_ID(),
-            'type' => get_post_type(),
-            'title' => get_the_title()
-        ];
-    }
-
-    $queried_object = get_queried_object();
-    if (is_category() || is_tag()) {
-        $vars['title'] = $queried_object->name;
-    } elseif (is_author()) {
-        $vars['title'] = $queried_object->data->display_name;
-    }
+	$vars['queryPage']     = apply_filters( 'foody_page_query_var', Foody_Query::$page );
+	$vars['objectID']      = get_queried_object_id();
+	$vars['title']         = get_the_title();
+	$vars['type']          = get_page_type();
+	$vars['postsPerPage']  = get_option( 'posts_per_page' );
+	$vars['mixpanelToken'] = MIXPANEL_TOKEN;
 
 
-    return $vars;
+	if ( is_single() ) {
+
+		$vars['post'] = [
+			'ID'    => get_the_ID(),
+			'type'  => get_post_type(),
+			'title' => get_the_title()
+		];
+	}
+
+	$queried_object = get_queried_object();
+	if ( is_category() || is_tag() ) {
+		$vars['title'] = $queried_object->name;
+	} elseif ( is_author() ) {
+		$vars['title'] = $queried_object->data->display_name;
+	}
+
+
+	return $vars;
 }
 
-add_filter('foody_js_globals', 'foody_js_globals_main');
+add_filter( 'foody_js_globals', 'foody_js_globals_main' );
 
 
-function is_tablet($vars)
-{
-    $tablet_browser = foody_is_tablet();
+function is_tablet( $vars ) {
+	$tablet_browser = foody_is_tablet();
 
-    $vars['isTablet'] = $tablet_browser;
-    return $vars;
+	$vars['isTablet'] = $tablet_browser;
+
+	return $vars;
 }
 
-add_filter('foody_js_globals', 'is_tablet');
+add_filter( 'foody_js_globals', 'is_tablet' );
 
+
+function campaign_name( $vars ) {
+	if ( get_page_type() == 'campaign' ) {
+		$vars['campaign_name'] = get_field( 'campaign_name' );
+	}
+
+	return $vars;
+}
+
+add_filter( 'foody_js_globals', 'campaign_name' );
 
 function foody_set_og_image()
 {
     if (is_author()) {
 
-        $author = new Foody_Author();
+		$author = new Foody_Author();
 
-        $author_image = $author->topic_image();
-        $image = "<meta property=\"og:image\" content=\"$author_image\">";
+		$author_image = $author->topic_image();
+		$image        = "<meta property=\"og:image\" content=\"$author_image\">";
 
-        $image .= '<meta property="og:image:width" content="96">';
-        $image .= '<meta property="og:image:height" content="96">';
-        echo $image;
-    }
+		$image .= '<meta property="og:image:width" content="96">';
+		$image .= '<meta property="og:image:height" content="96">';
+		echo $image;
+	}
 
 
 }
 
-add_action('wp_head', 'foody_set_og_image');
+add_action( 'wp_head', 'foody_set_og_image' );
 
 
-function foody_hide_mobile_filter($vars)
-{
-    $queried_object = get_queried_object();
-    $show_filters = get_field('show_filters', $queried_object);
-    if ($show_filters === false) {
-        $vars['hideFilter'] = true;
-    }
-    return $vars;
+function foody_hide_mobile_filter( $vars ) {
+	$queried_object = get_queried_object();
+	$show_filters   = get_field( 'show_filters', $queried_object );
+	if ( $show_filters === false ) {
+		$vars['hideFilter'] = true;
+	}
+
+	return $vars;
 }
 
-add_filter('foody_js_globals', 'foody_hide_mobile_filter');
+add_filter( 'foody_js_globals', 'foody_hide_mobile_filter' );
 
 
-function foody_env_scripts()
-{
-    $scripts = [
-        'http://foody.moveodevelop.com' => [
-            "    (function(h,o,t,j,a,r){
+function foody_env_scripts() {
+	$scripts = [
+		'http://foody.moveodevelop.com' => [
+			"    (function(h,o,t,j,a,r){
 
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
 
@@ -145,98 +154,95 @@ function foody_env_scripts()
         a.appendChild(r);
 
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');"
-        ],
-        'https://foody.co.il' => []
-    ];
+		],
+		'https://foody.co.il'           => []
+	];
 
-    if (isset($scripts[home_url()])) {
-        $env_scripts = $scripts[home_url()];
+	if ( isset( $scripts[ home_url() ] ) ) {
+		$env_scripts = $scripts[ home_url() ];
 
-        foreach ($env_scripts as $script) {
+		foreach ( $env_scripts as $script ) {
 
-            ?>
+			?>
             <script>
 
-                <?php echo $script ?>
+				<?php echo $script ?>
 
             </script>
-            <?php
-        }
-    }
+			<?php
+		}
+	}
 }
 
-add_action('wp_head', 'foody_env_scripts');
+add_action( 'wp_head', 'foody_env_scripts' );
 
-function foody_page_content_pagination()
-{
-    if (is_category() || is_home() || is_front_page()) {
-        $page = get_query_var('page');
-        if (isset($_GET['page'])) {
-            $page = $_GET['page'];
-            if (!is_numeric($page)) {
-                $page = 1;
-            }
-        }
-        if (empty($page)) {
-            $page = 1;
-        }
-        $args = [
-            'post_type' => ['foody_recipe', 'foody_playlist', 'post'],
-            'post_status' => 'publish',
-            'fields' => 'ids'
-        ];
+function foody_page_content_pagination() {
+	if ( is_category() || is_home() || is_front_page() ) {
+		$page = get_query_var( 'page' );
+		if ( isset( $_GET['page'] ) ) {
+			$page = $_GET['page'];
+			if ( ! is_numeric( $page ) ) {
+				$page = 1;
+			}
+		}
+		if ( empty( $page ) ) {
+			$page = 1;
+		}
+		$args = [
+			'post_type'   => [ 'foody_recipe', 'foody_playlist', 'post' ],
+			'post_status' => 'publish',
+			'fields'      => 'ids'
+		];
 
-        $posts_per_page = get_option('posts_per_page');
-        $link = home_url();
+		$posts_per_page = get_option( 'posts_per_page' );
+		$link           = home_url();
 
-        if (is_category()) {
-            $args['cat'] = get_queried_object_id();
-            $link = get_term_link(get_queried_object_id());
-        }
+		if ( is_category() ) {
+			$args['cat'] = get_queried_object_id();
+			$link        = get_term_link( get_queried_object_id() );
+		}
 
-        $q = new WP_Query($args);
+		$q = new WP_Query( $args );
 
-        $posts_count = $q->found_posts;
-        if (is_numeric($posts_count)) {
-            $posts_count = intval($posts_count);
-        } else {
-            $posts_count = 0;
-        }
+		$posts_count = $q->found_posts;
+		if ( is_numeric( $posts_count ) ) {
+			$posts_count = intval( $posts_count );
+		} else {
+			$posts_count = 0;
+		}
 
-        $max_pages = $posts_count / $posts_per_page;
+		$max_pages = $posts_count / $posts_per_page;
 
-        $prev = $page - 1;
-        $next = $page + 1;
-        $q_or_path = '/page/';
-        if (is_category()) {
-            $q_or_path = '?page=';
-        }
-        if ($prev > 0) {
-            $href = $link . $q_or_path . $prev;
-            echo '<link id="pagination-prev" rel="prev" href="' . $href . '">';
-        }
+		$prev      = $page - 1;
+		$next      = $page + 1;
+		$q_or_path = '/page/';
+		if ( is_category() ) {
+			$q_or_path = '?page=';
+		}
+		if ( $prev > 0 ) {
+			$href = $link . $q_or_path . $prev;
+			echo '<link id="pagination-prev" rel="prev" href="' . $href . '">';
+		}
 
-        if ($next <= $max_pages) {
-            $href = $link . $q_or_path . $next;
-            echo '<link id="pagination-next" rel="next" href="' . $href . '">';
-        }
-    }
+		if ( $next <= $max_pages ) {
+			$href = $link . $q_or_path . $next;
+			echo '<link id="pagination-next" rel="next" href="' . $href . '">';
+		}
+	}
 }
 
-add_action('wp_head', 'foody_page_content_pagination');
+add_action( 'wp_head', 'foody_page_content_pagination' );
 
 
-function add_filter_query_arg($vars)
-{
-    $vars['filterQueryArg'] = Foody_Query::$filter_query_arg;
+function add_filter_query_arg( $vars ) {
+	$vars['filterQueryArg'] = Foody_Query::$filter_query_arg;
 
-    return $vars;
+	return $vars;
 }
 
-add_filter('foody_js_globals', 'add_user_data_globals');
+add_filter( 'foody_js_globals', 'add_user_data_globals' );
 
-function add_user_data_globals($vars)
-{
+function add_user_data_globals( $vars ) {
 	if ( is_user_logged_in() ) {
 		$user_id = get_current_user_id();
 		$social  = get_user_meta( $user_id, 'wsl_current_provider', true );
@@ -250,11 +256,10 @@ function add_user_data_globals($vars)
 	return $vars;
 }
 
-add_filter('foody_js_globals', 'add_filter_query_arg');
+add_filter( 'foody_js_globals', 'add_filter_query_arg' );
 
-function foody_style_placeholder()
-{
-    ?>
+function foody_style_placeholder() {
+	?>
     <style>
         body {
             -webkit-transition: opacity .15s;
@@ -265,23 +270,75 @@ function foody_style_placeholder()
             opacity: 0;
         }
     </style>
-    <?php
+	<?php
 }
 
 
-add_action('wp_head', 'foody_style_placeholder');
+add_action( 'wp_head', 'foody_style_placeholder' );
 
 
-function add_bg_class($classes){
+function add_bg_class( $classes ) {
 
-    $bg_image = foody_get_background_image();
+	$bg_image = foody_get_background_image();
 
-    $has_background = !empty($bg_image);
+	$has_background = ! empty( $bg_image );
 
-    $bg_class = $has_background ? 'has-background' : '';
+	$bg_class = $has_background ? 'has-background' : '';
 
-    $classes[]= $bg_class;
+	$classes[] = $bg_class;
 
-    return $classes;
+	return $classes;
 }
-add_filter('body_class','add_bg_class');
+
+add_filter( 'body_class', 'add_bg_class' );
+
+function foody_customize_colors_css() {
+	$titles_color_css      = get_theme_mod( 'foody_title_color' );
+	$subtitles_color_css   = get_theme_mod( 'foody_subtitle_color' );
+	$text_color_css        = get_theme_mod( 'foody_text_color' );
+	$links_color_css       = get_theme_mod( 'foody_links_color' );
+	$links_hover_color_css = get_theme_mod( 'foody_links_hover_color' );
+
+	if ( ! empty( $titles_color_css ) ) {
+		?>
+        <style type="text/css">
+            :root {
+                --color__text-title: <?php echo $titles_color_css; ?>;
+                --color__primary: <?php echo $titles_color_css; ?>;
+            }
+        </style>
+		<?php
+	}
+
+	if ( ! empty( $links_color_css ) ) {
+		?>
+        <style type="text/css">
+            :root {
+                --color__link: <?php echo $links_color_css; ?>;
+            }
+        </style>
+		<?php
+	}
+
+	if ( ! empty( $text_color_css ) ) {
+		?>
+        <style type="text/css">
+            :root {
+                --color__text-main: <?php echo $text_color_css; ?>;
+            }
+        </style>
+		<?php
+	}
+
+	if ( ! empty( $links_hover_color_css ) ) {
+		?>
+        <style type="text/css">
+            :root {
+                --color__link-hover: <?php echo $links_hover_color_css; ?>;
+            }
+        </style>
+		<?php
+	}
+}
+
+add_action( 'wp_head', 'foody_customize_colors_css' );

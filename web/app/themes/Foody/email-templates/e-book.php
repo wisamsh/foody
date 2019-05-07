@@ -8,7 +8,7 @@
 
 /** @noinspection PhpUndefinedVariableInspection */
 /** @var string $subject */
-extract($template_args);
+extract( $template_args );
 
 ?>
 <!doctype html>
@@ -28,7 +28,7 @@ extract($template_args);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        <?php echo $subject ?>
+		<?php echo $subject ?>
     </title>
 
     <style type="text/css">
@@ -847,9 +847,9 @@ extract($template_args);
                                                 <td class="mcnImageContent" valign="top"
                                                     style="padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0; text-align:center;">
 
-                                                    <a href="https://s3-eu-west-1.amazonaws.com/foody-media/FOODY-Passover-Ebook-2019.pdf" download="download">
-                                                        <img align="center" alt="<?php echo __('ספר מתכונים לפסח')?>"
-                                                             src="<?php echo $GLOBALS['images_dir'] . 'e-book-email-desktop.png' ?>"
+                                                    <a href="<?php echo $attachment ?>" download="download">
+                                                        <img align="center" alt="<?php echo $image_alt ?>"
+                                                             src="<?php echo $image ?>"
                                                              width="564"
                                                              style="max-width:800px; padding-bottom: 0; display: inline !important; vertical-align: bottom;"
                                                              class="mcnImage">

@@ -9,10 +9,34 @@
 class Foody_Header
 {
 
+    private static $tag_manager_id;
+
+    /**
+     * Foody_Header constructor.
+     */
+    public function __construct()
+    {
+        self::$tag_manager_id = get_option('foody_google_tag_manager_id', GOOGLE_TAG_MANAGER_ID);
+    }
 
     public function the_socials_bar()
     {
-        foody_get_template_part(get_template_directory() . '/template-parts/header-social-bar.php');
+        $show_instagram = get_theme_mod('foody_show_social_instagram');
+        $instagram_link = get_theme_mod('foody_social_instagram');
+        $show_facebook = get_theme_mod('foody_show_social_facebook');
+        $facebook_link = get_theme_mod('foody_social_facebook');
+        $show_youtube = get_theme_mod('foody_show_social_youtube');
+        $youtube_link = get_theme_mod('foody_social_youtube');
+        foody_get_template_part(get_template_directory() . '/template-parts/header-social-bar.php',
+            [
+                'show_instagram' => $show_instagram,
+                'show_facebook' => $show_facebook,
+                'show_youtube' => $show_youtube,
+                'instagram_link' => $instagram_link,
+                'facebook_link' => $facebook_link,
+                'youtube_link' => $youtube_link
+            ]
+        );
     }
 
     public static function facebook_init()
@@ -48,7 +72,14 @@ class Foody_Header
     {
         ?>
         <!-- Google Tag Manager -->
-        <script>(function (w, d, s, l, i) {w[l] = w[l] || [];w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js'});var f = d.getElementsByTagName(s)[0],j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';j.async = true;j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;f.parentNode.insertBefore(j, f);})(window, document, 'script', 'dataLayer', '<?php echo GOOGLE_TAG_MANAGER_ID?>');</script>
+        <script>(function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+                var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', '<?php echo self::$tag_manager_id?>');</script>
         <!-- End Google Tag Manager -->
         <?php
     }
@@ -58,7 +89,7 @@ class Foody_Header
         ?>
         <!-- Google Tag Manager (noscript) -->
         <noscript>
-            <iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo GOOGLE_TAG_MANAGE_ID ?>"
+            <iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo self::$tag_manager_id ?>"
                     height="0" width="0" style="display:none;visibility:hidden"></iframe>
         </noscript>
         <!-- End Google Tag Manager (noscript) -->

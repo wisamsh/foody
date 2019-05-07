@@ -9,7 +9,6 @@
  * @package Foody
  */
 $header = new Foody_Header();
-$channels = new Foody_Channels_Menu();
 $user = new Foody_User();
 
 ?>
@@ -31,13 +30,12 @@ $user = new Foody_User();
 
 <?php
 
-$background_image = foody_get_background_image();
-
-if (!empty($background_image)) {
+if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image'])) {
     ?>
-    <img class="body-background" src="<?php echo $background_image['url'] ?>"
-         alt="<?php echo $background_image['alt'] ?>">
+    <img class="body-background" src="<?php echo $_SESSION['background_image']['url'] ?>"
+         alt="<?php echo $_SESSION['background_image']['alt'] ?>">
     <?php
+	unset($_SESSION['background_image']);
 }
 ?>
 
@@ -64,7 +62,7 @@ if (!empty($background_image)) {
                 </span>
 
                 <?php if (!wp_is_mobile()): ?>
-                    <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility">
+                    <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility" data-accessibe="trigger">
                         <?php $header->accessibility(); ?>
                         <div id="accessibility-container"></div>
                     </button>
@@ -99,7 +97,7 @@ if (!empty($background_image)) {
                 </button>
 
 
-                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">
+                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility" data-accessibe="trigger">
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
                          alt="<?php echo __('נגישות') ?>">
                     <div id="accessibility-container"></div>
@@ -122,7 +120,7 @@ if (!empty($background_image)) {
                 </button>
 
 
-                <?php if (is_user_logged_in()): ?>
+                <?php if (is_user_logged_in() && foody_is_registration_open()): ?>
 
                     <div class="d-none d-lg-block profile-picture-container">
 
@@ -151,12 +149,6 @@ if (!empty($background_image)) {
             </div>
 
         </div>
-
-        <?php
-        if (wp_is_mobile()) {
-            echo $channels->get_the_menu();
-        }
-        ?>
 
 
         <!-- #site-navigation -->

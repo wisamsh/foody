@@ -80,7 +80,8 @@ class Foody_Registration
             update_user_meta($user_id, 'phone_number', $phone_number);
             update_user_meta($user_id, 'seen_approvals', true);
             if (!empty($user_data['e_book']) && !empty($user_data['marketing'])) {
-                Foody_Mailer::send(__('איזה כיף לך! קיבלת את ספר מתכוני הפסח של FOODY'), 'e-book', $email);
+            	$subject = get_field('campaign_mail_subject', get_page_by_title('הרשמה'));
+                Foody_Mailer::send($subject, 'e-book', $email);
                 update_user_meta($user_id, 'e_book', true);
             }
         }
@@ -100,7 +101,7 @@ class Foody_Registration
         if ('POST' == $_SERVER['REQUEST_METHOD']) {
             $redirect_url = home_url('הרשמה');
 
-            if (!get_option('users_can_register')) {
+            if (!foody_is_registration_open()) {
                 // Registration closed, display error
                 $redirect_url = add_query_arg('register-errors', 'closed', $redirect_url);
             } elseif (!$this->verify_recaptcha()) {
@@ -244,14 +245,19 @@ class Foody_Registration
                 exit;
             }
 
-            // The rest are redirected to the login page
-            $login_url = home_url('התחברות');
-            if (!empty($redirect_to)) {
-                $login_url = add_query_arg('redirect_to', $redirect_to, $login_url);
-            }
+            $login_page = get_page_by_title('התחברות', OBJECT, 'page');
+            $exists = ($login_page instanceof WP_Post);
 
-            wp_redirect($login_url);
-            exit;
+            if ($exists){
+                // The rest are redirected to the login page
+                $login_url = home_url('התחברות');
+                if (!empty($redirect_to)) {
+                    $login_url = add_query_arg('redirect_to', $redirect_to, $login_url);
+                }
+
+                wp_redirect($login_url);
+                exit;
+            }
         }
     }
 

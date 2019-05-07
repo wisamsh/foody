@@ -55,8 +55,13 @@ $featured_content_classes[] = 'featured-content-container';
                             ?>
                             <section class="details-container">
                                 <div class="<?php foody_el_classes($featured_content_classes) ?>">
-                                    <?php $foody_page->the_featured_content() ?>
+	                                <?php $foody_page->the_featured_content() ?>
                                 </div>
+	                            <?php if ( ! empty( $foody_page->get_featured_content_credit() ) ) : ?>
+                                    <div class="feature-content-credit">
+			                            <?php echo $foody_page->get_featured_content_credit(); ?>
+                                    </div>
+	                            <?php endif; ?>
 
                                 <?php $foody_page->the_details() ?>
 

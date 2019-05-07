@@ -31,10 +31,16 @@ class Foody_Footer
 
     public function menu()
     {
+        if (empty($this->footer_pages)){
+            $this->footer_pages = [];
+        }
 
+        if (empty($this->footer_links)){
+            $this->footer_links = [];
+        }
 
         if ($this->debug) {
-            $this->footer_links = array_merge($this->ooter_links, $this->dummy_links(40));
+            $this->footer_links = array_merge($this->footer_links, $this->dummy_links(40));
         }
 
 
@@ -45,7 +51,7 @@ class Foody_Footer
         }
 
         // FEATURE allow control over the separate cols in the footer
-        if ($chunk_size > 0) {
+        if ($chunk_size > 0 && !empty($this->footer_links)) {
             $this->footer_links = array_chunk($this->footer_links, $chunk_size);
         }
 
@@ -65,11 +71,10 @@ class Foody_Footer
                 array_pop($footer_links);
             }
 
-
-            foreach ($this->footer_links as $link_group) {
-
-
-                $this->display_menu($link_group, 'col');
+            if (!empty($this->footer_links)){
+                foreach ($this->footer_links as $link_group) {
+                    $this->display_menu($link_group, 'col');
+                }
             }
 
             ?>
@@ -108,9 +113,10 @@ class Foody_Footer
     }
 
 
-    public function the_moveo($echo = true){
+    public function the_moveo($echo = true)
+    {
         $moveo = file_get_contents(get_template_directory() . '/resources/images/moveo.svg');
-        if ($echo){
+        if ($echo) {
             echo $moveo;
         }
 
@@ -127,15 +133,22 @@ class Foody_Footer
             <?php
 
             $this->newsletter();
-
+            if (empty($menu_items)) {
+                return;
+            }
             $items = array_chunk($menu_items, count($menu_items) / 2);
 
+            if (count($items) > 1){
 
-            $items[1][] = array(
-                'title' => sprintf(__('Foody Israel') . ' %s', date('Y'))
-            );
+                $items[0][] = $this->moveo();
 
-            $items[0][] = $this->moveo();
+                $items[1][] = array(
+                    'title' => sprintf(__('Foody Israel') . ' %s', date('Y'))
+                );
+            }
+
+
+
 
 
             foreach ($items as $item) {
@@ -165,6 +178,39 @@ class Foody_Footer
 
     }
 
+    public function add_nagish_li_script()
+    {
+	    ?>
+        <script>(function (document, tag) {
+                var script = document.createElement(tag);
+                var element = document.getElementsByTagName('body')[0];
+                script.src = 'https://accessibeapp.com/api/v1/assets/js/accessibe.js';
+                script.async = true;
+                script.defer = true;
+                (typeof element === 'undefined' ? document.getElementsByTagName('html')[0] : element).appendChild(script);
+                script.onload = function () {
+                    AccessiBe.init({
+                        clientId: 1105,
+                        clientKey: 'CTr7CLASmMyt02TnLnNs',
+                        wlbl: 'Nagishly',
+                        statementLink: '',
+                        feedbackLink: '',
+                        showAllActions: false,
+                        keyNavStrong: false,
+                        hideMobile: true,
+                        hideTrigger: true,
+                        language: 'he',
+                        focusInnerColor: '#ed3d48',
+                        focusOuterColor: '#ff7216',
+                        leadColor: '#ed3d48',
+                        triggerColor: '#ed3d48',
+                        usefulLinks: {},
+                    });
+                };
+            }(document, 'script'));
+            </script>
+	    <?php
+    }
 
     private function display_menu_item($url, $title, $target = '', $classes = '')
     {

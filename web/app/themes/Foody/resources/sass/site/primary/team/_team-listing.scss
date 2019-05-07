@@ -26,7 +26,7 @@
         border-radius: 50%;
         background-color: #FFFFFF;
         box-shadow: -2px 1px 4px 0 rgba(0, 0, 0, 0.17);
-        color: $color__primary;
+        color: var(--color__primary);
         display: inline-block;
         position: absolute;
         bottom: 0;
@@ -42,7 +42,7 @@
       font-weight: 500;
       //noinspection CssInvalidPropertyValue
       word-break: break-word;
-      color: $color__text-primary-dark;
+      color: var(--color__text-primary-dark);
       font-size: 20px;
       margin: 0 0 10px;
     }

@@ -9,8 +9,11 @@
 
 /** @var Foody_Recipe $foody_page */
 /** @noinspection PhpUndefinedVariableInspection */
-$foody_page = $template_args['page'];
-$show_favorite = foody_get_array_default($template_args, 'show_favorite', true);
+$foody_page    = $template_args['page'];
+$show_favorite = foody_get_array_default( $template_args, 'show_favorite', true );
+if ( ! foody_is_registration_open() ) {
+	$show_favorite = false;
+}
 ?>
 <div class="details container">
     <?php bootstrap_breadcrumb() ?>

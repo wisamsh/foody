@@ -40,6 +40,9 @@ window.calculator = function (selector) {
         let original = $option.data('original');
 
         let originalSlices = $(this).find('option[data-original=1]').data('slices');
+        if (!originalSlices) {
+            originalSlices = 1;
+        }
         let slices = $option.data('slices');
         if (!slices) {
             slices = 1;
@@ -63,12 +66,17 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 
         let plural = $this.data('plural');
         let singular = $this.data('singular');
+        let unit = $this.data('unit');
+        if (!unit) {
+            unit = '';
+        }
 
         let calculated = base * val;
         let text = prettyNumber(calculated);
 
         let name = singular;
-        if (Math.ceil(parseFloat(text)) > 1) {
+
+        if (Math.ceil(parseFloat(text)) > 1 || (Math.ceil(parseFloat(text)) > 0 && unit == 'ק"ג')) {
             if (plural) {
                 name = plural;
             }
@@ -129,7 +137,7 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
                 console.log('totalValueForNutrient for ' + nutrient, totalValueForNutrient);
             });
         }
-        let decimals = 0;
+        let decimals = 1;
         if (nutrient === 'protein') {
             decimals = 1;
         }

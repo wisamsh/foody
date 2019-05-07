@@ -184,6 +184,19 @@ class Foody_Recipe extends Foody_Post {
 		}
 	}
 
+	public function the_conversion_table_link() {
+		$show = get_option( 'foody_conversion_table_link_show', false );
+		if ( $show ) {
+			$link      = get_option( 'foody_conversion_table_link', false );
+			$target    = get_option( 'foody_conversion_table_link_target', false ) ? '_blank' : '_self';
+			$link_text = get_option( 'foody_conversion_table_link_text', false );
+
+			echo '<a href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
+		} else {
+			echo '';
+		}
+	}
+
 	public function the_categories() {
 		echo '<h2 class="title">' . __( 'קטגוריות' ) . '</h2>';
 		echo get_the_category_list( '', '', $this->getId() );
@@ -539,6 +552,8 @@ class Foody_Recipe extends Foody_Post {
 						if ( $ingredient_post && $ingredient_post instanceof WP_Post ) {
 							$ingredient = new Foody_Ingredient( $ingredient_post );
 
+							$ingredient->comment = get_sub_field( 'comment' );
+
 							$ingredient->amounts = $amounts;
 
 							$this->ingredients_groups[ $current_group ]['ingredients'][] = $ingredient;
@@ -596,8 +611,10 @@ class Foody_Recipe extends Foody_Post {
 	}
 
 	public function has_nutrients() {
-		// TODO change check after implementing
-		return true;
+		$show_nutrients = get_option( 'foody_show_ingredients_conversion' );
+		// TODO change check to also check for nutrients availability
+
+		return $show_nutrients;
 	}
 
 	public function calculator() {
@@ -612,18 +629,18 @@ class Foody_Recipe extends Foody_Post {
 				$conversions = get_field( 'conversions', $pan );
 				$slices      = get_field( 'slices', $pan );
 
-				if ( ! empty( $conversions ) ) {
-
-					foody_get_template_part(
-						get_template_directory() . '/template-parts/content-recipe-calculator-pans.php',
-						[
-							'pan'         => $pan,
-							'conversions' => $conversions,
-							'slices'      => $slices
-						]
-					);
-
+				if ( empty( $conversions ) ) {
+					$conversions = [];
 				}
+
+				foody_get_template_part(
+					get_template_directory() . '/template-parts/content-recipe-calculator-pans.php',
+					[
+						'pan'         => $pan,
+						'conversions' => $conversions,
+						'slices'      => $slices
+					]
+				);
 			}
 
 		} else {
@@ -676,13 +693,13 @@ class Foody_Recipe extends Foody_Post {
 
 
 		$excluded_nutrients = [
-			'fibers',
-			'saturated_fat',
-			'cholesterol',
-			'calcium',
-			'iron',
-			'potassium',
-			'zinc',
+//			'fibers',
+//			'saturated_fat',
+//			'cholesterol',
+//			'calcium',
+//			'iron',
+//			'potassium',
+//			'zinc',
 			'sugar'
 		];
 
@@ -702,7 +719,7 @@ class Foody_Recipe extends Foody_Post {
 				}
 				$item['data_name'] = $nutrients_name;
 				$item['unit']      = Foody_Ingredient::get_nutrient_unit( $nutrients_name );
-				$decimals          = 0;
+				$decimals          = 1;
 				if ( $nutrients_name == 'protein' ) {
 					$decimals = 1;
 				}

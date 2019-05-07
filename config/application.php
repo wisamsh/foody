@@ -45,7 +45,7 @@ if (file_exists($env_config)) {
 
 // Foody related
 define('FOODY_PAGE', 'fp');
-
+define('COOKIE_DOMAIN', false);
 /**
  * URLs
  */
@@ -56,8 +56,17 @@ define('WP_SITEURL', env('WP_SITEURL'));
  * Custom Content Directory
  */
 define('CONTENT_DIR', '/app');
+define('WEB_ROOT', $webroot_dir);
 define('WP_CONTENT_DIR', $webroot_dir . CONTENT_DIR);
 define('WP_CONTENT_URL', WP_HOME . CONTENT_DIR);
+
+
+/*
+ * Logger
+ * */
+
+define('FOODY_LOGGER_PATH',env('FOODY_LOGGER_PATH'));
+
 
 /**
  * DB settings

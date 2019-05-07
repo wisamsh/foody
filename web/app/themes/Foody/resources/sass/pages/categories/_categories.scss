@@ -19,20 +19,20 @@
           border-top-right-radius: calc(0.35rem - 1px);
         }
         .card-title {
-          border-bottom: solid 1px $color__divider;
+          border-bottom: solid 1px var(--color__divider);
           padding-bottom: 5px;
           margin-bottom: 18px;
-          color: $color__primary;
+          color: var(--color__primary);
           font-size: 22px;
 
         }
         .card-subtitle {
-          color: $color__primary;
+          color: var(--color__primary);
           font-family: $font__main;
           margin-bottom: 10px;
           font-size: 20px;
           a{
-            color: $color__primary;
+            color: var(--color__primary);
           }
         }
 
@@ -50,7 +50,7 @@
             padding: 3px 0;
             a {
               font-size: 16px;
-              color: $color__text-primary-dark;
+              color: var(--color__text-primary-dark);
             }
           }
         }

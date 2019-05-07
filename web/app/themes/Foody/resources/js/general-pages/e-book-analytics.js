@@ -4,19 +4,19 @@
 
 jQuery(document).ready(($) => {
 
-    if (jQuery('.page-template-e-book').length) {
+    if (jQuery('.page-template-foody-campaign').length) {
 
         /**
          * Page Load
          */
-        eventCallback('', 'ebook', 'טעינת עמוד', 'מתכוני פסח');//TODO: Hard-Coded Passover PDF
+        eventCallback('', 'ebook', 'טעינת עמוד', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'מתכוני פסחא');
 
         /**
          * Register button click
          */
         let registerButton = jQuery('#main-content .site-content .btn-primary');
         registerButton.on('click', null, function () {
-            eventCallback(event, 'ebook', 'מעבר לרישום לאתר', 'מתכוני פסח');
+            eventCallback(event, 'ebook', 'מעבר לרישום לאתר', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'מתכוני פסחא');
         });
     }
 });
