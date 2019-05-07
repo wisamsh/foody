@@ -21,12 +21,14 @@ function register_post_types()
         'accessory' => array(
             'id' => 'accessory',
             'name' => 'אביזרים',
-            'singular_name' => 'אביזר'
+            'singular_name' => 'אביזר',
+            'show_in_menu' => is_main_site()
         ),
         'technique' => array(
             'id' => 'technique',
             'name' => 'טכניקות',
-            'singular_name' => 'טכניקה'
+            'singular_name' => 'טכניקה',
+            'show_in_menu' => is_main_site()
         ),
         'ingredient' => array(
             'id' => 'ingredient',
@@ -213,7 +215,8 @@ function pans_init()
             'capabilities' => array(
                 'assign_terms' => 'edit_posts',
                 'edit_terms' => 'publish_posts',
-                'show_ui' => true
+                'show_ui' => true,
+                'show_in_menu' => is_main_site()
             )
         )
     );
@@ -235,7 +238,8 @@ function limitations_init()
             'capabilities' => array(
                 'assign_terms' => 'edit_posts',
                 'edit_terms' => 'publish_posts',
-                'show_ui' => true
+                'show_ui' => true,
+                'show_in_menu' => is_main_site()
             )
         )
     );
@@ -267,13 +271,14 @@ function sponsors_init()
             'public' => false,
             'rewrite' => false,
             'show_ui' => true,
-
+            'show_in_menu' => is_main_site(),
+            'show_in_nav_menus' => is_main_site(),
             'capabilities' => array(
                 'assign_terms' => 'edit_posts',
                 'edit_terms' => 'publish_posts',
                 'show_ui' => true,
-                'show_in_menu' => true,
-                'show_in_nav_menus' => true
+                'show_in_menu' => is_main_site(),
+                'show_in_nav_menus' => is_main_site(),
             )
         )
     );

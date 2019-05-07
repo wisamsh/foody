@@ -9,13 +9,13 @@
 class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWithSidebar
 {
     private $grid;
-
-    private $debug = false;
+    private $foody_query;
 
     public function __construct(WP_Post $post = null)
     {
         parent::__construct($post);
         $this->grid = new FoodyGrid();
+        $this->foody_query = Foody_Query::get_instance();
     }
 
     private function get_channel_content($selector, $class)
@@ -43,11 +43,9 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
             'classes' => [
                 "channel-$type-grid"
             ],
-            // TODO change after implementing dynamic channels
-            'more' => false,
+            'more' => true,
             'header' => [
-                // TODO change after implementing dynamic channels
-                'sort' => false,
+                'sort' => true,
                 'title' => $title
             ],
             'return' => true
@@ -57,8 +55,6 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
             get_template_directory() . '/template-parts/common/foody-grid.php',
             $grid
         );
-
-//        return $grid_content;
     }
 
     public function the_featured_content()
@@ -95,7 +91,18 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
     function the_content($page)
     {
         $recipes = $this->get_channel_content('related_recipes', Foody_Recipe::class);
-        $playlists = $this->get_channel_content('related_playlists', Foody_Playlist::class);
+//        $playlists = $this->get_channel_content('related_playlists', Foody_Playlist::class);
+
+        $query = new WP_Query();
+
+        $args = $this->foody_query->get_query('channel', [
+            $this->id
+        ],true);
+
+        $posts = $query->query($args);
+
+
+        $posts = array_map('Foody_Post::create', $posts);
 
         $tabs = [
             [
@@ -103,7 +110,7 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
                 'target' => 'recipes-tab-pane',
                 'content' =>
                     $this->get_posts_grid(
-                        $recipes['posts'],
+                        $posts,
                         'recipe',
                         __('')
                     ),

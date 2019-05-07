@@ -32,8 +32,10 @@ class Foody_White_Label_Activator
      */
     public static function activate()
     {
-        if (is_main_site()){
-            Foody_WhiteLabelPostMapping::createTable();
+        if (is_main_site() && is_multisite()) {
+            if (class_exists('Foody_WhiteLabelPostMapping')) {
+                Foody_WhiteLabelPostMapping::createTable();
+            }
         }
     }
 
