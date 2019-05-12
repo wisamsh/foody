@@ -1,0 +1,388 @@
+{
+    "key": "group_5b1558ab68726",
+    "title": "קבוצות פילטור",
+    "fields": [
+        {
+            "key": "field_5b180a495e642",
+            "label": "כותרת קבוצה",
+            "name": "title",
+            "type": "text",
+            "instructions": "כותרת ראשית לווידג׳ט הסינון. לדוגמא ״סינון״.\r\nלא להתבלבל עם כותרת של רשימה בתוך הווידג׳ט כמו ״מטבח״",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "סינון",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b156ab8c83a7",
+            "label": "קבוצות",
+            "name": "groups",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "row",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_5b156b067e440",
+                    "label": "סוג",
+                    "name": "type",
+                    "type": "select",
+                    "instructions": "בחר סוג פילטור (קטגוריה, תגית, מצרך וכו׳)",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "categories": "קטגוריות",
+                        "ingredients": "מצרכים",
+                        "accessories": "אביזרים",
+                        "techniques": "טכניקות",
+                        "tags": "תגיות"
+                    },
+                    "default_value": [],
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "return_format": "value",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_5b156b9a6fd9b",
+                    "label": "סקשן פילטור - קטגוריות",
+                    "name": "sections",
+                    "type": "repeater",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5b156b067e440",
+                                "operator": "==",
+                                "value": "categories"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "row",
+                    "button_label": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_5b156bda6fd9c",
+                            "label": "כותרת",
+                            "name": "title",
+                            "type": "text",
+                            "instructions": "לדוגמה: מטבח",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_5b156bf46fd9d",
+                            "label": "רשימת ערכים",
+                            "name": "list",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "collapsed": "",
+                            "min": 0,
+                            "max": 0,
+                            "layout": "row",
+                            "button_label": "",
+                            "sub_fields": [
+                                {
+                                    "key": "field_5b156c006fd9e",
+                                    "label": "כותרת",
+                                    "name": "title",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "maxlength": ""
+                                },
+                                {
+                                    "key": "field_5b156c2f6fd9f",
+                                    "label": "ערך",
+                                    "name": "value",
+                                    "type": "taxonomy",
+                                    "instructions": "ערך בהתאם לסוג הפילטור. לדוגמא אם חלק זה בסינון הוא על פי קטגוריה הערך בשדה יהיה קטגוריה מסויימת.",
+                                    "required": 1,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "taxonomy": "category",
+                                    "field_type": "select",
+                                    "allow_null": 0,
+                                    "add_term": 0,
+                                    "save_terms": 0,
+                                    "load_terms": 0,
+                                    "return_format": "id",
+                                    "multiple": 0
+                                },
+                                {
+                                    "key": "field_5b156c546fda0",
+                                    "label": "לשלול מהחיפוש",
+                                    "name": "exclude_from_search",
+                                    "type": "true_false",
+                                    "instructions": "האם לא לכלול בתוצאות החיפוש ערכים שמכילים את הערך המצויין (חיפוש שלילי)",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "message": "",
+                                    "default_value": 0,
+                                    "ui": 0,
+                                    "ui_on_text": "",
+                                    "ui_off_text": ""
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_5b156c7e6fda1",
+                            "label": "לשלול הכל",
+                            "name": "exclude_all",
+                            "type": "true_false",
+                            "instructions": "האם כל קבוצת הפילטור הנוכחית צריכה להישלל בחיפוש (לדוגמה: ללא כוסברה)",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "ui": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": ""
+                        }
+                    ]
+                },
+                {
+                    "key": "field_5bb08fdbe1b5b",
+                    "label": "סקשן פילטור - מצרכים",
+                    "name": "sections_ingredients",
+                    "type": "repeater",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5b156b067e440",
+                                "operator": "==",
+                                "value": "ingredients"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "row",
+                    "button_label": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_5bb08fdbe1b5c",
+                            "label": "כותרת",
+                            "name": "title",
+                            "type": "text",
+                            "instructions": "לדוגמה: מטבח",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_5bb08fdbe1b5d",
+                            "label": "רשימת ערכים",
+                            "name": "list",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "collapsed": "",
+                            "min": 0,
+                            "max": 0,
+                            "layout": "row",
+                            "button_label": "",
+                            "sub_fields": [
+                                {
+                                    "key": "field_5bb08fdbe1b5e",
+                                    "label": "כותרת",
+                                    "name": "title",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "maxlength": ""
+                                },
+                                {
+                                    "key": "field_5bb08fdbe1b5f",
+                                    "label": "ערך",
+                                    "name": "value",
+                                    "type": "post_object",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "post_type": [
+                                        "foody_ingredient"
+                                    ],
+                                    "taxonomy": [],
+                                    "allow_null": 1,
+                                    "multiple": 0,
+                                    "return_format": "object",
+                                    "ui": 1
+                                },
+                                {
+                                    "key": "field_5bb08fdbe1b60",
+                                    "label": "לשלול מהחיפוש",
+                                    "name": "exclude_from_search",
+                                    "type": "true_false",
+                                    "instructions": "האם לא לכלול בתוצאות החיפוש ערכים שמכילים את הערך המצויין (חיפוש שלילי)",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "message": "",
+                                    "default_value": 0,
+                                    "ui": 0,
+                                    "ui_on_text": "",
+                                    "ui_off_text": ""
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_5bb08fdbe1b61",
+                            "label": "לשלול הכל",
+                            "name": "exclude_all",
+                            "type": "true_false",
+                            "instructions": "האם כל קבוצת הפילטור הנוכחית צריכה להישלל בחיפוש (לדוגמה: ללא כוסברה)",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "ui": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "foody-search-options.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 0,
+    "description": "",
+    "modified": 1557231258
+}
