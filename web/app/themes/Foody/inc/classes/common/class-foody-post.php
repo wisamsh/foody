@@ -288,7 +288,10 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 	public function get_featured_content_credit() {
 		// Credit field stored  on image meta
 		$thumbnail_id = get_post_thumbnail_id();
-		$credit = get_post_meta($thumbnail_id, 'featured_image_credit', true);
+		$image_object = get_post($thumbnail_id);
+		if (!empty($image_object) && !empty($image_object->post_title)) {
+			$credit = $image_object->post_title;
+		}
 		if (!empty($credit)) {
 			return $credit;
 		}
