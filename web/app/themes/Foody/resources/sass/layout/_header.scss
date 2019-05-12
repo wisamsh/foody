@@ -13,7 +13,7 @@ body {
 
   // Fix Nagish-li fixed menu
   .accessibe-quicknav-default.accessibe-rtl.accessibe-ready {
-    display: none;
+    display: none !important;
   }
 }
 
