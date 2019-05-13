@@ -83,7 +83,13 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
                     </div>
 
                     <div class="logo-container-mobile d-block d-lg-none">
-                        <?php echo get_logo_with_size('60', '60'); ?>
+                        <?php
+                            if ( is_main_site() ) {
+                                echo get_logo_with_size( '60', '60' );
+                            } else {
+                                the_custom_logo();
+                            }
+                        ?>
                     </div>
 
                 </div><!-- .site-branding -->

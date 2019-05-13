@@ -22,6 +22,10 @@ function foody_body_classes( $classes ) {
 		$classes[] = 'no-sidebar';
 	}
 
+	if ( is_multisite() && ! is_main_site() ) {
+		$classes[] = 'non-main-site';
+	}
+
 	return $classes;
 }
 add_filter( 'body_class', 'foody_body_classes' );
