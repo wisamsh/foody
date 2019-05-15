@@ -66,6 +66,31 @@ function foody_customize_register( $wp_customize ) {
 	// Add color picker - hover links
 	foody_add_custom_color_picker_setting( $wp_customize, 'foody_links_hover_color', 'טקסט קישור בריחוף' );
 
+	// Add Titles underline
+	$wp_customize->add_setting(
+		'foody_show_titles_underline',
+		array(
+			'default'    => 'true',
+			'capability' => 'edit_theme_options',
+		)
+	);
+
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'foody_show_titles_underline',
+		array(
+			'label'       => __( 'הצג קו תחתון לכותרות', 'foody' ),
+			'description' => __( '', 'foody' ),
+			'settings'    => 'foody_show_titles_underline',
+			'section'     => 'colors',
+			'type'        => 'checkbox'
+		)
+	) );
+
+	// Add color picker - title underline
+	foody_add_custom_color_picker_setting( $wp_customize, 'foody_underline_color', 'צבע קו תחתון כותרות' );
+
+
 	// Add Social Links section
 	$wp_customize->add_section( 'foody_social_links', array(
 		'title'    => __( 'קישורי רשתות חברות', 'foody' ),

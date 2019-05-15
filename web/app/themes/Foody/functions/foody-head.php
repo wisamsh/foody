@@ -298,7 +298,25 @@ function foody_customize_colors_css() {
 	$text_color_css        = get_theme_mod( 'foody_text_color' );
 	$links_color_css       = get_theme_mod( 'foody_links_color' );
 	$links_hover_color_css = get_theme_mod( 'foody_links_hover_color' );
+	$show_titles_underline = get_theme_mod( 'foody_show_titles_underline' );
+	$foody_underline_color = get_theme_mod( 'foody_underline_color' );
 
+	if ( ! empty( $show_titles_underline ) && ! empty( $foody_underline_color ) ) {
+		?>
+        <style type="text/css">
+            .title {
+                text-decoration: underline;
+                text-decoration-color: <?php echo $foody_underline_color ?> !important;
+            }
+
+            .title > a {
+                text-decoration: underline;
+                text-decoration-color: <?php echo $foody_underline_color ?> !important;
+            }
+        </style>
+		<?php
+
+	}
 	if ( ! empty( $titles_color_css ) ) {
 		?>
         <style type="text/css">
