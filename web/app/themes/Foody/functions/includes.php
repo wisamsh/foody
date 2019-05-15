@@ -105,6 +105,7 @@ require_once get_template_directory() . "/inc/widgets/widget-product.php";
 require_once get_template_directory() . "/functions/foody-session.php";
 require_once get_template_directory() . "/functions/core.php";
 require_once get_template_directory() . "/functions/authors.php";
+require_once get_template_directory() . "/functions/admin-comments.php";
 require_once get_template_directory() . "/functions/post-types.php";
 require_once get_template_directory() . "/functions/sidebars.php";
 require_once get_template_directory() . "/functions/widgets.php";
