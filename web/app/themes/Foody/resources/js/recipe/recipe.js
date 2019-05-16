@@ -3,6 +3,7 @@
  */
 
 // noinspection ES6ModulesDependencies
+//TODO:: Change category from מתכון to כתבה if nessesrey !
 if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGlobals.post.type == 'post')) {
 
     window.scroller();
