@@ -18,7 +18,7 @@ $image = wp_get_attachment_url($attachment_id);
 $author = get_user_by('email', $comment['comment_author_email']);
 $username = $author->display_name;
 
-$comments_per_page = get_option('hid_per_page', 2);
+$comments_per_page = get_option( 'hid_per_page', 2 );
 
 $col_class = '';
 $cols = 12;
@@ -51,16 +51,16 @@ if ($cols % $comments_per_page == 0) {
     </div>
     <div class="author row gutter-0">
         <div>
-            <?php echo get_avatar($comment['user_id'], 54); ?>
+			<?php echo get_avatar( $comment['user_id'], 54 ); ?>
         </div>
         <div class="col">
-           <span class="username">
-                <?php printf(__('%s'), sprintf('<span class="author-name">%s</span>', $username)); ?>
-            </span>
+               <span class="username">
+                    <?php printf( __( '%s' ), sprintf( '<span class="author-name">%s</span>', $username ) ); ?>
+                </span>
             <time>
-                <?php echo human_time_diff(get_comment_date('U', $comment['comment_ID']), date('U')) ?>
+				<?php echo human_time_diff( get_comment_date( 'U', $comment['comment_ID'] ), date( 'U' ) ) ?>
             </time>
-            <?php comment_text($comment['comment_ID']); ?>
+			<?php comment_text( $comment['comment_ID'] ); ?>
         </div>
     </div>
 </div>
