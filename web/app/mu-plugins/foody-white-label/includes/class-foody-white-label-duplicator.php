@@ -157,7 +157,8 @@ class Foody_WhiteLabelDuplicator
             'post_status' => 'draft',
             'post_type' => $old_post->post_type,
             'post_author' => 1,
-            'post_content' => $old_post->post_content
+            'post_content' => $old_post->post_content,
+            'post_excerpt' => $old_post->post_excerpt,
         );
 
         switch_to_blog($blogId);

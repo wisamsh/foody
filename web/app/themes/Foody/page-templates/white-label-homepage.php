@@ -15,40 +15,40 @@ $homepage = new Foody_WhiteLabel_HomePage();
 
     <div class="homepage">
 
-		<?php $homepage->cover_photo() ?>
+        <?php $homepage->cover_photo() ?>
 
         <div class="content">
-
-            <div class="brands-container">
-				<?php $homepage->the_brands(); ?>
-            </div>
-
+            <?php if (have_rows('brands')): ?>
+                <div class="brands-container">
+                    <?php $homepage->the_brands(); ?>
+                </div>
+            <?php endif; ?>
             <section class="feed-container row">
 
                 <section class="sidebar-container d-none d-lg-block">
-					<?php $homepage->sidebar(); ?>
+                    <?php $homepage->sidebar(); ?>
                 </section>
 
                 <section class="content-container col-lg-9 col-12">
 
                     <!-- Blocks -->
-					<?php $homepage->blocks(); ?>
+                    <?php $homepage->blocks(); ?>
 
                 </section>
 
-				<?php Foody_Seo::seo() ?>
+                <?php Foody_Seo::seo() ?>
 
             </section>
 
         </div>
 
-		<?php
+        <?php
 
-		foody_get_template_part( get_template_directory() . '/template-parts/common/mobile-filter.php', [
-			'sidebar' => array( $homepage, 'sidebar' )
-		] );
+        foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
+            'sidebar' => array($homepage, 'sidebar')
+        ]);
 
-		?>
+        ?>
 
     </div>
 <?php
