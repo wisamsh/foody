@@ -16,7 +16,6 @@ window.foodyFormMessage = require('./common/cf7-messages');
 // require('autocomplete.js/src/jquery/plugin.js');
 
 
-
 // window.Fraction = require('fractional').Fraction;
 window.lottie = require('lottie-web');
 
@@ -65,7 +64,7 @@ require('./homepage');
 require('./white-label');
 
 require('./team');
-
+require('./article');
 require('./recipe');
 require('./playlist');
 require('./profile');

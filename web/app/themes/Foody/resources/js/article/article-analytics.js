@@ -4,7 +4,7 @@
 
 
 jQuery(document).ready(($) => {
-    if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe')) {
+    if (foodyGlobals.post && (foodyGlobals.post.type == 'post')) {
 
         /**
          * Page Load
