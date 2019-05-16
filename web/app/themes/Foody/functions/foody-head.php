@@ -41,7 +41,7 @@ function get_page_type() {
 
 		$type = 'team';
 
-    } elseif ( is_page_template( 'page-templates/foody-campaign.php' ) ) {
+    } elseif ( is_page_template( 'page-templates/foody-campaign.php' ) || is_page_template( 'page-templates/foody-campaign-extended.php' ) ) {
 	    $type = 'campaign';
     }
 

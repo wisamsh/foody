@@ -34,12 +34,20 @@ if ($cols % $comments_per_page == 0) {
 
 <div class="col-sm-4 <?php echo $col_class ?> how-i-did">
     <div class="image-container">
-        <!--suppress HtmlUnknownAnchorTarget -->
-        <a class="how-i-did-modal-open" href="#how-i-did-modal" data-toggle="modal" data-image="<?php echo $image ?>"
-           data-user="<?php echo $author->display_name ?>"
-           data-content="<?php echo strip_tags(get_comment_text($comment['comment_ID'])); ?>">
-            <img src="<?php echo $image ?>" alt="">
-        </a>
+	    <?php if ( $comment['comment_approved'] ) : ?>
+            <!--suppress HtmlUnknownAnchorTarget -->
+            <a class="how-i-did-modal-open" href="#how-i-did-modal" data-toggle="modal"
+               data-image="<?php echo $image ?>"
+               data-user="<?php echo $author->display_name ?>"
+               data-content="<?php echo strip_tags( get_comment_text( $comment['comment_ID'] ) ); ?>">
+                <img src="<?php echo $image ?>" alt="">
+            </a>
+	    <?php else: ?>
+            <div class="waiting-for-approval">
+                <img src="<?php echo $GLOBALS['images_dir'] . 'how-i-did-waiting-mobile.png' ?>"
+                     alt="waiting for approval">
+            </div>
+	    <?php endif; ?>
     </div>
     <div class="author row gutter-0">
         <div>

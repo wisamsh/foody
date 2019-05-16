@@ -118,7 +118,8 @@ function foody_submit_ajax_how_i_did()
         'comment_date' => $time,
         'comment_meta' => array(
             'attachment' => $image
-        )
+        ),
+	    'comment_approved' => 0
     );
 
 

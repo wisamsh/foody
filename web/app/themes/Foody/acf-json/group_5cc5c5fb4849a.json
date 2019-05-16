@@ -22,6 +22,22 @@
             "maxlength": ""
         },
         {
+            "key": "field_5cdd47713003d",
+            "label": "וידאו ראשי",
+            "name": "hero_video",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
             "key": "field_5cc5c612cd394",
             "label": "תמונה ראשית",
             "name": "hero_image",
@@ -224,6 +240,13 @@
                 "operator": "==",
                 "value": "page-templates\/foody-campaign.php"
             }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-templates\/foody-campaign-extended.php"
+            }
         ]
     ],
     "menu_order": 0,
@@ -234,5 +257,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1557231210
+    "modified": 1558007440
 }
