@@ -60,16 +60,8 @@ if (is_array($brands)):
     ?>
     <ul class="brands-slider" data-slick='<?php echo json_encode($slider_data, ENT_QUOTES) ?>'>
         <?php
-        // FIXME
-        $height = 200;
-        $width = 50;
-        $image = [
-            'title' => 'asdgasgf',
-            'alt' => 'sd',
-            'url' => "https://dummyimage.com/{$height}x{$width}/000/fff.png"
-        ];
         foreach ($brands as $brand): ?>
-            <?php $brand['image'] = $image; ?>
+
             <li class="foody-slider-item brands-slider-item"
                 title="<?php echo isset($brand['image']['title']) ? $brand['image']['title'] : '' ?>">
                 <?php if (!empty($brand['link'])) {

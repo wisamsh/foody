@@ -51,6 +51,27 @@ function foody_customize_register( $wp_customize ) {
 		)
 	) );
 
+
+    $wp_customize->add_setting(
+        'foody_logo_mode',
+        array(
+            'capability'        => 'edit_theme_options'
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'foody_logo_mode',
+        array(
+            'label'       => __( 'תחם לוגו לגבולות ההדר', 'foody' ),
+            'description' => __( 'תחם לוגו לגבולות ההדר', 'foody' ),
+            'settings'    => 'foody_logo_mode',
+            'priority'    => 10,
+            'section'     => 'title_tagline',
+            'type'        => 'checkbox'
+        )
+    ) );
+
 	//	Remove default color pickers
 	$wp_customize->remove_control( 'background_color' );
 	$wp_customize->remove_control( 'header_textcolor' );

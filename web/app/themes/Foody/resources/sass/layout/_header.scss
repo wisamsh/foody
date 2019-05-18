@@ -27,8 +27,6 @@ body {
 
 header {
 
-
-
   .run {
     height: $run-height;
     width: 100%;
@@ -198,9 +196,22 @@ header {
     right: 10px;
   }
 
+   .logo-container {
+    &.logo-contain {
+      position: static;
+      top: 0;
+      right: 0;
+      margin-left: 10px;
+      img{
+        max-height: 60px;
+        height: 60px;
+      }
+    }
+  }
+
   .logo-container-desktop {
 
-    width: 100px;
+    //width: 100px;
     border-radius: 50%;
 
     img {
