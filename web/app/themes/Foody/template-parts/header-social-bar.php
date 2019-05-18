@@ -40,7 +40,7 @@ $youtube_link = foody_get_array_default($template_args,'youtube_link','https://w
         </a>
     <?php endif; ?>
     <span class="follow-us">
-        <?php echo __('עקבו אחרינו', 'foody') ?>
+        <?php echo get_theme_mod('foody_social_text',__('עקבו אחרינו', 'foody')) ?>
     </span>
 
 </section>

@@ -97,6 +97,37 @@ function foody_customize_register( $wp_customize ) {
 	add_social_link_setting( $wp_customize, 'instagram', 'אינסטגרם', 'https://www.instagram.com/foody_israel', 3 );
 	add_social_link_setting( $wp_customize, 'facebook', 'פייסבוק', 'https://www.facebook.com/FoodyIL/', 5 );
 
+    $wp_customize->add_setting(
+        'foody_social_text',
+        array(
+            'default'           => __('עקבו אחרינו','foody'),
+            'capability' => 'edit_theme_options',
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'foody_social_text' ,
+        array(
+            'label'       => __( 'טקסט ליד אייקונים', 'foody' ),
+            'description' => __( '', 'foody' ),
+            'settings'    => 'foody_social_text',
+            'priority'    => 6,
+            'section'     => 'foody_social_links',
+            'type'        => 'text'
+        )
+    ) );
+
+    // Add texts section
+    $wp_customize->add_section( 'foody_texts', array(
+        'title'    => __( 'טקסטים', 'foody' ),
+        'priority' => 32,
+    ) );
+
+    foody_customize_add_text($wp_customize,'search_placeholder','פלייסהולדר חיפוש',__('חפשו מתכון או כתבה…','foody'),1);
+
+
+
 }
 
 add_action( 'customize_register', 'foody_customize_register' );
@@ -201,4 +232,35 @@ function add_social_link_setting( $wp_customize, $id, $label_text, $default_valu
 			'type'        => 'url'
 		)
 	) );
+}
+
+
+/**
+ * @param $wp_customize
+ * @param $id
+ * @param $label_text
+ * @param $default_value
+ * @param $weight
+ */
+function foody_customize_add_text($wp_customize, $id, $label_text, $default_value, $weight){
+    $wp_customize->add_setting(
+        'foody_text_' . $id,
+        array(
+            'default'           => $default_value,
+            'capability' => 'edit_theme_options',
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'foody_text_' . $id,
+        array(
+            'label'       => __( $label_text, 'foody' ),
+            'description' => __( '', 'foody' ),
+            'settings'    =>  'foody_text_' . $id,
+            'priority'    => $weight,
+            'section'     => 'foody_texts',
+            'type'        => 'text'
+        )
+    ) );
 }

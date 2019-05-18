@@ -43,11 +43,11 @@ $homepage = new Foody_WhiteLabel_HomePage();
         </div>
 
         <?php
-
-        foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
-            'sidebar' => array($homepage, 'sidebar')
-        ]);
-
+        if (have_rows('filters_list')){
+            foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
+                'sidebar' => array($homepage, 'sidebar')
+            ]);
+        }
         ?>
 
     </div>

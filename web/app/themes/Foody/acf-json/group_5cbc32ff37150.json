@@ -668,7 +668,7 @@
                                 "foody_recipe"
                             ],
                             "taxonomy": [],
-                            "allow_null": 0,
+                            "allow_null": 1,
                             "multiple": 0,
                             "return_format": "object",
                             "ui": 1
@@ -696,7 +696,7 @@
                             },
                             "taxonomy": "category",
                             "field_type": "select",
-                            "allow_null": 0,
+                            "allow_null": 1,
                             "add_term": 1,
                             "save_terms": 0,
                             "load_terms": 0,
@@ -893,5 +893,5 @@
             ]
         }
     ],
-    "modified": 1557939273
+    "modified": 1558200279
 }
