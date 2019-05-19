@@ -98,8 +98,6 @@ class Foody_Header
 
     public function accessibility()
     {
-
-
         ?>
         <i class="icon-acces"></i>
         <?php

@@ -262,6 +262,7 @@ class Foody_Blocks
 
                 if (!empty($link)) {
                     $foody_post->link = $link['url'];
+                    $foody_post->link_attrs = $link;
                 }
 
                 if (!empty($secondary_text)) {

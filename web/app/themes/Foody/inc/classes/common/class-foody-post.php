@@ -11,6 +11,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public $id;
 
+    public $link_attrs;
+
     private $posted_on;
 
     protected $image;

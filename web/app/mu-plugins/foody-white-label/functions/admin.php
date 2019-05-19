@@ -140,4 +140,58 @@ if (is_main_site()) {
             <?php
         }
     }
+
+
+//    add_action('add_meta_boxes_foody_recipe', 'add_post_duplication_box');
+//    add_action('add_meta_boxes_post', 'add_post_duplication_box');
+
+    /**
+     * @param $post WP_Post
+     */
+    function add_post_duplication_box($post)
+    {
+
+        add_meta_box(
+            'foody-post-duplication',
+            __('העתק לאתר משנה'),
+            'add_post_duplication_box_cb',
+            $post->post_type,
+            'side',
+            'high'
+        );
+    }
+
+    function add_post_duplication_box_cb()
+    {
+        global $post;
+        $sites_for_post = Foody_WhiteLabelPostMapping::getByPost($post->ID);
+
+        if (!empty($sites_for_post)) {
+            $sites_for_post = array_map(function ($site) {
+                return isset($site['blog_id']) ? $site['blog_id'] : null;
+            }, $sites_for_post);
+        } else {
+            $sites_for_post = [];
+        }
+
+        $excluded_sites = array_merge($sites_for_post, [get_main_site_id()]);
+
+        $sites = get_sites(['site__not_in' => $excluded_sites]);
+
+        $copied_to_all = count($sites) == 0;
+        /** @var WP_Site $site */
+        foreach ($sites as $site) {
+            ?>
+            <label for="<?php echo $site->blog_id ?>">
+                <?php echo $site->blogname ?>
+            </label>
+            <input id="<?php echo $site->blog_id ?>" name="copy_to_<?php echo $site->blog_id ?>"
+                   type="checkbox">
+            <?php
+        }
+
+        if ($copied_to_all) {
+            echo __('פוסט זה כבר קיים בכל אתרי המשנה');
+        }
+    }
 }
