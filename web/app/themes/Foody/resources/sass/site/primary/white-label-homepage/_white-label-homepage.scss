@@ -41,11 +41,8 @@ $sidebar-top-offset: 60px;
 .non-main-site {
 
   header {
+
     .logo-container {
-      position: static;
-      top: 0;
-      right: 0;
-      margin-left: 10px;
 
       .logo-container-desktop {
         img {
@@ -59,7 +56,6 @@ $sidebar-top-offset: 60px;
 
   &.page-template-white-label-homepage {
 
-
     .site-content {
       background: white;
 
@@ -67,10 +63,12 @@ $sidebar-top-offset: 60px;
 
         .brands-container {
           background-color: rgba(173, 173, 173, 0.2);
-          padding: 0 3rem 0 0;
-
+          padding: 10px 20px 20px;
+          //padding: 0 3rem 0 0;
           .title {
-            padding: 0.67em 0 0;
+            //padding: 0.67em 0 0;
+            padding-bottom: 10px;
+            padding-right: 15px;
             margin: 0;
           }
         }
@@ -144,7 +142,7 @@ $sidebar-top-offset: 60px;
 
             .sidebar-container {
 
-              margin-top: 60px;
+              margin-top: 20px;
               width: calc(100% - #{$content-width});
               padding-right: 20px;
 
@@ -217,7 +215,7 @@ $sidebar-top-offset: 60px;
 
             .content-container {
               margin-top: 20px;
-
+              padding: 0;
               article {
 
                 &.feed {
@@ -244,7 +242,10 @@ $sidebar-top-offset: 60px;
               }
 
               .block-container {
-                padding: 10px 15px;
+
+                &:not(:first-child){
+                  padding: 10px 15px;
+                }
 
                 &:last-of-type {
                   padding-bottom: 10px;
@@ -333,6 +334,10 @@ $sidebar-top-offset: 60px;
           .brands-container {
             padding: 0 20px;
             margin: 0 -15px;
+
+            .title {
+              padding-right: 0;
+            }
           }
 
           .seo {

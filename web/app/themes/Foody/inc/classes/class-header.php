@@ -103,7 +103,15 @@ class Foody_Header
         ?>
         <i class="icon-acces"></i>
         <?php
+    }
 
+    public function the_logo_mode(){
+        $mode = get_theme_mod('foody_logo_mode',false);
+        $logo_class = '';
+        if ($mode){
+            $logo_class = 'logo-contain';
+        }
 
+        echo $logo_class;
     }
 }

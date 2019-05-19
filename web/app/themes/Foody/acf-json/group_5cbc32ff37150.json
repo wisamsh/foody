@@ -1,6 +1,23 @@
 {
     "key": "group_5cbc32ff37150",
     "title": "עמוד הבית - White Label",
+    "location": [
+        [
+            {
+                "param": "post_template",
+                "operator": "==",
+                "value": "page-templates\/white-label-homepage.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
     "fields": [
         {
             "key": "field_5cbc3f15ed6a1",
@@ -468,7 +485,7 @@
                     "post_type": [
                         "foody_filter"
                     ],
-                    "taxonomy": "",
+                    "taxonomy": [],
                     "allow_null": 0,
                     "multiple": 0,
                     "return_format": "object",
@@ -558,7 +575,7 @@
                             "key": "field_5cbc33d3b0065",
                             "label": "תמונה",
                             "name": "image",
-                            "type": "image",
+                            "type": "image_crop",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -567,22 +584,22 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "return_format": "array",
+                            "crop_type": "hard",
+                            "target_size": "list-item",
+                            "width": "",
+                            "height": "",
                             "preview_size": "thumbnail",
-                            "library": "all",
-                            "min_width": "",
-                            "min_height": "",
-                            "min_size": "",
-                            "max_width": "",
-                            "max_height": "",
-                            "max_size": "",
-                            "mime_types": ""
+                            "force_crop": "no",
+                            "save_in_media_library": "yes",
+                            "retina_mode": "no",
+                            "save_format": "object",
+                            "library": "all"
                         },
                         {
                             "key": "field_5cbc33d3b0066",
                             "label": "תמונת מובייל",
                             "name": "mobile_image",
-                            "type": "image",
+                            "type": "image_crop",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": [
@@ -599,16 +616,16 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "return_format": "array",
+                            "crop_type": "hard",
+                            "target_size": "custom",
+                            "width": 80,
+                            "height": 80,
                             "preview_size": "thumbnail",
-                            "library": "all",
-                            "min_width": "",
-                            "min_height": "",
-                            "min_size": "",
-                            "max_width": "",
-                            "max_height": "",
-                            "max_size": "",
-                            "mime_types": ""
+                            "force_crop": "no",
+                            "save_in_media_library": "yes",
+                            "retina_mode": "no",
+                            "save_format": "object",
+                            "library": "all"
                         },
                         {
                             "key": "field_5cbc33d3b0067",
@@ -650,8 +667,8 @@
                                 "post",
                                 "foody_recipe"
                             ],
-                            "taxonomy": "",
-                            "allow_null": 0,
+                            "taxonomy": [],
+                            "allow_null": 1,
                             "multiple": 0,
                             "return_format": "object",
                             "ui": 1
@@ -679,7 +696,7 @@
                             },
                             "taxonomy": "category",
                             "field_type": "select",
-                            "allow_null": 0,
+                            "allow_null": 1,
                             "add_term": 1,
                             "save_terms": 0,
                             "load_terms": 0,
@@ -893,5 +910,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1557850259
+    "modified": 1558200279
 }
