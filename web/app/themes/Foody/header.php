@@ -35,7 +35,7 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
     <img class="body-background" src="<?php echo $_SESSION['background_image']['url'] ?>"
          alt="<?php echo $_SESSION['background_image']['alt'] ?>">
     <?php
-	unset($_SESSION['background_image']);
+    unset($_SESSION['background_image']);
 }
 ?>
 
@@ -56,13 +56,14 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
                 <div class="search-bar search-bar-container">
                     <?php get_search_form(); ?>
                 </div>
-
-                <span class="run-desktop run">
+                <?php if (!is_multisite() || is_main_site()): ?>
+                    <span class="run-desktop run">
                     <?php echo __('בהרצה') ?>
                 </span>
-
+                <?php endif; ?>
                 <?php if (!wp_is_mobile()): ?>
-                    <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility" data-accessibe="trigger">
+                    <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility"
+                            data-accessibe="trigger">
                         <?php $header->accessibility(); ?>
                         <div id="accessibility-container"></div>
                     </button>
@@ -76,19 +77,19 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
             <div class="container-fluid foody-navbar-container">
 
                 <div class="site-branding">
-                    <div class="logo-container d-none d-lg-block">
+                    <div class="logo-container d-none d-lg-block <?php $header->the_logo_mode() ?> ">
                         <div class="logo-container-desktop">
-                            <?php the_custom_logo() ?>
+                            <?php the_custom_logo(); ?>
                         </div>
                     </div>
 
-                    <div class="logo-container-mobile d-block d-lg-none">
+                    <div class="logo-container-mobile <?php $header->the_logo_mode() ?> d-block d-lg-none">
                         <?php
-                            if ( is_main_site() ) {
-                                echo get_logo_with_size( '60', '60' );
-                            } else {
-                                the_custom_logo();
-                            }
+                        if (is_main_site()) {
+                            echo get_logo_with_size('60', '60');
+                        } else {
+                            the_custom_logo();
+                        }
                         ?>
                     </div>
 
@@ -103,7 +104,8 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
                 </button>
 
 
-                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility" data-accessibe="trigger">
+                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility"
+                        data-accessibe="trigger">
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
                          alt="<?php echo __('נגישות') ?>">
                     <div id="accessibility-container"></div>

@@ -275,8 +275,12 @@ add_filter('wp_nav_menu_items', 'add_menu_items', 10, 2);
 function foody_custom_walker(array $nav_menu_args, WP_Term $nav_menu, array $args, array $instance)
 {
 
+    $sidebars_with_categories_menu = [
+        'foody-sidebar',
+        'foody-social'
+    ];
 
-    if ($args['id'] == 'foody-sidebar') {
+    if (in_array($args['id'],$sidebars_with_categories_menu)) {
 
         $categories_accordion = new Foody_CategoriesAccordion();
         $nav_menu_args = array_merge($nav_menu_args, $categories_accordion->get_menu_args());

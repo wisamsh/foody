@@ -130,7 +130,7 @@ function foody_change_image_crop_meta($post_id, $key, $value, $field, $blog_id)
     /**
      * in acf-image-crop the value is saved like this:
      * {"original_image":"2865","cropped_image":2923}
-    */
+     */
     $parsed = json_decode($value);
     $new_value = [];
     foreach ($parsed as $image_type => $attachment_id) {
@@ -174,5 +174,33 @@ function foody_change_image_meta($post_id, $key, $value, $field, $blog_id)
         }
     }
 
+    return $value;
+}
+
+
+add_filter('foody_import_post_meta__yoast_wpseo_primary_category', 'foody_handle_post_meta_category_value', 10, 3);
+
+/**
+ * @param $post_id int the post being duplicated
+ * @param $value mixed meta value
+ * @param $blog_id int destination blog id
+ * @return int
+ */
+function foody_handle_post_meta_category_value($post_id, $value, $blog_id)
+{
+    /**
+     * get category from main site
+    */
+    switch_to_blog(1);
+    /** @var WP_Term $category */
+    $category = get_category($value);
+    switch_to_blog($blog_id);
+
+    if (!empty($category) && !is_wp_error($category)) {
+        $destination_category = get_term_by('name', $category->name, $category->taxonomy);
+        if (!empty($category) && !is_wp_error($category)) {
+            $value = $destination_category->term_id;
+        }
+    }
     return $value;
 }
