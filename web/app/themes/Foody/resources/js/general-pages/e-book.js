@@ -5,6 +5,20 @@
 // noinspection ES6ModulesDependencies
 if (foodyGlobals.type && (foodyGlobals.type == 'campaign')) {
 
+    let $attachment = $('#attachment');
+
+    // prevent upload if not logged in
+    $attachment.on('click', (e) => {
+        if (foodyGlobals.loggedIn == true) {
+            if (!foodyGlobals.seen_extended_approvals && foodyGlobals.extended_campaign_url) {
+                e.preventDefault();
+                window.location.href = foodyGlobals.extended_campaign_url;
+                return false;
+            }
+        }
+    });
+
+
     let $video = $('.hero-container #video');
 
     if ($video && $video.length) {

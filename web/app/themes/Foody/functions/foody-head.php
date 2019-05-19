@@ -96,7 +96,13 @@ add_filter( 'foody_js_globals', 'is_tablet' );
 function campaign_name( $vars ) {
 	if ( get_page_type() == 'campaign' ) {
 		$vars['campaign_name'] = get_field( 'campaign_name' );
+		if ( is_user_logged_in() ) {
+			$vars['extended_campaign_url']   = get_field( 'extended_campaign_url' );
+			$vars['seen_extended_approvals'] = Foody_User::user_has_meta( 'seen_extended_approvals' );
+		}
 	}
+	$registration_page = get_page_by_title( 'הרשמה' );
+	$vars['campaign_url'] = get_field( 'campaign_link', $registration_page );
 
 	return $vars;
 }

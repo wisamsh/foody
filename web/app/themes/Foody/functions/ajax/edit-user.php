@@ -179,3 +179,70 @@ function foody_edit_user_approvals_viewed()
 add_action('wp_ajax_foody_edit_user_approvals_viewed', 'foody_edit_user_approvals_viewed');
 
 
+function foody_edit_user_extended_campaign_approvals() {
+
+	$errors = new WP_Error();
+
+	$street                  = isset( $_POST['street'] ) ? $_POST['street'] : '';
+	$street_number           = isset( $_POST['street-number'] ) ? $_POST['street-number'] : '';
+	$city                    = isset( $_POST['city'] ) ? $_POST['city'] : '';
+	$birthday                = isset( $_POST['birthday'] ) ? $_POST['birthday'] : '';
+	$gender                  = isset( $_POST['gender'] ) ? $_POST['gender'] : '';
+	$extended_campaign_terms = isset( $_POST['extended-campaign-terms'] ) ? $_POST['extended-campaign-terms'] : false;
+
+
+	$ID = get_current_user_id();
+
+	$user = get_user_by( 'ID', $ID );
+
+	if ( ! empty( $street ) ) {
+		$resultStreet = update_user_meta( $ID, 'street', $street );
+	}
+
+	if ( ! empty( $street_number ) ) {
+		$resultStreetNumber = update_user_meta( $ID, 'street_number', $street_number );
+	}
+
+	if ( ! empty( $city ) ) {
+		$resultCity = update_user_meta( $ID, 'city', $city );
+	}
+
+	if ( ! empty( $birthday ) ) {
+		$resultBirthday = update_user_meta( $ID, 'birthday', $birthday );
+	}
+
+	if ( ! empty( $gender ) ) {
+		$resultGender = update_user_meta( $ID, 'gender', $gender );
+	}
+
+	$resultCampaignTerms = update_user_meta( $ID, 'extended-campaign-terms', $extended_campaign_terms );
+
+	update_user_meta( $ID, 'seen_extended_approvals', true );
+
+
+	if (
+		( isset( $resultStreet ) &&
+		  $resultStreet === false ) ||
+		( isset( $resultStreetNumber ) &&
+		  $resultStreetNumber === false ) ||
+		( isset( $resultCity ) &&
+		  $resultCity === false ) ||
+		( isset( $resultBirthday ) &&
+		  $resultBirthday === false ) ||
+		( isset( $resultGender ) &&
+		  $resultGender === false ) ||
+		$resultCampaignTerms === false
+	) {
+		$errors->add( 500, 'error updating user' );
+	}
+
+
+	if ( ! empty( $errors->errors ) ) {
+		wp_send_json_error( $errors, 400 );
+	} else {
+		$user = get_user_by( 'ID', get_current_user_id() );
+		wp_send_json_success( [ 'result' => true ] );
+	}
+}
+
+add_action( 'wp_ajax_foody_edit_user_extended_campaign_approvals', 'foody_edit_user_extended_campaign_approvals' );
