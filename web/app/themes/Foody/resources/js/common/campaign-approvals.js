@@ -64,12 +64,10 @@ jQuery(document).ready(($) => {
                 }, function (err, data) {
                     if (err) {
                         if (err.responseJSON && err.responseJSON.data && err.responseJSON.data[0] && err.responseJSON.data[0].message) {
-                            //TODO: analytics
-                            // eventCallback('', 'רישום לאתר', 'רישום לדיוור נכשל', foodyGlobals['user']['social_type'], 'הודעה', err.responseJSON.data[0].message);
+                            eventCallback('', 'תחרות מתכונים', 'השלמת רישום נכשלה', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'עמוד נחיתה ללא שם', 'הודעה', err.responseJSON.data[0].message);
                         }
                     } else {
-                        //TODO: analytics
-                        // eventCallback('', 'רישום לאתר', 'רישום לדיוור הצליח', foodyGlobals['user']['social_type'], 'רישום לדיוור', marketingAnalyticsText);
+                        eventCallback('', 'תחרות מתכונים', 'השלמת רישום הצליחה', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'עמוד נחיתה ללא שם');
                         $approvalsContainer.unblock();
                         // let $redirect = $('input[name="redirect"]');
                         // if ($redirect.length && $redirect.val() == 1) {
