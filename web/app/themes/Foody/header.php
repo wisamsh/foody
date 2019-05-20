@@ -44,9 +44,11 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
 <div id="page" class="site">
 
     <header id="masthead" class="site-header no-print">
+	    <?php if (!is_multisite() || is_main_site()): ?>
         <div class="run d-block d-lg-none">
             <?php echo __('בהרצה') ?>
         </div>
+        <?php endif; ?>
 
         <div class="socials d-none d-lg-block">
 
