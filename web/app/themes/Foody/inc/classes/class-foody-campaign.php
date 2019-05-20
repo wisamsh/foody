@@ -12,14 +12,12 @@ class Foody_Campaign {
 	private $image_link;
 	public $show_social = false;
 	public $lower_link;
-	private $campaign_name;
 
 
 	/**
 	 * E-Book constructor.
 	 */
 	public function __construct() {
-		$this->campaign_name = get_field( 'campaign_name' );
 		$this->show_social   = get_field( 'show_social' );
 		$this->lower_link    = get_field( 'lower_link' );
 	}

@@ -3,25 +3,6 @@
     "title": "עמוד נחיתה קמפיין E-book",
     "fields": [
         {
-            "key": "field_5cc5c80fcd39d",
-            "label": "שם הקמפיין",
-            "name": "campaign_name",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
             "key": "field_5cdd47713003d",
             "label": "וידאו ראשי",
             "name": "hero_video",
@@ -257,5 +238,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1558007440
+    "modified": 1558377413
 }

@@ -79,6 +79,25 @@
             "maxlength": ""
         },
         {
+            "key": "field_5ce2f3f9f05a9",
+            "label": "שם הקמפיין",
+            "name": "campaign_name",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_5cc6e155d9c8c",
             "label": "מייל קמפיין",
             "name": "campaign_mail",
@@ -326,5 +345,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1558267562
+    "modified": 1558377494
 }
