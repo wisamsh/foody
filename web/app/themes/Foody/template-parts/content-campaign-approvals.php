@@ -33,25 +33,25 @@ $today = date( 'Y-m-d' );
 		<?php echo $welcome_text; ?>
     </div>
     <form class="row" id="campaign-approvals" method="post">
-        <div class="form-group col-5 required-input">
+        <div class="form-group col-lg-5 col-8 required-input">
             <label for="street">
 				<?php echo __( 'רחוב', 'foody' ) ?>
             </label>
             <input type="text" id="street" name="street" required>
         </div>
-        <div class="form-group col-2 required-input">
+        <div class="form-group col-lg-2 col-4 required-input">
             <label for="street-number">
 				<?php echo __( 'מספר', 'foody' ) ?>
             </label>
             <input type="text" id="street-number" name="street-number" required>
         </div>
-        <div class="form-group col-5 required-input">
+        <div class="form-group col-lg-5 col-12 required-input">
             <label for="city">
 				<?php echo __( 'עיר', 'foody' ) ?>
             </label>
             <input type="text" id="city" name="city" required>
         </div>
-        <div class="form-group col-5 required-input">
+        <div class="form-group col-lg-5 col-12 required-input">
             <label for="birthday">
 				<?php echo __( 'תאריך לידה', 'foody' ) ?>
             </label>

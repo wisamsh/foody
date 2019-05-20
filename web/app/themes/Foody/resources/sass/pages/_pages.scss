@@ -20,6 +20,8 @@
 
 .campaign-approvals-container {
   text-align: right;
+  max-width: 960px;
+  margin: 0 auto;
 
   .welcome-text {
     text-align: right;
@@ -32,6 +34,7 @@
 
   form#campaign-approvals {
     padding-bottom: 15px;
+    width: 80%;
 
     .md-checkbox {
       input[type="checkbox"]:checked + label:not(.error):before {
@@ -59,7 +62,7 @@
       text-align: center;
       color: #ffffff;
       display: block;
-      padding: 4px 30px;
+      padding: 10px 50px;
     }
 
     .form-group {
@@ -216,6 +219,19 @@
       }
 
       input[type='submit'] {
+      }
+    }
+  }
+
+  body[class~='page-template-content-with-images'] #page .content-with-images .content {
+    .campaign-approvals-container {
+
+      form#campaign-approvals {
+
+        input[type='submit'] {
+          width: 80%;
+          margin: 10px auto 0;
+        }
       }
     }
   }
