@@ -1,6 +1,5 @@
 <?php
 /**
- * Template Name: Foody Campaign
  * Created by PhpStorm.
  * User: moveosoftware
  * Date: 3/31/19

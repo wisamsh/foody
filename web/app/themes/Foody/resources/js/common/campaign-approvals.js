@@ -10,7 +10,7 @@ jQuery(document).ready(($) => {
         $form.validate({
             rules: {
                 'extended-campaign-terms': {
-                    required: '#extended-campaign-terms:checked'
+                    required: true
                 },
                 street: {
                     required: true,
@@ -37,12 +37,17 @@ jQuery(document).ready(($) => {
                 city: 'עיר הינה שדה חובה',
                 birthday: 'תאריך לידה הינו שדה חובה',
                 gender: 'מין הינו שדה חובה',
-                'extended-campaign-terms': foodyGlobals.messages.registration.termsError
+                'extended-campaign-terms': 'נא לאשר תקנון'
             },
             errorPlacement: function (error, element) {
                 if (element.attr("type") == "checkbox") {
                     let parent = $(element).parent('.md-checkbox');
-                    error.insertBefore(parent);
+                    parent.append(error);
+                } else if (element.attr("type") == "radio") {
+                    let parent = $($(element)[0].parentElement.parentElement);
+                    if (parent) {
+                        parent.append(error);
+                    }
                 } else {
                     error.insertAfter(element);
                 }
