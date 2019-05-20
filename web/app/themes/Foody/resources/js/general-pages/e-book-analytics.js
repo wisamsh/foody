@@ -4,7 +4,7 @@
 
 jQuery(document).ready(($) => {
 
-    if (jQuery('.page-template-foody-campaign').length) {
+    if (jQuery('.page-template-foody-campaign').length || jQuery('.page-template-foody-campaign-extended').length) {
 
         /**
          * Page Load

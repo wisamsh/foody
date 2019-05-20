@@ -64,5 +64,6 @@ require('./social');
 require('./mobile-filter');
 require('./tag-manager');
 require('./approvals');
-require('./campaign-approvals');
 require('./approvals-analytics');
+require('./campaign-approvals');
+require('./campaign-approvals-analytics');

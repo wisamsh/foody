@@ -12,7 +12,7 @@ jQuery(document).ready(($) => {
 
         let form = $("form#campaign-approvals", $campaignApprovalsContainer);
         if (form) {
-            form.on('submit', null, (event) => {
+            jQuery('input[type=submit]', form).on('click', null, (event) => {
                 eventCallback(event, 'תחרות מתכונים', 'לחיצה להשלמת רישום', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'עמוד נחיתה ללא שם');
             });
         }
