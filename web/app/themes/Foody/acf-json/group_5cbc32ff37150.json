@@ -1,23 +1,6 @@
 {
     "key": "group_5cbc32ff37150",
     "title": "עמוד הבית - White Label",
-    "location": [
-        [
-            {
-                "param": "post_template",
-                "operator": "==",
-                "value": "page-templates\/white-label-homepage.php"
-            }
-        ]
-    ],
-    "menu_order": 0,
-    "position": "normal",
-    "style": "default",
-    "label_placement": "top",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": true,
-    "description": "",
     "fields": [
         {
             "key": "field_5cbc3f15ed6a1",
@@ -485,7 +468,7 @@
                     "post_type": [
                         "foody_filter"
                     ],
-                    "taxonomy": [],
+                    "taxonomy": "",
                     "allow_null": 0,
                     "multiple": 0,
                     "return_format": "object",
@@ -667,7 +650,7 @@
                                 "post",
                                 "foody_recipe"
                             ],
-                            "taxonomy": [],
+                            "taxonomy": "",
                             "allow_null": 1,
                             "multiple": 0,
                             "return_format": "object",
@@ -908,7 +891,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
-    "modified": 1558200279
+    "modified": 1558333606
 }
