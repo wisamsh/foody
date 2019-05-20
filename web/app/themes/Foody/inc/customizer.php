@@ -72,6 +72,26 @@ function foody_customize_register( $wp_customize ) {
         )
     ) );
 
+    $wp_customize->add_setting(
+        'foody_logo_border_radius',
+        array(
+            'capability'        => 'edit_theme_options'
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'foody_logo_border_radius',
+        array(
+            'label'       => __( 'עגל גבול לוגו', 'foody' ),
+            'description' => __( 'עגל גבול לוגו', 'foody' ),
+            'settings'    => 'foody_logo_border_radius',
+            'priority'    => 11,
+            'section'     => 'title_tagline',
+            'type'        => 'checkbox'
+        )
+    ) );
+
 	//	Remove default color pickers
 	$wp_customize->remove_control( 'background_color' );
 	$wp_customize->remove_control( 'header_textcolor' );

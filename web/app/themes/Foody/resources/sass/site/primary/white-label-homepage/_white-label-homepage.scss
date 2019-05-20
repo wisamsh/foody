@@ -51,6 +51,16 @@ $sidebar-top-offset: 60px;
           }
         }
       }
+      &.round-logo {
+        .logo-container-desktop {
+          img {
+            &.custom-logo {
+              border-radius: 50%;
+            }
+          }
+        }
+
+      }
     }
   }
 

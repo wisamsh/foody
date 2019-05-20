@@ -103,13 +103,17 @@ class Foody_Header
         <?php
     }
 
-    public function the_logo_mode(){
-        $mode = get_theme_mod('foody_logo_mode',false);
-        $logo_class = '';
-        if ($mode){
-            $logo_class = 'logo-contain';
-        }
+	public function the_logo_mode() {
+		$mode          = get_theme_mod( 'foody_logo_mode', false );
+		$border_radius = get_theme_mod( 'foody_logo_border_radius', false );
+		$logo_class    = '';
+		if ( $mode ) {
+			$logo_class = 'logo-contain';
+		}
+		if ( $border_radius ) {
+			$logo_class .= ' round-logo';
+		}
 
-        echo $logo_class;
-    }
+		echo $logo_class;
+	}
 }
