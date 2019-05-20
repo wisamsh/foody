@@ -332,6 +332,16 @@ $sidebar-top-offset: 60px;
         img {
           border-radius: 0;
         }
+        &.round-logo {
+          .logo-container-desktop {
+            img {
+              &.custom-logo {
+                border-radius: 50%;
+              }
+            }
+          }
+
+        }
       }
     }
 
