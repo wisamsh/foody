@@ -159,8 +159,12 @@ function foody_hid_loadmore_handler()
 
     $current_page = $max_pages - $current_page;
 
-    $per_page = intval(get_option('hid_per_page'));
-    $args['offset'] = $current_page * $per_page;
+	$comments_per_page = get_field( 'how_i_did_paging' );
+	if ( empty( $comments_per_page ) ) {
+		$comments_per_page = intval( get_option( 'hid_per_page' ) );
+	}
+	$per_page       = $comments_per_page;
+	$args['offset'] = $current_page * $per_page;
 
     $foody_comments->the_comments($args);
 
