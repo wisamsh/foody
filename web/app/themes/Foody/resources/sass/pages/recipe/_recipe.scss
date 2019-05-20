@@ -843,6 +843,12 @@ $content-width: 95%;
               height: 150px;
               border-radius: 3px;
             }
+
+            .waiting-for-approval {
+              img {
+                height: auto;
+              }
+            }
           }
 
           .author {
@@ -859,6 +865,7 @@ $content-width: 95%;
               clip-path: circle();
             }
           }
+
         }
       }
 
