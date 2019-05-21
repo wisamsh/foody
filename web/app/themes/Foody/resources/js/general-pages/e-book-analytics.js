@@ -18,6 +18,10 @@ jQuery(document).ready(($) => {
         registerButton.on('click', null, function () {
             eventCallback(event, 'ebook', 'מעבר לרישום לאתר', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'עמוד נחיתה ללא שם');
         });
+
+        $('.page-template-foody-campaign .site-content .foody-content a, .page-template-foody-campaign-extended .site-content .foody-content a').on('click', function () {
+            eventCallback(event, 'ebook', 'מעבר לרישום לאתר', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'עמוד נחיתה ללא שם');
+        });
     }
 
     if (foodyGlobals.type && (foodyGlobals.type == 'campaign')) {
