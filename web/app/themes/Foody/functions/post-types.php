@@ -458,3 +458,15 @@ function foody_set_custom_page_var($page)
 
     return $page;
 }
+
+
+function foody_posts_page_script() {
+	if ( get_post_type() == 'post' || get_post_type() == 'foody_recipe') {
+		$pixel_code = get_field( 'pixel_code' );
+		if ( ! empty( $pixel_code ) ) {
+			echo $pixel_code;
+		}
+	}
+}
+
+add_action( 'wp_head', 'foody_posts_page_script' );
