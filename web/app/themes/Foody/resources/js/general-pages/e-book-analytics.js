@@ -14,12 +14,13 @@ jQuery(document).ready(($) => {
         /**
          * Register button click
          */
-        let registerButton = jQuery('#main-content .site-content .btn-primary');
-        registerButton.on('click', null, function () {
-            eventCallback(event, 'ebook', 'מעבר לרישום לאתר', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'עמוד נחיתה ללא שם');
-        });
+        let registerButtons = jQuery('' +
+            '#main-content .site-content .hero-container a, ' +
+            '#main-content .site-content .btn-primary, ' +
+            '.page-template-foody-campaign .site-content .foody-content a, ' +
+            '.page-template-foody-campaign-extended .site-content .foody-content a');
 
-        $('.page-template-foody-campaign .site-content .foody-content a, .page-template-foody-campaign-extended .site-content .foody-content a').on('click', function () {
+        registerButtons.on('click', null, function () {
             eventCallback(event, 'ebook', 'מעבר לרישום לאתר', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'עמוד נחיתה ללא שם');
         });
     }
