@@ -55,13 +55,17 @@ class Foody_HowIDid
      */
     public function the_comments($args = [])
     {
-        $args = array_merge($args, $this->get_args());
+	    $args = array_merge( $args, $this->get_args() );
 
-        $comments = get_comments($args);
+	    $comments = get_comments( $args );
 
-        foreach ($comments as $comment) {
-            foody_get_template_part(get_template_directory() . '/template-parts/content-comment-how-i-did.php', $comment);
-        }
+	    $filtered_comments = array_filter( $comments, function ( $comment ) {
+		    return $this->filter_comments( $comment );
+	    } );
+
+	    foreach ( $filtered_comments as $comment ) {
+		    foody_get_template_part( get_template_directory() . '/template-parts/content-comment-how-i-did.php', $comment );
+	    }
     }
 
 
@@ -76,7 +80,16 @@ class Foody_HowIDid
      */
     public function the_title($echo = true)
     {
-        $foody_comment_count = get_comments(array('count' => true, 'type' => 'how_i_did', 'post_id' => get_the_ID()));
+	    $args     = array( 'type' => 'how_i_did', 'post_id' => get_the_ID() );
+	    $comments = get_comments( $args );
+
+	    $filtered_comments = array_filter(
+		    $comments,
+		    function ( $comment ) {
+			    return $this->filter_comments( $comment );
+		    } );
+
+	    $foody_comment_count = count( $filtered_comments );
 
 	    $how_i_did_title = get_field( 'how_i_did_title' );
 	    if ( empty( $how_i_did_title ) ) {
@@ -105,21 +118,29 @@ class Foody_HowIDid
     {
     }
 
-    public function get_page_count()
-    {
+	public function get_page_count() {
 
-        $args = $this->get_args();
-        unset($args['number']);
-        $comments = get_comments($args);
+		$args = $this->get_args();
+		unset( $args['number'] );
+		$comments          = get_comments( $args );
+		$filtered_comments = array_filter( $comments, function ( $comment ) {
+			return $this->filter_comments( $comment );
+		} );
 
-	    $comments_per_page = get_field( 'how_i_did_paging' );
-	    if ( empty( $comments_per_page ) ) {
-		    $comments_per_page = get_option( 'hid_per_page', 3 );
-	    }
-	    $num_of_pages = get_comment_pages_count( $comments, $comments_per_page );
+		$comments_per_page = get_field( 'how_i_did_paging' );
+		if ( empty( $comments_per_page ) ) {
+			$comments_per_page = get_option( 'hid_per_page', 3 );
+		}
+		$num_of_pages = get_comment_pages_count( $filtered_comments, $comments_per_page );
 
-        return $num_of_pages;
+		return $num_of_pages;
 
-    }
+	}
+
+	function filter_comments( $comment ) {
+		$author = get_user_by( 'email', $comment->comment_author_email );
+
+		return $comment->comment_approved || ( ! $comment->comment_approved && $author->ID == get_current_user_id() );
+	}
 
 }
