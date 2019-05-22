@@ -246,8 +246,7 @@ function add_async_attribute($tag, $handle)
 		'foody-white-label',
 		'sb_instagram_scripts',
 		'ui-a11y.js',
-		'wsl-widget',
-		'contact-form-7'
+		'wsl-widget'
 	);
 	foreach ( $scripts_to_defer as $defer_script ) {
 		if ( $defer_script === $handle ) {
