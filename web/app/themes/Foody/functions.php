@@ -241,9 +241,14 @@ function foody_get_versioned_asset($name)
 
 function add_async_attribute($tag, $handle)
 {
-    if ('foody-script' !== $handle)
-        return $tag;
-    return str_replace(' src', ' async="async" src', $tag);
+	$scripts_to_defer = array('foody-script');
+
+	foreach($scripts_to_defer as $defer_script) {
+		if ($defer_script !== $handle) {
+			return str_replace(' src', ' async defer src', $tag);
+		}
+	}
+	return $tag;
 }
 
 add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
