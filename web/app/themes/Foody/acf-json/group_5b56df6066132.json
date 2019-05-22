@@ -283,6 +283,25 @@
                                     "multiple": 0,
                                     "return_format": "object",
                                     "ui": 1
+                                },
+                                {
+                                    "key": "field_5caefe7ebac4c",
+                                    "label": "הערות למצרך",
+                                    "name": "comment",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "maxlength": ""
                                 }
                             ]
                         }
@@ -308,5 +327,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1557231175
+    "modified": 1558517428
 }
