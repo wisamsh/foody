@@ -183,7 +183,7 @@ class Foody_Footer
         if (!is_multisite() || is_main_site()){
 
             ?>
-            <script>(function (document, tag) {
+            <script async defer>(function (document, tag) {
                     var script = document.createElement(tag);
                     var element = document.getElementsByTagName('body')[0];
                     script.src = 'https://accessibeapp.com/api/v1/assets/js/accessibe.js';

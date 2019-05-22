@@ -43,7 +43,7 @@ class Foody_Header
     {
         ?>
 
-        <script>
+        <script async defer>
             window.fbAsyncInit = function () {
                 FB.init({
                     appId: '<?php echo FACEBOOK_APP_ID?>',
@@ -72,7 +72,7 @@ class Foody_Header
     {
         ?>
         <!-- Google Tag Manager -->
-        <script>(function (w, d, s, l, i) {
+        <script async defer>(function (w, d, s, l, i) {
                 w[l] = w[l] || [];
                 w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
                 var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
@@ -89,7 +89,7 @@ class Foody_Header
         ?>
         <!-- Google Tag Manager (noscript) -->
         <noscript>
-            <iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo self::$tag_manager_id ?>"
+            <iframe aria-hidden="true" src="https://www.googletagmanager.com/ns.html?id=<?php echo self::$tag_manager_id ?>"
                     height="0" width="0" style="display:none;visibility:hidden"></iframe>
         </noscript>
         <!-- End Google Tag Manager (noscript) -->

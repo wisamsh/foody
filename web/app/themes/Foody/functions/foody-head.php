@@ -170,7 +170,7 @@ function foody_env_scripts() {
 		foreach ( $env_scripts as $script ) {
 
 			?>
-            <script>
+            <script async defer>
 
 				<?php echo $script ?>
 

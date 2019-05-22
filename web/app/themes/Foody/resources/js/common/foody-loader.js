@@ -3,8 +3,13 @@
  */
 
 
-let json = require('../../lottie/loader.js');
-let lottie = require('lottie-web/build/player/lottie.min');
+let json = '';
+let lottie = '';
+
+setTimeout(() => {
+    json = require('../../lottie/loader.js');
+    lottie = require('lottie-web/build/player/lottie.min');
+});
 
 module.exports = (function () {
 
