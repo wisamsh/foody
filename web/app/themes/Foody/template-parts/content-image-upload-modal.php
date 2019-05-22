@@ -41,10 +41,10 @@ $btn_cancel_classes = foody_get_array_default($modal, 'btn_cancel_classes', 'btn
                     </div>
                     <input type="file" id="file" name="attachment">
                     <button type="button" class="btn btn-secondary <?php echo $btn_cancel_classes ?>"
-                            data-dismiss="modal">
+                            data-dismiss="modal" aria-label="<?php echo $btn_cancel ?>">
                         <?php echo $btn_cancel ?>
                     </button>
-                    <button type="submit" class="btn btn-primary <?php echo $btn_approve_classes ?>">
+                    <button type="submit" class="btn btn-primary <?php echo $btn_approve_classes ?>" aria-label="<?php echo $btn_approve ?>">
                         <?php echo $btn_approve ?>
                     </button>
                 </form>

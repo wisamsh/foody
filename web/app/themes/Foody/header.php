@@ -65,7 +65,7 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
                 <?php endif; ?>
                 <?php if (!wp_is_mobile()): ?>
                     <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility"
-                            data-accessibe="trigger">
+                            data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
                         <?php $header->accessibility(); ?>
                         <div id="accessibility-container"></div>
                     </button>
@@ -107,7 +107,7 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
 
 
                 <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility"
-                        data-accessibe="trigger">
+                        data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
                          alt="<?php echo __('נגישות') ?>">
                     <div id="accessibility-container"></div>
@@ -123,7 +123,7 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
 
                 <?php Foody_Social::whatsapp(['d-block', 'd-lg-none']) ?>
 
-                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none">
+                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none" aria-label="חיפוש">
 
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="">
 

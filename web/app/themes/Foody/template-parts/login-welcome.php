@@ -39,7 +39,7 @@ $campaign_link = get_field( 'campaign_link', $page );
     </p>
 
 
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" aria-label="למעבר לעמוד הבית">
 
         <a href="<?php echo home_url() ?>"> <?php echo __( 'עבור לעמוד הראשי', 'foody' ) ?> </a>
     </button>
