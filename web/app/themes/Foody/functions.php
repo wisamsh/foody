@@ -241,11 +241,17 @@ function foody_get_versioned_asset($name)
 
 function add_async_attribute($tag, $handle)
 {
-	$scripts_to_defer = array('foody-script');
-
-	foreach($scripts_to_defer as $defer_script) {
-		if ($defer_script !== $handle) {
-			return str_replace(' src', ' async defer src', $tag);
+	$scripts_to_defer = array(
+		'foody-script',
+		'foody-white-label',
+		'sb_instagram_scripts',
+		'ui-a11y.js',
+		'wsl-widget',
+		'contact-form-7'
+	);
+	foreach ( $scripts_to_defer as $defer_script ) {
+		if ( $defer_script === $handle ) {
+			return str_replace( ' src', ' async defer src', $tag );
 		}
 	}
 	return $tag;
