@@ -143,7 +143,8 @@ class Foody_Footer
                 $items[0][] = $this->moveo();
 
                 $items[1][] = array(
-                    'title' => sprintf(__('Foody Israel') . ' %s', date('Y'))
+                    'title' => sprintf(__('Foody Israel') . ' %s', date('Y')),
+                    'url' => 'https://foody.co.il'
                 );
             }
 
