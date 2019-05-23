@@ -19,6 +19,11 @@ web/app/uploads/*
 !web/app/uploads/.gitkeep
 web/app/themes/Foody/dist
 
+# Ignore w3 caching files
+web/app/w3tc-config
+web/app/cache
+web/app/advanced-cache.php
+
 # WordPress
 web/wp
 web/.htaccess
