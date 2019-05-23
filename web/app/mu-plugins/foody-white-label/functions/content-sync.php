@@ -206,6 +206,63 @@ if (is_main_site()) {
 
     }
 
+
+//    add_action('wp_insert_post', 'foody_duplicate_post', 10, 2);
+
+    function foody_duplicate_post($post_id, $post_object)
+    {
+
+        if (!in_array($post_object->post_type, ['foody_recipe', 'foody_playlist', 'post'])) {
+            return;
+        }
+
+        // Check to see if we are autosaving
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+
+        if (defined('DOING_AJAX') && DOING_AJAX) {
+            return;
+        }
+
+        if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+            return;
+        }
+
+        if (in_array($post_object->post_status, array('auto-draft', 'inherit'))) {
+            return;
+        }
+
+        // auto sync on main site only
+        if (get_current_blog_id() != get_main_site_id()) {
+            return;
+        }
+
+        $sites_for_post = Foody_WhiteLabelPostMapping::getByPost($post_id);
+
+        if (!empty($sites_for_post)) {
+            $sites_for_post = array_map(function ($site) {
+                return isset($site['blog_id']) ? $site['blog_id'] : null;
+            }, $sites_for_post);
+        } else {
+            $sites_for_post = [];
+        }
+
+        $excluded_sites = array_merge($sites_for_post, [get_main_site_id()]);
+        $sites = get_sites(['site__not_in' => $excluded_sites]);
+
+        if (!empty($sites)) {
+            /** @var WP_Site $site */
+            foreach ($sites as $site) {
+
+                $copy_to_site = get_post_meta($post_id, "copy_to_{$site->blog_id}", true);
+
+                if ($copy_to_site) {
+                    Foody_WhiteLabelDuplicator::duplicate($post_object, $site->blog_id);
+                }
+            }
+        }
+    }
 }
 
 

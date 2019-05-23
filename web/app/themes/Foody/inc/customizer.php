@@ -51,6 +51,47 @@ function foody_customize_register( $wp_customize ) {
 		)
 	) );
 
+
+    $wp_customize->add_setting(
+        'foody_logo_mode',
+        array(
+            'capability'        => 'edit_theme_options'
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'foody_logo_mode',
+        array(
+            'label'       => __( 'תחם לוגו לגבולות ההדר', 'foody' ),
+            'description' => __( 'תחם לוגו לגבולות ההדר', 'foody' ),
+            'settings'    => 'foody_logo_mode',
+            'priority'    => 10,
+            'section'     => 'title_tagline',
+            'type'        => 'checkbox'
+        )
+    ) );
+
+    $wp_customize->add_setting(
+        'foody_logo_border_radius',
+        array(
+            'capability'        => 'edit_theme_options'
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'foody_logo_border_radius',
+        array(
+            'label'       => __( 'עגל גבול לוגו', 'foody' ),
+            'description' => __( 'עגל גבול לוגו', 'foody' ),
+            'settings'    => 'foody_logo_border_radius',
+            'priority'    => 11,
+            'section'     => 'title_tagline',
+            'type'        => 'checkbox'
+        )
+    ) );
+
 	//	Remove default color pickers
 	$wp_customize->remove_control( 'background_color' );
 	$wp_customize->remove_control( 'header_textcolor' );
@@ -66,6 +107,31 @@ function foody_customize_register( $wp_customize ) {
 	// Add color picker - hover links
 	foody_add_custom_color_picker_setting( $wp_customize, 'foody_links_hover_color', 'טקסט קישור בריחוף' );
 
+	// Add Titles underline
+	$wp_customize->add_setting(
+		'foody_show_titles_underline',
+		array(
+			'default'    => 'true',
+			'capability' => 'edit_theme_options',
+		)
+	);
+
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'foody_show_titles_underline',
+		array(
+			'label'       => __( 'הצג קו תחתון לכותרות', 'foody' ),
+			'description' => __( '', 'foody' ),
+			'settings'    => 'foody_show_titles_underline',
+			'section'     => 'colors',
+			'type'        => 'checkbox'
+		)
+	) );
+
+	// Add color picker - title underline
+	foody_add_custom_color_picker_setting( $wp_customize, 'foody_underline_color', 'צבע קו תחתון כותרות' );
+
+
 	// Add Social Links section
 	$wp_customize->add_section( 'foody_social_links', array(
 		'title'    => __( 'קישורי רשתות חברות', 'foody' ),
@@ -75,6 +141,37 @@ function foody_customize_register( $wp_customize ) {
 	add_social_link_setting( $wp_customize, 'youtube', 'יוטיוב', 'https://www.youtube.com/channel/UCy_lqFqTpf7HTiv3nNT2SxQ', 1 );
 	add_social_link_setting( $wp_customize, 'instagram', 'אינסטגרם', 'https://www.instagram.com/foody_israel', 3 );
 	add_social_link_setting( $wp_customize, 'facebook', 'פייסבוק', 'https://www.facebook.com/FoodyIL/', 5 );
+
+    $wp_customize->add_setting(
+        'foody_social_text',
+        array(
+            'default'           => __('עקבו אחרינו','foody'),
+            'capability' => 'edit_theme_options',
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'foody_social_text' ,
+        array(
+            'label'       => __( 'טקסט ליד אייקונים', 'foody' ),
+            'description' => __( '', 'foody' ),
+            'settings'    => 'foody_social_text',
+            'priority'    => 6,
+            'section'     => 'foody_social_links',
+            'type'        => 'text'
+        )
+    ) );
+
+    // Add texts section
+    $wp_customize->add_section( 'foody_texts', array(
+        'title'    => __( 'טקסטים', 'foody' ),
+        'priority' => 32,
+    ) );
+
+    foody_customize_add_text($wp_customize,'search_placeholder','פלייסהולדר חיפוש',__('חפשו מתכון או כתבה…','foody'),1);
+
+
 
 }
 
@@ -180,4 +277,35 @@ function add_social_link_setting( $wp_customize, $id, $label_text, $default_valu
 			'type'        => 'url'
 		)
 	) );
+}
+
+
+/**
+ * @param $wp_customize
+ * @param $id
+ * @param $label_text
+ * @param $default_value
+ * @param $weight
+ */
+function foody_customize_add_text($wp_customize, $id, $label_text, $default_value, $weight){
+    $wp_customize->add_setting(
+        'foody_text_' . $id,
+        array(
+            'default'           => $default_value,
+            'capability' => 'edit_theme_options',
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'foody_text_' . $id,
+        array(
+            'label'       => __( $label_text, 'foody' ),
+            'description' => __( '', 'foody' ),
+            'settings'    =>  'foody_text_' . $id,
+            'priority'    => $weight,
+            'section'     => 'foody_texts',
+            'type'        => 'text'
+        )
+    ) );
 }

@@ -11,6 +11,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public $id;
 
+    public $link_attrs;
+
     private $posted_on;
 
     protected $image;
@@ -286,10 +288,16 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     }
 
 	public function get_featured_content_credit() {
-		$credit = get_post_meta($this->post->ID, 'featured_image_credit', true);
-		if (!empty($credit)) {
-			return $credit;
-		}
+		// Credit field stored  on image meta
+		//		$thumbnail_id = get_post_thumbnail_id();
+		//		$image_object = get_post($thumbnail_id);
+		//		if (!empty($image_object) && !empty($image_object->post_title)) {
+		//			$credit = $image_object->post_title;
+		//		}
+		//		if (!empty($credit)) {
+		//			return $credit;
+		//		}
+		return '';
 	}
 
     public function the_sidebar_content($args = array())

@@ -16,7 +16,7 @@ $(document).ready(() => {
             let $this = $(this);
 
             $this.on('click',() => {
-                if (foodyGlobals.loggedIn == 'false') {
+                if (foodyGlobals.loggedIn == false) {
                     return showLoginModal();
                 }
                 let topicId = $this.data('id');

@@ -128,8 +128,12 @@ jQuery(document).ready(($) => {
 
     if ($checkboxes.length) {
         $checkboxes.on('click', function (e) {
-            e.stopPropagation();
-            e.preventDefault();
+            if (e.target && !e.target.type && e.target.tagName == "A") {
+                console.log('');
+            } else {
+                e.stopPropagation();
+                e.preventDefault();
+            }
             if ($(this).attr('disabled')) {
                 e.preventDefault();
                 return;

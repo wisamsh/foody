@@ -26,7 +26,7 @@ $homepage = new Foody_HomePage();
 
 
                     <h2 class="title not-found-title">
-						<?php echo get_option('foody_404_text',__( 'אופס… העמוד לא נמצא<br> אבל אולי יעניין אותך גם… ', 'foody' )); ?>
+                        <?php echo get_option('foody_404_text', __('אופס… העמוד לא נמצא<br> אבל אולי יעניין אותך גם… ', 'foody')); ?>
                     </h2>
 
 
@@ -35,32 +35,32 @@ $homepage = new Foody_HomePage();
 
                         <div class="content">
 
-							<?php $homepage->promoted_items(); ?>
+                            <?php $homepage->promoted_items(); ?>
 
-							<?php
-
-							$num = wp_is_mobile() ? 4 : 6;
-							echo do_shortcode( '[foody_team max="' . $num . '" show_title="true"]' )
-
-							?>
+                            <?php
+                            if (!is_multisite() || is_main_site()) {
+                                $num = wp_is_mobile() ? 4 : 6;
+                                echo do_shortcode('[foody_team max="' . $num . '" show_title="true"]');
+                            }
+                            ?>
 
                             <section class="feed-container row">
 
 
                                 <section class="sidebar-container d-none d-lg-block">
-									<?php
-									echo "<aside class=\"sidebar col pl-0\">";
+                                    <?php
+                                    echo "<aside class=\"sidebar col pl-0\">";
 
-									echo "<div class=\"sidebar-content\">";
-									dynamic_sidebar( 'foody-social' );
-									echo "</div></aside>";
-									?>
+                                    echo "<div class=\"sidebar-content\">";
+                                    dynamic_sidebar('foody-social');
+                                    echo "</div></aside>";
+                                    ?>
                                 </section>
 
 
                                 <section class="content-container col-lg-9 col-12">
 
-									<?php $homepage->feed(); ?>
+                                    <?php $homepage->feed(); ?>
 
                                 </section>
 

@@ -1,0 +1,53 @@
+{
+    "key": "group_5b56e2ffabe45",
+    "title": "מתכונים מקושרים",
+    "fields": [
+        {
+            "key": "field_5b477488c0d94",
+            "label": "מתכונים מקושרים",
+            "name": "related_recipes",
+            "type": "post_object",
+            "instructions": "במידה ולא נבחר יוצגו מספר מתכונים רנדומליים מקטגוריו הפוסט",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "foody_recipe"
+            ],
+            "taxonomy": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "return_format": "object",
+            "ui": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "foody_recipe"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "foody_channel"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1557231190
+}

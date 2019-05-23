@@ -1,0 +1,150 @@
+{
+    "key": "group_5b56e29853119",
+    "title": "ערכים תזונתיים",
+    "fields": [
+        {
+            "key": "field_5b4202acd3923",
+            "label": "ערכים",
+            "name": "nutritions",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_5b4202d4d3924",
+                    "label": "ערך תזונתי",
+                    "name": "nutrition",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_5b420340d3925",
+                            "label": "שם",
+                            "name": "name",
+                            "type": "select",
+                            "instructions": "שם הערך. לדוגמא: קלוריות",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "fats": "שומנים",
+                                "calories": "קלוריות",
+                                "salt": "נתרן"
+                            },
+                            "default_value": [],
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "return_format": "label",
+                            "placeholder": ""
+                        },
+                        {
+                            "key": "field_5b4203fcd3926",
+                            "label": "ערך מספרי",
+                            "name": "value",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_5b420571c9cd3",
+                            "label": "חיובי או שלילי",
+                            "name": "positive",
+                            "type": "radio",
+                            "instructions": "חיובי יוצג בירוק, שלילי באדום.\r\nבמידה ולא נבחר יוצג צבע טקסט דיפולטיבי",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "positive": "חיובי",
+                                "negative": "שלילי"
+                            },
+                            "allow_null": 1,
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "default_value": "",
+                            "layout": "vertical",
+                            "return_format": "value"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_5b5da59e01307",
+            "label": "כותרת",
+            "name": "nutritions_title",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "ערכים תזונתיים",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "foody_recipe"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 0,
+    "description": "",
+    "modified": 1557231220
+}

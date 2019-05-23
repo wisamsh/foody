@@ -534,6 +534,8 @@ class Foody_Ingredient extends Foody_Post {
 						}
 					}
 				}
+			} else {
+				$sponsor_to_return = $sponsor;
 			}
 
 		}

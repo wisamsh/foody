@@ -12,16 +12,35 @@ class Foody_Campaign {
 	private $image_link;
 	public $show_social = false;
 	public $lower_link;
-	private $campaign_name;
 
 
 	/**
 	 * E-Book constructor.
 	 */
 	public function __construct() {
-		$this->campaign_name = get_field( 'campaign_name' );
 		$this->show_social   = get_field( 'show_social' );
 		$this->lower_link    = get_field( 'lower_link' );
+	}
+
+	public function has_hero_video() {
+		$video = get_field( 'hero_video' );
+
+		return ! empty( $video );
+	}
+
+	public function the_hero_video() {
+		$video_url = get_field( 'hero_video' );
+
+		if ( $video_url && count( $parts = explode( 'v=', $video_url ) ) > 1 ) {
+
+			$query    = explode( '&', $parts[1] );
+			$video_id = $query[0];
+			$args     = array(
+				'id'      => $video_id,
+				'post_id' => ''
+			);
+			foody_get_template_part( get_template_directory() . '/template-parts/content-recipe-video.php', $args );
+		}
 	}
 
 	public function get_hero_image_url() {

@@ -48,6 +48,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-how-i-did-walk
 require_once get_template_directory() . "/inc/classes/class-foody-homepage.php";
 require_once get_template_directory() . "/inc/classes/class-foody-white-label-homepage.php";
 require_once get_template_directory() . "/inc/classes/class-foody-campaign.php";
+require_once get_template_directory() . "/inc/classes/class-foody-campaign-extended.php";
 require_once get_template_directory() . "/inc/classes/class-foody-category.php";
 require_once get_template_directory() . "/inc/classes/class-foody-categories.php";
 require_once get_template_directory() . "/inc/classes/class-foody-team.php";
@@ -104,6 +105,8 @@ require_once get_template_directory() . "/inc/widgets/widget-product.php";
 
 require_once get_template_directory() . "/functions/foody-session.php";
 require_once get_template_directory() . "/functions/core.php";
+require_once get_template_directory() . "/functions/authors.php";
+require_once get_template_directory() . "/functions/admin-comments.php";
 require_once get_template_directory() . "/functions/post-types.php";
 require_once get_template_directory() . "/functions/sidebars.php";
 require_once get_template_directory() . "/functions/widgets.php";
@@ -124,6 +127,7 @@ require_once get_template_directory() . "/functions/foody-head.php";
 require_once get_template_directory() . "/functions/search.php";
 require_once get_template_directory() . "/functions/foody-fut.php";
 require_once get_template_directory() . "/functions/seo.php";
+require_once get_template_directory() . "/functions/user-profile.php";
 require_once get_template_directory() . "/functions/theme.php";
 require_once get_template_directory() . "/functions/client-messages.php";
 require_once get_template_directory() . "/functions/cookies.php";

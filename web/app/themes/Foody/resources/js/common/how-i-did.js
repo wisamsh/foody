@@ -58,7 +58,7 @@ $(document).ready(() => {
 
     // prevent upload if not logged in
     $attachment.on('click', (e) => {
-        if (foodyGlobals.loggedIn == 'false') {
+        if (foodyGlobals.loggedIn == false) {
             e.preventDefault();
             showLoginModal();
             return false;

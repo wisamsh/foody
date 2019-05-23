@@ -7,7 +7,7 @@ $(document).ready(() => {
 
 
     $('body').on('click', '.favorite i', function () {
-        if (foodyGlobals.loggedIn == 'false') {
+        if (foodyGlobals.loggedIn == false) {
             return showLoginModal();
         }
         let $this = $(this);
