@@ -312,11 +312,13 @@ function foody_customize_colors_css() {
         <style type="text/css">
             .title {
                 text-decoration: underline;
+                text-underline-position: under;
                 text-decoration-color: <?php echo $foody_underline_color ?> !important;
             }
 
             .title > a {
                 text-decoration: underline;
+                text-underline-position: under;
                 text-decoration-color: <?php echo $foody_underline_color ?> !important;
             }
         </style>
