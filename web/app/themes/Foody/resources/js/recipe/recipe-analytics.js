@@ -9,7 +9,7 @@ jQuery(document).ready(($) => {
         /**
          * Page Load
          */
-        eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', foodyGlobals['author_name']);//TODO: Publisher
+        eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', foodyGlobals['author_name']);
 
 
         /**
