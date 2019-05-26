@@ -98,12 +98,22 @@ class Foody_Header
 
     public function accessibility()
     {
-
-
         ?>
         <i class="icon-acces"></i>
         <?php
-
-
     }
+
+	public function the_logo_mode() {
+		$mode          = get_theme_mod( 'foody_logo_mode', false );
+		$border_radius = get_theme_mod( 'foody_logo_border_radius', false );
+		$logo_class    = '';
+		if ( $mode ) {
+			$logo_class = 'logo-contain';
+		}
+		if ( $border_radius ) {
+			$logo_class .= ' round-logo';
+		}
+
+		echo $logo_class;
+	}
 }

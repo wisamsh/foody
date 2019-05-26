@@ -157,7 +157,8 @@ class Foody_WhiteLabelDuplicator
             'post_status' => 'draft',
             'post_type' => $old_post->post_type,
             'post_author' => 1,
-            'post_content' => $old_post->post_content
+            'post_content' => $old_post->post_content,
+            'post_excerpt' => $old_post->post_excerpt,
         );
 
         switch_to_blog($blogId);
@@ -222,6 +223,7 @@ class Foody_WhiteLabelDuplicator
 
                 foreach ($values as $value) {
                     $value = apply_filters('foody_import_post_meta_value', $old_post->ID, $key, $value, $blogId);
+                    $value = apply_filters("foody_import_post_meta_{$key}", $old_post->ID, $value, $blogId);
                     update_post_meta($new_post_id, $key, $value);
                 }
             }
@@ -241,8 +243,8 @@ class Foody_WhiteLabelDuplicator
                 wp_set_post_categories($new_post_id, $destination_categories);
             }
 
-            if (!empty($duplicationArgsWithDefaults['index'])){
-                update_post_meta($new_post_id,'foody_index',1);
+            if (!empty($duplicationArgsWithDefaults['index'])) {
+                update_post_meta($new_post_id, 'foody_index', 1);
             }
 
             switch_to_blog(get_main_site_id());

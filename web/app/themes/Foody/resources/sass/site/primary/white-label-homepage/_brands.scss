@@ -1,8 +1,16 @@
 .brands-slider {
+  $item-border-width: 2px;
   z-index: 0;
-  padding: 1rem 3rem 1rem 5rem;
+  //padding: 1rem 3rem 1rem 5rem;
+  padding: 15px;
+  padding: 10px 0;
+  margin: 0 $item-border-width 0 0;
   visibility: hidden;
-  height: 120px;
+
+  li{
+    display: inline-block;
+  }
+  //height: 120px;
 
   &.slick-initialized {
     visibility: visible;
@@ -16,11 +24,14 @@
 
   i.slick-arrow {
     position: absolute;
-    right: -2rem;
-    padding: 15px;
+    //right: -2rem;
+    //padding: 15px;
     z-index: 1;
-    top: 15px;
+    top: 10px;
+    bottom: 10px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 
     &:before {
       color: var(--color__primary);
@@ -29,7 +40,7 @@
 
     &.next {
       right: initial;
-      left: -2rem;
+      left: 0;
     }
 
     &.prev {
@@ -57,19 +68,47 @@
 
     }
 
-    &[aria-hidden=false].slick-active > div:after {
-      content: "";
-      width: 2px;
-      height: 100%;
-      background-color: black;
-      position: absolute;
-      top: 0;
-      left: 0;
+    //&.slick-current > div:after, &.slick-current + .slick-active > div:after {
+    //  content: "";
+    //  width: $item-border-width;
+    //  height: 100%;
+    //  background-color: black;
+    //  position: absolute;
+    //  top: 0;
+    //  left: 0;
+    //}
+
+    &.slick-slide {
+      > div:after, > div:before {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      &.item-border {
+        > div:after, > div:before {
+          opacity: 1;
+          content: "";
+          width: $item-border-width;
+          height: 100%;
+          background-color: black;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        > div:before {
+          right: 0;
+          left: unset;
+        }
+      }
     }
 
-    &[aria-hidden=false].slick-active:last-child > div:after {
-      width: 0;
-    }
+    //&[aria-hidden=false].slick-active:last-child > div:after {
+    //  width: 0;
+    //}
+  }
+
+  .brands-slider-item {
+    vertical-align: middle;
   }
 
 }
@@ -77,28 +116,27 @@
 @include breakpoint(mobileonly) {
 
   .brands-slider {
-    margin-right: 15px;
-    margin-left: 10px;
-    padding: 20px 10px 20px 0;
-    height: 90px;
+    //margin-right: 15px;
+    //margin-left: 10px;
+    //padding: 20px 10px 20px 0;
+    //height: 90px;
 
     .slick-list {
-      padding: 0 0 0 30px;
+      //padding: 0 0 0 30px;
     }
 
     i.slick-arrow {
-      top: 20px;
 
       &:before {
 
       }
 
       &.next {
-        left: -15px;
+        //left: -15px;
       }
 
       &.prev {
-        right: -25px;
+        //right: -25px;
 
         &:before {
 
@@ -116,7 +154,6 @@
         vertical-align: middle;
 
         img {
-          max-width: 110px;
           margin: 0 auto;
         }
 

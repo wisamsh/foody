@@ -41,7 +41,7 @@ function get_page_type() {
 
 		$type = 'team';
 
-    } elseif ( is_page_template( 'page-templates/foody-campaign.php' ) ) {
+    } elseif ( is_page_template( 'page-templates/foody-campaign.php' ) || is_page_template( 'page-templates/foody-campaign-extended.php' ) ) {
 	    $type = 'campaign';
     }
 
@@ -95,8 +95,14 @@ add_filter( 'foody_js_globals', 'is_tablet' );
 
 function campaign_name( $vars ) {
 	if ( get_page_type() == 'campaign' ) {
-		$vars['campaign_name'] = get_field( 'campaign_name' );
+		if ( is_user_logged_in() ) {
+			$vars['extended_campaign_url']   = get_field( 'extended_campaign_url' );
+			$vars['seen_extended_approvals'] = Foody_User::user_has_meta( 'seen_extended_approvals' );
+		}
 	}
+	$registration_page = get_page_by_title( 'הרשמה' );
+    $vars['campaign_name'] = get_field( 'campaign_name', $registration_page );
+	$vars['campaign_url'] = get_field( 'campaign_link', $registration_page );
 
 	return $vars;
 }
@@ -306,11 +312,13 @@ function foody_customize_colors_css() {
         <style type="text/css">
             .title {
                 text-decoration: underline;
+                text-underline-position: under;
                 text-decoration-color: <?php echo $foody_underline_color ?> !important;
             }
 
             .title > a {
                 text-decoration: underline;
+                text-underline-position: under;
                 text-decoration-color: <?php echo $foody_underline_color ?> !important;
             }
         </style>

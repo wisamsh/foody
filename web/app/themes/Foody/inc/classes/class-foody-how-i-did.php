@@ -27,6 +27,10 @@ class Foody_HowIDid
 
     public function get_args()
     {
+    	$comments_per_page = get_field('how_i_did_paging');
+    	if (empty($comments_per_page)) {
+    		$comments_per_page = get_option('hid_per_page');
+	    }
         $args =
             array(
                 'type' => 'how_i_did',
@@ -38,7 +42,7 @@ class Foody_HowIDid
         $args = array(
             'type__not_in' => array('comment', 'pings'),
             'type' => 'how_i_did',
-            'number' => get_option('hid_per_page'),
+            'number' => $comments_per_page,
             'post_id' => get_the_ID(),
             'orderby' => 'comment_date_gmt',
         );
@@ -74,9 +78,14 @@ class Foody_HowIDid
     {
         $foody_comment_count = get_comments(array('count' => true, 'type' => 'how_i_did', 'post_id' => get_the_ID()));
 
+	    $how_i_did_title = get_field( 'how_i_did_title' );
+	    if ( empty( $how_i_did_title ) ) {
+		    $how_i_did_title = 'תראו מה יצא לי';
+	    }
+
         $title = sprintf(
         /* translators: 1: comment count number, 2: title. */
-            esc_html(_nx('תראו מה יצא לי (%s)', 'תראו מה יצא לי (%s)', $foody_comment_count, 'comments title', 'foody')),
+            esc_html(_nx($how_i_did_title . ' (%s)', $how_i_did_title . ' (%s)', $foody_comment_count, 'comments title', 'foody')),
             number_format_i18n($foody_comment_count)
         );
 
@@ -103,8 +112,11 @@ class Foody_HowIDid
         unset($args['number']);
         $comments = get_comments($args);
 
-        $comments_per_page = get_option('hid_per_page', 3);
-        $num_of_pages = get_comment_pages_count($comments, $comments_per_page);
+	    $comments_per_page = get_field( 'how_i_did_paging' );
+	    if ( empty( $comments_per_page ) ) {
+		    $comments_per_page = get_option( 'hid_per_page', 3 );
+	    }
+	    $num_of_pages = get_comment_pages_count( $comments, $comments_per_page );
 
         return $num_of_pages;
 

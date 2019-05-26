@@ -12,11 +12,16 @@ $recipe = $template_args['post'];
 $args = foody_get_array_default($template_args, 'args', []);
 $title_el = foody_get_array_default($args, 'title_el', 'h2');
 $image_size = isset($args['image_size']) ? $args['image_size'] : 'list-item';
+
+$target = '';
+if (!empty($recipe->link_attrs['target'])) {
+    $target = "target='{$recipe->link_attrs['target']}'";
+}
 ?>
 
 
 <div class="recipe-item feed-item">
-    <a href="<?php echo $recipe->link ?>">
+    <a href="<?php echo $recipe->link ?>" <?php echo $target?>>
         <div class="image-container main-image-container">
             <img class="recipe-item-image feed-item-image" src="<?php echo $recipe->getImage($image_size) ?>" alt="">
 
@@ -44,7 +49,7 @@ $image_size = isset($args['image_size']) ? $args['image_size'] : 'list-item';
     <section class="feed-item-details-container">
         <section class="title-container">
             <<?php echo $title_el?> class="grid-item-title">
-                <a href="<?php echo $recipe->link ?>">
+                <a href="<?php echo $recipe->link ?>" <?php echo $target?>>
                     <?php echo $recipe->getTitle() ?>
                 </a>
             </<?php echo $title_el?>>
