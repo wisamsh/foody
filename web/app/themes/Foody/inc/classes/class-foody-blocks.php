@@ -8,7 +8,9 @@
 
 class Foody_Blocks
 {
-
+    /**
+     * @var $foody_search Foody_Search
+    */
     private $foody_search;
 
     /**
