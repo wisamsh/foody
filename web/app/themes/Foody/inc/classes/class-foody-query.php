@@ -216,6 +216,20 @@ class Foody_Query
         return $args;
     }
 
+    public function white_label_homepage()
+    {
+        $args = self::get_args();
+
+        $featured = get_field('featured_items', get_option('page_on_front'));
+        if (!empty($featured)) {
+            $args['post__not_in'] = array_map(function ($row) {
+                return $row['post']->ID;
+            }, $featured);
+        }
+
+        return $args;
+    }
+
     public function category($id)
     {
         $args = self::get_args([
@@ -475,14 +489,14 @@ class Foody_Query
     {
         if (method_exists($this, $context)) {
             $fn = array($this, $context);
-            if ($context == 'homepage') {
-                $foody_args = call_user_func($fn);
-            } else {
+//            if ($context == 'homepage') {
+//                $foody_args = call_user_func($fn);
+//            } else {
                 if (!is_array($context_args)) {
                     $context_args = array($context_args);
                 }
                 $foody_args = call_user_func_array($fn, $context_args);
-            }
+//            }
 
             $page = get_query_var('paged');
 
