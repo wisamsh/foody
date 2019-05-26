@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Foody Taboola Client
+Plugin Name: Foody Taboola Client, Foody Version
 Plugin URI: http://www.foody.co.il
 Description: A plugin to easily install the foody taboola options
 Version: 1.0.5
@@ -9,11 +9,11 @@ Author URI: http://www.glove.co.il
 License: A "Slug" license name e.g. GPL2
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain:  footab_client
+Text Domain:  footab_client_foody
 Domain Path:  /languages
 */
 
-load_plugin_textdomain('footab_client', false, basename(dirname(__FILE__)) . '/languages');
+load_plugin_textdomain('footab_client_foody', false, basename(dirname(__FILE__)) . '/languages');
 
 define('FOOTABC_PATH', plugin_dir_path(__FILE__));
 define('FOOTABC_URL', plugin_dir_url(__FILE__));
@@ -21,9 +21,9 @@ define('FOOTABC_URL', plugin_dir_url(__FILE__));
 
 require 'plugin-update-checker/plugin-update-checker.php';
 $MyUpdateChecker = Puc_v4p4_Factory::buildUpdateChecker(
-    'https://foody.co.il/footab_client/footabc_data.json',
+    'https://foody.co.il/footab_client_foody/footabc_data.json',
     __FILE__,
-    'footab_client'
+    'footab_client_foody'
 );
 
 /*
@@ -185,7 +185,7 @@ if (get_option('footabc_data')) {
 
     add_action('init', 'footabc_show_module');
 
-    function footabc_add_code_to_content($content = '')
+    function footabc_add_code_to_content($content='')
     {
         if ((is_single() || is_singular('foody_recipe') || is_singular('recipe')) && in_the_loop() && is_main_query()) {
             $footab_show = footabc_show_module();
@@ -278,7 +278,7 @@ if (get_option('footabc_data')) {
         }
     }
 
-    add_filter('the_content', 'footabc_add_code_to_content');
+    /*add_filter('the_content', 'footabc_add_code_to_content');*/
 
     function footabc_taboola_head()
     {

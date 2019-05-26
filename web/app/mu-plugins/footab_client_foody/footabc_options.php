@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 /**
  * Define the path to the options page.
  */
-define('FOOTABC_OPTIONS_PAGE_PATH', '/wp-admin/options-general.php?page=footab_client');
+define('FOOTABC_OPTIONS_PAGE_PATH', '/wp-admin/options-general.php?page=footab_client_foody');
 
 // ---------------------------------------------------------------------------
 // Define the plugin options.
@@ -143,7 +143,7 @@ function footabc_options_page_html()
                 <tr>
                     <th scope="row">
                         <label for="footabc_options[footabc_url]">
-                            <?php esc_html_e('Foody Taboola Url', 'footab_client'); ?>:
+                            <?php esc_html_e('Foody Taboola Url', 'footab_client_foody'); ?>:
                         </label>
                     </th>
                     <td>
@@ -159,7 +159,7 @@ function footabc_options_page_html()
                 <tr>
                     <th>
                         <label for="footabc_options[footabc_reset]">
-                            <?php esc_html_e('Re-fetch Option', 'footab_client'); ?>:
+                            <?php esc_html_e('Re-fetch Option', 'footab_client_foody'); ?>:
                         </label>
                     </th>
                     <td>
@@ -173,7 +173,7 @@ function footabc_options_page_html()
 
             </table>
 
-            <?php submit_button(__('Save Settings', 'footab_client')); ?>
+            <?php submit_button(__('Save Settings', 'footab_client_foody')); ?>
 
         </form>
     </div>
@@ -190,10 +190,10 @@ function footabc_options_page_html()
 function footabc_options_page()
 {
     add_options_page(
-        __('Foody Taboola Options', 'footab_client'),
-        __('Foody Taboola', 'footab_client'),
+        __('Foody Taboola Options', 'footab_client_foody'),
+        __('Foody Taboola', 'footab_client_foody'),
         'manage_options',
-        'footab_client',
+        'footab_client_foody',
         'footabc_options_page_html'
     );
 }
@@ -216,7 +216,7 @@ function footabc_plugin_action_links($links, $file)
     }
 
     if ($file == $this_plugin) {
-        $settings_link = '<a href="' . FOOTABC_OPTIONS_PAGE_PATH . '">' . __('Settings', 'footab_client') . '</a>';
+        $settings_link = '<a href="' . FOOTABC_OPTIONS_PAGE_PATH . '">' . __('Settings', 'footab_client_foody') . '</a>';
         array_unshift($links, $settings_link);
     }
 
@@ -232,7 +232,7 @@ add_filter('plugin_action_links', 'footabc_plugin_action_links', 10, 2);
 function footabc_register_plugin_links($links, $file)
 {
     if ($file == plugin_basename(__FILE__)) {
-        $links[] = '<a href="' . FOOTABC_OPTIONS_PAGE_PATH . '">' . __('Settings', 'footab_client') . '</a>';
+        $links[] = '<a href="' . FOOTABC_OPTIONS_PAGE_PATH . '">' . __('Settings', 'footab_client_foody') . '</a>';
     }
 
     return $links;
