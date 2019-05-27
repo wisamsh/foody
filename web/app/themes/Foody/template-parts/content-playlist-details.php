@@ -37,13 +37,13 @@ $next_class = $current_recipe_index == $playlist->num_of_recipes - 1 ? 'disabled
                 </h1>
             </div>
             <div class="actions row">
-                <button class="btn btn-prev col-1 offset-1 <?php echo $prev_class ?>">
+                <button class="btn btn-prev col-1 offset-1 <?php echo $prev_class ?>" aria-label="אחורה">
                     <a href="<?php echo $playlist->prev() ?>">
                         <i class="icon-Backw"></i>
                     </a>
                 </button>
 
-                <button class="btn btn-next col-1 <?php echo $next_class ?>">
+                <button class="btn btn-next col-1 <?php echo $next_class ?>" aria-label="קדימה">
                     <a href="<?php echo $playlist->next() ?>">
                         <i class="icon-Forw"></i>
                     </a>
@@ -64,7 +64,7 @@ $next_class = $current_recipe_index == $playlist->num_of_recipes - 1 ? 'disabled
             )
             ?>
         </section>
-        <button class="btn btn-show-recipe">
+        <button class="btn btn-show-recipe" aria-label="הצג מתכון">
             <a role="button" href="<?php echo get_permalink($playlist->get_current_recipe()->id) ?>">
                 <span>הצג מתכון</span>
                 <span>

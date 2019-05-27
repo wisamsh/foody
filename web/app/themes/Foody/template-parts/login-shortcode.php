@@ -38,13 +38,13 @@ echo do_shortcode('[wordpress_social_login]');
 
             <div class="row col-12 justify-content-between gutter-0 buttons">
 
-                <button class="btn btn-google col-12 col-sm-5">
+                <button class="btn btn-google col-12 col-sm-5" aria-label="google">
                     <span>
                         <?php echo __('התחברו דרך גוגל', 'foody') ?>
                     </span>
                     <i class="icon-Shape1"></i>
                 </button>
-                <button class="btn btn-facebook col-12 col-sm-5">
+                <button class="btn btn-facebook col-12 col-sm-5" aria-label="facebook">
                     <span>
                         <?php echo __('התחברו דרך פייסבוק', 'foody') ?>
                     </span>
@@ -111,7 +111,7 @@ echo do_shortcode('[wordpress_social_login]');
                 </div>
 
                 <div class="form-group form-submit col-12">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" aria-label="המשך">
                         <?php echo __('המשך') ?>
                     </button>
                 </div>

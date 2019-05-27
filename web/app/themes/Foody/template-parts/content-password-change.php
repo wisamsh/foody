@@ -61,14 +61,14 @@ $form_classes = foody_get_array_default($template_args, 'form_classes', []);
             <li>
                 <a role="tab" data-toggle="tab"
                    href="#user-content" aria-controls="user-content">
-                    <button type="button" class="btn btn-primary btn-cancel">
+                    <button type="button" class="btn btn-primary btn-cancel" aria-label="ביטול">
                         <?php echo __('ביטול') ?>
                     </button>
                 </a>
             </li>
         </ul>
 
-        <button type="submit" name="submit_change_pass" class="btn btn-primary col-lg-4 col-5">
+        <button type="submit" name="submit_change_pass" class="btn btn-primary col-lg-4 col-5" aria-label="שינוי סיסמה">
             <?php echo __('שינוי סיסמא') ?>
         </button>
     </div>

@@ -45,10 +45,10 @@ $hide_buttons = isset($modal['hide_buttons']) && $modal['hide_buttons'];
             <div class="modal-footer">
                 <?php if (!$hide_buttons): ?>
                     <button type="button" class="btn btn-secondary <?php echo $btn_cancel_classes ?>"
-                            data-dismiss="modal">
+                            data-dismiss="modal" aria-label="<?php echo $btn_cancel ?>">
                         <?php echo $btn_cancel ?>
                     </button>
-                    <button type="button" class="btn btn-primary <?php echo $btn_approve_classes ?>">
+                    <button type="button" class="btn btn-primary <?php echo $btn_approve_classes ?>" aria-label="<?php echo $btn_approve ?>">
                         <?php echo $btn_approve ?>
                     </button>
                 <?php endif; ?>

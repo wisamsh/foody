@@ -17,7 +17,9 @@ window.foodyFormMessage = require('./common/cf7-messages');
 
 
 // window.Fraction = require('fractional').Fraction;
-window.lottie = require('lottie-web');
+setTimeout(() => {
+    window.lottie = require('lottie-web');
+});
 
 $.validator.addMethod(
     "regex",
