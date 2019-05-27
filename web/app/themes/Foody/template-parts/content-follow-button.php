@@ -40,7 +40,7 @@ $follow_btn_text = $is_followed ? __('עוקב') : __('עקוב');
 <button class="<?php echo $follow_btn_class ?>"
         data-id="<?php echo $topic->get_id() ?>"
         data-followed="<?php echo $is_followed ? 'true' : 'false' ?>"
-        data-topic="followed_<?php echo $topic->get_type() ?>">
+        data-topic="followed_<?php echo $topic->get_type() ?>" aria-label="<?php echo $follow_btn_text ?>">
     <i class="icon-Shape"></i>
     <span>
                     <?php echo $follow_btn_text ?>

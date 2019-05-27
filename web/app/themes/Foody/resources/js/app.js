@@ -16,9 +16,10 @@ window.foodyFormMessage = require('./common/cf7-messages');
 // require('autocomplete.js/src/jquery/plugin.js');
 
 
-
 // window.Fraction = require('fractional').Fraction;
-window.lottie = require('lottie-web');
+setTimeout(() => {
+    window.lottie = require('lottie-web');
+});
 
 $.validator.addMethod(
     "regex",
@@ -65,7 +66,7 @@ require('./homepage');
 require('./white-label');
 
 require('./team');
-
+require('./article');
 require('./recipe');
 require('./playlist');
 require('./profile');

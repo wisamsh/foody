@@ -33,6 +33,8 @@ console.log($target);
         $link.attr('href', moreLink);
 
         $image.css('opacity', '0.2');
+
+        $target.parent().addClass('showing-more')
     }
 
 

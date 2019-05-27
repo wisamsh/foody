@@ -84,7 +84,7 @@ class Foody_WhiteLabel_HomePage
 
         if (!empty($blocks)) {
 
-            foreach ($blocks as $block) {
+            foreach ($blocks as $index => $block) {
                 $type = $block['type'];
 
                 if (!empty($type)) {
@@ -92,7 +92,7 @@ class Foody_WhiteLabel_HomePage
 
                     $block_fn = "draw_{$type}_block";
                     if (method_exists($this->blocks_drawer, $block_fn)) {
-                        $block_options = call_user_func([$this->blocks_drawer, $block_fn], $block);
+                        $block_options = call_user_func([$this->blocks_drawer, $block_fn], $block, 'block_' . $index . '_' . $type);
                         if (!empty($block_options) && !empty($block_options['content'])) {
                             $this->blocks_drawer->wrap_block($block_options);
                         }

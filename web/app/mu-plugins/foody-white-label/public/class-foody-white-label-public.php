@@ -73,7 +73,8 @@ class Foody_White_Label_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/foody-white-label-public.css', array(), $this->version, 'all' );
+		//White label styles are in main site.
+//		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/foody-white-label-public.css', array(), $this->version, 'all' );
 
 	}
 
