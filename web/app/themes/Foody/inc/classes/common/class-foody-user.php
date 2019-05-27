@@ -231,12 +231,12 @@ class Foody_User
                 if (isset($user_images[$size])) {
                     $image = $user_images[$size];
                     if (!empty($image)) {
-                        $image = "<img class='avatar' src='$image' >";
+                        $image = "<img class='avatar' src='$image' alt=''>";
                     }
                 } elseif (isset($user_images['full'])) {
                     $image = $user_images['full'];
                     if (!empty($image)) {
-                        $image = "<img class='avatar' src='$image' >";
+                        $image = "<img class='avatar' src='$image' alt=''>";
                     }
                 }
             } else {
@@ -246,7 +246,7 @@ class Foody_User
 
         if (empty($image) || 'gravatar.com' == $image) {
             $image = $GLOBALS['images_dir'] . 'avatar.svg';
-            $image = "<img class='avatar default-avatar' src='$image' >";
+            $image = "<img class='avatar default-avatar' src='$image' alt=''>";
         }
 
         return $image;

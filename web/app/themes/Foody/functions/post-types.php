@@ -166,7 +166,7 @@ function foody_remove_page_template()
 
     if (in_array($pagenow, array('post-new.php', 'post.php')) && in_array(get_post_type(), $custom_content_post_types)) {
         ?>
-        <script type="text/javascript">
+        <script async defer type="text/javascript">
             (function ($) {
                 $(document).ready(function () {
                     $('#page_template').val('<?php echo $default_template?>');

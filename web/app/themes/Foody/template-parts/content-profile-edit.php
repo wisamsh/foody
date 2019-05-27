@@ -52,7 +52,7 @@ $user = wp_get_current_user();
             <li>
                 <a role="tab" data-toggle="tab"
                    href="#user-content" aria-controls="user-content">
-                    <button type="button" class="btn btn-primary btn-cancel">
+                    <button type="button" class="btn btn-primary btn-cancel" aria-label="Cancel">
                         <?php echo __('ביטול') ?>
                     </button>
                 </a>
@@ -60,7 +60,7 @@ $user = wp_get_current_user();
         </ul>
 
 
-        <button type="submit" class="btn btn-primary col-lg-4 col-5">
+        <button type="submit" class="btn btn-primary col-lg-4 col-5" aria-label="Save">
             <?php echo __('שמור שינויים') ?>
         </button>
     </div>

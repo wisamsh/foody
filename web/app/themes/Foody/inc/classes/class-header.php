@@ -43,26 +43,28 @@ class Foody_Header
     {
         ?>
 
-        <script>
-            window.fbAsyncInit = function () {
-                FB.init({
-                    appId: '<?php echo FACEBOOK_APP_ID?>',
-                    cookie: true,
-                    xfbml: true,
-                    version: '<?php echo FACEBOOK_API_VERSION ?>'
-                });
-            };
+        <script async defer>
+            setTimeout(() => {
+                window.fbAsyncInit = function () {
+                    FB.init({
+                        appId: '<?php echo FACEBOOK_APP_ID?>',
+                        cookie: true,
+                        xfbml: true,
+                        version: '<?php echo FACEBOOK_API_VERSION ?>'
+                    });
+                };
 
-            (function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {
-                    return;
-                }
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "https://connect.facebook.net/en_US/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
+                (function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {
+                        return;
+                    }
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "https://connect.facebook.net/en_US/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            });
         </script>
 
         <?php
@@ -72,7 +74,7 @@ class Foody_Header
     {
         ?>
         <!-- Google Tag Manager -->
-        <script>(function (w, d, s, l, i) {
+        <script async defer>(function (w, d, s, l, i) {
                 w[l] = w[l] || [];
                 w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
                 var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
@@ -89,7 +91,7 @@ class Foody_Header
         ?>
         <!-- Google Tag Manager (noscript) -->
         <noscript>
-            <iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo self::$tag_manager_id ?>"
+            <iframe aria-hidden="true" src="https://www.googletagmanager.com/ns.html?id=<?php echo self::$tag_manager_id ?>"
                     height="0" width="0" style="display:none;visibility:hidden"></iframe>
         </noscript>
         <!-- End Google Tag Manager (noscript) -->

@@ -14,7 +14,7 @@ $def_classes = ['btn'];
 $classes = array_merge($classes, $def_classes);
 ?>
 
-<button id="whatsapp" class="<?php foody_el_classes($classes) ?>">
+<button id="whatsapp" class="<?php foody_el_classes($classes) ?>" aria-label="whats app">
     <a href="<?php echo $url ?>" target="_blank">
         <?php if (!wp_is_mobile()): ?>
             <i class="icon-whatsapp"></i>
