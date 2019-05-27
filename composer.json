@@ -241,18 +241,6 @@
           "url": "https://wpgoplugins.com/index.php?eddfile=5753%3A805%3A3%3A1&ttl=1554470076&file=3&token=caca7216c2184b90d85d0244e7416ae2"
         }
       }
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "w3-total-cache",
-        "version": "2.1",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/w3-total-cache.0.9.7.4.zip"
-        }
-      }
     }
   ],
   "require": {
@@ -286,8 +274,7 @@
     "ext-curl": "*",
     "monolog/monolog": "^1.24",
     "justinticktock/network-subsite-user-registration": "^2.5",
-    "david-gwyer/simple-sitemap-pro": "^2.1",
-    "w3-total-cache": "^2.1"
+    "david-gwyer/simple-sitemap-pro": "^2.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"
