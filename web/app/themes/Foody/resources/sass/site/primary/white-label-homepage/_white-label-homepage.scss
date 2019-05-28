@@ -89,6 +89,9 @@ $sidebar-top-offset: 60px;
         }
 
         .cover-image {
+          opacity: 0.9;
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+
           img {
             background-size: cover;
             width: 100%;
@@ -370,6 +373,8 @@ $sidebar-top-offset: 60px;
           }
 
           .cover-image {
+            box-shadow: none;
+            opacity: 1;
 
             img {
             }
