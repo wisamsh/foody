@@ -7,6 +7,7 @@
  */
 
 $failed = !empty(isset($_GET['register-errors']));
+$text = isset($template_args) && isset($template_args['text']) ? $template_args['text'] : '';
 
 $classes = 'register';
 if ($failed) {
