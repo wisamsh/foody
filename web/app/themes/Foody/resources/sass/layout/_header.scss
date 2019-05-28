@@ -25,6 +25,19 @@ body {
   min-height: 100%;
 }
 
+.non-main-site {
+  header {
+    .socials {
+      .header-top-container {
+
+        .search-bar-container {
+          margin-right: 50px;
+        }
+      }
+    }
+  }
+}
+
 header {
 
   .run {
@@ -39,6 +52,28 @@ header {
       width: auto;
       padding: 1px 5px;
       border-radius: 3px;
+    }
+  }
+
+  .foody-collaboration {
+    width: 100%;
+    text-align: center;
+    font-size: 21px;
+    color: var(--color__text-main);
+    background-color: white;
+    padding-top: 5px;
+
+    &.foody-collaboration-desktop {
+      width: auto;
+      background-color: transparent;
+      padding: 1px 5px;
+      border-radius: 3px;
+      padding-top: 0;
+    }
+
+    img {
+      width: 45px;
+      margin-right: 10px;
     }
   }
 
@@ -681,6 +716,18 @@ header {
 
   #content {
     padding-top: 90px;
+  }
+
+  .non-main-site {
+    #content {
+      padding-top: 110px;
+    }
+
+    header {
+      &.header-unpin {
+        transform: translateY(-110px);
+      }
+    }
   }
 
   header {
