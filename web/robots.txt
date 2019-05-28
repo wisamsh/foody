@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /wp-admin/
 Disallow: /wp-login.php
+Disallow: /footab_sites/
