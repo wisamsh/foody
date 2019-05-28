@@ -311,7 +311,8 @@ $content-width: 95%;
       li {
         padding: 0;
         &:nth-child(n+2) {
-          display: none;
+          //display: none; //TODO: check why it was hidden for some reason
+          margin-right: 10px;
         }
       }
 

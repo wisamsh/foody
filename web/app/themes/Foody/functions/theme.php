@@ -15,7 +15,7 @@ function foody_get_background_image() {
 
 			if ( ! empty( $referer_post ) ) {
 				$post_type = get_post_type();
-				if ( is_category() || in_array( $post_type, [ 'post', 'foody_recipe', 'foody_filter' ] ) ) {
+				if ( is_category() || is_tag() || in_array( $post_type, [ 'post', 'foody_recipe', 'foody_filter' ] ) ) {
 					$background_image = get_field( 'background_image', $referer_post );
 					$_SESSION['background_image'] = $background_image;
 					if ( in_array( $post_type, [ 'post', 'foody_recipe', 'foody_filter' ] )) {
