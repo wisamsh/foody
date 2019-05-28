@@ -74,7 +74,7 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
 
         </div>
 
-        <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg" role="navigation">
+        <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg <?php $header->the_logo_nav_mode() ?>" role="navigation">
 
             <div class="container-fluid foody-navbar-container">
 

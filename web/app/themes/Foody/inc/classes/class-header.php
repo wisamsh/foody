@@ -118,4 +118,14 @@ class Foody_Header
 
 		echo $logo_class;
 	}
+
+	public function the_logo_nav_mode() {
+		$mode          = get_theme_mod( 'foody_logo_mode', false );
+		$logo_class    = '';
+		if ( $mode ) {
+			$logo_class = 'nav-bar-contain-logo';
+		}
+
+		echo $logo_class;
+	}
 }
