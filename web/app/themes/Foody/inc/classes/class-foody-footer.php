@@ -144,7 +144,8 @@ class Foody_Footer
 
                 $items[1][] = array(
                     'title' => sprintf(__('Foody Israel') . ' %s', date('Y')),
-                    'url' => foody_get_main_site_url()
+                    'url' => foody_get_main_site_url(),
+                    'target' => '_blank'
                 );
             }
 
