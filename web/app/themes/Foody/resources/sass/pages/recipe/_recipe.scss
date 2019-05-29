@@ -1373,7 +1373,7 @@ $content-width: 95%;
         justify-content: space-around;
 
         li {
-          width: 45%;
+          max-width: 45%;
 
           &:nth-child(n+1) {
             display: initial;
