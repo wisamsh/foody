@@ -12,9 +12,9 @@ $button_classes = foody_get_array_default($template_args,'button_classes','col-3
 
 
 
-<h4 class="newsletter-title">
+<div class="newsletter-title">
     <?php echo __('אל תפספסו את המתכונים החמים!', 'foody'); ?>
-</h4>
+</div>
 
 <section class="newsletter">
     <?php echo do_shortcode('[contact-form-7 id="3101" title="ניוזלטר"]')?>

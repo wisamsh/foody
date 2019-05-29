@@ -348,12 +348,12 @@ class Foody_Blocks
                         <?php echo $title ?>
                     </h2>
                     <?php if (!empty($see_more_link) && !empty($see_more_text)): ?>
-                        <h3 class="block-see-more title col">
+                        <h2 class="block-see-more title col">
                             <a href=" <?php echo $see_more_link ?>">
                                 <?php echo $see_more_text ?>
                             </a>
                             <i class="icon-arrowleft"></i>
-                        </h3>
+                        </h2>
                     <?php endif; ?>
                 </section>
             <?php endif; ?>
