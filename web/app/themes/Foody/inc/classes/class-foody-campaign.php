@@ -12,14 +12,17 @@ class Foody_Campaign {
 	private $image_link;
 	public $show_social = false;
 	public $lower_link;
-
+	public $registered_user_link;
+	public $content_link;
 
 	/**
 	 * E-Book constructor.
 	 */
 	public function __construct() {
-		$this->show_social   = get_field( 'show_social' );
-		$this->lower_link    = get_field( 'lower_link' );
+		$this->show_social          = get_field( 'show_social' );
+		$this->lower_link           = get_field( 'lower_link' );
+		$this->registered_user_link = get_field( 'registered_user_link' );
+		$this->content_link         = get_field( 'content_link' );
 	}
 
 	public function has_hero_video() {

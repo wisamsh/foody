@@ -46,7 +46,7 @@ if (empty($welcome_text)) {
                     <?php
                     $text = get_field('text', $registration_page);
                     if (empty($text)) {
-                        $text = __('ברצוני לקבל את ספר המתכונים לפסח');
+                        $text = __('ברצוני לקבל את ספר המתכונים לשבועות');
                     }
                     echo $text;
                     ?>

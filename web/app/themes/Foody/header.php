@@ -48,6 +48,8 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
         <div class="run d-block d-lg-none">
             <?php echo __('בהרצה') ?>
         </div>
+        <?php else: ?>
+            <?php $header->the_foody_collaboration(false); ?>
         <?php endif; ?>
 
         <div class="socials d-none d-lg-block">
@@ -58,11 +60,13 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
                 <div class="search-bar search-bar-container">
                     <?php get_search_form(); ?>
                 </div>
-                <?php if (!is_multisite() || is_main_site()): ?>
+	            <?php if ( ! is_multisite() || is_main_site() ): ?>
                     <span class="run-desktop run">
-                    <?php echo __('בהרצה') ?>
+                    <?php echo __( 'בהרצה' ) ?>
                 </span>
-                <?php endif; ?>
+	            <?php else: ?>
+		            <?php $header->the_foody_collaboration( true ); ?>
+	            <?php endif; ?>
                 <?php if (!wp_is_mobile()): ?>
                     <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility"
                             data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">

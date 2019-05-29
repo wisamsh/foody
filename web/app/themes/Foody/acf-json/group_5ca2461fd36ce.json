@@ -326,6 +326,61 @@
                     "maxlength": ""
                 }
             ]
+        },
+        {
+            "key": "field_5cee44c93cdb4",
+            "label": "מייל אישור תמונה",
+            "name": "image_approval_email",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_5cee45163cdb5",
+                    "label": "תבנית HTML",
+                    "name": "template",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "new_lines": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "rows": ""
+                },
+                {
+                    "key": "field_5cee45273cdb6",
+                    "label": "subject",
+                    "name": "subject",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
         }
     ],
     "location": [
@@ -345,5 +400,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1558377494
+    "modified": 1559119256
 }

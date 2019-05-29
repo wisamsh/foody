@@ -6,18 +6,19 @@
  * Time: 2:35 PM
  */
 $login_status = '';
+$text = isset($template_args) && isset($template_args['text']) ? $template_args['text'] : '';
+
 $email = isset($_GET['l']) ? $_GET['l'] : '';
 if (isset($_GET['login'])) {
     $login_status = $_GET['login'];
 }
 
 $foody_lost_password = isset($_REQUEST['checkemail']) && $_REQUEST['checkemail'] == 'confirm' && false;
-
 ?>
 
 <h2>התחברות</h2>
 <p>
-    <?php echo __('התחברו ותתחילו להנות ממגוון עצום של תכנים קולינריים ומתכונים עם אלפי שעות וידאו, להרכיב לעצמכם ספר מתכונים אישי עם המתכונים שהכי אהבתם, לשתף בתמונות, להגיב ולשאול שאלות.') ?>
+	<?php echo $text ?>
 </p>
 <p>
     <span>

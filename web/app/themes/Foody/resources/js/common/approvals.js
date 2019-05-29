@@ -45,12 +45,16 @@ jQuery(document).ready(($) => {
                         } else if (data.e_book) {
                             marketingAnalyticsText = 'לא נרשם פלוס ספר';
                         }
-                        eventCallback('', 'רישום לאתר', 'רישום לדיוור הצליח', foodyGlobals['user']['social_type'], 'רישום לדיוור', marketingAnalyticsText);
+                        eventCallback('', 'רישום לאתר', 'רישום לדיוור הצליח', foodyGlobals['user'] ? foodyGlobals['user']['social_type'] : 'אין משתמש', 'רישום לדיוור', marketingAnalyticsText);
                         $approvalsContainer.unblock();
                         let $redirect = $('input[name="redirect"]');
                         // noinspection EqualityComparisonWithCoercionJS
                         if ($redirect.length && $redirect.val() == 1) {
-                            window.location.href = '/';
+                            if (data && data.data && data.data['go-to']) {
+                                window.location.href = data.data['go-to'];
+                            } else {
+                                window.location.href = '/';
+                            }
                         }
                     }
                 });

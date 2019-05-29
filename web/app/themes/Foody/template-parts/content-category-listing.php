@@ -28,6 +28,6 @@ echo $template_args['link']; ?>" class="col">
             </picture>
         </div>
 
-        <h4 class="categort-listing-title"><?php echo $name; ?></h4>
+        <h2 class="categort-listing-title"><?php echo $name; ?></h2>
     </div>
 </a>

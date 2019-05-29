@@ -15,7 +15,7 @@ $widget  = isset( $template_args['widget'] ) && $template_args['widget'] ? $temp
     <section class="widget-product-container">
 
         <div class="foody-product-item">
-            <h2 class="product-title title"><?php echo $product['title'] ?></h2>
+            <div class="product-title title"><?php echo $product['title'] ?></div>
             <img src="<?php echo $product['image']['url'] ?>" alt="<?php echo $product['image']['alt'] ?>">
             <a class="product-link" href="<?php echo $product['link']['url'] ?>"
                target="<?php echo $product['link']['target'] ?>">

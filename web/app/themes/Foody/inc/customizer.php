@@ -134,7 +134,7 @@ function foody_customize_register( $wp_customize ) {
 
 	// Add Social Links section
 	$wp_customize->add_section( 'foody_social_links', array(
-		'title'    => __( 'קישורי רשתות חברות', 'foody' ),
+		'title'    => __( 'קישורי רשתות חברות ורכיבי header', 'foody' ),
 		'priority' => 31,
 	) );
 
@@ -162,6 +162,47 @@ function foody_customize_register( $wp_customize ) {
             'type'        => 'text'
         )
     ) );
+
+
+	$wp_customize->add_setting(
+		'show_foody_collaboration_text',
+		array(
+			'capability' => 'edit_theme_options',
+		)
+	);
+
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'show_foody_collaboration_text' ,
+		array(
+			'label'       => __( 'הצג רכיב בשיתוף עם Foody', 'foody' ),
+			'description' => __( '', 'foody' ),
+			'settings'    => 'show_foody_collaboration_text',
+			'priority'    => 6,
+			'section'     => 'foody_social_links',
+			'type'        => 'checkbox'
+		)
+	) );
+
+	$wp_customize->add_setting(
+		'foody_collaboration_text',
+		array(
+			'capability' => 'edit_theme_options',
+		)
+	);
+
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'foody_collaboration_text' ,
+		array(
+			'label'       => __( 'טקסט רכיב בשיתוף עם Foody', 'foody' ),
+			'description' => __( '', 'foody' ),
+			'settings'    => 'foody_collaboration_text',
+			'priority'    => 6,
+			'section'     => 'foody_social_links',
+			'type'        => 'text'
+		)
+	) );
 
     // Add texts section
     $wp_customize->add_section( 'foody_texts', array(

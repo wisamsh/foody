@@ -7,6 +7,7 @@
  */
 
 $failed = !empty(isset($_GET['register-errors']));
+$text = isset($template_args) && isset($template_args['text']) ? $template_args['text'] : '';
 
 $classes = 'register';
 if ($failed) {
@@ -16,7 +17,7 @@ if ($failed) {
 
 <h2>הגיע הזמן שנכיר</h2>
 <p>
-    <?php echo __('הרשמו לאתר כדי להגיב, להעלות תמונות של הבישולים שלכם ולהרכיב לעצמם ספר מתכונים אישי עם כל המתכונים שהכי אהבתם.') ?>
+    <?php echo $text ?>
 </p>
 <p>משתמש רשום?&nbsp;
     <span style="color: #ed3d48;">

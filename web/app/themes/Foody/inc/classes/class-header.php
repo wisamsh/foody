@@ -128,4 +128,27 @@ class Foody_Header
 
 		echo $logo_class;
 	}
+
+	public function the_foody_collaboration($desktop) {
+		$collab_text        = get_theme_mod( 'foody_collaboration_text', false );
+		$show_collaboration = get_theme_mod( 'show_foody_collaboration_text', false );
+		$foody_url = foody_get_main_site_url();
+
+		if ( $show_collaboration ) {
+			if ( $desktop ) {
+				echo '<span class="foody-collaboration-desktop foody-collaboration">';
+			} else {
+				echo '<div class="foody-collaboration d-block d-lg-none">';
+			}
+			echo '<a href="' . $foody_url . '" target="_blank">';
+			echo '<span>' . $collab_text . '</span>';
+			echo '<img src="' . $GLOBALS['images_dir'] . 'foody-logo.svg" alt="Foody">';
+			echo '</a> ';
+			if ( $desktop ) {
+				echo '</span>';
+			} else {
+				echo '</div>';
+			}
+		}
+	}
 }
