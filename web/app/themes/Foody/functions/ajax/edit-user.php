@@ -189,11 +189,28 @@ function foody_edit_user_extended_campaign_approvals() {
 	$birthday                = isset( $_POST['birthday'] ) ? $_POST['birthday'] : '';
 	$gender                  = isset( $_POST['gender'] ) ? $_POST['gender'] : '';
 	$extended_campaign_terms = isset( $_POST['extended-campaign-terms'] ) ? $_POST['extended-campaign-terms'] : false;
+	$marketing               = isset( $_POST['marketing'] ) ? $_POST['marketing'] : false;
 
 
 	$ID = get_current_user_id();
 
 	$user = get_user_by( 'ID', $ID );
+
+
+	if ( ! empty( $marketing ) ) {
+		$resultMarketing = update_user_meta( $ID, 'marketing', $marketing );
+		if ( ! empty( $user ) && $user->ID != 0 ) {
+			foody_register_newsletter( $user->user_email );
+		}
+	}
+
+	if ( empty( $marketing ) ) {
+		$marketing = get_user_meta( $ID, 'marketing', true );
+	}
+
+	if ( $marketing && ! empty( $user ) && $user->ID != 0 ) {
+		foody_register_newsletter( $user->user_email );
+	}
 
 	if ( ! empty( $street ) ) {
 		$resultStreet = update_user_meta( $ID, 'street', $street );
