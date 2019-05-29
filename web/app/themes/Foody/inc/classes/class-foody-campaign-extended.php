@@ -17,8 +17,11 @@ class Foody_Campaign_Extended {
 	public function __construct() {
 		$this->campaign       = new Foody_Campaign();
 		$this->show_how_i_did = get_field( 'show_how_i_did' );
-		if ( ! Foody_User::user_has_meta( 'seen_extended_approvals' ) ) {
-			$this->campaign->registered_user_link = get_field( 'extended_campaign_url' );
+		if ( ! Foody_User::user_has_meta( 'marketing' ) ) {
+			$this->campaign->registered_user_link = [
+				'url'    => get_page_link( get_page_by_title( 'השלמת רישום' ) ),
+				'target' => '_self'
+			];
 		}
 	}
 
