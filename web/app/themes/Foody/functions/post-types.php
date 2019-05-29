@@ -461,7 +461,10 @@ function foody_set_custom_page_var($page)
 
 
 function foody_posts_page_script() {
-	if ( get_post_type() == 'post' || get_post_type() == 'foody_recipe') {
+	if ( get_post_type() == 'post' ||
+	     get_post_type() == 'foody_recipe' ||
+	     get_post_type() == 'foody_feed_channel' ||
+	     is_page_template( 'page-templates/items.php' ) ) {
 		$pixel_code = get_field( 'pixel_code' );
 		if ( ! empty( $pixel_code ) ) {
 			echo $pixel_code;
