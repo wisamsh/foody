@@ -52,4 +52,17 @@ class Foody_Mailer {
 
 		wp_mail( $to, $subject, $body, $headers );
 	}
+
+
+
+	public static function sendEmailTemplate( $subject, $template, $to, $is_html = true ) {
+		$headers = [];
+		if ( $is_html ) {
+
+			$headers[]                        = 'Content-Type: text/html; charset=UTF-8';
+			$GLOBALS["use_html_content_type"] = true;
+		}
+
+		wp_mail( $to, $subject, $template, $headers );
+	}
 }

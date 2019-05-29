@@ -99,3 +99,23 @@ function foody_comment_how_i_did_image_cb( $comment ) {
     </p><?php
 
 }
+
+function foody_approve_comment_how_i_did( $new_status, $old_status, $comment ) {
+	if ( $old_status != $new_status ) {
+		if ( $new_status == 'approved' ) {
+			if ( $comment->comment_type == 'how_i_did' ) {
+				$registration_page = get_page_by_title( 'הרשמה' );
+				$campaign_url      = get_field( 'campaign_link', $registration_page );
+				$campaign_page     = url_to_postid( $campaign_url['url'] );
+				if ( $comment->comment_post_ID == $campaign_page ) {
+					// Send approval email
+					$approve_email_template = get_field( 'image_approval_email_template', $registration_page );
+					$approve_email_subject  = get_field( 'image_approval_email_subject', $registration_page );
+					Foody_Mailer::sendEmailTemplate( $approve_email_subject, $approve_email_template, $comment->comment_author_email );
+				}
+			}
+		}
+	}
+}
+
+add_action( 'transition_comment_status', 'foody_approve_comment_how_i_did', 10, 3 );

@@ -9,7 +9,7 @@
 $action = get_query_var('registered', null);
 
 $template = 'register-form.php';
-$args = isset( $template_args ) ? [ 'text' => $template_args['text'] ] : [];
+$args = isset( $template_args ) && isset($template_args['text']) ? [ 'text' => $template_args['text'] ] : [];
 if (!is_null($action) && is_user_logged_in()) {
 
     $user_id = get_current_user_id();

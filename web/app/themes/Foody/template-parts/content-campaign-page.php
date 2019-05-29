@@ -12,11 +12,13 @@ if ( ! wp_is_mobile() ) {
 	$bg = $GLOBALS['images_dir'] . 'e-book.png';
 }
 
-$image               = $e_book->get_hero_image_url();
-$mobile_image        = $e_book->get_mobile_hero_image_url();
-$promoted_images     = $e_book->get_promoted_images();
-$register_link       = $e_book->get_hero_link_url();
-$register_lower_link = $e_book->lower_link;
+$image                = $e_book->get_hero_image_url();
+$mobile_image         = $e_book->get_mobile_hero_image_url();
+$promoted_images      = $e_book->get_promoted_images();
+$register_link        = $e_book->get_hero_link_url();
+$register_lower_link  = $e_book->lower_link;
+$content_link         = $e_book->content_link;
+$registered_user_link = $e_book->registered_user_link;
 
 ?>
 
@@ -25,13 +27,17 @@ $register_lower_link = $e_book->lower_link;
 		<?php if ( $e_book->has_hero_video() ): ?>
 			<?php $e_book->the_hero_video() ?>
 		<?php else: ?>
-            <a href="<?php echo $register_link['url'] ?>" href="<?php echo $register_link['target'] ?>">
-                <picture>
-                    <source media="(min-width: 415px)" srcset="<?php echo $image ?>">
-                    <source media="(max-width: 414px)"
-                            srcset="<?php echo $mobile_image ?>">
-                    <img src="<?php echo $image ?>">
-                </picture>
+			<?php if ( is_user_logged_in() && ! empty( $registered_user_link ) ) {
+				echo '<a href="' . $registered_user_link['url'] . '" href="' . $registered_user_link['target'] . '">';
+			} else {
+				echo '<a href="' . $register_link['url'] . '" href="' . $register_link['target'] . '">';
+			} ?>
+            <picture>
+                <source media="(min-width: 415px)" srcset="<?php echo $image ?>">
+                <source media="(max-width: 414px)"
+                        srcset="<?php echo $mobile_image ?>">
+                <img src="<?php echo $image ?>">
+            </picture>
             </a>
 		<?php endif; ?>
     </div>
@@ -48,6 +54,18 @@ $register_lower_link = $e_book->lower_link;
 	<?php the_content(); ?>
 
     <section class="container pl-sm-0 pr-sm-0">
+		<?php if ( is_user_logged_in() && ! empty( $registered_user_link ) ) : ?>
+            <a class="btn btn-primary cta" href="<?php echo $registered_user_link['url'] ?>"
+               target="<?php echo $registered_user_link['target'] ?>">
+				<?php echo $content_link['title'] ?>
+            </a>
+		<?php elseif ( ! empty( $content_link ) ): ?>
+            <a class="btn btn-primary cta" href="<?php echo $content_link['url'] ?>"
+               target="<?php echo $content_link['target'] ?>">
+				<?php echo $content_link['title'] ?>
+            </a>
+		<?php endif; ?>
+
         <section class="recipes row">
 			<?php if ( ! empty( $promoted_images ) ):
 				foreach ( $promoted_images as $promoted_image ):
@@ -75,7 +93,12 @@ $register_lower_link = $e_book->lower_link;
 
     </section>
 
-	<?php if ( ! empty( $register_lower_link ) ): ?>
+	<?php if ( is_user_logged_in() && ! empty( $registered_user_link ) ) : ?>
+        <a class="btn btn-primary cta" href="<?php echo $registered_user_link['url'] ?>"
+           target="<?php echo $registered_user_link['target'] ?>">
+			<?php echo $register_lower_link['title'] ?>
+        </a>
+	<?php elseif ( ! empty( $register_lower_link ) ): ?>
         <a class="btn btn-primary cta" href="<?php echo $register_lower_link['url'] ?>"
            target="<?php echo $register_lower_link['target'] ?>">
 			<?php echo $register_lower_link['title'] ?>
