@@ -1378,6 +1378,10 @@ $content-width: 95%;
             display: initial;
           }
 
+          &:nth-child(n+2) {
+            margin-right: 0;
+          }
+
           margin-bottom: 5px;
           button {
             height: 50px;
