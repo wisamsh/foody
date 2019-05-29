@@ -109,8 +109,8 @@ function foody_approve_comment_how_i_did( $new_status, $old_status, $comment ) {
 				$campaign_page     = url_to_postid( $campaign_url['url'] );
 				if ( $comment->comment_post_ID == $campaign_page ) {
 					// Send approval email
-					$approve_email_template = get_field( 'image_approval_email_template', $registration_page );
-					$approve_email_subject  = get_field( 'image_approval_email_subject', $registration_page );
+					$approve_email_template = get_field( 'image_approval_email_template', $campaign_page );
+					$approve_email_subject  = get_field( 'image_approval_email_subject', $campaign_page );
 					Foody_Mailer::sendEmailTemplate( $approve_email_subject, $approve_email_template, $comment->comment_author_email );
 				}
 			}
