@@ -54,16 +54,18 @@ $registered_user_link = $e_book->registered_user_link;
 	<?php the_content(); ?>
 
     <section class="container pl-sm-0 pr-sm-0">
-		<?php if ( is_user_logged_in() && ! empty( $registered_user_link ) ) : ?>
-            <a class="btn btn-primary cta" href="<?php echo $registered_user_link['url'] ?>"
-               target="<?php echo $registered_user_link['target'] ?>">
-				<?php echo $content_link['title'] ?>
-            </a>
-		<?php elseif ( ! empty( $content_link ) ): ?>
-            <a class="btn btn-primary cta" href="<?php echo $content_link['url'] ?>"
-               target="<?php echo $content_link['target'] ?>">
-				<?php echo $content_link['title'] ?>
-            </a>
+		<?php if ( ! empty( $content_link ) ) : ?>
+			<?php if ( is_user_logged_in() && ! empty( $registered_user_link ) ) : ?>
+                <a class="btn btn-primary cta" href="<?php echo $registered_user_link['url'] ?>"
+                   target="<?php echo $registered_user_link['target'] ?>">
+					<?php echo $content_link['title'] ?>
+                </a>
+			<?php else: ?>
+                <a class="btn btn-primary cta" href="<?php echo $content_link['url'] ?>"
+                   target="<?php echo $content_link['target'] ?>">
+					<?php echo $content_link['title'] ?>
+                </a>
+			<?php endif; ?>
 		<?php endif; ?>
 
         <section class="recipes row">
