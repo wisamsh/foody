@@ -39,8 +39,3 @@ function foody_get_background_image() {
 	unset($_SESSION['back_button']);
 	return $background_image;
 }
-
-//function setBack($val) {
-//	$_SESSION['back_button'] = true;
-//	echo '"back";';
-//}
