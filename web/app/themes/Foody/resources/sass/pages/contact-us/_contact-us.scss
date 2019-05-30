@@ -41,6 +41,14 @@
           font-weight: bold;
           width: 50%;
         }
+
+        .wpcf7-validation-errors {
+          float: right;
+        }
+        .wpcf7-mail-sent-ok {
+          width: 20%;
+          text-align: right;
+        }
       }
     }
   }
@@ -67,6 +75,11 @@
 
           label {
             width: 100%;
+          }
+
+          .wpcf7-mail-sent-ok {
+            float: right;
+            margin-bottom: 50px;
           }
         }
       }
