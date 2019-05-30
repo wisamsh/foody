@@ -29,6 +29,7 @@ function foody_form_validation($required)
 }
 
 
+require_once get_template_directory() . '/functions/ajax/back-button.php';
 require_once get_template_directory() . '/functions/ajax/comments.php';
 require_once get_template_directory() . '/functions/ajax/favorites.php';
 require_once get_template_directory() . '/functions/ajax/follow.php';

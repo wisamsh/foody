@@ -122,4 +122,19 @@ jQuery(document).ready(function ($) {
         let height = $seo.height();
         $('article.content').css('padding-bottom', height + 'px');
     }
+
+    window.addEventListener('beforeunload', function (event) {
+        foodyAjax({
+            action: 'foody_back_button',
+            data: {
+                back_button: true
+            }
+        }, function (err, data) {
+            if (err) {
+                console.log('err: ', err);
+            } else {
+                console.log('data: ', data);
+            }
+        });
+    }, false);
 });
