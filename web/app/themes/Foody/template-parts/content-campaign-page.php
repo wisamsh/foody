@@ -66,6 +66,8 @@ $registered_user_link = $e_book->registered_user_link;
             </a>
 		<?php endif; ?>
 
+        <?php $e_book->the_extra_content(); ?>
+
         <section class="recipes row">
 			<?php if ( ! empty( $promoted_images ) ):
 				foreach ( $promoted_images as $promoted_image ):
