@@ -7,6 +7,7 @@
  */
 
 $failed = !empty(isset($_GET['register-errors']));
+$text = isset($template_args) && isset($template_args['text']) ? $template_args['text'] : '';
 
 $classes = 'register';
 if ($failed) {
@@ -16,7 +17,7 @@ if ($failed) {
 
 <h2>הגיע הזמן שנכיר</h2>
 <p>
-    <?php echo __('הרשמו לאתר כדי להגיב, להעלות תמונות של הבישולים שלכם ולהרכיב לעצמם ספר מתכונים אישי עם כל המתכונים שהכי אהבתם.') ?>
+    <?php echo $text ?>
 </p>
 <p>משתמש רשום?&nbsp;
     <span style="color: #ed3d48;">
@@ -36,13 +37,13 @@ echo do_shortcode('[wordpress_social_login]');
         <div class="row">
 
             <div class="row col-12 justify-content-between gutter-0 buttons">
-                <button class="btn btn-google col-12 col-sm-5">
+                <button class="btn btn-google col-12 col-sm-5" aria-label="google">
                                 <span>
                                     <?php echo __('הירשמו דרך גוגל', 'foody') ?>
                                 </span>
                     <i class="icon-Shape1"></i>
                 </button>
-                <button class="btn btn-facebook col-12 col-sm-5">
+                <button class="btn btn-facebook col-12 col-sm-5" aria-label="facebook">
                                 <span>
                                     <?php echo __('הירשמו דרך פייסבוק', 'foody') ?>
                                 </span>
@@ -157,7 +158,7 @@ echo do_shortcode('[wordpress_social_login]');
                     </div>
                 <?php endif; ?>
                 <!--suppress JSUnusedLocalSymbols -->
-                <script>
+                <script async defer>
                     function captchaCallback(token) {
                         document.getElementById('register-form').submit();
                     }
@@ -169,7 +170,7 @@ echo do_shortcode('[wordpress_social_login]');
                          data-callback="captchaCallback"
                     >
                     </div>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" aria-label="הירשם">
                         <?php echo __('הירשם') ?>
                     </button>
                 </div>

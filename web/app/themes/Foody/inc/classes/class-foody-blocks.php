@@ -8,7 +8,9 @@
 
 class Foody_Blocks
 {
-
+    /**
+     * @var $foody_search Foody_Search
+    */
     private $foody_search;
 
     /**
@@ -108,10 +110,11 @@ class Foody_Blocks
         return $block_options;
     }
 
-    public function draw_categories_block($block)
+    public function draw_categories_block($block, $block_id = '')
     {
-
         $items = $block['items'];
+
+	    $block_id = ! empty( $block_id ) ? ' id="' . $block_id . '"' : '';
 
         $block_options = [];
 
@@ -173,9 +176,9 @@ class Foody_Blocks
             if (isset($block['show_more_flag']) && $block['show_more_flag']) {
 
                 $show_more_link = !empty($block['see_more_link']['url']) ? $block['see_more_link']['url'] : '';
-                $items_content = "<section class='categories-block-content categories-listing show-more row' data-more-link='".esc_attr($show_more_link)."' data-count=''>$items_content</section>";
+                $items_content = "<section class='categories-block-content categories-listing show-more row' data-more-link='".esc_attr($show_more_link)."' data-count=''" . $block_id . ">$items_content</section>";
             } else {
-                $items_content = "<section class='categories-block-content categories-listing block-more row'>$items_content</section>";
+                $items_content = "<section class='categories-block-content categories-listing block-more row' " . $block_id . ">$items_content</section>";
             }
 
             $title = $block['title'];
@@ -345,12 +348,12 @@ class Foody_Blocks
                         <?php echo $title ?>
                     </h2>
                     <?php if (!empty($see_more_link) && !empty($see_more_text)): ?>
-                        <h3 class="block-see-more title col">
+                        <h2 class="block-see-more title col">
                             <a href=" <?php echo $see_more_link ?>">
                                 <?php echo $see_more_text ?>
                             </a>
                             <i class="icon-arrowleft"></i>
-                        </h3>
+                        </h2>
                     <?php endif; ?>
                 </section>
             <?php endif; ?>

@@ -166,7 +166,7 @@ function foody_remove_page_template()
 
     if (in_array($pagenow, array('post-new.php', 'post.php')) && in_array(get_post_type(), $custom_content_post_types)) {
         ?>
-        <script type="text/javascript">
+        <script async defer type="text/javascript">
             (function ($) {
                 $(document).ready(function () {
                     $('#page_template').val('<?php echo $default_template?>');
@@ -461,7 +461,10 @@ function foody_set_custom_page_var($page)
 
 
 function foody_posts_page_script() {
-	if ( get_post_type() == 'post' || get_post_type() == 'foody_recipe') {
+	if ( get_post_type() == 'post' ||
+	     get_post_type() == 'foody_recipe' ||
+	     get_post_type() == 'foody_feed_channel' ||
+	     is_page_template( 'page-templates/items.php' ) ) {
 		$pixel_code = get_field( 'pixel_code' );
 		if ( ! empty( $pixel_code ) ) {
 			echo $pixel_code;

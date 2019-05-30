@@ -16,7 +16,7 @@ $recipe = $template_args['recipe'];
 ?>
 
 
-<script type="application/ld+json" id="recipe-schema">
+<script async defer type="application/ld+json" id="recipe-schema">
      {
       "@context": "http://schema.org/",
       "@type": "Recipe",

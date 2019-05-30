@@ -96,7 +96,10 @@ add_filter( 'foody_js_globals', 'is_tablet' );
 function campaign_name( $vars ) {
 	if ( get_page_type() == 'campaign' ) {
 		if ( is_user_logged_in() ) {
-			$vars['extended_campaign_url']   = get_field( 'extended_campaign_url' );
+			$extended_campaign_url = get_field( 'extended_campaign_url' );
+			if ( ! empty( $extended_campaign_url ) ) {
+				$vars['extended_campaign_url'] = $extended_campaign_url['url'];
+			}
 			$vars['seen_extended_approvals'] = Foody_User::user_has_meta( 'seen_extended_approvals' );
 		}
 	}
@@ -170,7 +173,7 @@ function foody_env_scripts() {
 		foreach ( $env_scripts as $script ) {
 
 			?>
-            <script>
+            <script async defer>
 
 				<?php echo $script ?>
 
@@ -297,72 +300,3 @@ function add_bg_class( $classes ) {
 }
 
 add_filter( 'body_class', 'add_bg_class' );
-
-function foody_customize_colors_css() {
-	$titles_color_css      = get_theme_mod( 'foody_title_color' );
-	$subtitles_color_css   = get_theme_mod( 'foody_subtitle_color' );
-	$text_color_css        = get_theme_mod( 'foody_text_color' );
-	$links_color_css       = get_theme_mod( 'foody_links_color' );
-	$links_hover_color_css = get_theme_mod( 'foody_links_hover_color' );
-	$show_titles_underline = get_theme_mod( 'foody_show_titles_underline' );
-	$foody_underline_color = get_theme_mod( 'foody_underline_color' );
-
-	if ( ! empty( $show_titles_underline ) && ! empty( $foody_underline_color ) ) {
-		?>
-        <style type="text/css">
-            .title {
-                text-decoration: underline;
-                text-decoration-color: <?php echo $foody_underline_color ?> !important;
-            }
-
-            .title > a {
-                text-decoration: underline;
-                text-decoration-color: <?php echo $foody_underline_color ?> !important;
-            }
-        </style>
-		<?php
-
-	}
-	if ( ! empty( $titles_color_css ) ) {
-		?>
-        <style type="text/css">
-            :root {
-                --color__text-title: <?php echo $titles_color_css; ?>;
-                --color__primary: <?php echo $titles_color_css; ?>;
-            }
-        </style>
-		<?php
-	}
-
-	if ( ! empty( $links_color_css ) ) {
-		?>
-        <style type="text/css">
-            :root {
-                --color__link: <?php echo $links_color_css; ?>;
-            }
-        </style>
-		<?php
-	}
-
-	if ( ! empty( $text_color_css ) ) {
-		?>
-        <style type="text/css">
-            :root {
-                --color__text-main: <?php echo $text_color_css; ?>;
-            }
-        </style>
-		<?php
-	}
-
-	if ( ! empty( $links_hover_color_css ) ) {
-		?>
-        <style type="text/css">
-            :root {
-                --color__link-hover: <?php echo $links_hover_color_css; ?>;
-            }
-        </style>
-		<?php
-	}
-}
-
-add_action( 'wp_head', 'foody_customize_colors_css' );

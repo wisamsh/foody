@@ -311,7 +311,8 @@ $content-width: 95%;
       li {
         padding: 0;
         &:nth-child(n+2) {
-          display: none;
+          //display: none; //TODO: check why it was hidden for some reason
+          margin-right: 10px;
         }
       }
 
@@ -703,6 +704,9 @@ $content-width: 95%;
       margin: 20px 0;
 
       a {
+        border-radius: 2rem;
+        border: 1px solid #3a3a3a;
+        padding: 2px 12px;
         font-size: 20px;
       }
     }
@@ -1369,9 +1373,14 @@ $content-width: 95%;
         justify-content: space-around;
 
         li {
+          max-width: 45%;
 
           &:nth-child(n+1) {
             display: initial;
+          }
+
+          &:nth-child(n+2) {
+            margin-right: 0;
           }
 
           margin-bottom: 5px;

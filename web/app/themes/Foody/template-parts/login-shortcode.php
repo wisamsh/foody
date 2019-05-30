@@ -6,18 +6,19 @@
  * Time: 2:35 PM
  */
 $login_status = '';
+$text = isset($template_args) && isset($template_args['text']) ? $template_args['text'] : '';
+
 $email = isset($_GET['l']) ? $_GET['l'] : '';
 if (isset($_GET['login'])) {
     $login_status = $_GET['login'];
 }
 
 $foody_lost_password = isset($_REQUEST['checkemail']) && $_REQUEST['checkemail'] == 'confirm' && false;
-
 ?>
 
 <h2>התחברות</h2>
 <p>
-    <?php echo __('התחברו ותתחילו להנות ממגוון עצום של תכנים קולינריים ומתכונים עם אלפי שעות וידאו, להרכיב לעצמכם ספר מתכונים אישי עם המתכונים שהכי אהבתם, לשתף בתמונות, להגיב ולשאול שאלות.') ?>
+	<?php echo $text ?>
 </p>
 <p>
     <span>
@@ -38,13 +39,13 @@ echo do_shortcode('[wordpress_social_login]');
 
             <div class="row col-12 justify-content-between gutter-0 buttons">
 
-                <button class="btn btn-google col-12 col-sm-5">
+                <button class="btn btn-google col-12 col-sm-5" aria-label="google">
                     <span>
                         <?php echo __('התחברו דרך גוגל', 'foody') ?>
                     </span>
                     <i class="icon-Shape1"></i>
                 </button>
-                <button class="btn btn-facebook col-12 col-sm-5">
+                <button class="btn btn-facebook col-12 col-sm-5" aria-label="facebook">
                     <span>
                         <?php echo __('התחברו דרך פייסבוק', 'foody') ?>
                     </span>
@@ -111,7 +112,7 @@ echo do_shortcode('[wordpress_social_login]');
                 </div>
 
                 <div class="form-group form-submit col-12">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" aria-label="המשך">
                         <?php echo __('המשך') ?>
                     </button>
                 </div>

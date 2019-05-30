@@ -39,7 +39,7 @@
     </ul>
 
     <div class="form-group form-submit col-12">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" aria-label="שיחזור סיסמא">
             <?php echo __('שיחזור סיסמא') ?>
         </button>
     </div>

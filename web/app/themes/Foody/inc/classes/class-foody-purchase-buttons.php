@@ -58,7 +58,7 @@ class Foody_PurchaseButtons
             $text_color = $button['title_color'];
             $title = $button['title'];
 
-            $content = "<button style='background-color: $color;color: $text_color;'>$title</button>";
+            $content = "<button aria-label='רכישה' style='background-color: $color;color: $text_color;'>$title</button>";
         }
 
         if ($echo) {

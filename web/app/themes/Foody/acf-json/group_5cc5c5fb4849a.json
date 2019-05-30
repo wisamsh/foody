@@ -82,6 +82,21 @@
             "return_format": "array"
         },
         {
+            "key": "field_5cee24e1e83d4",
+            "label": "לינק מרכז העמוד",
+            "name": "content_link",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
             "key": "field_5cc5c6e5cd397",
             "label": "הצגת כפתורי שיתוף",
             "name": "show_social",
@@ -212,6 +227,21 @@
                 "id": ""
             },
             "return_format": "array"
+        },
+        {
+            "key": "field_5ced670ef34fe",
+            "label": "לינק למשתמשים מחוברים",
+            "name": "registered_user_link",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
         }
     ],
     "location": [
@@ -238,5 +268,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1558377413
+    "modified": 1559110915
 }

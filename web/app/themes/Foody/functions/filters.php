@@ -105,7 +105,7 @@ function foody_js_globals() {
 		$js = wp_json_encode( $vars );
 
 		?>
-        <script>
+        <script async defer>
             foodyGlobals = <?php echo $js?>;
         </script>
 

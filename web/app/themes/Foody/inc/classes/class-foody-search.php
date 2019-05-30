@@ -123,7 +123,8 @@ class Foody_Search
         $query_args = [];
 
         if (!isset($args['after_foody_query']) || $args['after_foody_query'] == false) {
-            unset($args['after_foody_query']);
+//            unset($args['after_foody_query']);
+	        $args['after_foody_query'] = true;
             $query_args = $this->foody_query->get_query($this->context, $this->context_args);
         }
 
@@ -512,7 +513,7 @@ class Foody_QueryBuilder
     {
         $args = [
             'has_wildcard_key' => $this->has_wildcard_key,
-            'post_type' => ['foody_recipe', 'foody_playlist'],
+            'post_type' => ['foody_recipe', 'foody_playlist','post'],
             'meta_query' => $this->meta_query_array,
             'post__not_in' => $this->post__not_in,
             'post_status' => 'publish'
@@ -661,8 +662,12 @@ class Foody_QueryBuilder
 
     private function resolve_query_conflicts($args, $wp_args)
     {
-        $args = array_merge_recursive($wp_args, $args);
-
+        $args = array_merge($wp_args, $args);
+	    if (isset($args['post_type'])){
+	    	if (is_array($args['post_type'])){
+			    $args['post_type'] = array_unique($args['post_type']);
+		    }
+	    }
         if (isset($args['author'])) {
             unset($args['author__in']);
         } elseif (isset($args['author__in'])) {

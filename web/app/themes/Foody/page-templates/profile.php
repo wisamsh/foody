@@ -48,7 +48,7 @@ get_header(); ?>
                                         <?php
                                         foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', [
                                             'id' => 'profile-pic-upload-modal',
-                                            'body' => "<div class='crop-container'><img id='cropped-image'></div>",
+                                            'body' => "<div class='crop-container'><img id='cropped-image' alt=''></div>",
                                             'title' => '',
                                             'dialog_classes' => 'modal-dialog-centered'
                                         ]);

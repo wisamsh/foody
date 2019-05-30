@@ -48,6 +48,8 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
         <div class="run d-block d-lg-none">
             <?php echo __('בהרצה') ?>
         </div>
+        <?php else: ?>
+            <?php $header->the_foody_collaboration(false); ?>
         <?php endif; ?>
 
         <div class="socials d-none d-lg-block">
@@ -58,14 +60,16 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
                 <div class="search-bar search-bar-container">
                     <?php get_search_form(); ?>
                 </div>
-                <?php if (!is_multisite() || is_main_site()): ?>
+	            <?php if ( ! is_multisite() || is_main_site() ): ?>
                     <span class="run-desktop run">
-                    <?php echo __('בהרצה') ?>
+                    <?php echo __( 'בהרצה' ) ?>
                 </span>
-                <?php endif; ?>
+	            <?php else: ?>
+		            <?php $header->the_foody_collaboration( true ); ?>
+	            <?php endif; ?>
                 <?php if (!wp_is_mobile()): ?>
                     <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility"
-                            data-accessibe="trigger">
+                            data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
                         <?php $header->accessibility(); ?>
                         <div id="accessibility-container"></div>
                     </button>
@@ -74,7 +78,7 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
 
         </div>
 
-        <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg" role="navigation">
+        <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg <?php $header->the_logo_nav_mode() ?>" role="navigation">
 
             <div class="container-fluid foody-navbar-container">
 
@@ -107,7 +111,7 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
 
 
                 <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility"
-                        data-accessibe="trigger">
+                        data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
                          alt="<?php echo __('נגישות') ?>">
                     <div id="accessibility-container"></div>
@@ -123,7 +127,7 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
 
                 <?php Foody_Social::whatsapp(['d-block', 'd-lg-none']) ?>
 
-                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none">
+                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none" aria-label="חיפוש">
 
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="">
 

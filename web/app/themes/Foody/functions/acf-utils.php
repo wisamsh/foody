@@ -75,7 +75,7 @@ function add_input_debug_preview() {
 function foody_acf_input_admin_footer() {
 
     ?>
-    <script type="text/javascript">
+    <script async defer type="text/javascript">
         (function($) {
 
 

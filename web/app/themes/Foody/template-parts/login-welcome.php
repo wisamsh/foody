@@ -39,15 +39,17 @@ $campaign_link = get_field( 'campaign_link', $page );
     </p>
 
 
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" aria-label="למעבר לעמוד הבית">
 
         <a href="<?php echo home_url() ?>"> <?php echo __( 'עבור לעמוד הראשי', 'foody' ) ?> </a>
     </button>
 
     <div class="campaign-button">
-		<?php if ( ! empty( $campaign_link ) ): ?>
+		<?php if ( ! empty( $campaign_link ) && ! empty( $campaign_link['title'] ) ): ?>
             <a class="btn" href="<?php echo $campaign_link['url'] ?>"
-               target="<?php echo $campaign_link['target'] ?>"><?php echo $campaign_link['title'] ?></a>
+               target="<?php echo $campaign_link['target'] ?>">
+				<?php echo $campaign_link['title'] ?>
+            </a>
 		<?php endif; ?>
     </div>
 
