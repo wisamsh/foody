@@ -83,4 +83,10 @@ class Foody_Campaign {
 		}
 	}
 
+	public function the_extra_content() {
+		$extra_content = get_field( 'extra_content' );
+		if (!empty($extra_content)) {
+			echo $extra_content;
+		}
+	}
 }
