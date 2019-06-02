@@ -67,7 +67,7 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
 	            <?php else: ?>
 		            <?php $header->the_foody_collaboration( true ); ?>
 	            <?php endif; ?>
-                <?php if (!wp_is_mobile()): ?>
+                <?php if (!wp_is_mobile() && ( ! is_multisite() || is_main_site() )): ?>
                     <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility"
                             data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
                         <?php $header->accessibility(); ?>
@@ -109,13 +109,14 @@ if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']
                     <i class="navbar-toggler-icon icon-menu-mobile"></i>
                 </button>
 
-
-                <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility"
-                        data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
-                    <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
-                         alt="<?php echo __('נגישות') ?>">
-                    <div id="accessibility-container"></div>
-                </button>
+	            <?php if ( ! is_multisite() || is_main_site() ): ?>
+                    <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility"
+                            data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
+                        <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
+                             alt="<?php echo __( 'נגישות' ) ?>">
+                        <div id="accessibility-container"></div>
+                    </button>
+	            <?php endif; ?>
 
                 <?php
                 $nav_args = array(

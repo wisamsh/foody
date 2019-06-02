@@ -89,7 +89,12 @@ if (!is_user_logged_in()) {
 
 <?php wp_footer(); ?>
 
-<?php $footer->add_nagish_li_script() ?>
+
+<?php
+    if ( ! is_multisite() || is_main_site() ) {
+        $footer->add_nagish_li_script();
+    }
+?>
 
 </body>
 </html>
