@@ -19,9 +19,9 @@ if ($failed) {
 <p>
     <?php echo $text ?>
 </p>
-<p>משתמש רשום?&nbsp;
+<p>משתמשים רשומים?&nbsp;
     <span style="color: #ed3d48;">
-        <a style="color: #ed3d48;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>">התחבר</a>
+        <a style="color: #ed3d48;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>">התחברו</a>
     </span>
 </p>
 <p>&nbsp;</p>

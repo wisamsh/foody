@@ -22,10 +22,10 @@ $foody_lost_password = isset($_REQUEST['checkemail']) && $_REQUEST['checkemail']
 </p>
 <p>
     <span>
-    משתמש חדש?
+    משתמשים חדשים?
 </span>
 
-    <a class="go-to-register" href="<?php echo get_permalink(get_page_by_path('הרשמה')) ?>">הירשם</a>
+    <a class="go-to-register" href="<?php echo get_permalink(get_page_by_path('הרשמה')) ?>">הירשמו</a>
 
 </p>
 <?php
