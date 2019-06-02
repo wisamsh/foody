@@ -59,9 +59,13 @@ class Foody_HowIDid
 
         $comments = get_comments($args);
 
-        foreach ($comments as $comment) {
-            foody_get_template_part(get_template_directory() . '/template-parts/content-comment-how-i-did.php', $comment);
-        }
+	    $filtered_comments = array_filter( $comments, function ( $comment ) {
+		    return $this->filter_comments( $comment );
+	    } );
+
+	    foreach ( $filtered_comments as $comment ) {
+		    foody_get_template_part( get_template_directory() . '/template-parts/content-comment-how-i-did.php', $comment );
+	    }
     }
 
 
@@ -76,7 +80,13 @@ class Foody_HowIDid
      */
     public function the_title($echo = true)
     {
-        $foody_comment_count = get_comments(array('count' => true, 'type' => 'how_i_did', 'post_id' => get_the_ID()));
+	    $comments = get_comments( array( 'type' => 'how_i_did', 'post_id' => get_the_ID() ) );
+
+	    $filtered_comments = array_filter( $comments, function ( $comment ) {
+		    return $this->filter_comments( $comment );
+	    } );
+
+	    $foody_comment_count = count( $filtered_comments );
 
 	    $how_i_did_title = get_field( 'how_i_did_title' );
 	    if ( empty( $how_i_did_title ) ) {
@@ -121,5 +131,11 @@ class Foody_HowIDid
         return $num_of_pages;
 
     }
+
+	function filter_comments( $comment ) {
+		$author = get_user_by( 'email', $comment->comment_author_email );
+
+		return $comment->comment_approved || ( ! $comment->comment_approved && $author->ID == get_current_user_id() );
+	}
 
 }
