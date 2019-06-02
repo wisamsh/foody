@@ -34,13 +34,13 @@ $foody_comments = new Foody_Comments();
     // You can start editing here -- including this comment!
     //
     ?>
-    <h2 class="comments-title">
+    <h3 class="comments-title">
         <?php
 
         $foody_comments->the_title();
 
         ?>
-    </h2><!-- .comments-title -->
+    </h3><!-- .comments-title -->
 
     <?php
 

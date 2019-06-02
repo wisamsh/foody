@@ -790,12 +790,13 @@ $content-width: 95%;
 
       .header {
         font-family: $font__assistant;
-        h2 {
+        .comments-title {
           float: right;
           margin: 0;
           padding: 15px 0;
           font-family: $font__main;
           font-weight: 900;
+          font-size: 20px;
         }
 
         .add-image {
@@ -1024,6 +1025,7 @@ $content-width: 95%;
       .comments-title {
         font-family: $font__main;
         font-weight: 900;
+        font-size: 20px;
       }
 
       .must-log-in {
