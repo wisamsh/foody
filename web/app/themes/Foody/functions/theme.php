@@ -28,13 +28,14 @@ function foody_get_background_image() {
 					$background_image             = get_field( 'background_image', $referer_post );
 					$_SESSION['background_image'] = $background_image;
 					if ( in_array( $post_type, [ 'post', 'foody_recipe', 'foody_filter' ] ) ) {
-						$_SESSION['HTTP_ORIGINAL_REFERER'] = $_SESSION['HTTP_REFERER'];
+						$_SESSION['HTTP_ORIGINAL_REFERER'] = isset( $_SESSION['HTTP_REFERER'] ) ? $_SESSION['HTTP_REFERER'] : '';
 						unset( $_SESSION['HTTP_REFERER'] );
 					}
 				}
 			}
 		}
 	} else {
+		unset( $_SESSION['HTTP_ORIGINAL_REFERER'] );
 		$_SESSION['HTTP_REFERER']     = get_queried_object_id();
 		$_SESSION['background_image'] = $background_image;
 	}

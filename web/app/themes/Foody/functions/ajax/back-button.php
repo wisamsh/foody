@@ -11,7 +11,8 @@ add_action( 'wp_ajax_foody_back_button', 'foody_update_back_button' );
 add_action( 'wp_ajax_nopriv_foody_back_button', 'foody_update_back_button' );
 
 function foody_update_back_button() {
-	$stuff                   = $_POST;
-	$_SESSION['back_button'] = $_POST['back_button'];
+	if ( ! empty( $_POST ) && isset( $_POST['back_button'] ) ) {
+		$_SESSION['back_button'] = $_POST['back_button'];
+	}
 	die();
 }
