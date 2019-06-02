@@ -124,14 +124,13 @@ function foody_edit_user_approvals() {
 		foody_register_newsletter( $user->user_email );
 	}
 
-	$resultMarketingEbook = update_user_meta( $ID, 'e_book', $e_book );
+	update_user_meta( $ID, 'e_book', $e_book );
 	update_user_meta( $ID, 'seen_approvals', true );
 
 
 	if (
 		( isset( $resultMarketing ) &&
-		  $resultMarketing === false ) ||
-		$resultMarketingEbook === false
+		  $resultMarketing === false )
 	) {
 		$errors->add( 500, 'error updating user' );
 	}
