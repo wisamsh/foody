@@ -39,9 +39,25 @@ function foody_set_meta_desc( $desc ) {
 
 add_action( 'wpseo_opengraph', 'change_yoast_seo_og_meta' );
 function change_yoast_seo_og_meta() {
-	if ( is_single() ) {
-		add_filter( 'wpseo_opengraph_image', 'foody_change_image' );
-	}
+    if (is_single()) {
+        add_filter('wpseo_opengraph_image', 'foody_change_image');
+
+        global $post;
+        if (has_post_thumbnail($post->ID)) {
+            $img_src = get_the_post_thumbnail_url(($post->ID), 'medium');
+        } else {
+            $img_src = "";
+        }
+        ?>
+
+        <meta property="og:image" content="<?php echo $img_src; ?>"/>
+        <meta property="og:image:width" content="1024">
+        <meta property="og:image:height" content="683">
+
+        <?php
+    } else {
+        return;
+    }
 }
 
 

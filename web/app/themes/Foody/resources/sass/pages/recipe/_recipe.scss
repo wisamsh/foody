@@ -462,17 +462,23 @@ $content-width: 95%;
           }
           .ingredients-group-list {
             .ingredients {
-              .ingredient-container {
+              position: relative;
+              span.amount{
+                vertical-align: top;
+              }
+              .extra-ingredients{
                 display: inline-block;
-
-                .ingredient-data {
+                .ingredient-container {
                   display: inline-block;
-                  vertical-align: top;
 
-                  .comment {
-                    font-size: 15px;
-                    color: $color__primary;
+                  .ingredient-data {
+                    display: inline-block;
+                    vertical-align: top;
                   }
+                }
+                .comment {
+                  font-size: 15px;
+                  color: $color__primary;
                 }
               }
             }
@@ -514,8 +520,9 @@ $content-width: 95%;
               }
 
               .sponsored-by {
-                display: inline-block;
-                float: left;
+                position: absolute;
+                top: 2%;
+                left: 2%;
 
                 > span {
                   font-size: 15px;
