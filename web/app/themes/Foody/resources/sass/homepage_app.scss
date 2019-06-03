@@ -1,0 +1,159 @@
+/*!
+Theme Name: Foody
+Description: Description
+Version: 1.0.0
+Text Domain: foody
+Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+*/
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Bootstrap
+# Normalize
+# Typography
+# Elements
+# Forms
+# Navigation
+	## Links
+	## Menus
+# Accessibility
+# Alignments
+# Clearings
+# Widgets
+# Content
+	## Posts and pages
+	## Comments
+# Infinite scroll
+# Media
+	## Captions
+	## Galleries
+
+
+--------------------------------------------------------------*/
+@import "mixins/mixins-master";
+@import "variables-site/variables-site";
+/*--------------------------------------------------------------
+# Bootstrap
+--------------------------------------------------------------*/
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+$theme-colors: (
+        "primary":$color__text-primary-dark,
+        "danger": #ff4136,
+        "dark":$color__text-primary-dark
+);
+
+@import "~bootstrap-material-design/scss/bootstrap-material-design";
+//
+//@import "plugins/pure-drawer/pure-drawer";
+
+///*--------------------------------------------------------------
+//# Slick
+//--------------------------------------------------------------*/
+//
+//@import "~slick-carousel/slick/slick.scss";
+
+/*--------------------------------------------------------------
+# Normalize
+--------------------------------------------------------------*/
+@import "normalize";
+
+/*--------------------------------------------------------------
+# Common
+--------------------------------------------------------------*/
+@import "common/common";
+
+/*--------------------------------------------------------------
+# Layout
+--------------------------------------------------------------*/
+@import "layout/header";
+@import "layout/footer";
+@import "layout/content-sidebar";
+@import "layout/centered-content";
+
+/*--------------------------------------------------------------
+# Typography
+--------------------------------------------------------------*/
+@import "typography/typography";
+@import "typography/_icons";
+/*--------------------------------------------------------------
+# Elements
+--------------------------------------------------------------*/
+@import "elements/elements";
+
+/*--------------------------------------------------------------
+# Forms
+--------------------------------------------------------------*/
+@import "forms/forms";
+
+/*--------------------------------------------------------------
+# Navigation
+--------------------------------------------------------------*/
+@import "navigation/navigation";
+
+///*--------------------------------------------------------------
+//# Slider
+//--------------------------------------------------------------*/
+//@import "modules/slider";
+
+/*--------------------------------------------------------------
+# Show More List
+--------------------------------------------------------------*/
+@import "modules/show-more-list";
+
+///*--------------------------------------------------------------
+//# Accordion
+//--------------------------------------------------------------*/
+//@import "modules/accordion";
+
+/*--------------------------------------------------------------
+# Widgets
+--------------------------------------------------------------*/
+@import "site/secondary/widgets";
+
+/*--------------------------------------------------------------
+# Homepage
+--------------------------------------------------------------*/
+@import "site/primary/homepage/hompage";
+@import "site/primary/white-label-homepage/white-label-homepage";
+
+/*--------------------------------------------------------------
+# Recipes Grid
+--------------------------------------------------------------*/
+@import "recipes-grid/recipes-grid";
+@import "recipes-grid/recipe-grid-item";
+
+@media (max-width: 768px) {
+  .navbar-collapse {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    height: 100vh;
+    width: 100%;
+    background-color: #fff;
+    opacity: 0;
+  }
+  .navbar-collapse.collapsing {
+    -webkit-transition: right .3s linear, opacity .3s linear;
+    -o-transition: right .3s linear, opacity .3s linear;
+    -moz-transition: right .3s linear, opacity .3s linear;
+    transition: right .3s linear, opacity .3s linear;
+    right: -50%;
+    opacity: 0;
+    z-index: $zindex-top;
+  }
+
+  .navbar-collapse.show {
+    right: 0;
+    z-index: $zindex-top;
+    -webkit-transition: right .3s linear, opacity .3s linear;
+    -o-transition: right .3s linear, opacity .3s linear;
+    -moz-transition: right .3s linear, opacity .3s linear;
+    transition: right .3s linear, opacity .3s linear;
+    opacity: 1;
+  }
+}

@@ -34,7 +34,7 @@
       .advantage {
         padding-bottom: 10px;
         margin-bottom: 10px;
-        background-image: url("../images/fn_seperator.png");
+        background-image: url("/app/themes/Foody/resources/images/fn_seperator.png");
         background-position: center bottom;
         background-repeat: no-repeat;
         line-height: 1;
@@ -52,7 +52,7 @@
           text-align: center;
 
           &.hilight {
-            background-image: url("../images/hilight.png");
+            background-image: url("/app/themes/Foody/resources/images/hilight.png");
             background-position: center center;
             background-repeat: no-repeat;
           }
