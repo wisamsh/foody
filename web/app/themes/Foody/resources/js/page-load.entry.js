@@ -10,7 +10,6 @@ window._ = import('underscore/underscore-min');
 window.foodyFormMessage = import('./common/cf7-messages');
 
 window.lottie = import('lottie-web/build/player/lottie.min');
-alert('a');
 /*
  * Commmon
  * */
