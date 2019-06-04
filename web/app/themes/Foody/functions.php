@@ -127,10 +127,8 @@ add_action( 'widgets_init', 'foody_widgets_init' );
  */
 function foody_scripts() {
 
-//    wp_deregister_script( 'jquery' );
-//    wp_register_script( 'jquery', includes_url( '/js/jquery/jquery.js' ), false, NULL, true );
-//    wp_enqueue_script( 'jquery' );
-//    wp_denqueue_style('foody-style', get_stylesheet_uri());
+	wp_deregister_script( 'jquery' );
+	wp_enqueue_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js', array(), null, true );
 
 	wp_enqueue_script( 'foody-navigation', get_template_directory_uri() . '/resources/js/navigation.js', array(), '20151215', true );
 
@@ -140,25 +138,20 @@ function foody_scripts() {
 		wp_enqueue_script( 'comment-reply', false, false, true, true );
 	}
 
-
-//    if(is_front_page()){
-//        wp_enqueue_script('foody-script', get_template_directory_uri() . '/dist/home.js', false, false, true);
-//    }
-
 	if ( ! is_admin() ) {
 
-//        if (is_front_page() || is_home()) {
-//            $homepage = foody_get_versioned_asset('homepage');
-//            wp_enqueue_script('foody-script', $homepage, false, false, false);
-//        }else{
 		$style = foody_get_versioned_asset( 'style' );
 		wp_enqueue_script( 'foody-style', $style, false, false, true );
 
 		$common_asset = foody_get_versioned_asset( 'common' );
-		wp_enqueue_script( 'foody-script', $common_asset, false, false, true );
+		wp_enqueue_script( 'foody-script-common', $common_asset, false, false, true );
 
-		$asset = foody_get_versioned_asset( 'main' );
-		wp_enqueue_script( 'foody-script', $asset, false, false, true );
+//		$asset = foody_get_versioned_asset( 'main' );
+//		wp_enqueue_script( 'foody-script-main', $asset, false, false, true );
+
+
+		$page_load_asset = foody_get_versioned_asset( 'page_load' );
+		wp_enqueue_script( 'foody-script-page-load', $page_load_asset, false, false, true );
 
 
 		$post_content = '';
@@ -170,79 +163,77 @@ function foody_scripts() {
 		// Homepage
 		if ( is_front_page() || is_home() ) {
 			$homepage_asset = foody_get_versioned_asset( 'homepage_js' );
-			wp_enqueue_script( 'foody-script', $homepage_asset, false, false, true );
+			wp_enqueue_script( 'foody-script-home', $homepage_asset, false, false, true );
 		}
 
 		if ( is_page_template( 'page-templates/profile.php' ) ) {
 			$profile_asset = foody_get_versioned_asset( 'profile' );
-			wp_enqueue_script( 'foody-script', $profile_asset, false, false, true );
+			wp_enqueue_script( 'foody-script-profile', $profile_asset, false, false, true );
 		}
 
 		if ( is_page_template( 'page-templates/foody-campaign.php' ) || is_page_template( 'page-templates/foody-campaign-extended.php' ) ) {
 			$campaign_asset = foody_get_versioned_asset( 'campaign' );
-			wp_enqueue_script( 'foody-script', $campaign_asset, false, false, true );
+			wp_enqueue_script( 'foody-script-campaign', $campaign_asset, false, false, true );
 		}
 
 		if ( is_page_template( 'page-templates/centered-content.php' ) ) {
 			$centered_content_asset = foody_get_versioned_asset( 'centered_content' );
-			wp_enqueue_script( 'foody-script', $centered_content_asset, false, false, true );
+			wp_enqueue_script( 'foody-script-centered_content', $centered_content_asset, false, false, true );
 		}
 
 		if ( is_page_template( 'page-templates/categories.php' ) ) {
 			$categories_asset = foody_get_versioned_asset( 'categories' );
-			wp_enqueue_script( 'foody-script', $categories_asset, false, false, true );
+			wp_enqueue_script( 'foody-script-categories', $categories_asset, false, false, true );
 		}
 
 		if ( is_page_template( 'page-templates/content-with-sidebar.php' ) && is_single() ) {
 			$post_asset = foody_get_versioned_asset( 'post' );
-			wp_enqueue_script( 'foody-script', $post_asset, false, false, true );
+			wp_enqueue_script( 'foody-script-recipe', $post_asset, false, false, true );
+		}
+
+		if ( is_page_template( 'page-templates/items.php' ) ) {
+			$items_asset = foody_get_versioned_asset( 'items' );
+			wp_enqueue_script( 'foody-script-recipe', $items_asset, false, false, true );
 		}
 
 		if ( has_shortcode( $post_content, 'foody-login' ) ) {
 			$login_asset = foody_get_versioned_asset( 'login' );
-			wp_enqueue_script( 'foody-script', $login_asset, false, false, true );
+			wp_enqueue_script( 'foody-script-login', $login_asset, false, false, true );
 		}
 
 		if ( has_shortcode( $post_content, 'foody-register' ) ) {
 			$register_asset = foody_get_versioned_asset( 'register' );
-			wp_enqueue_script( 'foody-script', $register_asset, false, false, true );
+			wp_enqueue_script( 'foody-script-register', $register_asset, false, false, true );
 		}
 
 		if ( is_author() ) {
 			$author_asset = foody_get_versioned_asset( 'author' );
-			wp_enqueue_script( 'foody-script', $author_asset, false, false, true );
+			wp_enqueue_script( 'foody-script-author', $author_asset, false, false, true );
+		}
+
+		if ( is_tag() ) {
+			$tag_asset = foody_get_versioned_asset( 'tag' );
+			wp_enqueue_script( 'foody-script-tag', $tag_asset, false, false, true );
 		}
 
 		if ( has_shortcode( $post_content, 'foody_team' ) ) {
 			$team_asset = foody_get_versioned_asset( 'team' );
-			wp_enqueue_script( 'foody-script', $team_asset, false, false, true );
+			wp_enqueue_script( 'foody-script-team', $team_asset, false, false, true );
 		}
 
 		if ( get_post_type() == 'foody_playlist' ) {
 			$playlist_asset = foody_get_versioned_asset( 'playlist' );
-			wp_enqueue_script( 'foody-script', $playlist_asset, false, false, true );
+			wp_enqueue_script( 'foody-script-plalist', $playlist_asset, false, false, true );
 		}
 
 
-//        }
-//        $page_template = get_page_template_slug();
-//        if ($page_template == 'page-templates/foody-campaign.php') {
-//            $ebook = foody_get_versioned_asset('ebook');
-//            wp_enqueue_script('foody-style', $ebook, false, false, true);
-//        }
 	}
 
 	if ( is_page( get_page_by_title( 'הרשמה' ) ) ) {
 		wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js' );
 	}
 
-	remove_action('wp_head', 'wp_print_scripts');
-	remove_action('wp_head', 'wp_print_head_scripts', 9);
-	remove_action('wp_head', 'wp_enqueue_scripts', 1);
 
-	add_action('wp_footer', 'wp_print_scripts', 5);
-	add_action('wp_footer', 'wp_enqueue_scripts', 5);
-	add_action('wp_footer', 'wp_print_head_scripts', 5);
 }
 
 add_action( 'wp_enqueue_scripts', 'foody_scripts' );
@@ -309,7 +300,21 @@ function foody_get_versioned_asset( $name ) {
 
 function add_async_attribute( $tag, $handle ) {
 	$scripts_to_defer = array(
-		'foody-script',
+//		'foody-script-common',
+//		'foody-script-page-load',
+		'foody-script-home',
+		'foody-script-profile',
+		'foody-script-campaign',
+		'foody-script-centered_content',
+		'foody-script-categories',
+		'foody-script-recipe',
+		'foody-script-recipe',
+		'foody-script-login',
+		'foody-script-register',
+		'foody-script-author',
+		'foody-script-tag',
+		'foody-script-team',
+		'foody-script-plalist',
 		'foody-white-label',
 		'sb_instagram_scripts',
 		'ui-a11y.js',
