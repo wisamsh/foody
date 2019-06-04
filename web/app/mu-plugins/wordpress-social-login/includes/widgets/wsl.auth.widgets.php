@@ -512,8 +512,8 @@ function wsl_add_stylesheets()
 	wp_enqueue_style( "wsl-widget" );
 }
 
-add_action( 'wp_enqueue_scripts'   , 'wsl_add_stylesheets' );
-add_action( 'login_enqueue_scripts', 'wsl_add_stylesheets' );
+//add_action( 'wp_enqueue_scripts'   , 'wsl_add_stylesheets' );
+//add_action( 'login_enqueue_scripts', 'wsl_add_stylesheets' );
 
 // --------------------------------------------------------------------
 
