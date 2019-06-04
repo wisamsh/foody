@@ -118,7 +118,7 @@ class Foody_Footer
 	public function the_foody_israel() {
 		return array(
 			'title'  => sprintf( __( 'Foody Israel' ) . ' %s', date( 'Y' ) ),
-			'url'    => foody_get_main_site_url(),
+			'url' => function_exists( 'foody_get_main_site_url' ) ? foody_get_main_site_url() : get_home_url(),
 			'target' => '_blank'
 		);
 	}

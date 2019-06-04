@@ -132,7 +132,7 @@ class Foody_Header
 	public function the_foody_collaboration($desktop) {
 		$collab_text        = get_theme_mod( 'foody_collaboration_text', false );
 		$show_collaboration = get_theme_mod( 'show_foody_collaboration_text', false );
-		$foody_url = foody_get_main_site_url();
+		$foody_url = function_exists( 'foody_get_main_site_url' ) ? foody_get_main_site_url() : get_home_url();
 
 		if ( $show_collaboration ) {
 			if ( $desktop ) {
