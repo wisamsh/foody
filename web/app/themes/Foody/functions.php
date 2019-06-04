@@ -303,7 +303,7 @@ add_action( 'login_enqueue_scripts', 'admin_theme_style' );
 function foody_get_versioned_asset( $name ) {
 	$assets_version = file_get_contents( get_template_directory() . '/build/version-hash.txt' );
 
-	return get_template_directory_uri() . "/dist/$name.$assets_version.js.gz";
+	return get_template_directory_uri() . "/dist/$name.$assets_version.js";
 
 }
 
