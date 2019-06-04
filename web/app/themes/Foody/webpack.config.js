@@ -96,7 +96,7 @@ module.exports = env => {
             // filename: '[name].js',
             filename: '[name].[hash].js',
             path: path.resolve(__dirname, 'dist'),
-            publicPath: '/app/themes/foody/dist/'
+            publicPath: '/app/themes/Foody/dist/'
             // publicPath: path.resolve(__dirname, 'resources')
         },
         mode: 'development',
