@@ -6,6 +6,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HashPlugin = require('hash-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 // the path(s) that should be cleaned
@@ -69,13 +70,27 @@ module.exports = env => {
                 allChunks: true
             }),
             new HashPlugin({path: './build', fileName: 'version-hash.txt'}),
-            new CleanWebpackPlugin(pathsToClean, cleanOptions)
+            new CleanWebpackPlugin(pathsToClean, cleanOptions),
+            new CompressionPlugin()
         ],
         entry: {
             // common : "./resources/pages/common/index",
             // home: "./resources/pages/homepage/index",
             main: "./resources/js/app",
             admin: "./resources/js/admin",
+            common: "./resources/js/common.entry",
+            author: "./resources/js/author.entry",
+            campaign: "./resources/js/campaign.entry",
+            categories: "./resources/js/categories.entry",
+            centered_content: "./resources/js/centered-content.entry",
+            channel: "./resources/js/channel.entry",
+            homepage_js: "./resources/js/homepage.entry",
+            login: "./resources/js/login.entry",
+            playlist: "./resources/js/playlist.entry",
+            post: "./resources/js/post.entry",
+            profile: "./resources/js/profile.entry",
+            register: "./resources/js/register.entry",
+            team: "./resources/js/team.entry",
             style: "./resources/sass/app.scss",
             // ebook: "./resources/sass/pages/e-book/e-book.scss",
             // homepage: './resources/js/entries/homepage.js',

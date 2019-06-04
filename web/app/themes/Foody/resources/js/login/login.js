@@ -4,48 +4,57 @@
 jQuery(document).ready(($) => {
 
     let $form = $('#login-form');
-    $.validator.addMethod(
-        "regex",
-        function (value, element, regexp) {
-            return this.optional(element) || regexp.test(value);
-        }
-    );
-
-    $.validator.addMethod(
-        "password",
-        function (value) {
-
-            let hasNumbers = /[0-9]+/.test(value);
-            let nonEn = /[^a-z0-9]/i.test(value);
-
-            return hasNumbers && nonEn === false;
-        }
-    );
-    $.validator.addMethod(
-        "emailOrUsername",
-        function (value, element) {
-            return this.email(element) || /^[^a-z0-9\s_.\-@]$/i.test(value);
-        }
-    );
-
-    $form.validate({
-        rules: {
-            log: {
-                required: true,
-                emailOrUsername: true
-            },
-            pwd: {
-                required: true
+    if ($.validator) {
+        $.validator.addMethod(
+            "regex",
+            function (value, element, regexp) {
+                return this.optional(element) || regexp.test(value);
             }
-        },
-        messages: {
-            log: 'כתובת המייל/שם המשתמש אינה תקינה',
-            pwd: 'סיסמא אינה תקינה',
-        },
-        submitHandler: function (form) {
-            form.submit();
-        }
-    });
+        );
+    }
+
+    if ($.validator) {
+        $.validator.addMethod(
+            "password",
+            function (value) {
+
+                let hasNumbers = /[0-9]+/.test(value);
+                let nonEn = /[^a-z0-9]/i.test(value);
+
+                return hasNumbers && nonEn === false;
+            }
+        );
+    }
+
+    if ($.validator) {
+        $.validator.addMethod(
+            "emailOrUsername",
+            function (value, element) {
+                return this.email(element) || /^[^a-z0-9\s_.\-@]$/i.test(value);
+            }
+        );
+    }
+
+    if ($form && $form.validate) {
+        $form.validate({
+            rules: {
+                log: {
+                    required: true,
+                    emailOrUsername: true
+                },
+                pwd: {
+                    required: true
+                }
+            },
+            messages: {
+                log: 'כתובת המייל/שם המשתמש אינה תקינה',
+                pwd: 'סיסמא אינה תקינה',
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    }
 
 
     $('.login .btn-google').on('click', () => {

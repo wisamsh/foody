@@ -53,6 +53,7 @@
 // });
 
 require('./forms');
+require('./foody-grid');
 require('./foody-ajax');
 require('./comments');
 require('./how-i-did');
@@ -63,7 +64,3 @@ require('./foody-search-filter');
 require('./social');
 require('./mobile-filter');
 require('./tag-manager');
-require('./approvals');
-require('./approvals-analytics');
-require('./campaign-approvals');
-require('./campaign-approvals-analytics');
