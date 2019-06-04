@@ -18,7 +18,7 @@
         if (typeof module === 'object' && module.exports) { // jshint ignore:line
             // Node/CommonJS
             // noinspection JSUnresolvedVariable
-            module.exports = factory(require('jquery')); // jshint ignore:line
+            module.exports = factory(import('jquery')); // jshint ignore:line
         } else {
             // Browser globals
             factory(window.jQuery);

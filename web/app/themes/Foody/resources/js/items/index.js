@@ -1,1 +1,1 @@
-require('./items-page');
+import('./items-page');

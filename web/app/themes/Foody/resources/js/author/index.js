@@ -1,4 +1,4 @@
 /**
  * Created by moveosoftware on 10/8/18.
  */
-require('./author');
+import('./author');

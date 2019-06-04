@@ -1,1 +1,1 @@
-require('./playlist');
+import('./playlist');

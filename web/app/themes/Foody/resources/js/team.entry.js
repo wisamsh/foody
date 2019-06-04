@@ -1,1 +1,1 @@
-require('./team');
+import('./team');

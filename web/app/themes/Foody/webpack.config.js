@@ -28,10 +28,10 @@ module.exports = env => {
         optimization: {
             splitChunks: {
                 // chunks: 'async',
-                minSize: 30000,
+                minSize: 20,
                 minChunks: 1,
-                maxAsyncRequests: 5,
-                maxInitialRequests: 3,
+                maxAsyncRequests: 1,
+                maxInitialRequests:1,
                 name: true,
                 cacheGroups: {
                     vendors: {
@@ -74,31 +74,30 @@ module.exports = env => {
             new CompressionPlugin()
         ],
         entry: {
-            admin: "./resources/js/admin",
-            common: "./resources/js/common.entry",
-            page_load: "./resources/js/page-load.entry",
-            author: "./resources/js/author.entry",
-            campaign: "./resources/js/campaign.entry",
-            categories: "./resources/js/categories.entry",
-            centered_content: "./resources/js/centered-content.entry",
-            channel: "./resources/js/channel.entry",
-            homepage_js: "./resources/js/homepage.entry",
-            items: "./resources/js/items.entry",
-            login: "./resources/js/login.entry",
-            playlist: "./resources/js/playlist.entry",
-            post: "./resources/js/post.entry",
-            profile: "./resources/js/profile.entry",
-            register: "./resources/js/register.entry",
-            tag: "./resources/js/tag.entry",
-            team: "./resources/js/team.entry",
-            style: "./resources/sass/app.scss",
-            homepage: './resources/sass/homepage_app.scss',
+            admin: ["./resources/js/admin","./resources/js/page-load.entry"],
+            author: ["./resources/js/author.entry","./resources/js/page-load.entry"],
+            campaign: ["./resources/js/campaign.entry","./resources/js/page-load.entry"],
+            categories: ["./resources/js/categories.entry","./resources/js/page-load.entry"],
+            centered_content: ["./resources/js/centered-content.entry","./resources/js/page-load.entry"],
+            channel: ["./resources/js/channel.entry","./resources/js/page-load.entry"],
+            homepage_js: ["./resources/js/homepage.entry","./resources/js/page-load.entry"],
+            items: ["./resources/js/items.entry","./resources/js/page-load.entry"],
+            login: ["./resources/js/login.entry","./resources/js/page-load.entry"],
+            playlist: ["./resources/js/playlist.entry","./resources/js/page-load.entry"],
+            post: ["./resources/js/post.entry","./resources/js/page-load.entry"],
+            profile: ["./resources/js/profile.entry","./resources/js/page-load.entry"],
+            register: ["./resources/js/register.entry","./resources/js/page-load.entry"],
+            tag: ["./resources/js/tag.entry","./resources/js/page-load.entry"],
+            team: ["./resources/js/team.entry","./resources/js/page-load.entry"],
+            style: ["./resources/sass/app.scss"],
+            homepage: ["./resources/sass/homepage_app.scss"],
         },
         output: {
             // filename: '[name].js',
             filename: '[name].[hash].js',
             path: path.resolve(__dirname, 'dist'),
-            publicPath: path.resolve(__dirname, 'resources')
+            publicPath: '/app/themes/foody/dist/'
+            // publicPath: path.resolve(__dirname, 'resources')
         },
         mode: 'development',
         module: {
@@ -163,6 +162,17 @@ module.exports = env => {
                         loader: "babel-loader",
                         options: {
                             presets: ["@babel/preset-env"]  //Preset used for env setup
+                        }
+                    }
+                },
+                {
+                    test: /\.js$/,
+                    use: {
+                        loader: "babel-loader",
+                        options: {
+                            plugins: [
+                                "@babel/plugin-syntax-dynamic-import"
+                            ]
                         }
                     }
                 }

@@ -1,2 +1,2 @@
-require('./homepage');
-require('./white-label');
+import('./homepage');
+import('./white-label');

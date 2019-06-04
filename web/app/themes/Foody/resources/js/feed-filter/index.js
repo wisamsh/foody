@@ -1,1 +1,1 @@
-require('./feed-filter');
+import('./feed-filter');

@@ -1,4 +1,4 @@
-let sorter = require('../common/sort');
+let sorter = import('../common/sort');
 
 jQuery(document).ready(($)=>{
    let sort  = sorter('.grid-body','.item');

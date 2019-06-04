@@ -1,1 +1,1 @@
-require('./channel');
+import('./channel');

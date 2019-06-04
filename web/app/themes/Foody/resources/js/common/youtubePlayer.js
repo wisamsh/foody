@@ -2,7 +2,7 @@
  * Created by moveosoftware on 8/22/18.
  */
 
-let YouTubePlayer = require('youtube-player');
+let YouTubePlayer = import('youtube-player');
 
 let videoSizes = {
     desktop: {

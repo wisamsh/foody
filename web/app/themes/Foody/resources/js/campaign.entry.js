@@ -1,1 +1,1 @@
-require('./campaign');
+import('./campaign');

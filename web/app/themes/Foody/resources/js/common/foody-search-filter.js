@@ -2,8 +2,8 @@
  * Created by moveosoftware on 10/7/18.
  */
 
-let FoodyGrid = require('./foody-grid');
-let FoodyLocationUtils = require('./foody-location-utils');
+let FoodyGrid = import('./foody-grid');
+let FoodyLocationUtils = import('./foody-location-utils');
 
 module.exports = (function () {
 

@@ -6,7 +6,7 @@ jQuery(document).ready(($)=>{
         if ($('.single-foody_recipe').length) {
 
             let videoId = $video.data('video-id');
-            let ytPlayer = require('../common/youtubePlayer');
+            let ytPlayer = import('../common/youtubePlayer');
 
             let player = ytPlayer('.video-container', videoId);
 

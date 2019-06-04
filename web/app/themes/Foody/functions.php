@@ -143,16 +143,16 @@ function foody_scripts() {
 		$style = foody_get_versioned_asset( 'style' );
 		wp_enqueue_script( 'foody-style', $style, false, false, true );
 
-		$common_asset = foody_get_versioned_asset( 'common' );
-		wp_enqueue_script( 'foody-script-common', $common_asset, false, false, true );
+//		$common_asset = foody_get_versioned_asset( 'common' );
+//		wp_enqueue_script( 'foody-script-common', $common_asset, false, false, true );
 
 //		$asset = foody_get_versioned_asset( 'main' );
 //		wp_enqueue_script( 'foody-script-main', $asset, false, false, true );
 
 
-		$page_load_asset = foody_get_versioned_asset( 'page_load' );
-		wp_enqueue_script( 'foody-script-page-load', $page_load_asset, false, false, true );
-
+//		$page_load_asset = foody_get_versioned_asset( 'page_load' );
+//		wp_enqueue_script( 'foody-script-page-load', $page_load_asset, ['foody-script-common'], false, true );
+//
 
 		$post_content = '';
 		$current_post = get_post();
@@ -216,17 +216,15 @@ function foody_scripts() {
 			wp_enqueue_script( 'foody-script-tag', $tag_asset, false, false, true );
 		}
 
-		if ( has_shortcode( $post_content, 'foody_team' ) ) {
-			$team_asset = foody_get_versioned_asset( 'team' );
-			wp_enqueue_script( 'foody-script-team', $team_asset, false, false, true );
-		}
+//		if ( has_shortcode( $post_content, 'foody_team' ) ) {
+//			$team_asset = foody_get_versioned_asset( 'team' );
+//			wp_enqueue_script( 'foody-script-team', $team_asset, false, false, true );
+//		}
 
 		if ( get_post_type() == 'foody_playlist' ) {
 			$playlist_asset = foody_get_versioned_asset( 'playlist' );
 			wp_enqueue_script( 'foody-script-plalist', $playlist_asset, false, false, true );
 		}
-
-
 	}
 
 	if ( is_page( get_page_by_title( 'הרשמה' ) ) ) {
@@ -300,8 +298,6 @@ function foody_get_versioned_asset( $name ) {
 
 function add_async_attribute( $tag, $handle ) {
 	$scripts_to_defer = array(
-//		'foody-script-common',
-//		'foody-script-page-load',
 		'foody-script-home',
 		'foody-script-profile',
 		'foody-script-campaign',
@@ -329,7 +325,7 @@ function add_async_attribute( $tag, $handle ) {
 	return $tag;
 }
 
-add_filter( 'script_loader_tag', 'add_async_attribute', 10, 2 );
+//add_filter( 'script_loader_tag', 'add_async_attribute', 10, 2 );
 
 function essb_stylebuilder_css_filess() {
 

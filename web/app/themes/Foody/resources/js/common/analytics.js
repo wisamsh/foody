@@ -5,7 +5,7 @@
 module.exports = (function () {
 
     let FoodyAnalytics = function (settings) {
-        this.mixpanel = require('mixpanel-browser');
+        this.mixpanel = import('mixpanel-browser');
         this.mixpanel.init(foodyGlobals.mixpanelToken);
     };
 

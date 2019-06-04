@@ -1,1 +1,1 @@
-require('./tag');
+import('./tag');

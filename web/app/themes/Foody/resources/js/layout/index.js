@@ -1,3 +1,3 @@
-require('./footer');
-require('./footer-analytics');
-require('./header');
+import('./footer');
+import('./footer-analytics');
+import('./header');

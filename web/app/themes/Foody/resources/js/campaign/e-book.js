@@ -26,7 +26,7 @@ if (foodyGlobals.type && (foodyGlobals.type == 'campaign')) {
         jQuery.each($video, (index, videoElem) => {
 
             let videoId = jQuery(videoElem).data('video-id');
-            let ytPlayer = require('../common/youtubePlayer');
+            let ytPlayer = import('../common/youtubePlayer');
 
             let playerContainer = jQuery(videoElem).siblings('.video-container');
 

@@ -1,1 +1,1 @@
-require('./profile');
+import('./profile');

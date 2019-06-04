@@ -1,3 +1,3 @@
-require('./common');
+import('./common');
 
-require('../../sass/site/primary/homepage/_hompage.scss');
+import('../../sass/site/primary/homepage/_hompage.scss');

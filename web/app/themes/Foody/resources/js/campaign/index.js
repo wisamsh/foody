@@ -1,6 +1,6 @@
-require('./campaign-approvals-analytics');
-require('./campaign-approvals');
-require('./approvals-analytics');
-require('./approvals');
-require('./e-book');
-require('./e-book-analytics');
+import('./campaign-approvals-analytics');
+import('./campaign-approvals');
+import('./approvals-analytics');
+import('./approvals');
+import('./e-book');
+import('./e-book-analytics');

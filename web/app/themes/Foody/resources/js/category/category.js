@@ -1,8 +1,8 @@
 /**
  * Created by moveosoftware on 10/8/18.
  */
-let FoodySearchFilter = require('../common/foody-search-filter');
-let FoodyContentPaging = require('../common/page-content-paging');
+let FoodySearchFilter = import('../common/foody-search-filter');
+let FoodyContentPaging = import('../common/page-content-paging');
 
 jQuery(document).ready(($) => {
 

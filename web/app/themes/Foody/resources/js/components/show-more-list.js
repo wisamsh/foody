@@ -18,7 +18,7 @@ window.showMoreList = function (selector, moreLink) {
         }
         let $image = $('img', $target);
         $('h4', $target).text('הצג הכל');
-console.log($target);
+
         let $imageContainer = $('.image-container', $target);
         let overlay = `<h4 class='show-more-list-overlay'> ${count}+</h4>`;
 

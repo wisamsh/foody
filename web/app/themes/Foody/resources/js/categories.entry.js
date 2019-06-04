@@ -1,1 +1,1 @@
-require('./category');
+import('./category');

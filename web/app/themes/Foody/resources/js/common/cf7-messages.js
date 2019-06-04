@@ -1,4 +1,4 @@
-const foodyAlert = require('./alerts');
+const foodyAlert = import('./alerts');
 
 module.exports = function (container) {
 

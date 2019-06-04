@@ -7,8 +7,8 @@ let json = '';
 let lottie = '';
 
 setTimeout(() => {
-    json = require('../../lottie/loader.js');
-    lottie = require('lottie-web/build/player/lottie.min');
+    json = import('../../lottie/loader.js');
+    lottie = import('lottie-web/build/player/lottie.min');
 });
 
 module.exports = (function () {
