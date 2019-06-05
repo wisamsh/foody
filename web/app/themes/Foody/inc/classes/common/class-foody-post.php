@@ -640,7 +640,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
             $no_index_author = get_field('no_index', "user_$post_author_id");
 
-            if (is_multisite()) {
+            if (is_multisite() && metadata_exists('post', $this->id, 'foody_index')) {
                 $should_index = get_post_meta($this->id, 'foody_index', true);
             }
 
