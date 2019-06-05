@@ -127,6 +127,9 @@ add_action( 'widgets_init', 'foody_widgets_init' );
  */
 function foody_scripts() {
 
+	wp_deregister_script( 'jquery' );
+	wp_enqueue_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js.gz', array(), null, false );
+
 	wp_enqueue_script( 'foody-navigation', get_template_directory_uri() . '/resources/js/navigation.js', array(), '20151215', true );
 
 	wp_enqueue_script( 'foody-skip-link-focus-fix', get_template_directory_uri() . '/resources/js/skip-link-focus-fix.js', array(), '20151215', true );
