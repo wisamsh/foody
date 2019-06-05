@@ -6,7 +6,9 @@ jQuery(document).ready(($) => {
 
     let $approvalsContainer = jQuery('.campaign-approvals-container');
     if ($approvalsContainer.length) {
+        let FoodyLoader = require('./foody-loader');
         let $form = $("form#campaign-approvals", $approvalsContainer);
+        let foodyLoader = new FoodyLoader({container: $approvalsContainer});
         $form.validate({
             rules: {
                 'extended-campaign-terms': {
@@ -53,8 +55,10 @@ jQuery(document).ready(($) => {
                 }
             },
             submitHandler: function (form) {
-
-                $approvalsContainer.block({message: ''});
+                if (jQuery(form).siblings('.foody-loader').length) {
+                    return;
+                }
+                foodyLoader.attach();
 
                 foodyAjax({
                     action: 'foody_edit_user_extended_campaign_approvals',
@@ -73,6 +77,7 @@ jQuery(document).ready(($) => {
                         }
                     } else {
                         eventCallback('', 'תחרות מתכונים', 'השלמת רישום הצליחה', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'עמוד נחיתה ללא שם');
+                        foodyLoader.detach();
                         $approvalsContainer.unblock();
                         // let $redirect = $('input[name="redirect"]');
                         // if ($redirect.length && $redirect.val() == 1) {
