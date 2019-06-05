@@ -1,2 +1,2 @@
-import('./article');
-import('./recipe');
+require('./article');
+require('./recipe');

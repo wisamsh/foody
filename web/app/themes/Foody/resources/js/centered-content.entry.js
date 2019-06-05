@@ -1,1 +1,1 @@
-import('./contact-us');
+require('./contact-us');

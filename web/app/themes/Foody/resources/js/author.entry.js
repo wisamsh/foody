@@ -1,1 +1,1 @@
-import('./author');
+require('./author');

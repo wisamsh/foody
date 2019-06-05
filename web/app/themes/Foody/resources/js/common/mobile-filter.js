@@ -1,7 +1,7 @@
 /**
  * Created by moveosoftware on 12/23/18.
  */
-let toggleScreenLock = import('./screenLock');
+let toggleScreenLock = require('./screenLock');
 
 jQuery(document).ready(($) => {
     // mobile filter handlers

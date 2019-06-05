@@ -1,7 +1,7 @@
 /**
  * Created by moveosoftware on 7/10/18.
  */
-// window.Fraction = import('fractional').Fraction;
+// window.Fraction = require('fractional').Fraction;
 window.calculator = function (selector) {
 
     $elements = $(selector);

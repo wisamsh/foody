@@ -2,17 +2,17 @@
  * Created by moveosoftware on 7/2/18.
  */
 //
-// import('jquery-validation/dist/jquery.validate.min');
-// import('block-ui');
-// import('autocomplete.js/dist/autocomplete.jquery.min');
-// import('bootstrap-material-design/dist/js/bootstrap-material-design.min');
-// import('bootstrap-select/dist/js/bootstrap-select.min');
+// require('jquery-validation/dist/jquery.validate.min');
+// require('block-ui');
+// require('autocomplete.js/dist/autocomplete.jquery.min');
+// require('bootstrap-material-design/dist/js/bootstrap-material-design.min');
+// require('bootstrap-select/dist/js/bootstrap-select.min');
 //
-// import('slick-carousel');
-// window._ = import('underscore/underscore-min');
+// require('slick-carousel');
+// window._ = require('underscore/underscore-min');
 //
 //
-// window.foodyFormMessage = import('./cf7-messages');
+// window.foodyFormMessage = require('./cf7-messages');
 //
 // jQuery(document).ready(function ($) {
 //
@@ -25,7 +25,7 @@
 //
 //     $('.foody-slider').slick();
 //
-//     let FoodyAnalytics = import('./analytics');
+//     let FoodyAnalytics = require('./analytics');
 //
 //     window.analytics = new FoodyAnalytics();
 //
@@ -52,15 +52,15 @@
 //     }
 // });
 
-import('./forms');
-import('./foody-grid');
-import('./foody-ajax');
-import('./comments');
-import('./how-i-did');
-import('./favorites');
-import('./follow');
-import('./sort');
-import('./foody-search-filter');
-import('./social');
-import('./mobile-filter');
-import('./tag-manager');
+require('./forms');
+require('./foody-grid');
+require('./foody-ajax');
+require('./comments');
+require('./how-i-did');
+require('./favorites');
+require('./follow');
+require('./sort');
+require('./foody-search-filter');
+require('./social');
+require('./mobile-filter');
+require('./tag-manager');

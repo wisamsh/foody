@@ -2,7 +2,7 @@
  * Created by moveosoftware on 11/5/18.
  */
 
-const bodyScrollLock = import('body-scroll-lock');
+const bodyScrollLock = require('body-scroll-lock');
 const disableBodyScroll = bodyScrollLock.disableBodyScroll;
 const enableBodyScroll = bodyScrollLock.enableBodyScroll;
 const options = {

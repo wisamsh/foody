@@ -2,7 +2,7 @@
  * Created by moveosoftware on 8/29/18.
  */
 
-let ytPlayer = import('../common/youtubePlayer');
+let ytPlayer = require('../common/youtubePlayer');
 
 jQuery(document).ready(function ($) {
 

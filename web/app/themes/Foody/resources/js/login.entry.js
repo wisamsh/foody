@@ -1,1 +1,1 @@
-import('./login');
+require('./login');

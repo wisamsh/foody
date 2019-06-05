@@ -2,7 +2,7 @@
  * Created by moveosoftware on 10/7/18.
  */
 
-let FoodyLoader = import('./foody-loader');
+let FoodyLoader = require('./foody-loader');
 module.exports = (function () {
 
     function FoodyGrid(settings) {

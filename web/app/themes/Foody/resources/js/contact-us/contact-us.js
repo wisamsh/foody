@@ -3,7 +3,7 @@
  */
 
 
-let foodyAlert = import('../common/alerts');
+let foodyAlert = require('../common/alerts');
 
 jQuery(document).ready(($) => {
 

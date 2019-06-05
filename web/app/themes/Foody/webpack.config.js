@@ -96,8 +96,7 @@ module.exports = env => {
             // filename: '[name].js',
             filename: '[name].[hash].js',
             path: path.resolve(__dirname, 'dist'),
-            publicPath: '/app/themes/foody/dist/'
-            // publicPath: path.resolve(__dirname, 'resources')
+            publicPath: path.resolve(__dirname, 'resources')
         },
         mode: 'development',
         module: {
@@ -162,17 +161,6 @@ module.exports = env => {
                         loader: "babel-loader",
                         options: {
                             presets: ["@babel/preset-env"]  //Preset used for env setup
-                        }
-                    }
-                },
-                {
-                    test: /\.js$/,
-                    use: {
-                        loader: "babel-loader",
-                        options: {
-                            plugins: [
-                                "@babel/plugin-syntax-dynamic-import"
-                            ]
                         }
                     }
                 }

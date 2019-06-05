@@ -2,13 +2,13 @@
  * Created by moveosoftware on 9/29/18.
  */
 
-let toggleFollowed = import('../common/follow');
-let FoodySearchFilter = import('../common/foody-search-filter');
-import('cropperjs');
-import('cropperjs/dist/cropper.min.css');
-import('jquery-cropper');
-let FoodyLoader = import('../common/foody-loader');
-let readUrl = import('../common/image-reader');
+let toggleFollowed = require('../common/follow');
+let FoodySearchFilter = require('../common/foody-search-filter');
+require('cropperjs');
+require('cropperjs/dist/cropper.min.css');
+require('jquery-cropper');
+let FoodyLoader = require('../common/foody-loader');
+let readUrl = require('../common/image-reader');
 jQuery(document).ready(($) => {
 
 

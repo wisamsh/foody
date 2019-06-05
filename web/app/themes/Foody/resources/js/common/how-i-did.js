@@ -2,11 +2,11 @@
  * Created by moveosoftware on 7/10/18.
  */
 
-let FoodyLoader = import('../common/foody-loader');
-let readUrl = import('./image-reader');
-import('cropperjs');
-import('cropperjs/dist/cropper.min.css');
-import('jquery-cropper');
+let FoodyLoader = require('../common/foody-loader');
+let readUrl = require('./image-reader');
+require('cropperjs');
+require('cropperjs/dist/cropper.min.css');
+require('jquery-cropper');
 $(document).ready(() => {
 
 

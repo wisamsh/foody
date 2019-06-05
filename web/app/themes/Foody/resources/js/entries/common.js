@@ -4,10 +4,10 @@
 // });
 
 
-import('../../sass/mixins/_mixins-master.scss');
-// import('../../sass/variables-site/_variables-site.scss');
-import('../../sass/typography/_typography.scss');
-import('../../sass/_normalize.scss');
-import('../../sass/common/_common.scss');
-import('../common');
-import('../layout');
+require('../../sass/mixins/_mixins-master.scss');
+// require('../../sass/variables-site/_variables-site.scss');
+require('../../sass/typography/_typography.scss');
+require('../../sass/_normalize.scss');
+require('../../sass/common/_common.scss');
+require('../common');
+require('../layout');

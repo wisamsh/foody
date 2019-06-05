@@ -1,1 +1,1 @@
-import('./register');
+require('./register');

@@ -1,19 +1,19 @@
-// import('jquery-validation/dist/jquery.validate.min');
-// import('block-ui');
-// import('autocomplete.js/dist/autocomplete.jquery.min');
-// import('bootstrap-material-design/dist/js/bootstrap-material-design.min');
-// import('bootstrap-select/dist/js/bootstrap-select.min');
-// import('slick-carousel/slick/slick.min');
-// window._ = import('underscore/underscore-min');
-// window.foodyFormMessage = import('./common/cf7-messages');
+// require('jquery-validation/dist/jquery.validate.min');
+// require('block-ui');
+// require('autocomplete.js/dist/autocomplete.jquery.min');
+// require('bootstrap-material-design/dist/js/bootstrap-material-design.min');
+// require('bootstrap-select/dist/js/bootstrap-select.min');
+// require('slick-carousel/slick/slick.min');
+// window._ = require('underscore/underscore-min');
+// window.foodyFormMessage = require('./common/cf7-messages');
 //
-// window.lottie = import('lottie-web/build/player/lottie.min');
+// window.lottie = require('lottie-web/build/player/lottie.min');
 //
 // /*
 //  * Commmon
 //  * */
-// import('./common');
-// import('./components');
-// import('./layout');
-// import('./feed-filter');
-// import('./search');
+// require('./common');
+// require('./components');
+// require('./layout');
+// require('./feed-filter');
+// require('./search');

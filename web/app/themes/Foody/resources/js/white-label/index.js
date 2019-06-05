@@ -5,4 +5,4 @@ jQuery('.categories-block-content.categories-listing.show-more').each(function()
     let block = this;
     showMoreList('#' + block.id + ' .col:last-child');
 });
-import('./brands');
+require('./brands');

@@ -1,5 +1,5 @@
-let toggleScreenLock = import('../common/screenLock');
-import('./mobile-header-scroll');
+let toggleScreenLock = require('../common/screenLock');
+require('./mobile-header-scroll');
 jQuery(document).ready(function ($) {
 
 
@@ -35,7 +35,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    let autocomplete = import('../common/autocomplete');
+    let autocomplete = require('../common/autocomplete');
 
     autocomplete('.search-autocomplete', {});
 

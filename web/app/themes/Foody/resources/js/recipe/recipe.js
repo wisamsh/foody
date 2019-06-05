@@ -17,7 +17,7 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
             jQuery.each($video, (index, videoElem) => {
 
                 let videoId = jQuery(videoElem).data('video-id');
-                let ytPlayer = import('../common/youtubePlayer');
+                let ytPlayer = require('../common/youtubePlayer');
 
                 let playerContainer = jQuery(videoElem).siblings('.video-container');
 

@@ -3,7 +3,7 @@
  */
 
 
-import('./categories');
-import('./homepage');
-import('./team');
-import('./recommended');
+require('./categories');
+require('./homepage');
+require('./team');
+require('./recommended');

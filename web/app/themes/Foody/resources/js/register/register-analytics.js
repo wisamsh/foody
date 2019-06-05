@@ -1,7 +1,7 @@
 /**
  * Created by omerfishman on 3/26/19.
  */
-let FoodyLocationUtils = import('../common/foody-location-utils');
+let FoodyLocationUtils = require('../common/foody-location-utils');
 
 jQuery(document).ready(($) => {
 

@@ -1,7 +1,7 @@
 /**
  * Created by moveosoftware on 6/27/18.
  */
-window.EXIF = import('exif-js');
+window.EXIF = require('exif-js');
 jQuery(document).ready(function () {
-    import('./article-analytics');
+    require('./article-analytics');
 });
