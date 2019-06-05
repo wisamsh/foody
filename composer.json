@@ -54,11 +54,11 @@
       "type": "package",
       "package": {
         "name": "smash-baloon/instagram-feed",
-        "version": "1.10.1",
+        "version": "1.12",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.10.1.zip"
+          "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.12.zip"
         }
       }
     },
@@ -256,7 +256,7 @@
     "andrewozz/tinymce-advanced": "^4.7",
     "xamin/handlebars.php": "^0.10.4",
     "phospr/fraction": "^1.2",
-    "smash-baloon/instagram-feed": "^1.10",
+    "smash-baloon/instagram-feed": "^1.12",
     "yoast/wordpress-seo": "9.5",
     "mixpanel/mixpanel-php": "^2.6",
     "joe-dolson/wp-accessibility": "^1.6",
