@@ -1,7 +1,7 @@
 jQuery(document).ready(($) => {
     let $approvalsContainer = $('.approvals-container');
     if ($approvalsContainer.length) {
-        let FoodyLoader = require('./foody-loader');
+        let FoodyLoader = require('../common/foody-loader');
         let $form = $("form#approvals", $approvalsContainer);
         let foodyLoader = new FoodyLoader({container: $approvalsContainer});
         $form.validate({
