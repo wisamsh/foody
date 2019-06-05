@@ -1,3 +1,4 @@
+require('jquery/dist/jquery.min');
 require('jquery-validation/dist/jquery.validate.min');
 require('block-ui');
 require('autocomplete.js/dist/autocomplete.jquery.min');
