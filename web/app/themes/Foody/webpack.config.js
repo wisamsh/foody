@@ -81,6 +81,7 @@ module.exports = env => {
             centered_content: ["./resources/js/centered-content.entry","./resources/js/page-load.entry"],
             channel: ["./resources/js/channel.entry","./resources/js/page-load.entry"],
             homepage_js: ["./resources/js/homepage.entry","./resources/js/page-load.entry"],
+            general: ["./resources/js/homepage.entry","./resources/js/general.entry"],
             items: ["./resources/js/items.entry","./resources/js/page-load.entry"],
             login: ["./resources/js/login.entry","./resources/js/page-load.entry"],
             playlist: ["./resources/js/playlist.entry","./resources/js/page-load.entry"],
