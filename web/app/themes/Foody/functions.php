@@ -181,7 +181,7 @@ function foody_scripts() {
 			wp_enqueue_script( 'foody-script-centered_content', $centered_content_asset, false, false, true );
 		}
 
-		if ( is_page_template( 'page-templates/categories.php' ) ) {
+		if ( is_category() || is_page_template( 'page-templates/categories.php' ) ) {
 			$categories_asset = foody_get_versioned_asset( 'categories' );
 			wp_enqueue_script( 'foody-script-categories', $categories_asset, false, false, true );
 		}
