@@ -23,3 +23,16 @@ function foody_widgets() {
 }
 
 add_action( 'widgets_init', 'foody_widgets' );
+
+
+add_filter( 'dynamic_sidebar_params', 'foody_wrap_widget_titles', 20 );
+function foody_wrap_widget_titles( array $params ) {
+
+    // $params will ordinarily be an array of 2 elements, we're only interested in the first element
+    $widget =& $params[0];
+    $widget['before_title'] = '<div class="widgettitle">';
+    $widget['after_title'] = '</div>';
+
+    return $params;
+
+}

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f068cbb5e2bbf46dab65887ba2d3a10d",
+    "content-hash": "8968b34ced017a0fc344613169394569",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -187,6 +187,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9MTMxNzg3fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTIzIDEyOjE1OjI5",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "exactly-www/ewww-image-optimizer",
+            "version": "4.8.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/ewww-image-optimizer.4.8.0.zip",
                 "reference": null,
                 "shasum": null
             },

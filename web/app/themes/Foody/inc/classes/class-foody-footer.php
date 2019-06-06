@@ -199,7 +199,7 @@ class Foody_Footer
                                 clientId: 1105,
                                 clientKey: 'CTr7CLASmMyt02TnLnNs',
                                 wlbl: 'Nagishly',
-                                statementLink: '',
+                                statementLink: '<?php echo  get_permalink(get_page_by_title('הצהרת נגישות'))?>',
                                 feedbackLink: '',
                                 showAllActions: false,
                                 keyNavStrong: false,
