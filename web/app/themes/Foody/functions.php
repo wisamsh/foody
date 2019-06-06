@@ -171,7 +171,7 @@ function foody_scripts() {
 			wp_enqueue_script( 'foody-script-profile', $profile_asset, false, false, true );
 		}
 
-		if ( is_page_template( 'page-templates/foody-campaign.php' ) || is_page_template( 'page-templates/foody-campaign-extended.php' ) ) {
+		if ( has_shortcode( $post_content, 'foody-approvals' ) || is_page_template( 'page-templates/foody-campaign.php' ) || is_page_template( 'page-templates/foody-campaign-extended.php' ) ) {
 			$campaign_asset = foody_get_versioned_asset( 'campaign' );
 			wp_enqueue_script( 'foody-script-campaign', $campaign_asset, false, false, true );
 		}
