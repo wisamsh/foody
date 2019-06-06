@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f068cbb5e2bbf46dab65887ba2d3a10d",
+    "content-hash": "e5a2073f5c1d8f9c320bc94e6cf6ee0d",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -778,10 +778,10 @@
         },
         {
             "name": "smash-baloon/instagram-feed",
-            "version": "1.10.1",
+            "version": "1.12",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.10.1.zip",
+                "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.12.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -939,6 +939,17 @@
                 "environment"
             ],
             "time": "2019-01-29T11:11:52+00:00"
+        },
+        {
+            "name": "w3-total-cache",
+            "version": "0.9.7.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/w3-total-cache.0.9.7.4.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
         },
         {
             "name": "wordpressdotorg/wordpress-importer",
