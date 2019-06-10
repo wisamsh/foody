@@ -31,7 +31,7 @@ module.exports = env => {
                 minSize: 20,
                 minChunks: 1,
                 maxAsyncRequests: 1,
-                maxInitialRequests:1,
+                maxInitialRequests: 1,
                 name: true,
                 cacheGroups: {
                     vendors: {
@@ -45,7 +45,7 @@ module.exports = env => {
                     }
                 }
             },
-            minimizer:[
+            minimizer: [
                 new UglifyJsPlugin({
                     cache: true,
                     parallel: true,
@@ -74,22 +74,22 @@ module.exports = env => {
             new CompressionPlugin()
         ],
         entry: {
-            admin: ["./resources/js/admin","./resources/js/page-load.entry"],
-            author: ["./resources/js/author.entry","./resources/js/page-load.entry"],
-            campaign: ["./resources/js/campaign.entry","./resources/js/page-load.entry"],
-            categories: ["./resources/js/categories.entry","./resources/js/page-load.entry"],
-            centered_content: ["./resources/js/centered-content.entry","./resources/js/page-load.entry"],
-            channel: ["./resources/js/channel.entry","./resources/js/page-load.entry"],
+            admin: ["./resources/js/admin", "./resources/js/page-load.entry"],
+            author: ["./resources/js/author.entry", "./resources/js/page-load.entry"],
+            campaign: ["./resources/js/campaign.entry", "./resources/js/page-load.entry"],
+            categories: ["./resources/js/categories.entry", "./resources/js/page-load.entry"],
+            centered_content: ["./resources/js/centered-content.entry", "./resources/js/page-load.entry"],
+            channel: ["./resources/js/channel.entry", "./resources/js/page-load.entry"],
             homepage: ["./resources/js/page-load.entry", "./resources/js/homepage.entry"],
-            general: ["./resources/js/general.entry","./resources/js/page-load.entry"],
-            items: ["./resources/js/items.entry","./resources/js/page-load.entry"],
-            login: ["./resources/js/login.entry","./resources/js/page-load.entry"],
-            playlist: ["./resources/js/playlist.entry","./resources/js/page-load.entry"],
-            post: ["./resources/js/post.entry","./resources/js/page-load.entry"],
-            profile: ["./resources/js/profile.entry","./resources/js/page-load.entry"],
-            register: ["./resources/js/register.entry","./resources/js/page-load.entry"],
-            tag: ["./resources/js/tag.entry","./resources/js/page-load.entry"],
-            team: ["./resources/js/team.entry","./resources/js/page-load.entry"],
+            general: ["./resources/js/general.entry", "./resources/js/page-load.entry"],
+            items: ["./resources/js/items.entry", "./resources/js/page-load.entry"],
+            login: ["./resources/js/login.entry", "./resources/js/page-load.entry"],
+            playlist: ["./resources/js/playlist.entry", "./resources/js/page-load.entry"],
+            post: ["./resources/js/post.entry", "./resources/js/page-load.entry"],
+            profile: ["./resources/js/profile.entry", "./resources/js/page-load.entry"],
+            register: ["./resources/js/register.entry", "./resources/js/page-load.entry"],
+            tag: ["./resources/js/tag.entry", "./resources/js/page-load.entry"],
+            team: ["./resources/js/team.entry", "./resources/js/page-load.entry"],
             style: ["./resources/sass/app.scss"],
             // homepage: ["./resources/sass/homepage_app.scss"],
         },
