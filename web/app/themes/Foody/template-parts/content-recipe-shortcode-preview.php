@@ -10,6 +10,9 @@
 /** @var Foody_Recipe $foody_page */
 $foody_page    = $template_args['recipe'];
 $show_favorite = foody_get_array_default( $template_args, 'show_favorite', true );
+if ( ! foody_is_registration_open() ) {
+	$show_favorite = false;
+}
 ?>
 <div class="recipe-shortcode-container">
 
