@@ -162,7 +162,7 @@ function foody_scripts() {
 		}
 		// Homepage
 		if ( is_front_page() || is_home() ) {
-			$homepage_asset = foody_get_versioned_asset( 'homepage_js' );
+			$homepage_asset = foody_get_versioned_asset( 'homepage' );
 			wp_enqueue_script( 'foody-script-home', $homepage_asset, false, false, true );
 		}
 
@@ -308,7 +308,6 @@ function add_async_attribute( $tag, $handle ) {
 		'foody-script-campaign',
 		'foody-script-centered_content',
 		'foody-script-categories',
-		'foody-script-recipe',
 		'foody-script-recipe',
 		'foody-script-login',
 		'foody-script-register',
