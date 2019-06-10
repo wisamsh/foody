@@ -30,7 +30,7 @@ $user = new Foody_User();
 
 <?php
 
-if (isset($_SESSION['background_image']) && !empty($_SESSION['background_image'])) {
+if ( ! wp_is_mobile() && ( isset( $_SESSION['background_image'] ) && ! empty( $_SESSION['background_image'] ) ) ) {
     ?>
     <img class="body-background" src="<?php echo $_SESSION['background_image']['url'] ?>"
          alt="<?php echo $_SESSION['background_image']['alt'] ?>">
