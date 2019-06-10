@@ -17,6 +17,10 @@ $target = '';
 if (!empty($recipe->link_attrs['target'])) {
     $target = "target='{$recipe->link_attrs['target']}'";
 }
+$show_favorite = foody_get_array_default( $template_args, 'show_favorite', true );
+if ( ! foody_is_registration_open() ) {
+	$show_favorite = false;
+}
 ?>
 
 
@@ -73,17 +77,19 @@ if (!empty($recipe->link_attrs['target'])) {
                 <li>
                     <?php echo $recipe->getViewCount() ?>
                 </li>
-                <li class="favorite-container">
-                    <?php
-                    foody_get_template_part(
-                        get_template_directory() . '/template-parts/common/favorite.php',
-                        array(
-                            'id' => $recipe->id,
-                            'post' => $recipe
-                        )
-                    );
-                    ?>
-                </li>
+	            <?php if ($show_favorite): ?>
+                    <li class="favorite-container">
+                        <?php
+                        foody_get_template_part(
+                            get_template_directory() . '/template-parts/common/favorite.php',
+                            array(
+                                'id' => $recipe->id,
+                                'post' => $recipe
+                            )
+                        );
+                        ?>
+                    </li>
+	            <?php endif; ?>
             </ul>
         </div>
 
