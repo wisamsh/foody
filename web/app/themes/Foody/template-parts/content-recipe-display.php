@@ -20,21 +20,25 @@ $recipe = $template_args['recipe'];
      {
       "@context": "http://schema.org/",
       "@type": "Recipe",
-      "name": "<?php echo get_the_title() ?>",
+      "name": "<?php echo addslashes(get_the_title()) ?>",
       "image": "<?php echo $recipe->getImage() ?>",
       "author": {
         "@type": "Person",
-        "name": "<?php echo $recipe->getAuthorName() ?>"
+        "name": "<?php echo addslashes($recipe->getAuthorName()) ?>"
       },
       "datePublished": "<?php echo get_the_date('Y-m-d') ?>",
-      "description": "<?php echo $recipe->getDescription() ?>",
+      "description": "<?php echo addslashes($recipe->getDescription()) ?>",
       "cookTime": "<?php echo $recipe->time_to_iso8601_duration('preparation_time') ?>",
       "totalTime": "<?php echo $recipe->time_to_iso8601_duration('total_time') ?>",
       "keywords": "<?php echo implode(',', wp_get_post_tags()) ?>",
       "recipeYield": "<?php echo $recipe->number_of_dishes ?>",
-      "recipeCategory": "<?php echo $recipe->get_primary_category_name() ?>",
+      "recipeCategory": "<?php echo addslashes($recipe->get_primary_category_name()) ?>",
       "recipeIngredient": <?php echo $recipe->get_ingredients_jsonld() ?>
 }
+
+
+
+
 
 
 </script>
@@ -68,7 +72,7 @@ $recipe = $template_args['recipe'];
 </section>
 
 <section class="conversion-table-link no-print">
-	<?php $recipe->the_conversion_table_link() ?>
+    <?php $recipe->the_conversion_table_link() ?>
 </section>
 
 <section class="recipe-purchase-buttons d-block d-lg-none">
