@@ -83,10 +83,18 @@ class Foody_PurchaseButtons
 
             foreach ($options as $option) {
 
-                // only first filters section
-                // is relevant
+
+                $filters = [];
+
+                // consider all filters lists
+                foreach ($option['filters_list'] as $list){
+                    if (is_array($list)){
+                        $filters = array_merge($filters,$list);
+                    }
+                }
+
                 $args = [
-                    'types' => SidebarFilter::parse_search_args($option['filters_list'][0])
+                    'types' => SidebarFilter::parse_search_args($filters)
                 ];
 
                 // purchase_buttons will invoke purchase_buttons ffn

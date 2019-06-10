@@ -39,6 +39,11 @@ $page_definitions = array(
         'content' => '',
         'template' => 'profile'
     ),
+    'הצהרת-נגישות' => array(
+        'title' => __('הצהרת נגישות', 'foody'),
+        'content' => '',
+        'template' => 'centered-content'
+    ),
 );
 
 foreach ($page_definitions as $slug => $page) {

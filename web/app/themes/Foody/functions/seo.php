@@ -67,3 +67,11 @@ function foody_change_image( $image ) {
 
 	return $image;
 }
+
+//add_filter('wpseo_sitemap_exclude_author','foody_xml_sitemap_authors');
+//
+//function foody_xml_sitemap_authors($users){
+//
+//
+//    return $users;
+//}

@@ -253,6 +253,18 @@
           "url": "https://downloads.wordpress.org/plugin/w3-total-cache.0.9.7.4.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "exactly-www/ewww-image-optimizer",
+        "version": "4.8.0",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/ewww-image-optimizer.4.8.0.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -287,7 +299,8 @@
     "monolog/monolog": "^1.24",
     "justinticktock/network-subsite-user-registration": "^2.5",
     "david-gwyer/simple-sitemap-pro": "^2.1",
-    "w3-total-cache": "^0.9.7.4"
+    "w3-total-cache": "^0.9.7.4",
+    "exactly-www/ewww-image-optimizer": "^4.8"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

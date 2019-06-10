@@ -14,9 +14,9 @@ $ingredients_groups = $template_args['groups'];
 <?php foreach ($ingredients_groups as $ingredients_group): ?>
 
     <div class="col-12 ingredients-group p-0">
-        <h4 class="ingredients-group-title">
+        <h2 class="ingredients-group-title">
             <?php echo $ingredients_group['title']; ?>
-        </h4>
+        </h2>
         <ul class="ingredients-group-list">
 
             <?php /** @var Foody_Ingredient $ingredient */

@@ -48,7 +48,11 @@ function foody_ajax_load_more()
 
                 unset($filter['context']);
 
-                $foody_search = new Foody_Search($context,$context_args);
+                if (empty($filter['types'])) {
+                    $filter['types'] = [];
+                }
+
+                $foody_search = new Foody_Search($context, $context_args);
 
                 $sort = '';
                 if (!empty($_POST['sort'])) {
