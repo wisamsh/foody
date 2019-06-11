@@ -22,8 +22,8 @@ let TagManager = require('./common/tag-manager');
 window.tagManager = new TagManager();
 
 jQuery(document).ready(function ($) {
-
     let $body = $('body');
+
     // noinspection JSUnresolvedFunction
     $body.bootstrapMaterialDesign();
     // $.fn.selectpicker.Constructor.BootstrapVersion = '4';

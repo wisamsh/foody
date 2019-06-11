@@ -89,6 +89,7 @@ module.exports = env => {
             register: ["./resources/js/register.entry", "./resources/js/page-load.entry"],
             tag: ["./resources/js/tag.entry", "./resources/js/page-load.entry"],
             team: ["./resources/js/team.entry", "./resources/js/page-load.entry"],
+            lazy: ["./resources/js/foody-lazy-loader.entry"],
             style: ["./resources/sass/app.scss"],
             // homepage: ["./resources/sass/homepage_app.scss"],
         },

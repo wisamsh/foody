@@ -24,7 +24,7 @@ if (!empty($playlist->link_attrs['target'])) {
 <div class="playlist-item feed-item">
     <a href="<?php echo $playlist->link ?>" <?php echo $target?>>
         <div class="image-container main-image-container">
-            <img class="playlist-item-image feed-item-image" src="<?php echo $playlist->getImage() ?>" alt="">
+            <img class="playlist-item-image feed-item-image foody-lazy" data-foody-src="<?php echo $playlist->getImage() ?>" alt="">
             <div class="playlist-count">
                 <i class="icon-timeplay"></i>
 
