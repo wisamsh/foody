@@ -161,8 +161,8 @@ function foody_scripts()
 
 //        wp_enqueue_script('foody-lazy', '//cdn.jsdelivr.net/gh/eisbehr-/jquery.lazy@1.7.10/jquery.lazy.min.js', ['jquery']);
 
-        $lazy_loader_asset = foody_get_versioned_asset('lazy');
-        wp_enqueue_script('foody-script-lazy-loader', $lazy_loader_asset, ['jquery']);
+//        $lazy_loader_asset = foody_get_versioned_asset('lazy');
+//        wp_enqueue_script('foody-script-lazy-loader', $lazy_loader_asset, ['jquery']);
 
         $post_content = '';
         $current_post = get_post();
