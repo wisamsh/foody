@@ -17,18 +17,16 @@ $release_dir = '/home/ubuntu/releases';
 $db_backup_dir = '/var/www/db_backups';
 $app_dir = '/var/www/html';
 $global_uploads_dir = '/home/ubuntu/uploads';
+$app_uploads_dir = $app_dir . '/web/app/uploads';
 $deploy_date = date('YmdHis');
 $release = 'release_' . $deploy_date;
 $shared_drive = '/home/ubuntu/foody-shared-efs/';
 
 if( $target === 'production' ){
-    echo 'Deploy to production';
-    $app_dir = $shared_drive . 'foody.co.il/html';
+    $app_dir = $shared_drive 'foody.co.il/html';
     $global_uploads_dir = $shared_drive . 'uploads';
     $release_dir = $shared_drive . 'releases';
 }
-
-$app_uploads_dir = $app_dir . '/web/app/uploads';
 
 $servers = [
     'local' => '127.0.0.1',

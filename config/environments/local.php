@@ -21,3 +21,4 @@ define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
 define( 'WP_DEFAULT_THEME', 'foody');
 define( 'W3TC_CONFIG_DIR', '/var/tmp/w3tc/w3tc-config' );
+define('EWWW_IMAGE_OPTIMIZER_TOOL_PATH','/var/tmp/ewww/');
