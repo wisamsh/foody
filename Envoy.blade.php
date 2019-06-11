@@ -84,6 +84,11 @@ composer install --prefer-dist;
 
 
 @task('run_after_install', [ 'on' => $target ])
+
+echo 'Copying w3tc config files to temp...'
+[[ -e {{ $app_dir }}/web/app/advanced-cache.php ]] && cp {{ $app_dir }}/web/app/advanced-cache.php /tmp
+[[ -e {{ $app_dir }}/web/app/object-cache.php ]] && cp {{ $app_dir }}/web/app/object-cache.php /tmp
+
 echo 'Installing compiled assets...'
 cd ~
 tar -xzf assets-{{ $release }}.tar.gz -C {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}
@@ -107,6 +112,12 @@ echo 'Updating symlinks...'
 sudo ln -nfs {{ $release_dir }}/{{ $release }} {{ $app_dir }};
 sudo rm -r {{ $app_uploads_dir }}
 sudo ln -s {{$global_uploads_dir}} {{$app_uploads_dir}}
+
+echo 'Copying w3tc config files back from temp...'
+[[ -e /tmp/advanced-cache.php ]] && cp /tmp/advanced-cache.php {{ $app_dir }}/web/app
+[[ -e /tmp/object-cache.php ]] && cp /tmp/object-cache.php {{ $app_dir }}/web/app
+[[ -e /tmp/advanced-cache.php ]] && rm /tmp/advanced-cache.php
+[[ -e /tmp/object-cache.php ]] && rm /tmp/object-cache.php
 
 echo 'Deployment to {{$target}} finished successfully.'
 @endtask
