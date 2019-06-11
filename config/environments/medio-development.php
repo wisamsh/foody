@@ -27,3 +27,4 @@ define('PATH_CURRENT_SITE', '/');
 define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
 define( 'WP_DEFAULT_THEME', 'Foody');
+define('EWWW_IMAGE_OPTIMIZER_TOOL_PATH','/home/ubuntu/efs-test/staging-test/ewww/');

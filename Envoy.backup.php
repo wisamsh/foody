@@ -17,29 +17,20 @@ $release_dir = '/home/ubuntu/releases';
 $db_backup_dir = '/var/www/db_backups';
 $app_dir = '/var/www/html';
 $global_uploads_dir = '/home/ubuntu/uploads';
+$app_uploads_dir = $app_dir . '/web/app/uploads';
 $deploy_date = date('YmdHis');
 $release = 'release_' . $deploy_date;
-$shared_drive = '/home/ubuntu/foody-shared-efs/';
-
-if( $target === 'production' ){
-    echo 'Deploy to production';
-    $app_dir = $shared_drive . 'foody.co.il/html';
-    $global_uploads_dir = $shared_drive . 'uploads';
-    $release_dir = $shared_drive . 'releases';
-}
-
-$app_uploads_dir = $app_dir . '/web/app/uploads';
-
 $servers = [
-    'local' => '127.0.0.1',
-    'dev' => 'ubuntu@foody-dev.moveodevelop.com',
-    'mu-dev' => 'ubuntu@mu.foody-dev.moveodevelop.com',
-    'medio-dev' => 'ubuntu@foody.moveodevelop.com',
-    'production' => 'ubuntu@34.253.214.81'
+'local' => '127.0.0.1',
+'dev' => 'ubuntu@foody-dev.moveodevelop.com',
+'mu-dev' => 'ubuntu@mu.foody-dev.moveodevelop.com',
+'medio-dev' => 'ubuntu@foody.moveodevelop.com',
+'prod1' => 'ubuntu@34.253.214.81',
+'prod2' => 'ubuntu@34.245.51.22'
 ];
 
 if (!isset($branch)){
-    $branch = 'staging';
+$branch = 'staging';
 }
 
 @endsetup
