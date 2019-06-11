@@ -1,9 +1,10 @@
+require('jquery/dist/jquery.min');
 require('jquery-validation/dist/jquery.validate.min');
 require('block-ui');
 require('autocomplete.js/dist/autocomplete.jquery.min');
 require('bootstrap-material-design/dist/js/bootstrap-material-design.min');
 require('bootstrap-select/dist/js/bootstrap-select.min');
-require('slick-carousel/slick/slick.min');
+require('./plugins/slick.min');
 window._ = require('underscore/underscore-min');
 window.foodyFormMessage = require('./common/cf7-messages');
 

@@ -443,6 +443,7 @@ $content-width: 95%;
             font-weight: bold;
             font-size: 17px;
             max-width: 80%;
+            text-align: right;
           }
 
           ul {
@@ -462,17 +463,23 @@ $content-width: 95%;
           }
           .ingredients-group-list {
             .ingredients {
-              .ingredient-container {
+              position: relative;
+              span.amount{
+                vertical-align: top;
+              }
+              .extra-ingredients{
                 display: inline-block;
-
-                .ingredient-data {
+                .ingredient-container {
                   display: inline-block;
-                  vertical-align: top;
 
-                  .comment {
-                    font-size: 15px;
-                    color: $color__primary;
+                  .ingredient-data {
+                    display: inline-block;
+                    vertical-align: top;
                   }
+                }
+                .comment {
+                  font-size: 15px;
+                  color: $color__primary;
                 }
               }
             }
@@ -514,8 +521,9 @@ $content-width: 95%;
               }
 
               .sponsored-by {
-                display: inline-block;
-                float: left;
+                position: absolute;
+                top: 2%;
+                left: 2%;
 
                 > span {
                   font-size: 15px;
@@ -790,12 +798,13 @@ $content-width: 95%;
 
       .header {
         font-family: $font__assistant;
-        h2 {
+        .comments-title {
           float: right;
           margin: 0;
           padding: 15px 0;
           font-family: $font__main;
           font-weight: 900;
+          font-size: 20px;
         }
 
         .add-image {
@@ -1024,6 +1033,7 @@ $content-width: 95%;
       .comments-title {
         font-family: $font__main;
         font-weight: 900;
+        font-size: 20px;
       }
 
       .must-log-in {

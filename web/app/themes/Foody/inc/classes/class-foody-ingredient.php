@@ -97,6 +97,7 @@ class Foody_Ingredient extends Foody_Post {
 					'<span dir="ltr" class="amount"' . $data . '>
                         ' . $display . '
                     </span>
+                    <div class="extra-ingredients">
                     <span class="unit">
                          ' . $amount['unit'] . '
                     </span>';
@@ -114,12 +115,15 @@ class Foody_Ingredient extends Foody_Post {
 
 			$unit            = $last['unit'];
 			$this->amounts[] = $last;
-			$ing_html        = $this->get_ingredient_html( $amount, $display, $unit, $title, $show_after_ingredient );
+			$ing_html        = $this->get_ingredient_html( $amount, $display, $unit, $title, $show_after_ingredient, $length );
 
 
 			if ( $length > 1 ) {
 				$content .= $this->amounts_delimiter;
 			}
+			else{
+                $content .= '<div class="extra-ingredients">';
+            }
 
 			if ( ! empty( $content ) ) {
 				$content .= $ing_html;
@@ -141,7 +145,7 @@ class Foody_Ingredient extends Foody_Post {
 		return $content;
 	}
 
-	public function get_ingredient_html( $amount, $display, $unit, $title, $is_unit_after_title ) {
+	public function get_ingredient_html( $amount, $display, $unit, $title, $is_unit_after_title , $length) {
 
 		if ( ! empty( $this->plural_name ) ) {
 			if ( ceil( $amount ) > 1 || (ceil( $amount ) > 0 && $unit == 'ק"ג') ) {
@@ -188,11 +192,20 @@ class Foody_Ingredient extends Foody_Post {
 			$amount_el .= $name_el;
 		}
 
-		// Add ingredient comment
-		if ( ! empty( $this->comment ) ) {
-			$amount_el .= '<div class="comment">' . $this->comment . '</div>';
-		}
-		$amount_el .= '</span></span>';
+        if ( $length > 1 ) {
+            $amount_el .= '</span></span>';
+        }
+
+        // Add ingredient comment
+        if ( ! empty( $this->comment ) ) {
+            $amount_el .= '<div class="comment">' . $this->comment . '</div>';
+        }
+
+        if ( $length <= 1 ) {
+            $amount_el .= '</span></span>';
+        }
+
+
 
 		/** @var WP_Term $sponsor */
 		$sponsor = $this->get_sponsor();

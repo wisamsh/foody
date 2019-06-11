@@ -260,7 +260,7 @@ class Foody_QueryBuilder
     private $categories__and;
 
     private $tag__and = [];
-    private $tags__not_in = [];
+    private $tag__not_in = [];
 
     private $post__not_in = [];
     private $post__in = [];
@@ -412,7 +412,7 @@ class Foody_QueryBuilder
         $parsed = $this->parse_args($tags);
 
         if (!empty($parsed['exclude'])) {
-            $this->tags__not_in = array_map(function ($arg) {
+            $this->tag__not_in = array_map(function ($arg) {
                 return $arg['value'];
             }, $parsed['exclude']);
         }
@@ -530,8 +530,8 @@ class Foody_QueryBuilder
             $args['tag__and'] = $this->tag__and;
         }
 
-        if (!empty($this->tags__not_in)) {
-            $args['tags__not_in'] = $this->tags__not_in;
+        if (!empty($this->tag__not_in)) {
+            $args['tag__not_in'] = $this->tag__not_in;
         }
 
         if (!empty($this->author__not_in)) {

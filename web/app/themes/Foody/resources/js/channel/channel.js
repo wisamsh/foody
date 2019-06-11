@@ -34,7 +34,7 @@ jQuery(document).ready(($) => {
             'foody_recipe'
         ],
         filter: recipesFilter,
-        sort: '#channel-recipe-feed'
+        sort: '#sort-channel-recipe-feed'
     });
     //
     // let playlistsPager = new FoodyContentPaging({

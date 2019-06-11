@@ -57,13 +57,15 @@ header {
 
   .foody-collaboration {
     width: 100%;
-    text-align: center;
+    text-align: left;
     font-size: 21px;
     color: var(--color__text-main);
     background-color: white;
     padding-top: 5px;
+    padding-left: 25px;
 
     &.foody-collaboration-desktop {
+      text-align: center;
       width: auto;
       background-color: transparent;
       padding: 1px 5px;

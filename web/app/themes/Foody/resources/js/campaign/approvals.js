@@ -1,7 +1,9 @@
 jQuery(document).ready(($) => {
     let $approvalsContainer = $('.approvals-container');
     if ($approvalsContainer.length) {
+        let FoodyLoader = require('../common/foody-loader');
         let $form = $("form#approvals", $approvalsContainer);
+        let foodyLoader = new FoodyLoader({container: $approvalsContainer});
         $form.validate({
             rules: {
                 marketing: {
@@ -21,8 +23,10 @@ jQuery(document).ready(($) => {
                 }
             },
             submitHandler: function (form) {
-
-                $approvalsContainer.block({message: ''});
+                if (jQuery(form).siblings('.foody-loader').length) {
+                    return;
+                }
+                foodyLoader.attach();
 
                 foodyAjax({
                     action: 'foody_edit_user_approvals',
@@ -33,7 +37,7 @@ jQuery(document).ready(($) => {
                 }, function (err, data) {
                     if (err) {
                         if (err.responseJSON && err.responseJSON.data && err.responseJSON.data[0] && err.responseJSON.data[0].message) {
-                            eventCallback('', 'רישום לאתר', 'רישום לדיוור נכשל', foodyGlobals['user']['social_type'], 'הודעה', err.responseJSON.data[0].message);
+                            eventCallback('', 'רישום לאתר', 'רישום לדיוור נכשל', foodyGlobals['user'] ? foodyGlobals['user']['social_type']: 'אין משתמש', 'הודעה', err.responseJSON.data[0].message);
                         }
                     } else {
                         let marketingAnalyticsText = 'לא נרשם';
@@ -46,7 +50,7 @@ jQuery(document).ready(($) => {
                             marketingAnalyticsText = 'לא נרשם פלוס ספר';
                         }
                         eventCallback('', 'רישום לאתר', 'רישום לדיוור הצליח', foodyGlobals['user'] ? foodyGlobals['user']['social_type'] : 'אין משתמש', 'רישום לדיוור', marketingAnalyticsText);
-                        $approvalsContainer.unblock();
+                        foodyLoader.detach();
                         let $redirect = $('input[name="redirect"]');
                         // noinspection EqualityComparisonWithCoercionJS
                         if ($redirect.length && $redirect.val() == 1) {

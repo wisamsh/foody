@@ -50,13 +50,13 @@ if ( is_null( $show_upload ) ) {
 
 	?>
     <div class="header">
-        <h2 class="comments-title">
+        <h3 class="comments-title">
 			<?php
 
 			$foody_how_i_did->the_title();
 
 			?>
-        </h2><!-- .comments-title -->
+        </h3><!-- .comments-title -->
 
 	    <?php if ( $show_upload ): ?>
             <div class="add-image">
