@@ -181,7 +181,17 @@ function foody_scripts() {
 			wp_enqueue_script( 'foody-script-categories', $categories_asset, false, false, true );
 		}
 
-		if ( is_404() || is_search() || is_page_template( 'page-templates/categories.php' ) || has_shortcode( $post_content, 'contact-form-7' ) ) {
+		if ( is_page_template( 'page-templates/channel.php' ) ) {
+			$channel_asset = foody_get_versioned_asset( 'channel' );
+			wp_enqueue_script( 'foody-script-channel', $channel_asset, false, false, true );
+		}
+
+		if (
+			is_404() ||
+			is_search() ||
+			is_page_template( 'page-templates/categories.php' ) ||
+			has_shortcode( $post_content, 'contact-form-7' )
+		) {
 			$general_asset = foody_get_versioned_asset( 'general' );
 			wp_enqueue_script( 'foody-script-general', $general_asset, false, false, true );
 		}
