@@ -43,7 +43,7 @@ $homepage = new Foody_WhiteLabel_HomePage();
         </div>
 
         <?php
-        if (have_rows('filters_list')){
+        if (have_rows('filters_list','foody_search_options')){
             foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
                 'sidebar' => array($homepage, 'sidebar')
             ]);
