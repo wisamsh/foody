@@ -22,7 +22,8 @@ if (!empty($article->link_attrs['target'])) {
 <div class="article-item feed-item">
     <a href="<?php echo $article->link ?>" <?php echo $target ?>>
         <div class="image-container main-image-container">
-            <img class="article-item-image feed-item-image foody-lazy" data-foody-src="<?php echo $article->getImage() ?>" alt="">
+<!--            <img class="article-item-image feed-item-image foody-lazy" data-foody-src="--><?php //echo $article->getImage() ?><!--" alt="">-->
+            <img class="article-item-image feed-item-image foody-lazy" src="<?php echo $article->getImage() ?>" alt="">
 
             <?php if (!empty($label = $article->get_label())): ?>
 

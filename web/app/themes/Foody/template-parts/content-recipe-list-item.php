@@ -27,7 +27,8 @@ if ( ! foody_is_registration_open() ) {
 <div class="recipe-item feed-item">
     <a href="<?php echo $recipe->link ?>" <?php echo $target?>>
         <div class="image-container main-image-container">
-            <img class="recipe-item-image feed-item-image foody-lazy" data-foody-src="<?php echo $recipe->getImage($image_size) ?>" alt="">
+<!--            <img class="recipe-item-image feed-item-image foody-lazy" data-foody-src="--><?php //echo $recipe->getImage($image_size) ?><!--" alt="">-->
+            <img class="recipe-item-image feed-item-image foody-lazy" src="<?php echo $recipe->getImage($image_size) ?>" alt="">
 
             <?php if (!empty($label = $recipe->get_label())): ?>
 

@@ -22,9 +22,13 @@ echo $template_args['link']; ?>" class="col">
     <div class="category-listing">
         <div class="image-container">
             <picture>
-                <source media="(min-width: 415px)" data-foody-srcset="<?php echo $image; ?>">
-                <source media="(max-width: 414px)" data-foody-srcset="<?php echo $mobile_image; ?>">
-                <img class="foody-lazy" data-foody-src="<?php echo $image ?>">
+<!--                <source media="(min-width: 415px)" data-foody-srcset="--><?php //echo $image; ?><!--">-->
+<!--                <source media="(max-width: 414px)" data-foody-srcset="--><?php //echo $mobile_image; ?><!--">-->
+<!--                <img class="foody-lazy" data-foody-src="--><?php //echo $image ?><!--">-->
+
+                <source media="(min-width: 415px)" srcset="<?php echo $image; ?>">
+                <source media="(max-width: 414px)" srcset="<?php echo $mobile_image; ?>">
+                <img class="foody-lazy" src="<?php echo $image ?>">
             </picture>
         </div>
 
