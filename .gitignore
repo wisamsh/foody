@@ -156,3 +156,5 @@ web/app/themes/Foody/dist
 uploads.zip
 stats.json
 web/app/mu-plugins/foody-white-label/tmp
+web/app/ewww
+*.webp
