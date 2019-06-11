@@ -161,7 +161,7 @@ function foody_scripts() {
 			$post_content = $current_post->post_content;
 		}
 		// Homepage
-		if ( is_front_page() || is_home() ) {
+		if ( is_front_page() || is_home() || is_404() ) {
 			$homepage_asset = foody_get_versioned_asset( 'homepage' );
 			wp_enqueue_script( 'foody-script-home', $homepage_asset, false, false, true );
 		}
@@ -187,7 +187,6 @@ function foody_scripts() {
 		}
 
 		if (
-			is_404() ||
 			is_search() ||
 			is_page_template( 'page-templates/categories.php' ) ||
 			has_shortcode( $post_content, 'contact-form-7' )
