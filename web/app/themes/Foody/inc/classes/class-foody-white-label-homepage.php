@@ -102,4 +102,13 @@ class Foody_WhiteLabel_HomePage
         }
     }
 
+    public function the_title()
+    {
+        $title = get_theme_mod('foody_front_page_title');
+
+        if (!empty($title) && !empty(trim($title))) {
+            echo "<h1 class='title front-page-title'> $title </h1>";
+        }
+    }
+
 }

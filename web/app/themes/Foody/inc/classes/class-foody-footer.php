@@ -8,10 +8,9 @@
  */
 class Foody_Footer
 {
-    // TODO remove debug
+
     public $footer_pages;
     public $footer_links;
-    private $debug = false;
 
     private static $MAX_MENUS = 4;
 
@@ -40,10 +39,6 @@ class Foody_Footer
 
         if (empty($this->footer_links)){
             $this->footer_links = [];
-        }
-
-        if ($this->debug) {
-            $this->footer_links = array_merge($this->footer_links, $this->dummy_links(40));
         }
 
 
@@ -188,7 +183,14 @@ class Foody_Footer
 
     public function add_nagish_li_script()
     {
-        if (!is_multisite() || is_main_site()){
+
+        $show_accessibility = get_theme_mod('foody_show_accessibility');
+        // always show on main site
+        if (!is_multisite() || is_main_site()) {
+            $show_accessibility = true;
+        }
+
+        if ($show_accessibility){
 
             ?>
             <script async defer>
@@ -234,27 +236,5 @@ class Foody_Footer
                     href="<?php echo $url ?>"><?php echo $title ?></a></li>
 
         <?php
-    }
-
-
-    private function dummy_links($num = 40)
-    {
-        $links = array();
-
-        $dumdum = 'ךלג  שדךל שדךכ יךשדכ';
-
-        for ($i = 0; $i < $num; $i++) {
-
-            $title = esc_html(substr($dumdum, 0, rand(0, strlen($dumdum) - 1)));
-            if (empty($title)) {
-                $title = 'asfasf';
-            }
-            $links[] = array(
-                'url' => '',
-                'title' => $title
-            );
-        }
-
-        return $links;
     }
 }

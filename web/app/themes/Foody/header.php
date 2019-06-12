@@ -10,7 +10,11 @@
  */
 $header = new Foody_Header();
 $user = new Foody_User();
-
+$show_accessibility = get_theme_mod('foody_show_accessibility');
+// always show on main site
+if (!is_multisite() || is_main_site()) {
+    $show_accessibility = true;
+}
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?> dir="rtl">
@@ -30,7 +34,7 @@ $user = new Foody_User();
 
 <?php
 
-if ( ! wp_is_mobile() && ( isset( $_SESSION['background_image'] ) && ! empty( $_SESSION['background_image'] ) ) ) {
+if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']))) {
     ?>
     <img class="body-background" src="<?php echo $_SESSION['background_image']['url'] ?>"
          alt="<?php echo $_SESSION['background_image']['alt'] ?>">
@@ -44,10 +48,10 @@ if ( ! wp_is_mobile() && ( isset( $_SESSION['background_image'] ) && ! empty( $_
 <div id="page" class="site">
 
     <header id="masthead" class="site-header no-print">
-	    <?php if (!is_multisite() || is_main_site()): ?>
-        <div class="run d-block d-lg-none">
-            <?php echo __('בהרצה') ?>
-        </div>
+        <?php if (!is_multisite() || is_main_site()): ?>
+            <div class="run d-block d-lg-none">
+                <?php echo __('בהרצה') ?>
+            </div>
         <?php else: ?>
             <?php $header->the_foody_collaboration(false); ?>
         <?php endif; ?>
@@ -60,14 +64,19 @@ if ( ! wp_is_mobile() && ( isset( $_SESSION['background_image'] ) && ! empty( $_
                 <div class="search-bar search-bar-container">
                     <?php get_search_form(); ?>
                 </div>
-	            <?php if ( ! is_multisite() || is_main_site() ): ?>
+                <?php if (!is_multisite() || is_main_site()): ?>
                     <span class="run-desktop run">
-                    <?php echo __( 'בהרצה' ) ?>
+                    <?php echo __('בהרצה') ?>
                 </span>
-	            <?php else: ?>
-		            <?php $header->the_foody_collaboration( true ); ?>
-	            <?php endif; ?>
-                <?php if (!wp_is_mobile() && ( ! is_multisite() || is_main_site() )): ?>
+                <?php else: ?>
+                    <?php $header->the_foody_collaboration(true); ?>
+                <?php endif; ?>
+                <?php
+
+
+                if (!wp_is_mobile() && $show_accessibility):
+
+                    ?>
                     <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility"
                             data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
                         <?php $header->accessibility(); ?>
@@ -78,7 +87,8 @@ if ( ! wp_is_mobile() && ( isset( $_SESSION['background_image'] ) && ! empty( $_
 
         </div>
 
-        <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg <?php $header->the_logo_nav_mode() ?>" role="navigation">
+        <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg <?php $header->the_logo_nav_mode() ?>"
+             role="navigation">
 
             <div class="container-fluid foody-navbar-container">
 
@@ -109,14 +119,14 @@ if ( ! wp_is_mobile() && ( isset( $_SESSION['background_image'] ) && ! empty( $_
                     <i class="navbar-toggler-icon icon-menu-mobile"></i>
                 </button>
 
-	            <?php if ( ! is_multisite() || is_main_site() ): ?>
+                <?php if ($show_accessibility): ?>
                     <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility"
                             data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
                         <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
-                             alt="<?php echo __( 'נגישות' ) ?>">
+                             alt="<?php echo __('נגישות') ?>">
                         <div id="accessibility-container"></div>
                     </button>
-	            <?php endif; ?>
+                <?php endif; ?>
 
                 <?php
                 $nav_args = array(
@@ -128,7 +138,8 @@ if ( ! wp_is_mobile() && ( isset( $_SESSION['background_image'] ) && ! empty( $_
 
                 <?php Foody_Social::whatsapp(['d-block', 'd-lg-none']) ?>
 
-                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none" aria-label="חיפוש">
+                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none"
+                        aria-label="חיפוש">
 
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="">
 

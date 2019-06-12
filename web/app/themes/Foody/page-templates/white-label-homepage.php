@@ -17,6 +17,10 @@ $homepage = new Foody_WhiteLabel_HomePage();
 
         <?php $homepage->cover_photo() ?>
 
+        <?php
+            $homepage->the_title();
+        ?>
+
         <div class="content">
             <?php if (have_rows('brands')): ?>
                 <div class="brands-container">

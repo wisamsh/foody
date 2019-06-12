@@ -71,6 +71,11 @@ $sidebar-top-offset: 60px;
 
       .homepage {
 
+        .front-page-title {
+          margin-bottom: 0;
+          margin-right: 20px;
+        }
+
         .brands-container {
           background-color: rgba(173, 173, 173, 0.2);
           padding: 10px 20px 20px;
@@ -106,7 +111,7 @@ $sidebar-top-offset: 60px;
         }
 
         .content {
-          padding-top: 15px;
+          padding-top: 0;
 
           .featured {
           }
@@ -257,7 +262,7 @@ $sidebar-top-offset: 60px;
 
               .block-container {
 
-                &:not(:first-child){
+                &:not(:first-child) {
                   padding: 10px 15px;
                 }
 

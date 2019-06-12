@@ -52,6 +52,28 @@ function foody_customize_register( $wp_customize ) {
 	) );
 
 
+    // Front page title (used only in WL sites)
+    $wp_customize->add_setting(
+        'foody_front_page_title',
+        array(
+            'capability'        => 'edit_theme_options'
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'foody_front_page_title',
+        array(
+            'label'       => __( 'כותרת עמוד ראשי', 'foody' ),
+            'description' => __( 'כותרת עמוד ראשי', 'foody' ),
+            'settings'    => 'foody_front_page_title',
+            'priority'    => 10,
+            'section'     => 'title_tagline',
+            'type'        => 'text'
+        )
+    ) );
+
+
     $wp_customize->add_setting(
         'foody_logo_mode',
         array(
@@ -66,6 +88,27 @@ function foody_customize_register( $wp_customize ) {
             'label'       => __( 'תחם לוגו לגבולות ההדר', 'foody' ),
             'description' => __( 'תחם לוגו לגבולות ההדר', 'foody' ),
             'settings'    => 'foody_logo_mode',
+            'priority'    => 10,
+            'section'     => 'title_tagline',
+            'type'        => 'checkbox'
+        )
+    ) );
+
+    // show accessibility
+    $wp_customize->add_setting(
+        'foody_show_accessibility',
+        array(
+            'capability'        => 'edit_theme_options'
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'foody_show_accessibility',
+        array(
+            'label'       => __( 'הצג תפריט נגישות', 'foody' ),
+            'description' => __( 'הצג תפריט נגישות', 'foody' ),
+            'settings'    => 'foody_show_accessibility',
             'priority'    => 10,
             'section'     => 'title_tagline',
             'type'        => 'checkbox'
