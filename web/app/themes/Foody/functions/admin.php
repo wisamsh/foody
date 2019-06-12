@@ -21,3 +21,5 @@ function foody_modify_users_table_columns_values( $val, $column_name, $user_id )
     return $val;
 }
 add_filter( 'manage_users_custom_column', 'foody_modify_users_table_columns_values', 10, 3 );
+
+

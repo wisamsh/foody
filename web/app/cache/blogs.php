@@ -1,0 +1,1 @@
+{"foody-local.co.il":"m1"}
