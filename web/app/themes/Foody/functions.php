@@ -206,7 +206,7 @@ function foody_scripts()
         if (has_shortcode($post_content, 'foody-register')) {
             $register_asset = foody_get_versioned_asset('register');
             wp_enqueue_script('foody-script-register', $register_asset, false, false, true);
-            wp_enqueue_script('recaptcha', 'https://www.google.com/recaptcha/api.js',false,false,true);
+            wp_enqueue_script('recaptcha', 'https://www.google.com/recaptcha/api.js', false, false, true);
         }
 
         if (is_author()) {
