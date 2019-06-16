@@ -65,9 +65,11 @@ $footer = new Foody_Footer();
         <section class="foody-israel-footer">
             <?php $footer->the_foody_israel(true); ?>
         </section>
-        <section class="powered-by">
-            <?php $footer->the_moveo() ?>
-        </section>
+	    <?php if ( get_theme_mod( 'foody_show_moveo_logo', true) ) : ?>
+            <section class="powered-by">
+			    <?php $footer->the_moveo() ?>
+            </section>
+	    <?php endif; ?>
 
 
     </section>

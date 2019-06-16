@@ -148,7 +148,9 @@ class Foody_Footer
 
             if (count($items) > 1){
 
-                $items[0][] = $this->moveo();
+	            if ( get_theme_mod( 'foody_show_moveo_logo', true ) ) {
+		            $items[0][] = $this->moveo();
+	            }
 
                 $items[1][] = $this->the_foody_israel();
             }
