@@ -62,6 +62,9 @@ $footer = new Foody_Footer();
         <ul>
             <?php $footer->display_menu_items($footer->footer_pages) ?>
         </ul>
+        <section class="foody-israel-footer">
+            <?php $footer->the_foody_israel(true); ?>
+        </section>
         <section class="powered-by">
             <?php $footer->the_moveo() ?>
         </section>

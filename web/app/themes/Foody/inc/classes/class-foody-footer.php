@@ -24,9 +24,6 @@ class Foody_Footer
         }
 
         $this->footer_pages = wp_get_nav_menu_items('footer-pages');
-	    if ( wp_is_mobile() ) {
-		    array_unshift( $this->footer_pages, $this->the_foody_israel() );
-	    }
         $this->footer_links = wp_get_nav_menu_items('footer-links');
     }
 
@@ -110,12 +107,18 @@ class Foody_Footer
         );
     }
 
-	public function the_foody_israel() {
-		return array(
-			'title'  => sprintf( __( 'Foody Israel' ) . ' %s', date( 'Y' ) ),
-			'url' => function_exists( 'foody_get_main_site_url' ) ? foody_get_main_site_url() : get_home_url(),
-			'target' => '_blank'
-		);
+	public function the_foody_israel($echo = false) {
+        $foody = array(
+	        'title'  => sprintf( __( 'Foody Israel' ) . ' %s', date( 'Y' ) ),
+	        'url'    => function_exists( 'foody_get_main_site_url' ) ? foody_get_main_site_url() : get_home_url(),
+	        'target' => '_blank'
+        );
+
+        if ($echo) {
+	        echo '<a href="' . $foody['url'] . '" target="' . $foody['target'] . '">' . $foody['title'] . '</a>';
+        } else {
+			return $foody;
+		}
 	}
 
     public function the_moveo($echo = true)
