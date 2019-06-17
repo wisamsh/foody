@@ -504,7 +504,9 @@ if (class_exists('WP_Importer')) {
                                 $value = maybe_unserialize($meta['value']);
 
                             $value = apply_filters('foody_import_post_meta_value', $post_id, $key, $value, get_current_blog_id());
-                            $value = apply_filters("foody_import_post_meta_{$key}", $post_id, $value, get_current_blog_id());
+                            if (has_filter("foody_import_post_meta_{$key}")){
+                                $value = apply_filters("foody_import_post_meta_{$key}", $post_id, $value, get_current_blog_id());
+                            }
                             add_post_meta($post_id, $key, $value);
                             do_action('import_post_meta', $post_id, $key, $value);
                         }
