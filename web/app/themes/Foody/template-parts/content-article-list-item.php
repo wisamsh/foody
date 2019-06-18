@@ -17,12 +17,14 @@ if (!empty($article->link_attrs['target'])) {
     $target = "target='{$article->link_attrs['target']}'";
 }
 
+$random_placeholder = mt_rand(1,5);
+
 ?>
 
 <div class="article-item feed-item">
     <a href="<?php echo $article->link ?>" <?php echo $target ?>>
         <div class="image-container main-image-container">
-            <img class="article-item-image feed-item-image" src="<?php echo $article->getImage() ?>" alt="">
+            <img class="article-item-image feed-item-image lazyload" src="<?php echo $GLOBALS['images_dir'] . "placeholder$random_placeholder.jpg" ?>" data-foody-src="<?php echo $article->getImage() ?>" alt="">
 
             <?php if (!empty($label = $article->get_label())): ?>
 

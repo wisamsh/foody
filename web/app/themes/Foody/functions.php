@@ -147,6 +147,10 @@ function foody_scripts()
         $style = foody_get_versioned_asset('style');
         wp_enqueue_script('foody-style', $style, false, false, true);
 
+
+        $lazy_asset = foody_get_versioned_asset('lazy');
+        wp_enqueue_script('foody-script-home', $lazy_asset);
+
         $post_content = '';
         $current_post = get_post();
 
