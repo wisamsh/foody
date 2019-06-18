@@ -74,7 +74,7 @@ module.exports = env => {
             new CompressionPlugin()
         ],
         entry: {
-            admin: ["./resources/js/admin", "./resources/js/page-load.entry"],
+            admin: ["./resources/js/admin"],
             author: ["./resources/js/author.entry", "./resources/js/page-load.entry"],
             campaign: ["./resources/js/campaign.entry", "./resources/js/page-load.entry"],
             categories: ["./resources/js/categories.entry", "./resources/js/page-load.entry"],
