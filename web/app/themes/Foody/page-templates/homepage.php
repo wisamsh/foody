@@ -43,9 +43,9 @@ $homepage = new Foody_HomePage();
                 </section>
 
 
-                <section class="content-container col-lg-9 col-12">
+                <section id="homepage-main-content" class="content-container col-lg-9 col-12">
 
-                    <?php $homepage->feed(); ?>
+<!--                    --><?php //$homepage->feed(); ?>
 
                 </section>
 
