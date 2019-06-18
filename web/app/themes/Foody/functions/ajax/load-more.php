@@ -48,7 +48,7 @@ function foody_ajax_load_more()
 
                 unset($filter['context']);
 
-                if (empty($filter['types'])) {
+                if (empty($filter['types']) || !is_array($filter['types'])) {
                     $filter['types'] = [];
                 }
 
