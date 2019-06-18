@@ -330,3 +330,49 @@ function foody_replace_to_webp()
     </script>
     <?php
 }
+
+function foody_background_image_referer() {
+	?>
+    <script>
+        function createRefererLinks(background_referer) {
+            if (background_referer) {
+                let links = document.getElementsByTagName("a");
+
+                for (let i = 0; i < links.length; i++) {
+                    let linkURL = new URL(links[i].href);
+                    if (linkURL && !linkURL.hash && linkURL.origin == window.location.origin && linkURL.href != window.location.origin + '/' && linkURL.href != window.location.href) {
+                        if (links[i].href.includes('?')) {
+                            links[i].href += '&referer=' + background_referer;
+                        } else {
+                            links[i].href += '?referer=' + background_referer;
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+	<?php
+
+	if ( isset( $_SESSION['HTTP_REFERER'] ) && ! empty( $_SESSION['HTTP_REFERER'] ) && get_post_type() == 'foody_feed_channel' ) {
+		?>
+        <script>
+            jQuery(document).ready(($) => {
+                let background_referer = '' + <?php echo $_SESSION['HTTP_REFERER']; ?>;
+                createRefererLinks(background_referer);
+            });
+
+        </script>
+		<?php
+	} elseif ( ( isset( $_GET['referer'] ) && ! empty( $_GET['referer'] ) ) && ( is_category() || is_tag() || get_post_type() == 'foody_filter' ) ) {
+		?>
+        <script>
+            jQuery(document).ready(($) => {
+                let background_referer = '' + <?php echo $_GET['referer']; ?>;
+                createRefererLinks(background_referer);
+            });
+        </script>
+		<?php
+	}
+}
+
+add_action( 'wp_head', 'foody_background_image_referer' );
