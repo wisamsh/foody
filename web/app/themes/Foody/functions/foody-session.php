@@ -21,3 +21,6 @@ $wp_session['followed_authors'] = $user_followed_authors;
 
 $user_followed_channels = get_user_meta(get_current_user_id(), 'followed_channels', true);
 $wp_session['followed_channels'] = $user_followed_channels;
+
+$user_followed_feed_channels = get_user_meta(get_current_user_id(), 'followed_feed_channels', true);
+$wp_session['followed_feed_channels'] = $user_followed_feed_channels;

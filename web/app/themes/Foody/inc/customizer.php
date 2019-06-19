@@ -135,6 +135,28 @@ function foody_customize_register( $wp_customize ) {
         )
     ) );
 
+
+	$wp_customize->add_setting(
+		'foody_show_moveo_logo',
+		array(
+			'default'    => 'true',
+			'capability' => 'edit_theme_options'
+		)
+	);
+
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'foody_show_moveo_logo',
+		array(
+			'label'       => __( 'הצג לוגו מובאו', 'foody' ),
+			'description' => __( 'הצג לוגו מובאו', 'foody' ),
+			'settings'    => 'foody_show_moveo_logo',
+			'priority'    => 41,
+			'section'     => 'title_tagline',
+			'type'        => 'checkbox'
+		)
+	) );
+
 	//	Remove default color pickers
 	$wp_customize->remove_control( 'background_color' );
 	$wp_customize->remove_control( 'header_textcolor' );

@@ -34,7 +34,41 @@ class Foody_Blocks
      *  method in order to create a mutual block html structure
      * */
 
-    /**
+	/**
+	 *
+	 * @uses Foody_Feed_Channel::get_dynamic_block_posts()
+	 * @uses Foody_Feed_Channel::get_manual_block_posts()
+	 *
+	 * @param $block
+	 *
+	 * @return array the block options
+	 * @throws Exception if query filter is wrong
+	 */
+	public function get_dynamic_block_posts( $block ) {
+		$posts = [];
+
+		/** @var WP_Post $filter_post */
+		$filter_post = isset( $block['filter'] ) ? $block['filter'] : null;
+
+
+		if ( ! empty( $filter_post ) && $filter_post ) {
+
+			$filter = get_field( 'filters_list', $filter_post->ID );
+
+			$types = SidebarFilter::parse_search_args_array( $filter );
+
+			$args = [
+				'types' => $types,
+				'sort'  => 'popular_desc'
+			];
+
+			$posts = $this->foody_search->query( $args )['posts'];
+		}
+
+		return $posts;
+	}
+
+	/**
      *
      * @uses Foody_Feed_Channel::draw_dynamic_block()
      * @uses Foody_Feed_Channel::draw_manual_block()
@@ -47,68 +81,56 @@ class Foody_Blocks
      * @return array the block options
      * @throws Exception if query filter is wrong
      */
-    public function draw_dynamic_block($block)
-    {
+	public function draw_dynamic_block( $block ) {
 
-        $block_options = [];
+		$block_options = [];
+		$filter_post   = isset( $block['filter'] ) ? $block['filter'] : null;
 
-        /** @var WP_Post $filter_post */
-        $filter_post = isset($block['filter']) ? $block['filter'] : null;
+		if ( ! empty( $filter_post ) && $filter_post ) {
 
-        if (!empty($filter_post) && $filter_post) {
+			$title = $block['title'];
 
-            $filter = get_field('filters_list', $filter_post->ID);
+			if ( empty( $title ) ) {
+				$title = $filter_post->post_title;
+			}
 
-            $title = $block['title'];
+			$posts = $this->get_dynamic_block_posts( $block );
 
-            if (empty($title)) {
-                $title = $filter_post->post_title;
-            }
+			if ( ! empty( $posts ) && is_array( $posts ) ) {
+				$posts = array_map( 'Foody_Post::create', $posts );
+				if ( count( $posts ) > 4 ) {
+					$posts = array_slice( $posts, 0, 4 );
+				}
+				$block_content = foody_get_template_part( get_template_directory() . '/template-parts/common/foody-grid.php', [
+					'id'     => uniqid(),
+					'posts'  => $posts,
+					'cols'   => 2,
+					'more'   => false,
+					'header' => [
+						'title' => ''
+					],
+					'return' => true
+				] );
 
-            $types = SidebarFilter::parse_search_args_array($filter);
+				$see_more_link = $block['see_more_link'];
+				if ( empty( $see_more_link ) ) {
+					$see_more_link = [ 'url' => get_permalink( $filter_post->ID ) ];
+				}
 
-            $args = [
-                'types' => $types,
-                'sort' => 'popular_desc'
-            ];
+				$see_more_text = $block['see_more_text'];
 
-            $posts = $this->foody_search->query($args)['posts'];
-
-            if (is_array($posts)) {
-                $posts = array_map('Foody_Post::create', $posts);
-                if (count($posts) > 4) {
-                    $posts = array_slice($posts, 0, 4);
-                }
-                $block_content = foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', [
-                    'id' => uniqid(),
-                    'posts' => $posts,
-                    'cols' => 2,
-                    'more' => false,
-                    'header' => [
-                        'title' => ''
-                    ],
-                    'return' => true
-                ]);
-
-                $see_more_link = $block['see_more_link'];
-                if (empty($see_more_link)) {
-                    $see_more_link = ['url' => get_permalink($filter_post->ID)];
-                }
-
-                $see_more_text = $block['see_more_text'];
-
-                $block_options = [
-                    'title' => $title,
-                    'see_more_link' => $see_more_link['url'],
-                    'see_more_text' => $see_more_text,
-                    'content' => $block_content
-                ];
-            }
-        }
+				$block_options = [
+					'title'         => $title,
+					'see_more_link' => $see_more_link['url'],
+					'see_more_text' => $see_more_text,
+					'content'       => $block_content
+				];
+			}
+		}
 
 
-        return $block_options;
-    }
+		return $block_options;
+	}
 
     public function draw_categories_block($block, $block_id = '')
     {

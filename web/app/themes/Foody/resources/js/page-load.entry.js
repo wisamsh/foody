@@ -56,24 +56,6 @@ jQuery(document).ready(function ($) {
         $('article.content').css('padding-bottom', height + 'px');
     }
 
-    window.onbeforeunload = function (event) {
-        if (event.currentTarget.performance.navigation.type == 2) {
-            foodyAjax({
-                action: 'foody_back_button',
-                data: {
-                    back_button: true
-                }
-            }, function (err, data) {
-                if (err) {
-                    console.log('err: ', err);
-                } else {
-                    console.log('data: ', data);
-                }
-            });
-        }
-    }
-
-
     $.validator.addMethod(
         "regex",
         function (value, element, regexp) {

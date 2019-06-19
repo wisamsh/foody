@@ -13,7 +13,8 @@ function foody_toggle_follow()
 {
     $allowed_topics = [
         'followed_authors',
-        'followed_channels'
+        'followed_channels',
+        'followed_feed_channels'
     ];
 
     if (!is_user_logged_in()) {

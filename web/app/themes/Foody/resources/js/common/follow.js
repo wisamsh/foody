@@ -30,6 +30,8 @@ $(document).ready(() => {
                     let eventName = null;
                     if (topic == 'followed_channels') {
                         eventName = 'follow channel';
+                    } else if (topic == 'followed_feed_channels') {
+                        eventName = 'follow feed channel';
                     } else if (topic == 'followed_authors') {
                         eventName = 'follow creator';
                     }

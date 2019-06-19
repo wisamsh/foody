@@ -223,7 +223,11 @@ class Foody_WhiteLabelDuplicator
 
                 foreach ($values as $value) {
                     $value = apply_filters('foody_import_post_meta_value', $old_post->ID, $key, $value, $blogId);
-                    $value = apply_filters("foody_import_post_meta_{$key}", $old_post->ID, $value, $blogId);
+
+                    if (has_filter("foody_import_post_meta_{$key}")) {
+                        $value = apply_filters("foody_import_post_meta_{$key}", $old_post->ID, $value, $blogId);
+                    }
+
                     update_post_meta($new_post_id, $key, $value);
                 }
             }

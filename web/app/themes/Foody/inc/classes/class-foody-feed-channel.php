@@ -36,6 +36,9 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
 	public function the_details() {
 		bootstrap_breadcrumb();
 		the_title( '<h1 class="title">', '</h1>' );
+		if ( foody_is_registration_open() ) {
+			echo '<span class="followers-count">' . $this->get_followers_count() . '</span>';
+		}
 		foody_get_template_part( get_template_directory() . '/template-parts/content-feed-channel-details.php', [
 			'feed_channel' => $this
 		] );
@@ -120,8 +123,24 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
 
 	}
 
-	function get_followers_count() {
+	function get_followers_count()
+	{
+		$query = new WP_User_Query([
+			'meta_query' => [
+				[
+					[
+						'key' => 'followed_feed_channels',
+						'value' => '"' . $this->getId() . '"',
+						'compare' => 'LIKE'
+					]
+				]
+			],
+			'meta_key' => 'followed_feed_channels',
+			'count_total' => true
+		]);
 
+		$total = $query->get_total();
+		return view_count_display($total, 0, null, '%s עוקבים');
 	}
 
 	function get_description() {
