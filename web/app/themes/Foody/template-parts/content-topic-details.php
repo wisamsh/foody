@@ -35,7 +35,7 @@ $topic = $template_args['topic'];
             </span>
 			<?php endif; ?>
         </div>
-        <div class="follow omer">
+        <div class="follow">
 			<?php
 			if ( foody_is_registration_open() ) {
 				foody_get_template_part(

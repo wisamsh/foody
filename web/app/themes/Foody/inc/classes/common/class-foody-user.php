@@ -10,6 +10,7 @@ class Foody_User
 {
     const META_KEY_FOLLOWED_AUTHORS = 'followed_authors';
     const META_KEY_FOLLOWED_CHANNELS = 'followed_channels';
+    const META_KEY_FOLLOWED_FEED_CHANNELS = 'followed_feed_channels';
 
     public $favorites;
 
@@ -105,11 +106,84 @@ class Foody_User
     /**
      * @return array
      */
+    public function get_followed_feed_channels()
+    {
+        global $wp_session;
+
+        $followed_feed_channels = $wp_session['followed_feed_channels'];
+
+        if (empty($followed_feed_channels)) {
+            $followed_feed_channels = [];
+        }
+
+        return array_map(function ($feed_channel_id) {
+
+
+            $post = get_post($feed_channel_id);
+            $channel = new Foody_Channel($post);
+
+            return [
+                'image' => get_the_post_thumbnail($channel->id),
+                'link' => get_permalink($feed_channel_id),
+                'name' => $channel->getTitle(),
+                'id' => $feed_channel_id,
+                'type' => 'followed_feed_channels'
+            ];
+
+        }, $followed_feed_channels);
+
+    }
+
+    /**
+     * @return array
+     */
+	public function get_followed_feed_channel_posts( $followed_feed_channels ) {
+
+		$foody_search  = new Foody_Search( 'feed_channel' );
+		$blocks_drawer = new Foody_Blocks( $foody_search );
+
+		if ( empty( $followed_feed_channels ) ) {
+			$followed_feed_channels = [];
+		}
+
+		$posts = [];
+
+		foreach ($followed_feed_channels as $feed_channel_id) {
+			$blocks = get_field( 'blocks', $feed_channel_id );
+
+			if ( ! empty( $blocks ) ) {
+
+				foreach ( $blocks as $block ) {
+					$type = $block['type'];
+
+					if ( ! empty( $type ) && ( $type == 'manual' || $type == 'dynamic' ) ) {
+						$blocks_drawer->validate_block( $block );
+
+						$block_fn = "get_{$type}_block_posts";
+						if ( method_exists( $blocks_drawer, $block_fn ) ) {
+							$block_posts = call_user_func( [ $blocks_drawer, $block_fn ], $block );
+							if ( ! empty( $block_posts ) ) {
+								$posts = array_merge( $posts, $block_posts );
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+		return $posts;
+	}
+
+	/**
+	 * @return array
+     */
     public function get_followed_topics()
     {
         return array_merge(
             $this->get_followed_authors(),
-            $this->get_followed_channels()
+            $this->get_followed_channels(),
+            $this->get_followed_feed_channels()
         );
     }
 
@@ -160,6 +234,7 @@ class Foody_User
 
         $authors = $wp_session['followed_authors'];
         $channels = $wp_session['followed_channels'];
+        $feed_channels = $wp_session['followed_feed_channels'];
 
 
         $query_authors = "";
@@ -204,11 +279,24 @@ class Foody_User
             ORDER BY rand($seed)
             LIMIT $offset,$limit";
 
-            $results = $wpdb->get_results($query);
-        }
+            $results = $wpdb->get_results( $query );
+	    }
 
+	    // Get feed channels posts
+	    if ( is_array( $feed_channels ) && count( $feed_channels ) > 0 ) {
+		    $posts = $this->get_followed_feed_channel_posts( $feed_channels );
+		    if ( ! empty( $posts ) ) {
+			    if ( $count ) {
+				    $posts             = $this->remove_posts_duplicates( $posts );
+				    $results[0]->count += count( $posts );
+			    } else {
+				    $results = array_merge( $results, $posts );
+				    $results = array_unique( $results , SORT_REGULAR);
+			    }
+		    }
+	    }
 
-        return $results;
+	    return $results;
     }
 
     public function get_image($size = '52')
