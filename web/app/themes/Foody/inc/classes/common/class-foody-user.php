@@ -148,7 +148,7 @@ class Foody_User
 
 		$posts = [];
 
-		foreach ($followed_feed_channels as $feed_channel_id) {
+		foreach ( $followed_feed_channels as $feed_channel_id ) {
 			$blocks = get_field( 'blocks', $feed_channel_id );
 
 			if ( ! empty( $blocks ) ) {
@@ -156,13 +156,23 @@ class Foody_User
 				foreach ( $blocks as $block ) {
 					$type = $block['type'];
 
-					if ( ! empty( $type ) && ( $type == 'manual' || $type == 'dynamic' ) ) {
-						$blocks_drawer->validate_block( $block );
+					if ( ! empty( $type ) ) {
+						if ( $type == 'dynamic' ) {
+							$blocks_drawer->validate_block( $block );
 
-						$block_fn = "get_{$type}_block_posts";
-						if ( method_exists( $blocks_drawer, $block_fn ) ) {
-							$block_posts = call_user_func( [ $blocks_drawer, $block_fn ], $block );
-							if ( ! empty( $block_posts ) ) {
+							$block_fn = "get_{$type}_block_posts";
+							if ( method_exists( $blocks_drawer, $block_fn ) ) {
+								$block_posts = call_user_func( [ $blocks_drawer, $block_fn ], $block );
+								if ( ! empty( $block_posts ) ) {
+									$posts = array_merge( $posts, $block_posts );
+								}
+							}
+						} else if ( $type == 'manual' ) {
+							if ( ! empty( $block['items'] ) ) {
+								$block_posts = [];
+								foreach ( $block['items'] as $item ) {
+									array_push($block_posts, $item['post']);
+								}
 								$posts = array_merge( $posts, $block_posts );
 							}
 						}
@@ -279,19 +289,19 @@ class Foody_User
             ORDER BY rand($seed)
             LIMIT $offset,$limit";
 
-            $results = $wpdb->get_results( $query );
-	    }
+	        $results = $wpdb->get_results( $query );
+        }
 
 	    // Get feed channels posts
 	    if ( is_array( $feed_channels ) && count( $feed_channels ) > 0 ) {
 		    $posts = $this->get_followed_feed_channel_posts( $feed_channels );
 		    if ( ! empty( $posts ) ) {
 			    if ( $count ) {
-				    $posts             = $this->remove_posts_duplicates( $posts );
+				    $posts             = array_unique( $posts, SORT_REGULAR );
 				    $results[0]->count += count( $posts );
 			    } else {
 				    $results = array_merge( $results, $posts );
-				    $results = array_unique( $results , SORT_REGULAR);
+				    $results = array_unique( $results, SORT_REGULAR );
 			    }
 		    }
 	    }
