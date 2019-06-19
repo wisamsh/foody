@@ -143,6 +143,13 @@ header {
     }
   }
 
+  #quadmenu.quadmenu-default_theme .quadmenu-navbar-nav > li.quadmenu-item > a,
+  #quadmenu.quadmenu-default_theme .quadmenu-navbar-nav > li.quadmenu-item > form,
+  #quadmenu.quadmenu-default_theme .quadmenu-navbar-nav .quadmenu-dropdown-menu li.quadmenu-item > a
+  {
+    font-family: $font__assistant !important;
+  }
+
   .socials {
 
     .header-top-container {
