@@ -265,18 +265,6 @@
           "url": "https://downloads.wordpress.org/plugin/ewww-image-optimizer.4.8.0.zip"
         }
       }
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "lazy-load",
-        "version": "0.6.1",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/lazy-load.0.6.1.zip"
-        }
-      }
     }
   ],
   "require": {
@@ -312,8 +300,7 @@
     "justinticktock/network-subsite-user-registration": "^2.5",
     "david-gwyer/simple-sitemap-pro": "^2.1",
     "exactly-www/ewww-image-optimizer": "^4.8",
-    "w3-total-cache": "0.9.7.4",
-    "lazy-load": "^0.6.1"
+    "w3-total-cache": "0.9.7.4"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"
