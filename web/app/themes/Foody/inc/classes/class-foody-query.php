@@ -284,6 +284,55 @@ class Foody_Query
         ]);
     }
 
+    public function foody_ingredient($ingredient_post_id)
+    {
+
+	    function my_posts_where($where, WP_Query $query)
+	    {
+		    if ($query->get('has_wildcard_key')) {
+			    $where = str_replace(
+				    "meta_key = 'ingredients_ingredients_groups_\$_ingredients_\$_ingredient",
+				    "meta_key LIKE 'ingredients_ingredients_groups_%_ingredients_%_ingredient",
+				    $where
+			    );
+		    }
+		    return $where;
+	    }
+
+	    add_filter('posts_where', 'my_posts_where', 10, 2);
+
+	    $args = [
+		    'has_wildcard_key' => true,
+		    'post_type' => 'foody_recipe',
+		    'meta_query' => [
+			    [
+				    'key' => 'ingredients_ingredients_groups_$_ingredients_$_ingredient',
+				    'compare' => '=',
+				    'value' => $ingredient_post_id
+			    ]
+
+		    ],
+		    'fields' => 'ids'
+	    ];
+
+
+	    $query = new WP_Query($args);
+
+	    $posts = $query->get_posts();
+
+	    remove_filter('posts_where', 'my_posts_where');
+
+	    $args = [
+	    	'post__in' => $posts
+	    ];
+
+	    if (count($posts) == 0){
+		    $args = null;
+	    }
+
+	    return $args;
+    }
+
     public function search()
     {
         $search_term = get_search_query();
@@ -488,33 +537,39 @@ class Foody_Query
             }
 
             $foody_args = call_user_func_array($fn, $context_args);
+			if($foody_args != null){
+				$page = get_query_var('paged');
 
-            $page = get_query_var('paged');
+				if (!$page) {
+					if (isset($_REQUEST[self::$page])) {
+						$page = $_REQUEST[self::$page];
+					} else {
+						$page = $this->get_param(self::$page);
+						if (!$page) {
+							$page = 1;
+						}
+					}
+				}
 
-            if (!$page) {
-                if (isset($_REQUEST[self::$page])) {
-                    $page = $_REQUEST[self::$page];
-                } else {
-                    $page = $this->get_param(self::$page);
-                    if (!$page) {
-                        $page = 1;
-                    }
-                }
-            }
+				$foody_args['paged'] = $page;
 
-            $foody_args['paged'] = $page;
+				if ($ranged) {
+					$foody_args['posts_per_page'] = $this->get_posts_per_page() * $page;
+					$foody_args['paged'] = 0;
+				}
+			}
 
-            if ($ranged) {
-                $foody_args['posts_per_page'] = $this->get_posts_per_page() * $page;
-                $foody_args['paged'] = 0;
-            }
 
         } else {
             $foody_args = new WP_Error("invalid context: $context");
         }
 
-        $filter_args = $this->parse_query_args($context, $context_args);
-        $foody_args = array_merge($filter_args, $foody_args);
+		if($foody_args != null){
+			$filter_args = $this->parse_query_args($context, $context_args);
+
+			$foody_args = array_merge($filter_args, $foody_args);
+		}
+
         return $foody_args;
     }
 

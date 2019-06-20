@@ -35,6 +35,8 @@ class Foody_Ingredient extends Foody_Post {
 	public $nutrients_conversion;
 	public $recipe_id;
 
+	private $foody_search;
+
 	/**
 	 * Foody_Ingredient constructor.
 	 *
@@ -53,6 +55,8 @@ class Foody_Ingredient extends Foody_Post {
 		$this->nutrients_conversion = get_field( 'nutrients_conversion', $this->id );
 
 		$this->unit_taxonomy = $unit_taxonomy;
+
+		$this->foody_search = new Foody_Search( 'foody_ingredient' );
 	}
 
 
@@ -65,6 +69,33 @@ class Foody_Ingredient extends Foody_Post {
 		);
 	}
 
+	public function feed()
+	{
+		$foody_query = Foody_Query::get_instance();
+
+		$args = $foody_query->get_query('foody_ingredient', [$this->id], true);
+
+		$query = new WP_Query($args);
+
+		$posts = $query->get_posts();
+
+		$posts = array_map('Foody_Post::create', $posts);
+
+		$grid_args = [
+			'id' => 'foody-ingredient-feed',
+			'posts' => $posts,
+			'more' => $foody_query->has_more_posts($query),
+			'cols' => 2,
+			'header' => [
+				'sort' => true
+			]
+		];
+
+		echo '<div class="container-fluid feed-container ingredient-feed-container">';
+		foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
+		echo '</div>';
+	}
+
 	public function getUnit() {
 		return $this->unit;
 	}
@@ -75,7 +106,8 @@ class Foody_Ingredient extends Foody_Post {
 	}
 
 	public function the_sidebar_content( $args = array() ) {
-
+		dynamic_sidebar('foody-sidebar');
+		dynamic_sidebar('foody-social');
 	}
 
 	public function the_amounts( $echo = true ) {
@@ -276,7 +308,10 @@ class Foody_Ingredient extends Foody_Post {
 	}
 
 	public function the_details() {
-
+		echo '<section class="ingredient-details-container">';
+		bootstrap_breadcrumb();
+		the_title('<h1 class="title">', '</h1>');
+		echo '</section>';
 	}
 
 
