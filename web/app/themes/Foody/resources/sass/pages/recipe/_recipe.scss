@@ -723,45 +723,45 @@ $content-width: 95%;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
     }
 
-    .recipe-accessories, .recipe-techniques {
+    //.recipe-accessories, .recipe-techniques {
+    //
+    //  @include max-width-section;
+    //
+    //  ul {
+    //    padding: 0;
+    //    margin: 0;
+    //    display: flex;
+    //    flex-direction: row;
+    //    flex-flow: row;
+    //    flex-wrap: wrap;
+    //    line-height: normal;
+    //
+    //    li {
+    //      font-family: $font__assistant;
+    //      font-size: $content-font-size;
+    //      list-style-type: none;
+    //      margin-left: 1em;
+    //      position: relative;
+    //
+    //      &:before {
+    //        content: "\B7";
+    //        vertical-align: sub;
+    //        font-size: 35px;
+    //        line-height: normal;
+    //        position: absolute;
+    //        top: -12.5px;
+    //        display: block;
+    //        padding-left: 10px;
+    //      }
+    //
+    //      a {
+    //        margin-right: 10px;
+    //      }
+    //    }
+    //  }
+    //}
 
-      @include max-width-section;
-
-      ul {
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: row;
-        flex-flow: row;
-        flex-wrap: wrap;
-        line-height: normal;
-
-        li {
-          font-family: $font__assistant;
-          font-size: $content-font-size;
-          list-style-type: none;
-          margin-left: 1em;
-          position: relative;
-
-          &:before {
-            content: "\B7";
-            vertical-align: sub;
-            font-size: 35px;
-            line-height: normal;
-            position: absolute;
-            top: -12.5px;
-            display: block;
-            padding-left: 10px;
-          }
-
-          a {
-            margin-right: 10px;
-          }
-        }
-      }
-    }
-
-    .recipe-tags, .recipe-categories {
+    .recipe-tags, .recipe-categories, .recipe-techniques, .recipe-accessories  {
       @include max-width-section;
 
       .title {
@@ -787,11 +787,11 @@ $content-width: 95%;
       }
     }
 
-    .recipe-accessories, .recipe-techniques {
-      a {
-        pointer-events: none !important;
-      }
-    }
+    //.recipe-accessories, .recipe-techniques {
+    //  a {
+    //    pointer-events: none !important;
+    //  }
+    //}
 
     .recipe-how-i-did {
       @include max-width-section;
@@ -1449,25 +1449,25 @@ $content-width: 95%;
         max-width: calc(100% - #{$content-padding});
       }
 
-      .recipe-accessories, .recipe-techniques {
-
-        @include max-width-section;
-
-        .title {
-          margin-bottom: 0;
-          font-size: 20px;
-          margin-top: 20px;
-        }
-
-        ul {
-          li {
-            font-size: 18px;
-            margin-left: .5em;
-            &:before {
-            }
-          }
-        }
-      }
+      //.recipe-accessories, .recipe-techniques {
+      //
+      //  @include max-width-section;
+      //
+      //  .title {
+      //    margin-bottom: 0;
+      //    font-size: 20px;
+      //    margin-top: 20px;
+      //  }
+      //
+      //  ul {
+      //    li {
+      //      font-size: 18px;
+      //      margin-left: .5em;
+      //      &:before {
+      //      }
+      //    }
+      //  }
+      //}
 
       .recipe-rating {
 
@@ -1549,20 +1549,20 @@ $content-width: 95%;
       > section[class^="recipe-"].box {
       }
 
-      .recipe-accessories, .recipe-techniques {
-
-        max-width: calc(100% - #{$content-padding});
-
-        ul {
-          column-count: 2;
-          li {
-
-            &:before {
-
-            }
-          }
-        }
-      }
+      //.recipe-accessories, .recipe-techniques {
+      //
+      //  max-width: calc(100% - #{$content-padding});
+      //
+      //  ul {
+      //    column-count: 2;
+      //    li {
+      //
+      //      &:before {
+      //
+      //      }
+      //    }
+      //  }
+      //}
 
       .recipe-tags {
 

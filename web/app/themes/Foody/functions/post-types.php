@@ -159,6 +159,8 @@ function foody_remove_page_template()
         'foody_recipe',
         'foody_playlist',
         'foody_ingredient',
+        'foody_accessory',
+        'foody_technique',
         'foody_feed_channel',
         'post'
     );
@@ -449,12 +451,12 @@ function custom_post_type_js_vars($single_template)
 add_filter('single_template', 'custom_post_type_js_vars');
 
 
-function foody_ingredient_custom_template($default_template) {
-    if (in_array(get_post_type(),['foody_ingredient'])){
-	    $default_template = get_template_directory() . '/page-templates/content-with-sidebar.php';
+function foody_ingredient_custom_template($template) {
+    if (in_array(get_post_type(),['foody_ingredient', 'foody_accessory', 'foody_technique'])){
+	    $template = get_template_directory() . '/page-templates/content-with-sidebar.php';
     }
 
-	return $default_template;
+	return $template;
 }
 
 add_filter('single_template', 'foody_ingredient_custom_template');

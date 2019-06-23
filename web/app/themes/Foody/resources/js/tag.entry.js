@@ -1,1 +1,2 @@
 require('./tag');
+require('./accessory');

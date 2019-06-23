@@ -214,10 +214,10 @@ function foody_scripts()
             wp_enqueue_script('foody-script-author', $author_asset, false, false, true);
         }
 
-        if (is_tag()) {
-            $tag_asset = foody_get_versioned_asset('tag');
-            wp_enqueue_script('foody-script-tag', $tag_asset, false, false, true);
-        }
+	    if ( is_tag() || in_array( get_post_type(), [ 'foody_ingredient', 'foody_accessory', 'foody_technique' ] ) ) {
+		    $tag_asset = foody_get_versioned_asset( 'tag' );
+		    wp_enqueue_script( 'foody-script-tag', $tag_asset, false, false, true );
+	    }
 
         if (has_shortcode($post_content, 'foody_team')) {
             $team_asset = foody_get_versioned_asset('team');

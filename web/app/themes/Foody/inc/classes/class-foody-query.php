@@ -333,6 +333,36 @@ class Foody_Query
 	    return $args;
     }
 
+	public function foody_accessory( $accessory_post_id ) {
+		$meta_query[] = [
+			'key'     => 'accessories_accessories',
+			'compare' => 'LIKE',
+			'value'   => '"' . $accessory_post_id . '"'
+		];
+
+		$args = [
+			'meta_query' => $meta_query,
+			'post_type'  => 'foody_recipe'
+		];
+
+		return $args;
+	}
+
+	public function foody_technique( $technique_post_id ) {
+		$meta_query[] = [
+			'key'     => 'techniques_techniques',
+			'compare' => 'LIKE',
+			'value'   => '"' . $technique_post_id . '"'
+		];
+
+		$args = [
+			'meta_query' => $meta_query,
+			'post_type'  => 'foody_recipe'
+		];
+
+		return $args;
+	}
+
     public function search()
     {
         $search_term = get_search_query();

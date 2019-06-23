@@ -68,6 +68,12 @@ class Foody_PageContentFactory
 	            case 'foody_ingredient':
 		            $page = new Foody_Ingredient($post);
 		            break;
+	            case 'foody_accessory':
+		            $page = new Foody_Accessory($post);
+		            break;
+	            case 'foody_technique':
+		            $page = new Foody_Technique($post);
+		            break;
                 default:
                     $page = new Foody_Article($post);
                     break;
