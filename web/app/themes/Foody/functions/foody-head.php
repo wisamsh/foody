@@ -116,20 +116,28 @@ function campaign_name($vars)
 
 add_filter('foody_js_globals', 'campaign_name');
 
-function foody_set_og_image()
-{
-    if (is_author()) {
+function foody_set_og_image() {
+	if ( is_author() ) {
 
-        $author = new Foody_Author();
+		$author = new Foody_Author();
 
-        $author_image = $author->topic_image();
-        $image = "<meta property=\"og:image\" content=\"$author_image\">";
+		$author_image = $author->topic_image();
+		$image        = "<meta property=\"og:image\" content=\"" . $author_image . "\">";
 
-        $image .= '<meta property="og:image:width" content="96">';
-        $image .= '<meta property="og:image:height" content="96">';
-        echo $image;
-    }
+		$image .= '<meta property="og:image:width" content="96">';
+		$image .= '<meta property="og:image:height" content="96">';
+		echo $image;
+	} else if ( get_post_type() == 'foody_feed_channel' ) {
 
+		$cover_image = get_field( 'cover_image' );
+		if ( ! empty( $cover_image ) && isset( $cover_image['url'] ) ) {
+			$image = "<meta property=\"og:image\" content=\"" . $cover_image['url'] . "\">";
+
+			$image .= '<meta property="og:image:width" content="1024">';
+			$image .= '<meta property="og:image:height" content="683">';
+			echo $image;
+		}
+	}
 
 }
 

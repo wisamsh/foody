@@ -39,7 +39,7 @@ function foody_set_meta_desc( $desc ) {
 
 add_action( 'wpseo_opengraph', 'change_yoast_seo_og_meta' );
 function change_yoast_seo_og_meta() {
-    if (is_single()) {
+	if ( is_single() && ! in_array( get_post_type(), [ 'foody_feed_channel' ] ) ) {
         add_filter('wpseo_opengraph_image', 'foody_change_image');
 
         global $post;
