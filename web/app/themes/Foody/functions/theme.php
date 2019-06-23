@@ -21,6 +21,11 @@ function foody_get_background_image() {
 					$_SESSION['background_image'] = $background_image;
 				}
 			}
+		} else {
+			$background_image = get_field( 'background_image', get_option( 'page_on_front' ) );
+			if ( ! empty( $background_image ) ) {
+				$_SESSION['background_image'] = $background_image;
+			}
 		}
 	} else {
 		$_SESSION['HTTP_REFERER']     = get_queried_object_id();
