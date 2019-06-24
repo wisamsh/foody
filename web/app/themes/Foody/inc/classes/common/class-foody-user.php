@@ -171,7 +171,9 @@ class Foody_User
 							if ( ! empty( $block['items'] ) ) {
 								$block_posts = [];
 								foreach ( $block['items'] as $item ) {
-									array_push($block_posts, $item['post']);
+									if ( ! empty( $item ) && ! empty( $item['post'] ) ) {
+										array_push($block_posts, $item['post']);
+									}
 								}
 								$posts = array_merge( $posts, $block_posts );
 							}
