@@ -62,7 +62,7 @@ class Foody_Query
         return $ret_val;
     }
 
-    private function parse_query_args($context, $context_args)
+    private function parse_query_args($context, $context_args,$wp_args = [])
     {
         $foody_search = new Foody_Search($context, $context_args);
         $args = [
@@ -70,7 +70,7 @@ class Foody_Query
             'after_foody_query' => true
         ];
 
-        return $foody_search->build_query($args, [], '', true);
+        return $foody_search->build_query($args, $wp_args, '', true);
     }
 
     private function foody_get_query_arg($key)
@@ -595,7 +595,7 @@ class Foody_Query
         }
 
 		if($foody_args != null){
-			$filter_args = $this->parse_query_args($context, $context_args);
+			$filter_args = $this->parse_query_args($context, $context_args, $foody_args);
 
 			$foody_args = array_merge($filter_args, $foody_args);
 		}

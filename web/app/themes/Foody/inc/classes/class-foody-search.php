@@ -662,7 +662,7 @@ class Foody_QueryBuilder
 
     private function resolve_query_conflicts($args, $wp_args)
     {
-        $args = array_merge($wp_args, $args);
+	    $args = array_merge( $args, $wp_args );
 	    if (isset($args['post_type'])){
 	    	if (is_array($args['post_type'])){
 			    $args['post_type'] = array_unique($args['post_type']);
