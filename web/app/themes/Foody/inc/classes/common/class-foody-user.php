@@ -255,7 +255,7 @@ class Foody_User
         if (is_array($authors) && count($authors) > 0) {
             $authors = string_array_to_int($authors);
             $authors = implode(',', $authors);
-            $query_authors = "post_author IN ($authors)";
+            $query_authors = "(post_author IN ($authors) and post_type IN ('foody_recipe' , 'foody_playlist')) ";
         }
 
         if (is_array($channels) && count($channels) > 0) {
