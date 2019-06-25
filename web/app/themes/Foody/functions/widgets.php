@@ -7,26 +7,28 @@
  */
 
 
-function foody_widgets() {
+function foody_widgets()
+{
 
 
-	$widgets = array(
-		'foody_Categories_List_Widget',
-		'foody_Search_Filter',
+    $widgets = array(
+        'foody_Categories_List_Widget',
+        'foody_Search_Filter',
         'Foody_CategoriesAccordionWidget',
         'foody_Product_Widget'
-	);
+    );
 
-	foreach ( $widgets as $widget ) {
-		register_widget( $widget );
-	}
+    foreach ($widgets as $widget) {
+        register_widget($widget);
+    }
 }
 
-add_action( 'widgets_init', 'foody_widgets' );
+add_action('widgets_init', 'foody_widgets');
 
 
-add_filter( 'dynamic_sidebar_params', 'foody_wrap_widget_titles', 20 );
-function foody_wrap_widget_titles( array $params ) {
+add_filter('dynamic_sidebar_params', 'foody_wrap_widget_titles', 20);
+function foody_wrap_widget_titles(array $params)
+{
 
     // $params will ordinarily be an array of 2 elements, we're only interested in the first element
     $widget =& $params[0];
@@ -34,5 +36,25 @@ function foody_wrap_widget_titles( array $params ) {
     $widget['after_title'] = '</div>';
 
     return $params;
+
+}
+
+function foody_dynamic_sidebar_ajax_loading($sidebar_id, $container_selector)
+{
+    ob_start();
+
+    dynamic_sidebar($sidebar_id);
+
+    $sidebar = ob_get_contents();
+
+    ob_end_clean();
+
+    $sidebar = addslashes(preg_replace('/\s+/',' ', $sidebar));
+    ?>
+    <script id="sidebar-loader-<?php echo $sidebar_id ?>">
+        var sidebar = '<?php echo $sidebar; ?>';
+        jQuery('<?php echo $container_selector?>').append(sidebar);
+    </script>
+    <?php
 
 }
