@@ -19,17 +19,29 @@ $sidebar-width: 25%;
           margin: 0;
           font-size: 16px;
           font-family: $font__bold;
+          display: flex;
 
           img {
             clip-path: circle();
             margin-left: 14px;
-            width: 52px;
+            width: 45px;
+            height: 45px;
+            line-height: 45px;
+            display: inline-block;
+            vertical-align: middle;
+          }
+
+          a {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 45px;
           }
 
           .close {
             display: none;
-            float: left;
-            line-height: 52px;
+            margin-right: auto;
+            vertical-align: middle;
+            line-height: 45px;
 
             > span {
               font-size: 2rem;
