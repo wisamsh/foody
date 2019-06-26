@@ -67,7 +67,7 @@ if ( ! foody_is_registration_open() ) {
                         get_template_directory() . '/template-parts/common/favorite.php',
                         array(
                             'post' => $foody_page,
-                            'show_text' => !wp_is_mobile()
+                            'show_text' => true,
                         )
                     );
                     ?>

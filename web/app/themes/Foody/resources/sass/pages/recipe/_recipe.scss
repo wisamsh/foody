@@ -1221,20 +1221,27 @@ $content-width: 95%;
           }
 
           ul.content-details-bullets {
+            display: block;
 
             li {
-
+              display: block;
             }
 
             li:not(:first-child):before {
-
+              padding: 0;
+              content: '';
             }
           }
 
-          .favorite {
+          .favorite-container {
+            padding: 5px 0;
 
-            i {
+            .favorite {
+              text-align: center;
 
+              i {
+                display: block;
+              }
             }
           }
 

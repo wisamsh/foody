@@ -16,13 +16,15 @@ $show_text = !empty($template_args['show_text']);
 
 $favorite = [
     'icon' => 'icon-heart',
-    'text' => 'הוספה למועדפים'
+    'text' => 'הוספה למועדפים',
+    'mobile_text' => 'מועדפים'
 ];
 
 if ($foody_post->favorite) {
     $favorite = [
         'icon' => 'icon-favorite-pressed',
-        'text' => 'נשמר במועדפים'
+        'text' => 'נשמר במועדפים',
+        'mobile_text' => 'מועדפים'
     ];
 }
 
@@ -34,7 +36,7 @@ if ($foody_post->favorite) {
     </i>
     <?php if ($show_text): ?>
         <span>
-            <?php echo $favorite['text'] ?>
+            <?php echo( wp_is_mobile() ? $favorite['mobile_text'] : $favorite['text'] ); ?>
         </span>
     <?php endif; ?>
 </div>

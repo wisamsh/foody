@@ -76,11 +76,11 @@ $(document).ready(() => {
             if (isAlreadyFavorite) {
                 classToRemove = 'icon-favorite-pressed';
                 classToAdd = 'icon-heart';
-                text = 'הוספה למועדפים';
+                text = (foodyGlobals.isMobile ? 'מועדפים' : 'הוספה למועדפים');
             } else {
                 classToRemove = 'icon-heart';
                 classToAdd = 'icon-favorite-pressed';
-                text = 'נשמר במועדפים';
+                text = (foodyGlobals.isMobile ? 'מועדפים' : 'נשמר במועדפים');
             }
 
             $icon.removeClass(classToRemove);

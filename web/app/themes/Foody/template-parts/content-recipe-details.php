@@ -84,7 +84,8 @@ if ( ! foody_is_registration_open() ) {
             foody_get_template_part(
                 get_template_directory() . '/template-parts/common/favorite.php',
                 array(
-                    'post' => $foody_page
+                    'post' => $foody_page,
+                    'show_text' => true,
                 )
             );
             ?>
