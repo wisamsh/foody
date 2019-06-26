@@ -51,7 +51,7 @@ function foody_dynamic_sidebar_ajax_loading($sidebar_id, $container_selector)
 
     $sidebar = addslashes(preg_replace('/\s+/',' ', $sidebar));
     ?>
-    <script id="sidebar-loader-<?php echo $sidebar_id ?>">
+    <script async defer id="sidebar-loader-<?php echo $sidebar_id ?>">
         var sidebar = '<?php echo $sidebar; ?>';
         jQuery('<?php echo $container_selector?>').append(sidebar);
     </script>
