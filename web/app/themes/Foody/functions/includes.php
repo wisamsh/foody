@@ -34,6 +34,16 @@ require_once get_template_directory() . "/inc/classes/interfaces/interface-conte
 require_once get_template_directory() . "/inc/classes/interfaces/interface-foody-list-item.php";
 require_once get_template_directory() . "/inc/classes/interfaces/interface-foody-topic.php";
 
+/*
+ * Foody Sitemap
+ * */
+
+require_once get_template_directory() . "/inc/classes/sitemap/foody-sitemap-group-shortcode.php";
+require_once get_template_directory() . "/inc/classes/sitemap/foody-sitemap-shortcode.php";
+require_once get_template_directory() . "/inc/classes/sitemap/foody-sitemap-tax-shortcode.php";
+require_once get_template_directory() . "/inc/classes/sitemap/foody_shortcodes_utility.php";
+require_once get_template_directory() . "/inc/classes/sitemap/wpgo-foody-sitemap-pro.php";
+
 
 /*
  * Classes

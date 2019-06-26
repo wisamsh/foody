@@ -6,7 +6,7 @@
  * Date: 1/22/19
  * Time: 4:13 PM
  */
-//echo do_shortcode('[simple-sitemap-group type="foody_recipe" render"tab"]');
+//echo do_shortcode('[foody-simple-sitemap-group type="foody_recipe" render"tab"]');
 //$types = [
 //    'post',
 //    'foody_recipe',
@@ -14,7 +14,7 @@
 //];
 //
 //foreach ($types as $type) {
-//    echo do_shortcode("[simple-sitemap-group type='$type' visibility='public' hide-empty='1' ]");
+//    echo do_shortcode("[foody-simple-sitemap-group type='$type' visibility='public' hide-empty='1' ]");
 //}
 
 ?>
