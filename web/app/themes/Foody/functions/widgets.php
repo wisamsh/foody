@@ -48,13 +48,32 @@ function foody_dynamic_sidebar_ajax_loading($sidebar_id, $container_selector)
     $sidebar = ob_get_contents();
 
     ob_end_clean();
-
-    $sidebar = addslashes(preg_replace('/\s+/m', ' ', $sidebar));
+    $sidebar = escape_javascript_text($sidebar);
+//    $sidebar = addslashes(preg_replace('/\s+/m', ' ', $sidebar));
     ?>
     <script async defer id="sidebar-loader-<?php echo $sidebar_id ?>">
-        var sidebar = <?php echo "'" . $sidebar . "';" ?>
+        var sidebar = '<?php echo $sidebar; ?>';
         jQuery('<?php echo $container_selector?>').append(sidebar);
     </script>
     <?php
 
+}
+
+function escape_javascript_text($string)
+{
+    return str_replace(
+        "\n",
+        '\n',
+        str_replace(
+            '"',
+            '\"',
+            addcslashes(
+                str_replace(
+                    "\r",
+                    '',
+                    (string)$string),
+                "\0..\37'\\"
+            )
+        )
+    );
 }
