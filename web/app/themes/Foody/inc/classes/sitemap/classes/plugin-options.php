@@ -529,10 +529,10 @@ class WPGO_Simple_Sitemap_Pro_Options {
 	public function register_admin_scripts() {
 
 		// Register plugin style sheets
-		wp_register_style( 'wpgo-simple-sitemap-pro-admin-css', plugins_url( 'css/simple-sitemap-pro-admin.css', $this->_args['plugin_root'] ) );
+		wp_register_style( 'wpgo-simple-sitemap-pro-admin-css', get_template_directory_uri() . '/inc/classes/sitemap/css/simple-sitemap-pro-admin.css', $this->_args['plugin_root'] );
 
 		// Register plugin scripts
-		wp_register_script( 'wpgo-simple-sitemap-pro-admin-js', plugins_url( 'js/simple-sitemap-pro-admin.js', $this->_args['plugin_root'] ) );
+		wp_register_script( 'wpgo-simple-sitemap-pro-admin-js', get_template_directory_uri() . '/inc/classes/sitemap/js/simple-sitemap-pro-admin.js', $this->_args['plugin_root'] );
 	}
 
 	/**
@@ -562,9 +562,9 @@ class WPGO_Simple_Sitemap_Pro_Options {
 	 */
 	public function register_front_end_scripts() {
 
-		wp_register_style( 'wpgo-simple-sitemap-pro-css', plugins_url( 'css/simple-sitemap-pro.css', $this->_args['plugin_root'] ) );
-		wp_register_style( 'wpgo-simple-sitemap-pro-jquery-ui-css', plugins_url( 'css/simple-sitemap-pro-jquery-ui.css', $this->_args['plugin_root'] ) );
-		wp_register_script( 'wpgo-simple-sitemap-pro-js', plugins_url( 'js/simple-sitemap-pro.js', $this->_args['plugin_root'] ), array( 'jquery-ui-tabs' ) );
+		wp_register_style( 'wpgo-simple-sitemap-pro-css', get_template_directory_uri() . '/inc/classes/sitemap/css/simple-sitemap-pro.css', $this->_args['plugin_root'] );
+		wp_register_style( 'wpgo-simple-sitemap-pro-jquery-ui-css', get_template_directory_uri() . '/inc/classes/sitemap/css/simple-sitemap-pro-jquery-ui.css', $this->_args['plugin_root'] );
+		wp_register_script( 'wpgo-simple-sitemap-pro-js', get_template_directory_uri() . '/inc/classes/sitemap/js/simple-sitemap-pro.js', $this->_args['plugin_root'], array( 'jquery-ui-tabs' ) );
 	}
 
 	/**
