@@ -121,7 +121,8 @@ class Foody_Blocks
 
 				$block_options = [
 					'title'         => $title,
-					'see_more_link' => $see_more_link['url'],
+					'see_more_target' => isset( $see_more_link['target'] ) && ! empty( $see_more_link['target'] ) ? $see_more_link['target'] : '',
+				    'see_more_link' => $see_more_link['url'],
 					'see_more_text' => $see_more_text,
 					'content'       => $block_content
 				];
@@ -212,7 +213,12 @@ class Foody_Blocks
                 $see_more_link = ['url' => ''];
             }
 
+            if (empty($see_more_text)) {
+                $see_more_text = $see_more_link['title'];
+            }
+
             $block_options['title'] = $title;
+	        $block_options['see_more_target'] = isset( $see_more_link['target'] ) && ! empty( $see_more_link['target'] ) ? $see_more_link['target'] : '';
             $block_options['see_more_text'] = $see_more_text;
             $block_options['see_more_link'] = $see_more_link['url'];
             $block_options['content'] = $items_content;
@@ -321,7 +327,8 @@ class Foody_Blocks
             }
 
             $block_options['title'] = $title;
-            $block_options['see_more_text'] = $see_more_text;
+	        $block_options['see_more_target'] = isset( $see_more_link['target'] ) && ! empty( $see_more_link['target'] ) ? $see_more_link['target'] : '';
+	        $block_options['see_more_text'] = $see_more_text;
             $block_options['see_more_link'] = $see_more_link['url'];
             $block_options['content'] = $items_content;
         }
@@ -371,7 +378,7 @@ class Foody_Blocks
                     </h2>
                     <?php if (!empty($see_more_link) && !empty($see_more_text)): ?>
                         <h2 class="block-see-more title col">
-                            <a href=" <?php echo $see_more_link ?>">
+                            <a href="<?php echo $see_more_link ?>" <?php echo isset( $see_more_target ) && ! empty ( $see_more_target ) ? "target='" . $see_more_target . "'" : ''; ?>">
                                 <?php echo $see_more_text ?>
                             </a>
                             <i class="icon-arrowleft"></i>
