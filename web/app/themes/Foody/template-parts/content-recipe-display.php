@@ -96,6 +96,12 @@ $recipe = $template_args['recipe'];
 
 </section>
 
+<?php if ( $recipe->show_google_adx() ): ?>
+    <section class="google-adx-container col-lg-9 col-12">
+		<?php $recipe->the_google_adx(); ?>
+    </section>
+<?php endif; ?>
+
 <?php if ($recipe->has_nutrients()): ?>
 
     <section class="recipe-nutrition box no-print">

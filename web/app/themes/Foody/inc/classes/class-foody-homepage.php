@@ -207,9 +207,14 @@ class Foody_HomePage
         }
     }
 
-	public function the_google_adx()
-	{
-		$show_google_adx   = get_option( 'foody_show_google_adx' );
+	public function show_google_adx() {
+		$show_google_adx = get_option( 'foody_show_google_adx' );
+
+		return $show_google_adx;
+	}
+
+	public function the_google_adx() {
+		$show_google_adx   = $this->show_google_adx();
 		$google_adx_script = get_option( 'foody_google_adx_script' );
 
 		if ( $show_google_adx && ! empty( $google_adx_script ) ) {
