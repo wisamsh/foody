@@ -184,9 +184,12 @@ class Foody_Blocks
                     $link = ['url' => get_term_link($category->term_id)];
                 }
 
+                if (isset($link['target'])) {
+                    $target = $link['target'];
+                }
                 $link = $link['url'];
                 $return = true;
-                $item_args = compact('title', 'image', 'link', 'mobile_image', 'return');
+                $item_args = compact('title', 'image', 'link', 'target', 'mobile_image', 'return');
 
                 return $item_args;
 
