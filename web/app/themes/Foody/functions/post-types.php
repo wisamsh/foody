@@ -86,6 +86,19 @@ function register_post_types()
                 'slug' => 'feed/filter',
                 'with_front' => true
             )
+        ),
+        'comm_rule' => array(
+            'id' => 'comm_rule',
+            'name' => 'מצרכים מסחריים',
+            'singular_name' => 'מצרך מסחרי',
+            'taxonomies' => array(),
+            'supports' => array('title', 'revisions'),
+            'unsupported' => array('editor'),
+            'show_ui' => true,
+            'rewrite' => false,
+            'query_var' => false,
+            'publicly_queryable' => false,
+            'public' => false
         )
     );
 
@@ -162,6 +175,7 @@ function foody_remove_page_template()
         'foody_accessory',
         'foody_technique',
         'foody_feed_channel',
+        'foody_comm_rule',
         'post'
     );
 
