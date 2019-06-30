@@ -15,10 +15,12 @@ if (empty($name)) {
     $name = isset($template_args['title']) ? $template_args['title'] : '';
 }
 
+$target = isset($template_args['target']) ? $template_args['target'] : '_self';
+
 ?>
 
 <a href="<?php /** @noinspection PhpUndefinedVariableInspection */
-echo $template_args['link']; ?>" class="col">
+echo $template_args['link']; ?>" target="<?php echo $target ?>" class="col">
     <div class="category-listing">
         <div class="image-container">
             <picture>
