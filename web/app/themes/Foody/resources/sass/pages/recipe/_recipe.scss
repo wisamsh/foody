@@ -1046,7 +1046,7 @@ $content-width: 95%;
 
     }
 
-    .footab-container {
+    .footab-container, .google-adx-container {
       padding: 0 15px;
     }
   }
@@ -1753,7 +1753,7 @@ $content-width: 95%;
         }
       }
 
-      .footab-container {
+      .footab-container, .google-adx-container {
         padding: 0;
         width: calc(100% - 20px);
         margin: 0 auto;

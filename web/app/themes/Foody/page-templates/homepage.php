@@ -54,6 +54,9 @@ $homepage = new Foody_HomePage();
             </section>
 
 
+            <section class="google-adx-container col-lg-9 col-12">
+		        <?php $homepage->the_google_adx(); ?>
+            </section>
         </div>
 
         <?php
