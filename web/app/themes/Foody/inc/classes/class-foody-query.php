@@ -284,6 +284,36 @@ class Foody_Query
         ]);
     }
 
+    public function foody_commercial_rule($filter)
+    {
+
+        $types = SidebarFilter::parse_search_args_array($filter);
+
+        $args = [
+            'types' => $types,
+            'sort' => 'popular_desc',
+            'after_foody_query' => true
+        ];
+
+        $foody_search = new Foody_Search('foody_commercial_rule');
+
+        $posts = $foody_search->query($args, ['posts_per_page' => -1])['posts'];
+
+        if (is_array($posts)) {
+            $posts = array_filter($posts, function ($post) {
+                return $post instanceof WP_Post;
+            });
+
+            $posts = array_map(function ($post) {
+                return $post->ID;
+            }, $posts);
+        }
+
+        return self::get_args([
+            'post__in' => $posts
+        ]);
+    }
+
     public function foody_ingredient($ingredient_post_id)
     {
 
