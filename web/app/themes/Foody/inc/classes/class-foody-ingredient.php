@@ -591,4 +591,13 @@ class Foody_Ingredient extends Foody_Post {
 		return $sponsor_to_return;
 	}
 
+	/**
+	 *
+	 * @return mixed|null|void
+	 */
+	private function get_sponsored_ingredient() {
+		// Fetch rules for recipe
+		$rules = Foody_CommercialRuleMapping::getByIngredientRecipe( $this->recipe_id, $this->id );
+	}
+
 }
