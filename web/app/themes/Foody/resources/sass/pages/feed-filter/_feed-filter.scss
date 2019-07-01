@@ -13,9 +13,12 @@
     }
   }
 
+  .container-fluid {
+    min-height: auto;
+
+  }
+
   .google-adx-container {
-    position: absolute;
-    bottom: 0;
     padding: 0;
   }
 }
