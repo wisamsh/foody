@@ -584,6 +584,7 @@ class Foody_Recipe extends Foody_Post
                         if ($ingredient_post && $ingredient_post instanceof WP_Post) {
                             $ingredient = new Foody_Ingredient($ingredient_post);
 
+                            $ingredient->recipe_id = $this->post->ID;
                             $ingredient->comment = get_sub_field('comment');
 
                             $ingredient->amounts = $amounts;

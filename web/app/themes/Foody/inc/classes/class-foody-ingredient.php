@@ -598,6 +598,26 @@ class Foody_Ingredient extends Foody_Post {
 	private function get_sponsored_ingredient() {
 		// Fetch rules for recipe
 		$rules = Foody_CommercialRuleMapping::getByIngredientRecipe( $this->recipe_id, $this->id );
+
+		if ( ! empty( $rules ) ) {
+			foreach ( $rules as $rule ) {
+
+				$rule_id   = $rule['rule_id'];
+				// $rule_post = get_post( $rule_id );
+				$from      = get_field( 'from', $rule_id );
+				$from = str_replace('/', '-', $from);
+				$to        = get_field( 'to', $rule_id );
+				$to = str_replace('/', '-', $to);
+
+				// Should show according to date
+				if ( strtotime( $from ) <= strtotime( 'now' ) && strtotime( $to ) >= strtotime( 'now' ) ) {
+
+					$sponsor_id = get_field( 'sponsor', $rule_id );
+					$sponsor = get_term_by( 'id', $sponsor_id, 'sponsors' );
+					return $sponsor;
+				}
+			}
+		}
 	}
 
 }

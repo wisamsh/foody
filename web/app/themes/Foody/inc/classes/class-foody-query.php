@@ -262,8 +262,9 @@ class Foody_Query
         $args = [
             'types' => $types,
             'sort' => 'popular_desc',
-            'after_foody_query' => true
-        ];
+            'after_foody_query' => true,
+	        'post_type' => 'foody_recipe'
+	    ];
 
         $foody_search = new Foody_Search('foody_filter');
 
