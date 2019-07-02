@@ -5,9 +5,10 @@
     font-family: $font__assistant;
   }
 
-  p:last-of-type{
-    margin-bottom: 0;
-  }
+  // Removed To Fix new line issue on posts
+  //p:last-of-type{
+  //  margin-bottom: 0;
+  //}
 
   h2 {
     font-family: $font__main;
