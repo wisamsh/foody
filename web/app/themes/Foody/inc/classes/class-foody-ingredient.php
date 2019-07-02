@@ -240,7 +240,7 @@ class Foody_Ingredient extends Foody_Post {
 
 
 		/** @var WP_Term $sponsor */
-		$sponsor = $this->get_sponsor();
+		$sponsor = $this->get_sponsored_ingredient();
 		if ( ! empty( $sponsor ) ) {
 			$image = get_field( 'logo', $sponsor->taxonomy . '_' . $sponsor->term_id );
 			$link  = get_field( 'link', $sponsor->taxonomy . '_' . $sponsor->term_id );
@@ -612,8 +612,16 @@ class Foody_Ingredient extends Foody_Post {
 				// Should show according to date
 				if ( strtotime( $from ) <= strtotime( 'now' ) && strtotime( $to ) >= strtotime( 'now' ) ) {
 
-					$sponsor_id = get_field( 'sponsor', $rule_id );
-					$sponsor = get_term_by( 'id', $sponsor_id, 'sponsors' );
+					$sponsor_id    = get_field( 'sponsor', $rule_id );
+					$sponsor_child = get_term( $sponsor_id, 'sponsors' );
+					if ( ! empty( $sponsor_child->parent ) ) {
+						$sponsor = get_term( $sponsor_child->parent, 'sponsors' );
+						if ( ! empty( $sponsor->parent ) ) {
+							$sponsor = get_term( $sponsor->parent, 'sponsors' );
+						}
+
+					}
+
 					return $sponsor;
 				}
 			}
