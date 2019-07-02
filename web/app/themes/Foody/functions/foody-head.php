@@ -361,12 +361,12 @@ function foody_background_image_referer() {
     </script>
 	<?php
 
-	if ( isset( $_SESSION['HTTP_REFERER'] ) && ! empty( $_SESSION['HTTP_REFERER'] ) && get_post_type() == 'foody_feed_channel' ) {
+	if ( get_post_type() == 'foody_feed_channel' ) {
 		?>
         <script>
             jQuery(document).ready(($) => {
                 setTimeout(() => {
-                    let background_referer = '' + <?php echo $_SESSION['HTTP_REFERER']; ?>;
+                    let background_referer = '' + <?php echo get_queried_object_id(); ?>;
                     createRefererLinks(background_referer);
                 })
             });
