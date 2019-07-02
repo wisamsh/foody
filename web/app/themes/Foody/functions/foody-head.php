@@ -365,8 +365,10 @@ function foody_background_image_referer() {
 		?>
         <script>
             jQuery(document).ready(($) => {
-                let background_referer = '' + <?php echo $_SESSION['HTTP_REFERER']; ?>;
-                createRefererLinks(background_referer);
+                setTimeout(() => {
+                    let background_referer = '' + <?php echo $_SESSION['HTTP_REFERER']; ?>;
+                    createRefererLinks(background_referer);
+                })
             });
 
         </script>
@@ -375,8 +377,10 @@ function foody_background_image_referer() {
 		?>
         <script>
             jQuery(document).ready(($) => {
-                let background_referer = '' + <?php echo $_GET['referer']; ?>;
-                createRefererLinks(background_referer);
+                setTimeout(() => {
+                    let background_referer = '' + <?php echo $_GET['referer']; ?>;
+                    createRefererLinks(background_referer);
+                });
             });
         </script>
 		<?php
