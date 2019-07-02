@@ -290,6 +290,7 @@ function sponsors_init()
             'show_ui' => true,
             'show_in_menu' => is_main_site(),
             'show_in_nav_menus' => is_main_site(),
+	        'hierarchical' => true,
             'capabilities' => array(
                 'assign_terms' => 'edit_posts',
                 'edit_terms' => 'publish_posts',
