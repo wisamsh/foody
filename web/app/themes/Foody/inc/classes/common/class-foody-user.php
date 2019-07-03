@@ -299,14 +299,19 @@ class Foody_User
 		    $posts = $this->get_followed_feed_channel_posts( $feed_channels );
 		    if ( ! empty( $posts ) ) {
 			    if ( $count ) {
-				    $posts = array_unique( $posts, SORT_REGULAR );
+				    if ( isset( $query ) ) {
+					    $wpq = new WP_Query();
+					    $wpq->parse_query( $query );
+					    $posts = array_merge( $posts, $wpq->get_posts() );
+				    }
+				    $posts = Foody_Post::remove_duplications( $posts, SORT_REGULAR );
 				    if ( empty( $results ) ) {
 					    $results[] = (object) [ 'count' => 0 ];
 				    }
-				    $results[0]->count += count( $posts );
+				    $results[0]->count = count( $posts );
 			    } else {
 				    $results = array_merge( $results, $posts );
-				    $results = array_unique( $results, SORT_REGULAR );
+				    $results = Foody_Post::remove_duplications( $results );
 			    }
 		    }
 	    }

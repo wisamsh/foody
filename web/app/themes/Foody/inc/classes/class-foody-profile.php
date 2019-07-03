@@ -17,6 +17,8 @@ class Foody_Profile
 
     private $form_classes = ['profile-form'];
 
+	private $foody_search;
+
     /**
      * Foody_Profile constructor.
      */
@@ -25,6 +27,7 @@ class Foody_Profile
         $this->sidebar_filter = new SidebarFilter();
         $this->foody_user = new Foody_User();
         $this->grid = new FoodyGrid();
+	    $this->foody_search = new Foody_Search( 'profile', [ 'channels' ] );
     }
 
     /**
@@ -96,7 +99,13 @@ class Foody_Profile
         </h2>
         <?php
 
-        $posts = $this->foody_user->get_followed_content();
+	    $foody_query = Foody_Query::get_instance();
+
+	    $args = $foody_query->get_query( 'profile', [ 'channels' ] );
+
+	    $query = new WP_Query( $args );
+
+	    $posts = $query->get_posts();
 
         $posts = array_map('Foody_Post::create', $posts);
 
@@ -104,7 +113,7 @@ class Foody_Profile
         $grid_args = [
             'id' => 'my-channels-grid',
             'posts' => $posts,
-            'more' => false,
+            'more' => true,
             'cols' => 1
         ];
 
@@ -147,7 +156,7 @@ class Foody_Profile
 
     public function channels_tab()
     {
-        $results = $this->foody_user->get_followed_content(0, 12, true);
+        $results = $this->foody_user->get_followed_content(0, 10, true);
         $count = 0;
         if (isset($results[0]) && isset($results[0]->count)) {
             $count = $results[0]->count;
@@ -163,11 +172,11 @@ class Foody_Profile
 
         $followed = $this->foody_user->get_followed_content();
         $followed = array_map('Foody_Post::create', $followed);
-        $results = $this->foody_user->get_followed_content(0, 12, true);
+//        $results = $this->foody_user->get_followed_content(0, 10, true);
         $count = 0;
-        if (isset($results[0]) && isset($results[0]->count)) {
-            $count = $results[0]->count;
-        }
+//        if (isset($results[0]) && isset($results[0]->count)) {
+            $count = count($followed);
+//        }
 
 
         global $wp_session;

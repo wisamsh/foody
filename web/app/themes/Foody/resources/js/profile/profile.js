@@ -4,6 +4,7 @@
 
 let toggleFollowed = require('../common/follow');
 let FoodySearchFilter = require('../common/foody-search-filter');
+let FoodyContentPaging = require('../common/page-content-paging');
 require('cropperjs');
 require('cropperjs/dist/cropper.min.css');
 require('jquery-cropper');
@@ -55,7 +56,7 @@ jQuery(document).ready(($) => {
 
 
     // Foody search and filter
-    new FoodySearchFilter({
+    let profile_filter = new FoodySearchFilter({
         selector: '.page-template-profile #accordion-foody-filter',
         grid: '#my-channels-grid',
         cols: 1,
@@ -71,6 +72,12 @@ jQuery(document).ready(($) => {
         page: '.page-template-profile',
         context: 'profile',
         contextArgs: ['favorites']
+    });
+
+    new FoodyContentPaging({
+        context: 'profile',
+        filter: profile_filter,
+        contextArgs: ['channels']
     });
 
     // Tab switch analytics
