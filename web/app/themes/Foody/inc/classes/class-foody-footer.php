@@ -239,13 +239,7 @@ class Foody_Footer
 
 	    if ( $show_custom_accessibility && ! empty( $custom_accessibility_script ) ) {
 
-		    ?>
-            <script async defer>
-                setTimeout(() => {
-				    <?php echo $custom_accessibility_script ?>
-                });
-            </script>
-		    <?php
+	        echo $custom_accessibility_script;
 
 		    if ( ! empty( $custom_accessibility_class ) ) {
 
