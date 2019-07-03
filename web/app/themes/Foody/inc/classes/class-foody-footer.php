@@ -246,7 +246,7 @@ class Foody_Footer
 			    ?>
                 <style>
                     <?php echo $custom_accessibility_class ?> {
-                        opacity: 0;
+                        visibility: hidden;
                     }
                 </style>
 			    <?php
