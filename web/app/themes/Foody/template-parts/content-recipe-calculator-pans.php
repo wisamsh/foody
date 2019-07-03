@@ -18,13 +18,26 @@ $options = array_map(function ($conversion) {
             return null;
         }
 
-        return [
-            'value' => $conversion['conversion_rate'],
-            'label' => get_term( $conversion['pan'] )->name,
-            'data'  => [
-                'slices' => get_field( 'slices', $conversion['pan'] )
-            ]
-        ];
+        $pan = get_term($conversion['pan'], 'pans');
+
+        if (!empty($pan) && !is_wp_error($pan)) {
+            if (is_multisite() && !is_main_site()) {
+                switch_to_blog(1);
+                $pan = get_term($conversion['pan'], 'pans');
+                restore_current_blog();
+            }
+        }
+
+        if (!empty($pan) && !is_wp_error($pan)) {
+            return [
+                'value' => $conversion['conversion_rate'],
+                'label' => $pan->name,
+                'data' => [
+                    'slices' => get_field('slices', $conversion['pan'])
+                ]
+            ];
+        }
+
     }
 
 }, $conversions);

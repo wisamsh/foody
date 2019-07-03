@@ -165,6 +165,10 @@ class Foody_User
 								$block_posts = call_user_func( [ $blocks_drawer, $block_fn ], $block );
 								if ( ! empty( $block_posts ) ) {
 									$posts = array_merge( $posts, $block_posts );
+									$posts = array_filter($posts, function($post){
+										// Don't add posts for now
+										return $post->post_type != 'post';
+									});
 								}
 							}
 						} else if ( $type == 'manual' ) {
@@ -172,7 +176,10 @@ class Foody_User
 								$block_posts = [];
 								foreach ( $block['items'] as $item ) {
 									if ( ! empty( $item ) && ! empty( $item['post'] ) ) {
-										array_push($block_posts, $item['post']);
+										// Don't add posts for now
+										if ($item['post']->post_type != 'post' ) {
+											array_push($block_posts, $item['post']);
+										}
 									}
 								}
 								$posts = array_merge( $posts, $block_posts );
@@ -299,14 +306,19 @@ class Foody_User
 		    $posts = $this->get_followed_feed_channel_posts( $feed_channels );
 		    if ( ! empty( $posts ) ) {
 			    if ( $count ) {
-				    $posts = array_unique( $posts, SORT_REGULAR );
 				    if ( empty( $results ) ) {
 					    $results[] = (object) [ 'count' => 0 ];
+				    } else {
+					    if ( isset( $query ) ) {
+						    $wpq = new WP_Query( $query );
+						    $posts = array_merge( $posts, $wpq->get_posts() );
+					    }
 				    }
-				    $results[0]->count += count( $posts );
+				    $posts = Foody_Post::remove_duplications( $posts );
+				    $results[0]->count = count( $posts );
 			    } else {
 				    $results = array_merge( $results, $posts );
-				    $results = array_unique( $results, SORT_REGULAR );
+				    $results = Foody_Post::remove_duplications( $results );
 			    }
 		    }
 	    }

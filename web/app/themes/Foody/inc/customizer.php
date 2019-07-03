@@ -278,6 +278,65 @@ function foody_customize_register( $wp_customize ) {
     foody_customize_add_text($wp_customize,'search_placeholder','פלייסהולדר חיפוש',__('חפשו מתכון או כתבה…','foody'),1);
 
 
+	$wp_customize->add_setting(
+		'show_white_label_accessibility',
+		array(
+			'capability' => 'edit_theme_options',
+		)
+	);
+
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'show_white_label_accessibility' ,
+		array(
+			'label'       => __( 'הצג רכיב נגישות מיוחד', 'foody' ),
+			'description' => __( '', 'foody' ),
+			'settings'    => 'show_white_label_accessibility',
+			'priority'    => 6,
+			'section'     => 'foody_social_links',
+			'type'        => 'checkbox'
+		)
+	) );
+
+	$wp_customize->add_setting(
+		'white_label_accessibility_script',
+		array(
+			'capability' => 'edit_theme_options',
+		)
+	);
+
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'white_label_accessibility_script' ,
+		array(
+			'label'       => __( 'סקריפט רכיב נגישות מיוחד', 'foody' ),
+			'description' => __( '', 'foody' ),
+			'settings'    => 'white_label_accessibility_script',
+			'priority'    => 6,
+			'section'     => 'foody_social_links',
+			'type'        => 'textarea'
+		)
+	) );
+
+	$wp_customize->add_setting(
+		'white_label_accessibility_class',
+		array(
+			'capability' => 'edit_theme_options',
+		)
+	);
+
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'white_label_accessibility_class' ,
+		array(
+			'label'       => __( 'מזהה class רכיב נגישות מיוחד', 'foody' ),
+			'description' => __( 'על מנת לפתוח את הרכיב באמצעות לחיצה על כפתור נגישות פודי', 'foody' ),
+			'settings'    => 'white_label_accessibility_class',
+			'priority'    => 6,
+			'section'     => 'foody_social_links',
+			'type'        => 'text'
+		)
+	) );
 
 }
 

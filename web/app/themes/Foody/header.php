@@ -10,7 +10,7 @@
  */
 $header = new Foody_Header();
 $user = new Foody_User();
-$show_accessibility = get_theme_mod('foody_show_accessibility');
+$show_accessibility = get_theme_mod('foody_show_accessibility') || get_theme_mod('show_white_label_accessibility');
 // always show on main site
 if (!is_multisite() || is_main_site()) {
     $show_accessibility = true;
