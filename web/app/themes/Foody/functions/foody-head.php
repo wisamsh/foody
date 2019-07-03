@@ -77,6 +77,13 @@ function foody_js_globals_main($vars)
         $vars['title'] = $queried_object->data->display_name;
     }
 
+    // Custom accessibility
+	$show_custom_accessibility           = get_theme_mod( 'show_white_label_accessibility' );
+
+	if ($show_custom_accessibility) {
+        $vars['show_custom_accessibility']   = $show_custom_accessibility;
+        $vars['custom_accessibility_class']  = get_theme_mod( 'white_label_accessibility_class' );
+    }
 
     return $vars;
 }
