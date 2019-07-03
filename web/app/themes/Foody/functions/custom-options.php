@@ -16,6 +16,8 @@ register_setting('general', 'foody_conversion_table_link');
 register_setting('general', 'foody_conversion_table_link_target');
 register_setting('general', 'foody_conversion_table_link_text');
 register_setting('general', 'foody_google_tag_manager_id');
+register_setting('general', 'foody_show_google_adx');
+register_setting('general', 'foody_google_adx_script');
 
 $page_name_search_options   = __( 'הגדרות חיפוש - פודי', 'foody' );
 $page_name_purchase_buttons = __( 'כפתורי רכישה', 'foody' );
@@ -169,6 +171,10 @@ function foody_custom_options() {
     // Google tag manager id
     add_settings_field('foody_google_tag_manager_id', __('מזהה Google Tag Manager', 'foody'), 'foody_show_tag_manager_callback', 'general', 'foody_general_settings');
 
+	// Show Google AdX feature
+    add_settings_field('foody_show_google_adx', __('הצג רכיב Google AdX', 'foody'), 'foody_show_google_adx_callback', 'general', 'foody_general_settings');
+    add_settings_field('foody_google_adx_script', __('סקריפט רכיב Google AdX', 'foody'), 'foody_google_adx_script_callback', 'general', 'foody_general_settings');
+
 }
 
 add_action( 'admin_init', 'foody_custom_options' );
@@ -221,6 +227,19 @@ function foody_show_tag_manager_callback()
     $options = get_option('foody_google_tag_manager_id', false);
     echo '<input value="' . $options . '"type="text" id="foody_google_tag_manager_id" name="foody_google_tag_manager_id">';
 }
+
+// Show Google AdX feature
+function foody_show_google_adx_callback() {
+	$options = get_option( 'foody_show_google_adx', false );
+	$checked = $options ? 'checked' : '';
+	echo '<input ' . $checked . ' type="checkbox" id="foody_show_google_adx" name="foody_show_google_adx">';
+}
+
+function foody_google_adx_script_callback() {
+	$content = get_option( 'foody_google_adx_script', '' );
+	echo '<textarea id="foody_google_adx_script" name="foody_google_adx_script" rows="5" cols="50">' . $content . '</textarea>';
+}
+
 //add_filter('manage_edit-units_columns', 'add_units_columns');
 //
 //function add_units_column_content($content)
