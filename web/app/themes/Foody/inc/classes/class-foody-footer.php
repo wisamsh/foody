@@ -231,6 +231,27 @@ class Foody_Footer
             </script>
             <?php
         }
+
+	    // Custom accessibility widget
+	    $show_custom_accessibility   = get_theme_mod( 'show_white_label_accessibility' );
+	    $custom_accessibility_script = get_theme_mod( 'white_label_accessibility_script' );
+	    $custom_accessibility_class  = get_theme_mod( 'white_label_accessibility_class' );
+
+	    if ( $show_custom_accessibility && ! empty( $custom_accessibility_script ) ) {
+
+	        echo $custom_accessibility_script;
+
+		    if ( ! empty( $custom_accessibility_class ) ) {
+
+			    ?>
+                <style>
+                    <?php echo $custom_accessibility_class ?> {
+                        visibility: hidden;
+                    }
+                </style>
+			    <?php
+		    }
+	    }
     }
 
     private function display_menu_item($url, $title, $target = '', $classes = '')

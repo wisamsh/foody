@@ -68,4 +68,12 @@ jQuery(document).ready(function ($) {
         $('#login-modal').modal('show');
     };
 
+    // Click custom accessibility widget
+    if (foodyGlobals.show_custom_accessibility && foodyGlobals.custom_accessibility_class) {
+        $('.navbar-btn.accessibility').on('click',function (e) {
+            e.stopPropagation();
+            $(foodyGlobals.custom_accessibility_class).click();
+        });
+    }
+
 });
