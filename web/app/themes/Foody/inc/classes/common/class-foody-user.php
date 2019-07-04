@@ -164,11 +164,14 @@ class Foody_User
 							if ( method_exists( $blocks_drawer, $block_fn ) ) {
 								$block_posts = call_user_func( [ $blocks_drawer, $block_fn ], $block );
 								if ( ! empty( $block_posts ) ) {
+									if ( count( $block_posts ) > 4 ) {
+										$block_posts = array_slice( $block_posts, 0, 4 );
+									}
 									$posts = array_merge( $posts, $block_posts );
-									$posts = array_filter($posts, function($post){
+									$posts = array_filter( $posts, function ( $post ) {
 										// Don't add posts for now
 										return $post->post_type != 'post';
-									});
+									} );
 								}
 							}
 						} else if ( $type == 'manual' ) {
