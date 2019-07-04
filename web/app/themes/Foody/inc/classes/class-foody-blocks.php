@@ -216,7 +216,7 @@ class Foody_Blocks
                 $see_more_link = ['url' => ''];
             }
 
-            if (empty($see_more_text)) {
+            if (empty($see_more_text) && isset($see_more_link['title'])) {
                 $see_more_text = $see_more_link['title'];
             }
 

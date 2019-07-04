@@ -310,11 +310,11 @@ class Foody_User
 					    $results[] = (object) [ 'count' => 0 ];
 				    } else {
 					    if ( isset( $query ) ) {
-						    $wpq = new WP_Query( $query );
-						    $posts = array_merge( $posts, $wpq->get_posts() );
+						    $query = str_replace_first( 'count(*) as count ', '*', $query );
+						    $posts = array_merge( $posts, $wpdb->get_results( $query ) );
 					    }
 				    }
-				    $posts = Foody_Post::remove_duplications( $posts );
+				    $posts             = Foody_Post::remove_duplications( $posts );
 				    $results[0]->count = count( $posts );
 			    } else {
 				    $results = array_merge( $results, $posts );
