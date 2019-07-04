@@ -599,33 +599,48 @@ class Foody_Ingredient extends Foody_Post {
 		// Fetch rules for recipe
 		$rules = Foody_CommercialRuleMapping::getByIngredientRecipe( $this->recipe_id, $this->id );
 
+		$sponsored_ingredient = '';
 		if ( ! empty( $rules ) ) {
 			foreach ( $rules as $rule ) {
 
-				$rule_id   = $rule['rule_id'];
+				$rule_id = $rule['rule_id'];
 				// $rule_post = get_post( $rule_id );
-				$from      = get_field( 'from', $rule_id );
-				$from = str_replace('/', '-', $from);
-				$to        = get_field( 'to', $rule_id );
-				$to = str_replace('/', '-', $to);
+				$from = get_field( 'from', $rule_id );
+				$from = str_replace( '/', '-', $from );
+				$to   = get_field( 'to', $rule_id );
+				$to   = str_replace( '/', '-', $to );
 
 				// Should show according to date
 				if ( strtotime( $from ) <= strtotime( 'now' ) && strtotime( $to ) >= strtotime( 'now' ) ) {
 
-					$sponsor_id    = get_field( 'sponsor', $rule_id );
-					$sponsor_child = get_term( $sponsor_id, 'sponsors' );
-					if ( ! empty( $sponsor_child->parent ) ) {
-						$sponsor = get_term( $sponsor_child->parent, 'sponsors' );
-						if ( ! empty( $sponsor->parent ) ) {
-							$sponsor = get_term( $sponsor->parent, 'sponsors' );
-						}
+					$sponsor_id = get_field( 'sponsor', $rule_id );
 
+					$chosen_sponsor = get_term( $sponsor_id, 'sponsors' );
+					if ( ! empty( $chosen_sponsor->parent ) ) {
+						$sponsor_brand = get_term( $chosen_sponsor->parent, 'sponsors' );
+						if ( ! empty( $sponsor_brand->parent ) ) {
+							$sponsor = get_term( $sponsor_brand->parent, 'sponsors' );
+						}
 					}
 
-					return $sponsor;
+					$show_product       = get_field( 'show_product', $rule_id );
+					$show_sponsor_brand = get_field( 'show_sponsor_brand', $rule_id );
+					$show_sponsor       = get_field( 'show_sponsor', $rule_id );
+
+					if ( $show_product && isset( $chosen_sponsor ) && ! empty( $chosen_sponsor ) ) {
+						// do something with $chosen_sponsor;
+					}
+					if ( $show_sponsor_brand && isset( $sponsor_brand ) && ! empty( $sponsor_brand ) ) {
+						// do something with $sponsor_brand;
+					}
+					if ( $show_sponsor && isset( $sponsor ) && ! empty( $sponsor ) ) {
+						// do something with $sponsor;
+					}
 				}
 			}
 		}
+
+		return $sponsored_ingredient;
 	}
 
 }
