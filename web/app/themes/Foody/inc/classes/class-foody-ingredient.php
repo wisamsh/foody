@@ -240,30 +240,12 @@ class Foody_Ingredient extends Foody_Post {
 
 
 		/** @var WP_Term $sponsor */
-		$sponsor = $this->get_sponsored_ingredient();
-		if ( ! empty( $sponsor ) ) {
-			$image = get_field( 'logo', $sponsor->taxonomy . '_' . $sponsor->term_id );
-			$link  = get_field( 'link', $sponsor->taxonomy . '_' . $sponsor->term_id );
-			$text  = get_field( 'text', $this->id );
+//		$sponsor = $this->get_sponsor();
+//		if ( ! empty( $sponsor ) ) {
+//			$amount_el = $this->get_sponsor_data($amount_el, $sponsor);
+//		}
 
-			if ( ! empty( $link ) ) {
-				$target = '';
-				if ( ! empty( $link['target'] ) ) {
-					$target = 'target="' . $link['target'] . '"';
-				}
-				$amount_el .= '<a href="' . $link['url'] . '" ' . $target . ' >';
-			}
-			$amount_el .= '<span class="sponsored-by">';
-			if ( ! empty( $image ) ) {
-				$amount_el .= '<img src="' . $image['url'] . '" alt="' . $image['alt'] . '">';
-			}
-			if ( ! empty( $text ) ) {
-				$amount_el .= '<span>' . $text . '</span></span>';
-			}
-			if ( ! empty( $link ) ) {
-				$amount_el .= '</a>';
-			}
-		}
+		$amount_el .= $this->get_sponsored_ingredient();
 
 		return $amount_el;
 	}
@@ -629,18 +611,49 @@ class Foody_Ingredient extends Foody_Post {
 
 					if ( $show_product && isset( $chosen_sponsor ) && ! empty( $chosen_sponsor ) ) {
 						// do something with $chosen_sponsor;
+						$sponsored_ingredient .= $this->get_sponsor_data($sponsored_ingredient, $chosen_sponsor);
 					}
 					if ( $show_sponsor_brand && isset( $sponsor_brand ) && ! empty( $sponsor_brand ) ) {
 						// do something with $sponsor_brand;
+						$sponsored_ingredient .= $this->get_sponsor_data($sponsored_ingredient, $sponsor_brand);
 					}
 					if ( $show_sponsor && isset( $sponsor ) && ! empty( $sponsor ) ) {
 						// do something with $sponsor;
+						$sponsored_ingredient .= $this->get_sponsor_data($sponsored_ingredient, $sponsor);
 					}
 				}
 			}
 		}
 
 		return $sponsored_ingredient;
+	}
+
+	private function get_sponsor_data( $content, $sponsor ) {
+		if ( ! empty( $sponsor ) ) {
+			$image = get_field( 'logo', $sponsor->taxonomy . '_' . $sponsor->term_id );
+			$link  = get_field( 'link', $sponsor->taxonomy . '_' . $sponsor->term_id );
+			$text  = get_field( 'text', $this->id );
+
+			if ( ! empty( $link ) ) {
+				$target = '';
+				if ( ! empty( $link['target'] ) ) {
+					$target = 'target="' . $link['target'] . '"';
+				}
+				$content .= '<a href="' . $link['url'] . '" ' . $target . ' >';
+			}
+			$content .= '<span class="sponsored-by">';
+			if ( ! empty( $image ) ) {
+				$content .= '<img src="' . $image['url'] . '" alt="' . $image['alt'] . '">';
+			}
+			if ( ! empty( $text ) ) {
+				$content .= '<span>' . $text . '</span></span>';
+			}
+			if ( ! empty( $link ) ) {
+				$content .= '</a>';
+			}
+		}
+
+		return $content;
 	}
 
 }
