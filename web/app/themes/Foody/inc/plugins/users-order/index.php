@@ -52,8 +52,8 @@ class SimpleUserOrdering_Plugin {
 		$qry->query_where = " LEFT OUTER JOIN wp_usermeta AS wp_usermeta_order ON (wp_users.ID = wp_usermeta_order.user_id AND wp_usermeta_order.meta_key = 'menu_order') " . $qry->query_where;
 		$qry->query_orderby = preg_replace('/ORDER BY (.*) (ASC|DESC)/',"ORDER BY CAST(wp_usermeta_order.meta_value AS UNSIGNED) ".$qry->get('order') ,$qry->query_orderby);
 
-		wp_enqueue_script( 'jquery-ui', 'http://code.jquery.com/ui/1.10.3/jquery-ui.js', array('jquery'), FALSE, TRUE );
-		wp_enqueue_style( 'jquery-ui-css', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' );
+		wp_enqueue_script( 'jquery-ui', '//code.jquery.com/ui/1.10.3/jquery-ui.js', array('jquery'), FALSE, TRUE );
+		wp_enqueue_style( 'jquery-ui-css', '//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' );
 	}
 
 
