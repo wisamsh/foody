@@ -10,6 +10,10 @@
           width: 100%;
         }
       }
+
+      .wp-caption-text {
+        text-align: center;
+      }
     }
   }
 
@@ -55,9 +59,6 @@
         }
         &.alignnone {
           width: 100vw;
-        }
-        .wp-caption-text {
-          text-align: center;
         }
       }
     }
