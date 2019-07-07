@@ -164,11 +164,14 @@ class Foody_User
 							if ( method_exists( $blocks_drawer, $block_fn ) ) {
 								$block_posts = call_user_func( [ $blocks_drawer, $block_fn ], $block );
 								if ( ! empty( $block_posts ) ) {
+									if ( count( $block_posts ) > 4 ) {
+										$block_posts = array_slice( $block_posts, 0, 4 );
+									}
 									$posts = array_merge( $posts, $block_posts );
-									$posts = array_filter($posts, function($post){
+									$posts = array_filter( $posts, function ( $post ) {
 										// Don't add posts for now
 										return $post->post_type != 'post';
-									});
+									} );
 								}
 							}
 						} else if ( $type == 'manual' ) {
@@ -310,11 +313,11 @@ class Foody_User
 					    $results[] = (object) [ 'count' => 0 ];
 				    } else {
 					    if ( isset( $query ) ) {
-						    $wpq = new WP_Query( $query );
-						    $posts = array_merge( $posts, $wpq->get_posts() );
+						    $query = str_replace_first( 'count(*) as count ', '*', $query );
+						    $posts = array_merge( $posts, $wpdb->get_results( $query ) );
 					    }
 				    }
-				    $posts = Foody_Post::remove_duplications( $posts );
+				    $posts             = Foody_Post::remove_duplications( $posts );
 				    $results[0]->count = count( $posts );
 			    } else {
 				    $results = array_merge( $results, $posts );
