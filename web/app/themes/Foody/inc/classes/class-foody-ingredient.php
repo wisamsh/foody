@@ -605,21 +605,24 @@ class Foody_Ingredient extends Foody_Post {
 						}
 					}
 
-					$show_product       = get_field( 'show_product', $rule_id );
-					$show_sponsor_brand = get_field( 'show_sponsor_brand', $rule_id );
-					$show_sponsor       = get_field( 'show_sponsor', $rule_id );
+					$show_product            = get_field( 'show_product', $rule_id );
+					$show_product_logo       = get_field( 'show_product_logo', $rule_id );
+					$show_sponsor_brand      = get_field( 'show_sponsor_brand', $rule_id );
+					$show_sponsor_brand_logo = get_field( 'show_sponsor_brand_logo', $rule_id );
+					$show_sponsor            = get_field( 'show_sponsor', $rule_id );
+					$show_sponsor_logo       = get_field( 'show_sponsor_logo', $rule_id );
 
-					if ( $show_product && isset( $chosen_sponsor ) && ! empty( $chosen_sponsor ) ) {
-						// do something with $chosen_sponsor;
-						$sponsored_ingredient .= $this->get_sponsor_data($sponsored_ingredient, $chosen_sponsor);
-					}
-					if ( $show_sponsor_brand && isset( $sponsor_brand ) && ! empty( $sponsor_brand ) ) {
-						// do something with $sponsor_brand;
-						$sponsored_ingredient .= $this->get_sponsor_data($sponsored_ingredient, $sponsor_brand);
-					}
-					if ( $show_sponsor && isset( $sponsor ) && ! empty( $sponsor ) ) {
+					if ( isset( $sponsor ) && ! empty( $sponsor ) ) {
 						// do something with $sponsor;
-						$sponsored_ingredient .= $this->get_sponsor_data($sponsored_ingredient, $sponsor);
+						$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $sponsor, $show_sponsor_logo, $show_sponsor );
+					}
+					if ( isset( $sponsor_brand ) && ! empty( $sponsor_brand ) ) {
+						// do something with $sponsor_brand;
+						$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $sponsor_brand, $show_sponsor_brand_logo, $show_sponsor_brand );
+					}
+					if ( isset( $chosen_sponsor ) && ! empty( $chosen_sponsor ) ) {
+						// do something with $chosen_sponsor;
+						$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $chosen_sponsor, $show_product_logo, $show_product );
 					}
 				}
 			}
@@ -628,11 +631,11 @@ class Foody_Ingredient extends Foody_Post {
 		return $sponsored_ingredient;
 	}
 
-	private function get_sponsor_data( $content, $sponsor ) {
+	private function get_sponsor_data( $content, $sponsor, $show_logo = true, $show_text = true ) {
 		if ( ! empty( $sponsor ) ) {
 			$image = get_field( 'logo', $sponsor->taxonomy . '_' . $sponsor->term_id );
 			$link  = get_field( 'link', $sponsor->taxonomy . '_' . $sponsor->term_id );
-			$text  = get_field( 'text', $this->id );
+			$text  = $sponsor->name;
 
 			if ( ! empty( $link ) ) {
 				$target = '';
@@ -642,10 +645,10 @@ class Foody_Ingredient extends Foody_Post {
 				$content .= '<a href="' . $link['url'] . '" ' . $target . ' >';
 			}
 			$content .= '<span class="sponsored-by">';
-			if ( ! empty( $image ) ) {
+			if ( ! empty( $image ) && $show_logo ) {
 				$content .= '<img src="' . $image['url'] . '" alt="' . $image['alt'] . '">';
 			}
-			if ( ! empty( $text ) ) {
+			if ( ! empty( $text ) && $show_text ) {
 				$content .= '<span>' . $text . '</span></span>';
 			}
 			if ( ! empty( $link ) ) {

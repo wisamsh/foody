@@ -202,7 +202,26 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "45",
+                "class": "",
+                "id": ""
+            },
+            "message": "הצגת שם החברה המסחרית בעמוד מתכון",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5d21da1618460",
+            "label": "הצג לוגו חברה",
+            "name": "show_sponsor_logo",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "45",
                 "class": "",
                 "id": ""
             },
@@ -221,7 +240,26 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "45",
+                "class": "",
+                "id": ""
+            },
+            "message": "הצגת שם המותג בעמוד מתכון",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5d21da2418461",
+            "label": "הצג לוגו מותג",
+            "name": "show_sponsor_brand_logo",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "45",
                 "class": "",
                 "id": ""
             },
@@ -240,7 +278,26 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "45",
+                "class": "",
+                "id": ""
+            },
+            "message": "הצגת שם המוצר בעמוד מתכון",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5d21da3218462",
+            "label": "הצג לוגו מוצר",
+            "name": "show_product_logo",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "45",
                 "class": "",
                 "id": ""
             },
@@ -302,5 +359,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1561712703
+    "modified": 1562499715
 }
