@@ -575,46 +575,77 @@ class Foody_Ingredient extends Foody_Post {
 
 		$sponsored_ingredient = '<div class="sponsors-container">';
 		if ( ! empty( $rules ) ) {
+
+
+			// Filter rules by order - greatest order is the one to be shown.
+			$orders = [];
+
+			array_map( function ( $rule ) use ( &$orders ) {
+				$order                      = get_post_meta( $rule['rule_id'], 'menu_order', true );
+				$orders[ $rule['rule_id'] ] = $order;
+			}, $rules );
+
+			uasort( $orders, function ( $a, $b ) {
+				if ( $a == $b ) {
+					return 0;
+				}
+
+				return ( $a < $b ) ? - 1 : 1;
+			} );
+
+			$rules = array_filter( $rules, function ( $rule ) use ( $orders ) {
+				return $rule['rule_id'] == key( $orders );
+			} );
+
+
 			foreach ( $rules as $rule ) {
 
 				$rule_id = $rule['rule_id'];
 				// $rule_post = get_post( $rule_id );
-				$from = get_field( 'from', $rule_id );
-				$from = str_replace( '/', '-', $from );
-				$to   = get_field( 'to', $rule_id );
-				$to   = str_replace( '/', '-', $to );
+				$emptyDate = false;
+				$from      = get_field( 'from', $rule_id );
+				$to        = get_field( 'to', $rule_id );
+				if ( empty( $from ) && empty( $to ) ) {
+					$emptyDate = true;
+				} else {
+					$from = str_replace( '/', '-', $from );
+					$to   = str_replace( '/', '-', $to );
+				}
 
 				// Should show according to date
-				if ( strtotime( $from ) <= strtotime( 'now' ) && strtotime( $to ) >= strtotime( 'now' ) ) {
+				if ( $emptyDate || ( strtotime( $from ) <= strtotime( 'now' ) && strtotime( $to ) >= strtotime( 'now' ) ) ) {
 
-					$sponsor_id = get_field( 'sponsor', $rule_id );
+					$object_type = get_field( 'object_type', $rule_id );
+					if ( $object_type == 'ingredient' ) {
+						$sponsor_id = get_field( 'sponsor', $rule_id );
 
-					$chosen_sponsor = get_term( $sponsor_id, 'sponsors' );
-					if ( ! empty( $chosen_sponsor->parent ) ) {
-						$sponsor_brand = get_term( $chosen_sponsor->parent, 'sponsors' );
-						if ( ! empty( $sponsor_brand->parent ) ) {
-							$sponsor = get_term( $sponsor_brand->parent, 'sponsors' );
+						$chosen_sponsor = get_term( $sponsor_id, 'sponsors' );
+						if ( ! empty( $chosen_sponsor->parent ) ) {
+							$sponsor_brand = get_term( $chosen_sponsor->parent, 'sponsors' );
+							if ( ! empty( $sponsor_brand->parent ) ) {
+								$sponsor = get_term( $sponsor_brand->parent, 'sponsors' );
+							}
 						}
-					}
 
-					$show_product            = get_field( 'show_product', $rule_id );
-					$show_product_logo       = get_field( 'show_product_logo', $rule_id );
-					$show_sponsor_brand      = get_field( 'show_sponsor_brand', $rule_id );
-					$show_sponsor_brand_logo = get_field( 'show_sponsor_brand_logo', $rule_id );
-					$show_sponsor            = get_field( 'show_sponsor', $rule_id );
-					$show_sponsor_logo       = get_field( 'show_sponsor_logo', $rule_id );
+						$show_product            = get_field( 'show_product', $rule_id );
+						$show_product_logo       = get_field( 'show_product_logo', $rule_id );
+						$show_sponsor_brand      = get_field( 'show_sponsor_brand', $rule_id );
+						$show_sponsor_brand_logo = get_field( 'show_sponsor_brand_logo', $rule_id );
+						$show_sponsor            = get_field( 'show_sponsor', $rule_id );
+						$show_sponsor_logo       = get_field( 'show_sponsor_logo', $rule_id );
 
-					if ( isset( $chosen_sponsor ) && ! empty( $chosen_sponsor ) ) {
-						// do something with $chosen_sponsor;
-						$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $chosen_sponsor, $show_product_logo, $show_product );
-					}
-					if ( isset( $sponsor_brand ) && ! empty( $sponsor_brand ) ) {
-						// do something with $sponsor_brand;
-						$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $sponsor_brand, $show_sponsor_brand_logo, $show_sponsor_brand );
-					}
-					if ( isset( $sponsor ) && ! empty( $sponsor ) ) {
-						// do something with $sponsor;
-						$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $sponsor, $show_sponsor_logo, $show_sponsor );
+						if ( isset( $chosen_sponsor ) && ! empty( $chosen_sponsor ) ) {
+							// do something with $chosen_sponsor;
+							$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $chosen_sponsor, $show_product_logo, $show_product );
+						}
+						if ( isset( $sponsor_brand ) && ! empty( $sponsor_brand ) ) {
+							// do something with $sponsor_brand;
+							$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $sponsor_brand, $show_sponsor_brand_logo, $show_sponsor_brand );
+						}
+						if ( isset( $sponsor ) && ! empty( $sponsor ) ) {
+							// do something with $sponsor;
+							$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $sponsor, $show_sponsor_logo, $show_sponsor );
+						}
 					}
 				}
 			}
