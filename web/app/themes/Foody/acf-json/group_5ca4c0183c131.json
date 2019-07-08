@@ -6,7 +6,7 @@
             "key": "field_5ca4c021354e0",
             "label": "לוגו",
             "name": "logo",
-            "type": "image_crop",
+            "type": "image",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -15,16 +15,16 @@
                 "class": "",
                 "id": ""
             },
-            "crop_type": "hard",
-            "target_size": "custom",
-            "width": 35,
-            "height": 24,
+            "return_format": "array",
             "preview_size": "thumbnail",
-            "force_crop": "yes",
-            "save_in_media_library": "yes",
-            "retina_mode": "no",
-            "save_format": "object",
-            "library": "all"
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
         },
         {
             "key": "field_5cab51dbd6536",
@@ -59,5 +59,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1557231084
+    "modified": 1562569840
 }

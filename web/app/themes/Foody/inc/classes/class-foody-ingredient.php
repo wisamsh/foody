@@ -170,6 +170,8 @@ class Foody_Ingredient extends Foody_Post {
                     </span>';
 		}
 
+		$content .= '</div>';
+
 		if ( $echo ) {
 			echo $content;
 		}
@@ -236,16 +238,6 @@ class Foody_Ingredient extends Foody_Post {
         if ( $length <= 1 ) {
             $amount_el .= '</span></span>';
         }
-
-
-
-		/** @var WP_Term $sponsor */
-//		$sponsor = $this->get_sponsor();
-//		if ( ! empty( $sponsor ) ) {
-//			$amount_el = $this->get_sponsor_data($amount_el, $sponsor);
-//		}
-
-		$amount_el .= $this->get_sponsored_ingredient();
 
 		return $amount_el;
 	}
@@ -577,11 +569,11 @@ class Foody_Ingredient extends Foody_Post {
 	 *
 	 * @return mixed|null|void
 	 */
-	private function get_sponsored_ingredient() {
+	public function the_sponsored_ingredient($echo = true) {
 		// Fetch rules for recipe
 		$rules = Foody_CommercialRuleMapping::getByIngredientRecipe( $this->recipe_id, $this->id );
 
-		$sponsored_ingredient = '';
+		$sponsored_ingredient = '<div class="sponsors-container">';
 		if ( ! empty( $rules ) ) {
 			foreach ( $rules as $rule ) {
 
@@ -612,31 +604,37 @@ class Foody_Ingredient extends Foody_Post {
 					$show_sponsor            = get_field( 'show_sponsor', $rule_id );
 					$show_sponsor_logo       = get_field( 'show_sponsor_logo', $rule_id );
 
-					if ( isset( $sponsor ) && ! empty( $sponsor ) ) {
-						// do something with $sponsor;
-						$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $sponsor, $show_sponsor_logo, $show_sponsor );
+					if ( isset( $chosen_sponsor ) && ! empty( $chosen_sponsor ) ) {
+						// do something with $chosen_sponsor;
+						$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $chosen_sponsor, $show_product_logo, $show_product );
 					}
 					if ( isset( $sponsor_brand ) && ! empty( $sponsor_brand ) ) {
 						// do something with $sponsor_brand;
 						$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $sponsor_brand, $show_sponsor_brand_logo, $show_sponsor_brand );
 					}
-					if ( isset( $chosen_sponsor ) && ! empty( $chosen_sponsor ) ) {
-						// do something with $chosen_sponsor;
-						$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $chosen_sponsor, $show_product_logo, $show_product );
+					if ( isset( $sponsor ) && ! empty( $sponsor ) ) {
+						// do something with $sponsor;
+						$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $sponsor, $show_sponsor_logo, $show_sponsor );
 					}
 				}
 			}
+		}
+		$sponsored_ingredient .= '</div>';
+
+		if ( $echo ) {
+			echo $sponsored_ingredient;
 		}
 
 		return $sponsored_ingredient;
 	}
 
 	private function get_sponsor_data( $content, $sponsor, $show_logo = true, $show_text = true ) {
-		if ( ! empty( $sponsor ) ) {
+		if ( ! empty( $sponsor ) && ( $show_logo || $show_text ) ) {
 			$image = get_field( 'logo', $sponsor->taxonomy . '_' . $sponsor->term_id );
 			$link  = get_field( 'link', $sponsor->taxonomy . '_' . $sponsor->term_id );
 			$text  = $sponsor->name;
 
+			$content .= '<span class="sponsored-by">';
 			if ( ! empty( $link ) ) {
 				$target = '';
 				if ( ! empty( $link['target'] ) ) {
@@ -644,16 +642,16 @@ class Foody_Ingredient extends Foody_Post {
 				}
 				$content .= '<a href="' . $link['url'] . '" ' . $target . ' >';
 			}
-			$content .= '<span class="sponsored-by">';
 			if ( ! empty( $image ) && $show_logo ) {
 				$content .= '<img src="' . $image['url'] . '" alt="' . $image['alt'] . '">';
 			}
 			if ( ! empty( $text ) && $show_text ) {
-				$content .= '<span>' . $text . '</span></span>';
+				$content .= '<div>' . $text . '</div>';
 			}
 			if ( ! empty( $link ) ) {
 				$content .= '</a>';
 			}
+			$content .= '</span>';
 		}
 
 		return $content;

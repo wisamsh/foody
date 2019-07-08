@@ -25,6 +25,7 @@ $ingredients_groups = $template_args['groups'];
                 <li class="ingredients">
 
                     <?php $ingredient->the_amounts() ?>
+                    <?php $ingredient->the_sponsored_ingredient(); ?>
 
                 </li>
 
