@@ -48,14 +48,20 @@ class Foody_Recipe extends Foody_Post
 		$cover_image  = get_field( 'cover_image' );
 		$mobile_image = get_field( 'mobile_cover_image' );
 
-		if ( empty( $cover_image ) ) {
-			if ( isset( $_GET['referer'] ) ) {
-				$referer_post = $_GET['referer'];
-				if ( ! empty( $referer_post ) ) {
-					$cover_image = get_field( 'cover_image', $referer_post );
-				}
+		if ( isset( $_GET['referer'] ) ) {
+			$referer_post = $_GET['referer'];
+			if ( ! empty( $referer_post ) ) {
+				$cover_image = get_field( 'cover_image', $referer_post );
 			}
 		}
+
+		if ( isset( $_GET['referer'] ) ) {
+			$referer_post = $_GET['referer'];
+			if ( ! empty( $referer_post ) ) {
+				$mobile_image = get_field( 'mobile_cover_image', $referer_post );
+			}
+		}
+
 		if ( ! empty( $cover_image ) ) {
 			foody_get_template_part( get_template_directory() . '/template-parts/content-cover-image.php', [
 				'image'        => $cover_image,
