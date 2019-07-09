@@ -611,11 +611,27 @@ class Foody_Recipe extends Foody_Post
         if (array_not_empty($array)) {
             foreach ($array as $item) {
                 $post_id = $item->ID;
-                $items[] = '<li><a href="' . get_permalink($post_id) . '">' . get_the_title($post_id) . '</a></li>';
+                $sponsors = $this->get_accessory_commercial($post_id);
+                if (empty($sponsors)) {
+                    $sponsors = '';
+                }
+	            $items[] = '<li><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a>' . $sponsors . '</li>';
             }
 
             echo sprintf($list, implode('', $items));
         }
+    }
+
+    private function get_accessory_commercial($accessory_id) {
+	    // Fetch rules for recipe
+	    $rules = Foody_CommercialRuleMapping::getByIngredientRecipe( $this->post->ID, $accessory_id );
+	    $sponsored_ingredient = '';
+
+	    if ( ! empty( $rules ) ) {
+		    $sponsored_ingredient = foody_print_commercial_rules($rules);
+	    }
+
+	    return $sponsored_ingredient;
     }
 
     public function the_details()
