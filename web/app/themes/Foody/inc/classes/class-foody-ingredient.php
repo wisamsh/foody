@@ -572,8 +572,8 @@ class Foody_Ingredient extends Foody_Post {
 	public function the_sponsored_ingredient($echo = true) {
 		// Fetch rules for recipe
 		$rules = Foody_CommercialRuleMapping::getByIngredientRecipe( $this->recipe_id, $this->id );
+		$sponsored_ingredient = '';
 
-		$sponsored_ingredient = '<div class="sponsors-container">';
 		if ( ! empty( $rules ) ) {
 
 
@@ -634,6 +634,8 @@ class Foody_Ingredient extends Foody_Post {
 						$show_sponsor            = get_field( 'show_sponsor', $rule_id );
 						$show_sponsor_logo       = get_field( 'show_sponsor_logo', $rule_id );
 
+						$sponsored_ingredient = '<div class="sponsors-container">';
+
 						if ( isset( $chosen_sponsor ) && ! empty( $chosen_sponsor ) ) {
 							// do something with $chosen_sponsor;
 							$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $chosen_sponsor, $show_product_logo, $show_product );
@@ -646,11 +648,12 @@ class Foody_Ingredient extends Foody_Post {
 							// do something with $sponsor;
 							$sponsored_ingredient = $this->get_sponsor_data( $sponsored_ingredient, $sponsor, $show_sponsor_logo, $show_sponsor );
 						}
+
+						$sponsored_ingredient .= '</div>';
 					}
 				}
 			}
 		}
-		$sponsored_ingredient .= '</div>';
 
 		if ( $echo ) {
 			echo $sponsored_ingredient;
