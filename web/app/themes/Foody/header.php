@@ -78,7 +78,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
                     ?>
                     <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility"
-                            data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
+                            data-acsb="trigger" aria-label="פתיחת תפריט נגישות">
                         <?php $header->accessibility(); ?>
                         <div id="accessibility-container"></div>
                     </button>
@@ -121,7 +121,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
                 <?php if ($show_accessibility): ?>
                     <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility"
-                            data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
+                            data-acsb="trigger" aria-label="פתיחת תפריט נגישות">
                         <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
                              alt="<?php echo __('נגישות') ?>">
                         <div id="accessibility-container"></div>
