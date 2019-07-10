@@ -8,25 +8,48 @@
  */
 class Foody_Course {
 
-	public $show_how_i_did = false;
-
 	/**
 	 * Course constructor.
 	 */
-	public function __construct($post) {
-		$this->show_how_i_did = get_field( 'show_how_i_did' );
+	public function __construct() {
 	}
 
-	public function how_i_did() {
-		$template = '/comments-how-i-did.php';
+	public function get_cover_image() {
+		$cover_image = get_field( 'cover_image' );
 
-		if ( wp_is_mobile() ) {
-			$template = '/comments-how-i-did-mobile.php';
-		}
-
-		comments_template(
-			$template
-		);
+		return $cover_image;
 	}
 
+	public function get_main_video() {
+		$video = get_field( 'video' );
+
+		return $video;
+	}
+
+	public function get_floating_button() {
+		$floating_registration_button = get_field( 'floating_registration_button' );
+
+		return $floating_registration_button;
+	}
+
+	public function the_about() {
+		$about = get_field( 'about' );
+
+		echo $about;
+	}
+
+	public function get_information_top_section() {
+		$information_top_sections = get_field( 'information_top_section' );
+
+		$information_section = [];
+
+		array_map( function ( $section ) use ( $information_section ) {
+			$information_section[] = array(
+				'title'    => $section['title'],
+				'subtitle' => $section['subtitle']
+			);
+		}, $information_top_sections );
+
+		return $information_section;
+	}
 }
