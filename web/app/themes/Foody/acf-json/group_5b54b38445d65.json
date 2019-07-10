@@ -25,6 +25,30 @@
             "retina_mode": "no",
             "save_format": "object",
             "library": "all"
+        },
+        {
+            "key": "field_5d2452a1706e6",
+            "label": "תמונת קאבר מובייל",
+            "name": "mobile_cover_image",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
         }
     ],
     "location": [
@@ -41,6 +65,13 @@
                 "operator": "==",
                 "value": "page"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "foody_recipe"
+            }
         ]
     ],
     "menu_order": 0,
@@ -51,5 +82,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1557231254
+    "modified": 1562661591
 }

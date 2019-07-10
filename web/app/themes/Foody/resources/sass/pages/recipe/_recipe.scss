@@ -93,6 +93,10 @@ $content-width: 95%;
     }
   }
 
+  .cover-image + aside {
+    padding-top: 10px;
+  }
+
   article.content {
 
     .title, h2 {
