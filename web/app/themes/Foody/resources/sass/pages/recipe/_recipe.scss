@@ -812,6 +812,27 @@ $content-width: 95%;
     //  }
     //}
 
+    .recipe-accessories {
+      .sponsors-container {
+        display: block;
+
+        .sponsored-by {
+          display: inline-block;
+          vertical-align: top;
+          width: 33%;
+          margin: 0 5px;
+
+          img {
+            height: 30px;
+          }
+
+          div {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+
     .recipe-how-i-did {
       @include max-width-section;
 
