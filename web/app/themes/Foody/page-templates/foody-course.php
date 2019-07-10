@@ -17,13 +17,16 @@ $course = new Foody_Course();
 
         <div id="primary" class="content-area">
 
-			<?php if ( $course->show_how_i_did ): ?>
-                <div class="campaign-how-i-did">
-					<?php $course->how_i_did() ?>
-                </div>
-			<?php endif; ?>
+            <div class="course-information-top-section">
+
+				<?php $course->get_information_top_section(); ?>
+
+            </div>
+
         </div><!-- #primary -->
+
     </div><!-- #main-content -->
+
 <?php
 
 get_footer();
