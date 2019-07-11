@@ -21,13 +21,21 @@ $show_favorite = foody_get_array_default( $template_args, 'show_favorite', true 
 if ( ! foody_is_registration_open() ) {
 	$show_favorite = false;
 }
+
+$lazy = !empty($template_args['lazy']);
+
 ?>
 
 
 <div class="recipe-item feed-item">
     <a href="<?php echo $recipe->link ?>" <?php echo $target?>>
         <div class="image-container main-image-container">
-            <img class="recipe-item-image feed-item-image" src="<?php echo $recipe->getImage($image_size) ?>" alt="">
+            <?php if ($lazy): ?>
+                <img class="recipe-item-image feed-item-image lazyload" data-foody-src="<?php echo $recipe->getImage() ?>" alt="<?php echo image_alt_by_url($recipe->getImage())?>">
+            <?php else: ?>
+                <img class="recipe-item-image feed-item-image" src="<?php echo $recipe->getImage() ?>" alt="<?php echo image_alt_by_url($recipe->getImage())?>">
+
+            <?php endif; ?>
 
             <?php if (!empty($label = $recipe->get_label())): ?>
 

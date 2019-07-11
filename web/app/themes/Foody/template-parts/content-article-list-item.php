@@ -17,13 +17,19 @@ if (!empty($article->link_attrs['target'])) {
     $target = "target='{$article->link_attrs['target']}'";
 }
 
+$lazy = !empty($template_args['lazy']);
+
 ?>
 
 <div class="article-item feed-item">
     <a href="<?php echo $article->link ?>" <?php echo $target ?>>
         <div class="image-container main-image-container">
-            <img class="article-item-image feed-item-image" src="<?php echo $article->getImage() ?>" alt="">
+            <?php if ($lazy): ?>
+                <img src="<?php echo $GLOBALS['images_dir'] . 'placeholder.png'?>" class="article-item-image feed-item-image lazyload" data-foody-src="<?php echo $article->getImage() ?>" alt="<?php echo image_alt_by_url($article->getImage())?>">
+            <?php else: ?>
+                <img class="article-item-image feed-item-image" src="<?php echo $article->getImage() ?>" alt="<?php echo image_alt_by_url($article->getImage())?>">
 
+            <?php endif; ?>
             <?php if (!empty($label = $article->get_label())): ?>
 
                 <div class="recipe-label">
@@ -53,7 +59,7 @@ if (!empty($article->link_attrs['target'])) {
 
         <section class="title-container">
             <<?php echo $title_el ?> class="grid-item-title">
-            <a href="<?php echo $article->link ?>" <?php echo $target?>>
+            <a href="<?php echo $article->link ?>" <?php echo $target ?>>
                 <?php echo $article->getTitle() ?>
             </a>
         </<?php echo $title_el ?>>

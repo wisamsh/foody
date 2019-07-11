@@ -83,6 +83,7 @@ class FoodyGrid
             [
                 'post' => $post,
                 'args' => $args,
+                'lazy' => true,
                 'return' => true
             ]
         );

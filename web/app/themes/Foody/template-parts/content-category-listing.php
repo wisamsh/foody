@@ -21,10 +21,10 @@ if (empty($name)) {
 echo $template_args['link']; ?>" class="col">
     <div class="category-listing">
         <div class="image-container">
-            <picture>
-                <source media="(min-width: 415px)" srcset="<?php echo $image; ?>">
-                <source media="(max-width: 414px)" srcset="<?php echo $mobile_image; ?>">
-                <img src="<?php echo $image ?>">
+            <picture class="lazyload">
+                <source media="(min-width: 415px)" data-srcset="<?php echo $image; ?>" srcset="<?php echo $GLOBALS['images_dir'] . 'placeholder.png'?>" >
+                <source media="(max-width: 414px)" srcset="<?php echo $GLOBALS['images_dir'] . 'placeholder.png'?>"  data-srcset="<?php echo $mobile_image; ?>">
+                <img class="lazyload" data-foody-src="<?php echo $image ?>" src="<?php echo $GLOBALS['images_dir'] . 'placeholder.png'?>" >
             </picture>
         </div>
 

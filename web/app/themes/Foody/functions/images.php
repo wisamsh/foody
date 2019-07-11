@@ -314,3 +314,24 @@ function transfer_iptc_exif_to_image( $image_info, $destination_image, $original
     return false;
 
 }
+
+
+/**
+ * Get image alt text by image URL
+ *
+ * @param String $image_url
+ *
+ * @return Bool | String
+ */
+function image_alt_by_url( $image_url ) {
+    global $wpdb;
+
+    if( empty( $image_url ) ) {
+        return false;
+    }
+
+    $query_arr  = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE guid='%s';", strtolower( $image_url ) ) );
+    $image_id   = ( ! empty( $query_arr ) ) ? $query_arr[0] : 0;
+
+    return get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+}

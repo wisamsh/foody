@@ -159,3 +159,4 @@ stats.json
 web/app/mu-plugins/foody-white-label/tmp
 web/app/ewww
 *.webp
+phpunit.xml
