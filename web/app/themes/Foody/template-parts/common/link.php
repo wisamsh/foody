@@ -6,14 +6,9 @@
  * Time: 5:37 PM
  */
 
-/** @noinspection PhpUndefinedVariableInspection */
-$images = $template_args['images'];
+$link = $template_args['link'];
 ?>
 
-<picture>
-    <source media="(min-width: 415px)" srcset="<?php echo $images['image']['url']; ?>"
-    ">
-    <source media="(max-width: 414px)" srcset="<?php echo $images['mobile_image']['url']; ?>"
-    ">
-    <img src="<?php echo $images['image']['url'] ?>">
-</picture>
+<a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>">
+	<?php echo $link['title']; ?>
+</a>
