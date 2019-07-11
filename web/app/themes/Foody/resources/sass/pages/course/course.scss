@@ -1,0 +1,162 @@
+.foody_course-template-page-templates {
+
+  #primary {
+    text-align: right;
+
+    .cover-video {
+      margin: 10px 0;
+
+      iframe {
+        border-radius: 10px;
+      }
+    }
+
+    .about {
+      margin: 15px 0;
+    }
+
+    .course-information {
+      margin: 15px 0;
+      background-color: #e7e4e4;
+
+      .course-information-top-section {
+        padding: 1.5rem 0;
+        margin: 0 2rem;
+        border-bottom: 1px solid white;
+
+        .information-item {
+          display: inline-block;
+          vertical-align: top;
+          width: 50%;
+          text-align: center;
+          padding: 0 2.5rem;
+
+          .information-title {
+            font-size: 28px;
+            font-weight: 900;
+          }
+
+          &:last-child {
+            border-right: 1px solid white;
+          }
+        }
+      }
+
+      .course-information-bottom-section {
+        text-align: center;
+        position: relative;
+        padding: 40px;
+
+        .information-item {
+          &.price {
+            position: absolute;
+            right: 2rem;
+            bottom: 3rem;
+
+            .price-number {
+              margin-right: 5px;
+              font-weight: bold;
+            }
+          }
+
+          &.information-registration-link {
+            a {
+              font-size: 28px;
+              font-weight: 700;
+              border-radius: 15px;
+              background-color: #ef4049;
+              padding: 0.5rem 3rem;
+              color: white;
+            }
+          }
+        }
+      }
+    }
+
+    .course-is-for {
+      border-radius: 15px;
+      border: solid 3px #f05346;
+      background-color: #ffffff;
+      padding: 15px 20px;
+      margin: 15px 0;
+
+      .course-is-for-title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .course-is-for-bullets {
+        color: var(--color__text-title);
+        margin-top: 20px;
+
+        .course-is-for-item {
+          background: url('/app/themes/Foody/resources/images/icons/check-mark.svg') no-repeat 100% top;
+          background-size: 20px;
+          list-style: none;
+          padding: 0 25px 0 0;
+          display: inline-block;
+          vertical-align: top;
+          width: 33%;
+
+          .course-is-for-bullet {
+          }
+        }
+      }
+    }
+
+    .how-it-works {
+      background: #b6e6faa8;
+      padding: 0.5rem;
+
+      .how-it-works-title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .how-it-works-bullets {
+
+        .how-it-works-item {
+          display: inline-block;
+          vertical-align: top;
+          width: 33%;
+          padding: 0.5rem 0;
+          padding-right: 1rem;
+
+          .how-it-works-step-number {
+            display: inline-block;
+            vertical-align: top;
+            text-align: center;
+            width: 13%;
+            border-radius: 50%;
+            background-color: #ef4049;
+            color: white;
+            font-size: 24px;
+            font-weight: 900;
+          }
+
+          .how-it-works-step {
+            display: inline-block;
+            vertical-align: top;
+            width: 84%;
+            padding-right: 10px;
+            font-size: 14px;
+            line-height: 20px;
+          }
+
+          &:not(:last-child) {
+            border-left: 1px solid white;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(mobileonly) {
+
+  .foody_course-template-page-templates {
+
+  }
+}
