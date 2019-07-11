@@ -48,13 +48,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 <div id="page" class="site">
 
     <header id="masthead" class="site-header no-print">
-        <?php if (!is_multisite() || is_main_site()): ?>
-            <div class="run d-block d-lg-none">
-                <?php echo __('בהרצה') ?>
-            </div>
-        <?php else: ?>
-            <?php $header->the_foody_collaboration(false); ?>
-        <?php endif; ?>
+        <?php $header->the_foody_collaboration(false); ?>
 
         <div class="socials d-none d-lg-block">
 
@@ -64,13 +58,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                 <div class="search-bar search-bar-container">
                     <?php get_search_form(); ?>
                 </div>
-                <?php if (!is_multisite() || is_main_site()): ?>
-                    <span class="run-desktop run">
-                    <?php echo __('בהרצה') ?>
-                </span>
-                <?php else: ?>
-                    <?php $header->the_foody_collaboration(true); ?>
-                <?php endif; ?>
+                <?php $header->the_foody_collaboration(true); ?>
                 <?php
 
 
