@@ -48,7 +48,9 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 <div id="page" class="site">
 
     <header id="masthead" class="site-header no-print">
-        <?php $header->the_foody_collaboration(false); ?>
+        <?php if (is_multisite() && !is_main_site()): ?>
+            <?php $header->the_foody_collaboration(false); ?>
+        <?php endif; ?>
 
         <div class="socials d-none d-lg-block">
 
@@ -58,7 +60,9 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                 <div class="search-bar search-bar-container">
                     <?php get_search_form(); ?>
                 </div>
-                <?php $header->the_foody_collaboration(true); ?>
+                <?php if (is_multisite() && !is_main_site()): ?>
+                    <?php $header->the_foody_collaboration(true); ?>
+                <?php endif; ?>
                 <?php
 
 
