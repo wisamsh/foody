@@ -84,14 +84,14 @@ class Foody_CommercialRuleMapping {
  */
 function foody_save_commercial_rule_mapping( $rule_id, $rule, $update ) {
 
-	if ( $rule->post_type != 'revision' ) {
+	if ( $rule->post_type != 'revision' && $rule->post_status != 'auto-draft' ) {
 		foody_save_commercial_rule_mapping_for_rule($rule_id);
 	}
 }
 
 function foody_save_post_for_commercial_rule_mapping( $post_id, $post, $update ) {
 
-	if ( $post->post_type != 'revision' ) {
+	if ( $post->post_type != 'revision' && $post->post_status != 'auto-draft' ) {
 		$query = new WP_Query(array(
 			'post_type' => 'foody_comm_rule',
 			'posts_per_page' => -1,
