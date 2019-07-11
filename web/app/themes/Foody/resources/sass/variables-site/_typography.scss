@@ -11,6 +11,7 @@ $raanan-unicode-range: 'U+0021-0039';
 @include font-face(RaananSuper, '../fonts/Raanan/RaanaSuperBlack', bold, null, 'otf', $raanan-unicode-range);
 @include font-face(Assistant, '../fonts/Assistant/Assistant-Regular', null, null, 'ttf');
 @include font-face(Assistant, '../fonts/Assistant/Assistant-Bold', 700, null, 'ttf');
+@include font-face(Assistant, '../fonts/Assistant/Assistant-ExtraBold', 900, null, 'ttf');
 @include font-face(Assistant, '../fonts/Assistant/Assistant-SemiBold', 500, null, 'ttf');
 
 $font__ariel-rounded: RaananSuper;
