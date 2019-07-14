@@ -110,4 +110,13 @@ class Foody_Course {
 		return $recommendations_steps;
 	}
 
+	public function the_legal_text() {
+		the_field('legal');
+	}
+
+	public function get_legal_registration_link() {
+		$legal_registration_link = get_field( 'legal_registration_link' );
+
+		return $legal_registration_link;
+	}
 }

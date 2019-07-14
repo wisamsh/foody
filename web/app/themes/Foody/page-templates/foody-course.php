@@ -208,6 +208,17 @@ $course = new Foody_Course();
 
             </div>
 
+            <div class="divider"></div>
+
+            <div class="legal-text">
+				<?php $course->the_legal_text() ?>
+            </div>
+
+            <div class="legal-registration-link">
+                <?php
+                foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $course->get_legal_registration_link() ) );
+                ?>
+            </div>
         </div><!-- #primary -->
 
     </div><!-- #main-content -->
