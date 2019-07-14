@@ -135,7 +135,7 @@ class Foody_White_Label_Loader
         require_once PLUGIN_DIR . 'functions/includes.php';
 
 
-        Foody_WhiteLabelPostMapping::createTable();
+//        Foody_WhiteLabelPostMapping::createTable();
     }
 
 }

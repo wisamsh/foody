@@ -24,7 +24,7 @@ if (!function_exists('foody_setup')) :
          * If you're building a theme based on Foody, use a find and replace
          * to change 'foody' to the name of your theme in all the template files.
          */
-        load_theme_textdomain('foody', get_template_directory() . '/languages');
+//        load_theme_textdomain('foody', get_template_directory() . '/languages');
 
         // Add default posts and comments RSS feed links to head.
         add_theme_support('automatic-feed-links');
@@ -153,6 +153,11 @@ function foody_scripts()
         if (!empty($current_post)) {
             $post_content = $current_post->post_content;
         }
+
+        $lazy_asset = foody_get_versioned_asset('lazy');
+        wp_enqueue_script('foody-script-lazy', $lazy_asset, false, false, false);
+
+
         // Homepage
         if (is_front_page() || is_home() || is_404()) {
             $homepage_asset = foody_get_versioned_asset('homepage');

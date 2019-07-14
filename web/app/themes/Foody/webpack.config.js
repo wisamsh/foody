@@ -75,6 +75,7 @@ module.exports = env => {
         ],
         entry: {
             admin: ["./resources/js/admin"],
+            lazy: ["./resources/js/lazy.entry"],
             author: ["./resources/js/author.entry", "./resources/js/page-load.entry"],
             campaign: ["./resources/js/campaign.entry", "./resources/js/page-load.entry"],
             categories: ["./resources/js/categories.entry", "./resources/js/page-load.entry"],
