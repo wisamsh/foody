@@ -73,4 +73,41 @@ class Foody_Course {
 
 		return $how_it_works_steps_registration;
 	}
+
+	public function get_course_plan_title() {
+		$course_plan_title = get_field( 'course_plan_title' );
+
+		return $course_plan_title;
+	}
+
+	public function get_course_plan_classes() {
+		$course_plan_classes = get_field( 'course_plan_classes' );
+
+		return $course_plan_classes;
+	}
+
+	public function get_course_plan_registration_link() {
+		$course_plan_steps_registration = get_field( 'course_plan_classes_registration_link' );
+
+		return $course_plan_steps_registration;
+	}
+
+	public function get_promotions() {
+		$promotions = get_field( 'promotion' );
+
+		return $promotions;
+	}
+
+	public function get_recommendations_title() {
+		$recommendations_title = get_field( 'recommending_customers_title' );
+
+		return $recommendations_title;
+	}
+
+	public function get_recommendations() {
+		$recommendations_steps = get_field( 'recommending_customers_recommendations' );
+
+		return $recommendations_steps;
+	}
+
 }

@@ -120,6 +120,94 @@ $course = new Foody_Course();
                 </span>
             </div>
 
+            <div class="course-plan">
+
+                <div class="title course-plan-title">
+					<?php echo $course->get_course_plan_title(); ?>
+                </div>
+                <div class="course-plan-container">
+
+                    <div class="course-plan-classes">
+						<?php
+						$course_plan_classes = $course->get_course_plan_classes();
+						foreach ( $course_plan_classes as $index => $class ) {
+							echo '<div class="course-class-item">';
+							echo '<span class="course-class-number">' . ( $index + 1 ) . '</span>';
+							echo '<span class="course-class-name">' . $class['class_name'] . '</span>';
+							echo '<span class="course-class-info">' . $class['class_info'] . '</span>';
+							echo '</div>';
+						}
+						?>
+
+                    </div>
+
+                    <span class="classes-registration-link">
+                    <?php
+                    foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $course->get_course_plan_registration_link() ) );
+                    ?>
+                </span>
+                </div>
+            </div>
+
+            <div class="course-promtions">
+				<?php
+				$promotions = $course->get_promotions();
+				foreach ( $promotions as $promotion ) {
+					$link  = isset( $promotion['link'] ) ? $promotion['link'] : '';
+					$image = $promotion['image'];
+
+					echo '<span class="course-promtion">';
+					if ( ! empty( $link ) ) {
+						echo '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
+					}
+					echo '<img src="' . $image['url'] . '">';
+
+					if ( ! empty( $link ) ) {
+						echo '</a>';
+					}
+
+					echo '</span>';
+				}
+				?>
+            </div>
+
+            <!-- TODO: coupons  -->
+
+
+            <div class="recommendations">
+
+                <div class="title recommendations-title">
+					<?php echo $course->get_recommendations_title(); ?>
+                </div>
+
+				<?php
+				$slider_data = [
+					'slidesToShow'   => 1,
+					'rtl'            => true,
+					'prevArrow'      => '<i class="icon-arrowleft prev"></i>',
+					'nextArrow'      => '<i class="icon-arrowleft next"></i>',
+					'dots'           => true,
+					'slidesToScroll' => 1,
+					'infinite'       => true
+				]
+				?>
+                <div class="recommendations-container"
+                     data-slick='<?php echo json_encode( $slider_data, ENT_QUOTES ) ?>'>
+
+					<?php
+					$recommendations = $course->get_recommendations();
+					foreach ( $recommendations as $recommendation ) {
+						echo '<div class="recommendation-item">';
+						echo '<div class="recommendation-text">' . $recommendation['text'] . '</div>';
+						echo '<div class="recommendation-name">' . $recommendation['name'] . '</div>';
+						echo '</div>';
+					}
+					?>
+
+                </div>
+
+            </div>
+
         </div><!-- #primary -->
 
     </div><!-- #main-content -->

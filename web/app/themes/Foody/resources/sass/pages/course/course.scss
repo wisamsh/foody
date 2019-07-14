@@ -60,14 +60,15 @@
           }
 
           &.information-registration-link {
-            a {
-              font-size: 28px;
-              font-weight: 700;
-              border-radius: 15px;
-              background-color: #ef4049;
-              padding: 0.5rem 3rem;
-              color: white;
-            }
+            //a {
+            //  font-size: 28px;
+            //  font-weight: 700;
+            //  border-radius: 15px;
+            //  background-color: #ef4049;
+            //  padding: 0.5rem 3rem;
+            //  color: white;
+            //}
+            @import "course-registration-button";
           }
         }
       }
@@ -107,7 +108,9 @@
 
     .how-it-works {
       background: #b6e6faa8;
-      padding: 0.5rem;
+      padding: 0.5rem 0.5rem 1.5rem;
+      margin: 15px 0;
+      text-align: center;
 
       .how-it-works-title {
         text-align: center;
@@ -116,23 +119,24 @@
       }
 
       .how-it-works-bullets {
+        text-align: right;
+        padding: 15px 0 25px;
 
         .how-it-works-item {
           display: inline-block;
           vertical-align: top;
           width: 33%;
-          padding: 0.5rem 0;
-          padding-right: 1rem;
+          padding: 0.5rem 1rem 0.5rem 0;
 
           .how-it-works-step-number {
             display: inline-block;
             vertical-align: top;
             text-align: center;
-            width: 13%;
+            padding: 0.5% 5%;
             border-radius: 50%;
             background-color: #ef4049;
             color: white;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 900;
           }
 
@@ -148,6 +152,127 @@
           &:not(:last-child) {
             border-left: 1px solid white;
           }
+        }
+      }
+
+      .how-it-works-registration-link {
+        @import "course-registration-button";
+      }
+    }
+
+    .course-plan {
+      text-align: center;
+      margin: 15px 0;
+
+      .course-plan-title {
+        font-size: 28px;
+        font-weight: 900;
+        color: var(--color__text-primary-dark);
+      }
+
+      .course-plan-container {
+        background-color: #e7e4e4;
+        padding: 1rem 1rem 2rem;
+
+        .course-plan-classes {
+          margin-bottom: 2rem;
+
+          .course-class-item {
+            background-color: white;
+            margin-bottom: 1rem;
+            padding: 1rem 1.5rem;
+
+            .course-class-number {
+              font-size: 28px;
+              font-weight: 900;
+              color: var(--color__text-title);
+              display: inline-block;
+              vertical-align: middle;
+              margin-left: 2rem;
+            }
+
+            .course-class-name {
+              display: inline-block;
+              vertical-align: middle;
+              width: 12%;
+              text-align: right;
+              font-weight: 700;
+              line-height: normal;
+              margin-left: 2rem;
+            }
+
+            .course-class-info {
+              display: inline-block;
+              vertical-align: middle;
+              width: 75%;
+              text-align: right;
+              line-height: normal;
+            }
+          }
+        }
+
+        .classes-registration-link {
+          @import "course-registration-button";
+        }
+      }
+    }
+
+    .course-promtions {
+      text-align: center;
+      margin: 15px 0;
+
+      .course-promtion {
+        display: inline-block;
+        vertical-align: top;
+        width: 33%;
+      }
+    }
+
+    .recommendations {
+      text-align: center;
+      margin: 15px 0;
+
+      .recommendations-title {
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .recommendations-container {
+        opacity: 0;
+        height: 0;
+        transition: opacity 0.1s;
+        margin: 20px 0;
+
+        &.slick-initialized {
+          opacity: 1;
+          height: auto;
+        }
+
+        i.slick-arrow {
+          position: absolute;
+          top: 1rem;
+
+          &:before {
+            color: var(--color__primary);
+          }
+
+          &.prev {
+            &:before {
+              transform: rotate(180deg);
+              display: inline-block;
+            }
+
+            right: 1rem;
+          }
+
+          &.next {
+            left: 1rem;
+          }
+        }
+
+        .recommendation-item {
+          //Override inline width
+          width: 85% !important;
         }
       }
     }

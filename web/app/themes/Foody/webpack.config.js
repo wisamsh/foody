@@ -79,6 +79,7 @@ module.exports = env => {
             campaign: ["./resources/js/campaign.entry", "./resources/js/page-load.entry"],
             categories: ["./resources/js/categories.entry", "./resources/js/page-load.entry"],
             channel: ["./resources/js/channel.entry", "./resources/js/page-load.entry"],
+            course: ["./resources/js/course.entry", "./resources/js/page-load.entry"],
             homepage: ["./resources/js/page-load.entry", "./resources/js/homepage.entry"],
             general: ["./resources/js/general.entry", "./resources/js/page-load.entry"],
             items: ["./resources/js/items.entry", "./resources/js/page-load.entry"],
