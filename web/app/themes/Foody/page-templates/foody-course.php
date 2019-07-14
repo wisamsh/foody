@@ -13,11 +13,12 @@ $course = new Foody_Course();
 
 ?>
 
-    <!--    <div class="sticky-registration">-->
-    <!--		--><?php
-//		foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $course->get_floating_registration_button() ) );
-//		?>
-    <!--    </div>-->
+    <div class="sticky-registration">
+		<?php
+		foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $course->get_floating_registration_button() ) );
+		?>
+    </div>
+
     <div id="main-content" class="main-content">
 
         <div id="primary" class="content-area">
@@ -149,14 +150,14 @@ $course = new Foody_Course();
                 </div>
             </div>
 
-            <div class="course-promtions">
+            <div class="course-promotions">
 				<?php
 				$promotions = $course->get_promotions();
 				foreach ( $promotions as $promotion ) {
 					$link  = isset( $promotion['link'] ) ? $promotion['link'] : '';
 					$image = $promotion['image'];
 
-					echo '<span class="course-promtion">';
+					echo '<span class="course-promotion">';
 					if ( ! empty( $link ) ) {
 						echo '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
 					}
@@ -171,7 +172,27 @@ $course = new Foody_Course();
 				?>
             </div>
 
-            <!-- TODO: coupons  -->
+            <div class="course-coupon-promotions">
+				<?php
+				$coupon_promotions = $course->get_coupon_promotions();
+				foreach ( $coupon_promotions as $coupon_promotion ) {
+					$link  = isset( $coupon_promotion['link'] ) ? $coupon_promotion['link'] : '';
+					$image = $coupon_promotion['image'];
+
+					echo '<span class="course-coupon-promotion">';
+					if ( ! empty( $link ) ) {
+						echo '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
+					}
+					echo '<img src="' . $image['url'] . '">';
+
+					if ( ! empty( $link ) ) {
+						echo '</a>';
+					}
+
+					echo '</span>';
+				}
+				?>
+            </div>
 
 
             <div class="recommendations">
@@ -215,10 +236,26 @@ $course = new Foody_Course();
             </div>
 
             <div class="legal-registration-link">
-                <?php
-                foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $course->get_legal_registration_link() ) );
-                ?>
+				<?php
+				foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $course->get_legal_registration_link() ) );
+				?>
             </div>
+
+            <section class="course-share socials">
+				<?php foody_get_template_part( get_template_directory() . '/template-parts/content-social-actions.php', [ 'exclude' => [ 'print' ] ] ) ?>
+            </section>
+
+            <section class="newsletter-container no-print">
+				<?php
+				foody_get_template_part( get_template_directory() . '/template-parts/content-newsletter.php', [
+					'button_classes' => 'col-2',
+					'input_classes'  => 'col-10',
+					'title'          => $course->get_newsletter_title(),
+					'checkbox_text'  => $course->get_newsletter_checkbox_text()
+				] );
+				?>
+            </section>
+
         </div><!-- #primary -->
 
     </div><!-- #main-content -->

@@ -98,6 +98,12 @@ class Foody_Course {
 		return $promotions;
 	}
 
+	public function get_coupon_promotions() {
+		$coupon_promotions = get_field( 'coupon_promotions' );
+
+		return $coupon_promotions;
+	}
+
 	public function get_recommendations_title() {
 		$recommendations_title = get_field( 'recommending_customers_title' );
 
@@ -111,12 +117,24 @@ class Foody_Course {
 	}
 
 	public function the_legal_text() {
-		the_field('legal');
+		the_field( 'legal' );
 	}
 
 	public function get_legal_registration_link() {
 		$legal_registration_link = get_field( 'legal_registration_link' );
 
 		return $legal_registration_link;
+	}
+
+	public function get_newsletter_title() {
+		$newsletter_title = get_field( 'newsletter_title' );
+
+		return $newsletter_title;
+	}
+
+	public function get_newsletter_checkbox_text() {
+		$newsletter_checkbox_text = get_field( 'newsletter_checkbox_text' );
+
+		return $newsletter_checkbox_text;
 	}
 }

@@ -1,4 +1,20 @@
 .foody_course-template-page-templates {
+  $margin-boxes: 2rem;
+  $title-size: 28px;
+
+  .sticky-registration {
+    opacity: 0;
+    pointer-events: none;
+    background-color: #01010178;
+    position: fixed;
+    width: 100%;
+    padding: 1rem 0;
+    top: 0;
+    left: 0;
+    text-align: center;
+    z-index: 2;
+    @import "course-registration-button";
+  }
 
   #primary {
 
@@ -19,11 +35,11 @@
     }
 
     .about {
-      margin: 15px 0;
+      margin: $margin-boxes 0;
     }
 
     .course-information {
-      margin: 15px 0;
+      margin: $margin-boxes 0;
       background-color: #e7e4e4;
 
       .course-information-top-section {
@@ -39,7 +55,7 @@
           padding: 0 2.5rem;
 
           .information-title {
-            font-size: 28px;
+            font-size: $title-size;
             font-weight: 900;
           }
 
@@ -78,11 +94,11 @@
       border: solid 3px #f05346;
       background-color: #ffffff;
       padding: 15px 20px;
-      margin: 15px 0;
+      margin: $margin-boxes 0;
 
       .course-is-for-title {
         text-align: center;
-        font-size: 28px;
+        font-size: $title-size;
         font-weight: 900;
       }
 
@@ -108,12 +124,12 @@
     .how-it-works {
       background: #b6e6faa8;
       padding: 0.5rem 0.5rem 1.5rem;
-      margin: 15px 0;
+      margin: $margin-boxes 0;
       text-align: center;
 
       .how-it-works-title {
         text-align: center;
-        font-size: 28px;
+        font-size: $title-size;
         font-weight: 900;
       }
 
@@ -135,7 +151,7 @@
             border-radius: 50%;
             background-color: #ef4049;
             color: white;
-            font-size: 28px;
+            font-size: $title-size;
             font-weight: 900;
           }
 
@@ -161,10 +177,10 @@
 
     .course-plan {
       text-align: center;
-      margin: 15px 0;
+      margin: $margin-boxes 0;
 
       .course-plan-title {
-        font-size: 28px;
+        font-size: $title-size;
         font-weight: 900;
         color: var(--color__text-primary-dark);
       }
@@ -172,6 +188,7 @@
       .course-plan-container {
         background-color: #e7e4e4;
         padding: 1rem 1rem 2rem;
+        margin-top: 1rem;
 
         .course-plan-classes {
           margin-bottom: 2rem;
@@ -183,7 +200,7 @@
             padding: 1rem 1.5rem;
 
             .course-class-number {
-              font-size: 28px;
+              font-size: $title-size;
               font-weight: 900;
               color: var(--color__text-title);
               display: inline-block;
@@ -217,23 +234,34 @@
       }
     }
 
-    .course-promtions {
+    .course-promotions {
       text-align: center;
-      margin: 15px 0;
+      margin: $margin-boxes 0;
 
-      .course-promtion {
+      .course-promotion {
         display: inline-block;
         vertical-align: top;
         width: 33%;
       }
     }
 
+    .course-coupon-promotions {
+      text-align: center;
+      margin: $margin-boxes 0;
+
+      .course-coupon-promotion {
+        display: inline-block;
+        width: 50%;
+        vertical-align: top;
+      }
+    }
+
     .recommendations {
       text-align: center;
-      margin: 15px 0;
+      margin: $margin-boxes 0;
 
       .recommendations-title {
-        font-size: 28px;
+        font-size: $title-size;
         font-weight: 900;
       }
 
@@ -312,7 +340,7 @@
     }
 
     .legal-text {
-      margin: 15px 0;
+      margin: $margin-boxes 0;
       padding: 2rem 1rem;
       text-align: right;
     }
@@ -322,6 +350,109 @@
       margin: 1rem 0 3rem;
       @import "course-registration-button";
     }
+
+    .course-share {
+      background-color: #b6e6faab;
+      padding: 1rem;
+
+      .social-title {
+        text-align: center;
+        font-size: $title-size;
+        font-weight: 700;
+      }
+
+      .essb_links_list {
+        text-align: center;
+
+        .essb_item {
+          a {
+            color: #b6e6fa !important;
+            background-color: #ef4049 !important;
+
+            &:hover {
+              color: #fff !important;
+            }
+          }
+
+          &.essb_link_whatsapp a:hover {
+            background-color: #1D9E11 !important;
+          }
+
+          &.essb_link_facebook a:hover {
+            background-color: #3a579a !important;
+          }
+
+          &.essb_link_pinterest a:hover {
+            background-color: #cd1c1f !important;
+          }
+
+          &.essb_link_gmail a:hover {
+            background-color: #dd4b39 !important;
+          }
+        }
+      }
+    }
+
+    .newsletter-container {
+      background-color: #ef4049;
+      padding: 10px 20px;
+      margin: $margin-boxes 0 10px;
+
+      .newsletter-title {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+        color: white;
+      }
+
+      .newsletter {
+        margin-bottom: 0;
+      }
+
+      p {
+        margin: 0;
+        text-align: right;
+
+        input:not([type="checkbox"]) {
+          border: none;
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+          background-color: #ffffff;
+
+          &[type="email"] {
+            width: 70%;
+            margin-left: 10px;
+            padding: 1rem 3px;
+            border-radius: 0;
+          }
+
+          &[type="submit"] {
+            font-size: $title-size;
+            font-weight: 700;
+            border-radius: 15px;
+            background-color: var(--color__text-primary-dark);
+            padding: 1rem 3rem;
+            color: white;
+            padding: 1rem 3rem;
+            vertical-align: middle;
+          }
+
+          &::placeholder {
+            opacity: 0.5;
+            font-size: 12px;
+            text-align: right;
+            color: #4a4a4a;
+          }
+        }
+
+        .accept-label {
+          color: white;
+        }
+      }
+
+      .foody-form-message {
+        text-align: right;
+      }
+    }
   }
 }
 
@@ -329,5 +460,123 @@
 
   .foody_course-template-page-templates {
 
+    #primary {
+
+      .cover-image {
+        padding: 0 1rem;
+      }
+
+      .cover-video {
+
+        iframe {
+          width: 100%;
+          height: auto;
+        }
+      }
+
+      .about {
+        padding: 0 1rem;
+      }
+
+      .course-information {
+        .course-information-top-section {
+          .information-item {
+            display: block;
+            width: 100%;
+            padding: 1rem 0;
+            margin-bottom: 1rem;
+
+            &:first-child {
+              border-bottom: 1px solid white;
+            }
+
+            &:last-child {
+              border-right: none;
+            }
+          }
+        }
+
+        .course-information-bottom-section {
+          padding: 1rem 0 3rem;
+
+          .information-item {
+            &.price {
+              position: static;
+              padding: 0 1rem 1rem;
+            }
+          }
+        }
+      }
+
+      .course-is-for {
+        margin: 2rem 1rem;
+
+        .course-is-for-title {
+          text-align: right;
+          padding-right: 40px;
+        }
+
+        .course-is-for-bullets {
+          .course-is-for-item {
+            display: block;
+            width: 100%;
+
+            &:nth-child(3n) {
+              margin-bottom: 2rem;
+            }
+          }
+        }
+      }
+
+      .how-it-works {
+        .how-it-works-bullets {
+          .how-it-works-item {
+            text-align: center;
+
+            .how-it-works-step-number {
+              padding: 0.5% 12%;
+              margin-bottom: 1rem;
+            }
+          }
+        }
+
+      }
+
+      .course-plan {
+        .course-plan-container {
+          .course-plan-classes {
+            .course-class-item {
+              .course-class-number {
+                margin-left: 1rem;
+              }
+
+              .course-class-name {
+                width: 24%;
+              }
+
+              .course-class-info {
+                width: 55%;
+              }
+            }
+          }
+        }
+      }
+
+      .course-share {
+        margin: 1rem 0;
+      }
+
+      .recommendations {
+        .recommendations-container {
+          .recommendation-item {
+            margin-bottom: 1rem;
+          }
+        }
+      }
+
+      .newsletter-container {
+        display: none;
+      }
+    }
   }
 }
