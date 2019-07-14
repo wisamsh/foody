@@ -48,11 +48,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 <div id="page" class="site">
 
     <header id="masthead" class="site-header no-print">
-        <?php if (!is_multisite() || is_main_site()): ?>
-            <div class="run d-block d-lg-none">
-                <?php echo __('בהרצה') ?>
-            </div>
-        <?php else: ?>
+        <?php if (is_multisite() && !is_main_site()): ?>
             <?php $header->the_foody_collaboration(false); ?>
         <?php endif; ?>
 
@@ -64,11 +60,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                 <div class="search-bar search-bar-container">
                     <?php get_search_form(); ?>
                 </div>
-                <?php if (!is_multisite() || is_main_site()): ?>
-                    <span class="run-desktop run">
-                    <?php echo __('בהרצה') ?>
-                </span>
-                <?php else: ?>
+                <?php if (is_multisite() && !is_main_site()): ?>
                     <?php $header->the_foody_collaboration(true); ?>
                 <?php endif; ?>
                 <?php
@@ -78,7 +70,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
                     ?>
                     <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility"
-                            data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
+                            data-acsb="trigger" aria-label="פתיחת תפריט נגישות">
                         <?php $header->accessibility(); ?>
                         <div id="accessibility-container"></div>
                     </button>
@@ -121,7 +113,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
                 <?php if ($show_accessibility): ?>
                     <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility"
-                            data-accessibe="trigger" aria-label="פתיחת תפריט נגישות">
+                            data-acsb="trigger" aria-label="פתיחת תפריט נגישות">
                         <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
                              alt="<?php echo __('נגישות') ?>">
                         <div id="accessibility-container"></div>
