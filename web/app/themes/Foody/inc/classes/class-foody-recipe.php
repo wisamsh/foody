@@ -32,15 +32,8 @@ class Foody_Recipe extends Foody_Post
     public function __construct(WP_Post $post = null)
     {
         parent::__construct($post);
-        if ($post != null) {
-
-            $this->init();
-
-            $this->duration = $this->video['duration'];
-
-        } else {
-            $this->duration = '2.45';
-        }
+        $this->init_video();
+        $this->duration = $this->video['duration'];
     }
 
 
@@ -349,9 +342,8 @@ class Foody_Recipe extends Foody_Post
      * */
 
 
-    private function init()
+    public function init()
     {
-        $this->init_video();
         $this->init_ingredients();
         $this->init_overview();
         $this->init_nutrients();

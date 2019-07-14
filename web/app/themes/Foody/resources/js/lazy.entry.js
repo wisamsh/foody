@@ -5,7 +5,7 @@ window.lazySizesConfig = window.lazySizesConfig || {};
 lazySizesConfig.srcAttr = 'data-foody-src';
 lazySizesConfig.preloadAfterLoad = true;
 
-//page is optimized for fast onload event
+// page is optimized for fast onload event
 // lazySizesConfig.loadMode = 1;
 
 require('lazysizes');

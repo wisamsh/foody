@@ -135,8 +135,8 @@ class Foody_HomePage
 
         echo "<div class=\"sidebar-content\">";
         dynamic_sidebar($sidebar_name);
-//        dynamic_sidebar('foody-social');
-        foody_dynamic_sidebar_ajax_loading('foody-social',$container_selector);
+        dynamic_sidebar('foody-social');
+//        foody_dynamic_sidebar_ajax_loading('foody-social',$container_selector);
         echo "</div></aside>";
     }
 
