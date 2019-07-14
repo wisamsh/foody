@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb8e2eca6b80444eb1f142af2d7b62c1",
+    "content-hash": "71c28e0f5488ad4770a283f4aedea9f4",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -193,6 +193,17 @@
             "type": "wordpress-plugin"
         },
         {
+            "name": "enrique-chavez/jwt-authentication-for-wp-rest-api",
+            "version": "1.2.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/jwt-authentication-for-wp-rest-api.1.2.6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "exactly-www/ewww-image-optimizer",
             "version": "4.8.0",
             "dist": {
@@ -209,6 +220,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/wp-user-avatar.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "humanmade/Restsplain",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/humanmade/Restsplain/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },

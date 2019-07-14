@@ -144,6 +144,7 @@ require_once get_template_directory() . "/functions/theme.php";
 require_once get_template_directory() . "/functions/client-messages.php";
 require_once get_template_directory() . "/functions/cookies.php";
 require_once get_template_directory() . "/functions/pages.php";
+require_once get_template_directory() . "/functions/users.php";
 if (defined('WP_ENV') && in_array(WP_ENV,['local','development-mu'])){
     require_once get_template_directory() . "/functions/debug.php";
 }
@@ -166,3 +167,6 @@ require_once get_template_directory() . "/inc/shortcodes/shortcode-recipe.php";
  * Plugins
  * */
 
+// Foody API
+
+require_once get_template_directory() . "/foody-api/foody-api.php";
