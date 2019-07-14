@@ -8,12 +8,14 @@
 
 $input_classes = foody_get_array_default($template_args,'input_classes','col-9 col-lg-7');
 $button_classes = foody_get_array_default($template_args,'button_classes','col-3 col-lg-3 offset-lg-1');
+$title = isset( $template_args['title'] ) ? $template_args['title'] : 'אל תפספסו את המתכונים החמים!';
+
 ?>
 
 
 
 <div class="newsletter-title">
-    <?php echo __('אל תפספסו את המתכונים החמים!', 'foody'); ?>
+	<?php echo __( $title, 'foody' ); ?>
 </div>
 
 <section class="newsletter">
