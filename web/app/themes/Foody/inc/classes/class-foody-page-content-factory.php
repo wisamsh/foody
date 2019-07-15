@@ -52,6 +52,7 @@ class Foody_PageContentFactory
             switch ($post_type) {
                 case 'foody_recipe':
                     $page = new Foody_Recipe($post);
+                    $page->init();
                     break;
                 case 'foody_channel':
                     $page = new Foody_Channel($post);
