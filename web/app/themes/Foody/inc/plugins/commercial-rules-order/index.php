@@ -22,7 +22,7 @@ class FoodyCommercialRulesOrdering_Plugin {
 		return self::$instance;
 	}
 
-	protected function should_kick_in() {
+	protected function should_rules_kick_in() {
 		if ( ! is_admin() ) {
 			return false;
 		}
@@ -54,7 +54,7 @@ class FoodyCommercialRulesOrdering_Plugin {
 
 	function alter_rules_search( $qry ) {
 
-		if ( ! $this->should_kick_in() ) {
+		if ( ! $this->should_rules_kick_in() ) {
 			return;
 		}
 
@@ -69,7 +69,7 @@ class FoodyCommercialRulesOrdering_Plugin {
 
 	function sort_rules_js() {
 
-		if ( ! $this->should_kick_in() ) {
+		if ( ! $this->should_rules_kick_in() ) {
 			return;
 		}
 		wp_enqueue_script( 'jquery-ui', '//code.jquery.com/ui/1.10.3/jquery-ui.js', array( 'jquery' ), false, true );

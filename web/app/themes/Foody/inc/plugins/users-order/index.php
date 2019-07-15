@@ -21,7 +21,7 @@ class SimpleUserOrdering_Plugin {
 		return self::$instance;
 	}
 
-	protected function should_kick_in() {
+	protected function should_users_kick_in() {
 		if ( ! is_admin() ) return FALSE;
 		$screen = get_current_screen();
 		if ( $screen->id !== 'users' ) return FALSE;
@@ -45,7 +45,7 @@ class SimpleUserOrdering_Plugin {
 
 	function alter_user_search($qry) {
 
-		if ( ! $this->should_kick_in() ) return;
+		if ( ! $this->should_users_kick_in() ) return;
 
 		// doing outer join to make sure to include any users that might be missing 'menu_order' value in wp_usermeta
 		/** @var $qry WP_User_Query */
@@ -59,7 +59,7 @@ class SimpleUserOrdering_Plugin {
 
 	function sort_users_js() {
 
-		if ( ! $this->should_kick_in() ) return;
+		if ( ! $this->should_users_kick_in() ) return;
 		?>
 		<script type="text/javascript">
             jQuery(function($){
