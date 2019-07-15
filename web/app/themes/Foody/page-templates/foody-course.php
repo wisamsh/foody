@@ -104,10 +104,13 @@ $course = new Foody_Course();
 
 					<?php
 					$how_it_works_steps = $course->get_how_it_works();
-					foreach ( $how_it_works_steps as $step ) {
+					foreach ( $how_it_works_steps as $index => $step ) {
 						echo '<span class="how-it-works-item">';
 						echo '<span class="how-it-works-step-number">' . $step['step_number_text'] . '</span>';
 						echo '<span class="how-it-works-step">' . $step['step_text'] . '</span>';
+						if ( $index !== count( $how_it_works_steps ) - 1 ) {
+							echo '<hr class="divider"/>';
+						}
 						echo '</span>';
 					}
 					?>

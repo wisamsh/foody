@@ -138,10 +138,11 @@
         padding: 15px 0 25px;
 
         .how-it-works-item {
+          position: relative;
           display: inline-block;
           vertical-align: top;
           width: 33%;
-          padding: 0.5rem 1rem 0.5rem 0;
+          padding: 0.5rem 1rem;
 
           .how-it-works-step-number {
             display: inline-block;
@@ -151,7 +152,7 @@
             border-radius: 50%;
             background-color: #ef4049;
             color: white;
-            font-size: $title-size;
+            font-size: 25px;
             font-weight: 900;
           }
 
@@ -164,8 +165,13 @@
             line-height: 20px;
           }
 
-          &:not(:last-child) {
-            border-left: 1px solid white;
+          hr.divider {
+            transform: rotate(90deg);
+            width: 25%;
+            top: 25px;
+            left: -40px;
+            background-color: white;
+            position: absolute;
           }
         }
       }
@@ -532,10 +538,22 @@
         .how-it-works-bullets {
           .how-it-works-item {
             text-align: center;
+            padding: 0.5rem 1rem;
 
             .how-it-works-step-number {
-              padding: 0.5% 12%;
+              padding: 0.5% 15%;
               margin-bottom: 1rem;
+            }
+
+            .how-it-works-step {
+              padding-right: 0;
+            }
+
+            hr.divider {
+              width: 100%;
+              top: 65px;
+              left: -60px;
+              margin: 0;
             }
           }
         }
@@ -546,6 +564,8 @@
         .course-plan-container {
           .course-plan-classes {
             .course-class-item {
+              padding: 1rem;
+
               .course-class-number {
                 margin-left: 1rem;
               }
