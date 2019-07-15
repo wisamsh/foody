@@ -29,11 +29,11 @@ $wrap = isset($template_args['wrap']) && $template_args['wrap'];
     <?php
 
     if ($wrap) {
-        echo '<aside class="sidebar"> <section class="sidebar-content">';
+        echo '<aside class="sidebar sidebar-mobile"> <section class="sidebar-content">';
     }
 
     if (is_callable($sidebar)) {
-        $sidebar();
+        $sidebar('aside.sidebar-mobile .sidebar-content');
     }
 
     if ($wrap) {

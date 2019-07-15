@@ -17,7 +17,7 @@ class Foody_Recipe extends Foody_Post
 
     private $overview;
 
-    private $ingredients_groups;
+    public $ingredients_groups;
 
     private $ingredients_count;
 

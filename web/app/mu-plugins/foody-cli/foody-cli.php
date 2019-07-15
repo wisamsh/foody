@@ -51,6 +51,15 @@ if (defined('WP_CLI') && WP_CLI) {
             WP_CLI::success('plugins successfully activated');
         }
 
+        public function test(){
+            $arr = [
+                'a',
+                'b'
+            ];
+
+            echo esc_sql($arr);
+        }
+
     }
 
     WP_CLI::add_command('foody-cli', 'Foody_CLI');

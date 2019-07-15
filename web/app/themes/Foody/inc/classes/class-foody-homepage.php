@@ -122,9 +122,9 @@ class Foody_HomePage
         return $posts;
     }
 
-    public function sidebar()
+    public function sidebar($container_selector)
     {
-        echo "<aside class=\"sidebar col pl-0\">";
+        echo "<aside class=\"sidebar sidebar-desktop col pl-0\">";
 
         $sidebar_name = $this->sidebar_id;
         if (wp_is_mobile() && !foody_is_tablet()) {
@@ -135,7 +135,8 @@ class Foody_HomePage
 
         echo "<div class=\"sidebar-content\">";
         dynamic_sidebar($sidebar_name);
-        dynamic_sidebar('foody-social');
+//        dynamic_sidebar('foody-social');
+        foody_dynamic_sidebar_ajax_loading('foody-social',$container_selector);
         echo "</div></aside>";
     }
 
