@@ -35,9 +35,9 @@ class SimpleUserOrdering_Plugin {
 		add_action( 'wp_ajax_my_action',                        array( $this, 'ajax_update' )                           );
 		add_action( 'user_register',                            array( $this, 'registration_save' )                     );
 		add_filter( 'manage_users_columns',                     array( $this, 'add_user_id_column' )                    );
-		add_action( 'manage_users_custom_column',               array( $this, 'show_menu_order_column_content' ), 10, 3 );
+		add_action( 'manage_users_custom_column',               array( $this, 'show_users_menu_order_column_content' ), 10, 3 );
 		add_filter( 'get_user_option_manageuserscolumnshidden', array( $this, 'hide_column' )                           );
-		add_filter( 'views_users' ,                             array( $this, 'sort_by_order_link' )                    );
+		add_filter( 'views_users' ,                             array( $this, 'sort_users_by_order_link' )                    );
 
 	}
 
@@ -242,7 +242,7 @@ class SimpleUserOrdering_Plugin {
 		$columns['menu_order'] = 'Order';
 		return $columns;
 	}
-	function show_menu_order_column_content($value, $column_name, $user_id) {
+	function show_users_menu_order_column_content($value, $column_name, $user_id) {
 
 		if ( 'menu_order' == $column_name )
 			return get_the_author_meta( 'menu_order', $user_id );
@@ -256,7 +256,7 @@ class SimpleUserOrdering_Plugin {
 		return $result;
 	}
 
-	function sort_by_order_link( $views ) {
+	function sort_users_by_order_link( $views ) {
 		$orderby = isset( $_GET['orderby'] ) ? $_GET['orderby'] : '';
 		$class = empty( $orderby ) ? 'current' : '';
 		$query_string = remove_query_arg( array( 'orderby', 'order' ) );

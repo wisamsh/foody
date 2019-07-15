@@ -8,7 +8,7 @@
 
 
 $plugins = array('users-order');
-$plugins = array('commercial-rules-order');
+array_push($plugins, 'commercial-rules-order');
 
 $custom_plugins_path = get_template_directory() . '/inc/plugins/';
 
