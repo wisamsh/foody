@@ -67,6 +67,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-accessory.php"
 require_once get_template_directory() . "/inc/classes/class-foody-technique.php";
 require_once get_template_directory() . "/inc/classes/class-foody-ingredient.php";
 require_once get_template_directory() . "/inc/classes/class-foody-recipe.php";
+require_once get_template_directory() . "/inc/classes/class-foody-course.php";
 require_once get_template_directory() . "/inc/classes/class-foody-playlist.php";
 require_once get_template_directory() . "/inc/classes/class-foody-channel.php";
 require_once get_template_directory() . "/inc/classes/class-foody-grid.php";

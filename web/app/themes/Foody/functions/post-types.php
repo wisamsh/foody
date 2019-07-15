@@ -51,6 +51,20 @@ function register_post_types()
                 'with_front' => true
             )
         ),
+        'course' => array(
+	        'id' => 'course',
+	        'name' => 'קורסים',
+	        'singular_name' => 'קורס',
+	        'taxonomies' => array(),
+	        'show_in_menu' => is_main_site(),
+	        'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
+	        'unsupported' => array('editor'),
+	        'show_ui' => true,
+	        'rewrite' => array(
+		        'slug' => 'academy',
+		        'with_front' => true
+	        )
+        ),
         'channel' => array(
             'id' => 'channel',
             'name' => 'ערוצים',

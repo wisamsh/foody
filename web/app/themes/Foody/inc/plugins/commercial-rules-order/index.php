@@ -22,7 +22,7 @@ class FoodyCommercialRulesOrdering_Plugin {
 		return self::$instance;
 	}
 
-	protected function should_kick_in() {
+	protected function should_rules_kick_in() {
 		if ( ! is_admin() ) {
 			return false;
 		}
@@ -45,16 +45,16 @@ class FoodyCommercialRulesOrdering_Plugin {
 		add_filter( 'manage_foody_comm_rule_posts_columns', array( $this, 'add_foody_comm_rule_id_column' ) );
 		add_action( 'manage_foody_comm_rule_posts_custom_column', array(
 			$this,
-			'show_menu_order_column_content'
+			'show_rules_menu_order_column_content'
 		), 10, 2 );
 //		add_filter( 'manage_foody_comm_rule_posts_columns', array( $this, 'hide_foody_comm_rule_id_column' ) );
-		add_filter( 'views_foody_comm_rule', array( $this, 'sort_by_order_link' ) );
+		add_filter( 'views_foody_comm_rule', array( $this, 'sort_rules_by_order_link' ) );
 	}
 
 
 	function alter_rules_search( $qry ) {
 
-		if ( ! $this->should_kick_in() ) {
+		if ( ! $this->should_rules_kick_in() ) {
 			return;
 		}
 
@@ -69,7 +69,7 @@ class FoodyCommercialRulesOrdering_Plugin {
 
 	function sort_rules_js() {
 
-		if ( ! $this->should_kick_in() ) {
+		if ( ! $this->should_rules_kick_in() ) {
 			return;
 		}
 		wp_enqueue_script( 'jquery-ui', '//code.jquery.com/ui/1.10.3/jquery-ui.js', array( 'jquery' ), false, true );
@@ -262,7 +262,7 @@ class FoodyCommercialRulesOrdering_Plugin {
 		return $columns;
 	}
 
-	function show_menu_order_column_content( $column_name, $post_id ) {
+	function show_rules_menu_order_column_content( $column_name, $post_id ) {
 
 		if ( 'menu_order' == $column_name ) {
 			echo get_post_meta( $post_id, 'menu_order', true );
@@ -277,7 +277,7 @@ class FoodyCommercialRulesOrdering_Plugin {
 //		return $columns;
 //	}
 
-	function sort_by_order_link( $views ) {
+	function sort_rules_by_order_link( $views ) {
 		$orderby          = isset( $_GET['orderby'] ) ? $_GET['orderby'] : '';
 		$class            = empty( $orderby ) ? 'current' : '';
 		$query_string     = remove_query_arg( array( 'orderby', 'order' ) );
