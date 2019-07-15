@@ -38,6 +38,7 @@ $homepage = new Foody_HomePage();
 
                 <section class="sidebar-container d-none d-lg-block">
                     <?php
+
                     $homepage->sidebar('aside.sidebar-desktop  .sidebar-content');
                     ?>
                 </section>

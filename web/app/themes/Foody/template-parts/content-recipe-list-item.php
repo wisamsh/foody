@@ -31,7 +31,7 @@ $lazy = !empty($template_args['lazy']);
     <a href="<?php echo $recipe->link ?>" <?php echo $target?>>
         <div class="image-container main-image-container">
             <?php if ($lazy): ?>
-                <img class="recipe-item-image feed-item-image lazyload" data-foody-src="<?php echo $recipe->getImage() ?>" alt="<?php echo image_alt_by_url($recipe->getImage())?>">
+                <img src="<?php echo $GLOBALS['images_dir'] . 'recipe-placeholder.svg'?>" class="recipe-item-image feed-item-image lazyload" data-foody-src="<?php echo $recipe->getImage() ?>" alt="<?php echo image_alt_by_url($recipe->getImage())?>">
             <?php else: ?>
                 <img class="recipe-item-image feed-item-image" src="<?php echo $recipe->getImage() ?>" alt="<?php echo image_alt_by_url($recipe->getImage())?>">
 
@@ -74,7 +74,7 @@ $lazy = !empty($template_args['lazy']);
     <section class="recipe-item-details  d-flex">
         <div class="image-container col-12 nopadding">
             <a href="<?php echo $recipe->get_author_link() ?>">
-                <img src="<?php echo $recipe->getAuthorImage() ?>" alt="">
+                <img class="lazyload" src="<?php echo $GLOBALS['images_dir'] . 'author-placeholder.svg'?>" data-foody-src="<?php echo $recipe->getAuthorImage() ?>" alt=" <?php echo $recipe->getAuthorName() ?>">
             </a>
             <ul>
                 <li>
