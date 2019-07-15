@@ -182,6 +182,11 @@
         }
       }
 
+      .how-it-works-image {
+        padding: 15px 15px 25px;
+        width: 100%;
+      }
+
       .how-it-works-registration-link {
         @import "course-registration-button";
       }
@@ -546,21 +551,26 @@
           .how-it-works-item {
             text-align: center;
             padding: 0.5rem 1rem;
+            display: block;
+            width: 100%;
 
             .how-it-works-step-number {
-              padding: 0.5% 15%;
+              padding: 0.5% 4%;
               margin-bottom: 1rem;
             }
 
             .how-it-works-step {
-              padding-right: 0;
+              display: block;
+              width: 100%;
+              padding: 0 2rem;
             }
 
             hr.divider {
-              width: 100%;
-              top: 65px;
-              left: -60px;
-              margin: 0;
+              width: 85%;
+              top: 10px;
+              left: -1rem;
+              transform: none;
+              position: relative;
             }
           }
         }
@@ -577,15 +587,31 @@
                 margin-left: 1rem;
               }
 
-              .course-class-name {
-                width: 24%;
-              }
+              .course-class-details {
+                display: inline-block;
+                vertical-align: middle;
+                width: 80%;
+                margin-right: 5%;
 
-              .course-class-info {
-                width: 55%;
+                .course-class-name {
+                  display: block;
+                  width: 100%;
+                }
+
+                .course-class-info {
+                  display: block;
+                  width: 100%;
+                }
               }
             }
           }
+        }
+      }
+
+      .course-promotions {
+        .course-promotion {
+          display: block;
+          width: 100%;
         }
       }
 
@@ -597,6 +623,10 @@
         .recommendations-container {
           .recommendation-item {
             margin-bottom: 1rem;
+
+            .recommendation-name {
+              margin-top: 0.5rem;
+            }
           }
         }
       }

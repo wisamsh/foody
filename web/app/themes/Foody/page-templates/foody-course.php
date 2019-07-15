@@ -125,6 +125,15 @@ $course = new Foody_Course();
 
                 </div>
 
+                <div class="how-it-works-image">
+					<?php
+					$image = $course->get_how_it_works_image();
+					if ( ! empty( $image ) ) {
+						echo '<img src="' . $image . '" alt="">';
+					}
+					?>
+                </div>
+
                 <span class="how-it-works-registration-link">
                     <?php
                     foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $course->get_how_it_works_registration_link() ) );
@@ -145,8 +154,10 @@ $course = new Foody_Course();
 						foreach ( $course_plan_classes as $index => $class ) {
 							echo '<div class="course-class-item">';
 							echo '<span class="course-class-number">' . ( $index + 1 ) . '</span>';
-							echo '<span class="course-class-name">' . $class['class_name'] . '</span>';
-							echo '<span class="course-class-info">' . $class['class_info'] . '</span>';
+                            echo '<span class="course-class-details">';
+                                echo '<span class="course-class-name">' . $class['class_name'] . '</span>';
+                                echo '<span class="course-class-info">' . $class['class_info'] . '</span>';
+							echo '</span>';
 							echo '</div>';
 						}
 						?>
