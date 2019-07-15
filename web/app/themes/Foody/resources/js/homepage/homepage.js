@@ -25,9 +25,10 @@ jQuery(document).ready(($) => {
         sort: '#sort-homepage-feed'
     });
 
-
-    foodyAjax({action: 'load_foody_social'}, (err, data) => {
-        console.log(data);
-        $('aside.sidebar-desktop  .sidebar-content').append(data);
-    })
+    if(!foodyGlobals.isMobile){
+        foodyAjax({action: 'load_foody_social'}, (err, data) => {
+            console.log(data);
+            $('aside.sidebar-desktop  .sidebar-content').append(data);
+        })
+    }
 });

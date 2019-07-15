@@ -22,8 +22,8 @@ function load_foody_social()
             sbi_init();
         }
 
-        if(FB && FB.XFBML && typeof FB.XFBML.parse === 'function'){
-            FB.XFBML.parse();
+        if(window.FB && window.FB && window.FB.XFBML && typeof window.FB.XFBML.parse === 'function'){
+            window.FB.XFBML.parse();
         }
     </script>
     <?php

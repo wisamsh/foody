@@ -71,7 +71,7 @@ $lazy = !empty($template_args['lazy']);
     <section class="article-item-details  d-flex">
         <div class="image-container col-12 nopadding">
             <a href="<?php echo $article->get_author_link() ?>">
-                <img class="lazyload" src="<?php echo $GLOBALS['images_dir'] . 'author-placeholder.svg'?>" data-foody-src="<?php echo $article->getAuthorImage() ?>" alt=" <?php echo $article->getAuthorName() ?>">
+                <img class="lazyload" src="<?php echo $GLOBALS['images_dir'] . 'author-placeholder.svg'?>" data-foody-src="<?php echo $article->getAuthorImage() ?>" alt="<?php echo $article->getAuthorName() ?>">
             </a>
             <ul>
                 <li>

@@ -71,10 +71,11 @@ $lazy = !empty($template_args['lazy']);
             </div>
         </section>
     </section>
+
     <section class="recipe-item-details  d-flex">
         <div class="image-container col-12 nopadding">
             <a href="<?php echo $recipe->get_author_link() ?>">
-                <img class="lazyload" src="<?php echo $GLOBALS['images_dir'] . 'author-placeholder.svg'?>" data-foody-src="<?php echo $recipe->getAuthorImage() ?>" alt=" <?php echo $recipe->getAuthorName() ?>">
+                <img class="lazyload" src="<?php echo $GLOBALS['images_dir'] . 'author-placeholder.svg'?>" data-foody-src="<?php echo $recipe->getAuthorImage() ?>" alt="<?php echo $recipe->getAuthorName() ?>">
             </a>
             <ul>
                 <li>
