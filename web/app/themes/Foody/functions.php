@@ -198,10 +198,10 @@ function foody_scripts()
             wp_enqueue_script('foody-script-recipe', $post_asset, false, false, true);
         }
 
-	    if ( is_page_template( 'page-templates/foody-course.php' ) ) {
-		    $course_asset = foody_get_versioned_asset( 'course' );
-		    wp_enqueue_script( 'foody-script-course', $course_asset, false, false, true );
-	    }
+        if (is_page_template('page-templates/foody-course.php')) {
+            $course_asset = foody_get_versioned_asset('course');
+            wp_enqueue_script('foody-script-course', $course_asset, false, false, true);
+        }
 
         if (is_page_template('page-templates/items.php')) {
             $items_asset = foody_get_versioned_asset('items');
@@ -224,10 +224,10 @@ function foody_scripts()
             wp_enqueue_script('foody-script-author', $author_asset, false, false, true);
         }
 
-	    if ( is_tag() || in_array( get_post_type(), [ 'foody_ingredient', 'foody_accessory', 'foody_technique' ] ) ) {
-		    $tag_asset = foody_get_versioned_asset( 'tag' );
-		    wp_enqueue_script( 'foody-script-tag', $tag_asset, false, false, true );
-	    }
+        if (is_tag() || in_array(get_post_type(), ['foody_ingredient', 'foody_accessory', 'foody_technique'])) {
+            $tag_asset = foody_get_versioned_asset('tag');
+            wp_enqueue_script('foody-script-tag', $tag_asset, false, false, true);
+        }
 
         if (has_shortcode($post_content, 'foody_team')) {
             $team_asset = foody_get_versioned_asset('team');
@@ -245,6 +245,23 @@ function foody_scripts()
 
 add_action('wp_enqueue_scripts', 'foody_scripts');
 
+function foody_add_footer_styles()
+{
+
+    wp_register_style('sb_instagram_styles', content_url('/plugins/instagram-feed/css/sb-instagram.min.css') , array(), SBIVER);
+    wp_enqueue_style('sb_instagram_styles');
+
+    if(is_single()){
+        wp_register_style('wp-postratings', content_url('/plugins/wp-postratings/css/postratings-css.css') , false, WP_POSTRATINGS_VERSION, 'all');
+        wp_enqueue_style('wp-postratings');
+
+        wp_register_style('wp-postratings-rtl', content_url('/plugins/wp-postratings/css/postratings-css-rtl.css') , false, WP_POSTRATINGS_VERSION, 'all');
+        wp_enqueue_style('wp-postratings-rtl');
+    }
+}
+
+add_action('get_footer', 'foody_add_footer_styles', 10000000000000000);
+
 add_action('wp_print_styles', 'my_deregister_styles', 100000000000);
 
 function my_deregister_styles()
@@ -253,6 +270,38 @@ function my_deregister_styles()
     wp_dequeue_style('fontawesome');
     wp_deregister_style('fontawesome');
 }
+
+function foody_custom_dequeue()
+{
+
+    wp_deregister_style('sb_instagram_styles');
+    wp_dequeue_style('sb_instagram_styles');
+
+    wp_deregister_style('wp-postratings');
+    wp_dequeue_style('wp-postratings');
+    wp_deregister_style('wp-postratings-rtl');
+    wp_dequeue_style('wp-postratings-rtl');
+
+    global $wp_styles;
+
+    foreach ($wp_styles->registered as $handle=>$args) {
+        if($handle != 'easy-social-share-buttons'){
+            if(preg_match('/^essb-/', $handle)){
+                wp_deregister_style($handle);
+                wp_dequeue_style($handle);
+            }
+        }
+    }
+
+
+    wp_deregister_style('essb-social-followers-counter');
+    wp_dequeue_style('essb-social-followers-counter');
+
+}
+
+add_action('wp_print_styles', 'foody_custom_dequeue', 9999);
+add_action('wp_enqueue_scripts', 'foody_custom_dequeue', 9999);
+add_action('wp_head', 'foody_custom_dequeue', 9999);
 
 /**
  * Implement the Custom Header feature.
