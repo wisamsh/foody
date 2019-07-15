@@ -80,6 +80,12 @@ class Foody_Course {
 		return $how_it_works_steps_registration;
 	}
 
+	public function get_how_it_works_image() {
+		$how_it_works_image = get_field( 'how_it_works_image' );
+
+		return $how_it_works_image;
+	}
+
 	public function get_course_plan_title() {
 		$course_plan_title = get_field( 'course_plan_title' );
 
