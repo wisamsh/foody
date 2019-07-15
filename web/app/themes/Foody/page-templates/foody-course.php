@@ -93,6 +93,14 @@ $course = new Foody_Course();
 
                 </ul>
 
+                <div class="course-is-for-image">
+					<?php
+					$image = $course->get_course_is_for_image();
+					if ( ! empty( $image ) ) {
+						echo '<img src="' . $image . '" alt="">';
+					}
+					?>
+                </div>
             </div>
 
             <div class="how-it-works">

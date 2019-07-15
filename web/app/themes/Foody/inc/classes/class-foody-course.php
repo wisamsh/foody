@@ -56,6 +56,12 @@ class Foody_Course {
 		return $course_is_for_bullets;
 	}
 
+	public function get_course_is_for_image() {
+		$course_is_for_image = get_field( 'course_is_for_image' );
+
+		return $course_is_for_image;
+	}
+
 	public function get_how_it_works_title() {
 		$how_it_works_title = get_field( 'how_it_works_title' );
 
