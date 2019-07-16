@@ -4,12 +4,12 @@
 
 
 let json = '';
-let lottie = '';
-
-setTimeout(() => {
-    json = require('../../lottie/loader.js');
-    lottie = require('lottie-web/build/player/lottie.min');
-});
+// let lottie = '';
+//
+// setTimeout(() => {
+//     json = require('../../lottie/loader.js');
+//     lottie = require('lottie-web/build/player/lottie.min');
+// });
 
 module.exports = (function () {
 
