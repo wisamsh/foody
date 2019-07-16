@@ -156,14 +156,14 @@ class Foody_Profile
 
     public function channels_tab()
     {
-        $results = $this->foody_user->get_followed_content(0, 10, true);
-        $count = 0;
-        if (isset($results[0]) && isset($results[0]->count)) {
-            $count = $results[0]->count;
-        }
+	    $results = $this->foody_user->get_followed_content( true );
+	    $count   = 0;
+	    if ( isset( $results[0] ) && isset( $results[0]->count ) ) {
+		    $count = $results[0]->count;
+	    }
 
 
-        echo '<span>' . sprintf('מתכונים מערוצים (%s)', $count) . '</span>';
+	    echo '<span>' . sprintf( 'מתכונים מערוצים (%s)', $count ) . '</span>';
     }
 
     public function the_content()
@@ -172,7 +172,7 @@ class Foody_Profile
 
         $followed = $this->foody_user->get_followed_content();
         $followed = array_map('Foody_Post::create', $followed);
-//        $results = $this->foody_user->get_followed_content(0, 10, true);
+//        $results = $this->foody_user->get_followed_content( true );
         $count = 0;
 //        if (isset($results[0]) && isset($results[0]->count)) {
             $count = count($followed);
