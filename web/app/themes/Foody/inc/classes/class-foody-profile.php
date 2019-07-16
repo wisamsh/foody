@@ -93,33 +93,35 @@ class Foody_Profile
      */
     public function my_topics_content()
     {
-        ?>
+	    ?>
         <h2 class="title">
-            <?php echo __('מתכונים מערוצים', 'foody') ?>
+		    <?php echo __( 'מתכונים מערוצים', 'foody' ) ?>
         </h2>
-        <?php
+	    <?php
 
 	    $foody_query = Foody_Query::get_instance();
 
 	    $args = $foody_query->get_query( 'profile', [ 'channels' ] );
 
-	    $query = new WP_Query( $args );
+	    if ( isset( $args['post__in'] ) && ! empty( $args['post__in'] ) ) {
+		    $query = new WP_Query( $args );
 
-	    $posts = $query->get_posts();
+		    $posts = $query->get_posts();
 
-        $posts = array_map('Foody_Post::create', $posts);
-
-
-        $grid_args = [
-            'id' => 'my-channels-grid',
-            'posts' => $posts,
-            'more' => true,
-            'cols' => 1
-        ];
-
-        foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
+		    $posts = array_map( 'Foody_Post::create', $posts );
+	    } else {
+		    $posts = [];
+	    }
 
 
+	    $grid_args = [
+		    'id'    => 'my-channels-grid',
+		    'posts' => $posts,
+		    'more'  => true,
+		    'cols'  => 1
+	    ];
+
+	    foody_get_template_part( get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args );
     }
 
     /**
@@ -156,14 +158,14 @@ class Foody_Profile
 
     public function channels_tab()
     {
-        $results = $this->foody_user->get_followed_content(0, 10, true);
-        $count = 0;
-        if (isset($results[0]) && isset($results[0]->count)) {
-            $count = $results[0]->count;
-        }
+	    $results = $this->foody_user->get_followed_content( true );
+	    $count   = 0;
+	    if ( isset( $results[0] ) && isset( $results[0]->count ) ) {
+		    $count = $results[0]->count;
+	    }
 
 
-        echo '<span>' . sprintf('מתכונים מערוצים (%s)', $count) . '</span>';
+	    echo '<span>' . sprintf( 'מתכונים מערוצים (%s)', $count ) . '</span>';
     }
 
     public function the_content()
@@ -172,7 +174,7 @@ class Foody_Profile
 
         $followed = $this->foody_user->get_followed_content();
         $followed = array_map('Foody_Post::create', $followed);
-//        $results = $this->foody_user->get_followed_content(0, 10, true);
+//        $results = $this->foody_user->get_followed_content( true );
         $count = 0;
 //        if (isset($results[0]) && isset($results[0]->count)) {
             $count = count($followed);

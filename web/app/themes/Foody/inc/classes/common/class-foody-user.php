@@ -249,7 +249,7 @@ class Foody_User
      * @param bool $count
      * @return array|null|object
      */
-    public function get_followed_content($offset = 0, $limit = 10, $count = false)
+    public function get_followed_content($count = false)
     {
         global $wp_session;
         global $wpdb;
@@ -298,8 +298,7 @@ class Foody_User
 
             $query .= "AND post_type IN ('foody_recipe','foody_playlist')
             AND post_status = 'publish'
-            ORDER BY rand($seed)
-            LIMIT $offset,$limit";
+            ORDER BY rand($seed)";
 
 	        $results = $wpdb->get_results( $query );
         }

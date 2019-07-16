@@ -87,6 +87,10 @@ module.exports = (function () {
             that.filter.stopLoading();
             that.grid.append(data.data);
             that.locationUtils.updateHistory(ajaxSettings.data.page)
+            let ref = that.locationUtils.getQuery('referer');
+            if (ref && ref.length) {
+                createRefererLinks(ref);
+            }
         });
     };
 
