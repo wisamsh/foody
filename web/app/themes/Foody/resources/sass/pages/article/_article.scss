@@ -5,6 +5,7 @@
     padding: 20px 0;
 
     .wp-caption {
+      text-align: center;
       &:not(.alignleft) {
         &:not(.alignright) {
           width: 100%;
@@ -41,16 +42,9 @@
       padding: 20px;
 
       .wp-caption {
-        margin-left: -20px;
-        margin-right: -20px;
-
-        width: 100vw;
-        max-width: 100vw;
         img {
           &[class*="wp-image-"] {
             width: 100%;
-            margin-left: 20px;
-            margin-right: 20px;
           }
         }
         &.aligncenter {
