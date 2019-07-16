@@ -245,6 +245,17 @@ function foody_scripts()
 
 add_action('wp_enqueue_scripts', 'foody_scripts');
 
+function foody_add_async_script($url)
+{
+    if (strpos($url, '#asyncload')===false)
+        return $url;
+    else if (is_admin())
+        return str_replace('#asyncload', '', $url);
+    else
+        return str_replace('#asyncload', '', $url)."' async='async";
+}
+add_filter('clean_url', 'foody_add_async_script', 11, 1);
+
 function foody_add_footer_styles()
 {
 
@@ -353,7 +364,7 @@ function foody_get_versioned_asset($name)
 {
     $assets_version = file_get_contents(get_template_directory() . '/build/version-hash.txt');
 
-    return get_template_directory_uri() . "/dist/$name.$assets_version.js";
+    return get_template_directory_uri() . "/dist/$name.$assets_version.js#asyncload";
 
 }
 
