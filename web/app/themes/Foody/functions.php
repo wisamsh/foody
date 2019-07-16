@@ -186,6 +186,7 @@ function foody_scripts()
 
         if (
             is_search() ||
+        	is_page_template('page-templates/centered-content.php') ||
             is_page_template('page-templates/categories.php') ||
             has_shortcode($post_content, 'contact-form-7')
         ) {
