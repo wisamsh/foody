@@ -10,6 +10,7 @@
 
 get_header();
 $homepage = new Foody_HomePage();
+$homepage->init();
 ?>
 
     <div class="homepage">
@@ -46,7 +47,7 @@ $homepage = new Foody_HomePage();
 
                 <section class="content-container col-lg-9 col-12">
 
-                    <?php $homepage->feed(); ?>
+<!--                    --><?php //$homepage->feed(); ?>
 
                 </section>
 

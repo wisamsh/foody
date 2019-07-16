@@ -22,7 +22,7 @@ function load_foody_social()
             sbi_init();
         }
 
-        if(window.FB && window.FB && window.FB.XFBML && typeof window.FB.XFBML.parse === 'function'){
+        if (window.FB && window.FB && window.FB.XFBML && typeof window.FB.XFBML.parse === 'function') {
             window.FB.XFBML.parse();
         }
     </script>
@@ -38,3 +38,16 @@ function load_foody_social()
     echo $sidebar;
     wp_die();
 }
+
+add_action('wp_ajax_load_homepage_feed', 'load_homepage_feed');
+add_action('wp_ajax_nopriv_load_homepage_feed', 'load_homepage_feed');
+
+function load_homepage_feed()
+{
+    $homepage = new Foody_HomePage();
+
+    $homepage->feed();
+
+    wp_die();
+}
+
