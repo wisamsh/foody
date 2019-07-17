@@ -14,9 +14,9 @@ $title = $template_args['title'];
 
 <section class="recipe-notes box">
 
-    <h4 class="title">
+    <h2 class="title">
         <?php echo $title ?>
-    </h4>
+    </h2>
 
     <ul class="notes" title="הערות">
 

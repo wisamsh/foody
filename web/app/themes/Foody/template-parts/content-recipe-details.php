@@ -22,7 +22,7 @@ if ( ! foody_is_registration_open() ) {
         <!-- Author image -->
         <div class="image-container col-sm-1 col-2 nopadding">
             <a href="<?php echo $foody_page->get_author_link() ?>">
-                <img src="<?php echo $foody_page->getAuthorImage() ?>" alt="">
+                <img src="<?php echo $foody_page->getAuthorImage() ?>" alt="<?php echo $foody_page->getAuthorName() ?>">
             </a>
         </div>
 

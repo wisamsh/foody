@@ -245,7 +245,7 @@ function add_menu_items($items_html, $args)
 
         $categories_accordion = new Foody_CategoriesAccordion();
         $before = "  
-          <h2 class=\"title main-title\">
+          <div class=\"title main-title\">
         
                     <a href=\"#" . $categories_accordion->container_id . "-section\" data-toggle=\"collapse\" aria-expanded=\"true\"
                        aria-controls=\"" . $categories_accordion->container_id . "-section\">
@@ -257,7 +257,7 @@ function add_menu_items($items_html, $args)
                         <i class=\"icon-side-arrow\"></i>
         
                     </a>
-          </h2>
+          </div>
           <section id=\"" . $categories_accordion->container_id . "-section\" class=\"sidebar-categories show\">
         ";
 

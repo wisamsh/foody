@@ -40,12 +40,12 @@ if ($cols % $comments_per_page == 0) {
                data-image="<?php echo $image ?>"
                data-user="<?php echo $author->display_name ?>"
                data-content="<?php echo strip_tags( get_comment_text( $comment['comment_ID'] ) ); ?>">
-                <img src="<?php echo $image ?>" alt="">
+                <img src="<?php echo $image ?>" alt="<?php echo strip_tags( get_comment_text( $comment['comment_ID'] ) ); ?>">
             </a>
 	    <?php else: ?>
             <div class="waiting-for-approval">
                 <img src="<?php echo $GLOBALS['images_dir'] . 'how-i-did-waiting-mobile.png' ?>"
-                     alt="waiting for approval">
+                     alt="<?php echo __('ממתין לאישור')?>">
             </div>
 	    <?php endif; ?>
     </div>

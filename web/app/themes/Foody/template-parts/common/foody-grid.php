@@ -90,10 +90,10 @@ $title_el = foody_get_array_default($template_args, 'title_el', 'h3');
 <?php if (!empty($posts) && $more && $grid->is_displayable($posts)): ?>
 
     <div class="show-more">
-        <img src="<?php echo $GLOBALS['images_dir'] . 'bite.png' ?>" alt="">
-        <h4>
+        <img src="<?php echo $GLOBALS['images_dir'] . 'bite.png' ?>" alt="<?php echo __('לעוד מתכונים') ?>">
+        <div class="show-more-text">
             <?php echo __('לעוד מתכונים', 'foody') ?>
-        </h4>
+        </div>
     </div>
 
 <?php endif; ?>
