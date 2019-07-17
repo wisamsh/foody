@@ -92,7 +92,7 @@ function foody_ajax_filter()
     $grid = new FoodyGrid();
 
     $res = [
-        'next' => true,
+        'next' => count($posts) < $query['found'] ,
         'count' => count($posts),
         'found' => $query['found']
     ];
