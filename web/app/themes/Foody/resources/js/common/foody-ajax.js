@@ -10,6 +10,10 @@ window.foodyAjax = function (settings, cb) {
 
     data = _.extend(data, settings.data);
 
+    let url = foodyGlobals.ajax;
+    if(settings.query){
+        url = `${url}${settings.query}`
+    }
     $.ajax({
         url: foodyGlobals.ajax,
         data: data,
