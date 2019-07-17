@@ -77,8 +77,8 @@ class Foody_Query
     {
         $value = '';
 
-        if (isset($_GET[$key])) {
-            $value = $_GET[$key];
+        if (isset($_REQUEST[$key])) {
+            $value = $_REQUEST[$key];
         }
 
         return $value;
