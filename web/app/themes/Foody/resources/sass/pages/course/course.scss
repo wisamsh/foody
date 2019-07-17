@@ -81,6 +81,13 @@
             position: absolute;
             right: 2rem;
             bottom: 3rem;
+            text-align: right;
+
+            .price-text {
+              display: inline-block;
+              width: 60%;
+              vertical-align: middle;
+            }
 
             .price-number {
               margin-right: 5px;
@@ -110,7 +117,8 @@
 
       .course-is-for-bullets {
         color: var(--color__text-title);
-        margin-top: 20px;
+        margin: 20px 0;
+        padding: 0;
 
         .course-is-for-item {
           background: url('/app/themes/Foody/resources/images/icons/check-mark.svg') no-repeat 100% top;
@@ -124,6 +132,10 @@
           .course-is-for-bullet {
           }
         }
+      }
+
+      .course-is-for-image {
+        text-align: center;
       }
     }
 

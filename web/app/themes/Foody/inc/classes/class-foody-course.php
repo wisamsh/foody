@@ -26,6 +26,14 @@ class Foody_Course {
 		return $floating_registration_button;
 	}
 
+	public function has_information() {
+		return (
+			! empty( $this->get_information_top_section() ) &&
+			! empty( $this->get_information_bottom_section() ) &&
+			! empty( $this->get_information_registration_link() )
+		);
+	}
+
 	public function get_information_top_section() {
 		$information_top_sections = get_field( 'information_top_section' );
 
@@ -34,6 +42,9 @@ class Foody_Course {
 
 	public function get_information_bottom_section() {
 		$information_bottom_section = get_field( 'information_bottom_section' );
+		if ( empty( $information_bottom_section['price_text'] ) && empty( $information_bottom_section['price'] ) ) {
+			return '';
+		}
 
 		return $information_bottom_section;
 	}
