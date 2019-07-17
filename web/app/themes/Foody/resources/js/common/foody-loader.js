@@ -4,12 +4,14 @@
 
 
 let json = '';
-let lottie = '';
 
-setTimeout(() => {
-    json = require('../../lottie/loader.js');
-    lottie = require('lottie-web/build/player/lottie.min');
-});
+json = require('../../lottie/loader.js');
+
+
+if (!window.lottie) {
+    window.lottie = require('lottie-web/build/player/lottie.min');
+}
+
 
 module.exports = (function () {
 
@@ -21,14 +23,14 @@ module.exports = (function () {
 
 
     FoodyLoader.prototype.attach = function () {
-        if(this.$container.is(':hidden')){
+        if (this.$container.is(':hidden')) {
             return;
         }
         this.$container.append(this.$loaderElement);
 
-        lottie.loadAnimation({
+        window.lottie.loadAnimation({
             container: this.$loaderElement[0], // Required
-            animationData:json,
+            animationData: json,
             // path: 'dist/loader.json', // Required
             renderer: 'svg', // Required
             loop: false, // Optional
@@ -39,7 +41,7 @@ module.exports = (function () {
 
 
     FoodyLoader.prototype.detach = function () {
-        if(this.$container.is(':hidden')){
+        if (this.$container.is(':hidden')) {
             return;
         }
         lottie.destroy();

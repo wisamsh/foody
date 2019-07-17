@@ -8,7 +8,9 @@ require('./plugins/slick.min');
 window._ = require('underscore/underscore-min');
 window.foodyFormMessage = require('./common/cf7-messages');
 
-window.lottie = require('lottie-web/build/player/lottie.min');
+if(! window.lottie ){
+    window.lottie = require('lottie-web/build/player/lottie.min');
+}
 /*
  * Commmon
  * */

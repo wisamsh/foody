@@ -5,6 +5,10 @@ $content-width: 75%;
 $feed-header-height: 60px;
 $sidebar-top-offset: 60px;
 
+.sbi_loader{
+  left: 0 !important;
+}
+
 #approvals-modal {
   .modal-body {
     padding-top: 0;

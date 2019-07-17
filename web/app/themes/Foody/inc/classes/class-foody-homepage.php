@@ -8,26 +8,32 @@
  */
 class Foody_HomePage
 {
-
+    /**
+     * @var $team FoodyTeam
+     * */
     private $team;
 
+    /**
+     * @var $grid FoodyGrid
+     * */
     private $grid;
 
     private $sidebar_filter;
 
     private $sidebar_id = 'foody-sidebar';
     private $mobile_sidebar_id = 'foody-sidebar-mobile';
-    private $foody_query;
 
     /**
      * HomePage constructor.
      */
     public function __construct()
     {
+    }
+
+    public function init(){
         $this->team = new FoodyTeam();
         $this->grid = new FoodyGrid();
         $this->sidebar_filter = new SidebarFilter();
-        $this->foody_query = Foody_Query::get_instance();
     }
 
     public function featured()
@@ -67,17 +73,19 @@ class Foody_HomePage
         Foody_Social::socials_bar();
     }
 
-    public function feed()
+    public function feed($is_mobile = false)
     {
         $query = new WP_Query();
 
-        $args = $this->foody_query->get_query('homepage', [], true);
+        $foody_query = Foody_Query::get_instance();
+
+        $args = $foody_query->get_query('homepage', [], true);
 
         $posts = $query->query($args);
 
         $posts = array_map('Foody_Post::create', $posts);
 
-        if (wp_is_mobile()) {
+        if (wp_is_mobile() || $is_mobile) {
             $posts = array_merge($this->get_featured_posts(), $posts);
         }
 
@@ -85,7 +93,7 @@ class Foody_HomePage
             'id' => 'homepage-feed',
             'cols' => 2,
             'posts' => $posts,
-            'more' => $this->foody_query->has_more_posts($query),
+            'more' => $foody_query->has_more_posts($query),
             'header' => [
                 'sort' => true,
                 'title' => __('ההמלצות שלנו', 'foody')
@@ -105,23 +113,6 @@ class Foody_HomePage
         dynamic_sidebar('foody-sidebar');
     }
 
-    public function feed_query()
-    {
-        $query = new WP_Query();
-
-        $args = $this->foody_query->get_query('homepage', [], true);
-
-        $posts = $query->query($args);
-
-        $posts = array_map('Foody_Post::create', $posts);
-
-        if (wp_is_mobile()) {
-            $posts = array_merge($this->get_featured_posts(), $posts);
-        }
-
-        return $posts;
-    }
-
     public function sidebar($container_selector)
     {
         echo "<aside class=\"sidebar sidebar-desktop col pl-0\">";
@@ -135,7 +126,7 @@ class Foody_HomePage
 
         echo "<div class=\"sidebar-content\">";
         dynamic_sidebar($sidebar_name);
-        dynamic_sidebar('foody-social');
+//        dynamic_sidebar('foody-social');
 //        foody_dynamic_sidebar_ajax_loading('foody-social',$container_selector);
         echo "</div></aside>";
     }

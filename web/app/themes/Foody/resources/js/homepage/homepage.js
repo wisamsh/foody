@@ -4,24 +4,44 @@
 
 let FoodySearchFilter = require('../common/foody-search-filter');
 let FoodyContentPaging = require('../common/page-content-paging');
+let FoodyLoader = require('../common/foody-loader');
+
+
 
 jQuery(document).ready(($) => {
-    // sidebar filter
-    let filter = new FoodySearchFilter({
-        selector: '.homepage #accordion-foody-filter',
-        grid: '#homepage-feed',
-        cols: 2,
-        searchButton: '.show-recipes',
-        page: '.page-template-homepage',
-        context: 'homepage',
-        contextArgs: [],
-    });
 
-    // search and filter pager
-    let pager = new FoodyContentPaging({
-        context: 'homepage',
-        contextArgs: [],
-        filter: filter,
-        sort: '#sort-homepage-feed'
-    });
+
+    if(!foodyGlobals.isMobile){
+        foodyAjax({action: 'load_foody_social'}, (err, data) => {
+            $('aside.sidebar-desktop  .sidebar-content').append(data);
+        });
+    }
+
+    let feedContainer = '.feed-container .content-container';
+    let loader = new FoodyLoader({container:feedContainer});
+    loader.attach();
+    foodyAjax({action: 'load_homepage_feed'}, (err, data) => {
+        loader.detach();
+        $(feedContainer).append(data);
+        $('#sort-homepage-feed').selectpicker({dropdownAlignRight: true, style: 'foody-select', dropupAuto: false, width: 'fit'});
+
+        // sidebar filter
+        let filter = new FoodySearchFilter({
+            selector: '.homepage #accordion-foody-filter',
+            grid: '#homepage-feed',
+            cols: 2,
+            searchButton: '.show-recipes',
+            page: '.page-template-homepage',
+            context: 'homepage',
+            contextArgs: [],
+        });
+
+        // search and filter pager
+        let pager = new FoodyContentPaging({
+            context: 'homepage',
+            contextArgs: [],
+            filter: filter,
+            sort: '#sort-homepage-feed'
+        });
+    })
 });
