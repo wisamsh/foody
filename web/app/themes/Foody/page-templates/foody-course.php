@@ -38,42 +38,50 @@ $course = new Foody_Course();
 				<?php the_field( 'about' ); ?>
             </div>
 
-            <div class="course-information">
+			<?php if ( $course->has_information() ): ?>
+                <div class="course-information">
 
-                <div class="course-information-top-section">
+                    <div class="course-information-top-section">
 
-					<?php
-					$information = $course->get_information_top_section();
-					foreach ( $information as $information_item ) {
-						echo '<span class="information-item">';
-						echo '<div class="title information-title">' . $information_item['title'] . '</div>';
-						echo '<div class="information-subtitle">' . $information_item['subtitle'] . '</div>';
-						echo '</span>';
-					}
-					?>
-
-                </div>
-
-                <div class="course-information-bottom-section">
-
-                    <div class="information-item price">
 						<?php
-						$information = $course->get_information_bottom_section();
+						$information = $course->get_information_top_section();
 						if ( ! empty( $information ) ) {
-							echo '<span class="price-text">' . $information['price_text'] . '</span>';
-							echo '<span class="price-number">' . '₪' . $information['price'] . '</span>';
+							foreach ( $information as $information_item ) {
+								echo '<span class="information-item">';
+								echo '<div class="title information-title">' . $information_item['title'] . '</div>';
+								echo '<div class="information-subtitle">' . $information_item['subtitle'] . '</div>';
+								echo '</span>';
+							}
 						}
 						?>
+
                     </div>
 
-                    <span class="information-item information-registration-link">
+                    <div class="course-information-bottom-section">
+
+                        <div class="information-item price">
+							<?php
+							$information = $course->get_information_bottom_section();
+							if ( ! empty( $information ) ) {
+								echo '<span class="price-text">' . $information['price_text'] . '</span>';
+								if ( ! empty( $information['price'] ) ) {
+									echo '<span class="price-number">' . '₪' . $information['price'] . '</span>';
+								}
+							}
+							?>
+                        </div>
+
+                        <span class="information-item information-registration-link">
                         <?php
-                        foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $course->get_information_registration_link() ) );
+                        $link = $course->get_information_registration_link();
+                        if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
+	                        foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $link ) );
+                        }
                         ?>
+                    </div>
+
                 </div>
-
-            </div>
-
+			<?php endif; ?>
 
             <div class="course-is-for">
 
@@ -84,10 +92,12 @@ $course = new Foody_Course();
 
 					<?php
 					$course_is_for_bullets = $course->get_course_is_for();
-					foreach ( $course_is_for_bullets as $bullet ) {
-						echo '<li class="course-is-for-item">';
-						echo '<span class="course-is-for-bullet">' . $bullet['bullet_text'] . '</span>';
-						echo '</li>';
+					if ( ! empty( $course_is_for_bullets ) ) {
+						foreach ( $course_is_for_bullets as $bullet ) {
+							echo '<li class="course-is-for-item">';
+							echo '<span class="course-is-for-bullet">' . $bullet['bullet_text'] . '</span>';
+							echo '</li>';
+						}
 					}
 					?>
 
@@ -154,9 +164,9 @@ $course = new Foody_Course();
 						foreach ( $course_plan_classes as $index => $class ) {
 							echo '<div class="course-class-item">';
 							echo '<span class="course-class-number">' . ( $index + 1 ) . '</span>';
-                            echo '<span class="course-class-details">';
-                                echo '<span class="course-class-name">' . $class['class_name'] . '</span>';
-                                echo '<span class="course-class-info">' . $class['class_info'] . '</span>';
+							echo '<span class="course-class-details">';
+							echo '<span class="course-class-name">' . $class['class_name'] . '</span>';
+							echo '<span class="course-class-info">' . $class['class_info'] . '</span>';
 							echo '</span>';
 							echo '</div>';
 						}
