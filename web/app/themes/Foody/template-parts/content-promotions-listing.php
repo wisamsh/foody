@@ -43,7 +43,7 @@ $max_mobile_items = 4;
                                 <source media="(max-width: 414px)"
                                         srcset="<?php echo $item['mobile_image']; ?>"
                                 ">
-                                <img src="<?php echo $item['image'] ?>">
+                                <img src="<?php echo $item['image'] ?>" alt="<?php echo $item['title']; ?>">
                             </picture>
                         </div>
 

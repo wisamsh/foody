@@ -9,6 +9,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+
 // the path(s) that should be cleaned
 let pathsToClean = [
     'dist'
@@ -64,10 +65,8 @@ module.exports = env => {
                 IScroll: 'iscroll'
             }),
             new ExtractTextPlugin({
-                filename: (getPath) => {
-                    return getPath('css/[name].css').replace('css/js', 'css');
-                },
-                allChunks: true
+                filename: '[name].css',
+                // allChunks: true
             }),
             new HashPlugin({path: './build', fileName: 'version-hash.txt'}),
             new CleanWebpackPlugin(pathsToClean, cleanOptions),
@@ -129,7 +128,8 @@ module.exports = env => {
                         },
                         {
                             loader: 'sass-loader' // compiles Sass to CSS
-                        }
+                        },
+
                     ]
                 },
                 {

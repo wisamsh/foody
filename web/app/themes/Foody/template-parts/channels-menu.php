@@ -23,7 +23,7 @@ if(wp_is_mobile()){
             <div class="col-6 col-lg-3 channel-item-container">
                 <div class="channel-item">
                     <a href="<?php echo $item_for_display['link']; ?>" class="link">
-                        <div class="image-gradient"><img src="<?php echo $item_for_display['image']; ?>" class="img-fluid channel-image"></div>
+                        <div class="image-gradient"><img src="<?php echo $item_for_display['image']; ?>" alt="<?php echo $item_for_display['title']; ?>" class="img-fluid channel-image"></div>
                         <div class="channel-title"><h1><?php echo $item_for_display['title']; ?></h1></div>
                     </a>
                 </div>
