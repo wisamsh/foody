@@ -394,6 +394,8 @@
         text-align: center;
 
         .essb_item {
+          margin: 1rem !important;
+
           a {
             color: #b6e6fa !important;
             background-color: #ef4049 !important;
@@ -423,19 +425,27 @@
     }
 
     .newsletter-container {
-      background-color: #ef4049;
+      background-color: #d8d8d8;
       padding: 10px 20px;
       margin: $margin-boxes 0 10px;
 
       .newsletter-title {
-        font-size: 22px;
-        font-weight: bold;
-        text-align: center;
-        color: white;
+        font-size: 16px;
+        font-weight: 500;
+        text-align: right;
+        color: var(--color__primary);
       }
 
       .newsletter {
+        padding: 0;
         margin-bottom: 0;
+      }
+
+      .newsletter-title {
+        font-size: 16px;
+        font-weight: 500;
+        text-align: right;
+        color: var(--color__primary);
       }
 
       p {
@@ -444,26 +454,20 @@
 
         input:not([type="checkbox"]) {
           border: none;
+          height: 40px;
           box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
           background-color: #ffffff;
 
           &[type="email"] {
             width: 70%;
             margin-left: 10px;
-            padding: 1rem 3px;
-            border-radius: 0;
           }
 
           &[type="submit"] {
-            font-size: $title-size;
-            font-weight: 700;
-            border-radius: 15px;
-            background-color: var(--color__text-primary-dark);
-            padding: 1rem 3rem;
-            color: white;
-            padding: 1rem 3rem;
-            vertical-align: middle;
-            cursor: pointer;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            color: var(--color__primary);
+            font-weight: 900;
           }
 
           &::placeholder {
@@ -472,10 +476,6 @@
             text-align: right;
             color: #4a4a4a;
           }
-        }
-
-        .accept-label {
-          color: white;
         }
       }
 
@@ -497,9 +497,10 @@
       }
 
       .cover-video {
+        text-align: center;
 
         iframe {
-          width: 100%;
+          width: 98%;
           height: 210px;
           margin-top: 1rem;
         }
@@ -534,6 +535,11 @@
             &.price {
               position: static;
               padding: 0 1rem 1rem;
+            }
+
+            &.information-registration-link {
+              display: inline-block;
+              width: 85%;
             }
           }
         }
@@ -597,7 +603,7 @@
               padding: 1rem;
 
               .course-class-number {
-                margin-left: 1rem;
+                margin-left: 0;
               }
 
               .course-class-details {
@@ -623,18 +629,26 @@
 
       .course-promotions {
         .course-promotion {
-          display: block;
-          width: 100%;
+          width: 98%;
         }
       }
 
       .course-share {
         margin: 1rem 0;
+
+        .essb_links {
+          .essb_links_list {
+            .essb_item {
+              margin: 0.5rem !important;
+            }
+          }
+        }
       }
 
       .recommendations {
         .recommendations-container {
           .recommendation-item {
+            width: 80%;
             margin-bottom: 1rem;
 
             .recommendation-name {
