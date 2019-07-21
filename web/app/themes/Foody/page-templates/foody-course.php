@@ -38,6 +38,16 @@ if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
 			) );
 			?>
 
+            <div class="main-cover-image">
+	            <?php
+	            $image = $course->get_main_image();
+	            if ( ! empty( $image ) ) {
+		            echo '<img src="' . $image . '" alt="">';
+	            }
+	            ?>
+
+            </div>
+
             <div class="cover-video">
 				<?php the_field( 'video' ); ?>
             </div>

@@ -26,6 +26,12 @@ class Foody_Course {
 		return $mobile_cover_image;
 	}
 
+	public function get_main_image() {
+		$main_image = get_field( 'main_image' );
+
+		return $main_image;
+	}
+
 	public function get_floating_registration_button() {
 		$floating_registration_button = get_field( 'floating_registration_button' );
 
