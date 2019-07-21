@@ -17,6 +17,10 @@ jQuery(document).ready(($) => {
                 window.location.href = '/';
             } else {
                 form.on('submit', null, (event) => {
+                    let social_type = '';
+                    if (foodyGlobals['user']) {
+                        social_type = foodyGlobals['user']['social_type'] ? foodyGlobals['user']['social_type'] : ''
+                    }
                     let withMarketing = form.find('#check-marketing').prop('checked');
                     let withEBook = form.find('#check-e-book').prop('checked');
                     let marketingAnalyticsText = 'לא נרשם';
@@ -28,7 +32,7 @@ jQuery(document).ready(($) => {
                     } else if (withEBook) {
                         marketingAnalyticsText = 'לא נרשם פלוס ספר';
                     }
-                    eventCallback(event, 'רישום לאתר', 'לחיצה לסיום רישום', foodyGlobals['user']['social_type'], 'רישום לדיוור', marketingAnalyticsText);
+                    eventCallback(event, 'רישום לאתר', 'לחיצה לסיום רישום', social_type, 'רישום לדיוור', marketingAnalyticsText);
                 });
             }
         }
