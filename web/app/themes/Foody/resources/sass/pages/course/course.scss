@@ -40,7 +40,7 @@
       }
     }
 
-    .main-image {
+    .main-cover-image {
       margin: 10px 0;
 
       img {
@@ -520,6 +520,11 @@
         }
       }
 
+      .main-cover-image {
+        padding: 0 1rem;
+        margin-top: 1rem;
+      }
+
       .about {
         padding: 0 1rem;
       }
@@ -571,6 +576,10 @@
           .course-is-for-item {
             display: block;
             width: 100%;
+
+            &:nth-child(1) {
+
+            }
 
             &:nth-child(3n) {
               margin-bottom: 2rem;
