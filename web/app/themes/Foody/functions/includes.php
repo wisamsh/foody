@@ -21,17 +21,12 @@ require_once get_template_directory() . "/inc/globals.php";
 require_once get_template_directory() . "/inc/utils/utils.php";
 
 
-/*
- * Utils
- * */
-require_once get_template_directory() . "/inc/classes/common/class-foody-social.php";
 
 /*
  * Interfaces
  * */
 
 require_once get_template_directory() . "/inc/classes/interfaces/interface-content-with-sidebar.php";
-require_once get_template_directory() . "/inc/classes/interfaces/interface-foody-list-item.php";
 require_once get_template_directory() . "/inc/classes/interfaces/interface-foody-topic.php";
 
 /*

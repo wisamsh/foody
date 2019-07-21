@@ -70,7 +70,7 @@ class Foody_HomePage
 
     public function socials_bar()
     {
-        Foody_Social::socials_bar();
+
     }
 
     public function feed($is_mobile = false)

@@ -128,7 +128,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                 wp_nav_menu($nav_args);
                 ?>
 
-                <?php Foody_Social::whatsapp(['d-block', 'd-lg-none']) ?>
+                <?php Foody_Header::whatsapp(['d-block', 'd-lg-none']) ?>
 
                 <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none"
                         aria-label="חיפוש">
@@ -175,9 +175,9 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
     <div id="content" class="site-content">
         <?php
         if (wp_is_mobile()) {
-            Foody_Social::whatsapp(['d-lg-block', 'floating', 'whatsapp-mobile']);
+            Foody_Header::whatsapp(['d-lg-block', 'floating', 'whatsapp-mobile']);
         } else {
-            Foody_Social::whatsapp(['d-none', 'd-lg-block', 'floating']);
+            Foody_Header::whatsapp(['d-none', 'd-lg-block', 'floating']);
         }
         ?>
 
