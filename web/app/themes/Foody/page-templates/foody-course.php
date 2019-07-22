@@ -39,12 +39,12 @@ if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
 			?>
 
             <div class="main-cover-image">
-	            <?php
-	            $image = $course->get_main_image();
-	            if ( ! empty( $image ) ) {
-		            echo '<img src="' . $image . '" alt="">';
-	            }
-	            ?>
+				<?php
+				$image = $course->get_main_image();
+				if ( ! empty( $image ) ) {
+					echo '<img src="' . $image . '" alt="">';
+				}
+				?>
 
             </div>
 
@@ -219,26 +219,27 @@ if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
 
             <div class="course-promotions">
 				<?php
-				$promotions = $course->get_promotions();
-				if ( ! empty( $promotions ) ) {
-					foreach ( $promotions as $promotion ) {
-						$link  = isset( $promotion['link'] ) ? $promotion['link'] : '';
-						$image = $promotion['image'];
+				$promotion = $course->get_promotions();
+				if ( ! empty( $promotion ) ) {
+					$link  = isset( $promotion['link'] ) ? $promotion['link'] : '';
+					$image = $promotion['image'];
 
-						if ( ! empty( $image ) ) {
-							echo '<span class="course-promotion">';
+					if ( wp_is_mobile() ) {
+						$image = isset( $promotion['mobile_image'] ) ? $promotion['mobile_image'] : $promotion['image'];
+					}
 
-							if ( ! empty( $link ) ) {
-								echo '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
-							}
-							echo '<img src="' . $image['url'] . '">';
+					if ( ! empty( $image ) ) {
+						echo '<span class="course-promotion">';
 
-							if ( ! empty( $link ) ) {
-								echo '</a>';
-							}
-
-							echo '</span>';
+						if ( ! empty( $link ) ) {
+							echo '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
 						}
+						echo '<img src="' . $image['url'] . '">';
+						if ( ! empty( $link ) ) {
+							echo '</a>';
+						}
+
+						echo '</span>';
 					}
 				}
 				?>
@@ -247,7 +248,7 @@ if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
             <div class="course-coupon-promotions">
 				<?php
 				$coupon_promotions = $course->get_coupon_promotions();
-				if ( ! empty( $coupon_promotions ) ) {
+				if ( ! empty( $coupon_promotions ) && count($coupon_promotions) == 2 ) {
 					foreach ( $coupon_promotions as $coupon_promotion ) {
 						$link  = isset( $coupon_promotion['link'] ) ? $coupon_promotion['link'] : '';
 						$image = $coupon_promotion['image'];

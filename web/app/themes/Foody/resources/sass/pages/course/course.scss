@@ -98,8 +98,13 @@
             }
 
             .price-number {
+              display: inline-block;
+              width: 30%;
+              vertical-align: middle;
               margin-right: 5px;
               font-weight: bold;
+              font-size: 1.2rem;
+              line-height: 1.6rem;
             }
           }
 
@@ -276,12 +281,6 @@
     .course-promotions {
       text-align: center;
       margin: $margin-boxes 0;
-
-      .course-promotion {
-        display: inline-block;
-        vertical-align: top;
-        width: 33%;
-      }
     }
 
     .course-coupon-promotions {
@@ -537,8 +536,8 @@
             padding: 1rem 0;
             margin-bottom: 1rem;
 
-            &:first-child {
-              border-bottom: 1px solid white;
+            &:nth-child(2) {
+              border-top: 1px solid white;
             }
 
             &:last-child {
@@ -554,6 +553,16 @@
             &.price {
               position: static;
               padding: 0 1rem 1rem;
+              text-align: center;
+
+              .price-text {
+                width: auto;
+              }
+
+              .price-number {
+                width: auto;
+                line-height: 1.4rem;
+              }
             }
 
             &.information-registration-link {
@@ -651,9 +660,7 @@
       }
 
       .course-promotions {
-        .course-promotion {
-          width: 98%;
-        }
+        margin: 2rem 1rem;
       }
 
       .course-share {
