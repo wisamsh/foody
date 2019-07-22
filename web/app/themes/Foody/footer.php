@@ -65,11 +65,11 @@ $footer = new Foody_Footer();
         <section class="foody-israel-footer">
             <?php $footer->the_foody_israel(true); ?>
         </section>
-	    <?php if ( get_theme_mod( 'foody_show_moveo_logo', true) ) : ?>
+        <?php if (get_theme_mod('foody_show_moveo_logo', true)) : ?>
             <section class="powered-by">
-			    <?php $footer->the_moveo() ?>
+                <?php $footer->the_moveo() ?>
             </section>
-	    <?php endif; ?>
+        <?php endif; ?>
 
 
     </section>
@@ -78,7 +78,7 @@ $footer = new Foody_Footer();
 </div><!-- #page -->
 
 <?php
-if (!is_user_logged_in()) {
+if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || foody_is_registration_open())) {
     $login_popup_args = [
         'id' => 'login-modal',
         'body' => do_shortcode('[foody-login]'),
