@@ -22,7 +22,7 @@
             "label": "קאבר",
             "name": "cover_image",
             "type": "image",
-            "instructions": "",
+            "instructions": "גודל מקסימלי בדסקטופ - 960px",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -31,6 +31,54 @@
                 "id": ""
             },
             "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_5d30590c8f63a",
+            "label": "קאבר מובייל",
+            "name": "mobile_cover_image",
+            "type": "image",
+            "instructions": "גודל מקסימלי - 768px (על-מנת לתמוך גם בטאבלט) - הגודל שיוצג הוא בהתאם ל98% מרוחב מסך הטלפון.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_5d342486ecf1b",
+            "label": "תמונה ראשית",
+            "name": "main_image",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
             "preview_size": "thumbnail",
             "library": "all",
             "min_width": "",
@@ -303,7 +351,7 @@
                     "label": "תמונה",
                     "name": "image",
                     "type": "image",
-                    "instructions": "",
+                    "instructions": "רוחב מקסימלי שיוצג - 914px",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -437,7 +485,7 @@
                     "label": "תמונה",
                     "name": "image",
                     "type": "image",
-                    "instructions": "",
+                    "instructions": "רוחב מקסימלי שיוצג - 914px",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -570,9 +618,9 @@
         },
         {
             "key": "field_5d25da8310b6b",
-            "label": "רכיבי קידום",
+            "label": "רכיב קידום",
             "name": "promotion",
-            "type": "repeater",
+            "type": "group",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -581,18 +629,38 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "",
-            "min": 0,
-            "max": 3,
-            "layout": "table",
-            "button_label": "",
+            "layout": "block",
             "sub_fields": [
                 {
                     "key": "field_5d25da9b10b6c",
                     "label": "תמונה",
                     "name": "image",
                     "type": "image",
-                    "instructions": "",
+                    "instructions": "רוחב מקסימלי שיוצג בדסקטופ - 320px\r\nרוחב מקסימלי במובייל - לפי רוחב המסך - 768px מומלץ על-מנת לתמוך גם בטאבלט",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": ""
+                },
+                {
+                    "key": "field_5d35eaa5edcc5",
+                    "label": "תמונת מובייל",
+                    "name": "mobile_image",
+                    "type": "image",
+                    "instructions": "רוחב מקסימלי שיוצג בדסקטופ - 320px\r\nרוחב מקסימלי במובייל - לפי רוחב המסך - 768px מומלץ על-מנת לתמוך גם בטאבלט",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -652,7 +720,7 @@
                     "label": "תמונה",
                     "name": "image",
                     "type": "image",
-                    "instructions": "",
+                    "instructions": "רוחב מקסימלי שיוצג בדסקטופ - 480px\r\nרוחב מקסימלי במובייל - לפי רוחב המסך לחלק ל-2",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -873,5 +941,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1563351036
+    "modified": 1563814579
 }

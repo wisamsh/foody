@@ -261,6 +261,21 @@
                 "id": ""
             },
             "return_format": "array"
+        },
+        {
+            "key": "field_5cee866ca8817",
+            "label": "לינק לעמוד תודה לקמפיין",
+            "name": "thank_you_campaign",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url"
         }
     ],
     "location": [
@@ -287,5 +302,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1559220980
+    "modified": 1563716424
 }

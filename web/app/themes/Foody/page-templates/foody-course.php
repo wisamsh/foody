@@ -11,24 +11,42 @@
 get_header();
 $course = new Foody_Course();
 
+$recommendations = $course->get_recommendations();
 ?>
 
-    <div class="sticky-registration">
-		<?php
-		foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $course->get_floating_registration_button() ) );
-		?>
-    </div>
+
+<?php
+$link = $course->get_floating_registration_button();
+if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
+	echo '<div class="sticky-registration">';
+	foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $link ) );
+	echo '</div>';
+}
+?>
 
     <div id="main-content" class="main-content">
 
         <div id="primary" class="content-area">
 			<?php
-			$image = $course->get_cover_image();
+			$image        = $course->get_cover_image();
+			$mobile_image = $course->get_mobile_cover_image();
+
 			foody_get_template_part( get_template_directory() . '/template-parts/content-cover-image.php', array(
-				'image' => $image,
-				'link'  => ''
+				'image'        => $image,
+				'mobile_image' => $mobile_image,
+				'link'         => ''
 			) );
 			?>
+
+            <div class="main-cover-image">
+				<?php
+				$image = $course->get_main_image();
+				if ( ! empty( $image ) ) {
+					echo '<img src="' . $image . '" alt="">';
+				}
+				?>
+
+            </div>
 
             <div class="cover-video">
 				<?php the_field( 'video' ); ?>
@@ -122,14 +140,18 @@ $course = new Foody_Course();
 
 					<?php
 					$how_it_works_steps = $course->get_how_it_works();
-					foreach ( $how_it_works_steps as $index => $step ) {
-						echo '<span class="how-it-works-item">';
-						echo '<span class="how-it-works-step-number">' . $step['step_number_text'] . '</span>';
-						echo '<span class="how-it-works-step">' . $step['step_text'] . '</span>';
-						if ( $index !== count( $how_it_works_steps ) - 1 ) {
-							echo '<hr class="divider"/>';
+					if ( ! empty( $how_it_works_steps ) ) {
+						foreach ( $how_it_works_steps as $index => $step ) {
+							if ( ! empty( $step ) && isset( $step['step_number_text'] ) && ! empty( isset( $step['step_number_text'] ) ) && isset( $step['step_text'] ) && ! empty( $step['step_text'] ) ) {
+								echo '<span class="how-it-works-item">';
+								echo '<span class="how-it-works-step-number">' . $step['step_number_text'] . '</span>';
+								echo '<span class="how-it-works-step">' . $step['step_text'] . '</span>';
+								if ( $index !== count( $how_it_works_steps ) - 1 ) {
+									echo '<hr class="divider"/>';
+								}
+								echo '</span>';
+							}
 						}
-						echo '</span>';
 					}
 					?>
 
@@ -146,7 +168,10 @@ $course = new Foody_Course();
 
                 <span class="how-it-works-registration-link">
                     <?php
-                    foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $course->get_how_it_works_registration_link() ) );
+                    $link = $course->get_how_it_works_registration_link();
+                    if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
+	                    foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $link ) );
+                    }
                     ?>
                 </span>
             </div>
@@ -161,14 +186,21 @@ $course = new Foody_Course();
                     <div class="course-plan-classes">
 						<?php
 						$course_plan_classes = $course->get_course_plan_classes();
-						foreach ( $course_plan_classes as $index => $class ) {
-							echo '<div class="course-class-item">';
-							echo '<span class="course-class-number">' . ( $index + 1 ) . '</span>';
-							echo '<span class="course-class-details">';
-							echo '<span class="course-class-name">' . $class['class_name'] . '</span>';
-							echo '<span class="course-class-info">' . $class['class_info'] . '</span>';
-							echo '</span>';
-							echo '</div>';
+						if ( ! empty( $course_plan_classes ) ) {
+							foreach ( $course_plan_classes as $index => $class ) {
+								if ( ! empty( $class ) &&
+								     ( isset( $class['class_name'] ) || isset( $class['class_info'] ) ) &&
+								     ( ! empty( $class['class_name'] ) || ! empty( $class['class_info'] ) )
+								) {
+									echo '<div class="course-class-item">';
+									echo '<span class="course-class-number">' . ( $index + 1 ) . '</span>';
+									echo '<span class="course-class-details">';
+									echo '<span class="course-class-name">' . $class['class_name'] . '</span>';
+									echo '<span class="course-class-info">' . $class['class_info'] . '</span>';
+									echo '</span>';
+									echo '</div>';
+								}
+							}
 						}
 						?>
 
@@ -176,7 +208,10 @@ $course = new Foody_Course();
 
                     <span class="classes-registration-link">
                     <?php
-                    foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $course->get_course_plan_registration_link() ) );
+                    $link = $course->get_course_plan_registration_link();
+                    if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
+	                    foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $link ) );
+                    }
                     ?>
                 </span>
                 </div>
@@ -184,22 +219,28 @@ $course = new Foody_Course();
 
             <div class="course-promotions">
 				<?php
-				$promotions = $course->get_promotions();
-				foreach ( $promotions as $promotion ) {
+				$promotion = $course->get_promotions();
+				if ( ! empty( $promotion ) ) {
 					$link  = isset( $promotion['link'] ) ? $promotion['link'] : '';
 					$image = $promotion['image'];
 
-					echo '<span class="course-promotion">';
-					if ( ! empty( $link ) ) {
-						echo '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
-					}
-					echo '<img src="' . $image['url'] . '">';
-
-					if ( ! empty( $link ) ) {
-						echo '</a>';
+					if ( wp_is_mobile() ) {
+						$image = isset( $promotion['mobile_image'] ) ? $promotion['mobile_image'] : $promotion['image'];
 					}
 
-					echo '</span>';
+					if ( ! empty( $image ) ) {
+						echo '<span class="course-promotion">';
+
+						if ( ! empty( $link ) ) {
+							echo '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
+						}
+						echo '<img src="' . $image['url'] . '">';
+						if ( ! empty( $link ) ) {
+							echo '</a>';
+						}
+
+						echo '</span>';
+					}
 				}
 				?>
             </div>
@@ -207,59 +248,61 @@ $course = new Foody_Course();
             <div class="course-coupon-promotions">
 				<?php
 				$coupon_promotions = $course->get_coupon_promotions();
-				foreach ( $coupon_promotions as $coupon_promotion ) {
-					$link  = isset( $coupon_promotion['link'] ) ? $coupon_promotion['link'] : '';
-					$image = $coupon_promotion['image'];
+				if ( ! empty( $coupon_promotions ) && count($coupon_promotions) == 2 ) {
+					foreach ( $coupon_promotions as $coupon_promotion ) {
+						$link  = isset( $coupon_promotion['link'] ) ? $coupon_promotion['link'] : '';
+						$image = $coupon_promotion['image'];
 
-					echo '<span class="course-coupon-promotion">';
-					if ( ! empty( $link ) ) {
-						echo '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
+						echo '<span class="course-coupon-promotion">';
+						if ( ! empty( $link ) ) {
+							echo '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
+						}
+						echo '<img src="' . $image['url'] . '">';
+
+						if ( ! empty( $link ) ) {
+							echo '</a>';
+						}
+
+						echo '</span>';
 					}
-					echo '<img src="' . $image['url'] . '">';
-
-					if ( ! empty( $link ) ) {
-						echo '</a>';
-					}
-
-					echo '</span>';
 				}
 				?>
             </div>
 
+			<?php if ( ! empty( $recommendations ) ): ?>
+                <div class="recommendations">
 
-            <div class="recommendations">
-
-                <div class="title recommendations-title">
-					<?php echo $course->get_recommendations_title(); ?>
-                </div>
-
-				<?php
-				$slider_data = [
-					'slidesToShow'   => 1,
-					'rtl'            => true,
-					'prevArrow'      => '<i class="icon-arrowleft prev"></i>',
-					'nextArrow'      => '<i class="icon-arrowleft next"></i>',
-					'dots'           => true,
-					'slidesToScroll' => 1,
-					'infinite'       => true
-				]
-				?>
-                <div class="recommendations-container"
-                     data-slick='<?php echo json_encode( $slider_data, ENT_QUOTES ) ?>'>
+                    <div class="title recommendations-title">
+						<?php echo $course->get_recommendations_title(); ?>
+                    </div>
 
 					<?php
-					$recommendations = $course->get_recommendations();
-					foreach ( $recommendations as $recommendation ) {
-						echo '<div class="recommendation-item">';
-						echo '<div class="recommendation-text">' . $recommendation['text'] . '</div>';
-						echo '<div class="recommendation-name">' . $recommendation['name'] . '</div>';
-						echo '</div>';
-					}
+					$slider_data = [
+						'slidesToShow'   => 1,
+						'rtl'            => true,
+						'prevArrow'      => '<i class="icon-arrowleft prev"></i>',
+						'nextArrow'      => '<i class="icon-arrowleft next"></i>',
+						'dots'           => true,
+						'slidesToScroll' => 1,
+						'infinite'       => true
+					]
 					?>
+                    <div class="recommendations-container"
+                         data-slick='<?php echo json_encode( $slider_data, ENT_QUOTES ) ?>'>
+
+						<?php
+						foreach ( $recommendations as $recommendation ) {
+							echo '<div class="recommendation-item">';
+							echo '<div class="recommendation-text">' . $recommendation['text'] . '</div>';
+							echo '<div class="recommendation-name">' . $recommendation['name'] . '</div>';
+							echo '</div>';
+						}
+						?>
+
+                    </div>
 
                 </div>
-
-            </div>
+			<?php endif; ?>
 
             <div class="divider"></div>
 
@@ -269,7 +312,10 @@ $course = new Foody_Course();
 
             <div class="legal-registration-link">
 				<?php
-				foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $course->get_legal_registration_link() ) );
+				$link = $course->get_legal_registration_link();
+				if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
+					foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $link ) );
+				}
 				?>
             </div>
 
@@ -281,9 +327,7 @@ $course = new Foody_Course();
 				<?php
 				foody_get_template_part( get_template_directory() . '/template-parts/content-newsletter.php', [
 					'button_classes' => 'col-2',
-					'input_classes'  => 'col-10',
-					'title'          => $course->get_newsletter_title(),
-					'checkbox_text'  => $course->get_newsletter_checkbox_text()
+					'input_classes'  => 'col-10'
 				] );
 				?>
             </section>

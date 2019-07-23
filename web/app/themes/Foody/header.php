@@ -114,8 +114,7 @@ if ( ! wp_is_mobile() && ( isset( $_SESSION['background_image'] ) && ! empty( $_
 				<?php if ( $show_accessibility ): ?>
                     <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility"
                             data-acsb="trigger" aria-label="פתיחת תפריט נגישות">
-                        <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
-                             alt="<?php echo __( 'נגישות' ) ?>">
+	                    <?php $header->accessibility(); ?>
                         <div id="accessibility-container"></div>
                     </button>
 				<?php endif; ?>

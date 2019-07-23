@@ -90,11 +90,11 @@ function foody_ajax_filter() {
 
 	$grid = new FoodyGrid();
 
-	$res = [
-		'next'  => true,
-		'count' => count( $posts ),
-		'found' => $query['found']
-	];
+    $res = [
+        'next' => count($posts) < $query['found'] ,
+        'count' => count($posts),
+        'found' => $query['found']
+    ];
 
 
 	if ( ! empty( $posts ) && ! empty( array_filter( $posts, array( $grid, 'is_post_displayable' ) ) ) ) {
