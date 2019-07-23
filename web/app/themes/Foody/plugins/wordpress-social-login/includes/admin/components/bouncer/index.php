@@ -7,44 +7,45 @@
 */
 
 /**
-* The Bouncer our friend whos trying to be funneh
-*/
+ * The Bouncer our friend whos trying to be funneh
+ */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;  
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // --------------------------------------------------------------------
 
-function wsl_component_bouncer()
-{
+function wsl_component_bouncer() {
 	// HOOKABLE: 
 	do_action( "wsl_component_bouncer_start" );
 
 	include "wsl.components.bouncer.setup.php";
 	include "wsl.components.bouncer.sidebar.php";
-?>
-<form method="post" id="wsl_setup_form" action="options.php"> 
-	<?php settings_fields( 'wsl-settings-group-bouncer' ); ?> 
+	?>
+    <form method="post" id="wsl_setup_form" action="options.php">
+		<?php settings_fields( 'wsl-settings-group-bouncer' ); ?>
 
-	<div class="metabox-holder columns-2" id="post-body">
-		<table width="100%">
-			<tr valign="top">
-				<td>
-					<?php
+        <div class="metabox-holder columns-2" id="post-body">
+            <table width="100%">
+                <tr valign="top">
+                    <td>
+						<?php
 						wsl_component_bouncer_setup();
-					?>
-				</td>
-				<td width="10"></td>
-				<td width="400">
-					<?php
+						?>
+                    </td>
+                    <td width="10"></td>
+                    <td width="400">
+						<?php
 						wsl_component_bouncer_sidebar();
-					?>
-				</td>
-			</tr>
-		</table>
-	</div> 
-</form>
-<?php
+						?>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+	<?php
 	// HOOKABLE: 
 	do_action( "wsl_component_bouncer_end" );
 }

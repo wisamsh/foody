@@ -43,5 +43,4 @@ class Foody_White_Label_i18n {
 	}
 
 
-
 }

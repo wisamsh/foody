@@ -12,10 +12,9 @@ require_once get_template_directory() . $api_dir . '/functions/foody-api.php';
 require_once get_template_directory() . $api_dir . '/inc/inc.php';
 
 
-function foody_bot_register_endpoints()
-{
-    $bot_controller = new \FoodyAPI\Foody_BotAPIController();
-    $bot_controller->registerRoutes();
+function foody_bot_register_endpoints() {
+	$bot_controller = new \FoodyAPI\Foody_BotAPIController();
+	$bot_controller->registerRoutes();
 }
 
-add_action('rest_api_init', 'foody_bot_register_endpoints');
+add_action( 'rest_api_init', 'foody_bot_register_endpoints' );

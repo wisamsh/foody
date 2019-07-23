@@ -10,18 +10,18 @@
 $items = $template_args['items'];
 
 $select_args = array(
-    'id' => 'items-sort',
-    'placeholder' => 'סדר על פי',
-    'options' => array(
-        array(
-            'value' => 1,
-            'label' => 'א-ת'
-        ),
-        array(
-            'value' => -1,
-            'label' => 'ת-א'
-        )
-    )
+	'id'          => 'items-sort',
+	'placeholder' => 'סדר על פי',
+	'options'     => array(
+		array(
+			'value' => 1,
+			'label' => 'א-ת'
+		),
+		array(
+			'value' => - 1,
+			'label' => 'ת-א'
+		)
+	)
 );
 
 
@@ -31,19 +31,19 @@ $select_args = array(
 <section class="grid">
 
     <div class="grid-header">
-        <?php foody_get_template_part(get_template_directory() . '/template-parts/common/foody-select.php', $select_args); ?>
+		<?php foody_get_template_part( get_template_directory() . '/template-parts/common/foody-select.php', $select_args ); ?>
     </div>
 
     <section class="grid-body row gutter-10">
 
-        <?php
-        $i = 0;
-        foreach ($items as $item) {
-            $item['order'] = $i;
-            foody_get_template_part(get_template_directory() . '/template-parts/content-items-page-item.php', $item);
-            $i++;
-        }
-        ?>
+		<?php
+		$i = 0;
+		foreach ( $items as $item ) {
+			$item['order'] = $i;
+			foody_get_template_part( get_template_directory() . '/template-parts/content-items-page-item.php', $item );
+			$i ++;
+		}
+		?>
 
 
     </section>

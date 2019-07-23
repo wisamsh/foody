@@ -135,46 +135,45 @@
 <!--</style>-->
 
 <?php
-function categories_post_type_display($post_type, $categories)
-{
+function categories_post_type_display( $post_type, $categories ) {
 
-    foreach ($categories as $tax) :
-        // List posts by the terms for a custom taxonomy of any post type
-        $args = array(
-            'post_type' => $post_type,
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-            'orderby' => 'title',
-            'tax_query' => array(
-                array(
-                    'taxonomy' => 'category',
-                    'field' => 'slug',
-                    'terms' => $tax->slug
-                )
-            )
-        );
-        if (get_posts($args)) :
-            ?>
+	foreach ( $categories as $tax ) :
+		// List posts by the terms for a custom taxonomy of any post type
+		$args = array(
+			'post_type'      => $post_type,
+			'post_status'    => 'publish',
+			'posts_per_page' => - 1,
+			'orderby'        => 'title',
+			'tax_query'      => array(
+				array(
+					'taxonomy' => 'category',
+					'field'    => 'slug',
+					'terms'    => $tax->slug
+				)
+			)
+		);
+		if ( get_posts( $args ) ) :
+			?>
             <h2><?php echo $tax->name; ?></h2>
             <ul>
-                <?php
-                $posts = get_posts($args);
-                foreach ($posts as $p) :
+				<?php
+				$posts = get_posts( $args );
+				foreach ( $posts as $p ) :
 
-                    ?>
-                    <li><a href="<?php echo get_permalink($p); ?>"><?php echo $p->post_title; ?></a></li>
-                <?php endforeach; ?>
-                <?php
-                $sub_categories = get_categories("hide_empty=0&child_of={$tax->term_id}");
-                if (!empty($sub_categories)) {
-                    categories_post_type_display($post_type, $sub_categories);
-                }
-                ?>
+					?>
+                    <li><a href="<?php echo get_permalink( $p ); ?>"><?php echo $p->post_title; ?></a></li>
+				<?php endforeach; ?>
+				<?php
+				$sub_categories = get_categories( "hide_empty=0&child_of={$tax->term_id}" );
+				if ( ! empty( $sub_categories ) ) {
+					categories_post_type_display( $post_type, $sub_categories );
+				}
+				?>
 
             </ul>
-        <?php
-        endif;
-    endforeach;
+		<?php
+		endif;
+	endforeach;
 }
 
 ?>

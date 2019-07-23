@@ -43,5 +43,4 @@ class Foody_Fut_i18n {
 	}
 
 
-
 }

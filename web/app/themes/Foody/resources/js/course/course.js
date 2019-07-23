@@ -1,6 +1,8 @@
 /**
  * Created by omerfishman on 14/7/19.
  */
+
+
 jQuery(document).ready(($) => {
 
     let $stickyRegistration = $('.foody_course-template-page-templates .sticky-registration');
@@ -27,4 +29,5 @@ jQuery(document).ready(($) => {
         $stickyRegistration.css("opacity", op);
         $stickyRegistration.css("pointer-events", pointerEvents);
     });
+
 });

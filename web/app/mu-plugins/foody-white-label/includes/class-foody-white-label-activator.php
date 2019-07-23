@@ -20,23 +20,21 @@
  * @subpackage Foody_White_Label/includes
  * @author     Matan Zari <zari@moveo.co.il>
  */
-class Foody_White_Label_Activator
-{
+class Foody_White_Label_Activator {
 
-    /**
-     * Short Description. (use period)
-     *
-     * Long Description.
-     *
-     * @since    1.0.0
-     */
-    public static function activate()
-    {
-        if (is_main_site() && is_multisite()) {
-            if (class_exists('Foody_WhiteLabelPostMapping')) {
-                Foody_WhiteLabelPostMapping::createTable();
-            }
-        }
-    }
+	/**
+	 * Short Description. (use period)
+	 *
+	 * Long Description.
+	 *
+	 * @since    1.0.0
+	 */
+	public static function activate() {
+		if ( is_main_site() && is_multisite() ) {
+			if ( class_exists( 'Foody_WhiteLabelPostMapping' ) ) {
+				Foody_WhiteLabelPostMapping::createTable();
+			}
+		}
+	}
 
 }

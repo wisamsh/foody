@@ -7,43 +7,42 @@
  */
 
 
-function foody_edit_user()
-{
-    $required = [
-        'first_name',
-        'last_name'
-    ];
+function foody_edit_user() {
+	$required = [
+		'first_name',
+		'last_name'
+	];
 
-    $validation_errors = foody_form_validation($required);
-
-
-    $errors = new WP_Error();
+	$validation_errors = foody_form_validation( $required );
 
 
-    if (!is_user_logged_in()) {
-        $errors->add(401, 'unauthorized');
-    } else {
-        if (!empty($validation_errors)) {
-            $errors->add(400, 'bad request');
-        } else {
-
-            $first_name = $_POST['first_name'];
-            $last_name = $_POST['last_name'];
-
-            $user_data = new stdClass();
-
-            $user_data->first_name = $first_name;
-            $user_data->last_name = $last_name;
-
-            $user_data->ID = get_current_user_id();
+	$errors = new WP_Error();
 
 
-            $updated_user_id = wp_update_user($user_data);
+	if ( ! is_user_logged_in() ) {
+		$errors->add( 401, 'unauthorized' );
+	} else {
+		if ( ! empty( $validation_errors ) ) {
+			$errors->add( 400, 'bad request' );
+		} else {
+
+			$first_name = $_POST['first_name'];
+			$last_name  = $_POST['last_name'];
+
+			$user_data = new stdClass();
+
+			$user_data->first_name = $first_name;
+			$user_data->last_name  = $last_name;
+
+			$user_data->ID = get_current_user_id();
 
 
-            if (is_wp_error($updated_user_id)) {
+			$updated_user_id = wp_update_user( $user_data );
 
-                $errors->add(500, 'error updating user');
+
+			if ( is_wp_error( $updated_user_id ) ) {
+
+				$errors->add( 500, 'error updating user' );
 
 			} else {
 				if ( isset( $_POST['phone_number'] ) ) {
@@ -129,8 +128,8 @@ function foody_edit_user_approvals() {
 
 
 	if (
-		( isset( $resultMarketing ) &&
-		  $resultMarketing === false )
+	( isset( $resultMarketing ) &&
+	  $resultMarketing === false )
 	) {
 		$errors->add( 500, 'error updating user' );
 	}

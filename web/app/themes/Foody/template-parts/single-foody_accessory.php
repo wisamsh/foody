@@ -11,8 +11,8 @@
 $accessory = $template_args['page'];
 
 foody_get_template_part(
-    get_template_directory() . '/template-parts/content-accessory-display.php',
-    [
-        'page' => $accessory
-    ]
+	get_template_directory() . '/template-parts/content-accessory-display.php',
+	[
+		'page' => $accessory
+	]
 );

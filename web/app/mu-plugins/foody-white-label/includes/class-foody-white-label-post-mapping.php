@@ -6,17 +6,15 @@
  * Time: 7:00 PM
  */
 
-class Foody_WhiteLabelPostMapping
-{
-    public static $table_name;
+class Foody_WhiteLabelPostMapping {
+	public static $table_name;
 
-    public static function createTable()
-    {
-        global $wpdb;
-        self::$table_name = $wpdb->prefix . 'foody_post_mapping';
-        $charset_collate = $wpdb->get_charset_collate();
+	public static function createTable() {
+		global $wpdb;
+		self::$table_name = $wpdb->prefix . 'foody_post_mapping';
+		$charset_collate  = $wpdb->get_charset_collate();
 
-        $sql = "CREATE TABLE " . self::$table_name . "  (
+		$sql = "CREATE TABLE " . self::$table_name . "  (
               `ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
               `post_id` BIGINT(20) NOT NULL,
               `destination_post_id` BIGINT(20) NOT NULL,
@@ -25,67 +23,64 @@ class Foody_WhiteLabelPostMapping
               `source_type` VARCHAR(20) NULL,
               PRIMARY KEY (`ID`)) $charset_collate;";
 
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql);
-    }
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		dbDelta( $sql );
+	}
 
-    public static function add($post_id, $destination_id, $blog_id)
-    {
-        global $wpdb;
-        $result = $wpdb->insert(self::$table_name, [
-            'post_id' => $post_id,
-            'destination_post_id' => $destination_id,
-            'blog_id' => $blog_id
-        ]);
+	public static function add( $post_id, $destination_id, $blog_id ) {
+		global $wpdb;
+		$result = $wpdb->insert( self::$table_name, [
+			'post_id'             => $post_id,
+			'destination_post_id' => $destination_id,
+			'blog_id'             => $blog_id
+		] );
 
-        if ($result === false) {
-            Foody_WhiteLabelLogger::error("Error inserting to foody_post_mapping: $wpdb->last_error", $wpdb->last_result);
-        }
+		if ( $result === false ) {
+			Foody_WhiteLabelLogger::error( "Error inserting to foody_post_mapping: $wpdb->last_error", $wpdb->last_result );
+		}
 
-        return $result;
-    }
+		return $result;
+	}
 
-    public static function remove($post_id, $blog_id)
-    {
-        global $wpdb;
-        return $wpdb->delete(self::$table_name, [
-            'post_id' => $post_id,
-            'blog_id' => $blog_id
-        ]);
-    }
+	public static function remove( $post_id, $blog_id ) {
+		global $wpdb;
 
-    public static function getByPost($post_id)
-    {
-        global $wpdb;
+		return $wpdb->delete( self::$table_name, [
+			'post_id' => $post_id,
+			'blog_id' => $blog_id
+		] );
+	}
 
-        $results = $wpdb->get_results("SELECT * from " . self::$table_name . " where post_id = $post_id", ARRAY_A);
+	public static function getByPost( $post_id ) {
+		global $wpdb;
 
-        return $results;
-    }
+		$results = $wpdb->get_results( "SELECT * from " . self::$table_name . " where post_id = $post_id", ARRAY_A );
 
-    public static function existsInBlog($post_id, $blog)
-    {
-        global $wpdb;
+		return $results;
+	}
 
-        $results = $wpdb->get_results("SELECT * from " . self::$table_name . " where post_id = $post_id and blog_id = $blog", ARRAY_A);
+	public static function existsInBlog( $post_id, $blog ) {
+		global $wpdb;
 
-        return !empty($results);
-    }
+		$results = $wpdb->get_results( "SELECT * from " . self::$table_name . " where post_id = $post_id and blog_id = $blog", ARRAY_A );
 
-    public static function insertManyToBlog($posts, $blog_id)
-    {
-        global $wpdb;
-        $values = array();
-        $place_holders = array();
+		return ! empty( $results );
+	}
 
-        $query = "INSERT INTO " . self::$table_name . " (post_id, blog_id) VALUES ";
+	public static function insertManyToBlog( $posts, $blog_id ) {
+		global $wpdb;
+		$values        = array();
+		$place_holders = array();
 
-        foreach ($posts as $post) {
-            array_push($values, $post, $blog_id);
-            $place_holders[] = "(%d, %d)";
-        }
+		$query = "INSERT INTO " . self::$table_name . " (post_id, blog_id) VALUES ";
 
-        $query .= implode(', ', $place_holders);
-        return $wpdb->query($wpdb->prepare("$query ", $values));
-    }
+		foreach ( $posts as $post ) {
+			array_push( $values, $post, $blog_id );
+			$place_holders[] = "(%d, %d)";
+		}
+
+		$query .= implode( ', ', $place_holders );
+
+		return $wpdb->query( $wpdb->prepare( "$query ", $values ) );
+	}
 }

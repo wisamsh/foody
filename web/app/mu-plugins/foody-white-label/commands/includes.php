@@ -6,4 +6,4 @@
  * Time: 2:57 PM
  */
 
-require_once plugin_dir_path(__FILE__) . '/class-foody-white-label-cmd-export.php';
+require_once plugin_dir_path( __FILE__ ) . '/class-foody-white-label-cmd-export.php';

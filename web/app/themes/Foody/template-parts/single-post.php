@@ -14,10 +14,10 @@ $article = $template_args['page'];
 
 
 foody_get_template_part(
-    get_template_directory() . '/template-parts/content-article-display.php',
-    [
-        'article' => $article
-    ]
+	get_template_directory() . '/template-parts/content-article-display.php',
+	[
+		'article' => $article
+	]
 );
 
 

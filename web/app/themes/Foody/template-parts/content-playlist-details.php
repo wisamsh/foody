@@ -10,7 +10,7 @@
 /** @var Foody_Playlist $playlist */
 $playlist = $template_args['playlist'];
 
-$current_recipe = $playlist->get_current_recipe();
+$current_recipe       = $playlist->get_current_recipe();
 $current_recipe_index = $playlist->get_current_recipe_index();
 
 $prev_class = $current_recipe_index == 0 ? 'disabled' : '';
@@ -19,9 +19,9 @@ $next_class = $current_recipe_index == $playlist->num_of_recipes - 1 ? 'disabled
 ?>
 
 <section class="d-none d-lg-block">
-    <?php
-    $current_recipe->the_details();
-    ?>
+	<?php
+	$current_recipe->the_details();
+	?>
 </section>
 <div class="details-container d-block d-lg-none">
 
@@ -33,7 +33,7 @@ $next_class = $current_recipe_index == $playlist->num_of_recipes - 1 ? 'disabled
                 <i class="icon-Playlist col-1"></i>
                 <h1 class="col playlist-title">
 
-                    <?php echo $playlist->getTitle() ?>
+					<?php echo $playlist->getTitle() ?>
                 </h1>
             </div>
             <div class="actions row">
@@ -51,21 +51,21 @@ $next_class = $current_recipe_index == $playlist->num_of_recipes - 1 ? 'disabled
 
                 <span class="count col">
             <?php
-            $count = $playlist->num_of_recipes;
+            $count   = $playlist->num_of_recipes;
             $current = $playlist->get_current_recipe_index() + 1;
-            printf('%s/%s', $current, $count);
+            printf( '%s/%s', $current, $count );
             ?>
         </span>
             </div>
 
-            <?php
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/content-social-actions.php'
-            )
-            ?>
+			<?php
+			foody_get_template_part(
+				get_template_directory() . '/template-parts/content-social-actions.php'
+			)
+			?>
         </section>
         <button class="btn btn-show-recipe" aria-label="הצג מתכון">
-            <a role="button" href="<?php echo get_permalink($playlist->get_current_recipe()->id) ?>">
+            <a role="button" href="<?php echo get_permalink( $playlist->get_current_recipe()->id ) ?>">
                 <span>הצג מתכון</span>
                 <span>
                     <i class="icon-arrowleft"></i>

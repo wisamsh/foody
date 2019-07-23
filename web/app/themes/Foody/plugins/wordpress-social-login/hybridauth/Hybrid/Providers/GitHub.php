@@ -6,19 +6,17 @@
 */
 
 /**
- * Hybrid_Providers_GitHub 
+ * Hybrid_Providers_GitHub
  */
-class Hybrid_Providers_GitHub extends Hybrid_Provider_Model_OAuth2
-{ 
+class Hybrid_Providers_GitHub extends Hybrid_Provider_Model_OAuth2 {
 	// default permissions  
 	// (no scope) => public read-only access (includes public user profile info, public repo info, and gists).
 	public $scope = "user:email";
 
 	/**
-	* IDp wrappers initializer 
-	*/
-	function initialize() 
-	{
+	 * IDp wrappers initializer
+	 */
+	function initialize() {
 		parent::initialize();
 
 		// Provider api end-points
@@ -28,41 +26,38 @@ class Hybrid_Providers_GitHub extends Hybrid_Provider_Model_OAuth2
 	}
 
 	/**
-	* load the user profile from the IDp api client
-	*/
-	function getUserProfile()
-	{
-		$data = $this->api->api( "user" ); 
+	 * load the user profile from the IDp api client
+	 */
+	function getUserProfile() {
+		$data = $this->api->api( "user" );
 
-		if ( ! isset( $data->id ) ){
+		if ( ! isset( $data->id ) ) {
 			throw new Exception( "User profile request failed! {$this->providerId} returned an invalid response.", 6 );
 		}
 
-		$this->user->profile->identifier  = @ $data->id; 
+		$this->user->profile->identifier  = @ $data->id;
 		$this->user->profile->displayName = @ $data->name;
 		$this->user->profile->description = @ $data->bio;
 		$this->user->profile->photoURL    = @ $data->avatar_url;
-		$this->user->profile->profileURL  = @ $data->html_url; 
+		$this->user->profile->profileURL  = @ $data->html_url;
 		$this->user->profile->email       = @ $data->email;
 		$this->user->profile->webSiteURL  = @ $data->blog;
 		$this->user->profile->region      = @ $data->location;
 
-		if( ! $this->user->profile->displayName ){
+		if ( ! $this->user->profile->displayName ) {
 			$this->user->profile->displayName = @ $data->login;
 		}
 
 		// request user emails from github api
-		if( ! $data->email ){
-			try{
-				$emails = $this->api->api("user/emails");
+		if ( ! $data->email ) {
+			try {
+				$emails = $this->api->api( "user/emails" );
 
 				// fail gracefully, and let apps collect the email if not present
-				if (is_array($emails) && !empty($emails[0]->email))
-				{
-				    $this->user->profile->email = $emails[0]->email;
+				if ( is_array( $emails ) && ! empty( $emails[0]->email ) ) {
+					$this->user->profile->email = $emails[0]->email;
 				}
-			}
-			catch( GithubApiException $e ){
+			} catch ( GithubApiException $e ) {
 				throw new Exception( "User email request failed! {$this->providerId} returned an error: $e", 6 );
 			}
 		}

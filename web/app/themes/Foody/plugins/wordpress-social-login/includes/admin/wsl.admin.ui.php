@@ -11,7 +11,7 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( !defined( 'ABSPATH' ) ) {exit;}
 
 // --------------------------------------------------------------------
 
@@ -178,7 +178,7 @@ function wsl_admin_ui_header( $wslp = null )
 		<a style="font-size: 0.9em; text-decoration: none;" target="_blank" href="https://github.com/miled/wordpress-social-login"><?php _wsl_e('Github', 'wordpress-social-login') ?></a>
 	</div>
 
-	<h1 <?php if( is_rtl() ) echo 'style="margin: 20px 0;"'; ?>>
+	<h1 <?php if( is_rtl() ) {echo 'style="margin: 20px 0;"';} ?>>
 		<?php _wsl_e( 'WordPress Social Login', 'wordpress-social-login' ) ?>
 
 		<small><?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?></small>
@@ -203,7 +203,7 @@ function wsl_admin_ui_header( $wslp = null )
 						}
 					}
 
-					?><a class="nav-tab <?php if( $wslp == $name ) echo "nav-tab-active"; ?>" style="<?php echo $css_pull_right; ?>" href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php if( isset( $settings["ico"] ) ) echo '<img style="margin: 0px; padding: 0px; border: 0px none;width: 16px; height: 16px;" src="' . WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/' . $settings["ico"] . '" />'; else _wsl_e( $settings["label"], 'wordpress-social-login' ); ?></a><?php
+					?><a class="nav-tab <?php if( $wslp == $name ) {echo "nav-tab-active";} ?>" style="<?php echo $css_pull_right; ?>" href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php if( isset( $settings["ico"] ) ) {echo '<img style="margin: 0px; padding: 0px; border: 0px none;width: 16px; height: 16px;" src="' . WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/' . $settings["ico"] . '" />';} else {_wsl_e( $settings["label"], 'wordpress-social-login' );} ?></a><?php
 				}
 			}
 		?>
@@ -270,7 +270,7 @@ function wsl_admin_ui_error()
 
 	<div>
 		<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/support.html" target="_blank"><?php _wsl_e( "Report as bug", 'wordpress-social-login' ) ?></a>
-		<a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=components" style="float:<?php if( is_rtl() ) echo 'left'; else echo 'right'; ?>"><?php _wsl_e( "Check enabled components", 'wordpress-social-login' ) ?></a>
+		<a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=components" style="float:<?php if( is_rtl() ) {echo 'left';} else {echo 'right';} ?>"><?php _wsl_e( "Check enabled components", 'wordpress-social-login' ) ?></a>
 	</div>
 </div>
 <?php
@@ -365,7 +365,7 @@ function wsl_admin_welcome_panel()
 	//> wsl-w-panel is shamelessly borrowed and modified from wordpress welcome-panel
 -->
 <div id="wsl-w-panel">
-	<a href="options-general.php?page=wordpress-social-login&wslp=<?php echo $wslp ?>&wsldwp=1" id="wsl-w-panel-dismiss" <?php if( is_rtl() ) echo 'style="left: 10px;right: auto;"'; ?>><?php _wsl_e("Dismiss", 'wordpress-social-login') ?></a>
+	<a href="options-general.php?page=wordpress-social-login&wslp=<?php echo $wslp ?>&wsldwp=1" id="wsl-w-panel-dismiss" <?php if( is_rtl() ) {echo 'style="left: 10px;right: auto;"';} ?>><?php _wsl_e("Dismiss", 'wordpress-social-login') ?></a>
 
 	<table width="100%" border="0" style="margin:0;padding:0;">
 		<tr>

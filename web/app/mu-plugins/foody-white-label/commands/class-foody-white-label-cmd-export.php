@@ -6,39 +6,34 @@
  * Time: 2:56 PM
  */
 
-if (defined('WP_CLI') && WP_CLI) {
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
 
-    class Foody_WhiteLabelCmdExport
-    {
+	class Foody_WhiteLabelCmdExport {
 
 
-        public function __construct()
-        {
-        }
+		public function __construct() {
+		}
 
-        public function export()
-        {
+		public function export() {
 
-            // give output
-            WP_CLI::success('hello from foody_export() !');
+			// give output
+			WP_CLI::success( 'hello from foody_export() !' );
 
-        }
+		}
 
-        public function import($args, $accos_args)
-        {
-            $file = $args[0];
+		public function import( $args, $accos_args ) {
+			$file = $args[0];
 
-            (new Foody_Import())->import($file);
+			( new Foody_Import() )->import( $file );
 
-            WP_CLI::success('foody');
-        }
+			WP_CLI::success( 'foody' );
+		}
 
-        public function test($args)
-        {
-            WP_CLI::success('test');
-        }
-    }
+		public function test( $args ) {
+			WP_CLI::success( 'test' );
+		}
+	}
 
-    WP_CLI::add_command('foody', 'Foody_WhiteLabelCmdExport');
+	WP_CLI::add_command( 'foody', 'Foody_WhiteLabelCmdExport' );
 
 }

@@ -6,30 +6,27 @@
  * Date: 12/11/18
  * Time: 11:16 AM
  */
-class Foody_CategoriesAccordion
-{
+class Foody_CategoriesAccordion {
 
-    private $theme_location = 'categories';
-    private $depth = 3;
-    public $container_class = 'categories-accordion-widget show';
-    public $container_id = 'accordion-categories-widget-accordion';
-    public $menu_id = 'categories-widget-accordion-menu';
-    public $menu_class = 'categories-widget-accordion-menu';
+	private $theme_location = 'categories';
+	private $depth = 3;
+	public $container_class = 'categories-accordion-widget show';
+	public $container_id = 'accordion-categories-widget-accordion';
+	public $menu_id = 'categories-widget-accordion-menu';
+	public $menu_class = 'categories-widget-accordion-menu';
 
-    /**
-     * Foody_CategoriesAccordion constructor.
-     */
-    public function __construct()
-    {
-    }
+	/**
+	 * Foody_CategoriesAccordion constructor.
+	 */
+	public function __construct() {
+	}
 
 
-    public function the_menu()
-    {
+	public function the_menu() {
 
-        $title = foody_get_menu_title($this->theme_location);
+		$title = foody_get_menu_title( $this->theme_location );
 
-        ?>
+		?>
         <section class="sidebar-categories sidebar-section">
         <h2 class="title main-title">
 
@@ -45,34 +42,33 @@ class Foody_CategoriesAccordion
             </a>
         </h2>
 
-        <?php
+		<?php
 
-        $nav_args = $this->get_menu_args();
-
-
-        wp_nav_menu($nav_args);
-
-        echo '</section>';
-    }
+		$nav_args = $this->get_menu_args();
 
 
-    public function get_menu_args()
-    {
+		wp_nav_menu( $nav_args );
+
+		echo '</section>';
+	}
 
 
-        return [
-            'theme_location' => $this->theme_location,
-            'depth' => $this->depth,
-            'container' => 'div',
-            'container_class' => $this->container_class,
-            'container_id' => $this->container_id,
-            'menu_class' => $this->menu_class,
-            'menu_id' => $this->menu_id,
-            'fallback_cb' => 'Foody_BootstrapAccordionNavwalker::fallback',
-            'before_menu' => '',
-            'walker' => new Foody_BootstrapAccordionNavwalker(),
-            'item_class' => 'category-accordion-item',
-            'parent_item_class' => 'category-accordion-toggle'
-        ];
-    }
+	public function get_menu_args() {
+
+
+		return [
+			'theme_location'    => $this->theme_location,
+			'depth'             => $this->depth,
+			'container'         => 'div',
+			'container_class'   => $this->container_class,
+			'container_id'      => $this->container_id,
+			'menu_class'        => $this->menu_class,
+			'menu_id'           => $this->menu_id,
+			'fallback_cb'       => 'Foody_BootstrapAccordionNavwalker::fallback',
+			'before_menu'       => '',
+			'walker'            => new Foody_BootstrapAccordionNavwalker(),
+			'item_class'        => 'category-accordion-item',
+			'parent_item_class' => 'category-accordion-toggle'
+		];
+	}
 }

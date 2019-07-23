@@ -10,22 +10,22 @@
 
 /** @var Foody_Post $foody_post */
 $foody_post = $template_args['post'];
-$post_id = $foody_post->id;
+$post_id    = $foody_post->id;
 
-$show_text = !empty($template_args['show_text']);
+$show_text = ! empty( $template_args['show_text'] );
 
 $favorite = [
-    'icon' => 'icon-heart',
-    'text' => 'הוספה למועדפים',
-    'mobile_text' => 'מועדפים'
+	'icon'        => 'icon-heart',
+	'text'        => 'הוספה למועדפים',
+	'mobile_text' => 'מועדפים'
 ];
 
-if ($foody_post->favorite) {
-    $favorite = [
-        'icon' => 'icon-favorite-pressed',
-        'text' => 'נשמר במועדפים',
-        'mobile_text' => 'מועדפים'
-    ];
+if ( $foody_post->favorite ) {
+	$favorite = [
+		'icon'        => 'icon-favorite-pressed',
+		'text'        => 'נשמר במועדפים',
+		'mobile_text' => 'מועדפים'
+	];
 }
 
 ?>
@@ -34,9 +34,9 @@ if ($foody_post->favorite) {
     <i class="<?php echo $favorite['icon'] ?>">
 
     </i>
-    <?php if ($show_text): ?>
+	<?php if ( $show_text ): ?>
         <span>
             <?php echo( wp_is_mobile() ? $favorite['mobile_text'] : $favorite['text'] ); ?>
         </span>
-    <?php endif; ?>
+	<?php endif; ?>
 </div>

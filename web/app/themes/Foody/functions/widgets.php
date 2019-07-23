@@ -7,73 +7,69 @@
  */
 
 
-function foody_widgets()
-{
+function foody_widgets() {
 
 
-    $widgets = array(
-        'foody_Categories_List_Widget',
-        'foody_Search_Filter',
-        'Foody_CategoriesAccordionWidget',
-        'foody_Product_Widget'
-    );
+	$widgets = array(
+		'foody_Categories_List_Widget',
+		'foody_Search_Filter',
+		'Foody_CategoriesAccordionWidget',
+		'foody_Product_Widget'
+	);
 
-    foreach ($widgets as $widget) {
-        register_widget($widget);
-    }
+	foreach ( $widgets as $widget ) {
+		register_widget( $widget );
+	}
 }
 
-add_action('widgets_init', 'foody_widgets');
+add_action( 'widgets_init', 'foody_widgets' );
 
 
-add_filter('dynamic_sidebar_params', 'foody_wrap_widget_titles', 20);
-function foody_wrap_widget_titles(array $params)
-{
+add_filter( 'dynamic_sidebar_params', 'foody_wrap_widget_titles', 20 );
+function foody_wrap_widget_titles( array $params ) {
 
-    // $params will ordinarily be an array of 2 elements, we're only interested in the first element
-    $widget =& $params[0];
-    $widget['before_title'] = '<div class="widgettitle">';
-    $widget['after_title'] = '</div>';
+	// $params will ordinarily be an array of 2 elements, we're only interested in the first element
+	$widget                 =& $params[0];
+	$widget['before_title'] = '<div class="widgettitle">';
+	$widget['after_title']  = '</div>';
 
-    return $params;
+	return $params;
 
 }
 
-function foody_dynamic_sidebar_ajax_loading($sidebar_id, $container_selector)
-{
-    ob_start();
+function foody_dynamic_sidebar_ajax_loading( $sidebar_id, $container_selector ) {
+	ob_start();
 
-    dynamic_sidebar($sidebar_id);
+	dynamic_sidebar( $sidebar_id );
 
-    $sidebar = ob_get_contents();
+	$sidebar = ob_get_contents();
 
-    ob_end_clean();
-    $sidebar =  escape_javascript_text($sidebar);
+	ob_end_clean();
+	$sidebar = escape_javascript_text( $sidebar );
 //    $sidebar = addslashes(preg_replace('/\s+/m', ' ', $sidebar));
-    ?>
+	?>
     <script async defer id="sidebar-loader-<?php echo $sidebar_id ?>">
         var sidebar = '<?php echo $sidebar; ?>';
         jQuery('<?php echo $container_selector?>').append(sidebar);
     </script>
-    <?php
+	<?php
 
 }
 
-function escape_javascript_text($string)
-{
-    return str_replace(
-        "\n",
-        '',
-        str_replace(
-            '"',
-            '\"',
-            addcslashes(
-                str_replace(
-                    "\r",
-                    '',
-                    str_replace('\t','', str_replace("'",'\'',(string)$string))),
-                "\0..\37'\\"
-            )
-        )
-    );
+function escape_javascript_text( $string ) {
+	return str_replace(
+		"\n",
+		'',
+		str_replace(
+			'"',
+			'\"',
+			addcslashes(
+				str_replace(
+					"\r",
+					'',
+					str_replace( '\t', '', str_replace( "'", '\'', (string) $string ) ) ),
+				"\0..\37'\\"
+			)
+		)
+	);
 }

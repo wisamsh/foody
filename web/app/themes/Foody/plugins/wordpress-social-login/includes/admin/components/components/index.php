@@ -7,16 +7,17 @@
 */
 
 /**
-* Components Manager 
-*/
+ * Components Manager
+ */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit; 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // --------------------------------------------------------------------
 
-function wsl_component_help()
-{
+function wsl_component_help() {
 	// HOOKABLE: 
 	do_action( "wsl_component_help_start" );
 
@@ -24,7 +25,7 @@ function wsl_component_help()
 	include "wsl.components.help.gallery.php";
 
 	wsl_component_components_setup();
-	
+
 	wsl_component_components_gallery();
 
 	// HOOKABLE: 

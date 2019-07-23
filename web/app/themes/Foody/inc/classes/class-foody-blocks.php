@@ -6,43 +6,41 @@
  * Time: 4:45 PM
  */
 
-class Foody_Blocks
-{
-    /**
-     * @var $foody_search Foody_Search
-    */
-    private $foody_search;
-
-    /**
-     * Foody_Feed_Channel constructor.
-     */
-    public function __construct($foody_search)
-    {
-        if (isset($foody_search)) {
-            $this->foody_search = $foody_search;
-        }
-    }
-
-    /*
-     *  All draw_{type}_block methods below must return
-     *  and the block options including the following:
-     *  - title
-     *  - see more text
-     *  - see more link
-     *  - block html content
-     *  These methods are meant to be used in conjunction with wrap_block()
-     *  method in order to create a mutual block html structure
-     * */
+class Foody_Blocks {
+	/**
+	 * @var $foody_search Foody_Search
+	 */
+	private $foody_search;
 
 	/**
-	 *
-	 * @uses Foody_Feed_Channel::get_dynamic_block_posts()
-	 * @uses Foody_Feed_Channel::get_manual_block_posts()
+	 * Foody_Feed_Channel constructor.
+	 */
+	public function __construct( $foody_search ) {
+		if ( isset( $foody_search ) ) {
+			$this->foody_search = $foody_search;
+		}
+	}
+
+	/*
+	 *  All draw_{type}_block methods below must return
+	 *  and the block options including the following:
+	 *  - title
+	 *  - see more text
+	 *  - see more link
+	 *  - block html content
+	 *  These methods are meant to be used in conjunction with wrap_block()
+	 *  method in order to create a mutual block html structure
+	 * */
+
+	/**
 	 *
 	 * @param $block
 	 *
 	 * @return array the block options
 	 * @throws Exception if query filter is wrong
+	 * @uses Foody_Feed_Channel::get_manual_block_posts()
+	 *
+	 * @uses Foody_Feed_Channel::get_dynamic_block_posts()
 	 */
 	public function get_dynamic_block_posts( $block ) {
 		$posts = [];
@@ -69,18 +67,18 @@ class Foody_Blocks
 	}
 
 	/**
-     *
-     * @uses Foody_Feed_Channel::draw_dynamic_block()
-     * @uses Foody_Feed_Channel::draw_manual_block()
-     * @uses Foody_Feed_Channel::draw_categories_block()
-     * @uses Foody_Feed_Channel::draw_banner_block()
-     * @uses Foody_Feed_Channel::draw_product_block()
-     *
-     * @param $block
-     *
-     * @return array the block options
-     * @throws Exception if query filter is wrong
-     */
+	 *
+	 * @param $block
+	 *
+	 * @return array the block options
+	 * @throws Exception if query filter is wrong
+	 * @uses Foody_Feed_Channel::draw_banner_block()
+	 * @uses Foody_Feed_Channel::draw_product_block()
+	 *
+	 * @uses Foody_Feed_Channel::draw_dynamic_block()
+	 * @uses Foody_Feed_Channel::draw_manual_block()
+	 * @uses Foody_Feed_Channel::draw_categories_block()
+	 */
 	public function draw_dynamic_block( $block ) {
 
 		$block_options = [];
@@ -120,11 +118,11 @@ class Foody_Blocks
 				$see_more_text = $block['see_more_text'];
 
 				$block_options = [
-					'title'         => $title,
+					'title'           => $title,
 					'see_more_target' => isset( $see_more_link['target'] ) && ! empty( $see_more_link['target'] ) ? $see_more_link['target'] : '',
-				    'see_more_link' => $see_more_link['url'],
-					'see_more_text' => $see_more_text,
-					'content'       => $block_content
+					'see_more_link'   => $see_more_link['url'],
+					'see_more_text'   => $see_more_text,
+					'content'         => $block_content
 				];
 			}
 		}
@@ -133,289 +131,284 @@ class Foody_Blocks
 		return $block_options;
 	}
 
-    public function draw_categories_block($block, $block_id = '')
-    {
-        $items = $block['items'];
+	public function draw_categories_block( $block, $block_id = '' ) {
+		$items = $block['items'];
 
-	    $block_id = ! empty( $block_id ) ? ' id="' . $block_id . '"' : '';
+		$block_id = ! empty( $block_id ) ? ' id="' . $block_id . '"' : '';
 
-        $block_options = [];
+		$block_options = [];
 
-        if (!empty($items) && is_array($items)) {
-
-            $items = array_filter($items, function ($item) {
-                return $item['category'] instanceof WP_Term;
-            });
-
-            $items = array_map(function ($item) {
-
-                /**
-                 * @var $title
-                 * @var $image
-                 * @var $mobile_image
-                 * @var $link
-                 * @var $title
-                 * @var $category WP_Term
-                 */
-                extract($item);
-
-
-                if (empty($title)) {
-                    $title = $category->name;
-                }
-
-                if (empty($image)) {
-                    $image = get_field('image', $category->taxonomy . '_' . $category->term_id);
-                    if (empty($image)) {
-                        $image = ['url' => ''];
-                    }
-                }
+		if ( ! empty( $items ) && is_array( $items ) ) {
 
-                $image = $image['url'];
+			$items = array_filter( $items, function ( $item ) {
+				return $item['category'] instanceof WP_Term;
+			} );
+
+			$items = array_map( function ( $item ) {
+
+				/**
+				 * @var $title
+				 * @var $image
+				 * @var $mobile_image
+				 * @var $link
+				 * @var $title
+				 * @var $category WP_Term
+				 */
+				extract( $item );
 
-                if (empty($mobile_image)) {
-                    $mobile_image = $image;
-                } else {
-                    $mobile_image = $mobile_image['url'];
-                }
-
-
-                if (empty($link)) {
-                    $link = ['url' => get_term_link($category->term_id)];
-                }
-
-                if (isset($link['target'])) {
-                    $target = $link['target'];
-                }
-                $link = $link['url'];
-                $return = true;
-                $item_args = compact('title', 'image', 'link', 'target', 'mobile_image', 'return');
+
+				if ( empty( $title ) ) {
+					$title = $category->name;
+				}
 
-                return $item_args;
+				if ( empty( $image ) ) {
+					$image = get_field( 'image', $category->taxonomy . '_' . $category->term_id );
+					if ( empty( $image ) ) {
+						$image = [ 'url' => '' ];
+					}
+				}
 
-            }, $items);
+				$image = $image['url'];
 
-            $items_content = implode('', array_map(function ($item) {
-                return foody_get_template_part(get_template_directory() . '/template-parts/content-category-listing.php', $item);
-            }, $items));
+				if ( empty( $mobile_image ) ) {
+					$mobile_image = $image;
+				} else {
+					$mobile_image = $mobile_image['url'];
+				}
+
+
+				if ( empty( $link ) ) {
+					$link = [ 'url' => get_term_link( $category->term_id ) ];
+				}
 
-            if (isset($block['show_more_flag']) && $block['show_more_flag']) {
+				if ( isset( $link['target'] ) ) {
+					$target = $link['target'];
+				}
+				$link      = $link['url'];
+				$return    = true;
+				$item_args = compact( 'title', 'image', 'link', 'target', 'mobile_image', 'return' );
 
-                $show_more_link = !empty($block['see_more_link']['url']) ? $block['see_more_link']['url'] : '';
-                $items_content = "<section class='categories-block-content categories-listing show-more row' data-more-link='".esc_attr($show_more_link)."' data-count=''" . $block_id . ">$items_content</section>";
-            } else {
-                $items_content = "<section class='categories-block-content categories-listing block-more row' " . $block_id . ">$items_content</section>";
-            }
+				return $item_args;
 
-            $title = $block['title'];
+			}, $items );
 
-            $see_more_text = $block['see_more_text'];
-            $see_more_link = $block['see_more_link'];
+			$items_content = implode( '', array_map( function ( $item ) {
+				return foody_get_template_part( get_template_directory() . '/template-parts/content-category-listing.php', $item );
+			}, $items ) );
 
-            if (empty($see_more_link)) {
-                $see_more_link = ['url' => ''];
-            }
+			if ( isset( $block['show_more_flag'] ) && $block['show_more_flag'] ) {
 
-            if (empty($see_more_text) && isset($see_more_link['title'])) {
-                $see_more_text = $see_more_link['title'];
-            }
+				$show_more_link = ! empty( $block['see_more_link']['url'] ) ? $block['see_more_link']['url'] : '';
+				$items_content  = "<section class='categories-block-content categories-listing show-more row' data-more-link='" . esc_attr( $show_more_link ) . "' data-count=''" . $block_id . ">$items_content</section>";
+			} else {
+				$items_content = "<section class='categories-block-content categories-listing block-more row' " . $block_id . ">$items_content</section>";
+			}
 
-            $block_options['title'] = $title;
-	        $block_options['see_more_target'] = isset( $see_more_link['target'] ) && ! empty( $see_more_link['target'] ) ? $see_more_link['target'] : '';
-            $block_options['see_more_text'] = $see_more_text;
-            $block_options['see_more_link'] = $see_more_link['url'];
-            $block_options['content'] = $items_content;
-        }
+			$title = $block['title'];
 
-        return $block_options;
-    }
+			$see_more_text = $block['see_more_text'];
+			$see_more_link = $block['see_more_link'];
 
-    public function draw_banner_block($block)
-    {
-        /**
-         * @var $image
-         * @var $link
-         */
-        extract($block['banner']);
+			if ( empty( $see_more_link ) ) {
+				$see_more_link = [ 'url' => '' ];
+			}
 
-        $block_options = [
-            'hide_header' => true
-        ];
-        if (!empty($image)) {
-            $block_options['content'] = foody_get_template_part(
-                get_template_directory() . '/template-parts/content-banner.php',
-                [
-                    'image' => $image,
-                    'link' => $link,
-                    'return' => true
-                ]
-            );
-        }
+			if ( empty( $see_more_text ) && isset( $see_more_link['title'] ) ) {
+				$see_more_text = $see_more_link['title'];
+			}
 
-        return $block_options;
-    }
+			$block_options['title']           = $title;
+			$block_options['see_more_target'] = isset( $see_more_link['target'] ) && ! empty( $see_more_link['target'] ) ? $see_more_link['target'] : '';
+			$block_options['see_more_text']   = $see_more_text;
+			$block_options['see_more_link']   = $see_more_link['url'];
+			$block_options['content']         = $items_content;
+		}
 
-    public function draw_manual_block($block)
-    {
+		return $block_options;
+	}
 
-        $items = $block['items'];
+	public function draw_banner_block( $block ) {
+		/**
+		 * @var $image
+		 * @var $link
+		 */
+		extract( $block['banner'] );
 
-        $block_options = [];
+		$block_options = [
+			'hide_header' => true
+		];
+		if ( ! empty( $image ) ) {
+			$block_options['content'] = foody_get_template_part(
+				get_template_directory() . '/template-parts/content-banner.php',
+				[
+					'image'  => $image,
+					'link'   => $link,
+					'return' => true
+				]
+			);
+		}
 
-        if (!empty($items) && is_array($items)) {
+		return $block_options;
+	}
 
-            $items = array_filter($items, function ($item) {
-                return $item['post'] instanceof WP_Post;
-            });
+	public function draw_manual_block( $block ) {
 
-            $items = array_map(function ($item) {
+		$items = $block['items'];
 
-                /**
-                 * @var $title
-                 * @var $secondary_text
-                 * @var $image
-                 * @var $mobile_image
-                 * @var $link
-                 * @var $title
-                 * @var $post WP_Post
-                 */
-                extract($item);
+		$block_options = [];
 
+		if ( ! empty( $items ) && is_array( $items ) ) {
 
-                $foody_post = Foody_Post::create($post);
+			$items = array_filter( $items, function ( $item ) {
+				return $item['post'] instanceof WP_Post;
+			} );
 
-                if (!empty($title)) {
-                    $foody_post->setTitle($title);
-                }
+			$items = array_map( function ( $item ) {
 
-                if (!empty($image)) {
+				/**
+				 * @var $title
+				 * @var $secondary_text
+				 * @var $image
+				 * @var $mobile_image
+				 * @var $link
+				 * @var $title
+				 * @var $post WP_Post
+				 */
+				extract( $item );
 
-                    $foody_post->setImage($image['url']);
-                }
 
+				$foody_post = Foody_Post::create( $post );
 
-                if (!empty($link)) {
-                    $foody_post->link = $link['url'];
-                    $foody_post->link_attrs = $link;
-                }
+				if ( ! empty( $title ) ) {
+					$foody_post->setTitle( $title );
+				}
 
-                if (!empty($secondary_text)) {
-                    $foody_post->setDescription($secondary_text);
-                }
+				if ( ! empty( $image ) ) {
 
+					$foody_post->setImage( $image['url'] );
+				}
 
-                return $foody_post;
 
-            }, $items);
+				if ( ! empty( $link ) ) {
+					$foody_post->link       = $link['url'];
+					$foody_post->link_attrs = $link;
+				}
 
-            $grid_args = [
-                'id' => uniqid(),
-                'more' => false,
-                'cols' => 2,
-                'posts' => $items,
-                'return' => true
-            ];
+				if ( ! empty( $secondary_text ) ) {
+					$foody_post->setDescription( $secondary_text );
+				}
 
-            $items_content = foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
 
-            $items_content = "<section class='categories-block-content categories-listing row'>$items_content</section>";
+				return $foody_post;
 
-            $title = $block['title'];
+			}, $items );
 
-            $see_more_text = $block['see_more_text'];
-            $see_more_link = $block['see_more_link'];
+			$grid_args = [
+				'id'     => uniqid(),
+				'more'   => false,
+				'cols'   => 2,
+				'posts'  => $items,
+				'return' => true
+			];
 
-            if (empty($see_more_link)) {
-                $see_more_link = ['url' => ''];
-            }
+			$items_content = foody_get_template_part( get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args );
 
-            $block_options['title'] = $title;
-	        $block_options['see_more_target'] = isset( $see_more_link['target'] ) && ! empty( $see_more_link['target'] ) ? $see_more_link['target'] : '';
-	        $block_options['see_more_text'] = $see_more_text;
-            $block_options['see_more_link'] = $see_more_link['url'];
-            $block_options['content'] = $items_content;
-        }
+			$items_content = "<section class='categories-block-content categories-listing row'>$items_content</section>";
 
-        return $block_options;
-    }
+			$title = $block['title'];
 
-    public function draw_product_block($block)
-    {
+			$see_more_text = $block['see_more_text'];
+			$see_more_link = $block['see_more_link'];
 
-        $product = $block['product'];
+			if ( empty( $see_more_link ) ) {
+				$see_more_link = [ 'url' => '' ];
+			}
 
-        $block_options = [];
+			$block_options['title']           = $title;
+			$block_options['see_more_target'] = isset( $see_more_link['target'] ) && ! empty( $see_more_link['target'] ) ? $see_more_link['target'] : '';
+			$block_options['see_more_text']   = $see_more_text;
+			$block_options['see_more_link']   = $see_more_link['url'];
+			$block_options['content']         = $items_content;
+		}
 
-        if (!empty($product) && is_array($product)) {
+		return $block_options;
+	}
 
-            $items_content = foody_get_template_part(get_template_directory() . '/template-parts/white-label/content-foody-product.php', ['product' => $product]);
+	public function draw_product_block( $block ) {
 
-            $block_options['content'] = $items_content;
-        }
+		$product = $block['product'];
 
-        return $block_options;
-    }
+		$block_options = [];
 
-    /**
-     * Outputs a generic block html structure.
-     *
-     * @param $block_options array
-     */
-    public function wrap_block($block_options)
-    {
+		if ( ! empty( $product ) && is_array( $product ) ) {
 
-        /**
-         * @var string $title
-         * @var string $see_more_link
-         * @var string $see_more_text
-         * @var string $content
-         */
-        extract($block_options);
+			$items_content = foody_get_template_part( get_template_directory() . '/template-parts/white-label/content-foody-product.php', [ 'product' => $product ] );
 
-        ?>
+			$block_options['content'] = $items_content;
+		}
+
+		return $block_options;
+	}
+
+	/**
+	 * Outputs a generic block html structure.
+	 *
+	 * @param $block_options array
+	 */
+	public function wrap_block( $block_options ) {
+
+		/**
+		 * @var string $title
+		 * @var string $see_more_link
+		 * @var string $see_more_text
+		 * @var string $content
+		 */
+		extract( $block_options );
+
+		?>
         <div class="container block-container">
-            <?php if (!isset($hide_header) || $hide_header == false): ?>
+			<?php if ( ! isset( $hide_header ) || $hide_header == false ): ?>
                 <section class="block-header row">
                     <h2 class="block-title title col">
-                        <?php echo $title ?>
+						<?php echo $title ?>
                     </h2>
-                    <?php if (!empty($see_more_link) && !empty($see_more_text)): ?>
+					<?php if ( ! empty( $see_more_link ) && ! empty( $see_more_text ) ): ?>
                         <h2 class="block-see-more title col">
-                            <a href="<?php echo $see_more_link ?>" <?php echo isset( $see_more_target ) && ! empty ( $see_more_target ) ? "target='" . $see_more_target . "'" : ''; ?>">
-                                <?php echo $see_more_text ?>
+                            <a href="<?php echo $see_more_link ?>" <?php echo isset( $see_more_target ) && ! empty ( $see_more_target ) ? "target='" . $see_more_target . "'" : ''; ?>
+                            ">
+							<?php echo $see_more_text ?>
                             </a>
                             <i class="icon-arrowleft"></i>
                         </h2>
-                    <?php endif; ?>
+					<?php endif; ?>
                 </section>
-            <?php endif; ?>
+			<?php endif; ?>
             <section class="block-content">
-                <?php echo $content; ?>
+				<?php echo $content; ?>
             </section>
         </div>
-        <?php
-    }
+		<?php
+	}
 
-    public function validate_block($block)
-    {
-        $type = $block['type'];
+	public function validate_block( $block ) {
+		$type = $block['type'];
 
-        if (!empty($type)) {
+		if ( ! empty( $type ) ) {
 
 
-            switch ($type) {
-                case 'dynamic':
+			switch ( $type ) {
+				case 'dynamic':
 
-                    break;
+					break;
 
-                case 'manual':
+				case 'manual':
 
-                    break;
-                case 'categories':
+					break;
+				case 'categories':
 
-                    break;
-            }
-        }
+					break;
+			}
+		}
 
-    }
+	}
 }

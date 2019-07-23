@@ -8,19 +8,17 @@
 */
 
 /**
-* Hybrid_Providers_Yahoo provider adapter based on OAuth1 protocol 
-*
-* http://hybridauth.sourceforge.net/userguide/IDProvider_info_Yahoo.html
-*/
-class Hybrid_Providers_Yahoo extends Hybrid_Provider_Model_OpenID
-{
-	var $openidIdentifier = "https://open.login.yahooapis.com/openid20/www.yahoo.com/xrds"; 
+ * Hybrid_Providers_Yahoo provider adapter based on OAuth1 protocol
+ *
+ * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Yahoo.html
+ */
+class Hybrid_Providers_Yahoo extends Hybrid_Provider_Model_OpenID {
+	var $openidIdentifier = "https://open.login.yahooapis.com/openid20/www.yahoo.com/xrds";
 
 	/**
-	* finish login step 
-	*/
-	function loginFinish()
-	{
+	 * finish login step
+	 */
+	function loginFinish() {
 		parent::loginFinish();
 
 		$this->user->profile->identifier    = $this->user->profile->email;

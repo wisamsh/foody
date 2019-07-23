@@ -10,15 +10,15 @@ function foody_team_shortcode( $atts ) {
 
 	$team = new FoodyTeam();
 
-	$team_display = $team->team(shortcode_atts( array(
-		'show_count' => false,
-		'sort'       => 'ASC',
-		'display' => 'row',
-		'max' =>1000,
+	$team_display = $team->team( shortcode_atts( array(
+		'show_count'    => false,
+		'sort'          => 'ASC',
+		'display'       => 'row',
+		'max'           => 1000,
 		'grid_col_span' => 0,
-		'show_title' => false,
-		'allow_sort' => false
-	), $atts ));
+		'show_title'    => false,
+		'allow_sort'    => false
+	), $atts ) );
 
 
 	return $team_display;

@@ -89,7 +89,7 @@ $disclaimer = sprintf( '<div> <span class="close">&times;</span><div>%s</div></d
                                 <?php echo $item['unit'] ?>
                             </span>
                         </span>
-                        
+
                         <span class="chosen-dishes-nutrition">
                             <span class="value">
                                 <?php echo $item['value'] ?>

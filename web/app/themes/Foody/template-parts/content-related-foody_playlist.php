@@ -19,7 +19,7 @@ $playlist_item = $template_args;
         <i class="icon-timeplay"></i>
 
         <div class="count">
-            <?php echo sprintf('%s מתכונים', $playlist_item['count']) ?>
+			<?php echo sprintf( '%s מתכונים', $playlist_item['count'] ) ?>
         </div>
 
     </div>

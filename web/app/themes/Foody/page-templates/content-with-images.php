@@ -9,8 +9,8 @@
 
 get_header();
 
-$image_right = get_field('right_image');
-$image_left = get_field('left_image');
+$image_right = get_field( 'right_image' );
+$image_left  = get_field( 'left_image' );
 
 ?>
 
@@ -23,11 +23,11 @@ $image_left = get_field('left_image');
             </div>
 
             <div class="content col-12 col-lg-6">
-                <?php
+				<?php
 
-                the_content();
+				the_content();
 
-                ?>
+				?>
             </div>
 
             <div class="image-container image-container-left col d-sm-none d-lg-block">

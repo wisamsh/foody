@@ -6,42 +6,38 @@
  * Date: 5/14/18
  * Time: 4:17 PM
  */
-class Foody_Header
-{
+class Foody_Header {
 
-    private static $tag_manager_id;
+	private static $tag_manager_id;
 
-    /**
-     * Foody_Header constructor.
-     */
-    public function __construct()
-    {
-        self::$tag_manager_id = get_option('foody_google_tag_manager_id', GOOGLE_TAG_MANAGER_ID);
-    }
+	/**
+	 * Foody_Header constructor.
+	 */
+	public function __construct() {
+		self::$tag_manager_id = get_option( 'foody_google_tag_manager_id', GOOGLE_TAG_MANAGER_ID );
+	}
 
-    public function the_socials_bar()
-    {
-        $show_instagram = get_theme_mod('foody_show_social_instagram');
-        $instagram_link = get_theme_mod('foody_social_instagram');
-        $show_facebook = get_theme_mod('foody_show_social_facebook');
-        $facebook_link = get_theme_mod('foody_social_facebook');
-        $show_youtube = get_theme_mod('foody_show_social_youtube');
-        $youtube_link = get_theme_mod('foody_social_youtube');
-        foody_get_template_part(get_template_directory() . '/template-parts/header-social-bar.php',
-            [
-                'show_instagram' => $show_instagram,
-                'show_facebook' => $show_facebook,
-                'show_youtube' => $show_youtube,
-                'instagram_link' => $instagram_link,
-                'facebook_link' => $facebook_link,
-                'youtube_link' => $youtube_link
-            ]
-        );
-    }
+	public function the_socials_bar() {
+		$show_instagram = get_theme_mod( 'foody_show_social_instagram' );
+		$instagram_link = get_theme_mod( 'foody_social_instagram' );
+		$show_facebook  = get_theme_mod( 'foody_show_social_facebook' );
+		$facebook_link  = get_theme_mod( 'foody_social_facebook' );
+		$show_youtube   = get_theme_mod( 'foody_show_social_youtube' );
+		$youtube_link   = get_theme_mod( 'foody_social_youtube' );
+		foody_get_template_part( get_template_directory() . '/template-parts/header-social-bar.php',
+			[
+				'show_instagram' => $show_instagram,
+				'show_facebook'  => $show_facebook,
+				'show_youtube'   => $show_youtube,
+				'instagram_link' => $instagram_link,
+				'facebook_link'  => $facebook_link,
+				'youtube_link'   => $youtube_link
+			]
+		);
+	}
 
-    public static function facebook_init()
-    {
-        ?>
+	public static function facebook_init() {
+		?>
 
         <script async defer>
             setTimeout(() => {
@@ -67,12 +63,11 @@ class Foody_Header
             });
         </script>
 
-        <?php
-    }
+		<?php
+	}
 
-    public static function google_tag_manager()
-    {
-        ?>
+	public static function google_tag_manager() {
+		?>
         <!-- Google Tag Manager -->
         <script async defer>(function (w, d, s, l, i) {
                 w[l] = w[l] || [];
@@ -83,27 +78,26 @@ class Foody_Header
                 f.parentNode.insertBefore(j, f);
             })(window, document, 'script', 'dataLayer', '<?php echo self::$tag_manager_id?>');</script>
         <!-- End Google Tag Manager -->
-        <?php
-    }
+		<?php
+	}
 
-    public static function google_tag_manager_iframe()
-    {
-        ?>
+	public static function google_tag_manager_iframe() {
+		?>
         <!-- Google Tag Manager (noscript) -->
         <noscript>
-            <iframe aria-hidden="true" src="https://www.googletagmanager.com/ns.html?id=<?php echo self::$tag_manager_id ?>"
+            <iframe aria-hidden="true"
+                    src="https://www.googletagmanager.com/ns.html?id=<?php echo self::$tag_manager_id ?>"
                     height="0" width="0" style="display:none;visibility:hidden"></iframe>
         </noscript>
         <!-- End Google Tag Manager (noscript) -->
-        <?php
-    }
+		<?php
+	}
 
-    public function accessibility()
-    {
-        ?>
+	public function accessibility() {
+		?>
         <i class="icon-acces"></i>
-        <?php
-    }
+		<?php
+	}
 
 	public function the_logo_mode() {
 		$mode          = get_theme_mod( 'foody_logo_mode', false );
@@ -120,8 +114,8 @@ class Foody_Header
 	}
 
 	public function the_logo_nav_mode() {
-		$mode          = get_theme_mod( 'foody_logo_mode', false );
-		$logo_class    = '';
+		$mode       = get_theme_mod( 'foody_logo_mode', false );
+		$logo_class = '';
 		if ( $mode ) {
 			$logo_class = 'nav-bar-contain-logo';
 		}
@@ -129,10 +123,10 @@ class Foody_Header
 		echo $logo_class;
 	}
 
-	public function the_foody_collaboration($desktop) {
+	public function the_foody_collaboration( $desktop ) {
 		$collab_text        = get_theme_mod( 'foody_collaboration_text', false );
 		$show_collaboration = get_theme_mod( 'show_foody_collaboration_text', false );
-		$foody_url = function_exists( 'foody_get_main_site_url' ) ? foody_get_main_site_url() : get_home_url();
+		$foody_url          = function_exists( 'foody_get_main_site_url' ) ? foody_get_main_site_url() : get_home_url();
 
 		if ( $show_collaboration ) {
 			if ( $desktop ) {
@@ -152,25 +146,24 @@ class Foody_Header
 		}
 	}
 
-    public static function whatsapp($ext_classes = [])
-    {
-        $phone_number = get_option('whatsapp_phone_number');
-        $url = "https://api.whatsapp.com/send?phone=$phone_number";
-        if (!wp_is_mobile()) {
-            $url = "https://web.whatsapp.com/send?phone=$phone_number";
-        }
+	public static function whatsapp( $ext_classes = [] ) {
+		$phone_number = get_option( 'whatsapp_phone_number' );
+		$url          = "https://api.whatsapp.com/send?phone=$phone_number";
+		if ( ! wp_is_mobile() ) {
+			$url = "https://web.whatsapp.com/send?phone=$phone_number";
+		}
 
-        $show = $phone_number = get_option('whatsapp_phone_number_toggle', false);
+		$show = $phone_number = get_option( 'whatsapp_phone_number_toggle', false );
 
-        $classes = $ext_classes;
-        if (!$show) {
-            $classes[] = 'invisible';
-        }
+		$classes = $ext_classes;
+		if ( ! $show ) {
+			$classes[] = 'invisible';
+		}
 
 
-        foody_get_template_part(get_template_directory() . '/template-parts/whatsapp-business.php', [
-            'url' => $url,
-            'classes' => $classes
-        ]);
-    }
+		foody_get_template_part( get_template_directory() . '/template-parts/whatsapp-business.php', [
+			'url'     => $url,
+			'classes' => $classes
+		] );
+	}
 }

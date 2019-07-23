@@ -9,21 +9,20 @@
  *
  * @return void
  */
-function foody_human_post_time($timestamp = 'current')
-{
+function foody_human_post_time( $timestamp = 'current' ) {
 
-    if (empty($timestamp)) {
-        return false;
-    }
-    if ($timestamp === 'current') {
-        $timestamp = time();
-    }
+	if ( empty( $timestamp ) ) {
+		return false;
+	}
+	if ( $timestamp === 'current' ) {
+		$timestamp = time();
+	}
 
-    if (abs(time() - date('G', $timestamp)) < 86400) {
-        return human_time_diff(date('G', $timestamp));
-    } else {
-        return date('Y/m/d g:i:s A', $timestamp);
-    }
+	if ( abs( time() - date( 'G', $timestamp ) ) < 86400 ) {
+		return human_time_diff( date( 'G', $timestamp ) );
+	} else {
+		return date( 'Y/m/d g:i:s A', $timestamp );
+	}
 }
 
 /**
@@ -36,15 +35,14 @@ function foody_human_post_time($timestamp = 'current')
  *
  * @return void
  */
-function recursive_in_array($needle, $haystack)
-{
-    foreach ($haystack as $stalk) {
-        if ($needle == $stalk || (is_array($stalk) && recursive_in_array($needle, $stalk))) {
-            return true;
-        }
-    }
+function recursive_in_array( $needle, $haystack ) {
+	foreach ( $haystack as $stalk ) {
+		if ( $needle == $stalk || ( is_array( $stalk ) && recursive_in_array( $needle, $stalk ) ) ) {
+			return true;
+		}
+	}
 
-    return false;
+	return false;
 }
 
 /**
@@ -55,19 +53,18 @@ function recursive_in_array($needle, $haystack)
  *
  * @return array
  */
-function foody_array_filter_recursive($input, $callback = null)
-{
-    foreach ($input as &$value) {
-        if (is_array($value)) {
-            $value = foody_array_filter_recursive($value, $callback);
-        }
-    }
+function foody_array_filter_recursive( $input, $callback = null ) {
+	foreach ( $input as &$value ) {
+		if ( is_array( $value ) ) {
+			$value = foody_array_filter_recursive( $value, $callback );
+		}
+	}
 
-    if ($callback) {
-        return array_filter($input, $callback);
-    }
+	if ( $callback ) {
+		return array_filter( $input, $callback );
+	}
 
-    return array_filter($input);
+	return array_filter( $input );
 }
 
 /**
@@ -79,12 +76,11 @@ function foody_array_filter_recursive($input, $callback = null)
  *
  * @return void
  */
-function foody_get_permalink($post)
-{
+function foody_get_permalink( $post ) {
 
-    $post = foody_parse_post($post);
+	$post = foody_parse_post( $post );
 
-    return get_permalink($post->ID);
+	return get_permalink( $post->ID );
 }
 
 /**
@@ -97,53 +93,50 @@ function foody_get_permalink($post)
  *
  * @return void
  */
-function foody_shorten_string($string, $length)
-{
+function foody_shorten_string( $string, $length ) {
 
-    // convert string to chars, as if we have somethign like &quot; what we really want is that to be a count of 1
-    $string = html_entity_decode($old_string = $string, ENT_COMPAT, 'UTF-8');
+	// convert string to chars, as if we have somethign like &quot; what we really want is that to be a count of 1
+	$string = html_entity_decode( $old_string = $string, ENT_COMPAT, 'UTF-8' );
 
-    if ($string !== $old_string) {
-        $had_entities = true;
-    } else {
-        $had_entities = false;
-    }
+	if ( $string !== $old_string ) {
+		$had_entities = true;
+	} else {
+		$had_entities = false;
+	}
 
-    if (mb_strlen($string, 'UTF-8') > (int)$length) {
-        return mb_substr($string, 0, $length - 3, 'UTF-8') . '...';
-    }
+	if ( mb_strlen( $string, 'UTF-8' ) > (int) $length ) {
+		return mb_substr( $string, 0, $length - 3, 'UTF-8' ) . '...';
+	}
 
-    return $had_entities ? htmlentities($string, ENT_COMPAT, 'UTF-8') : $string;
+	return $had_entities ? htmlentities( $string, ENT_COMPAT, 'UTF-8' ) : $string;
 }
 
-function foody_sort_array_by_object_key($array, $object_key)
-{
+function foody_sort_array_by_object_key( $array, $object_key ) {
 
-    global $foody_sort_array_by_object_key;
-    $foody_sort_array_by_object_key = $object_key;
-    usort($array, '_foody_sort_array_by_object_key_cmp');
+	global $foody_sort_array_by_object_key;
+	$foody_sort_array_by_object_key = $object_key;
+	usort( $array, '_foody_sort_array_by_object_key_cmp' );
 
-    return $array;
+	return $array;
 
 }
 
-function _foody_sort_array_by_object_key_cmp($a, $b)
-{
-    global $foody_sort_array_by_object_key;
+function _foody_sort_array_by_object_key_cmp( $a, $b ) {
+	global $foody_sort_array_by_object_key;
 
-    if (is_object($a)) {
+	if ( is_object( $a ) ) {
 
-        $valuea = is_numeric($a->{$foody_sort_array_by_object_key}) ? (int)$a->{$foody_sort_array_by_object_key} : $a->{$foody_sort_array_by_object_key};
-        $valueb = is_numeric($b->{$foody_sort_array_by_object_key}) ? (int)$b->{$foody_sort_array_by_object_key} : $b->{$foody_sort_array_by_object_key};
+		$valuea = is_numeric( $a->{$foody_sort_array_by_object_key} ) ? (int) $a->{$foody_sort_array_by_object_key} : $a->{$foody_sort_array_by_object_key};
+		$valueb = is_numeric( $b->{$foody_sort_array_by_object_key} ) ? (int) $b->{$foody_sort_array_by_object_key} : $b->{$foody_sort_array_by_object_key};
 
-    } elseif (is_array($a)) {
+	} elseif ( is_array( $a ) ) {
 
-        $valuea = is_numeric($a[$foody_sort_array_by_object_key]) ? (int)$a[$foody_sort_array_by_object_key] : $a[$foody_sort_array_by_object_key];
-        $valueb = is_numeric($b[$foody_sort_array_by_object_key]) ? (int)$b[$foody_sort_array_by_object_key] : $b[$foody_sort_array_by_object_key];
+		$valuea = is_numeric( $a[ $foody_sort_array_by_object_key ] ) ? (int) $a[ $foody_sort_array_by_object_key ] : $a[ $foody_sort_array_by_object_key ];
+		$valueb = is_numeric( $b[ $foody_sort_array_by_object_key ] ) ? (int) $b[ $foody_sort_array_by_object_key ] : $b[ $foody_sort_array_by_object_key ];
 
-    }
+	}
 
-    return $valuea > $valueb;
+	return $valuea > $valueb;
 }
 
 /**
@@ -157,92 +150,86 @@ function _foody_sort_array_by_object_key_cmp($a, $b)
  *
  * @return array Array containing all the elements of $arr1 after applying the callback function to each one, recursively, maintain keys.
  */
-function array_map_preserve_keys($callback, $arr1)
-{
-    $results = array();
-    $args = array();
-    if (func_num_args() > 2) {
-        $args = (array)array_shift(array_slice(func_get_args(), 2));
-    }
-    foreach ($arr1 as $key => $value) {
-        $temp = $args;
-        array_unshift($temp, $value);
-        if (is_array($value)) {
-            $results[$key] = call_user_func_array($callback, $temp);
-        } else {
-            $results[$key] = call_user_func_array($callback, $temp);
-        }
-    }
+function array_map_preserve_keys( $callback, $arr1 ) {
+	$results = array();
+	$args    = array();
+	if ( func_num_args() > 2 ) {
+		$args = (array) array_shift( array_slice( func_get_args(), 2 ) );
+	}
+	foreach ( $arr1 as $key => $value ) {
+		$temp = $args;
+		array_unshift( $temp, $value );
+		if ( is_array( $value ) ) {
+			$results[ $key ] = call_user_func_array( $callback, $temp );
+		} else {
+			$results[ $key ] = call_user_func_array( $callback, $temp );
+		}
+	}
 
-    return $results;
+	return $results;
 }
 
-function foody_count($count, $none, $one, $more = null)
-{
+function foody_count( $count, $none, $one, $more = null ) {
 
-    if ($count > 1) {
-        echo str_replace('%', $count, $more);
-    } elseif ($count == 1) {
-        echo $one;
-    } else {
-        echo $none;
-    }
-
-}
-
-function foody_unsanitize_title($title)
-{
-    return ucwords(str_replace('_', ' ', $title));
-}
-
-function get_post_meta_by($field = 'post_id', $value)
-{
-
-    return get_metadata_by($field, $value, 'post');
+	if ( $count > 1 ) {
+		echo str_replace( '%', $count, $more );
+	} elseif ( $count == 1 ) {
+		echo $one;
+	} else {
+		echo $none;
+	}
 
 }
 
-function get_term_meta_by($field = 'term_id', $value)
-{
+function foody_unsanitize_title( $title ) {
+	return ucwords( str_replace( '_', ' ', $title ) );
+}
 
-    return get_metadata_by($field, $value, 'term');
+function get_post_meta_by( $field = 'post_id', $value ) {
+
+	return get_metadata_by( $field, $value, 'post' );
+
+}
+
+function get_term_meta_by( $field = 'term_id', $value ) {
+
+	return get_metadata_by( $field, $value, 'term' );
 
 }
 
 /**
  * Get meta data by any given fields / values. For example, get all meta entries with a meta_value of '_featured'
  *
- * @param  array $fields the fields you want to select by
- * @param  array $values the values for the fields specified above
- * @param  string $type the type of meta data, example post|comment etc
- * @param  string $col the column to select
+ * @param array $fields the fields you want to select by
+ * @param array $values the values for the fields specified above
+ * @param string $type the type of meta data, example post|comment etc
+ * @param string $col the column to select
  *
  * @return mixed
  */
-function get_metadata_by($fields, $values, $type = 'post', $col = '*')
-{
+function get_metadata_by( $fields, $values, $type = 'post', $col = '*' ) {
 
-    global $wpdb;
+	global $wpdb;
 
-    if (empty($fields) || (!is_array($fields) && empty($values))) {
-        return array();
-    }
+	if ( empty( $fields ) || ( ! is_array( $fields ) && empty( $values ) ) ) {
+		return array();
+	}
 
-    if (!is_array($fields) && !empty($fields) && !is_array($values) && !empty($values)) {
-        $fields = array($fields => $values);
-    }
+	if ( ! is_array( $fields ) && ! empty( $fields ) && ! is_array( $values ) && ! empty( $values ) ) {
+		$fields = array( $fields => $values );
+	}
 
-    if (is_array($fields) && is_array($values)) {
-        $fields = array_combine($fields, $values);
-    }
+	if ( is_array( $fields ) && is_array( $values ) ) {
+		$fields = array_combine( $fields, $values );
+	}
 
-    foreach ((array)$fields as $field => $value) {
-        $where[] = "" . $field . " = '" . $value . "'";
-    }
+	foreach ( (array) $fields as $field => $value ) {
+		$where[] = "" . $field . " = '" . $value . "'";
+	}
 
-    $table = $wpdb->prefix . $type . 'meta';
+	$table = $wpdb->prefix . $type . 'meta';
 
-    return $wpdb->get_results("SELECT $col FROM $table WHERE " . implode(' AND ', (array)$where));
+	return $wpdb->get_results( "SELECT $col FROM $table WHERE " . implode( ' AND ', (array) $where ) );
 }
 
 /**
@@ -252,141 +239,135 @@ function get_metadata_by($fields, $values, $type = 'post', $col = '*')
  *
  * @return array
  */
-function foody_get_term_children($parent, $taxonomy = null)
-{
+function foody_get_term_children( $parent, $taxonomy = null ) {
 
-    if (!is_numeric($parent)) {
-        return false;
-    }
+	if ( ! is_numeric( $parent ) ) {
+		return false;
+	}
 
-    global $wpdb;
+	global $wpdb;
 
-    $where = "WHERE tt.parent = $parent";
+	$where = "WHERE tt.parent = $parent";
 
-    if ($taxonomy) {
-        $where .= " AND tt.taxonomy = '$taxonomy'";
-    }
+	if ( $taxonomy ) {
+		$where .= " AND tt.taxonomy = '$taxonomy'";
+	}
 
-    $query = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id $where ORDER BY t.name ASC";
+	$query = "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id $where ORDER BY t.name ASC";
 
-    $terms = $wpdb->get_results($query);
+	$terms = $wpdb->get_results( $query );
 
-    return $terms;
+	return $terms;
 }
 
 
-function foody_get_post_image($post = null, $w = 0, $h = 0, $crop = false, $id = null, $default = null)
-{
+function foody_get_post_image( $post = null, $w = 0, $h = 0, $crop = false, $id = null, $default = null ) {
 
-    if ($post === null) {
-        global $post;
-    }
+	if ( $post === null ) {
+		global $post;
+	}
 
-    // stop images with no post_id slipping in
-    if ($post->ID == 0 && !$id) {
-        return;
-    }
+	// stop images with no post_id slipping in
+	if ( $post->ID == 0 && ! $id ) {
+		return;
+	}
 
-    $id = $id ? $id : foody_get_post_image_id($post);
+	$id = $id ? $id : foody_get_post_image_id( $post );
 
-    if ($id) {
-        return wpthumb(get_attached_file($id), $w, $h, $crop, true, wpthumb_wm_get_options($id));
-    }
+	if ( $id ) {
+		return wpthumb( get_attached_file( $id ), $w, $h, $crop, true, wpthumb_wm_get_options( $id ) );
+	}
 
-    $att_id = foody_get_post_attached_image_id($post);
-    if ($att_id) {
-        return wpthumb(get_attached_file($att_id), $w, $h, $crop, true, wpthumb_wm_get_options($id));
-    }
-    //if there is no id, then try search the content for an image
-    if ($return = wpthumb(foody_get_post_internal_image($post), $w, $h, $crop, true, wpthumb_wm_get_options($id))) {
-        return $return;
-    }
+	$att_id = foody_get_post_attached_image_id( $post );
+	if ( $att_id ) {
+		return wpthumb( get_attached_file( $att_id ), $w, $h, $crop, true, wpthumb_wm_get_options( $id ) );
+	}
+	//if there is no id, then try search the content for an image
+	if ( $return = wpthumb( foody_get_post_internal_image( $post ), $w, $h, $crop, true, wpthumb_wm_get_options( $id ) ) ) {
+		return $return;
+	}
 
-    if ($return = foody_get_post_external_image($post)) {
-        return $return;
-    }
+	if ( $return = foody_get_post_external_image( $post ) ) {
+		return $return;
+	}
 
-    if ($default) {
-        $file = $default === 'default' ? dirname(__FILE__) . '/includes/image-unavailable.png' : $default;
+	if ( $default ) {
+		$file = $default === 'default' ? dirname( __FILE__ ) . '/includes/image-unavailable.png' : $default;
 
-        return wpthumb($file, $w, $h, $crop, true);
-    }
+		return wpthumb( $file, $w, $h, $crop, true );
+	}
 }
 
-function foody_get_post_image_id($post = null)
-{
-    if ($post === null) {
-        global $post;
-    }
-    if ($post->ID == 0) {
-        return;
-    }
+function foody_get_post_image_id( $post = null ) {
+	if ( $post === null ) {
+		global $post;
+	}
+	if ( $post->ID == 0 ) {
+		return;
+	}
 
-    $id = (int)get_post_meta($post->ID, 'foody_post_image', true);
-    if ($id) {
-        return $id;
-    }
+	$id = (int) get_post_meta( $post->ID, 'foody_post_image', true );
+	if ( $id ) {
+		return $id;
+	}
 
-    return foody_get_post_attached_image_id($post);
+	return foody_get_post_attached_image_id( $post );
 
 }
 
-function foody_get_post_attached_image_id($post = null, $return = 'file')
-{
-    if ($post === null) {
-        global $post;
-    }
+function foody_get_post_attached_image_id( $post = null, $return = 'file' ) {
+	if ( $post === null ) {
+		global $post;
+	}
 
-    $images = array();
-    foreach (
-        (array)get_children(array(
-            'post_parent' => $post->ID,
-            'post_type' => 'attachment',
-            'orderby' => 'menu_order',
-            'order' => 'ASC'
-        )) as $attachment
-    ) {
-        if (!wp_attachment_is_image($attachment->ID) || !file_exists(get_attached_file($attachment->ID))) {
-            continue;
-        }
+	$images = array();
+	foreach (
+		(array) get_children( array(
+			'post_parent' => $post->ID,
+			'post_type'   => 'attachment',
+			'orderby'     => 'menu_order',
+			'order'       => 'ASC'
+		) ) as $attachment
+	) {
+		if ( ! wp_attachment_is_image( $attachment->ID ) || ! file_exists( get_attached_file( $attachment->ID ) ) ) {
+			continue;
+		}
 
-        return $attachment->ID;
-    }
+		return $attachment->ID;
+	}
 }
 
-function foody_get_post_attached_images($post = null)
-{
-    if ($post === null) {
-        global $post;
-    }
+function foody_get_post_attached_images( $post = null ) {
+	if ( $post === null ) {
+		global $post;
+	}
 
-    $images = array();
-    foreach (
-        (array)get_children(array(
-            'post_parent' => $post->ID,
-            'post_type' => 'attachment',
-            'orderby' => 'menu_order',
-            'order' => 'ASC'
-        )) as $attachment
-    ) {
-        if (!wp_attachment_is_image($attachment->ID) || !file_exists(get_attached_file($attachment->ID))) {
-            continue;
-        }
-        $images[] = $attachment;
-    }
+	$images = array();
+	foreach (
+		(array) get_children( array(
+			'post_parent' => $post->ID,
+			'post_type'   => 'attachment',
+			'orderby'     => 'menu_order',
+			'order'       => 'ASC'
+		) ) as $attachment
+	) {
+		if ( ! wp_attachment_is_image( $attachment->ID ) || ! file_exists( get_attached_file( $attachment->ID ) ) ) {
+			continue;
+		}
+		$images[] = $attachment;
+	}
 
-    return $images;
+	return $images;
 }
 
-function foody_get_post_attached_images_id($post = null)
-{
+function foody_get_post_attached_images_id( $post = null ) {
 
-    $images = array();
-    foreach (foody_get_post_attached_images($post) as $attachment) {
-        $images[] = $attachment->ID;
-    }
+	$images = array();
+	foreach ( foody_get_post_attached_images( $post ) as $attachment ) {
+		$images[] = $attachment->ID;
+	}
 
-    return $images;
+	return $images;
 }
 
 /**
@@ -398,9 +379,8 @@ function foody_get_post_attached_images_id($post = null)
  *
  * @return int
  */
-function foody_get_post_internal_image($post_id)
-{
-    return reset(foody_get_post_internal_images($post_id));
+function foody_get_post_internal_image( $post_id ) {
+	return reset( foody_get_post_internal_images( $post_id ) );
 }
 
 /**
@@ -412,32 +392,31 @@ function foody_get_post_internal_image($post_id)
  *
  * @return Array attachment id's
  */
-function foody_get_post_internal_images($post_id)
-{
+function foody_get_post_internal_images( $post_id ) {
 
-    $post = get_post($post_id);
+	$post = get_post( $post_id );
 
-    $images = array();
+	$images = array();
 
-    if (empty($post->post_content)) {
-        return array();
-    }
+	if ( empty( $post->post_content ) ) {
+		return array();
+	}
 
-    preg_match_all('/(img|src)=("|\')[^"\'>]+/i', $post->post_content, $media);
+	preg_match_all( '/(img|src)=("|\')[^"\'>]+/i', $post->post_content, $media );
 
-    $data = preg_replace('/(img|src)("|\'|="|=\')(.*)/i', "$3", reset($media));
+	$data = preg_replace( '/(img|src)("|\'|="|=\')(.*)/i', "$3", reset( $media ) );
 
-    if (empty($data)) {
-        return array();
-    }
+	if ( empty( $data ) ) {
+		return array();
+	}
 
-    foreach ($data as $url) {
-        if (strpos($url, get_bloginfo('url')) === 0 && file_exists($path = str_ireplace(trailingslashit(get_bloginfo('url')), trailingslashit(ABSPATH), $url))) {
-            $images[] = $path;
-        }
-    }
+	foreach ( $data as $url ) {
+		if ( strpos( $url, get_bloginfo( 'url' ) ) === 0 && file_exists( $path = str_ireplace( trailingslashit( get_bloginfo( 'url' ) ), trailingslashit( ABSPATH ), $url ) ) ) {
+			$images[] = $path;
+		}
+	}
 
-    return $images;
+	return $images;
 
 }
 
@@ -451,14 +430,13 @@ function foody_get_post_internal_images($post_id)
  *
  * @return null
  */
-function strip_images($content, $post_id = null)
-{
+function strip_images( $content, $post_id = null ) {
 
-    if (is_null($post_id)) {
-        return preg_replace('/(<img[\s\S]*?\>)/i', '', $content);
-    }
+	if ( is_null( $post_id ) ) {
+		return preg_replace( '/(<img[\s\S]*?\>)/i', '', $content );
+	}
 
-    return preg_replace('/<img[\s\S]*?wp-image-' . $post_id . '[\s\S]*?\>/i', '', $content);
+	return preg_replace( '/<img[\s\S]*?wp-image-' . $post_id . '[\s\S]*?\>/i', '', $content );
 
 }
 
@@ -471,350 +449,340 @@ function strip_images($content, $post_id = null)
  *
  * @return null
  */
-function foody_get_post_external_image($post_id = null)
-{
+function foody_get_post_external_image( $post_id = null ) {
 
-    $post = get_post($post_id);
+	$post = get_post( $post_id );
 
-    $images = array();
+	$images = array();
 
-    preg_match_all('/(img|src)=("|\')[^"\'>]+/i', $post->post_content, $media);
-    $data = preg_replace('/(img|src)("|\'|="|=\')(.*)/i', "$3", reset($media));
+	preg_match_all( '/(img|src)=("|\')[^"\'>]+/i', $post->post_content, $media );
+	$data = preg_replace( '/(img|src)("|\'|="|=\')(.*)/i', "$3", reset( $media ) );
 
-    foreach ($data as $url) {
+	foreach ( $data as $url ) {
 
-        $ext = end(explode('.', $url));
+		$ext = end( explode( '.', $url ) );
 
-        if (strpos($url, 'http://') === 0 && strpos($url, get_bloginfo('url')) === false && $ext == 'png' || $ext == 'jpg' || $ext == 'bmp' || $ext == 'jpeg' || $ext == 'gif') {
-            $images[] = $url;
-        }
+		if ( strpos( $url, 'http://' ) === 0 && strpos( $url, get_bloginfo( 'url' ) ) === false && $ext == 'png' || $ext == 'jpg' || $ext == 'bmp' || $ext == 'jpeg' || $ext == 'gif' ) {
+			$images[] = $url;
+		}
 
-    }
+	}
 
-    return reset($images);
+	return reset( $images );
 }
 
-function foody_remote_get_file($url, $cache = true)
-{
+function foody_remote_get_file( $url, $cache = true ) {
 
 
-    //check for stuff
-    $upload_dir = wp_upload_dir();
-    $dest_folder = $upload_dir['basedir'] . '/remote_files/';
-    $dest_file = $dest_folder . sanitize_title($url) . '.' . end(explode('.', $url));
+	//check for stuff
+	$upload_dir  = wp_upload_dir();
+	$dest_folder = $upload_dir['basedir'] . '/remote_files/';
+	$dest_file   = $dest_folder . sanitize_title( $url ) . '.' . end( explode( '.', $url ) );
 
-    // cache file 404s in options
-    $file_404s = (array)get_option('remote_404s');
-    if (isset($file_404s[$url]) && (int)$file_404s[$url] > (time() - (60 * 60 * 12)) && $cache === true) {
-        return null;
-    }
+	// cache file 404s in options
+	$file_404s = (array) get_option( 'remote_404s' );
+	if ( isset( $file_404s[ $url ] ) && (int) $file_404s[ $url ] > ( time() - ( 60 * 60 * 12 ) ) && $cache === true ) {
+		return null;
+	}
 
-    if (!is_dir($dest_folder)) {
-        mkdir($dest_folder);
-    }
+	if ( ! is_dir( $dest_folder ) ) {
+		mkdir( $dest_folder );
+	}
 
-    if (file_exists($dest_file) && file_get_contents($dest_file) && $cache === true) {
-        return $dest_file;
-    }
+	if ( file_exists( $dest_file ) && file_get_contents( $dest_file ) && $cache === true ) {
+		return $dest_file;
+	}
 
-    do_action('start_operation', $operation = ('Remote get file: ' . $url));
+	do_action( 'start_operation', $operation = ( 'Remote get file: ' . $url ) );
 
-    if ($fp = @fopen($url, 'r')) {
-        $content = '';
-        // keep reading until there's nothing left
-        while ($line = fread($fp, 1024)) {
-            $content .= $line;
-        }
-    }
+	if ( $fp = @fopen( $url, 'r' ) ) {
+		$content = '';
+		// keep reading until there's nothing left
+		while ( $line = fread( $fp, 1024 ) ) {
+			$content .= $line;
+		}
+	}
 
-    if (empty($content)) {
-        $file_404s[$url] = time();
-        update_option('remote_404s', $file_404s);
-        do_action('end_operation', $operation);
+	if ( empty( $content ) ) {
+		$file_404s[ $url ] = time();
+		update_option( 'remote_404s', $file_404s );
+		do_action( 'end_operation', $operation );
 
-        return null;
-    }
+		return null;
+	}
 
-    preg_match('/Content-Length: ([0-9]+)/', $content, $parts);
+	preg_match( '/Content-Length: ([0-9]+)/', $content, $parts );
 
-    $image_data = substr($content, -$parts[1]);
+	$image_data = substr( $content, - $parts[1] );
 
-    $ptr = fopen($dest_file, 'wb');
+	$ptr = fopen( $dest_file, 'wb' );
 
-    fwrite($ptr, $image_data);
-    fclose($ptr);
+	fwrite( $ptr, $image_data );
+	fclose( $ptr );
 
-    do_action('end_operation', $operation);
+	do_action( 'end_operation', $operation );
 
-    return $dest_file;
+	return $dest_file;
 }
 
-function foody_get_countries($popular = null)
-{
+function foody_get_countries( $popular = null ) {
 
-    $countries = array(
-        'Afghanistan',
-        'Albania',
-        'Algeria',
-        'Andorra',
-        'Angola',
-        'Antigua and Barbuda',
-        'Argentina',
-        'Armenia',
-        'Australia',
-        'Austria',
-        'Azerbaijan',
-        'Bahamas',
-        'Bahrain',
-        'Bangladesh',
-        'Barbados',
-        'Belarus',
-        'Belgium',
-        'Belize',
-        'Benin',
-        'Bhutan',
-        'Bolivia',
-        'Bosnia and Herzegovina',
-        'Botswana',
-        'Brazil',
-        'Brunei',
-        'Bulgaria',
-        'Burkina Faso',
-        'Burundi',
-        'Cambodia',
-        'Cameroon',
-        'Canada',
-        'Cape Verde',
-        'Central African Republic',
-        'Chad',
-        'Chile',
-        'China',
-        'Colombi',
-        'Comoros',
-        'Congo (Brazzaville)',
-        'Congo',
-        'Costa Rica',
-        'Cote d\'Ivoire',
-        'Croatia',
-        'Cuba',
-        'Cyprus',
-        'Czech Republic',
-        'Denmark',
-        'Djibouti',
-        'Dominica',
-        'Dominican Republic',
-        'East Timor (Timor Timur)',
-        'Ecuador',
-        'Egypt',
-        'El Salvador',
-        'Equatorial Guinea',
-        'Eritrea',
-        'Estonia',
-        'Ethiopia',
-        'Fiji',
-        'Finland',
-        'France',
-        'Gabon',
-        'Gambia, The',
-        'Georgia',
-        'Germany',
-        'Ghana',
-        'Greece',
-        'Grenada',
-        'Guatemala',
-        'Guinea',
-        'Guinea-Bissau',
-        'Guyana',
-        'Haiti',
-        'Honduras',
-        'Hungary',
-        'Iceland',
-        'India',
-        'Indonesia',
-        'Iran',
-        'Iraq',
-        'Ireland',
-        'Israel',
-        'Italy',
-        'Jamaica',
-        'Japan',
-        'Jordan',
-        'Kazakhstan',
-        'Kenya',
-        'Kiribati',
-        'Korea, North',
-        'Korea, South',
-        'Kuwait',
-        'Kyrgyzstan',
-        'Laos',
-        'Latvia',
-        'Lebanon',
-        'Lesotho',
-        'Liberia',
-        'Libya',
-        'Liechtenstein',
-        'Lithuania',
-        'Luxembourg',
-        'Macedonia',
-        'Madagascar',
-        'Malawi',
-        'Malaysia',
-        'Maldives',
-        'Mali',
-        'Malta',
-        'Marshall Islands',
-        'Mauritania',
-        'Mauritius',
-        'Mexico',
-        'Micronesia',
-        'Moldova',
-        'Monaco',
-        'Mongolia',
-        'Morocco',
-        'Mozambique',
-        'Myanmar',
-        'Namibia',
-        'Nauru',
-        'Nepa',
-        'Netherlands',
-        'New Zealand',
-        'Nicaragua',
-        'Niger',
-        'Nigeria',
-        'Norway',
-        'Oman',
-        'Pakistan',
-        'Palau',
-        'Panama',
-        'Papua New Guinea',
-        'Paraguay',
-        'Peru',
-        'Philippines',
-        'Poland',
-        'Portugal',
-        'Qatar',
-        'Romania',
-        'Russia',
-        'Rwanda',
-        'Saint Kitts and Nevis',
-        'Saint Lucia',
-        'Saint Vincent',
-        'Samoa',
-        'San Marino',
-        'Sao Tome and Principe',
-        'Saudi Arabia',
-        'Senegal',
-        'Serbia and Montenegro',
-        'Seychelles',
-        'Sierra Leone',
-        'Singapore',
-        'Slovakia',
-        'Slovenia',
-        'Solomon Islands',
-        'Somalia',
-        'South Africa',
-        'Spain',
-        'Sri Lanka',
-        'Sudan',
-        'Suriname',
-        'Swaziland',
-        'Sweden',
-        'Switzerland',
-        'Syria',
-        'Taiwan',
-        'Tajikistan',
-        'Tanzania',
-        'Thailand',
-        'Togo',
-        'Tonga',
-        'Trinidad and Tobago',
-        'Tunisia',
-        'Turkey',
-        'Turkmenistan',
-        'Tuvalu',
-        'Uganda',
-        'Ukraine',
-        'United Arab Emirates',
-        'United Kingdom',
-        'United States',
-        'Uruguay',
-        'Uzbekistan',
-        'Vanuatu',
-        'Vatican City',
-        'Venezuela',
-        'Vietnam',
-        'Yemen',
-        'Zambia',
-        'Zimbabwe'
-    );
+	$countries = array(
+		'Afghanistan',
+		'Albania',
+		'Algeria',
+		'Andorra',
+		'Angola',
+		'Antigua and Barbuda',
+		'Argentina',
+		'Armenia',
+		'Australia',
+		'Austria',
+		'Azerbaijan',
+		'Bahamas',
+		'Bahrain',
+		'Bangladesh',
+		'Barbados',
+		'Belarus',
+		'Belgium',
+		'Belize',
+		'Benin',
+		'Bhutan',
+		'Bolivia',
+		'Bosnia and Herzegovina',
+		'Botswana',
+		'Brazil',
+		'Brunei',
+		'Bulgaria',
+		'Burkina Faso',
+		'Burundi',
+		'Cambodia',
+		'Cameroon',
+		'Canada',
+		'Cape Verde',
+		'Central African Republic',
+		'Chad',
+		'Chile',
+		'China',
+		'Colombi',
+		'Comoros',
+		'Congo (Brazzaville)',
+		'Congo',
+		'Costa Rica',
+		'Cote d\'Ivoire',
+		'Croatia',
+		'Cuba',
+		'Cyprus',
+		'Czech Republic',
+		'Denmark',
+		'Djibouti',
+		'Dominica',
+		'Dominican Republic',
+		'East Timor (Timor Timur)',
+		'Ecuador',
+		'Egypt',
+		'El Salvador',
+		'Equatorial Guinea',
+		'Eritrea',
+		'Estonia',
+		'Ethiopia',
+		'Fiji',
+		'Finland',
+		'France',
+		'Gabon',
+		'Gambia, The',
+		'Georgia',
+		'Germany',
+		'Ghana',
+		'Greece',
+		'Grenada',
+		'Guatemala',
+		'Guinea',
+		'Guinea-Bissau',
+		'Guyana',
+		'Haiti',
+		'Honduras',
+		'Hungary',
+		'Iceland',
+		'India',
+		'Indonesia',
+		'Iran',
+		'Iraq',
+		'Ireland',
+		'Israel',
+		'Italy',
+		'Jamaica',
+		'Japan',
+		'Jordan',
+		'Kazakhstan',
+		'Kenya',
+		'Kiribati',
+		'Korea, North',
+		'Korea, South',
+		'Kuwait',
+		'Kyrgyzstan',
+		'Laos',
+		'Latvia',
+		'Lebanon',
+		'Lesotho',
+		'Liberia',
+		'Libya',
+		'Liechtenstein',
+		'Lithuania',
+		'Luxembourg',
+		'Macedonia',
+		'Madagascar',
+		'Malawi',
+		'Malaysia',
+		'Maldives',
+		'Mali',
+		'Malta',
+		'Marshall Islands',
+		'Mauritania',
+		'Mauritius',
+		'Mexico',
+		'Micronesia',
+		'Moldova',
+		'Monaco',
+		'Mongolia',
+		'Morocco',
+		'Mozambique',
+		'Myanmar',
+		'Namibia',
+		'Nauru',
+		'Nepa',
+		'Netherlands',
+		'New Zealand',
+		'Nicaragua',
+		'Niger',
+		'Nigeria',
+		'Norway',
+		'Oman',
+		'Pakistan',
+		'Palau',
+		'Panama',
+		'Papua New Guinea',
+		'Paraguay',
+		'Peru',
+		'Philippines',
+		'Poland',
+		'Portugal',
+		'Qatar',
+		'Romania',
+		'Russia',
+		'Rwanda',
+		'Saint Kitts and Nevis',
+		'Saint Lucia',
+		'Saint Vincent',
+		'Samoa',
+		'San Marino',
+		'Sao Tome and Principe',
+		'Saudi Arabia',
+		'Senegal',
+		'Serbia and Montenegro',
+		'Seychelles',
+		'Sierra Leone',
+		'Singapore',
+		'Slovakia',
+		'Slovenia',
+		'Solomon Islands',
+		'Somalia',
+		'South Africa',
+		'Spain',
+		'Sri Lanka',
+		'Sudan',
+		'Suriname',
+		'Swaziland',
+		'Sweden',
+		'Switzerland',
+		'Syria',
+		'Taiwan',
+		'Tajikistan',
+		'Tanzania',
+		'Thailand',
+		'Togo',
+		'Tonga',
+		'Trinidad and Tobago',
+		'Tunisia',
+		'Turkey',
+		'Turkmenistan',
+		'Tuvalu',
+		'Uganda',
+		'Ukraine',
+		'United Arab Emirates',
+		'United Kingdom',
+		'United States',
+		'Uruguay',
+		'Uzbekistan',
+		'Vanuatu',
+		'Vatican City',
+		'Venezuela',
+		'Vietnam',
+		'Yemen',
+		'Zambia',
+		'Zimbabwe'
+	);
 
-    if (!is_null($popular)) {
-        $countries = $popular + $countries;
-    }
+	if ( ! is_null( $popular ) ) {
+		$countries = $popular + $countries;
+	}
 
-    return $countries;
+	return $countries;
 
 }
 
-function foody_time_to_local($time = null)
-{
+function foody_time_to_local( $time = null ) {
 
-    if (is_null($time)) {
-        $time = time();
-    }
+	if ( is_null( $time ) ) {
+		$time = time();
+	}
 
-    return $time + (get_option('gmt_offset') * 3600);
+	return $time + ( get_option( 'gmt_offset' ) * 3600 );
 }
 
-function foody_local_to_time($local_time)
-{
-    return $local_time - (get_option('gmt_offset') * 3600);
+function foody_local_to_time( $local_time ) {
+	return $local_time - ( get_option( 'gmt_offset' ) * 3600 );
 }
 
-function foody_time_to_dst_offset($time)
-{
+function foody_time_to_dst_offset( $time ) {
 
-    // Set TZ so localtime works.
-    date_default_timezone_set(get_option('timezone_string'));
+	// Set TZ so localtime works.
+	date_default_timezone_set( get_option( 'timezone_string' ) );
 
-    if (date('I', $time) !== date('I', time())) {
-        if (date('I', $time) > date('I', time())) {
+	if ( date( 'I', $time ) !== date( 'I', time() ) ) {
+		if ( date( 'I', $time ) > date( 'I', time() ) ) {
 
-            //post was created in DST (+1 hour)
-            $time += 3600;
+			//post was created in DST (+1 hour)
+			$time += 3600;
 
-        } else {
+		} else {
 
-            //post was created in standard time (-1 Hour)
-            $time -= 3600;
-        }
-    }
+			//post was created in standard time (-1 Hour)
+			$time -= 3600;
+		}
+	}
 
-    // Set back to UTC.
-    date_default_timezone_set('UTC');
+	// Set back to UTC.
+	date_default_timezone_set( 'UTC' );
 
-    return $time;
+	return $time;
 }
 
 // This forces the inbuilt mail function to send html emails instead of plain text emails.
-function wp_mail_content_type_html($content_type)
-{
-    return 'text/html';
+function wp_mail_content_type_html( $content_type ) {
+	return 'text/html';
 }
 
-function foody_wp_mail_from($mail)
-{
-    return apply_filters('foody_wp_mail_from', str_replace('wordpress@', 'noreply@', $mail));
+function foody_wp_mail_from( $mail ) {
+	return apply_filters( 'foody_wp_mail_from', str_replace( 'wordpress@', 'noreply@', $mail ) );
 }
 
-function foody_array_value($array, $key)
-{
-    return $array[$key];
+function foody_array_value( $array, $key ) {
+	return $array[ $key ];
 }
 
-function foody_wp_mail_from_name()
-{
-    return apply_filters('foody_wp_mail_from_name', get_bloginfo('name'));
+function foody_wp_mail_from_name() {
+	return apply_filters( 'foody_wp_mail_from_name', get_bloginfo( 'name' ) );
 }
 
 /**
@@ -826,20 +794,19 @@ function foody_wp_mail_from_name()
  *
  * @return array
  */
-function foody_array_insert($array, $pos, $val, $key = null)
-{
+function foody_array_insert( $array, $pos, $val, $key = null ) {
 
-    $array2 = array_splice($array, $pos);
+	$array2 = array_splice( $array, $pos );
 
-    if ($key) {
-        $array[$key] = $val;
-    } else {
-        $array[] = $val;
-    }
+	if ( $key ) {
+		$array[ $key ] = $val;
+	} else {
+		$array[] = $val;
+	}
 
-    $array = array_merge($array, $array2);
+	$array = array_merge( $array, $array2 );
 
-    return $array;
+	return $array;
 }
 
 /**
@@ -854,55 +821,53 @@ function foody_array_insert($array, $pos, $val, $key = null)
  *
  * @return string a list of array values
  */
-function foody_multi_implode($array, $separator = ', ', $last_separator = ' &amp; ')
-{
+function foody_multi_implode( $array, $separator = ', ', $last_separator = ' &amp; ' ) {
 
-    if (count($array) == 1) {
-        return reset($array);
-    }
+	if ( count( $array ) == 1 ) {
+		return reset( $array );
+	}
 
-    $end_value = array_pop($array);
+	$end_value = array_pop( $array );
 
-    $list = implode($separator, $array);
+	$list = implode( $separator, $array );
 
-    return $list . $last_separator . $end_value;
+	return $list . $last_separator . $end_value;
 
 }
 
 /**
  * Take into account draft posts when you specify hide_empty in get_terms()
  *
- * @param  StdClass[] $terms
- * @param  string $taxonomies
- * @param  array $args
+ * @param StdClass[] $terms
+ * @param string $taxonomies
+ * @param array $args
  *
  * @return StdClass[]
  */
-function foody_add_exclude_draft_to_get_terms_hide_empty($terms, $taxonomies, $args)
-{
+function foody_add_exclude_draft_to_get_terms_hide_empty( $terms, $taxonomies, $args ) {
 
-    if ($args['hide_empty'] == false || ($args['hide_empty'] == true && empty($args['hide_empty_exclude_drafts']))) {
-        return $terms;
-    }
+	if ( $args['hide_empty'] == false || ( $args['hide_empty'] == true && empty( $args['hide_empty_exclude_drafts'] ) ) ) {
+		return $terms;
+	}
 
-    global $wpdb;
+	global $wpdb;
 
-    // Check that each term has posts in it which are published
-    foreach ($terms as $key => $term) {
+	// Check that each term has posts in it which are published
+	foreach ( $terms as $key => $term ) {
 
-        $post_id = $wpdb->get_var("SELECT ID FROM $wpdb->posts INNER JOIN $wpdb->term_relationships ON $wpdb->posts.ID = $wpdb->term_relationships.object_id WHERE post_status != 'draft' AND $wpdb->term_relationships.term_taxonomy_id = $term->term_taxonomy_id LIMIT 0, 1");
+		$post_id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts INNER JOIN $wpdb->term_relationships ON $wpdb->posts.ID = $wpdb->term_relationships.object_id WHERE post_status != 'draft' AND $wpdb->term_relationships.term_taxonomy_id = $term->term_taxonomy_id LIMIT 0, 1" );
 
-        if (!$post_id) {
-            unset($terms[$key]);
-        }
+		if ( ! $post_id ) {
+			unset( $terms[ $key ] );
+		}
 
-    }
+	}
 
-    return $terms;
+	return $terms;
 
 }
 
-add_filter('get_terms', 'foody_add_exclude_draft_to_get_terms_hide_empty', 1, 3);
+add_filter( 'get_terms', 'foody_add_exclude_draft_to_get_terms_hide_empty', 1, 3 );
 
 
 /**
@@ -916,110 +881,108 @@ add_filter('get_terms', 'foody_add_exclude_draft_to_get_terms_hide_empty', 1, 3)
  *
  * @return  pagination hmtl
  */
-function foody_get_pagination($wp_query = null, $current_page = null, $ppp = null, $args = array())
-{
+function foody_get_pagination( $wp_query = null, $current_page = null, $ppp = null, $args = array() ) {
 
-    global $wp_rewrite;
+	global $wp_rewrite;
 
-    if (is_null($wp_query)) {
-        global $wp_query;
-    }
+	if ( is_null( $wp_query ) ) {
+		global $wp_query;
+	}
 
-    if (is_null($ppp)) {
-        $ppp = $wp_query->query_vars['posts_per_page'] ? $wp_query->query_vars['posts_per_page'] : get_option('posts_per_page');
-    }
+	if ( is_null( $ppp ) ) {
+		$ppp = $wp_query->query_vars['posts_per_page'] ? $wp_query->query_vars['posts_per_page'] : get_option( 'posts_per_page' );
+	}
 
-    $number_pages = ceil($wp_query->found_posts / $ppp);
+	$number_pages = ceil( $wp_query->found_posts / $ppp );
 
-    if (is_null($current_page)) {
-        $current_page = get_query_var('paged');
-    }
+	if ( is_null( $current_page ) ) {
+		$current_page = get_query_var( 'paged' );
+	}
 
-    $current_page = $current_page ? $current_page : 1;
+	$current_page = $current_page ? $current_page : 1;
 
-    $defaults = array(
-        'next_text' => __('Next &raquo;', 'hm-core'),
-        'prev_text' => __('&laquo; Prev', 'hm-core'),
-        'show_all' => false
-    );
+	$defaults = array(
+		'next_text' => __( 'Next &raquo;', 'hm-core' ),
+		'prev_text' => __( '&laquo; Prev', 'hm-core' ),
+		'show_all'  => false
+	);
 
-    $args = wp_parse_args($args, $defaults);
+	$args = wp_parse_args( $args, $defaults );
 
-    if ($wp_rewrite->pagination_base) {
-        $wp_rewrite->pagination_base = trailingslashit($wp_rewrite->pagination_base);
-    }
+	if ( $wp_rewrite->pagination_base ) {
+		$wp_rewrite->pagination_base = trailingslashit( $wp_rewrite->pagination_base );
+	}
 
-    $base = str_replace($wp_rewrite->pagination_base . $current_page . '/', '', $_SERVER['REQUEST_URI']);
+	$base = str_replace( $wp_rewrite->pagination_base . $current_page . '/', '', $_SERVER['REQUEST_URI'] );
 
-    $base = remove_query_arg('paged', $base);
+	$base = remove_query_arg( 'paged', $base );
 
-    // Strip any query args, put them on the end (after /page/%number%/
-    $bases = explode('?', $base);
-    $base = current($bases);
+	// Strip any query args, put them on the end (after /page/%number%/
+	$bases = explode( '?', $base );
+	$base  = current( $bases );
 
-    if (isset($bases[1])) {
-        $query_params = $bases[1];
-    }
+	if ( isset( $bases[1] ) ) {
+		$query_params = $bases[1];
+	}
 
-    // Mid-size depends on what page you are on, as it applies to each side of current_page
-    if ($current_page > ($number_pages - 3)) {
-        $mid_size = 5 - ($number_pages - ($current_page) + 1);
-    } elseif ($current_page >= 5) {
-        $mid_size = 2;
-    } elseif ($current_page == 1) {
-        $mid_size = 4;
-    } else {
-        $mid_size = 5 - $current_page + 1;
-    }
+	// Mid-size depends on what page you are on, as it applies to each side of current_page
+	if ( $current_page > ( $number_pages - 3 ) ) {
+		$mid_size = 5 - ( $number_pages - ( $current_page ) + 1 );
+	} elseif ( $current_page >= 5 ) {
+		$mid_size = 2;
+	} elseif ( $current_page == 1 ) {
+		$mid_size = 4;
+	} else {
+		$mid_size = 5 - $current_page + 1;
+	}
 
-    $page_links = paginate_links(array(
-        'base' => trailingslashit($base) . ((isset($_GET['s']) && $_GET['s']) ? '' : $wp_rewrite->pagination_base . '%#%/') . ((isset($query_params) && $query_params) ? '?' . $query_params : '') . ((isset($_GET['s']) && $_GET['s']) ? '&paged=%#%' : ''),
-        'format' => '',
-        'prev_text' => $args['prev_text'],
-        'next_text' => $args['next_text'],
-        'total' => $number_pages,
-        'current' => $current_page,
-        'mid_size' => $mid_size,
-        'end_size' => 1,
-        'show_all' => $args['show_all'],
-        'type' => 'array'
-    ));
+	$page_links = paginate_links( array(
+		'base'      => trailingslashit( $base ) . ( ( isset( $_GET['s'] ) && $_GET['s'] ) ? '' : $wp_rewrite->pagination_base . '%#%/' ) . ( ( isset( $query_params ) && $query_params ) ? '?' . $query_params : '' ) . ( ( isset( $_GET['s'] ) && $_GET['s'] ) ? '&paged=%#%' : '' ),
+		'format'    => '',
+		'prev_text' => $args['prev_text'],
+		'next_text' => $args['next_text'],
+		'total'     => $number_pages,
+		'current'   => $current_page,
+		'mid_size'  => $mid_size,
+		'end_size'  => 1,
+		'show_all'  => $args['show_all'],
+		'type'      => 'array'
+	) );
 
-    if (!is_array($page_links) || empty($page_links)) {
-        return;
-    }
+	if ( ! is_array( $page_links ) || empty( $page_links ) ) {
+		return;
+	}
 
-    foreach ($page_links as &$page_link) {
+	foreach ( $page_links as &$page_link ) {
 
-        if (strpos($page_link, $args['prev_text'])) {
-            $page_link = str_replace('>', ' rel="prev">', $page_link);
-        }
+		if ( strpos( $page_link, $args['prev_text'] ) ) {
+			$page_link = str_replace( '>', ' rel="prev">', $page_link );
+		}
 
-        if (strpos($page_link, $args['next_text'])) {
-            $page_link = str_replace('>', ' rel="next">', $page_link);
-        }
+		if ( strpos( $page_link, $args['next_text'] ) ) {
+			$page_link = str_replace( '>', ' rel="next">', $page_link );
+		}
 
-    }
+	}
 
-    $output = implode('', $page_links);
+	$output = implode( '', $page_links );
 
-    // Exception for page 1
-    if (isset($_GET['s']) && $_GET['s']) {
-        $output = str_replace("&#038;paged=1'", "'", $output);
-    } else {
-        $output = str_replace($wp_rewrite->pagination_base . '1/', '', $output);
-    }
+	// Exception for page 1
+	if ( isset( $_GET['s'] ) && $_GET['s'] ) {
+		$output = str_replace( "&#038;paged=1'", "'", $output );
+	} else {
+		$output = str_replace( $wp_rewrite->pagination_base . '1/', '', $output );
+	}
 
-    return '<div class="pagination">' . $output . '</div>';
+	return '<div class="pagination">' . $output . '</div>';
 }
 
 /**
  * Echoes foody_get_pagination
  *
  */
-function foody_pagination()
-{
-    echo foody_get_pagination();
+function foody_pagination() {
+	echo foody_get_pagination();
 }
 
 /**
@@ -1030,99 +993,97 @@ function foody_pagination()
  *
  * @return string - pagination html
  */
-function foody_get_post_pagination($post = null, $current_page = null)
-{
+function foody_get_post_pagination( $post = null, $current_page = null ) {
 
-    global $numpages;
+	global $numpages;
 
-    // set number_pages to the global if we are using global $post
-    if ($post === null) {
-        $number_pages = $numpages;
-    }
-    if ($post === null) {
-        global $post;
-    }
+	// set number_pages to the global if we are using global $post
+	if ( $post === null ) {
+		$number_pages = $numpages;
+	}
+	if ( $post === null ) {
+		global $post;
+	}
 
-    if (!$current_page) {
-        $current_page = (($page = get_query_var('page')) ? $page : 1);
-    }
+	if ( ! $current_page ) {
+		$current_page = ( ( $page = get_query_var( 'page' ) ) ? $page : 1 );
+	}
 
-    if ($number_pages == null) {
-        $pages = explode('<!--nextpage-->', $post->post_content);
-        $number_pages = count($pages);
-    }
+	if ( $number_pages == null ) {
+		$pages        = explode( '<!--nextpage-->', $post->post_content );
+		$number_pages = count( $pages );
+	}
 
-    $defaults = array(
-        'next_text' => __('Next &raquo;'),
-        'prev_text' => __('&laquo; Prev')
-    );
-    $args = wp_parse_args($args, $defaults);
+	$defaults = array(
+		'next_text' => __( 'Next &raquo;' ),
+		'prev_text' => __( '&laquo; Prev' )
+	);
+	$args     = wp_parse_args( $args, $defaults );
 
-    // mid-size depends on what page you are on, as it applies to each side of current_page
-    if ($current_page > ($number_pages - 3)) {
-        $mid_size = 5 - ($number_pages - ($current_page) + 1);
-    } elseif ($current_page >= 5) {
-        $mid_size = 2;
-    } elseif ($current_page == 1) {
-        $mid_size = 4;
-    } else {
-        $mid_size = 5 - $current_page + 1;
-    }
+	// mid-size depends on what page you are on, as it applies to each side of current_page
+	if ( $current_page > ( $number_pages - 3 ) ) {
+		$mid_size = 5 - ( $number_pages - ( $current_page ) + 1 );
+	} elseif ( $current_page >= 5 ) {
+		$mid_size = 2;
+	} elseif ( $current_page == 1 ) {
+		$mid_size = 4;
+	} else {
+		$mid_size = 5 - $current_page + 1;
+	}
 
-    if (is_preview()) {
-        $base = get_permalink($post->ID) . '&page=%#%';
-    } else {
-        $base = trailingslashit(get_permalink($post->ID)) . '%#%/';
-    }
+	if ( is_preview() ) {
+		$base = get_permalink( $post->ID ) . '&page=%#%';
+	} else {
+		$base = trailingslashit( get_permalink( $post->ID ) ) . '%#%/';
+	}
 
-    $page_links = paginate_links(array(
-        'base' => $base,
-        'format' => '',
-        'prev_text' => $args['prev_text'],
-        'next_text' => $args['next_text'],
-        'total' => $number_pages,
-        'current' => $current_page,
-        'mid_size' => $mid_size,
-        'end_size' => 1,
-        'type' => 'array'
-    ));
+	$page_links = paginate_links( array(
+		'base'      => $base,
+		'format'    => '',
+		'prev_text' => $args['prev_text'],
+		'next_text' => $args['next_text'],
+		'total'     => $number_pages,
+		'current'   => $current_page,
+		'mid_size'  => $mid_size,
+		'end_size'  => 1,
+		'type'      => 'array'
+	) );
 
-    if (!is_array($page_links) || empty($page_links)) {
-        return;
-    }
+	if ( ! is_array( $page_links ) || empty( $page_links ) ) {
+		return;
+	}
 
-    // loop through the page links, removing any unwanted ones as paginate_links() does not provide such fine control
-    $real_counter = 0;
-    foreach ($page_links as $counter => $pagination_item) :
+	// loop through the page links, removing any unwanted ones as paginate_links() does not provide such fine control
+	$real_counter = 0;
+	foreach ( $page_links as $counter => $pagination_item ) :
 
-        //strip ..., last page
-        if (strpos($pagination_item, '...') || (strpos($page_links[$counter - 1], '...') && $counter == count($page_links) - 2) || ($counter == 1 && strpos($page_links[2], '...')) || ($counter == 1 && strpos($page_links[0], $args['prev_text']) && $current_page == 4)) {
-            continue;
-        }
+		//strip ..., last page
+		if ( strpos( $pagination_item, '...' ) || ( strpos( $page_links[ $counter - 1 ], '...' ) && $counter == count( $page_links ) - 2 ) || ( $counter == 1 && strpos( $page_links[2], '...' ) ) || ( $counter == 1 && strpos( $page_links[0], $args['prev_text'] ) && $current_page == 4 ) ) {
+			continue;
+		}
 
-        if ($real_counter >= 6 && strpos($pagination_item, $args['next_text']) === false) {
-            continue;
-        }
+		if ( $real_counter >= 6 && strpos( $pagination_item, $args['next_text'] ) === false ) {
+			continue;
+		}
 
-        $real_counter++;
+		$real_counter ++;
 
-        $output .= $pagination_item;
+		$output .= $pagination_item;
 
-    endforeach;
+	endforeach;
 
-    // exception for page 1
-    $output = str_replace('/1/', '/', $output);
+	// exception for page 1
+	$output = str_replace( '/1/', '/', $output );
 
-    return '<div class="post-pagination">' . $output . '</div>';
+	return '<div class="post-pagination">' . $output . '</div>';
 }
 
 /**
  * Echoes foody_get_post_pagination
  *
  */
-function foody_post_pagination()
-{
-    echo foody_get_post_pagination();
+function foody_post_pagination() {
+	echo foody_get_post_pagination();
 }
 
 /**
@@ -1133,20 +1094,19 @@ function foody_post_pagination()
  * @param array $classes
  * @param object $item
  *
- * @todo not sure this actually works?
  * @return null
+ * @todo not sure this actually works?
  */
-function foody_submenu_class($classes, $item)
-{
+function foody_submenu_class( $classes, $item ) {
 
-    if (get_post_meta_by(array('meta_value', 'meta_key'), array($item->ID, '_menu_item_menu_item_parent'))) {
-        $classes[] = 'menu_parent';
-    }
+	if ( get_post_meta_by( array( 'meta_value', 'meta_key' ), array( $item->ID, '_menu_item_menu_item_parent' ) ) ) {
+		$classes[] = 'menu_parent';
+	}
 
-    return $classes;
+	return $classes;
 }
 
-add_filter('nav_menu_css_class', 'foody_submenu_class', 10, 2);
+add_filter( 'nav_menu_css_class', 'foody_submenu_class', 10, 2 );
 
 /**
  * foody_touch_time function.
@@ -1158,48 +1118,47 @@ add_filter('nav_menu_css_class', 'foody_submenu_class', 10, 2);
  *
  * @return null
  */
-function foody_touch_time($timestamp, $name = 'foody_time_')
-{
+function foody_touch_time( $timestamp, $name = 'foody_time_' ) {
 
-    global $wp_locale, $post, $comment;
+	global $wp_locale, $post, $comment;
 
-    $time_adj = current_time('timestamp');
-    $post_date = $post->post_date;
+	$time_adj  = current_time( 'timestamp' );
+	$post_date = $post->post_date;
 
-    $jj = date('d', $timestamp);
-    $mm = date('m', $timestamp);
-    $aa = date('Y', $timestamp);
-    $hh = date('H', $timestamp);
-    $mn = date('i', $timestamp);
-    $ss = date('s', $timestamp);
+	$jj = date( 'd', $timestamp );
+	$mm = date( 'm', $timestamp );
+	$aa = date( 'Y', $timestamp );
+	$hh = date( 'H', $timestamp );
+	$mn = date( 'i', $timestamp );
+	$ss = date( 's', $timestamp );
 
-    $month = "<select name=\"{$name}mm\">\n";
+	$month = "<select name=\"{$name}mm\">\n";
 
-    for ($i = 1; $i < 13; $i = $i + 1) {
+	for ( $i = 1; $i < 13; $i = $i + 1 ) {
 
-        $month .= "\t\t\t" . '<option value="' . zeroise($i, 2) . '"';
+		$month .= "\t\t\t" . '<option value="' . zeroise( $i, 2 ) . '"';
 
-        if ($i == $mm) {
-            $month .= ' selected="selected"';
-        }
+		if ( $i == $mm ) {
+			$month .= ' selected="selected"';
+		}
 
-        $month .= '>' . $wp_locale->get_month_abbrev($wp_locale->get_month($i)) . "</option>\n";
+		$month .= '>' . $wp_locale->get_month_abbrev( $wp_locale->get_month( $i ) ) . "</option>\n";
 
-    }
+	}
 
-    $month .= '</select>';
+	$month .= '</select>';
 
-    $day = '<input style="width: 2.1em;" type="text" name="' . $name . 'jj" value="' . $jj . '" size="2" maxlength="2" autocomplete="off" />';
-    $year = '<input style="width: 3.5em;" type="text" name="' . $name . 'aa" value="' . $aa . '" size="4" maxlength="4" autocomplete="off" />';
-    $hour = '<input style="width: 2.1em;" type="text" name="' . $name . 'hh" value="' . $hh . '" size="2" maxlength="2" autocomplete="off" />';
-    $minute = '<input style="width: 2.1em;" type="text" name="' . $name . 'mn" value="' . $mn . '" size="2" maxlength="2" autocomplete="off" />';
+	$day    = '<input style="width: 2.1em;" type="text" name="' . $name . 'jj" value="' . $jj . '" size="2" maxlength="2" autocomplete="off" />';
+	$year   = '<input style="width: 3.5em;" type="text" name="' . $name . 'aa" value="' . $aa . '" size="4" maxlength="4" autocomplete="off" />';
+	$hour   = '<input style="width: 2.1em;" type="text" name="' . $name . 'hh" value="' . $hh . '" size="2" maxlength="2" autocomplete="off" />';
+	$minute = '<input style="width: 2.1em;" type="text" name="' . $name . 'mn" value="' . $mn . '" size="2" maxlength="2" autocomplete="off" />';
 
-    echo '<div class="timestamp-wrap">';
+	echo '<div class="timestamp-wrap">';
 
-    /* translators: 1: month input, 2: day input, 3: year input, 4: hour input, 5: minute input */
-    printf(__('%1$s%2$s, %3$s @ %4$s : %5$s'), $month, $day, $year, $hour, $minute);
+	/* translators: 1: month input, 2: day input, 3: year input, 4: hour input, 5: minute input */
+	printf( __( '%1$s%2$s, %3$s @ %4$s : %5$s' ), $month, $day, $year, $hour, $minute );
 
-    echo '</div><input type="hidden" id="ss" name="' . $name . 'ss" value="' . $ss . '" />';
+	echo '</div><input type="hidden" id="ss" name="' . $name . 'ss" value="' . $ss . '" />';
 
 }
 
@@ -1213,12 +1172,11 @@ function foody_touch_time($timestamp, $name = 'foody_time_')
  *
  * @return string
  */
-function foody_touch_time_get_time_from_data($name, $data)
-{
+function foody_touch_time_get_time_from_data( $name, $data ) {
 
-    $string = $data[$name . 'aa'] . '-' . $data[$name . 'mm'] . '-' . $data[$name . 'jj'] . ' ' . $data[$name . 'hh'] . ':' . $data[$name . 'mn'] . ':' . $data[$name . 'ss'];
+	$string = $data[ $name . 'aa' ] . '-' . $data[ $name . 'mm' ] . '-' . $data[ $name . 'jj' ] . ' ' . $data[ $name . 'hh' ] . ':' . $data[ $name . 'mn' ] . ':' . $data[ $name . 'ss' ];
 
-    return strtotime($string);
+	return strtotime( $string );
 
 }
 
@@ -1229,27 +1187,26 @@ function foody_touch_time_get_time_from_data($name, $data)
  *
  * @return [type]
  */
-function foody_disable_admin_bar()
-{
+function foody_disable_admin_bar() {
 
-    if (is_admin() || !is_user_logged_in()) {
-        return;
-    }
+	if ( is_admin() || ! is_user_logged_in() ) {
+		return;
+	}
 
-    global $_wp_theme_features;
+	global $_wp_theme_features;
 
-    $maybe_remove = array_intersect((array)wp_get_current_user()->roles, isset($_wp_theme_features['foody_disable_admin_bar'][0]) ? (array)$_wp_theme_features['foody_disable_admin_bar'][0] : array());
+	$maybe_remove = array_intersect( (array) wp_get_current_user()->roles, isset( $_wp_theme_features['foody_disable_admin_bar'][0] ) ? (array) $_wp_theme_features['foody_disable_admin_bar'][0] : array() );
 
-    if (is_user_logged_in() && current_theme_supports('foody_disable_admin_bar') && !empty($maybe_remove)) :
-        show_admin_bar(false);
-        remove_action('wp_head', '_admin_bar_bump_cb');
-        wp_dequeue_script('admin-bar');
-        wp_dequeue_style('admin-bar');
-    endif;
+	if ( is_user_logged_in() && current_theme_supports( 'foody_disable_admin_bar' ) && ! empty( $maybe_remove ) ) :
+		show_admin_bar( false );
+		remove_action( 'wp_head', '_admin_bar_bump_cb' );
+		wp_dequeue_script( 'admin-bar' );
+		wp_dequeue_style( 'admin-bar' );
+	endif;
 
 }
 
-add_action('init', 'foody_disable_admin_bar');
+add_action( 'init', 'foody_disable_admin_bar' );
 
 
 /**
@@ -1258,16 +1215,15 @@ add_action('init', 'foody_disable_admin_bar');
  * @access public
  * @return null
  */
-function foody_disable_admin_bar_for_subscribers()
-{
+function foody_disable_admin_bar_for_subscribers() {
 
-    if (current_theme_supports('foody_disable_admin_bar_for_subscribers')) {
-        add_theme_support('foody_disable_admin_bar', array('subscriber'));
-    }
+	if ( current_theme_supports( 'foody_disable_admin_bar_for_subscribers' ) ) {
+		add_theme_support( 'foody_disable_admin_bar', array( 'subscriber' ) );
+	}
 
 }
 
-add_action('init', 'foody_disable_admin_bar_for_subscribers', 1);
+add_action( 'init', 'foody_disable_admin_bar_for_subscribers', 1 );
 
 
 /**
@@ -1278,26 +1234,25 @@ add_action('init', 'foody_disable_admin_bar_for_subscribers', 1);
  *
  * @return array
  */
-function foody_get_object_properties_from_array($array, $property)
-{
+function foody_get_object_properties_from_array( $array, $property ) {
 
-    if (!is_array($array)) {
-        return array();
-    }
+	if ( ! is_array( $array ) ) {
+		return array();
+	}
 
-    $properties = array();
+	$properties = array();
 
-    foreach ($array as $value) {
+	foreach ( $array as $value ) {
 
-        $value = (object)$value;
+		$value = (object) $value;
 
-        if (isset($value->$property)) {
-            $properties[] = $value->$property;
-        }
+		if ( isset( $value->$property ) ) {
+			$properties[] = $value->$property;
+		}
 
-    }
+	}
 
-    return $properties;
+	return $properties;
 
 }
 
@@ -1309,23 +1264,22 @@ function foody_get_object_properties_from_array($array, $property)
  *
  * @return string
  */
-function foody_pluralize_string($str)
-{
+function foody_pluralize_string( $str ) {
 
-    $endings = array(
-        's' => 'ses',
-        'y' => 'ies'
-    );
+	$endings = array(
+		's' => 'ses',
+		'y' => 'ies'
+	);
 
-    $ending = substr($str, strlen($str) - 1, 1);
+	$ending = substr( $str, strlen( $str ) - 1, 1 );
 
-    if (array_key_exists($ending, $endings)) {
-        $str = substr($str, 0, strlen($str) - 1) . $endings[$ending];
-    } else {
-        $str = $str . 's';
-    }
+	if ( array_key_exists( $ending, $endings ) ) {
+		$str = substr( $str, 0, strlen( $str ) - 1 ) . $endings[ $ending ];
+	} else {
+		$str = $str . 's';
+	}
 
-    return $str;
+	return $str;
 
 }
 
@@ -1337,34 +1291,32 @@ function foody_pluralize_string($str)
  *
  * @return null
  */
-function hma_class($classes, $bool)
-{
+function hma_class( $classes, $bool ) {
 
-    if ($bool) { ?>
+	if ( $bool ) { ?>
 
         class="<?php echo $classes; ?>"
 
-    <?php }
+	<?php }
 
 }
 
 
-if (!function_exists('unregister_post_type')) :
+if ( ! function_exists( 'unregister_post_type' ) ) :
 
-    function unregister_post_type($post_type)
-    {
+	function unregister_post_type( $post_type ) {
 
-        global $wp_post_types;
+		global $wp_post_types;
 
-        if (isset($wp_post_types[$post_type])) {
-            unset($wp_post_types[$post_type]);
+		if ( isset( $wp_post_types[ $post_type ] ) ) {
+			unset( $wp_post_types[ $post_type ] );
 
-            return true;
-        }
+			return true;
+		}
 
-        return false;
+		return false;
 
-    }
+	}
 
 endif;
 
@@ -1374,10 +1326,9 @@ endif;
  * @access public
  * @return null
  */
-function foody_remove_wp_links()
-{
+function foody_remove_wp_links() {
 
-    add_action('admin_menu', '_foody_remove_wp_link_callback');
+	add_action( 'admin_menu', '_foody_remove_wp_link_callback' );
 
 }
 
@@ -1386,24 +1337,22 @@ function foody_remove_wp_links()
  *
  * @access private
  */
-function _foody_remove_wp_link_callback()
-{
+function _foody_remove_wp_link_callback() {
 
-    remove_menu_page('link-manager.php');
+	remove_menu_page( 'link-manager.php' );
 
 }
 
-if (!function_exists('is_login')) :
+if ( ! function_exists( 'is_login' ) ) :
 
-    /**
-     * Simple way to check whether you are on the login page
-     *
-     * @return bool
-     */
-    function is_login()
-    {
-        return in_array($GLOBALS['pagenow'], array('wp-login.php', 'wp-register.php'));
-    }
+	/**
+	 * Simple way to check whether you are on the login page
+	 *
+	 * @return bool
+	 */
+	function is_login() {
+		return in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) );
+	}
 
 endif;
 
@@ -1415,64 +1364,63 @@ endif;
  * @param string filepart
  * @param mixed wp_args style argument list
  */
-function foody_get_template_part($file, $template_args = array(), $cache_args = array())
-{
+function foody_get_template_part( $file, $template_args = array(), $cache_args = array() ) {
 
-    $template_args = wp_parse_args($template_args);
-    $cache_args = wp_parse_args($cache_args);
+	$template_args = wp_parse_args( $template_args );
+	$cache_args    = wp_parse_args( $cache_args );
 
-    if ($cache_args) {
+	if ( $cache_args ) {
 
-        foreach ($template_args as $key => $value) {
-            if (is_scalar($value) || is_array($value)) {
-                $cache_args[$key] = $value;
-            } else if (is_object($value) && method_exists($value, 'get_id')) {
-                $cache_args[$key] = call_user_func('get_id', $value);
-            }
-        }
+		foreach ( $template_args as $key => $value ) {
+			if ( is_scalar( $value ) || is_array( $value ) ) {
+				$cache_args[ $key ] = $value;
+			} else if ( is_object( $value ) && method_exists( $value, 'get_id' ) ) {
+				$cache_args[ $key ] = call_user_func( 'get_id', $value );
+			}
+		}
 
-        if (($cache = wp_cache_get($file, serialize($cache_args))) !== false) {
+		if ( ( $cache = wp_cache_get( $file, serialize( $cache_args ) ) ) !== false ) {
 
-            if (!empty($template_args['return'])) {
-                return $cache;
-            }
+			if ( ! empty( $template_args['return'] ) ) {
+				return $cache;
+			}
 
-            echo $cache;
+			echo $cache;
 
-            return;
-        }
+			return;
+		}
 
-    }
+	}
 
-    $file_handle = $file;
+	$file_handle = $file;
 
-    do_action('start_operation', 'foody_template_part::' . $file_handle);
+	do_action( 'start_operation', 'foody_template_part::' . $file_handle );
 
-    if (file_exists(get_stylesheet_directory() . '/' . $file . '.php')) {
-        $file = get_stylesheet_directory() . '/' . $file . '.php';
-    } elseif (file_exists(get_template_directory() . '/' . $file . '.php')) {
-        $file = get_template_directory() . '/' . $file . '.php';
-    }
+	if ( file_exists( get_stylesheet_directory() . '/' . $file . '.php' ) ) {
+		$file = get_stylesheet_directory() . '/' . $file . '.php';
+	} elseif ( file_exists( get_template_directory() . '/' . $file . '.php' ) ) {
+		$file = get_template_directory() . '/' . $file . '.php';
+	}
 
-    ob_start();
-    $return = require($file);
-    $data = ob_get_clean();
+	ob_start();
+	$return = require( $file );
+	$data   = ob_get_clean();
 
-    do_action('end_operation', 'foody_template_part::' . $file_handle);
+	do_action( 'end_operation', 'foody_template_part::' . $file_handle );
 
-    if ($cache_args) {
-        wp_cache_set($file, $data, serialize($cache_args), 3600);
-    }
+	if ( $cache_args ) {
+		wp_cache_set( $file, $data, serialize( $cache_args ), 3600 );
+	}
 
-    if (!empty($template_args['return'])) {
-        if ($return === false) {
-            return false;
-        } else {
-            return $data;
-        }
-    }
+	if ( ! empty( $template_args['return'] ) ) {
+		if ( $return === false ) {
+			return false;
+		} else {
+			return $data;
+		}
+	}
 
-    echo $data;
+	echo $data;
 }
 
 /**
@@ -1481,105 +1429,104 @@ function foody_get_template_part($file, $template_args = array(), $cache_args = 
  * @param string filepart
  * @param mixed wp_args style argument list
  */
-function foody_is_queried_object($term_or_taxonomy)
-{
+function foody_is_queried_object( $term_or_taxonomy ) {
 
-    global $wp_query;
+	global $wp_query;
 
-    // tax
-    if (is_string($term_or_taxonomy)) {
+	// tax
+	if ( is_string( $term_or_taxonomy ) ) {
 
-        if ($wp_query->tax_query) {
-            foreach ($wp_query->tax_query->queries as $query) {
+		if ( $wp_query->tax_query ) {
+			foreach ( $wp_query->tax_query->queries as $query ) {
 
-                if ($query['taxonomy'] == $term_or_taxonomy) {
-                    return true;
-                }
+				if ( $query['taxonomy'] == $term_or_taxonomy ) {
+					return true;
+				}
 
-            }
-        }
+			}
+		}
 
-        if (!empty($wp_query->_post_parent_query)) {
-            foreach ($wp_query->_post_parent_query->tax_query->queries as $query) {
+		if ( ! empty( $wp_query->_post_parent_query ) ) {
+			foreach ( $wp_query->_post_parent_query->tax_query->queries as $query ) {
 
-                if ($query['taxonomy'] == $term_or_taxonomy) {
-                    return true;
-                }
+				if ( $query['taxonomy'] == $term_or_taxonomy ) {
+					return true;
+				}
 
-            }
-        }
+			}
+		}
 
-    } else if (is_object($term_or_taxonomy)) {
+	} else if ( is_object( $term_or_taxonomy ) ) {
 
-        foreach ($wp_query->tax_query->queries as $query) {
+		foreach ( $wp_query->tax_query->queries as $query ) {
 
-            if ($query['field'] == 'slug' && in_array($term_or_taxonomy->slug, $query['terms'])) {
-                return true;
-            }
+			if ( $query['field'] == 'slug' && in_array( $term_or_taxonomy->slug, $query['terms'] ) ) {
+				return true;
+			}
 
-            if (in_array($term_or_taxonomy->term_id, $query['terms'])) {
-                return true;
-            }
-        }
-    }
+			if ( in_array( $term_or_taxonomy->term_id, $query['terms'] ) ) {
+				return true;
+			}
+		}
+	}
 }
 
-add_filter('body_class', 'foody_body_class');
+add_filter( 'body_class', 'foody_body_class' );
 // Add specific CSS class by filter
-function foody_body_class($classes)
-{
-    if (is_page()) {
-        $classes[] = get_field('css_classes');
-    }
-    return $classes;
+function foody_body_class( $classes ) {
+	if ( is_page() ) {
+		$classes[] = get_field( 'css_classes' );
+	}
+
+	return $classes;
 }
 
-function foody_get_post_views($postID)
-{
-    $count_key = 'post_views_count';
-    $count = get_post_meta($postID, $count_key, true);
-    if ($count == '') {
-        delete_post_meta($postID, $count_key);
-        add_post_meta($postID, $count_key, '0');
-        return 0;
-    }
-    return $count;
+function foody_get_post_views( $postID ) {
+	$count_key = 'post_views_count';
+	$count     = get_post_meta( $postID, $count_key, true );
+	if ( $count == '' ) {
+		delete_post_meta( $postID, $count_key );
+		add_post_meta( $postID, $count_key, '0' );
+
+		return 0;
+	}
+
+	return $count;
 }
 
-function foody_set_post_views($postID)
-{
+function foody_set_post_views( $postID ) {
 
-    if (!is_preview()) {
-        $count_key = 'post_views_count';
-        $count = get_post_meta($postID, $count_key, true);
-        if ($count == '') {
-            $count = 0;
-            delete_post_meta($postID, $count_key);
-            add_post_meta($postID, $count_key, '0');
-        } else {
-            $count++;
-            update_post_meta($postID, $count_key, $count);
-        }
-    }
+	if ( ! is_preview() ) {
+		$count_key = 'post_views_count';
+		$count     = get_post_meta( $postID, $count_key, true );
+		if ( $count == '' ) {
+			$count = 0;
+			delete_post_meta( $postID, $count_key );
+			add_post_meta( $postID, $count_key, '0' );
+		} else {
+			$count ++;
+			update_post_meta( $postID, $count_key, $count );
+		}
+	}
 
 }
 
 // Remove issues with prefetching adding extra views
-remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
+remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10 );
 
 /**
  * @param string $theme_location
  *
  * @return array of menu items
  */
-function foody_get_menu_by_location($theme_location)
-{
-    $theme_locations = get_nav_menu_locations();
-    $menu_obj = get_term($theme_locations[$theme_location], 'nav_menu');
-    if ($menu_obj && !is_wp_error($menu_obj))
-        return wp_get_nav_menu_items($menu_obj->term_id);
-    else
-        return $menu_obj;
+function foody_get_menu_by_location( $theme_location ) {
+	$theme_locations = get_nav_menu_locations();
+	$menu_obj        = get_term( $theme_locations[ $theme_location ], 'nav_menu' );
+	if ( $menu_obj && ! is_wp_error( $menu_obj ) ) {
+		return wp_get_nav_menu_items( $menu_obj->term_id );
+	} else {
+		return $menu_obj;
+	}
 }
 
 /**
@@ -1588,155 +1535,150 @@ function foody_get_menu_by_location($theme_location)
  *
  * @return string menu name if exists, else return "menu"
  */
-function foody_get_menu_title($theme_location, $default_name = 'menu')
-{
-    if ($theme_location && ($locations = get_nav_menu_locations()) && isset($locations[$theme_location])) {
-        $menu = wp_get_nav_menu_object($locations[$theme_location]);
+function foody_get_menu_title( $theme_location, $default_name = 'menu' ) {
+	if ( $theme_location && ( $locations = get_nav_menu_locations() ) && isset( $locations[ $theme_location ] ) ) {
+		$menu = wp_get_nav_menu_object( $locations[ $theme_location ] );
 
-        if ($menu && $menu->name) {
-            return $menu->name;
-        }
-    }
-    return $default_name;
+		if ( $menu && $menu->name ) {
+			return $menu->name;
+		}
+	}
+
+	return $default_name;
 }
 
 
-function foody_get_array_default($array, $key, $default)
-{
-    $val = $default;
+function foody_get_array_default( $array, $key, $default ) {
+	$val = $default;
 
-    if ($array instanceof stdClass) {
-        $array = get_object_vars($array);
-    }
-    if (isset($array) && !empty($array)) {
-        $val = isset($array[$key]) ? $array[$key] : $default;
-    }
-    return $val;
+	if ( $array instanceof stdClass ) {
+		$array = get_object_vars( $array );
+	}
+	if ( isset( $array ) && ! empty( $array ) ) {
+		$val = isset( $array[ $key ] ) ? $array[ $key ] : $default;
+	}
+
+	return $val;
 }
 
-function array_not_empty($arr)
-{
-    $not_empty = false;
+function array_not_empty( $arr ) {
+	$not_empty = false;
 
-    if (!is_null($arr) && !empty($arr)) {
-        $filtered = array_filter($arr, function ($var) {
-            return !is_null($var) && $var;
-        });
+	if ( ! is_null( $arr ) && ! empty( $arr ) ) {
+		$filtered = array_filter( $arr, function ( $var ) {
+			return ! is_null( $var ) && $var;
+		} );
 
-        $not_empty = !empty($filtered);
-    }
+		$not_empty = ! empty( $filtered );
+	}
 
-    return $not_empty;
+	return $not_empty;
 
 }
 
-function group_by($array, $key)
-{
-    $return = array();
-    if (is_array($array)) {
-        foreach ($array as $val) {
-            if (is_callable($key)) {
-                $key = call_user_func($key, $val);
-            }
-            $return[$val[$key]][] = $val;
-        }
-    }
-    return $return;
+function group_by( $array, $key ) {
+	$return = array();
+	if ( is_array( $array ) ) {
+		foreach ( $array as $val ) {
+			if ( is_callable( $key ) ) {
+				$key = call_user_func( $key, $val );
+			}
+			$return[ $val[ $key ] ][] = $val;
+		}
+	}
+
+	return $return;
 }
 
-function string_array_to_int($arr)
-{
-    if (!is_array($arr)) {
-        return $arr;
-    }
-    return array_map('intval', $arr);
+function string_array_to_int( $arr ) {
+	if ( ! is_array( $arr ) ) {
+		return $arr;
+	}
+
+	return array_map( 'intval', $arr );
 }
 
-function foody_el_classes($classes)
-{
+function foody_el_classes( $classes ) {
 
-    if (is_array($classes)) {
-        $classes = implode(' ', $classes);
-    }
+	if ( is_array( $classes ) ) {
+		$classes = implode( ' ', $classes );
+	}
 
-    $classes = trim($classes);
+	$classes = trim( $classes );
 
-    echo $classes;
+	echo $classes;
 }
 
-function foody_validate_post_required($vars)
-{
-    $valid = true;
+function foody_validate_post_required( $vars ) {
+	$valid = true;
 
-    foreach ($vars as $var) {
-        if (!isset($_POST[$var])) {
-            $valid = false;
-            break;
-        }
-    }
+	foreach ( $vars as $var ) {
+		if ( ! isset( $_POST[ $var ] ) ) {
+			$valid = false;
+			break;
+		}
+	}
 
-    return $valid;
+	return $valid;
 }
 
-function foody_is_tablet()
-{
-    $tablet_browser = false;
+function foody_is_tablet() {
+	$tablet_browser = false;
 
-    if (preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
-        $tablet_browser = true;
-    }
+	if ( preg_match( '/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower( $_SERVER['HTTP_USER_AGENT'] ) ) ) {
+		$tablet_browser = true;
+	}
 
 
-    if (strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'opera mini') > 0) {
-        //Check for tablets on opera mini alternative headers
-        $stock_ua = strtolower(isset($_SERVER['HTTP_X_OPERAMINI_PHONE_UA']) ? $_SERVER['HTTP_X_OPERAMINI_PHONE_UA'] : (isset($_SERVER['HTTP_DEVICE_STOCK_UA']) ? $_SERVER['HTTP_DEVICE_STOCK_UA'] : ''));
-        if (preg_match('/(tablet|ipad|playbook)|(android(?!.*mobile))/i', $stock_ua)) {
-            $tablet_browser = true;
-        }
-    }
+	if ( strpos( strtolower( $_SERVER['HTTP_USER_AGENT'] ), 'opera mini' ) > 0 ) {
+		//Check for tablets on opera mini alternative headers
+		$stock_ua = strtolower( isset( $_SERVER['HTTP_X_OPERAMINI_PHONE_UA'] ) ? $_SERVER['HTTP_X_OPERAMINI_PHONE_UA'] : ( isset( $_SERVER['HTTP_DEVICE_STOCK_UA'] ) ? $_SERVER['HTTP_DEVICE_STOCK_UA'] : '' ) );
+		if ( preg_match( '/(tablet|ipad|playbook)|(android(?!.*mobile))/i', $stock_ua ) ) {
+			$tablet_browser = true;
+		}
+	}
 
-    return $tablet_browser;
+	return $tablet_browser;
 }
 
-function foody_array_to_data_attr($data)
-{
-    if (empty($data)) {
-        return '';
-    }
-    $data_attrs = '';
-    foreach ($data as $key => $value) {
+function foody_array_to_data_attr( $data ) {
+	if ( empty( $data ) ) {
+		return '';
+	}
+	$data_attrs = '';
+	foreach ( $data as $key => $value ) {
 //        $data_attrs .= " data-$key='$value'";
 
-        $data_attrs .= ' data-' . $key . '=' . '\'' . $value . '\'';
-    }
+		$data_attrs .= ' data-' . $key . '=' . '\'' . $value . '\'';
+	}
 
-    return $data_attrs;
+	return $data_attrs;
 }
 
-function foody_normalize_content($content)
-{
-    if(function_exists('footabc_add_code_to_content')){
-        remove_filter('the_content','footabc_add_code_to_content');
-    }
+function foody_normalize_content( $content ) {
+	if ( function_exists( 'footabc_add_code_to_content' ) ) {
+		remove_filter( 'the_content', 'footabc_add_code_to_content' );
+	}
 
-    $content = apply_filters('the_content', $content);
+	$content = apply_filters( 'the_content', $content );
 
-    if(function_exists('footabc_add_code_to_content')){
-        add_filter('the_content','footabc_add_code_to_content');
-    }
+	if ( function_exists( 'footabc_add_code_to_content' ) ) {
+		add_filter( 'the_content', 'footabc_add_code_to_content' );
+	}
 
-    $content = str_replace('&nbsp;', " ", $content);
-    $content = preg_replace('/\s+/', ' ', $content);
+	$content = str_replace( '&nbsp;', " ", $content );
+	$content = preg_replace( '/\s+/', ' ', $content );
 
-    return $content;
+	return $content;
 
 }
 
-function foody_array_find($xs, $f)
-{
-    foreach ($xs as $x) {
-        if (call_user_func($f, $x) === true)
-            return $x;
-    }
-    return null;
+function foody_array_find( $xs, $f ) {
+	foreach ( $xs as $x ) {
+		if ( call_user_func( $f, $x ) === true ) {
+			return $x;
+		}
+	}
+
+	return null;
 }

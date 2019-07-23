@@ -6,20 +6,16 @@
 *  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
-class WSL_Test_Session extends WP_UnitTestCase
-{
-	function setUp()
-	{
+class WSL_Test_Session extends WP_UnitTestCase {
+	function setUp() {
 		parent::setUp();
 	}
 
-	function tearDown()
-	{
+	function tearDown() {
 		parent::tearDown();
 	}
 
-	function test_wsl_version()
-	{
+	function test_wsl_version() {
 		global $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
 		$this->assertEquals( $_SESSION["wsl::plugin"], "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION );

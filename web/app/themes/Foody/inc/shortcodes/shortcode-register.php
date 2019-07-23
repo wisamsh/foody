@@ -7,12 +7,11 @@
  */
 
 
-function foody_register_shortcode($atts)
-{
+function foody_register_shortcode( $atts ) {
 
-	$text = isset($atts['text']) ? $atts['text'] : '';
-	if (empty($text)) {
-		$text = __('הרשמו לאתר כדי להגיב, להעלות תמונות של הבישולים שלכם ולהרכיב לעצמם ספר מתכונים אישי עם כל המתכונים שהכי אהבתם.');
+	$text = isset( $atts['text'] ) ? $atts['text'] : '';
+	if ( empty( $text ) ) {
+		$text = __( 'הרשמו לאתר כדי להגיב, להעלות תמונות של הבישולים שלכם ולהרכיב לעצמם ספר מתכונים אישי עם כל המתכונים שהכי אהבתם.' );
 	}
 
 	$display = foody_get_template_part( get_template_directory() . '/template-parts/register-shortcode.php', [
@@ -20,9 +19,9 @@ function foody_register_shortcode($atts)
 		'text'   => $text
 	] );
 
-    return $display;
+	return $display;
 
 }
 
 
-add_shortcode('foody-register', 'foody_register_shortcode');
+add_shortcode( 'foody-register', 'foody_register_shortcode' );

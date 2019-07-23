@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*!
 * HybridAuth
 * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
@@ -12,39 +12,31 @@
  *
  * This class has been entirely reworked for the new Steam API (http://steamcommunity.com/dev)
  */
-class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
-{
+class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID {
 	var $openidIdentifier = "http://steamcommunity.com/openid";
 
 	/**
-	* finish login step 
-	*/
-	function loginFinish()
-	{
+	 * finish login step
+	 */
+	function loginFinish() {
 		parent::loginFinish();
 
 		$this->user->profile->identifier = str_ireplace( "http://steamcommunity.com/openid/id/", "", $this->user->profile->identifier );
 
-		if( ! $this->user->profile->identifier )
-		{
+		if ( ! $this->user->profile->identifier ) {
 			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid user ID.", 5 );
 		}
 
 		// if api key is provided, we attempt to use steam web api
-		if( isset( Hybrid_Auth::$config['providers']['Steam']['keys']['key'] ) && Hybrid_Auth::$config['providers']['Steam']['keys']['key'] )
-		{
+		if ( isset( Hybrid_Auth::$config['providers']['Steam']['keys']['key'] ) && Hybrid_Auth::$config['providers']['Steam']['keys']['key'] ) {
 			$userProfile = $this->getUserProfileWebAPI( Hybrid_Auth::$config['providers']['Steam']['keys']['key'] );
-		}
-
-		// otherwise we fallback to community data
-		else
-		{
+		} // otherwise we fallback to community data
+		else {
 			$userProfile = $this->getUserProfileLegacyAPI();
 		}
 
 		// fetch user profile
-		foreach( $userProfile as $k => $v )
-		{
+		foreach ( $userProfile as $k => $v ) {
 			$this->user->profile->$k = $v ? $v : $this->user->profile->$k;
 		}
 
@@ -52,8 +44,7 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 		Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.user", $this->user );
 	}
 
-	function getUserProfileWebAPI( $apiKey )
-	{
+	function getUserProfileWebAPI( $apiKey ) {
 		$apiUrl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . $apiKey . '&steamids=' . $this->user->profile->identifier;
 
 		$data = $this->httpRequest( $apiUrl );
@@ -64,17 +55,16 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 
 		$userProfile = array();
 
-		$userProfile['displayName'] = property_exists( $data, 'personaname'   ) ? $data->personaname    : '';
-		$userProfile['firstName'  ] = property_exists( $data, 'realname'      ) ? $data->realname       : '';
-		$userProfile['photoURL'   ] = property_exists( $data, 'avatarfull'    ) ? $data->avatarfull     : '';
-		$userProfile['profileURL' ] = property_exists( $data, 'profileurl'    ) ? $data->profileurl     : '';
-		$userProfile['country'    ] = property_exists( $data, 'loccountrycode') ? $data->loccountrycode : '';
+		$userProfile['displayName'] = property_exists( $data, 'personaname' ) ? $data->personaname : '';
+		$userProfile['firstName']   = property_exists( $data, 'realname' ) ? $data->realname : '';
+		$userProfile['photoURL']    = property_exists( $data, 'avatarfull' ) ? $data->avatarfull : '';
+		$userProfile['profileURL']  = property_exists( $data, 'profileurl' ) ? $data->profileurl : '';
+		$userProfile['country']     = property_exists( $data, 'loccountrycode' ) ? $data->loccountrycode : '';
 
 		return $userProfile;
 	}
 
-	function getUserProfileLegacyAPI()
-	{
+	function getUserProfileLegacyAPI() {
 		$apiUrl = 'http://steamcommunity.com/profiles/' . $this->user->profile->identifier . '/?xml=1';
 
 		$data = $this->httpRequest( $apiUrl );
@@ -82,20 +72,19 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 
 		$userProfile = array();
 
-		$userProfile['displayName' ] = property_exists( $data, 'steamID'     ) ? (string) $data->steamID     : '';
-		$userProfile['firstName'   ] = property_exists( $data, 'realname'    ) ? (string) $data->realname    : '';
-		$userProfile['photoURL'    ] = property_exists( $data, 'avatarFull'  ) ? (string) $data->avatarFull  : '';
-		$userProfile['description' ] = property_exists( $data, 'summary'     ) ? (string) $data->summary     : '';
-		$userProfile['region'      ] = property_exists( $data, 'location'    ) ? (string) $data->location    : '';
-		$userProfile['profileURL'  ] = property_exists( $data, 'customURL'   )
+		$userProfile['displayName'] = property_exists( $data, 'steamID' ) ? (string) $data->steamID : '';
+		$userProfile['firstName']   = property_exists( $data, 'realname' ) ? (string) $data->realname : '';
+		$userProfile['photoURL']    = property_exists( $data, 'avatarFull' ) ? (string) $data->avatarFull : '';
+		$userProfile['description'] = property_exists( $data, 'summary' ) ? (string) $data->summary : '';
+		$userProfile['region']      = property_exists( $data, 'location' ) ? (string) $data->location : '';
+		$userProfile['profileURL']  = property_exists( $data, 'customURL' )
 			? "http://steamcommunity.com/id/{$data->customURL}/"
 			: "http://steamcommunity.com/profiles/{$this->user->profile->identifier}/";
 
 		return $userProfile;
 	}
 
-	function httpRequest( $url )
-	{
+	function httpRequest( $url ) {
 		$ch = curl_init();
 
 		$curl_options = array(
@@ -109,14 +98,14 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 			CURLOPT_TIMEOUT        => 30
 		);
 
-		curl_setopt_array($ch, $curl_options);
+		curl_setopt_array( $ch, $curl_options );
 
-		$data = curl_exec($ch);
+		$data = curl_exec( $ch );
 
 		return array(
 			'response' => $data,
-			'info'     => curl_getinfo($ch),
-			'error'    => curl_error($ch),
+			'info'     => curl_getinfo( $ch ),
+			'error'    => curl_error( $ch ),
 		);
 	}
 }
