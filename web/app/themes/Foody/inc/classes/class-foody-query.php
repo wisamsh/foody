@@ -304,7 +304,7 @@ class Foody_Query {
 
 	public function foody_ingredient( $ingredient_post_id ) {
 
-		function my_posts_where( $where, WP_Query $query ) {
+		function ingredient_posts_where( $where, WP_Query $query ) {
 			if ( $query->get( 'has_wildcard_key' ) ) {
 				$where = str_replace(
 					"meta_key = 'ingredients_ingredients_groups_\$_ingredients_\$_ingredient",
@@ -316,7 +316,7 @@ class Foody_Query {
 			return $where;
 		}
 
-		add_filter( 'posts_where', 'my_posts_where', 10, 2 );
+		add_filter( 'posts_where', 'ingredient_posts_where', 10, 2 );
 
 		$args = [
 			'has_wildcard_key' => true,
@@ -337,7 +337,7 @@ class Foody_Query {
 
 		$posts = $query->get_posts();
 
-		remove_filter( 'posts_where', 'my_posts_where' );
+		remove_filter( 'posts_where', 'ingredient_posts_where' );
 
 		$args = [
 			'post__in' => $posts
@@ -351,11 +351,14 @@ class Foody_Query {
 	}
 
 	public function foody_accessory( $accessory_post_id ) {
-		$meta_query[] = [
-			'key'     => 'accessories_accessories',
-			'compare' => 'LIKE',
-			'value'   => '"' . $accessory_post_id . '"'
+		$meta_query = [
+			[
+				'key'     => 'accessories_accessories',
+				'compare' => 'LIKE',
+				'value'   => '"' . $accessory_post_id . '"'
+			]
 		];
+
 
 		$args = [
 			'meta_query' => $meta_query,
@@ -366,6 +369,7 @@ class Foody_Query {
 	}
 
 	public function foody_technique( $technique_post_id ) {
+		$meta_query   = [];
 		$meta_query[] = [
 			'key'     => 'techniques_techniques',
 			'compare' => 'LIKE',

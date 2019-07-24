@@ -6,14 +6,14 @@ let FoodyContentPaging = require('../common/page-content-paging');
 
 jQuery(document).ready(($) => {
 
-    let accessoryFilter = new FoodySearchFilter({
+    let ingredientFilter = new FoodySearchFilter({
         grid: '#foody-ingredient-feed',
         cols:2,
         page:'body[class~=single-foody_ingredient]',
         context: 'foody_ingredient',
         contextArgs: [
             foodyGlobals.objectID
-        ],
+        ]
     });
 
     new FoodyContentPaging({
@@ -21,7 +21,7 @@ jQuery(document).ready(($) => {
         contextArgs: [
             foodyGlobals.objectID
         ],
-        filter: accessoryFilter,
+        filter: ingredientFilter,
         sort:'#sort-foody-ingredient-feed'
     });
 

@@ -491,7 +491,7 @@ class Foody_QueryBuilder {
 	 */
 	public function build( $wp_args = [], $raw = false ) {
 
-		$args = $this->get_args();
+		$args = $this->get_args( $wp_args );
 
 		$args = $this->resolve_query_conflicts( $args, $wp_args );
 
@@ -506,7 +506,7 @@ class Foody_QueryBuilder {
 		return $query;
 	}
 
-	public function get_args() {
+	public function get_args( $wp_args = [] ) {
 		$args = [
 			'has_wildcard_key' => $this->has_wildcard_key,
 			'post_type'        => [ 'foody_recipe', 'foody_playlist', 'post' ],
@@ -554,6 +554,10 @@ class Foody_QueryBuilder {
 			$args['post__in'] = $this->post__in;
 		}
 
+		if(!empty( $this->meta_query_array)){
+			$args['meta_query'] =  $this->meta_query_array;
+		}
+
 		if ( ! empty( $this->order ) ) {
 			$args['order']   = strtoupper( $this->order );
 			$args['orderby'] = $this->order_by;
@@ -567,7 +571,7 @@ class Foody_QueryBuilder {
 			}
 		}
 
-		return $args;
+		return array_merge( $args, $wp_args );
 	}
 
 
@@ -653,19 +657,18 @@ class Foody_QueryBuilder {
 		}
 	}
 
-    private function resolve_query_conflicts($args, $wp_args)
-    {
-	    $args = array_merge( $wp_args ,$args);
-	    if (isset($args['post_type'])){
-	    	if (is_array($args['post_type'])){
-			    $args['post_type'] = array_unique($args['post_type']);
-		    }
-	    }
-        if (isset($args['author'])) {
-            unset($args['author__in']);
-        } elseif (isset($args['author__in'])) {
-            unset($args['author__not_in']);
-        }
+	private function resolve_query_conflicts( $args, $wp_args ) {
+		$args = array_merge( $wp_args, $args );
+		if ( isset( $args['post_type'] ) ) {
+			if ( is_array( $args['post_type'] ) ) {
+				$args['post_type'] = array_unique( $args['post_type'] );
+			}
+		}
+		if ( isset( $args['author'] ) ) {
+			unset( $args['author__in'] );
+		} elseif ( isset( $args['author__in'] ) ) {
+			unset( $args['author__not_in'] );
+		}
 
 		if ( isset( $args['cat'] ) ) {
 			if ( ! isset( $args['category__and'] ) ) {

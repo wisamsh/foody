@@ -21,7 +21,7 @@ $deploy_date = date('YmdHis');
 $release = 'release_' . $deploy_date;
 $shared_drive = '/home/ubuntu/foody-shared-efs/';
 
-if( $target === 'prod1' || $target === 'prod2' || 'prod3' ){
+if( $target === 'prod1' || $target === 'prod2' || $target === 'prod3' ){
     echo 'Deploy to production';
     $global_uploads_dir = $shared_drive . 'uploads';
 }

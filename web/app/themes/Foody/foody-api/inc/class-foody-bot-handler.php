@@ -9,6 +9,11 @@
 namespace FoodyAPI;
 
 
+use Foody_Ingredient;
+use Foody_Recipe;
+use WP_Query;
+use WP_Term_Query;
+
 class Foody_BotHandler {
 	public static $MAX_RECIPES = 100;
 
@@ -209,8 +214,13 @@ class Foody_BotHandler {
 	private function extractAttributesFromRecipes( array $posts, $params ) {
 		$foody_posts   = array_map( 'Foody_Post::create', $posts );
 		$foody_recipes = array_filter( $foody_posts, function ( $post ) {
-			return $post instanceof \Foody_Recipe;
+			return $post instanceof Foody_Recipe;
 		} );
+
+		/** @var Foody_Recipe $foody_recipe */
+		foreach ( $foody_recipes as $foody_recipe ) {
+			$foody_recipe->init();
+		}
 
 		$attributes = [
 			'tags'        => [],
@@ -220,14 +230,14 @@ class Foody_BotHandler {
 			'limitations' => [],
 		];
 
-		/** @var \Foody_Recipe $foody_recipe */
+		/** @var Foody_Recipe $foody_recipe */
 		foreach ( $foody_recipes as $foody_recipe ) {
 
 			// ingredients
 			$ingredients_titles = [];
 			foreach ( $foody_recipe->ingredients_groups as $ingredients_group ) {
 				$group_ingredients_titles = array_map( function ( $ingredient ) {
-					/** @var \Foody_Ingredient $ingredient */
+					/** @var Foody_Ingredient $ingredient */
 					return $ingredient->getTitle();
 				}, $ingredients_group['ingredients'] );
 
@@ -299,7 +309,7 @@ class Foody_BotHandler {
 			'fields'   => 'ids'
 		];
 
-		$query = new \WP_Term_Query( $args );
+		$query = new WP_Term_Query( $args );
 
 		return $query->get_terms();
 	}
@@ -307,7 +317,7 @@ class Foody_BotHandler {
 
 	/**
 	 * @param $where string
-	 * @param $query \WP_Query
+	 * @param $query WP_Query
 	 *
 	 * @return mixed
 	 */

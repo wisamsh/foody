@@ -212,9 +212,9 @@ class Foody_Ingredient extends Foody_Post {
                          ' . $unit . '
                     </span>';
 
-		$name_el = '<span class="name">
+		$name_el = '<span class="name"><a title="'. esc_attr( sprintf( 'לכל המתכונים עם %s',$title)) .'" class="foody-u-link" href="'.  $this->link.'">
                         ' . $title . '
-                    </span>';
+                    </span></a>';
 
 		if ( $is_unit_after_title ) {
 			$amount_el .= $name_el;
