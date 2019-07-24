@@ -64,10 +64,11 @@ $items = foody_get_array_default( $related_content, 'items', array() );
                     <a class="author-name" href="<?php echo $item['author']['link'] ?>">
 						<?php echo $item['author']['name'] ?>
                     </a>
-
-                    <span class="view-count">
-            <?php echo $item['view_count'] ?>
-        </span>
+					<?php if ( ! empty( get_option( 'foody_show_post_views' ) ) ) : ?>
+                        <span class="view-count">
+                            <?php echo $item['view_count'] ?>
+                        </span>
+					<?php endif; ?>
                 </div>
 
                 <div class="excerpt">

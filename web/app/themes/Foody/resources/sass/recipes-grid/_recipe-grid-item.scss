@@ -137,11 +137,13 @@
         vertical-align: middle;
 
         &:nth-child(2) {
-          &:before {
-            content: "• ";
-            padding: 0 .5rem;
-            font-weight: 900;
-            color: var(--color__primary);
+          &:not(.favorite-container){
+            &:before {
+              content: "• ";
+              padding: 0 .5rem;
+              font-weight: 900;
+              color: var(--color__primary);
+            }
           }
         }
 
