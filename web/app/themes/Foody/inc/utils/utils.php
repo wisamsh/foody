@@ -204,7 +204,7 @@ function foody_print_commercial_rules( $rules ) {
 
 		$sponsored_ingredient_container = '<div class="' . implode( ' ', $sponsored_ingredient_container_classes ) . '">';
 
-		$sponsored_ingredients          = implode( '<span>,</span>', $sponsored_ingredients );
+		$sponsored_ingredients          = implode( '<span class="delimiter">,</span>', $sponsored_ingredients );
 		$sponsored_ingredient_container .= $sponsored_ingredients;
 		$sponsored_ingredient_container .= '</div>';
 	}
