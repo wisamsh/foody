@@ -125,7 +125,7 @@ function foody_print_commercial_rules( $rules ) {
 		} );
 
 		$has_image             = false;
-		$sponsored_ingredients = '';
+		$sponsored_ingredients = [];
 
 		foreach ( $rules as $rule ) {
 
@@ -156,13 +156,13 @@ function foody_print_commercial_rules( $rules ) {
 
 				if ( isset( $sponsor ) ) {
 					// Has grandparent (sponsor - company) -> chosen == product
-					$sponsored_ingredients .= foody_get_commercial_sponsor_data( $chosen_sponsor, $show_product_logo, $show_product );
+					$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $chosen_sponsor, $show_product_logo, $show_product );
 				} else if ( isset( $sponsor_brand ) ) {
 					// Has parent only (sponsor - company) -> chosen == brand
-					$sponsored_ingredients .= foody_get_commercial_sponsor_data( $chosen_sponsor, $show_sponsor_brand_logo, $show_sponsor_brand );
+					$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $chosen_sponsor, $show_sponsor_brand_logo, $show_sponsor_brand );
 				} else {
 					// Has no parents -> chosen == company
-					$sponsored_ingredients .= foody_get_commercial_sponsor_data( $chosen_sponsor, $show_sponsor_logo, $show_sponsor );
+					$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $chosen_sponsor, $show_sponsor_logo, $show_sponsor );
 
 				}
 			}
@@ -171,10 +171,10 @@ function foody_print_commercial_rules( $rules ) {
 				$has_image = $has_image || ( ! empty( get_field( 'logo', $sponsor_brand->taxonomy . '_' . $sponsor_brand->term_id ) ) && $show_sponsor_brand_logo );
 				if ( isset( $sponsor ) ) {
 					// Has parent (sponsor - company) -> brand == brand
-					$sponsored_ingredients .= foody_get_commercial_sponsor_data( $sponsor_brand, $show_sponsor_brand_logo, $show_sponsor_brand );
+					$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $sponsor_brand, $show_sponsor_brand_logo, $show_sponsor_brand );
 				} else {
 					// Has no parents -> brand == company
-					$sponsored_ingredients .= foody_get_commercial_sponsor_data( $sponsor_brand, $show_sponsor_logo, $show_sponsor );
+					$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $sponsor_brand, $show_sponsor_logo, $show_sponsor );
 				}
 
 			}
@@ -195,6 +195,8 @@ function foody_print_commercial_rules( $rules ) {
 		}
 
 		$sponsored_ingredient_container = '<div class="' . implode( ' ', $sponsored_ingredient_container_classes ) . '">';
+
+		$sponsored_ingredients          = implode( '<span>,</span>', $sponsored_ingredients );
 		$sponsored_ingredient_container .= $sponsored_ingredients;
 		$sponsored_ingredient_container .= '</div>';
 	}
