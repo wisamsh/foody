@@ -149,11 +149,19 @@ function foody_print_commercial_rules( $rules ) {
 			$show_sponsor            = get_field( 'show_sponsor', $rule_id );
 			$show_sponsor_logo       = get_field( 'show_sponsor_logo', $rule_id );
 
+			if ( ! $has_image ) {
+				$has_image = (
+					( $show_product_logo && $show_product ) ||
+					( $show_sponsor_brand_logo && $show_sponsor_brand ) ||
+					( $show_sponsor_logo && $show_sponsor )
+				);
+			}
 
 			if ( isset( $chosen_sponsor ) && ! empty( $chosen_sponsor ) ) {
-				// print $chosen_sponsor;
-				$has_image = ( ! empty( get_field( 'logo', $chosen_sponsor->taxonomy . '_' . $chosen_sponsor->term_id ) ) && $show_product_logo );
 
+				$has_image = $has_image || ( ! empty( get_field( 'logo', $chosen_sponsor->taxonomy . '_' . $chosen_sponsor->term_id ) ) && $show_product_logo );
+
+				// print $chosen_sponsor;
 				if ( isset( $sponsor ) ) {
 					// Has grandparent (sponsor - company) -> chosen == product
 					$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $chosen_sponsor, $show_product_logo, $show_product );
