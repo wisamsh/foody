@@ -183,7 +183,7 @@ function foody_print_commercial_rules( $rules ) {
 				$has_image = $has_image || ( ! empty( get_field( 'logo', $sponsor->taxonomy . '_' . $sponsor->term_id ) ) && $show_sponsor_logo );
 
 				// print $sponsor;
-				$sponsored_ingredients .= foody_get_commercial_sponsor_data( $sponsor, $show_sponsor_logo, $show_sponsor );
+				$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $sponsor, $show_sponsor_logo, $show_sponsor );
 			}
 
 
