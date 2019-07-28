@@ -12,6 +12,7 @@ get_header();
 $course = new Foody_Course();
 
 $recommendations = $course->get_recommendations();
+$legal_text      = $course->get_legal_text();
 ?>
 
 
@@ -131,42 +132,44 @@ if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
                 </div>
             </div>
 
-            <div class="how-it-works">
+			<?php if ( $course->has_how_it_works() ): ?>
 
-                <div class="title how-it-works-title">
-					<?php echo $course->get_how_it_works_title(); ?>
-                </div>
-                <div class="how-it-works-bullets">
+                <div class="how-it-works">
 
-					<?php
-					$how_it_works_steps = $course->get_how_it_works();
-					if ( ! empty( $how_it_works_steps ) ) {
-						foreach ( $how_it_works_steps as $index => $step ) {
-							if ( ! empty( $step ) && isset( $step['step_number_text'] ) && ! empty( isset( $step['step_number_text'] ) ) && isset( $step['step_text'] ) && ! empty( $step['step_text'] ) ) {
-								echo '<span class="how-it-works-item">';
-								echo '<span class="how-it-works-step-number">' . $step['step_number_text'] . '</span>';
-								echo '<span class="how-it-works-step">' . $step['step_text'] . '</span>';
-								if ( $index !== count( $how_it_works_steps ) - 1 ) {
-									echo '<hr class="divider"/>';
+                    <div class="title how-it-works-title">
+						<?php echo $course->get_how_it_works_title(); ?>
+                    </div>
+                    <div class="how-it-works-bullets">
+
+						<?php
+						$how_it_works_steps = $course->get_how_it_works();
+						if ( ! empty( $how_it_works_steps ) ) {
+							foreach ( $how_it_works_steps as $index => $step ) {
+								if ( ! empty( $step ) && isset( $step['step_number_text'] ) && ! empty( isset( $step['step_number_text'] ) ) && isset( $step['step_text'] ) && ! empty( $step['step_text'] ) ) {
+									echo '<span class="how-it-works-item">';
+									echo '<span class="how-it-works-step-number">' . $step['step_number_text'] . '</span>';
+									echo '<span class="how-it-works-step">' . $step['step_text'] . '</span>';
+									if ( $index !== count( $how_it_works_steps ) - 1 ) {
+										echo '<hr class="divider"/>';
+									}
+									echo '</span>';
 								}
-								echo '</span>';
 							}
 						}
-					}
-					?>
+						?>
 
-                </div>
+                    </div>
 
-                <div class="how-it-works-image">
-					<?php
-					$image = $course->get_how_it_works_image();
-					if ( ! empty( $image ) ) {
-						echo '<img src="' . $image . '" alt="">';
-					}
-					?>
-                </div>
+                    <div class="how-it-works-image">
+						<?php
+						$image = $course->get_how_it_works_image();
+						if ( ! empty( $image ) ) {
+							echo '<img src="' . $image . '" alt="">';
+						}
+						?>
+                    </div>
 
-                <span class="how-it-works-registration-link">
+                    <span class="how-it-works-registration-link">
                     <?php
                     $link = $course->get_how_it_works_registration_link();
                     if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
@@ -174,7 +177,8 @@ if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
                     }
                     ?>
                 </span>
-            </div>
+                </div>
+			<?php endif; ?>
 
             <div class="course-plan">
 
@@ -248,7 +252,7 @@ if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
             <div class="course-coupon-promotions">
 				<?php
 				$coupon_promotions = $course->get_coupon_promotions();
-				if ( ! empty( $coupon_promotions ) && count($coupon_promotions) == 2 ) {
+				if ( ! empty( $coupon_promotions ) && count( $coupon_promotions ) == 2 ) {
 					foreach ( $coupon_promotions as $coupon_promotion ) {
 						$link  = isset( $coupon_promotion['link'] ) ? $coupon_promotion['link'] : '';
 						$image = $coupon_promotion['image'];
@@ -306,9 +310,12 @@ if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
 
             <div class="divider"></div>
 
-            <div class="legal-text">
-				<?php $course->the_legal_text() ?>
-            </div>
+
+			<?php if ( ! empty( $legal_text ) ) : ?>
+                <div class="legal-text">
+					<?php echo $legal_text; ?>
+                </div>
+			<?php endif; ?>
 
             <div class="legal-registration-link">
 				<?php

@@ -8,7 +8,7 @@ require('./plugins/slick.min');
 window._ = require('underscore/underscore-min');
 window.foodyFormMessage = require('./common/cf7-messages');
 
-if(! window.lottie ){
+if (!window.lottie) {
     window.lottie = require('lottie-web/build/player/lottie.min');
 }
 /*
@@ -35,7 +35,7 @@ jQuery(document).ready(function ($) {
 
     $('.foody-slider').slick();
 
-   let FoodyAnalytics =  require('./common/analytics');
+    let FoodyAnalytics = require('./common/analytics');
     window.analytics = new FoodyAnalytics();
     analytics.view();
 
@@ -75,4 +75,13 @@ jQuery(document).ready(function ($) {
             return hasNumbers && nonEn === false;
         }
     );
+
+    // Force remove desktop class to prevent menu issues
+    setTimeout(() => {
+        if (foodyGlobals.isMobile) {
+            if ($('nav#quadmenu').hasClass('quadmenu-is-horizontal')) {
+                $('nav#quadmenu').removeClass('quadmenu-is-horizontal');
+            }
+        }
+    });
 });
