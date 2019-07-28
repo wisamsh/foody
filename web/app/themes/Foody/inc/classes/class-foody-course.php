@@ -85,6 +85,13 @@ class Foody_Course {
 		return $course_is_for_image;
 	}
 
+	public function has_how_it_works() {
+		return (
+			! empty( $this->get_how_it_works_title() ) &&
+			! empty( $this->get_how_it_works() )
+		);
+	}
+
 	public function get_how_it_works_title() {
 		$how_it_works_title = get_field( 'how_it_works_title' );
 
@@ -151,8 +158,10 @@ class Foody_Course {
 		return $recommendations_steps;
 	}
 
-	public function the_legal_text() {
-		the_field( 'legal' );
+	public function get_legal_text() {
+		$legal_text = get_field( 'legal' );
+
+		return $legal_text;
 	}
 
 	public function get_legal_registration_link() {
