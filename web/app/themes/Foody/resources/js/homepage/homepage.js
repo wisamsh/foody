@@ -19,7 +19,7 @@ jQuery(document).ready(($) => {
         });
     }
 
-    let feedContainer = '.feed-container .content-container';
+    let feedContainer = $('.feed-container .content-container');
     let loader = new FoodyLoader({container:feedContainer});
     loader.attach();
     foodyAjax({action: 'load_homepage_feed',data:{filter:locationUtils.getQuery('filter')}}, (err, data) => {
