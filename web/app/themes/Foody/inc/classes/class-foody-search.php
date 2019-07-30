@@ -571,7 +571,7 @@ class Foody_QueryBuilder {
 			}
 		}
 
-		return array_merge( $args, $wp_args );
+		return array_merge( $wp_args, $args );
 	}
 
 
