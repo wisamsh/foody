@@ -7,6 +7,9 @@
  * Time: 8:35 PM
  */
 class Foody_HomePage {
+
+	private $id;
+
 	/**
 	 * @var $team FoodyTeam
 	 * */
@@ -26,6 +29,7 @@ class Foody_HomePage {
 	 * HomePage constructor.
 	 */
 	public function __construct() {
+		$this->id = get_option( 'page_on_front' );
 	}
 
 	public function init() {
@@ -123,7 +127,7 @@ class Foody_HomePage {
 
 	private function get_featured_posts() {
 
-		$featured = get_field( 'featured_items' );
+		$featured = get_field( 'featured_items', $this->id );
 		$posts    = [];
 		if ( ! empty( $featured ) ) {
 
@@ -165,7 +169,7 @@ class Foody_HomePage {
 	 * in the homepage below featured categories
 	 */
 	public function promoted_items() {
-		$promoted_groups = get_field( 'promoted_groups' );
+		$promoted_groups = get_field( 'promoted_groups', $this->id );
 
 		if ( ! empty( $promoted_groups ) ) {
 			foreach ( $promoted_groups as $promoted_group ) {
