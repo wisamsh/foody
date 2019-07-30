@@ -1,6 +1,6 @@
 const analyticsCategory = 'קורסים';
 
-const VimeoPlayer = require('@vimeo/player');
+// const Vimeo = require('@vimeo/player');
 
 jQuery(document).ready(($) => {
 
@@ -58,41 +58,41 @@ jQuery(document).ready(($) => {
         eventCallback('', analyticsCategory, 'שיתוף', foodyGlobals.post.title);
     });
 
+    // let player = new Vimeo.Player('.cover-video iframe');
+    //
+    // let playerEvents = [
+    //     {
+    //         event: 'play',
+    //         label: 'הפעלה',
+    //     },
+    //     {
+    //         event: 'timeupdate',
+    //         label: 'התקדמות',
+    //     },
+    //     {
+    //         event: 'pause',
+    //         label: 'עצירה',
+    //     }
+    // ];
+    //
+    // let sentEvents = {
+    //     play: {},
+    //     timeupdate: {},
+    //     pause: {}
+    // };
 
-    let player = new VimeoPlayer('.cover-video iframe');
-
-    let playerEvents = [
-        {
-            event: 'play',
-            label: 'הפעלה',
-        },
-        {
-            event: 'timeupdate',
-            label: 'התקדמות',
-        },
-        {
-            event: 'pause',
-            label: 'עצירה',
-        }
-    ];
-
-    let sentEvents = {
-        play: {},
-        timeupdate: {},
-        pause: {}
-    };
-
-    playerEvents.forEach((event) => {
-        player.on(event.event, event, (e) => {
-            let percent = parseFloat(e.data.percent);
-            percent = parseFloat(percent.toFixed(1)) * 100;
-            // send event only if video time
-            if (percent % 10 === 0 && !(sentEvents[e.data.event][String(percent)])) {
-                sentEvents[e.data.event][String(percent)] = true;
-                eventCallback('', analyticsCategory, 'צפייה בווידאו', e.data.label, 'מיקום', percent);
-            }
-        });
-    });
+    // playerEvents.forEach((event) => {
+    //     player.on(event.event, event, (e) => {
+    //         debugger;
+    //         let percent = parseFloat(e.data.percent);
+    //         percent = parseFloat(percent.toFixed(1)) * 100;
+    //         // send event only if video time
+    //         if (percent % 10 === 0 && !(sentEvents[e.data.event][String(percent)])) {
+    //             sentEvents[e.data.event][String(percent)] = true;
+    //             eventCallback('', analyticsCategory, 'צפייה בווידאו', e.data.label, 'מיקום', percent);
+    //         }
+    //     });
+    // });
 });
 
 
