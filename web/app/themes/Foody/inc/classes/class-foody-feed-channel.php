@@ -123,24 +123,24 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
 
 	}
 
-	function get_followers_count()
-	{
-		$query = new WP_User_Query([
-			'meta_query' => [
+	function get_followers_count() {
+		$query = new WP_User_Query( [
+			'meta_query'  => [
 				[
 					[
-						'key' => 'followed_feed_channels',
-						'value' => '"' . $this->getId() . '"',
+						'key'     => 'followed_feed_channels',
+						'value'   => '"' . $this->getId() . '"',
 						'compare' => 'LIKE'
 					]
 				]
 			],
-			'meta_key' => 'followed_feed_channels',
+			'meta_key'    => 'followed_feed_channels',
 			'count_total' => true
-		]);
+		] );
 
 		$total = $query->get_total();
-		return view_count_display($total, 0, null, '%s עוקבים');
+
+		return view_count_display( $total, 0, null, '%s עוקבים' );
 	}
 
 	function get_description() {

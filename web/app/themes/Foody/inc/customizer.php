@@ -52,88 +52,88 @@ function foody_customize_register( $wp_customize ) {
 	) );
 
 
-    // Front page title (used only in WL sites)
-    $wp_customize->add_setting(
-        'foody_front_page_title',
-        array(
-            'capability'        => 'edit_theme_options'
-        )
-    );
+	// Front page title (used only in WL sites)
+	$wp_customize->add_setting(
+		'foody_front_page_title',
+		array(
+			'capability' => 'edit_theme_options'
+		)
+	);
 
-    $wp_customize->add_control( new WP_Customize_Control(
-        $wp_customize,
-        'foody_front_page_title',
-        array(
-            'label'       => __( 'כותרת עמוד ראשי', 'foody' ),
-            'description' => __( 'כותרת עמוד ראשי', 'foody' ),
-            'settings'    => 'foody_front_page_title',
-            'priority'    => 10,
-            'section'     => 'title_tagline',
-            'type'        => 'text'
-        )
-    ) );
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'foody_front_page_title',
+		array(
+			'label'       => __( 'כותרת עמוד ראשי', 'foody' ),
+			'description' => __( 'כותרת עמוד ראשי', 'foody' ),
+			'settings'    => 'foody_front_page_title',
+			'priority'    => 10,
+			'section'     => 'title_tagline',
+			'type'        => 'text'
+		)
+	) );
 
 
-    $wp_customize->add_setting(
-        'foody_logo_mode',
-        array(
-            'capability'        => 'edit_theme_options'
-        )
-    );
+	$wp_customize->add_setting(
+		'foody_logo_mode',
+		array(
+			'capability' => 'edit_theme_options'
+		)
+	);
 
-    $wp_customize->add_control( new WP_Customize_Control(
-        $wp_customize,
-        'foody_logo_mode',
-        array(
-            'label'       => __( 'תחם לוגו לגבולות ההדר', 'foody' ),
-            'description' => __( 'תחם לוגו לגבולות ההדר', 'foody' ),
-            'settings'    => 'foody_logo_mode',
-            'priority'    => 10,
-            'section'     => 'title_tagline',
-            'type'        => 'checkbox'
-        )
-    ) );
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'foody_logo_mode',
+		array(
+			'label'       => __( 'תחם לוגו לגבולות ההדר', 'foody' ),
+			'description' => __( 'תחם לוגו לגבולות ההדר', 'foody' ),
+			'settings'    => 'foody_logo_mode',
+			'priority'    => 10,
+			'section'     => 'title_tagline',
+			'type'        => 'checkbox'
+		)
+	) );
 
-    // show accessibility
-    $wp_customize->add_setting(
-        'foody_show_accessibility',
-        array(
-            'capability'        => 'edit_theme_options'
-        )
-    );
+	// show accessibility
+	$wp_customize->add_setting(
+		'foody_show_accessibility',
+		array(
+			'capability' => 'edit_theme_options'
+		)
+	);
 
-    $wp_customize->add_control( new WP_Customize_Control(
-        $wp_customize,
-        'foody_show_accessibility',
-        array(
-            'label'       => __( 'הצג תפריט נגישות', 'foody' ),
-            'description' => __( 'הצג תפריט נגישות', 'foody' ),
-            'settings'    => 'foody_show_accessibility',
-            'priority'    => 10,
-            'section'     => 'title_tagline',
-            'type'        => 'checkbox'
-        )
-    ) );
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'foody_show_accessibility',
+		array(
+			'label'       => __( 'הצג תפריט נגישות', 'foody' ),
+			'description' => __( 'הצג תפריט נגישות', 'foody' ),
+			'settings'    => 'foody_show_accessibility',
+			'priority'    => 10,
+			'section'     => 'title_tagline',
+			'type'        => 'checkbox'
+		)
+	) );
 
-    $wp_customize->add_setting(
-        'foody_logo_border_radius',
-        array(
-            'capability'        => 'edit_theme_options'
-        )
-    );
+	$wp_customize->add_setting(
+		'foody_logo_border_radius',
+		array(
+			'capability' => 'edit_theme_options'
+		)
+	);
 
-    $wp_customize->add_control( new WP_Customize_Control(
-        $wp_customize,
-        'foody_logo_border_radius',
-        array(
-            'label'       => __( 'עגל גבול לוגו', 'foody' ),
-            'description' => __( 'עגל גבול לוגו', 'foody' ),
-            'settings'    => 'foody_logo_border_radius',
-            'priority'    => 11,
-            'section'     => 'title_tagline',
-            'type'        => 'checkbox'
-        )
-    ) );
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'foody_logo_border_radius',
+		array(
+			'label'       => __( 'עגל גבול לוגו', 'foody' ),
+			'description' => __( 'עגל גבול לוגו', 'foody' ),
+			'settings'    => 'foody_logo_border_radius',
+			'priority'    => 11,
+			'section'     => 'title_tagline',
+			'type'        => 'checkbox'
+		)
+	) );
 
 
 	$wp_customize->add_setting(
@@ -207,26 +207,26 @@ function foody_customize_register( $wp_customize ) {
 	add_social_link_setting( $wp_customize, 'instagram', 'אינסטגרם', 'https://www.instagram.com/foody_israel', 3 );
 	add_social_link_setting( $wp_customize, 'facebook', 'פייסבוק', 'https://www.facebook.com/FoodyIL/', 5 );
 
-    $wp_customize->add_setting(
-        'foody_social_text',
-        array(
-            'default'           => __('עקבו אחרינו','foody'),
-            'capability' => 'edit_theme_options',
-        )
-    );
+	$wp_customize->add_setting(
+		'foody_social_text',
+		array(
+			'default'    => __( 'עקבו אחרינו', 'foody' ),
+			'capability' => 'edit_theme_options',
+		)
+	);
 
-    $wp_customize->add_control( new WP_Customize_Control(
-        $wp_customize,
-        'foody_social_text' ,
-        array(
-            'label'       => __( 'טקסט ליד אייקונים', 'foody' ),
-            'description' => __( '', 'foody' ),
-            'settings'    => 'foody_social_text',
-            'priority'    => 6,
-            'section'     => 'foody_social_links',
-            'type'        => 'text'
-        )
-    ) );
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'foody_social_text',
+		array(
+			'label'       => __( 'טקסט ליד אייקונים', 'foody' ),
+			'description' => __( '', 'foody' ),
+			'settings'    => 'foody_social_text',
+			'priority'    => 6,
+			'section'     => 'foody_social_links',
+			'type'        => 'text'
+		)
+	) );
 
 
 	$wp_customize->add_setting(
@@ -238,7 +238,7 @@ function foody_customize_register( $wp_customize ) {
 
 	$wp_customize->add_control( new WP_Customize_Control(
 		$wp_customize,
-		'show_foody_collaboration_text' ,
+		'show_foody_collaboration_text',
 		array(
 			'label'       => __( 'הצג רכיב בשיתוף עם Foody', 'foody' ),
 			'description' => __( '', 'foody' ),
@@ -258,7 +258,7 @@ function foody_customize_register( $wp_customize ) {
 
 	$wp_customize->add_control( new WP_Customize_Control(
 		$wp_customize,
-		'foody_collaboration_text' ,
+		'foody_collaboration_text',
 		array(
 			'label'       => __( 'טקסט רכיב בשיתוף עם Foody', 'foody' ),
 			'description' => __( '', 'foody' ),
@@ -269,13 +269,13 @@ function foody_customize_register( $wp_customize ) {
 		)
 	) );
 
-    // Add texts section
-    $wp_customize->add_section( 'foody_texts', array(
-        'title'    => __( 'טקסטים', 'foody' ),
-        'priority' => 32,
-    ) );
+	// Add texts section
+	$wp_customize->add_section( 'foody_texts', array(
+		'title'    => __( 'טקסטים', 'foody' ),
+		'priority' => 32,
+	) );
 
-    foody_customize_add_text($wp_customize,'search_placeholder','פלייסהולדר חיפוש',__('חפשו מתכון או כתבה…','foody'),1);
+	foody_customize_add_text( $wp_customize, 'search_placeholder', 'פלייסהולדר חיפוש', __( 'חפשו מתכון או כתבה…', 'foody' ), 1 );
 
 
 	$wp_customize->add_setting(
@@ -287,7 +287,7 @@ function foody_customize_register( $wp_customize ) {
 
 	$wp_customize->add_control( new WP_Customize_Control(
 		$wp_customize,
-		'show_white_label_accessibility' ,
+		'show_white_label_accessibility',
 		array(
 			'label'       => __( 'הצג רכיב נגישות מיוחד', 'foody' ),
 			'description' => __( '', 'foody' ),
@@ -307,7 +307,7 @@ function foody_customize_register( $wp_customize ) {
 
 	$wp_customize->add_control( new WP_Customize_Control(
 		$wp_customize,
-		'white_label_accessibility_script' ,
+		'white_label_accessibility_script',
 		array(
 			'label'       => __( 'סקריפט רכיב נגישות מיוחד', 'foody' ),
 			'description' => __( '', 'foody' ),
@@ -327,7 +327,7 @@ function foody_customize_register( $wp_customize ) {
 
 	$wp_customize->add_control( new WP_Customize_Control(
 		$wp_customize,
-		'white_label_accessibility_class' ,
+		'white_label_accessibility_class',
 		array(
 			'label'       => __( 'מזהה class רכיב נגישות מיוחד', 'foody' ),
 			'description' => __( 'על מנת לפתוח את הרכיב באמצעות לחיצה על כפתור נגישות פודי', 'foody' ),
@@ -452,25 +452,25 @@ function add_social_link_setting( $wp_customize, $id, $label_text, $default_valu
  * @param $default_value
  * @param $weight
  */
-function foody_customize_add_text($wp_customize, $id, $label_text, $default_value, $weight){
-    $wp_customize->add_setting(
-        'foody_text_' . $id,
-        array(
-            'default'           => $default_value,
-            'capability' => 'edit_theme_options',
-        )
-    );
+function foody_customize_add_text( $wp_customize, $id, $label_text, $default_value, $weight ) {
+	$wp_customize->add_setting(
+		'foody_text_' . $id,
+		array(
+			'default'    => $default_value,
+			'capability' => 'edit_theme_options',
+		)
+	);
 
-    $wp_customize->add_control( new WP_Customize_Control(
-        $wp_customize,
-        'foody_text_' . $id,
-        array(
-            'label'       => __( $label_text, 'foody' ),
-            'description' => __( '', 'foody' ),
-            'settings'    =>  'foody_text_' . $id,
-            'priority'    => $weight,
-            'section'     => 'foody_texts',
-            'type'        => 'text'
-        )
-    ) );
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'foody_text_' . $id,
+		array(
+			'label'       => __( $label_text, 'foody' ),
+			'description' => __( '', 'foody' ),
+			'settings'    => 'foody_text_' . $id,
+			'priority'    => $weight,
+			'section'     => 'foody_texts',
+			'type'        => 'text'
+		)
+	) );
 }

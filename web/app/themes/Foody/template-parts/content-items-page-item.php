@@ -15,34 +15,34 @@ $title = $item['title'];
 
 $link = '';
 
-if (!empty($item['link'])) {
-    if (is_array($item['link'])) {
-        $link = $item['link']['url'];
-        $target = foody_get_array_default($item['link'], 'target', '');
-        if (empty($title)) {
-            $title = $item['link']['title'];
-        }
-    }
+if ( ! empty( $item['link'] ) ) {
+	if ( is_array( $item['link'] ) ) {
+		$link   = $item['link']['url'];
+		$target = foody_get_array_default( $item['link'], 'target', '' );
+		if ( empty( $title ) ) {
+			$title = $item['link']['title'];
+		}
+	}
 }
 
 
 ?>
 
 <div class="col-4 col-lg-3 item" data-sort="<?php echo $title ?>" data-order="<?php echo $item['order'] ?>">
-    <a href="<?php echo $link ?>" <?php if (!empty($target)) {
-        echo 'target="' . $target . '"';
-    } ?> >
+    <a href="<?php echo $link ?>" <?php if ( ! empty( $target ) ) {
+		echo 'target="' . $target . '"';
+	} ?> >
 
-        <?php if ($image): ?>
+		<?php if ( $image ): ?>
 
             <div class="image-container">
                 <img src="<?php echo $image['url'] ?>" alt="<?php echo $image['alt'] ?>">
             </div>
 
-        <?php endif; ?>
+		<?php endif; ?>
 
         <h4 class="title">
-            <?php echo $title ?>
+			<?php echo $title ?>
         </h4>
     </a>
 </div>

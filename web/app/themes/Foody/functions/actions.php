@@ -21,7 +21,7 @@ function is_comments_open( $post_id ) {
 	if ( ! foody_is_registration_open() ) {
 		$open = false;
 	} else if ( ( isset( $comments_closed ) && $comments_closed )
-        && ( isset( $comments_closed_days ) && $comments_closed_days == 0 ) ) {
+	            && ( isset( $comments_closed_days ) && $comments_closed_days == 0 ) ) {
 		$open = false;
 	}
 

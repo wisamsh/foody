@@ -85,24 +85,24 @@ class Foody_CommercialRuleMapping {
 function foody_save_commercial_rule_mapping( $rule_id, $rule, $update ) {
 
 	if ( $rule->post_type != 'revision' && $rule->post_status != 'auto-draft' ) {
-		foody_save_commercial_rule_mapping_for_rule($rule_id);
+		foody_save_commercial_rule_mapping_for_rule( $rule_id );
 	}
 }
 
 function foody_save_post_for_commercial_rule_mapping( $post_id, $post, $update ) {
 
 	if ( $post->post_type != 'revision' && $post->post_status != 'auto-draft' ) {
-		$query = new WP_Query(array(
-			'post_type' => 'foody_comm_rule',
-			'posts_per_page' => -1,
-			'post_status' => 'publish'
-		));
+		$query = new WP_Query( array(
+			'post_type'      => 'foody_comm_rule',
+			'posts_per_page' => - 1,
+			'post_status'    => 'publish'
+		) );
 
 
-		while ($query->have_posts()) {
+		while ( $query->have_posts() ) {
 			$query->the_post();
 			$post_id = get_the_ID();
-			foody_save_commercial_rule_mapping_for_rule($post_id);
+			foody_save_commercial_rule_mapping_for_rule( $post_id );
 		}
 
 		wp_reset_query();
@@ -115,7 +115,7 @@ function foody_save_post_for_commercial_rule_mapping( $post_id, $post, $update )
  *
  * @throws Exception
  */
-function foody_save_commercial_rule_mapping_for_rule( $rule_id) {
+function foody_save_commercial_rule_mapping_for_rule( $rule_id ) {
 
 	// Clear old rules
 	Foody_CommercialRuleMapping::removeRules( $rule_id );

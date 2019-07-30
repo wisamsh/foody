@@ -2,6 +2,14 @@
 
 .register, .login {
 
+
+  .login-title{
+    color: var(--color__primary);
+    font-size: 24px;
+    text-align: right;
+    font-weight: 900;
+  }
+
   &.failed {
     .login-failed-alert {
       opacity: 1;

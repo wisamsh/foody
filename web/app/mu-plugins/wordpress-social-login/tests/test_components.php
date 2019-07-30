@@ -6,35 +6,28 @@
 *  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
-class WSL_Test_Components extends WP_UnitTestCase
-{
-	function setUp()
-	{
+class WSL_Test_Components extends WP_UnitTestCase {
+	function setUp() {
 		parent::setUp();
 	}
 
-	function tearDown()
-	{
+	function tearDown() {
 		parent::tearDown();
 	}
 
-	function test_component_core_enabled()
-	{
+	function test_component_core_enabled() {
 		$this->assertTrue( wsl_is_component_enabled( 'core' ) );
 	}
 
-	function test_component_networks_enabled()
-	{
+	function test_component_networks_enabled() {
 		$this->assertTrue( wsl_is_component_enabled( 'networks' ) );
 	}
 
-	function test_component_loginwidget_enabled()
-	{
+	function test_component_loginwidget_enabled() {
 		$this->assertTrue( wsl_is_component_enabled( 'login-widget' ) );
 	}
 
-	function test_component_bouncer_enabled()
-	{
+	function test_component_bouncer_enabled() {
 		$this->assertTrue( wsl_is_component_enabled( 'bouncer' ) );
 	}
 }

@@ -20,7 +20,7 @@ $item = $template_args;
 	?>
 
     <a href="<?php echo $item['link'] ?>">
-        <?php echo $item['name'] ?>
+		<?php echo $item['name'] ?>
     </a>
 
     <button type="button" class="close" aria-label="Close">

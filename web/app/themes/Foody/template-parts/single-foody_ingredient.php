@@ -11,8 +11,8 @@
 $ingredient = $template_args['page'];
 
 foody_get_template_part(
-    get_template_directory() . '/template-parts/content-ingredient-display.php',
-    [
-        'page' => $ingredient
-    ]
+	get_template_directory() . '/template-parts/content-ingredient-display.php',
+	[
+		'page' => $ingredient
+	]
 );

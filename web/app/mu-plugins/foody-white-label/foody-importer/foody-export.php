@@ -14,11 +14,12 @@ define('WXR_VERSION', '1.2');
  * be exported for post types with the `can_export` argument enabled. Any posts with the
  * 'auto-draft' status will be skipped.
  *
- * @since 2.1.0
- *
- *
  * @param $newBlogId int newly create blog to import content into
+ *
  * @throws Exception
+ *@since 2.1.0
+ *
+ *
  */
 function export_import_foody_wp($newBlogId)
 {
@@ -44,17 +45,17 @@ function export_import_foody_wp($newBlogId)
     // Put categories in order with no child going before its parent.
     while ($cat = array_shift($categories)) {
         if ($cat->parent == 0 || isset($cats[$cat->parent]))
-            $cats[$cat->term_id] = $cat;
+            {$cats[$cat->term_id] = $cat;}
         else
-            $categories[] = $cat;
+            {$categories[] = $cat;}
     }
 
     // Put terms in order with no child going before its parent.
     while ($t = array_shift($custom_terms)) {
         if ($t->parent == 0 || isset($terms[$t->parent]))
-            $terms[$t->term_id] = $t;
+            {$terms[$t->term_id] = $t;}
         else
-            $custom_terms[] = $t;
+            {$custom_terms[] = $t;}
     }
 
     unset($categories, $custom_taxonomies, $custom_terms);
@@ -101,6 +102,7 @@ function export_import_foody_wp($newBlogId)
 
 /**
 * Copies all acf field groups from the main site to the new blog
+*
 * @param $destination_blog_url string the new blog url
 */
 function foody_copy_acf($destination_blog_url){
@@ -157,7 +159,9 @@ function foody_copy_acf($destination_blog_url){
 
 /**
  * Creates the wxr xml string for the provided post.
+*
 * @param $post WP_Post
+*
 * @return string wxr representation of $post
 */
 function foody_get_export_post($post){
@@ -207,11 +211,12 @@ function foody_get_export_post($post){
              * Returning a truthy value to the filter will skip the current meta
              * object from being exported.
              *
-             * @since 3.3.0
-             *
              * @param bool $skip Whether to skip the current post meta. Default false.
              * @param string $meta_key Current meta key.
              * @param object $meta Current meta object.
+             *
+             *@since 3.3.0
+             *
              */
             if (apply_filters('foody_export_skip_postmeta', false, $meta->meta_key, $meta)){
                 continue;
@@ -231,10 +236,11 @@ function foody_get_export_post($post){
 /**
  * Wrap given string in XML CDATA tag.
  *
- * @since 2.1.0
- *
  * @param string $str String to wrap in XML CDATA tag.
+ *
  * @return string
+ *@since 2.1.0
+ *
  */
 function foody_cdata($str)
 {
@@ -252,31 +258,32 @@ function foody_cdata($str)
 /**
  * Return the URL of the site
  *
- * @since 2.5.0
- *
  * @return string Site URL.
+ *@since 2.5.0
+ *
  */
 function foody_site_url()
 {
     // Multisite: the base URL.
     if (is_multisite())
-        return network_home_url();
+        {return network_home_url();}
     // WordPress (single site): the blog URL.
     else
-        return get_bloginfo_rss('url');
+        {return get_bloginfo_rss('url');}
 }
 
 /**
  * Output a cat_name XML tag from a given category object
  *
- * @since 2.1.0
- *
  * @param object $category Category Object
+ *
+ *@since 2.1.0
+ *
  */
 function foody_cat_name($category)
 {
     if (empty($category->name))
-        return;
+        {return;}
 
     echo '<wp:cat_name>' . foody_cdata($category->name) . "</wp:cat_name>\n";
 }
@@ -284,14 +291,15 @@ function foody_cat_name($category)
 /**
  * Output a category_description XML tag from a given category object
  *
- * @since 2.1.0
- *
  * @param object $category Category Object
+ *
+ *@since 2.1.0
+ *
  */
 function foody_category_description($category)
 {
     if (empty($category->description))
-        return;
+        {return;}
 
     echo '<wp:category_description>' . foody_cdata($category->description) . "</wp:category_description>\n";
 }
@@ -299,14 +307,15 @@ function foody_category_description($category)
 /**
  * Output a tag_name XML tag from a given tag object
  *
- * @since 2.3.0
- *
  * @param object $tag Tag Object
+ *
+ *@since 2.3.0
+ *
  */
 function foody_tag_name($tag)
 {
     if (empty($tag->name))
-        return;
+        {return;}
 
     echo '<wp:tag_name>' . foody_cdata($tag->name) . "</wp:tag_name>\n";
 }
@@ -314,14 +323,15 @@ function foody_tag_name($tag)
 /**
  * Output a tag_description XML tag from a given tag object
  *
- * @since 2.3.0
- *
  * @param object $tag Tag Object
+ *
+ *@since 2.3.0
+ *
  */
 function foody_tag_description($tag)
 {
     if (empty($tag->description))
-        return;
+        {return;}
 
     echo '<wp:tag_description>' . foody_cdata($tag->description) . "</wp:tag_description>\n";
 }
@@ -329,9 +339,10 @@ function foody_tag_description($tag)
 /**
 * Output list of taxonomy terms, in XML tag format, associated with a post
 *
-* @since 2.3.0
 * @param bool $echo
+*
 * @return string
+*@since 2.3.0
 */
 function foody_post_taxonomy($post,$echo = true)
 {
@@ -361,14 +372,15 @@ function foody_post_taxonomy($post,$echo = true)
 /**
  * Output a term_name XML tag from a given term object
  *
- * @since 2.9.0
- *
  * @param object $term Term Object
+ *
+ *@since 2.9.0
+ *
  */
 function foody_term_name($term)
 {
     if (empty($term) || empty($term->name))
-        return;
+        {return;}
 
     echo '<wp:term_name>' . foody_cdata($term->name) . "</wp:term_name>\n";
 }
@@ -376,14 +388,15 @@ function foody_term_name($term)
 /**
  * Output a term_description XML tag from a given term object
  *
- * @since 2.9.0
- *
  * @param object $term Term Object
+ *
+ *@since 2.9.0
+ *
  */
 function foody_term_description($term)
 {
     if (empty($term->description))
-        return;
+        {return;}
 
     echo "\t\t<wp:term_description>" . foody_cdata($term->description) . "</wp:term_description>\n";
 }
@@ -391,9 +404,10 @@ function foody_term_description($term)
 /**
  * Output term meta XML tags for a given term object.
  *
- * @since 4.6.0
- *
  * @param WP_Term $term Term object.
+ *
+ *@since 4.6.0
+ *
  */
 function foody_term_meta($term)
 {
@@ -413,11 +427,12 @@ function foody_term_meta($term)
          * Returning a truthy value to the filter will skip the current meta
          * object from being exported.
          *
-         * @since 4.6.0
-         *
          * @param bool $skip Whether to skip the current piece of term meta. Default false.
          * @param string $meta_key Current meta key.
          * @param object $meta Current meta object.
+         *
+         *@since 4.6.0
+         *
          */
         if (!apply_filters('foody_export_skip_termmeta', false, $meta->meta_key, $meta)) {
             $meta_key = foody_cdata($meta->meta_key);
@@ -469,6 +484,7 @@ function get_wxr_channel_head()
  * @param $terms
  * @param $post_ids
  * @param $wpdb wpdb
+ *
  * @return string
  */
 function write_foody_wxr($newBlogId, $cats, $tags, $terms, $post_ids, $wpdb)

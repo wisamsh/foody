@@ -9,8 +9,7 @@
 namespace FoodyAPI;
 
 
-class Foody_API
-{
+class Foody_API {
 
 
 }

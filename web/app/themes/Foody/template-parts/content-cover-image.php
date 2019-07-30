@@ -7,21 +7,21 @@
  */
 
 
-if (isset($template_args)) {
-    if (!isset($template_args['image'])) {
-        $image = $template_args;
-    }else{
-        $image = $template_args['image'];
-    }
-	if (isset($template_args['link'])) {
+if ( isset( $template_args ) ) {
+	if ( ! isset( $template_args['image'] ) ) {
+		$image = $template_args;
+	} else {
+		$image = $template_args['image'];
+	}
+	if ( isset( $template_args['link'] ) ) {
 		$link = $template_args['link'];
 	}
 }
 
-if (empty($image)) {
-    $image = get_header_image();
+if ( empty( $image ) ) {
+	$image = get_header_image();
 } else {
-    $image = $image['url'];
+	$image = $image['url'];
 }
 
 if ( empty( $link ) ) {
@@ -33,20 +33,20 @@ if ( ! empty( $link ) ) {
 
 $mobile_image = $image;
 
-if(isset($template_args['mobile_image'])){
-    /** @noinspection PhpUndefinedVariableInspection */
-    $mobile_image = $template_args['mobile_image'];
-    if(!is_string($mobile_image)){
-        $mobile_image = $mobile_image['url'];
-    }
+if ( isset( $template_args['mobile_image'] ) ) {
+	/** @noinspection PhpUndefinedVariableInspection */
+	$mobile_image = $template_args['mobile_image'];
+	if ( ! is_string( $mobile_image ) ) {
+		$mobile_image = $mobile_image['url'];
+	}
 }
 
 ?>
 
 <div class="cover-image">
-    <?php if (isset($a)) {
-        echo $a;
-    } ?>
+	<?php if ( isset( $a ) ) {
+		echo $a;
+	} ?>
 
 
     <picture>
@@ -59,10 +59,10 @@ if(isset($template_args['mobile_image'])){
     </picture>
 
 
-<!--    <img src="--><?php //echo $image ?><!--" alt="">-->
+    <!--    <img src="--><?php //echo $image ?><!--" alt="">-->
 
-    <?php if (isset($a)) {
-        echo '</a>';
-    } ?>
+	<?php if ( isset( $a ) ) {
+		echo '</a>';
+	} ?>
 
 </div>

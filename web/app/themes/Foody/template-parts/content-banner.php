@@ -8,17 +8,17 @@
 
 /** @noinspection PhpUndefinedVariableInspection */
 $image = $template_args['image'];
-$link = foody_get_array_default($template_args, 'link', ['url' => '', 'target' => '']);
+$link  = foody_get_array_default( $template_args, 'link', [ 'url' => '', 'target' => '' ] );
 
 ?>
 <section class="foody-banner">
-    <?php if (!empty($link)): ?>
+	<?php if ( ! empty( $link ) ): ?>
     <a href="<?php echo $link['url'] ?>" target="<?php echo $link['target'] ?>">
-    <?php endif; ?>
+		<?php endif; ?>
 
         <img src="<?php echo $image['url'] ?>" alt="<?php echo $image['alt'] ?>">
 
-    <?php if (!empty($link)): ?>
-        </a>
-    <?php endif; ?>
+		<?php if ( ! empty( $link ) ): ?>
+    </a>
+<?php endif; ?>
 </section>

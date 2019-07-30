@@ -69,30 +69,29 @@ class Foody_Ingredient extends Foody_Post {
 		);
 	}
 
-	public function feed()
-	{
+	public function feed() {
 		$foody_query = Foody_Query::get_instance();
 
-		$args = $foody_query->get_query('foody_ingredient', [$this->id], true);
+		$args = $foody_query->get_query( 'foody_ingredient', [ $this->id ], true );
 
-		$query = new WP_Query($args);
+		$query = new WP_Query( $args );
 
 		$posts = $query->get_posts();
 
-		$posts = array_map('Foody_Post::create', $posts);
+		$posts = array_map( 'Foody_Post::create', $posts );
 
 		$grid_args = [
-			'id' => 'foody-ingredient-feed',
-			'posts' => $posts,
-			'more' => $foody_query->has_more_posts($query),
-			'cols' => 2,
+			'id'     => 'foody-ingredient-feed',
+			'posts'  => $posts,
+			'more'   => $foody_query->has_more_posts( $query ),
+			'cols'   => 2,
 			'header' => [
 				'sort' => true
 			]
 		];
 
 		echo '<div class="container-fluid feed-container ingredient-feed-container">';
-		foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args);
+		foody_get_template_part( get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args );
 		echo '</div>';
 	}
 
@@ -106,8 +105,8 @@ class Foody_Ingredient extends Foody_Post {
 	}
 
 	public function the_sidebar_content( $args = array() ) {
-		dynamic_sidebar('foody-sidebar');
-		dynamic_sidebar('foody-social');
+		dynamic_sidebar( 'foody-sidebar' );
+		dynamic_sidebar( 'foody-social' );
 	}
 
 	public function the_amounts( $echo = true ) {
@@ -152,10 +151,9 @@ class Foody_Ingredient extends Foody_Post {
 
 			if ( $length > 1 ) {
 				$content .= $this->amounts_delimiter;
+			} else {
+				$content .= '<div class="extra-ingredients">';
 			}
-			else{
-                $content .= '<div class="extra-ingredients">';
-            }
 
 			if ( ! empty( $content ) ) {
 				$content .= $ing_html;
@@ -179,10 +177,10 @@ class Foody_Ingredient extends Foody_Post {
 		return $content;
 	}
 
-	public function get_ingredient_html( $amount, $display, $unit, $title, $is_unit_after_title , $length) {
+	public function get_ingredient_html( $amount, $display, $unit, $title, $is_unit_after_title, $length ) {
 
 		if ( ! empty( $this->plural_name ) ) {
-			if ( ceil( $amount ) > 1 || (ceil( $amount ) > 0 && $unit == 'ק"ג') ) {
+			if ( ceil( $amount ) > 1 || ( ceil( $amount ) > 0 && $unit == 'ק"ג' ) ) {
 				$title = $this->plural_name;
 			}
 		}
@@ -214,9 +212,9 @@ class Foody_Ingredient extends Foody_Post {
                          ' . $unit . '
                     </span>';
 
-		$name_el = '<span class="name">
+		$name_el = '<span class="name"><a title="'. esc_attr( sprintf( 'לכל המתכונים עם %s',$title)) .'" class="foody-u-link" href="'.  $this->link.'">
                         ' . $title . '
-                    </span>';
+                    </span></a>';
 
 		if ( $is_unit_after_title ) {
 			$amount_el .= $name_el;
@@ -226,18 +224,18 @@ class Foody_Ingredient extends Foody_Post {
 			$amount_el .= $name_el;
 		}
 
-        if ( $length > 1 ) {
-            $amount_el .= '</span></span>';
-        }
+		if ( $length > 1 ) {
+			$amount_el .= '</span></span>';
+		}
 
-        // Add ingredient comment
-        if ( ! empty( $this->comment ) ) {
-            $amount_el .= '<div class="comment">' . $this->comment . '</div>';
-        }
+		// Add ingredient comment
+		if ( ! empty( $this->comment ) ) {
+			$amount_el .= '<div class="comment">' . $this->comment . '</div>';
+		}
 
-        if ( $length <= 1 ) {
-            $amount_el .= '</span></span>';
-        }
+		if ( $length <= 1 ) {
+			$amount_el .= '</span></span>';
+		}
 
 		return $amount_el;
 	}
@@ -284,7 +282,7 @@ class Foody_Ingredient extends Foody_Post {
 	public function the_details() {
 		echo '<section class="ingredient-details-container">';
 		bootstrap_breadcrumb();
-		the_title('<h1 class="title">', '</h1>');
+		the_title( '<h1 class="title">', '</h1>' );
 		echo '</section>';
 	}
 
@@ -569,13 +567,13 @@ class Foody_Ingredient extends Foody_Post {
 	 *
 	 * @return mixed|null|void
 	 */
-	public function the_sponsored_ingredient($echo = true) {
+	public function the_sponsored_ingredient( $echo = true ) {
 		// Fetch rules for recipe
-		$rules = Foody_CommercialRuleMapping::getByIngredientRecipe( $this->recipe_id, $this->id );
+		$rules                = Foody_CommercialRuleMapping::getByIngredientRecipe( $this->recipe_id, $this->id );
 		$sponsored_ingredient = '';
 
 		if ( ! empty( $rules ) ) {
-			$sponsored_ingredient = foody_print_commercial_rules($rules);
+			$sponsored_ingredient = foody_print_commercial_rules( $rules );
 		}
 
 		if ( $echo ) {

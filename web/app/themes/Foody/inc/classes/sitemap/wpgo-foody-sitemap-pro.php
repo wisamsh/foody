@@ -37,7 +37,7 @@ class WPGO_Foody_Simple_Sitemap_Pro {
 	public function __construct() {
 
 		$this->constants(); // define framework constants
-		$this->bootstrap();	// load plugin classes
+		$this->bootstrap();    // load plugin classes
 
 		$this->load_supported_features();
 
@@ -94,35 +94,40 @@ class WPGO_Foody_Simple_Sitemap_Pro {
 		require_once( plugin_dir_path( __FILE__ ) . 'classes/class-wpgo-walker-page.php' );
 
 		$plugin_options_args = array(
-			'plugin_name' => WPGO_SIMPLE_SITEMAP_PRO_NAME,
-			'options_group' => WPGO_SIMPLE_SITEMAP_PRO_NAME_U . "_plugin_options_group",
-			'menu_slug' => WPGO_SIMPLE_SITEMAP_PRO_NAME_U . "_admin_options_menu",
+			'plugin_name'     => WPGO_SIMPLE_SITEMAP_PRO_NAME,
+			'options_group'   => WPGO_SIMPLE_SITEMAP_PRO_NAME_U . "_plugin_options_group",
+			'menu_slug'       => WPGO_SIMPLE_SITEMAP_PRO_NAME_U . "_admin_options_menu",
 			'options_section' => 'simple_sitemap_pro_default',
-			'options_db_name' => WPGO_SIMPLE_SITEMAP_PRO_OPTIONS_DB_NAME, // use this where possible, i.e. in non-static methods
-			'plugin_root' => __FILE__, // don't edit this
+			'options_db_name' => WPGO_SIMPLE_SITEMAP_PRO_OPTIONS_DB_NAME,
+			// use this where possible, i.e. in non-static methods
+			'plugin_root'     => __FILE__,
+			// don't edit this
 		);
 
 		$update_manager_args = array(
-			'edd_store_url'					=> 'http://www.wpgoplugins.com',
-			'edd_store_url_account_page'	=> 'https://wpgoplugins.com/my-account',
-			'edd_item_name'					=> 'Simple Sitemap Pro', // plugin name
-			'edd_item_id'               	=> '805',
-			'page_title'					=> 'Simple Sitemap Pro Options Page',
-			'menu_title'					=> 'Simple Sitemap Pro',
-			'options_page_title'			=> 'Simple Sitemap Pro Plugin',
-			'license_key_status_expiry'		=> DAY_IN_SECONDS,
-			'plugin_root'   				=> __FILE__, // don't edit this
-			'plugin_name_slug'          	=> WPGO_SIMPLE_SITEMAP_PRO_NAME_H, // plugin name slug label (used mainly in options page)
-			'plugin_dir_path'           	=> plugin_dir_path( __FILE__ ),
-			'options_group'             	=> WPGO_SIMPLE_SITEMAP_PRO_NAME_U . "_plugin_options_group",
-			'menu_slug'                 	=> WPGO_SIMPLE_SITEMAP_PRO_NAME_U . "_admin_options_menu",
-			'plugin_options_path'			=> admin_url() . "options-general.php?page=" . WPGO_SIMPLE_SITEMAP_PRO_NAME_U . "_admin_options_menu",
-			'edd_auto_updates_option'   	=> 'edd_auto_updates_simple_sitemap_pro_option',
-			'options_section'           	=> 'simple_sitemap_pro_default'
+			'edd_store_url'              => 'http://www.wpgoplugins.com',
+			'edd_store_url_account_page' => 'https://wpgoplugins.com/my-account',
+			'edd_item_name'              => 'Simple Sitemap Pro',
+			// plugin name
+			'edd_item_id'                => '805',
+			'page_title'                 => 'Simple Sitemap Pro Options Page',
+			'menu_title'                 => 'Simple Sitemap Pro',
+			'options_page_title'         => 'Simple Sitemap Pro Plugin',
+			'license_key_status_expiry'  => DAY_IN_SECONDS,
+			'plugin_root'                => __FILE__,
+			// don't edit this
+			'plugin_name_slug'           => WPGO_SIMPLE_SITEMAP_PRO_NAME_H,
+			// plugin name slug label (used mainly in options page)
+			'plugin_dir_path'            => plugin_dir_path( __FILE__ ),
+			'options_group'              => WPGO_SIMPLE_SITEMAP_PRO_NAME_U . "_plugin_options_group",
+			'menu_slug'                  => WPGO_SIMPLE_SITEMAP_PRO_NAME_U . "_admin_options_menu",
+			'plugin_options_path'        => admin_url() . "options-general.php?page=" . WPGO_SIMPLE_SITEMAP_PRO_NAME_U . "_admin_options_menu",
+			'edd_auto_updates_option'    => 'edd_auto_updates_simple_sitemap_pro_option',
+			'options_section'            => 'simple_sitemap_pro_default'
 		);
 
 		// Instantiate plugin classes
-		$this->_plugin_options_class        = new WPGO_Simple_Sitemap_Pro_Options($plugin_options_args);
+		$this->_plugin_options_class = new WPGO_Simple_Sitemap_Pro_Options( $plugin_options_args );
 //		$this->_edd_updater_manager_class	= new EDD_Plugin_Updater_Manager($update_manager_args);
 	}
 
@@ -138,30 +143,33 @@ class WPGO_Foody_Simple_Sitemap_Pro {
 
 	public static function get_the_title( $title_text, $permalink, $args, $parent_page = false, $parent_page_link = '1' ) {
 
-		$links = $args['links'];
-		$title_open = $args['title_open'];
+		$links       = $args['links'];
+		$title_open  = $args['title_open'];
 		$title_close = $args['title_close'];
-		$nofollow = $args['nofollow'];
-		if( $nofollow === '1' ) { $nofollow = ' rel="nofollow"'; } else { $nofollow = ''; }
-
-		if( !empty( $title_text ) ) {
-			if ( $links == 'true' && $parent_page === false ) {
-				$title = $title_open . '<a href="' . esc_url($permalink) . '"' . $nofollow . '>' . wp_kses_post($title_text) . '</a>' . $title_close;
-			} elseif ( $links == 'true' && $parent_page && $parent_page_link != '1' ) {
-				$title = $title_open . '<a href="' . esc_url($permalink) . '"' . $nofollow . '>' . wp_kses_post($title_text) . '</a>' . $title_close;
-			}else {
-				$title = $title_open . wp_kses_post($title_text) . $title_close;
-			}
+		$nofollow    = $args['nofollow'];
+		if ( $nofollow === '1' ) {
+			$nofollow = ' rel="nofollow"';
+		} else {
+			$nofollow = '';
 		}
-		else {
+
+		if ( ! empty( $title_text ) ) {
 			if ( $links == 'true' && $parent_page === false ) {
-				$title = $title_open . '<a href="' . esc_url($permalink) . '"' . $nofollow . '>' . '(no title)' . '</a>' . $title_close;
+				$title = $title_open . '<a href="' . esc_url( $permalink ) . '"' . $nofollow . '>' . wp_kses_post( $title_text ) . '</a>' . $title_close;
 			} elseif ( $links == 'true' && $parent_page && $parent_page_link != '1' ) {
-				$title = $title_open . '<a href="' . esc_url($permalink) . '"' . $nofollow . '>' . '(no title)' . '</a>' . $title_close;
+				$title = $title_open . '<a href="' . esc_url( $permalink ) . '"' . $nofollow . '>' . wp_kses_post( $title_text ) . '</a>' . $title_close;
+			} else {
+				$title = $title_open . wp_kses_post( $title_text ) . $title_close;
+			}
+		} else {
+			if ( $links == 'true' && $parent_page === false ) {
+				$title = $title_open . '<a href="' . esc_url( $permalink ) . '"' . $nofollow . '>' . '(no title)' . '</a>' . $title_close;
+			} elseif ( $links == 'true' && $parent_page && $parent_page_link != '1' ) {
+				$title = $title_open . '<a href="' . esc_url( $permalink ) . '"' . $nofollow . '>' . '(no title)' . '</a>' . $title_close;
 			} else {
 				$title = $title_open . '(no title)' . $title_close;
 			}
-        }
+		}
 
 		return $title;
 	}
@@ -169,8 +177,12 @@ class WPGO_Foody_Simple_Sitemap_Pro {
 	// FUNCTIONS IMPORTED AND CUSTOMISED FROM WP CORE TO ADD REL NOFOLLOW TO INTERNAL LINKS
 	public static function wp_rel_nofollow( $text ) {
 		// This is a pre save filter, so text is already escaped.
-		$text = stripslashes($text);
-		$text = preg_replace_callback('|<a (.+?)>|i', array( 'WPGO_Simple_Sitemap_Pro' ,'wp_rel_nofollow_callback'), $text);
+		$text = stripslashes( $text );
+		$text = preg_replace_callback( '|<a (.+?)>|i', array(
+			'WPGO_Simple_Sitemap_Pro',
+			'wp_rel_nofollow_callback'
+		), $text );
+
 		return wp_slash( $text );
 	}
 
@@ -200,6 +212,7 @@ class WPGO_Foody_Simple_Sitemap_Pro {
 			}
 			$text = trim( $html );
 		}
+
 		return "<a $text rel=\"$rel\">";
 	}
 

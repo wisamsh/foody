@@ -12,60 +12,60 @@ $pan         = $template_args['pan'];
 $conversions = $template_args['conversions'];
 $slices      = $template_args['slices'];
 
-$options = array_map(function ($conversion) {
-    if ( ! empty( $conversion ) ) {
-        if ( empty( $conversion['pan'] ) ) {
-            return null;
-        }
+$options = array_map( function ( $conversion ) {
+	if ( ! empty( $conversion ) ) {
+		if ( empty( $conversion['pan'] ) ) {
+			return null;
+		}
 
-        $pan = get_term($conversion['pan'], 'pans');
+		$pan = get_term( $conversion['pan'], 'pans' );
 
-        if (!empty($pan) && !is_wp_error($pan)) {
-            if (is_multisite() && !is_main_site()) {
-                switch_to_blog(1);
-                $pan = get_term($conversion['pan'], 'pans');
-                restore_current_blog();
-            }
-        }
+		if ( ! empty( $pan ) && ! is_wp_error( $pan ) ) {
+			if ( is_multisite() && ! is_main_site() ) {
+				switch_to_blog( 1 );
+				$pan = get_term( $conversion['pan'], 'pans' );
+				restore_current_blog();
+			}
+		}
 
-        if (!empty($pan) && !is_wp_error($pan)) {
-            return [
-                'value' => $conversion['conversion_rate'],
-                'label' => $pan->name,
-                'data' => [
-                    'slices' => get_field('slices', $conversion['pan'])
-                ]
-            ];
-        }
+		if ( ! empty( $pan ) && ! is_wp_error( $pan ) ) {
+			return [
+				'value' => $conversion['conversion_rate'],
+				'label' => $pan->name,
+				'data'  => [
+					'slices' => get_field( 'slices', $conversion['pan'] )
+				]
+			];
+		}
 
-    }
+	}
 
-}, $conversions);
+}, $conversions );
 
-$options = array_filter($options,function ($conv){
-    return !empty($conv);
-});
+$options = array_filter( $options, function ( $conv ) {
+	return ! empty( $conv );
+} );
 
-array_unshift($options, [
-    'value' => 1,
-    'label' => $pan->name,
-    'selected' => true,
-    'data' => [
-        'original' => true,
-        'slices' => $slices
-    ]
-]);
+array_unshift( $options, [
+	'value'    => 1,
+	'label'    => $pan->name,
+	'selected' => true,
+	'data'     => [
+		'original' => true,
+		'slices'   => $slices
+	]
+] );
 
 $select_args = [
-    'id' => 'pan-conversions',
-    'placeholder' => '',
-    'options' => $options,
-    'data' => [
-        'original' => true
-    ]
+	'id'          => 'pan-conversions',
+	'placeholder' => '',
+	'options'     => $options,
+	'data'        => [
+		'original' => true
+	]
 ];
 
-foody_get_template_part(get_template_directory() . '/template-parts/common/foody-select.php', $select_args)
+foody_get_template_part( get_template_directory() . '/template-parts/common/foody-select.php', $select_args )
 
 
 ?>

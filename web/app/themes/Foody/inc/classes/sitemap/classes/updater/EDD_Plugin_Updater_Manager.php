@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin updater manager class.
  *
@@ -15,7 +16,7 @@ class EDD_Plugin_Updater_Manager {
 	/**
 	 * Plugin updater manager class constructor.
 	 */
-	public function __construct($args) {
+	public function __construct( $args ) {
 
 		$this->_plugin_args = $args;
 		$this->_plugin_slug = $this->_plugin_args['plugin_name_slug'];
@@ -23,7 +24,10 @@ class EDD_Plugin_Updater_Manager {
 		add_action( 'admin_init', array( &$this, 'instantiate_updater_class' ), 0 );
 		add_action( 'admin_init', array( &$this, 'register_plugin_option' ) );
 		add_action( 'admin_init', array( $this, 'license_action' ) );
-		add_action( 'update_option_' . $this->_plugin_slug . '_license_key', array( $this, 'activate_license' ), 10, 2 );
+		add_action( 'update_option_' . $this->_plugin_slug . '_license_key', array(
+			$this,
+			'activate_license'
+		), 10, 2 );
 		add_action( 'admin_notices', array( $this, 'display_expired_admin_notice' ) );
 		register_activation_hook( $this->_plugin_args['plugin_root'], array( $this, 'after_plugin_activated' ) );
 	}
@@ -31,26 +35,32 @@ class EDD_Plugin_Updater_Manager {
 	// Show admin notice to renew license if expired.
 	public function display_expired_admin_notice() {
 		$admin_page = get_current_screen()->base;
-		$status = get_option( $this->_plugin_slug . '_license_key_status', '0' );
-		$res = strpos( $admin_page, $this->_plugin_args['menu_slug'] );
+		$status     = get_option( $this->_plugin_slug . '_license_key_status', '0' );
+		$res        = strpos( $admin_page, $this->_plugin_args['menu_slug'] );
 
 		//$response = $this->get_api_response( 'check_license' );
 		//$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
-		if( $res ) {
+		if ( $res ) {
 			// echo "status: " . $status . '<br>';
 			// echo $admin_page . '<br>';
 			// echo $this->_plugin_args['menu_slug'] . '<br>';
 			// echo "res: " . $res . '<br>';
 
-			if( $status === 'expired') :
-			?>
-			<div style="display: grid;grid-template-columns:1fr 100px;align-items:center;justify-content:center;" class="error settings-error notice">
-				<div style="margin-right: 10px;"><p><strong>License Key Expired</strong> - You currently don't have access to plugin updates. To help keep your site secure, and be able to use new features, we <b>highly recommend</b> keeping your plugin up to date.</p></div>
-				<div>
-					<a style="text-align:center;display:block;margin:0 auto !important;" title="Open your wpgoplugins.com account to renew license (new window)" class="renew button-secondary" href="<?php echo esc_url( $this->get_renewal_link() ); ?>" target="_blank"><?php _e( 'Renew Now' ); ?></a>
-				</div>
-			</div>
+			if ( $status === 'expired' ) :
+				?>
+                <div style="display: grid;grid-template-columns:1fr 100px;align-items:center;justify-content:center;"
+                     class="error settings-error notice">
+                    <div style="margin-right: 10px;"><p><strong>License Key Expired</strong> - You currently don't have
+                            access to plugin updates. To help keep your site secure, and be able to use new features, we
+                            <b>highly recommend</b> keeping your plugin up to date.</p></div>
+                    <div>
+                        <a style="text-align:center;display:block;margin:0 auto !important;"
+                           title="Open your wpgoplugins.com account to renew license (new window)"
+                           class="renew button-secondary" href="<?php echo esc_url( $this->get_renewal_link() ); ?>"
+                           target="_blank"><?php _e( 'Renew Now' ); ?></a>
+                    </div>
+                </div>
 			<?php
 			endif;
 		}
@@ -68,18 +78,19 @@ class EDD_Plugin_Updater_Manager {
 		//}
 
 		/* Load EDD Plugin updater class. */
-		if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) )
+		if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
 			require_once( $this->_plugin_args['plugin_dir_path'] . 'classes/updater/EDD_SL_Plugin_Updater.php' );
+		}
 
 		$plugin_data = get_plugin_data( $this->_plugin_args['plugin_root'] );
 
 		// setup the updater
 		$this->_plugin_updater_class = new EDD_SL_Plugin_Updater( $this->_plugin_args['edd_store_url'], $this->_plugin_args['plugin_root'], array(
-			'version'        => $plugin_data['Version'], // the current Plugin version we are running
-			'license'        => $this->get_license_key(),
-			'item_name'      => $this->_plugin_args['edd_item_name'],
-			'item_id'        => $this->_plugin_args['edd_item_id'],
-			'author'         => "David Gwyer"
+			'version'   => $plugin_data['Version'], // the current Plugin version we are running
+			'license'   => $this->get_license_key(),
+			'item_name' => $this->_plugin_args['edd_item_name'],
+			'item_id'   => $this->_plugin_args['edd_item_id'],
+			'author'    => "David Gwyer"
 		) );
 	}
 
@@ -121,10 +132,10 @@ class EDD_Plugin_Updater_Manager {
 	public function render_license_key_field() {
 
 		$license_key = $this->get_license_key();
-		$renew_link = '<a title="Open your wpgoplugins.com account to renew license (new window)" class="renew button-secondary" href="' . esc_url( $this->get_renewal_link() ) . '" target="_blank">' . __( 'Renew' ) . '</a>';
+		$renew_link  = '<a title="Open your wpgoplugins.com account to renew license (new window)" class="renew button-secondary" href="' . esc_url( $this->get_renewal_link() ) . '" target="_blank">' . __( 'Renew' ) . '</a>';
 
 		// Checks license status to display under license key - allows '0', '00' etc.
-		if ( $license_key != '0' && !$license_key ) {
+		if ( $license_key != '0' && ! $license_key ) {
 			$message = sprintf(
 				__( 'Don\'t have your license key to hand? Retrieve it now via your wpgoplugins.com %1$saccount page%2$s.' ),
 				'<a href="' . esc_url( $this->_plugin_args['edd_store_url_account_page'] ) . '" target="_blank">',
@@ -140,10 +151,10 @@ class EDD_Plugin_Updater_Manager {
 		$status = get_option( $this->_plugin_slug . '_license_key_status', '0' );
 		//echo "status: [" . $status . "]"; // only uncomment for testing
 
-		if($status == 'valid') {
+		if ( $status == 'valid' ) {
 			$key_col = 'green';
 		} else {
-			if ( $license_key != '0' && !$license_key ) {
+			if ( $license_key != '0' && ! $license_key ) {
 				$key_col = 'inherit';
 			} else {
 				$key_col = 'red';
@@ -151,30 +162,56 @@ class EDD_Plugin_Updater_Manager {
 		}
 		?>
 
-		<style>
-		.license-key{color: <?php echo $key_col; ?>;width: 18px;height: 18px;font-size: 18px;position:absolute;margin: 6px 0 0 5px;vertical-align:text-top;}
-		.license-key-input{color: <?php echo $key_col; ?> !important;padding-left:25px;}
-		.renew { margin-right: 5px !important; text-decoration: none !important; }
-		.refresh:hover span { color: #555; }
-		.refresh { position: absolute;margin: 7px 0 0 -32px; }
-		</style>
-		<span class="left license-key dashicons dashicons-admin-network"></span><input class="license-key-input regular-text" id="<?php echo $this->_plugin_slug; ?>_license_key" name="<?php echo $this->_plugin_slug; ?>_license_key" type="text" placeholder="Enter license key..." value="<?php echo esc_attr( $license_key ); ?>" />
+        <style>
+            .license-key {
+                color: <?php echo $key_col; ?>;
+                width: 18px;
+                height: 18px;
+                font-size: 18px;
+                position: absolute;
+                margin: 6px 0 0 5px;
+                vertical-align: text-top;
+            }
+
+            .license-key-input {
+                color: <?php echo $key_col; ?> !important;
+                padding-left: 25px;
+            }
+
+            .renew {
+                margin-right: 5px !important;
+                text-decoration: none !important;
+            }
+
+            .refresh:hover span {
+                color: #555;
+            }
+
+            .refresh {
+                position: absolute;
+                margin: 7px 0 0 -32px;
+            }
+        </style>
+        <span class="left license-key dashicons dashicons-admin-network"></span><input
+                class="license-key-input regular-text" id="<?php echo $this->_plugin_slug; ?>_license_key"
+                name="<?php echo $this->_plugin_slug; ?>_license_key" type="text" placeholder="Enter license key..."
+                value="<?php echo esc_attr( $license_key ); ?>"/>
 		<?php
-			if( !empty($license_key) ) :
-				echo '<button style="color:#bbb;border:0;background:transparent;outline:none;" class="refresh" onclick="this.form.submit();" title="Refresh license key status" name="' . $this->_plugin_slug . '_license_refresh"><span style="width:14px;height:14px;font-size:14px;" class="dashicons dashicons-image-rotate"></span></button>';
-				wp_nonce_field( $this->_plugin_slug . '_nonce', $this->_plugin_slug . '_nonce' );
-				if( 'valid' == $status ) {
-					echo '<span><input type="submit" class="button-secondary" name="' . $this->_plugin_slug . '_license_deactivate" value="' . esc_attr__( 'Deactivate' ) . '"/></span>';
-				} else {
-					if( 'expired' == $status ) {
-						echo '<span>' . $renew_link . '</span>';
-					}
-					echo '<span><input type="submit" class="button-secondary" name="' . $this->_plugin_slug . '_license_activate" value="' . esc_attr__( 'Activate' ) . '"/></span>';
+		if ( ! empty( $license_key ) ) :
+			echo '<button style="color:#bbb;border:0;background:transparent;outline:none;" class="refresh" onclick="this.form.submit();" title="Refresh license key status" name="' . $this->_plugin_slug . '_license_refresh"><span style="width:14px;height:14px;font-size:14px;" class="dashicons dashicons-image-rotate"></span></button>';
+			wp_nonce_field( $this->_plugin_slug . '_nonce', $this->_plugin_slug . '_nonce' );
+			if ( 'valid' == $status ) {
+				echo '<span><input type="submit" class="button-secondary" name="' . $this->_plugin_slug . '_license_deactivate" value="' . esc_attr__( 'Deactivate' ) . '"/></span>';
+			} else {
+				if ( 'expired' == $status ) {
+					echo '<span>' . $renew_link . '</span>';
 				}
-			endif;
+				echo '<span><input type="submit" class="button-secondary" name="' . $this->_plugin_slug . '_license_activate" value="' . esc_attr__( 'Activate' ) . '"/></span>';
+			}
+		endif;
 		?>
-		<p class="description"><?php echo $message; ?></p>
-	<?php
+        <p class="description"><?php echo $message; ?></p>
+		<?php
 	}
 
 	/**
@@ -185,18 +222,18 @@ class EDD_Plugin_Updater_Manager {
 		if ( isset( $_POST[ $this->_plugin_slug . '_license_activate' ] ) ) {
 			if ( check_admin_referer( $this->_plugin_slug . '_nonce', $this->_plugin_slug . '_nonce' ) ) {
 				$response = $this->get_api_response( 'activate_license' );
-				set_transient( $this->_plugin_slug . '_license_message', $this->get_license_message($response, 'activate'), DAY_IN_SECONDS );
+				set_transient( $this->_plugin_slug . '_license_message', $this->get_license_message( $response, 'activate' ), DAY_IN_SECONDS );
 			}
 		}
 
-		if ( isset( $_POST[$this->_plugin_slug . '_license_deactivate'] ) ) {
+		if ( isset( $_POST[ $this->_plugin_slug . '_license_deactivate' ] ) ) {
 			if ( check_admin_referer( $this->_plugin_slug . '_nonce', $this->_plugin_slug . '_nonce' ) ) {
 				$response = $this->get_api_response( 'deactivate_license' );
-				set_transient( $this->_plugin_slug . '_license_message', $this->get_license_message($response, 'deactivate'), DAY_IN_SECONDS );
+				set_transient( $this->_plugin_slug . '_license_message', $this->get_license_message( $response, 'deactivate' ), DAY_IN_SECONDS );
 			}
 		}
 
-		if ( isset( $_POST[$this->_plugin_slug . '_license_refresh'] ) ) {
+		if ( isset( $_POST[ $this->_plugin_slug . '_license_refresh' ] ) ) {
 			if ( check_admin_referer( $this->_plugin_slug . '_nonce', $this->_plugin_slug . '_nonce' ) ) {
 				$this->check_license();
 			}
@@ -206,13 +243,13 @@ class EDD_Plugin_Updater_Manager {
 	public function check_license() {
 
 		$response = $this->get_api_response( 'check_license' );
-		set_transient( $this->_plugin_slug . '_license_message', $this->get_license_message($response, 'check'), DAY_IN_SECONDS );
+		set_transient( $this->_plugin_slug . '_license_message', $this->get_license_message( $response, 'check' ), DAY_IN_SECONDS );
 	}
 
 	/**
 	 * Updates the license status message.
 	 */
-	public function get_license_message($response, $action) {
+	public function get_license_message( $response, $action ) {
 
 		// make sure the response came back okay
 		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
@@ -232,8 +269,8 @@ class EDD_Plugin_Updater_Manager {
 			// print_r($license_data);
 			// echo "</pre>";
 
-			$expires = date_i18n( 'F jS, Y', strtotime( $license_data->expires, current_time( 'timestamp' ) ) );
-			$site_count = $license_data->site_count;
+			$expires       = date_i18n( 'F jS, Y', strtotime( $license_data->expires, current_time( 'timestamp' ) ) );
+			$site_count    = $license_data->site_count;
 			$license_limit = $license_data->license_limit;
 
 			// If unlimited
@@ -243,7 +280,7 @@ class EDD_Plugin_Updater_Manager {
 
 			if ( false === $license_data->success ) {
 
-				switch( $license_data->error ) {
+				switch ( $license_data->error ) {
 					case 'expired' :
 						$message = sprintf( __( 'Your license key expired on %s.' ), '<b>' . $expires . '</b>' );
 						update_option( $this->_plugin_slug . '_license_key_status', 'expired' );
@@ -282,22 +319,22 @@ class EDD_Plugin_Updater_Manager {
 				}
 			} else {
 
-				switch( $license_data->license ) {
+				switch ( $license_data->license ) {
 					case 'expired' :
 						$message = sprintf( __( 'Your license key expired on %s.' ), '<b>' . $expires . '</b>' );
 						update_option( $this->_plugin_slug . '_license_key_status', 'expired' );
 						break;
 					case 'valid' :
 						$status = 'valid';
-						if($action == 'check') {
-							if( false === $license_data->client_site_active ) {
-								$status = 'deactivated';
+						if ( $action == 'check' ) {
+							if ( false === $license_data->client_site_active ) {
+								$status  = 'deactivated';
 								$message = sprintf( __( 'License key not active for %1$s - plugin updates currently unavailable.' ), '<b>' . $license_data->client_url . '</b>' );
 							} else {
 								$message = sprintf( __( 'License key active. Expires %1$s, %2$s/%3$s sites activated.' ), '<b>' . $expires . '</b>', $site_count, $license_limit );
 							}
 						}
-						if($action == 'activate') {
+						if ( $action == 'activate' ) {
 							$message = __( 'License key activated. Thanks for your continued support - you\'re amazing!' );
 						}
 						update_option( $this->_plugin_slug . '_license_key_status', $status );
@@ -316,7 +353,7 @@ class EDD_Plugin_Updater_Manager {
 						update_option( $this->_plugin_slug . '_license_key_status', 'missing' );
 						break;
 					case 'inactive' :
-						if($action == 'check') {
+						if ( $action == 'check' ) {
 							$message = sprintf( __( 'Inactive license. This site (%1$s) hasn\'t been activated for the license key above.' ), '<b>' . $license_data->client_url . '</b>' );
 						} else {
 							$message = __( 'Inactive license. This site hasn\'t been activated for the license key above.' );
@@ -342,6 +379,7 @@ class EDD_Plugin_Updater_Manager {
 						break;
 				}
 			}
+
 			return $message;
 		}
 	}
@@ -349,7 +387,7 @@ class EDD_Plugin_Updater_Manager {
 	/**
 	 * Makes a call to the API.
 	 */
-	public function get_api_response($edd_action) {
+	public function get_api_response( $edd_action ) {
 
 		// Retrieve license key from the database.
 		$license = $this->get_license_key();
@@ -366,9 +404,10 @@ class EDD_Plugin_Updater_Manager {
 		$response = wp_remote_post(
 			$this->_plugin_args['edd_store_url'],
 			array(
-				'timeout' => 15,
+				'timeout'   => 15,
 				'sslverify' => false,
-				'body' => $api_params )
+				'body'      => $api_params
+			)
 		);
 
 		return $response;
@@ -384,6 +423,7 @@ class EDD_Plugin_Updater_Manager {
 		if ( '' != $this->_plugin_args['edd_item_id'] && $license_key ) {
 			$url = esc_url( $this->_plugin_args['edd_store_url'] );
 			$url .= '/checkout/?edd_license_key=' . $license_key . '&download_id=' . $this->_plugin_args['edd_item_id'];
+
 			return $url;
 		}
 
@@ -393,7 +433,9 @@ class EDD_Plugin_Updater_Manager {
 
 	/**
 	 * Sanitizes the license key.
+	 *
 	 * @param string $new License key that was submitted.
+	 *
 	 * @return string $new Sanitized license key.
 	 */
 	public function sanitize_license( $new ) {
@@ -407,7 +449,7 @@ class EDD_Plugin_Updater_Manager {
 		}
 
 		// sanitize license key
-		return wp_filter_nohtml_kses($new);
+		return wp_filter_nohtml_kses( $new );
 	}
 
 	/**

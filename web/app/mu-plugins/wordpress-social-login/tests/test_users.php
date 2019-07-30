@@ -6,16 +6,14 @@
 *  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
-class WSL_Test_Users extends WP_UnitTestCase
-{
-	protected $someUserID      = null;
-	protected $someUserLogin   = 'wslusertest';
-	protected $someUserMail    = 'wp-user@domain.ltd';
-	protected $someUserIDP     = 'Google';
+class WSL_Test_Users extends WP_UnitTestCase {
+	protected $someUserID = null;
+	protected $someUserLogin = 'wslusertest';
+	protected $someUserMail = 'wp-user@domain.ltd';
+	protected $someUserIDP = 'Google';
 	protected $someUserProfile = null;
 
-	function setUp()
-	{
+	function setUp() {
 		parent::setUp();
 
 		$this->someUserID = wp_create_user( $this->someUserLogin, wp_generate_password(), $this->someUserMail );
@@ -34,33 +32,30 @@ class WSL_Test_Users extends WP_UnitTestCase
 		$this->someUserProfile->emailVerified = 'email-verified@domain.ltd';
 	}
 
-	function tearDown()
-	{
+	function tearDown() {
 		parent::tearDown();
 	}
 
 	/*
 	* make sure we can found a wordpress user by email
 	*/
-	function test_wsl_wp_email_exists()
-	{
+	function test_wsl_wp_email_exists() {
 		$this->assertEquals( $this->someUserID, wsl_wp_email_exists( $this->someUserMail ) );
 	}
 
 	/*
 	* make sure users social profiles setter and getters works correctly
 	*/
-	function test_store_user_social_profile()
-	{
+	function test_store_user_social_profile() {
 		$insert_id = wsl_store_hybridauth_user_profile( $this->someUserID, $this->someUserIDP, $this->someUserProfile );
 
 		$profile = (array) wsl_get_stored_hybridauth_user_profiles_by_user_id( $this->someUserID );
-		$this->assertEquals( 1                                     , count( $profile ) );
-		$this->assertEquals( $this->someUserID                     , $profile[0]->user_id );
-		$this->assertEquals( $this->someUserIDP                    , $profile[0]->provider );
-		$this->assertEquals( $this->someUserProfile->identifier    , $profile[0]->identifier );
-		$this->assertEquals( $this->someUserProfile->email         , $profile[0]->email );
-		$this->assertEquals( $this->someUserProfile->emailVerified , $profile[0]->emailverified );
+		$this->assertEquals( 1, count( $profile ) );
+		$this->assertEquals( $this->someUserID, $profile[0]->user_id );
+		$this->assertEquals( $this->someUserIDP, $profile[0]->provider );
+		$this->assertEquals( $this->someUserProfile->identifier, $profile[0]->identifier );
+		$this->assertEquals( $this->someUserProfile->email, $profile[0]->email );
+		$this->assertEquals( $this->someUserProfile->emailVerified, $profile[0]->emailverified );
 
 		$profile = (array) wsl_get_stored_hybridauth_user_id_by_email_verified( $this->someUserProfile->emailVerified );
 		$this->assertEquals( 1, count( $profile ) );
@@ -81,8 +76,7 @@ class WSL_Test_Users extends WP_UnitTestCase
 	/*
 	* make sure users social profiles are deleted when the associated wordpress user is deleted
 	*/
-	function test_delete_user_social_profile()
-	{
+	function test_delete_user_social_profile() {
 		$insert_id = wsl_store_hybridauth_user_profile( $this->someUserID, $this->someUserIDP, $this->someUserProfile );
 
 		$profile = (array) wsl_get_stored_hybridauth_user_profiles_by_user_id( $this->someUserID );

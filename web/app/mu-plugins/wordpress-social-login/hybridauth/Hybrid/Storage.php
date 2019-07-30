@@ -1,22 +1,20 @@
 <?php
 /**
-* HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2014, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
-*/
+ * HybridAuth
+ * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
+ * (c) 2009-2014, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+ */
 
 /**
  * HybridAuth storage manager
  */
-class Hybrid_Storage
-{
+class Hybrid_Storage {
 	/**
 	 * Constructor
 	 */
-	function __construct()
-	{ 
-		if ( ! session_id() ){
-			if( ! session_start() ){
+	function __construct() {
+		if ( ! session_id() ) {
+			if ( ! session_start() ) {
 				throw new Exception( "Hybridauth requires the use of 'session_start()' at the start of your script, which appears to be disabled.", 1 );
 			}
 		}
@@ -26,112 +24,109 @@ class Hybrid_Storage
 
 	/**
 	 * Config
+	 *
 	 * @param String $key
 	 * @param String $value
 	 */
-	public function config($key, $value = null) 
-	{
-		$key = strtolower( $key );  
+	public function config( $key, $value = null ) {
+		$key = strtolower( $key );
 
-		if( $value ){
-			$_SESSION["HA::CONFIG"][$key] = serialize( $value ); 
-		}
-		elseif( isset( $_SESSION["HA::CONFIG"][$key] ) ){ 
-			return unserialize( $_SESSION["HA::CONFIG"][$key] );
+		if ( $value ) {
+			$_SESSION["HA::CONFIG"][ $key ] = serialize( $value );
+		} elseif ( isset( $_SESSION["HA::CONFIG"][ $key ] ) ) {
+			return unserialize( $_SESSION["HA::CONFIG"][ $key ] );
 		}
 
-		return NULL; 
+		return null;
 	}
 
 	/**
 	 * Get a key
+	 *
 	 * @param String $key
 	 */
-	public function get($key) 
-	{
-		$key = strtolower( $key );  
+	public function get( $key ) {
+		$key = strtolower( $key );
 
-		if( isset( $_SESSION["HA::STORE"], $_SESSION["HA::STORE"][$key] ) ){ 
-			return unserialize( $_SESSION["HA::STORE"][$key] );  
+		if ( isset( $_SESSION["HA::STORE"], $_SESSION["HA::STORE"][ $key ] ) ) {
+			return unserialize( $_SESSION["HA::STORE"][ $key ] );
 		}
 
-		return NULL; 
+		return null;
 	}
-	
+
 	/**
 	 * GEt a set of key and value
+	 *
 	 * @param String $key
 	 * @param String $value
 	 */
-	public function set( $key, $value )
-	{
+	public function set( $key, $value ) {
 		$key = strtolower( $key );
 
-		$_SESSION["HA::STORE"][$key] = serialize( $value );
+		$_SESSION["HA::STORE"][ $key ] = serialize( $value );
 	}
-	
+
 	/**
 	 * Clear session storage
 	 */
-	function clear()
-	{ 
-		$_SESSION["HA::STORE"] = ARRAY(); 
+	function clear() {
+		$_SESSION["HA::STORE"] = ARRAY();
 	}
-	
+
 	/**
 	 * Delete a specific key
+	 *
 	 * @param String $key
 	 */
-	function delete($key)
-	{
-		$key = strtolower( $key );  
+	function delete( $key ) {
+		$key = strtolower( $key );
 
-		if( isset( $_SESSION["HA::STORE"], $_SESSION["HA::STORE"][$key] ) ){
-		    $f = $_SESSION['HA::STORE'];
-		    unset($f[$key]);
-		    $_SESSION["HA::STORE"] = $f;
-		} 
+		if ( isset( $_SESSION["HA::STORE"], $_SESSION["HA::STORE"][ $key ] ) ) {
+			$f = $_SESSION['HA::STORE'];
+			unset( $f[ $key ] );
+			$_SESSION["HA::STORE"] = $f;
+		}
 	}
-	
+
 	/**
 	 * Delete a set
+	 *
 	 * @param String $key
 	 */
-	function deleteMatch($key)
-	{
-		$key = strtolower( $key ); 
+	function deleteMatch( $key ) {
+		$key = strtolower( $key );
 
-		if( isset( $_SESSION["HA::STORE"] ) && count( $_SESSION["HA::STORE"] ) ) {
-		    $f = $_SESSION['HA::STORE'];
-		    foreach( $f as $k => $v ){ 
-				if( strstr( $k, $key ) ){
-					unset( $f[ $k ] ); 
+		if ( isset( $_SESSION["HA::STORE"] ) && count( $_SESSION["HA::STORE"] ) ) {
+			$f = $_SESSION['HA::STORE'];
+			foreach ( $f as $k => $v ) {
+				if ( strstr( $k, $key ) ) {
+					unset( $f[ $k ] );
 				}
 			}
 			$_SESSION["HA::STORE"] = $f;
-			
+
 		}
 	}
-	
+
 	/**
 	 * Get the storage session data into an array
 	 * @return Array
 	 */
-	function getSessionData()
-	{
-		if( isset( $_SESSION["HA::STORE"] ) ){ 
-			return serialize( $_SESSION["HA::STORE"] ); 
+	function getSessionData() {
+		if ( isset( $_SESSION["HA::STORE"] ) ) {
+			return serialize( $_SESSION["HA::STORE"] );
 		}
 
-		return NULL; 
+		return null;
 	}
-	
+
 	/**
 	 * Restore the storage back into session from an array
+	 *
 	 * @param Array $sessiondata
 	 */
-	function restoreSessionData( $sessiondata = NULL )
-	{ 
+	function restoreSessionData( $sessiondata = null ) {
 		$_SESSION["HA::STORE"] = unserialize( $sessiondata );
-	} 
+	}
 }

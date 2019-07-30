@@ -7,14 +7,13 @@
  */
 
 
-add_action('wpmu_new_blog', 'foody_set_permalink_structure', 10);
-function foody_set_permalink_structure($blog_id)
-{
-    switch_to_blog($blog_id);
-    global $wp_rewrite;
-    $wp_rewrite->set_permalink_structure('/%postname%/');
-    $wp_rewrite->flush_rules();
-    restore_current_blog();
+add_action( 'wpmu_new_blog', 'foody_set_permalink_structure', 10 );
+function foody_set_permalink_structure( $blog_id ) {
+	switch_to_blog( $blog_id );
+	global $wp_rewrite;
+	$wp_rewrite->set_permalink_structure( '/%postname%/' );
+	$wp_rewrite->flush_rules();
+	restore_current_blog();
 }
 
 function foody_is_registration_open() {

@@ -19,7 +19,7 @@ $topic = $template_args['topic'];
     <div class="row">
         <div class="image-container">
 
-            <img src="<?php echo $topic->topic_image() ?>" alt="<?php echo $topic->topic_title()?>">
+            <img src="<?php echo $topic->topic_image() ?>" alt="<?php echo $topic->topic_title() ?>">
 
         </div>
 

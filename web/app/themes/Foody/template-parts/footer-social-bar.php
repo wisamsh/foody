@@ -15,7 +15,7 @@ $youtube_link   = isset( $template_args['youtube_link'] ) ? $template_args['yout
 
 <section class="social-icons">
     <div class="follow-us">
-	    <?php echo get_theme_mod('foody_social_text',__('עקבו אחרינו', 'foody')) ?>
+		<?php echo get_theme_mod( 'foody_social_text', __( 'עקבו אחרינו', 'foody' ) ) ?>
     </div>
     <div class="icons">
 		<?php if ( $show_facebook ): ?>

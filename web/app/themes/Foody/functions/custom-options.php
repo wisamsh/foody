@@ -6,18 +6,19 @@
  * Time: 11:51 AM
  */
 
-register_setting('discussion', 'hid_per_page');
-register_setting('discussion', 'whatsapp_phone_number_toggle');
-register_setting('discussion', 'whatsapp_phone_number');
-register_setting('general', 'foody_404_text');
+register_setting( 'discussion', 'hid_per_page' );
+register_setting( 'discussion', 'whatsapp_phone_number_toggle' );
+register_setting( 'discussion', 'whatsapp_phone_number' );
+register_setting( 'general', 'foody_404_text' );
 register_setting( 'general', 'foody_show_ingredients_conversion' );
-register_setting('general', 'foody_conversion_table_link_show');
-register_setting('general', 'foody_conversion_table_link');
-register_setting('general', 'foody_conversion_table_link_target');
-register_setting('general', 'foody_conversion_table_link_text');
-register_setting('general', 'foody_google_tag_manager_id');
-register_setting('general', 'foody_show_google_adx');
-register_setting('general', 'foody_google_adx_script');
+register_setting( 'general', 'foody_conversion_table_link_show' );
+register_setting( 'general', 'foody_conversion_table_link' );
+register_setting( 'general', 'foody_conversion_table_link_target' );
+register_setting( 'general', 'foody_conversion_table_link_text' );
+register_setting( 'general', 'foody_google_tag_manager_id' );
+register_setting( 'general', 'foody_show_google_adx' );
+register_setting( 'general', 'foody_google_adx_script' );
+register_setting( 'reading', 'foody_show_post_views' );
 
 $page_name_search_options   = __( 'הגדרות חיפוש - פודי', 'foody' );
 $page_name_purchase_buttons = __( 'כפתורי רכישה', 'foody' );
@@ -97,10 +98,10 @@ if ( function_exists( 'acf_add_options_page' ) ) {
 
 
 /**
- * Validates arguments for @see acf_add_options_page()
- *
- * @param $args array specific arguments to a page
+ * Validates arguments for @param $args array specific arguments to a page
  * @return bool true if required arguments are set
+ * @see acf_add_options_page()
+ *
  */
 function validate_args( $args ) {
 	$valid = false;
@@ -168,12 +169,15 @@ function foody_custom_options() {
 	// Should show Ingredients
 	add_settings_field( 'foody_show_ingredients_conversion', __( 'הצגת טבלת ערכים תזונתיים', 'foody' ), 'foody_show_ingredients_callback', 'general', 'foody_general_settings' );
 
-    // Google tag manager id
-    add_settings_field('foody_google_tag_manager_id', __('מזהה Google Tag Manager', 'foody'), 'foody_show_tag_manager_callback', 'general', 'foody_general_settings');
+	// Google tag manager id
+	add_settings_field( 'foody_google_tag_manager_id', __( 'מזהה Google Tag Manager', 'foody' ), 'foody_show_tag_manager_callback', 'general', 'foody_general_settings' );
 
 	// Show Google AdX feature
-    add_settings_field('foody_show_google_adx', __('הצג רכיב Google AdX', 'foody'), 'foody_show_google_adx_callback', 'general', 'foody_general_settings');
-    add_settings_field('foody_google_adx_script', __('סקריפט רכיב Google AdX', 'foody'), 'foody_google_adx_script_callback', 'general', 'foody_general_settings');
+	add_settings_field( 'foody_show_google_adx', __( 'הצג רכיב Google AdX', 'foody' ), 'foody_show_google_adx_callback', 'general', 'foody_general_settings' );
+	add_settings_field( 'foody_google_adx_script', __( 'סקריפט רכיב Google AdX', 'foody' ), 'foody_google_adx_script_callback', 'general', 'foody_general_settings' );
+
+	// Toggle post views visibility
+	add_settings_field( 'foody_show_post_views', __( 'הצג כמות צפיות', 'foody' ), 'foody_show_post_views_callback', 'reading' );
 
 }
 
@@ -222,10 +226,9 @@ function foody_show_ingredients_callback() {
 }
 
 
-function foody_show_tag_manager_callback()
-{
-    $options = get_option('foody_google_tag_manager_id', false);
-    echo '<input value="' . $options . '"type="text" id="foody_google_tag_manager_id" name="foody_google_tag_manager_id">';
+function foody_show_tag_manager_callback() {
+	$options = get_option( 'foody_google_tag_manager_id', false );
+	echo '<input value="' . $options . '"type="text" id="foody_google_tag_manager_id" name="foody_google_tag_manager_id">';
 }
 
 // Show Google AdX feature
@@ -238,6 +241,12 @@ function foody_show_google_adx_callback() {
 function foody_google_adx_script_callback() {
 	$content = get_option( 'foody_google_adx_script', '' );
 	echo '<textarea id="foody_google_adx_script" name="foody_google_adx_script" rows="5" cols="50">' . $content . '</textarea>';
+}
+
+function foody_show_post_views_callback() {
+	$options = get_option( 'foody_show_post_views', true );
+	$checked = $options ? 'checked' : '';
+	echo '<input ' . $checked . ' type="checkbox" id="foody_show_post_views" name="foody_show_post_views">';
 }
 
 //add_filter('manage_edit-units_columns', 'add_units_columns');

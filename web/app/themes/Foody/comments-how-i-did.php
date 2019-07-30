@@ -58,7 +58,7 @@ if ( is_null( $show_upload ) ) {
 			?>
         </h3><!-- .comments-title -->
 
-	    <?php if ( $show_upload ): ?>
+		<?php if ( $show_upload ): ?>
             <div class="add-image">
                 <form id="image-upload-hidden">
                     <label for="attachment">
@@ -72,7 +72,7 @@ if ( is_null( $show_upload ) ) {
                     <input name="post_id" type="hidden" value="<?php echo get_the_ID() ?>">
                 </form>
             </div>
-	    <?php endif; ?>
+		<?php endif; ?>
     </div>
 
 	<?php foody_get_template_part(

@@ -11,8 +11,8 @@
 $technique = $template_args['page'];
 
 foody_get_template_part(
-    get_template_directory() . '/template-parts/content-technique-display.php',
-    [
-        'page' => $technique
-    ]
+	get_template_directory() . '/template-parts/content-technique-display.php',
+	[
+		'page' => $technique
+	]
 );

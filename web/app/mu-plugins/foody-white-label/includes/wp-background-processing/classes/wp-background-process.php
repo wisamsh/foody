@@ -110,7 +110,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 		 * Update queue
 		 *
 		 * @param string $key Key.
-		 * @param array  $data Data.
+		 * @param array $data Data.
 		 *
 		 * @return $this
 		 */
@@ -367,7 +367,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 				$memory_limit = '128M';
 			}
 
-			if ( ! $memory_limit || -1 === intval( $memory_limit ) ) {
+			if ( ! $memory_limit || - 1 === intval( $memory_limit ) ) {
 				// Unlimited, set to 32GB.
 				$memory_limit = '32000M';
 			}
@@ -409,7 +409,9 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 		 * Schedule cron healthcheck
 		 *
 		 * @access public
+		 *
 		 * @param mixed $schedules Schedules.
+		 *
 		 * @return mixed
 		 */
 		public function schedule_cron_healthcheck( $schedules ) {

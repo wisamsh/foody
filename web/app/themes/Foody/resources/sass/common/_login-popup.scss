@@ -1,8 +1,11 @@
 #login-modal{
 
 
-  h2{
+  .login-title {
     color: var(--color__primary);
+    font-size: 2rem;
+    text-align: right;
+    font-weight: 500;
   }
 
   p{

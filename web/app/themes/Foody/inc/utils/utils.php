@@ -46,7 +46,8 @@ function view_count_display( $number, $precision = 0, $divisors = null, $label =
 }
 
 function foody_print_commercial_rules( $rules ) {
-	$sponsored_ingredient = '';
+
+	$sponsored_ingredient_container = '';
 
 	if ( ! empty( $rules ) ) {
 
@@ -123,6 +124,8 @@ function foody_print_commercial_rules( $rules ) {
 			return $rule['rule_id'] == key( $orders );
 		} );
 
+		$has_image             = false;
+		$sponsored_ingredients = [];
 
 		foreach ( $rules as $rule ) {
 
@@ -146,53 +149,77 @@ function foody_print_commercial_rules( $rules ) {
 			$show_sponsor            = get_field( 'show_sponsor', $rule_id );
 			$show_sponsor_logo       = get_field( 'show_sponsor_logo', $rule_id );
 
-			$sponsored_ingredient = '<div class="sponsors-container">';
+			if ( ! $has_image ) {
+				$has_image = (
+					( $show_product_logo && $show_product ) ||
+					( $show_sponsor_brand_logo && $show_sponsor_brand ) ||
+					( $show_sponsor_logo && $show_sponsor )
+				);
+			}
 
 			if ( isset( $chosen_sponsor ) && ! empty( $chosen_sponsor ) ) {
-				// print $chosen_sponsor;
 
+				$has_image = $has_image || ( ! empty( get_field( 'logo', $chosen_sponsor->taxonomy . '_' . $chosen_sponsor->term_id ) ) && $show_product_logo );
+
+				// print $chosen_sponsor;
 				if ( isset( $sponsor ) ) {
 					// Has grandparent (sponsor - company) -> chosen == product
-					$sponsored_ingredient = foody_get_commercial_sponsor_data( $sponsored_ingredient, $chosen_sponsor, $show_product_logo, $show_product );
+					$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $chosen_sponsor, $show_product_logo, $show_product );
 				} else if ( isset( $sponsor_brand ) ) {
 					// Has parent only (sponsor - company) -> chosen == brand
-					$sponsored_ingredient = foody_get_commercial_sponsor_data( $sponsored_ingredient, $chosen_sponsor, $show_sponsor_brand_logo, $show_sponsor_brand );
+					$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $chosen_sponsor, $show_sponsor_brand_logo, $show_sponsor_brand );
 				} else {
 					// Has no parents -> chosen == company
-					$sponsored_ingredient = foody_get_commercial_sponsor_data( $sponsored_ingredient, $chosen_sponsor, $show_sponsor_logo, $show_sponsor );
+					$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $chosen_sponsor, $show_sponsor_logo, $show_sponsor );
+
 				}
 			}
 			if ( isset( $sponsor_brand ) && ! empty( $sponsor_brand ) ) {
 				// print $sponsor_brand;
-
+				$has_image = $has_image || ( ! empty( get_field( 'logo', $sponsor_brand->taxonomy . '_' . $sponsor_brand->term_id ) ) && $show_sponsor_brand_logo );
 				if ( isset( $sponsor ) ) {
 					// Has parent (sponsor - company) -> brand == brand
-					$sponsored_ingredient = foody_get_commercial_sponsor_data( $sponsored_ingredient, $sponsor_brand, $show_sponsor_brand_logo, $show_sponsor_brand );
+					$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $sponsor_brand, $show_sponsor_brand_logo, $show_sponsor_brand );
 				} else {
 					// Has no parents -> brand == company
-					$sponsored_ingredient = foody_get_commercial_sponsor_data( $sponsored_ingredient, $sponsor_brand, $show_sponsor_logo, $show_sponsor );
+					$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $sponsor_brand, $show_sponsor_logo, $show_sponsor );
 				}
 
 			}
 			if ( isset( $sponsor ) && ! empty( $sponsor ) ) {
+
+				$has_image = $has_image || ( ! empty( get_field( 'logo', $sponsor->taxonomy . '_' . $sponsor->term_id ) ) && $show_sponsor_logo );
+
 				// print $sponsor;
-				$sponsored_ingredient = foody_get_commercial_sponsor_data( $sponsored_ingredient, $sponsor, $show_sponsor_logo, $show_sponsor );
+				$sponsored_ingredients[] = foody_get_commercial_sponsor_data( $sponsor, $show_sponsor_logo, $show_sponsor );
 			}
 
-			$sponsored_ingredient .= '</div>';
+
 		}
+
+		$sponsored_ingredient_container_classes = [ 'sponsors-container' ];
+		if ( ! $has_image ) {
+			$sponsored_ingredient_container_classes[] = 'sponsors-without-image';
+		}
+
+		$sponsored_ingredient_container = '<div class="' . implode( ' ', $sponsored_ingredient_container_classes ) . '">';
+
+		$sponsored_ingredients          = implode( '<span class="delimiter">,</span>', $sponsored_ingredients );
+		$sponsored_ingredient_container .= $sponsored_ingredients;
+		$sponsored_ingredient_container .= '</div>';
 	}
 
-	return $sponsored_ingredient;
+	return $sponsored_ingredient_container;
 }
 
 
-function foody_get_commercial_sponsor_data( $content, $sponsor, $show_logo = true, $show_text = true ) {
+function foody_get_commercial_sponsor_data( $sponsor, $show_logo, $show_text ) {
 	if ( ! empty( $sponsor ) && ( $show_logo || $show_text ) ) {
 		$image = get_field( 'logo', $sponsor->taxonomy . '_' . $sponsor->term_id );
 		$link  = get_field( 'link', $sponsor->taxonomy . '_' . $sponsor->term_id );
 		$text  = $sponsor->name;
 
+		$content = '';
 		$content .= '<span class="sponsored-by">';
 		if ( ! empty( $link ) ) {
 			$target = '';

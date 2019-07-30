@@ -6,25 +6,20 @@
 *  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
-class WSL_Test_URL extends WP_UnitTestCase
-{
-	function setUp()
-	{
+class WSL_Test_URL extends WP_UnitTestCase {
+	function setUp() {
 		parent::setUp();
 	}
 
-	function tearDown()
-	{
+	function tearDown() {
 		parent::tearDown();
 	}
 
-	function test_wsl_is_https_on()
-	{
+	function test_wsl_is_https_on() {
 		$this->assertTrue( true ); // @fixme
 	}
 
-	function test_wsl_get_current_url()
-	{
+	function test_wsl_get_current_url() {
 		$this->assertTrue( true ); // @fixme
 	}
 }

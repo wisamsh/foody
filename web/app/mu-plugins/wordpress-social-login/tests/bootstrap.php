@@ -14,10 +14,9 @@ $_SERVER['HTTP_HOST'] = 'localhost';
 
 define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH', dirname( __FILE__ ) . '/../' );
 
-$_tests_dir = getenv('WP_TESTS_DIR');
+$_tests_dir = getenv( 'WP_TESTS_DIR' );
 
-if ( ! $_tests_dir )
-{
+if ( ! $_tests_dir ) {
 	$_tests_dir = '/tmp/wordpress-tests-lib';
 }
 
@@ -28,8 +27,7 @@ echo "WSL:WORDPRESS_SOCIAL_LOGIN_ABS_PATH=" . realpath( WORDPRESS_SOCIAL_LOGIN_A
 
 require_once $_tests_dir . '/includes/functions.php';
 
-function _manually_load_plugin()
-{
+function _manually_load_plugin() {
 	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'wp-social-login.php';
 }
 

@@ -54,7 +54,6 @@ class Foody_Mailer {
 	}
 
 
-
 	public static function sendEmailTemplate( $subject, $template, $to, $is_html = true ) {
 		$headers = [];
 		if ( $is_html ) {

@@ -17,14 +17,14 @@ $search = $template_args['search'];
 
     <div class="row gutter-3">
 
-        <?php
+		<?php
 
-        if (have_posts()) {
-            $search->the_results();
-        } else {
-            $search->no_results();
-        }
-        ?>
+		if ( have_posts() ) {
+			$search->the_results();
+		} else {
+			$search->no_results();
+		}
+		?>
 
     </div>
 

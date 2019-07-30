@@ -79,4 +79,5 @@ function run_foody_fut() {
 	$plugin->run();
 
 }
+
 run_foody_fut();

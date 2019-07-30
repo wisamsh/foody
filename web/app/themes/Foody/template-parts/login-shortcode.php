@@ -6,17 +6,17 @@
  * Time: 2:35 PM
  */
 $login_status = '';
-$text = isset($template_args) && isset($template_args['text']) ? $template_args['text'] : '';
+$text         = isset( $template_args ) && isset( $template_args['text'] ) ? $template_args['text'] : '';
 
-$email = isset($_GET['l']) ? $_GET['l'] : '';
-if (isset($_GET['login'])) {
-    $login_status = $_GET['login'];
+$email = isset( $_GET['l'] ) ? $_GET['l'] : '';
+if ( isset( $_GET['login'] ) ) {
+	$login_status = $_GET['login'];
 }
 
-$foody_lost_password = isset($_REQUEST['checkemail']) && $_REQUEST['checkemail'] == 'confirm' && false;
+$foody_lost_password = isset( $_REQUEST['checkemail'] ) && $_REQUEST['checkemail'] == 'confirm' && false;
 ?>
 
-<h2>התחברות</h2>
+<div class="login-title">התחברות</div>
 <p>
 	<?php echo $text ?>
 </p>
@@ -25,11 +25,11 @@ $foody_lost_password = isset($_REQUEST['checkemail']) && $_REQUEST['checkemail']
     משתמשים חדשים?
 </span>
 
-    <a class="go-to-register" href="<?php echo get_permalink(get_page_by_path('הרשמה')) ?>">הירשמו</a>
+    <a class="go-to-register" href="<?php echo get_permalink( get_page_by_path( 'הרשמה' ) ) ?>">הירשמו</a>
 
 </p>
 <?php
-echo do_shortcode('[wordpress_social_login]');
+echo do_shortcode( '[wordpress_social_login]' );
 ?>
 <section class="login <?php echo $login_status ?>">
 
@@ -41,13 +41,13 @@ echo do_shortcode('[wordpress_social_login]');
 
                 <button class="btn btn-google col-12 col-sm-5" aria-label="google">
                     <span>
-                        <?php echo __('התחברו דרך גוגל', 'foody') ?>
+                        <?php echo __( 'התחברו דרך גוגל', 'foody' ) ?>
                     </span>
                     <i class="icon-Shape1"></i>
                 </button>
                 <button class="btn btn-facebook col-12 col-sm-5" aria-label="facebook">
                     <span>
-                        <?php echo __('התחברו דרך פייסבוק', 'foody') ?>
+                        <?php echo __( 'התחברו דרך פייסבוק', 'foody' ) ?>
                     </span>
                     <i class="icon-Facebook"></i>
                 </button>
@@ -59,40 +59,40 @@ echo do_shortcode('[wordpress_social_login]');
                 <div class="divider col-5"></div>
                 <div class="col-2 or">
                                 <span>
-                                    <?php echo __('או', 'foody') ?>
+                                    <?php echo __( 'או', 'foody' ) ?>
                                 </span>
                 </div>
                 <div class="divider col-5"></div>
 
             </div>
 
-            <form id="login-form" action="<?php echo wp_login_url(home_url()); ?>" class="row" method="post">
+            <form id="login-form" action="<?php echo wp_login_url( home_url() ); ?>" class="row" method="post">
 
                 <div role="alert" class="alert foody-alert alert-dismissible alert-danger login-failed-alert">
-                    <span><?php echo __('התחברות נכשלה. אנא ודא/י את כתובת המייל והסיסמא', 'foody'); ?></span>
+                    <span><?php echo __( 'התחברות נכשלה. אנא ודא/י את כתובת המייל והסיסמא', 'foody' ); ?></span>
                     <a class="close" data-dismiss="alert">
                         ×
                     </a>
                 </div>
 
-                <?php if ($foody_lost_password): ?>
+				<?php if ( $foody_lost_password ): ?>
                     <div role="alert" class="alert foody-alert alert-dismissible alert-success login-change-passsword">
-                        <span><?php echo __('לינק איפוס סיסמא נשלח לכתובת שהוזנה', 'foody'); ?></span>
+                        <span><?php echo __( 'לינק איפוס סיסמא נשלח לכתובת שהוזנה', 'foody' ); ?></span>
                         <a class="close" data-dismiss="alert">
                             ×
                         </a>
                     </div>
-                <?php endif; ?>
+				<?php endif; ?>
 
                 <div class="form-group col-12 required-input">
                     <label for="email">
-                        <?php echo __('כתובת מייל', 'foody') ?>
+						<?php echo __( 'כתובת מייל', 'foody' ) ?>
                     </label>
                     <input type="text" id="email" name="log" value="<?php echo $email ?>">
                 </div>
                 <div class="form-group col-12 required-input">
                     <label for="password">
-                        <?php echo __('סיסמא', 'foody') ?>
+						<?php echo __( 'סיסמא', 'foody' ) ?>
                     </label>
                     <input type="password" id="password" aria-describedby="password-help" name="pwd">
                 </div>
@@ -101,28 +101,28 @@ echo do_shortcode('[wordpress_social_login]');
                 <div class="md-checkbox col-6">
                     <input id="stay-connected" type="checkbox" checked name="forever">
                     <label for="stay-connected">
-                        <?php echo __('הישאר מחובר') ?>
+						<?php echo __( 'הישאר מחובר' ) ?>
                     </label>
                 </div>
 
                 <div class="form-group col-6">
                     <a class="forgot-password" href="<?php echo wp_lostpassword_url() ?>">
-                        <?php echo __('שכחת סיסמא?', 'foody') ?>
+						<?php echo __( 'שכחת סיסמא?', 'foody' ) ?>
                     </a>
                 </div>
 
                 <div class="form-group form-submit col-12">
                     <button type="submit" class="btn btn-primary" aria-label="המשך">
-                        <?php echo __('המשך') ?>
+						<?php echo __( 'המשך' ) ?>
                     </button>
                 </div>
 
-                <?php
-                $redirect_to = get_permalink();
-                if (strpos($redirect_to, 'התחברות') !== false) {
-                    $redirect_to = home_url();
-                }
-                ?>
+				<?php
+				$redirect_to = get_permalink();
+				if ( strpos( $redirect_to, 'התחברות' ) !== false ) {
+					$redirect_to = home_url();
+				}
+				?>
 
                 <input type="hidden" name="redirect_to" value="<?php echo $redirect_to; ?>">
 
