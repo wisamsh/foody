@@ -219,6 +219,22 @@
       }
     }
 
+    .feeling-images {
+      text-align: center;
+      margin: $margin-boxes 0 3rem;
+
+      .title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .feeling-image {
+        margin-top: 2rem;
+      }
+    ;
+    }
+
     .course-plan {
       text-align: center;
       margin: $margin-boxes 0;
