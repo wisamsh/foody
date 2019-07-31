@@ -19,6 +19,7 @@ register_setting( 'general', 'foody_google_tag_manager_id' );
 register_setting( 'general', 'foody_show_google_adx' );
 register_setting( 'general', 'foody_google_adx_script' );
 register_setting( 'reading', 'foody_show_post_views' );
+register_setting( 'reading', 'foody_show_followers_count_views' );
 
 $page_name_search_options   = __( 'הגדרות חיפוש - פודי', 'foody' );
 $page_name_purchase_buttons = __( 'כפתורי רכישה', 'foody' );
@@ -179,6 +180,9 @@ function foody_custom_options() {
 	// Toggle post views visibility
 	add_settings_field( 'foody_show_post_views', __( 'הצג כמות צפיות', 'foody' ), 'foody_show_post_views_callback', 'reading' );
 
+	// Toggle channel & authors followers visibility
+	add_settings_field( 'foody_show_followers_count_views', __( 'הצג כמות עוקבים', 'foody' ), 'foody_show_followers_count_callback', 'reading' );
+
 }
 
 add_action( 'admin_init', 'foody_custom_options' );
@@ -247,6 +251,13 @@ function foody_show_post_views_callback() {
 	$options = get_option( 'foody_show_post_views', true );
 	$checked = $options ? 'checked' : '';
 	echo '<input ' . $checked . ' type="checkbox" id="foody_show_post_views" name="foody_show_post_views">';
+}
+
+function foody_show_followers_count_callback() {
+	$options = get_option( 'foody_show_followers_count_views', true );
+	$checked = $options ? 'checked' : '';
+	echo '<input ' . $checked . ' type="checkbox" id="foody_show_followers_count_views" name="foody_show_followers_count_views">';
+	echo '<p class="description">הצג/הסר כמות עוקבים אחר ערוצים/מתחמי פידים/יוצרים</p>';
 }
 
 //add_filter('manage_edit-units_columns', 'add_units_columns');

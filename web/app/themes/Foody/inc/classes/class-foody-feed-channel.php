@@ -36,7 +36,7 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
 	public function the_details() {
 		bootstrap_breadcrumb();
 		the_title( '<h1 class="title">', '</h1>' );
-		if ( foody_is_registration_open() ) {
+		if ( foody_is_registration_open() && ! empty( get_option( 'foody_show_followers_count_views' ) ) ) {
 			echo '<span class="followers-count">' . $this->get_followers_count() . '</span>';
 		}
 		foody_get_template_part( get_template_directory() . '/template-parts/content-feed-channel-details.php', [
