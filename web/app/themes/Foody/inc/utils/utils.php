@@ -204,6 +204,7 @@ function foody_print_commercial_rules( $rules ) {
 
 		$sponsored_ingredient_container = '<div class="' . implode( ' ', $sponsored_ingredient_container_classes ) . '">';
 
+		$sponsored_ingredients          = array_filter( $sponsored_ingredients );
 		$sponsored_ingredients          = implode( '<span class="delimiter">,</span>', $sponsored_ingredients );
 		$sponsored_ingredient_container .= $sponsored_ingredients;
 		$sponsored_ingredient_container .= '</div>';
@@ -238,7 +239,7 @@ function foody_get_commercial_sponsor_data( $sponsor, $show_logo, $show_text ) {
 			$content .= '</a>';
 		}
 		$content .= '</span>';
-	}
 
-	return $content;
+		return $content;
+	}
 }

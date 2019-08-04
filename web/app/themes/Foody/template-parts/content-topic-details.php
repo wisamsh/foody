@@ -29,7 +29,7 @@ $topic = $template_args['topic'];
             <h1 class="title">
 				<?php echo $topic->topic_title() ?>
             </h1>
-			<?php if ( foody_is_registration_open() ) : ?>
+	        <?php if ( foody_is_registration_open() && ! empty( get_option( 'foody_show_followers_count_views' ) ) ) : ?>
                 <span class="followers-count">
                 <?php echo $topic->get_followers_count(); ?>
             </span>

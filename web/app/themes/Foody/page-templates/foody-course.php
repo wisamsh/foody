@@ -180,6 +180,26 @@ if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
                 </div>
 			<?php endif; ?>
 
+            <section class="feeling-images">
+				<?php
+				$feeling_images = $course->get_feeling_images();
+
+				if ( isset( $feeling_images['title'] ) && ! empty( $feeling_images['title'] ) ) {
+					echo '<div class="title feeling-images-title">' . $feeling_images['title'] . '</div>';
+				}
+
+				if ( isset( $feeling_images['images'] ) && ! empty( $feeling_images['images'] ) ) {
+						foreach ( $feeling_images['images'] as $image ) {
+					?>
+                        <div class="feeling-image">
+                            <?php echo '<img src="' . $image['image']['url'] . '" alt="">'; ?>
+                        </div>
+                    <?php
+                    }
+				}
+				?>
+            </section>
+
             <div class="course-plan">
 
                 <div class="title course-plan-title">
@@ -238,7 +258,7 @@ if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
 						if ( ! empty( $link ) ) {
 							echo '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
 						}
-						echo '<img src="' . $image['url'] . '">';
+						echo '<img src="' . $image['url'] . '" alt="">';
 						if ( ! empty( $link ) ) {
 							echo '</a>';
 						}
@@ -261,7 +281,7 @@ if ( ! empty( $link ) && isset( $link['url'] ) && ! empty( $link['url'] ) ) {
 						if ( ! empty( $link ) ) {
 							echo '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
 						}
-						echo '<img src="' . $image['url'] . '">';
+						echo '<img src="' . $image['url'] . '" alt="">';
 
 						if ( ! empty( $link ) ) {
 							echo '</a>';

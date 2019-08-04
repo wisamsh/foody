@@ -116,6 +116,12 @@ class Foody_Course {
 		return $how_it_works_image;
 	}
 
+	public function get_feeling_images() {
+		$feeling_images = get_field( 'feeling_images' );
+
+		return $feeling_images;
+	}
+
 	public function get_course_plan_title() {
 		$course_plan_title = get_field( 'course_plan_title' );
 
