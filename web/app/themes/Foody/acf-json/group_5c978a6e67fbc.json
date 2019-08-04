@@ -140,14 +140,15 @@
                         "categories": "קטגוריות",
                         "manual": "ידני",
                         "dynamic": "דינאמי",
+                        "html": "html",
                         "banner": "באנר"
                     },
                     "default_value": [],
                     "allow_null": 1,
                     "multiple": 0,
                     "ui": 0,
-                    "ajax": 0,
                     "return_format": "value",
+                    "ajax": 0,
                     "placeholder": ""
                 },
                 {
@@ -157,7 +158,15 @@
                     "type": "text",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5c978b3431705",
+                                "operator": "!=",
+                                "value": "html"
+                            }
+                        ]
+                    ],
                     "wrapper": {
                         "width": "",
                         "class": "",
@@ -176,7 +185,15 @@
                     "type": "text",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5c978b3431705",
+                                "operator": "!=",
+                                "value": "html"
+                            }
+                        ]
+                    ],
                     "wrapper": {
                         "width": "",
                         "class": "",
@@ -201,6 +218,11 @@
                                 "field": "field_5c978b3431705",
                                 "operator": "==",
                                 "value": "dynamic"
+                            },
+                            {
+                                "field": "field_5c978b3431705",
+                                "operator": "==",
+                                "value": "html"
                             }
                         ]
                     ],
@@ -212,7 +234,7 @@
                     "post_type": [
                         "foody_filter"
                     ],
-                    "taxonomy": [],
+                    "taxonomy": "",
                     "allow_null": 0,
                     "multiple": 0,
                     "return_format": "object",
@@ -231,6 +253,11 @@
                                 "field": "field_5c978b3431705",
                                 "operator": "==",
                                 "value": "manual"
+                            },
+                            {
+                                "field": "field_5c978b3431705",
+                                "operator": "!=",
+                                "value": "html"
                             }
                         ],
                         [
@@ -238,6 +265,11 @@
                                 "field": "field_5c978b3431705",
                                 "operator": "==",
                                 "value": "categories"
+                            },
+                            {
+                                "field": "field_5c978b3431705",
+                                "operator": "!=",
+                                "value": "html"
                             }
                         ]
                     ],
@@ -445,6 +477,11 @@
                                 "field": "field_5c978b3431705",
                                 "operator": "==",
                                 "value": "banner"
+                            },
+                            {
+                                "field": "field_5c978b3431705",
+                                "operator": "!=",
+                                "value": "html"
                             }
                         ]
                     ],
@@ -503,13 +540,48 @@
                     "type": "link",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5c978b3431705",
+                                "operator": "!=",
+                                "value": "html"
+                            }
+                        ]
+                    ],
                     "wrapper": {
                         "width": "",
                         "class": "",
                         "id": ""
                     },
                     "return_format": "array"
+                },
+                {
+                    "key": "field_5d46e5baf4f30",
+                    "label": "HTML",
+                    "name": "html",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5c978b3431705",
+                                "operator": "==",
+                                "value": "html"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "maxlength": "",
+                    "rows": "",
+                    "new_lines": ""
                 }
             ]
         },
@@ -550,5 +622,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1558333776
+    "modified": 1564927442
 }

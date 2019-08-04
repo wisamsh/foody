@@ -390,14 +390,43 @@ class Foody_Blocks {
 		<?php
 	}
 
+
+	/**
+	 *
+	 * @param $block
+	 *
+	 * @return array the block options
+	 * @throws Exception if query filter is wrong
+	 * @uses Foody_Feed_Channel::draw_html_block()
+	 */
+	public function draw_html_block( $block ) {
+
+		$block_options = [];
+		$html          = isset( $block['html'] ) ? $block['html'] : null;
+		if ( ! empty( $html ) ) {
+			?>
+            <div class="container block-container">
+				<?php echo $html; ?>
+            </div>
+			<?php
+		}
+
+		return $block_options;
+	}
+
 	public function validate_block( $block ) {
 		$type = $block['type'];
+
 
 		if ( ! empty( $type ) ) {
 
 
 			switch ( $type ) {
 				case 'dynamic':
+
+					break;
+
+				case 'html':
 
 					break;
 

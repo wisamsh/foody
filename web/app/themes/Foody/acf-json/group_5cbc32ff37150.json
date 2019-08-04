@@ -324,6 +324,7 @@
                         "categories": "קטגוריות",
                         "manual": "ידני",
                         "dynamic": "דינאמי",
+                        "html": "html",
                         "banner": "באנר",
                         "product": "מוצר"
                     },
@@ -348,6 +349,11 @@
                                 "field": "field_5cbc33d3b005e",
                                 "operator": "!=",
                                 "value": "product"
+                            },
+                            {
+                                "field": "field_5cbc33d3b005e",
+                                "operator": "!=",
+                                "value": "html"
                             }
                         ]
                     ],
@@ -380,6 +386,11 @@
                                 "field": "field_5cbc33d3b005e",
                                 "operator": "!=",
                                 "value": "product"
+                            },
+                            {
+                                "field": "field_5cbc33d3b005e",
+                                "operator": "!=",
+                                "value": "html"
                             }
                         ]
                     ],
@@ -407,6 +418,11 @@
                                 "field": "field_5cbc33d3b005e",
                                 "operator": "!=",
                                 "value": "product"
+                            },
+                            {
+                                "field": "field_5cbc33d3b005e",
+                                "operator": "!=",
+                                "value": "html"
                             }
                         ]
                     ],
@@ -430,6 +446,11 @@
                                 "field": "field_5cbc33d3b005e",
                                 "operator": "==",
                                 "value": "categories"
+                            },
+                            {
+                                "field": "field_5cbc33d3b005e",
+                                "operator": "==",
+                                "value": "html"
                             }
                         ]
                     ],
@@ -457,6 +478,11 @@
                                 "field": "field_5cbc33d3b005e",
                                 "operator": "==",
                                 "value": "dynamic"
+                            },
+                            {
+                                "field": "field_5cbc33d3b005e",
+                                "operator": "==",
+                                "value": "html"
                             }
                         ]
                     ],
@@ -487,6 +513,11 @@
                                 "field": "field_5cbc33d3b005e",
                                 "operator": "==",
                                 "value": "manual"
+                            },
+                            {
+                                "field": "field_5cbc33d3b005e",
+                                "operator": "==",
+                                "value": "html"
                             }
                         ],
                         [
@@ -494,6 +525,11 @@
                                 "field": "field_5cbc33d3b005e",
                                 "operator": "==",
                                 "value": "categories"
+                            },
+                            {
+                                "field": "field_5cbc33d3b005e",
+                                "operator": "==",
+                                "value": "html"
                             }
                         ]
                     ],
@@ -701,6 +737,11 @@
                                 "field": "field_5cbc33d3b005e",
                                 "operator": "==",
                                 "value": "banner"
+                            },
+                            {
+                                "field": "field_5cbc33d3b005e",
+                                "operator": "==",
+                                "value": "html"
                             }
                         ]
                     ],
@@ -765,6 +806,11 @@
                                 "field": "field_5cbc33d3b005e",
                                 "operator": "==",
                                 "value": "product"
+                            },
+                            {
+                                "field": "field_5cbc33d3b005e",
+                                "operator": "==",
+                                "value": "html"
                             }
                         ]
                     ],
@@ -872,6 +918,33 @@
                             "maxlength": ""
                         }
                     ]
+                },
+                {
+                    "key": "field_5d46e03cc0818",
+                    "label": "HTML",
+                    "name": "html",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5cbc33d3b005e",
+                                "operator": "==",
+                                "value": "html"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "maxlength": "",
+                    "rows": "",
+                    "new_lines": ""
                 }
             ]
         }
@@ -891,7 +964,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": true,
+    "active": 1,
     "description": "",
-    "modified": 1558333606
+    "modified": 1564926277
 }
