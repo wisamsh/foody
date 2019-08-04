@@ -23,6 +23,9 @@ $footer = new Foody_Footer();
 <?php endif; ?>
 <footer id="colophon" class="site-footer no-print">
 
+    <section class="footer-social-container d-block d-lg-none">
+		<?php dynamic_sidebar( 'foody-social' ); ?>
+    </section>
 
     <section class="newsletter d-block d-lg-none">
 		<?php
