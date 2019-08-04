@@ -513,3 +513,23 @@ function foody_posts_page_script() {
 }
 
 add_action( 'wp_head', 'foody_posts_page_script' );
+
+
+/**
+ * Use in posts_where filter to search for recipes with ingredients
+ * @param $where
+ * @param WP_Query $query
+ *
+ * @return mixed
+ */
+function ingredient_posts_where( $where, WP_Query $query ) {
+	if ( $query->get( 'has_wildcard_key' ) ) {
+		$where = str_replace(
+			"meta_key = 'ingredients_ingredients_groups_\$_ingredients_\$_ingredient",
+			"meta_key LIKE 'ingredients_ingredients_groups_%_ingredients_%_ingredient",
+			$where
+		);
+	}
+
+	return $where;
+}

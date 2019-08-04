@@ -304,17 +304,6 @@ class Foody_Query {
 
 	public function foody_ingredient( $ingredient_post_id ) {
 
-		function ingredient_posts_where( $where, WP_Query $query ) {
-			if ( $query->get( 'has_wildcard_key' ) ) {
-				$where = str_replace(
-					"meta_key = 'ingredients_ingredients_groups_\$_ingredients_\$_ingredient",
-					"meta_key LIKE 'ingredients_ingredients_groups_%_ingredients_%_ingredient",
-					$where
-				);
-			}
-
-			return $where;
-		}
 
 		add_filter( 'posts_where', 'ingredient_posts_where', 10, 2 );
 
@@ -329,7 +318,8 @@ class Foody_Query {
 				]
 
 			],
-			'fields'           => 'ids'
+			'fields'           => 'ids',
+			'posts_per_page'   => - 1
 		];
 
 
@@ -347,7 +337,7 @@ class Foody_Query {
 			$args = null;
 		}
 
-		return $args;
+		return self::get_args( $args );
 	}
 
 	public function foody_accessory( $accessory_post_id ) {
@@ -590,7 +580,11 @@ class Foody_Query {
 					} else {
 						$page = $this->get_param( self::$page );
 						if ( ! $page ) {
-							$page = 1;
+							if ( is_single() ) {
+								$page = get_query_var( 'page' );
+							} else {
+								$page = 1;
+							}
 						}
 					}
 				}
