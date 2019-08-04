@@ -190,7 +190,8 @@ function foody_scripts() {
 			wp_enqueue_script( 'foody-script-general', $general_asset, false, false, true );
 		}
 
-		if ( is_page_template( 'page-templates/content-with-sidebar.php' ) && is_single() ) {
+		if ( is_page_template( 'page-templates/content-with-sidebar.php' ) && is_single()
+		     && ! in_array( get_post_type(), [ 'foody_ingredient', 'foody_accessory', 'foody_technique' ] ) ) {
 			$post_asset = foody_get_versioned_asset( 'post' );
 			wp_enqueue_script( 'foody-script-recipe', $post_asset, false, false, true );
 		}
