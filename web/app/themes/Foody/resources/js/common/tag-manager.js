@@ -44,6 +44,9 @@ module.exports = (function () {
             case 'channel':
                 object = '';
                 break;
+            case 'course':
+                object = decodeURI(window.location.pathname.replace('/academy/', '').replace(/-/g, ' '));
+                break;
         }
 
         // Data Layer as an Object
