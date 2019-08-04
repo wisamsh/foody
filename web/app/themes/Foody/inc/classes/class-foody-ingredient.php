@@ -37,6 +37,8 @@ class Foody_Ingredient extends Foody_Post {
 
 	private $foody_search;
 
+	public $has_alter_link = false;
+
 	/**
 	 * Foody_Ingredient constructor.
 	 *
@@ -212,7 +214,17 @@ class Foody_Ingredient extends Foody_Post {
                          ' . $unit . '
                     </span>';
 
-		$name_el = '<span class="name"><a title="'. esc_attr( sprintf( 'לכל המתכונים עם %s',$title)) .'" class="foody-u-link" href="'.  $this->link.'">
+		if ( $this->has_alter_link ) {
+			$link       = $this->link['url'];
+			$link_title = $this->link['title'];
+			$target     = $this->link['target'];
+		} else {
+			$link_title = esc_attr( sprintf( 'לכל המתכונים עם %s', $title ) );
+			$link       = $this->link;
+			$target     = '_self';
+
+		}
+		$name_el = '<span class="name"><a target="' . $target . '" title="' . $link_title . '" class="foody-u-link" href="' . $link . '">
                         ' . $title . '
                     </span></a>';
 

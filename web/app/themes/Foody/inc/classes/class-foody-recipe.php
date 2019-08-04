@@ -580,7 +580,11 @@ class Foody_Recipe extends Foody_Post {
 
 							$ingredient->recipe_id = $this->post->ID;
 							$ingredient->comment   = get_sub_field( 'comment' );
-
+							$alter_link            = get_sub_field( 'alter_link' );
+							if ( ! empty( $alter_link ) ) {
+								$ingredient->has_alter_link = true;
+								$ingredient->link = get_sub_field( 'alter_link' );
+							}
 							$ingredient->amounts = $amounts;
 
 							$this->ingredients_groups[ $current_group ]['ingredients'][] = $ingredient;
