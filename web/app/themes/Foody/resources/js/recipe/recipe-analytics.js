@@ -6,10 +6,17 @@
 jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe')) {
 
+        let publishers = ['אין'];
+        if ($('.sponsors-container .sponsored-by.company div').length) {
+            publishers = [];
+            $('.sponsors-container .sponsored-by.company div').each((index, elem) => {
+                publishers.push(elem.innerHTML);
+            });
+        }
         /**
          * Page Load
          */
-        eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', foodyGlobals['author_name']);
+        eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '));
 
 
         /**
