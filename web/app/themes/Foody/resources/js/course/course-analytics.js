@@ -1,8 +1,11 @@
 const analyticsCategory = 'קורסים';
+const timeInPageDelta = 30;
 
 const Vimeo = require('@vimeo/player');
 
 jQuery(document).ready(($) => {
+
+    let secondsInPage = 0;
 
     eventCallback('', analyticsCategory, 'טעינה', foodyGlobals.post.title);
 
@@ -112,10 +115,15 @@ jQuery(document).ready(($) => {
             toLog = true;
         }
         if (toLog) {
-            eventCallback(event, analyticsCategory, 'גלילה', scrollPercentRounded + '%', '', '');
+            eventCallback(e, analyticsCategory, 'גלילה', scrollPercentRounded + '%', '', '');
 
         }
     });
+
+    setInterval(function () {
+        secondsInPage += timeInPageDelta;
+        eventCallback('', analyticsCategory, 'טיימר', foodyGlobals.post.title, 'זמן', secondsInPage + ' שניות');
+    }, timeInPageDelta * 1000);
 
 });
 
