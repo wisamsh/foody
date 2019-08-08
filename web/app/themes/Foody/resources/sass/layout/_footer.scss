@@ -187,7 +187,9 @@ footer.site-footer {
       }
 
       .fb-page, .fb-page span, .fb-page span iframe[style] {
-        width: 98% !important;
+        width: 340px !important;
+        margin: 0 auto;
+        display: block;
       }
     }
 
