@@ -1649,7 +1649,7 @@ function foody_array_to_data_attr( $data ) {
 	foreach ( $data as $key => $value ) {
 //        $data_attrs .= " data-$key='$value'";
 
-		$data_attrs .= ' data-' . $key . '=' . '\'' . $value . '\'';
+		$data_attrs .= ' data-' . $key . '=' . '\'' . esc_attr( $value) . '\'';
 	}
 
 	return $data_attrs;

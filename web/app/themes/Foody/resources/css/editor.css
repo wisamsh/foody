@@ -1,0 +1,8 @@
+li:not(.foody-list-item-spacing){
+    background-color: initial;
+}
+
+.foody-list-item-spacing {
+    transition: background-color .4s;
+    background-color: aliceblue;
+}

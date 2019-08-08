@@ -103,3 +103,46 @@ function replace_em_dashes( $content ) {
 
 
 add_filter( 'the_content', 'replace_em_dashes' );
+
+
+function foody_add_mce_button() {
+	// check user permissions
+	if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
+		return;
+	}
+	// check if WYSIWYG is enabled
+	if ( 'true' == get_user_option( 'rich_editing' ) ) {
+		add_filter( 'mce_external_plugins', 'foody_add_tinymce_plugin' );
+		add_filter( 'mce_buttons', 'foody_register_mce_button' );
+	}
+}
+
+add_action( 'admin_head', 'foody_add_mce_button' );
+
+// register new button in the editor
+function foody_register_mce_button( $buttons ) {
+	array_push( $buttons, 'foody_mce_button' );
+
+	return $buttons;
+}
+
+
+// declare a script for the new button
+// the script will insert the shortcode on the click event
+function foody_add_tinymce_plugin( $plugin_array ) {
+	$plugin_array['foody_mce_button'] = get_template_directory_uri() . '/resources/js/foody-mce-button.js';
+
+	return $plugin_array;
+}
+
+function foody_mce_css( $mce_css ) {
+	if ( ! empty( $mce_css ) ) {
+		$mce_css .= ',';
+	}
+
+	$mce_css .= get_template_directory_uri() . '/resources/css/editor.css';
+
+	return $mce_css;
+}
+
+add_filter( 'mce_css', 'foody_mce_css' );

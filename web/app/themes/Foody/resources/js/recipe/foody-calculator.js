@@ -87,7 +87,7 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
             text = $this.data('original');
         }
 
-        let $name = $('span.name', $this.parent());
+        let $name = $('span.name a', $this.parent());
 
 
         $name.text(name);
