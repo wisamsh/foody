@@ -1,19 +1,17 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71c28e0f5488ad4770a283f4aedea9f4",
+    "content-hash": "ae01970427c37c3f17a4a468544625a0",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
             "version": "4.7.11",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/tinymce-advanced.4.7.11.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/tinymce-advanced.4.7.11.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -22,9 +20,7 @@
             "version": "1.2.4.1",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/contact-form-cfdb7.1.2.4.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/contact-form-cfdb7.1.2.4.1.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -149,24 +145,11 @@
             "time": "2018-08-27T06:10:37+00:00"
         },
         {
-            "name": "david-gwyer/simple-sitemap-pro",
-            "version": "2.1",
-            "dist": {
-                "type": "zip",
-                "url": "https://wpgoplugins.com/index.php?eddfile=5753%3A805%3A3%3A1&ttl=1554470076&file=3&token=caca7216c2184b90d85d0244e7416ae2",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "wordpress-plugin"
-        },
-        {
             "name": "delicious-brains-inc/wp-ses",
             "version": "0.8.2",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-ses.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/wp-ses.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -175,9 +158,7 @@
             "version": "2.0.1",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.2.0.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.2.0.1.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -186,9 +167,7 @@
             "version": "5.6.10",
             "dist": {
                 "type": "zip",
-                "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9MTMxNzg3fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTIzIDEyOjE1OjI5",
-                "reference": null,
-                "shasum": null
+                "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9MTMxNzg3fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTIzIDEyOjE1OjI5"
             },
             "type": "wordpress-plugin"
         },
@@ -197,9 +176,7 @@
             "version": "1.2.6",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/jwt-authentication-for-wp-rest-api.1.2.6.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/jwt-authentication-for-wp-rest-api.1.2.6.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -208,9 +185,7 @@
             "version": "4.8.0",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/ewww-image-optimizer.4.8.0.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/ewww-image-optimizer.4.8.0.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -219,9 +194,7 @@
             "version": "2.1.6",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-user-avatar.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/wp-user-avatar.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -230,9 +203,7 @@
             "version": "1.0.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/humanmade/Restsplain/archive/master.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://github.com/humanmade/Restsplain/archive/master.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -241,9 +212,7 @@
             "version": "1.6.4",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -380,9 +349,7 @@
             "version": "2.5",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/network-subsite-user-registration.2.5.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/network-subsite-user-registration.2.5.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -391,9 +358,7 @@
             "version": "1.86.1",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-postratings.1.86.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/wp-postratings.1.86.1.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -402,9 +367,7 @@
             "version": "1.7.3",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/quadmenu.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/quadmenu.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -811,12 +774,10 @@
         },
         {
             "name": "smash-baloon/instagram-feed",
-            "version": "1.12",
+            "version": "1.12.2",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.12.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.12.2.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -916,9 +877,7 @@
             "version": "5.0.5",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/contact-form-7.5.0.5.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/contact-form-7.5.0.5.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -978,9 +937,7 @@
             "version": "0.9.7.4",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/w3-total-cache.0.9.7.4.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/w3-total-cache.0.9.7.4.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -989,9 +946,7 @@
             "version": "0.6.4",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordpress-importer.0.6.4.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/wordpress-importer.0.6.4.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -1042,9 +997,7 @@
             "version": "9.5",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.9.5.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.9.5.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -1053,9 +1006,7 @@
             "version": "1.7.8",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/forms-3rdparty-integration.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/forms-3rdparty-integration.zip"
             },
             "type": "wordpress-plugin"
         }
