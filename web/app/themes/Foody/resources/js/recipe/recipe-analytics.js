@@ -20,7 +20,6 @@ jQuery(document).ready(($) => {
          * Page Load
          */
         eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), get_recipe_order_location());
-debugger;
 
         /**
          * Breadcrumbs click
