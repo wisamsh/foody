@@ -1,6 +1,7 @@
 .foody_feed_channel-template {
 
   .details-container {
+    text-align: right;
 
     h1 {
       font-size: 24px;
@@ -13,6 +14,10 @@
     }
     .featured-content-container {
       display: none;
+    }
+
+    .followers-count {
+      padding-right: 15px;
     }
   }
 
@@ -69,10 +74,10 @@
 
         .essb_item {
           a {
-            background-color: $color__social !important;
+            background-color: var(--color__social) !important;
 
             &:hover {
-              //background-color: $color__social !important;
+              //background-color: var(--color__social) !important;
             }
           }
         }
@@ -81,7 +86,41 @@
 
     .follow {
       margin-right: auto;
-      display: none;
+      button {
+
+        &.btn-follow {
+          padding: 0 20px;
+          background-color: var(--color__primary);
+          color: white;
+          font-size: 22px;
+
+          i {
+            display: none;
+
+          }
+
+          &.followed {
+            padding-right: 5px;
+            background-color: white;
+            color: var(--color__primary);
+            border: 1px solid var(--color__primary);
+
+            i {
+              display: initial;
+              vertical-align: middle;
+
+              &:before {
+                font-size: 16px;
+              }
+            }
+
+            span {
+              vertical-align: sub;
+            }
+          }
+        }
+
+      }
     }
   }
 

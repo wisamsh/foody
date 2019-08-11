@@ -49,12 +49,13 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background-color: $color__background-screen !important;
+  background-color: var(--color__background-screen) !important;
   direction: rtl;
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
   min-height: fit-content;
   opacity: 1 !important;
+
   &.contrast {
     header {
       .accessibility {
@@ -83,6 +84,7 @@ body {
 
   &.side-active {
     overflow: hidden;
+
     &:after {
       opacity: .8;
       pointer-events: initial;
@@ -91,6 +93,7 @@ body {
 
   &.lock {
     overflow: hidden;
+
     .logo-container-mobile {
       //display: none !important;
       opacity: 0;
@@ -453,8 +456,9 @@ li.widget {
 
 a {
   text-decoration: none !important;
+
   &:hover {
-    color: $color__primary;
+    color: var(--color__primary);
     //border: 0 !important;
     outline: none !important;
   }
@@ -464,7 +468,7 @@ a {
   }
 
   &:visited {
-    //color: $color__link-visited;
+    //color: var(--color__link-visited);
   }
 }
 
@@ -526,6 +530,7 @@ figure {
   }
   .d-flex:not(.d-lg-block) * {
     display: initial !important;
+
     h1, h2, h3, h4, h5, h6 {
 
       display: flex !important;
@@ -585,6 +590,7 @@ figure {
     bottom: 20px;
     right: 20px;
     z-index: 2;
+
     i {
       &:before {
         font-size: 50px;
@@ -609,6 +615,7 @@ figure {
   }
 }
 
-.essb-customizer-toggle {
+.essb-customizer-toggle, .preloader-holder, .essb-live-customizer {
   display: none !important;
 }
+

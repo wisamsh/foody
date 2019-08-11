@@ -7,28 +7,28 @@
 */
 
 /**
-* Wannabe Users Manager module
-*/
+ * Wannabe Users Manager module
+ */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit; 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // --------------------------------------------------------------------
 
-function wsl_component_users()
-{
+function wsl_component_users() {
 	// HOOKABLE: 
 	do_action( "wsl_component_users_start" );
 
 	include "wsl.components.users.list.php";
 	include "wsl.components.users.profiles.php";
 
-	if( isset( $_REQUEST["uid"] ) && $_REQUEST["uid"] ){
+	if ( isset( $_REQUEST["uid"] ) && $_REQUEST["uid"] ) {
 		$user_id = (int) $_REQUEST["uid"];
 
 		wsl_component_users_profiles( $user_id );
-	}
-	else{
+	} else {
 		wsl_component_users_list();
 	}
 

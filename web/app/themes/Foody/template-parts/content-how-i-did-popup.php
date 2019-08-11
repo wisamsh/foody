@@ -7,7 +7,7 @@
  */
 
 $modal = [
-    'title' => 'תראו מה יצא לי'
+	'title' => 'תראו מה יצא לי'
 ];
 
 ?>
@@ -17,7 +17,7 @@ $modal = [
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <?php echo $modal['title'] ?>
+					<?php echo $modal['title'] ?>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

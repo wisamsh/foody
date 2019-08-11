@@ -10,7 +10,7 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
+    <header class="entry-header">
 		<?php
 		if ( is_singular() ) :
 			the_title( '<h1 class="entry-title">', '</h1>' );
@@ -20,22 +20,22 @@
 
 		if ( 'post' === get_post_type() ) :
 			?>
-			<div class="entry-meta">
+            <div class="entry-meta">
 				<?php
 				foody_posted_on();
 				foody_posted_by();
 				?>
-			</div><!-- .entry-meta -->
+            </div><!-- .entry-meta -->
 		<?php endif; ?>
-	</header><!-- .entry-header -->
+    </header><!-- .entry-header -->
 
 	<?php foody_post_thumbnail(); ?>
 
-	<div class="entry-content">
+    <div class="entry-content">
 		<?php
 		the_content( sprintf(
 			wp_kses(
-				/* translators: %s: Name of current post. Only visible to screen readers */
+			/* translators: %s: Name of current post. Only visible to screen readers */
 				__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'foody' ),
 				array(
 					'span' => array(
@@ -51,9 +51,9 @@
 			'after'  => '</div>',
 		) );
 		?>
-	</div><!-- .entry-content -->
+    </div><!-- .entry-content -->
 
-	<footer class="entry-footer">
+    <footer class="entry-footer">
 		<?php foody_entry_footer(); ?>
-	</footer><!-- .entry-footer -->
+    </footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->

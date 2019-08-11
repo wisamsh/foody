@@ -29,7 +29,7 @@
             display: flex;
             flex-direction: column;
             align-items: start;
-            justify-content: flex-end;
+            justify-content: center;
             padding: 0 20px;
 
             h1 {
@@ -49,7 +49,7 @@
 
             &.btn-follow {
               padding: 0 20px;
-              background-color: $color__primary;
+              background-color: var(--color__primary);
               color: white;
               font-size: 22px;
 
@@ -61,8 +61,8 @@
               &.followed {
                 padding-right: 5px;
                 background-color: white;
-                color: $color__primary;
-                border: 1px solid $color__primary;
+                color: var(--color__primary);
+                border: 1px solid var(--color__primary);
 
                 i {
                   display: initial;
@@ -110,7 +110,7 @@
           }
         }
         .tabs-container {
-          background-color: $color__background-body;
+          background-color: var(--color__background-body);
 
           .bootstrap-select.foody-select {
             max-width: 7em;
@@ -118,7 +118,7 @@
             margin-top: 10px;
           }
           .tab-content {
-            background-color: $color__background-body;
+            background-color: var(--color__background-body);
 
             .foody-grid {
               .grid-header {
@@ -166,7 +166,7 @@
 
             }
             img {
-              height: 150px;
+              height: 100%;
             }
           }
 
@@ -234,7 +234,17 @@
                         &:before {
                           font-size: 18px !important;
                           left: 2px !important;
-                          top: 6px;
+                          top: 6px !important;
+                        }
+                        &.essb_icon_pinterest {
+                          &:before {
+                            top: 7px !important;
+                          }
+                        }
+                        &.essb_icon_whatsapp {
+                          &:before {
+                            top: 5px !important;
+                          }
                         }
                       }
                     }

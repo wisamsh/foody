@@ -6,25 +6,20 @@
 *  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
-class WSL_Test_Install extends WP_UnitTestCase
-{
-	function setUp()
-	{
+class WSL_Test_Install extends WP_UnitTestCase {
+	function setUp() {
 		parent::setUp();
 	}
 
-	function tearDown()
-	{
+	function tearDown() {
 		parent::tearDown();
 	}
 
-	function test_requirements()
-	{
+	function test_requirements() {
 		$this->assertTrue( wsl_check_requirements() );
 	}
 
-	function test_tables()
-	{
+	function test_tables() {
 		global $wpdb;
 
 		$test = $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}wslusersprofiles'" );
@@ -34,8 +29,7 @@ class WSL_Test_Install extends WP_UnitTestCase
 		$this->assertEquals( $wpdb->prefix . 'wsluserscontacts', $test );
 	}
 
-	function test_options_created()
-	{
+	function test_options_created() {
 		$test = get_option( 'wsl_settings_redirect_url' );
 		$this->assertEquals( home_url(), $test );
 
@@ -43,20 +37,17 @@ class WSL_Test_Install extends WP_UnitTestCase
 		$this->assertEquals( '', $test );
 	}
 
-	function test_registration_enabled()
-	{
+	function test_registration_enabled() {
 		$test = get_option( 'wsl_settings_bouncer_registration_enabled' );
 		$this->assertEquals( 1, $test );
 	}
 
-	function test_authentication_enabled()
-	{
+	function test_authentication_enabled() {
 		$test = get_option( 'wsl_settings_bouncer_authentication_enabled' );
 		$this->assertEquals( 1, $test );
 	}
 
-	function test_default_networks_enabled()
-	{
+	function test_default_networks_enabled() {
 		$test = get_option( 'wsl_settings_Facebook_enabled' );
 		$this->assertEquals( 1, $test );
 
@@ -67,14 +58,12 @@ class WSL_Test_Install extends WP_UnitTestCase
 		$this->assertEquals( 1, $test );
 	}
 
-	function test_devmode_disabled()
-	{
+	function test_devmode_disabled() {
 		$test = get_option( 'wsl_settings_development_mode_enabled' ) ? 1 : null;
 		$this->assertNull( $test );
 	}
 
-	function test_debugmode_disabled()
-	{
+	function test_debugmode_disabled() {
 		$test = get_option( 'wsl_settings_debug_mode_enabled' ) ? 1 : null;
 		$this->assertNull( $test );
 	}

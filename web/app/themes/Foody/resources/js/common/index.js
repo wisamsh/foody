@@ -53,6 +53,7 @@
 // });
 
 require('./forms');
+require('./foody-grid');
 require('./foody-ajax');
 require('./comments');
 require('./how-i-did');

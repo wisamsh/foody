@@ -3,5 +3,5 @@
  */
 
 jQuery(document).ready(($) => {
-    showMoreList('.categories-listing a:last-child', $('.categories-list-widget .title a').attr('href'));
+    showMoreList('.categories-listing:not(.block-more):not(.showing-more) a:last-child', $('.categories-list-widget .title a').attr('href'));
 });

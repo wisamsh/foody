@@ -19,53 +19,67 @@ $topic = $template_args['topic'];
     <div class="row">
         <div class="image-container">
 
-            <img src="<?php echo $topic->topic_image() ?>" alt="">
+            <img src="<?php echo $topic->topic_image() ?>" alt="<?php echo $topic->topic_title() ?>">
 
         </div>
 
         <div class="details col">
-            <?php bootstrap_breadcrumb(null, $topic->get_breadcrumbs_path()); ?>
+			<?php bootstrap_breadcrumb( null, $topic->get_breadcrumbs_path() ); ?>
 
             <h1 class="title">
-                <?php echo $topic->topic_title() ?>
+				<?php echo $topic->topic_title() ?>
             </h1>
-            <span class="followers-count">
+	        <?php if ( foody_is_registration_open() && ! empty( get_option( 'foody_show_followers_count_views' ) ) ) : ?>
+                <span class="followers-count">
                 <?php echo $topic->get_followers_count(); ?>
             </span>
+			<?php endif; ?>
         </div>
         <div class="follow">
-            <?php
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/content-follow-button.php',
-                ['topic' => $topic, 'classes' => 'd-none d-lg-inline']
-            );
-            ?>
+			<?php
+			if ( foody_is_registration_open() ) {
+				foody_get_template_part(
+					get_template_directory() . '/template-parts/content-follow-button.php',
+					[ 'topic' => $topic, 'classes' => 'd-none d-lg-inline' ]
+				);
+			}
+			?>
             <div class="social d-none d-sm-block">
-                <?php
-                foody_get_template_part(
-                    get_template_directory() . '/template-parts/content-social-actions.php', ['hide_rating' => true]
-                )
-                ?>
+				<?php
+				foody_get_template_part(
+					get_template_directory() . '/template-parts/content-social-actions.php', [ 'hide_rating' => true ]
+				)
+				?>
             </div>
         </div>
 
-        <div class="social d-block d-lg-none col-12">
-            <?php
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/content-social-actions.php',
-                [
-                    'extra_content' => foody_get_template_part(
-                        get_template_directory() . '/template-parts/content-follow-button.php',
-                        ['topic' => $topic, 'classes' => '','return'=>true]
-                    )
-                ]
-            )
-            ?>
+        <div class="social d-block d-lg-none col-12 fish">
+			<?php
+			if ( foody_is_registration_open() ) {
+				foody_get_template_part(
+					get_template_directory() . '/template-parts/content-social-actions.php',
+					[
+						'extra_content' => foody_get_template_part(
+							get_template_directory() . '/template-parts/content-follow-button.php',
+							[ 'topic' => $topic, 'classes' => '', 'return' => true ]
+						)
+					]
+				);
+			} else {
+				foody_get_template_part(
+					get_template_directory() . '/template-parts/content-social-actions.php',
+					[
+						'extra_content' => ''
+					]
+				);
+
+			}
+			?>
         </div>
 
     </div>
 
     <p class="description">
-        <?php echo $topic->get_description(); ?>
+		<?php echo $topic->get_description(); ?>
     </p>
 </section>

@@ -14,175 +14,176 @@
  */
 
 // Exit if accessed directly
-if (!defined('ABSPATH')) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // --------------------------------------------------------------------
 
-function wsl_process_login_new_users_gateway($provider, $redirect_to, $hybridauth_user_profile)
-{
-    // HOOKABLE:
-    do_action("wsl_process_login_new_users_gateway_start", $provider, $redirect_to, $hybridauth_user_profile);
+function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile ) {
+	// HOOKABLE:
+	do_action( "wsl_process_login_new_users_gateway_start", $provider, $redirect_to, $hybridauth_user_profile );
 
-    $assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/16x16/';
+	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/16x16/';
 
-    // remove wsl widget
-    remove_action('register_form', 'wsl_render_auth_widget_in_wp_register_form');
+	// remove wsl widget
+	remove_action( 'register_form', 'wsl_render_auth_widget_in_wp_register_form' );
 
-    $hybridauth_user_email = sanitize_email($hybridauth_user_profile->email);
-    $hybridauth_user_login = sanitize_user($hybridauth_user_profile->displayName, true);
-    $hybridauth_user_avatar = $hybridauth_user_profile->photoURL;
-    $hybridauth_user_website = $hybridauth_user_profile->webSiteURL;
-    $hybridauth_user_link = $hybridauth_user_profile->profileURL;
+	$hybridauth_user_email   = sanitize_email( $hybridauth_user_profile->email );
+	$hybridauth_user_login   = sanitize_user( $hybridauth_user_profile->displayName, true );
+	$hybridauth_user_avatar  = $hybridauth_user_profile->photoURL;
+	$hybridauth_user_website = $hybridauth_user_profile->webSiteURL;
+	$hybridauth_user_link    = $hybridauth_user_profile->profileURL;
 
-    $hybridauth_user_login = trim(str_replace(array(' ', '.'), '_', $hybridauth_user_login));
-    $hybridauth_user_login = trim(str_replace('__', '_', $hybridauth_user_login));
+	$hybridauth_user_login = trim( str_replace( array( ' ', '.' ), '_', $hybridauth_user_login ) );
+	$hybridauth_user_login = trim( str_replace( '__', '_', $hybridauth_user_login ) );
 
-    $requested_user_email = isset($_REQUEST["user_email"]) ? trim($_REQUEST["user_email"]) : $hybridauth_user_email;
-    $requested_user_login = isset($_REQUEST["user_login"]) ? trim($_REQUEST["user_login"]) : $hybridauth_user_login;
+	$requested_user_email = isset( $_REQUEST["user_email"] ) ? trim( $_REQUEST["user_email"] ) : $hybridauth_user_email;
+	$requested_user_login = isset( $_REQUEST["user_login"] ) ? trim( $_REQUEST["user_login"] ) : $hybridauth_user_login;
 
-    $requested_user_email = apply_filters('wsl_new_users_gateway_alter_requested_email', $requested_user_email);
-    $requested_user_login = apply_filters('wsl_new_users_gateway_alter_requested_login', $requested_user_login);
+	$requested_user_email = apply_filters( 'wsl_new_users_gateway_alter_requested_email', $requested_user_email );
+	$requested_user_login = apply_filters( 'wsl_new_users_gateway_alter_requested_login', $requested_user_login );
 
-    $user_id = 0;
-    $shall_pass = false;
+	$user_id    = 0;
+	$shall_pass = false;
 
-    $bouncer_account_linking = false;
-    $account_linking_errors = array();
+	$bouncer_account_linking = false;
+	$account_linking_errors  = array();
 
-    $bouncer_profile_completion = false;
-    $profile_completion_errors = array();
+	$bouncer_profile_completion = false;
+	$profile_completion_errors  = array();
 
-    $linking_enabled = get_option('wsl_settings_bouncer_accounts_linking_enabled');
-    $require_email = get_option('wsl_settings_bouncer_profile_completion_require_email');
-    $change_username = get_option('wsl_settings_bouncer_profile_completion_change_username');
-    $extra_fields = get_option('wsl_settings_bouncer_profile_completion_hook_extra_fields');
+	$linking_enabled = get_option( 'wsl_settings_bouncer_accounts_linking_enabled' );
+	$require_email   = get_option( 'wsl_settings_bouncer_profile_completion_require_email' );
+	$change_username = get_option( 'wsl_settings_bouncer_profile_completion_change_username' );
+	$extra_fields    = get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' );
 
-    if (isset($_REQUEST["bouncer_account_linking"]) && false) {
-        if ($linking_enabled == 2) {
-            return wsl_process_login_render_notice_page(_wsl__("Not tonight.", 'wordpress-social-login'));
-        }
+	if ( isset( $_REQUEST["bouncer_account_linking"] ) && false ) {
+		if ( $linking_enabled == 2 ) {
+			return wsl_process_login_render_notice_page( _wsl__( "Not tonight.", 'wordpress-social-login' ) );
+		}
 
-        $bouncer_account_linking = true;
+		$bouncer_account_linking = true;
 
-        $username = isset($_REQUEST["user_login"]) ? trim($_REQUEST["user_login"]) : '';
-        $password = isset($_REQUEST["user_password"]) ? trim($_REQUEST["user_password"]) : '';
+		$username = isset( $_REQUEST["user_login"] ) ? trim( $_REQUEST["user_login"] ) : '';
+		$password = isset( $_REQUEST["user_password"] ) ? trim( $_REQUEST["user_password"] ) : '';
 
-        # http://codex.wordpress.org/Function_Reference/wp_authenticate
-        $user = wp_authenticate($username, $password);
+		# http://codex.wordpress.org/Function_Reference/wp_authenticate
+		$user = wp_authenticate( $username, $password );
 
-        // WP_Error object?
-        if (is_wp_error($user)) {
-            // we give no useful hint.
-            $account_linking_errors[] =
-                sprintf(
-                    _wsl__(
-                        '<strong>ERROR</strong>: Invalid username or incorrect password. <a href="%s">Lost your password</a>?',
-                        'wordpress-social-login'
-                    ),
-                    wp_lostpassword_url(home_url())
-                );
-        } elseif (is_a($user, 'WP_User')) {
-            $user_id = $user->ID;
+		// WP_Error object?
+		if ( is_wp_error( $user ) ) {
+			// we give no useful hint.
+			$account_linking_errors[] =
+				sprintf(
+					_wsl__(
+						'<strong>ERROR</strong>: Invalid username or incorrect password. <a href="%s">Lost your password</a>?',
+						'wordpress-social-login'
+					),
+					wp_lostpassword_url( home_url() )
+				);
+		} elseif ( is_a( $user, 'WP_User' ) ) {
+			$user_id = $user->ID;
 
-            $shall_pass = true;
-        }
-    } elseif (isset($_REQUEST["bouncer_profile_completion"]) && false) {
-        // Bouncer::Profile Completion enabled?
-        // > if not enabled we just let the user pass
-        if ($require_email == 2 && $change_username == 2 && $extra_fields == 2) {
-            $shall_pass = true;
-        } // otherwise we request email &or username &or extra fields
-        else {
-            $bouncer_profile_completion = true;
+			$shall_pass = true;
+		}
+	} elseif ( isset( $_REQUEST["bouncer_profile_completion"] ) && false ) {
+		// Bouncer::Profile Completion enabled?
+		// > if not enabled we just let the user pass
+		if ( $require_email == 2 && $change_username == 2 && $extra_fields == 2 ) {
+			$shall_pass = true;
+		} // otherwise we request email &or username &or extra fields
+		else {
+			$bouncer_profile_completion = true;
 
-            /**
-             * Code based on wpmu_validate_user_signup()
-             *
-             * Ref: http://codex.wordpress.org/Function_Reference/wpmu_validate_user_signup
-             */
+			/**
+			 * Code based on wpmu_validate_user_signup()
+			 *
+			 * Ref: http://codex.wordpress.org/Function_Reference/wpmu_validate_user_signup
+			 */
 
-            # {{{ validate usermail
-            if ($require_email == 1) {
-                if (empty($requested_user_email)) {
-                    $profile_completion_errors[] = _wsl__('<strong>ERROR</strong>: Please type your e-mail address.', 'wordpress-social-login');
-                }
+			# {{{ validate usermail
+			if ( $require_email == 1 ) {
+				if ( empty( $requested_user_email ) ) {
+					$profile_completion_errors[] = _wsl__( '<strong>ERROR</strong>: Please type your e-mail address.', 'wordpress-social-login' );
+				}
 
-                if (!is_email($requested_user_email)) {
-                    $profile_completion_errors[] = _wsl__('<strong>ERROR</strong>: Please enter a valid email address.', 'wordpress-social-login');
-                }
+				if ( ! is_email( $requested_user_email ) ) {
+					$profile_completion_errors[] = _wsl__( '<strong>ERROR</strong>: Please enter a valid email address.', 'wordpress-social-login' );
+				}
 
-                if (wsl_wp_email_exists($requested_user_email)) {
-                    $profile_completion_errors[] = _wsl__('<strong>ERROR</strong>: Sorry, that email address is already used!', 'wordpress-social-login');
-                }
-            }
-            # }}} validate usermail
+				if ( wsl_wp_email_exists( $requested_user_email ) ) {
+					$profile_completion_errors[] = _wsl__( '<strong>ERROR</strong>: Sorry, that email address is already used!', 'wordpress-social-login' );
+				}
+			}
+			# }}} validate usermail
 
-            # {{{ validate username (called login in wsl)
-            if ($change_username == 1) {
-                $illegal_names = array('www', 'web', 'root', 'admin', 'main', 'invite', 'administrator');
+			# {{{ validate username (called login in wsl)
+			if ( $change_username == 1 ) {
+				$illegal_names = array( 'www', 'web', 'root', 'admin', 'main', 'invite', 'administrator' );
 
-                $illegal_names = apply_filters('wsl_new_users_gateway_alter_illegal_names', $illegal_names);
+				$illegal_names = apply_filters( 'wsl_new_users_gateway_alter_illegal_names', $illegal_names );
 
-                if (in_array($requested_user_login, $illegal_names) == true) {
-                    $profile_completion_errors[] = _wsl__('<strong>ERROR</strong>: That username is not allowed.', 'wordpress-social-login');
-                }
+				if ( in_array( $requested_user_login, $illegal_names ) == true ) {
+					$profile_completion_errors[] = _wsl__( '<strong>ERROR</strong>: That username is not allowed.', 'wordpress-social-login' );
+				}
 
-                if (strlen($requested_user_login) < 4) {
-                    $profile_completion_errors[] = _wsl__('<strong>ERROR</strong>: Username must be at least 4 characters.', 'wordpress-social-login');
-                }
+				if ( strlen( $requested_user_login ) < 4 ) {
+					$profile_completion_errors[] = _wsl__( '<strong>ERROR</strong>: Username must be at least 4 characters.', 'wordpress-social-login' );
+				}
 
-                if (strpos(' ' . $requested_user_login, '_') != false) {
-                    // $profile_completion_errors[] = _wsl__( '<strong>ERROR</strong>: Sorry, usernames may not contain the character &#8220;_&#8221;!', 'wordpress-social-login' );
-                }
+				if ( strpos( ' ' . $requested_user_login, '_' ) != false ) {
+					// $profile_completion_errors[] = _wsl__( '<strong>ERROR</strong>: Sorry, usernames may not contain the character &#8220;_&#8221;!', 'wordpress-social-login' );
+				}
 
-                if (preg_match('/^[0-9]*$/', $requested_user_login)) {
-                    $profile_completion_errors[] = _wsl__('<strong>ERROR</strong>: Sorry, usernames must have letters too!', 'wordpress-social-login');
-                }
+				if ( preg_match( '/^[0-9]*$/', $requested_user_login ) ) {
+					$profile_completion_errors[] = _wsl__( '<strong>ERROR</strong>: Sorry, usernames must have letters too!', 'wordpress-social-login' );
+				}
 
-                if (username_exists($requested_user_login)) {
-                    $profile_completion_errors[] = _wsl__('<strong>ERROR</strong>: Sorry, that username already exists!', 'wordpress-social-login');
-                }
-            }
-            # }}} validate username
+				if ( username_exists( $requested_user_login ) ) {
+					$profile_completion_errors[] = _wsl__( '<strong>ERROR</strong>: Sorry, that username already exists!', 'wordpress-social-login' );
+				}
+			}
+			# }}} validate username
 
-            # ... well, that was a lot of sorries.
+			# ... well, that was a lot of sorries.
 
-            # {{{ extra fields
-            if ($extra_fields == 1) {
-                $errors = new WP_Error();
+			# {{{ extra fields
+			if ( $extra_fields == 1 ) {
+				$errors = new WP_Error();
 
-                $errors = apply_filters('registration_errors', $errors, $requested_user_login, $requested_user_email);
+				$errors = apply_filters( 'registration_errors', $errors, $requested_user_login, $requested_user_email );
 
-                if ($errors = $errors->get_error_messages()) {
-                    foreach ($errors as $error) {
-                        $profile_completion_errors[] = $error;
-                    }
-                }
-            }
-            # }}} extra fields
+				if ( $errors = $errors->get_error_messages() ) {
+					foreach ( $errors as $error ) {
+						$profile_completion_errors[] = $error;
+					}
+				}
+			}
+			# }}} extra fields
 
-            $profile_completion_errors = apply_filters('wsl_new_users_gateway_alter_profile_completion_errors', $profile_completion_errors);
+			$profile_completion_errors = apply_filters( 'wsl_new_users_gateway_alter_profile_completion_errors', $profile_completion_errors );
 
-            // all check?
-            if (!$profile_completion_errors) {
-                $shall_pass = true;
-            }
-        }
-    }
-    $shall_pass = true;
-    if ($shall_pass == false) {
-        $provider_name = wsl_get_provider_name_by_id($provider);
+			// all check?
+			if ( ! $profile_completion_errors ) {
+				$shall_pass = true;
+			}
+		}
+	}
+	$shall_pass = true;
+	if ( $shall_pass == false ) {
+		$provider_name = wsl_get_provider_name_by_id( $provider );
 //        foody_get_template_part(get_template_directory() . '/template-parts/login-welcome.php', [
 //            'profile' => $hybridauth_user_profile
 //        ]);
 
 
-        ?>
+		?>
 
         <!DOCTYPE html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-            <title><?php echo get_bloginfo('name'); ?></title>
+            <title><?php echo get_bloginfo( 'name' ); ?></title>
             <style type="text/css">
                 html, body {
                     height: 100%;
@@ -485,9 +486,9 @@ function wsl_process_login_new_users_gateway($provider, $redirect_to, $hybridaut
                 </div>
 
                 <div id="welcome">
-                    <img id="idp-icon" src="<?php echo $assets_base_url . strtolower($provider); ?>.png">
-                    <b><?php printf(_wsl__("Hi %s", 'wordpress-social-login'), htmlentities($hybridauth_user_profile->displayName)); ?></b>
-                    <p><?php printf(_wsl__("You're now signed in with your %s account but you are still one step away of getting into our website", 'wordpress-social-login'), $provider); ?>
+                    <img id="idp-icon" src="<?php echo $assets_base_url . strtolower( $provider ); ?>.png">
+                    <b><?php printf( _wsl__( "Hi %s", 'wordpress-social-login' ), htmlentities( $hybridauth_user_profile->displayName ) ); ?></b>
+                    <p><?php printf( _wsl__( "You're now signed in with your %s account but you are still one step away of getting into our website", 'wordpress-social-login' ), $provider ); ?>
                         .</p>
 
                     <hr/>
@@ -495,95 +496,95 @@ function wsl_process_login_new_users_gateway($provider, $redirect_to, $hybridaut
 
                 <table id="mapping-options" border="0">
                     <tr>
-                        <?php if ($linking_enabled == 1): ?>
+						<?php if ( $linking_enabled == 1 ): ?>
                             <td valign="top" width="50%" style="text-align:center;">
-                                <h4><?php _wsl_e("Already have an account", 'wordpress-social-login'); ?>?</h4>
-                                <p style="font-size: 12px;"><?php printf(_wsl__("Link your existing account on our website to your %s ID.", 'wordpress-social-login'), $provider); ?></p>
+                                <h4><?php _wsl_e( "Already have an account", 'wordpress-social-login' ); ?>?</h4>
+                                <p style="font-size: 12px;"><?php printf( _wsl__( "Link your existing account on our website to your %s ID.", 'wordpress-social-login' ), $provider ); ?></p>
                             </td>
-                        <?php endif; ?>
+						<?php endif; ?>
 
                         <td valign="top" width="50%" style="text-align:center;">
-                            <h4><?php _wsl_e("New to our website", 'wordpress-social-login'); ?>?</h4>
-                            <p style="font-size: 12px;"><?php printf(_wsl__("Create a new account and it will be associated with your %s ID.", 'wordpress-social-login'), $provider); ?></p>
+                            <h4><?php _wsl_e( "New to our website", 'wordpress-social-login' ); ?>?</h4>
+                            <p style="font-size: 12px;"><?php printf( _wsl__( "Create a new account and it will be associated with your %s ID.", 'wordpress-social-login' ), $provider ); ?></p>
                         </td>
                     </tr>
 
                     <tr>
-                        <?php if ($linking_enabled == 1): ?>
+						<?php if ( $linking_enabled == 1 ): ?>
                             <td valign="top" width="50%" style="text-align:center;">
                                 <input type="button"
-                                       value="<?php _wsl_e("Link my account", 'wordpress-social-login'); ?>"
+                                       value="<?php _wsl_e( "Link my account", 'wordpress-social-login' ); ?>"
                                        class="button-primary" onclick="display_mapping_authenticate();">
                             </td>
-                        <?php endif; ?>
+						<?php endif; ?>
 
                         <td valign="top" width="50%" style="text-align:center;">
-                            <?php if ($require_email != 1 && $change_username != 1 && $extra_fields != 1): ?>
+							<?php if ( $require_email != 1 && $change_username != 1 && $extra_fields != 1 ): ?>
                                 <input type="button"
-                                       value="<?php _wsl_e("Create a new account", 'wordpress-social-login'); ?>"
+                                       value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>"
                                        class="button-primary" onclick="document.getElementById('info-form').submit();">
-                            <?php else : ?>
+							<?php else : ?>
                                 <input type="button"
-                                       value="<?php _wsl_e("Create a new account", 'wordpress-social-login'); ?>"
+                                       value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>"
                                        class="button-primary" onclick="display_mapping_complete_info();">
-                            <?php endif; ?>
+							<?php endif; ?>
                         </td>
                     </tr>
                 </table>
 
-                <?php
-                if ($account_linking_errors) {
-                    echo '<div id="errors-account-linking" class="error">';
+				<?php
+				if ( $account_linking_errors ) {
+					echo '<div id="errors-account-linking" class="error">';
 
-                    foreach ($account_linking_errors as $error) {
-                        ?><p><?php echo $error; ?></p><?php
-                    }
+					foreach ( $account_linking_errors as $error ) {
+						?><p><?php echo $error; ?></p><?php
+					}
 
-                    echo '</div>';
-                }
+					echo '</div>';
+				}
 
-                if ($profile_completion_errors) {
-                    echo '<div id="errors-profile-completion" class="error">';
+				if ( $profile_completion_errors ) {
+					echo '<div id="errors-profile-completion" class="error">';
 
-                    foreach ($profile_completion_errors as $error) {
-                        ?><p><?php echo $error; ?></p><?php
-                    }
+					foreach ( $profile_completion_errors as $error ) {
+						?><p><?php echo $error; ?></p><?php
+					}
 
-                    echo '</div>';
-                }
-                ?>
+					echo '</div>';
+				}
+				?>
 
-                <form method="post" action="<?php echo site_url('wp-login.php', 'login_post'); ?>" id="link-form">
+                <form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="link-form">
                     <table id="mapping-authenticate" border="0">
                         <tr>
                             <td valign="top" width="50%" style="text-align:center;">
-                                <h4><?php _wsl_e("Already have an account", 'wordpress-social-login'); ?>?</h4>
+                                <h4><?php _wsl_e( "Already have an account", 'wordpress-social-login' ); ?>?</h4>
 
-                                <p><?php printf(_wsl__("Please enter your username and password of your existing account on our website. Once verified, it will linked to your %s ID", 'wordpress-social-login'), ucfirst($provider)); ?>
+                                <p><?php printf( _wsl__( "Please enter your username and password of your existing account on our website. Once verified, it will linked to your %s ID", 'wordpress-social-login' ), ucfirst( $provider ) ); ?>
                                     .</p>
                             </td>
                         </tr>
                         <tr>
                             <td valign="bottom" width="50%" style="text-align:left;">
                                 <label>
-                                    <?php _wsl_e("Username", 'wordpress-social-login'); ?>
+									<?php _wsl_e( "Username", 'wordpress-social-login' ); ?>
                                     <br/>
                                     <input type="text" name="user_login" class="input" value="" size="25"
                                            placeholder=""/>
                                 </label>
 
                                 <label>
-                                    <?php _wsl_e("Password", 'wordpress-social-login'); ?>
+									<?php _wsl_e( "Password", 'wordpress-social-login' ); ?>
                                     <br/>
                                     <input type="password" name="user_password" class="input" value="" size="25"
                                            placeholder=""/>
                                 </label>
 
-                                <input type="submit" value="<?php _wsl_e("Continue", 'wordpress-social-login'); ?>"
+                                <input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>"
                                        class="button-primary">
 
                                 <a href="javascript:void(0);" onclick="display_mapping_options();"
-                                   class="back-to-options"><?php _wsl_e("Back", 'wordpress-social-login'); ?></a>
+                                   class="back-to-options"><?php _wsl_e( "Back", 'wordpress-social-login' ); ?></a>
                             </td>
                         </tr>
                     </table>
@@ -594,58 +595,58 @@ function wsl_process_login_new_users_gateway($provider, $redirect_to, $hybridaut
                     <input type="hidden" id="bouncer_account_linking" name="bouncer_account_linking" value="1">
                 </form>
 
-                <form method="post" action="<?php echo site_url('wp-login.php', 'login_post'); ?>" id="info-form">
+                <form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="info-form">
                     <table id="mapping-complete-info" border="0">
                         <tr>
                             <td valign="top" width="50%" style="text-align:center;">
-                                <?php if ($linking_enabled == 1): ?>
-                                    <h4><?php _wsl_e("New to our website", 'wordpress-social-login'); ?>?</h4>
-                                <?php endif; ?>
+								<?php if ( $linking_enabled == 1 ): ?>
+                                    <h4><?php _wsl_e( "New to our website", 'wordpress-social-login' ); ?>?</h4>
+								<?php endif; ?>
 
-                                <p><?php printf(_wsl__("Please fill in your information in the form below. Once completed, you will be able to automatically sign into our website through your %s ID", 'wordpress-social-login'), $provider_name); ?>
+                                <p><?php printf( _wsl__( "Please fill in your information in the form below. Once completed, you will be able to automatically sign into our website through your %s ID", 'wordpress-social-login' ), $provider_name ); ?>
                                     .</p>
                             </td>
                         </tr>
                         <tr>
                             <td valign="bottom" width="50%" style="text-align:left;">
-                                <?php if ($change_username == 1): ?>
+								<?php if ( $change_username == 1 ): ?>
                                     <label>
-                                        <?php _wsl_e("Username", 'wordpress-social-login'); ?>
+										<?php _wsl_e( "Username", 'wordpress-social-login' ); ?>
                                         <br/>
                                         <input type="text" name="user_login" class="input"
                                                value="<?php echo $requested_user_login; ?>" size="25" placeholder=""/>
                                     </label>
-                                <?php endif; ?>
+								<?php endif; ?>
 
-                                <?php if ($require_email == 1): ?>
+								<?php if ( $require_email == 1 ): ?>
                                     <label>
-                                        <?php _wsl_e("E-mail", 'wordpress-social-login'); ?>
+										<?php _wsl_e( "E-mail", 'wordpress-social-login' ); ?>
                                         <br/>
                                         <input type="text" name="user_email" class="input"
                                                value="<?php echo $requested_user_email; ?>" size="25" placeholder=""/>
                                     </label>
-                                <?php endif; ?>
+								<?php endif; ?>
 
-                                <?php
-                                /**
-                                 * Fires following the 'E-mail' field in the user registration form.
-                                 *
-                                 * hopefully, this won't become a pain in future
-                                 *
-                                 * Ref: http://codex.wordpress.org/Plugin_API/Action_Reference/register_form
-                                 */
-                                if ($extra_fields == 1) {
-                                    do_action('register_form');
-                                }
-                                ?>
+								<?php
+								/**
+								 * Fires following the 'E-mail' field in the user registration form.
+								 *
+								 * hopefully, this won't become a pain in future
+								 *
+								 * Ref: http://codex.wordpress.org/Plugin_API/Action_Reference/register_form
+								 */
+								if ( $extra_fields == 1 ) {
+									do_action( 'register_form' );
+								}
+								?>
 
-                                <input type="submit" value="<?php _wsl_e("Continue", 'wordpress-social-login'); ?>"
+                                <input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>"
                                        class="button-primary">
 
-                                <?php if ($linking_enabled == 1): ?>
+								<?php if ( $linking_enabled == 1 ): ?>
                                     <a href="javascript:void(0);" onclick="display_mapping_options();"
-                                       class="back-to-options"><?php _wsl_e("Back", 'wordpress-social-login'); ?></a>
-                                <?php endif; ?>
+                                       class="back-to-options"><?php _wsl_e( "Back", 'wordpress-social-login' ); ?></a>
+								<?php endif; ?>
                             </td>
                         </tr>
                     </table>
@@ -659,23 +660,23 @@ function wsl_process_login_new_users_gateway($provider, $redirect_to, $hybridaut
 
             <p class="back-to-home">
                 <a href="<?php echo home_url(); ?>">
-                    &#8592; <?php printf(_wsl__("Back to %s", 'wordpress-social-login'), get_bloginfo('name')); ?></a>
+                    &#8592; <?php printf( _wsl__( "Back to %s", 'wordpress-social-login' ), get_bloginfo( 'name' ) ); ?></a>
             </p>
         </div>
 
-        <?php
-        // Development mode on?
-        if (get_option('wsl_settings_development_mode_enabled')) {
-            wsl_display_dev_mode_debugging_area();
-        }
-        ?>
+		<?php
+		// Development mode on?
+		if ( get_option( 'wsl_settings_development_mode_enabled' ) ) {
+			wsl_display_dev_mode_debugging_area();
+		}
+		?>
         </body>
         </html>
-        <?php
-        die();
-    }
+		<?php
+		die();
+	}
 
-    return array($shall_pass, $user_id, $requested_user_login, $requested_user_email);
+	return array( $shall_pass, $user_id, $requested_user_login, $requested_user_email );
 }
 
 // --------------------------------------------------------------------

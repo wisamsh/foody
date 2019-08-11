@@ -26,6 +26,10 @@ if (file_exists($root_dir . '/.env')) {
  */
 define('WP_ENV', env('WP_ENV') ?: 'production');
 
+define('VIPLUS_BASE_URL','http://members.viplus.com/subscribe.aspx');
+define('VIPLUS_KEY','a8a36351-f176-44d0-941e-7fdc4476cc30');
+
+
 if (
     WP_ENV == 'production'
     || (WP_ENV == 'medio-development' && isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false)) {
@@ -41,7 +45,7 @@ if (file_exists($env_config)) {
 
 // Foody related
 define('FOODY_PAGE', 'fp');
-
+define('COOKIE_DOMAIN', false);
 /**
  * URLs
  */
@@ -52,8 +56,17 @@ define('WP_SITEURL', env('WP_SITEURL'));
  * Custom Content Directory
  */
 define('CONTENT_DIR', '/app');
+define('WEB_ROOT', $webroot_dir);
 define('WP_CONTENT_DIR', $webroot_dir . CONTENT_DIR);
 define('WP_CONTENT_URL', WP_HOME . CONTENT_DIR);
+
+
+/*
+ * Logger
+ * */
+
+define('FOODY_LOGGER_PATH',env('FOODY_LOGGER_PATH'));
+
 
 /**
  * DB settings

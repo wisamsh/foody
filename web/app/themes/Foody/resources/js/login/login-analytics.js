@@ -1,6 +1,7 @@
 /**
  * Created by omerfishman on 3/26/19.
  */
+let FoodyLocationUtils = require('../common/foody-location-utils');
 
 jQuery(document).ready(($) => {
 
@@ -17,12 +18,12 @@ jQuery(document).ready(($) => {
 
         // Google Login
         googleButton.click((event) => {
-            eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'גוגל');
+            eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'Google');
         });
 
         // Facebook Login
         facebookButton.click((event) => {
-            eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'פייסבוק');
+            eventCallback(event, 'רישום לאתר', 'לחיצה לתחילת רישום', 'Facebook');
         });
 
         /**
@@ -46,7 +47,9 @@ jQuery(document).ready(($) => {
         /**
          * Login Failure
          */
-        if (jQuery('#login-form .foody-alert.login-failed-alert:visible').length) {
+        let locationUtils = new FoodyLocationUtils();
+        let loginQuery = locationUtils.getQuery('login');
+        if (loginQuery == 'failed' && jQuery('#login-form .foody-alert.login-failed-alert:visible').length) {
             if (jQuery('#login-form .foody-alert.login-failed-alert:visible').css('opacity') != 0) {
                 let errorMessage = jQuery('#login-form .foody-alert.login-failed-alert:visible span').text().trim();
                 eventCallback(event, 'הזדהות', 'הזדהות נכשלה', 'אתר', 'הודעה', errorMessage);

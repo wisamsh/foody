@@ -10,7 +10,7 @@
     }
 
     &.active {
-      color: $color__primary;
+      color: var(--color__primary);
       font-weight: 900;
     }
 

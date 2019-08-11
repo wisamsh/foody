@@ -39,15 +39,22 @@ $content-width: 95%;
       padding: 10px 20px;
       margin-bottom: 10px;
 
+      .newsletter-title {
+        font-size: 16px;
+        font-weight: 500;
+        text-align: right;
+        color: var(--color__primary);
+      }
+
       .newsletter {
         padding: 0;
         margin-bottom: 0;
       }
-      h4 {
+      .newsletter-title {
         font-size: 16px;
         font-weight: 500;
         text-align: right;
-        color: $color__primary;
+        color: var(--color__primary);
       }
 
       p {
@@ -66,7 +73,7 @@ $content-width: 95%;
           &[type="submit"] {
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
             background-color: #ffffff;
-            color: $color__primary;
+            color: var(--color__primary);
             font-weight: 900;
           }
 

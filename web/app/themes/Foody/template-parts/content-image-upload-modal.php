@@ -7,11 +7,11 @@
  */
 $modal = $template_args;
 
-$btn_approve = foody_get_array_default($modal, 'btn_approve', __('שלח', 'foody'));
-$btn_cancel = foody_get_array_default($modal, 'btn_cancel', __('ביטול', 'foody'));
+$btn_approve = foody_get_array_default( $modal, 'btn_approve', __( 'שלח', 'foody' ) );
+$btn_cancel  = foody_get_array_default( $modal, 'btn_cancel', __( 'ביטול', 'foody' ) );
 
-$btn_approve_classes = foody_get_array_default($modal, 'btn_approve_classes', 'btn-approve');
-$btn_cancel_classes = foody_get_array_default($modal, 'btn_cancel_classes', 'btn-cancel');
+$btn_approve_classes = foody_get_array_default( $modal, 'btn_approve_classes', 'btn-approve' );
+$btn_cancel_classes  = foody_get_array_default( $modal, 'btn_cancel_classes', 'btn-cancel' );
 
 ?>
 
@@ -21,7 +21,7 @@ $btn_cancel_classes = foody_get_array_default($modal, 'btn_cancel_classes', 'btn
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <?php echo $modal['title'] ?>
+					<?php echo $modal['title'] ?>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -34,22 +34,22 @@ $btn_cancel_classes = foody_get_array_default($modal, 'btn_cancel_classes', 'btn
                     </div>
                     <div class="comment-input-container">
                         <label for="comment">
-                            <?php echo wp_get_current_user()->display_name ?>
+							<?php echo wp_get_current_user()->display_name ?>
                         </label>
                         <input max="80" class="comment" type="text" name="comment" id="comment"
                                placeholder="הקלד תיאור…">
                     </div>
                     <input type="file" id="file" name="attachment">
                     <button type="button" class="btn btn-secondary <?php echo $btn_cancel_classes ?>"
-                            data-dismiss="modal">
-                        <?php echo $btn_cancel ?>
+                            data-dismiss="modal" aria-label="<?php echo $btn_cancel ?>">
+						<?php echo $btn_cancel ?>
                     </button>
-                    <button type="submit" class="btn btn-primary <?php echo $btn_approve_classes ?>">
-                        <?php echo $btn_approve ?>
+                    <button type="submit" class="btn btn-primary <?php echo $btn_approve_classes ?>"
+                            aria-label="<?php echo $btn_approve ?>">
+						<?php echo $btn_approve ?>
                     </button>
                 </form>
             </div>
-
 
 
             <div class="modal-footer">

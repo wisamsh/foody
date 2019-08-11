@@ -10,6 +10,7 @@
 get_header();
 
 $homepage = new Foody_HomePage();
+$homepage->init();
 ?>
 
     <div id="primary" class="content-area">
@@ -26,7 +27,7 @@ $homepage = new Foody_HomePage();
 
 
                     <h2 class="title not-found-title">
-						<?php echo get_option('foody_404_text',__( 'אופס… העמוד לא נמצא<br> אבל אולי יעניין אותך גם… ', 'foody' )); ?>
+						<?php echo get_option( 'foody_404_text', __( 'אופס… העמוד לא נמצא<br> אבל אולי יעניין אותך גם… ', 'foody' ) ); ?>
                     </h2>
 
 
@@ -38,10 +39,10 @@ $homepage = new Foody_HomePage();
 							<?php $homepage->promoted_items(); ?>
 
 							<?php
-
-							$num = wp_is_mobile() ? 4 : 6;
-							echo do_shortcode( '[foody_team max="' . $num . '" show_title="true"]' )
-
+							if ( ! is_multisite() || is_main_site() ) {
+								$num = wp_is_mobile() ? 4 : 6;
+								echo do_shortcode( '[foody_team max="' . $num . '" show_title="true"]' );
+							}
 							?>
 
                             <section class="feed-container row">

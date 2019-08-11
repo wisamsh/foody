@@ -6,9 +6,9 @@
  * Time: 12:19 PM
  */
 
-$page = get_page_by_path('הרשמה')->ID;
-$image_right = get_field('right_image', $page);
-$image_left = get_field('left_image', $page);
+$page        = get_page_by_path( 'הרשמה' )->ID;
+$image_right = get_field( 'right_image', $page );
+$image_left  = get_field( 'left_image', $page );
 
 $profile = $template_args['profile'];
 
@@ -16,6 +16,7 @@ $username  = $profile['username'];
 $marketing = $template_args['marketing'];
 $eBook     = $template_args['e-book'];
 
+$campaign_link = get_field( 'campaign_link', $page );
 ?>
 
 <section class="welcome">
@@ -25,24 +26,32 @@ $eBook     = $template_args['e-book'];
     </div>
 
     <h2>
-        <?php echo sprintf(__('%s, נעים להכיר!'), $username) ?>
+		<?php echo sprintf( __( '%s, נעים להכיר!' ), $username ) ?>
         <br>
     </h2>
     <input class="marketing-approved" type="hidden" value="<?php echo $marketing ?>">
     <input class="e-book-approved" type="hidden" value="<?php echo $eBook ?>">
 
     <p>
-        <?php
-        echo __('נרשמת בהצלחה, עכשיו נשאר לארגן את המטבח לארוחה הבאה.', 'foody');
-        ?>
+		<?php
+		echo __( 'נרשמת בהצלחה, עכשיו נשאר לארגן את המטבח לארוחה הבאה.', 'foody' );
+		?>
     </p>
 
 
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" aria-label="למעבר לעמוד הבית">
 
-        <a href="<?php echo home_url() ?>"> <?php echo __('עבור לעמוד הראשי', 'foody') ?> </a>
+        <a href="<?php echo home_url() ?>"> <?php echo __( 'עבור לעמוד הראשי', 'foody' ) ?> </a>
     </button>
 
+    <div class="campaign-button">
+		<?php if ( ! empty( $campaign_link ) && ! empty( $campaign_link['title'] ) ): ?>
+            <a class="btn" href="<?php echo $campaign_link['url'] ?>"
+               target="<?php echo $campaign_link['target'] ?>">
+				<?php echo $campaign_link['title'] ?>
+            </a>
+		<?php endif; ?>
+    </div>
 
 </section>
 

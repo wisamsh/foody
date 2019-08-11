@@ -4,13 +4,13 @@
 
 let toggleFollowed = require('../common/follow');
 let FoodySearchFilter = require('../common/foody-search-filter');
+let FoodyContentPaging = require('../common/page-content-paging');
 require('cropperjs');
 require('cropperjs/dist/cropper.min.css');
 require('jquery-cropper');
 let FoodyLoader = require('../common/foody-loader');
 let readUrl = require('../common/image-reader');
 jQuery(document).ready(($) => {
-
 
 
     // Followed topics list
@@ -56,7 +56,7 @@ jQuery(document).ready(($) => {
 
 
     // Foody search and filter
-    new FoodySearchFilter({
+    let profile_filter = new FoodySearchFilter({
         selector: '.page-template-profile #accordion-foody-filter',
         grid: '#my-channels-grid',
         cols: 1,
@@ -72,6 +72,12 @@ jQuery(document).ready(($) => {
         page: '.page-template-profile',
         context: 'profile',
         contextArgs: ['favorites']
+    });
+
+    new FoodyContentPaging({
+        context: 'profile',
+        filter: profile_filter,
+        contextArgs: ['channels']
     });
 
     // Tab switch analytics
@@ -139,42 +145,44 @@ jQuery(document).ready(($) => {
 
 
     // Change password form validation
-    $("#password-reset").validate({
-        rules: {
-            current_password: {
-                required: true,
-                password: true,
-                minlength: 8,
+    if ($("#password-reset").length) {
+        $("#password-reset").validate({
+            rules: {
+                current_password: {
+                    required: true,
+                    password: true,
+                    minlength: 8,
+                },
+                password: {
+                    required: true,
+                    minlength: 8,
+                    password: true,
+                },
+                password_confirmation: {
+                    required: true,
+                    equalTo: '#password[name="password"]',
+                }
             },
-            password: {
-                required: true,
-                minlength: 8,
-                password: true,
-            },
-            password_confirmation: {
-                required: true,
-                equalTo: '#password[name="password"]',
+            messages: {
+                current_password: {
+                    required: 'סיסמא נוכחית הינו שדה חובה',
+                    password: 'סיסמא אינה תקינה',
+                    minlength: 'יש להזין לפחות 8 תווים'
+                },
+                password: {
+                    required: 'סיסמא חדשה הינו שדה חובה',
+                    password: 'סיסמא אינה תקינה',
+                    minlength: 'יש להזין לפחות 8 תווים'
+                },
+                password_confirmation: {
+                    required: 'ווידוא סיסמא הינו שדה חובה',
+                    equalTo: 'סיסמאות אינן תואמות'
+                }
+            }, submitHandler: function (form) {
+                form.submit();
             }
-        },
-        messages: {
-            current_password: {
-                required: 'סיסמא נוכחית הינו שדה חובה',
-                password: 'סיסמא אינה תקינה',
-                minlength: 'יש להזין לפחות 8 תווים'
-            },
-            password: {
-                required: 'סיסמא חדשה הינו שדה חובה',
-                password: 'סיסמא אינה תקינה',
-                minlength: 'יש להזין לפחות 8 תווים'
-            },
-            password_confirmation: {
-                required: 'ווידוא סיסמא הינו שדה חובה',
-                equalTo: 'סיסמאות אינן תואמות'
-            }
-        }, submitHandler: function (form) {
-            form.submit();
-        }
-    });
+        });
+    }
 
 
     formSubmit({
@@ -197,34 +205,36 @@ jQuery(document).ready(($) => {
         }
     });
 
-    $("form#edit-user-details").validate({
-        rules: {
-            first_name: {
-                required: true
+    if ($("form#edit-user-details").length) {
+        $("form#edit-user-details").validate({
+            rules: {
+                first_name: {
+                    required: true
+                },
+                last_name: {
+                    required: true
+                },
+                phone_number: {
+                    regex: /^((\+972|972)|0)( |-)?([1-468-9]( |-)?\d{7}|(5|7)[0-9]( |-)?\d{7})/
+                }
             },
-            last_name: {
-                required: true
+            messages: {
+                first_name: {
+                    required: 'שם פרטי הינו שדה חובה'
+                },
+                last_name: {
+                    required: 'שם משפחה הינו שדה חובה'
+                },
+                phone_number: {
+                    regex: 'מספר טלפון אינו תקין'
+                }
             },
-            phone_number: {
-                regex: /^((\+972|972)|0)( |-)?([1-468-9]( |-)?\d{7}|(5|7)[0-9]( |-)?\d{7})/
+            submitHandler: (form) => {
+                console.log('submitHandler');
+                form.submit();
             }
-        },
-        messages: {
-            first_name: {
-                required: 'שם פרטי הינו שדה חובה'
-            },
-            last_name: {
-                required: 'שם משפחה הינו שדה חובה'
-            },
-            phone_number: {
-                regex: 'מספר טלפון אינו תקין'
-            }
-        },
-        submitHandler: (form) => {
-            console.log('submitHandler');
-            form.submit();
-        }
-    });
+        });
+    }
 
 
     let $uploadModal = $('#profile-pic-upload-modal');

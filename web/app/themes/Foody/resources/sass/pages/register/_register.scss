@@ -2,6 +2,14 @@
 
 .register, .login {
 
+
+  .login-title{
+    color: var(--color__primary);
+    font-size: 24px;
+    text-align: right;
+    font-weight: 900;
+  }
+
   &.failed {
     .login-failed-alert {
       opacity: 1;
@@ -145,7 +153,7 @@
           -moz-border-radius: 50%;
           -webkit-border-radius: 50%;
           border-radius: 50%;
-          background-color: $color__primary;
+          background-color: var(--color__primary);
           vertical-align: middle;
         }
       }
@@ -221,6 +229,23 @@
       }
     }
 
+  }
+
+  .campaign-button {
+
+    a {
+      border-image-source: linear-gradient(76deg, #ec3849, #f35644);
+      margin-top: 10px;
+      padding: 12px 30px;
+      border: 2px solid #EC3849;
+      width: 50%;
+      font-size: 18px;
+      font-weight: bold;
+
+      &:hover {
+        background-color: rgba(243, 86, 68, 0.2);
+      }
+    }
   }
 
 }

@@ -3,7 +3,7 @@ $sidebar-width: 21%;
 body {
   &.has-background {
     footer {
-      background-color: $color__background-screen;
+      background-color: var(--color__background-screen);
     }
   }
 }
@@ -60,7 +60,7 @@ footer.site-footer {
       margin: 0;
 
       &:not(:last-child) {
-        border-left: solid 1px $color__divider;
+        border-left: solid 1px var(--color__divider);
       }
 
       li {
@@ -77,6 +77,8 @@ footer.site-footer {
       .newsletter-title {
         font-weight: 900;
         font-size: 18px;
+        margin-bottom: 0.5rem;
+        text-align: right;
       }
 
       .newsletter {
@@ -84,6 +86,7 @@ footer.site-footer {
 
         p {
           margin: 0;
+
           input {
             height: 40px;
             border-radius: 3px;
@@ -110,7 +113,7 @@ footer.site-footer {
               box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
               background-color: #ffffff;
               border: none;
-              color: $color__primary;
+              color: var(--color__primary);
               font-size: 1em;
               cursor: pointer;
               font-weight: 900;
@@ -126,6 +129,7 @@ footer.site-footer {
           padding-left: 2rem;
           padding-right: 0;
         }
+
         &:nth-child(even) {
           padding-right: 2rem;
           padding-left: 0;
@@ -172,6 +176,23 @@ footer.site-footer {
     position: initial !important;
     border: none;
 
+    .footer-social-container {
+
+      .widgettitle {
+        font-size: 1.7rem;
+        font-weight: 900;
+        letter-spacing: -0.1px;
+        text-align: right;
+        color: var(--color__primary);
+      }
+
+      .fb-page, .fb-page span, .fb-page span iframe[style] {
+        width: 340px !important;
+        margin: 0 auto;
+        display: block;
+      }
+    }
+
     > .newsletter {
       background-image: linear-gradient(67deg, #ec3849, #f35644);
       padding: 15px;
@@ -179,6 +200,9 @@ footer.site-footer {
       .newsletter-title {
         color: #fff;
         font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        text-align: right;
       }
 
       //.newsletter {
@@ -196,6 +220,7 @@ footer.site-footer {
         p {
           margin: 0;
           text-align: right;
+
           input[type="email"] {
             @extend .newsletter-input;
             width: 70%;
@@ -212,7 +237,7 @@ footer.site-footer {
 
           input[type="submit"] {
             @extend .newsletter-input;
-            color: $color__primary;
+            color: var(--color__primary);
             font-weight: 900;
           }
         }
@@ -263,6 +288,7 @@ footer.site-footer {
 
         li {
           line-height: 1.3rem;
+
           a {
           }
         }
@@ -290,6 +316,12 @@ footer.site-footer {
             }
           }
         }
+      }
+
+      .foody-israel-footer {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
       }
 
       .powered-by {

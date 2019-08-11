@@ -21,19 +21,18 @@
 *   Restrict non logged users to certain pages
 */
 
-add_action('template_redirect', 'foody_non_logged_redirect');
-function foody_non_logged_redirect()
-{
-    $restricted_pages = array(
-        'פרופיל-אישי'
-    );
+add_action( 'template_redirect', 'foody_non_logged_redirect' );
+function foody_non_logged_redirect() {
+	$restricted_pages = array(
+		'פרופיל-אישי'
+	);
 
-    $slug = urldecode(get_post_field('post_name', get_post()));
+	$slug = urldecode( get_post_field( 'post_name', get_post() ) );
 
-    if (in_array($slug, $restricted_pages) && !is_user_logged_in()) {
-        wp_redirect(wp_login_url(get_permalink()));
-        die();
-    }
+	if ( in_array( $slug, $restricted_pages ) && ! is_user_logged_in() ) {
+		wp_redirect( wp_login_url( get_permalink() ) );
+		die();
+	}
 }
 
 
@@ -41,20 +40,19 @@ function foody_non_logged_redirect()
 *   Restrict logged users from login and registration
 */
 
-add_action('template_redirect', 'foody_logged_redirect');
-function foody_logged_redirect()
-{
-    $signon_pages = array(
-        'הרשמה',
-        'התחברות'
-    );
+add_action( 'template_redirect', 'foody_logged_redirect' );
+function foody_logged_redirect() {
+	$signon_pages = array(
+		'הרשמה',
+		'התחברות'
+	);
 
-    $slug = urldecode(get_post_field('post_name', get_post()));
+	$slug = urldecode( get_post_field( 'post_name', get_post() ) );
 
-    if (in_array($slug, $signon_pages) && is_user_logged_in()) {
-        if(!isset($_REQUEST['registered'])){
-            wp_redirect(home_url());
-            die();
-        }
-    }
+	if ( in_array( $slug, $signon_pages ) && is_user_logged_in() ) {
+		if ( ! isset( $_REQUEST['registered'] ) ) {
+			wp_redirect( home_url() );
+			die();
+		}
+	}
 }

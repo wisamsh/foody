@@ -1,0 +1,11 @@
+.foody-list-item-spacing {
+  background-color: aliceblue;
+
+  &:before {
+    content: ' ';
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background-color: #0A246A;
+  }
+}

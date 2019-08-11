@@ -6,10 +6,30 @@
 jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe')) {
 
+        // Add to recipes visited in session count
+        set_recipe_order_location(foodyGlobals.ID);
+
+        let publishers = ['אין'];
+        if ($('.sponsors-container .sponsored-by.company div').length) {
+            publishers = [];
+            $('.sponsors-container .sponsored-by.company div').each((index, elem) => {
+                publishers.push(elem.innerHTML);
+            });
+        }
         /**
          * Page Load
          */
-        eventCallback(null,'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', foodyGlobals['author_name']);//TODO: Publisher
+        eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), get_recipe_order_location());
+debugger;
+
+        /**
+         * Breadcrumbs click
+         */
+        let breadcrumbs = jQuery('.details-container .breadcrumb');
+        breadcrumbs.delegate('li', 'click', function (event) {
+            let breadcrumb = jQuery(this).find('a').text().trim();
+            eventCallback(event, 'מתכון', 'מעבר לקטגוריה', breadcrumb, 'מיקום', 'פירורי לחם', get_recipe_order_location());
+        });
 
         /**
          * Add/Remove favorite recipe
@@ -20,9 +40,9 @@ jQuery(document).ready(($) => {
                 favButton.on("click", null, function (event) {
                     let isFav = jQuery(this).hasClass('icon-favorite-pressed');
                     if (isFav) {
-                        eventCallback(event, 'מתכון', 'הסרה ממועדפים', '', '', '');
+                        eventCallback(event, 'מתכון', 'הסרה ממועדפים', '', '', '', get_recipe_order_location());
                     } else {
-                        eventCallback(event, 'מתכון', 'הוספה למועדפים', '', '', '');
+                        eventCallback(event, 'מתכון', 'הוספה למועדפים', '', '', '', get_recipe_order_location());
                     }
                 });
             }
@@ -34,16 +54,16 @@ jQuery(document).ready(($) => {
         let ratings = jQuery('.post-ratings');
         ratings.delegate('img', 'click', function (event) {
             let ratingValue = this.id.charAt(this.id.length - 1);
-            eventCallback(event, 'מתכון', 'דירוג מתכון', '', 'ציון', ratingValue);
+            eventCallback(event, 'מתכון', 'דירוג מתכון', '', 'ציון', ratingValue, get_recipe_order_location());
         });
 
         /**
          * Social shares
          */
-        let socialShareList = jQuery('.details-container .social').find('ul');
+        let socialShareList = jQuery('.details-container .social .essb_links').find('ul');
         socialShareList.delegate('li', 'click', function (event) {
             let sharingPlatform = this.className.substring(this.className.lastIndexOf('_') + 1, this.className.lastIndexOf(' '));
-            eventCallback(event, 'מתכון', 'שיתוף', sharingPlatform);
+            eventCallback(event, 'מתכון', 'שיתוף', sharingPlatform, get_recipe_order_location());
         });
 
         /**
@@ -51,7 +71,7 @@ jQuery(document).ready(($) => {
          */
         if (jQuery('#number-of-dishes').length) {
             jQuery('#number-of-dishes').on("change", null, function (event) {
-                eventCallback(event, 'מתכון', 'שינוי מספר מנות', this.defaultValue, 'מספר מנות', this.value);
+                eventCallback(event, 'מתכון', 'שינוי מספר מנות', this.defaultValue, 'מספר מנות', this.value, get_recipe_order_location());
             });
         }
 
@@ -62,15 +82,15 @@ jQuery(document).ready(($) => {
         relatedRecipes.each((index, relatedRecipe) => {
             jQuery(relatedRecipe).find('.post-title a').click((event) => {
                 let recipeName = jQuery(event.target).text().trim();
-                let position = $('.details .post-title a').index(event.target)
-                eventCallback(event, 'מתכון', 'בחירת מתכון נוסף', recipeName, 'מיקום', position);
+                let position = $('.details .post-title a').index(event.target);
+                eventCallback(event, 'מתכון', 'בחירת מתכון נוסף', recipeName, 'מיקום', position, get_recipe_order_location());
             });
 
             jQuery(relatedRecipe).find('a .image-container').click((event) => {
                 let recipeName = jQuery(event.target).parent().parent().find('.details .post-title a').text().trim();
                 // let position = jQuery(this).parent().parent().index() + 1;
-                let position = $('a .image-container').index(event.target)
-                eventCallback(event, 'מתכון', 'בחירת מתכון נוסף', recipeName, 'מיקום', position);
+                let position = $('a .image-container').index(event.target);
+                eventCallback(event, 'מתכון', 'בחירת מתכון נוסף', recipeName, 'מיקום', position, get_recipe_order_location());
             });
         });
 
@@ -80,18 +100,100 @@ jQuery(document).ready(($) => {
         let categoriesHeader = jQuery('#main .sidebar-section');
         categoriesHeader.on('click', null, function (event) {
             if (jQuery('#categoriesHeader-widget-accordion').is(":hidden")) {
-                eventCallback(event, 'מתכון', 'פתיחת תפריט קטגוריות')
+                eventCallback(event, 'מתכון', 'פתיחת תפריט קטגוריות', get_recipe_order_location());
             }
         });
 
         /**
-         * Category click
+         * Side bar category click
          */
-        let categoriesList = jQuery(document.getElementsByClassName("category-accordion-item"));
-        categoriesList.on('click', null, function (event) {
+        let sideCategoriesList = jQuery(document.getElementsByClassName("category-accordion-item"));
+        sideCategoriesList.on('click', null, function (event) {
             let catName = jQuery(this).find('a').text().trim();
-            eventCallback(event, 'מתכון', 'מעבר לקטגוריה', catName, 'מיקום', 'תפריט ימין')
-        })
+            eventCallback(event, 'מתכון', 'מעבר לקטגוריה', catName, 'מיקום', 'תפריט ימין', get_recipe_order_location());
+        });
+
+        /**
+         * Bottom category click
+         */
+        let bottomCategories = jQuery('.recipe-categories .post-categories');
+        bottomCategories.delegate('li', 'click', function (event) {
+            let catName = jQuery(this).find('a').text().trim();
+            eventCallback(event, 'מתכון', 'מעבר לקטגוריה', catName, 'מיקום', 'פוטר', get_recipe_order_location());
+        });
+
+        /**
+         * Bottom tags click
+         */
+        let bottomTags = jQuery('.recipe-tags .post-tags');
+        bottomTags.delegate('li', 'click', function (event) {
+            let tagName = jQuery(this).find('a').text().trim();
+            eventCallback(event, 'מתכון', 'לחיצה על תגיות', tagName, 'מיקום', 'פוטר', get_recipe_order_location());
+        });
+
+        /**
+         * Newsletter registration
+         */
+        let newsletterSubmitBtn = jQuery('#wpcf7-f10340-p10877-o1 > form')
+        newsletterSubmitBtn.submit((event) => {
+            eventCallback(event, 'מתכון', 'לחיצה על רישום לדיוור', foodyGlobals['title'], 'מיקום', 'פוטר', get_recipe_order_location());
+        });
+
+        /**
+         * Add photo button
+         */
+        let addImage = jQuery('#image-upload-hidden');
+        addImage.click((event) => {
+            if (event.target.id !== 'attachment') {
+                eventCallback(event, 'מתכון', 'לחיצה על מצלמה', '', 'מיקום', 'פוטר', get_recipe_order_location());
+            }
+        });
+
+        /**
+         * Add photo approve button
+         */
+        let apprvoeAddingimage = jQuery('#image-upload-form > button.btn.btn-primary.btn-approve');
+        apprvoeAddingimage.click((event) => {
+            eventCallback(event, 'מתכון', 'העלאת תמונה', '', 'מיקום', 'פוטר', get_recipe_order_location());
+        });
+
+        /**
+         * Add comment
+         */
+        let addCommentBtn = jQuery('#submit');
+        addCommentBtn.click((event) => {
+            eventCallback(event, 'מתכון', 'הוספת תגובה', '', 'מיקום', 'פוטר', get_recipe_order_location());
+        });
+
+        /**
+         * Purchase button
+         */
+        let purchaseBtn = jQuery(document.getElementsByClassName('purchase-button-container'));
+        purchaseBtn.delegate('a', 'click', function (event) {
+            let buttonText = this.innerText;
+            eventCallback(event, 'מתכון', 'לחיצה לרכישה', buttonText, 'מיקום', 'עליון', get_recipe_order_location());
+        });
+
+        /**
+         * Scroll listener
+         */
+        $(window).scroll(function (e) {
+            const scrollTop = $(window).scrollTop();
+            const docHeight = $(document).height();
+            const winHeight = $(window).height();
+            const scrollPercent = (scrollTop) / (docHeight - winHeight);
+            const scrollPercentRounded = Math.round(scrollPercent * 100);
+            let toLog = false;
+            if (scrollPercentRounded === 0 || scrollPercentRounded === 25 ||
+                scrollPercentRounded === 50 || scrollPercentRounded === 75 || scrollPercentRounded === 100) {
+                toLog = true;
+            }
+            if (toLog) {
+                eventCallback(event, 'מתכון', 'גלילה', scrollPercentRounded + '%', '', '', get_recipe_order_location());
+
+            }
+        });
+
     }
 });
 
@@ -105,7 +207,7 @@ jQuery(document).ready(($) => {
  * @param cdDesc
  * @param cdValue
  */
-function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '') {
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location) {
 
     /**
      * Recipe name
@@ -152,9 +254,9 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
     }
 
     /**
-     * TODO: I Don't know!
+     * Index of recipe in current Session
      */
-    let order_location = 0;//TODO: Don't know
+    let order_location = recipe_order_location;
 
     /**
      * Recipe view count
@@ -184,4 +286,28 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
         cdValue,
         ''
     );
+}
+
+function get_recipe_order_location() {
+    let recipes_visited = JSON.parse(sessionStorage.getItem('recipes_visited'));
+
+    if (!recipes_visited) {
+        return 0;
+    }
+
+    return recipes_visited.length;
+}
+
+function set_recipe_order_location(recipe_id) {
+    let recipes_visited = JSON.parse(sessionStorage.getItem('recipes_visited'));
+
+    if (!recipes_visited) {
+        recipes_visited = [];
+    }
+
+    if (!recipes_visited.includes(recipe_id)) {
+        recipes_visited.push(recipe_id);
+    }
+
+    sessionStorage.setItem('recipes_visited', JSON.stringify(recipes_visited));
 }

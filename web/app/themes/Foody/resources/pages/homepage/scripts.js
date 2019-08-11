@@ -3,7 +3,7 @@
  */
 
 import '../common/scripts'
-require('slick-carousel');
+import('slick-carousel');
 import '../../js/components/index'
 import '../../js/homepage/team'
 import '../../js/homepage/recommended'

@@ -13,14 +13,14 @@ $list = $template_args;
 
 <ul class="managed-list">
 
-    <?php
-    foreach ($list as $item) {
-        foody_get_template_part(
-            get_template_directory() . '/template-parts/content-user-managed-list-item.php',
-            $item
-        );
-    }
-    ?>
+	<?php
+	foreach ( $list as $item ) {
+		foody_get_template_part(
+			get_template_directory() . '/template-parts/content-user-managed-list-item.php',
+			$item
+		);
+	}
+	?>
 
 
 </ul>

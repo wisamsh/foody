@@ -16,7 +16,7 @@ $(document).ready(() => {
             let $this = $(this);
 
             $this.on('click',() => {
-                if (foodyGlobals.loggedIn == 'false') {
+                if (foodyGlobals.loggedIn == false) {
                     return showLoginModal();
                 }
                 let topicId = $this.data('id');
@@ -30,6 +30,8 @@ $(document).ready(() => {
                     let eventName = null;
                     if (topic == 'followed_channels') {
                         eventName = 'follow channel';
+                    } else if (topic == 'followed_feed_channels') {
+                        eventName = 'follow feed channel';
                     } else if (topic == 'followed_authors') {
                         eventName = 'follow creator';
                     }

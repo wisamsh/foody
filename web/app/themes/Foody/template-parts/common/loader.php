@@ -11,7 +11,7 @@
 <div class="foody-loader"></div>
 <script>
 
-    jQuery(document).ready(()=>{
+    jQuery(document).ready(() => {
         lottie.loadAnimation({
             container: $('.foody-loader')[0], // the dom element that will contain the animation
             renderer: 'svg',
@@ -20,7 +20,6 @@
             path: '/app/themes/Foody/resources/lottie/loader.json' // the path to the animation json
         });
     });
-
 
 
 </script>

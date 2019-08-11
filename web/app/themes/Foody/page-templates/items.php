@@ -16,21 +16,21 @@ get_header();
         <div id="primary" class="content-area">
             <div class="site-content" role="main">
 
-                <?php $items_page->cover() ?>
+				<?php $items_page->cover() ?>
 
                 <div class="container container-max-960 ">
-                    <?php if (function_exists('bootstrap_breadcrumb')): ?>
+					<?php if ( function_exists( 'bootstrap_breadcrumb' ) ): ?>
 
-                        <?php bootstrap_breadcrumb(); ?>
+						<?php bootstrap_breadcrumb(); ?>
 
-                    <?php endif; ?>
+					<?php endif; ?>
 
-                    <?php echo the_title('<h1 class="title mt-0 mb-0">', '</h1>') ?>
+					<?php echo the_title( '<h1 class="title mt-0 mb-0">', '</h1>' ) ?>
 
 
-                    <?php the_content(); ?>
+					<?php the_content(); ?>
 
-                    <?php $items_page->items() ?>
+					<?php $items_page->items() ?>
                 </div>
 
             </div><!-- #content -->

@@ -10,11 +10,12 @@
 <section class="no-results">
 
     <div>
-        <img src="<?php echo $GLOBALS['images_dir'] . 'empty-recipes.svg' ?>" alt="">
+        <img src="<?php echo $GLOBALS['images_dir'] . 'empty-recipes.svg' ?>"
+             alt="<?php echo __( 'לא נמצאו תוצאות' ) ?>">
 
     </div>
 
     <h2>
-        <?php echo __('לא נמצאו תוצאות', 'foody') ?>
+		<?php echo __( 'לא נמצאו תוצאות', 'foody' ) ?>
     </h2>
 </section>

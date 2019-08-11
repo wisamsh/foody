@@ -8,4 +8,4 @@
 
 define( 'WORDPRESS_SOCIAL_LOGIN_CUSTOM_ENDPOINT', 'Dribbble' );
 
-require_once("../index.php");
+require_once( "../index.php" );

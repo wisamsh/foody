@@ -16,7 +16,7 @@ jQuery(document).ready(($) => {
     new FoodyContentPaging({
         context: 'foody_filter',
         filter: filter,
-        sort: '#sort-foody_filter',
+        sort: '#sort-foody-filter-feed',
         contextArgs: [
             foodyGlobals.objectID
         ]

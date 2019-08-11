@@ -13,12 +13,8 @@ jQuery(document).ready(function () {
         let newOrder;
         let newValue = $(this).val();
 
-        console.log('change', newValue);
-        console.log(creators);
         if (newValue) {
             newOrder = _.sortBy(creators, function (creator) {
-                console.log(creator);
-                console.log($('> div', creator).attr('data-name'));
                 return $('> div', creator).attr('data-name');
             });
 

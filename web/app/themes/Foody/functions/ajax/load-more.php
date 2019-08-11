@@ -7,98 +7,101 @@
  */
 
 
-function foody_ajax_load_more()
-{
+function foody_ajax_load_more() {
 
-    $foody_query = Foody_Query::get_instance();
-    $required = [
-        'context',
-        'page',
-        'filter'
-    ];
+	$foody_query = Foody_Query::get_instance();
+	$required    = [
+		'context',
+		'page',
+		'filter'
+	];
 
-    $valid = foody_validate_post_required($required);
+	$valid = foody_validate_post_required( $required );
 
-    if ($valid) {
+	if ( $valid ) {
 
 
-        $filter = $_POST['filter'];
-        if (!is_array($filter)) {
-            $error = "invalid filter: " . strval($filter);
-        } else {
+		$filter = $_POST['filter'];
+		if ( ! is_array( $filter ) ) {
+			$error = "invalid filter: " . strval( $filter );
+		} else {
 
-            $context_args = [];
-            if (isset($_POST['context_args'])) {
-                $context_args = $_POST['context_args'];
-                if (!is_array($context_args)) {
-                    $context_args = [$context_args];
-                }
-            }
-            $context = $_POST['context'];
+			$context_args = [];
+			if ( isset( $_POST['context_args'] ) ) {
+				$context_args = $_POST['context_args'];
+				if ( ! is_array( $context_args ) ) {
+					$context_args = [ $context_args ];
+				}
+			}
+			$context = $_POST['context'];
 
-            $page = $_POST['page'];
+			$page = $_POST['page'];
 
-            $ranged = isset($_POST['ranged']) && $_POST['ranged'];
+			$ranged = isset( $_POST['ranged'] ) && $_POST['ranged'];
 
-            $page_args = $foody_query->get_query($context, $context_args, $ranged);
+			$page_args = $foody_query->get_query( $context, $context_args, $ranged );
 
-            if (is_wp_error($page_args)) {
-                $error = $page_args->get_error_message();
-            } else {
+			if ( is_wp_error( $page_args ) ) {
+				$error = $page_args->get_error_message();
+			} else {
 
-                unset($filter['context']);
+				unset( $filter['context'] );
 
-                $foody_search = new Foody_Search($context,$context_args);
+				if ( empty( $filter['types'] ) || ! is_array( $filter['types'] ) ) {
+					$filter['types'] = [];
+				}
 
-                $sort = '';
-                if (!empty($_POST['sort'])) {
-                    $sort = $_POST['sort'];
-                    if (get_query_var('paged', null)) {
-                        unset($page_args['paged']);
-                    }
-                }
+				$foody_search = new Foody_Search( $context, $context_args );
 
-                $query = $foody_search->build_query($filter, $page_args, $sort);
+				$sort = '';
+				if ( ! empty( $_POST['sort'] ) ) {
+					$sort = $_POST['sort'];
+					if ( get_query_var( 'paged', null ) ) {
+						unset( $page_args['paged'] );
+					}
+				}
 
-                $next = $query->max_num_pages > $page;
+				$query = $foody_search->build_query( $filter, $page_args, $sort );
 
-                $foody_search->before_query();
+				$next = $query->max_num_pages > $page;
 
-                $posts = $query->get_posts();
+				$foody_search->before_query();
 
-                $foody_search->after_query();
+				$posts = $query->get_posts();
 
-                $grid = new FoodyGrid();
+				$foody_search->after_query();
 
-                $foody_posts = array_map('Foody_Post::create', $posts);
+				$grid = new FoodyGrid();
 
-                $cols = foody_get_array_default($_POST, 'cols', 2);
-                $cols = intval($cols);
-                $items = $grid->loop($foody_posts, $cols, false);
+				$foody_posts = array_map( 'Foody_Post::create', $posts );
 
-                $response = [
-                    'next' => $next && count($items) > 0,
-                    'items' => $items,
-                    'found' => $query->found_posts
-                ];
+				$cols  = foody_get_array_default( $_POST, 'cols', 2 );
+				$cols  = intval( $cols );
+				$items = $grid->loop( $foody_posts, $cols, false );
 
-            }
-        }
+				$response = [
+					'next'  => $next && count( $items ) > 0,
+					'items' => $items,
+					'found' => $query->found_posts
+				];
 
-    } else {
-        $error = 'bad request';
-    }
+			}
+		}
 
-    if (!empty($error)) {
-        wp_send_json_error(['message' => $error], 400);
-    } elseif (!isset($response)) {
-        wp_send_json_error(['message' => 'unknown error']);
-    } else {
-        wp_send_json_success($response);
-    }
+	} else {
+		$error = 'bad request';
+	}
+
+	if ( ! empty( $error ) ) {
+		wp_send_json_error( [ 'message' => $error ], 400 );
+	} elseif ( ! isset( $response ) ) {
+		wp_send_json_error( [ 'message' => 'unknown error' ] );
+	} else {
+		wp_send_json_success( $response );
+	}
 
 
 }
 
-add_action('wp_ajax_load_more', 'foody_ajax_load_more');
-add_action('wp_ajax_nopriv_load_more', 'foody_ajax_load_more');
+add_action( 'wp_ajax_load_more', 'foody_ajax_load_more' );
+add_action( 'wp_ajax_nopriv_load_more', 'foody_ajax_load_more' );

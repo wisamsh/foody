@@ -251,7 +251,14 @@ module.exports = (function () {
         if (foodyGlobals.isMobile === false || (foodyGlobals.isTablet && $(document).width() >= 1024)) {
             delta = 30;
         }
-        let titleLocation = this.grid.$title.offset().top - delta;
+        
+        let titleLocation = 0
+        let title = this.grid.$title.offset();
+
+        if (title) {
+            titleLocation = title.top - delta;
+        }
+
         $([document.documentElement, document.body]).animate({
             scrollTop: titleLocation
         }, 700);

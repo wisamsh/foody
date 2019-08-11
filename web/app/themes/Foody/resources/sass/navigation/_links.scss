@@ -1,13 +1,13 @@
 a {
-  color: $color__link;
+  color: var(--color__link);
 
   &:visited {
-    color: $color__link_visited;
+    color: var(--color__link_visited);
   }
   &:hover,
   &:focus,x
   &:active {
-    color: $color__link-hover;
+    color: var(--color__link-hover);
   }
   &:focus {
     outline: thin dotted;
@@ -26,4 +26,8 @@ a {
   a {
     pointer-events: none;
   }
+}
+
+.foody-u-link{
+  text-decoration: underline !important;
 }

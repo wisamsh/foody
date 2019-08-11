@@ -22,17 +22,21 @@ require_once get_template_directory() . "/inc/utils/utils.php";
 
 
 /*
- * Utils
- * */
-require_once get_template_directory() . "/inc/classes/common/class-foody-social.php";
-
-/*
  * Interfaces
  * */
 
 require_once get_template_directory() . "/inc/classes/interfaces/interface-content-with-sidebar.php";
-require_once get_template_directory() . "/inc/classes/interfaces/interface-foody-list-item.php";
 require_once get_template_directory() . "/inc/classes/interfaces/interface-foody-topic.php";
+
+/*
+ * Foody Sitemap
+ * */
+
+require_once get_template_directory() . "/inc/classes/sitemap/foody-sitemap-group-shortcode.php";
+require_once get_template_directory() . "/inc/classes/sitemap/foody-sitemap-shortcode.php";
+require_once get_template_directory() . "/inc/classes/sitemap/foody-sitemap-tax-shortcode.php";
+require_once get_template_directory() . "/inc/classes/sitemap/foody_shortcodes_utility.php";
+require_once get_template_directory() . "/inc/classes/sitemap/wpgo-foody-sitemap-pro.php";
 
 
 /*
@@ -42,15 +46,22 @@ require_once get_template_directory() . "/inc/classes/common/class-foody-term.ph
 require_once get_template_directory() . "/inc/classes/common/class-foody-user.php";
 require_once get_template_directory() . "/inc/classes/class-header.php";
 require_once get_template_directory() . "/inc/classes/class-foody-footer.php";
+require_once get_template_directory() . "/inc/classes/class-foody-blocks.php";
 require_once get_template_directory() . "/inc/classes/class-foody-comment-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-how-i-did-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-homepage.php";
+require_once get_template_directory() . "/inc/classes/class-foody-white-label-homepage.php";
+require_once get_template_directory() . "/inc/classes/class-foody-campaign.php";
+require_once get_template_directory() . "/inc/classes/class-foody-campaign-extended.php";
 require_once get_template_directory() . "/inc/classes/class-foody-category.php";
 require_once get_template_directory() . "/inc/classes/class-foody-categories.php";
 require_once get_template_directory() . "/inc/classes/class-foody-team.php";
 require_once get_template_directory() . "/inc/classes/common/class-foody-post.php";
+require_once get_template_directory() . "/inc/classes/class-foody-accessory.php";
+require_once get_template_directory() . "/inc/classes/class-foody-technique.php";
 require_once get_template_directory() . "/inc/classes/class-foody-ingredient.php";
 require_once get_template_directory() . "/inc/classes/class-foody-recipe.php";
+require_once get_template_directory() . "/inc/classes/class-foody-course.php";
 require_once get_template_directory() . "/inc/classes/class-foody-playlist.php";
 require_once get_template_directory() . "/inc/classes/class-foody-channel.php";
 require_once get_template_directory() . "/inc/classes/class-foody-grid.php";
@@ -82,7 +93,7 @@ require_once get_template_directory() . '/inc/classes/class-foody-seo.php';
 require_once get_template_directory() . '/inc/classes/class-foody-feed-channel.php';
 require_once get_template_directory() . '/inc/classes/class-foody-feed-filter.php';
 require_once get_template_directory() . '/inc/classes/common/class-foody-mailer.php';
-
+require_once get_template_directory() . '/inc/classes/class-foody-commercial-rule-mapping.php';
 
 /*
  * Widgets
@@ -92,6 +103,7 @@ require_once get_template_directory() . "/inc/widgets/class-foody-widget.php";
 require_once get_template_directory() . "/inc/widgets/widget-categories-list.php";
 require_once get_template_directory() . "/inc/widgets/widget-search-filter.php";
 require_once get_template_directory() . "/inc/widgets/widget-categories-accordion.php";
+require_once get_template_directory() . "/inc/widgets/widget-product.php";
 
 
 /*
@@ -100,6 +112,8 @@ require_once get_template_directory() . "/inc/widgets/widget-categories-accordio
 
 require_once get_template_directory() . "/functions/foody-session.php";
 require_once get_template_directory() . "/functions/core.php";
+require_once get_template_directory() . "/functions/authors.php";
+require_once get_template_directory() . "/functions/admin-comments.php";
 require_once get_template_directory() . "/functions/post-types.php";
 require_once get_template_directory() . "/functions/sidebars.php";
 require_once get_template_directory() . "/functions/widgets.php";
@@ -120,8 +134,15 @@ require_once get_template_directory() . "/functions/foody-head.php";
 require_once get_template_directory() . "/functions/search.php";
 require_once get_template_directory() . "/functions/foody-fut.php";
 require_once get_template_directory() . "/functions/seo.php";
+require_once get_template_directory() . "/functions/user-profile.php";
 require_once get_template_directory() . "/functions/theme.php";
 require_once get_template_directory() . "/functions/client-messages.php";
+require_once get_template_directory() . "/functions/cookies.php";
+require_once get_template_directory() . "/functions/pages.php";
+require_once get_template_directory() . "/functions/users.php";
+if ( defined( 'WP_ENV' ) && in_array( WP_ENV, [ 'local', 'development-mu' ] ) ) {
+	require_once get_template_directory() . "/functions/debug.php";
+}
 
 
 /*
@@ -131,10 +152,14 @@ require_once get_template_directory() . "/inc/shortcodes/shortcode-team.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-register.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-login.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-foody-sitemap.php";
-
+require_once get_template_directory() . "/inc/shortcodes/shortcode-approvals.php";
+require_once get_template_directory() . "/inc/shortcodes/shortcode-recipe.php";
 
 
 /*
  * Plugins
  * */
 
+// Foody API
+
+require_once get_template_directory() . "/foody-api/foody-api.php";

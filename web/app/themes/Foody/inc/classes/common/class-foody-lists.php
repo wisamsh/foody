@@ -16,8 +16,7 @@ class Foody_Lists {
 	}
 
 
-
-	public function list_show_more($list,$template,$template_args,$count){
+	public function list_show_more( $list, $template, $template_args, $count ) {
 
 	}
 }

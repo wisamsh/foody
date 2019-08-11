@@ -12,8 +12,8 @@
 $feed_channel = $template_args['page'];
 
 foody_get_template_part(
-    get_template_directory() . '/template-parts/content-feed-channel-display.php',
-    [
-        'page' => $feed_channel
-    ]
+	get_template_directory() . '/template-parts/content-feed-channel-display.php',
+	[
+		'page' => $feed_channel
+	]
 );

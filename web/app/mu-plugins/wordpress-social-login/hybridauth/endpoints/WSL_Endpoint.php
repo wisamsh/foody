@@ -6,14 +6,12 @@
 *  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
-class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
-{
-	public static function process( $request = NULL )
-	{
+class WSL_Hybrid_Endpoint extends Hybrid_Endpoint {
+	public static function process( $request = null ) {
 		// Setup request variable
 		Hybrid_Endpoint::$request = $request;
 
-		if ( is_null(Hybrid_Endpoint::$request) ){
+		if ( is_null( Hybrid_Endpoint::$request ) ) {
 			// Fix a strange behavior when some provider call back ha endpoint
 			// with /index.php?hauth.done={provider}?{args}... 
 			// >here we need to recreate the $_REQUEST
@@ -29,50 +27,43 @@ class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
 		// If we get a hauth.start
 		if ( isset( WSL_Hybrid_Endpoint::$request["hauth_start"] ) && WSL_Hybrid_Endpoint::$request["hauth_start"] ) {
 			return WSL_Hybrid_Endpoint::processAuthStart();
-		}
-
-		// Else if hauth.done
-		elseif ( isset( WSL_Hybrid_Endpoint::$request["hauth_done"] ) && WSL_Hybrid_Endpoint::$request["hauth_done"] ) {
+		} // Else if hauth.done
+        elseif ( isset( WSL_Hybrid_Endpoint::$request["hauth_done"] ) && WSL_Hybrid_Endpoint::$request["hauth_done"] ) {
 			return WSL_Hybrid_Endpoint::processAuthDone();
 		}
-		
+
 		parent::process( $request );
 	}
 
-	public static function processAuthStart()
-	{
+	public static function processAuthStart() {
 		WSL_Hybrid_Endpoint::authInit();
 
 		try {
 			parent::processAuthStart();
-		}
-		catch( Exception $e ){
+		} catch ( Exception $e ) {
 			WSL_Hybrid_Endpoint::dieError( "412 Precondition Failed", $e->getMessage() . "<br />For more information refer to WSL <a href='http://miled.github.io/wordpress-social-login/troubleshooting.html' target='_blank'>Troubleshooting</a>" );
 		}
 	}
 
-	public static function processAuthDone()
-	{
+	public static function processAuthDone() {
 		WSL_Hybrid_Endpoint::authInit();
 
 		try {
 			parent::processAuthDone();
-		}
-		catch( Exception $e ){
+		} catch ( Exception $e ) {
 			WSL_Hybrid_Endpoint::dieError( "410 Gone", $e->getMessage() . "<br />For more information refer to WSL <a href='http://miled.github.io/wordpress-social-login/troubleshooting.html' target='_blank'>Troubleshooting</a>" );
 		}
 	}
 
-	public static function authInit()
-	{
+	public static function authInit() {
 		$storage = new Hybrid_Storage();
 
 		header( 'X-Hybridauth-Version: ' . $storage->config( "version" ) );
 		header( 'X-Hybridauth-Time: ' . time() );
 		header( 'X-Hybridauth-Init: ' . strlen( json_encode( $storage->config( "CONFIG" ) ) ) );
 
-		if ( ! WSL_Hybrid_Endpoint::$initDone ){
-			WSL_Hybrid_Endpoint::$initDone = TRUE;
+		if ( ! WSL_Hybrid_Endpoint::$initDone ) {
+			WSL_Hybrid_Endpoint::$initDone = true;
 
 			// Check if Hybrid_Auth session already exist
 			if ( ! $storage->config( "CONFIG" ) ) {
@@ -80,17 +71,15 @@ class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
 			}
 
 			# Init Hybrid_Auth
-			try{
-				Hybrid_Auth::initialize( $storage->config( "CONFIG" ) ); 
-			}
-			catch ( Exception $e ){
+			try {
+				Hybrid_Auth::initialize( $storage->config( "CONFIG" ) );
+			} catch ( Exception $e ) {
 				WSL_Hybrid_Endpoint::dieError( '500 Internal Server Error', 'An error occurred while attempting to initialize Hybridauth' );
 			}
 		}
 	}
 
-	public static function dieError( $code, $message )
-	{
+	public static function dieError( $code, $message ) {
 		#{{{
 		# This 7 LLOC should be executed only once every three millennium.
 		# It means either : 1. Php Sessions ain't working as expected. 2. A crawler got lost. 3. Someone is having fun forging urls.
@@ -99,12 +88,10 @@ class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
 
 		$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 
-		if( file_exists( $parse_uri[0] . 'wp-load.php' ) )
-		{
+		if ( file_exists( $parse_uri[0] . 'wp-load.php' ) ) {
 			require_once( $parse_uri[0] . 'wp-load.php' );
 
-			if( get_option( 'wsl_settings_development_mode_enabled' ) )
-			{
+			if ( get_option( 'wsl_settings_development_mode_enabled' ) ) {
 				wsl_display_dev_mode_debugging_area();
 			}
 		}
@@ -115,47 +102,50 @@ class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
 }
 
 /**
-* Display a nicer error page.
-*/
-function display_wsl_error( $code, $message )
-{
-	header( 'HTTP/1.0 '. $code );
-?>
-<!DOCTYPE html>
-	<head>
-		<meta name="robots" content="noindex, nofollow">
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>Oops</title>
-		<style type="text/css">
-			* {
-				margin: 0;
-				padding: 0;
-			}
-			body {
-				background: #333;
-			}
-			h1 {
-				color: white;
-				font: 45px 'Open Sans';
-				padding: 30px;
-			}
-			p {
-				color: white;
-				font: 15px 'Open Sans';
-				padding: 0 30px;
-			}
-			a {
-				color: white;
-			}
-		</style>
-	<head>  
-	<body id="notice-page"> 
-		<h1>WordPress Social Login Endpoint.</h1>
+ * Display a nicer error page.
+ */
+function display_wsl_error( $code, $message ) {
+	header( 'HTTP/1.0 ' . $code );
+	?>
+    <!DOCTYPE html>
+    <head>
+        <meta name="robots" content="noindex, nofollow">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <title>Oops</title>
+        <style type="text/css">
+            * {
+                margin: 0;
+                padding: 0;
+            }
 
-		<p>
-			<?php echo (int) substr( $code, 0, 3 ); ?>. <?php echo $message; ?>
-		</p>
-	</body>
-</html> 
-<?php
+            body {
+                background: #333;
+            }
+
+            h1 {
+                color: white;
+                font: 45px 'Open Sans';
+                padding: 30px;
+            }
+
+            p {
+                color: white;
+                font: 15px 'Open Sans';
+                padding: 0 30px;
+            }
+
+            a {
+                color: white;
+            }
+        </style>
+        <head>
+    <body id="notice-page">
+    <h1>WordPress Social Login Endpoint.</h1>
+
+    <p>
+		<?php echo (int) substr( $code, 0, 3 ); ?>. <?php echo $message; ?>
+    </p>
+    </body>
+    </html>
+	<?php
 }

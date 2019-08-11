@@ -14,19 +14,19 @@ $title = $template_args['title'];
 
 <section class="recipe-notes box">
 
-    <h4 class="title">
-        <?php echo $title ?>
-    </h4>
+    <h2 class="title">
+		<?php echo $title ?>
+    </h2>
 
     <ul class="notes" title="הערות">
 
-        <?php foreach ($notes as $note): ?>
+		<?php foreach ( $notes as $note ): ?>
 
             <li class="note">
-                <?php echo $note['note'] ?>
+				<?php echo $note['note'] ?>
             </li>
 
-        <?php endforeach; ?>
+		<?php endforeach; ?>
 
     </ul>
 

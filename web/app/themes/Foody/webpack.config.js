@@ -6,8 +6,10 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HashPlugin = require('hash-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+
 // the path(s) that should be cleaned
 let pathsToClean = [
     'dist'
@@ -27,10 +29,10 @@ module.exports = env => {
         optimization: {
             splitChunks: {
                 // chunks: 'async',
-                minSize: 30000,
+                minSize: 20,
                 minChunks: 1,
-                maxAsyncRequests: 5,
-                maxInitialRequests: 3,
+                maxAsyncRequests: 1,
+                maxInitialRequests: 1,
                 name: true,
                 cacheGroups: {
                     vendors: {
@@ -44,7 +46,7 @@ module.exports = env => {
                     }
                 }
             },
-            minimizer:[
+            minimizer: [
                 new UglifyJsPlugin({
                     cache: true,
                     parallel: true,
@@ -58,28 +60,38 @@ module.exports = env => {
                 $: 'jquery',
                 jQuery: 'jquery',
                 'window.jQuery': 'jquery',
-                "window.$": "jquery",
+                'window.$': 'jquery',
                 Popper: ['popper.js', 'default'],
                 IScroll: 'iscroll'
             }),
             new ExtractTextPlugin({
-                filename: (getPath) => {
-                    return getPath('css/[name].css').replace('css/js', 'css');
-                },
-                allChunks: true
+                filename: '[name].css',
+                // allChunks: true
             }),
             new HashPlugin({path: './build', fileName: 'version-hash.txt'}),
-            new CleanWebpackPlugin(pathsToClean, cleanOptions)
+            new CleanWebpackPlugin(pathsToClean, cleanOptions),
+            new CompressionPlugin()
         ],
         entry: {
-            // common : "./resources/pages/common/index",
-            // home: "./resources/pages/homepage/index",
-            main: "./resources/js/app",
-            admin: "./resources/js/admin",
-            style: "./resources/sass/app.scss",
-            // ebook: "./resources/sass/pages/e-book/e-book.scss",
-            // homepage: './resources/js/entries/homepage.js',
-            // common: './resources/js/entries/common.js',
+            admin: ["./resources/js/admin"],
+            lazy: ["./resources/js/lazy.entry"],
+            author: ["./resources/js/author.entry", "./resources/js/page-load.entry"],
+            campaign: ["./resources/js/campaign.entry", "./resources/js/page-load.entry"],
+            categories: ["./resources/js/categories.entry", "./resources/js/page-load.entry"],
+            channel: ["./resources/js/channel.entry", "./resources/js/page-load.entry"],
+            course: ["./resources/js/course.entry", "./resources/js/page-load.entry"],
+            homepage: ["./resources/js/page-load.entry", "./resources/js/homepage.entry"],
+            general: ["./resources/js/general.entry", "./resources/js/page-load.entry"],
+            items: ["./resources/js/items.entry", "./resources/js/page-load.entry"],
+            login: ["./resources/js/login.entry", "./resources/js/page-load.entry"],
+            playlist: ["./resources/js/playlist.entry", "./resources/js/page-load.entry"],
+            post: ["./resources/js/post.entry", "./resources/js/page-load.entry"],
+            profile: ["./resources/js/profile.entry", "./resources/js/page-load.entry"],
+            register: ["./resources/js/register.entry", "./resources/js/page-load.entry"],
+            tag: ["./resources/js/tag.entry", "./resources/js/page-load.entry"],
+            team: ["./resources/js/team.entry", "./resources/js/page-load.entry"],
+            style: ["./resources/sass/app.scss"],
+            // homepage: ["./resources/sass/homepage_app.scss"],
         },
         output: {
             // filename: '[name].js',
@@ -116,7 +128,8 @@ module.exports = env => {
                         },
                         {
                             loader: 'sass-loader' // compiles Sass to CSS
-                        }
+                        },
+
                     ]
                 },
                 {

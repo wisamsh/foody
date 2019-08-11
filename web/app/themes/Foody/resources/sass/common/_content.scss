@@ -5,13 +5,18 @@
     font-family: $font__assistant;
   }
 
-  p:last-of-type{
-    margin-bottom: 0;
+  .foody-list-item-spacing{
+    margin-bottom: 1em;
   }
+
+  // Removed To Fix new line issue on posts
+  //p:last-of-type{
+  //  margin-bottom: 0;
+  //}
 
   h2 {
     font-family: $font__main;
-    color: $color__primary;
+    color: var(--color__primary);
     font-weight: 900;
     font-size: 24px;
   }
@@ -45,7 +50,7 @@
       margin: 5px 0 0;
       font-weight: normal;
       font-family: $font__assistant;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     &.aligncenter{
@@ -57,9 +62,9 @@
   }
 
   a {
-    color: $color__primary;
+    color: var(--color__primary);
     &:visited {
-      color: $color__primary;
+      color: var(--color__primary);
     }
   }
 

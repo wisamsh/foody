@@ -9,10 +9,10 @@
 
 use Phospr\Fraction;
 
-echo Fraction::fromFloat(1.5);
+echo Fraction::fromFloat( 1.5 );
 
 echo 'asfasf';
 
-var_dump(Fraction::fromFloat(1.5));
+var_dump( Fraction::fromFloat( 1.5 ) );
 
 

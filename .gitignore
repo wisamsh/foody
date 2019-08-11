@@ -8,6 +8,12 @@ web/app/mu-plugins/*/
 !web/app/mu-plugins/easy-social-share-buttons3
 !web/app/mu-plugins/foody-rating
 !web/app/mu-plugins/footab
+!web/app/mu-plugins/foody-white-label
+!web/app/mu-plugins/foody-cli
+!web/app/mu-plugins/advanced-custom-fields-wpcli
+web/app/mu-plugins/foody-white-label/foody-importer/tmp
+!web/app/mu-plugins/footab_client_foody
+!web/app/mu-plugins/acf-image-crop-add-on
 web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
@@ -26,6 +32,7 @@ web/.htaccess
 vendor/*
 !vendor/.gitkeep
 
+#w3tc
 
 ### Npm
 
@@ -149,3 +156,7 @@ web/app/themes/Foody/dist
 .env1
 uploads.zip
 stats.json
+web/app/mu-plugins/foody-white-label/tmp
+web/app/ewww
+*.webp
+phpunit.xml

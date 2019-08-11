@@ -39,7 +39,15 @@ window.calculator = function (selector) {
 
         let original = $option.data('original');
 
-        updateIngredients($elements, 1, val, original);
+        let originalSlices = $(this).find('option[data-original=1]').data('slices');
+        if (!originalSlices) {
+            originalSlices = 1;
+        }
+        let slices = $option.data('slices');
+        if (!slices) {
+            slices = 1;
+        }
+        updateIngredients($elements, originalSlices, slices, original);
 
     });
 
@@ -49,7 +57,7 @@ window.calculator = function (selector) {
 
 function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 
-    // updateNutrients(originalNumberOfDishes, val, reset);
+    updateNutrients(originalNumberOfDishes, val, reset);
 
     $elements.each(function () {
 
@@ -58,12 +66,17 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 
         let plural = $this.data('plural');
         let singular = $this.data('singular');
+        let unit = $this.data('unit');
+        if (!unit) {
+            unit = '';
+        }
 
         let calculated = base * val;
         let text = prettyNumber(calculated);
 
         let name = singular;
-        if (Math.ceil(parseFloat(text)) > 1) {
+
+        if (Math.ceil(parseFloat(text)) > 1 || (Math.ceil(parseFloat(text)) > 0 && unit == 'ק"ג')) {
             if (plural) {
                 name = plural;
             }
@@ -74,7 +87,7 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
             text = $this.data('original');
         }
 
-        let $name = $('span.name', $this.parent());
+        let $name = $('span.name a', $this.parent());
 
 
         $name.text(name);
@@ -85,6 +98,9 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
 }
 
 function updateNutrients(originalNumberOfDishes, val, reset) {
+    // Update header amount title
+    $('.nutrients-header-dishes-amount').text(val);
+
     $('.nutrition-row').each(function () {
 
         let $this = $(this);
@@ -105,6 +121,11 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
                 }
 
                 nutrientBaseValue = parseFloat(nutrientBaseValue);
+
+                // Divide by original num of dishes to retrieve one dish
+                nutrientBaseValue = nutrientBaseValue / originalNumberOfDishes;
+
+                // Dish value times new val
                 if (nutrientBaseValue) {
                     nutrientBaseValue = nutrientBaseValue * val;
                 }
@@ -116,13 +137,13 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
                 console.log('totalValueForNutrient for ' + nutrient, totalValueForNutrient);
             });
         }
-        let decimals = 0;
+        let decimals = 1;
         if (nutrient === 'protein') {
             decimals = 1;
         }
 
         if (totalValueForNutrient > 0) {
-            $('.value', this).text(prettyNumber(totalValueForNutrient, decimals))
+            $('.chosen-dishes-nutrition .value', this).text(prettyNumber(totalValueForNutrient, decimals))
         }
 
     });

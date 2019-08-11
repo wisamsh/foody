@@ -1,0 +1,219 @@
+/* Simple Sitemap Menu */
+
+/* -------------------------- */
+
+/* Horizontal sitemap styles. */
+
+.horizontal ul.children {
+    display: inline;
+    margin-left: 0;
+}
+
+/* -------------------------- */
+
+/*.simple-sitemap-menu {
+}*/
+
+body .simple-sitemap-menu li {
+    float: initial;
+}
+
+/* Simple Sitemap */
+
+.simple-sitemap-container.tab {
+    display: none;
+}
+
+.simple-sitemap-wrap ul.main li {
+    padding: 8px 0;
+}
+
+.simple-sitemap-container .excerpt {
+    font-size: 13px;
+    line-height: 17px;
+    margin-top: -2px;
+    color: #555;
+    margin-bottom: -5px;
+    padding: 3px 3px 0 0
+}
+
+.simple-sitemap-container div.excerpt {
+    /* padding-left: 34px; */
+}
+
+.simple-sitemap-container span.excerpt {
+    /* margin-left: -9px; */
+    position: relative;
+    left: 8px;
+}
+
+.simple-sitemap-container .separator {
+    border-bottom: 1px #eee solid;
+    margin-bottom: -5px;
+    margin-top: 18px;
+    padding: 0;
+}
+
+/* don't show the bottom border on the last entry */
+.simple-sitemap-container ul.main > li:last-child .separator {
+    border-bottom: 0;
+}
+
+/* featured image */
+.simple-sitemap-fi {
+    position: relative;
+    top: 6px;
+    left: -5px;
+    margin-left: 5px;
+}
+
+/* Flexbox sitemap columns */
+
+.simple-sitemap-container.col {
+    padding: 0;
+    margin: 0;
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.simple-sitemap-wrap.col {
+    width: 260px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+.simple-sitemap-wrap.col ul.main {
+    margin-left: 20px;
+}
+
+.simple-sitemap-container.hide-icon ul.main {
+    margin-left: 5px;
+    list-style-type: none;
+}
+
+.simple-sitemap-container.hide-icon ul.main ul.children {
+    list-style-type: none;
+    margin: 0 0 0 35px;
+}
+
+/* make tab headers responsive */
+@media only screen and (max-width: 800px) {
+    .simple-sitemap-container.tab .ui-tabs-nav li a {
+        font-size: 14px;
+    }
+}
+@media only screen and (max-width: 700px) {
+    .simple-sitemap-container.tab .ui-tabs-nav li a {
+        font-size: 12px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .simple-sitemap-container.tab .ui-tabs-nav {
+        padding: 0 !important;
+        border: 0 !important;
+    }
+
+    .simple-sitemap-container.tab .ui-tabs-nav li {
+        float: none !important;
+        margin: 0 !important;
+        margin-top: 2px !important;
+        border-bottom-width: 1px !important;
+        -moz-border-radius: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    .simple-sitemap-container.tab .ui-tabs-nav li.ui-tabs-active {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .simple-sitemap-container.tab .ui-tabs-nav li a {
+        float: none !important;
+        display: block !important;
+    }
+
+    .simple-sitemap-container.tab .ui-tabs-panel {
+        border-top-width: 0 !important;
+    }
+}
+
+/*.simple-sitemap-wrap.one-col { width: 100%; }
+.simple-sitemap-wrap.two-col { width: 49%; }
+.simple-sitemap-wrap.three-col { width: 32%; }
+.simple-sitemap-wrap.four-col { width: 23.5%; }
+.simple-sitemap-wrap.five-col { width: 18.4%; }
+.simple-sitemap-wrap.six-col { width: 15%; }*/
+
+/*.simple-sitemap-wrap {
+    float: left;
+    margin-right: 2%;
+    position: relative;
+}*/
+
+/*.simple-sitemap-wrap:last-child {
+    clear: right;
+    margin-right: 0;
+}*/
+
+/* ========================== */
+
+/* jQuery tab styles */
+.simple-sitemap-container.tab.ui-widget {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.simple-sitemap-container.tab a.ui-tabs-anchor {
+    cursor: pointer !important;
+}
+
+.simple-sitemap-container.tab ul.ui-widget-header {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    background: none;
+}
+
+.simple-sitemap-container.tab ul.ui-corner-all {
+    border-radius: 0;
+    padding-bottom: 0 !important;
+}
+
+.simple-sitemap-container.tab .ui-tabs-panel {
+    border-width: 1px !important;
+    border-left: 1px #ccc solid;
+    border-right: 1px #ccc solid;
+    border-bottom: 1px #ccc solid;
+    border-top: 0;
+}
+
+.simple-sitemap-container.tab .ui-widget-header .ui-state-active,
+.simple-sitemap-container.tab li.ui-state-hover {
+    border-color: #ccc;
+}
+
+.simple-sitemap-container.tab li.ui-corner-top {
+    background: #e6e6e6;
+}
+
+.simple-sitemap-container.tab li.ui-state-active {
+    background: #ffffff;
+}
+
+.simple-sitemap-container.tab.ui-widget-content {
+    border: 0;
+}
+
+/*  horizontal rendering */
+.simple-sitemap-wrap > ul.horizontal {
+    list-style-type: none;
+    margin: 0;
+}
+
+.simple-sitemap-wrap > ul.horizontal li {
+    display: inline;
+}

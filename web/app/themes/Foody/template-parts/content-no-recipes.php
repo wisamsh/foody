@@ -11,7 +11,8 @@
 <div class="no-recipes">
 
     <div class="image-container">
-        <img src="<?php echo $GLOBALS['images_dir'] .'empty-recipes.svg' ?>" alt="">
+        <img src="<?php echo $GLOBALS['images_dir'] . 'empty-recipes.svg' ?>"
+             alt="<?php echo __( 'לא נמצאו מתכונים' ) ?>">
 
     </div>
 

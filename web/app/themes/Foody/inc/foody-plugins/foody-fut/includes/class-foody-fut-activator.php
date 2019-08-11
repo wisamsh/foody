@@ -20,32 +20,29 @@
  * @subpackage Foody_Fut/includes
  * @author     Matan Zari <zari@moveo.co.il>
  */
-class Foody_Fut_Activator
-{
+class Foody_Fut_Activator {
 
-    private static $table_name = 'foody_fut';
+	private static $table_name = 'foody_fut';
 
-    /**
-     * Short Description. (use period)
-     *
-     * Long Description.
-     *
-     * @since    1.0.0
-     */
-    public static function activate()
-    {
-        self::create_fut_table();
-    }
+	/**
+	 * Short Description. (use period)
+	 *
+	 * Long Description.
+	 *
+	 * @since    1.0.0
+	 */
+	public static function activate() {
+		self::create_fut_table();
+	}
 
 
-    public static function create_fut_table()
-    {
-        global $wpdb;
-        $charset_collate = $wpdb->get_charset_collate();
-        $table_name = $wpdb->prefix . self::$table_name;
+	public static function create_fut_table() {
+		global $wpdb;
+		$charset_collate = $wpdb->get_charset_collate();
+		$table_name      = $wpdb->prefix . self::$table_name;
 
 
-        $sql = "
+		$sql = "
               CREATE TABLE $table_name (
               ID BIGINT(20) NOT NULL AUTO_INCREMENT,
               email VARCHAR(40) NOT NULL,
@@ -55,14 +52,13 @@ class Foody_Fut_Activator
         ";
 
 
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql);
-    }
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		dbDelta( $sql );
+	}
 
-    private function restrict()
-    {
+	private function restrict() {
 
 
-    }
+	}
 
 }

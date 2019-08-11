@@ -6,18 +6,16 @@
 */
 
 /**
-* Hybrid_Providers_Instagram (By Sebastian Lasse - https://github.com/sebilasse)
-*/
-class Hybrid_Providers_Instagram extends Hybrid_Provider_Model_OAuth2
-{ 
+ * Hybrid_Providers_Instagram (By Sebastian Lasse - https://github.com/sebilasse)
+ */
+class Hybrid_Providers_Instagram extends Hybrid_Provider_Model_OAuth2 {
 	// default permissions   
-	public $scope = "basic"; 
+	public $scope = "basic";
 
 	/**
-	* IDp wrappers initializer 
-	*/
-	function initialize()
-	{
+	 * IDp wrappers initializer
+	 */
+	function initialize() {
 		parent::initialize();
 
 		// Provider api end-points
@@ -27,22 +25,22 @@ class Hybrid_Providers_Instagram extends Hybrid_Provider_Model_OAuth2
 	}
 
 	/**
-	* load the user profile from the IDp api client
-	*/
-	function getUserProfile(){ 
-		$data = $this->api->api("users/self/" ); 
+	 * load the user profile from the IDp api client
+	 */
+	function getUserProfile() {
+		$data = $this->api->api( "users/self/" );
 
-		if ( $data->meta->code != 200 ){
+		if ( $data->meta->code != 200 ) {
 			throw new Exception( "User profile request failed! {$this->providerId} returned an invalid response.", 6 );
 		}
 
-		$this->user->profile->identifier  = $data->data->id; 
-		$this->user->profile->displayName = $data->data->full_name ? $data->data->full_name : $data->data->username; 
+		$this->user->profile->identifier  = $data->data->id;
+		$this->user->profile->displayName = $data->data->full_name ? $data->data->full_name : $data->data->username;
 		$this->user->profile->description = $data->data->bio;
 		$this->user->profile->photoURL    = $data->data->profile_picture;
-		$this->user->profile->profileURL = 'https://instagram.com/' . $data->data->username;
+		$this->user->profile->profileURL  = 'https://instagram.com/' . $data->data->username;
 
-		$this->user->profile->webSiteURL  = $data->data->website; 
+		$this->user->profile->webSiteURL = $data->data->website;
 
 		return $this->user->profile;
 	}

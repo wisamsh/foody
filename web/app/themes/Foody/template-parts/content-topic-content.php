@@ -15,22 +15,22 @@
     <div class="tab-content col">
         <div class="tab-pane fade show active row gutter-3" id="my-recipes" role="tabpanel"
              aria-labelledby="my-recipes-tab">
-            <?php $foody_profile->my_favorites() ?>
+			<?php $foody_profile->my_favorites() ?>
         </div>
         <div class="tab-pane fade row gutter-3" id="my-channels-recipes" role="tabpanel"
              aria-labelledby="my-channels-recipes-tab">
             <h2 class="title">
-                <?php echo __('מתכונים מערוצים', 'foody') ?>
+				<?php echo __( 'מתכונים מערוצים', 'foody' ) ?>
             </h2>
-            <?php $foody_profile->my_topics_content() ?>
+			<?php $foody_profile->my_topics_content() ?>
         </div>
     </div>
     <section class="my-channels col d-none d-sm-block pr-0">
         <h2 class="title">
-            <?php echo __('הערוצים שלי', 'foody') ?>
+			<?php echo __( 'הערוצים שלי', 'foody' ) ?>
         </h2>
         <section class="channels">
-            <?php $foody_profile->my_followed_topics() ?>
+			<?php $foody_profile->my_followed_topics() ?>
         </section>
 
     </section>

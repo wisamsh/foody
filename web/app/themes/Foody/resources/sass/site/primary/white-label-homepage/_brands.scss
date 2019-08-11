@@ -1,0 +1,165 @@
+.brands-slider {
+  $item-border-width: 2px;
+  z-index: 0;
+  //padding: 1rem 3rem 1rem 5rem;
+  padding: 15px;
+  padding: 10px 0;
+  margin: 0 $item-border-width 0 0;
+  visibility: hidden;
+
+  li{
+    display: inline-block;
+  }
+  //height: 120px;
+
+  &.slick-initialized {
+    visibility: visible;
+    height: auto;
+  }
+
+  .slick-track {
+    margin: 0;
+    display: flex;
+  }
+
+  i.slick-arrow {
+    position: absolute;
+    //right: -2rem;
+    //padding: 15px;
+    z-index: 1;
+    top: 10px;
+    bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &:before {
+      color: var(--color__primary);
+      font-size: 22px;
+    }
+
+    &.next {
+      right: initial;
+      left: 0;
+    }
+
+    &.prev {
+      &:before {
+        transform: rotate(180deg);
+        display: inline-block;
+      }
+    }
+  }
+
+  .slick-slide {
+    display: flex;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .brands-slider-item {
+
+      img {
+        max-width: 200px;
+        width: 100%;
+        clip-path: inset(0 round 4px);
+      }
+
+    }
+
+    //&.slick-current > div:after, &.slick-current + .slick-active > div:after {
+    //  content: "";
+    //  width: $item-border-width;
+    //  height: 100%;
+    //  background-color: black;
+    //  position: absolute;
+    //  top: 0;
+    //  left: 0;
+    //}
+
+    &.slick-slide {
+      > div:after, > div:before {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      &.item-border {
+        > div:after, > div:before {
+          opacity: 1;
+          content: "";
+          width: $item-border-width;
+          height: 100%;
+          background-color: black;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        > div:before {
+          right: 0;
+          left: unset;
+        }
+      }
+    }
+
+    //&[aria-hidden=false].slick-active:last-child > div:after {
+    //  width: 0;
+    //}
+  }
+
+  .brands-slider-item {
+    vertical-align: middle;
+  }
+
+}
+
+@include breakpoint(mobileonly) {
+
+  .brands-slider {
+    //margin-right: 15px;
+    //margin-left: 10px;
+    //padding: 20px 10px 20px 0;
+    //height: 90px;
+
+    .slick-list {
+      //padding: 0 0 0 30px;
+    }
+
+    i.slick-arrow {
+
+      &:before {
+
+      }
+
+      &.next {
+        //left: -15px;
+      }
+
+      &.prev {
+        //right: -25px;
+
+        &:before {
+
+        }
+      }
+    }
+
+    .slick-slide {
+
+      &[aria-hidden=false].slick-active > div:after {
+        width: 0;
+      }
+
+      .brands-slider-item {
+        vertical-align: middle;
+
+        img {
+          margin: 0 auto;
+        }
+
+      }
+    }
+
+  }
+
+}

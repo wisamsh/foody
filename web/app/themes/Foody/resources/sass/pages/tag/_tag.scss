@@ -4,7 +4,7 @@ body[class~='tag'] {
     &.content{
       .details-container{
         padding-right: 15px;
-        background-color: $color__background-screen;
+        background-color: var(--color__background-screen);
       }
     }
   }

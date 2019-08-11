@@ -11,7 +11,9 @@
  */
 
 // Exit if accessed directly
-if (!defined('ABSPATH')) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // --------------------------------------------------------------------
 
@@ -25,19 +27,18 @@ if (!defined('ABSPATH')) exit;
  *
  *   The $provider name is passed as a parameter.
  */
-if (!function_exists('wsl_render_redirect_to_provider_loading_screen')) {
-    function wsl_render_redirect_to_provider_loading_screen($provider)
-    {
-        $assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
-        ?>
+if ( ! function_exists( 'wsl_render_redirect_to_provider_loading_screen' ) ) {
+	function wsl_render_redirect_to_provider_loading_screen( $provider ) {
+		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
+		?>
         <!DOCTYPE html>
         <head>
-        <script>
-            window.location.replace(window.location.href + "&redirect_to_provider=true");
-        </script>
+            <script>
+                window.location.replace(window.location.href + "&redirect_to_provider=true");
+            </script>
             <meta name="robots" content="NOINDEX, NOFOLLOW">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-            <title><?php _wsl_e("Redirecting...", 'wordpress-social-login') ?> - <?php bloginfo('name'); ?></title>
+            <title><?php _wsl_e( "Redirecting...", 'wordpress-social-login' ) ?> - <?php bloginfo( 'name' ); ?></title>
             <style type="text/css">
                 html {
                     background: #fff;
@@ -77,26 +78,27 @@ if (!function_exists('wsl_render_redirect_to_provider_loading_screen')) {
 //                        path: '<?php //echo get_template_directory_uri() .'/resources/lottie/loader.json'?>//'
 //                    });
 //                    setTimeout(() => {
-                        window.location.replace(window.location.href + "&redirect_to_provider=true");
+                    window.location.replace(window.location.href + "&redirect_to_provider=true");
 //                    }, 3000);
                 }
             </script>
         </head>
         <body id="loading-screen">
         <table width="100%" border="0">
-<!--            <tr>-->
-<!--                <td align="center">-->
-<!--                    <div>-->
-<!--                        --><?php //echo foody_get_template_part(get_template_directory() . '/template-parts/common/loader.php') ?>
-<!--                    </div>-->
-<!--                </td>-->
-<!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td align="center">-->
+            <!--                    <div>-->
+            <!--                        --><?php //echo foody_get_template_part(get_template_directory() . '/template-parts/common/loader.php') 
+			?>
+            <!--                    </div>-->
+            <!--                </td>-->
+            <!--            </tr>-->
         </table>
         </body>
         </html>
-        <?php
-        die();
-    }
+		<?php
+		die();
+	}
 }
 
 /**
@@ -106,25 +108,24 @@ if (!function_exists('wsl_render_redirect_to_provider_loading_screen')) {
  *   In case you want to customize the content generated, you may redefine this function
  *   Just make sure the script DIES at the end.
  */
-if (!function_exists('wsl_render_return_from_provider_loading_screen')) {
-    function wsl_render_return_from_provider_loading_screen($provider, $authenticated_url, $redirect_to, $wsl_settings_use_popup)
-    {
-        /*
-        * If Authentication displayis undefined or eq Popup ($wsl_settings_use_popup==1)
-        * > create a from with javascript in parent window and submit it to wp-login.php ($authenticated_url)
-        * > with action=wordpress_social_authenticated, then close popup
-        *
-        * If Authentication display eq In Page ($wsl_settings_use_popup==2)
-        * > create a from in page then submit it to wp-login.php with action=wordpress_social_authenticated
-        */
+if ( ! function_exists( 'wsl_render_return_from_provider_loading_screen' ) ) {
+	function wsl_render_return_from_provider_loading_screen( $provider, $authenticated_url, $redirect_to, $wsl_settings_use_popup ) {
+		/*
+		* If Authentication displayis undefined or eq Popup ($wsl_settings_use_popup==1)
+		* > create a from with javascript in parent window and submit it to wp-login.php ($authenticated_url)
+		* > with action=wordpress_social_authenticated, then close popup
+		*
+		* If Authentication display eq In Page ($wsl_settings_use_popup==2)
+		* > create a from in page then submit it to wp-login.php with action=wordpress_social_authenticated
+		*/
 
-        $assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
-        ?>
+		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
+		?>
         <!DOCTYPE html>
         <head>
             <meta name="robots" content="NOINDEX, NOFOLLOW">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-            <title><?php _wsl_e("Redirecting...", 'wordpress-social-login') ?> - <?php bloginfo('name'); ?></title>
+            <title><?php _wsl_e( "Redirecting...", 'wordpress-social-login' ) ?> - <?php bloginfo( 'name' ); ?></title>
             <style type="text/css">
                 html {
                     background: #f1f1f1;
@@ -158,9 +159,9 @@ if (!function_exists('wsl_render_return_from_provider_loading_screen')) {
             </style>
             <script>
                 function init() {
-                    <?php
-                    if( $wsl_settings_use_popup == 1 || !$wsl_settings_use_popup ){
-                    ?>
+					<?php
+					if( $wsl_settings_use_popup == 1 || ! $wsl_settings_use_popup ){
+					?>
                     if (window.opener) {
                         window.opener.wsl_wordpress_social_login({
                             'action': 'wordpress_social_authenticated',
@@ -168,18 +169,17 @@ if (!function_exists('wsl_render_return_from_provider_loading_screen')) {
                         });
 
                         window.close();
-                    }
-                    else {
+                    } else {
                         document.loginform.submit();
                     }
-                    <?php
-                    }
+					<?php
+					}
                     elseif( $wsl_settings_use_popup == 2 ){
-                    ?>
+					?>
                     document.loginform.submit();
-                    <?php
-                    }
-                    ?>
+					<?php
+					}
+					?>
                 }
             </script>
         </head>
@@ -191,22 +191,22 @@ if (!function_exists('wsl_render_return_from_provider_loading_screen')) {
             <tr>
                 <td align="center">
                     <div>
-                        <?php echo _wsl_e("Processing, please wait...", 'wordpress-social-login'); ?>
+						<?php echo _wsl_e( "Processing, please wait...", 'wordpress-social-login' ); ?>
                     </div>
                 </td>
             </tr>
         </table>
 
         <form name="loginform" method="post" action="<?php echo $authenticated_url; ?>">
-            <input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo esc_url($redirect_to); ?>">
+            <input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo esc_url( $redirect_to ); ?>">
             <input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>">
             <input type="hidden" id="action" name="action" value="wordpress_social_authenticated">
         </form>
         </body>
         </html>
-        <?php
-        die();
-    }
+		<?php
+		die();
+	}
 }
 
 // --------------------------------------------------------------------

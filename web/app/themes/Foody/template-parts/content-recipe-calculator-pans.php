@@ -8,46 +8,64 @@
 
 /** @noinspection PhpUndefinedVariableInspection */
 /** @var WP_Term $pan */
-$pan = $template_args['pan'];
+$pan         = $template_args['pan'];
 $conversions = $template_args['conversions'];
+$slices      = $template_args['slices'];
 
+$options = array_map( function ( $conversion ) {
+	if ( ! empty( $conversion ) ) {
+		if ( empty( $conversion['pan'] ) ) {
+			return null;
+		}
 
-$options = array_map(function ($conversion) {
+		$pan = get_term( $conversion['pan'], 'pans' );
 
-    if(empty($conversion['pan'])){
-        return null;
-    }
+		if ( ! empty( $pan ) && ! is_wp_error( $pan ) ) {
+			if ( is_multisite() && ! is_main_site() ) {
+				switch_to_blog( 1 );
+				$pan = get_term( $conversion['pan'], 'pans' );
+				restore_current_blog();
+			}
+		}
 
-    return [
-        'value' => $conversion['conversion_rate'],
-        'label' => get_term($conversion['pan'])->name
-    ];
+		if ( ! empty( $pan ) && ! is_wp_error( $pan ) ) {
+			return [
+				'value' => $conversion['conversion_rate'],
+				'label' => $pan->name,
+				'data'  => [
+					'slices' => get_field( 'slices', $conversion['pan'] )
+				]
+			];
+		}
 
-}, $conversions);
+	}
 
-$options = array_filter($options,function ($conv){
-    return !empty($conv);
-});
+}, $conversions );
 
-array_unshift($options, [
-    'value' => 1,
-    'label' => $pan->name,
-    'selected' => true,
-    'data' => [
-        'original' => true
-    ]
-]);
+$options = array_filter( $options, function ( $conv ) {
+	return ! empty( $conv );
+} );
+
+array_unshift( $options, [
+	'value'    => 1,
+	'label'    => $pan->name,
+	'selected' => true,
+	'data'     => [
+		'original' => true,
+		'slices'   => $slices
+	]
+] );
 
 $select_args = [
-    'id' => 'pan-conversions',
-    'placeholder' => '',
-    'options' => $options,
-    'data' => [
-        'original' => true
-    ]
+	'id'          => 'pan-conversions',
+	'placeholder' => '',
+	'options'     => $options,
+	'data'        => [
+		'original' => true
+	]
 ];
 
-foody_get_template_part(get_template_directory() . '/template-parts/common/foody-select.php', $select_args)
+foody_get_template_part( get_template_directory() . '/template-parts/common/foody-select.php', $select_args )
 
 
 ?>

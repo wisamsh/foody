@@ -8,21 +8,24 @@
  *
  * @package Foody
  */
-$header = new Foody_Header();
-$channels = new Foody_Channels_Menu();
-$user = new Foody_User();
-
+$header             = new Foody_Header();
+$user               = new Foody_User();
+$show_accessibility = get_theme_mod( 'foody_show_accessibility' ) || get_theme_mod( 'show_white_label_accessibility' );
+// always show on main site
+if ( ! is_multisite() || is_main_site() ) {
+	$show_accessibility = true;
+}
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?> dir="rtl">
 <head>
-    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#ED3D48">
     <link rel="profile" href="http://gmpg.org/xfn/11">
 
-    <?php Foody_Header::google_tag_manager(); ?>
-    <?php wp_head(); ?>
+	<?php Foody_Header::google_tag_manager(); ?>
+	<?php wp_head(); ?>
 
 </head>
 
@@ -31,13 +34,12 @@ $user = new Foody_User();
 
 <?php
 
-$background_image = foody_get_background_image();
-
-if (!empty($background_image)) {
-    ?>
-    <img class="body-background" src="<?php echo $background_image['url'] ?>"
-         alt="<?php echo $background_image['alt'] ?>">
-    <?php
+if ( ! wp_is_mobile() && ( isset( $_SESSION['background_image'] ) && ! empty( $_SESSION['background_image'] ) ) ) {
+	?>
+    <img class="body-background" src="<?php echo $_SESSION['background_image']['url'] ?>"
+         alt="<?php echo $_SESSION['background_image']['alt'] ?>">
+	<?php
+	unset( $_SESSION['background_image'] );
 }
 ?>
 
@@ -46,46 +48,57 @@ if (!empty($background_image)) {
 <div id="page" class="site">
 
     <header id="masthead" class="site-header no-print">
-        <div class="run d-block d-lg-none">
-            <?php echo __('בהרצה') ?>
-        </div>
+		<?php if ( is_multisite() && ! is_main_site() ): ?>
+			<?php $header->the_foody_collaboration( false ); ?>
+		<?php endif; ?>
 
         <div class="socials d-none d-lg-block">
 
             <section class="header-top-container  d-none d-lg-flex">
-                <?php $header->the_socials_bar() ?>
+				<?php $header->the_socials_bar() ?>
 
                 <div class="search-bar search-bar-container">
-                    <?php get_search_form(); ?>
+					<?php get_search_form(); ?>
                 </div>
+				<?php if ( is_multisite() && ! is_main_site() ): ?>
+					<?php $header->the_foody_collaboration( true ); ?>
+				<?php endif; ?>
+				<?php
 
-                <span class="run-desktop run">
-                    <?php echo __('בהרצה') ?>
-                </span>
 
-                <?php if (!wp_is_mobile()): ?>
-                    <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility">
-                        <?php $header->accessibility(); ?>
+				if ( ! wp_is_mobile() && $show_accessibility ):
+
+					?>
+                    <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility"
+                            data-acsb="trigger" aria-label="פתיחת תפריט נגישות">
+						<?php $header->accessibility(); ?>
                         <div id="accessibility-container"></div>
                     </button>
-                <?php endif; ?>
+				<?php endif; ?>
             </section>
 
         </div>
 
-        <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg" role="navigation">
+        <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg <?php $header->the_logo_nav_mode() ?>"
+             role="navigation">
 
             <div class="container-fluid foody-navbar-container">
 
                 <div class="site-branding">
-                    <div class="logo-container d-none d-lg-block">
+                    <div class="logo-container d-none d-lg-block <?php $header->the_logo_mode() ?> ">
                         <div class="logo-container-desktop">
-                            <?php the_custom_logo() ?>
+							<?php the_custom_logo(); ?>
                         </div>
                     </div>
 
-                    <div class="logo-container-mobile d-block d-lg-none">
-                        <?php echo get_logo_with_size('60', '60'); ?>
+                    <div class="logo-container-mobile <?php $header->the_logo_mode() ?> d-block d-lg-none">
+						<?php
+						if ( is_main_site() ) {
+							echo get_logo_with_size( '60', '60' );
+						} else {
+							the_custom_logo();
+						}
+						?>
                     </div>
 
                 </div><!-- .site-branding -->
@@ -98,43 +111,45 @@ if (!empty($background_image)) {
                     <i class="navbar-toggler-icon icon-menu-mobile"></i>
                 </button>
 
+				<?php if ( $show_accessibility ): ?>
+                    <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility"
+                            data-acsb="trigger" aria-label="פתיחת תפריט נגישות">
+	                    <?php $header->accessibility(); ?>
+                        <div id="accessibility-container"></div>
+                    </button>
+				<?php endif; ?>
 
-                <button type="button" class="btn btn-default navbar-btn  d-block d-lg-none accessibility">
-                    <img src="<?php echo $GLOBALS['images_dir'] . 'icons/accessibility-red.png' ?>"
-                         alt="<?php echo __('נגישות') ?>">
-                    <div id="accessibility-container"></div>
-                </button>
+				<?php
+				$nav_args = array(
+					'theme_location' => 'primary',
+				);
 
-                <?php
-                $nav_args = array(
-                    'theme_location' => 'primary',
-                );
+				wp_nav_menu( $nav_args );
+				?>
 
-                wp_nav_menu($nav_args);
-                ?>
+				<?php Foody_Header::whatsapp( [ 'd-block', 'd-lg-none' ] ) ?>
 
-                <?php Foody_Social::whatsapp(['d-block', 'd-lg-none']) ?>
-
-                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none">
+                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none"
+                        aria-label="חיפוש">
 
                     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="">
 
                 </button>
 
 
-                <?php if (is_user_logged_in()): ?>
+				<?php if ( is_user_logged_in() && foody_is_registration_open() ): ?>
 
                     <div class="d-none d-lg-block profile-picture-container">
 
-                        <?php
-                        $link = is_user_logged_in() ? get_permalink(get_page_by_path('פרופיל-אישי')) : '';
-                        ?>
+						<?php
+						$link = is_user_logged_in() ? get_permalink( get_page_by_path( 'פרופיל-אישי' ) ) : '';
+						?>
                         <a href="<?php echo $link ?>">
-                            <?php echo $user->get_image() ?>
+							<?php echo $user->get_image() ?>
                         </a>
                     </div>
 
-                <?php endif; ?>
+				<?php endif; ?>
 
             </div>
         </nav>
@@ -152,22 +167,16 @@ if (!empty($background_image)) {
 
         </div>
 
-        <?php
-        if (wp_is_mobile()) {
-            echo $channels->get_the_menu();
-        }
-        ?>
-
 
         <!-- #site-navigation -->
     </header><!-- #masthead -->
 
     <div id="content" class="site-content">
-        <?php
-        if (wp_is_mobile()) {
-            Foody_Social::whatsapp(['d-lg-block', 'floating', 'whatsapp-mobile']);
-        } else {
-            Foody_Social::whatsapp(['d-none', 'd-lg-block', 'floating']);
-        }
-        ?>
+		<?php
+		if ( wp_is_mobile() ) {
+			Foody_Header::whatsapp( [ 'd-lg-block', 'floating', 'whatsapp-mobile' ] );
+		} else {
+			Foody_Header::whatsapp( [ 'd-none', 'd-lg-block', 'floating' ] );
+		}
+		?>
 

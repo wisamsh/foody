@@ -18,9 +18,11 @@
     img {
       margin-bottom: 10px;
     }
-    h4 {
-      color: $color__primary;
+    .show-more-text {
+      color: var(--color__primary);
       text-align: center;
+      font-weight: 500;
+      font-size: 24px;
     }
   }
 
@@ -50,7 +52,7 @@
 
     h2 {
       margin-top: 20px;
-      color: $color__primary;
+      color: var(--color__primary);
       font-size: 24px;
       font-weight: 900;
       line-height: normal;
