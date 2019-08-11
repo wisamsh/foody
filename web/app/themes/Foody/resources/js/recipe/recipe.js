@@ -34,15 +34,19 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                  * 5 (video cued).
                  * */
                 let firstPlay = true;
+                let timeUpdater;
+                let videoTime = 0;
                 player.on('stateChange', (event) => {
 
                     switch (event.data) {
                         // video ended
                         case 0:
+                            clearInterval(timeUpdater);
                             break;
 
                         // video playing
                         case 1:
+                            timeUpdater = setInterval(updateTime, 1000);
                             if (firstPlay) {
                                 firstPlay = false;
                                 eventCallback(event, 'מתכון', 'צפייה בווידאו', 'הפעלה', 'מיקום', '0%');
@@ -58,6 +62,7 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                             break;
                         // video paused
                         case 2:
+                            clearInterval(timeUpdater);
                             let pausedDurationPromise = player.getDuration();
                             let pausedCurrPromise = player.getCurrentTime();
                             Promise.all([pausedDurationPromise, pausedCurrPromise]).then(function (values) {
@@ -73,6 +78,24 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                             break;
                     }
                 });
+
+                function updateTime() {
+                    let oldTime = videoTime;
+                    if (player && player.getCurrentTime) {
+                        videoTime = player.getCurrentTime();
+                    }
+                    if (videoTime !== oldTime) {
+                        let durationPromise = player.getDuration();
+                        onProgress([durationPromise, videoTime]);
+                    }
+                }
+
+                function onProgress(event) {
+                    Promise.all(event).then(function (values) {
+                        let passPercentage = Math.round((values[1] / values[0]) * 100);
+                        eventCallback('', 'מתכון', 'צפייה בווידאו', 'התקדמות', 'מיקום', passPercentage + '%');
+                    });
+                }
             });
         }
 
