@@ -30,6 +30,7 @@ body {
       }
     }
   }
+
   .accept-label {
     max-width: 85%;
     display: inline-block;
@@ -160,6 +161,7 @@ footer.site-footer {
         }
       }
     }
+
     .accept-label {
 
       vertical-align: middle;
@@ -177,9 +179,10 @@ footer.site-footer {
     border: none;
 
     .footer-social-container {
+      padding: 0 15px;
 
       .widgettitle {
-        font-size: 1.7rem;
+        font-size: 22px;
         font-weight: 900;
         letter-spacing: -0.1px;
         text-align: right;
