@@ -6,6 +6,11 @@
     }
   }
 
+  .promotion-listing-block-title{
+    font-size: 22px;
+    text-align: right;
+  }
+
   .promoted-items {
     list-style-type: none;
     padding: 0;
@@ -32,6 +37,7 @@
       text-align: center;
       font-family: $font__main;
       font-size: 21px;
+      font-weight: 500;
     }
 
     .overlay {

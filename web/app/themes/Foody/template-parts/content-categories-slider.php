@@ -77,9 +77,9 @@ if ( is_array( $sub_categories ) ):
                     <div>
                         <img src="<?php echo $sub_category->get_image() ?>" alt="<?php echo $sub_category->title ?>">
                     </div>
-                    <h4 class="title category-title">
+                    <div class="title category-title">
 						<?php echo $sub_category->title ?>
-                    </h4>
+                    </div>
 
                 </a>
             </li>

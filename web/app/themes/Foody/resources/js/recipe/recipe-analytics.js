@@ -74,6 +74,7 @@ jQuery(document).ready(($) => {
             });
         }
 
+
         /**
          * Related recipes chosen by name
          */
@@ -165,12 +166,15 @@ jQuery(document).ready(($) => {
         });
 
         /**
-         * Purchase button
+         * Purchase buttons
          */
         let purchaseBtn = jQuery(document.getElementsByClassName('purchase-button-container'));
         purchaseBtn.delegate('a', 'click', function (event) {
-            let buttonText = this.innerText;
-            eventCallback(event, 'מתכון', 'לחיצה לרכישה', buttonText, 'מיקום', 'עליון', get_recipe_order_location());
+            let analyticsLabel = $(this).attr('data-analytics');
+            if(!analyticsLabel){
+                analyticsLabel = this.innerText;
+            }
+            eventCallback(event, 'מתכון', 'לחיצה לרכישה', analyticsLabel, 'מיקום', 'עליון', get_recipe_order_location());
         });
 
         /**
@@ -205,6 +209,7 @@ jQuery(document).ready(($) => {
  * @param label
  * @param cdDesc
  * @param cdValue
+ * @param recipe_order_location
  */
 function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location) {
 

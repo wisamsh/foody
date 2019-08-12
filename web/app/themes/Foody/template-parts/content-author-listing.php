@@ -25,7 +25,7 @@ $order = isset( $template_args['order'] ) ? $template_args['order'] : 0;
         </div>
 
 
-        <h4 class="author-name"> <?php echo $template_args['name'] ?> </h4>
+        <h2 class="author-name"> <?php echo $template_args['name'] ?> </h2>
 
     </div>
 </a>

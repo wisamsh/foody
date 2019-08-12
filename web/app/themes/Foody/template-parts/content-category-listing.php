@@ -34,6 +34,6 @@ echo $template_args['link']; ?>" target="<?php echo $target ?>" class="col">
             </picture>
         </div>
 
-        <h2 class="categort-listing-title"><?php echo $name; ?></h2>
+        <div class="categort-listing-title"><?php echo $name; ?></div>
     </div>
 </a>
