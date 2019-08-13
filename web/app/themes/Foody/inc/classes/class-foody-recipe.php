@@ -14,7 +14,7 @@ class Foody_Recipe extends Foody_Post {
 
 	public $nutrients;
 
-	private $overview;
+	public $overview;
 
 	public $ingredients_groups;
 
