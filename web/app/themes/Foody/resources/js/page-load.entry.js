@@ -5,6 +5,7 @@ require('autocomplete.js/dist/autocomplete.jquery.min');
 require('bootstrap-material-design/dist/js/bootstrap-material-design.min');
 require('bootstrap-select/dist/js/bootstrap-select.min');
 require('./plugins/slick.min');
+require('./common/newsletter');
 window._ = require('underscore/underscore-min');
 window.foodyFormMessage = require('./common/cf7-messages');
 
