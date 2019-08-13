@@ -16,12 +16,10 @@ jQuery(document).ready(($) => {
             }
         );
     }
-
     if ($.validator) {
         $.validator.addMethod(
             "password",
             function (value) {
-
                 let hasNumbers = /[0-9]+/.test(value);
                 let nonEn = /[^a-z0-9]/i.test(value);
 
@@ -47,10 +45,12 @@ jQuery(document).ready(($) => {
                 },
                 first_name: {
                     required: true,
+                    maxlength: 15,
                     normalizer: textNormalizer
                 },
                 last_name: {
                     required: true,
+                    maxlength: 15,
                     normalizer: textNormalizer
                 },
                 password: {
@@ -76,8 +76,14 @@ jQuery(document).ready(($) => {
             },
             messages: {
                 email: 'כתובת המייל אינה תקינה',
-                first_name: 'שם פרטי הינו שדה חובה',
-                last_name: 'שם משפחה הינו שדה חובה',
+                first_name: {
+                    required: 'שם פרטי הינו שדה חובה',
+                    maxlength:'שם פרטי יכול להכיל 15 תווים לכל היותר'
+                },
+                last_name: {
+                    required: 'שם משפחה הינו שדה חובה',
+                    maxlength:'שם משפחה יכול להכיל 15 תווים לכל היותר'
+                },
                 password: 'סיסמא אינה תקינה',
                 'password-confirmation': 'סיסמאות אינן תואמות',
                 phone_number: 'מספר טלפון נייד אינו תקין',

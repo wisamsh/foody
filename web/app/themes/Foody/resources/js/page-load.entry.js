@@ -70,9 +70,10 @@ jQuery(document).ready(function ($) {
         function (value) {
 
             let hasNumbers = /[0-9]+/.test(value);
+            let hasEn = /[a-zA-Z]+/.test(value);
             let nonEn = /[^a-z0-9]/i.test(value);
 
-            return hasNumbers && nonEn === false;
+            return hasEn && hasNumbers && nonEn === false;
         }
     );
 

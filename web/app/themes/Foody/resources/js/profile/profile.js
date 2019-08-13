@@ -12,6 +12,23 @@ let FoodyLoader = require('../common/foody-loader');
 let readUrl = require('../common/image-reader');
 jQuery(document).ready(($) => {
 
+    let textNormalizer = function (value) {
+        return $.trim(value);
+    };
+
+    if ($.validator) {
+        $.validator.addMethod(
+            "password",
+            function (value) {
+
+                let hasNumbers = /[0-9]+/.test(value);
+                let hasEn = /[a-zA-Z]+/.test(value);
+                let nonEn = /[^a-z0-9]/i.test(value);
+
+                return hasEn && hasNumbers && nonEn === false;
+            }
+        );
+    }
 
     // Followed topics list
     $('.managed-list li .close').click(function () {
@@ -157,10 +174,12 @@ jQuery(document).ready(($) => {
                     required: true,
                     minlength: 8,
                     password: true,
+                    normalizer: textNormalizer
                 },
                 password_confirmation: {
                     required: true,
                     equalTo: '#password[name="password"]',
+                    normalizer: textNormalizer
                 }
             },
             messages: {
