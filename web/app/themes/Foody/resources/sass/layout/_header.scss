@@ -845,6 +845,7 @@ header {
 
                 &.hoverintent {
                   > .quadmenu-item-content {
+                    color: #000000 !important;
                     > .quadmenu-caret {
                       width: fit-content;
                       bottom: unset;
@@ -1333,6 +1334,7 @@ header {
             a {
               .quadmenu-item-content {
                 text-align: right !important;
+                color: #000000!important;
 
 
                 .quadmenu-caret {
