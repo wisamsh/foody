@@ -4,11 +4,13 @@
 
 jQuery(document).ready(($) => {
 
-    $( '.wpcf7' ).on( 'wpcf7invalid', function( event ) {
-       let messageSelector = $('.wpcf7-not-valid-tip');
+    $('.wpcf7').on('wpcf7invalid', function (event) {
+
+        let messageSelector = $('.invalid .wpcf7-not-valid-tip');
+        let responseOutput = $('.invalid .wpcf7-response-output');
         messageSelector.remove();
-        messageSelector.insertBefore($('#wpcf7-f3101-o2 .bmd-form-group'));
-
+        responseOutput.remove();
+        messageSelector.insertBefore($('.site-footer .invalid .bmd-form-group'));
     });
-
 });
+

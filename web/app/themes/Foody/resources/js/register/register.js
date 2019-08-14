@@ -8,25 +8,6 @@ jQuery(document).ready(($) => {
     let textNormalizer = function (value) {
         return $.trim(value);
     };
-    if ($.validator) {
-        $.validator.addMethod(
-            "regex",
-            function (value, element, regexp) {
-                return this.optional(element) || regexp.test(value);
-            }
-        );
-    }
-    if ($.validator) {
-        $.validator.addMethod(
-            "password",
-            function (value) {
-                let hasNumbers = /[0-9]+/.test(value);
-                let nonEn = /[^a-z0-9]/i.test(value);
-
-                return hasNumbers && nonEn === false;
-            }
-        );
-    }
 
 
     $('#register-form .md-checkbox label').on('click', function () {
@@ -78,11 +59,11 @@ jQuery(document).ready(($) => {
                 email: 'כתובת המייל אינה תקינה',
                 first_name: {
                     required: 'שם פרטי הינו שדה חובה',
-                    maxlength:'שם פרטי יכול להכיל 15 תווים לכל היותר'
+                    maxlength: 'שם פרטי יכול להכיל 15 תווים לכל היותר'
                 },
                 last_name: {
                     required: 'שם משפחה הינו שדה חובה',
-                    maxlength:'שם משפחה יכול להכיל 15 תווים לכל היותר'
+                    maxlength: 'שם משפחה יכול להכיל 15 תווים לכל היותר'
                 },
                 password: 'סיסמא אינה תקינה',
                 'password-confirmation': 'סיסמאות אינן תואמות',

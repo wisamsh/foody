@@ -301,10 +301,10 @@ jQuery(document).ready(($) => {
         // Get the content type
         let contentType = block[0].split(":")[1];// In this case "image/gif"
 
-        let loader = new FoodyLoader({container:$('.modal-body',$uploadModal)});
+        let loader = new FoodyLoader({container: $('.modal-body', $uploadModal)});
         loader.attach();
 
-        $uploadModal.block({message:''});
+        $uploadModal.block({message: ''});
         srcToFile(
             image,
             'photo.' + contentType.split('/')[1],

@@ -298,14 +298,12 @@ header {
           &:not(.quadmenu-dropdown-menu) {
             &.quadmenu-item {
               > a {
-                background-color: #ffffff !important;
 
                 &.hoverintent {
                   > .quadmenu-item-content {
                     //padding-right: 0;
                     > .quadmenu-caret {
                       left: -10px;
-                      width: fit-content !important; //bla
                     }
                   }
                 }
@@ -843,12 +841,14 @@ header {
           &:not(.quadmenu-dropdown-menu) {
             &.quadmenu-item {
               > a {
-                background-color: #ffffff !important;
+                background-color: #ffffff;
 
                 &.hoverintent {
                   > .quadmenu-item-content {
                     > .quadmenu-caret {
-                      width: fit-content !important;
+                      width: fit-content;
+                      bottom: unset;
+                      margin-top: 5px;
                     }
                   }
                 }
@@ -1337,7 +1337,9 @@ header {
 
                 .quadmenu-caret {
                   left: 0 !important;
-                  width: fit-content !important;
+                  width: fit-content;
+                  bottom: unset;
+                  margin-top: 5px;
                 }
               }
             }
