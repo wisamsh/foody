@@ -845,7 +845,6 @@ header {
 
                 &.hoverintent {
                   > .quadmenu-item-content {
-                    color: #000000 !important;
                     > .quadmenu-caret {
                       width: fit-content;
                       bottom: unset;
@@ -1334,7 +1333,6 @@ header {
             a {
               .quadmenu-item-content {
                 text-align: right !important;
-                color: #000000!important;
 
 
                 .quadmenu-caret {
@@ -1348,6 +1346,10 @@ header {
 
           }
         }
+      }
+
+      #quadmenu.quadmenu-default_theme .quadmenu-navbar-nav > li:not(.quadmenu-item-type-button).quadmenu-has-link.open > a > .quadmenu-item-content {
+        color: #8e8e8e;
       }
 
     }
