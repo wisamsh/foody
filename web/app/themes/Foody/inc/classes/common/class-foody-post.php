@@ -46,6 +46,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar {
 
 	protected $stub_images = array();
 
+	public $featured_image_alt;
+
 	/**
 	 * FoodyPost constructor.
 	 *

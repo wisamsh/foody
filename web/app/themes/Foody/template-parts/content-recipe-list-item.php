@@ -34,10 +34,10 @@ $lazy = ! empty( $template_args['lazy'] );
                 <img src="<?php echo $GLOBALS['images_dir'] . 'recipe-placeholder.svg' ?>"
                      class="recipe-item-image feed-item-image lazyload"
                      data-foody-src="<?php echo $recipe->getImage() ?>"
-                     alt="<?php echo image_alt_by_url( $recipe->getImage() ) ?>">
+                     alt="<?php echo foody_get_featured_image_alt( $recipe) ?>">
 			<?php else: ?>
                 <img class="recipe-item-image feed-item-image" src="<?php echo $recipe->getImage() ?>"
-                     alt="<?php echo image_alt_by_url( $recipe->getImage() ) ?>">
+                     alt="<?php echo foody_get_featured_image_alt( $recipe) ?>">
 
 			<?php endif; ?>
 

@@ -132,7 +132,11 @@ class Foody_BotAPIController extends Foody_BaseAPIController {
 
 		$results = $this->bot_handler->getResults( $params );
 
-		return new WP_REST_Response( $results );
+		$response = [
+			'items' => $results
+		];
+
+		return new WP_REST_Response( $response, 200, [ 'Content-Type:application/json' ] );
 	}
 
 

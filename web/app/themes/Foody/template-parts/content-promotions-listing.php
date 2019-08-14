@@ -16,9 +16,9 @@ $max_mobile_items = 4;
 
 <section class="promotion-listing">
 
-    <h2 class="title">
+    <div class="title promotion-listing-block-title">
 		<?php echo $title ?>
-    </h2>
+    </div>
 
     <ul class="promoted-items d-flex flex-row">
 
@@ -47,7 +47,7 @@ $max_mobile_items = 4;
                             </picture>
                         </div>
 
-                        <h4 class="promotion-listing-title"><?php echo $item['title']; ?></h4>
+                        <div class="promotion-listing-title"><?php echo $item['title']; ?></div>
                     </div>
                 </a>
 

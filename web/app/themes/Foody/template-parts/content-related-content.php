@@ -35,9 +35,9 @@ $items = foody_get_array_default( $related_content, 'items', array() );
 ?>
 <section class="related-content-container <?php echo $content_classes ?>">
 
-    <h3 class="title related-content-title">
+    <div class="title related-content-title">
 		<?php echo $related_content['title'] ?>
-    </h3>
+    </div>
     <ul class="related-content nolist <?php echo $content_classes ?>">
 
 		<?php foreach ( $items as $item ) : ?>
@@ -55,11 +55,11 @@ $items = foody_get_array_default( $related_content, 'items', array() );
                 </a>
 
                 <div class="details">
-                    <h3 class="post-title">
+                    <div class="post-title">
                         <a href="<?php echo get_permalink( $item['id'] ) ?>">
 							<?php echo $item['title'] ?>
                         </a>
-                    </h3>
+                    </div>
 
                     <a class="author-name" href="<?php echo $item['author']['link'] ?>">
 						<?php echo $item['author']['name'] ?>

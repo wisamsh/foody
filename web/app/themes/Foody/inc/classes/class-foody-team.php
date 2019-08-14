@@ -27,6 +27,7 @@ class FoodyTeam {
 				'max'        => 6
 			);
 		}
+
 		$num_of_authors = $display_args['max'];
 
 		$show_count = $display_args['show_count'];

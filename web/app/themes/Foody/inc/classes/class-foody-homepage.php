@@ -43,8 +43,9 @@ class Foody_HomePage {
 			return;
 		}
 
-		$posts = $this->get_featured_posts();
-		$this->grid->loop( $posts, 2, 12, null, [], null, [ 'image_size' => '' ] );
+		$posts    = $this->get_featured_posts();
+		$title_el = wp_is_mobile() ? 'h2' : 'div';
+		$this->grid->loop( $posts, 2, 12, null, [], null, [ 'image_size' => '', 'title_el' => $title_el ] );
 	}
 
 	public function cover_photo() {

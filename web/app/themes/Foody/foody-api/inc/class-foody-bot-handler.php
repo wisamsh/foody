@@ -11,6 +11,7 @@ namespace FoodyAPI;
 
 use Foody_Ingredient;
 use Foody_Recipe;
+use WP_Post;
 use WP_Query;
 use WP_Term_Query;
 
@@ -39,9 +40,81 @@ class Foody_BotHandler {
 
 		$posts = $this->getPosts( $params );
 
-		$posts = array_map( 'get_permalink', $posts );
+		$posts = array_map( [ $this, 'mapPostToResponse' ], $posts );
+
 
 		return $posts;
+	}
+
+
+	/**
+	 * @param $post WP_Post
+	 *
+	 * @return array
+	 */
+	private function mapPostToResponse( $post ) {
+
+
+		$recipe = new Foody_Recipe( $post );
+		$recipe->init();
+
+		$item = [
+			'title'            => $post->post_title,
+			'url'              => get_permalink( $post ),
+			'image'            => get_the_post_thumbnail_url( $post ),
+			'author'           => get_the_author_meta( 'display_name', $post->post_author ),
+			'ingredients'      => $this->getPostIngredients( $post ),
+			'techniques'       => $this->getPostRepeaterTitles( 'techniques', $post ),
+			'accessories'      => $this->getPostRepeaterTitles( 'accessories', $post ),
+			'tags'             => wp_get_post_terms( $post->ID, 'post_tag', [ 'fields' => 'names' ] ),
+			'categories'       => wp_get_post_terms( $post->ID, 'category', [ 'fields' => 'names' ] ),
+			'time'             => $recipe->overview['total_time'],
+			'difficulty_level' => $recipe->overview['difficulty_level'],
+		];
+
+
+		return $item;
+
+	}
+
+
+	/**
+	 * @param $post WP_Post
+	 *
+	 * @return array
+	 */
+	private function getPostIngredients( $post ) {
+
+		$ingredients_groups = get_field( 'ingredients', $post->ID );
+
+		$ingredients = [];
+
+		foreach ( $ingredients_groups['ingredients_groups'] as $ingredients_group ) {
+			$ingredients_ids = array_map( function ( $row ) {
+				return $row['ingredient'];
+			}, $ingredients_group['ingredients'] );
+			$ingredients     = array_merge( $ingredients, array_map( 'get_the_title', $ingredients_ids ) );
+		}
+
+		return $ingredients;
+	}
+
+	/**
+	 * @param $selector string
+	 * @param $post WP_Post
+	 *
+	 * @return array
+	 */
+	private function getPostRepeaterTitles( $selector, $post ) {
+
+		$items = [];
+		$posts = get_field( $selector, $post->ID );
+		if ( ! empty( $posts ) ) {
+			$posts = $posts[ $selector ];
+			$items = array_map( 'get_the_title', $posts );
+		}
+
+		return $items;
 	}
 
 	private function getPosts( $params ) {

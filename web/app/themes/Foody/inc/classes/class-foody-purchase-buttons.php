@@ -37,6 +37,9 @@ class Foody_PurchaseButtons {
 	}
 
 	public static function the_button( $button, $echo = true ) {
+
+
+
 		if ( ! empty( $button['image'] ) ) {
 			$images = [
 				'mobile_image' => $button['image']
@@ -47,7 +50,7 @@ class Foody_PurchaseButtons {
 
 			$content = foody_get_template_part(
 				get_template_directory() . '/template-parts/common/picture.php',
-				[ 'return' => true, 'images' => $images ]
+				[ 'return' => true, 'images' => $images]
 			);
 		} else {
 			$color      = $button['color'];
@@ -68,6 +71,7 @@ class Foody_PurchaseButtons {
 	 * @param int $post
 	 *
 	 * @return array purchase buttons relevant to post
+	 * @throws Exception
 	 */
 	public function get_buttons_for_post( $post ) {
 		$buttons = [];
