@@ -179,6 +179,7 @@ jQuery(document).ready(($) => {
                 password_confirmation: {
                     required: true,
                     equalTo: '#password[name="password"]',
+                    password: true,
                     normalizer: textNormalizer
                 }
             },
@@ -195,6 +196,7 @@ jQuery(document).ready(($) => {
                 },
                 password_confirmation: {
                     required: 'ווידוא סיסמא הינו שדה חובה',
+                    password: 'סיסמא אינה תקינה',
                     equalTo: 'סיסמאות אינן תואמות'
                 }
             }, submitHandler: function (form) {
