@@ -229,7 +229,10 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
     function load_more_recipes()
     {
         $recipes = ($this->get_author_content('foody_recipe'))['posts'];
-        $recipes_ids = array_map(function ($recipe) {
+
+
+        $recipes_ids = array_map( function ($recipe) {
+            /** @var Foody_Recipe $recipe */
             return $recipe->get_id();
         }, $recipes);
 
@@ -278,6 +281,7 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
     {
         $primary_categories_associative_list = [];
         $primary_categories_list = [];
+        /** @var Foody_Recipe $recipe */
         foreach ($recipes_list as $recipe) {
             $primary_category = $recipe->get_primary_category_name();
             if (!array_key_exists($primary_category, $primary_categories_associative_list)) {
