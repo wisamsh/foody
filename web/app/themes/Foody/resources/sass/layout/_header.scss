@@ -1348,8 +1348,17 @@ header {
         }
       }
 
-      #quadmenu.quadmenu-default_theme .quadmenu-navbar-nav > li:not(.quadmenu-item-type-button).quadmenu-has-link.open > a > .quadmenu-item-content {
-        color: #8e8e8e;
+      #quadmenu.quadmenu-default_theme {
+        .quadmenu-navbar-nav {
+          > li:not(.quadmenu-item-type-button).quadmenu-has-link.open {
+            > a {
+              > .quadmenu-item-content {
+                color: #8e8e8e;
+              }
+            }
+          }
+        }
+
       }
 
     }
