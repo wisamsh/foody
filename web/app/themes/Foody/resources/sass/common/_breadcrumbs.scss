@@ -3,6 +3,7 @@
   padding: 15px 0;
   padding:0;
   margin-bottom: 0;
+  .unlinked-page,
   li {
     font-size: 16px;
     a {
@@ -20,6 +21,10 @@
       padding:0 5px;
     }
 
+  }
+
+  .unlinked-page{
+    color: #B0B0B0;
   }
 
 }
