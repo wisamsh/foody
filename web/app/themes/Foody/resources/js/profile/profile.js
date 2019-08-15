@@ -12,6 +12,23 @@ let FoodyLoader = require('../common/foody-loader');
 let readUrl = require('../common/image-reader');
 jQuery(document).ready(($) => {
 
+    let textNormalizer = function (value) {
+        return $.trim(value);
+    };
+
+    if ($.validator) {
+        $.validator.addMethod(
+            "password",
+            function (value) {
+
+                let hasNumbers = /[0-9]+/.test(value);
+                let hasEn = /[a-zA-Z]+/.test(value);
+                let nonEn = /[^a-z0-9]/i.test(value);
+
+                return hasEn && hasNumbers && nonEn === false;
+            }
+        );
+    }
 
     // Followed topics list
     $('.managed-list li .close').click(function () {
@@ -157,10 +174,13 @@ jQuery(document).ready(($) => {
                     required: true,
                     minlength: 8,
                     password: true,
+                    normalizer: textNormalizer
                 },
                 password_confirmation: {
                     required: true,
                     equalTo: '#password[name="password"]',
+                    password: true,
+                    normalizer: textNormalizer
                 }
             },
             messages: {
@@ -176,6 +196,7 @@ jQuery(document).ready(($) => {
                 },
                 password_confirmation: {
                     required: 'ווידוא סיסמא הינו שדה חובה',
+                    password: 'סיסמא אינה תקינה',
                     equalTo: 'סיסמאות אינן תואמות'
                 }
             }, submitHandler: function (form) {
@@ -282,10 +303,10 @@ jQuery(document).ready(($) => {
         // Get the content type
         let contentType = block[0].split(":")[1];// In this case "image/gif"
 
-        let loader = new FoodyLoader({container:$('.modal-body',$uploadModal)});
+        let loader = new FoodyLoader({container: $('.modal-body', $uploadModal)});
         loader.attach();
 
-        $uploadModal.block({message:''});
+        $uploadModal.block({message: ''});
         srcToFile(
             image,
             'photo.' + contentType.split('/')[1],

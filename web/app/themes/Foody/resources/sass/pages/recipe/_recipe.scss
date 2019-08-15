@@ -3305,3 +3305,21 @@ $content-width: 95%;
     color: $color-red-error;
   }
 }
+
+@media print {
+  .content-details-bullets-container{
+    .favorite-container,
+    .wrapper{
+      display: inline-block !important;
+      float: right;
+      margin-right: 10px;
+    }
+  }
+  .d-flex:not(.d-lg-block) * {
+    .ratings-wrapper {
+      .post-ratings-loading {
+        display: none !important;
+      }
+    }
+  }
+}

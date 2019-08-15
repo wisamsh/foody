@@ -5,6 +5,7 @@ require('autocomplete.js/dist/autocomplete.jquery.min');
 require('bootstrap-material-design/dist/js/bootstrap-material-design.min');
 require('bootstrap-select/dist/js/bootstrap-select.min');
 require('./plugins/slick.min');
+require('./common/newsletter');
 window._ = require('underscore/underscore-min');
 window.foodyFormMessage = require('./common/cf7-messages');
 
@@ -70,9 +71,10 @@ jQuery(document).ready(function ($) {
         function (value) {
 
             let hasNumbers = /[0-9]+/.test(value);
+            let hasEn = /[a-zA-Z]+/.test(value);
             let nonEn = /[^a-z0-9]/i.test(value);
 
-            return hasNumbers && nonEn === false;
+            return hasEn && hasNumbers && nonEn === false;
         }
     );
 
