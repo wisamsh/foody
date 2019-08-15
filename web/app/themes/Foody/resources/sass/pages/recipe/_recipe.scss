@@ -3308,11 +3308,15 @@ $content-width: 95%;
 
 @media print {
   .content-details-bullets-container{
-    .favorite-container,
+    .favorite-container{
+      display: inline-block !important;
+      float:left;
+    }
     .wrapper{
       display: inline-block !important;
       float: right;
-      margin-right: 10px;
+      margin-top: 10px;
+      margin-right: -50px !important;
     }
   }
   .d-flex:not(.d-lg-block) * {
