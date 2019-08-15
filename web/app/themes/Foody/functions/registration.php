@@ -4,18 +4,31 @@
  * User: moveosoftware
  * Date: 10/2/18
  * Time: 11:12 AM
+ *
+ * @param $provider_scope
+ * @param $provider
+ *
+ * @return string
  */
 
 
-function wsl_change_default_permissons( $provider_scope, $provider ) {
+function wsl_change_default_permissions( $provider_scope, $provider ) {
+
+	// $provider should not be empty or it will be overwritten
+
+
 	if ( 'facebook' == strtolower( $provider ) ) {
 		$provider_scope = 'email, public_profile';
+	}
+
+	if ( 'google' == strtolower( $provider ) ) {
+		$provider_scope = 'profile';
 	}
 
 	return $provider_scope;
 }
 
-add_filter( 'wsl_hook_alter_provider_scope', 'wsl_change_default_permissons', 10, 2 );
+add_filter( 'wsl_hook_alter_provider_scope', 'wsl_change_default_permissions', 10, 2 );
 
 
 /**
