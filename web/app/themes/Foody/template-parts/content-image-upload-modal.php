@@ -34,7 +34,7 @@ $btn_cancel_classes  = foody_get_array_default( $modal, 'btn_cancel_classes', 'b
                     </div>
                     <div class="comment-input-container">
                         <label for="comment">
-							<?php echo wp_get_current_user()->display_name ?>
+                            <?php echo wp_get_current_user()->first_name . ' ' . wp_get_current_user()->last_name; ?>
                         </label>
                         <input max="80" class="comment" type="text" name="comment" id="comment"
                                placeholder="הקלד תיאור…">
