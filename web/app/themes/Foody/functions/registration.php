@@ -134,6 +134,8 @@ add_action( 'wp', function () {
 					$error = [
 						'message' => 'invalid password'
 					];
+                    $redirect_url = add_query_arg('error', 'invalid-password', home_url('פרופיל-אישי'));
+                    wp_redirect($redirect_url);
 				}
 			}
 		}

@@ -10,7 +10,13 @@ require('cropperjs/dist/cropper.min.css');
 require('jquery-cropper');
 let FoodyLoader = require('../common/foody-loader');
 let readUrl = require('../common/image-reader');
+let requiredMessage  = 'סיסמא נוכחית הינו שדה חובה';
 jQuery(document).ready(($) => {
+
+    if ($("#password-error").length) {
+        requiredMessage = 'הסיסמא לא נכונה';
+        $('#password-error a').trigger('click', 'error');
+    }
 
     let textNormalizer = function (value) {
         return $.trim(value);
@@ -158,6 +164,10 @@ jQuery(document).ready(($) => {
                 $mobileChannels.addClass('d-none').removeClass('d-block');
             }
         }
+
+        if (e.currentTarget.offsetParent.id == 'password-error') {
+            $("#current-password").valid();
+        }
     });
 
 
@@ -185,7 +195,7 @@ jQuery(document).ready(($) => {
             },
             messages: {
                 current_password: {
-                    required: 'סיסמא נוכחית הינו שדה חובה',
+                    required: requiredMessage,
                     password: 'סיסמא אינה תקינה',
                     minlength: 'יש להזין לפחות 8 תווים'
                 },
@@ -355,5 +365,4 @@ jQuery(document).ready(($) => {
                 })
         );
     }
-
 });
