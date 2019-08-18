@@ -86,9 +86,13 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
 
             <li>
                 <?php $categories_page = get_page_by_path('קטגוריות') ?>
+                <?php if ($categories_page == null || !get_field('categories', $categories_page->ID)) {
+                     echo "<li class='unlinked-page''>" . __('קטגוריות') . "</li>";
+                } else {?>
                 <a href="<?php echo get_permalink($categories_page) ?>">
                     <?php echo get_the_title($categories_page) ?>
                 </a>
+            <?php }?>
             </li>
 
             <?php
