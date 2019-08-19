@@ -7,7 +7,7 @@
  */
 
 $modal = [
-	'title' => 'תראו מה יצא לי'
+    'title' => 'תראו מה יצא לי'
 ];
 
 ?>
@@ -17,7 +17,7 @@ $modal = [
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-					<?php echo $modal['title'] ?>
+                    <?php echo $modal['title'] ?>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -28,14 +28,18 @@ $modal = [
                     <img id="image" src="" alt="">
                 </div>
 
-
+                <?php if (!essb_is_mobile()){ ?>
                 <section class="details col-4">
-                    <h4 id="user">
+                    <?php }
+                    else { ?>
+                    <section class="details col-3">
+                        <?php } ?>
+                        <h4 id="user">
 
-                    </h4>
+                        </h4>
 
-                    <p id="content"></p>
-                </section>
+                        <p id="content"></p>
+                    </section>
             </div>
         </div>
     </div>
