@@ -134,7 +134,7 @@ function foody_set_og_image() {
 		$image        = "<meta property=\"og:image\"  itemprop=\"image\" content=\"" . $author_image . "\">";
 
 		$image .= '<meta property="og:image:width" content="300">';
-		$image .= '<meta property="og:image:height" content="200">';
+		$image .= '<meta property="og:image:height" content="300">';
 		echo $image;
 	} else if ( get_post_type() == 'foody_feed_channel' ) {
 
