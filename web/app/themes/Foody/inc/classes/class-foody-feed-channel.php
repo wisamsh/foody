@@ -115,7 +115,7 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
 		}
 	}
 
-	function topic_image() {
+	function topic_image($size = 96) {
 
 	}
 

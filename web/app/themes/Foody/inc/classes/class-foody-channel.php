@@ -131,7 +131,7 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
 
 	// Foody_Topic
 
-	function topic_image() {
+	function topic_image($size = 96) {
 		return $this->getImage();
 	}
 

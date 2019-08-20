@@ -8,7 +8,7 @@
  */
 interface Foody_Topic {
 
-	function topic_image();
+	function topic_image($size = 96);
 
 	function topic_title();
 
