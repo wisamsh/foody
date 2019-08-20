@@ -47,7 +47,7 @@ $username = ! empty( $user ) ? $user->display_name : get_comment_author( $commen
 				<?php printf( __( '%s' ), sprintf( '<span class="author">%s</span>', $username ) ); ?>
                 <time>
 					<?php
-                    $timestamp = (new DateTime())->getTimestamp();
+                    $timestamp = (new DateTime('now','Israel'))->getTimestamp();
                     echo human_time_diff( get_comment_date( 'U' ), date( 'U' ,$timestamp) );
                     ?>
                 </time>
