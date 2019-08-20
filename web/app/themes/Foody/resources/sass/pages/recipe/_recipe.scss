@@ -1029,6 +1029,10 @@ $content-width: 95%;
               font-family: $font__assistant;
               font-size: 22px;
 
+              #content{
+                word-break: break-word;
+              }
+
               h4 {
                 font-weight: bold;
                 font-family: $font__assistant;

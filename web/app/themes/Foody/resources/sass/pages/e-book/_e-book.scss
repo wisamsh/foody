@@ -214,6 +214,10 @@
               font-family: $font__assistant;
               font-size: 22px;
 
+              #content{
+                word-break: break-word;
+              }
+
               h4 {
                 font-weight: bold;
                 font-family: $font__assistant;
@@ -470,6 +474,7 @@
         #content {
           padding-top: 0;
           min-height: unset;
+          word-break: break-word;
         }
 
         .close {

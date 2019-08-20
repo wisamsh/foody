@@ -24,22 +24,17 @@ $modal = [
                 </button>
             </div>
             <div class="modal-body row">
-                <div class="col-8">
+                <div class="col-7">
                     <img id="image" src="" alt="">
                 </div>
-
-                <?php if (!essb_is_mobile()){ ?>
                 <section class="details col-4">
-                    <?php }
-                    else { ?>
-                    <section class="details col-3">
-                        <?php } ?>
-                        <h4 id="user">
 
-                        </h4>
+                    <h4 id="user">
 
-                        <p id="content"></p>
-                    </section>
+                    </h4>
+
+                    <p id="content"></p>
+                </section>
             </div>
         </div>
     </div>
