@@ -181,7 +181,7 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 //            $url = 'https://www.goodtherapy.org/blog/blog/wp-content/uploads/2017/11/thanksgiving-holiday-table-300x200.jpg';
 //            return $url;
 //        }
-        return get_avatar_url($this->getId(), ['size' => $size]);
+        return get_avatar_url($this->getId(), ['size' => 96]);
     }
 
     function topic_title()
