@@ -177,10 +177,10 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
     function topic_image($size = 96)
     {
-        if($size != 96){
-            $url = 'https://www.goodtherapy.org/blog/blog/wp-content/uploads/2017/11/thanksgiving-holiday-table-300x200.jpg';
-            return $url;
-        }
+//        if($size != 96){
+//            $url = 'https://www.goodtherapy.org/blog/blog/wp-content/uploads/2017/11/thanksgiving-holiday-table-300x200.jpg';
+//            return $url;
+//        }
         return get_avatar_url($this->getId(), ['size' => $size]);
     }
 
