@@ -56,7 +56,7 @@ if ( $cols % $comments_per_page == 0 ) {
         </div>
         <div class="col">
                <span class="username">
-                    <?php printf( __( '%s' ), sprintf( '<span class="author-name">%s</span>', $username ) ); ?>
+                    <?php printf( __( '%s' ), sprintf( '<span class="author-name">%s</span>', $author->first_name.' '.$author->last_name ) ); ?>
                 </span>
             <time>
 				<?php echo human_time_diff( get_comment_date( 'U', $comment['comment_ID'] ), date( 'U' ) ) ?>
