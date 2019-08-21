@@ -36,12 +36,14 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                 let firstPlay = true;
                 let timeUpdater;
                 let videoTime = 0;
+                let sentPercentage = {};
                 player.on('stateChange', (event) => {
 
                     switch (event.data) {
                         // video ended
                         case 0:
                             clearInterval(timeUpdater);
+                            sentPercentage = {};
                             break;
 
                         // video playing
@@ -93,7 +95,11 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                 function onProgress(event) {
                     Promise.all(event).then(function (values) {
                         let passPercentage = Math.round((values[1] / values[0]) * 100);
-                        eventCallback('', 'מתכון', 'צפייה בווידאו', 'התקדמות', 'מיקום', passPercentage + '%');
+                        //Send event only for 0, 10, 20, 30, etc...
+                        if (passPercentage % 10 == 0 && !sentPercentage[passPercentage]) {
+                            sentPercentage[passPercentage] = true;
+                            eventCallback('', 'מתכון', 'צפייה בווידאו', 'התקדמות', 'מיקום', passPercentage + '%');
+                        }
                     });
                 }
             });
