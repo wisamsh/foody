@@ -38,7 +38,7 @@ if ( $cols % $comments_per_page == 0 ) {
             <!--suppress HtmlUnknownAnchorTarget -->
             <a class="how-i-did-modal-open" href="#how-i-did-modal" data-toggle="modal"
                data-image="<?php echo $image ?>"
-               data-user="<?php echo $author->first_name.' '.$author->last_name ?>"
+               data-user="<?php echo $author->display_name; ?>"
                data-content="<?php echo strip_tags( get_comment_text( $comment['comment_ID'] ) ); ?>">
                 <img src="<?php echo $image ?>"
                      alt="<?php echo strip_tags( get_comment_text( $comment['comment_ID'] ) ); ?>">
