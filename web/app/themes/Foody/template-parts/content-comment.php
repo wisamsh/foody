@@ -20,7 +20,7 @@ if ( ! isset( $args['depth'] ) ) {
 
 $author   = get_comment_author_email( $comment );
 $user     = get_user_by( 'email', $author );
-$username = ! empty( $user ) ? $user->first_name.' '.$user->last_name : get_comment_author( $comment );
+$username = ! empty( $user ) ? $user->display_name : get_comment_author( $comment );
 
 ?>
 
@@ -44,7 +44,7 @@ $username = ! empty( $user ) ? $user->first_name.' '.$user->last_name : get_comm
 					<?php echo __( 'תגובתך התקבלה, היא תפורסם בהקדם', 'foody' ) ?>
                 </div>
 			<?php else: ?>
-				<?php printf( __( '%s' ), sprintf( '<span class="author">%s</span>', $username ) ); ?>
+				<?php printf( __( '%s' ), sprintf( '<span class="author">%s</span>', $user->first_name.' '.$user->last_name ) ); ?>
                 <time>
 					<?php
                     //$timestamp = (new DateTime('now','Israel'))->getTimestamp();
