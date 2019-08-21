@@ -878,13 +878,16 @@ class Foody_Recipe extends Foody_Post
 
     public function get_jsonld_video()
     {
-        $time = explode(':',$this->video['duration']);
-        $secs = $time[0]*60+$time[1];
-        $json = [
-            "contentUrl" =>  $this->video['url'],
-            "duration" => $this->duration8601($secs)
-        ];
+        if ($this->video['url'] != null) {
+            $time = explode(':', $this->video['duration']);
+            $secs = $time[0] * 60 + $time[1];
+            $json = [
+                "contentUrl" => $this->video['url'],
+                "duration" => $this->duration8601($secs)
+            ];
 
-        return json_encode($json,JSON_UNESCAPED_SLASHES);
+            return json_encode($json, JSON_UNESCAPED_SLASHES);
+        }
+        return "";
     }
 }
