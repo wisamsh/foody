@@ -775,11 +775,11 @@ class Foody_Recipe extends Foody_Post
     {
         $json = [
             "@type" => "NutritionInformation",
-            'calories' => isset($this->nutrients['calories']) ? $this->nutrients['calories'] : '',
-            'carbohydrateContent' => isset($this->nutrients['carbohydrates']) ? $this->nutrients['carbohydrates'] : '',
-            'fatContent' => isset($this->nutrients['fats']) ? $this->nutrients['fats'] : '',
-            'proteinContent' => isset($this->nutrients['protein']) ? $this->nutrients['protein'] : '',
-            'sodiumContent' => isset($this->nutrients['sodium']) ? $this->nutrients['sodium'] : '',
+            'calories' => isset($this->nutrients[0]) ? $this->nutrients[0]['value'] : '',
+            'carbohydrateContent' => isset($this->nutrients[1]) ? $this->nutrients[0]['value'] : '',
+            'fatContent' => isset($this->nutrients[2]) ? $this->nutrients[2]['value'] : '',
+            'sodiumContent' => isset($this->nutrients[3]) ? $this->nutrients[3]['value'] : '',
+            'proteinContent' => isset($this->nutrients[4]) ? $this->nutrients[4]['value'] : '',
         ];
 
         return json_encode($json);
@@ -869,17 +869,22 @@ class Foody_Recipe extends Foody_Post
         return json_encode($json);
     }
 
-    public function get_tags_names(){
-        return array_map(function ($tag){
-            return $tag->name;
+    public function get_tags_names()
+    {
+        return array_map(function ($tag) {
+            return str_replace(['״', '"'], '', $tag->name);
         }, wp_get_post_tags($this->get_id()));
     }
 
-    public function get_jsonld_video(){
-        if ( have_rows( 'video', $this->post->ID ) ) {
-            while (have_rows('video', $this->post->ID)): the_row();
-                $video_url = get_sub_field( 'url' );
-            endwhile;
-        }
+    public function get_jsonld_video()
+    {
+        $time = explode(':',$this->video['duration']);
+        $secs = $time[0]*60+$time[1];
+        $json = [
+            "contentUrl" =>  $this->video['url'],
+            "duration" => $this->duration8601($secs)
+        ];
+
+        return json_encode($json,JSON_UNESCAPED_SLASHES);
     }
 }
