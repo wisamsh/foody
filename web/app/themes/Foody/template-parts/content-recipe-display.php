@@ -20,7 +20,9 @@ $recipe = $template_args['recipe'];
      {
       "@context": "http://schema.org/",
       "@type": "Recipe",
+      "aggregateRating": <?php echo $recipe->get_jsonld_aggregateRating()?>,
       "name": "<?php echo addslashes( get_the_title() ) ?>",
+      "nutrition": <?php echo $recipe->get_jsonld_nutrients()?>,
       "image": "<?php echo $recipe->getImage() ?>",
       "author": {
         "@type": "Person",
@@ -30,10 +32,11 @@ $recipe = $template_args['recipe'];
       "description": "<?php echo addslashes( $recipe->getDescription() ) ?>",
       "cookTime": "<?php echo $recipe->time_to_iso8601_duration( 'preparation_time' ) ?>",
       "totalTime": "<?php echo $recipe->time_to_iso8601_duration( 'total_time' ) ?>",
-      "keywords": "<?php echo implode( ',', wp_get_post_tags() ) ?>",
+      "keywords": "<?php echo implode( ',',$recipe->get_tags_names() ) ?>",
       "recipeYield": "<?php echo $recipe->number_of_dishes ?>",
       "recipeCategory": "<?php echo addslashes( $recipe->get_primary_category_name() ) ?>",
-      "recipeIngredient": <?php echo $recipe->get_ingredients_jsonld() ?>
+      "recipeIngredient": <?php echo $recipe->get_ingredients_jsonld() ?>,
+      "recipeInstructions": "<?php echo str_replace(array("\r", "\n", "\t"), "",wp_strip_all_tags(get_the_content($recipe)))  ?>"
 }
 
 
