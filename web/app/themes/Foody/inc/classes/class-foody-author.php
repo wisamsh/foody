@@ -177,7 +177,7 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
     function topic_image($size = 96)
     {
-        return get_avatar_url($this->getId(), ['size' => $size]);
+        return get_avatar_url($this->getId(), ['size' => 96]);
     }
 
     function topic_title()
