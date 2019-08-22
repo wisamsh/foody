@@ -19,8 +19,12 @@ jQuery(document).ready(($) => {
         /**
          * Page Load
          */
-        eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), get_recipe_order_location());
-
+        if(foodyGlobals['post']['categories'] && foodyGlobals['post']['categories'].length > 1){
+            eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', publishers.join(', '), get_recipe_order_location());
+        }
+        else {
+            eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), get_recipe_order_location());
+        }
         /**
          * Breadcrumbs click
          */
@@ -194,6 +198,19 @@ jQuery(document).ready(($) => {
             if (toLog) {
                 eventCallback(event, 'מתכון', 'גלילה', scrollPercentRounded + '%', '', '', get_recipe_order_location());
 
+            }
+        });
+
+        /**
+         * Register to newsletter footer
+         */
+        let newsletterRegisterBtn = $('footer .newsletter .wpcf7');
+        newsletterRegisterBtn.submit((event)=>{
+            if(foodyGlobals['post']['categories'] && foodyGlobals['post']['categories'].length > 1){
+                eventCallback(event, 'מתכון', 'לחיצה על רישום לדיוור', 'קטגוריות נוספות', 'מיקום', 'פוטר');
+            }
+            else {
+                eventCallback(event, 'מתכון', 'לחיצה על רישום לדיוור', 'קטגוריה ראשית', 'מיקום', 'פוטר');
             }
         });
 

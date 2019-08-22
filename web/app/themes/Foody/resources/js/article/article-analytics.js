@@ -94,6 +94,22 @@ jQuery(document).ready(($) => {
             }
         });
 
+        /**
+        * Register to newsletter footer
+         */
+        let newsletterRegisterBtn = $('footer .newsletter .wpcf7');
+        newsletterRegisterBtn.submit((event)=>{
+            eventCallback(event,'כתבה', 'לחיצה על רישום לדיוור', '', 'מיקום', 'פוטר');
+        });
+
+        /**
+         * Purchase button clicked
+         */
+        let purchaseBtn = $('.purchase-buttons .purchase-button-container a');
+        purchaseBtn.click((event)=>{
+            eventCallback(event,'כתבה', 'לחיצה לרכישה', '', '', '');
+        });
+
     }
 });
 
