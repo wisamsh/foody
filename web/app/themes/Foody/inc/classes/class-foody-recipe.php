@@ -881,9 +881,11 @@ class Foody_Recipe extends Foody_Post
         if ($this->video['url'] != null) {
             $time = explode(':', $this->video['duration']);
             $secs = $time[0] * 60 + $time[1];
+            $duration = $this->duration8601($secs);
             $json = [
+                "@type" => "VideoObject",
                 "contentUrl" => $this->video['url'],
-                "duration" => $this->duration8601($secs)
+                "duration" => ltrim($duration,$duration[0])
             ];
 
             return json_encode($json, JSON_UNESCAPED_SLASHES);
