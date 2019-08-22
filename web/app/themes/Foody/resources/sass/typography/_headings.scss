@@ -1,8 +1,8 @@
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6,  div.filter-title-h5 {
 	clear: both;
 }
 
-.title{
+.title,  div.filter-title-h5{
 	color: var(--color__text-title);
 	font-family: $font__bold;
 	font-weight: 900;
@@ -12,4 +12,9 @@ h1, h2, h3, h4, h5, h6 {
 h4{
 	font-size: 24px;
 	letter-spacing: -0.12px;
+}
+
+div.filter-title-h5{
+	text-align: right;
+	font-family: $font__bold;
 }

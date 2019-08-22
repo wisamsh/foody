@@ -1769,7 +1769,7 @@ $content-width: 95%;
         #accordion-how-i-did-accordion {
 
           .foody-accordion-title {
-            h5 {
+            h5,  div.filter-title-h5 {
               i.icon-side-arrow {
                 &:before {
                   left: 0;
@@ -1912,7 +1912,7 @@ $content-width: 95%;
         max-width: 100%;
 
         .foody-accordion-title {
-          h5 {
+          h5,  div.filter-title-h5 {
             i.icon-side-arrow {
               &:before {
                 left: 0;
@@ -2257,7 +2257,7 @@ $content-width: 95%;
         #accordion-how-i-did {
 
           .foody-accordion-title {
-            h5 {
+            h5,  div.filter-title-h5 {
               i.icon-side-arrow {
                 &:before {
                 }
@@ -2361,7 +2361,7 @@ $content-width: 95%;
 
       .recipe-comments {
         .foody-accordion-title {
-          h5 {
+          h5,  div.filter-title-h5 {
             i.icon-side-arrow {
               &:before {
               }
@@ -2647,7 +2647,7 @@ $content-width: 95%;
 
         #accordion-how-i-did {
           .foody-accordion-title {
-            h5 {
+            h5,  div.filter-title-h5 {
               i.icon-side-arrow {
                 &:before {
                   left: 5em;
@@ -2803,7 +2803,7 @@ $content-width: 95%;
 
         #accordion-comments-accordion {
           .foody-accordion-title {
-            h5 {
+            h5,  div.filter-title-h5 {
               i.icon-side-arrow {
                 &:before {
                   left: 5em;
@@ -3126,7 +3126,7 @@ $content-width: 95%;
 
         #accordion-how-i-did {
           .foody-accordion-title {
-            h5 {
+            h5,  div.filter-title-h5 {
               i.icon-side-arrow {
                 &:before {
                   left: 5em;
@@ -3283,7 +3283,7 @@ $content-width: 95%;
         @include max-width-section;
 
         .foody-accordion-title {
-          h5 {
+          h5,  div.filter-title-h5 {
             i.icon-side-arrow {
               &:before {
                 left: 5em;

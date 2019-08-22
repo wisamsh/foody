@@ -79,7 +79,7 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
 
     #accordion-foody-filter {
 
-      h5 {
+      h5, div.filter-title-h5{
         + a {
           font-family: $font__main;
           font-size: 21px;

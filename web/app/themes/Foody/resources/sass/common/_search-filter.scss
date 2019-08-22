@@ -5,7 +5,7 @@ aside {
 
   #accordion-foody-filter {
 
-    h5 {
+    h5 ,div.filter-title-h5{
       + a {
         font-family: $font__main;
         font-size: 26px;
@@ -159,7 +159,7 @@ aside {
           #foody-filter {
             margin-right: 0;
 
-            h5 {
+            h5, div.filter-title-h5 {
               i.arrow {
                 &:before {
                   left: 4.3em;

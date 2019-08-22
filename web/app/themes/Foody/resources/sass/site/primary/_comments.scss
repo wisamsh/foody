@@ -241,7 +241,7 @@
     &.content {
       .comments, .recipe-comments {
         .foody-accordion-title {
-          h5 {
+          h5,  div.filter-title-h5 {
             i.icon-side-arrow {
               &:before {
                 left: 0;

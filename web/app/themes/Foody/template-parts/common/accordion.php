@@ -57,7 +57,7 @@ $collapse_classes[] = $start_state;
 <div id="accordion-<?php echo $id ?>" role="tablist" class="foody-accordion <?php foody_el_classes( $classes ) ?>">
     <div class="foody-accordion-content">
         <div class="foody-accordion-title" role="tab" id="heading-<?php echo $id ?>">
-            <h5 class="mb-0">
+            <div class="mb-0 filter-title-h5">
 				<?php if ( $title_icon != '' ): ?>
                     <i class="<?php echo $title_icon ?>"></i>
 				<?php endif; ?>
@@ -67,7 +67,7 @@ $collapse_classes[] = $start_state;
 					<?php echo $title ?>
                 </a>
                 <i class="icon-side-arrow arrow" data-toggle="collapse" aria-controls="<?php echo $id ?>"></i>
-            </h5>
+            </div>
         </div>
 
         <div id="<?php echo $id ?>" class="collapse <?php foody_el_classes( $collapse_classes ) ?>" role="tabpanel"
