@@ -860,10 +860,18 @@ class Foody_Recipe extends Foody_Post
 
     public function get_jsonld_aggregateRating()
     {
+        $rating_val = get_post_meta($this->get_id(), 'ratings_average', true);
+        $rating_count = get_post_meta($this->get_id(), 'ratings_users', true);
+
+        if ($rating_val === "" || $rating_count === "") {
+            $rating_val = "0.0";
+            $rating_count = "0";
+        }
+
         $json = [
             "@type" => "AggregateRating",
-            "ratingValue" => get_post_meta($this->get_id(), 'ratings_average', true),
-            "reviewCount" => get_post_meta(get_the_ID(), 'ratings_users', true)
+            "ratingValue" => $rating_val,
+            "reviewCount" => $rating_count
         ];
 
         return json_encode($json);
@@ -885,7 +893,7 @@ class Foody_Recipe extends Foody_Post
             $json = [
                 "@type" => "VideoObject",
                 "contentUrl" => $this->video['url'],
-                "duration" => ltrim($duration,$duration[0])
+                "duration" => ltrim($duration, $duration[0])
             ];
 
             return json_encode($json, JSON_UNESCAPED_SLASHES);
