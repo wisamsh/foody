@@ -97,7 +97,7 @@ jQuery(document).ready(($) => {
         contextArgs: ['favorites']
     });
 
-    new FoodyContentPaging({
+    let pager =new FoodyContentPaging({
         context: 'profile',
         filter: profile_filter,
         contextArgs: ['channels']
