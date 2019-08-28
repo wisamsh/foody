@@ -38,6 +38,8 @@ if ( is_main_site() ) {
 			$term_duplicator_process = new Foody_WhiteLabelTermDuplicatorProcess();
 			global $author_duplicator_process;
 			$author_duplicator_process = new Foody_WhiteLabelAuthorDuplicatorProcess();
+            global $recipe_duplicator_process;
+            $recipe_duplicator_process = new Foody_WhiteLabelRecipeDuplicatorProcess();
 		} catch ( Exception $e ) {
 			Foody_WhiteLabelLogger::exception( $e );
 		}
@@ -185,6 +187,34 @@ if ( is_main_site() ) {
 		}
 
 	}
+
+    // copy recipe posts
+    add_action( 'save_post_foody_recipe', 'foody_copy_recipe' );
+    /**
+     * Copy posts by term to a specific blog
+     *
+     * @param $term_id
+     * @param $taxonomy
+     *
+     * @throws Exception only locally
+     */
+    function foody_copy_recipe( $recipes_ids ) {
+        $post = get_post($recipes_ids);
+        $is_new = $post->post_date === $post->post_modified;
+        if($is_new && $post->post_status !== 'publish'){
+            return;
+        }
+        global $recipe_duplicator_process;
+        try {
+            $recipe_duplicator_process
+                ->push_to_queue( [ 'recipes_ids' => $recipes_ids ] )
+                ->save()
+                ->dispatch();
+        } catch ( Exception $e ) {
+            Foody_WhiteLabelLogger::exception( $e );
+        }
+
+    }
 
 	// Copy author posts
 	add_action( 'edit_user_profile_update', 'foody_copy_posts_by_author' );
