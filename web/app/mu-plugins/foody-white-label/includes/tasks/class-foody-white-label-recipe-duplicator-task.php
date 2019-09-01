@@ -43,7 +43,7 @@ class Foody_WhiteLabelRecipeDuplicatorProcess extends WP_Background_Process
                     $copied = get_term_meta($recipes_ids, $copied_to_key, true);
                     if (empty($copied)) {
                         $post = get_post($recipes_ids);
-                        $result = Foody_WhiteLabelDuplicator::duplicate( $post, $blog_id, [$site_to_copy_to] );
+                        $result = Foody_WhiteLabelDuplicator::duplicate( $post, $blog_id, $site_to_copy_to );
 
                         if ($result) {
                             update_term_meta($recipes_ids, $copied_to_key, true);
