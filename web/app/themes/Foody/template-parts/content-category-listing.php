@@ -30,7 +30,7 @@ echo $template_args['link']; ?>" target="<?php echo $target ?>" class="col">
                         srcset="<?php echo $GLOBALS['images_dir'] . 'category-placeholder.svg' ?>"
                         data-srcset="<?php echo $mobile_image; ?>">
                 <img class="lazyload" data-foody-src="<?php echo $image ?>"
-                     src="<?php echo $GLOBALS['images_dir'] . 'category-placeholder.svg' ?>">
+                     src="<?php echo $GLOBALS['images_dir'] . 'category-placeholder.svg' ?>" alt="category-placeholder">
             </picture>
         </div>
 

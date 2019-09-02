@@ -13,7 +13,7 @@
         <input name="s" type="text" class="search search-autocomplete"
                placeholder="<?php echo get_theme_mod( 'foody_text_search_placeholder', __( 'חפשו מתכון או כתבה…', 'foody' ) ) ?>">
         <label class="icon" for="textbox">
-            <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-gray.png' ?>" alt=""/>
+            <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-gray.png' ?>" alt="search-icon"/>
         </label>
     </div>
 </form>

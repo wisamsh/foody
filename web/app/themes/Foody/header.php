@@ -132,7 +132,7 @@ if ( ! wp_is_mobile() && ( isset( $_SESSION['background_image'] ) && ! empty( $_
                 <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none"
                         aria-label="חיפוש">
 
-                    <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="">
+                    <img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="search-bar">
 
                 </button>
 
