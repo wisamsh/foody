@@ -20,8 +20,10 @@ if ( isset( $template_args ) ) {
 
 if ( empty( $image ) ) {
 	$image = get_header_image();
+	$alt="";
 } else {
-	$image = $image['url'];
+    $alt = $image['alt'];
+    $image = $image['url'];
 }
 
 if ( empty( $link ) ) {
@@ -55,7 +57,7 @@ if ( isset( $template_args['mobile_image'] ) ) {
         <source media="(max-width: 799px)"
                 srcset="<?php echo $mobile_image; ?>"
         ">
-        <img src="<?php echo $image ?>">
+        <img src="<?php echo $image ?>" alt="<?php echo $alt;?>">
     </picture>
 
 
