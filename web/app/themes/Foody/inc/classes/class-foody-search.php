@@ -98,6 +98,9 @@ class Foody_Search {
 	 * @throws Exception
 	 */
 	public function build_query( $args, $wp_args = [], $sort = '', $raw = false ) {
+		if ( ! isset( $args['types'] ) ) {
+			$args['types'] = [];
+		}
 		$this->types = group_by( $args['types'], 'type' );
 
 		foreach ( $this->types as $type => $values ) {
@@ -130,7 +133,7 @@ class Foody_Search {
 //		}
 
 
-		$wp_args = array_merge( $wp_args, $query_args );
+//		$wp_args = array_merge( $wp_args, $query_args );
 
 		$query = $this->query_builder
 			->build( $wp_args, $raw );
@@ -571,7 +574,44 @@ class Foody_QueryBuilder {
 			}
 		}
 
-		return array_merge( $args, $wp_args );
+
+		return array_merge_recursive( $args, $wp_args );
+	}
+
+
+	function array_merge_retain( $array_a = array(), $array_b = array() ) {
+
+		$array_merge = array();
+
+
+		if ( ! empty( $array_a ) && ! empty( $array_b ) ) {
+
+			foreach ( $array_a as $field => $value ) {
+
+				$array_merge[ $field ] = $value;
+
+			}
+
+
+			foreach ( $array_b as $field => $value ) {
+
+				if ( ! empty( $value ) ) {
+
+					$array_merge[ $field ] = $value;
+
+				} elseif ( ! array_key_exists( $field, $array_a ) ) {
+
+					$array_merge[ $field ] = $value;
+
+				}
+
+			}
+
+		}
+
+
+		return $array_merge;
+
 	}
 
 

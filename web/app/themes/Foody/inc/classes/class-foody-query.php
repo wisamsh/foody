@@ -91,7 +91,7 @@ class Foody_Query {
 
 		$filter_value = $this->array_query_string_to_array( self::$filter_query_arg );
 		if ( empty( $filter_value ) ) {
-			if ( isset( $_POST[ self::$filter_query_arg ] ) ) {
+			if ( isset( $_POST[ self::$filter_query_arg ] ) && ! isset( $_POST[ self::$filter_query_arg ]['types'] ) && ! isset( $_POST[ self::$filter_query_arg ]['context'] ) ) {
 				$filter_value = $_POST[ self::$filter_query_arg ];
 				if ( ! empty( $filter_value ) && ! is_array( $filter_value ) ) {
 					$filter_value = [ $filter_value ];
