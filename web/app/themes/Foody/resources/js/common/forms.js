@@ -127,7 +127,7 @@ jQuery(document).ready(($) => {
     let $checkboxes = $('.md-checkbox');
 
     if ($checkboxes.length) {
-        $checkboxes.on('click', function (e) {
+        $('body').on('click','.md-checkbox', function (e) {
             if (e.target && !e.target.type && e.target.tagName == "A") {
                 console.log('');
             } else {
