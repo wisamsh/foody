@@ -204,13 +204,16 @@ class SidebarFilter {
 				'title'   => $value_arr['title']
 			];
 
-			$switch_type = $value_arr['switch_type'];
+			if ( isset( $value_arr['switch_type'] ) ) {
+				$switch_type = $value_arr['switch_type'];
 
-			if ( $switch_type ) {
-				$item_type              = $value_arr['value_group'];
-				$checkbox_item['type']  = $item_type['type'];
-				$checkbox_item['value'] = $item_type['value'];
+				if ( $switch_type ) {
+					$item_type              = $value_arr['value_group'];
+					$checkbox_item['type']  = $item_type['type'];
+					$checkbox_item['value'] = $item_type['value'];
+				}
 			}
+
 
 			if ( empty( $checkbox_item['title'] ) ) {
 				$checkbox_item['title'] = self::get_item_title( $checkbox_item['value'], $checkbox_item['type'] );

@@ -94,7 +94,7 @@ class Foody_Search {
 	 * @param string $sort
 	 * @param bool $raw
 	 *
-	 * @return WP_Query
+	 * @return WP_Query|array
 	 * @throws Exception
 	 */
 	public function build_query( $args, $wp_args = [], $sort = '', $raw = false ) {
@@ -123,11 +123,11 @@ class Foody_Search {
 
 		$query_args = [];
 
-		if ( ! isset( $args['after_foody_query'] ) || $args['after_foody_query'] == false ) {
-//            unset($args['after_foody_query']);
-			$args['after_foody_query'] = true;
-			$query_args                = $this->foody_query->get_query( $this->context, $this->context_args );
-		}
+//		if ( ! isset( $args['after_foody_query'] ) || $args['after_foody_query'] == false ) {
+////            unset($args['after_foody_query']);
+//			$args['after_foody_query'] = true;
+//			$query_args                = $this->foody_query->get_query( $this->context, $this->context_args );
+//		}
 
 
 		$wp_args = array_merge( $wp_args, $query_args );
@@ -554,8 +554,8 @@ class Foody_QueryBuilder {
 			$args['post__in'] = $this->post__in;
 		}
 
-		if(!empty( $this->meta_query_array)){
-			$args['meta_query'] =  $this->meta_query_array;
+		if ( ! empty( $this->meta_query_array ) ) {
+			$args['meta_query'] = $this->meta_query_array;
 		}
 
 		if ( ! empty( $this->order ) ) {

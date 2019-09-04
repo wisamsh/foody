@@ -60,9 +60,14 @@ class Foody_Query {
 		return $ret_val;
 	}
 
-	private function parse_query_args( $context, $context_args, $wp_args = [] ) {
-		$foody_search = new Foody_Search( $context, $context_args );
-		$args         = [
+	private function parse_query_args( $context, $context_args, $wp_args = [], Foody_Search $search = null ) {
+		if ( ! is_null( $search ) ) {
+			$foody_search = $search;
+		} else {
+			$foody_search = new Foody_Search( $context, $context_args );
+		}
+
+		$args = [
 			'types'             => $this->_parse_query_values(),
 			'after_foody_query' => true
 		];
@@ -85,6 +90,14 @@ class Foody_Query {
 		$filter_types = [];
 
 		$filter_value = $this->array_query_string_to_array( self::$filter_query_arg );
+		if ( empty( $filter_value ) ) {
+			if ( isset( $_POST[ self::$filter_query_arg ] ) ) {
+				$filter_value = $_POST[ self::$filter_query_arg ];
+				if ( ! empty( $filter_value ) && ! is_array( $filter_value ) ) {
+					$filter_value = [ $filter_value ];
+				}
+			}
+		}
 		if ( ! empty( $filter_value ) ) {
 			// TODO change post id to be relevant to current page
 			$filter_options = get_field( 'filters_list', get_filters_id() );
@@ -374,6 +387,24 @@ class Foody_Query {
 		return $args;
 	}
 
+	public function limitations( $limitation_id ) {
+		$meta_query = [
+			[
+				'key'     => 'limitations',
+				'compare' => 'LIKE',
+				'value'   => '"' . $limitation_id . '"'
+			]
+		];
+
+
+		$args = [
+			'meta_query' => $meta_query,
+			'post_type'  => 'foody_recipe'
+		];
+
+		return $args;
+	}
+
 	public function search() {
 		$search_term = get_search_query();
 		$search_term = html_entity_decode( $search_term );
@@ -560,9 +591,11 @@ class Foody_Query {
 	 * @param array $context_args
 	 * @param bool $ranged
 	 *
+	 * @param Foody_Search $search
+	 *
 	 * @return mixed|WP_Error
 	 */
-	public function get_query( $context, $context_args = [], $ranged = false ) {
+	public function get_query( $context, $context_args = [], $ranged = false, Foody_Search $search = null ) {
 		if ( method_exists( $this, $context ) ) {
 			$fn = array( $this, $context );
 
@@ -603,7 +636,7 @@ class Foody_Query {
 		}
 
 		if ( $foody_args != null ) {
-			$filter_args = $this->parse_query_args( $context, $context_args, $foody_args );
+			$filter_args = $this->parse_query_args( $context, $context_args, $foody_args, $search );
 
 			$foody_args = array_merge( $filter_args, $foody_args );
 		}
