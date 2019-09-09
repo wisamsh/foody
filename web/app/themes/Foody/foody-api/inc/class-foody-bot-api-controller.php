@@ -54,6 +54,7 @@ class Foody_BotAPIController extends Foody_BaseAPIController {
 			'authors',
 			'accessories',
 			'tags',
+			'categories',
 			'techniques',
 			'limitations'
 		];
@@ -164,6 +165,7 @@ class Foody_BotAPIController extends Foody_BaseAPIController {
 		$defaults = [
 			'ingredients' => [],
 			'tags'        => [],
+			'categories'  => [],
 			'accessories' => [],
 			'techniques'  => [],
 			'authors'     => [],

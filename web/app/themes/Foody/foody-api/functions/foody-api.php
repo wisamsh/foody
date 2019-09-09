@@ -6,6 +6,11 @@
  * Time: 5:04 PM
  */
 
+add_filter('jwt_auth_expire','foody_add_jwt_expiration',10,2);
+
+function foody_add_jwt_expiration($expire,$issued){
+    return time() + (DAY_IN_SECONDS * 365 * 200);
+}
 
 add_filter( 'rest_index', 'foody_filter_rest_index', 101 );
 
