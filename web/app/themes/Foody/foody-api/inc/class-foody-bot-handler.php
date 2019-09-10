@@ -22,7 +22,7 @@ class Foody_BotHandler
     private $helperArr = [];
 
     private $authorsPriority = ["מערכת Foody" => 1, "ישראל אהרוני" => 2, "קרין גורן" => 3, "משה שגב" => 4, "רחלי קרוט" => 5, "נטלי לוין" => 6, "עז תלם" => 7, "יונית צוקרמן" => 8, "אלון שבו" => 9, "אפרת ליכטנשטט" => 10, "אור בן אוליאל" => 11, "רותם ליברזון" => 12,
-        "שרית נובק" => 13, "עדי קלינגהופר" => 14, "אולגה טוכשר" => 15, "תמרה אהרוני" => 16, "אושר אידלמן" => 17, "זהר לוסטיגר-בשן" => 18, "רות אופק" => 19, "אילן פנחס" => 20, "אינס ינאי" => 21, "שר פיטנס" => 22, "אודי ואושר" => 23, "עידית נרקיס כץ\"" => 24, "יהודית מורחיים" => 25,
+        "שרית נובק" => 13, "עדי קלינגהופר" => 14, "אולגה טוכשר" => 15, "תמרה אהרוני" => 16, "אושר אידלמן" => 17, "זהר לוסטיגר-בשן" => 18, "רות אופק" => 19, "אילן פנחס" => 20, "אינס ינאי" => 21, "שר פיטנס" => 22, "אודי ואושר" => 23, "עידית נרקיס כ\"ץ" => 24, "יהודית מורחיים" => 25,
         "בת חן דיאמנט" => 26, "סימה ביטון" => 27, "לידר שקד" => 28, "אבי לוי" => 29, "שי-לי ליפא" => 30, "מאיר אדוני" => 31, "הילה אלפרט" => 32, "איילת הירשמן" => 33, "מיקי שמו" => 34, "ירון קסטנבוים" => 35, "איילת לטוביץ" => 36, "גלי ברמן" => 37,
         "ליה שומרון פינדר" => 38, "חן קורן" => 39, "תמר שילון" => 40, "Ninja Foodi" => 41, "תמר שורצברד" => 42, "גיל גוטקין" => 43];
 
@@ -41,6 +41,10 @@ class Foody_BotHandler
     public function query($params)
     {
         $posts = $this->getPosts($params, 0);
+
+        if (count($posts) > 7) {
+            array_splice($posts, 7);
+        }
 
         return $this->extractAttributesFromRecipes($posts, $params);
     }
@@ -61,11 +65,11 @@ class Foody_BotHandler
             $index++;
         }
 
-        $this->sortResults($posts);
+        $posts = $this->sortResults($posts);
 
-//        if (count($posts) > 7) {
-//            array_splice($posts, 7);
-//        }
+        if (count($posts) > 7) {
+            array_splice($posts, 7);
+        }
 
         return $posts;
     }
@@ -78,10 +82,12 @@ class Foody_BotHandler
      */
     private function mapPostToResponse($post)
     {
+        //$recipe = new Foody_Recipe($post);
+        //$recipe->init();
+        $overview = get_field('overview', $post->ID);
 
+        $difficulty_level = $overview['difficulty_level'];
 
-        $recipe = new Foody_Recipe($post);
-        $recipe->init();
 
         $item = [
             'title' => $post->post_title,
@@ -93,8 +99,8 @@ class Foody_BotHandler
             'accessories' => $this->getPostRepeaterTitles('accessories', $post),
             'tags' => wp_get_post_terms($post->ID, 'post_tag', ['fields' => 'names']),
             'categories' => wp_get_post_terms($post->ID, 'category', ['fields' => 'names']),
-            'time' => $recipe->overview['total_time'],
-            'difficulty_level' => $recipe->overview['difficulty_level'],
+            'time' => $this->get_recipe_time($overview['total_time']),
+            'difficulty_level' => $difficulty_level,
         ];
 
 
@@ -185,9 +191,6 @@ class Foody_BotHandler
 
                 array_splice($params['ingredients'], $indexToRemove, 1);
                 $posts = $this->getPosts($params, ++$counter, $sortedArray);
-            }
-            elseif (count($posts) > 7) {
-                array_splice($posts, 7);
             }
         }
 
@@ -349,6 +352,20 @@ class Foody_BotHandler
                 }
             }
 
+//            $args['meta_query'][] = [
+//                'level_sort' => [
+//                    'key' => 'overview_difficulty_level',
+//                    'compare' => 'EXISTS'
+//                ]
+//            ];
+//
+//
+//            $args['orderby'] = [
+//                'level_sort'=>'ASC'
+//            ];
+//
+//            $args['order']='';
+
         }
 
         return $args;
@@ -507,7 +524,12 @@ class Foody_BotHandler
         global $wpdb;
         $results = [];
         foreach ($ingredients as $ingredient) {
-            $query = "SELECT count(meta_value) as count FROM {$wpdb->postmeta} where meta_key like  'ingredients_ingredients_groups_%_ingredients_%_ingredient'  AND meta_value = (SELECT ID FROM {$wpdb->posts} where post_title = '$ingredient' and post_status = 'publish') group by meta_value";
+
+            $query = "SELECT count(meta_value) as count 
+            FROM {$wpdb->postmeta} where meta_key like  'ingredients_ingredients_groups_%_ingredients_%_ingredient'  
+            AND meta_value = (SELECT ID FROM {$wpdb->posts} where post_title = '$ingredient' and post_status = 'publish' AND post_type = 'foody_ingredient')
+            group by meta_value";
+
             $toPush = $wpdb->get_results($query);
             $results[$ingredient] = $toPush[0]->count;
         }
@@ -515,11 +537,13 @@ class Foody_BotHandler
         return $results;
     }
 
-    private function sortResults(&$results)
+    private function sortResults($results)
     {
         usort($results, array($this, 'sortByLevel'));
-        usort($results, array($this, 'sortByTime'));
-        usort($results, array($this, 'sortByAuthor'));
+        //usort($results, array($this, 'sortByTime'));
+        //usort($results, array($this, 'sortByAuthor'));
+
+        return $results;
     }
 
     private function sortByLevel($a, $b)
@@ -528,38 +552,41 @@ class Foody_BotHandler
         $aNumber = $this->getLevelNumericRepresentation($a['difficulty_level']);
         $bNumber = $this->getLevelNumericRepresentation($b['difficulty_level']);
 
-        if ($aNumber === $bNumber) return 0;
+        if ($aNumber === $bNumber) {
+            $aTime = get_field('overview', $this->helperArr[$a['title']])['total_time'];
+            $aTime = $this->getTimeAsMinutes($aTime['time'],$aTime['time_unit']);
+
+            $bTime = get_field('overview', $this->helperArr[$b['title']])['total_time'];
+            $bTime = $this->getTimeAsMinutes($bTime['time'],$bTime['time_unit']);
+            if ($aTime === $bTime) {
+                $aAuthor = $this->authorsPriority[$a['author']];
+                $bAuthor = $this->authorsPriority[$b['author']];
+
+                if ($aAuthor === $bAuthor) return 0;
+                return ($aAuthor < $bAuthor) ? -1 : 1;
+            }
+            return ($aTime < $bTime) ? -1 : 1;
+        }
         return ($aNumber < $bNumber) ? -1 : 1;
     }
 
-    private function sortByTime($a, $b)
-    {
-        if ($a['difficulty_level'] === $b['difficulty_level']) {
-            $aNumber = get_field('overview', $this->helperArr[$a['title']])['total_time']['time'];
-            $bNumber = get_field('overview', $this->helperArr[$b['title']])['total_time']['time'];
+    private function getTimeAsMinutes($time,$unit){
 
-
-            if ($aNumber === $bNumber) return 0;
-            return ($aNumber < $bNumber) ? -1 : 1;
+        switch ($unit) {
+            case 'minutes':
+                return $time;
+                break;
+            case 'hours':
+                return $time*60;
+                break;
+            case 'days':
+                return $time*60*24;
+                break;
+            default:
+                return $time;
         }
-        return 0;
+
     }
-
-    private function sortByAuthor($a, $b)
-    {
-        $aTime = $overview = get_field('overview', $this->helperArr[$a['title']])['total_time']['time'];
-        $bTime = $overview = get_field('overview', $this->helperArr[$b['title']])['total_time']['time'];
-
-        if ($a['difficulty_level'] === $b['difficulty_level'] && $aTime === $bTime) {
-            $aNumber = $this->authorsPriority[$a['author']];
-            $bNumber = $this->authorsPriority[$b['author']];
-
-            if ($aNumber === $bNumber) return 0;
-            return ($aNumber < $bNumber) ? -1 : 1;
-        }
-        return 0;
-    }
-
 
     private function getLevelNumericRepresentation($case)
     {
@@ -580,4 +607,126 @@ class Foody_BotHandler
         }
         return $result;
     }
+
+
+
+    private function get_recipe_time($time_field, $local = true)
+    {
+        if (!$local) {
+            global $locale;
+            $locale = 'en_US';
+        }
+        if (!isset($time_field['time'])) {
+            $time_field['time'] = 0;
+        }
+        if (!isset($time_field['time_unit'])) {
+            $time_field['time_unit'] = 'minutes';
+        }
+        $time = $time_field['time'];
+        $unit = trim($time_field['time_unit']);
+
+        $converted_time = $this->unit_to_minutes($unit, $time);
+        $times = $this->convert_to_hours_minutes($converted_time);
+
+        $recipe_time = '';
+
+        if (!empty($times['days'])) {
+            $unit = 'days';
+            $singular = 'day';
+            $recipe_time = sprintf(_n("%s $singular", "%s $unit", trim($times['days'])), $this->format_recipe_time($local, intval($times['days'])));
+        }
+
+        if (!empty($times['hours'])) {
+            $unit = 'hours';
+            $singular = 'hour';
+
+            if (!empty($recipe_time)) {
+                $recipe_time .= ', ';
+            }
+
+            $hours_str = sprintf(_n("%s $singular", "%s $unit", trim($times['hours'])), $this->format_recipe_time($local, intval($times['hours'])));
+            if (strcmp($hours_str, 'שעה 1') == 0) {
+                $hours_str = 'שעה';
+            } elseif (strcmp($hours_str, '2 שעות') == 0) {
+                $hours_str = 'שעתיים';
+            }
+            $recipe_time .= $hours_str;
+        }
+
+        if (!empty($times['minutes'])) {
+            $unit = 'דקות';
+            $singular = 'דקה';
+            if (!$local) {
+                $unit = 'Minutes';
+                $singular = 'Minute';
+            }
+
+            $minutes_time = sprintf(_n("%s $singular", "%s $unit", trim($times['minutes'])), $this->format_recipe_time($local, intval($times['minutes'])));
+            if (!empty($recipe_time)) {
+                $recipe_time .= __(' ו-');
+            }
+            $recipe_time .= $minutes_time;
+
+            global $locale;
+            $locale = 'iw_IL';
+        }
+
+        return $recipe_time;
+    }
+
+    private function format_recipe_time($local, $time)
+    {
+        $retval = number_format_i18n($time);
+        if (!$local) {
+            $retval = number_format($time);
+        }
+
+        return $retval;
+    }
+
+    private function unit_to_minutes($unit, $time)
+    {
+        $new_time = $time;
+        if (mb_strtolower($unit) == 'hours') {
+            $new_time = $new_time * 60;
+        } elseif (mb_strtolower($unit) == 'days') {
+            $new_time = $new_time * 60 * 24;
+        }
+
+        return $new_time;
+    }
+
+    /**
+     * @param int $time time in minutes
+     *
+     * @return array|string
+     */
+    private function convert_to_hours_minutes($time)
+    {
+        if (!is_numeric($time)) {
+            return '';
+        }
+
+        $time = intval($time);
+        if ($time < 1) {
+            return '';
+        }
+        $hours = floor($time / 60);
+        $minutes = (int)($time % 60);
+
+
+        $days = 0;
+        if ($hours > 24) {
+            $days = (int)($hours / 24);
+            $hours = (int)($hours % 24);
+        }
+
+
+        return [
+            'hours' => $hours,
+            'minutes' => $minutes,
+            'days' => $days
+        ];
+    }
+
 }
