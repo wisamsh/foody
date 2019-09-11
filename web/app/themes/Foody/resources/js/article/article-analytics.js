@@ -60,10 +60,10 @@ jQuery(document).ready(($) => {
         /**
          * Newsletter registration
          */
-        let newsletterSubmitBtn = jQuery('#wpcf7-f10340-p10877-o1 > form')
+        let newsletterSubmitBtn = jQuery('.content .wpcf7 > form')
         newsletterSubmitBtn.submit((event) => {
             //TODO: Notice the use of foodyGlobals should probably be implemented
-            eventCallback(event, 'כתבה', 'לחיצה על רישום לדיוור', ''/*foodyGlobals['title']*/, 'מיקום', 'פוטר');
+            eventCallback(event, 'כתבה', 'לחיצה על רישום לדיוור', foodyGlobals['title'], 'מיקום', 'פוטר');
         });
 
         /**
