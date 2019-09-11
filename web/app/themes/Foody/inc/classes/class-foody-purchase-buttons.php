@@ -97,11 +97,20 @@ class Foody_PurchaseButtons {
 					'types' => SidebarFilter::parse_search_args( $filters )
 				];
 
+				$context      = 'purchase_buttons';
+				$context_args = [ 'id' => $post ];
+
+				// Creating WP_args for search query parameter.
+				$wp_args     = [];
+				$foody_query = Foody_Query::get_instance();
+				$query_args = $foody_query->get_query( 'purchase_buttons', $context_args );
+				$wp_args = array_merge( $wp_args, $query_args );
+
 				// purchase_buttons will invoke purchase_buttons ffn
 				// in class Foody_Query
-				$foody_search = new Foody_Search( 'purchase_buttons', [ 'id' => $post ] );
+				$foody_search = new Foody_Search( $context, $context_args );
 
-				$result = $foody_search->query( $args );
+				$result = $foody_search->query( $args, $wp_args );
 
 				// $post exists in query, add
 				// button options to buttons
