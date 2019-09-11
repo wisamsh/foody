@@ -60,7 +60,7 @@ function register_post_types() {
 			'unsupported'   => array( 'editor' ),
 			'show_ui'       => true,
 			'rewrite'       => array(
-				'slug'       => 'academy',
+				'slug'       => 'courses',
 				'with_front' => true
 			)
 		),
