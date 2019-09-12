@@ -18,7 +18,7 @@ function wsl_change_default_permissions( $provider_scope, $provider ) {
 
 
 	if ( 'facebook' == strtolower( $provider ) ) {
-		$provider_scope = 'email, public_profile';
+		$provider_scope = 'email public_profile';
 	}
 
 	if ( 'google' == strtolower( $provider ) ) {
