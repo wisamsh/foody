@@ -22,7 +22,7 @@ function wsl_change_default_permissions( $provider_scope, $provider ) {
 	}
 
 	if ( 'google' == strtolower( $provider ) ) {
-		$provider_scope = 'profile email';
+		$provider_scope = 'profile';
 	}
 
 	return $provider_scope;
