@@ -62,44 +62,45 @@ jQuery(document).ready(($) => {
     });
 
     let frame = $('.cover-video iframe');
-    let player = new Vimeo.default(frame);
+    if(!frame[0]['src'].includes('youtube')) {
+        let player = new Vimeo.default(frame);
 
-    let playerEvents = [
-        {
-            event: 'play',
-            label: 'הפעלה',
-        },
-        {
-            event: 'timeupdate',
-            label: 'התקדמות',
-        },
-        {
-            event: 'pause',
-            label: 'עצירה',
-        }
-    ];
-
-    let sentEvents = {
-        play: {},
-        timeupdate: {},
-        pause: {}
-    };
-
-    playerEvents.forEach((event) => {
-        player.on(event.event, (e) => {
-            let percent = parseFloat(e.percent);
-            percent = parseFloat(percent.toFixed(1)) * 100;
-            // send event only if video time
-            if (event.event == 'timeupdate' && percent % 10 === 0 && !(sentEvents[event.event][String(percent)])) {
-                sentEvents[event.event][String(percent)] = true;
-                eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent, foodyGlobals.post['hostName']);
-            } else if (event.event != 'timeupdate') {
-                eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent, foodyGlobals.post['hostName']);
+        let playerEvents = [
+            {
+                event: 'play',
+                label: 'הפעלה',
+            },
+            {
+                event: 'timeupdate',
+                label: 'התקדמות',
+            },
+            {
+                event: 'pause',
+                label: 'עצירה',
             }
+        ];
+
+        let sentEvents = {
+            play: {},
+            timeupdate: {},
+            pause: {}
+        };
+
+        playerEvents.forEach((event) => {
+            player.on(event.event, (e) => {
+                let percent = parseFloat(e.percent);
+                percent = parseFloat(percent.toFixed(1)) * 100;
+                // send event only if video time
+                if (event.event == 'timeupdate' && percent % 10 === 0 && !(sentEvents[event.event][String(percent)])) {
+                    sentEvents[event.event][String(percent)] = true;
+                    eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent, foodyGlobals.post['hostName']);
+                } else if (event.event != 'timeupdate') {
+                    eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent, foodyGlobals.post['hostName']);
+                }
+            });
         });
-    });
 
-
+    }
     /**
      * Scroll listener
      */
@@ -122,10 +123,25 @@ jQuery(document).ready(($) => {
 
     setInterval(function () {
         secondsInPage += timeInPageDelta;
-        eventCallback('', analyticsCategory, 'טיימר', foodyGlobals.post.title, 'זמן', secondsInPage + ' שניות', foodyGlobals.post['hostName']);
+        if(secondsInPage == timeInPageDelta) {
+            eventCallback('', analyticsCategory, 'טיימר', foodyGlobals.post.title, 'זמן', secondsInPage + 's', foodyGlobals.post['hostName']);
+        }
+        else {
+            let timerString = toMinutes(secondsInPage);
+            eventCallback('', analyticsCategory, 'טיימר', foodyGlobals.post.title, 'זמן', timerString, foodyGlobals.post['hostName']);
+        }
     }, timeInPageDelta * 1000);
 
 });
+
+function toMinutes(secondsInPage) {
+    if(secondsInPage%60 == 0){
+        return secondsInPage/60 + 'm';
+    }
+    else{
+        return (secondsInPage/60) - 0.5 + 'm' + 30 + 's';
+    }
+}
 
 
 /**

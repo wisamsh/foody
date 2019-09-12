@@ -1,7 +1,7 @@
 /**
  * Created by bencohen on 2/4/19.
  */
-
+//.sponsored-by.company div
 
 jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe')) {
@@ -10,11 +10,19 @@ jQuery(document).ready(($) => {
         set_recipe_order_location(foodyGlobals.ID);
 
         var publishers = ['אין'];
-        if ($('.sponsors-container .sponsored-by.company div').length) {
+        if(foodyGlobals['post']['publisher'] || $('.sponsors-container').length) {
             publishers = [];
-            $('.sponsors-container .sponsored-by.company div').each((index, elem) => {
-                publishers.push(elem.innerHTML);
-            });
+        }
+        if(foodyGlobals['post']['publisher']){
+            let publisher = foodyGlobals['post']['publisher'];
+            publishers.push(publisher);
+        }
+        if ($('.sponsors-container').length) {
+            let sponsors = $('.sponsors-container');
+            for(let i=0;i < sponsors.length; i++){
+                let topOfHierarchy = sponsors[i].children[sponsors[i].children.length - 1];
+                publishers.push(topOfHierarchy.innerText);
+            }
         }
         /**
          * Page Load
