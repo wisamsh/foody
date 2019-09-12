@@ -37,34 +37,34 @@ echo do_shortcode( '[wordpress_social_login]' );
 
         <div class="row">
 
-<!--            <div class="row col-12 justify-content-between gutter-0 buttons">-->
-<!---->
+            <div class="row col-12 justify-content-center gutter-0 buttons">
+
 <!--                <button class="btn btn-google col-12 col-sm-5" aria-label="google">-->
 <!--                    <span>-->
 <!--                        --><?php //echo __( 'התחברו דרך גוגל', 'foody' ) ?>
 <!--                    </span>-->
 <!--                    <i class="icon-Shape1"></i>-->
 <!--                </button>-->
-<!--                <button class="btn btn-facebook col-12 col-sm-5" aria-label="facebook">-->
-<!--                    <span>-->
-<!--                        --><?php //echo __( 'התחברו דרך פייסבוק', 'foody' ) ?>
-<!--                    </span>-->
-<!--                    <i class="icon-Facebook"></i>-->
-<!--                </button>-->
-<!---->
-<!--            </div>-->
-<!---->
-<!--            <div class="row col-12 justify-content-between gutter-0 dividers">-->
-<!---->
-<!--                <div class="divider col-5"></div>-->
-<!--                <div class="col-2 or">-->
-<!--                                <span>-->
-<!--                                    --><?php //echo __( 'או', 'foody' ) ?>
-<!--                                </span>-->
-<!--                </div>-->
-<!--                <div class="divider col-5"></div>-->
-<!---->
-<!--            </div>-->
+                <button class="btn btn-facebook col-12 col-sm-5" aria-label="facebook">
+                    <span>
+                        <?php echo __( 'התחברו דרך פייסבוק', 'foody' ) ?>
+                    </span>
+                    <i class="icon-Facebook"></i>
+                </button>
+
+            </div>
+
+            <div class="row col-12 justify-content-between gutter-0 dividers">
+
+                <div class="divider col-5"></div>
+                <div class="col-2 or">
+                                <span>
+                                    <?php echo __( 'או', 'foody' ) ?>
+                                </span>
+                </div>
+                <div class="divider col-5"></div>
+
+            </div>
 
             <form id="login-form" action="<?php echo wp_login_url( home_url() ); ?>" class="row" method="post">
 
