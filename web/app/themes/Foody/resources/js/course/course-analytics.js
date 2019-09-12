@@ -7,7 +7,7 @@ jQuery(document).ready(($) => {
 
     let secondsInPage = 0;
 
-    eventCallback('', analyticsCategory, 'טעינה', foodyGlobals.post.title);
+    eventCallback('', analyticsCategory, 'טעינה', foodyGlobals.post.title,'','', foodyGlobals.post['hostName']);
 
     let registrationLinks = [
         {
@@ -34,7 +34,7 @@ jQuery(document).ready(($) => {
 
     registrationLinks.forEach((link) => {
         $(link.selector).on('click', () => {
-            eventCallback('', analyticsCategory, 'לחיצה להרשמה', foodyGlobals.post.title, 'מיקום', link.label);
+            eventCallback('', analyticsCategory, 'לחיצה להרשמה', foodyGlobals.post.title, 'מיקום', link.label, foodyGlobals.post['hostName']);
         });
     });
 
@@ -48,17 +48,17 @@ jQuery(document).ready(($) => {
     shareMediums.forEach((medium) => {
         $(`.essb_link_${medium}`).on('click', {medium}, (e) => {
             let clickedMedium = e.data.medium;
-            eventCallback('', analyticsCategory, 'שיתוף', clickedMedium);
+            eventCallback('', analyticsCategory, 'שיתוף', clickedMedium,'','',foodyGlobals.post['hostName']);
         });
     });
 
 
     $('#main-content .newsletter form').on('submit', () => {
-        eventCallback('', analyticsCategory, 'לחיצה על רישום לדיוור', foodyGlobals.post.title, 'מיקום', 'פוטר');
+        eventCallback('', analyticsCategory, 'לחיצה על רישום לדיוור', foodyGlobals.post.title, 'מיקום', 'פוטר', foodyGlobals.post['hostName']);
     });
 
     $('.recommendations .recommendations-container').on('afterChange', () => {
-        eventCallback('', analyticsCategory, 'שיתוף', foodyGlobals.post.title);
+        eventCallback('', analyticsCategory, 'שיתוף', foodyGlobals.post.title, '', '', foodyGlobals.post['hostName']);
     });
 
     let frame = $('.cover-video iframe');
@@ -92,9 +92,9 @@ jQuery(document).ready(($) => {
             // send event only if video time
             if (event.event == 'timeupdate' && percent % 10 === 0 && !(sentEvents[event.event][String(percent)])) {
                 sentEvents[event.event][String(percent)] = true;
-                eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent);
+                eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent, foodyGlobals.post['hostName']);
             } else if (event.event != 'timeupdate') {
-                eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent);
+                eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent, foodyGlobals.post['hostName']);
             }
         });
     });
@@ -115,14 +115,14 @@ jQuery(document).ready(($) => {
             toLog = true;
         }
         if (toLog) {
-            eventCallback(e, analyticsCategory, 'גלילה', scrollPercentRounded + '%', '', '');
+            eventCallback(e, analyticsCategory, 'גלילה', scrollPercentRounded + '%', '', '', foodyGlobals.post['hostName']);
 
         }
     });
 
     setInterval(function () {
         secondsInPage += timeInPageDelta;
-        eventCallback('', analyticsCategory, 'טיימר', foodyGlobals.post.title, 'זמן', secondsInPage + ' שניות');
+        eventCallback('', analyticsCategory, 'טיימר', foodyGlobals.post.title, 'זמן', secondsInPage + ' שניות', foodyGlobals.post['hostName']);
     }, timeInPageDelta * 1000);
 
 });
@@ -137,7 +137,7 @@ jQuery(document).ready(($) => {
  * @param cdDesc
  * @param cdValue
  */
-function eventCallback(event, category, action, label, cdDesc, cdValue) {
+function eventCallback(event, category, action, label, cdDesc, cdValue, hostName ='') {
 
     /**
      * Logged in user ID
@@ -151,7 +151,7 @@ function eventCallback(event, category, action, label, cdDesc, cdValue) {
         customerID,
         '',
         '',
-        '',
+        hostName,
         '',
         '',
         '',

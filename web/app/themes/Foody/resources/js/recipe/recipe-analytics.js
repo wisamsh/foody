@@ -311,7 +311,7 @@ function get_recipe_order_location() {
         return 0;
     }
 
-    return recipes_visited.length;
+    return jQuery.inArray(foodyGlobals.ID, recipes_visited);
 }
 
 function set_recipe_order_location(recipe_id) {

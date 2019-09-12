@@ -75,6 +75,9 @@ function foody_js_globals_main( $vars ) {
         if($vars['post']['type'] === "foody_recipe"){
             $vars['post']['categories'] = wp_get_post_terms($vars['post']['ID'], 'category');
         }
+        if($vars['post']['type'] === "foody_course"){
+            $vars['post']['hostName'] = get_field('host_name',$vars['post']['ID']);
+        }
 	}
 
 	$queried_object = get_queried_object();
