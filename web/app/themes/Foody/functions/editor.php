@@ -53,6 +53,7 @@ function custom_meta_box_markup() {
 
 function add_custom_meta_box() {
 	add_meta_box( "recipe-id", "מזהה מתכון", "custom_meta_box_markup", "foody_recipe", "side", "high", null );
+	add_meta_box( "article-id", "מזהה כתבה", "custom_meta_box_markup", "post", "side", "high", null );
 }
 
 add_action( "add_meta_boxes", "add_custom_meta_box" );
