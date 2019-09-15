@@ -75,7 +75,7 @@ function foody_js_globals_main($vars)
         ];
         if ($vars['post']['type'] === "foody_recipe") {
             $vars['post']['categories'] = wp_get_post_terms($vars['post']['ID'], 'category');
-            $vars['post']['publisher'] = $_GET['referer'] ? get_field('publisher_name', $_GET['referer']) : '';
+            $vars['post']['publisher'] = isset($_GET['referer']) ? get_field('publisher_name', $_GET['referer']) : '';
         }
         if ($vars['post']['type'] === "foody_course") {
             $vars['post']['hostName'] = get_field('host_name', $vars['post']['ID']);
