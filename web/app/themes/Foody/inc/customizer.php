@@ -338,6 +338,92 @@ function foody_customize_register( $wp_customize ) {
 		)
 	) );
 
+    //add banner section
+    $wp_customize->add_section( 'foody_banner', array(
+        'title'    => __( 'באנר', 'foody' ),
+        'priority' => 33,
+    ) );
+
+    $wp_customize->add_setting(
+        'show_in_all_the_site',
+        array(
+            'capability' => 'edit_theme_options',
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'show_in_all_the_site',
+        array(
+            'label'       => __( 'הצגת רכיב - כללי', 'foody' ),
+            'description' => __( '', 'foody' ),
+            'settings'    => 'show_in_all_the_site',
+            'priority'    => 1,
+            'section'     => 'foody_banner',
+            'type'        => 'checkbox'
+        )
+    ) );
+
+    $wp_customize->add_setting(
+        'show_in_main_pages',
+        array(
+            'capability' => 'edit_theme_options',
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'show_in_main_pages',
+        array(
+            'label'       => __( 'הצגת רכיב בעמוד ראשי ועמוד המרות ומשקולות', 'foody' ),
+            'description' => __( '', 'foody' ),
+            'settings'    => 'show_in_main_pages',
+            'priority'    => 2,
+            'section'     => 'foody_banner',
+            'type'        => 'checkbox'
+        )
+    ) );
+
+    $wp_customize->add_setting(
+        'show_in_post_pages',
+        array(
+            'capability' => 'edit_theme_options',
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'show_in_post_pages',
+        array(
+            'label'       => __( 'הצגת רכיב בעמודי מתכון, כתבה וקורס ', 'foody' ),
+            'description' => __( '', 'foody' ),
+            'settings'    => 'show_in_post_pages',
+            'priority'    => 3,
+            'section'     => 'foody_banner',
+            'type'        => 'checkbox'
+        )
+    ) );
+
+    $wp_customize->add_setting(
+        'show_in_all_other_pages',
+        array(
+            'capability' => 'edit_theme_options',
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'show_in_all_other_pages',
+        array(
+            'label'       => __( 'הצגת רכיב בכל שאר העמודים באתר', 'foody' ),
+            'description' => __( '', 'foody' ),
+            'settings'    => 'show_in_all_other_pages',
+            'priority'    => 4,
+            'section'     => 'foody_banner',
+            'type'        => 'checkbox'
+        )
+    ) );
+
 }
 
 add_action( 'customize_register', 'foody_customize_register' );
