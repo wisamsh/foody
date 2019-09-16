@@ -172,11 +172,11 @@ if ( ! wp_is_mobile() && ( isset( $_SESSION['background_image'] ) && ! empty( $_
     </header><!-- #masthead -->
 
     <div id="content" class="site-content">
-<!--		--><?php
-//		if ( wp_is_mobile() ) {
-//			Foody_Header::whatsapp( [ 'd-lg-block', 'floating', 'whatsapp-mobile' ] );
-//		} else {
-//			Foody_Header::whatsapp( [ 'd-none', 'd-lg-block', 'floating' ] );
-//		}
-//		?>
+		<?php
+		if ( wp_is_mobile() ) {
+			Foody_Header::whatsapp( [ 'd-lg-block', 'floating', 'whatsapp-mobile' ] );
+		} else {
+			Foody_Header::whatsapp( [ 'd-none', 'd-lg-block', 'floating' ] );
+		}
+		?>
 

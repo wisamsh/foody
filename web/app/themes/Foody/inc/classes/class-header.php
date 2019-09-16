@@ -153,7 +153,7 @@ class Foody_Header {
 			$url = "https://web.whatsapp.com/send?phone=$phone_number";
 		}
 
-		$show = $phone_number = get_option( 'whatsapp_phone_number_toggle', false );
+		$show  = get_option( 'whatsapp_phone_number_toggle', false );
 
 		$classes = $ext_classes;
 		if ( ! $show ) {
