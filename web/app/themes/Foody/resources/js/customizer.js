@@ -7,7 +7,7 @@
  */
 
 ( function( $ ) {
-
+debugger
 	// Site title and description.
 	wp.customize( 'blogname', function( value ) {
 		value.bind( function( to ) {
@@ -39,4 +39,6 @@
 			}
 		} );
 	} );
+
+	let s = $('#_customize-input-show_in_all_the_site')[0];
 } )( jQuery );

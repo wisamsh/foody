@@ -7,6 +7,7 @@ jQuery(document).ready(function ($) {
     let navbar = $('#foody-navbar-collapse');
 
     let navbarShown = false;
+    let bannerPoped = false;
 
     navbar.on('show.bs.collapse', function (e) {
 
@@ -75,5 +76,30 @@ jQuery(document).ready(function ($) {
             $(foodyGlobals.custom_accessibility_class).click();
         });
     }
+
+    //popup banner
+    $(window).on('scroll', function () {
+        if(!sessionStorage.getItem('popup-closed')) {
+            let popupBanner = $('#popup-banner');
+            if (popupBanner.length && !bannerPoped) {
+                popupBanner.modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                $('.modal-open').css('overflow', 'auto');
+                $('.modal-backdrop').css('display', 'none');
+                popupBanner.slideDown();
+                popupBanner.modal('show');
+                let bottomScale = ($(window).width() < 575) ? '10%' : '15%';
+                $('#popup-banner .modal-dialog').css('bottom', bottomScale);
+                bannerPoped = true;
+            }
+        }
+    });
+
+    $('footer .close').on('click',function () {
+        sessionStorage.setItem('popup-closed','true');
+    })
+
 
 });
