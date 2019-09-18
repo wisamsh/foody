@@ -531,7 +531,9 @@ class Foody_BotHandler
             group by meta_value";
 
             $toPush = $wpdb->get_results($query);
-            $results[$ingredient] = $toPush[0]->count;
+            if(is_array($toPush) && !empty($toPush)) {
+                $results[$ingredient] = $toPush[0]->count;
+            }
         }
         arsort($results);
         return $results;
@@ -540,9 +542,6 @@ class Foody_BotHandler
     private function sortResults($results)
     {
         usort($results, array($this, 'sortByLevel'));
-        //usort($results, array($this, 'sortByTime'));
-        //usort($results, array($this, 'sortByAuthor'));
-
         return $results;
     }
 
