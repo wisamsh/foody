@@ -149,6 +149,13 @@ footer.site-footer {
     z-index: 9999999999999;
     pointer-events: none;
 
+
+    &.show {
+      .modal-dialog {
+        bottom: 0;
+      }
+    }
+
     .modal-dialog {
       max-width: 960px;
       position: fixed;
@@ -157,11 +164,11 @@ footer.site-footer {
       margin: 0 auto;
       left: 0;
       right: 0;
-      bottom: 0;
       transition: 0.5s ease-in;
+      bottom: -100px;
 
       .modal-content {
-        position: fixed;
+        position: relative;
         width: 100%;
         padding: 0;
 
@@ -178,6 +185,7 @@ footer.site-footer {
               flex-direction: column-reverse;
               background-size: cover;
               background-position-y: center;
+              position: relative;
 
               .banner-button {
                 z-index: 1;
@@ -185,8 +193,6 @@ footer.site-footer {
                 border: none;
                 width: fit-content;
                 align-self: flex-end;
-                margin-left: 11.5%;
-                margin-bottom: 5.5%;
                 border-radius: 4px;
                 background-image: linear-gradient(71deg, #ec3849, #f35644);
                 font-family: Assistant;
@@ -198,18 +204,23 @@ footer.site-footer {
                 letter-spacing: -0.05px;
                 text-align: center;
                 color: #ffffff;
+                position: absolute;
+                left: 40px;
+                bottom: 20px;
               }
 
               .close {
                 z-index: 1;
                 align-self: flex-end;
-                margin-left: 2%;
-                margin-bottom: 1%;
                 color: #ffffff;
                 font-family: Assistant;
                 font-weight: normal;
                 text-decoration: none;
                 opacity: .75;
+                -webkit-appearance: none;
+                position: absolute;
+                top: 10px;
+                left: 10px;
 
                 svg{
                   width: 0.8em;
@@ -285,17 +296,20 @@ footer.site-footer {
                 flex-direction: column;
                 background-repeat: no-repeat;
                 background-size: cover;
+                position: relative;
 
                 .close {
                   z-index: 1;
                   align-self: flex-end;
-                  margin-left: 4%;
-                  margin-top: 4%;
                   color: #ffffff;
                   font-family: Assistant;
                   font-weight: normal;
                   text-decoration: none;
                   opacity: .75;
+                  -webkit-appearance: none;
+                  position: absolute;
+                  top: 10px;
+                  left: 10px;
 
                   svg{
                     width: 1em;
@@ -513,7 +527,12 @@ footer.site-footer {
     #popup-banner {
       z-index: 9999999999999;
       pointer-events: none;
-      transition: height 5s ease-in;
+
+      &.show {
+        .modal-dialog {
+          bottom: 0;
+        }
+      }
 
       .modal-dialog {
         position: fixed;
@@ -523,10 +542,12 @@ footer.site-footer {
         left: 0;
         right: 0;
         bottom: 0;
-        transition: 0.5s ease-in;
+        transition: all 0.5s ease-in;
+        bottom: -100px;
+
 
         .modal-content {
-          position: fixed;
+          position: relative;
           width: 100%;
           padding: 0;
 
@@ -541,15 +562,14 @@ footer.site-footer {
                 height: inherit;
                 display: flex;
                 flex-direction: column-reverse;
-                background-size: contain;
+                background-size: cover;
+                position: relative;
 
                 .banner-button {
                   padding: 4px 10px;
                   border: none;
                   width: fit-content;
                   align-self: flex-end;
-                  margin-left: 6.5%;
-                  margin-bottom: 7.5%;
                   border-radius: 4px;
                   background-image: linear-gradient(71deg, #ec3849, #f35644);
                   font-family: Assistant;
@@ -561,17 +581,22 @@ footer.site-footer {
                   letter-spacing: -0.05px;
                   text-align: center;
                   color: #ffffff;
+                  position: absolute;
+                  left: 40px;
+                  bottom: 20px;
                 }
 
                 .close {
                   align-self: flex-end;
-                  margin-left: 2%;
-                  margin-bottom: 4%;
                   color: #ffffff;
                   font-family: Assistant;
                   font-weight: normal;
                   text-decoration: none;
                   opacity: .75;
+                  -webkit-appearance: none;
+                  position: absolute;
+                  top: 0;
+                  left: 10px;
 
                   svg{
                     width: 0.5em;
@@ -650,17 +675,21 @@ footer.site-footer {
                   flex-direction: column;
                   background-repeat: no-repeat;
                   background-size: cover;
+                  position: relative;
 
                   .close {
                     z-index: 1;
                     align-self: flex-end;
-                    margin-left: 3%;
-                    margin-top: -2%;
                     color: #ffffff;
                     font-family: Assistant;
                     font-weight: normal;
                     text-decoration: none;
-                    opacity: .75;
+                    opacity: 0.75;
+                    background: none;
+                    -webkit-appearance: none;
+                    position: absolute;
+                    top: 0;
+                    left: 10px;
 
                     svg{
                       width: 0.7rem;

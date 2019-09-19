@@ -81,7 +81,7 @@ $footer = new Foody_Footer();
     if (get_theme_mod('show_in_all_the_site') ||
         ((is_front_page() || is_page(get_page_by_title(__('המרת מידות ומשקלות')))) && get_theme_mod('show_in_main_pages')) ||
         (is_single() && get_theme_mod('show_in_post_pages')) ||
-        ((!is_front_page() || !is_page(get_page_by_title(__('המרת מידות ומשקלות'))) || is_single()) && get_theme_mod('show_in_all_other_pages'))) {
+        ((!is_front_page() && !is_page(get_page_by_title(__('המרת מידות ומשקלות'))) && !is_single()) && get_theme_mod('show_in_all_other_pages'))) {
 
 
         $link_page = get_page_by_title(__('עמוד קידומים'));

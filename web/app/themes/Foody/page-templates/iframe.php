@@ -8,7 +8,8 @@
  */
 get_header();
 
-$destination_id = $_GET['dest'];
+$destination_id = isset($_GET['dest']) ? $_GET['dest'] : '';
+if($destination_id != ''){
 $dest_page = get_post($destination_id);
 ?>
     <div id="main-content" class="main-content">
@@ -24,6 +25,15 @@ $dest_page = get_post($destination_id);
         </div><!-- #primary -->
     </div><!-- #main-content -->
 
-<?php
+<?php }
+else{ ?>
+    <div id="main-content" class="main-content">
+
+        <div id="primary" class="content-area">
+            <div id="content container" class="site-content" role="main" style="">
+            </div><!-- #content -->
+        </div><!-- #primary -->
+    </div><!-- #main-content -->
+<?php }
 get_footer();
 

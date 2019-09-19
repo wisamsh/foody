@@ -551,7 +551,7 @@ function foody_customize_register( $wp_customize ) {
         $wp_customize,
         'text_for_image',
         array(
-            'label'       => __( 'בחר טקסט לתמונה', 'foody' ),
+            'label'       => __( 'בחר טקסט לתמונה (עד 140 תווים)', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'text_for_image',
             'priority'    => 11,
@@ -572,7 +572,7 @@ function foody_customize_register( $wp_customize ) {
         $wp_customize,
         'text_for_button',
         array(
-            'label'       => __( 'בחר טקסט לכפתור', 'foody' ),
+            'label'       => __( 'בחר טקסט לכפתור (עד 16 תווים)', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'text_for_button',
             'priority'    => 12,
@@ -593,7 +593,7 @@ function foody_customize_register( $wp_customize ) {
         $wp_customize,
         'is_iframe',
         array(
-            'label'       => __( 'קישור ל- Iframe', 'foody' ),
+            'label'       => __( 'הצגת הלינק ב - Iframe', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'is_iframe',
             'priority'    => 13,

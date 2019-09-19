@@ -90,8 +90,8 @@ jQuery(document).ready(function ($) {
                 $('.modal-backdrop').css('display', 'none');
                 popupBanner.slideDown();
                 popupBanner.modal('show');
-                let bottomScale = ($(window).width() < 575) ? '10%' : '15%';
-                $('#popup-banner .modal-dialog').css('bottom', bottomScale);
+                // let bottomScale = ($(window).width() < 575) ? '10%' : '15%';
+                // $('#popup-banner .modal-dialog').css('bottom', bottomScale);
                 bannerPoped = true;
             }
         }
