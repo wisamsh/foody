@@ -229,6 +229,19 @@ $content-width: 95%;
             }
           }
         }
+
+        .kosher-sign{
+          margin: auto;
+          padding-right: 2.2rem;
+          font-family: Assistant;
+          font-size: 23px;
+          font-weight: 800;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: -0.07px;
+          color: #ff0000;
+        }
       }
 
       .description, .content-details-bullets-container {
@@ -1319,6 +1332,24 @@ $content-width: 95%;
               font-size: 18px;
               margin: 0 auto 0 0;
             }
+            .description{
+              &.social-title{
+                width: 70%;
+              }
+            }
+
+            .kosher-sign{
+              width: 30%;
+              font-family: Assistant;
+              font-size: 22px;
+              font-weight: 800;
+              font-style: normal;
+              font-stretch: normal;
+              line-height: normal;
+              letter-spacing: -0.07px;
+              color: #ff0000;
+            }
+
           }
 
           .mobile-rating {
