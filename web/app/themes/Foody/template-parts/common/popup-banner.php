@@ -16,10 +16,10 @@ $banner_text = isset($modal['banner_text']) ? $modal['banner_text'] : null;
 $banner_link = $modal['banner_link'];
 $button_text = $modal['button_text'];
 
-if($modal['is_iframe']){
-    $destination =  '?dest=' . strval($modal['dest_id']);
-    $banner_link = $banner_link . $destination;
-}
+//if($modal['is_iframe']){
+//    $destination =  '?dest=' . strval($modal['dest_id']);
+//    $banner_link = $banner_link . $destination;
+//}
 
 $modal_body_class = isset($modal['banner_text']) ? "with-text" : "without-text";
 ?>
@@ -34,7 +34,7 @@ $modal_body_class = isset($modal['banner_text']) ? "with-text" : "without-text";
                     <div class="banner-text-box">
                         <p class="banner-text"> <?php echo $banner_text; ?> </p>
                         <a class="banner-button"
-                           href=" <?php echo $banner_link; ?>"><?php echo $button_text; ?></a>
+                           href=" <?php echo $banner_link; ?>" target="_blank"><?php echo $button_text; ?></a>
                     </div>
                     <?php if (wp_is_mobile()) { ?>
                     <div class="banner-image-container"
@@ -68,7 +68,7 @@ $modal_body_class = isset($modal['banner_text']) ? "with-text" : "without-text";
                     <div class="banner-image-container"
                          style="background-image: url(<?php echo $mobile_image; ?>)">
                         <a class="banner-button"
-                           href=" <?php echo $banner_link; ?>"><?php echo $button_text; ?></a>
+                           href=" <?php echo $banner_link; ?>" target="_blank"><?php echo $button_text; ?></a>
                         <div type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
                                 <path fill="#FFF" fill-rule="nonzero"
@@ -82,7 +82,7 @@ $modal_body_class = isset($modal['banner_text']) ? "with-text" : "without-text";
                     <div class="banner-image-container"
                          style="background-image: url(<?php echo $desktop_image; ?>)">
                         <a class="banner-button"
-                           href=" <?php echo $banner_link; ?>"><?php echo $button_text; ?></a>
+                           href=" <?php echo $banner_link; ?>" target="_blank"><?php echo $button_text; ?></a>
                         <div type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
                                 <path fill="#FFF" fill-rule="nonzero"
