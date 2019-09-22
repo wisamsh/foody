@@ -84,7 +84,7 @@ $footer = new Foody_Footer();
         ((!is_front_page() && !is_page(get_page_by_title(__('המרת מידות ומשקלות'))) && !is_single()) && get_theme_mod('show_in_all_other_pages'))) {
 
 
-        $link_page = get_page_by_title(__('עמוד קידומים'));
+        $link_page = get_page_by_title(__('gift card'));
         $is_iframe = get_theme_mod('is_iframe');
         if ($is_iframe) {
             $button_link = get_permalink($link_page->ID);

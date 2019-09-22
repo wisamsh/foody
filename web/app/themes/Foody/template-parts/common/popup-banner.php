@@ -16,10 +16,6 @@ $banner_text = isset($modal['banner_text']) ? $modal['banner_text'] : null;
 $banner_link = $modal['banner_link'];
 $button_text = $modal['button_text'];
 
-//if($modal['is_iframe']){
-//    $destination =  '?dest=' . strval($modal['dest_id']);
-//    $banner_link = $banner_link . $destination;
-//}
 
 $modal_body_class = isset($modal['banner_text']) ? "with-text" : "without-text";
 ?>
