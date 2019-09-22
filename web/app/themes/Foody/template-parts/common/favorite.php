@@ -9,8 +9,10 @@
 /** @noinspection PhpUndefinedVariableInspection */
 
 /** @var Foody_Post $foody_post */
+global $post;
 $foody_post = $template_args['post'];
 $post_id    = $foody_post->id;
+$is_recipe = $post->post_type == 'foody_recipe';
 
 $show_text = ! empty( $template_args['show_text'] );
 
@@ -40,7 +42,8 @@ if ( $foody_post->favorite ) {
         </span>
 	<?php endif; ?>
 </div>
-<?php if(!wp_is_mobile()) { ?>
+<?php if(!wp_is_mobile() && $is_recipe) { ?>
+
     <div class="kosher-sign">
         <?php echo __('כשר'); ?>
     </div>
