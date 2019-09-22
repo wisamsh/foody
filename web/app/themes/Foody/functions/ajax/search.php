@@ -80,9 +80,16 @@ function foody_ajax_filter() {
 
 	$context = $_POST['data']['context'];
 
+    // Creating WP_args for search query parameter.
+    $wp_args     = [];
+    $foody_query = Foody_Query::get_instance();
+    $query_args = $foody_query->get_query( $context, $context_args );
+    $wp_args = array_merge( $wp_args, $query_args );
+
+
 	$foody_search = new Foody_Search( $context, $context_args );
 
-	$query = $foody_search->query( $filter );
+	$query = $foody_search->query( $filter , $wp_args);
 
 	$posts = $query['posts'];
 
