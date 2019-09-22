@@ -125,11 +125,6 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
 
 }
 
-debugger
-if (!$('.purchase-button-container').length) {
-    $('.kosher-sign').attr('style','margin-left: 0');
-}
-
 /**
  * Handle events and fire analytics dataLayer.push
  * @param event
