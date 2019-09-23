@@ -12,7 +12,12 @@
 global $post;
 $foody_post = $template_args['post'];
 $post_id    = $foody_post->id;
-$is_recipe = $post->post_type == 'foody_recipe';
+if(!is_null($post)) {
+    $is_recipe = $post->post_type == 'foody_recipe';
+}
+else{
+    $is_recipe = false;
+}
 
 $show_text = ! empty( $template_args['show_text'] );
 
