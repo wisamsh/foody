@@ -99,7 +99,10 @@ jQuery(document).ready(function ($) {
 
     $('footer .close').on('click',function () {
         sessionStorage.setItem('popup-closed','true');
-    })
+    });
 
+    $('#popup-banner').on('shown.bs.modal', function() {
+        $(document).off('focusin.modal');
+    });
 
 });
