@@ -532,7 +532,7 @@ function foody_customize_register( $wp_customize ) {
         $wp_customize,
         'image_with_text_mobile',
         array(
-            'label'       => __( 'בחר תמונה עם טקסט - מובייל (150x92)', 'foody' ),
+            'label'       => __( 'בחר תמונה עם טקסט - מובייל (137x92)', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'image_with_text_mobile',
             'priority'    => 10,
