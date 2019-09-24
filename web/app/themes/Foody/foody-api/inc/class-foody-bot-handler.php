@@ -535,7 +535,7 @@ class Foody_BotHandler
                 $results[$ingredient] = $toPush[0]->count;
             }
         }
-        arsort($results);
+        asort($results);
         return $results;
     }
 
