@@ -1,47 +1,6 @@
 $sidebar-width: 21%;
 
 body {
-  #newsletter-modal {
-    //.newsletter {
-    form {
-      .newsletter-input {
-        height: 40px;
-        padding: 12px;
-        border-radius: 3px;
-        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-        background-color: #ffffff;
-        border: none;
-        font-size: 18px;
-      }
-
-      p {
-        margin: 0;
-        text-align: right;
-
-        input[type="email"] {
-          @extend .newsletter-input;
-          width: 70%;
-          margin-left: 10px;
-          //noinspection CssInvalidPseudoSelector
-          &::placeholder {
-            opacity: 0.5;
-            font-size: 18px;
-            font-weight: normal;
-            font-family: $font__main;
-
-          }
-        }
-
-        input[type="submit"] {
-          @extend .newsletter-input;
-          color: var(--color__primary);
-          font-weight: 900;
-        }
-      }
-
-      //}
-    }
-  }
   &.has-background {
     footer {
       background-color: var(--color__background-screen);
@@ -78,6 +37,79 @@ body {
     font-size: 14px;
   }
 
+}
+
+#newsletter-modal {
+  display: flex !important;
+
+  .modal-dialog {
+    margin: auto auto;
+
+    .modal-content {
+      text-align: right;
+      height: fit-content;
+
+      .modal-header {
+        background-color: rgba(58, 58, 58, 0.05);
+
+        .close{
+          margin-left: 0;
+        }
+      }
+
+      .modal-body {
+        background-color: rgba(58, 58, 58, 0.05);
+
+        .newsletter {
+          margin-bottom: 15px;
+
+          p {
+            margin: 0;
+
+            input {
+              height: 40px;
+              border-radius: 3px;
+              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+              background-color: #ffffff;
+              border: none;
+              padding: 0 5px;
+              font-family: $font__assistant;
+
+              &[type="email"] {
+                width: 60%;
+                margin-left: 10px;
+              }
+
+              //noinspection CssInvalidPseudoSelector
+              &::placeholder {
+                font-family: $font__main;
+                font-size: 16px;
+                font-weight: normal;
+              }
+
+              &[type="submit"] {
+                border-radius: 3px;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+                background-color: #ffffff;
+                border: none;
+                color: var(--color__primary);
+                font-size: 1em;
+                cursor: pointer;
+                font-weight: 900;
+              }
+            }
+            .accept-label{
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+
+      .modal-footer{
+        display: none;
+      }
+    }
+  }
 }
 
 footer.site-footer {
@@ -263,7 +295,7 @@ footer.site-footer {
                 top: 10px;
                 left: 10px;
 
-                svg{
+                svg {
                   width: 0.8em;
                   height: 0.8em;
                 }
@@ -287,12 +319,12 @@ footer.site-footer {
               display: flex;
               flex-direction: row;
 
-              .banner-text-box{
+              .banner-text-box {
                 width: 70%;
                 background-image: linear-gradient(72deg, #ec3849, #f35644);
                 display: flex;
 
-                .banner-text{
+                .banner-text {
                   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                   font-family: Assistant;
                   font-size: 22px;
@@ -310,7 +342,7 @@ footer.site-footer {
                   z-index: 1;
                 }
 
-                .banner-button{
+                .banner-button {
                   width: 30%;
                   border-radius: 6px;
                   border: solid 1.5px #ffffff;
@@ -331,7 +363,7 @@ footer.site-footer {
                 }
               }
 
-              .banner-image-container{
+              .banner-image-container {
                 width: 30%;
                 display: flex;
                 flex-direction: column;
@@ -352,11 +384,12 @@ footer.site-footer {
                   top: 10px;
                   left: 10px;
 
-                  svg{
+                  svg {
                     width: 1em;
                     height: 1em;
                   }
                 }
+
                 &:after {
                   content: '';
                   background-color: black;
@@ -406,7 +439,6 @@ footer.site-footer {
     margin-right: 0;
     position: initial !important;
     border: none;
-
 
 
     .footer-social-container {
@@ -641,7 +673,7 @@ footer.site-footer {
                   top: 0;
                   left: 10px;
 
-                  svg{
+                  svg {
                     width: 0.5em;
                     height: 0.5em;
                   }
@@ -657,6 +689,7 @@ footer.site-footer {
                 }
               }
             }
+
             &.with-text {
               .modal-body-container {
                 background-repeat: no-repeat;
@@ -664,13 +697,13 @@ footer.site-footer {
                 display: flex;
                 flex-direction: row;
 
-                .banner-text-box{
+                .banner-text-box {
                   width: 60%;
                   background-image: linear-gradient(72deg, #ec3849, #f35644);
                   display: flex;
                   flex-direction: column;
 
-                  .banner-text{
+                  .banner-text {
                     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                     font-family: Assistant;
                     font-size: 13px;
@@ -688,7 +721,7 @@ footer.site-footer {
                     margin-bottom: 2%;
                   }
 
-                  .banner-button{
+                  .banner-button {
                     width: fit-content;
                     border-radius: 8px;
                     border: solid 1.5px #ffffff;
@@ -708,11 +741,11 @@ footer.site-footer {
                     padding: 1.5% 5.5%;
                     align-self: center;
                     margin-bottom: 7%;
-                    margin-top:0;
+                    margin-top: 0;
                   }
                 }
 
-                .banner-image-container{
+                .banner-image-container {
                   width: 40%;
                   display: flex;
                   flex-direction: column;
@@ -734,11 +767,12 @@ footer.site-footer {
                     top: 0;
                     left: 10px;
 
-                    svg{
+                    svg {
                       width: 0.7rem;
                       height: 0.7rem;
                     }
                   }
+
                   &:after {
                     content: '';
                     background-color: black;

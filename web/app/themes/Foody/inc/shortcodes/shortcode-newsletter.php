@@ -12,7 +12,9 @@ function foody_newsletter_shortcode( $attrs ) {
 	}
 	$attrs['return'] = true;
 
-	$display = '<section class="newsletter">[contact-form-7 id="3101" title="ניוזלטר"]</section>';
+	$display = '<section class="newsletter">';
+    $display = $display . do_shortcode('[contact-form-7 id="20190" title="ניוזלטר"]') . '</section>';
+
 
 	return $display;
 }

@@ -24,4 +24,4 @@ function foody_recipe_shortcode( $attrs ) {
 	return $display;
 }
 
-add_shortcode( 'foody-recipe', 'foody_recipe_shortcode' );
+add_shortcode( 'foody-§', 'foody_recipe_shortcode' );

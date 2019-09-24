@@ -155,6 +155,7 @@ require_once get_template_directory() . "/inc/shortcodes/shortcode-foody-sitemap
 require_once get_template_directory() . "/inc/shortcodes/shortcode-approvals.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-recipe.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-article.php";
+require_once get_template_directory() . "/inc/shortcodes/shortcode-newsletter.php";
 
 
 /*

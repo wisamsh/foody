@@ -140,7 +140,7 @@ if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || f
 if (get_option('foody_show_newsletter_popup')) {
     $login_popup_args = [
         'id' => 'newsletter-modal',
-        'body' => do_shortcode('[contact-form-7 id="3101" title="ניוזלטר"]'),
+        'body' => do_shortcode('[foody-newsletter]'),
         'btn_approve_classes' => 'hide',
         'btn_cancel_classes' => 'hide',
         'title' => '',
