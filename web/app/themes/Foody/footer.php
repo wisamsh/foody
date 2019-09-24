@@ -136,7 +136,20 @@ if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || f
 }
 ?>
 
+<?php
+if (get_option('foody_show_newsletter_popup')) {
+    $login_popup_args = [
+        'id' => 'newsletter-modal',
+        'body' => do_shortcode('[contact-form-7 id="3101" title="ניוזלטר"]'),
+        'btn_approve_classes' => 'hide',
+        'btn_cancel_classes' => 'hide',
+        'title' => '',
+        'hide_buttons' => true
+    ];
 
+    foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', $login_popup_args);
+}
+?>
 
 <?php wp_footer(); ?>
 

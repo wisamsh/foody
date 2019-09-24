@@ -69,6 +69,10 @@ jQuery(document).ready(function ($) {
         $('#login-modal').modal('show');
     };
 
+    window.showNewsletterModal = function () {
+        $('#newsletter-modal').modal('show');
+    };
+
     // Click custom accessibility widget
     if (foodyGlobals.show_custom_accessibility && foodyGlobals.custom_accessibility_class) {
         $('.navbar-btn.accessibility').on('click',function (e) {
@@ -104,5 +108,12 @@ jQuery(document).ready(function ($) {
     $('#popup-banner').on('shown.bs.modal', function() {
         $(document).off('focusin.modal');
     });
+
+    if($('#newsletter-modal').length) {
+        setTimeout(function () {
+            // load popup after 30 second
+            showNewsletterModal();
+        }, 30000);
+    }
 
 });
