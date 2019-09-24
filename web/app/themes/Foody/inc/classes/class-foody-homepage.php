@@ -235,9 +235,9 @@ class Foody_HomePage
 //            $format = 'UTC+2';
 //        }
         $datetime = new DateTime(null, new DateTimeZone('Asia/Jerusalem'));
-        $current_date_time = $datetime->format('Y-m-d H:i:s');
-        $last_selected_date_first = '0-0-0 00:00:00';
-        $last_selected_date_second = '0-0-0 00:00:00';
+        $current_date_time = $datetime->format('Y-m-d H:i');
+        $last_selected_date_first = '0-0-0 00:00';
+        $last_selected_date_second = '0-0-0 00:00';
 
         for ($i = 0; $i < count($posts); $i++) {
             foreach ($posts[$i]['featured_item'] as $featured_item){
