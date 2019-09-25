@@ -85,9 +85,10 @@ class Foody_Footer {
 	}
 
 
-	public function newsletter() {
+	public function newsletter($id) {
+	    $args['ID'] = $id;
 
-		foody_get_template_part( get_template_directory() . '/template-parts/content-newsletter.php' );
+		foody_get_template_part( get_template_directory() . '/template-parts/content-newsletter.php' ,$args);
 	}
 
 	public function moveo() {
@@ -132,7 +133,7 @@ class Foody_Footer {
 
 			<?php
 
-			$this->newsletter();
+			$this->newsletter(get_option('foody_id_for_newsletter'));
 			if ( empty( $menu_items ) ) {
 				return;
 			}

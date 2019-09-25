@@ -7,13 +7,15 @@
  */
 
 function foody_newsletter_shortcode( $attrs ) {
+
+    $newsletter_id = get_option('foody_id_for_newsletter');
 	if ( empty( $attrs ) ) {
 		$attrs = [];
 	}
 	$attrs['return'] = true;
 
 	$display = '<section class="newsletter">';
-    $display = $display . do_shortcode('[contact-form-7 id="20190" title="ניוזלטר"]') . '</section>';
+    $display = $display . do_shortcode('[contact-form-7 id="'.$newsletter_id.'" title="ניוזלטר"]') . '</section>';
 
 
 	return $display;

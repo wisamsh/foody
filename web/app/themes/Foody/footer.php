@@ -29,7 +29,7 @@ $footer = new Foody_Footer();
 
     <section class="newsletter d-block d-lg-none">
         <?php
-        $footer->newsletter();
+        $footer->newsletter(get_option('foody_id_for_newsletter'));
         ?>
 
     </section>
