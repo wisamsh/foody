@@ -40,73 +40,76 @@ body {
 }
 
 #newsletter-modal {
-  display: flex !important;
+  &.show {
+    display: flex !important;
 
-  .modal-dialog {
-    margin: auto auto;
+    .modal-dialog {
+      margin: auto auto;
 
-    .modal-content {
-      text-align: right;
-      height: fit-content;
+      .modal-content {
+        text-align: right;
+        height: fit-content;
 
-      .modal-header {
-        background-color: rgba(58, 58, 58, 0.05);
+        .modal-header {
+          background-color: rgba(58, 58, 58, 0.05);
 
-        .close{
-          margin-left: 0;
+          .close {
+            margin-left: 0;
+          }
         }
-      }
 
-      .modal-body {
-        background-color: rgba(58, 58, 58, 0.05);
+        .modal-body {
+          background-color: rgba(58, 58, 58, 0.05);
 
-        .newsletter {
-          margin-bottom: 15px;
+          .newsletter {
+            margin-bottom: 15px;
 
-          p {
-            margin: 0;
+            p {
+              margin: 0;
 
-            input {
-              height: 40px;
-              border-radius: 3px;
-              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
-              background-color: #ffffff;
-              border: none;
-              padding: 0 5px;
-              font-family: $font__assistant;
-
-              &[type="email"] {
-                width: 60%;
-                margin-left: 10px;
-              }
-
-              //noinspection CssInvalidPseudoSelector
-              &::placeholder {
-                font-family: $font__main;
-                font-size: 16px;
-                font-weight: normal;
-              }
-
-              &[type="submit"] {
+              input {
+                height: 40px;
                 border-radius: 3px;
-                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
                 background-color: #ffffff;
                 border: none;
-                color: var(--color__primary);
-                font-size: 1em;
-                cursor: pointer;
-                font-weight: 900;
+                padding: 0 5px;
+                font-family: $font__assistant;
+
+                &[type="email"] {
+                  width: 60%;
+                  margin-left: 10px;
+                }
+
+                //noinspection CssInvalidPseudoSelector
+                &::placeholder {
+                  font-family: $font__main;
+                  font-size: 16px;
+                  font-weight: normal;
+                }
+
+                &[type="submit"] {
+                  border-radius: 3px;
+                  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+                  background-color: #ffffff;
+                  border: none;
+                  color: var(--color__primary);
+                  font-size: 1em;
+                  cursor: pointer;
+                  font-weight: 900;
+                }
               }
-            }
-            .accept-label{
-              margin-right: 10px;
+
+              .accept-label {
+                margin-right: 10px;
+              }
             }
           }
         }
-      }
 
-      .modal-footer{
-        display: none;
+        .modal-footer {
+          display: none;
+        }
       }
     }
   }

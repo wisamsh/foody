@@ -117,7 +117,7 @@ jQuery(document).ready(function ($) {
     }
 
     $('#newsletter-modal').on('hidden.bs.modal', function () {
-        $('#newsletter-modal').attr('style','display: none !important')
+        $('#newsletter-modal').attr('style','display: none !important');
     });
 
 });
