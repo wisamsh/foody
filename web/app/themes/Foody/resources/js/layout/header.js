@@ -9,6 +9,8 @@ jQuery(document).ready(function ($) {
     let navbarShown = false;
     let bannerPoped = false;
 
+    let timeIdle = 0;
+
     navbar.on('show.bs.collapse', function (e) {
 
 
@@ -83,7 +85,7 @@ jQuery(document).ready(function ($) {
 
     //popup banner
     $(window).on('scroll', function () {
-        if(!sessionStorage.getItem('popup-closed')) {
+        if(!sessionStorage.getItem('banner-popup-closed')) {
             let popupBanner = $('#popup-banner');
             if (popupBanner.length && !bannerPoped) {
                 popupBanner.modal({
@@ -101,23 +103,44 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $('footer .close').on('click',function () {
-        sessionStorage.setItem('popup-closed','true');
+    $('footer #popup-banner .close').on('click',function () {
+        sessionStorage.setItem('banner-popup-closed','true');
     });
 
     $('#popup-banner').on('shown.bs.modal', function() {
         $(document).off('focusin.modal');
     });
 
+    // if($('#newsletter-modal').length) {
+    //     setTimeout(function () {
+    //         // load popup after 5 second
+    //         showNewsletterModal();
+    //     }, 5000);
+    // }
+
+    $(window).on('scroll', function () {
+        timeIdle = 0;
+    });
+
     if($('#newsletter-modal').length) {
-        setTimeout(function () {
-            // load popup after 30 second
-            showNewsletterModal();
-        }, 30000);
+        let interval =  setInterval(function () {
+            timeIdle++;
+            if (timeIdle == 5) {
+                showNewsletterModal();
+            }
+            if(sessionStorage.getItem('newsletter-popup-closed')){
+                clearInterval(interval);
+            }
+        }, 1000);
     }
+
+    $('#newsletter-modal').on('show.bs.modal', function () {
+        $('#newsletter-modal .modal-body > p').remove();
+    });
 
     $('#newsletter-modal').on('hidden.bs.modal', function () {
         $('#newsletter-modal').attr('style','display: none !important');
+        sessionStorage.setItem('newsletter-popup-closed','true');
     });
 
 });
