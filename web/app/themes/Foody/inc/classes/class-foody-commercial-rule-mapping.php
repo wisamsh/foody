@@ -27,7 +27,8 @@ class Foody_CommercialRuleMapping {
 	}
 
 	public static function add( $rule_id, $recipe_id, $object_id ) {
-		global $wpdb;
+        global $wpdb;
+        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
 		$result = $wpdb->insert( self::$table_name, [
 			'rule_id'   => $rule_id,
 			'recipe_id' => $recipe_id,
@@ -42,7 +43,8 @@ class Foody_CommercialRuleMapping {
 	}
 
 	public static function remove( $id ) {
-		global $wpdb;
+        global $wpdb;
+        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
 
 		return $wpdb->delete( self::$table_name, [
 			'id' => $id
@@ -50,7 +52,8 @@ class Foody_CommercialRuleMapping {
 	}
 
 	public static function removeRules( $rule_id ) {
-		global $wpdb;
+        global $wpdb;
+        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
 
 		return $wpdb->delete( self::$table_name, [
 			'rule_id' => $rule_id,
@@ -58,7 +61,8 @@ class Foody_CommercialRuleMapping {
 	}
 
 	public static function getByRecipe( $recipe_id ) {
-		global $wpdb;
+        global $wpdb;
+        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
 
 		$results = $wpdb->get_results( "SELECT * from " . self::$table_name . " where recipe_id = " . $recipe_id . " ORDER BY DATE(created_at) DESC, created_at ASC", ARRAY_A );
 
@@ -66,7 +70,8 @@ class Foody_CommercialRuleMapping {
 	}
 
 	public static function getByIngredientRecipe( $recipe_id, $object_id ) {
-		global $wpdb;
+        global $wpdb;
+        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
 
 		$results = $wpdb->get_results( "SELECT * from " . self::$table_name . " where object_id = " . $object_id . " AND recipe_id = " . $recipe_id . " ORDER BY DATE(created_at) DESC, created_at ASC", ARRAY_A );
 
