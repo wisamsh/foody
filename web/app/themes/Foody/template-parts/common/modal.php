@@ -42,12 +42,12 @@ $hide_buttons = isset($modal['hide_buttons']) && $modal['hide_buttons'];
                     <?php if ($id == 'newsletter-modal'){ ?>
                 <div class="popup-text-container">
                     <div class="popup-text">
-                        <?php echo __('נרדמת?');?>
+                        <?php echo __('נרדמתם?');?>
                         <br/>
                         <?php echo __('יש לנו משהו שיעיר אתכם! הרשמו לקבלת המתכונים החמים'); ?>
                     </div>
                     <div class="popup-image">
-                        <img src="<?php echo $GLOBALS['images_dir'] . '255.png' ?>" alt="">
+                        <img src="<?php echo $GLOBALS['images_dir'] . '_MG_1957-2.png' ?>" alt="">
                     </div>
                 </div>
                 <?php } ?>

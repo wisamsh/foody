@@ -117,10 +117,11 @@ jQuery(document).ready(function ($) {
     //         showNewsletterModal();
     //     }, 5000);
     // }
-
-    $(window).on('scroll', function () {
-        timeIdle = 0;
-    });
+    if($('#newsletter-modal').length) {
+        $(window).on('scroll', function () {
+            timeIdle = 0;
+        });
+    }
 
     if($('#newsletter-modal').length) {
         let interval =  setInterval(function () {
@@ -141,6 +142,19 @@ jQuery(document).ready(function ($) {
     $('#newsletter-modal').on('hidden.bs.modal', function () {
         $('#newsletter-modal').attr('style','display: none !important');
         sessionStorage.setItem('newsletter-popup-closed','true');
+    });
+
+    $('#newsletter-modal .wpcf7-form .wpcf7-submit').on('click',function () {
+        let seconds = 0;
+        let submitInterval =  setInterval(function () {
+            seconds++;
+            if (seconds == 4) {
+                $('#newsletter-modal').modal('hide');
+            }
+            if(sessionStorage.getItem('newsletter-popup-closed')){
+                clearInterval(submitInterval);
+            }
+        }, 1000);
     });
 
 });
