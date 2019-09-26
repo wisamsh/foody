@@ -88,10 +88,11 @@ class Foody_BotHandler
 
         $difficulty_level = $overview['difficulty_level'];
 
+        $short_link_with_utm = wp_get_shortlink($post->ID) . '&utm_source=Foody%20Bot&utm_medium=Bot&utm_campaign=Bot';
 
         $item = [
             'title' => $post->post_title,
-            'url' => wp_get_shortlink($post->ID),
+            'url' => $short_link_with_utm,
             'image' => get_the_post_thumbnail_url($post),
             'author' => get_the_author_meta('display_name', $post->post_author),
             'ingredients' => $this->getPostIngredients($post),
