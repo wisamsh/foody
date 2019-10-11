@@ -11,7 +11,10 @@ function foody_recipe_shortcode( $attrs ) {
 		$attrs = [];
 	}
 	$attrs['return'] = true;
-	$post_id         = get_post()->ID;
+	$post_id = '';
+	if ( isset( get_post()->ID ) ) {
+		$post_id = get_post()->ID;
+	}
 
 	$display = '';
 	if ( $post_id != $attrs['recipe'] ) {
