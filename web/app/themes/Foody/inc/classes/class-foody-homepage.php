@@ -148,34 +148,39 @@ class Foody_HomePage
 
             $posts = array_map(function ($row) {
 
-                // WP_Post
-                $foody_post = Foody_Post::create($row['post']);
+            	if (isset($row['post']) && !empty($row['post'])) {
+	                // WP_Post
+	                $foody_post = Foody_Post::create($row['post']);
 
-                if (!empty($row['image']['url'])) {
-                    $foody_post->setImage($row['image']['url']);
-                }
+	                if (!empty($row['image']['url'])) {
+	                    $foody_post->setImage($row['image']['url']);
+	                }
 
-                if (!empty($row['title'])) {
-                    $foody_post->setTitle($row['title']);
-                }
+	                if (!empty($row['title'])) {
+	                    $foody_post->setTitle($row['title']);
+	                }
 
-                if (!empty($row['secondary_text'])) {
-                    $foody_post->setDescription($row['secondary_text']);
-                    $foody_post->description_mobile = $row['secondary_text'];
-                }
+	                if (!empty($row['secondary_text'])) {
+	                    $foody_post->setDescription($row['secondary_text']);
+	                    $foody_post->description_mobile = $row['secondary_text'];
+	                }
 
-                if (!empty($row['secondary_text_mobile'])) {
-                    $foody_post->description_mobile = $row['secondary_text_mobile'];
-                }
+	                if (!empty($row['secondary_text_mobile'])) {
+	                    $foody_post->description_mobile = $row['secondary_text_mobile'];
+	                }
 
-                if (!empty($row['link'])) {
-                    $foody_post->link = $row['link']['url'];
-                }
+	                if (!empty($row['link'])) {
+	                    $foody_post->link = $row['link']['url'];
+	                }
 
-                return $foody_post;
+	                return $foody_post;
+	            }
             }, $featured);
         }
 
+	    $posts = array_filter( $posts, function ( $value ) {
+		    return ! empty( $value ) && ! is_null( $value );
+        });
         return $posts;
     }
 
@@ -240,21 +245,31 @@ class Foody_HomePage
         $last_selected_date_second = '0-0-0 00:00';
 
         for ($i = 0; $i < count($posts); $i++) {
-            foreach ($posts[$i]['featured_item'] as $featured_item){
-                if($featured_item['time_date'] <= $current_date_time ){
-                    if($i == 0 && $featured_item['time_date'] >= $last_selected_date_first){
-                        $first_post = $featured_item;
-                        $last_selected_date_first = $featured_item['time_date'];
-                    }
-                    elseif($i==1 && $featured_item['time_date'] >= $last_selected_date_second){
-                        {
-                            $second_post = $featured_item;
-                            $last_selected_date_second = $featured_item['time_date'];
-                        }
-                    }
+        	if (isset($posts[$i]['featured_item'])) {
+	            foreach ($posts[$i]['featured_item'] as $featured_item) {
+	                if($featured_item['time_date'] <= $current_date_time ){
+	                    if($i == 0 && $featured_item['time_date'] >= $last_selected_date_first){
+	                        $first_post = $featured_item;
+	                        $last_selected_date_first = $featured_item['time_date'];
+	                    }
+	                    elseif($i==1 && $featured_item['time_date'] >= $last_selected_date_second){
+	                        {
+	                            $second_post = $featured_item;
+	                            $last_selected_date_second = $featured_item['time_date'];
+	                        }
+	                    }
+		            }
                 }
             }
         }
-        return [$first_post,$second_post];
+	    $response = [];
+	    if ( ! empty( $first_post ) ) {
+		    array_push( $response, $first_post );
+	    }
+	    if ( ! empty( $second_post ) ) {
+		    array_push( $response, $second_post );
+	    }
+
+	    return $response;
     }
 }
