@@ -148,39 +148,34 @@ class Foody_HomePage
 
             $posts = array_map(function ($row) {
 
-            	if (isset($row['post']) && !empty($row['post'])) {
-	                // WP_Post
-	                $foody_post = Foody_Post::create($row['post']);
+                // WP_Post
+                $foody_post = Foody_Post::create($row['post']);
 
-	                if (!empty($row['image']['url'])) {
-	                    $foody_post->setImage($row['image']['url']);
-	                }
+                if (!empty($row['image']['url'])) {
+                    $foody_post->setImage($row['image']['url']);
+                }
 
-	                if (!empty($row['title'])) {
-	                    $foody_post->setTitle($row['title']);
-	                }
+                if (!empty($row['title'])) {
+                    $foody_post->setTitle($row['title']);
+                }
 
-	                if (!empty($row['secondary_text'])) {
-	                    $foody_post->setDescription($row['secondary_text']);
-	                    $foody_post->description_mobile = $row['secondary_text'];
-	                }
+                if (!empty($row['secondary_text'])) {
+                    $foody_post->setDescription($row['secondary_text']);
+                    $foody_post->description_mobile = $row['secondary_text'];
+                }
 
-	                if (!empty($row['secondary_text_mobile'])) {
-	                    $foody_post->description_mobile = $row['secondary_text_mobile'];
-	                }
+                if (!empty($row['secondary_text_mobile'])) {
+                    $foody_post->description_mobile = $row['secondary_text_mobile'];
+                }
 
-	                if (!empty($row['link'])) {
-	                    $foody_post->link = $row['link']['url'];
-	                }
+                if (!empty($row['link'])) {
+                    $foody_post->link = $row['link']['url'];
+                }
 
-	                return $foody_post;
-	            }
+                return $foody_post;
             }, $featured);
         }
 
-	    $posts = array_filter( $posts, function ( $value ) {
-		    return ! empty( $value ) && ! is_null( $value );
-        });
         return $posts;
     }
 
@@ -231,43 +226,24 @@ class Foody_HomePage
 
     public static function get_relevant_posts($posts)
     {
-        $first_post = null;
-        $second_post = null;
-//        if(date('I')){
-//            $format = 'UTC+3';
-//        }
-//        else{
-//            $format = 'UTC+2';
-//        }
-        $datetime = new DateTime(null, new DateTimeZone('Asia/Jerusalem'));
-        $current_date_time = $datetime->format('Y-m-d H:i');
-        $last_selected_date_first = '0-0-0 00:00';
-        $last_selected_date_second = '0-0-0 00:00';
+	    $datetime          = new DateTime( null, new DateTimeZone( 'Asia/Jerusalem' ) );
+	    $current_date_time = $datetime->format( 'Y-m-d H:i' );
 
-        for ($i = 0; $i < count($posts); $i++) {
-        	if (isset($posts[$i]['featured_item'])) {
-	            foreach ($posts[$i]['featured_item'] as $featured_item) {
-	                if($featured_item['time_date'] <= $current_date_time ){
-	                    if($i == 0 && $featured_item['time_date'] >= $last_selected_date_first){
-	                        $first_post = $featured_item;
-	                        $last_selected_date_first = $featured_item['time_date'];
-	                    }
-	                    elseif($i==1 && $featured_item['time_date'] >= $last_selected_date_second){
-	                        {
-	                            $second_post = $featured_item;
-	                            $last_selected_date_second = $featured_item['time_date'];
-	                        }
-	                    }
-		            }
-                }
-            }
-        }
 	    $response = [];
-	    if ( ! empty( $first_post ) ) {
-		    array_push( $response, $first_post );
-	    }
-	    if ( ! empty( $second_post ) ) {
-		    array_push( $response, $second_post );
+	    foreach ( $posts as $post ) {
+		    $item_found         = [];
+		    $last_selected_date = '0-0-0 00:00';
+		    if ( isset( $post['featured_item'] ) ) {
+			    foreach ( $post['featured_item'] as $featured_item ) {
+				    if ( $featured_item['time_date'] <= $current_date_time ) {
+					    if ( $featured_item['time_date'] >= $last_selected_date ) {
+						    $item_found         = $featured_item;
+						    $last_selected_date = $featured_item['time_date'];
+					    }
+				    }
+			    }
+		    }
+		    array_push( $response, $item_found );
 	    }
 
 	    return $response;
