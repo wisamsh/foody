@@ -3,12 +3,13 @@
 .register, .login {
 
 
-  .login-title{
-    color: var(--color__primary);
-    font-size: 24px;
-    text-align: right;
-    font-weight: 900;
-  }
+  //.login-title{
+  //  color: var(--color__primary);
+  //  font-size: 24px;
+  //  text-align: right;
+  //  font-weight: 900;
+  //  text-align: right;
+  //}
 
   &.failed {
     .login-failed-alert {
@@ -187,6 +188,15 @@
     }
 
   }
+}
+
+
+.login-title{
+  color: var(--color__primary);
+  font-size: 24px;
+  text-align: right;
+  font-weight: 900;
+  text-align: right;
 }
 
 .welcome {
