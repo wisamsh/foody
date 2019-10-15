@@ -864,8 +864,7 @@ class Foody_Recipe extends Foody_Post
         $rating_count = get_post_meta($this->get_id(), 'ratings_users', true);
 
         if ($rating_val === "" || $rating_count === "") {
-            $rating_val = "0.0";
-            $rating_count = "0";
+            return false;
         }
 
         $json = [

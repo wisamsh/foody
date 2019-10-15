@@ -21,7 +21,12 @@ $recipe = $template_args['recipe'];
      {
       "@context": "http://schema.org/",
       "@type": "Recipe",
-      "aggregateRating": <?php echo $recipe->get_jsonld_aggregateRating()?>,
+<?php
+    $aggregateRating =  $recipe->get_jsonld_aggregateRating();
+    if($aggregateRating != false)
+    { ?>
+      "aggregateRating": <?php echo $aggregateRating;?>,
+<?php } ?>
       "name": "<?php echo addslashes( get_the_title() ) ?>",
       "nutrition": <?php echo $recipe->get_jsonld_nutrients()?>,
       "image": "<?php echo $recipe->getImage() ?>",
@@ -167,5 +172,3 @@ $recipe = $template_args['recipe'];
 		<?php echo footabc_add_code_to_content(); ?>
     </section>
 <?php endif; ?>
-
-
