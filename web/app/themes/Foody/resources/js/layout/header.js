@@ -144,17 +144,17 @@ jQuery(document).ready(function ($) {
         sessionStorage.setItem('newsletter-popup-closed','true');
     });
 
-    // $('#newsletter-modal .wpcf7-form .wpcf7-submit').on('click',function () {
-    //     let seconds = 0;
-    //     let submitInterval =  setInterval(function () {
-    //         seconds++;
-    //         if (seconds == 4) {
-    //             $('#newsletter-modal').modal('hide');
-    //         }
-    //         if(sessionStorage.getItem('newsletter-popup-closed')){
-    //             clearInterval(submitInterval);
-    //         }
-    //     }, 1000);
-    // });
+    $('#newsletter-modal .wpcf7-form .wpcf7-submit').on('click',function () {
+        let seconds = 0;
+        let submitInterval =  setInterval(function () {
+            seconds++;
+            if (seconds == 2) {
+                $('#newsletter-modal').modal('hide');
+            }
+            if(sessionStorage.getItem('newsletter-popup-closed')){
+                clearInterval(submitInterval);
+            }
+        }, 1000);
+    });
 
 });
