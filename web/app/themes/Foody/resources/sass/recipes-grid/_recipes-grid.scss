@@ -58,6 +58,10 @@
       line-height: normal;
     }
   }
+
+  #similar-recipe-feed{
+    margin-top: 15px;
+  }
 }
 
 @include breakpoint(mobileonly) {

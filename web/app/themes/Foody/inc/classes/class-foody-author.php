@@ -259,13 +259,13 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
         $posts_for_grid = array_map('Foody_Post::create', $the_query->posts);
 
         $grid = [
-            'id' => 'recipe-feed',
+            'id' => 'similar-recipe-feed',
             'cols' => 2,
             'posts' => $posts_for_grid,
             'more' => '',
             'header' => [
                 'sort' => false,
-                'title' => __('מתכונים דומים', 'foody')
+                'title' => __('מתכונים נוספים שעשויים לעניין אותך', 'foody')
             ],
             'title_el' => 'h2'
         ];
