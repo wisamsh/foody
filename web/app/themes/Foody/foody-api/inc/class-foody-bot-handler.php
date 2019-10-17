@@ -548,26 +548,32 @@ class Foody_BotHandler
 
     private function sortByLevel($a, $b)
     {
+        $aIngredientsCount = count($a['ingredients']);
+        $bIngredientsCount = count($b['ingredients']);
 
-        $aNumber = $this->getLevelNumericRepresentation($a['difficulty_level']);
-        $bNumber = $this->getLevelNumericRepresentation($b['difficulty_level']);
+        if ($aIngredientsCount === $bIngredientsCount) {
 
-        if ($aNumber === $bNumber) {
-            $aTime = get_field('overview', $this->helperArr[$a['title']])['total_time'];
-            $aTime = $this->getTimeAsMinutes($aTime['time'],$aTime['time_unit']);
+            $aNumber = $this->getLevelNumericRepresentation($a['difficulty_level']);
+            $bNumber = $this->getLevelNumericRepresentation($b['difficulty_level']);
 
-            $bTime = get_field('overview', $this->helperArr[$b['title']])['total_time'];
-            $bTime = $this->getTimeAsMinutes($bTime['time'],$bTime['time_unit']);
-            if ($aTime === $bTime) {
-                $aAuthor = $this->authorsPriority[$a['author']];
-                $bAuthor = $this->authorsPriority[$b['author']];
+            if ($aNumber === $bNumber) {
+                $aTime = get_field('overview', $this->helperArr[$a['title']])['total_time'];
+                $aTime = $this->getTimeAsMinutes($aTime['time'], $aTime['time_unit']);
 
-                if ($aAuthor === $bAuthor) return 0;
-                return ($aAuthor < $bAuthor) ? -1 : 1;
+                $bTime = get_field('overview', $this->helperArr[$b['title']])['total_time'];
+                $bTime = $this->getTimeAsMinutes($bTime['time'], $bTime['time_unit']);
+                if ($aTime === $bTime) {
+                    $aAuthor = $this->authorsPriority[$a['author']];
+                    $bAuthor = $this->authorsPriority[$b['author']];
+
+                    if ($aAuthor === $bAuthor) return 0;
+                    return ($aAuthor < $bAuthor) ? -1 : 1;
+                }
+                return ($aTime < $bTime) ? -1 : 1;
             }
-            return ($aTime < $bTime) ? -1 : 1;
+            return ($aNumber < $bNumber) ? -1 : 1;
         }
-        return ($aNumber < $bNumber) ? -1 : 1;
+        return ($aIngredientsCount < $bIngredientsCount) ? -1 : 1;
     }
 
     private function getTimeAsMinutes($time,$unit){
