@@ -148,7 +148,7 @@ jQuery(document).ready(function ($) {
         let seconds = 0;
         let submitInterval =  setInterval(function () {
             seconds++;
-            if (seconds == 2) {
+            if (seconds == 3) {
                 $('#newsletter-modal').modal('hide');
             }
             if(sessionStorage.getItem('newsletter-popup-closed')){
