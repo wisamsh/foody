@@ -30,8 +30,7 @@ $homepage->init();
 			<?php
 
 			$num = wp_is_mobile() ? 4 : 6;
-			echo do_shortcode( '[foody_team max="' . $num . '" show_title="true"]' )
-// type="team"
+			echo do_shortcode( '[foody_team max="' . $num . '" show_title="true" type="team"]' );
 			?>
 
             <section class="feed-container row">
