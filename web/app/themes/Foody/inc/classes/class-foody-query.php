@@ -214,7 +214,7 @@ class Foody_Query {
 
 		$featured = get_field( 'featured_items', get_option( 'page_on_front' ) );
 		$featured = Foody_HomePage::get_relevant_posts($featured);
-		if ( ! empty( $featured ) ) {
+		if ( ! empty( $featured ) && (! empty( $featured[0] ) || ! empty( $featured[1]))) {
 			$args['post__not_in'] = array_map( function ( $row ) {
 				return $row['post']->ID;
 			}, $featured );
