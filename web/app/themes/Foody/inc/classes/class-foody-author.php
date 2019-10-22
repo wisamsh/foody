@@ -213,18 +213,18 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
     function get_breadcrumbs_path()
     {
-        if (get_the_author_meta('type_of_writer', $this->author->ID) != 'israel-cooks') {
-            $team_link = get_permalink(18);
-            $team_title = get_post_field('post_title', 18);
-        }
-        else {
-            $team_link = get_permalink(get_page_by_path('בשלני ישראל'));
-            $team_title = get_post_field('post_title', get_page_by_path('בשלני ישראל'));
-        }
+//        if (get_the_author_meta('type_of_writer', $this->author->ID) != 'israel-cooks') {
+//            $team_link = get_permalink(18);
+//            $team_title = get_post_field('post_title', 18);
+//        }
+//        else {
+//            $team_link = get_permalink(get_page_by_path('בשלני ישראל'));
+//            $team_title = get_post_field('post_title', get_page_by_path('בשלני ישראל'));
+//        }
         return [
             [
-                'href' => $team_link,
-                'title' => $team_title
+                'href' => get_permalink(18),
+                'title' => $team_title = get_post_field('post_title', 18)
             ],
             [
                 'title' => $this->topic_title()

@@ -33,52 +33,52 @@ class FoodyTeam {
 		$show_count = $display_args['show_count'];
 		$display    = $display_args['display'];
 
-//		$args = array(
-//			'role'     => 'author',
-//			'orderby'  => 'meta_value_num',
-//			'meta_key' => 'menu_order',
-//			'order'    => 'ASC',
-//			'number'   => $num_of_authors
-//		);
+		$args = array(
+			'role'     => 'author',
+			'orderby'  => 'meta_value_num',
+			'meta_key' => 'menu_order',
+			'order'    => 'ASC',
+			'number'   => $num_of_authors
+		);
 
-		if(isset($display_args['type']) && $display_args['type'] == 'israel-cooks'){
-            $args = array(
-                'meta_query' => array(
-                    'relation' => 'AND',
-                    array(
-                        'role'     => 'author'
-                    ),
-                    array(
-                        'key'     => 'type_of_writer',
-                        'value'   => 'israel-cooks',
-                        'compare' => '='
-                    )
-                ),
-                'orderby'  => 'meta_value_num',
-                'meta_key' => 'menu_order',
-                'order'    => 'ASC',
-                'number'   => $num_of_authors
-            );
-        }
-		else{
-            $args = array(
-                'meta_query' => array(
-                    'relation' => 'AND',
-                    array(
-                        'role'     => 'author'
-                    ),
-                    array(
-                        'key'     => 'type_of_writer',
-                        'value'   => 'israel-cooks',
-                        'compare' => '!='
-                    )
-                ),
-                'orderby'  => 'meta_value_num',
-                'meta_key' => 'menu_order',
-                'order'    => 'ASC',
-                'number'   => $num_of_authors
-            );
-        }
+//		if(isset($display_args['type']) && $display_args['type'] == 'israel-cooks'){
+//            $args = array(
+//                'meta_query' => array(
+//                    'relation' => 'AND',
+//                    array(
+//                        'role'     => 'author'
+//                    ),
+//                    array(
+//                        'key'     => 'type_of_writer',
+//                        'value'   => 'israel-cooks',
+//                        'compare' => '='
+//                    )
+//                ),
+//                'orderby'  => 'meta_value_num',
+//                'meta_key' => 'menu_order',
+//                'order'    => 'ASC',
+//                'number'   => $num_of_authors
+//            );
+//        }
+//		else{
+//            $args = array(
+//                'meta_query' => array(
+//                    'relation' => 'AND',
+//                    array(
+//                        'role'     => 'author'
+//                    ),
+//                    array(
+//                        'key'     => 'type_of_writer',
+//                        'value'   => 'israel-cooks',
+//                        'compare' => '!='
+//                    )
+//                ),
+//                'orderby'  => 'meta_value_num',
+//                'meta_key' => 'menu_order',
+//                'order'    => 'ASC',
+//                'number'   => $num_of_authors
+//            );
+//        }
 
 		$authors      = get_users( $args );
 		$query_count  = sizeof( $authors );
@@ -155,18 +155,20 @@ class FoodyTeam {
 
 		$data  = $this->list_authors( $disply_args );
 
-		if($disply_args['type'] == 'team') {
-		    $page_link = get_permalink( get_page_by_path( 'הנבחרת' ) );
-		    $page_title = 'הנבחרת של Foody';
-        }
-		else{
-            $page_link = get_permalink( get_page_by_path( 'בשלני ישראל' ) );
-            $page_title = 'בשלני ישראל של Foody';
-        }
-
-		$title = '<h1 class="title team-title"><a href="' . $page_link . '" >';
-		$title .= $page_title;
-		$title .= '</a></h1>';
+//		if($disply_args['type'] == 'team') {
+//		    $page_link = get_permalink( get_page_by_path( 'הנבחרת' ) );
+//		    $page_title = 'הנבחרת של Foody';
+//        }
+//		else{
+//            $page_link = get_permalink( get_page_by_path( 'בשלני ישראל' ) );
+//            $page_title = 'בשלני ישראל של Foody';
+//        }
+//
+//		$title = '<h1 class="title team-title"><a href="' . $page_link . '" >';
+//		$title .= $page_title;
+        $title = '<h1 class="title team-title"><a href="' . get_permalink( get_page_by_path( 'הנבחרת' ) ) . '" >';
+        $title .= 'הנבחרת של Foody';
+        $title .= '</a></h1>';
 
 		if ( ! $disply_args['show_title'] ) {
 			$title = '';
