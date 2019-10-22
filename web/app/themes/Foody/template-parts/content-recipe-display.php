@@ -35,7 +35,7 @@ $recipe = $template_args['recipe'];
         "name": "<?php echo addslashes( $recipe->getAuthorName() ) ?>"
       },
       "datePublished": "<?php echo get_the_date( 'Y-m-d' ) ?>",
-      "description": "<?php echo addslashes( $recipe->getDescription() ) ?>",
+      "description": "<?php echo  $recipe->getDescription() ?>",
       "cookTime": "<?php echo $recipe->time_to_iso8601_duration( 'preparation_time' ) ?>",
       "totalTime": "<?php echo $recipe->time_to_iso8601_duration( 'total_time' ) ?>",
       "keywords": "<?php echo implode( ',',$recipe->get_tags_names() ) ?>",
