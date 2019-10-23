@@ -6,6 +6,7 @@
 
     .wp-caption {
       text-align: center;
+
       &:not(.alignleft) {
         &:not(.alignright) {
           width: 100%;
@@ -32,6 +33,16 @@
   .footab-container {
     padding: 0 15px;
   }
+
+  .recipe-shortcode-container {
+    .details-container {
+      div:not(.details) {
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 
 @include breakpoint(mobileonly) {
@@ -47,15 +58,18 @@
             width: 100%;
           }
         }
+
         &.aligncenter {
           margin-left: auto;
           margin-right: auto;
         }
+
         &.alignnone {
           width: 100vw;
         }
       }
     }
+
     .comments {
       max-width: 95%;
       margin: 0 auto;
