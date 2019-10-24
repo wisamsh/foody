@@ -57,6 +57,7 @@
 
       &.btn-facebook {
         background-color: #3a539f;
+        margin-right: 20px;
         .facebook-icon:after {
           background: url("../images/icons/facebook.svg") no-repeat;
           content: '';
@@ -295,6 +296,7 @@
       button {
 
         &.btn-facebook {
+          margin: 0;
         }
 
         &.btn-google {
