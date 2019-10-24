@@ -66,9 +66,18 @@
       }
 
       &.btn-google {
-        background-color: #d35647;
-        .google-icon:after {
-          background: url("../images/icons/google.svg") no-repeat;
+        text-transform: none;
+        border-radius: 2px;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+        background-color: #ffffff;
+        color: #5c5a5a;
+        font-family: Roboto;
+        font-weight: 500;
+        .google-icon:before {
+          content: '';
+          background: url("../images/icons/Google-icon.svg") no-repeat;
+          width: 24px;
+          height: 24px;
         }
       }
     }
