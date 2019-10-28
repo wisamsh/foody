@@ -429,6 +429,12 @@ $content-width: 95%;
           padding-left: 0;
           align-self: center;
 
+          .filter-option{
+            padding-right: 0;
+            font-size: 18px;
+            padding-left: 4px;
+          }
+
           .foody-select {
 
             button {

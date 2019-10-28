@@ -64,9 +64,14 @@ $select_args = [
 		'original' => true
 	]
 ];
-
-foody_get_template_part( get_template_directory() . '/template-parts/common/foody-select.php', $select_args )
-
+if ( empty( $conversions)){
+	?>
+	<div class="filter-option" > <?php echo $pan->name; ?> </div>
+<?php
+}
+else {
+	foody_get_template_part(get_template_directory() . '/template-parts/common/foody-select.php', $select_args);
+}
 
 ?>
 
