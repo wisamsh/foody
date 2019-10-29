@@ -38,13 +38,14 @@ echo do_shortcode( '[wordpress_social_login]' );
         <div class="row">
 
             <div class="row col-12 justify-content-center gutter-0 buttons">
-<!---->
-<!--                <button class="btn btn-google col-12 col-sm-5" aria-label="google">-->
-<!--                    <span>-->
-<!--                        --><?php //echo __( 'להמשיך עם Google', 'foody' ) ?>
-<!--                    </span>-->
-<!--                    <i class="google-icon"></i>-->
-<!--                </button>-->
+                <?php if (get_option('foody_show_google_login')) { ?>
+                    <button class="btn btn-google col-12 col-sm-5" aria-label="google">
+                    <span>
+                        <?php echo __('להמשיך עם Google', 'foody') ?>
+                    </span>
+                        <i class="google-icon"></i>
+                    </button>
+                <?php } ?>
                 <button class="btn btn-facebook col-12 col-sm-5" aria-label="facebook">
                     <span>
                         <?php echo __( 'התחברו דרך פייסבוק', 'foody' ) ?>

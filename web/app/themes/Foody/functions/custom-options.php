@@ -20,6 +20,7 @@ register_setting( 'general', 'foody_show_google_adx' );
 register_setting( 'general', 'foody_google_adx_script' );
 register_setting( 'general', 'foody_show_newsletter_popup' );
 register_setting( 'general', 'foody_id_for_newsletter' );
+register_setting( 'general', 'foody_show_google_login' );
 register_setting( 'reading', 'foody_show_post_views' );
 register_setting( 'reading', 'foody_show_followers_count_views' );
 
@@ -175,6 +176,9 @@ function foody_custom_options() {
 	// Google tag manager id
 	add_settings_field( 'foody_google_tag_manager_id', __( 'מזהה Google Tag Manager', 'foody' ), 'foody_show_tag_manager_callback', 'general', 'foody_general_settings' );
 
+    // Show Google AdX feature
+    add_settings_field( 'foody_show_google_login', __( 'הצג רכיב הרשמה Google', 'foody' ), 'foody_show_google_login_callback', 'general', 'foody_general_settings' );
+
 	// Show Google AdX feature
 	add_settings_field( 'foody_show_google_adx', __( 'הצג רכיב Google AdX', 'foody' ), 'foody_show_google_adx_callback', 'general', 'foody_general_settings' );
 	add_settings_field( 'foody_google_adx_script', __( 'סקריפט רכיב Google AdX', 'foody' ), 'foody_google_adx_script_callback', 'general', 'foody_general_settings' );
@@ -192,6 +196,13 @@ function foody_custom_options() {
 }
 
 add_action( 'admin_init', 'foody_custom_options' );
+
+// Show foody_show_google_login field
+function foody_show_google_login_callback() {
+    $options = get_option( 'foody_show_google_login', false );
+    $checked = $options ? 'checked' : '';
+    echo '<input ' . $checked . ' type="checkbox" id="foody_show_google_login" name="foody_show_google_login">';
+}
 
 // Show foody_conversion_table_link_show field
 function foody_conversion_table_link_show_callback() {
