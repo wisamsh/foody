@@ -37,7 +37,7 @@ echo do_shortcode('[wordpress_social_login]');
         <div class="row">
 
             <div class="row col-12 justify-content-center gutter-0 buttons">
-                <?php if (get_option('foody_show_google_login')) { ?>
+                <?php if (get_option('foody_show_google_login') != "") { ?>
                     <button class="btn btn-google col-12 col-sm-5" aria-label="google">
                                 <span>
                                     <?php echo __('להמשיך עם Google', 'foody') ?>
