@@ -175,7 +175,12 @@ class Foody_WhiteLabelDuplicator {
 		// ID to post data so wp_insert_post handle this op
 		// as an update
 		if ( $exists ) {
-			return 0;
+		    if($post_in_blog->post_type == "foody_ingredient"){
+		        $post['ID'] = $post_in_blog->ID;
+            }
+		    else {
+                return 0;
+            }
 		}
 
 		if ( $duplicationArgsWithDefaults['with_media'] ) {
