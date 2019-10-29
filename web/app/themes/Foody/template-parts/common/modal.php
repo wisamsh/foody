@@ -44,7 +44,7 @@ $hide_buttons = isset($modal['hide_buttons']) && $modal['hide_buttons'];
                     <div class="popup-text">
                         <?php echo __('נרדמתם?');?>
                         <br/>
-                        <?php echo __('יש לנו משהו שיעיר אתכם! הרשמו לקבלת המתכונים החמים'); ?>
+                        <?php echo __('יש לנו משהו שיעיר אתכם! הירשמו לקבלת המתכונים החמים'); ?>
                     </div>
                     <div class="popup-image">
                         <img src="<?php echo $GLOBALS['images_dir'] . '_MG_1957-2.png' ?>" alt="">
