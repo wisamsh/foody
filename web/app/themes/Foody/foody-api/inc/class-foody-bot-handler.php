@@ -21,6 +21,8 @@ class Foody_BotHandler
 
     private $helperArr = [];
 
+    private $mainCategoriesList = ["בשר" => "בשר", "מתכוני עוף" => "מתכוני עוף", "דגים" => "דגים", "אורז" => "אורז", "פסטה" => "פסטה"];
+
     private $authorsPriority = ["מערכת Foody" => 1, "ישראל אהרוני" => 2, "קרין גורן" => 3, "משה שגב" => 4, "רחלי קרוט" => 5, "נטלי לוין" => 6, "עז תלם" => 7, "יונית צוקרמן" => 8, "אלון שבו" => 9, "אפרת ליכטנשטט" => 10, "אור בן אוליאל" => 11, "רותם ליברזון" => 12,
         "שרית נובק" => 13, "עדי קלינגהופר" => 14, "אולגה טוכשר" => 15, "תמרה אהרוני" => 16, "אושר אידלמן" => 17, "זהר לוסטיגר-בשן" => 18, "רות אופק" => 19, "אילן פנחס" => 20, "אינס ינאי" => 21, "שר פיטנס" => 22, "אודי ואושר" => 23, "עידית נרקיס כ\"ץ" => 24, "יהודית מורחיים" => 25,
         "בת חן דיאמנט" => 26, "סימה ביטון" => 27, "לידר שקד" => 28, "אבי לוי" => 29, "שי-לי ליפא" => 30, "מאיר אדוני" => 31, "הילה אלפרט" => 32, "איילת הירשמן" => 33, "מיקי שמו" => 34, "ירון קסטנבוים" => 35, "איילת לטוביץ" => 36, "גלי ברמן" => 37,
@@ -161,11 +163,17 @@ class Foody_BotHandler
         return $items;
     }
 
-    private function getPosts($params, $counter, $sortedArray = [])
+    private function getPosts($params, $counter, $sortedArray = [] , $recursiveArgs =[])
     {
-        $args = $this->parseQueryArgs($params);
+        if( $counter == 0 ) {
+            $args = $this->parseQueryArgs($params);
+        }
+        else{
+            $args = $recursiveArgs;
+        }
 
         $posts = [];
+
         if (!empty($args)) {
 
             $args['suppress_filters'] = false;
@@ -191,7 +199,7 @@ class Foody_BotHandler
                 $indexToRemove = array_search($toRemove, $params['ingredients']);
 
                 array_splice($params['ingredients'], $indexToRemove, 1);
-                $posts = $this->getPosts($params, ++$counter, $sortedArray);
+                $posts = $this->getPosts($params, ++$counter, $sortedArray, $args);
             }
         }
 
@@ -217,6 +225,11 @@ class Foody_BotHandler
         ];
 
         $params = wp_parse_args($params, $defaults);
+
+//        if (isset($this->mainCategoriesList[$params['ingredients'][0]])) {
+//            $category = array_shift($params['ingredients']);
+//            array_push($params['categories'], $category);
+//        }
 
         $args = null;
 
@@ -532,7 +545,7 @@ class Foody_BotHandler
             group by meta_value";
 
             $toPush = $wpdb->get_results($query);
-            if(is_array($toPush) && !empty($toPush)) {
+            if (is_array($toPush) && !empty($toPush)) {
                 $results[$ingredient] = $toPush[0]->count;
             }
         }
@@ -576,17 +589,18 @@ class Foody_BotHandler
         return ($aIngredientsCount < $bIngredientsCount) ? -1 : 1;
     }
 
-    private function getTimeAsMinutes($time,$unit){
+    private function getTimeAsMinutes($time, $unit)
+    {
 
         switch ($unit) {
             case 'minutes':
                 return $time;
                 break;
             case 'hours':
-                return $time*60;
+                return $time * 60;
                 break;
             case 'days':
-                return $time*60*24;
+                return $time * 60 * 24;
                 break;
             default:
                 return $time;
@@ -613,7 +627,6 @@ class Foody_BotHandler
         }
         return $result;
     }
-
 
 
     private function get_recipe_time($time_field, $local = true)
