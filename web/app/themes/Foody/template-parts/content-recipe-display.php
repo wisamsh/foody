@@ -148,6 +148,12 @@ $recipe = $template_args['recipe'];
 
 <?php endif; ?>
 
+<?php if (get_field('active_similar_content', $recipe->get_id()) != ""): ?>
+
+<section class="recipe_similar_content">
+    <?php $recipe->get_similar_content(); ?>
+</section>
+<?php endif;?>
 <section class="newsletter no-print">
 	<?php $recipe->newsletter(); ?>
 

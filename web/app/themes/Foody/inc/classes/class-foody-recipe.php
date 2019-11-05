@@ -899,4 +899,62 @@ class Foody_Recipe extends Foody_Post
         }
         return "";
     }
+
+    public function get_similar_content()
+    {
+        $similar_contents = get_field('similar_content', $this->get_id());
+        $not_in_random = [];
+        $counter = 0;
+        $args = ['title' => __('תוכן נוסף שעשוי לעניין'), 'items' => []];
+
+        foreach ($similar_contents as $content) {
+            if ($content['post'] != false) {
+                //array_push($posts_for_grid, Foody_Post::create($content['post']));
+                array_push($not_in_random, $content['post']->ID);
+                $current_post = Foody_Post::create($content['post']);
+            }
+            if (!empty($current_post)) {
+                $title = $current_post->getTitle();
+                $image = $current_post->getImage();
+                $link = $current_post->link;
+                $current_post = false;
+            }
+            else{
+                $title = get_cat_name($content['category']);
+                $image = $content['image']['url'];
+                $link = get_category_link($content['category']);
+            }
+            $args_to_push = [
+                'title' => $title,
+                'image' => $image,
+                'link' => $link
+            ];
+
+            array_push($args['items'],$args_to_push);
+            $counter++;
+        }
+
+        if ($counter < 4) {
+            $query_args = array(
+                'post_type' => 'foody_recipe',
+                'posts_per_page' => (4 - $counter),
+                'order' => 'ASC',
+                'orderby' => 'rand',
+                'post__not_in' => $not_in_random,
+            );
+
+            $the_query = new WP_Query($query_args);
+            foreach ($the_query->posts as $post){
+                $current_post = Foody_Post::create($post);
+                $args_to_push = [
+                    'title' => $current_post->getTitle(),
+                    'image' => $current_post->getImage(),
+                    'link' => $current_post->link
+                ];
+
+                array_push($args['items'],$args_to_push);
+            }
+        }
+        foody_get_template_part(get_template_directory() . '/template-parts/content-similar-content-listing.php', $args);
+    }
 }
