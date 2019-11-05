@@ -33,7 +33,7 @@ $max_mobile_items = 4;
 			?>
 
             <li class="<?php echo $item_class ?>">
-                <a href="<?php echo $item['link']; ?>">
+                <a href="<?php echo $item['link']; ?>" target="<?php echo $item['link']; ?>">
                     <div class="similar-content-item-listing">
                         <div class="image-container">
                             <picture>
