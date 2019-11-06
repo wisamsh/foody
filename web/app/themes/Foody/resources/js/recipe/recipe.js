@@ -125,6 +125,24 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
 
 }
 
+jQuery(document).ready(($) => {
+    if($('.post-ratings')[0].innerText != ""){
+        $('.rating-digits').remove();
+    }
+
+    $('.post-ratings img').on('keypress',function () {
+        if( $('.rating-digits').length) {
+            $('.rating-digits').remove();
+        }
+    });
+
+    $('.post-ratings img').on('click',function () {
+        if( $('.rating-digits').length) {
+            $('.rating-digits').remove();
+        }
+    });
+});
+
 /**
  * Handle events and fire analytics dataLayer.push
  * @param event

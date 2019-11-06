@@ -110,21 +110,29 @@ $content-width: 95%;
       margin-top: 10px;
       margin-bottom: 10px;
     }
+    .wrapper {
+      margin-right: 10px;
+      .ratings-wrapper {
+        display: inline-flex;
+        align-items: center;
+        margin: 0 10px;
+        font-family: $font__assistant;
 
-    .ratings-wrapper {
-      display: inline-flex;
-      align-items: center;
-      margin: 0 10px;
-      font-family: $font__assistant;
+        .rating-digits{
+          color: red;
+          font-weight: 700;
+        }
 
-      .post-ratings {
-        width: auto;
+        .post-ratings {
+          width: auto;
+          margin: 0 2px 4px 2px;
 
-        em {
-          vertical-align: middle;
+          em {
+            vertical-align: middle;
 
-          strong {
-            margin-left: 1px;
+            strong {
+              margin-left: 1px;
+            }
           }
         }
       }
@@ -1285,9 +1293,17 @@ $content-width: 95%;
         .ratings-wrapper {
           margin: 0;
           font-size: 18px;
+          display: flex;
+
+          .rating-digits{
+            color: red;
+            font-weight: 700;
+          }
+
 
           .post-ratings {
-
+            width: auto;
+            margin: -2px 2px 0px 2px;
             em {
               strong {
               }
