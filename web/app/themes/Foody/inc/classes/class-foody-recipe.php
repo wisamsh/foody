@@ -907,31 +907,32 @@ class Foody_Recipe extends Foody_Post
         $counter = 0;
         $args = ['title' => __('תוכן נוסף שעשוי לעניין'), 'items' => []];
 
-        foreach ($similar_contents as $content) {
-            if ($content['post'] != false) {
-                //array_push($posts_for_grid, Foody_Post::create($content['post']));
-                array_push($not_in_random, $content['post']->ID);
-                $current_post = Foody_Post::create($content['post']);
-            }
-            if (!empty($current_post)) {
-                $title = $current_post->getTitle();
-                $image = $current_post->getImage();
-                $link = $current_post->link;
-                $current_post = false;
-            }
-            else{
-                $title = get_cat_name($content['category']);
-                $image = $content['image']['url'];
-                $link = get_category_link($content['category']);
-            }
-            $args_to_push = [
-                'title' => $title,
-                'image' => $image,
-                'link' => $link
-            ];
+        if($similar_contents) {
+            foreach ($similar_contents as $content) {
+                if ($content['post'] != false) {
+                    //array_push($posts_for_grid, Foody_Post::create($content['post']));
+                    array_push($not_in_random, $content['post']->ID);
+                    $current_post = Foody_Post::create($content['post']);
+                }
+                if (!empty($current_post)) {
+                    $title = $current_post->getTitle();
+                    $image = $current_post->getImage();
+                    $link = $current_post->link;
+                    $current_post = false;
+                } else {
+                    $title = get_cat_name($content['category']);
+                    $image = $content['image']['url'];
+                    $link = get_category_link($content['category']);
+                }
+                $args_to_push = [
+                    'title' => $title,
+                    'image' => $image,
+                    'link' => $link
+                ];
 
-            array_push($args['items'],$args_to_push);
-            $counter++;
+                array_push($args['items'], $args_to_push);
+                $counter++;
+            }
         }
 
         if ($counter < 4) {
