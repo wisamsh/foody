@@ -21,6 +21,7 @@ register_setting( 'general', 'foody_google_adx_script' );
 register_setting( 'general', 'foody_show_newsletter_popup' );
 register_setting( 'general', 'foody_id_for_newsletter' );
 register_setting( 'general', 'foody_show_google_login' );
+register_setting( 'general', 'foody_title_for_extra_content' );
 register_setting( 'reading', 'foody_show_post_views' );
 register_setting( 'reading', 'foody_show_followers_count_views' );
 
@@ -176,7 +177,7 @@ function foody_custom_options() {
 	// Google tag manager id
 	add_settings_field( 'foody_google_tag_manager_id', __( 'מזהה Google Tag Manager', 'foody' ), 'foody_show_tag_manager_callback', 'general', 'foody_general_settings' );
 
-    // Show Google AdX feature
+    // Show Google login button
     add_settings_field( 'foody_show_google_login', __( 'הצג רכיב הרשמה Google', 'foody' ), 'foody_show_google_login_callback', 'general', 'foody_general_settings' );
 
 	// Show Google AdX feature
@@ -192,6 +193,10 @@ function foody_custom_options() {
 
 	// Toggle channel & authors followers visibility
 	add_settings_field( 'foody_show_followers_count_views', __( 'הצג כמות עוקבים', 'foody' ), 'foody_show_followers_count_callback', 'reading' );
+
+	//text for extra content
+    add_settings_field( 'foody_title_for_extra_content', __( 'כותרת לתוכן נוסף', 'foody' ), 'foody_title_for_extra_content_callback', 'general', 'foody_general_settings' );
+
 
 }
 
@@ -286,6 +291,11 @@ function foody_show_followers_count_callback() {
 	$checked = $options ? 'checked' : '';
 	echo '<input ' . $checked . ' type="checkbox" id="foody_show_followers_count_views" name="foody_show_followers_count_views">';
 	echo '<p class="description">הצג/הסר כמות עוקבים אחר ערוצים/מתחמי פידים/יוצרים</p>';
+}
+
+function foody_title_for_extra_content_callback(){
+    $options = get_option( 'foody_title_for_extra_content', false );
+    echo '<input value="' . $options . '"type="text" id="foody_title_for_extra_content" name="foody_title_for_extra_content">';
 }
 
 //add_filter('manage_edit-units_columns', 'add_units_columns');
