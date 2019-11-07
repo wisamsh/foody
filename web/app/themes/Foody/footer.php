@@ -144,7 +144,8 @@ if (get_option('foody_show_newsletter_popup')) {
         'btn_approve_classes' => 'hide',
         'btn_cancel_classes' => 'hide',
         'title' => '',
-        'hide_buttons' => true
+        'hide_buttons' => true,
+        'close_id' => 'close-newsletter-popup'
     ];
 
     foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', $login_popup_args);

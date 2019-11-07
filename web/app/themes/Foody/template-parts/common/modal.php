@@ -20,6 +20,7 @@ $btn_cancel_classes = foody_get_array_default($modal, 'btn_cancel_classes', 'btn
 $id = $modal['id'];
 
 $hide_buttons = isset($modal['hide_buttons']) && $modal['hide_buttons'];
+$close_id = isset($modal['close_id']) ? $modal['close_id'] : "";
 
 ?>
 
@@ -33,7 +34,7 @@ $hide_buttons = isset($modal['hide_buttons']) && $modal['hide_buttons'];
                 <h5 class="modal-title">
                     <?php echo $modal['title'] ?>
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button <?php if($close_id != ""){ ?> id="<?php echo $close_id;?>" <?php } ?> type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
