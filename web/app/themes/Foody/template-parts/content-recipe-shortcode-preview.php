@@ -15,8 +15,8 @@ if (!foody_is_registration_open()) {
 }
 ?>
 
-<div class="recipe-shortcode-container" >
-    <a href="<?php echo $foody_page->link ?>">
+<div class="recipe-shortcode-container" onclick="window.open('<?php echo $foody_page->link; ?>')">
+<!--    <a href="--><?php //echo $foody_page->link ?><!--">-->
         <div class="details-container">
 
             <div class="<?php echo $foody_page->has_video ? ' video-featured-content featured-content-container' : '' ?>">
@@ -94,5 +94,5 @@ if (!foody_is_registration_open()) {
             הצג מתכון
 
         </div>
-    </a>
+<!--    </a>-->
 </div>
