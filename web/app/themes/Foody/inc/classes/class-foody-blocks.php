@@ -96,8 +96,8 @@ class Foody_Blocks {
 
 			if ( ! empty( $posts ) && is_array( $posts ) ) {
 				$posts = array_map( 'Foody_Post::create', $posts );
-				if ( count( $posts ) > 4 ) {
-					$posts = array_slice( $posts, 0, 4 );
+				if ( count( $posts ) > $block['recipes_amount']) {
+					$posts = array_slice( $posts, 0, $block['recipes_amount'] );
 				}
 				$block_content = foody_get_template_part( get_template_directory() . '/template-parts/common/foody-grid.php', [
 					'id'     => uniqid(),
