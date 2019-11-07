@@ -912,7 +912,6 @@ class Foody_Recipe extends Foody_Post
         if($similar_contents) {
             foreach ($similar_contents as $content) {
                 if ($content['post'] != false) {
-                    //array_push($posts_for_grid, Foody_Post::create($content['post']));
                     array_push($not_in_random, $content['post']->ID);
                     $current_post = Foody_Post::create($content['post']);
                 }
@@ -922,9 +921,16 @@ class Foody_Recipe extends Foody_Post
                     $link = $current_post->link;
                     $current_post = false;
                 } else {
-                    $title = get_cat_name($content['category']);
-                    $image = $content['image']['url'];
-                    $link = get_category_link($content['category']);
+                    if ($content['category'] != false) {
+                        $title = get_cat_name($content['category']);
+                        $image = $content['image']['url'];
+                        $link = get_category_link($content['category']);
+                    }
+                    else{
+                        $title = $content['title'];
+                        $image = $content['image']['url'];
+                        $link = $content['manual'];
+                    }
                 }
                 $args_to_push = [
                     'title' => $title,
@@ -944,6 +950,14 @@ class Foody_Recipe extends Foody_Post
                 'order' => 'ASC',
                 'orderby' => 'rand',
                 'post__not_in' => $not_in_random,
+                'meta_query' => [
+                    [
+                        'key' => '_yoast_wpseo_primary_category',
+                        'compare' => 'IN',
+                        'value' => $this->get_primary_category(),
+                        'type' => 'NUMERIC'
+                    ]
+                ]
             );
 
             $the_query = new WP_Query($query_args);
