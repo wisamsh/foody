@@ -157,4 +157,16 @@ jQuery(document).ready(function ($) {
         }, 1000);
     });
 
+
+    if($('.phone-link').length){
+        if(window.innerWidth > 736){
+            $('.phone-link').each(function (index,value) {
+                let number = value.innerText;
+                let numberDiv = $('<p>'+number+'</p>');
+                numberDiv.insertAfter(value);
+                value.remove();
+            });
+        }
+    }
+
 });
