@@ -25,7 +25,11 @@ function foody_sidebars() {
 		array(
 			'id'   => 'foody-social',
 			'name' => 'פודי Social',
-		)
+		),
+        array(
+            'id'   => 'foody-social-mobile',
+            'name' => 'פודי Social mobile',
+        )
 	);
 
 	foreach ( $sidebars as $sidebar ) {
