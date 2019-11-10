@@ -5,21 +5,21 @@
 
 jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe')) {
-
+        let feedPublisher = "";
         // Add to recipes visited in session count
         set_recipe_order_location(foodyGlobals.ID);
 
         var publishers = ['אין'];
-        if(foodyGlobals['post']['publisher'] || $('.sponsors-container').length) {
+        if (foodyGlobals['post']['publisher'] || $('.sponsors-container').length) {
             publishers = [];
         }
-        if(foodyGlobals['post']['publisher']){
-            let publisher = foodyGlobals['post']['publisher'];
-            publishers.push(publisher);
+        if (foodyGlobals['post']['publisher']) {
+            feedPublisher = foodyGlobals['post']['publisher'];
+            //publishers.push(publisher);
         }
         if ($('.sponsors-container').length) {
             let sponsors = $('.sponsors-container');
-            for(let i=0;i < sponsors.length; i++){
+            for (let i = 0; i < sponsors.length; i++) {
                 let topOfHierarchy = sponsors[i].children[sponsors[i].children.length - 1];
                 publishers.push(topOfHierarchy.innerText);
             }
@@ -28,7 +28,7 @@ jQuery(document).ready(($) => {
          * Page Load
          */
         if (foodyGlobals['post']['categories']) {
-            categoriesHits(publishers);
+            categoriesHits(publishers, feedPublisher);
         }
         /**
          * Breadcrumbs click
@@ -336,12 +336,17 @@ function set_recipe_order_location(recipe_id) {
     sessionStorage.setItem('recipes_visited', JSON.stringify(recipes_visited));
 }
 
-function categoriesHits(publishers) {
+function categoriesHits(publishers, feedPublisher) {
     let primaryCategory = $('.breadcrumb > li').last()[0].innerText;
     eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), get_recipe_order_location(), primaryCategory);
     foodyGlobals['post']['categories'].forEach((category) => {
         if (category.name != primaryCategory) {
-            eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', publishers.join(', '), get_recipe_order_location(), category.name);
+            if (feedPublisher == "") {
+                eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', publishers.join(', '), get_recipe_order_location(), category.name);
+            }
+            else {
+                eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', feedPublisher, get_recipe_order_location(), category.name);
+            }
         }
     });
 }
