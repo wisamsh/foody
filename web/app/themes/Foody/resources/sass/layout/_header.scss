@@ -629,7 +629,11 @@ header {
       }
 
       .profile-picture-container {
-        margin-right: 20px;
+        margin: 0 0 8px 0;
+        width: 15%;
+        //display: flex !important;
+        flex-direction: column;
+        align-items: center;
 
         .avatar {
           clip-path: circle();
@@ -641,6 +645,15 @@ header {
             border: none;
             clip-path: unset;
           }
+        }
+
+        .user-name-header{
+          display: inline-block;
+          max-width: 105px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
       }
 
@@ -802,6 +815,12 @@ header {
         }
       }
     }
+    //
+    //.foody-navbar-container{
+    //  .profile-picture-container{
+    //    display: none !important;
+    //  }
+    //}
 
     #quadmenu {
       .quadmenu-navbar-collapse {
