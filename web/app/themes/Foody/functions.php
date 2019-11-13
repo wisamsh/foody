@@ -201,6 +201,11 @@ function foody_scripts() {
 			wp_enqueue_script( 'foody-script-course', $course_asset, false, false, true );
 		}
 
+        if ( is_page_template( 'page-templates/foody-course-efrat.php' ) ) {
+            $course_asset = foody_get_versioned_asset( 'course' );
+            wp_enqueue_script( 'foody-script-course', $course_asset, false, false, true );
+        }
+
 		if ( is_page_template( 'page-templates/items.php' ) ) {
 			$items_asset = foody_get_versioned_asset( 'items' );
 			wp_enqueue_script( 'foody-script-recipe', $items_asset, false, false, true );

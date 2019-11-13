@@ -40,6 +40,14 @@
       }
     }
 
+    .cover-image-html-area{
+      .hero-image{
+        height: 75vh;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
+
     .main-cover-image {
       margin: 10px 0;
 
@@ -121,6 +129,7 @@
       background-color: #ffffff;
       padding: 15px 20px;
       margin: $margin-boxes 0;
+      text-align: center;
 
       .course-is-for-title {
         text-align: center;
@@ -146,6 +155,19 @@
 
           .course-is-for-bullet {
           }
+        }
+      }
+
+      .course-is-for-registration-link{
+        a{
+          display: inline-block;
+          font-size: 28px;
+          font-weight: 700;
+          border-radius: 15px;
+          background-color: #ef4049;
+          padding: 0.5rem 3rem;
+          color: white;
+          margin-bottom: 5px;
         }
       }
 
