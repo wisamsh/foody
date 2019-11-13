@@ -11,6 +11,12 @@ jQuery(document).ready(function ($) {
 
     let timeIdle = 0;
 
+    let englishRgx = /^[a-zA-Z\- _]+$/;
+
+    if($('.user-name-header').length && englishRgx.test($('.user-name-header')[0].innerText)){
+        $('.user-name-header').attr('style', 'direction: ltr');
+    }
+
     navbar.on('show.bs.collapse', function (e) {
 
 
