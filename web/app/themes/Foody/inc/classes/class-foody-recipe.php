@@ -764,9 +764,9 @@ class Foody_Recipe extends Foody_Post
         if (function_exists('the_ratings') && !empty($post)) {
             ?>
             <section class="ratings-wrapper">
-                <span class="rating-digits" id="lowest-rating">1</span>
+<!--                <span class="rating-digits" id="lowest-rating">1</span>-->
                 <?php echo do_shortcode('[ratings]') ?>
-                <span class="rating-digits" id="highest-rating">5</span>
+<!--                <span class="rating-digits" id="highest-rating">5</span>-->
             </section>
             <?php
         }
