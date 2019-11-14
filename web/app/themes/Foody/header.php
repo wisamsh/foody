@@ -150,7 +150,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                             <?php echo $user->get_image() ?>
                         </a>
                         <div class="user-name-header title">
-                            <?php echo $user->user->first_name . " " . $user->user->last_name; ?>
+                            <?php echo __('שלום'). " " .  $user->user->first_name; ?>
                         </div>
                     </div>
 
