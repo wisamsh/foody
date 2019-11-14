@@ -456,3 +456,39 @@ function foody_remove_from_admin_bar( $wp_admin_bar ) {
 	}
 
 }
+
+add_filter( 'manage_foody_ingredient_posts_columns', 'set_custom_edit_foody_ingredient_columns' );
+function set_custom_edit_foody_ingredient_columns($columns) {
+    $columns['amount'] = __( 'כמות', 'your_text_domain' );
+
+    return $columns;
+}
+
+// Add the data to the custom columns for the book post type:
+add_action( 'manage_foody_ingredient_posts_custom_column' , 'custom_foody_ingredient_column', 10, 2 );
+function custom_foody_ingredient_column( $column, $post_id ) {
+    global $wpdb;
+    $ingredient = get_the_title($post_id);
+    switch ( $column ) {
+
+        case 'amount' :
+            $query = "SELECT count(meta_value) as count 
+            FROM {$wpdb->postmeta} where meta_key like  'ingredients_ingredients_groups_%_ingredients_%_ingredient'  
+            AND meta_value = (SELECT ID FROM {$wpdb->posts} where post_title = '$ingredient' and post_status = 'publish' AND post_type = 'foody_ingredient')
+            group by meta_value";
+
+            $results = $wpdb->get_results($query);
+//            if (is_array($toPush) && !empty($toPush)) {
+//                $results[$ingredient] = $toPush[0]->count;
+//            }
+        if(empty($results)){
+            $amount = 0;
+        }
+        else {
+            $amount = $results[0]->count;
+        }
+            echo $amount;
+            break;
+
+    }
+}
