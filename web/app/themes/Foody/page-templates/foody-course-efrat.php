@@ -30,17 +30,29 @@ if (!empty($link) && isset($link['url']) && !empty($link['url'])) {
         <div id="primary" class="content-area">
             <?php
             $html_area = $course->get_html_area();
-            if ($html_area == "") {
+            $html_area_mobile = $course->get_html_area_mobile();
+            if (($html_area == "" && !wp_is_mobile()) || ($html_area_mobile == "" && wp_is_mobile())) {
                 $image = $course->get_cover_image();
                 $mobile_image = $course->get_mobile_cover_image();
+                ?>
 
+                <div class="efrat-cover-image">
+                <?php
                 foody_get_template_part(get_template_directory() . '/template-parts/content-cover-image.php', array(
                     'image' => $image,
                     'mobile_image' => $mobile_image,
                     'link' => ''
                 ));
+                ?>
+                </div>
+                <?php
             } else {
-                echo $html_area;
+                if(wp_is_mobile()){
+                    echo $html_area_mobile;
+                }
+                else {
+                    echo $html_area;
+                }
             } ?>
             <?php if (!empty($course->get_main_image())) { ?>
                 <div class="main-cover-image">

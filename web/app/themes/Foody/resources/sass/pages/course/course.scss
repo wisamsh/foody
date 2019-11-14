@@ -32,6 +32,15 @@
       }
     }
 
+    .efrat-cover-image{
+      .cover-image {
+        img {
+          border-radius: 10px;
+          height: 77vh;
+        }
+      }
+    }
+
     .cover-video {
       margin: 10px 0;
 
@@ -40,9 +49,10 @@
       }
     }
 
-    .cover-image-html-area{
+    .cover-image-html-area,
+    .cover-image-html-area-mobile{
       .hero-image{
-        height: 75vh;
+        height: 77vh;
         background-size: cover;
         background-repeat: no-repeat;
       }
@@ -544,6 +554,18 @@
       .cover-image {
         padding: 0 1rem;
         margin-top: 1rem;
+      }
+
+      .efrat-cover-image{
+        height: 77vh;
+        .cover-image {
+          height: 77vh;
+          padding: 0;
+          margin: 0;
+          img {
+            height: 77vh;
+          }
+        }
       }
 
       .cover-video {

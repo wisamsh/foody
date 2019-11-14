@@ -32,6 +32,12 @@ class Foody_Course {
         return $html_area;
     }
 
+    public function get_html_area_mobile() {
+        $html_area = get_field( 'html_area_mobile' );
+
+        return $html_area;
+    }
+
 	public function get_main_image() {
 		$main_image = get_field( 'main_image' );
 
