@@ -32,7 +32,7 @@
       }
     }
 
-    .efrat-cover-image{
+    .efrat-cover-image {
       .cover-image {
         img {
           border-radius: 10px;
@@ -49,17 +49,17 @@
       }
     }
 
-    .cover-image-html-area{
-      .hero-image{
+    .cover-image-html-area {
+      .hero-image {
         height: 77vh;
         background-size: cover;
         background-repeat: no-repeat;
         display: flex;
 
-        .banner-text-container{
-          margin: auto 5% auto;
+        .banner-text-container {
+          margin: 2% 5% 0 0;
           width: 100%;
-          height: 63%;
+          height: 75%;
           opacity: 0.82;
           border-radius: 29.9px;
           border-style: solid;
@@ -74,7 +74,7 @@
           align-items: center;
         }
 
-        .banner-title{
+        .banner-title {
           font-size: 30px;
           font-weight: bold;
           font-stretch: normal;
@@ -86,7 +86,7 @@
           margin-top: 10%;
         }
 
-        .banner-first-paragraph{
+        .banner-first-paragraph {
           font-size: 23px;
           font-weight: 600;
           font-stretch: normal;
@@ -97,12 +97,12 @@
           color: #ed3d48;
           margin-top: 10%;
 
-          .prev-price{
+          .prev-price {
             text-decoration: line-through;
           }
         }
 
-        .banner-second-paragraph{
+        .banner-second-paragraph {
           font-size: 19px;
           font-stretch: normal;
           font-style: normal;
@@ -113,14 +113,14 @@
           margin-top: 10%;
         }
 
-        p{
+        p {
           margin-top: 9%;
           width: 100%;
           text-align: center;
           display: flex;
           flex-direction: column;
 
-          .syllabus{
+          .syllabus {
             border-radius: 4.7px;
             border-style: solid;
             border-width: 3.1px;
@@ -139,7 +139,7 @@
             width: 60%;
           }
 
-          .purchase{
+          .purchase {
             border-radius: 4.7px;
             border-radius: 4.7px;
             border-width: 3.1px;
@@ -270,8 +270,8 @@
         }
       }
 
-      .course-is-for-registration-link{
-        a{
+      .course-is-for-registration-link {
+        a {
           display: inline-block;
           font-size: 28px;
           font-weight: 700;
@@ -653,17 +653,175 @@
 
     #primary {
 
+      .course-html-area {
+        display: flex;
+        flex-direction: column;
+        height: 75vh;
+        margin-top: 3%;
+
+        > p{
+          display: none !important;
+        }
+
+        p {
+          margin: 0;
+        }
+
+        .cover-image-html-area-mobile {
+          height: 100%;
+
+          .hero-image {
+            background-image: url(http://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/2019/11/16143036/group-5-copy.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+          }
+        }
+
+        .text-html-area-mobile {
+
+          > p{
+            display: none;
+          }
+
+          text-align: center;
+          height: 100%;
+          display: flex;
+          width: 100%;
+
+          .banner-text-container {
+            padding: 5%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            .banner-title {
+              font-size: 1.5rem;
+              font-weight: bold;
+              line-height: 0.6;
+              letter-spacing: -0.1px;
+              color: #ed3d48;
+            }
+
+            .banner-first-paragraph {
+              font-size: 1rem;
+              font-stretch: normal;
+              font-style: normal;
+              line-height: 0.6;
+              letter-spacing: -0.04px;
+              color: #ed3d48;
+              padding-top: 6%;
+            }
+
+            .banner-second-paragraph {
+              font-size: 1rem;
+              font-stretch: normal;
+              font-style: normal;
+              letter-spacing: -0.04px;
+              color: #ed3d48;
+              padding-top: 6%;
+            }
+
+            p {
+              width: 100%;
+              text-align: center;
+              display: flex;
+              flex-direction: column;
+              margin-top: 3%;
+
+              .syllabus{
+                border-style: solid;
+                border-width: 1px;
+                border-image-source: linear-gradient(76deg, #ed3d48 20%, #f35644 80%);
+                border-image-slice: 1;
+                font-size: 16px;
+                font-weight: bold;
+                color: #ed3d48;
+                width: 50%;
+                margin: 0 auto;
+                padding: 2%;
+                font-size: 0.8rem;
+              }
+
+              br{
+                display: none;
+              }
+
+              .purchase{
+                border-radius: 2.5px;
+                background-image: linear-gradient(76deg, #ec3849 20%, #f35644 80%);
+                width: 50%;
+                margin: 3% auto 0 auto;
+                padding: 2%;
+                color: #ffffff;
+                font-weight: bold;
+                font-size: 0.8rem;
+              }
+            }
+          }
+        }
+
+        p {
+          margin-top: 9%;
+          width: 100%;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+
+          .syllabus {
+            border-radius: 4.7px;
+            border-style: solid;
+            border-width: 3.1px;
+            border-image-source: linear-gradient(74deg, #ed3d48 20%, #f35644 80%);
+            border-image-slice: 1;
+            font-size: 28.1px;
+            font-weight: bold;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: -0.11px;
+            text-align: center;
+            color: #ed3d48;
+            padding: 10px 0;
+            align-self: center;
+            width: 60%;
+          }
+
+          .purchase {
+            border-radius: 4.7px;
+            border-radius: 4.7px;
+            border-width: 3.1px;
+            font-size: 28.1px;
+            font-weight: bold;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: -0.11px;
+            text-align: center;
+            color: #ffffffff;
+            padding: 10px 0;
+            width: 60%;
+            align-self: center;
+            background-color: red;
+          }
+        }
+
+      }
+
       .cover-image {
         padding: 0 1rem;
         margin-top: 1rem;
       }
 
-      .efrat-cover-image{
+      .efrat-cover-image {
         height: 77vh;
+
         .cover-image {
           height: 77vh;
           padding: 0;
           margin: 0;
+
           img {
             height: 77vh;
           }
