@@ -138,7 +138,7 @@ if (!empty($link) && isset($link['url']) && !empty($link['url'])) {
                 </ul>
                 <span class="course-is-for-registration-link">
                     <?php
-                    $link = $course->get_how_it_works_registration_link();
+                    $link = $course->get_course_is_for_registration_link();
                     if (!empty($link) && isset($link['url']) && !empty($link['url'])) {
                         foody_get_template_part(get_template_directory() . '/template-parts/common/link.php', array('link' => $link));
                     }

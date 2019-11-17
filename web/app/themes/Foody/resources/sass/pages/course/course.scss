@@ -37,6 +37,8 @@
         img {
           border-radius: 10px;
           height: 77vh;
+          min-height: 600px;
+          max-height: unset;
         }
       }
     }
@@ -55,6 +57,7 @@
         background-size: cover;
         background-repeat: no-repeat;
         display: flex;
+        min-height: 600px;
 
         .banner-text-container {
           margin: 5% 5% 0 0;
@@ -774,6 +777,7 @@
 
           img {
             height: 77vh;
+            max-height: unset;
           }
         }
       }

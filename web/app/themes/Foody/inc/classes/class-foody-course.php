@@ -97,6 +97,12 @@ class Foody_Course {
 		return $course_is_for_image;
 	}
 
+    public function get_course_is_for_registration_link() {
+        $is_for_registration_link = get_field( 'is_for_registration_link' );
+
+        return $is_for_registration_link;
+    }
+
 	public function has_how_it_works() {
 		return (
 			! empty( $this->get_how_it_works_title() ) &&
