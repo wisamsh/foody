@@ -98,7 +98,7 @@ class Foody_Course {
 	}
 
     public function get_course_is_for_registration_link() {
-        $is_for_registration_link = get_field( 'is_for_registration_link' );
+        $is_for_registration_link = get_field( 'course_is_for_registration_link' );
 
         return $is_for_registration_link;
     }
