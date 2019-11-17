@@ -221,38 +221,38 @@ if (!empty($link) && isset($link['url']) && !empty($link['url'])) {
                 }
                 ?>
             </section>
+            <?php if ($course->get_course_plan_classes()) { ?>
+                <div class="course-plan">
 
-            <div class="course-plan">
+                    <div class="title course-plan-title">
+                        <?php echo $course->get_course_plan_title(); ?>
+                    </div>
+                    <div class="course-plan-container">
 
-                <div class="title course-plan-title">
-                    <?php echo $course->get_course_plan_title(); ?>
-                </div>
-                <div class="course-plan-container">
-
-                    <div class="course-plan-classes">
-                        <?php
-                        $course_plan_classes = $course->get_course_plan_classes();
-                        if (!empty($course_plan_classes)) {
-                            foreach ($course_plan_classes as $index => $class) {
-                                if (!empty($class) &&
-                                    (isset($class['class_name']) || isset($class['class_info'])) &&
-                                    (!empty($class['class_name']) || !empty($class['class_info']))
-                                ) {
-                                    echo '<div class="course-class-item">';
-                                    echo '<span class="course-class-number">' . ($index + 1) . '</span>';
-                                    echo '<span class="course-class-details">';
-                                    echo '<span class="course-class-name">' . $class['class_name'] . '</span>';
-                                    echo '<span class="course-class-info">' . $class['class_info'] . '</span>';
-                                    echo '</span>';
-                                    echo '</div>';
+                        <div class="course-plan-classes">
+                            <?php
+                            $course_plan_classes = $course->get_course_plan_classes();
+                            if (!empty($course_plan_classes)) {
+                                foreach ($course_plan_classes as $index => $class) {
+                                    if (!empty($class) &&
+                                        (isset($class['class_name']) || isset($class['class_info'])) &&
+                                        (!empty($class['class_name']) || !empty($class['class_info']))
+                                    ) {
+                                        echo '<div class="course-class-item">';
+                                        echo '<span class="course-class-number">' . ($index + 1) . '</span>';
+                                        echo '<span class="course-class-details">';
+                                        echo '<span class="course-class-name">' . $class['class_name'] . '</span>';
+                                        echo '<span class="course-class-info">' . $class['class_info'] . '</span>';
+                                        echo '</span>';
+                                        echo '</div>';
+                                    }
                                 }
                             }
-                        }
-                        ?>
+                            ?>
 
-                    </div>
+                        </div>
 
-                    <span class="classes-registration-link">
+                        <span class="classes-registration-link">
                     <?php
                     $link = $course->get_course_plan_registration_link();
                     if (!empty($link) && isset($link['url']) && !empty($link['url'])) {
@@ -260,9 +260,9 @@ if (!empty($link) && isset($link['url']) && !empty($link['url'])) {
                     }
                     ?>
                 </span>
+                    </div>
                 </div>
-            </div>
-
+            <?php } ?>
             <div class="course-promotions">
                 <?php
                 $promotion = $course->get_promotions();
