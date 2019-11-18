@@ -7,7 +7,7 @@ jQuery(document).ready(($) => {
 
     let secondsInPage = 0;
 
-    eventCallback('', analyticsCategory, 'טעינה', foodyGlobals.post.title,'','', foodyGlobals.post['hostName']);
+    eventCallback('', analyticsCategory, 'טעינה', foodyGlobals.post.title, '', '', foodyGlobals.post['hostName']);
 
     let registrationLinks = [
         {
@@ -20,7 +20,7 @@ jQuery(document).ready(($) => {
         },
         {
             selector: '.how-it-works-registration-link a',
-            label: 'איך זה עובד?'
+            label: 'איך תהפכו לצלמי אוכל'
         },
         {
             selector: '.course-plan-container .classes-registration-link a',
@@ -30,12 +30,28 @@ jQuery(document).ready(($) => {
             selector: '.legal-registration-link a',
             label: 'מידע ליגאלי'
         },
+        {
+            selector: '.about a',
+            label: 'עלות הקורס'
+        },
+        {
+            selector: '.course-is-for a',
+            label: 'מה מקבלים'
+        },
     ];
 
     registrationLinks.forEach((link) => {
         $(link.selector).on('click', () => {
             eventCallback('', analyticsCategory, 'לחיצה להרשמה', foodyGlobals.post.title, 'מיקום', link.label, foodyGlobals.post['hostName']);
         });
+    });
+
+    $('.banner-text-container > p > .syllabus').on('click', () => {
+        eventCallback('', analyticsCategory, 'הורדת סילבוס', foodyGlobals.post.title, 'מיקום', 'פופ אפ', foodyGlobals.post['hostName']);
+    });
+
+    $('.banner-text-container > p > .purchase').on('click', () => {
+        eventCallback('', analyticsCategory, 'לחיצה להרשמה', foodyGlobals.post.title, 'מיקום', 'פופ אפ', foodyGlobals.post['hostName']);
     });
 
     let shareMediums = [
@@ -48,7 +64,7 @@ jQuery(document).ready(($) => {
     shareMediums.forEach((medium) => {
         $(`.essb_link_${medium}`).on('click', {medium}, (e) => {
             let clickedMedium = e.data.medium;
-            eventCallback('', analyticsCategory, 'שיתוף', clickedMedium,'','',foodyGlobals.post['hostName']);
+            eventCallback('', analyticsCategory, 'שיתוף', clickedMedium, '', '', foodyGlobals.post['hostName']);
         });
     });
 
@@ -62,7 +78,7 @@ jQuery(document).ready(($) => {
     });
 
     let frame = $('.cover-video iframe');
-    if(!frame[0]['src'].includes('youtube')) {
+    if (!frame[0]['src'].includes('youtube')) {
         let player = new Vimeo.default(frame);
 
         let playerEvents = [
@@ -93,9 +109,9 @@ jQuery(document).ready(($) => {
                 // send event only if video time
                 if (event.event == 'timeupdate' && percent % 10 === 0 && !(sentEvents[event.event][String(percent)])) {
                     sentEvents[event.event][String(percent)] = true;
-                    eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent, foodyGlobals.post['hostName']);
+                    eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent+'%', foodyGlobals.post['hostName']);
                 } else if (event.event != 'timeupdate') {
-                    eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent, foodyGlobals.post['hostName']);
+                    eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent+'%', foodyGlobals.post['hostName']);
                 }
             });
         });
@@ -123,10 +139,9 @@ jQuery(document).ready(($) => {
 
     setInterval(function () {
         secondsInPage += timeInPageDelta;
-        if(secondsInPage == timeInPageDelta) {
+        if (secondsInPage == timeInPageDelta) {
             eventCallback('', analyticsCategory, 'טיימר', foodyGlobals.post.title, 'זמן', secondsInPage + 's', foodyGlobals.post['hostName']);
-        }
-        else {
+        } else {
             let timerString = toMinutes(secondsInPage);
             eventCallback('', analyticsCategory, 'טיימר', foodyGlobals.post.title, 'זמן', timerString, foodyGlobals.post['hostName']);
         }
@@ -135,11 +150,10 @@ jQuery(document).ready(($) => {
 });
 
 function toMinutes(secondsInPage) {
-    if(secondsInPage%60 == 0){
-        return secondsInPage/60 + 'm';
-    }
-    else{
-        return (secondsInPage/60) - 0.5 + 'm' + 30 + 's';
+    if (secondsInPage % 60 == 0) {
+        return secondsInPage / 60 + 'm';
+    } else {
+        return (secondsInPage / 60) - 0.5 + 'm' + 30 + 's';
     }
 }
 
@@ -153,7 +167,7 @@ function toMinutes(secondsInPage) {
  * @param cdDesc
  * @param cdValue
  */
-function eventCallback(event, category, action, label, cdDesc, cdValue, hostName ='') {
+function eventCallback(event, category, action, label, cdDesc, cdValue, hostName = '') {
 
     /**
      * Logged in user ID

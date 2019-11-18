@@ -204,7 +204,7 @@ jQuery(document).ready(($) => {
                 toLog = true;
             }
             if (toLog) {
-                eventCallback(event, 'מתכון', 'גלילה', scrollPercentRounded + '%', '', '', get_recipe_order_location());
+                eventCallback(e, 'מתכון', 'גלילה', scrollPercentRounded + '%', '', '', get_recipe_order_location());
 
             }
         });
