@@ -44,8 +44,8 @@ class Foody_BotHandler
     {
         $posts = $this->getPosts($params, 0);
 
-        if (count($posts) > 7) {
-            array_splice($posts, 7);
+        if (count($posts) > 4) {
+            array_splice($posts, 4);
         }
 
         return $this->extractAttributesFromRecipes($posts, $params);
@@ -69,8 +69,8 @@ class Foody_BotHandler
 
         $posts = $this->sortResults($posts);
 
-        if (count($posts) > 7) {
-            array_splice($posts, 7);
+        if (count($posts) > 4) {
+            array_splice($posts, 4);
         }
 
         return $posts;
