@@ -47,11 +47,11 @@ jQuery(document).ready(($) => {
     });
 
     $('.banner-text-container > p > .syllabus').on('click', () => {
-        eventCallback('', analyticsCategory, 'הורדת סילבוס', foodyGlobals.post.title, 'מיקום', 'פופ אפ', foodyGlobals.post['hostName']);
+        eventCallback('', analyticsCategory, 'הורדת סילבוס', foodyGlobals.post.title, 'מיקום', 'קאבר עמוד', foodyGlobals.post['hostName']);
     });
 
     $('.banner-text-container > p > .purchase').on('click', () => {
-        eventCallback('', analyticsCategory, 'לחיצה להרשמה', foodyGlobals.post.title, 'מיקום', 'פופ אפ', foodyGlobals.post['hostName']);
+        eventCallback('', analyticsCategory, 'לחיצה להרשמה', foodyGlobals.post.title, 'מיקום', 'קאבר עמוד', foodyGlobals.post['hostName']);
     });
 
     let shareMediums = [
