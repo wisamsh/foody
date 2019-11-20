@@ -540,14 +540,19 @@ class Foody_BotHandler
         $results = [];
         foreach ($ingredients as $ingredient) {
 
-            $query = "SELECT count(meta_value) as count 
-            FROM {$wpdb->postmeta} where meta_key like  'ingredients_ingredients_groups_%_ingredients_%_ingredient'  
-            AND meta_value = (SELECT ID FROM {$wpdb->posts} where post_title = '$ingredient' and post_status = 'publish' AND post_type = 'foody_ingredient')
-            group by meta_value";
+            $query = "SELECT count(post_id) as count FROM {$wpdb->postmeta} as postmeta 
+JOIN {$wpdb->posts} as posts
+where posts.ID = postmeta.post_id 
+	AND meta_key like 'ingredients_ingredients_groups_%_ingredients_%_ingredient'
+	AND meta_value = (SELECT ID FROM {$wpdb->posts} where post_title = '$ingredient' and post_status = 'publish' AND post_type = 'foody_ingredient')
+    AND post_status = 'publish'
+group by post_id ";
+
+
 
             $toPush = $wpdb->get_results($query);
             if (is_array($toPush) && !empty($toPush)) {
-                $results[$ingredient] = $toPush[0]->count;
+                $results[$ingredient] = count($toPush);
             }
         }
         asort($results);

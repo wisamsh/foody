@@ -94,6 +94,7 @@ require_once get_template_directory() . '/inc/classes/class-foody-feed-channel.p
 require_once get_template_directory() . '/inc/classes/class-foody-feed-filter.php';
 require_once get_template_directory() . '/inc/classes/common/class-foody-mailer.php';
 require_once get_template_directory() . '/inc/classes/class-foody-commercial-rule-mapping.php';
+require_once get_template_directory() . '/inc/foody-ingredients-wp-list-table.php';
 
 /*
  * Widgets
