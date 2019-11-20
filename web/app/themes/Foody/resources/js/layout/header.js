@@ -132,7 +132,7 @@ jQuery(document).ready(function ($) {
     if($('#newsletter-modal').length) {
         let interval =  setInterval(function () {
             timeIdle++;
-            if (timeIdle == 5) {
+            if (timeIdle == 10) {
                 showNewsletterModal();
             }
             if(sessionStorage.getItem('newsletter-popup-closed')){
