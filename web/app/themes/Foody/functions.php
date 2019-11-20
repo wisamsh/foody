@@ -475,7 +475,7 @@ function foody_remove_from_admin_bar($wp_admin_bar)
 add_filter('manage_foody_ingredient_posts_columns', 'set_custom_edit_foody_ingredient_columns');
 function set_custom_edit_foody_ingredient_columns($columns)
 {
-    $columns['amount'] = __('כמות', 'your_text_domain');
+    $columns['recipes'] = __('מתכונים', 'your_text_domain');
 
     return $columns;
 }
@@ -487,23 +487,24 @@ function custom_foody_ingredient_column($column, $post_id)
     global $wpdb;
     switch ($column) {
 
-        case 'amount' :
-            $query = "SELECT count(post_id) FROM {$wpdb->postmeta} as postmeta 
-JOIN {$wpdb->posts} as posts
-where posts.ID = postmeta.post_id 
-	AND meta_key like 'ingredients_ingredients_groups_%_ingredients_%_ingredient'
-	AND meta_value = $post_id
-    AND post_status = 'publish'
-group by post_id ";
+        case 'recipes' :
+//            $query = "SELECT count(post_id) FROM {$wpdb->postmeta} as postmeta
+//JOIN {$wpdb->posts} as posts
+//where posts.ID = postmeta.post_id
+//	AND meta_key like 'ingredients_ingredients_groups_%_ingredients_%_ingredient'
+//	AND meta_value = $post_id
+//    AND post_status = 'publish'
+//group by post_id ";
 
 
-            $results = $wpdb->get_results($query);
-            if (empty($results)) {
-                $amount = 0;
-            } else {
-                $amount = count($results);
-            }
-            echo '<a href=http://foody-local.co.il/wp/wp-admin/edit.php?post_type=foody_ingredient&page=ingredients_recipes_list&ingredient_id=' . $post_id . '>' . $amount . '</a>';
+            $current_site_url = get_site(get_current_blog_id())->domain;
+//            $results = $wpdb->get_results($query);
+//            if (empty($results)) {
+//                $amount = 0;
+//            } else {
+//                $amount = count($results);
+//            }
+            echo '<a href=http://'.$current_site_url.'/wp/wp-admin/edit.php?post_type=foody_ingredient&page=ingredients_recipes_list&ingredient_id=' . $post_id . '>' . __('למתכונים') . '</a>';
             break;
 
     }
