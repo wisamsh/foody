@@ -138,7 +138,7 @@ if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || f
 
 <?php
 if (get_option('foody_show_newsletter_popup')) {
-    $login_popup_args = [
+    $newsletter_popup_args = [
         'id' => 'newsletter-modal',
         'body' => do_shortcode('[foody-newsletter]'),
         'btn_approve_classes' => 'hide',
@@ -148,7 +148,7 @@ if (get_option('foody_show_newsletter_popup')) {
         'close_id' => 'close-newsletter-popup'
     ];
 
-    foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', $login_popup_args);
+    foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', $newsletter_popup_args);
 }
 ?>
 
