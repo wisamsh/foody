@@ -57,7 +57,49 @@ jQuery(document).ready(($) => {
     registerBtnOnPopup.on('click', function (event) {
         eventCallback(event, 'רישום לאתר', 'לחיצה על קישור לקוח חדש? הירשם', 'אתר', '', '');
     });
+
+    /**
+     * searching without autocomplete
+     */
+    $('.search-bar > .icon > img').on('click', function () {
+       let searchValue = $('.foody-input')[0].value;
+        set_search_order(searchValue);
+        eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order(searchValue));
+    });
+
+    /**
+     * searching with autocomplete
+     */
+    // $('.search-bar > .icon > img').on('click', function () {
+    //     let searchValue = $('.foody-input')[0].value;
+    //     set_search_order(searchValue);
+    //     eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order(searchValue));
+    // });
 });
+
+function set_search_order(key) {
+    let searches_comitted = JSON.parse(sessionStorage.getItem('searches_comitted'));
+
+    if (!searches_comitted) {
+        searches_comitted = [];
+    }
+
+    if (!searches_comitted.includes(key)) {
+        searches_comitted.push(key);
+    }
+
+    sessionStorage.setItem('searches_comitted', JSON.stringify(searches_comitted));
+}
+
+function get_search_order(key) {
+    let searches_comitted = JSON.parse(sessionStorage.getItem('searches_comitted'));
+
+    if (!searches_comitted) {
+        return 0;
+    }
+
+    return jQuery.inArray(key, searches_comitted) +1;
+}
 
 /**
  * Handle events and fire analytics dataLayer.push

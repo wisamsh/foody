@@ -26,57 +26,57 @@ jQuery(document).ready(($) => {
         /** redirect to recipe through image **/
         $('#category-feed').on('click', '.image-container.main-image-container img', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
-            let $order_in_Grid = dataset.dataset.order;
+            let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'עמוד קטגוריה', 'בחירת מתכון', foodyGlobals['title'], ' מיקום', $order_in_Grid, '');
+            eventCallback('', 'עמוד קטגוריה', 'בחירת מתכון', foodyGlobals['title'], ' מיקום', order_in_Grid, '');
         });
 
         /** redirect to recipe through title **/
         $('#category-feed').on('click', '.grid-item-title a', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
-            let $order_in_Grid = dataset.dataset.order;
+            let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'עמוד קטגוריה', 'בחירת מתכון', foodyGlobals['title'], ' מיקום', $order_in_Grid, '');
+            eventCallback('', 'עמוד קטגוריה', 'בחירת מתכון', foodyGlobals['title'], ' מיקום', order_in_Grid, '');
         });
 
         /** redirect to recipe through video duration **/
         $('#category-feed').on('click', '.duration', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
-            let $order_in_Grid = dataset.dataset.order;
+            let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'עמוד קטגוריה', 'בחירת מתכון', foodyGlobals['title'], ' מיקום', $order_in_Grid, '');
+            eventCallback('', 'עמוד קטגוריה', 'בחירת מתכון', foodyGlobals['title'], ' מיקום', order_in_Grid, '');
         });
 
         /** add recipe to favorites **/
         $('#category-feed').on('click', '.favorite-container .icon-heart', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
-            let $order_in_Grid = dataset.dataset.order;
+            let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'עמוד קטגוריה', 'הוספה למועדפים', foodyGlobals['title'], ' מיקום', $order_in_Grid, '');
+            eventCallback('', 'עמוד קטגוריה', 'הוספה למועדפים', foodyGlobals['title'], ' מיקום', order_in_Grid, '');
         });
 
         /** remove recipe from favorites **/
         $('#category-feed').on('click', '.favorite-container .icon-favorite-pressed', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
-            let $order_in_Grid = dataset.dataset.order;
+            let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'עמוד קטגוריה', 'הסרה ממועדפים', foodyGlobals['title'], ' מיקום', $order_in_Grid, '');
+            eventCallback('', 'עמוד קטגוריה', 'הסרה ממועדפים', foodyGlobals['title'], ' מיקום', order_in_Grid, '');
         });
 
         /** redirect to author through name **/
         $('#category-feed').on('click', '.image-container > ul > li:first-child', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
-            let $order_in_Grid = dataset.dataset.order;
+            let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'עמוד קטגוריה', 'בחירה בשף', foodyGlobals['title'], ' מיקום', $order_in_Grid, '');
+            eventCallback('', 'עמוד קטגוריה', 'בחירה בשף', foodyGlobals['title'], ' מיקום', order_in_Grid, '');
         });
 
         /** redirect to author through image **/
         $('#category-feed').on('click', '.image-container > a > img', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
-            let $order_in_Grid = dataset.dataset.order;
+            let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'עמוד קטגוריה', 'בחירה בשף', foodyGlobals['title'], ' מיקום', $order_in_Grid, '');
+            eventCallback('', 'עמוד קטגוריה', 'בחירה בשף', foodyGlobals['title'], ' מיקום', order_in_Grid, '');
         });
 
         /** add/remove filters **/
