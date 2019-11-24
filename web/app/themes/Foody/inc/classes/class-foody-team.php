@@ -43,11 +43,9 @@ class FoodyTeam {
 
 		if(isset($display_args['type']) && $display_args['type'] == 'israel-cooks'){
             $args = array(
+                'role'     => 'author',
                 'meta_query' => array(
                     'relation' => 'AND',
-                    array(
-                        'role'     => 'author'
-                    ),
                     array(
                         'key'     => 'type_of_writer',
                         'value'   => 'israel-cooks',
@@ -62,11 +60,12 @@ class FoodyTeam {
         }
 		else{
             $args = array(
+                'role'     => 'author',
                 'meta_query' => array(
                     'relation' => 'AND',
-                    array(
-                        'role'     => 'author'
-                    ),
+//                    array(
+//                        'role'     => 'author'
+//                    ),
                     array(
                         'key'     => 'type_of_writer',
                         'value'   => 'israel-cooks',
