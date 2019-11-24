@@ -63,9 +63,6 @@ class FoodyTeam {
                 'role'     => 'author',
                 'meta_query' => array(
                     'relation' => 'AND',
-//                    array(
-//                        'role'     => 'author'
-//                    ),
                     array(
                         'key'     => 'type_of_writer',
                         'value'   => 'israel-cooks',

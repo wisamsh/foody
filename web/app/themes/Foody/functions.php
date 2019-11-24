@@ -191,7 +191,9 @@ function foody_scripts()
             has_shortcode($post_content, 'contact-form-7')
         ) {
             $general_asset = foody_get_versioned_asset('general');
+            $categories_asset = foody_get_versioned_asset('categories');
             wp_enqueue_script('foody-script-general', $general_asset, false, false, true);
+            wp_enqueue_script('foody-script-categories', $categories_asset, false, false, true);
         }
 
         if (is_page_template('page-templates/content-with-sidebar.php') && is_single()
