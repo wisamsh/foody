@@ -906,6 +906,7 @@ class Foody_Recipe extends Foody_Post
     {
         $similar_contents = get_field('similar_content', $this->get_id());
         $not_in_random = [];
+        array_push($not_in_random, $this->get_id());
         $counter = 0;
         $title_of_section = (get_option('foody_title_for_extra_content')) ? get_option('foody_title_for_extra_content') : __('תוכן נוסף');
         $args = ['title' => $title_of_section, 'items' => []];
