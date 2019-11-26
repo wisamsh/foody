@@ -63,22 +63,31 @@ jQuery(document).ready(($) => {
      */
     $('.search-bar > .icon > img').on('click', function () {
        let searchValue = $('.foody-input')[0].value;
-        set_search_order(searchValue);
-        eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order(searchValue));
+        set_search_order('searches_strings', searchValue);
+        eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue));
+    });
+
+    $('.foody-input').on('keyup', function (event) {
+       if(event.which == 13){
+           let searchValue = $('.foody-input')[0].value;
+           set_search_order('searches_strings', searchValue);
+           eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue));
+       }
     });
 
     /**
      * searching with autocomplete
      */
-    // $('.search-bar > .icon > img').on('click', function () {
-    //     let searchValue = $('.foody-input')[0].value;
-    //     set_search_order(searchValue);
-    //     eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order(searchValue));
-    // });
+    $('.foody-dataset-1').on('click', '.foody-search-suggestions a', function () {
+        let searchValue = $('.foody-input')[0].value;
+        let choiceSuggestion = this.innerText;
+        set_search_order('searches_strings', searchValue);
+        eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי',choiceSuggestion , 'מספר חיפוש', get_search_order('searches_strings', searchValue));
+    });
 });
 
-function set_search_order(key) {
-    let searches_comitted = JSON.parse(sessionStorage.getItem('searches_comitted'));
+function set_search_order(action, key) {
+    let searches_comitted = JSON.parse(sessionStorage.getItem(action));
 
     if (!searches_comitted) {
         searches_comitted = [];
@@ -88,11 +97,11 @@ function set_search_order(key) {
         searches_comitted.push(key);
     }
 
-    sessionStorage.setItem('searches_comitted', JSON.stringify(searches_comitted));
+    sessionStorage.setItem(action, JSON.stringify(searches_comitted));
 }
 
-function get_search_order(key) {
-    let searches_comitted = JSON.parse(sessionStorage.getItem('searches_comitted'));
+function get_search_order(action, key) {
+    let searches_comitted = JSON.parse(sessionStorage.getItem(action));
 
     if (!searches_comitted) {
         return 0;

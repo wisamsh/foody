@@ -90,6 +90,7 @@ module.exports = env => {
             register: ["./resources/js/register.entry", "./resources/js/page-load.entry"],
             tag: ["./resources/js/tag.entry", "./resources/js/page-load.entry"],
             team: ["./resources/js/team.entry", "./resources/js/page-load.entry"],
+            searchResults: ["./resources/js/search-results.entry", "./resources/js/page-load.entry"],
             style: ["./resources/sass/app.scss"],
             // homepage: ["./resources/sass/homepage_app.scss"],
         },

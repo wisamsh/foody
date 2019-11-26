@@ -16,7 +16,7 @@
 		printf( 'תוצאות חיפוש (%s)', $count );
 		?>
     </div>
-    <h2 class="title">
+    <h2 class="title search-results-title">
 		<?php echo get_search_query(); ?>
     </h2>
 </div>

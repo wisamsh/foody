@@ -194,6 +194,10 @@ function foody_scripts()
             $categories_asset = foody_get_versioned_asset('categories');
             wp_enqueue_script('foody-script-general', $general_asset, false, false, true);
             wp_enqueue_script('foody-script-categories', $categories_asset, false, false, true);
+            if(is_search()){
+                $search_results_asset = foody_get_versioned_asset('searchResults');
+                wp_enqueue_script('foody-script-search-results', $search_results_asset, false, false, true);
+            }
         }
 
         if (is_page_template('page-templates/content-with-sidebar.php') && is_single()
@@ -388,6 +392,7 @@ function add_async_attribute($tag, $handle)
         'foody-script-author',
         'foody-script-tag',
         'foody-script-team',
+        'foody-script-search-results',
         'foody-script-plalist',
         'foody-white-label',
         'sb_instagram_scripts',

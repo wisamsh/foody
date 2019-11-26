@@ -8,6 +8,7 @@ jQuery(document).ready(($) => {
         eventCallback('', 'עמוד קטגוריה', 'טעינה', '', '', '', '');
 
 
+        /** selecting a category from header **/
         if ($('.slick-track .slick-slide').length) {
             $('.slick-track .slick-slide a').on('click', function () {
                 let $categoryName = this.innerText;

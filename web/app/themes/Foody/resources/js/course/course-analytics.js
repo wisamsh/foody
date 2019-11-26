@@ -137,13 +137,16 @@ jQuery(document).ready(($) => {
         }
     });
 
-    setInterval(function () {
+    let interval = setInterval(function () {
         secondsInPage += timeInPageDelta;
         if (secondsInPage == timeInPageDelta) {
             eventCallback('', analyticsCategory, 'טיימר', foodyGlobals.post.title, 'זמן', secondsInPage + 's', foodyGlobals.post['hostName']);
         } else {
             let timerString = toMinutes(secondsInPage);
             eventCallback('', analyticsCategory, 'טיימר', foodyGlobals.post.title, 'זמן', timerString, foodyGlobals.post['hostName']);
+            if(timerString == '20m'){
+                clearInterval(interval);
+            }
         }
     }, timeInPageDelta * 1000);
 
