@@ -8,6 +8,32 @@ jQuery(document).ready(($) => {
         eventCallback(event, foodyGlobals['title'], 'לחיצה לרישום לדיוור', '', 'מיקום', 'פוטר');
     });
 
+    let key_for_image = ($('#newsletter-modal .modal-content > .modal-body .popup-image img').length) ? $('#newsletter-modal .modal-content > .modal-body .popup-image img')[0].alt : '';
+
+    /** newsletter popup - load popup **/
+    $('#newsletter-modal').on('show.bs.modal', function () {
+        eventCallback('', foodyGlobals['title'], 'טעינת פופאפ רישום לדיוור', '', 'קריאייטיב', key_for_image,'פופאפ - ניוזלטר מתוזמן')
+    });
+
+    /** closing the popup by pressing outside of it **/
+    if($('#newsletter-modal').hasClass('show')) {
+        $('body').click(function (event) {
+            let selector = $('#newsletter-modal,  #newsletter-modal *');
+            if (!$(event.target).is(selector)) {
+                eventCallback('', foodyGlobals['title'], 'סגירת פופ אפ ללא רישום', '', 'קריאייטיב', key_for_image, 'פופאפ - ניוזלטר מתוזמן')
+            }
+        });
+    }
+
+    /** closing the popup by pressing the close button (X) **/
+    $('#newsletter-modal .close').on('click',function () {
+        eventCallback('', foodyGlobals['title'], 'סגירת פופ אפ ללא רישום', '', 'קריאייטיב', key_for_image,'פופאפ - ניוזלטר מתוזמן')
+    });
+
+    /** press submit on the popup **/
+    $('#newsletter-modal .wpcf7-form .wpcf7-submit').on('click',function () {
+        eventCallback('', foodyGlobals['title'], 'לחיצה לאישור רישום לדיוור', '', 'קריאייטיב', key_for_image,'פופאפ - ניוזלטר מתוזמן')
+    });
 });
 
 
@@ -20,7 +46,7 @@ jQuery(document).ready(($) => {
  * @param cdDesc
  * @param cdValue
  */
-function eventCallback(event, category, action, label, cdDesc, cdValue) {
+function eventCallback(event, category, action, label, cdDesc, cdValue, _object ='') {
 
     /**
      * Logged in user ID
@@ -43,6 +69,7 @@ function eventCallback(event, category, action, label, cdDesc, cdValue) {
         '',
         cdDesc,
         cdValue,
-        ''
+        '',
+        _object
     );
 }

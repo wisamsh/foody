@@ -52,7 +52,7 @@ $close_id = isset($modal['close_id']) ? $modal['close_id'] : "";
                         </span>
                     </div>
                     <div class="popup-image">
-                        <img src="<?php echo $GLOBALS['images_dir'] . 'shnitzel.svg' ?>" alt="">
+                        <img src="<?php echo $GLOBALS['images_dir'] . 'shnitzel.svg' ?>" alt="shnitzel">
                     </div>
                 </div>
                 <?php } ?>
