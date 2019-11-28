@@ -99,9 +99,9 @@ $max_mobile_items = 4;
 
                         <?php $i++; ?>
                     <?php endforeach; ?>
+                    </ul>
                 <?php } ?>
             <?php } ?>
-            </ul>
         <?php } ?>
     <?php }
 } ?>
