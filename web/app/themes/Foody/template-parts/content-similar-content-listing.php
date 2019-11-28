@@ -63,42 +63,43 @@ $max_mobile_items = 4;
         <?php if (!empty($items)) { ?>
             <?php for ($index = 0; $index < 2; $index++) { ?>
 
+                <?php if (isset($items[$index])) { ?>
+                    <ul class="similar-content-items d-flex flex-row">
+                    <?php $i = 1; ?>
+                    <?php foreach ($items[$index] as $item): ?>
 
-                <ul class="similar-content-items d-flex flex-row">
-                <?php $i = 1; ?>
-                <?php foreach ($items[$index] as $item): ?>
+                        <?php
+                        $item_class = 'similar-content-item col';
+                        if ($i > $max_mobile_items) {
+                            $item_class = "$item_class d-none d-lg-block";
+                        }
 
-                    <?php
-                    $item_class = 'similar-content-item col';
-                    if ($i > $max_mobile_items) {
-                        $item_class = "$item_class d-none d-lg-block";
-                    }
+                        ?>
 
-                    ?>
+                        <li class="<?php echo $item_class ?>">
+                            <a href="<?php echo $item['link']; ?>" target="<?php echo $item['link']; ?>">
+                                <div class="similar-content-item-listing">
+                                    <div class="image-container">
+                                        <picture>
+                                            <source media="(min-width: 415px)" srcset="<?php echo $item['image']; ?>"
+                                            ">
+                                            <!--                                <source media="(max-width: 414px)"-->
+                                            <!--                                        srcset="-->
+                                            <?php //echo $item['mobile_image']; ?><!--"-->
+                                            <!--                                ">-->
+                                            <img src="<?php echo $item['image'] ?>" alt="<?php echo $item['title']; ?>">
+                                        </picture>
+                                    </div>
 
-                    <li class="<?php echo $item_class ?>">
-                        <a href="<?php echo $item['link']; ?>" target="<?php echo $item['link']; ?>">
-                            <div class="similar-content-item-listing">
-                                <div class="image-container">
-                                    <picture>
-                                        <source media="(min-width: 415px)" srcset="<?php echo $item['image']; ?>"
-                                        ">
-                                        <!--                                <source media="(max-width: 414px)"-->
-                                        <!--                                        srcset="-->
-                                        <?php //echo $item['mobile_image']; ?><!--"-->
-                                        <!--                                ">-->
-                                        <img src="<?php echo $item['image'] ?>" alt="<?php echo $item['title']; ?>">
-                                    </picture>
+                                    <div class="similar-content-listing-title"><?php echo $item['title']; ?></div>
                                 </div>
+                            </a>
 
-                                <div class="similar-content-listing-title"><?php echo $item['title']; ?></div>
-                            </div>
-                        </a>
+                        </li>
 
-                    </li>
-
-                    <?php $i++; ?>
-                <?php endforeach; ?>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+                <?php } ?>
             <?php } ?>
             </ul>
         <?php } ?>
