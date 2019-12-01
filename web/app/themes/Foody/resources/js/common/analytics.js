@@ -66,14 +66,14 @@ jQuery(document).ready(($) => {
         set_search_order('searches_strings', searchValue);
         eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue));
     });
-
-    $('.foody-input').on('keyup', function (event) {
-       if(event.which == 13){
-           let searchValue = $('.foody-input')[0].value;
-           set_search_order('searches_strings', searchValue);
-           eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue));
-       }
-    });
+    //
+    // $('.foody-input').on('keyup', function (event) {
+    //    if(event.which == 13){
+    //        let searchValue = $('.foody-input')[0].value;
+    //        set_search_order('searches_strings', searchValue);
+    //        eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue));
+    //    }
+    // });
 
     /**
      * searching with autocomplete
@@ -119,7 +119,7 @@ function get_search_order(action, key) {
  * @param cdDesc
  * @param cdValue
  */
-function eventCallback(event, category, action, label, cdDesc, cdValue) {
+function eventCallback(event, category, action, label, cdDesc, cdValue, object='') {
 
     /**
      * Logged in user ID
@@ -142,6 +142,7 @@ function eventCallback(event, category, action, label, cdDesc, cdValue) {
         '',
         cdDesc,
         cdValue,
-        ''
+        '',
+        object
     );
 }

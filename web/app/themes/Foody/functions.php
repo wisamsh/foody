@@ -523,7 +523,7 @@ function custom_foody_ingredient_column($column, $post_id)
 add_action( 'admin_head', 'foody_custom_wp_admin_style_head' );
 function foody_custom_wp_admin_style_head() { ?>
     <style>
-        #wpfooter { position: relative }
+        #wpfooter { position: static }
     </style>
 <?php }
 
