@@ -186,7 +186,7 @@ jQuery(document).ready(($) => {
             if (!analyticsLabel) {
                 analyticsLabel = this.innerText;
             }
-            eventCallback(event, 'מתכון', 'לחיצה לרכישה', analyticsLabel, 'מיקום', 'עליון', get_recipe_order_location());
+            eventCallback(event, 'מתכון', 'לחיצה לרכישה', analyticsLabel, 'מפרסם', feedPublisher, get_recipe_order_location(),);
         });
 
         /**

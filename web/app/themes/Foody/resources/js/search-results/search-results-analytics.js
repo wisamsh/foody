@@ -140,7 +140,7 @@ function get_search_order(action, key) {
  * @param _order_location
  * @param _amount
  */
-function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '',  _amount = '', _order_location = '') {
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '',  _amount = '', _order_location = '', _object) {
 
     /**
      * Recipe name
@@ -208,6 +208,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
         hasRichContent,
         cdDesc,
         cdValue,
-        ''
+        '',
+        _object
     );
 }

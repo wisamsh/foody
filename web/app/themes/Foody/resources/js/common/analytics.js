@@ -41,6 +41,26 @@ module.exports = (function () {
 })();
 
 jQuery(document).ready(($) => {
+    // const config = { attributes: true, childList: true, subtree: true };
+    // const callbackObserver = function(mutationsList, observer) {
+    //     // Use traditional 'for loops' for IE 11
+    //     for(let mutation of mutationsList) {
+    //         if (mutation.type === 'childList') {
+    //             if($('.foody-search-suggestions').length) {
+    //                 let searchValue = $('.foody-input')[0].value;
+    //                 let choiceSuggestion = this.innerText;
+    //                 set_search_order('searches_strings', searchValue);
+    //                 eventCallback('', 'רישום לאתר', 'בחירה בתוצאה מוצעת', choiceSuggestion, 'מספר חיפוש', get_search_order('searches_strings', searchValue));
+    //             }
+    //         }
+    //     }
+    // };
+    //
+    // const observer = new MutationObserver(callbackObserver);
+    //
+    // observer.observe($('.foody-dataset-1')[0], config);
+
+    let lastInputSearch = undefined;
 
     /**
      * Load pop-up
@@ -62,11 +82,11 @@ jQuery(document).ready(($) => {
      * searching without autocomplete
      */
     $('.search-bar > .icon > img').on('click', function () {
-       let searchValue = $('.foody-input')[0].value;
+        let searchValue = $('.foody-input')[0].value;
         set_search_order('searches_strings', searchValue);
-        eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue));
+        eventCallback('', 'חיפוש', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue), 'חיפוש חופשי');
     });
-    //
+
     // $('.foody-input').on('keyup', function (event) {
     //    if(event.which == 13){
     //        let searchValue = $('.foody-input')[0].value;
@@ -75,14 +95,39 @@ jQuery(document).ready(($) => {
     //    }
     // });
 
+    // $('.search.search-autocomplete.foody-input').on('keyup', function (e) {
+    //     if(e.which != 13) {
+    //         if ($('.foody-dropdown-menu.foody-with-1').css('display') == 'block') {
+    //             let searchValue = $('.foody-input')[0].value;
+    //             let amount = $('.foody-search-suggestions')[0].childNodes.length;
+    //             set_search_order('searches_strings', searchValue);
+    //             eventCallback('', 'חיפוש', 'בחירה בתוצאה מוצעת', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue), 'מנגנון תוצאות', amount);
+    //         }
+    //     }
+    // });
+
+    // $('.foody-dropdown-menu').on('DOMSubtreeModified', function (e) {
+    //     const dropdownOpen = $('.foody-dropdown-menu.foody-with-1').css('display') == 'block';
+    //     let searchValue = ($('.foody-input').length ) ? $('.foody-input')[0].value : '' ;
+    //
+    //     if (dropdownOpen && lastInputSearch != searchValue) {
+    //             let amount = $('.foody-search-suggestions')[0].childNodes.length;
+    //             set_search_order('searches_strings', searchValue);
+    //             lastInputSearch = searchValue;
+    //             eventCallback('', 'חיפוש', 'בחירה בתוצאה מוצעת', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue), 'מנגנון תוצאות', amount);
+    //         }
+    // });
+
+
     /**
      * searching with autocomplete
      */
     $('.foody-dataset-1').on('click', '.foody-search-suggestions a', function () {
         let searchValue = $('.foody-input')[0].value;
         let choiceSuggestion = this.innerText;
+        let amount = $('.foody-search-suggestions')[0].childNodes.length;
         set_search_order('searches_strings', searchValue);
-        eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי',choiceSuggestion , 'מספר חיפוש', get_search_order('searches_strings', searchValue));
+        eventCallback('', 'חיפוש', 'בחירה בתוצאה מוצעת', choiceSuggestion, 'מספר חיפוש', get_search_order('searches_strings', searchValue),'מנגנון תוצאות', amount);
     });
 });
 
@@ -107,7 +152,7 @@ function get_search_order(action, key) {
         return 0;
     }
 
-    return jQuery.inArray(key, searches_comitted) +1;
+    return jQuery.inArray(key, searches_comitted) + 1;
 }
 
 /**
@@ -119,7 +164,7 @@ function get_search_order(action, key) {
  * @param cdDesc
  * @param cdValue
  */
-function eventCallback(event, category, action, label, cdDesc, cdValue, object='') {
+function eventCallback(event, category, action, label, cdDesc, cdValue, object = '', _amount = '') {
 
     /**
      * Logged in user ID
@@ -138,7 +183,7 @@ function eventCallback(event, category, action, label, cdDesc, cdValue, object='
         '',
         '',
         '',
-        '',
+        _amount,
         '',
         cdDesc,
         cdValue,
