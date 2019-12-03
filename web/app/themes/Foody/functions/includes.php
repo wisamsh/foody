@@ -19,6 +19,7 @@
 
 require_once get_template_directory() . "/inc/globals.php";
 require_once get_template_directory() . "/inc/utils/utils.php";
+require_once get_template_directory() . "/inc/utils/foody-ingredients-export.php";
 
 
 /*

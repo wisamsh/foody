@@ -313,7 +313,8 @@
     "w3-total-cache": "0.9.7.4",
     "enrique-chavez/jwt-authentication-for-wp-rest-api": "^1.2",
     "humanmade/Restsplain": "^1.0",
-    "smash-baloon/instagram-feed": "1.12.2"
+    "smash-baloon/instagram-feed": "1.12.2",
+    "phpoffice/phpspreadsheet": "^1.10"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

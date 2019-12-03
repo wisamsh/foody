@@ -542,9 +542,22 @@ function ingredients_recipes_list_adjustments()
     $myListTable->prepare_items();
     ?>
     <form method="post">
-        <input type="hidden" name="page" value="ttest_list_table">
+        <input type="hidden" name="page" value="test_list_table">
     <?php
     //$myListTable->search_box( 'search', 'search_id' );
     $myListTable->display();
     echo '</form></div>';
 }
+
+function ingredients_delta_export_menu_options()
+{
+    add_submenu_page('edit.php?post_type=foody_ingredient', 'export new ingredients', __('ייצא מצרכים חדשים'), 'administrator', 'new_ingredients_export', 'ingredients_export_adjustments', 19);
+}
+add_action('admin_menu', 'ingredients_delta_export_menu_options');
+
+
+function ingredients_export_adjustments ()
+{
+    Foody_ingredients_exporter::generate_xlsx();
+}
+

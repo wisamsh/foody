@@ -28,8 +28,8 @@ class Ingredient_List_Table extends WP_List_Table
     {
         global $wpdb;
 
-        $query = "SELECT * FROM wp_postmeta as postmeta 
-JOIN wp_posts as posts
+        $query = "SELECT * FROM $wpdb->postmeta as postmeta 
+JOIN $wpdb->posts as posts
 where posts.ID = postmeta.post_id 
 	AND meta_key like 'ingredients_ingredients_groups_%_ingredients_%_ingredient'
 	AND meta_value = $this->ingredient_id
