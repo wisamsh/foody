@@ -134,7 +134,13 @@ class Foody_Header {
 			} else {
 				echo '<div class="foody-collaboration d-block d-lg-none">';
 			}
-			echo '<a href="' . $foody_url . '" target="_blank">';
+            $current_blog_id = get_current_blog_id();
+            if($current_blog_id == 2){
+                echo '<a href="' . $foody_url .'?utm_source=Carine%20Site&utm_medium=Logo&utm_campaign=Foody%20Logo'. '" target="_blank">';
+            }
+            else {
+                echo '<a href="' . $foody_url . '" target="_blank">';
+            }
 			echo '<span>' . $collab_text . '</span>';
 			echo '<img src="' . $GLOBALS['images_dir'] . 'foody-logo.svg" alt="Foody">';
 			echo '</a> ';
