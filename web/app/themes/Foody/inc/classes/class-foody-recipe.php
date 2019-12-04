@@ -970,8 +970,31 @@ class Foody_Recipe extends Foody_Post
                     'image' => $current_post->getImage(),
                     'link' => $current_post->link
                 ];
-
+                array_push($not_in_random, $post->ID);
                 array_push($args['items'],$args_to_push);
+            }
+            $post_added = count($the_query->posts);
+            if((4 - $counter) != $post_added){
+                $post_added += $counter;
+                $query_args = array(
+                    'post_type' => 'foody_recipe',
+                    'posts_per_page' => (4 - $post_added),
+                    'order' => 'ASC',
+                    'orderby' => 'rand',
+                    'post__not_in' => $not_in_random
+                );
+
+                $the_query = new WP_Query($query_args);
+                foreach ($the_query->posts as $post){
+                    $current_post = Foody_Post::create($post);
+                    $args_to_push = [
+                        'title' => $current_post->getTitle(),
+                        'image' => $current_post->getImage(),
+                        'link' => $current_post->link
+                    ];
+
+                    array_push($args['items'],$args_to_push);
+                }
             }
         }
         foody_get_template_part(get_template_directory() . '/template-parts/content-similar-content-listing.php', $args);
