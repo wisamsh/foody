@@ -21,6 +21,8 @@ class Foody_BotHandler
 
     private $helperArr = [];
 
+    private $remaining_ingredients = [];
+
     private $mainCategoriesList = ["בשר" => "בשר", "מתכוני עוף" => "מתכוני עוף", "דגים" => "דגים", "אורז" => "אורז", "פסטה" => "פסטה"];
 
     private $authorsPriority = ["מערכת Foody" => 1, "ישראל אהרוני" => 2, "קרין גורן" => 3, "משה שגב" => 4, "רחלי קרוט" => 5, "נטלי לוין" => 6, "עז תלם" => 7, "יונית צוקרמן" => 8, "אלון שבו" => 9, "אפרת ליכטנשטט" => 10, "אור בן אוליאל" => 11, "רותם ליברזון" => 12,
@@ -201,6 +203,9 @@ class Foody_BotHandler
 
                 array_splice($params['ingredients'], $indexToRemove, 1);
                 $posts = $this->getPosts($params, ++$counter, $sortedArray, $args);
+            }
+            else{
+                $this->remaining_ingredients = $params['ingredients'];
             }
         }
 
@@ -567,32 +572,77 @@ group by post_id ";
 
     private function sortByLevel($a, $b)
     {
-        $aIngredientsCount = count($a['ingredients']);
-        $bIngredientsCount = count($b['ingredients']);
+        //** sort by ingredients in titles **/
+        $aHasIngredientInTitle = $this->is_ingredient_in_title($a['title']);
+        $bHasIngredientInTitle = $this->is_ingredient_in_title($b['title']);
 
-        if ($aIngredientsCount === $bIngredientsCount) {
+        if($aHasIngredientInTitle == $bHasIngredientInTitle) {
 
-            $aNumber = $this->getLevelNumericRepresentation($a['difficulty_level']);
-            $bNumber = $this->getLevelNumericRepresentation($b['difficulty_level']);
+            //** sort by number of ingredients **/
+            $aIngredientsCount = count($a['ingredients']);
+            $bIngredientsCount = count($b['ingredients']);
 
-            if ($aNumber === $bNumber) {
-                $aTime = get_field('overview', $this->helperArr[$a['title']])['total_time'];
-                $aTime = $this->getTimeAsMinutes($aTime['time'], $aTime['time_unit']);
+            if ($aIngredientsCount === $bIngredientsCount) {
 
-                $bTime = get_field('overview', $this->helperArr[$b['title']])['total_time'];
-                $bTime = $this->getTimeAsMinutes($bTime['time'], $bTime['time_unit']);
-                if ($aTime === $bTime) {
-                    $aAuthor = $this->authorsPriority[$a['author']];
-                    $bAuthor = $this->authorsPriority[$b['author']];
+                //** sort by difficulty level **/
+                $aNumber = $this->getLevelNumericRepresentation($a['difficulty_level']);
+                $bNumber = $this->getLevelNumericRepresentation($b['difficulty_level']);
 
-                    if ($aAuthor === $bAuthor) return 0;
-                    return ($aAuthor < $bAuthor) ? -1 : 1;
+                if ($aNumber === $bNumber) {
+
+                    //** sort by time of preparation **/
+                    $aTime = get_field('overview', $this->helperArr[$a['title']])['total_time'];
+                    $aTime = $this->getTimeAsMinutes($aTime['time'], $aTime['time_unit']);
+
+                    $bTime = get_field('overview', $this->helperArr[$b['title']])['total_time'];
+                    $bTime = $this->getTimeAsMinutes($bTime['time'], $bTime['time_unit']);
+                    if ($aTime === $bTime) {
+
+                        //** sort by author priority **/
+                        $aAuthor = $this->authorsPriority[$a['author']];
+                        $bAuthor = $this->authorsPriority[$b['author']];
+
+                        if ($aAuthor === $bAuthor) return 0;
+                        return ($aAuthor < $bAuthor) ? -1 : 1;
+                    }
+                    return ($aTime < $bTime) ? -1 : 1;
                 }
-                return ($aTime < $bTime) ? -1 : 1;
+                return ($aNumber < $bNumber) ? -1 : 1;
             }
-            return ($aNumber < $bNumber) ? -1 : 1;
+            return ($aIngredientsCount < $bIngredientsCount) ? -1 : 1;
         }
-        return ($aIngredientsCount < $bIngredientsCount) ? -1 : 1;
+        if($aHasIngredientInTitle && !$bHasIngredientInTitle){
+            return -1;
+        }
+        else{
+            return 1;
+        }
+    }
+
+    private function is_ingredient_in_title($title){
+        global $wpdb;
+        foreach ($this->remaining_ingredients as $ingredient){
+            $query_for_plural_name = "SELECT * FROM {$wpdb->postmeta} as postmeta
+join {$wpdb->posts} as posts
+where postmeta.post_id = posts.ID
+and posts.post_title = '{$ingredient}'
+and posts.post_status = 'publish'
+and meta_key = 'plural_name';";
+
+            $arr = $wpdb->get_results($query_for_plural_name);
+            $arr = (isset($arr[0])) ? $arr[0] : [];
+            $has_plural_in_title = false;
+
+            if($arr->meta_value != ''){
+                $has_plural_in_title = strpos($title, $arr->meta_value) !== false;
+            }
+            $has_singular_in_title = strpos($title, $ingredient) !== false;
+
+            if($has_singular_in_title || $has_plural_in_title){
+                return true;
+            }
+        }
+        return false;
     }
 
     private function getTimeAsMinutes($time, $unit)
