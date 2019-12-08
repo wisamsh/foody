@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "60367fee97f1f882c69b2f236c7bff3f",
+    "content-hash": "0d356cf37b6f9faf5625c87bbe3299de",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -712,6 +712,15 @@
                 "psr-3"
             ],
             "time": "2018-11-05T09:00:11+00:00"
+        },
+        {
+            "name": "onesignal/onesignal",
+            "version": "1.17.9",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/onesignal-free-web-push-notifications.1.17.9.zip"
+            },
+            "type": "wordpress-plugin"
         },
         {
             "name": "oscarotero/env",
