@@ -34,7 +34,7 @@ $servers = [
     'mu-dev' => 'ubuntu@mu.foody-dev.moveodevelop.com',
     'medio-dev' => 'ubuntu@foody.moveodevelop.com',
     'prod1' => 'ubuntu@34.253.214.81',
-    'prod2' => 'ubuntu@34.245.51.22',
+    'prod2' => 'ubuntu@54.72.141.143',
     'prod3' => 'ubuntu@34.242.248.233'
 ];
 
