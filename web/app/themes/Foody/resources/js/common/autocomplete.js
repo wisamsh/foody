@@ -45,7 +45,7 @@ module.exports = function (selector, options) {
                         let link = '';
                         if (suggestion.name != null) {
                             let name = suggestion.name.replace(new RegExp('(' + currentQuery + ')', 'g'), '<span>$1</span>');
-                            link = '<a href="' + suggestion.link + '">' + name + ' </a>';
+                            link = '<a href="' + suggestion.link + '&auto=1' + '">' + name + ' </a>';
                         }
 
                         return link;

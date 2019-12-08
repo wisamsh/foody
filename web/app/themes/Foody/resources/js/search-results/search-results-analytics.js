@@ -7,18 +7,25 @@ jQuery(document).ready(($) => {
 
         let searchString = ($('.search-results-title').length) ? $('.search-results-title')[0].innerText : '';
         let searchResultsCount = ($('.search-results-count').length) ? $('.search-results-count')[0].innerText : '';
-        let separators = separators = ['\\\(', '\\\)']
+        let separators = separators = ['\\\(', '\\\)'];
+        let object = 'חיפוש חופשי';
         searchResultsCount = searchResultsCount.split(new RegExp(separators.join('|'), 'g'))[1];
+
+        var urlParams = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+
+        if((typeof urlParams[1] != 'undefined') && urlParams[1] == 'auto=1'){
+            object = 'מנגנון תוצאות'
+        }
 
         /** page load **/
         set_search_order('results-page-load', searchString);
-        eventCallback('', 'חיפוש', 'טעינת עמוד תוצאות', searchString, 'מספר חיפוש', get_search_order('results-page-load', searchString), searchResultsCount, get_search_order('results-page-load', searchString));
+        eventCallback('', 'חיפוש', 'טעינת עמוד תוצאות', searchString, 'מספר חיפוש', get_search_order('results-page-load', searchString), searchResultsCount, get_search_order('results-page-load', searchString), object);
 
         /** result sorting **/
         $('.grid-sort').on('click', 'span.text', function (event) {
             let $sorting_method = this.innerText;
             if ($sorting_method != 'סדר על פי') {
-                eventCallback('', 'חיפוש', 'מיון רשימה', searchString, ' מיון', $sorting_method, searchResultsCount, get_search_order('results-page-load', searchString));
+                eventCallback('', 'חיפוש', 'מיון רשימה', searchString, ' מיון', $sorting_method, searchResultsCount, get_search_order('results-page-load', searchString), object);
             }
         });
 
@@ -27,7 +34,7 @@ jQuery(document).ready(($) => {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'חיפוש', 'בחירת מתכון', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString));
+            eventCallback('', 'חיפוש', 'בחירת מתכון', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
         });
 
         /** redirect to recipe through title **/
@@ -35,7 +42,7 @@ jQuery(document).ready(($) => {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'חיפוש', 'בחירת מתכון', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString));
+            eventCallback('', 'חיפוש', 'בחירת מתכון', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
         });
 
         /** redirect to recipe through video duration **/
@@ -43,7 +50,7 @@ jQuery(document).ready(($) => {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'חיפוש', 'בחירת מתכון', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString));
+            eventCallback('', 'חיפוש', 'בחירת מתכון', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
         });
 
         /** add recipe to favorites **/
@@ -51,7 +58,7 @@ jQuery(document).ready(($) => {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'חיפוש', 'הוספה למועדפים', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString));
+            eventCallback('', 'חיפוש', 'הוספה למועדפים', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
         });
 
         /** remove recipe from favorites **/
@@ -59,7 +66,7 @@ jQuery(document).ready(($) => {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'חיפוש','הסרה ממועדפים', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString));
+            eventCallback('', 'חיפוש','הסרה ממועדפים', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
         });
 
         /** redirect to author through name **/
@@ -67,7 +74,7 @@ jQuery(document).ready(($) => {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'חיפוש','בחירה בשף', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString));
+            eventCallback('', 'חיפוש','בחירה בשף', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
         });
 
         /** redirect to author through image **/
@@ -75,21 +82,21 @@ jQuery(document).ready(($) => {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
 
-            eventCallback('', 'חיפוש','בחירה בשף', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString));
+            eventCallback('', 'חיפוש','בחירה בשף', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
         });
 
         /** add/remove filters **/
         $('.sidebar-section').on('click', '.md-checkbox', function () {
             if (this.children[0].checked) {
-                eventCallback('', 'חיפוש','הסרת סינון', searchString, ' סינון', this.innerText,  searchResultsCount, get_search_order('results-page-load', searchString));
+                eventCallback('', 'חיפוש','הסרת סינון', searchString, ' סינון', this.innerText,  searchResultsCount, get_search_order('results-page-load', searchString), object);
             } else {
-                eventCallback('', 'חיפוש','הוספת סינון', searchString, ' סינון', this.innerText,  searchResultsCount, get_search_order('results-page-load', searchString));
+                eventCallback('', 'חיפוש','הוספת סינון', searchString, ' סינון', this.innerText,  searchResultsCount, get_search_order('results-page-load', searchString), object);
 
             }
         });
 
         $('.foody-grid').on('click', '.show-more', function () {
-            eventCallback('', 'חיפוש', 'עוד מתכונים', searchString, 'מספר חיפוש', get_search_order('results-page-load', searchString), searchResultsCount, get_search_order('results-page-load', searchString));
+            eventCallback('', 'חיפוש', 'עוד מתכונים', searchString, 'מספר חיפוש', get_search_order('results-page-load', searchString), searchResultsCount, get_search_order('results-page-load', searchString), object);
         });
     }
 });

@@ -44,6 +44,9 @@ module.exports = (function () {
             case 'channel':
                 object = _object;
                 break;
+            case 'search':
+                object = _object;
+                break;
             case 'course':
                 if (_object == '') {
                     object = decodeURI(window.location.pathname.replace('/courses/', '').replace(/-/g, ' '));
