@@ -9,6 +9,22 @@
  * @package Foody
  */
 $footer = new Foody_Footer();
+$post = get_post();
+$feed_area_id = 0;
+$use_general_banner = true;
+
+if (isset($_GET) && !empty($_GET)) {
+    if (isset($_GET['referer']) && $_GET['referer'] != 0) {
+        if (!get_field('activate_banner', $post->ID)) {
+            $feed_area_id = $_GET['referer'];
+        }
+        else {
+            $feed_area_id = $post->ID;
+        }
+    }
+} elseif ($post->post_type == 'foody_feed_channel' ) {
+    $feed_area_id = $post->ID;
+}
 
 ?>
 
@@ -77,11 +93,50 @@ $footer = new Foody_Footer();
 
     </section>
     <?php
+    if ($feed_area_id != 0) {
+        if (get_field('activate_banner', $feed_area_id)) {
+            $use_general_banner = false;
+            $banners_list = get_field('banners_list', $feed_area_id);
+            $banner = $footer->get_relevant_banner($banners_list[0]['banner']);
 
-    if (get_theme_mod('show_in_all_the_site') ||
-        ((is_front_page() || is_page(get_page_by_title(__('המרת מידות ומשקלות')))) && get_theme_mod('show_in_main_pages')) ||
-        (is_single() && get_theme_mod('show_in_post_pages')) ||
-        ((!is_front_page() && !is_page(get_page_by_title(__('המרת מידות ומשקלות'))) && !is_single()) && get_theme_mod('show_in_all_other_pages'))) {
+            $link_page = get_page_by_title(__('Gift card'));
+            if ($banner['is_iframe']) {
+                $button_link = get_permalink($link_page->ID);
+            } else {
+                $button_link = $link_page->post_content;
+            }
+
+            if ($banner['enable_banner_without_text']) {
+                $banner_args = [
+                    'dest_id' => $link_page->ID,
+                    'page_id' => 'popup-banner',
+                    'desktop_img' => $banner['image_without_text']['url'],
+                    'mobile_img' => $banner['image_without_text_mobile']['url'],
+                    'banner_link' => $button_link,
+                    'button_text' => $banner['text_for_button'],
+                    'is_iframe' => $banner['is_iframe']
+                ];
+                foody_get_template_part(get_template_directory() . '/template-parts/common/popup-banner.php', $banner_args);
+            } elseif ($banner['enable_banner_with_text']) {
+                $banner_args = [
+                    'dest_id' => $link_page->ID,
+                    'page_id' => 'popup-banner',
+                    'desktop_img' => $banner['image_with_text']['url'],
+                    'mobile_img' => $banner['image_with_text_mobile']['url'],
+                    'banner_text' => $banner['text_for_banner'],
+                    'banner_link' => $button_link,
+                    'button_text' => $banner['text_for_button'],
+                    'is_iframe' => $banner['is_iframe']
+                ];
+                foody_get_template_part(get_template_directory() . '/template-parts/common/popup-banner.php', $banner_args);
+            }
+        }
+    }
+
+    if ($use_general_banner && (get_theme_mod('show_in_all_the_site') ||
+            ((is_front_page() || is_page(get_page_by_title(__('המרת מידות ומשקלות')))) && get_theme_mod('show_in_main_pages')) ||
+            (is_single() && get_theme_mod('show_in_post_pages')) ||
+            ((!is_front_page() && !is_page(get_page_by_title(__('המרת מידות ומשקלות'))) && !is_single()) && get_theme_mod('show_in_all_other_pages')))) {
 
 
         $link_page = get_page_by_title(__('Gift card'));
