@@ -22,7 +22,7 @@ if (isset($_GET) && !empty($_GET)) {
             $feed_area_id = $post->ID;
         }
     }
-} elseif ($post->post_type == 'foody_feed_channel' ) {
+} elseif ($post->post_type == 'foody_feed_channel' || $post->post_type == 'foody_recipe' || $post->post_type == 'post') {
     $feed_area_id = $post->ID;
 }
 
