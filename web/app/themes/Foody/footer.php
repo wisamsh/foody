@@ -117,7 +117,7 @@ if (isset($_GET) && !empty($_GET)) {
                     'is_iframe' => $banner['is_iframe']
                 ];
                 foody_get_template_part(get_template_directory() . '/template-parts/common/popup-banner.php', $banner_args);
-            } elseif ($banner['enable_banner_with_text']) {
+            } else {
                 $banner_args = [
                     'dest_id' => $link_page->ID,
                     'page_id' => 'popup-banner',
