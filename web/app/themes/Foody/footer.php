@@ -101,9 +101,9 @@ if (isset($_GET) && !empty($_GET)) {
 
             $link_page = get_page_by_title(__('Gift card'));
             if ($banner['is_iframe']) {
-                $button_link = get_permalink($link_page->ID);
+                $button_link = get_permalink($link_page->ID).'?alterLink='.urlencode($banner['link']['url']);
             } else {
-                $button_link = $link_page->post_content;
+                $button_link = $banner['link']['url'];
             }
 
             if ($banner['enable_banner_without_text']) {
@@ -114,7 +114,9 @@ if (isset($_GET) && !empty($_GET)) {
                     'mobile_img' => $banner['image_without_text_mobile']['url'],
                     'banner_link' => $button_link,
                     'button_text' => $banner['text_for_button'],
-                    'is_iframe' => $banner['is_iframe']
+                    'is_iframe' => $banner['is_iframe'],
+                    'name'      => $banner['name'],
+                    'publisher' => $banner['publisher']
                 ];
                 foody_get_template_part(get_template_directory() . '/template-parts/common/popup-banner.php', $banner_args);
             } else {
@@ -126,7 +128,9 @@ if (isset($_GET) && !empty($_GET)) {
                     'banner_text' => $banner['text_for_banner'],
                     'banner_link' => $button_link,
                     'button_text' => $banner['text_for_button'],
-                    'is_iframe' => $banner['is_iframe']
+                    'is_iframe' => $banner['is_iframe'],
+                    'name'      => $banner['name'],
+                    'publisher' => $banner['publisher']
                 ];
                 foody_get_template_part(get_template_directory() . '/template-parts/common/popup-banner.php', $banner_args);
             }

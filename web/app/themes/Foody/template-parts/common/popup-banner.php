@@ -15,7 +15,8 @@ $mobile_image = $modal['mobile_img'];
 $banner_text = isset($modal['banner_text']) ? $modal['banner_text'] : null;
 $banner_link = $modal['banner_link'];
 $button_text = $modal['button_text'];
-
+$banner_name = isset($modal['name']) ? $modal['name'] : '';
+$publisher = isset($modal['publisher']) ? $modal['publisher'] : '';
 
 $modal_body_class = isset($modal['banner_text']) ? "with-text" : "without-text";
 ?>
@@ -23,7 +24,7 @@ $modal_body_class = isset($modal['banner_text']) ? "with-text" : "without-text";
 
 <div class="modal " tabindex="-1" role="dialog" id="<?php echo $id ?>">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" data-banner-name="<?php echo $banner_name; ?>" data-banner-publisher="<?php echo $publisher; ?>">
             <div class="modal-body <?php echo $modal_body_class; ?>">
                 <?php if ($banner_text != null) { ?>
                 <div class="modal-body-container">

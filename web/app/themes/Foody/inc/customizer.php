@@ -425,6 +425,46 @@ function foody_customize_register( $wp_customize ) {
     ) );
 
     $wp_customize->add_setting(
+        'name_for_banner',
+        array(
+            'capability' => 'edit_theme_options',
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'name_for_banner',
+        array(
+            'label'       => __( 'שם באנר(אנליטיקס)', 'foody' ),
+            'description' => __( '', 'foody' ),
+            'settings'    => 'name_for_banner',
+            'priority'    => 5,
+            'section'     => 'foody_banner',
+            'type'        => 'text'
+        )
+    ) );
+
+    $wp_customize->add_setting(
+        'banner_publisher',
+        array(
+            'capability' => 'edit_theme_options',
+        )
+    );
+
+    $wp_customize->add_control( new WP_Customize_Control(
+        $wp_customize,
+        'banner_publisher',
+        array(
+            'label'       => __( 'שם  מפרסם(אנליטיקס)', 'foody' ),
+            'description' => __( '', 'foody' ),
+            'settings'    => 'banner_publisher',
+            'priority'    => 6,
+            'section'     => 'foody_banner',
+            'type'        => 'text'
+        )
+    ) );
+
+    $wp_customize->add_setting(
         'show_image_without_text',
         array(
             'capability' => 'edit_theme_options',
@@ -438,7 +478,7 @@ function foody_customize_register( $wp_customize ) {
             'label'       => __( 'באנר עם תמונה בלי טקסט', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'show_image_without_text',
-            'priority'    => 5,
+            'priority'    => 7,
             'section'     => 'foody_banner',
             'type'        => 'checkbox'
         )
@@ -458,7 +498,7 @@ function foody_customize_register( $wp_customize ) {
             'label'       => __( 'בחר תמונה ללא טקסט - דסקטופ (960x153)', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'image_without_text_desktop',
-            'priority'    => 6,
+            'priority'    => 8,
             'section'     => 'foody_banner'
         )
     ) );
@@ -477,7 +517,7 @@ function foody_customize_register( $wp_customize ) {
             'label'       => __( 'בחר תמונה ללא טקסט - מובייל (375x92)', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'image_without_text_mobile',
-            'priority'    => 7,
+            'priority'    => 9,
             'section'     => 'foody_banner'
         )
     ) );
@@ -496,7 +536,7 @@ function foody_customize_register( $wp_customize ) {
             'label'       => __( 'באנר של תמונה עם טקסט', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'show_image_with_text',
-            'priority'    => 8,
+            'priority'    => 10,
             'section'     => 'foody_banner',
             'type'        => 'checkbox'
         )
@@ -516,7 +556,7 @@ function foody_customize_register( $wp_customize ) {
             'label'       => __( 'בחר תמונה עם טקסט - דסקטופ (288x153)', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'image_with_text_desktop',
-            'priority'    => 9,
+            'priority'    => 11,
             'section'     => 'foody_banner'
         )
     ) );
@@ -535,7 +575,7 @@ function foody_customize_register( $wp_customize ) {
             'label'       => __( 'בחר תמונה עם טקסט - מובייל (137x92)', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'image_with_text_mobile',
-            'priority'    => 10,
+            'priority'    => 12,
             'section'     => 'foody_banner'
         )
     ) );
@@ -554,7 +594,7 @@ function foody_customize_register( $wp_customize ) {
             'label'       => __( 'בחר טקסט לתמונה (עד 140 תווים)', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'text_for_image',
-            'priority'    => 11,
+            'priority'    => 13,
             'section'     => 'foody_banner',
             'type'        => 'text'
 
@@ -575,7 +615,7 @@ function foody_customize_register( $wp_customize ) {
             'label'       => __( 'בחר טקסט לכפתור (עד 16 תווים)', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'text_for_button',
-            'priority'    => 12,
+            'priority'    => 14,
             'section'     => 'foody_banner',
             'type'        => 'text'
 
@@ -596,7 +636,7 @@ function foody_customize_register( $wp_customize ) {
             'label'       => __( 'הצגת הלינק ב - Iframe', 'foody' ),
             'description' => __( '', 'foody' ),
             'settings'    => 'is_iframe',
-            'priority'    => 13,
+            'priority'    => 15,
             'section'     => 'foody_banner',
             'type'        => 'checkbox'
 

@@ -8,13 +8,18 @@
  */
 get_header();
 global $post;
-
+if (isset($_GET) && !empty($_GET) && isset($_GET['alterLink'])){
+    $link = urldecode($_GET['alterLink']);
+}
+else{
+    $link = $post->post_content;
+}
 ?>
     <div id="main-content" class="main-content">
 
         <div id="primary" class="content-area">
             <div id="content container" class="site-content" role="main" style="">
-                <iframe src="<?php echo $post->post_content;?>" style="width: 100%;
+                <iframe src="<?php echo $link;?>" style="width: 100%;
                         height: auto;
                         min-height: 1200px;
                         padding-top: 3%;
