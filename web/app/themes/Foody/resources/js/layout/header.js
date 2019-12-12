@@ -151,16 +151,21 @@ jQuery(document).ready(function ($) {
     });
 
     $('#newsletter-modal .wpcf7-form .wpcf7-submit').on('click',function () {
-        let seconds = 0;
-        let submitInterval =  setInterval(function () {
-            seconds++;
-            if (seconds == 4) {
-                $('#newsletter-modal').modal('hide');
-            }
-            if(sessionStorage.getItem('newsletter-popup-closed')){
-                clearInterval(submitInterval);
-            }
-        }, 1000);
+        let isEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if((typeof $('#newsletter-modal .wpcf7-form .wpcf7-email')[0] != "undefined") &&
+            ($('#newsletter-modal .wpcf7-form .wpcf7-email')[0].value != '') &&
+            (isEmail.test($('#newsletter-modal .wpcf7-form .wpcf7-email')[0].value))) {
+            let seconds = 0;
+            let submitInterval = setInterval(function () {
+                seconds++;
+                if (seconds == 4) {
+                    $('#newsletter-modal').modal('hide');
+                }
+                if (sessionStorage.getItem('newsletter-popup-closed')) {
+                    clearInterval(submitInterval);
+                }
+            }, 1000);
+        }
     });
 
 
