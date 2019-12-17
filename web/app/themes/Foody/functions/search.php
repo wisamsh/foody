@@ -25,7 +25,7 @@ function foody_where_filter( $where ) {
 			$author_search = "($wpdb->posts.post_author = {$author_id})";
 			$where_replace = " AND (($wpdb->posts.post_title";
 			$replace_count = 1;
-			$where         = str_replace( $where_replace, " AND ( $author_search OR ($wpdb->posts.post_title", $where, $replace_count );
+			$where         = str_replace( $where_replace, " AND ( $author_search OR (($wpdb->posts.post_title", $where, $replace_count );
 		}
 
 	}
