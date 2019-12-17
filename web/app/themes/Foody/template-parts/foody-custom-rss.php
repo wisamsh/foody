@@ -11,6 +11,8 @@ $posts = array_map(function ($post){
     return $post['recipe'];
 }, $posts_list);
 
+array_reverse($posts);
+
 // Setting up content type and charset headers
 header('Content-Type: '.feed_content_type('rss-http').';charset='.get_option('blog_charset'), true);
 
@@ -44,6 +46,21 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
                     <url><?php echo get_the_post_thumbnail_url($post->ID,'post-thumbnail');?></url>
                 </image>
                 <title><?php the_title_rss(); ?></title>
+                <dc:creator><?php the_author(); ?></dc:creator>
+                <link><?php the_permalink_rss(); ?></link>
+                <?php rss_enclosure(); ?>
+                <?php do_action('rss2_item'); ?>
+            </item>
+        <?php endforeach; ?>
+    </channel>
+</rss>
+<?php
+/*
+<item>
+                <image>
+                    <url><?php echo get_the_post_thumbnail_url($post->ID,'post-thumbnail');?></url>
+                </image>
+                <title><?php the_title_rss(); ?></title>
 <!--                <pubDate>--><?php //echo mysql2date($dateTimeFormat, get_post_time('Y-m-d H:i:s', true), false); ?><!--</pubDate>-->
                 <dc:creator><?php the_author(); ?></dc:creator>
                 <link><?php the_permalink_rss(); ?></link>
@@ -53,6 +70,5 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
                 <?php rss_enclosure(); ?>
                 <?php do_action('rss2_item'); ?>
             </item>
-        <?php endforeach; ?>
-    </channel>
-</rss>
+*/
+?>
