@@ -561,3 +561,25 @@ function ingredients_export_adjustments ()
     Foody_ingredients_exporter::generate_xlsx();
 }
 
+//function rss_post_thumbnail($content) {
+//    global $post;
+//    if(has_post_thumbnail($post->ID)) {
+//        $content = '<p>' . get_the_post_thumbnail($post->ID) .
+//            '</p>' . get_the_content();
+//    }
+//    return $content;
+//}
+//add_filter('the_excerpt_rss', 'rss_post_thumbnail');
+//add_filter('the_content_feed', 'rss_post_thumbnail');
+
+
+function init_rss() {
+    add_feed( 'custom-rss', 'custom_rss_feed' );
+}
+add_action( 'init', 'init_rss' );
+
+
+function custom_rss_feed() {
+    get_template_part('foody-custom-rss.php', 'custom-rss');
+}
+
