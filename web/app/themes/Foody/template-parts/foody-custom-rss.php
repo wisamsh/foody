@@ -11,7 +11,7 @@ $posts = array_map(function ($post){
     return $post['recipe'];
 }, $posts_list);
 
-array_reverse($posts);
+$posts = array_reverse($posts);
 
 // Setting up content type and charset headers
 header('Content-Type: '.feed_content_type('rss-http').';charset='.get_option('blog_charset'), true);
