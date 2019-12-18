@@ -17,15 +17,30 @@
  */
 function foody_where_filter( $where ) {
 	global $wpdb;
-	if ( is_search() ) {
-		$search    = get_search_query();
-		$author_id = foody_search_user_by_name( $search );
+	if ( is_search() || (!empty($_POST) && isset($_POST['action']) && $_POST['action'] == 'load_more' )) {
+	    $author_id = 0;
+	    if(isset($_POST['filter']) && isset($_POST['filter']['search'])){
+	        $search = $_POST['filter']['search'];
+        }
+	    else {
+            $search = get_search_query();
+        }
+	    if($search != '') {
+	        if(get_page_by_title($search,OBJECT, 'post') || get_page_by_title($search,OBJECT, 'foody_recipe')) {
+                $author_id = 0;
+            }
+	        else{
+                $author_id = foody_search_user_by_name($search);
+            }
+        }
 
 		if ( $author_id ) {
-			$author_search = "($wpdb->posts.post_author = {$author_id})";
-			$where_replace = " AND (($wpdb->posts.post_title";
-			$replace_count = 1;
-			$where         = str_replace( $where_replace, " AND ( $author_search OR (($wpdb->posts.post_title", $where, $replace_count );
+		    //if(strpos($where,  " AND (($wpdb->posts.post_title") !== false) {
+                $author_search = "($wpdb->posts.post_author = {$author_id})";
+                $where_replace = " AND (($wpdb->posts.post_title";
+                $replace_count = 1;
+                $where = str_replace($where_replace, " AND ( $author_search OR (($wpdb->posts.post_title", $where, $replace_count);
+            //}
 		}
 
 	}

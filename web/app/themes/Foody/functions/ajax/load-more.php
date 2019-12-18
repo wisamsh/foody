@@ -6,7 +6,7 @@
  * Time: 2:34 PM
  */
 
-
+global $post;
 function foody_ajax_load_more() {
 
 	$foody_query = Foody_Query::get_instance();
@@ -60,6 +60,13 @@ function foody_ajax_load_more() {
 						unset( $page_args['paged'] );
 					}
 				}
+//
+//				if(isset($filter['search']) && !empty($filter['search'])){
+//                    $author_id = foody_search_user_by_name( $filter['search'] );
+//                    if(!empty($author_id)){
+//                        $page_args['author__in'] = [$author_id];
+//                    }
+//                }
 
 				$query = $foody_search->build_query( $filter, $page_args, $sort );
 
