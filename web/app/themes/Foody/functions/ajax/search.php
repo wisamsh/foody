@@ -146,7 +146,7 @@ function __search_by_title_only($search, $wp_query)
             'search' => $q['s'],
         );
         $users = (new WP_User_Query($args))->get_results();
-        if (empty($users) && !isset($users)) {
+        if (!isset($users) || empty($users)) {
             $is_user = false;
         } else {
             $is_user = true;
