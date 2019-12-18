@@ -17,10 +17,13 @@
  */
 function foody_where_filter( $where ) {
 	global $wpdb;
-	if ( is_search() || (!empty($_POST) && isset($_POST['action']) && $_POST['action'] == 'load_more' )) {
+	if ( is_search() || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more' ) || (isset($_POST['action']) && $_POST['action'] == 'foody_filter' )))) {
 	    $author_id = 0;
 	    if(isset($_POST['filter']) && isset($_POST['filter']['search'])){
 	        $search = $_POST['filter']['search'];
+        }
+	    elseif (isset($_POST['data']) && isset($_POST['data']['search'])){
+            $search = $_POST['data']['search'];
         }
 	    else {
             $search = get_search_query();

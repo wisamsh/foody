@@ -142,10 +142,11 @@ function __search_by_title_only($search, $wp_query)
     $n = !empty($q['exact']) ? '' : '%';
 
     if (isset($q['s'])) {
-        $args = array(
-            'search' => $q['s'],
-        );
-        $users = (new WP_User_Query($args))->get_results();
+//        $args = array(
+//            'search' => $q['s'],
+//        );
+//        $users = (new WP_User_Query($args))->get_results();
+        $users = foody_search_user_by_name($q['s']);
         if (!isset($users) || empty($users)) {
             $is_user = false;
         } else {
