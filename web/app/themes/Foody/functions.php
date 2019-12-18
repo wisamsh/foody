@@ -583,3 +583,8 @@ function custom_rss_feed() {
     get_template_part('foody-custom-rss.php', 'custom-rss');
 }
 
+function rss_campaign_tracking($post_permalink) {
+    return $post_permalink .  '?utm_source=Maariv%20site&utm_medium=promos&utm_campaign=maariv%20food';
+};
+add_filter('the_permalink_rss', 'rss_campaign_tracking');
+
