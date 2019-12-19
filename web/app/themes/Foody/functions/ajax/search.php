@@ -141,7 +141,8 @@ function __search_by_title_only($search, $wp_query)
     $q = $wp_query->query_vars;
     $n = !empty($q['exact']) ? '' : '%';
 
-    if (isset($q['s'])) {
+    if (( is_search() || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more' ) || (isset($_POST['action']) && $_POST['action'] == 'foody_filter' )))) && isset($q['s'])){
+//    if ((is_search()) && isset($q['s'])) {
 //        $args = array(
 //            'search' => $q['s'],
 //        );
