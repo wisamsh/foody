@@ -51,6 +51,19 @@ function foody_ajax_autocomplete()
 
     }
 
+    $ingredients = findIngredients($search, 'foody_ingredient',true);
+
+    if (is_array($ingredients) && count($ingredients) > 0) {
+        $ingredients = array_map(function ($ingredient) {
+            return [
+                'name' => $ingredient->post_title,
+                'link' => $ingredient->guid
+            ];
+        }, $ingredients);
+
+        $items = array_merge($ingredients, $items);
+    }
+
     wp_send_json_success($items);
 }
 
@@ -138,18 +151,18 @@ function __search_by_title_only($search, $wp_query)
         return $search;
     } // skip processing - no search term in query
     $is_user = false;
+    $is_ingredient = false;
     $q = $wp_query->query_vars;
     $n = !empty($q['exact']) ? '' : '%';
 
-    if (( is_search() || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more' ) || (isset($_POST['action']) && $_POST['action'] == 'foody_filter' )))) && isset($q['s'])){
-//    if ((is_search()) && isset($q['s'])) {
-//        $args = array(
-//            'search' => $q['s'],
-//        );
-//        $users = (new WP_User_Query($args))->get_results();
+    if ((is_search() || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more') || (isset($_POST['action']) && $_POST['action'] == 'foody_filter')))) && isset($q['s'])) {
         $users = foody_search_user_by_name($q['s']);
         if (!isset($users) || empty($users)) {
             $is_user = false;
+            $ingredient = findIngredients($q['s'], 'foody_ingredient',false);
+            if(!empty($ingredient)){
+                $is_ingredient = true;
+            }
         } else {
             $is_user = true;
         }
@@ -162,20 +175,18 @@ function __search_by_title_only($search, $wp_query)
     $users_amount = count((array)$q['search_terms']);
 
     foreach ((array)$q['search_terms'] as $term) {
-        if($is_user){
+        if ($is_user || $is_ingredient) {
             if ($index == $users_amount - 1) {
                 $term = esc_sql($wpdb->esc_like($term));
                 $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'))";
                 $searchand = ' AND ';
-            }
-            else{
+            } else {
                 $term = esc_sql($wpdb->esc_like($term));
                 $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
                 $searchand = ' AND ';
             }
             $index++;
-        }
-        else {
+        } else {
             $term = esc_sql($wpdb->esc_like($term));
             $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
             $searchand = ' AND ';
@@ -193,3 +204,17 @@ function __search_by_title_only($search, $wp_query)
 }
 
 add_filter('posts_search', '__search_by_title_only', 500, 2);
+
+function findIngredients($titles, $post_type, $is_autocomplete)
+{
+    global $wpdb;
+    if($is_autocomplete) {
+        $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_title like '%$titles%' and post_type = '$post_type'";
+    }
+    else{
+        $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_title like '$titles' and post_type = '$post_type'";
+    }
+    $results = $wpdb->get_results($query);
+
+    return $results;
+}

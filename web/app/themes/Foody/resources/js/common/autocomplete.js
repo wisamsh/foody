@@ -44,8 +44,13 @@ module.exports = function (selector, options) {
                     suggestion: function (suggestion) {
                         let link = '';
                         if (suggestion.name != null) {
+                            let splitedUrl = suggestion.link.split('?');
+                            let autocompleteAnalyticsParam = '?auto=1';
+                            if(splitedUrl.length > 1 && splitedUrl[1] !== ''){
+                                autocompleteAnalyticsParam = '&auto=1';
+                            }
                             let name = suggestion.name.replace(new RegExp('(' + currentQuery + ')', 'g'), '<span>$1</span>');
-                            link = '<a href="' + suggestion.link + '&auto=1' + '">' + name + ' </a>';
+                            link = '<a href="' + suggestion.link + autocompleteAnalyticsParam + '">' + name + ' </a>';
                         }
 
                         return link;
