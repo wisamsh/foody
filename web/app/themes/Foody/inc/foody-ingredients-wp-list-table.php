@@ -28,6 +28,7 @@ class Ingredient_List_Table extends WP_List_Table
     {
         global $wpdb;
 
+        $posts_list =[];
         $query = "SELECT * FROM $wpdb->postmeta as postmeta 
 JOIN $wpdb->posts as posts
 where posts.ID = postmeta.post_id 
@@ -147,23 +148,25 @@ where posts.ID = postmeta.post_id
 
         // $this->_column_headers = array($columns, $hidden, $sortable);
         $recipes_list = $this->get_recipes();
-        usort($recipes_list, array(&$this, 'usort_reorder'));
+        if ($this->record_count() != 0) {
+            usort($recipes_list, array(&$this, 'usort_reorder'));
 
-        /** Process bulk action */
-        $this->process_bulk_action();
+            /** Process bulk action */
+            $this->process_bulk_action();
 
-        $per_page = 10;
-        $current_page = $this->get_pagenum();
-        $total_items = $this->record_count();
+            $per_page = 10;
+            $current_page = $this->get_pagenum();
+            $total_items = $this->record_count();
 
-        $this->set_pagination_args([
-            'total_items' => $total_items, //WE have to calculate the total number of items
-            'per_page' => $per_page //WE have to determine how many items to show on a page
-        ]);
+            $this->set_pagination_args([
+                'total_items' => $total_items, //WE have to calculate the total number of items
+                'per_page' => $per_page //WE have to determine how many items to show on a page
+            ]);
 
-        $recipes_list = array_slice($recipes_list, (($current_page - 1) * $per_page), $per_page);
-        $this->_column_headers = array($columns, $hidden, $sortable);
-        $this->items = $recipes_list;
+            $recipes_list = array_slice($recipes_list, (($current_page - 1) * $per_page), $per_page);
+            $this->_column_headers = array($columns, $hidden, $sortable);
+            $this->items = $recipes_list;
+        }
     }
 
     public function process_bulk_action()
