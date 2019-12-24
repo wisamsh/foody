@@ -222,5 +222,4 @@ $footer->add_nagish_li_script();
 ?>
 
 </body>
-<script src="https://popup.vp4.me/a_vip.js" type="text/javascript" data-a-vip="\\0\\\\LandingPage,7fd1d99a-720c-4217-ab01-8c3d54980f27,317049.aspx?r=1009"></script>
 </html>
