@@ -602,7 +602,12 @@ abstract class Foody_Post implements Foody_ContentWithSidebar {
 
 
 	public function get_label() {
-		$label = get_field( 'recipe_label', $this->post->ID );
+        $label = '';
+        $homepage_only = get_field( 'homepage_only', $this->post->ID );
+        if($homepage_only && $this->is_homepage()){
+            $label = get_field( 'recipe_label', $this->post->ID );
+        }
+
 
 		if ( empty( $label ) ) {
 			$label = '';
@@ -752,4 +757,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar {
 
 		return $keep_key_assoc ? $array : array_values( $array );
 	}
+
+	public function is_homepage(){
+	    return (is_front_page() || (isset($_POST) && isset($_POST['data']) && isset($_POST['data']['context']) && $_POST['data']['context'] == 'homepage'));
+    }
 }
