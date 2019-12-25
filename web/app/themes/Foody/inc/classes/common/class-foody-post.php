@@ -607,7 +607,9 @@ abstract class Foody_Post implements Foody_ContentWithSidebar {
         if($homepage_only && $this->is_homepage()){
             $label = get_field( 'recipe_label', $this->post->ID );
         }
-
+        elseif(!$homepage_only){
+            $label = get_field( 'recipe_label', $this->post->ID );
+        }
 
 		if ( empty( $label ) ) {
 			$label = '';
@@ -759,6 +761,6 @@ abstract class Foody_Post implements Foody_ContentWithSidebar {
 	}
 
 	public function is_homepage(){
-	    return (is_front_page() || (isset($_POST) && isset($_POST['data']) && isset($_POST['data']['context']) && $_POST['data']['context'] == 'homepage'));
+	    return (is_front_page() || (isset($_POST) && isset($_POST['data']) && isset($_POST['data']['context']) && $_POST['data']['context'] == 'homepage') || (isset($_POST) && isset($_POST['action']) && $_POST['action'] == 'load_homepage_feed'));
     }
 }
