@@ -217,6 +217,15 @@ jQuery(document).ready(($) => {
             eventCallback(event, 'מתכון', 'לחיצה על רישום לדיוור', '', 'מיקום', 'פוטר');
         });
 
+        /**
+         * click on link from the content
+         */
+        $('.post-content-link').on('click', function () {
+            let linkURL= $(this).attr("href");
+            let domainName = get_hostname(linkURL);
+            eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'מיקום', 'תוכן');
+        });
+
     }
 });
 
@@ -349,4 +358,24 @@ function categoriesHits(publishers, feedPublisher) {
             }
         }
     });
+}
+
+function get_hostname(url) {
+    var domain = "", page = "";
+
+    //remove "http://"
+    if (url.indexOf("http://") == 0) {
+        url = url.substr(7);
+    }
+    //remove "https://"
+    if (url.indexOf("https://") == 0) {
+        url = url.substr(8);
+    }
+    //remove "www."
+    if (url.indexOf("www.") == 0) {
+        url = url.substr(4);
+    }
+    domain = url.split('/')[0].split('.')[0];
+
+    return domain;
 }
