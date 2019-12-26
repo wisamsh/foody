@@ -28,16 +28,18 @@ module.exports = function (selector, options) {
             {
                 source: function (query, cb) {
                     currentQuery = query;
-                    try {
-                        searchRequest.abort();
-                    } catch (e) {
+                    if(query.length > 2) {
+                        try {
+                            searchRequest.abort();
+                        } catch (e) {
+                        }
+                        searchRequest = $.post('/wp/wp-admin/admin-ajax.php', {
+                            search: query,
+                            action: 'search_site'
+                        }, function (res) {
+                            cb(res.data);
+                        });
                     }
-                    searchRequest = $.post('/wp/wp-admin/admin-ajax.php', {
-                        search: query,
-                        action: 'search_site'
-                    }, function (res) {
-                        cb(res.data);
-                    });
                 },
                 displayKey: 'name',
                 templates: {

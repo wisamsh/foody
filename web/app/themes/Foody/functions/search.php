@@ -35,7 +35,7 @@ function foody_where_filter($where)
             } else {
                 $author_id = foody_search_user_by_name($search);
                 if (!$author_id) {
-                    $ingredients = findIngredients($search, 'foody_ingredient', false);
+                    $ingredients = find_posts_by_title_and_type($search, 'foody_ingredient', false);
                     $ingredients = array_map(function ($post) {
                         return $post->post_title;
                     }, $ingredients);
@@ -44,13 +44,12 @@ function foody_where_filter($where)
         }
 
         if ($author_id) {
-            //if(strpos($where,  " AND (($wpdb->posts.post_title") !== false) {
             $author_search = "($wpdb->posts.post_author = {$author_id})";
             $where_replace = " AND (($wpdb->posts.post_title";
             $replace_count = 1;
             $where = str_replace($where_replace, " AND ( $author_search OR (($wpdb->posts.post_title", $where, $replace_count);
-            //}
-        } elseif (!empty($ingredients)) {
+        }
+        elseif (!empty($ingredients)) {
             if (strstr($where, " AND (($wpdb->posts.post_title")) {
             $ingredient_search = "SELECT post_id FROM {$wpdb->postmeta} as postmeta 
 JOIN {$wpdb->posts} as posts
@@ -59,12 +58,6 @@ where posts.ID = postmeta.post_id
 	AND meta_value = (SELECT ID FROM {$wpdb->posts} where post_title = '$ingredients[0]' and post_status = 'publish' AND post_type = 'foody_ingredient')
     AND post_status = 'publish'
 group by post_id ";
-//            if (strstr($where, " AND (($wpdb->posts.post_title")) {
-//                $recipes_ids = $wpdb->get_results($ingredient_search);
-//                $recipes_ids = array_map(function ($post) {
-//                    return $post->post_id;
-//                }, $recipes_ids);
-//                $recipes_ids = implode(',', $recipes_ids);
                 $where_replace = " AND (($wpdb->posts.post_title";
                 $replace_count = 1;
                 $where = str_replace($where_replace, " AND ( $wpdb->posts.ID IN ($ingredient_search) OR (($wpdb->posts.post_title", $where, $replace_count);

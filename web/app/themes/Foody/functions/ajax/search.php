@@ -23,13 +23,14 @@ function foody_ajax_autocomplete()
         's' => $search,
     ));
 
+    //$types = ['foody_ingredient', 'foody_feed_channel'];
 
     $items = [];
     if (!empty($results->posts)) {
         foreach ($results->posts as $result) {
             $items[] = [
                 'name' => $result->post_title,
-                'link' => Foody_Query::get_search_url($result->post_title)
+                'link' => str_replace('"','', Foody_Query::get_search_url($result->post_title))
             ];
         }
     }
@@ -51,18 +52,34 @@ function foody_ajax_autocomplete()
 
     }
 
-    $ingredients = findIngredients($search, 'foody_ingredient',true);
-
-    if (is_array($ingredients) && count($ingredients) > 0) {
-        $ingredients = array_map(function ($ingredient) {
-            return [
-                'name' => $ingredient->post_title,
-                'link' => $ingredient->guid
-            ];
-        }, $ingredients);
-
-        $items = array_merge($ingredients, $items);
-    }
+    //foreach ($types as $type) {
+       // $results = find_posts_by_title_and_type($search, $type, true);
+        $results = find_posts_by_title_and_type($search, 'foody_ingredient', true);
+        if (is_array($results) && count($results) > 0) {
+//            if ($type == 'foody_feed_channel') {
+//                $results = array_map(function ($result) {
+//                    return [
+//                        'name' => $result->post_title,
+//                        'link' => Foody_Query::get_search_url($result->post_title)
+//                    ];
+//                }, $results);
+//            } else {
+//                $results = array_map(function ($result) {
+//                    return [
+//                        'name' => $result->post_title,
+//                        'link' => $result->guid
+//                    ];
+//                }, $results);
+//            }
+            $results = array_map(function ($result) {
+                return [
+                    'name' => $result->post_title,
+                    'link' => $result->guid
+                ];
+            }, $results);
+            $items = array_merge($results, $items);
+        }
+    //}
 
     wp_send_json_success($items);
 }
@@ -156,15 +173,17 @@ function __search_by_title_only($search, $wp_query)
     $n = !empty($q['exact']) ? '' : '%';
 
     if ((is_search() || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more') || (isset($_POST['action']) && $_POST['action'] == 'foody_filter')))) && isset($q['s'])) {
-        $users = foody_search_user_by_name($q['s']);
-        if (!isset($users) || empty($users)) {
-            $is_user = false;
-            $ingredient = findIngredients($q['s'], 'foody_ingredient',false);
-            if(!empty($ingredient)){
-                $is_ingredient = true;
+        if (!get_page_by_title($q['s'], OBJECT, 'post') && !get_page_by_title($q['s'], OBJECT, 'foody_recipe')) {
+            $users = foody_search_user_by_name($q['s']);
+            if (!isset($users) || empty($users)) {
+                $is_user = false;
+                $ingredient = find_posts_by_title_and_type($q['s'], 'foody_ingredient', false);
+                if (!empty($ingredient)) {
+                    $is_ingredient = true;
+                }
+            } else {
+                $is_user = true;
             }
-        } else {
-            $is_user = true;
         }
     }
 
@@ -205,15 +224,15 @@ function __search_by_title_only($search, $wp_query)
 
 add_filter('posts_search', '__search_by_title_only', 500, 2);
 
-function findIngredients($titles, $post_type, $is_autocomplete)
+function find_posts_by_title_and_type($titles, $post_type, $is_autocomplete)
 {
     global $wpdb;
-    if($is_autocomplete) {
+    if ($is_autocomplete) {
         $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_title like '%$titles%' and post_type = '$post_type'";
-    }
-    else{
+    } else {
         $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_title like '$titles' and post_type = '$post_type'";
     }
+
     $results = $wpdb->get_results($query);
 
     return $results;
