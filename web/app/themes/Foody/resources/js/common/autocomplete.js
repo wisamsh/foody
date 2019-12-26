@@ -52,7 +52,7 @@ module.exports = function (selector, options) {
                                 autocompleteAnalyticsParam = '&auto=1';
                             }
                             let name = suggestion.name.replace(new RegExp('(' + currentQuery + ')', 'g'), '<span>$1</span>');
-                            link = '<a href="' + suggestion.link + autocompleteAnalyticsParam + '">' + name + ' </a>';
+                            link = '<a href="' + suggestion.link + autocompleteAnalyticsParam + '">' + name + '</a>';
                         }
 
                         return link;
@@ -74,7 +74,11 @@ module.exports = function (selector, options) {
         let key = e.which;
         if (key === 13) {
             let search = $(e.target).val();
-            if (search) {
+            let url = get_suggestion(search);
+            if(url != ''){
+                window.location = url;
+            }
+            else if (search) {
                 window.location = '/?s=' + search;
             }
             e.preventDefault();
@@ -83,3 +87,15 @@ module.exports = function (selector, options) {
 
     });
 };
+
+function get_suggestion(searchString) {
+    let suggestions  = $('.foody-search-suggestion');
+    let url = '';
+    for(let i = 0; i < suggestions.length; i++){
+        if(searchString == suggestions[i].innerText){
+            url = $((suggestions[i].children)[0]).attr('href');
+            break;
+        }
+    }
+    return url;
+}
