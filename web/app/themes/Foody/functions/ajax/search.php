@@ -23,14 +23,15 @@ function foody_ajax_autocomplete()
         's' => $search,
     ));
 
-    //$types = ['foody_ingredient', 'foody_feed_channel'];
+//    $types = ['foody_ingredient', 'foody_feed_channel'];
 
     $items = [];
     if (!empty($results->posts)) {
         foreach ($results->posts as $result) {
             $items[] = [
                 'name' => $result->post_title,
-                'link' => str_replace('"','', Foody_Query::get_search_url($result->post_title))
+                'link' => $result->guid
+                //'link' => str_replace('"','', Foody_Query::get_search_url($result->post_title))
             ];
         }
     }
@@ -52,8 +53,8 @@ function foody_ajax_autocomplete()
 
     }
 
-    //foreach ($types as $type) {
-       // $results = find_posts_by_title_and_type($search, $type, true);
+//    foreach ($types as $type) {
+        //$results = find_posts_by_title_and_type($search, $type, true);
         $results = find_posts_by_title_and_type($search, 'foody_ingredient', true);
         if (is_array($results) && count($results) > 0) {
 //            if ($type == 'foody_feed_channel') {
@@ -79,7 +80,7 @@ function foody_ajax_autocomplete()
             }, $results);
             $items = array_merge($results, $items);
         }
-    //}
+//    }
 
     wp_send_json_success($items);
 }
