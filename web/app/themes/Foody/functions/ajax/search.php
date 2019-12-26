@@ -30,7 +30,7 @@ function foody_ajax_autocomplete()
         foreach ($results->posts as $result) {
             $items[] = [
                 'name' => $result->post_title,
-                'link' => $result->guid
+                'link' =>  get_permalink( $result->ID)
                 //'link' => str_replace('"','', Foody_Query::get_search_url($result->post_title))
             ];
         }
@@ -68,14 +68,14 @@ function foody_ajax_autocomplete()
 //                $results = array_map(function ($result) {
 //                    return [
 //                        'name' => $result->post_title,
-//                        'link' => $result->guid
+//                        'link' =>  get_permalink( $result->ID)
 //                    ];
 //                }, $results);
 //            }
             $results = array_map(function ($result) {
                 return [
                     'name' => $result->post_title,
-                    'link' => $result->guid
+                    'link' =>  get_permalink( $result->ID)
                 ];
             }, $results);
             $items = array_merge($results, $items);

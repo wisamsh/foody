@@ -27,6 +27,7 @@ function foody_where_filter($where)
             $search = $_POST['data']['search'];
         } else {
             $search = get_search_query();
+            $search = str_replace("&#039;", "'", $search);
         }
         if ($search != '') {
             if (get_page_by_title($search, OBJECT, 'post') || get_page_by_title($search, OBJECT, 'foody_recipe')) {
