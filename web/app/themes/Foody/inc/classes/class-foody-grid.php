@@ -18,6 +18,7 @@ class FoodyGrid {
 		'playlist',
 		'article',
 		'post',
+        'feed_channel'
 	];
 
 

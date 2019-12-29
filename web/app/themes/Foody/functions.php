@@ -588,3 +588,18 @@ function rss_campaign_tracking($post_permalink) {
 };
 add_filter('the_permalink_rss', 'rss_campaign_tracking');
 
+
+add_filter( 'posts_orderby', 'order_search_by_posttype', 10, 2 );
+function order_search_by_posttype( $orderby, $wp_query ){
+    if( $wp_query->is_search || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more') || (isset($_POST['action']) && $_POST['action'] == 'foody_filter')))) :
+        global $wpdb;
+        $orderby =
+            "
+            CASE WHEN {$wpdb->prefix}posts.post_type = 'foody_feed_channel' THEN '1' 
+                 WHEN {$wpdb->prefix}posts.post_type = 'foody_recipe' THEN '2' 
+                 WHEN {$wpdb->prefix}posts.post_type = 'post' THEN '3'  
+            ELSE {$wpdb->prefix}posts.post_type END ASC, 
+            {$wpdb->prefix}posts.post_title ASC";
+    endif;
+    return $orderby;
+}

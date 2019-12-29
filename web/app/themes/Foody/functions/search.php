@@ -37,41 +37,66 @@ function foody_where_filter($where)
                 $author_id = foody_search_user_by_name($search);
                 if (!$author_id) {
                     $ingredients = find_posts_by_title_and_type($search, 'foody_ingredient', false);
-                    $ingredients = array_map(function ($post) {
-                        return $post->post_title;
-                    }, $ingredients);
+                    if (!empty($ingredients)) {
+                        $ingredients = array_map(function ($post) {
+                            return $post->post_title;
+                        }, $ingredients);
+                    }
                 }
             }
-        }
-
-        if ($author_id) {
-            $author_search = "($wpdb->posts.post_author = {$author_id})";
-            $where_replace = " AND (($wpdb->posts.post_title";
-            $replace_count = 1;
-            $where = str_replace($where_replace, " AND ( $author_search OR (($wpdb->posts.post_title", $where, $replace_count);
-        }
-        elseif (!empty($ingredients)) {
             if (strstr($where, " AND (($wpdb->posts.post_title")) {
-            $ingredient_search = "SELECT post_id FROM {$wpdb->postmeta} as postmeta 
+                if ($author_id) {
+                    //if(!isset($_POST['action']) || $_POST['action'] !== 'load_more'){
+                    $authors_feed_areas = get_feed_areas_from_author_name($search);
+                    $feed_areas_search = '';
+                    if (!empty($authors_feed_areas)) {
+                        foreach ($authors_feed_areas as $index => $authors_feed_area) {
+                            $feed_areas_search .= "($wpdb->posts.post_title = '{$authors_feed_area}') OR ";
+                        }
+                    }
+
+                    $author_search = "($wpdb->posts.post_author = {$author_id})";
+                    $where_replace = " AND (($wpdb->posts.post_title";
+                    $replace_count = 1;
+                    $where = str_replace($where_replace, " AND ( $author_search OR $feed_areas_search (($wpdb->posts.post_title", $where, $replace_count);
+                } elseif (!empty($ingredients)) {
+                    $ingredient_search = "SELECT post_id FROM {$wpdb->postmeta} as postmeta 
 JOIN {$wpdb->posts} as posts
 where posts.ID = postmeta.post_id 
 	AND meta_key like 'ingredients_ingredients_groups_%_ingredients_%_ingredient'
 	AND meta_value = (SELECT ID FROM {$wpdb->posts} where post_title = '$ingredients[0]' and post_status = 'publish' AND post_type = 'foody_ingredient')
     AND post_status = 'publish'
 group by post_id ";
-                $where_replace = " AND (($wpdb->posts.post_title";
-                $replace_count = 1;
-                $where = str_replace($where_replace, " AND ( $wpdb->posts.ID IN ($ingredient_search) OR (($wpdb->posts.post_title", $where, $replace_count);
+                    $where_replace = " AND (($wpdb->posts.post_title";
+                    $replace_count = 1;
+                    $where = str_replace($where_replace, " AND ( $wpdb->posts.ID IN ($ingredient_search) OR (($wpdb->posts.post_title", $where, $replace_count);
+                }
             }
         }
-
     }
-
     return $where;
 }
 
 add_filter('posts_where', 'foody_where_filter');
 
+
+function get_feed_areas_from_author_name($author)
+{
+    $found_feed_areas = [];
+    $feed_areas_search_words = Foody_Query::get_feed_areas_search_words();
+    foreach ($feed_areas_search_words as $feed_area => $feed_area_search_words) {
+        if (isset($feed_area_search_words)) {
+            foreach ($feed_area_search_words as $word) {
+                if (strpos($word['search_word'], $author) !== false) {
+                    array_push($found_feed_areas, $feed_area);
+                    break;
+                }
+            }
+        }
+    }
+
+    return $found_feed_areas;
+}
 
 /**
  * @param string $name user name to search

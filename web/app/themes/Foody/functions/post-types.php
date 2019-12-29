@@ -443,7 +443,7 @@ function my_pre_get_posts( WP_Query $query ) {
 	}
 
 	if ( is_search() && $query->is_main_query() ) {
-		$query->set( 'post_type', [ 'foody_recipe', 'post' ] );
+		$query->set( 'post_type', [ 'foody_recipe', 'post' , 'foody_feed_channel'] );
 	}
 
 }

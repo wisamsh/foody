@@ -16,8 +16,8 @@ class Foody_SearchPage implements Foody_ContentWithSidebar {
 	public function __construct() {
 		$this->foody_query = Foody_Query::get_instance();
 		function search_filter( WP_Query $query ) {
-			if ( $query->is_search ) {
-				$query->set( 'post_type', [ 'foody_recipe', 'foody_playlist', 'post' ] );
+			if ( $query->is_search  || (!empty($_POST) && (isset($_POST['action']) && $_POST['action'] == 'foody_filter'))) {
+				$query->set( 'post_type', [ 'foody_feed_channel', 'foody_recipe',  'foody_playlist', 'post' ] );
 			}
 
 			return $query;

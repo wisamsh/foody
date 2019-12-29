@@ -23,16 +23,37 @@ function foody_ajax_autocomplete()
         's' => $search,
     ));
 
-//    $types = ['foody_ingredient', 'foody_feed_channel'];
-
+    $types = ['foody_ingredient', 'foody_feed_channel'];
     $items = [];
+
     if (!empty($results->posts)) {
         foreach ($results->posts as $result) {
-            $items[] = [
+            $posts[] = [
                 'name' => $result->post_title,
-                'link' =>  get_permalink( $result->ID)
+                'link' => get_permalink($result->ID)
                 //'link' => str_replace('"','', Foody_Query::get_search_url($result->post_title))
             ];
+        }
+        $items = array_merge($posts, $items);
+    }
+
+    foreach ($types as $type) {
+            if ($type == 'foody_feed_channel') {
+                $feed_areas_for_auto = check_feed_areas_suggetions($search);
+                if(!empty($feed_areas_for_auto)) {
+                    $items = array_merge($feed_areas_for_auto, $items);
+                }
+            } else {
+                $results = find_posts_by_title_and_type($search, $type, true);
+                if (is_array($results) && count($results) > 0) {
+                $results = array_map(function ($result) {
+                    return [
+                        'name' => $result->post_title,
+                        'link' => get_permalink($result->ID)
+                    ];
+                }, $results);
+            }
+            $items = array_merge($results, $items);
         }
     }
 
@@ -52,35 +73,6 @@ function foody_ajax_autocomplete()
         $items = array_merge($authors, $items);
 
     }
-
-//    foreach ($types as $type) {
-        //$results = find_posts_by_title_and_type($search, $type, true);
-        $results = find_posts_by_title_and_type($search, 'foody_ingredient', true);
-        if (is_array($results) && count($results) > 0) {
-//            if ($type == 'foody_feed_channel') {
-//                $results = array_map(function ($result) {
-//                    return [
-//                        'name' => $result->post_title,
-//                        'link' => Foody_Query::get_search_url($result->post_title)
-//                    ];
-//                }, $results);
-//            } else {
-//                $results = array_map(function ($result) {
-//                    return [
-//                        'name' => $result->post_title,
-//                        'link' =>  get_permalink( $result->ID)
-//                    ];
-//                }, $results);
-//            }
-            $results = array_map(function ($result) {
-                return [
-                    'name' => $result->post_title,
-                    'link' =>  get_permalink( $result->ID)
-                ];
-            }, $results);
-            $items = array_merge($results, $items);
-        }
-//    }
 
     wp_send_json_success($items);
 }
@@ -237,4 +229,36 @@ function find_posts_by_title_and_type($titles, $post_type, $is_autocomplete)
     $results = $wpdb->get_results($query);
 
     return $results;
+}
+
+function check_feed_areas_suggetions($search)
+{
+    $feed_areas_search_words = Foody_Query::get_feed_areas_search_words();
+
+    $found_feed_areas =[];
+    foreach ($feed_areas_search_words as $feed_area => $feed_area_search_words) {
+        if (isset($feed_area_search_words)) {
+            foreach ($feed_area_search_words as $word) {
+                if (strpos($word['search_word'], $search) !== false) {
+                    array_push($found_feed_areas, $feed_area);
+                    break;
+                }
+            }
+        }
+    }
+
+    $feed_areas_for_auto = [];
+    if (!empty($found_feed_areas)) {
+        foreach ($found_feed_areas as $feed_area_name) {
+            $feed_area_to_add = find_posts_by_title_and_type($feed_area_name, 'foody_feed_channel', false);
+            if (is_array($feed_area_to_add) && count($feed_area_to_add) > 0) {
+                array_push($feed_areas_for_auto, [
+                    'name' => $feed_area_to_add[0]->post_title,
+                    'link' => Foody_Query::get_search_url($feed_area_to_add[0]->post_title)
+                ]);
+            }
+        }
+
+    }
+    return $feed_areas_for_auto;
 }

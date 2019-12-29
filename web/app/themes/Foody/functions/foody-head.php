@@ -367,7 +367,7 @@ function foody_background_image_referer()
     </script>
     <?php
 
-    if (get_post_type() == 'foody_feed_channel') {
+    if (!is_search() && get_post_type() == 'foody_feed_channel') {
         ?>
         <script>
             jQuery(document).ready(($) => {
