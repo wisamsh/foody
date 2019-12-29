@@ -191,13 +191,13 @@ function foody_scripts()
         ) {
             $general_asset = foody_get_versioned_asset('general');
             wp_enqueue_script('foody-script-general', $general_asset, false, false, true);
-            if(is_page_template('page-templates/categories.php')) {
+            if (is_page_template('page-templates/categories.php')) {
                 $categories_asset = foody_get_versioned_asset('categories');
                 wp_enqueue_script('foody-script-categories', $categories_asset, false, false, true);
             }
         }
 
-        if(is_search()){
+        if (is_search()) {
             $search_results_asset = foody_get_versioned_asset('searchResults');
             wp_enqueue_script('foody-script-search-results', $search_results_asset, false, false, true);
         }
@@ -513,17 +513,20 @@ function custom_foody_ingredient_column($column, $post_id)
 //            } else {
 //                $amount = count($results);
 //            }
-            echo '<a href=http://'.$current_site_url.'/wp/wp-admin/edit.php?post_type=foody_ingredient&page=ingredients_recipes_list&ingredient_id=' . $post_id . '>' . __('למתכונים') . '</a>';
+            echo '<a href=http://' . $current_site_url . '/wp/wp-admin/edit.php?post_type=foody_ingredient&page=ingredients_recipes_list&ingredient_id=' . $post_id . '>' . __('למתכונים') . '</a>';
             break;
 
     }
 }
 
 //* Add CSS directly into the admin head
-add_action( 'admin_head', 'foody_custom_wp_admin_style_head' );
-function foody_custom_wp_admin_style_head() { ?>
+add_action('admin_head', 'foody_custom_wp_admin_style_head');
+function foody_custom_wp_admin_style_head()
+{ ?>
     <style>
-        #wpfooter { position: static }
+        #wpfooter {
+            position: static
+        }
     </style>
 <?php }
 
@@ -553,10 +556,11 @@ function ingredients_delta_export_menu_options()
 {
     add_submenu_page('edit.php?post_type=foody_ingredient', 'export new ingredients', __('ייצא מצרכים חדשים'), 'administrator', 'new_ingredients_export', 'ingredients_export_adjustments', 19);
 }
+
 add_action('admin_menu', 'ingredients_delta_export_menu_options');
 
 
-function ingredients_export_adjustments ()
+function ingredients_export_adjustments()
 {
     Foody_ingredients_exporter::generate_xlsx();
 }
@@ -573,33 +577,44 @@ function ingredients_export_adjustments ()
 //add_filter('the_content_feed', 'rss_post_thumbnail');
 
 
-function init_rss() {
-    add_feed( 'custom-rss', 'custom_rss_feed' );
+function init_rss()
+{
+    add_feed('custom-rss', 'custom_rss_feed');
 }
-add_action( 'init', 'init_rss' );
+
+add_action('init', 'init_rss');
 
 
-function custom_rss_feed() {
+function custom_rss_feed()
+{
     get_template_part('foody-custom-rss.php', 'custom-rss');
 }
 
-function rss_campaign_tracking($post_permalink) {
-    return $post_permalink .  '?utm_source=Maariv%20site&utm_medium=promos&utm_campaign=maariv%20food';
-};
+function rss_campaign_tracking($post_permalink)
+{
+    return $post_permalink . '?utm_source=Maariv%20site&utm_medium=promos&utm_campaign=maariv%20food';
+}
+
+;
 add_filter('the_permalink_rss', 'rss_campaign_tracking');
 
 
-add_filter( 'posts_orderby', 'order_search_by_posttype', 10, 2 );
-function order_search_by_posttype( $orderby, $wp_query ){
-    if( $wp_query->is_search || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more') || (isset($_POST['action']) && $_POST['action'] == 'foody_filter')))) :
+add_filter('posts_orderby', 'order_search_by_posttype', 10, 2);
+function order_search_by_posttype($orderby, $wp_query)
+{
+    if ((isset($wp_query->query['post_type']) && $wp_query->query['post_type'] == 'acf-field') || (isset($_REQUEST['sort']) && $_REQUEST['sort'] != '') ) {
+        return $orderby;
+    }
+    if ($wp_query->is_search || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more') || (isset($_POST['action']) && $_POST['action'] == 'foody_filter')))) :
         global $wpdb;
         $orderby =
             "
-            CASE WHEN {$wpdb->prefix}posts.post_type = 'foody_feed_channel' THEN '1' 
-                 WHEN {$wpdb->prefix}posts.post_type = 'foody_recipe' THEN '2' 
-                 WHEN {$wpdb->prefix}posts.post_type = 'post' THEN '3'  
-            ELSE {$wpdb->prefix}posts.post_type END ASC, 
-            {$wpdb->prefix}posts.post_title ASC";
+            CASE WHEN {$wpdb->prefix}posts.post_type = 'foody_feed_channel' THEN '1'
+            ELSE {$wpdb->prefix}posts.post_type END ASC,
+            {$wpdb->prefix}posts.post_date DESC";
     endif;
     return $orderby;
 }
+// WHEN {$wpdb->prefix}posts.post_type = 'foody_recipe' THEN '2'
+//                 WHEN {$wpdb->prefix}posts.post_type = 'post' THEN '3'
+//
