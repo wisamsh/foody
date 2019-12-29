@@ -87,7 +87,7 @@ function foody_ajax_load_more() {
 				$items = $grid->loop( $foody_posts, $cols, false );
 
 				$response = [
-					'next'  => $next && count( $items ) > 0,
+					'next'  => $next && strlen( $items ) > 0,
 					'items' => $items,
 					'found' => $query->found_posts
 				];
