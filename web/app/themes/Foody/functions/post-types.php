@@ -507,6 +507,7 @@ function foody_posts_page_script() {
 	     is_page_template( 'page-templates/items.php' ) ) {
 		$pixel_code = get_field( 'pixel_code' );
 		if ( ! empty( $pixel_code ) ) {
+		    $pixel_code = add_script_tags($pixel_code);
 			echo $pixel_code;
 		}
 	}
@@ -532,4 +533,16 @@ function ingredient_posts_where( $where, WP_Query $query ) {
 	}
 
 	return $where;
+}
+
+function add_script_tags($code){
+    $change_code = $code;
+    if(strpos($change_code, '<script>') == false){
+        $change_code = '<script>\n'.$change_code;
+    }
+    if(strpos($change_code, '</script>') == false){
+        $change_code = $change_code.'</script>';
+    }
+
+    return $change_code;
 }
