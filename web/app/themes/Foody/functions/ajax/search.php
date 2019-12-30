@@ -253,12 +253,22 @@ function check_feed_areas_suggetions($search)
             $feed_area_to_add = find_posts_by_title_and_type($feed_area_name, 'foody_feed_channel', false);
             if (is_array($feed_area_to_add) && count($feed_area_to_add) > 0) {
                 array_push($feed_areas_for_auto, [
-                    'name' => $feed_area_to_add[0]->post_title,
-                    'link' => Foody_Query::get_search_url($feed_area_to_add[0]->post_title)
+                    'name' => clean_string_before_search($feed_area_to_add[0]->post_title),
+                    'link' => Foody_Query::get_search_url(clean_string_before_search($feed_area_to_add[0]->post_title))
                 ]);
             }
         }
 
     }
     return $feed_areas_for_auto;
+}
+
+function clean_string_before_search($search){
+    $special_chars = ['#','(',')'];
+    $cleaned_search = $search;
+    foreach ($special_chars as $special_char){
+        $cleaned_search = str_replace($special_char, '', $cleaned_search);
+    }
+
+    return $cleaned_search;
 }

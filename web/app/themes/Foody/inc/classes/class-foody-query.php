@@ -677,7 +677,7 @@ class Foody_Query
 
     public static function get_feed_areas_search_words()
     {
-        if (!isset($_SESSION) || !isset($_SESSION['search_words_array']) || empty($_SESSION['search_words_array'])) {
+        if (!isset($_SESSION) || !isset($_SESSION['search_words_array']) || empty($_SESSION['search_words_array']) || (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > 60))) {
             global $wpdb;
             $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_type = 'foody_feed_channel'";
 
@@ -689,7 +689,11 @@ class Foody_Query
                 }
             }
             $_SESSION['search_words_array'] = $search_words_array;
+            $_SESSION["LAST_ACTIVITY"] = time();
             return $search_words_array;
+        }
+        elseif (!isset($_SESSION["LAST_ACTIVITY"])){
+            $_SESSION["LAST_ACTIVITY"] = time();
         }
         return $_SESSION['search_words_array'];
     }
