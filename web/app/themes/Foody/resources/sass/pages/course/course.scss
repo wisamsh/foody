@@ -159,6 +159,116 @@
       }
     }
 
+    .course-html-area {
+      display: flex;
+      flex-direction: column;
+      height: 75vh;
+      margin-top: 3%;
+
+      > p{
+        display: none !important;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .cover-image-html-area-mobile {
+        .hero-image {
+          background-size: cover;
+          background-repeat: no-repeat;
+          height: 30vh;
+        }
+      }
+
+      .text-html-area-mobile {
+
+        > p{
+          display: none;
+        }
+
+        text-align: center;
+        height: fit-content;
+        display: flex;
+        width: 100%;
+
+        .banner-text-container {
+          padding: 5%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+
+          .banner-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            line-height: 0.6;
+            letter-spacing: -0.1px;
+            color: #ed3d48;
+          }
+
+          .banner-first-paragraph {
+            font-size: 1rem;
+            line-height: 0.6;
+            letter-spacing: -0.04px;
+            color: #ed3d48;
+            padding-top: 8%;
+            font-weight: 500;
+
+            .third-line{
+              font-size: 0.8rem;
+              .prev-price {
+                text-decoration: line-through;
+              }
+            }
+          }
+
+          .banner-second-paragraph {
+            font-size: 1rem;
+            letter-spacing: -0.04px;
+            color: #ed3d48;
+            padding-top: 8%;
+            font-weight: 500;
+          }
+
+          p {
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            margin-top: 4%;
+
+            .syllabus{
+              border-style: solid;
+              border-width: 1px;
+              border-radius: 4.7px;
+              font-weight: bold;
+              color: #ed3d48;
+              width: 65%;
+              margin: 0 auto;
+              padding: 2%;
+              font-size: 1rem;
+            }
+
+            br{
+              display: none;
+            }
+
+            .purchase{
+              border-radius: 2.5px;
+              background-image: linear-gradient(76deg, #ec3849 20%, #f35644 80%);
+              width: 65%;
+              margin: 3% auto 0 auto;
+              padding: 2%;
+              color: #ffffff;
+              font-weight: bold;
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+    }
+
     .main-cover-image {
       margin: 10px 0;
 
