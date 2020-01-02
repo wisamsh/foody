@@ -9,6 +9,7 @@ $posts_list = get_field('post_list', $page_id);
 $counter = 0;
 
 $posts = array_map(function ($post) {
+    $post['recipe']->items_image = $post['items_image'];
     return $post['recipe'];
 }, $posts_list);
 
@@ -45,7 +46,7 @@ echo '<?xml version="1.0" encoding="' . get_option('blog_charset') . '"?' . '>';
                 <?php if ($counter < $limitCount) { ?>
                     <item>
                         <image>
-                            <url><?php echo get_the_post_thumbnail_url($post->ID, 'post-thumbnail'); ?></url>
+                            <url><?php echo $post->items_image['url']; ?></url>
                         </image>
                         <title><?php the_title_rss(); ?></title>
                         <dc:creator><?php the_author(); ?></dc:creator>
