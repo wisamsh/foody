@@ -116,7 +116,13 @@ jQuery(document).ready(($) => {
         $('.post-content-link').on('click', function () {
             let linkURL= $(this).attr("href");
             let domainName = get_hostname(linkURL);
-            eventCallback(event, 'כתבה', 'לחיצה על לינק בתוכן', domainName, 'מיקום', 'תוכן');
+            if ($(this).has('img').length) {
+                eventCallback(event, 'כתבה', 'לחיצה על לינק בתוכן', domainName, 'מיקום', 'תוכן', 'תמונה');
+
+            }
+            else {
+                eventCallback(event, 'כתבה', 'לחיצה על לינק בתוכן', domainName, 'מיקום', 'תוכן', 'טקסט');
+            }
         });
 
     }
@@ -132,7 +138,7 @@ jQuery(document).ready(($) => {
  * @param cdDesc
  * @param cdValue
  */
-function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '') {
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', object = '') {
 
     /**
      * Recipe name
@@ -209,7 +215,8 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
         hasRichContent,
         cdDesc,
         cdValue,
-        ''
+        '',
+        object
     );
 }
 

@@ -221,9 +221,14 @@ jQuery(document).ready(($) => {
          * click on link from the content
          */
         $('.post-content-link').on('click', function () {
-            let linkURL= $(this).attr("href");
+            let linkURL = $(this).attr("href");
             let domainName = get_hostname(linkURL);
-            eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'מיקום', 'תוכן');
+            if ($(this).has('img').length) {
+                eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'מיקום', 'תוכן', '', 'תמונה');
+
+            } else {
+                eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'מיקום', 'תוכן', '', '','טקסט');
+            }
         });
 
     }
@@ -240,7 +245,7 @@ jQuery(document).ready(($) => {
  * @param cdValue
  * @param recipe_order_location
  */
-function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location, itemCategory = '') {
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location = '', itemCategory = '', object = '') {
 
     /**
      * Recipe name
@@ -317,7 +322,8 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
         hasRichContent,
         cdDesc,
         cdValue,
-        ''
+        '',
+        object
     );
 }
 
@@ -352,8 +358,7 @@ function categoriesHits(publishers, feedPublisher) {
         if (category.name != primaryCategory) {
             if (feedPublisher == "") {
                 eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', publishers.join(', '), get_recipe_order_location(), category.name);
-            }
-            else {
+            } else {
                 eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', feedPublisher, get_recipe_order_location(), category.name);
             }
         }
