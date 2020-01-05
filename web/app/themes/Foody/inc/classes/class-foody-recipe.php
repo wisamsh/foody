@@ -800,7 +800,7 @@ class Foody_Recipe extends Foody_Post
 //			'iron',
 //			'potassium',
 //			'zinc',
-            'sugar'
+//          'sugar'
         ];
 
         foreach (Foody_Ingredient::get_nutrients_options() as $nutrients_name => $nutrients_title) {

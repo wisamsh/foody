@@ -496,7 +496,9 @@ class Foody_Ingredient extends Foody_Post{
     public static function get_nutrients_options()
     {
         $nutrients = get_field_object('field_5b62c59c35d88')['choices'];
-        unset($nutrients['sugar']);
+
+        /** remove suger from nutrients list **/
+        //unset($nutrients['sugar']);
 
         return $nutrients;
     }
