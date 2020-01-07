@@ -618,6 +618,11 @@ abstract class Foody_Post implements Foody_ContentWithSidebar {
 		return $label;
 	}
 
+	public function get_feed_logo($feed_id){
+        $logo = get_field( 'feed_logo', $feed_id );
+        return isset($logo['url']) ? $logo['url'] : '';
+    }
+
 	public function get_id() {
 		return $this->id;
 	}

@@ -48,6 +48,11 @@ $lazy = ! empty( $template_args['lazy'] );
                 </div>
 
 			<?php endif; ?>
+            <?php if (isset($args['feed_area_id']) && $args['feed_area_id'] && ! empty( $logo = $recipe->get_feed_logo($args['feed_area_id']))  ): ?>
+
+                <img class="feed-logo-sticker" src="<?php echo $logo;?>">
+
+            <?php endif; ?>
 			<?php if ( $recipe->video != null ): ?>
                 <div class="duration">
                     <i class="icon icon-timeplay">

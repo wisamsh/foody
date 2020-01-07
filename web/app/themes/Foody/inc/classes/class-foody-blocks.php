@@ -99,17 +99,31 @@ class Foody_Blocks {
 				if ( count( $posts ) > $block['recipes_amount']) {
 					$posts = array_slice( $posts, 0, $block['recipes_amount'] );
 				}
-				$block_content = foody_get_template_part( get_template_directory() . '/template-parts/common/foody-grid.php', [
-					'id'     => uniqid(),
-					'posts'  => $posts,
-					'cols'   => 2,
-					'more'   => false,
-					'header' => [
-						'title' => ''
-					],
-					'return' => true
-				] );
-
+				if(isset($block['feed_area_id']) && $block['feed_area_id']){
+                    $block_content = foody_get_template_part( get_template_directory() . '/template-parts/common/foody-grid.php', [
+                        'id'     => uniqid(),
+                        'posts'  => $posts,
+                        'cols'   => 2,
+                        'more'   => false,
+                        'header' => [
+                            'title' => ''
+                        ],
+                        'return' => true,
+                        'feed_area_id' => $block['feed_area_id']
+                    ] );
+                }
+				else {
+                    $block_content = foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', [
+                        'id' => uniqid(),
+                        'posts' => $posts,
+                        'cols' => 2,
+                        'more' => false,
+                        'header' => [
+                            'title' => ''
+                        ],
+                        'return' => true
+                    ]);
+                }
 				$see_more_link = $block['see_more_link'];
 				if ( empty( $see_more_link ) ) {
 					$see_more_link = [ 'url' => get_permalink( $filter_post->ID ) ];

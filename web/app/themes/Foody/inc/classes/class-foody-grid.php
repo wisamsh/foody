@@ -77,15 +77,29 @@ class FoodyGrid {
 
 		$item_content = $container_start;
 
-		$item_content .= foody_get_template_part(
-			get_template_directory() . '/template-parts/content-' . $type . '-list-item.php',
-			[
-				'post'   => $post,
-				'args'   => $args,
-				'lazy'   => true,
-				'return' => true
-			]
-		);
+		if(isset($args['feed_area_id']) && $args['feed_area_id']){
+            $item_content .= foody_get_template_part(
+                get_template_directory() . '/template-parts/content-' . $type . '-list-item.php',
+                [
+                    'post' => $post,
+                    'args' => $args,
+                    'lazy' => true,
+                    'return' => true,
+                    'feed_area_id' => $args['feed_area_id']
+                ]
+            );
+        }
+		else {
+            $item_content .= foody_get_template_part(
+                get_template_directory() . '/template-parts/content-' . $type . '-list-item.php',
+                [
+                    'post' => $post,
+                    'args' => $args,
+                    'lazy' => true,
+                    'return' => true
+                ]
+            );
+        }
 
 		$item_content .= $container_end;
 
