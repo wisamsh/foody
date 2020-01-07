@@ -592,7 +592,13 @@ function custom_rss_feed()
 
 function rss_campaign_tracking($post_permalink)
 {
-    return $post_permalink . '?utm_source=Maariv%20site&utm_medium=promos&utm_campaign=maariv%20food';
+    $maariv_RSS_slugs = ['/maariv-rss/','/maariv2-rss/'];
+    if(isset($GLOBALS['path']) && in_array($GLOBALS['path'],$maariv_RSS_slugs)) {
+        return $post_permalink . '?utm_source=Maariv%20site&utm_medium=promos&utm_campaign=maariv%20food';
+    }
+    else{
+        return $post_permalink ;
+    }
 }
 
 ;
