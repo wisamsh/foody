@@ -15,7 +15,10 @@ $use_general_banner = true;
 
 if (isset($_GET) && !empty($_GET)) {
     if (isset($_GET['referer']) && $_GET['referer'] != 0) {
-        if (!get_field('activate_banner', $post->ID)) {
+        if($post == null){
+            $feed_area_id = $_GET['referer'];
+        }
+        elseif (!get_field('activate_banner', $post->ID)) {
             $feed_area_id = $_GET['referer'];
         }
         else {
