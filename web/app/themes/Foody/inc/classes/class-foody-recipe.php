@@ -764,9 +764,9 @@ class Foody_Recipe extends Foody_Post
         if (function_exists('the_ratings') && !empty($post)) {
             ?>
             <section class="ratings-wrapper">
-<!--                <span class="rating-digits" id="lowest-rating">1</span>-->
+                <!--                <span class="rating-digits" id="lowest-rating">1</span>-->
                 <?php echo do_shortcode('[ratings]') ?>
-<!--                <span class="rating-digits" id="highest-rating">5</span>-->
+                <!--                <span class="rating-digits" id="highest-rating">5</span>-->
             </section>
             <?php
         }
@@ -791,7 +791,6 @@ class Foody_Recipe extends Foody_Post
     {
         $nutrients = array();
 
-
         $excluded_nutrients = [
 //			'fibers',
 //			'saturated_fat',
@@ -800,8 +799,24 @@ class Foody_Recipe extends Foody_Post
 //			'iron',
 //			'potassium',
 //			'zinc',
-//          'sugar'
+            'sugar'
         ];
+
+        if (isset($_GET['referer'])) {
+            $show_sugar = get_field('enable_sugar', $_GET['referer']);
+            if ($show_sugar) {
+                $excluded_nutrients = [
+//			'fibers',
+//			'saturated_fat',
+//			'cholesterol',
+//			'calcium',
+//			'iron',
+//			'potassium',
+//			'zinc',
+//          'sugar'
+                ];
+            }
+        }
 
         foreach (Foody_Ingredient::get_nutrients_options() as $nutrients_name => $nutrients_title) {
 
@@ -911,7 +926,7 @@ class Foody_Recipe extends Foody_Post
         $title_of_section = (get_option('foody_title_for_extra_content')) ? get_option('foody_title_for_extra_content') : __('תוכן נוסף');
         $args = ['title' => $title_of_section, 'items' => []];
 
-        if($similar_contents) {
+        if ($similar_contents) {
             foreach ($similar_contents as $content) {
                 if ($content['post'] != false) {
                     array_push($not_in_random, $content['post']->ID);
@@ -927,8 +942,7 @@ class Foody_Recipe extends Foody_Post
                         $title = get_cat_name($content['category']);
                         $image = $content['image']['url'];
                         $link = get_category_link($content['category']);
-                    }
-                    else{
+                    } else {
                         $title = $content['title'];
                         $image = $content['image']['url'];
                         $link = $content['manual'];
@@ -963,7 +977,7 @@ class Foody_Recipe extends Foody_Post
             );
 
             $the_query = new WP_Query($query_args);
-            foreach ($the_query->posts as $post){
+            foreach ($the_query->posts as $post) {
                 $current_post = Foody_Post::create($post);
                 $args_to_push = [
                     'title' => $current_post->getTitle(),
@@ -971,10 +985,10 @@ class Foody_Recipe extends Foody_Post
                     'link' => $current_post->link
                 ];
                 array_push($not_in_random, $post->ID);
-                array_push($args['items'],$args_to_push);
+                array_push($args['items'], $args_to_push);
             }
             $post_added = count($the_query->posts);
-            if((4 - $counter) != $post_added){
+            if ((4 - $counter) != $post_added) {
                 $post_added += $counter;
                 $query_args = array(
                     'post_type' => 'foody_recipe',
@@ -985,7 +999,7 @@ class Foody_Recipe extends Foody_Post
                 );
 
                 $the_query = new WP_Query($query_args);
-                foreach ($the_query->posts as $post){
+                foreach ($the_query->posts as $post) {
                     $current_post = Foody_Post::create($post);
                     $args_to_push = [
                         'title' => $current_post->getTitle(),
@@ -993,7 +1007,7 @@ class Foody_Recipe extends Foody_Post
                         'link' => $current_post->link
                     ];
 
-                    array_push($args['items'],$args_to_push);
+                    array_push($args['items'], $args_to_push);
                 }
             }
         }
