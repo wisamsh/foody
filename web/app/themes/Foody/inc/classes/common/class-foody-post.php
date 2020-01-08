@@ -694,6 +694,9 @@ abstract class Foody_Post implements Foody_ContentWithSidebar {
 						foody_get_template_part( get_template_directory() . '/template-parts/content-recipe-video.php', $args );
 					} else {
 						echo get_the_post_thumbnail( $this->id, 'foody-main' );
+						if (isset($_GET['referer']) && $_GET['referer'] && ! empty( $logo = $this->get_feed_logo($_GET['referer']))){
+                            echo '<img class="feed-logo-sticker" src="'.$logo.'">';
+                        }
 					}
 
 				endwhile;
