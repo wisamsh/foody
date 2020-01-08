@@ -173,10 +173,13 @@ jQuery(document).ready(function ($) {
         if(window.innerWidth > 736){
             $('.phone-link').each(function (index,value) {
                 let number = value.innerText;
-                let numberDiv = $('<p>'+number+'</p>');
+                let numberDiv = $('<span style="white-space: nowrap;">'+number+'</span>');
                 numberDiv.insertAfter(value);
                 value.remove();
             });
+        }
+        else{
+            $('.phone-link').attr('style', 'white-space: nowrap');
         }
     }
 
