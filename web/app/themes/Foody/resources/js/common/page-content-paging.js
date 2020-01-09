@@ -126,6 +126,12 @@ module.exports = (function () {
             ajaxSettings.data.sort = sort;
         }
 
+        var url = new URL(window.location.href);
+        var idReferer = url.searchParams.get("referer");
+        if(idReferer){
+            ajaxSettings.data.referer = idReferer;
+        }
+
 
         return ajaxSettings;
 

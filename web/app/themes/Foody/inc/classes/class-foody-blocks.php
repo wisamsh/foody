@@ -317,13 +317,33 @@ class Foody_Blocks {
 
 			}, $items );
 
-			$grid_args = [
-				'id'     => uniqid(),
-				'more'   => false,
-				'cols'   => 2,
-				'posts'  => $items,
-				'return' => true
-			];
+            if(isset($block['feed_area_id']) && $block['feed_area_id']){
+                $grid_args = [
+                    'id'     => uniqid(),
+                    'posts'  => $items,
+                    'cols'   => 2,
+                    'more'   => false,
+                    'return' => true,
+                    'feed_area_id' => $block['feed_area_id']
+                ];
+            }
+            else {
+                $grid_args = [
+                    'id' => uniqid(),
+                    'posts' => $items,
+                    'cols' => 2,
+                    'more' => false,
+                    'return' => true
+                ];
+            }
+
+//			$grid_args = [
+//				'id'     => uniqid(),
+//				'more'   => false,
+//				'cols'   => 2,
+//				'posts'  => $items,
+//				'return' => true
+//			];
 
 			$items_content = foody_get_template_part( get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args );
 

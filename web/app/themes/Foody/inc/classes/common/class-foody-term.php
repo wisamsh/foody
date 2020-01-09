@@ -132,7 +132,9 @@ abstract class Foody_Term {
 		];
 
 		$grid = array_replace_recursive( $grid, $grid_args );
-
+		if((is_category() || is_tag()) && isset($_GET['referer']) && $_GET['referer']){
+		    $grid['feed_area_id'] = $_GET['referer'];
+        }
 		foody_get_template_part(
 			get_template_directory() . '/template-parts/common/foody-grid.php',
 			$grid

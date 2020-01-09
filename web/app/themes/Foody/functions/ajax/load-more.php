@@ -84,7 +84,15 @@ function foody_ajax_load_more() {
 
 				$cols  = foody_get_array_default( $_POST, 'cols', 2 );
 				$cols  = intval( $cols );
-				$items = $grid->loop( $foody_posts, $cols, false );
+
+				if(($context == 'category' || $context == 'tag') && isset($_POST['referer']) && $_POST['referer']){
+                    $args['feed_area_id'] = $_POST['referer'];
+                    $items = $grid->loop( $foody_posts, $cols, false , null, [], null, $args);
+
+				}
+				else {
+                    $items = $grid->loop($foody_posts, $cols, false);
+                }
 
 				$response = [
 					'next'  => $next && strlen( $items ) > 0,
