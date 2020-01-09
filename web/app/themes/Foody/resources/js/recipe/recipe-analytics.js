@@ -221,13 +221,16 @@ jQuery(document).ready(($) => {
          * click on link from the content
          */
         $('.post-content-link').on('click', function () {
+            let text = '';
             let linkURL = $(this).attr("href");
             let domainName = get_hostname(linkURL);
-            if ($(this).has('img').length) {
-                eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'מיקום', 'תוכן', '', 'תמונה');
-
+            let imageContainer = $(this).has('img');
+            if (imageContainer.length) {
+                text = $(imageContainer[0].children[0]).attr('alt');
+                eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', '','תמונה');
             } else {
-                eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'מיקום', 'תוכן', '', '','טקסט');
+                text = $(this)[0].innerHTML;
+                eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', '','קישור');
             }
         });
 
