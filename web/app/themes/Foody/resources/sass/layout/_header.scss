@@ -320,6 +320,9 @@ header {
                 .quadmenu-text {
                   word-break: break-word;
                 }
+                .quadmenu-description {
+                  display: none !important;
+                }
               }
             }
 
@@ -330,7 +333,7 @@ header {
 
     .quadmenu-item-content {
       .quadmenu-description {
-        display: none;
+        display: none !important;
       }
     }
   }
@@ -850,6 +853,9 @@ header {
                 .quadmenu-text {
 
                 }
+                .quadmenu-description {
+                  display: none !important;
+                }
               }
             }
           }
@@ -860,6 +866,9 @@ header {
             a {
               .quadmenu-item-content {
                 font-weight: 900;
+                .quadmenu-description {
+                  display: none !important;
+                }
               }
             }
           }
@@ -889,6 +898,9 @@ header {
               .quadmenu-item-content {
                 .quadmenu-text {
 
+                }
+                .quadmenu-description {
+                  display: none !important;
                 }
               }
             }
@@ -1360,7 +1372,9 @@ header {
               .quadmenu-item-content {
                 text-align: right !important;
 
-
+                .quadmenu-description {
+                  display: none !important;
+                }
                 .quadmenu-caret {
                   left: 0 !important;
                   width: fit-content;
