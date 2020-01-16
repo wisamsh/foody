@@ -22,7 +22,10 @@ if ( method_exists( $foody_page, 'featured_content_classes' ) ) {
 
 
 $featured_content_classes[] = 'featured-content-container';
-
+$css_fn = "the_css";
+if ( method_exists( $foody_page, $css_fn ) ) {
+    call_user_func(  [$foody_page, $css_fn]  );
+}
 ?>
     <div id="primary" class="content-area">
         <main id="main" class="site-main">

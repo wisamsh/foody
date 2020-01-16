@@ -28,6 +28,10 @@ if ( empty( $image ) ) {
 
 if ( empty( $link ) ) {
 	$link = get_field( 'cover_link' );
+	// add link to cover that was referred by feed channel
+    if (isset($_GET) && isset($_GET['referer']) && $_GET['referer']) {
+        $link = get_field( 'cover_link' , $_GET['referer']);
+    }
 }
 if ( ! empty( $link ) ) {
 	$a = '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
