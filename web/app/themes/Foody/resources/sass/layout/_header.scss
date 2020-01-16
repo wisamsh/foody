@@ -327,11 +327,10 @@ header {
         }
       }
     }
-    .quadmenu-item-content{
-      .quadmenu-text{
-        .quadmenu-description{
-          display: none;
-        }
+
+    .quadmenu-item-content {
+      .quadmenu-description {
+        display: none;
       }
     }
   }
@@ -654,7 +653,7 @@ header {
           }
         }
 
-        .user-name-header{
+        .user-name-header {
           display: inline-block;
           max-width: 105px;
           overflow: hidden;
@@ -822,6 +821,7 @@ header {
         }
       }
     }
+
     //
     //.foody-navbar-container{
     //  .profile-picture-container{
