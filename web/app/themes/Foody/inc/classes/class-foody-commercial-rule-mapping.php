@@ -125,6 +125,10 @@ function foody_save_commercial_rule_mapping_for_rule( $rule_id ) {
 	// Clear old rules
 	Foody_CommercialRuleMapping::removeRules( $rule_id );
 
+	// if delete commercial rule
+	if(isset($_REQUEST) &&( isset($_REQUEST['action']) && $_REQUEST['action'] == 'trash')){
+	    return;
+    }
 	$posts = [];
 
 	if ( get_field( 'type' ) == 'area' ) {
