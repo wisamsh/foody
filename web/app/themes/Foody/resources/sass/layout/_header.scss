@@ -327,6 +327,13 @@ header {
         }
       }
     }
+    .quadmenu-item-content{
+      .quadmenu-text{
+        .quadmenu-description{
+          display: none;
+        }
+      }
+    }
   }
 
   #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
