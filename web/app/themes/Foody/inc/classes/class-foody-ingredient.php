@@ -262,9 +262,9 @@ class Foody_Ingredient extends Foody_Post{
         }
 
         // Add ingredient comment
-        if (!empty($this->comment)) {
-            $amount_el .= '<div class="comment">' . $this->comment . '</div>';
-        }
+//        if (!empty($this->comment)) {
+//            $amount_el .= '<div class="comment">' . $this->comment . '</div>';
+//        }
 
         if ($length <= 1) {
             $amount_el .= '</span></span>';
