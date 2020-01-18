@@ -5,21 +5,7 @@
 jQuery(document).ready(($) => {
     if (foodyGlobals.type && foodyGlobals.type == 'feed_channel') {
 
-        let searchString = ($('.search-results-title').length) ? $('.search-results-title')[0].innerText : '';
-        let searchResultsCount = ($('.search-results-count').length) ? $('.search-results-count')[0].innerText : '';
-        let separators = separators = ['\\\(', '\\\)'];
-        let object = 'חיפוש חופשי';
-        searchResultsCount = searchResultsCount.split(new RegExp(separators.join('|'), 'g'))[1];
-
-        var urlParams = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        if ((typeof urlParams[1] != 'undefined') && urlParams[1] == 'auto=1') {
-            object = 'מנגנון תוצאות'
-        }
-
-
-        var channelName = foodyGlobals.title ? foodyGlobals.title : '';
-
-
+        let channelName = foodyGlobals.title ? foodyGlobals.title : '';
         let recipesLocationList = getRecipesLocationsInFeedChannel();
 
         /** page load **/
