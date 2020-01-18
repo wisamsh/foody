@@ -91,6 +91,7 @@ module.exports = env => {
             tag: ["./resources/js/tag.entry", "./resources/js/page-load.entry"],
             team: ["./resources/js/team.entry", "./resources/js/page-load.entry"],
             searchResults: ["./resources/js/search-results.entry", "./resources/js/page-load.entry"],
+            feedChannel: ["./resources/js/feed-channel.entry", "./resources/js/page-load.entry"],
             style: ["./resources/sass/app.scss"],
             // homepage: ["./resources/sass/homepage_app.scss"],
         },

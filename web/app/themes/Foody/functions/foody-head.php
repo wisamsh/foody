@@ -135,6 +135,16 @@ function campaign_name($vars)
 
 add_filter('foody_js_globals', 'campaign_name');
 
+function channel_name($vars){
+    if(isset($_GET) && isset($_GET['referer']) && $_GET['referer']){
+        $vars['channel_name'] = get_the_title($_GET['referer']);
+    }
+    return $vars;
+}
+
+add_filter('foody_js_globals', 'channel_name');
+
+
 function foody_set_og_image()
 {
     if (is_author()) {
