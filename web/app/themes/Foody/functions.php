@@ -203,13 +203,16 @@ function foody_scripts()
         }
 
         if (is_page_template('page-templates/content-with-sidebar.php') && is_single()
-            && !in_array(get_post_type(), ['foody_ingredient', 'foody_accessory', 'foody_technique'])) {
+            && !in_array(get_post_type(), ['foody_ingredient', 'foody_accessory', 'foody_technique', 'foody_feed_channel'])) {
             $post_asset = foody_get_versioned_asset('post');
             wp_enqueue_script('foody-script-recipe', $post_asset, false, false, true);
 
+        }
+
+        if (is_page_template('page-templates/content-with-sidebar.php') && is_single()
+            && in_array(get_post_type(), ['foody_feed_channel'])) {
             $feed_channel_asset = foody_get_versioned_asset('feedChannel');
             wp_enqueue_script('foody-script-feed-channel', $feed_channel_asset, false, false, true);
-
         }
 
         if (is_page_template('page-templates/foody-course.php')) {
