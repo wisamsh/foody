@@ -25,6 +25,9 @@ if (!is_multisite() || is_main_site()) {
     <link rel="profile" href="http://gmpg.org/xfn/11">
 
     <?php Foody_Header::google_tag_manager(); ?>
+    <?php if(get_current_blog_id() == 2){ ?>
+        <script data-ad-client="ca-pub-3607762765478350" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <?php } ?>
     <?php wp_head(); ?>
 
 </head>
