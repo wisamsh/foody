@@ -540,6 +540,9 @@ $content-width: 95%;
             .ingredients {
               position: relative;
 
+              .ingredient{
+                display: inline-flex;
+              }
               span.amount {
                 vertical-align: top;
               }
@@ -593,6 +596,7 @@ $content-width: 95%;
             li {
               padding: 5px 10px;
               font-size: 17px;
+
 
               &:nth-child(odd) {
                 background-color: white;

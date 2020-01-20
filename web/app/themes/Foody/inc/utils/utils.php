@@ -200,8 +200,11 @@ function foody_print_commercial_rules( $rules ) {
 		}
 
 		$sponsored_ingredient_container_classes = [ 'sponsors-container' ];
-		if ( ! $has_image ) {
-			$sponsored_ingredient_container_classes[] = 'sponsors-without-image';
+		if ( ! $has_image  || !($show_product || $show_sponsor_brand || $show_sponsor) ) {
+		    //check if more the one image
+		    if(!(($show_product_logo && $show_sponsor_brand_logo) || ($show_product_logo && $show_sponsor_logo) || ($show_sponsor_brand_logo && $show_sponsor_logo) )) {
+                $sponsored_ingredient_container_classes[] = 'sponsors-without-image';
+            }
 		}
 
 		$sponsored_ingredient_container = '<div class="' . implode( ' ', $sponsored_ingredient_container_classes ) . '">';
