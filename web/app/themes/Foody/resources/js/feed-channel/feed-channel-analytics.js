@@ -13,12 +13,12 @@ jQuery(document).ready(($) => {
         eventCallback('', 'מתחם פידים', 'טעינה', channelName);
 
         /** loading channel category **/
-        if ($('.categort-listing-title').length) {
-            $('.categort-listing-title').each(function () {
-                let categoryName = $(this)[0].innerText;
-                eventCallback('', 'מתחם פידים', 'טעינת קטגוריה', categoryName);
-            });
-        }
+        // if ($('.categort-listing-title').length) {
+        //     $('.categort-listing-title').each(function () {
+        //         let categoryName = $(this)[0].innerText;
+        //         eventCallback('', 'מתחם פידים', 'טעינת קטגוריה', categoryName);
+        //     });
+        // }
 
         /** choose category **/
         if ($('.category-listing').length) {
@@ -28,13 +28,6 @@ jQuery(document).ready(($) => {
             });
         }
 
-        /** choose recipe **/
-        // $('.recipe-item-container').on('click', function () {
-        //     let recipeName = $(this)[0] ? $(this)[0].dataset.title : '';
-        //     let recipeLocation = recipesLocationList[recipeName];
-        //     let recipeDetails = getCurrentRecipeDetail($(this)[0]);
-        //     eventCallback('', 'מתחם פידים', 'בחירת מתכון', channelName, 'מיקום', recipeLocation, '', '', '', recipeDetails);
-        // });
 
         /** redirect to recipe through image **/
         $('.foody-grid ').on('click', '.image-container.main-image-container img', function (event) {
