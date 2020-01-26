@@ -501,26 +501,9 @@ function set_custom_edit_foody_ingredient_columns($columns)
 add_action('manage_foody_ingredient_posts_custom_column', 'custom_foody_ingredient_column', 10, 2);
 function custom_foody_ingredient_column($column, $post_id)
 {
-    global $wpdb;
     switch ($column) {
-
         case 'recipes' :
-//            $query = "SELECT count(post_id) FROM {$wpdb->postmeta} as postmeta
-//JOIN {$wpdb->posts} as posts
-//where posts.ID = postmeta.post_id
-//	AND meta_key like 'ingredients_ingredients_groups_%_ingredients_%_ingredient'
-//	AND meta_value = $post_id
-//    AND post_status = 'publish'
-//group by post_id ";
-
-
             $current_site_url = get_site(get_current_blog_id())->domain;
-//            $results = $wpdb->get_results($query);
-//            if (empty($results)) {
-//                $amount = 0;
-//            } else {
-//                $amount = count($results);
-//            }
             echo '<a href=http://' . $current_site_url . '/wp/wp-admin/edit.php?post_type=foody_ingredient&page=ingredients_recipes_list&ingredient_id=' . $post_id . '>' . __('למתכונים') . '</a>';
             break;
 

@@ -54,6 +54,14 @@ function extra_profile_fields($user)
             </td>
         </tr>
         <tr>
+            <th><label for="zip-code">מיקוד</label></th>
+            <td>
+                <input type="text" name="zip-code" id="zip-code"
+                       value="<?php echo esc_attr(get_the_author_meta('zip_code', $user->ID)); ?>"
+                       class="regular-text"/><br/>
+            </td>
+        </tr>
+        <tr>
             <th><label for="birthday">תאריך לידה</label></th>
             <td>
                 <input type="date" name="birthday" id="birthday"
@@ -93,6 +101,7 @@ function save_extra_profile_fields($user_id)
     update_user_meta($user_id, 'street', $_POST['street']);
     update_user_meta($user_id, 'street_number', $_POST['street-number']);
     update_user_meta($user_id, 'city', $_POST['city']);
+    update_user_meta($user_id, 'zip_code', $_POST['zip-code']);
     update_user_meta($user_id, 'birthday', $_POST['birthday']);
     update_user_meta($user_id, 'gender', $_POST['gender']);
     update_user_meta($user_id, 'type_of_writer', $_POST['type_of_writer']);
