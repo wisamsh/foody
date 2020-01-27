@@ -63,9 +63,9 @@ jQuery(document).ready(($) => {
         let banner_link = $(this).attr('href');
         let bannerName = $('#popup-banner .modal-content').attr('data-banner-name');
         let publisherName = $('#popup-banner .modal-content').attr('data-banner-publisher');
-        if (banner_link.toLowerCase().indexOf('foody') >= 0) {
+        if (bannerLink.toLowerCase().indexOf('utm') < 0 && bannerLink.toLowerCase().indexOf('foody') >= 0) {
             eventCallback('', foodyGlobals['type'], 'הקלקה על באנר (הפניה פנימה)', bannerName, 'מפרסם', publisherName, 'באנר קידום');
-        } else {
+        } else if (bannerLink.toLowerCase().indexOf('utm') >= 0 || bannerLink.toLowerCase().indexOf('foody') < 0) {
             eventCallback('', foodyGlobals['type'], 'הקלקה על באנר (הפניה החוצה)', bannerName, 'מפרסם', publisherName, 'באנר קידום');
         }
     });

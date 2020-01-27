@@ -144,6 +144,17 @@ function channel_name($vars){
 
 add_filter('foody_js_globals', 'channel_name');
 
+function channel_publisher_name($vars){
+    if(isset($_GET) && isset($_GET['referer']) && $_GET['referer']){
+        $vars['channel_publisher_name'] = get_field('publisher_name' ,$_GET['referer']);
+    }
+    if (get_post_type() == 'foody_feed_channel') {
+        $vars['channel_publisher_name'] = get_field('publisher_name');
+    }
+    return $vars;
+}
+
+add_filter('foody_js_globals', 'channel_publisher_name');
 
 function foody_set_og_image()
 {

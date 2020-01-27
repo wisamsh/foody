@@ -8,8 +8,16 @@ jQuery(document).ready(($) => {
     if (foodyGlobals.type && (foodyGlobals.type == 'category' || foodyGlobals.type == 'categories')) {
 
         /** page load **/
-        eventCallback('', 'עמוד קטגוריה', 'טעינה', '', '', '', '', foodyGlobals['title']);
+        if(typeof(foodyGlobals['channel_name']) != "undefined" && foodyGlobals['channel_name'].length){
+            // feed area category
+            let categoryName = foodyGlobals['title'].length ? foodyGlobals['title'] : '';
+            eventCallback('', 'מתחם פידים', 'טעינת קטגוריה', categoryName, '', '', '', foodyGlobals['channel_name']);
 
+        }
+        else {
+            // regular category
+            eventCallback('', 'עמוד קטגוריה', 'טעינה', '', '', '', '', foodyGlobals['title']);
+        }
 
         /** selecting a category from header **/
         if ($('.slick-track .slick-slide').length) {

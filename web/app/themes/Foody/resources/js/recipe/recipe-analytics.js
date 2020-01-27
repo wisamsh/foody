@@ -6,6 +6,8 @@
 jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe')) {
         let feedPublisher = "";
+        let scrollsArr = {'0': false, '25': false, '50': false, '75': false, '100': false};
+
         // Add to recipes visited in session count
         set_recipe_order_location(foodyGlobals.ID);
 
@@ -204,8 +206,10 @@ jQuery(document).ready(($) => {
                 toLog = true;
             }
             if (toLog) {
-                eventCallback(e, 'מתכון', 'גלילה', scrollPercentRounded + '%', '', '', get_recipe_order_location());
-
+                if(!scrollsArr[scrollPercentRounded]) {
+                    eventCallback(e, 'מתכון', 'גלילה', scrollPercentRounded + '%', '', '', get_recipe_order_location());
+                    scrollsArr[scrollPercentRounded] = true;
+                }
             }
         });
 

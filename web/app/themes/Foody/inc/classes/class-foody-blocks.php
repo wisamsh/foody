@@ -257,6 +257,7 @@ class Foody_Blocks {
 				[
 					'image'  => $image,
 					'link'   => $link,
+					'title'  => $block['title'],
 					'return' => true
 				]
 			);

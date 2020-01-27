@@ -5,6 +5,7 @@
 
 jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'post')) {
+        let scrollsArr = {'0': false, '25': false, '50': false, '75': false, '100': false};
 
         /**
          * Page Load
@@ -89,8 +90,10 @@ jQuery(document).ready(($) => {
                 toLog = true;
             }
             if (toLog) {
-                eventCallback(event, 'כתבה', 'גלילה', scrollPercentRounded + '%', '', '');
-
+                if(!scrollsArr[scrollPercentRounded]) {
+                    eventCallback(event, 'כתבה', 'גלילה', scrollPercentRounded + '%', '', '');
+                    scrollsArr[scrollPercentRounded] = true;
+                }
             }
         });
 

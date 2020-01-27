@@ -56,6 +56,21 @@ jQuery(document).ready(($) => {
             eventCallback('', 'מתחם פידים', 'בחירת מתכון', foodyGlobals['title'], ' מיקום', recipeLocation, '', '', '', recipeDetails);
         });
 
+        /** click on banner **/
+        if ($('.block-content .foody-banner a').length) {
+            $('.block-content .foody-banner a').on('click', function () {
+                let bannerLink = $(this).attr('href');
+                let bannerName = $('.foody-banner a').attr('data-banner-name');
+                let publisherName = typeof(foodyGlobals['channel_publisher_name']) != "undefined" ? foodyGlobals['channel_publisher_name'] : '';
+                if (bannerLink.toLowerCase().indexOf('utm') < 0 && bannerLink.toLowerCase().indexOf('foody') >= 0) {
+                    eventCallback('', 'מתחם פידים', 'הקלקה על באנר (הפניה פנימה)', bannerName, ' מפרסם', publisherName);
+                }
+                else if(bannerLink.toLowerCase().indexOf('utm') >= 0 || bannerLink.toLowerCase().indexOf('foody') < 0){
+                    eventCallback('', 'מתחם פידים', 'הקלקה על באנר (הפניה החוצה)', bannerName, ' מפרסם', publisherName);
+                }
+            });
+        }
+
 
     }
 });
@@ -87,6 +102,12 @@ function getCurrentRecipeDetail(recipeContainer) {
         if (authorElement.length) {
             recipeDetails['author'] = authorElement[0] ? authorElement[0].innerText : '';
         }
+    }
+
+    //has video
+    let videoDurationContainer = $(recipeContainer).find('.duration');
+    if (videoDurationContainer.length) {
+        recipeDetails['has_rich_content'] = true;
     }
     return recipeDetails;
 }
@@ -152,7 +173,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
     /**
      * Has rich content - does contains video or product buy option
      */
-    let hasRichContent = '';
+    let hasRichContent = (recipeDetails != '' && typeof (recipeDetails['has_rich_content']) != "undefined") ? recipeDetails['has_rich_content'] : '';
 
     tagManager.pushDataLayer(
         category,
