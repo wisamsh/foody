@@ -167,12 +167,7 @@ class Foody_BotHandler
 
     private function getPosts($params, $counter, $sortedArray = [] , $recursiveArgs =[])
     {
-//        if( $counter == 0 ) {
-//            $args = $this->parseQueryArgs($params);
-//        }
-//        else{
-//            $args = $recursiveArgs;
-//        }
+
         $args = $this->parseQueryArgs($params);
 
         $posts = [];

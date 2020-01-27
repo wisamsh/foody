@@ -5,22 +5,22 @@ add_action('rest_api_init', 'users_api_register_routs');
 function users_api_register_routs()
 {
 
-    register_rest_route('users-api/v1', '/login/user', array(
+    register_rest_route(users_api_get_base_route(), '/login/user', array(
         'methods' => WP_REST_Server::CREATABLE,
         'callback' => 'users_api_login_user',
     ));
 
-    register_rest_route('users-api/v1', '/create/user', array(
+    register_rest_route(users_api_get_base_route(), '/create/user', array(
         'methods' => WP_REST_Server::CREATABLE,
         'callback' => 'users_api_create_user'
     ));
 
-    register_rest_route('users-api/v1', '/update/user', array(
+    register_rest_route(users_api_get_base_route(), '/update/user', array(
         'methods' => WP_REST_Server::CREATABLE,
         'callback' => 'users_api_update_user'
     ));
 
-    register_rest_route('users-api/v1', '/get/user', array(
+    register_rest_route(users_api_get_base_route(), '/get/user', array(
         'methods' => WP_REST_Server::READABLE,
         'callback' => 'users_api_get_user'
     ));
@@ -239,4 +239,14 @@ function users_api_generate_error_response($error)
 function users_api_generate_exception($message)
 {
     throw new Exception($message);
+}
+
+function users_api_get_base_route(){
+    $route_base = 'users-api';
+    return $route_base.'/'.users_api_get_version();
+}
+
+function users_api_get_version(){
+    $version = 'v1';
+    return $version;
 }

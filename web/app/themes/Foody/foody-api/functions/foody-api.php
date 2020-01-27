@@ -18,7 +18,8 @@ function foody_filter_rest_index( \WP_REST_Response $response ) {
 	$data             = $response->get_data();
 	$valid_namespaces = [
 		'foody-api',
-		'jwt-auth/v1'
+		'jwt-auth/v1',
+        users_api_get_base_route()
 	];
 
 	$data['namespaces'] = array_filter( $data['namespaces'], function ( $namespace ) use ( $valid_namespaces ) {
