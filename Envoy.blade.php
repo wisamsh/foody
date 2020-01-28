@@ -92,6 +92,9 @@ sudo rm -rf assets-{{ $release }}.tar.gz
 
 mv version-hash.txt {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}/build/
 
+sudo ln -s {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}/inc/plugins/wp-oauth-server {{ $release_dir }}/{{ $release }}/web/app/plugins/wp-oauth-server
+
+
 cd {{ $release_dir }}/{{ $release }};
 
 echo 'Setting permissions...'
