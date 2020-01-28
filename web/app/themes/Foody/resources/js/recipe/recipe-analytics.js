@@ -7,6 +7,27 @@ jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe')) {
         let feedPublisher = "";
         let scrollsArr = {'0': false, '25': false, '50': false, '75': false, '100': false};
+        let mainCategoriesList = {
+            "קינוחים": "קינוחים",
+            "עוגות": "עוגות",
+            "קציצות": "קציצות",
+            "אוכל שילדים אוהבים": "אוכל שילדים אוהבים",
+            "עוגיות": "עוגיות",
+            "חגים": "חגים",
+            "ארוחות ב-5 דקות": "ארוחות ב-5 דקות",
+            "עוף": "עוף",
+            "מרקים": "מרקים",
+            "טבעוני": "טבעוני",
+            "ללא גלוטן": "ללא גלוטן",
+            "לחם ולחמניות": "לחם ולחמניות",
+            "סלטים": "סלטים",
+            "צמחוני": "צמחוני",
+            "שוקולד": "שוקולד",
+            "דגים": "דגים",
+            "ארוחת ערב": "ארוחת ערב",
+            "ארוחת צהריים": "ארוחת צהריים",
+            "בראנץ'": "בראנץ'",
+        };
 
         // Add to recipes visited in session count
         set_recipe_order_location(foodyGlobals.ID);
@@ -23,14 +44,16 @@ jQuery(document).ready(($) => {
             let sponsors = $('.sponsors-container');
             for (let i = 0; i < sponsors.length; i++) {
                 let topOfHierarchy = sponsors[i].children[sponsors[i].children.length - 1];
-                publishers.push(topOfHierarchy.innerText);
+                if(topOfHierarchy.innerText != '') {
+                    publishers.push(topOfHierarchy.innerText);
+                }
             }
         }
         /**
          * Page Load
          */
         if (foodyGlobals['post']['categories']) {
-            categoriesHits(publishers, feedPublisher);
+            categoriesHits(publishers, feedPublisher, mainCategoriesList);
         }
         /**
          * Breadcrumbs click
@@ -206,7 +229,7 @@ jQuery(document).ready(($) => {
                 toLog = true;
             }
             if (toLog) {
-                if(!scrollsArr[scrollPercentRounded]) {
+                if (!scrollsArr[scrollPercentRounded]) {
                     eventCallback(e, 'מתכון', 'גלילה', scrollPercentRounded + '%', '', '', get_recipe_order_location());
                     scrollsArr[scrollPercentRounded] = true;
                 }
@@ -231,10 +254,10 @@ jQuery(document).ready(($) => {
             let imageContainer = $(this).has('img');
             if (imageContainer.length) {
                 text = $(imageContainer[0].children[0]).attr('alt');
-                eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', '','תמונה');
+                eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', '', 'תמונה');
             } else {
                 text = $(this)[0].innerHTML;
-                eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', '','קישור');
+                eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', '', 'קישור');
             }
         });
 
@@ -358,18 +381,74 @@ function set_recipe_order_location(recipe_id) {
     sessionStorage.setItem('recipes_visited', JSON.stringify(recipes_visited));
 }
 
-function categoriesHits(publishers, feedPublisher) {
+function categoriesHits(publishers, feedPublisher, categoriesList) {
     let primaryCategory = $('.breadcrumb > li').last()[0].innerText;
+    let secondaryCategoriesString = "";
+    let hasSecondaryCategories = false;
+    //let techniquesAndAccessoriesString = '';
+    let techniquesAndAccessoriesString = getTechniquesAndAccessories();
+
     eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), get_recipe_order_location(), primaryCategory);
-    foodyGlobals['post']['categories'].forEach((category) => {
+    foodyGlobals['post']['categories'].forEach((category, index, array) => {
         if (category.name != primaryCategory) {
-            if (feedPublisher == "") {
-                eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', publishers.join(', '), get_recipe_order_location(), category.name);
+            if (typeof (categoriesList[category.name]) != 'undefined') {
+                if (feedPublisher == "") {
+                    eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', publishers.join(', '), get_recipe_order_location(), category.name);
+                } else {
+                    eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', feedPublisher, get_recipe_order_location(), category.name);
+                }
             } else {
-                eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', feedPublisher, get_recipe_order_location(), category.name);
+                if (index === (array.length - 1)) {
+                    secondaryCategoriesString += category.name;
+                    hasSecondaryCategories = true;
+                } else {
+                    secondaryCategoriesString += category.name + '/';
+                }
             }
         }
     });
+
+    if (hasSecondaryCategories) {
+        if (techniquesAndAccessoriesString != '') {
+            eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות משניות, אביזרים, טכניקות', '', '', '', secondaryCategoriesString + '/' + techniquesAndAccessoriesString);
+        } else {
+            eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות משניות, אביזרים, טכניקות', '', '', '', secondaryCategoriesString );
+        }
+    } else {
+        if(techniquesAndAccessoriesString != '') {
+            eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות משניות, אביזרים, טכניקות', '', '', '', secondaryCategoriesString);
+        }
+    }
+
+}
+
+function getTechniquesAndAccessories() {
+    let accessoriesList = '';
+    let techniquesList = '';
+    let hasAccessories = false;
+
+    $('.recipe-accessories li a').each((index, accessory ) => {
+        if (index === ( $('.recipe-accessories li a').length - 1)) {
+            accessoriesList += accessory.innerText;
+            hasAccessories = true;
+        } else {
+            accessoriesList += accessory.innerText + '/';
+        }
+    });
+
+    $('.recipe-techniques li a').each((index, technique) => {
+        if (index === ($('.recipe-techniques li a').length - 1)) {
+            techniquesList += technique.innerText;
+        } else {
+            techniquesList += technique.innerText + '/';
+        }
+    });
+
+    if (hasAccessories) {
+        return accessoriesList + '/' + techniquesList;
+    } else {
+        return techniquesList;
+    }
 }
 
 function get_hostname(url) {
