@@ -1,3 +1,11 @@
+.single-foody_recipe {
+  .foody-content {
+    a {
+      text-decoration: underline !important;
+    }
+  }
+}
+
 .foody-content {
   font-family: $font__assistant;
 
@@ -5,7 +13,7 @@
     font-family: $font__assistant;
   }
 
-  .foody-list-item-spacing{
+  .foody-list-item-spacing {
     margin-bottom: 1em;
   }
 
@@ -53,8 +61,9 @@
       font-size: 15px;
     }
 
-    &.aligncenter{
+    &.aligncenter {
       text-align: center;
+
       .wp-caption-text {
         text-align: center;
       }
@@ -63,6 +72,7 @@
 
   a {
     color: var(--color__primary);
+
     &:visited {
       color: var(--color__primary);
     }
@@ -85,6 +95,7 @@
 @include breakpoint(mobileonly) {
   .foody-content {
     font-size: 14pt;
+
     h2 {
     }
 
@@ -96,6 +107,7 @@
 
     .wp-caption {
       margin: 0;
+
       .wp-caption-text {
       }
     }

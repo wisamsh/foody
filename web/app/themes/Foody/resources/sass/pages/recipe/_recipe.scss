@@ -110,15 +110,17 @@ $content-width: 95%;
       margin-top: 10px;
       margin-bottom: 10px;
     }
+
     .wrapper {
       margin-right: 10px;
+
       .ratings-wrapper {
         display: inline-flex;
         align-items: center;
         margin: 0 10px;
         font-family: $font__assistant;
 
-        .rating-digits{
+        .rating-digits {
           color: red;
           font-weight: 700;
         }
@@ -165,7 +167,7 @@ $content-width: 95%;
           width: 100%;
         }
 
-        .feed-logo-sticker{
+        .feed-logo-sticker {
           position: absolute;
           left: 0;
           display: block;
@@ -250,7 +252,7 @@ $content-width: 95%;
           }
         }
 
-        .kosher-sign{
+        .kosher-sign {
           margin: auto;
           padding-right: 2.2rem;
           font-family: Assistant;
@@ -313,7 +315,7 @@ $content-width: 95%;
       border: solid 2px #979797;
       border-radius: 7px;
 
-      &:hover{
+      &:hover {
         cursor: pointer;
       }
 
@@ -453,7 +455,7 @@ $content-width: 95%;
           padding-left: 0;
           align-self: center;
 
-          .filter-option{
+          .filter-option {
             padding-right: 0;
             font-size: 18px;
             padding-left: 4px;
@@ -540,9 +542,10 @@ $content-width: 95%;
             .ingredients {
               position: relative;
 
-              .ingredient{
+              .ingredient {
                 display: inline-flex;
               }
+
               span.amount {
                 vertical-align: top;
               }
@@ -565,6 +568,7 @@ $content-width: 95%;
                   color: $color__primary;
                 }
               }
+
               .comment {
                 font-size: 15px;
                 line-height: 15px;
@@ -1082,7 +1086,7 @@ $content-width: 95%;
               font-family: $font__assistant;
               font-size: 22px;
 
-              #content{
+              #content {
                 word-break: break-word;
               }
 
@@ -1228,7 +1232,7 @@ $content-width: 95%;
       max-width: 95%;
       padding: 0;
 
-      .similar-content-listing-block-title{
+      .similar-content-listing-block-title {
         text-align: right;
         margin-bottom: 10px;
       }
@@ -1244,6 +1248,7 @@ $content-width: 95%;
 
         .similar-content-item {
           margin: 0 5px;
+
           .similar-content-item-listing {
             padding: 0 3px;
 
@@ -1320,7 +1325,7 @@ $content-width: 95%;
           font-size: 18px;
           display: flex;
 
-          .rating-digits{
+          .rating-digits {
             color: red;
             font-weight: 700;
           }
@@ -1329,6 +1334,7 @@ $content-width: 95%;
           .post-ratings {
             width: auto;
             margin: -2px 2px 0px 2px;
+
             em {
               strong {
               }
@@ -1338,6 +1344,7 @@ $content-width: 95%;
 
         .featured-content-container {
           position: relative;
+
           &.video-featured-content {
             iframe {
             }
@@ -1421,13 +1428,14 @@ $content-width: 95%;
               font-size: 18px;
               margin: 0 auto 0 0;
             }
-            .description{
-              &.social-title{
+
+            .description {
+              &.social-title {
                 width: 70%;
               }
             }
 
-            .kosher-sign{
+            .kosher-sign {
               width: 30%;
               font-family: Assistant;
               font-size: 22px;
@@ -1575,8 +1583,8 @@ $content-width: 95%;
 
           .amount-container {
 
-            .foody-select{
-              select{
+            .foody-select {
+              select {
                 left: unset;
               }
             }
@@ -1705,6 +1713,11 @@ $content-width: 95%;
         }
 
         .foody-content {
+
+          a {
+            text-decoration: underline var(--color__primary) !important;
+          }
+
 
           ol {
             list-style-type: none;
@@ -1892,7 +1905,7 @@ $content-width: 95%;
         #accordion-how-i-did-accordion {
 
           .foody-accordion-title {
-            h5,  div.filter-title-h5 {
+            h5, div.filter-title-h5 {
               i.icon-side-arrow {
                 &:before {
                   left: 0;
@@ -2035,7 +2048,7 @@ $content-width: 95%;
         max-width: 100%;
 
         .foody-accordion-title {
-          h5,  div.filter-title-h5 {
+          h5, div.filter-title-h5 {
             i.icon-side-arrow {
               &:before {
                 left: 0;
@@ -2062,15 +2075,15 @@ $content-width: 95%;
         margin: 0 auto;
       }
 
-      .recipe_similar_content{
-        .similar-content-items{
+      .recipe_similar_content {
+        .similar-content-items {
           padding: 0;
           margin: 14px 0;
 
-          .similar-content-item-listing{
+          .similar-content-item-listing {
             margin: 0;
 
-            .similar-content-listing-title{
+            .similar-content-listing-title {
               font-size: 13px !important;
             }
           }
@@ -2139,6 +2152,7 @@ $content-width: 95%;
 
         .featured-content-container {
           position: relative;
+
           &.video-featured-content {
             iframe {
             }
@@ -2230,11 +2244,12 @@ $content-width: 95%;
           }
 
           .amount-container {
-            .foody-select{
-              select{
+            .foody-select {
+              select {
                 left: unset;
               }
             }
+
             label {
 
             }
@@ -2399,7 +2414,7 @@ $content-width: 95%;
         #accordion-how-i-did {
 
           .foody-accordion-title {
-            h5,  div.filter-title-h5 {
+            h5, div.filter-title-h5 {
               i.icon-side-arrow {
                 &:before {
                 }
@@ -2503,7 +2518,7 @@ $content-width: 95%;
 
       .recipe-comments {
         .foody-accordion-title {
-          h5,  div.filter-title-h5 {
+          h5, div.filter-title-h5 {
             i.icon-side-arrow {
               &:before {
               }
@@ -2518,13 +2533,13 @@ $content-width: 95%;
         }
       }
 
-      .recipe_similar_content{
-        .similar-content-item{
+      .recipe_similar_content {
+        .similar-content-item {
           padding: 0;
           margin: 0;
 
-          .similar-content-item-listing{
-            .similar-content-listing-title{
+          .similar-content-item-listing {
+            .similar-content-listing-title {
               font-size: 13px;
             }
           }
@@ -2549,6 +2564,7 @@ $content-width: 95%;
 
         .featured-content-container {
           position: relative;
+
           &.video-featured-content {
             iframe {
 
@@ -2640,11 +2656,12 @@ $content-width: 95%;
           }
 
           .amount-container {
-            .foody-select{
-              select{
+            .foody-select {
+              select {
                 left: unset;
               }
             }
+
             label {
 
             }
@@ -2807,7 +2824,7 @@ $content-width: 95%;
 
         #accordion-how-i-did {
           .foody-accordion-title {
-            h5,  div.filter-title-h5 {
+            h5, div.filter-title-h5 {
               i.icon-side-arrow {
                 &:before {
                   left: 5em;
@@ -2963,7 +2980,7 @@ $content-width: 95%;
 
         #accordion-comments-accordion {
           .foody-accordion-title {
-            h5,  div.filter-title-h5 {
+            h5, div.filter-title-h5 {
               i.icon-side-arrow {
                 &:before {
                   left: 5em;
@@ -2995,6 +3012,7 @@ $content-width: 95%;
 
         .featured-content-container {
           position: relative;
+
           &.video-featured-content {
 
             iframe {
@@ -3123,11 +3141,12 @@ $content-width: 95%;
           }
 
           .amount-container {
-            .foody-select{
-              select{
+            .foody-select {
+              select {
                 left: unset;
               }
             }
+
             label {
 
             }
@@ -3290,7 +3309,7 @@ $content-width: 95%;
 
         #accordion-how-i-did {
           .foody-accordion-title {
-            h5,  div.filter-title-h5 {
+            h5, div.filter-title-h5 {
               i.icon-side-arrow {
                 &:before {
                   left: 5em;
@@ -3447,7 +3466,7 @@ $content-width: 95%;
         @include max-width-section;
 
         .foody-accordion-title {
-          h5,  div.filter-title-h5 {
+          h5, div.filter-title-h5 {
             i.icon-side-arrow {
               &:before {
                 left: 5em;
@@ -3475,13 +3494,14 @@ $content-width: 95%;
 }
 
 @media print {
-  .content-details-bullets-container{
-    .favorite-container{
+  .content-details-bullets-container {
+    .favorite-container {
       display: inline-block !important;
-      float:left;
+      float: left;
       margin-left: 17%;
     }
-    .wrapper{
+
+    .wrapper {
       display: inline-block !important;
       float: right;
       margin-top: 10px;
