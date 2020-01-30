@@ -289,6 +289,18 @@
           "url": "https://downloads.wordpress.org/plugin/onesignal-free-web-push-notifications.1.17.9.zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "wp-api/basic-auth",
+        "version": "1.0.0",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/WP-API/Basic-Auth/archive/master.zip"
+        }
+      }
     }
   ],
   "require": {
@@ -327,7 +339,8 @@
     "humanmade/Restsplain": "^1.0",
     "smash-baloon/instagram-feed": "1.12.2",
     "phpoffice/phpspreadsheet": "1.8.0",
-    "onesignal/onesignal": "^1.17"
+    "onesignal/onesignal": "^1.17",
+    "wp-api/basic-auth": "^1.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

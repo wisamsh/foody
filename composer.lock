@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53ebb68680efdc8a83637146b4a2570f",
+    "content-hash": "830d276bb4468ff9e24205e20c580aa8",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -1266,6 +1266,15 @@
             "type": "wordpress-plugin"
         },
         {
+            "name": "wp-api/basic-auth",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/WP-API/Basic-Auth/archive/master.zip"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "xamin/handlebars.php",
             "version": "v0.10.4",
             "source": {
@@ -1305,6 +1314,7 @@
             ],
             "description": "Handlebars processor for php",
             "homepage": "https://github.com/XaminProject/handlebars.php",
+            "abandoned": true,
             "time": "2016-12-12T13:51:02+00:00"
         },
         {
