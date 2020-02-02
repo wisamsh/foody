@@ -282,27 +282,24 @@ jQuery(document).ready(($) => {
             let ingredientName = this.innerText;
             let ingredientLink = $(this).attr('href');
             let elementParent = $(this).closest('.ingredients');
-            let ingredientsPromotion='';
+            let ingredientsPromotion = '';
 
-            if(elementParent.find('.sponsors-container').length){
-                if(elementParent.find('.sponsored-by a').length){
+            if (elementParent.find('.sponsors-container').length) {
+                if (elementParent.find('.sponsored-by a').length) {
                     ingredientsPromotion = 'יש קידום עם קישור';
-                }
-                else{
+                } else {
                     ingredientsPromotion = 'יש קידום';
                 }
-            }
-            else{
+            } else {
                 ingredientsPromotion = 'אין קידום';
             }
 
             if (ingredientLink.toLowerCase().indexOf('utm') < 0 && ingredientLink.toLowerCase().indexOf('foody') >= 0) {
                 eventCallback(event, 'מתכון', 'לחיצה על מצרכים (הפניה פנימה)', ingredientName, 'מפרסם', feedPublisher, '', '', '', ingredientsPromotion);
-            }
-            else if(ingredientLink.toLowerCase().indexOf('utm') >= 0 || ingredientLink.toLowerCase().indexOf('foody') < 0){
+            } else if (ingredientLink.toLowerCase().indexOf('utm') >= 0 || ingredientLink.toLowerCase().indexOf('foody') < 0) {
                 eventCallback(event, 'מתכון', 'לחיצה על מצרכים (הפניה החוצה)', ingredientName, 'מפרסם', feedPublisher, '', '', '', ingredientsPromotion);
-                }
-            });
+            }
+        });
     }
 });
 
@@ -317,7 +314,7 @@ jQuery(document).ready(($) => {
  * @param cdValue
  * @param recipe_order_location
  */
-function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location = '', itemCategory = '', object = '' , ingredientsPromotion = '') {
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location = '', itemCategory = '', object = '', ingredientsPromotion = '') {
 
     /**
      * Recipe name
@@ -431,9 +428,13 @@ function categoriesHits(publishers, feedPublisher, categoriesList) {
     //let techniquesAndAccessoriesString = '';
     let techniquesAndAccessoriesString = getTechniquesAndAccessories();
 
-    let ingredientsPromotion =  $('.sponsors-container').length > 0  ? getRelevantIngredientsPromotion(publishers, feedPublisher) : 'אין קידומים';
-
-    eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), get_recipe_order_location(), primaryCategory, '', ingredientsPromotion);
+    let ingredientsPromotion = $('.sponsors-container').length > 0 ? getRelevantIngredientsPromotion(publishers, feedPublisher) : 'אין קידומים';
+    if (feedPublisher == "") {
+        eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), get_recipe_order_location(), primaryCategory, '', ingredientsPromotion);
+    }
+    else{
+        eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', feedPublisher, get_recipe_order_location(), primaryCategory, '', ingredientsPromotion);
+    }
     foodyGlobals['post']['categories'].forEach((category, index, array) => {
         if (category.name != primaryCategory) {
             if (typeof (categoriesList[category.name]) != 'undefined') {
@@ -455,7 +456,7 @@ function categoriesHits(publishers, feedPublisher, categoriesList) {
 
     if (hasSecondaryCategories) {
         if (techniquesAndAccessoriesString != '') {
-            eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות משניות, אביזרים, טכניקות', '', '', '', secondaryCategoriesString + '/' + techniquesAndAccessoriesString,'', ingredientsPromotion);
+            eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות משניות, אביזרים, טכניקות', '', '', '', secondaryCategoriesString + '/' + techniquesAndAccessoriesString, '', ingredientsPromotion);
         } else {
             eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות משניות, אביזרים, טכניקות', '', '', '', secondaryCategoriesString, '', ingredientsPromotion);
         }
