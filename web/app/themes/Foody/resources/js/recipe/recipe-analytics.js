@@ -271,7 +271,7 @@ jQuery(document).ready(($) => {
          * clicked on commercial ingredient
          */
         $('.sponsored-by a').on('click', function () {
-            let linkName = this.innerText;
+            let linkName = $(this).closest('.ingredients').find('.foody-u-link')[0].innerText;
             eventCallback(event, 'מתכון', 'לחיצה על קידום מצרכים', linkName, 'מפרסם', feedPublisher, '', '', '', 'יש קידום עם קישור');
         });
 
@@ -297,7 +297,7 @@ jQuery(document).ready(($) => {
             if (ingredientLink.toLowerCase().indexOf('utm') < 0 && ingredientLink.toLowerCase().indexOf('foody') >= 0) {
                 eventCallback(event, 'מתכון', 'לחיצה על מצרכים (הפניה פנימה)', ingredientName, 'מפרסם', feedPublisher, '', '', '', ingredientsPromotion);
             } else if (ingredientLink.toLowerCase().indexOf('utm') >= 0 || ingredientLink.toLowerCase().indexOf('foody') < 0) {
-                eventCallback(event, 'מתכון', 'לחיצה על מצרכים (הפניה החוצה)', ingredientName, 'מפרסם', feedPublisher, '', '', '', ingredientsPromotion);
+                eventCallback(event, 'מתכון', 'לחיצה על מצרכים (הפניה החוצה)', ingredientName, 'מפרסם', feedPublisher, '', '', '', 'יש קידום');
             }
         });
     }
