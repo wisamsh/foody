@@ -518,7 +518,7 @@ class Foody_Ingredient extends Foody_Post{
         $nutrients['fats'] = $gram;
         $nutrients['protein'] = $gram;
         $nutrients['sodium'] = $m_gram;
-
+        $nutrients['sugar'] = $gram;
         $nutrients['fibers'] = $gram;
         $nutrients['saturated_fat'] = $gram;
         $nutrients['cholesterol'] = $m_gram;
