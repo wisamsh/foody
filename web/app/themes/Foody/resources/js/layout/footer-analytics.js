@@ -60,7 +60,7 @@ jQuery(document).ready(($) => {
     /** banner popup - clicking on submitting **/
     $('#popup-banner .banner-button').on('click', function () {
         isBannerPressed = true;
-        let banner_link = $(this).attr('href');
+        let bannerLink = $(this).attr('href');
         let bannerName = $('#popup-banner .modal-content').attr('data-banner-name');
         let publisherName = $('#popup-banner .modal-content').attr('data-banner-publisher');
         if (bannerLink.toLowerCase().indexOf('utm') < 0 && bannerLink.toLowerCase().indexOf('foody') >= 0) {
