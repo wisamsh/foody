@@ -28,7 +28,7 @@ function users_api_register_routs()
 
 function users_api_login_user(WP_REST_Request $request_data)
 {
-    $body = $request_data->get_body_params();
+    $body = $request_data->get_json_params();
     $username = $body['email'];
     $password = $body['password'];
 
@@ -67,7 +67,7 @@ function users_api_get_user(WP_REST_Request $request_data){
 
 function users_api_create_user(WP_REST_Request $request_data)
 {
-    $body = $request_data->get_body_params();
+    $body = $request_data->get_json_params();
     $user = email_exists($body['email']);
     $created_user_fields = [];
     if ($user) {
@@ -94,7 +94,7 @@ function users_api_create_user(WP_REST_Request $request_data)
 
 function users_api_update_user(WP_REST_Request $request_data)
 {
-    $body = $request_data->get_body_params();
+    $body = $request_data->get_json_params();
     $user_id = email_exists($body['email']);
     $user = null;
     $updated_user_fields = [];
