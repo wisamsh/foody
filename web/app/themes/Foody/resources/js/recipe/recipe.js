@@ -57,6 +57,13 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                                 let currPromise = player.getCurrentTime();
                                 Promise.all([durationPromise, currPromise]).then(function (values) {
                                     let passPercentage = Math.round((values[1] / values[0]) * 100);
+                                    let reminder = passPercentage % 10;
+                                    if (reminder <= 5) {
+                                        passPercentage = passPercentage - reminder;
+                                    } else {
+                                        let addToRoundUp = 10 - reminder;
+                                        passPercentage = passPercentage + addToRoundUp;
+                                    }
                                     eventCallback(event, 'מתכון', 'צפייה בווידאו', 'התקדמות', 'מיקום', passPercentage + '%');
                                 });
                             }
