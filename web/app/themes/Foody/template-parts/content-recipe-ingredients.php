@@ -23,16 +23,17 @@ $ingredients_groups = $template_args['groups'];
             foreach ($ingredients_group['ingredients'] as $ingredient): ?>
 
                 <li class="ingredients">
-                <div class="ingredient">
-                    <?php $ingredient->the_amounts() ?>
-                </div>
-                <?php $ingredient->the_sponsored_ingredient(); ?>
-                <?php
-                // Add ingredient comment
-                if (!empty($ingredient->comment)) {
-                    echo '<div class="comment">' . $ingredient->comment . '</div>';
-                }
-                ?>
+                    <div class="ingredient">
+                        <?php $ingredient->the_amounts() ?>
+                    </div>
+                    <?php $ingredient->the_sponsored_ingredient(); ?>
+                    <?php echo $ingredient->get_substitute_ingredient(); ?>
+                    <?php
+                    // Add ingredient comment
+                    if (!empty($ingredient->comment)) {
+                        echo '<div class="comment">' . $ingredient->comment . '</div>';
+                    }
+                    ?>
 
                 </li>
 

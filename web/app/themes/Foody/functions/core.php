@@ -1655,6 +1655,20 @@ function foody_array_to_data_attr( $data ) {
 	return $data_attrs;
 }
 
+function foody_array_to_substitute_data_attr( $data ) {
+    if ( empty( $data ) ) {
+        return '';
+    }
+    $data_attrs = '';
+    foreach ( $data as $key => $value ) {
+//        $data_attrs .= " data-$key='$value'";
+
+        $data_attrs .= ' data-substitute-' . $key . '=' . '\'' . esc_attr( $value) . '\'';
+    }
+
+    return $data_attrs;
+}
+
 function foody_normalize_content( $content ) {
 	if ( function_exists( 'footabc_add_code_to_content' ) ) {
 		remove_filter( 'the_content', 'footabc_add_code_to_content' );

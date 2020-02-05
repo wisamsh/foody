@@ -12,6 +12,8 @@ window.calculator = function (selector) {
 
     let $numberOfDishes = $('#number-of-dishes');
 
+    let subIng = $('.substitute-ingredient');
+
     let originalNumberOfDishes = parseInt($numberOfDishes.data('amount'));
 
     if (foodyGlobals.isMobile) {
@@ -19,6 +21,28 @@ window.calculator = function (selector) {
             $(this).val(null);
         });
     }
+
+    subIng.on('click',function () {
+       let ingredientToSub = $(this).closest('.ingredients').find('.ingredient');
+       let ingredientAmounts = $(ingredientToSub).find('.amount');
+       let ingredientToSubTitle = ingredientToSub.find('.foody-u-link');
+       let newIngredientTitle = '';
+
+       /** swap data attributes **/
+        ingredientAmounts.toArray().forEach(function (amount) {
+            newIngredientTitle = substituteDataAttr($(amount));
+        });
+
+        this.innerText = 'החלפה ל' + ingredientToSubTitle[0].innerText;
+        ingredientToSubTitle[0].innerText = newIngredientTitle;
+
+        $.each(ingredientAmounts, function (index) {
+            ingredientAmounts[index].innerText = $(ingredientAmounts[index]).attr('data-amount');
+        });
+
+        let currentNumberOfDishes = $($numberOfDishes).val();
+        updateNutrients(originalNumberOfDishes, currentNumberOfDishes, false);
+    });
 
     $numberOfDishes.on('input', function () {
         let val = $(this).val();
@@ -97,7 +121,7 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
     });
 }
 
-function updateNutrients(originalNumberOfDishes, val, reset) {
+function updateNutrients(originalNumberOfDishes, val, dontChange = true, reset ) {
     // Update header amount title
     $('.nutrients-header-dishes-amount').text(val);
 
@@ -106,15 +130,16 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
         let $this = $(this);
         let nutrient = $this.data('name');
         let original = $this.data('original');
+        let nutrientBaseValue = 0;
 
         val = parseInt(val);
         let totalValueForNutrient = 0;
         originalNumberOfDishes = parseInt(originalNumberOfDishes);
-        if (val === originalNumberOfDishes || reset) {
+        if ((val === originalNumberOfDishes || reset) && dontChange) {
             totalValueForNutrient = parseFloat(original);
         } else {
             $('.ingredients .amount').each(function () {
-                let nutrientBaseValue = $(this).attr(`data-${nutrient}`);
+                nutrientBaseValue = $(this).attr(`data-${nutrient}`);
                 console.log('nutrientBaseValue ', nutrientBaseValue);
                 if (!nutrientBaseValue) {
                     nutrientBaseValue = 0;
@@ -143,7 +168,10 @@ function updateNutrients(originalNumberOfDishes, val, reset) {
         }
 
         if (totalValueForNutrient > 0) {
-            $('.chosen-dishes-nutrition .value', this).text(prettyNumber(totalValueForNutrient, decimals))
+            $('.chosen-dishes-nutrition .value', this).text(prettyNumber(totalValueForNutrient, decimals));
+            if(!dontChange){
+                $('.dish-nutrition .value', this).text(round(totalValueForNutrient/val,1), decimals)
+            }
         }
 
     });
@@ -164,4 +192,30 @@ function prettyNumber(num, decimals) {
     }
 
     return text;
+}
+
+function round(value, precision) {
+    let multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+}
+
+function substituteDataAttr(amount) {
+    const prefix = 'substitute';
+    let dataAttributes = amount.data();
+    for (const property in dataAttributes) {
+        if(property.indexOf(prefix) != 0) {
+            swapSubstituteAtrr(property, amount, prefix);
+        }
+    }
+    return amount.attr('data-singular');
+}
+
+function swapSubstituteAtrr(property, amount, prefix) {
+    let temp = amount.attr('data-'+ property);
+    amount.attr('data-'+property, amount.attr('data-'+prefix+'-'+property));
+    amount.attr('data-'+prefix+'-'+property, temp);
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }

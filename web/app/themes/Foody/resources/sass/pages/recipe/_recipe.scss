@@ -542,6 +542,15 @@ $content-width: 95%;
             .ingredients {
               position: relative;
 
+              .substitute-ingredient{
+                font-size: 15px;
+                font-weight: 600;
+                color: var(--color__primary);
+                float: left;
+                cursor: pointer;
+                text-decoration: underline;
+              }
+
               .ingredient {
                 display: inline-flex;
               }

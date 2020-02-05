@@ -608,6 +608,8 @@ class Foody_Recipe extends Foody_Post
 
                         endwhile;
 
+                        $substitute_ingredient_field = get_sub_field('recipe_substitute_ingredient');
+
                         if ($ingredient_post && $ingredient_post instanceof WP_Post) {
                             $ingredient = new Foody_Ingredient($ingredient_post);
 
@@ -619,6 +621,7 @@ class Foody_Recipe extends Foody_Post
                                 $ingredient->link = get_sub_field('alter_link');
                             }
                             $ingredient->amounts = $amounts;
+                            $ingredient->recipe_substitute_ingredient = $substitute_ingredient_field ? new Foody_Ingredient($substitute_ingredient_field) : null;
 
                             $this->ingredients_groups[$current_group]['ingredients'][] = $ingredient;
                         }
