@@ -69,7 +69,12 @@ class Foody_Ingredient extends Foody_Post
         $substitute_ingredients = get_field('substitute_ingredients_list', $this->id);
         if (is_array($substitute_ingredients)) {
             foreach ($substitute_ingredients as $substitute_ingredient) {
-                $this->substitute_ingredients_list[$substitute_ingredient['substitute_ingredient']->post_title] = ['conversion' => $substitute_ingredient['conversion'], 'show_everywhere' => $substitute_ingredient['show_everywhere']];
+                $this->substitute_ingredients_list[$substitute_ingredient['substitute_ingredient']->post_title] = [
+                    'title' => $substitute_ingredient['substitute_ingredient']->post_title,
+                    'conversion' => $substitute_ingredient['conversion'],
+                    'show_everywhere' => $substitute_ingredient['show_everywhere'],
+                    'post' => $substitute_ingredient['substitute_ingredient']
+                ];
             }
         }
     }
@@ -151,10 +156,9 @@ class Foody_Ingredient extends Foody_Post
                     if (is_array($this->substitute_ingredients_list) && $recipe_substitute_ingredient_title != '' && isset($this->substitute_ingredients_list[$recipe_substitute_ingredient_title])) {
                         $convertion_value = $this->substitute_ingredients_list[$recipe_substitute_ingredient_title]['conversion'];
                         $get_substitute_ingredient_data_attr = array($this->recipe_substitute_ingredient, 'get_substitute_ingredient_data_attr');
-                        if($convertion_value < 1) {
+                        if ($convertion_value < 1) {
                             $data .= ' ' . call_user_func($get_substitute_ingredient_data_attr, $amount['amount'] * $convertion_value, $display * $convertion_value);
-                        }
-                        else{
+                        } else {
                             $data .= ' ' . call_user_func($get_substitute_ingredient_data_attr, $amount['amount'] / $convertion_value, $display / $convertion_value);
                         }
                     }
@@ -237,6 +241,14 @@ class Foody_Ingredient extends Foody_Post
                 $nutrients_data[$nutrient_name] = $this->get_nutrient_data_by_unit_and_amount($nutrient_name);
             }
 
+            if ($this->recipe_substitute_ingredient == null) {
+                foreach ($this->substitute_ingredients_list as $substitute_ingredient) {
+                    if ($substitute_ingredient['show_everywhere']) {
+                        $this->recipe_substitute_ingredient = new Foody_Ingredient($substitute_ingredient['post']);
+                        break;
+                    }
+                }
+            }
 
             if ($this->recipe_substitute_ingredient != null && $this->recipe_substitute_ingredient->getTitle() != '') {
                 $recipe_substitute_ingredient_title = $this->recipe_substitute_ingredient->getTitle();
@@ -260,9 +272,8 @@ class Foody_Ingredient extends Foody_Post
             $data .= ' ' . foody_array_to_data_attr($nutrients_data);
             if ($has_substitute) {
                 if ($convertion_value < 1) {
-                    $data .= ' ' .$this->recipe_substitute_ingredient->get_substitute_ingredient_data_attr($amount * $convertion_value, $display * $convertion_value);
-                }
-                else{
+                    $data .= ' ' . $this->recipe_substitute_ingredient->get_substitute_ingredient_data_attr($amount * $convertion_value, $display * $convertion_value);
+                } else {
                     $data .= ' ' . $this->recipe_substitute_ingredient->get_substitute_ingredient_data_attr($amount / $convertion_value, $display / $convertion_value);
                 }
                 $data .= ' ' . foody_array_to_substitute_data_attr($substitute_nutrients_data);
@@ -727,6 +738,13 @@ class Foody_Ingredient extends Foody_Post
             if (isset($this->substitute_ingredients_list[$recipe_substitute_ingredient_title])) {
                 $substitute_ingredient_html = '<div class="substitute-ingredient" data-name="' . $recipe_substitute_ingredient_title . '">' . __('החלפה ל') . $recipe_substitute_ingredient_title . '</div>';
                 return $substitute_ingredient_html;
+            }
+        } else {
+            foreach ($this->substitute_ingredients_list as $substitute_ingredient) {
+                if ($substitute_ingredient['show_everywhere']) {
+                    $substitute_ingredient_html = '<div class="substitute-ingredient" data-name="' . $substitute_ingredient['title'] . '">' . __('החלפה ל') . $substitute_ingredient['title'] . '</div>';
+                    return $substitute_ingredient_html;
+                }
             }
         }
     }
