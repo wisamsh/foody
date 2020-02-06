@@ -127,7 +127,16 @@ $content-width: 95%;
 
         .post-ratings {
           width: auto;
-          margin: 0 2px 4px 2px;
+          margin: 7px 2px 4px 2px;
+
+          .ratings-index{
+            position: relative;
+            bottom: 15px;
+            right: 11px;
+            font-size: 14px;
+            color:  var(--color__primary);
+            font-weight: 600;
+          }
 
           em {
             vertical-align: middle;
@@ -1342,7 +1351,16 @@ $content-width: 95%;
 
           .post-ratings {
             width: auto;
-            margin: -2px 2px 0px 2px;
+            margin: 12px 2px 0px 2px;
+
+            .ratings-index{
+              position: relative;
+              bottom: 15px;
+              right: 12px;
+              font-size: 14px;
+              color:  var(--color__primary);
+              font-weight: 600;
+            }
 
             em {
               strong {
