@@ -106,11 +106,21 @@ class Foody_Recipe extends Foody_Post
 
     public function the_ingredients()
     {
+        $recipe_id = $this->getId();
+        $categories = wp_get_post_categories($recipe_id);
+        $techniques = array_map(function ($technique_post) {
+            return $technique_post->ID;
+        }, $this->the_techniques(false));
+
+        $author = get_post_field('post_author', $recipe_id);
+
+        $substitute_ingredients_filters = ['categories' => $categories, 'techniques' => $techniques, 'author' => $author];
 
         foody_get_template_part(
             get_template_directory() . '/template-parts/content-recipe-ingredients.php',
             [
-                'groups' => array_merge([], $this->get_the_ingredients_groups())
+                'groups' => array_merge([], $this->get_the_ingredients_groups()),
+                'substitute_ingredients_filters' => $substitute_ingredients_filters
             ]
         );
 
@@ -263,7 +273,7 @@ class Foody_Recipe extends Foody_Post
         $this->posts_bullets($posts, $title);
     }
 
-    public function the_techniques()
+    public function the_techniques($print = true)
     {
         $posts = [];
         $title = '';
@@ -277,7 +287,11 @@ class Foody_Recipe extends Foody_Post
 //			$posts = foody_get_serialized_field_by_meta( 'techniques_techniques', $this->id );
 //		}
 
-        $this->posts_bullets($posts, $title);
+        if ($print) {
+            $this->posts_bullets($posts, $title);
+        } else {
+            return $posts;
+        }
     }
 
     public function how_i_did()

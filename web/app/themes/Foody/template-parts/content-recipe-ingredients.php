@@ -8,7 +8,7 @@
 
 /** @noinspection PhpUndefinedVariableInspection */
 $ingredients_groups = $template_args['groups'];
-
+$substitute_ingredients_filters = isset($template_args['substitute_ingredients_filters']) ? $template_args['substitute_ingredients_filters'] : null;
 ?>
 
 <?php foreach ($ingredients_groups as $ingredients_group): ?>
@@ -27,7 +27,7 @@ $ingredients_groups = $template_args['groups'];
                         <?php $ingredient->the_amounts() ?>
                     </div>
                     <?php $ingredient->the_sponsored_ingredient(); ?>
-                    <?php echo $ingredient->get_substitute_ingredient(); ?>
+                    <?php echo $ingredient->get_substitute_ingredient($substitute_ingredients_filters); ?>
                     <?php
                     // Add ingredient comment
                     if (!empty($ingredient->comment)) {
