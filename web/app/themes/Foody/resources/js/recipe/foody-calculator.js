@@ -20,6 +20,8 @@ window.calculator = function (selector) {
     let caloriesNutrient = $('[data-name=calories]');
     let sugarNutrientOriginalVal = null;
     let caloriesNutrientOriginalVal = null;
+    let textToShow = '';
+    let textColor = '';
 
     if (sugarNutrient.length) {
         sugarNutrientOriginalVal = parseFloat(sugarNutrient.data('original'));
@@ -36,13 +38,13 @@ window.calculator = function (selector) {
     }
 
     subIng.on('click', function () {
-            let textToShow = $(this).data('text');
-            let showText = false;
+            textToShow = $(this).data('text');
             let ingredientToSub = $(this).closest('.ingredients').find('.ingredient');
             let ingredientAmounts = $(ingredientToSub).find('.amount');
             let ingredientUnit = $(ingredientToSub).find('.unit');
             let ingredientToSubTitle = ingredientToSub.find('.foody-u-link');
             let newIngredientTitle = '';
+            textColor = $(this).attr('data-text-color');
 
             /** swap data attributes **/
             ingredientAmounts.toArray().forEach(function (amount) {
@@ -52,8 +54,15 @@ window.calculator = function (selector) {
             this.innerText = 'החלפה ל' + ingredientToSubTitle[0].innerText;
             ingredientToSubTitle[0].innerText = newIngredientTitle;
 
+            /** swap ingredients units and amounts **/
             $.each(ingredientAmounts, function (index) {
-                ingredientAmounts[index].innerText = $(ingredientAmounts[index]).attr('data-amount');
+                if ($numberOfDishes[0].defaultValue == $numberOfDishes[0].value) {
+                    ingredientAmounts[index].innerText = $(ingredientAmounts[index]).attr('data-amount');
+                } else {
+                    let base = $(ingredientAmounts[index]).attr('data-original') / $numberOfDishes[0].defaultValue;
+                    let newAmount = base * $numberOfDishes[0].value;
+                    ingredientAmounts[index].innerText = prettyNumber(newAmount);
+                }
             });
 
             if ($numberOfDishes.length) {
@@ -78,34 +87,11 @@ window.calculator = function (selector) {
                 updateUnits(ingredientUnit, ingredientAmounts);
             }
 
-            let newSugarNutrient = $('[data-name=sugar]').find('.chosen-dishes-nutrition > .value').length ? parseFloat($('[data-name=sugar]').find('.chosen-dishes-nutrition > .value')[0].innerText) : 0;
-            let newCaloriesNutrient = $('[data-name=calories]').find('.chosen-dishes-nutrition > .value').length ? parseFloat($('[data-name=calories]').find('.chosen-dishes-nutrition > .value')[0].innerText) : 0;
+            let caloriesNutrientValForCompare = typeof caloriesNutrientOriginalVal != 'undefined' ? (caloriesNutrientOriginalVal / $numberOfDishes[0].defaultValue) * $numberOfDishes[0].value : undefined;
+            let sugarNutrientValForCompare = typeof sugarNutrientOriginalVal != 'undefined' ? (sugarNutrientOriginalVal / $numberOfDishes[0].defaultValue) * $numberOfDishes[0].value : undefined;
 
-            if (Math.round(newCaloriesNutrient) < Math.round(caloriesNutrientOriginalVal)) {
-                textToShow += ' ' + Math.round(caloriesNutrientOriginalVal - newCaloriesNutrient) + ' קלוריות ';
-                showText = true;
-            }
-
-            if (Math.round(newSugarNutrient) < Math.round(sugarNutrientOriginalVal)) {
-                textToShow += ' וגם ' + Math.round(sugarNutrientOriginalVal - newSugarNutrient) + ' גרם סוכר ';
-            }
-
-            if (showText) {
-                if (!$('.difference-nutrient').length) {
-                    $('.recipe-ingredients-top').after('<span class="difference-nutrient" style="color:' + $(this).attr('data-text-color') + '">' + textToShow + '</span>');
-                    $('.recipe-ingredients').after('<span class="difference-nutrient" style="color:' + $(this).attr('data-text-color') + '">' + textToShow + '</span>');
-                } else {
-
-                    $.each($('.difference-nutrient'), function (index) {
-                        $('.difference-nutrient')[index].innerText = textToShow;
-                    });
-                }
-            } else {
-                if ($('.difference-nutrient').length) {
-                    $('.difference-nutrient').remove();
-                    textToShow = '';
-                }
-            }
+            handleSubsText(textToShow, caloriesNutrientValForCompare, sugarNutrientValForCompare, textColor);
+            $elements = $('.recipe-ingredients-container li:not(.free-text-ingredients) .amount');
         }
     )
     ;
@@ -116,8 +102,16 @@ window.calculator = function (selector) {
         if (originalNumberOfDishes <= 0 || val <= 0) {
             return;
         }
+        let isOriginalAmountOfDishes = $numberOfDishes[0].defaultValue == $numberOfDishes[0].value;
+        let hasSubstitute = updateIngredients($elements, originalNumberOfDishes, val, undefined, !isOriginalAmountOfDishes);
 
-        updateIngredients($elements, originalNumberOfDishes, val);
+        if (hasSubstitute) {
+            let caloriesNutrientValForCompare = typeof caloriesNutrientOriginalVal != 'undefined' ? (caloriesNutrientOriginalVal / $numberOfDishes[0].defaultValue) * $numberOfDishes[0].value : undefined;
+            let sugarNutrientValForCompare = typeof sugarNutrientOriginalVal != 'undefined' ? (sugarNutrientOriginalVal / $numberOfDishes[0].defaultValue) * $numberOfDishes[0].value : undefined;
+
+            handleSubsText(textToShow, caloriesNutrientValForCompare, sugarNutrientValForCompare, textColor);
+
+        }
     });
 
 
@@ -137,8 +131,16 @@ window.calculator = function (selector) {
         if (!slices) {
             slices = 1;
         }
-        updateIngredients($elements, originalSlices, slices, original);
 
+        let isOriginalAmountOfDishes = $numberOfDishes[0].defaultValue == $numberOfDishes[0].value;
+        let hasSubstitute = updateIngredients($elements, originalNumberOfDishes, val, undefined, !isOriginalAmountOfDishes);
+
+        if (hasSubstitute) {
+            let caloriesNutrientValForCompare = typeof caloriesNutrientOriginalVal != 'undefined' ? (caloriesNutrientOriginalVal / $numberOfDishes[0].defaultValue) * $numberOfDishes[0].value : undefined;
+            let sugarNutrientValForCompare = typeof sugarNutrientOriginalVal != 'undefined' ? (sugarNutrientOriginalVal / $numberOfDishes[0].defaultValue) * $numberOfDishes[0].value : undefined;
+
+            handleSubsText(textToShow, caloriesNutrientValForCompare, sugarNutrientValForCompare, textColor);
+        }
     });
 
 
@@ -146,18 +148,32 @@ window.calculator = function (selector) {
 ;
 
 
-function updateIngredients($elements, originalNumberOfDishes, val, reset) {
-
-    updateNutrients(originalNumberOfDishes, val, reset);
+function updateIngredients($elements, originalNumberOfDishes, val, reset, dontChange = true) {
+    let hasSubstitute = false;
+    updateNutrients(originalNumberOfDishes, val, dontChange ,reset);
 
     $elements.each(function () {
-
         let $this = $(this);
-        let base = $this.data('amount') / originalNumberOfDishes;
+        let base = '';
+        let plural = '';
+        let singular = '';
+        let unit = '';
+        let isSubstitute = false;
 
-        let plural = $this.data('plural');
-        let singular = $this.data('singular');
-        let unit = $this.data('unit');
+        if ($this.data('singular') == $this.attr('data-singular')) {
+            base = $this.data('amount') / originalNumberOfDishes;
+            plural = $this.data('plural');
+            singular = $this.data('singular');
+            unit = $this.data('unit');
+
+        } else {
+            base = $this.attr('data-amount') / originalNumberOfDishes;
+            plural = $this.attr('data-plural');
+            singular = $this.attr('data-singular');
+            unit = $this.attr('data-unit');
+            isSubstitute = true;
+        }
+
         if (!unit) {
             unit = '';
         }
@@ -174,7 +190,7 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
         }
 
         // noinspection EqualityComparisonWithCoercionJS
-        if (val == originalNumberOfDishes || reset) {
+        if ((val == originalNumberOfDishes || reset) && !isSubstitute) {
             text = $this.data('original');
         }
 
@@ -185,7 +201,12 @@ function updateIngredients($elements, originalNumberOfDishes, val, reset) {
         if (parseFloat(text) > 0) {
             $this.text(text);
         }
+
+        if (isSubstitute) {
+            hasSubstitute = true;
+        }
     });
+    return hasSubstitute;
 }
 
 function updateNutrients(originalNumberOfDishes, val, dontChange = true, reset) {
@@ -293,5 +314,42 @@ function updateUnits(ingredientUnit, ingredientAmounts) {
             ingredientUnit[index].innerText = $(ingredientAmounts[index]).attr('data-unit') + ' ';
         }
     })
+}
 
+function handleSubsText(textToShow, caloriesNutrientOriginalVal, sugarNutrientOriginalVal, textColor) {
+    let showText = false;
+    let newSugarNutrient = $('[data-name=sugar]').find('.chosen-dishes-nutrition > .value').length ? parseFloat($('[data-name=sugar]').find('.chosen-dishes-nutrition > .value')[0].innerText) : 0;
+    let newCaloriesNutrient = $('[data-name=calories]').find('.chosen-dishes-nutrition > .value').length ? parseFloat($('[data-name=calories]').find('.chosen-dishes-nutrition > .value')[0].innerText) : 0;
+
+    if (Math.round(newCaloriesNutrient) < Math.round(caloriesNutrientOriginalVal)) {
+        let calCalc = Math.round(caloriesNutrientOriginalVal - newCaloriesNutrient);
+        if(calCalc > 0) {
+            textToShow += ' ' + calCalc + ' קלוריות ';
+            showText = true;
+        }
+    }
+
+    if (Math.round(newSugarNutrient) < Math.round(sugarNutrientOriginalVal)) {
+        let sugCalc = Math.round(sugarNutrientOriginalVal - newSugarNutrient);
+        if(sugCalc > 0) {
+            textToShow += ' וגם ' + sugCalc + ' גרם סוכר ';
+        }
+    }
+
+    if (showText) {
+        if (!$('.difference-nutrient').length) {
+            $('.recipe-ingredients-top').after('<span class="difference-nutrient" style="color:' + textColor + '">' + textToShow + '</span>');
+            $('.recipe-ingredients').after('<span class="difference-nutrient" style="color:' + textColor + '">' + textToShow + '</span>');
+        } else {
+
+            $.each($('.difference-nutrient'), function (index) {
+                $('.difference-nutrient')[index].innerText = textToShow;
+            });
+        }
+    } else {
+        if ($('.difference-nutrient').length) {
+            $('.difference-nutrient').remove();
+            textToShow = '';
+        }
+    }
 }
