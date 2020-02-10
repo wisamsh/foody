@@ -171,7 +171,7 @@ class Foody_Ingredient extends Foody_Post
                     if (is_array($this->substitute_ingredients_list) && $recipe_substitute_ingredient_title != '' && isset($this->substitute_ingredients_list[$recipe_substitute_ingredient_title])) {
                         $convertion_value = $this->substitute_ingredients_list[$recipe_substitute_ingredient_title]['conversion'];
                         $get_substitute_ingredient_data_attr = array($this->recipe_substitute_ingredient, 'get_substitute_ingredient_data_attr');
-                        $data .= ' ' . call_user_func($get_substitute_ingredient_data_attr, $amount['amount'] * $convertion_value, $display * $convertion_value);
+                        $data .= ' ' . call_user_func($get_substitute_ingredient_data_attr, $amount['amount'] * $convertion_value, $this->string_fraction_to_decimal($display) * $convertion_value);
                         $substitute_amount = $this->change_amount_by_convertion($amount, $convertion_value);
                         $data .= ' ' . foody_array_to_substitute_data_attr(['unit' => $substitute_amount['unit']]);
                         $this->recipe_substitute_ingredient->amounts =[];
@@ -837,6 +837,14 @@ class Foody_Ingredient extends Foody_Post
 //                return strval($amount_string / $convertion_value);
 //            }
 //        }
+    }
+
+    private function string_fraction_to_decimal($string){
+        if(strpos($string,'/')){
+            $numbers=explode("/",$string);
+            return round($numbers[0]/$numbers[1],6);
+        }
+        return $string;
     }
 
 }
