@@ -1312,6 +1312,9 @@ $content-width: 95%;
   $content-padding: 20px;
   .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .single-post {
 
+    .cover-image{
+      margin-bottom: 10px;
+    }
     article.content {
       width: $content-width;
 
@@ -2166,7 +2169,10 @@ $content-width: 95%;
 @include breakpoint(mobile-l) {
 
   .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .single-post {
-
+    .cover-image{
+      margin-bottom: 10px;
+    }
+    
     article.content {
 
       .details-container {
