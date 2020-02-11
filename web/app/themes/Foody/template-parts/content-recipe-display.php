@@ -63,6 +63,14 @@ $recipe = $template_args['recipe'];
 
 </section>
 
+<?php if($recipe->substitute_all_button != null){ ?>
+    <section class="substitute-all">
+        <div class="substitute-all-btn" data-opposite="<?php echo $recipe->substitute_all_button['restore'];?>" data-current="substitute" style="display: none">
+            <?php echo $recipe->substitute_all_button['substitute'];?>
+        </div>
+    </section>
+<?php } ?>
+
 <section class="recipe-ingredients box">
 
     <div class="recipe-ingredients-top row justify-content-between">

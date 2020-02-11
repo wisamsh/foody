@@ -9,6 +9,7 @@
 /** @noinspection PhpUndefinedVariableInspection */
 $ingredients_groups = $template_args['groups'];
 $substitute_ingredients_filters = isset($template_args['substitute_ingredients_filters']) ? $template_args['substitute_ingredients_filters'] : null;
+$counter = 0;
 ?>
 
 <?php foreach ($ingredients_groups as $ingredients_group): ?>
@@ -21,8 +22,11 @@ $substitute_ingredients_filters = isset($template_args['substitute_ingredients_f
 
             <?php /** @var Foody_Ingredient $ingredient */
             foreach ($ingredients_group['ingredients'] as $ingredient): ?>
-
-                <li class="ingredients">
+                <?php
+                $id = "ingredient-" . $counter;
+                $counter++;
+                ?>
+                <li class="ingredients" id="<?php echo $id; ?>">
                     <div class="ingredient">
                         <?php $ingredient->the_amounts() ?>
                     </div>
