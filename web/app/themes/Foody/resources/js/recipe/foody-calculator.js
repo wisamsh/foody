@@ -143,8 +143,7 @@ window.calculator = function (selector) {
             slices = 1;
         }
 
-        let isOriginalAmountOfDishes = $numberOfDishes[0].defaultValue == $numberOfDishes[0].value;
-        let hasSubstitute = updateIngredients($elements, originalNumberOfDishes, val, undefined, !isOriginalAmountOfDishes);
+        let hasSubstitute = updateIngredients($elements, originalNumberOfDishes, val, undefined, false);
 
         if (hasSubstitute) {
             handleSubsText(textToShow, caloriesNutrientOriginalVal, sugarNutrientOriginalVal, textColor);
