@@ -23,6 +23,8 @@ class Foody_Recipe extends Foody_Post
 
     public $number_of_dishes;
 
+    public $substitute_all_button;
+
 
     /**
      * Recipe constructor.
@@ -34,6 +36,16 @@ class Foody_Recipe extends Foody_Post
         parent::__construct($post);
         $this->init_video();
         $this->duration = $this->video['duration'];
+
+        $substitute_text = get_field('substitute_text');
+        $restore_text = get_field('restore_text');
+
+        if ($substitute_text && $restore_text) {
+            $this->substitute_all_button = [
+                'substitute' => $substitute_text,
+                'restore' => $restore_text
+            ];
+        }
     }
 
 
@@ -636,6 +648,9 @@ class Foody_Recipe extends Foody_Post
                             }
                             $ingredient->amounts = $amounts;
                             $ingredient->recipe_substitute_ingredient = $substitute_ingredient_field ? new Foody_Ingredient($substitute_ingredient_field) : null;
+                            if ($ingredient->recipe_substitute_ingredient !== null) {
+                                $ingredient->recipe_substitute_ingredient->part_of_bundle = get_sub_field('part_of_bundle');
+                            }
 
                             $this->ingredients_groups[$current_group]['ingredients'][] = $ingredient;
                         }

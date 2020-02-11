@@ -174,7 +174,11 @@ class Foody_Ingredient extends Foody_Post
                         $data .= ' ' . call_user_func($get_substitute_ingredient_data_attr, $amount['amount'] * $convertion_value, $this->string_fraction_to_decimal($display) * $convertion_value);
                         $substitute_amount = $this->change_amount_by_convertion($amount, $convertion_value);
                         $data .= ' ' . foody_array_to_substitute_data_attr(['unit' => $substitute_amount['unit']]);
-                        $this->recipe_substitute_ingredient->amounts =[];
+//                        if (isset($this->recipe_substitute_ingredient->part_of_bundle)) {
+//                            $is_part_of_the_bandle = $this->recipe_substitute_ingredient->part_of_bundle ? 1 : 0;
+//                            $data .= ' ' . ' data-substitute-bundle=' . '"' . $is_part_of_the_bandle . '"';
+//                        }
+                        $this->recipe_substitute_ingredient->amounts = [];
                         array_push($this->recipe_substitute_ingredient->amounts, $substitute_amount);
                     }
                 }
@@ -273,13 +277,13 @@ class Foody_Ingredient extends Foody_Post
                     $substitute_amounts = [];
                     $convertion_value = $this->substitute_ingredients_list[$recipe_substitute_ingredient_title]['conversion'];
                     foreach ($this->amounts as $amount_item) {
-                        if($amount_item['unit'] == $unit) {
+                        if ($amount_item['unit'] == $unit) {
                             $substitute_amount = $amount_item;
                             $substitute_amount = $this->change_amount_by_convertion($substitute_amount, $convertion_value);
                             array_push($substitute_amounts, $substitute_amount);
                         }
                     }
-                    if(!is_array($this->recipe_substitute_ingredient->amounts)) {
+                    if (!is_array($this->recipe_substitute_ingredient->amounts)) {
                         $this->recipe_substitute_ingredient->amounts = [];
                     }
                     array_push($this->recipe_substitute_ingredient->amounts, $substitute_amount);
@@ -295,6 +299,10 @@ class Foody_Ingredient extends Foody_Post
                 $data .= ' ' . foody_array_to_substitute_data_attr(['unit' => $substitute_amount['unit']]);
                 $data .= ' ' . $this->recipe_substitute_ingredient->get_substitute_ingredient_data_attr($amount * $convertion_value, $display * $convertion_value);
                 $data .= ' ' . foody_array_to_substitute_data_attr($substitute_nutrients_data);
+                if (isset($this->recipe_substitute_ingredient->part_of_bundle)) {
+                    $is_part_of_the_bandle = $this->recipe_substitute_ingredient->part_of_bundle ? 1 : 0;
+                    $data .= ' ' . ' data-substitute-bundle=' . '"' . $is_part_of_the_bandle . '"';
+                }
             }
 
         }
@@ -813,21 +821,20 @@ class Foody_Ingredient extends Foody_Post
 
     public function change_amount_by_convertion($amount_object, $convertion_value)
     {
-        if($amount_object['amount'] > 1){
+        if ($amount_object['amount'] > 1) {
             // original is plural
-            if($amount_object['amount'] * $convertion_value <= 1){
+            if ($amount_object['amount'] * $convertion_value <= 1) {
                 $single = $amount_object['unit_tax']->name;
-                $amount_object['unit'] = $single && $single!='' ? $single : $amount_object['unit'];
+                $amount_object['unit'] = $single && $single != '' ? $single : $amount_object['unit'];
             }
-        }
-        else {
+        } else {
             if ($amount_object['amount'] * $convertion_value > 1) {
                 $plural = get_field('plural_name', $amount_object['unit_tax']);
                 $amount_object['unit'] = $plural && $plural != '' ? $plural : $amount_object['unit'];
             }
         }
 
-        $amount_object['amount']  = strval($amount_object['amount'] * $convertion_value);
+        $amount_object['amount'] = strval($amount_object['amount'] * $convertion_value);
         return $amount_object;
 //
 //        if ($convertion_value) {
@@ -839,10 +846,11 @@ class Foody_Ingredient extends Foody_Post
 //        }
     }
 
-    private function string_fraction_to_decimal($string){
-        if(strpos($string,'/')){
-            $numbers=explode("/",$string);
-            return round($numbers[0]/$numbers[1],6);
+    private function string_fraction_to_decimal($string)
+    {
+        if (strpos($string, '/')) {
+            $numbers = explode("/", $string);
+            return round($numbers[0] / $numbers[1], 6);
         }
         return $string;
     }
