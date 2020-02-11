@@ -9,7 +9,7 @@ module.exports = (function () {
         recipe_name = '', item_category = '', chef = '',
         difficulty_level = '', preparation_time, ingredients_amount = '',
         order_location = '', amount = '', has_rich_content,
-        cd_description1 = '', cd_value1 = '', filters_amount = '', _object = '', ingredients_promotion=''
+        cd_description1 = '', cd_value1 = '', filters_amount = '', _object = '', ingredients_promotion='', ingredient=''
     ) {
 
         /**
@@ -78,7 +78,8 @@ module.exports = (function () {
             cd_description1,
             cd_value1,
             filters_amount,
-            ingredients_promotion
+            ingredients_promotion,
+            ingredient
         };
 
         window.dataLayer.push(dataLayerObj);

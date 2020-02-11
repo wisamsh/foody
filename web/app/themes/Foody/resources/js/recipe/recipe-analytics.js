@@ -300,6 +300,23 @@ jQuery(document).ready(($) => {
                 eventCallback(event, 'מתכון', 'לחיצה על מצרכים (הפניה החוצה)', ingredientName, 'מפרסם', feedPublisher, '', '', '', 'יש קידום');
             }
         });
+
+        /** substitute ingredient **/
+        $('.substitute-ingredient').on('click', function () {
+            let substituteIngredientName = $(this).attr('data-name');
+            let parentIngredient = $(this).closest('.ingredients');
+            let shownIngredientName = (parentIngredient.find('.foody-u-link'))[0].innerText;
+            let substituteLinkName = $(this)[0].innerText.replace('החלפה ל', '');
+
+            if(substituteIngredientName == shownIngredientName){
+                // substitute ingredient
+                eventCallback(event, 'מתכון', 'החלפת מצרך מקורי', substituteLinkName, 'מפרסם', feedPublisher, '', '', '', '',substituteIngredientName);
+            }
+            else{
+                // return to original
+                eventCallback(event, 'מתכון', 'החזרת מצרך מקורי', substituteIngredientName, 'מפרסם', feedPublisher, '', '', '', '', );
+            }
+        });
     }
 });
 
@@ -314,7 +331,7 @@ jQuery(document).ready(($) => {
  * @param cdValue
  * @param recipe_order_location
  */
-function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location = '', itemCategory = '', object = '', ingredientsPromotion = '') {
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location = '', itemCategory = '', object = '', ingredientsPromotion = '', ingredient ='') {
 
     /**
      * Recipe name
@@ -393,7 +410,8 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
         cdValue,
         '',
         object,
-        ingredientsPromotion
+        ingredientsPromotion,
+        ingredient
     );
 }
 
