@@ -237,7 +237,7 @@ function check_feed_areas_suggetions($search)
 
     $found_feed_areas =[];
     foreach ($feed_areas_search_words as $feed_area => $feed_area_search_words) {
-        if (isset($feed_area_search_words)) {
+        if (isset($feed_area_search_words) && is_array($feed_area_search_words)) {
             foreach ($feed_area_search_words as $word) {
                 if (strpos($word['search_word'], $search) !== false) {
                     array_push($found_feed_areas, $feed_area);
