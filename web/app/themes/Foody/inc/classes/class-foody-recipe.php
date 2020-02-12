@@ -120,9 +120,14 @@ class Foody_Recipe extends Foody_Post
     {
         $recipe_id = $this->getId();
         $categories = wp_get_post_categories($recipe_id);
-        $techniques = array_map(function ($technique_post) {
-            return $technique_post->ID;
-        }, $this->the_techniques(false));
+        $techniques = $this->the_techniques(false);
+        if($techniques != false) {
+            $techniques = array_map(function ($technique_post) {
+                return $technique_post->ID;
+            }, $this->the_techniques(false));
+        } else{
+            $techniques = [];
+        }
 
         $author = get_post_field('post_author', $recipe_id);
 
