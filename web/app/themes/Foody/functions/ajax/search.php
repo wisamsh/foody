@@ -38,14 +38,14 @@ function foody_ajax_autocomplete()
     }
 
     foreach ($types as $type) {
-            if ($type == 'foody_feed_channel') {
-                $feed_areas_for_auto = check_feed_areas_suggetions($search);
-                if(!empty($feed_areas_for_auto)) {
-                    $items = array_merge($feed_areas_for_auto, $items);
-                }
-            } else {
-                $results = find_posts_by_title_and_type($search, $type, true);
-                if (is_array($results) && count($results) > 0) {
+        if ($type == 'foody_feed_channel') {
+            $feed_areas_for_auto = check_feed_areas_suggetions($search);
+            if (!empty($feed_areas_for_auto)) {
+                $items = array_merge($feed_areas_for_auto, $items);
+            }
+        } else {
+            $results = find_posts_by_title_and_type($search, $type, true);
+            if (is_array($results) && count($results) > 0) {
                 $results = array_map(function ($result) {
                     return [
                         'name' => $result->post_title,
@@ -185,16 +185,33 @@ function __search_by_title_only($search, $wp_query)
 
     $index = 0;
     $users_amount = count((array)$q['search_terms']);
+    $apostrophes_types = ["’", "׳", "'"];
 
     foreach ((array)$q['search_terms'] as $term) {
+        $two_options_for_title = false;
+        foreach ($apostrophes_types as $apostrophes_type) {
+            $other_options = handle_apostrophes_on_title($apostrophes_type, $term, true);
+            if ($other_options != false) {
+                $two_options_for_title = true;
+                break;
+            }
+        }
         if ($is_user || $is_ingredient) {
             if ($index == $users_amount - 1) {
                 $term = esc_sql($wpdb->esc_like($term));
-                $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'))";
+                if ($two_options_for_title) {
+                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'". $other_options ."))";
+                } else {
+                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'))";
+                }
                 $searchand = ' AND ';
             } else {
                 $term = esc_sql($wpdb->esc_like($term));
-                $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
+                if ($two_options_for_title) {
+                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'". $other_options .")";
+                } else {
+                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
+                }
                 $searchand = ' AND ';
             }
             $index++;
@@ -220,10 +237,35 @@ add_filter('posts_search', '__search_by_title_only', 500, 2);
 function find_posts_by_title_and_type($titles, $post_type, $is_autocomplete)
 {
     global $wpdb;
+    $two_options_for_title = false;
+    $apostrophes_types = ["’", "׳", "'"];
     if ($is_autocomplete) {
-        $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_title like '%$titles%' and post_type = '$post_type'";
+        foreach ($apostrophes_types as $apostrophes_type) {
+            $other_options = handle_apostrophes_on_title($apostrophes_type, $titles, true);
+            if ($other_options != false) {
+                $two_options_for_title = true;
+                break;
+            }
+        }
+
+        if ($two_options_for_title) {
+            $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and (post_title like '%$titles%'" . $other_options . ") and post_type = '$post_type'";
+        } else {
+            $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_title like '%$titles%' and post_type = '$post_type'";
+        }
     } else {
-        $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_title like '$titles' and post_type = '$post_type'";
+        foreach ($apostrophes_types as $apostrophes_type) {
+            $other_options = handle_apostrophes_on_title($apostrophes_type, $titles, false);
+            if ($other_options != false) {
+                $two_options_for_title = true;
+                break;
+            }
+        }
+        if ($two_options_for_title) {
+            $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and (post_title like '$titles'" . $other_options . " ) and post_type = '$post_type'";
+        } else {
+            $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_title like '$titles' and post_type = '$post_type'";
+        }
     }
 
     $results = $wpdb->get_results($query);
@@ -231,11 +273,39 @@ function find_posts_by_title_and_type($titles, $post_type, $is_autocomplete)
     return $results;
 }
 
+function handle_apostrophes_on_title($apostrophes_type, $title, $is_autocomplete)
+{
+    $other_title_options = "";
+    $apostrophes_to_add = [];
+    $wild_card = $is_autocomplete ? '%' : '';
+
+    switch ($apostrophes_type) {
+        case "'":
+            $apostrophes_to_add = ["׳", "’"];
+            break;
+        case "׳":
+            $apostrophes_to_add = ["'", "’"];
+            break;
+        case "’":
+            $apostrophes_to_add = ["׳", "'"];
+            break;
+    }
+
+    if (strpos($title, $apostrophes_type)) {
+        foreach ($apostrophes_to_add as $apostrophe_to_add) {
+            $other_title_options .= ' or post_title like "' . $wild_card . str_replace($apostrophes_type, $apostrophe_to_add, $title) . $wild_card . '"';
+        }
+        return $other_title_options;
+    } else {
+        return false;
+    }
+}
+
 function check_feed_areas_suggetions($search)
 {
     $feed_areas_search_words = Foody_Query::get_feed_areas_search_words();
 
-    $found_feed_areas =[];
+    $found_feed_areas = [];
     foreach ($feed_areas_search_words as $feed_area => $feed_area_search_words) {
         if (isset($feed_area_search_words) && is_array($feed_area_search_words)) {
             foreach ($feed_area_search_words as $word) {
@@ -263,10 +333,11 @@ function check_feed_areas_suggetions($search)
     return $feed_areas_for_auto;
 }
 
-function clean_string_before_search($search){
-    $special_chars = ['#','(',')'];
+function clean_string_before_search($search)
+{
+    $special_chars = ['#', '(', ')'];
     $cleaned_search = $search;
-    foreach ($special_chars as $special_char){
+    foreach ($special_chars as $special_char) {
         $cleaned_search = str_replace($special_char, '', $cleaned_search);
     }
 

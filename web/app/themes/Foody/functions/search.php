@@ -60,11 +60,12 @@ function foody_where_filter($where)
                     $replace_count = 1;
                     $where = str_replace($where_replace, " AND ( $author_search OR $feed_areas_search (($wpdb->posts.post_title", $where, $replace_count);
                 } elseif (!empty($ingredients)) {
+                    $esc_ingredient = esc_sql($ingredients[0]);
                     $ingredient_search = "SELECT post_id FROM {$wpdb->postmeta} as postmeta 
 JOIN {$wpdb->posts} as posts
 where posts.ID = postmeta.post_id 
 	AND meta_key like 'ingredients_ingredients_groups_%_ingredients_%_ingredient'
-	AND meta_value = (SELECT ID FROM {$wpdb->posts} where post_title = '$ingredients[0]' and post_status = 'publish' AND post_type = 'foody_ingredient')
+	AND meta_value = (SELECT ID FROM {$wpdb->posts} where post_title = '$esc_ingredient' and post_status = 'publish' AND post_type = 'foody_ingredient')
     AND post_status = 'publish'
 group by post_id ";
                     $where_replace = " AND (($wpdb->posts.post_title";
