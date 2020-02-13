@@ -42,7 +42,8 @@ window.calculator = function (selector) {
     let bundleIngredients = $('.ingredient-container').find('[data-substitute-bundle=1]');
     $.each(bundleIngredients, function (index) {
         if (index == 0) {
-            $('.substitute-all-btn').attr('style', 'display: flex; align-self: center; text-decoration: underline; color: red; cursor: pointer; justify-content: center;');
+            $('.substitute-all-btn').attr('style', 'display: flex !important');
+            $('.recipe-ingredients.box').attr('style', 'margin-top: 0px');
         }
         let ingredientContainer = $(this).closest('.ingredients');
         if (ingredientContainer.length) {
