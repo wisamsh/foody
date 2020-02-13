@@ -802,9 +802,9 @@ class Foody_Ingredient extends Foody_Post
             case 'techniques':
                 $technique_id = $substitute_ingredient['filter_value_technique'];
                 if ($exclude) {
-                    $result = !in_array($technique_id, $substitute_ingredients_details_filter['categories']);
+                    $result = !in_array($technique_id, $substitute_ingredients_details_filter['techniques']);
                 } else {
-                    $result = in_array($technique_id, $substitute_ingredients_details_filter['categories']);
+                    $result = in_array($technique_id, $substitute_ingredients_details_filter['techniques']);
                 }
                 break;
             case 'authors':
@@ -813,6 +813,14 @@ class Foody_Ingredient extends Foody_Post
                     $result = $author_id != $substitute_ingredients_details_filter['author'];
                 } else {
                     $result = $author_id == $substitute_ingredients_details_filter['author'];
+                }
+                break;
+            case 'feed':
+                $feed_area_id = $substitute_ingredient['filter_value_feed_area'];
+                if ($exclude) {
+                    $result = (!isset($_GET['referer']) || (isset($_GET['referer']) && $feed_area_id != $_GET['referer']));
+                } else {
+                    $result = (isset($_GET['referer']) && $feed_area_id == $_GET['referer']);
                 }
                 break;
         }
