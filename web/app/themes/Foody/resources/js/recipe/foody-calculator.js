@@ -70,6 +70,7 @@ window.calculator = function (selector) {
             });
 
             /** swap ingredients name on substitute link **/
+            swapSubstituteAndOriginalLinks($(this), ingredientToSubTitle);
             this.innerText = 'החלפה ל' + ingredientToSubTitle[0].innerText;
             ingredientToSubTitle[0].innerText = newIngredientTitle;
 
@@ -366,6 +367,13 @@ function substituteDataAttr(amount) {
     }
     return amount.attr('data-singular');
 }
+
+function swapSubstituteAndOriginalLinks(substituteBtn, ingredientToSub){
+    let temp = substituteBtn.attr('data-url');
+    substituteBtn.attr('data-url',ingredientToSub.attr('href'));
+    ingredientToSub.attr('href',temp);
+}
+
 
 function swapSubstituteAtrr(property, amount, prefix) {
     let temp = amount.attr('data-' + property);
