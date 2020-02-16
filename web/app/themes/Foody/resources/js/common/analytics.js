@@ -129,6 +129,10 @@ jQuery(document).ready(($) => {
         set_search_order('searches_strings', searchValue);
         eventCallback('', 'חיפוש', 'בחירה בתוצאה מוצעת', choiceSuggestion, 'מספר חיפוש', get_search_order('searches_strings', searchValue),'מנגנון תוצאות', amount);
     });
+
+    $('.search .search-autocomplete').keydown((e) => {
+        //todo: chekc if 'aria-expanded' === 'true'
+    });
 });
 
 function set_search_order(action, key) {

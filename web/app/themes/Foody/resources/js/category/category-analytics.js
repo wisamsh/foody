@@ -6,11 +6,11 @@ let pageCounter = 1;
 
 jQuery(document).ready(($) => {
     if (foodyGlobals.type && (foodyGlobals.type == 'category' || foodyGlobals.type == 'categories')) {
+        let categoryName = foodyGlobals['title'].length ? foodyGlobals['title'] : '';
 
         /** page load **/
         if(typeof(foodyGlobals['channel_name']) != "undefined" && foodyGlobals['channel_name'].length){
             // feed area category
-            let categoryName = foodyGlobals['title'].length ? foodyGlobals['title'] : '';
             eventCallback('', 'מתחם פידים', 'טעינת קטגוריה', categoryName, '', '', '', foodyGlobals['channel_name']);
 
         }
@@ -23,7 +23,10 @@ jQuery(document).ready(($) => {
         if ($('.slick-track .slick-slide').length) {
             $('.slick-track .slick-slide a').on('click', function () {
                 let $categoryName = this.innerText;
-                eventCallback('', 'עמוד קטגוריה', 'בחירת קטגוריה', $categoryName, 'מיקום', '', 'תמונה', foodyGlobals['title']);
+                let zeroElementOnHierarchy = $('.breadcrumb > li:contains(קטגוריות)');
+                let location = getCategoryLocationOnHeader(zeroElementOnHierarchy, $categoryName);
+
+                eventCallback('', 'עמוד קטגוריה', 'בחירת קטגוריה', $categoryName, 'מיקום', location, 'תמונה', foodyGlobals['title']);
             });
         }
 
@@ -101,10 +104,11 @@ jQuery(document).ready(($) => {
 
         /** add/remove filters **/
         $('.sidebar-section').on('click', '.md-checkbox', function () {
+            let checkedAmount = $('.card-body input:checked').length;
             if (this.children[0].checked) {
-                eventCallback('', 'עמוד קטגוריה', 'הסרת סינון', foodyGlobals['title'], ' סינון', this.innerText, '', foodyGlobals['title']);
+                eventCallback('', 'עמוד קטגוריה', 'הסרת סינון', foodyGlobals['title'], ' סינון', this.innerText, '', foodyGlobals['title'], '', --checkedAmount);
             } else {
-                eventCallback('', 'עמוד קטגוריה', 'הוספת סינון', foodyGlobals['title'], ' סינון', this.innerText, '', foodyGlobals['title']);
+                eventCallback('', 'עמוד קטגוריה', 'הוספת סינון', foodyGlobals['title'], ' סינון', this.innerText, '', '', '', ++checkedAmount);
             }
         });
 
@@ -163,6 +167,16 @@ function getCurrentRecipeDetail(recipeContainer) {
     return recipeDetails;
 }
 
+function getCategoryLocationOnHeader(zeroElementInHierarchy, selectedCategoryString) {
+    let count = 0;
+    let iteratorHierarchy = zeroElementInHierarchy[0].nextElementSibling;
+    while (iteratorHierarchy != null){
+        count++;
+        iteratorHierarchy = iteratorHierarchy.nextElementSibling;
+    }
+    return ++count;
+}
+
 /**
  * Handle events and fire analytics dataLayer.push
  * @param event
@@ -173,7 +187,7 @@ function getCurrentRecipeDetail(recipeContainer) {
  * @param cdValue
  * @param recipe_order_location
  */
-function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location, itemCategory = '', recipeDetails = '') {
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location, itemCategory = '', recipeDetails = '', _amount = '') {
 
     /**
      * Recipe name
@@ -218,7 +232,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
     /**
      * Recipe view count
      */
-    let amount = '';
+    let amount = _amount;
 
     /**
      * Has rich content - does contains video or product buy option

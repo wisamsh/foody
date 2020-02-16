@@ -173,7 +173,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
     /**
      * Has rich content - does contains video or product buy option
      */
-    let hasRichContent = (recipeDetails != '' && typeof (recipeDetails['has_rich_content']) != "undefined") ? recipeDetails['has_rich_content'] : '';
+    let hasRichContent = (recipeDetails != '' && typeof (recipeDetails['has_rich_content']) != "undefined") ? recipeDetails['has_rich_content'] : false;
 
     tagManager.pushDataLayer(
         category,
