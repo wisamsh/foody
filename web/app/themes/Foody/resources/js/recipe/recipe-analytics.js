@@ -5,7 +5,11 @@
 
 jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe')) {
-        let feedPublisher = "";
+        let redTitlesList = [];
+        // let redTitlesAppeared = [];
+        let timeInPageDelta = 60;
+        let secondsInPage = 0;
+        let feedPublisher = "אין";
         let scrollsArr = {'0': false, '25': false, '50': false, '75': false, '100': false};
         let mainCategoriesList = {
             "קינוחים": "קינוחים",
@@ -35,6 +39,15 @@ jQuery(document).ready(($) => {
         // Add to recipes visited in session count
         set_recipe_order_location(foodyGlobals.ID);
 
+        $('h2').each(function (index) {
+            if($($('h2')[index]).css('color') == 'rgb(237, 61, 72)'){
+                if($($('h2')[index]).length) {
+                    redTitlesList[$($('h2')[index])[0].innerText] = $($('h2')[index]);
+                    // redTitlesAppeared[$($('h2')[index])[0].innerText] = false;
+                }
+            }
+        });
+
         var publishers = ['אין'];
         if (foodyGlobals['post']['publisher'] || $('.sponsors-container').length) {
             publishers = [];
@@ -43,11 +56,12 @@ jQuery(document).ready(($) => {
             feedPublisher = foodyGlobals['post']['publisher'];
             //publishers.push(publisher);
         }
+
         if ($('.sponsors-container').length) {
             let sponsors = $('.sponsors-container');
             for (let i = 0; i < sponsors.length; i++) {
                 let topOfHierarchy = sponsors[i].children[sponsors[i].children.length - 1];
-                if (topOfHierarchy.innerText != '') {
+                if ($(topOfHierarchy).length && topOfHierarchy.innerText != '') {
                     if ($.inArray(topOfHierarchy.innerText, publishers) < 0) {
                         publishers.push(topOfHierarchy.innerText);
                     }
@@ -229,6 +243,14 @@ jQuery(document).ready(($) => {
             const winHeight = $(window).height();
             const scrollPercent = (scrollTop) / (docHeight - winHeight);
             const scrollPercentRounded = Math.round(scrollPercent * 100);
+
+            for(let title in redTitlesList){
+                if ($(redTitlesList[title]).isInViewport()){
+                    eventCallback(e, 'מתכון', 'חשיפת רכיב',  title);
+                    delete redTitlesList[title];
+                }
+            }
+
             let toLog = false;
             if (scrollPercentRounded === 0 || scrollPercentRounded === 25 ||
                 scrollPercentRounded === 50 || scrollPercentRounded === 75 || scrollPercentRounded === 100) {
@@ -285,10 +307,16 @@ jQuery(document).ready(($) => {
             let ingredientsPromotion = '';
 
             if (elementParent.find('.sponsors-container').length) {
-                if (elementParent.find('.sponsored-by a').length) {
+                let sponsoredElement = elementParent.find('.sponsored-by');
+                let sponsoredElementLink = sponsoredElement.find('a');
+                if (sponsoredElementLink.length) {
                     ingredientsPromotion = 'יש קידום עם קישור';
                 } else {
-                    ingredientsPromotion = 'יש קידום';
+                    if (sponsoredElement.length) {
+                        ingredientsPromotion = 'יש קידום';
+                    } else {
+                        ingredientsPromotion = 'אין קידום';
+                    }
                 }
             } else {
                 ingredientsPromotion = 'אין קידום';
@@ -297,7 +325,7 @@ jQuery(document).ready(($) => {
             if (ingredientLink.toLowerCase().indexOf('utm') < 0 && ingredientLink.toLowerCase().indexOf('foody') >= 0) {
                 eventCallback(event, 'מתכון', 'לחיצה על מצרכים (הפניה פנימה)', ingredientName, 'מפרסם', feedPublisher, '', '', '', ingredientsPromotion);
             } else if (ingredientLink.toLowerCase().indexOf('utm') >= 0 || ingredientLink.toLowerCase().indexOf('foody') < 0) {
-                eventCallback(event, 'מתכון', 'לחיצה על מצרכים (הפניה החוצה)', ingredientName, 'מפרסם', feedPublisher, '', '', '', 'יש קידום');
+                eventCallback(event, 'מתכון', 'לחיצה על מצרכים (הפניה החוצה)', ingredientName, 'מפרסם', feedPublisher, '', '', '', ingredientsPromotion);
             }
         });
 
@@ -308,15 +336,24 @@ jQuery(document).ready(($) => {
             let shownIngredientName = (parentIngredient.find('.foody-u-link'))[0].innerText;
             let substituteLinkName = $(this)[0].innerText.replace('החלפה ל', '');
 
-            if(substituteIngredientName == shownIngredientName){
+            if (substituteIngredientName == shownIngredientName) {
                 // substitute ingredient
-                eventCallback(event, 'מתכון', 'החלפת מצרך מקורי', substituteLinkName, 'מפרסם', feedPublisher, '', '', '', '',substituteIngredientName);
-            }
-            else{
+                eventCallback(event, 'מתכון', 'החלפת מצרך מקורי', substituteLinkName, 'מפרסם', feedPublisher, '', '', '', '', substituteIngredientName);
+            } else {
                 // return to original
-                eventCallback(event, 'מתכון', 'החזרת מצרך מקורי', substituteIngredientName, 'מפרסם', feedPublisher, '', '', '', '', );
+                eventCallback(event, 'מתכון', 'החזרת מצרך מקורי', substituteIngredientName, 'מפרסם', feedPublisher, '', '', '', '',);
             }
         });
+
+        /** recipe timer **/
+        let interval = setInterval(function () {
+            secondsInPage += timeInPageDelta;
+            let timerString = toMinutes(secondsInPage);
+            eventCallback('', 'מתכון', 'טיימר',timerString , '', '', '');
+            if (timerString == '20m') {
+                clearInterval(interval);
+            }
+        }, timeInPageDelta * 1000);
     }
 });
 
@@ -331,7 +368,7 @@ jQuery(document).ready(($) => {
  * @param cdValue
  * @param recipe_order_location
  */
-function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location = '', itemCategory = '', object = '', ingredientsPromotion = '', ingredient ='') {
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location = '', itemCategory = '', object = '', ingredientsPromotion = '', ingredient = '') {
 
     /**
      * Recipe name
@@ -449,8 +486,7 @@ function categoriesHits(publishers, feedPublisher, categoriesList) {
     let ingredientsPromotion = $('.sponsors-container').length > 0 ? getRelevantIngredientsPromotion(publishers, feedPublisher) : 'אין קידומים';
     if (feedPublisher == "") {
         eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), get_recipe_order_location(), primaryCategory, '', ingredientsPromotion);
-    }
-    else{
+    } else {
         eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', feedPublisher, get_recipe_order_location(), primaryCategory, '', ingredientsPromotion);
     }
     foodyGlobals['post']['categories'].forEach((category, index, array) => {
@@ -491,11 +527,16 @@ function getRelevantIngredientsPromotion(publishers, feedPublisher) {
     let somePromotionsRelatedToPublisher = $.inArray(feedPublisher, publishers) >= 0;
     const promotionWithLink = 'יש קידום עם קישור';
     const promotionWithoutLink = 'יש קידום';
+    const noPromotion = 'אין קידום';
 
     if (hasLinks) {
         return promotionWithLink;
     } else {
-        return promotionWithoutLink;
+        if ($('.sponsored-by').length) {
+            return promotionWithoutLink;
+        } else {
+            return noPromotion;
+        }
     }
 }
 
@@ -547,3 +588,19 @@ function get_hostname(url) {
 
     return domain;
 }
+
+function toMinutes(secondsInPage) {
+    if (secondsInPage % 60 == 0) {
+        return secondsInPage / 60 + 'm';
+    } else {
+        return (secondsInPage / 60) - 0.5 + 'm' + 30 + 's';
+    }
+}
+
+$.fn.isInViewport = function() {
+    let elementTop = $(this).offset().top;
+    let elementBottom = elementTop + $(this).outerHeight();
+    let viewportTop = $(window).scrollTop();
+    let viewportBottom = viewportTop + $(window).height();
+    return elementBottom > viewportTop && elementTop < viewportBottom;
+};
