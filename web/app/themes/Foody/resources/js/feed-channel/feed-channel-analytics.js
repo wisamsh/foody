@@ -60,7 +60,7 @@ jQuery(document).ready(($) => {
         if ($('.block-content .foody-banner a').length) {
             $('.block-content .foody-banner a').on('click', function () {
                 let bannerLink = $(this).attr('href');
-                let bannerName = $('.foody-banner a').attr('data-banner-name');
+                let bannerName =  $(this).attr('data-banner-name');
                 let publisherName = typeof(foodyGlobals['channel_publisher_name']) != "undefined" ? foodyGlobals['channel_publisher_name'] : '';
                 if (bannerLink.toLowerCase().indexOf('utm') < 0 && bannerLink.toLowerCase().indexOf('foody') >= 0) {
                     eventCallback('', 'מתחם פידים', 'הקלקה על באנר (הפניה פנימה)', bannerName, ' מפרסם', publisherName);

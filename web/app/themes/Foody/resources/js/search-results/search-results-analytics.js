@@ -33,56 +33,61 @@ jQuery(document).ready(($) => {
         $('.foody-grid').on('click', '.image-container.main-image-container img', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
+            let recipeDetails = getCurrentRecipeDetail(this.parentElement.parentElement.parentElement);
 
-            eventCallback('', 'חיפוש', 'בחירת מתכון', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
+            eventCallback('', 'חיפוש', 'בחירת מתכון', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object, recipeDetails);
         });
 
         /** redirect to recipe through title **/
         $('.foody-grid').on('click', '.grid-item-title a', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
+            let recipeDetails = getCurrentRecipeDetail(this.parentElement.parentElement.parentElement.parentElement);
 
-            eventCallback('', 'חיפוש', 'בחירת מתכון', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
+            eventCallback('', 'חיפוש', 'בחירת מתכון', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object, recipeDetails);
         });
 
         /** redirect to recipe through video duration **/
         $('.foody-grid').on('click', '.duration', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
+            let recipeDetails = getCurrentRecipeDetail(this.parentElement.parentElement.parentElement);
 
-            eventCallback('', 'חיפוש', 'בחירת מתכון', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
+            eventCallback('', 'חיפוש', 'בחירת מתכון', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object, recipeDetails);
         });
 
         /** add recipe to favorites **/
         $('.foody-grid').on('click', '.favorite-container .icon-heart', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
+            let recipeDetails = getCurrentRecipeDetail($(this).closest('.recipe-item.feed-item'));
 
-            eventCallback('', 'חיפוש', 'הוספה למועדפים', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
+            eventCallback('', 'חיפוש', 'הוספה למועדפים', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object, recipeDetails);
         });
 
         /** remove recipe from favorites **/
         $('.foody-grid').on('click', '.favorite-container .icon-favorite-pressed', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
+            let recipeDetails = getCurrentRecipeDetail($(this).closest('.recipe-item.feed-item'));
 
-            eventCallback('', 'חיפוש','הסרה ממועדפים', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
+            eventCallback('', 'חיפוש','הסרה ממועדפים', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object, recipeDetails);
         });
 
         /** redirect to author through name **/
         $('.foody-grid').on('click', '.image-container > ul > li:first-child', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
-
-            eventCallback('', 'חיפוש','בחירה בשף', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
+            let recipeDetails = getCurrentRecipeDetail($(this).closest('.recipe-item.feed-item'));
+            eventCallback('', 'חיפוש','בחירה בשף', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object, recipeDetails);
         });
 
         /** redirect to author through image **/
         $('.foody-grid').on('click', '.image-container > a > img', function (event) {
             let dataset = getRecipeLocationFromParent(this.parentElement);
             let order_in_Grid = dataset.dataset.order;
-
-            eventCallback('', 'חיפוש','בחירה בשף', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object);
+            let recipeDetails = getCurrentRecipeDetail($(this).closest('.recipe-item.feed-item'));
+            eventCallback('', 'חיפוש','בחירה בשף', searchString, ' מיקום', order_in_Grid,  searchResultsCount, get_search_order('results-page-load', searchString), object, recipeDetails);
         });
 
         /** add/remove filters **/
@@ -112,6 +117,32 @@ function getRecipeLocationFromParent($parent) {
         }
     }
     return dataset;
+}
+
+function getCurrentRecipeDetail(recipeContainer) {
+    let recipeDetails = {};
+
+    //get recipe title
+    let titleElement = $(recipeContainer).find('.grid-item-title');
+    if (titleElement.length) {
+        recipeDetails['title'] = titleElement[0] ? titleElement[0].innerText : '';
+    }
+
+    //get recipe author
+    let authorElementContainer = $(recipeContainer).find('.recipe-item-details');
+    if (authorElementContainer.length) {
+        let authorElement = $(authorElementContainer).find('li > a');
+        if (authorElement.length) {
+            recipeDetails['author'] = authorElement[0] ? authorElement[0].innerText : '';
+        }
+    }
+
+    //has video
+    let videoDurationContainer = $(recipeContainer).find('.duration');
+    if (videoDurationContainer.length) {
+        recipeDetails['has_rich_content'] = true;
+    }
+    return recipeDetails;
 }
 
 function set_search_order(action, key) {
@@ -147,12 +178,12 @@ function get_search_order(action, key) {
  * @param _order_location
  * @param _amount
  */
-function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '',  _amount = '', _order_location = '', _object) {
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '',  _amount = '', _order_location = '', _object, recipe_details='') {
 
     /**
      * Recipe name
      */
-    let recipe_name = '';
+    let recipe_name = recipe_details != '' ? recipe_details['title'] : '';
 
     /**
      * Item category
@@ -162,7 +193,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
     /**
      * Chef Name
      */
-    let chef = '';
+    let chef =  recipe_details != '' ? recipe_details['author'] : '';
 
     /**
      * Logged in user ID

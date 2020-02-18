@@ -5,15 +5,17 @@ jQuery(document).ready(($) => {
     let newsletterForm = jQuery(".site-footer .newsletter .wpcf7-form");
     let isBannerPressed = false;
 
+    let page_type = getHebrewPageName(foodyGlobals['type']);
+
     newsletterForm.on('wpcf7:submit', null, (event) => {
-        eventCallback(event, foodyGlobals['type'], 'לחיצה לרישום לדיוור', '', 'מיקום', 'פוטר');
+        eventCallback(event, page_type, 'לחיצה לרישום לדיוור', '', 'מיקום', 'פוטר');
     });
 
     let key_for_image = ($('#newsletter-modal .modal-content > .modal-body .popup-image img').length) ? $('#newsletter-modal .modal-content > .modal-body .popup-image img')[0].alt : '';
 
     /** newsletter popup - load popup **/
     $('#newsletter-modal').on('show.bs.modal', function () {
-        eventCallback('', foodyGlobals['type'], 'טעינת פופאפ רישום לדיוור', '', 'קריאייטיב', key_for_image, 'פופאפ - ניוזלטר מתוזמן')
+        eventCallback('', page_type, 'טעינת פופאפ רישום לדיוור', '', 'קריאייטיב', key_for_image, 'פופאפ - ניוזלטר מתוזמן')
     });
 
     /** closing the popup by pressing outside of it **/
@@ -21,14 +23,14 @@ jQuery(document).ready(($) => {
         $('body').click(function (event) {
             let selector = $('#newsletter-modal,  #newsletter-modal *');
             if (!$(event.target).is(selector)) {
-                eventCallback('', foodyGlobals['type'], 'סגירת פופ אפ ללא רישום', '', 'קריאייטיב', key_for_image, 'פופאפ - ניוזלטר מתוזמן')
+                eventCallback('', page_type, 'סגירת פופ אפ ללא רישום', '', 'קריאייטיב', key_for_image, 'פופאפ - ניוזלטר מתוזמן')
             }
         });
     }
 
     /** closing the popup by pressing the close button (X) **/
     $('#newsletter-modal .close').on('click', function () {
-        eventCallback('', foodyGlobals['type'], 'סגירת פופ אפ ללא רישום', '', 'קריאייטיב', key_for_image, 'פופאפ - ניוזלטר מתוזמן')
+        eventCallback('', page_type, 'סגירת פופ אפ ללא רישום', '', 'קריאייטיב', key_for_image, 'פופאפ - ניוזלטר מתוזמן')
     });
 
     /** press submit on the popup **/
@@ -37,7 +39,7 @@ jQuery(document).ready(($) => {
         if ((typeof $('#newsletter-modal .wpcf7-form .wpcf7-email')[0] != "undefined") &&
             ($('#newsletter-modal .wpcf7-form .wpcf7-email')[0].value != '') &&
             (isEmail.test($('#newsletter-modal .wpcf7-form .wpcf7-email')[0].value))) {
-            eventCallback('', foodyGlobals['type'], 'לחיצה לאישור רישום לדיוור', '', 'קריאייטיב', key_for_image, 'פופאפ - ניוזלטר מתוזמן');
+            eventCallback('', page_type, 'לחיצה לאישור רישום לדיוור', '', 'קריאייטיב', key_for_image, 'פופאפ - ניוזלטר מתוזמן');
         }
     });
 
@@ -45,7 +47,7 @@ jQuery(document).ready(($) => {
     $('#popup-banner').on('shown.bs.modal', function () {
         let bannerName = $('#popup-banner .modal-content').attr('data-banner-name');
         let publisherName = $('#popup-banner .modal-content').attr('data-banner-publisher');
-        eventCallback('', foodyGlobals['type'], 'טעינת באנר קידום', bannerName, 'מפרסם', publisherName, 'באנר קידום');
+        eventCallback('', page_type, 'טעינת באנר קידום', bannerName, 'מפרסם', publisherName, 'באנר קידום');
     });
 
     /** banner popup - closed without submitting **/
@@ -53,7 +55,7 @@ jQuery(document).ready(($) => {
         if (!isBannerPressed) {
             let bannerName = $('#popup-banner .modal-content').attr('data-banner-name');
             let publisherName = $('#popup-banner .modal-content').attr('data-banner-publisher');
-            eventCallback('', foodyGlobals['type'], 'סגירת באנר קידום', bannerName, 'מפרסם', publisherName, 'באנר קידום');
+            eventCallback('', page_type, 'סגירת באנר קידום', bannerName, 'מפרסם', publisherName, 'באנר קידום');
         }
     });
 
@@ -64,13 +66,34 @@ jQuery(document).ready(($) => {
         let bannerName = $('#popup-banner .modal-content').attr('data-banner-name');
         let publisherName = $('#popup-banner .modal-content').attr('data-banner-publisher');
         if (bannerLink.toLowerCase().indexOf('utm') < 0 && bannerLink.toLowerCase().indexOf('foody') >= 0) {
-            eventCallback('', foodyGlobals['type'], 'הקלקה על באנר (הפניה פנימה)', bannerName, 'מפרסם', publisherName, 'באנר קידום');
+            eventCallback('', page_type, 'הקלקה על באנר (הפניה פנימה)', bannerName, 'מפרסם', publisherName, 'באנר קידום');
         } else if (bannerLink.toLowerCase().indexOf('utm') >= 0 || bannerLink.toLowerCase().indexOf('foody') < 0) {
-            eventCallback('', foodyGlobals['type'], 'הקלקה על באנר (הפניה החוצה)', bannerName, 'מפרסם', publisherName, 'באנר קידום');
+            eventCallback('', page_type, 'הקלקה על באנר (הפניה החוצה)', bannerName, 'מפרסם', publisherName, 'באנר קידום');
         }
     });
 });
 
+function getHebrewPageName(englishName) {
+    let returnVal = '';
+    switch (englishName) {
+        case 'recipe':
+            returnVal = 'מתכון';
+            break;
+        case 'article':
+            returnVal = 'כתבה';
+            break;
+        case 'category':
+            returnVal = 'קטגוריה';
+            break;
+        case 'feed_channel':
+            returnVal = 'מתחם פידים';
+            break;
+        default:
+            returnVal = englishName;
+            break;
+    }
+    return returnVal;
+}
 
 /**
  * Handle events and fire analytics dataLayer.push
