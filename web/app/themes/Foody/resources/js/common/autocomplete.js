@@ -66,7 +66,7 @@ module.exports = function (selector, options) {
         let $prev = $(this).prev();
         let searchTerm = $('input[name="s"]', $prev).val();
         if (searchTerm && searchTerm.trim()) {
-            window.location.href = '?s=' + $('input[name="s"]', $prev).val();
+            window.location.href =  window.location.origin + '/?s=' + $('input[name="s"]', $prev).val();
         }
     });
 
