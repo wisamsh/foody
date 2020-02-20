@@ -249,7 +249,8 @@ function find_posts_by_title_and_type($titles, $post_type, $is_autocomplete)
         }
 
         if ($two_options_for_title) {
-            $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and (post_title like '%$titles%'" . $other_options . ") and post_type = '$post_type'";
+            $title = esc_sql($titles);
+            $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and (post_title like '%$title%'" . $other_options . ") and post_type = '$post_type'";
         } else {
             $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_title like '%$titles%' and post_type = '$post_type'";
         }
@@ -262,6 +263,7 @@ function find_posts_by_title_and_type($titles, $post_type, $is_autocomplete)
             }
         }
         if ($two_options_for_title) {
+
             $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and (post_title like '$titles'" . $other_options . " ) and post_type = '$post_type'";
         } else {
             $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_title like '$titles' and post_type = '$post_type'";
@@ -293,6 +295,9 @@ function handle_apostrophes_on_title($apostrophes_type, $title, $is_autocomplete
 
     if (strpos($title, $apostrophes_type)) {
         foreach ($apostrophes_to_add as $apostrophe_to_add) {
+
+            $title = esc_sql($title);
+
             $other_title_options .= ' or post_title like "' . $wild_card . str_replace($apostrophes_type, $apostrophe_to_add, $title) . $wild_card . '"';
         }
         return $other_title_options;
