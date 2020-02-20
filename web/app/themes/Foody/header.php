@@ -48,6 +48,14 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
 <div id="fb-root"></div>
 <?php Foody_Header::google_tag_manager_iframe(); ?>
+
+<?php if (!empty($edit_link = get_edit_post_link())): ?>
+    <div dir="rtl" style="text-align: right; max-width: 960px;margin: 0 auto;">
+        <a href="<?php echo $edit_link ?>">
+            <?php echo __('ערוך') ?>
+        </a>
+    </div>
+<?php endif; ?>
 <div id="page" class="site">
 
     <header id="masthead" class="site-header no-print">
