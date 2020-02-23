@@ -2151,6 +2151,11 @@ $content-width: 95%;
           }
         }
       }
+
+      #taboola-below-article-thumbnails[data-feed-main-container-id="taboola-below-article-thumbnails"].tbl-feed-full-width{
+        margin-left: -10px;
+        margin-right: -10px;
+      }
     }
 
     aside {
