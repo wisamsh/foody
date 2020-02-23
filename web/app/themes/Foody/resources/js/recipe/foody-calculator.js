@@ -113,6 +113,22 @@ window.calculator = function (selector) {
                 updateNutrients(originalSlices, slices, false);
                 updateUnits(ingredientUnit, ingredientAmounts);
             }
+            else if($('.amount-container > .filter-option').length){
+                let $option = $('.amount-container > .filter-option');
+                let originalSlices = $(this).find('option[data-original=1]').data('slices');
+                let slices = $option.data('slices');
+
+                if (!originalSlices) {
+                    originalSlices = 1;
+                }
+
+                if (!slices) {
+                    slices = 1;
+                }
+
+                updateNutrients(originalSlices, slices, false);
+                updateUnits(ingredientUnit, ingredientAmounts);
+            }
 
             /** handle text line for substitute **/
             if ($numberOfDishes.length) {
