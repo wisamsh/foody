@@ -130,6 +130,7 @@ add_action('widgets_init', 'foody_widgets_init');
  */
 function foody_scripts()
 {
+    $added_login = false;
 
     wp_deregister_script('jquery');
     wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js', array(), null, false);
@@ -231,6 +232,12 @@ function foody_scripts()
         }
 
         if (has_shortcode($post_content, 'foody-login')) {
+            $added_login = true;
+            $login_asset = foody_get_versioned_asset('login');
+            wp_enqueue_script('foody-script-login', $login_asset, false, false, true);
+        }
+
+        if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || foody_is_registration_open()) && !$added_login) {
             $login_asset = foody_get_versioned_asset('login');
             wp_enqueue_script('foody-script-login', $login_asset, false, false, true);
         }
