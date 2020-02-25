@@ -127,7 +127,7 @@ jQuery(document).ready(($) => {
         let choiceSuggestion = this.innerText;
         let amount = $('.foody-search-suggestions')[0].childNodes.length;
         set_search_order('searches_strings', searchValue);
-        eventCallback('', 'חיפוש', 'בחירה בתוצאה מוצעת', choiceSuggestion, 'מספר חיפוש', get_search_order('searches_strings', searchValue),'מנגנון תוצאות', amount);
+        eventCallback('', 'חיפוש', 'בחירה בתוצאה מוצעת', choiceSuggestion, 'מספר חיפוש', get_search_order('searches_strings', choiceSuggestion),'מנגנון תוצאות', amount);
     });
 
     $('.search .search-autocomplete').keydown((e) => {
