@@ -297,7 +297,7 @@ class Foody_Ingredient extends Foody_Post
             $data .= ' ' . foody_array_to_data_attr($nutrients_data);
             if ($has_substitute) {
                 $data .= ' ' . foody_array_to_substitute_data_attr(['unit' => $substitute_amount['unit']]);
-                $data .= ' ' . $this->recipe_substitute_ingredient->get_substitute_ingredient_data_attr($amount * $convertion_value, $display * $convertion_value);
+                $data .= ' ' . $this->recipe_substitute_ingredient->get_substitute_ingredient_data_attr($amount * $convertion_value, $this->string_fraction_to_decimal($display) * $convertion_value);
                 $data .= ' ' . foody_array_to_substitute_data_attr($substitute_nutrients_data);
                 if (isset($this->recipe_substitute_ingredient->part_of_bundle)) {
                     $is_part_of_the_bandle = $this->recipe_substitute_ingredient->part_of_bundle ? 1 : 0;

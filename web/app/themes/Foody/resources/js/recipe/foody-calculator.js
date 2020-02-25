@@ -418,9 +418,22 @@ function handleSubsText(textToShow, caloriesNutrientOriginalVal, sugarNutrientOr
             showText = true;
         }
     }
+    else if(Math.round(caloriesNutrientOriginalVal) < Math.round(newCaloriesNutrient)) {
+        let calCalc = Math.round(newCaloriesNutrient - caloriesNutrientOriginalVal);
+        if (calCalc > 0) {
+            textToShow += ' ' + calCalc + ' קלוריות ';
+            showText = true;
+        }
+    }
 
     if (Math.round(newSugarNutrient) < Math.round(sugarNutrientOriginalVal)) {
         let sugCalc = Math.round(sugarNutrientOriginalVal - newSugarNutrient);
+        if (sugCalc > 0) {
+            textToShow += ' וגם ' + sugCalc + ' גרם סוכר ';
+        }
+    }
+    else if(Math.round(sugarNutrientOriginalVal) < Math.round(newSugarNutrient)) {
+        let sugCalc = Math.round(newSugarNutrient - sugarNutrientOriginalVal);
         if (sugCalc > 0) {
             textToShow += ' וגם ' + sugCalc + ' גרם סוכר ';
         }
