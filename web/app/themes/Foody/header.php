@@ -50,7 +50,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 <?php Foody_Header::google_tag_manager_iframe(); ?>
 
 <?php if (!empty($edit_link = get_edit_post_link())): ?>
-    <div dir="rtl" style="text-align: right; max-width: 960px;margin: 0 auto;">
+    <div dir="rtl" style="text-align: right; max-width: 960px;margin: 0 auto;position: relative;">
         <a href="<?php echo $edit_link ?>">
             <?php echo __('ערוך') ?>
         </a>
