@@ -74,6 +74,7 @@ class Foody_Ingredient extends Foody_Post
                     'title' => $substitute_ingredient['substitute_ingredient']->post_title,
                     'conversion' => $substitute_ingredient['conversion'],
                     'text' => $substitute_ingredient['text'],
+                    'original_ingredient_text' => $substitute_ingredient['original_ingredient_text'],
                     'text_color' => $substitute_ingredient['text_color'],
                     'show_everywhere' => $substitute_ingredient['show_everywhere'],
                     'post' => $substitute_ingredient['substitute_ingredient'],
@@ -761,23 +762,25 @@ class Foody_Ingredient extends Foody_Post
         if ($this->recipe_substitute_ingredient != null && $this->recipe_substitute_ingredient->getTitle() != '' && !$this->substitute_ingredient_everywhere) {
             $recipe_substitute_ingredient_title = $this->recipe_substitute_ingredient->getTitle();
             $recipe_substitute_ingredient_text = isset($this->substitute_ingredients_list[$recipe_substitute_ingredient_title]) ? $this->substitute_ingredients_list[$recipe_substitute_ingredient_title]['text'] : '';
+            $recipe_original_ingredient_text = isset($this->substitute_ingredients_list[$recipe_substitute_ingredient_title]) ? $this->substitute_ingredients_list[$recipe_substitute_ingredient_title]['original_ingredient_text'] : '';
             $recipe_substitute_ingredient_text_color = isset($this->substitute_ingredients_list[$recipe_substitute_ingredient_title]) ? $this->substitute_ingredients_list[$recipe_substitute_ingredient_title]['text_color'] : '';
             if (isset($this->substitute_ingredients_list[$recipe_substitute_ingredient_title])) {
-                $substitute_ingredient_html = '<div class="substitute-ingredient" data-text="' . $recipe_substitute_ingredient_text . '" data-text-color="' . $recipe_substitute_ingredient_text_color . '" data-name="' . $recipe_substitute_ingredient_title . '" data-url="' . $this->recipe_substitute_ingredient->link . '">' . __('החלפה ל') . $recipe_substitute_ingredient_title . '</div>';
+                $substitute_ingredient_html = '<div class="substitute-ingredient" data-text="' . $recipe_substitute_ingredient_text . '" data-original-text="' . $recipe_original_ingredient_text . '" data-text-color="' . $recipe_substitute_ingredient_text_color . '" data-name="' . $recipe_substitute_ingredient_title . '" data-url="' . $this->recipe_substitute_ingredient->link . '">' . __('החלפה ל') . $recipe_substitute_ingredient_title . '</div>';
                 return $substitute_ingredient_html;
             }
         } elseif ($this->substitute_ingredient_everywhere) {
             foreach ($this->substitute_ingredients_list as $substitute_ingredient) {
                 $recipe_substitute_ingredient_text = isset($substitute_ingredient['text']) ? $substitute_ingredient['text'] : '';
+                $recipe_original_ingredient_text = isset($substitute_ingredient['original_ingredient_text']) ? $substitute_ingredient['original_ingredient_text'] : '';
                 $recipe_substitute_ingredient_text_color = isset($substitute_ingredient['text_color']) ? $substitute_ingredient['text_color'] : '';
                 if ($substitute_ingredient['show_everywhere']) {
                     if (!$substitute_ingredient['filter']) {
-                        $substitute_ingredient_html = '<div class="substitute-ingredient" data-text="' . $recipe_substitute_ingredient_text . '" data-text-color="' . $recipe_substitute_ingredient_text_color . '" data-name="' . $substitute_ingredient['title'] . '"  data-url="' . get_permalink($substitute_ingredient['post']) . '">'. __('החלפה ל') . $substitute_ingredient['title'] . '</div>';
+                        $substitute_ingredient_html = '<div class="substitute-ingredient" data-text="' . $recipe_substitute_ingredient_text . '" data-original-text="' . $recipe_original_ingredient_text . '" data-text-color="' . $recipe_substitute_ingredient_text_color . '" data-name="' . $substitute_ingredient['title'] . '"  data-url="' . get_permalink($substitute_ingredient['post']) . '">'. __('החלפה ל') . $substitute_ingredient['title'] . '</div>';
                         return $substitute_ingredient_html;
                     } else {
                         $show_ingredient = $this->determine_substitute_display_by_filter($substitute_ingredient['filter'][0], $substitute_ingredients_details_filter);
                         if ($show_ingredient) {
-                            $substitute_ingredient_html = '<div class="substitute-ingredient" data-text="' . $recipe_substitute_ingredient_text . '" data-text-color="' . $recipe_substitute_ingredient_text_color . '" data-name="' . $substitute_ingredient['title'] . '"  data-url="' . get_permalink($substitute_ingredient['post']) . '">' . __('החלפה ל') . $substitute_ingredient['title'] . '</div>';
+                            $substitute_ingredient_html = '<div class="substitute-ingredient" data-text="' . $recipe_substitute_ingredient_text . '" data-original-text="' . $recipe_original_ingredient_text . '" data-text-color="' . $recipe_substitute_ingredient_text_color . '" data-name="' . $substitute_ingredient['title'] . '"  data-url="' . get_permalink($substitute_ingredient['post']) . '">' . __('החלפה ל') . $substitute_ingredient['title'] . '</div>';
                             return $substitute_ingredient_html;
                         }
                     }
