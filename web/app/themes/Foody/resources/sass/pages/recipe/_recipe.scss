@@ -1743,6 +1743,10 @@ $content-width: 95%;
         }
       }
 
+      > .difference-nutrient{
+        flex-wrap: wrap;
+      }
+
       .recipe-purchase-buttons {
         max-width: calc(100% - 15px);
         margin: 0 auto;
@@ -2365,6 +2369,10 @@ $content-width: 95%;
           }
 
         }
+      }
+
+      > .difference-nutrient{
+        flex-wrap: wrap;
       }
 
       .recipe-content {
