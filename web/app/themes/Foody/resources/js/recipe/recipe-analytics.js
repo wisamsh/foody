@@ -35,6 +35,9 @@ jQuery(document).ready(($) => {
             "ארוחות צהריים": "ארוחות צהריים",
             "בראנץ'": "בראנץ'",
         };
+        let nonInteraction = true;
+        let isTwoMinuets = false;
+
 
         // Add to recipes visited in session count
         set_recipe_order_location(foodyGlobals.ID);
@@ -94,8 +97,10 @@ jQuery(document).ready(($) => {
                     let isFav = jQuery(this).hasClass('icon-favorite-pressed');
                     if (isFav) {
                         eventCallback(event, 'מתכון', 'הסרה ממועדפים', '', '', '', get_recipe_order_location());
+                        nonInteraction = false;
                     } else {
                         eventCallback(event, 'מתכון', 'הוספה למועדפים', '', '', '', get_recipe_order_location());
+                        nonInteraction = false;
                     }
                 });
             }
@@ -108,6 +113,7 @@ jQuery(document).ready(($) => {
         ratings.delegate('img', 'click', function (event) {
             let ratingValue = this.id.charAt(this.id.length - 1);
             eventCallback(event, 'מתכון', 'דירוג מתכון', '', 'ציון', ratingValue, get_recipe_order_location());
+            nonInteraction = false;
         });
 
         /**
@@ -117,6 +123,7 @@ jQuery(document).ready(($) => {
         socialShareList.delegate('li', 'click', function (event) {
             let sharingPlatform = this.className.substring(this.className.lastIndexOf('_') + 1, this.className.lastIndexOf(' '));
             eventCallback(event, 'מתכון', 'שיתוף', sharingPlatform, get_recipe_order_location());
+            nonInteraction = false;
         });
 
         /**
@@ -125,6 +132,7 @@ jQuery(document).ready(($) => {
         if (jQuery('#number-of-dishes').length) {
             jQuery('#number-of-dishes').on("change", null, function (event) {
                 eventCallback(event, 'מתכון', 'שינוי מספר מנות', this.defaultValue, 'מספר מנות', this.value, get_recipe_order_location());
+                nonInteraction = false;
             });
         }
 
@@ -138,6 +146,7 @@ jQuery(document).ready(($) => {
                 let recipeName = jQuery(event.target).text().trim();
                 let position = $('.details .post-title a').index(event.target);
                 eventCallback(event, 'מתכון', 'בחירת מתכון נוסף', recipeName, 'מיקום', position, get_recipe_order_location());
+                nonInteraction = false;
             });
 
             jQuery(relatedRecipe).find('a .image-container').click((event) => {
@@ -145,6 +154,7 @@ jQuery(document).ready(($) => {
                 // let position = jQuery(this).parent().parent().index() + 1;
                 let position = $('a .image-container').index(event.target);
                 eventCallback(event, 'מתכון', 'בחירת מתכון נוסף', recipeName, 'מיקום', position, get_recipe_order_location());
+                nonInteraction = false;
             });
         });
 
@@ -155,6 +165,7 @@ jQuery(document).ready(($) => {
         categoriesHeader.on('click', null, function (event) {
             if (jQuery('#categoriesHeader-widget-accordion').is(":hidden")) {
                 eventCallback(event, 'מתכון', 'פתיחת תפריט קטגוריות', get_recipe_order_location());
+                nonInteraction = false;
             }
         });
 
@@ -165,6 +176,7 @@ jQuery(document).ready(($) => {
         sideCategoriesList.on('click', null, function (event) {
             let catName = jQuery(this).find('a').text().trim();
             eventCallback(event, 'מתכון', 'מעבר לקטגוריה', catName, 'מיקום', 'תפריט ימין', get_recipe_order_location());
+            nonInteraction = false;
         });
 
         /**
@@ -174,6 +186,7 @@ jQuery(document).ready(($) => {
         bottomCategories.delegate('li', 'click', function (event) {
             let catName = jQuery(this).find('a').text().trim();
             eventCallback(event, 'מתכון', 'מעבר לקטגוריה', catName, 'מיקום', 'פוטר', get_recipe_order_location());
+            nonInteraction = false;
         });
 
         /**
@@ -183,6 +196,7 @@ jQuery(document).ready(($) => {
         bottomTags.delegate('li', 'click', function (event) {
             let tagName = jQuery(this).find('a').text().trim();
             eventCallback(event, 'מתכון', 'לחיצה על תגיות', tagName, 'מיקום', 'פוטר', get_recipe_order_location());
+            nonInteraction = false;
         });
 
         /**
@@ -191,6 +205,7 @@ jQuery(document).ready(($) => {
         let newsletterSubmitBtn = jQuery('.content .wpcf7 > form')
         newsletterSubmitBtn.submit((event) => {
             eventCallback(event, 'מתכון', 'לחיצה על רישום לדיוור', foodyGlobals['title'], 'מיקום', 'פוטר', get_recipe_order_location());
+            nonInteraction = false;
             if (foodyGlobals['post']['categories']) {
                 categoriesHits(publishers);
             }
@@ -203,6 +218,7 @@ jQuery(document).ready(($) => {
         addImage.click((event) => {
             if (event.target.id !== 'attachment') {
                 eventCallback(event, 'מתכון', 'לחיצה על מצלמה', '', 'מיקום', 'פוטר', get_recipe_order_location());
+                nonInteraction = false;
             }
         });
 
@@ -212,6 +228,7 @@ jQuery(document).ready(($) => {
         let apprvoeAddingimage = jQuery('#image-upload-form > button.btn.btn-primary.btn-approve');
         apprvoeAddingimage.click((event) => {
             eventCallback(event, 'מתכון', 'העלאת תמונה', '', 'מיקום', 'פוטר', get_recipe_order_location());
+            nonInteraction = false;
         });
 
         /**
@@ -220,6 +237,7 @@ jQuery(document).ready(($) => {
         let addCommentBtn = jQuery('#submit');
         addCommentBtn.click((event) => {
             eventCallback(event, 'מתכון', 'הוספת תגובה', '', 'מיקום', 'פוטר', get_recipe_order_location());
+            nonInteraction = false;
         });
 
         /**
@@ -232,6 +250,7 @@ jQuery(document).ready(($) => {
                 analyticsLabel = this.innerText;
             }
             eventCallback(event, 'מתכון', 'לחיצה לרכישה', analyticsLabel, 'מפרסם', feedPublisher, get_recipe_order_location(),);
+            nonInteraction = false;
         });
 
         /**
@@ -258,7 +277,7 @@ jQuery(document).ready(($) => {
             }
             if (toLog) {
                 if (!scrollsArr[scrollPercentRounded]) {
-                    eventCallback(e, 'מתכון', 'גלילה', scrollPercentRounded + '%', '', '', get_recipe_order_location());
+                    eventCallback(e, 'מתכון', 'גלילה', scrollPercentRounded + '%', '', '', get_recipe_order_location(), '', '', '', '', isNonInteraction(scrollsArr,isTwoMinuets,nonInteraction));
                     scrollsArr[scrollPercentRounded] = true;
                 }
             }
@@ -270,6 +289,7 @@ jQuery(document).ready(($) => {
         let newsletterRegisterBtn = $('footer .newsletter .wpcf7');
         newsletterRegisterBtn.submit((event) => {
             eventCallback(event, 'מתכון', 'לחיצה על רישום לדיוור', '', 'מיקום', 'פוטר');
+            nonInteraction = false;
         });
 
         /**
@@ -283,9 +303,11 @@ jQuery(document).ready(($) => {
             if (imageContainer.length) {
                 text = $(imageContainer[0].children[0]).attr('alt');
                 eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', '', 'תמונה');
+                nonInteraction = false;
             } else {
                 text = $(this)[0].innerHTML;
                 eventCallback(event, 'מתכון', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', '', 'קישור');
+                nonInteraction = false;
             }
         });
 
@@ -295,6 +317,7 @@ jQuery(document).ready(($) => {
         $('.sponsored-by a').on('click', function () {
             let linkName = $(this).closest('.ingredients').find('.foody-u-link')[0].innerText;
             eventCallback(event, 'מתכון', 'לחיצה על קידום מצרכים', linkName, 'מפרסם', feedPublisher, '', '', '', 'יש קידום עם קישור');
+            nonInteraction = false;
         });
 
         /**
@@ -324,8 +347,10 @@ jQuery(document).ready(($) => {
 
             if (ingredientLink.toLowerCase().indexOf('utm') < 0 && ingredientLink.toLowerCase().indexOf('foody') >= 0) {
                 eventCallback(event, 'מתכון', 'לחיצה על מצרכים (הפניה פנימה)', ingredientName, 'מפרסם', feedPublisher, '', '', '', ingredientsPromotion);
+                nonInteraction = false;
             } else if (ingredientLink.toLowerCase().indexOf('utm') >= 0 || ingredientLink.toLowerCase().indexOf('foody') < 0) {
                 eventCallback(event, 'מתכון', 'לחיצה על מצרכים (הפניה החוצה)', ingredientName, 'מפרסם', feedPublisher, '', '', '', ingredientsPromotion);
+                nonInteraction = false;
             }
         });
 
@@ -339,9 +364,11 @@ jQuery(document).ready(($) => {
             if (substituteIngredientName == shownIngredientName) {
                 // substitute ingredient
                 eventCallback(event, 'מתכון', 'החלפת מצרך מקורי', substituteLinkName, 'מפרסם', feedPublisher, '', '', '', '', substituteIngredientName);
+                nonInteraction = false;
             } else {
                 // return to original
                 eventCallback(event, 'מתכון', 'החזרת מצרך מקורי', substituteIngredientName, 'מפרסם', feedPublisher, '', '', '', '',);
+                nonInteraction = false;
             }
         });
 
@@ -349,7 +376,10 @@ jQuery(document).ready(($) => {
         let interval = setInterval(function () {
             secondsInPage += timeInPageDelta;
             let timerString = toMinutes(secondsInPage);
-            eventCallback('', 'מתכון', 'טיימר',timerString , '', '', '');
+            eventCallback('', 'מתכון', 'טיימר',timerString , '', '', '','','','','', isNonInteraction(scrollsArr,isTwoMinuets,nonInteraction));
+            if(timerString == '2m'){
+                isTwoMinuets = true;
+            }
             if (timerString == '20m') {
                 clearInterval(interval);
             }
@@ -368,7 +398,7 @@ jQuery(document).ready(($) => {
  * @param cdValue
  * @param recipe_order_location
  */
-function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location = '', itemCategory = '', object = '', ingredientsPromotion = '', ingredient = '') {
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location = '', itemCategory = '', object = '', ingredientsPromotion = '', ingredient = '', non_interaction = false) {
 
     /**
      * Recipe name
@@ -448,7 +478,8 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
         '',
         object,
         ingredientsPromotion,
-        ingredient
+        ingredient,
+        non_interaction
     );
 }
 
@@ -520,6 +551,27 @@ function categoriesHits(publishers, feedPublisher, categoriesList) {
         }
     }
 
+}
+
+function isNonInteraction (scrollsArr, isTwoMinuets, _nonInteraction){
+    if (_nonInteraction) {
+        let scrollInteraction = false;
+
+        for (let key in scrollsArr) {
+            if (key != '0' && scrollsArr[key]) {
+                scrollInteraction = true;
+                break;
+            }
+        }
+
+        if (isTwoMinuets && scrollInteraction) {
+            return false;
+        }
+    }
+    else{
+        return false;
+    }
+    return true;
 }
 
 function getRelevantIngredientsPromotion(publishers, feedPublisher) {

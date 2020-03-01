@@ -9,6 +9,7 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
     window.scroller();
 
     let $video = $('.featured-content-container #video');
+    let videoStopped = false;
 
     if ($video && $video.length) {
 
@@ -64,6 +65,10 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                                         let addToRoundUp = 10 - reminder;
                                         passPercentage = passPercentage + addToRoundUp;
                                     }
+                                    if(videoStopped){
+                                        eventCallback(event, 'מתכון', 'צפייה בווידאו', 'הפעלה מחדש לאחר הפסקה', 'מיקום', passPercentage + '%');
+                                        videoStopped = false;
+                                    }
                                     eventCallback(event, 'מתכון', 'צפייה בווידאו', 'התקדמות', 'מיקום', passPercentage + '%');
                                 });
                             }
@@ -86,6 +91,7 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                                     }
                                 }
                                 eventCallback(event, 'מתכון', 'עצירת ווידאו', 'עצירה', 'מיקום', passPercentage + '%');
+                                videoStopped = true;
                             });
 
 

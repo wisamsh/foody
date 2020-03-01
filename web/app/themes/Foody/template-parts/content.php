@@ -23,7 +23,7 @@
             <div class="entry-meta">
 				<?php
 				foody_posted_on();
-				foody_posted_by();
+//				foody_posted_by();
 				?>
             </div><!-- .entry-meta -->
 		<?php endif; ?>

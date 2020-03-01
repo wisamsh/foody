@@ -46,16 +46,16 @@ $page_definitions = array(
 	),
 );
 
-foreach ( $page_definitions as $slug => $page ) {
+foreach ( $page_definitions as $slug => $foody_page_data ) {
 	// Check that the page doesn't exist already
 	$query = new WP_Query( 'pagename=' . $slug );
 	if ( ! $query->have_posts() ) {
 		// Add the page using the data from the array above
 		$id = wp_insert_post(
 			array(
-				'post_content'   => $page['content'],
+				'post_content'   => $foody_page_data['content'],
 				'post_name'      => $slug,
-				'post_title'     => $page['title'],
+				'post_title'     => $foody_page_data['title'],
 				'post_status'    => 'publish',
 				'post_type'      => 'page',
 				'ping_status'    => 'closed',
@@ -64,8 +64,8 @@ foreach ( $page_definitions as $slug => $page ) {
 		);
 
 		if ( ! is_wp_error( $id ) ) {
-			if ( ! empty( $page['template'] ) ) {
-				update_post_meta( $id, '_wp_page_template', "page-templates/{$page['template']}.php" );
+			if ( ! empty( $foody_page_data['template'] ) ) {
+				update_post_meta( $id, '_wp_page_template', "page-templates/{$foody_page_data['template']}.php" );
 			}
 		}
 	}

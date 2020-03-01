@@ -9,7 +9,8 @@ module.exports = (function () {
         recipe_name = '', item_category = '', chef = '',
         difficulty_level = '', preparation_time, ingredients_amount = '',
         order_location = '', amount = '', has_rich_content,
-        cd_description1 = '', cd_value1 = '', filters_amount = '', _object = '', ingredients_promotion='', ingredient=''
+        cd_description1 = '', cd_value1 = '', filters_amount = '', _object = '',
+        ingredients_promotion='', ingredient='', non_interaction = false
     ) {
 
         /**
@@ -60,6 +61,7 @@ module.exports = (function () {
         // Data Layer as an Object
         let dataLayerObj = {
             event: 'foody',
+            'non-interaction': non_interaction,
             category,
             action,
             label,
