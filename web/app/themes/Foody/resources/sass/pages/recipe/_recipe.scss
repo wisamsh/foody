@@ -1634,6 +1634,10 @@ $content-width: 95%;
 
       .recipe-ingredients {
 
+        > .difference-nutrient{
+          flex-wrap: wrap;
+        }
+
         > .recipe-ingredients-top {
           max-width: calc(100% - #{$content-padding});
           place-items: center;
@@ -2307,6 +2311,9 @@ $content-width: 95%;
       }
 
       .recipe-ingredients {
+        > .difference-nutrient{
+          flex-wrap: wrap;
+        }
 
         > .recipe-ingredients-top {
           .title {
