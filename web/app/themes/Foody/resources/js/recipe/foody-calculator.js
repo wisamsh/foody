@@ -429,8 +429,8 @@ function handleSubsTextBackAndForth(textToShow, textForOriginal, caloriesNutrien
     showText = true;
 
     if (switchToSub) {
-        calCalc = Math.round(caloriesNutrientOriginalVal - newCaloriesNutrient);
-        sugCalc = Math.round(sugarNutrientOriginalVal - newSugarNutrient);
+        calCalc = Math.abs(Math.round(caloriesNutrientOriginalVal - newCaloriesNutrient));
+        sugCalc =  Math.abs(Math.round(sugarNutrientOriginalVal - newSugarNutrient));
     } else {
         if ($('.cal-calc').length) {
             let toCalcCals = $('.cal-calc')[0].innerText;
