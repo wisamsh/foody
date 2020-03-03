@@ -375,6 +375,12 @@ if (defined('JETPACK__VERSION')) {
 }
 
 
+/**
+ * Load Foody background processes
+ */
+require get_template_directory() . '/foody-background-processes/foody-bp-content-sync.php';
+
+
 function admin_theme_style()
 {
     $asset = foody_get_versioned_asset('admin');

@@ -750,7 +750,8 @@ class Foody_Ingredient extends Foody_Post
             $rules = foody_get_commercial_rules($rules);
 
             if (!empty($rules)) {
-                $link = get_field('link', $rules[0]['rule_id']);
+                $first_rule = array_shift($rules);
+                $link = get_field('link', $first_rule['rule_id']);
             }
         }
 
