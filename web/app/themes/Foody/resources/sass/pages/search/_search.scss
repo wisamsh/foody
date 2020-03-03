@@ -59,12 +59,22 @@ body[class~='search'] {
         margin: 0 auto;
         text-align: center;
 
-        h2 {
+        > h2 {
           font-size: 32px;
           font-weight: 900;
           text-align: center;
           color: var(--color__primary);
           margin: 1em 0;
+        }
+
+        > .homepage{
+          .content-container{
+            max-width: 100%;
+            flex: 100%;
+            .foody-grid{
+              text-align: left;
+            }
+          }
         }
 
       }

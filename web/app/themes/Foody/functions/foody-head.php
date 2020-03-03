@@ -414,4 +414,22 @@ function foody_background_image_referer()
     }
 }
 
-add_action('wp_head', 'foody_background_image_referer');
+add_action('wp_head', 'foody_search_results_script');
+
+function foody_search_results_script(){
+    $foody_page = Foody_PageContentFactory::get_instance()->get_page();
+    if ($foody_page != null && get_class($foody_page) == 'Foody_SearchPage') {
+        ?>
+        <script>
+            debugger
+            if(document.getElementsByClassName('homepage').length) {
+                // no results
+                document.querySelector('#main > .row > aside').style.display = 'none !important';
+                document.querySelector('#main > .row > .content').style.display = 'width: 100%';
+                //$('#main > .row > aside').attr('style', 'display: none !important');
+                //$('#main > .row > .content').attr('style', 'width: 100%');
+            }
+        </script>
+        <?php
+    }
+}
