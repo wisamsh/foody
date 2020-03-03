@@ -8,6 +8,14 @@ module.exports = function (selector, options) {
 
     var searchRequest;
     var currentQuery;
+    var currentType = '';
+
+    var typesAndTitles = {
+        'post': 'בחרו ישירות מהתוצאות:',
+        'ingredient': 'מתכונים המכילים מצרכים אלו:',
+        'feed_channel': 'בחרו ממתחמי פידים:',
+        'author': ' בחרו מחברי חברי הנבחרת:'
+    };
 
     let defaultOptions = {
         hint: false,
@@ -44,7 +52,14 @@ module.exports = function (selector, options) {
                 displayKey: 'name',
                 templates: {
                     suggestion: function (suggestion) {
+                        let addHeader = false;
                         let link = '';
+
+                        if(currentType != suggestion.type){
+                            link = '<div class="suggestion-head-title">' + typesAndTitles[suggestion.type] + '</div>';
+                            currentType = suggestion.type;
+                            addHeader = true;
+                        }
                         if (suggestion.name != null) {
                             let splitedUrl = suggestion.link.split('?');
                             let autocompleteAnalyticsParam = '?auto=1';
@@ -52,7 +67,12 @@ module.exports = function (selector, options) {
                                 autocompleteAnalyticsParam = '&auto=1';
                             }
                             let name = suggestion.name.replace(new RegExp('(' + currentQuery + ')', 'g'), '<span>$1</span>');
-                            link = '<a href="' + suggestion.link + autocompleteAnalyticsParam + '">' + name + '</a>';
+                            if(addHeader){
+                                link += '<a href="' + suggestion.link + autocompleteAnalyticsParam + '">' + name + '</a>';
+                            }
+                            else {
+                                link = '<a href="' + suggestion.link + autocompleteAnalyticsParam + '">' + name + '</a>';
+                            }
                         }
 
                         return link;
