@@ -170,7 +170,7 @@ function __search_by_title_only($search, $wp_query)
             $users = foody_search_user_by_name($q['s']);
             if (!isset($users) || empty($users)) {
                 $is_user = false;
-                $ingredient = find_posts_by_title_and_type($q['s'], 'foody_ingredient', false);
+                $ingredient = find_posts_by_title_and_type($q['s'], 'foody_ingredient', false, true);
                 if (!empty($ingredient)) {
                     $is_ingredient = true;
                 }
@@ -234,7 +234,7 @@ function __search_by_title_only($search, $wp_query)
 
 add_filter('posts_search', '__search_by_title_only', 500, 2);
 
-function find_posts_by_title_and_type($titles, $post_type, $is_autocomplete)
+function find_posts_by_title_and_type($titles, $post_type, $is_autocomplete, $has_wildcard = false)
 {
     global $wpdb;
     $two_options_for_title = false;
@@ -262,8 +262,10 @@ function find_posts_by_title_and_type($titles, $post_type, $is_autocomplete)
                 break;
             }
         }
+        if($post_type == 'foody_ingredient'){
+            $titles = '%'.$titles.'%';
+        }
         if ($two_options_for_title) {
-
             $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and (post_title like '$titles'" . $other_options . " ) and post_type = '$post_type'";
         } else {
             $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_title like '$titles' and post_type = '$post_type'";
