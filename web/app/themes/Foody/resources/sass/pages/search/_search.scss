@@ -1,5 +1,9 @@
 body[class~='search'] {
+  .content-no-results{
+    width: 100% !important;
+  }
 
+  .content-no-results,
   .content {
     .details-container {
       padding-right: 15px;
@@ -87,7 +91,7 @@ body[class~='search'] {
   body[class~='search'] {
     #page {
       position: initial;
-
+      .content-no-results,
       .content{
         .search-results{
           padding-top: 15px;
