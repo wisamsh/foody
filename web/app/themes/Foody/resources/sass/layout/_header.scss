@@ -445,9 +445,16 @@ header {
         right: 0;
         direction: rtl;
 
+
+
+
         .foody-search-suggestions {
           width: 100%;
           padding: 0;
+
+          .suggestion-head-title{
+            font-weight: bold;
+          }
 
           .foody-search-suggestion {
             font-size: 22px;

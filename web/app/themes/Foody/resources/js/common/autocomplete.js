@@ -13,8 +13,8 @@ module.exports = function (selector, options) {
     var typesAndTitles = {
         'post': 'בחרו ישירות מהתוצאות:',
         'ingredient': 'מתכונים המכילים מצרכים אלו:',
-        'feed_channel': 'בחרו ממתחמי פידים:',
-        'author': ' בחרו מחברי חברי הנבחרת:'
+        'feed_channel': 'בחרו ממתחמי הפידים:',
+        'author': ' בחרו מחברי הנבחרת:'
     };
 
     let defaultOptions = {
@@ -56,7 +56,7 @@ module.exports = function (selector, options) {
                         let link = '';
 
                         if(currentType != suggestion.type){
-                            link = '<div class="suggestion-head-title">' + typesAndTitles[suggestion.type] + '</div>';
+                            link = '<div class="suggestion-head-title" style="font-weight: bold; text-decoration: underline; color: red;">' + typesAndTitles[suggestion.type] + '</div>';
                             currentType = suggestion.type;
                             addHeader = true;
                         }
