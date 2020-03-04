@@ -6,6 +6,7 @@
  * Time: 6:20 PM
  */
 
+$cover_name = '';
 
 if ( isset( $template_args ) ) {
 	if ( ! isset( $template_args['image'] ) ) {
@@ -16,7 +17,12 @@ if ( isset( $template_args ) ) {
 	if ( isset( $template_args['link'] ) ) {
 		$link = $template_args['link'];
 	}
+	if ( isset($template_args['type'] ) ) {
+	   $cover_name = get_field('cover_name' );
+    }
 }
+
+
 
 if ( empty( $image ) ) {
 	$image = get_header_image();
@@ -31,6 +37,7 @@ if ( empty( $link ) ) {
 	// add link to cover that was referred by feed channel
     if (isset($_GET) && isset($_GET['referer']) && $_GET['referer']) {
         $link = get_field( 'cover_link' , $_GET['referer']);
+        $cover_name = get_field('cover_name', $_GET['referer'] );
     }
 }
 if ( ! empty( $link ) ) {
@@ -61,7 +68,7 @@ if ( isset( $template_args['mobile_image'] ) ) {
         <source media="(max-width: 799px)"
                 srcset="<?php echo $mobile_image; ?>"
         ">
-        <img src="<?php echo $image ?>" alt="<?php echo $alt;?>">
+        <img src="<?php echo $image ?>" alt="<?php echo $alt;?>" data-name="<?php echo $cover_name;?>">
     </picture>
 
 

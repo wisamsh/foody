@@ -384,6 +384,21 @@ jQuery(document).ready(($) => {
                 clearInterval(interval);
             }
         }, timeInPageDelta * 1000);
+
+        /** feed areas cover clicked **/
+        if ($('.cover-image a').length) {
+            $('.cover-image a').on('click', function () {
+                let coverLink = $(this).attr('href');
+                let coverName = $(this).find('img').attr('data-name');
+                if (coverLink != '') {
+                    if (coverLink.toLowerCase().indexOf('utm') < 0 && coverLink.toLowerCase().indexOf('foody') >= 0) {
+                        eventCallback('', 'מתכון', 'לחיצה על קאבר (הפניה פנימה)', coverName, ' מפרסם', feedPublisher);
+                    } else if (coverLink.toLowerCase().indexOf('utm') >= 0 || coverLink.toLowerCase().indexOf('foody') < 0) {
+                        eventCallback('', 'מתחם פידים', 'לחיצה על קאבר (הפניה החוצה)', coverName, ' מפרסם', feedPublisher);
+                    }
+                }
+            });
+        }
     }
 });
 

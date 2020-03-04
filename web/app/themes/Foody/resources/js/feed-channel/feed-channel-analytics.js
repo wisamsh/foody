@@ -60,18 +60,30 @@ jQuery(document).ready(($) => {
         if ($('.block-content .foody-banner a').length) {
             $('.block-content .foody-banner a').on('click', function () {
                 let bannerLink = $(this).attr('href');
-                let bannerName =  $(this).attr('data-banner-name');
-                let publisherName = typeof(foodyGlobals['channel_publisher_name']) != "undefined" ? foodyGlobals['channel_publisher_name'] : '';
+                let bannerName = $(this).attr('data-banner-name');
+                let publisherName = typeof (foodyGlobals['channel_publisher_name']) != "undefined" ? foodyGlobals['channel_publisher_name'] : '';
                 if (bannerLink.toLowerCase().indexOf('utm') < 0 && bannerLink.toLowerCase().indexOf('foody') >= 0) {
                     eventCallback('', 'מתחם פידים', 'הקלקה על באנר (הפניה פנימה)', bannerName, ' מפרסם', publisherName);
-                }
-                else if(bannerLink.toLowerCase().indexOf('utm') >= 0 || bannerLink.toLowerCase().indexOf('foody') < 0){
+                } else if (bannerLink.toLowerCase().indexOf('utm') >= 0 || bannerLink.toLowerCase().indexOf('foody') < 0) {
                     eventCallback('', 'מתחם פידים', 'הקלקה על באנר (הפניה החוצה)', bannerName, ' מפרסם', publisherName);
                 }
             });
         }
 
-
+        if ($('.cover-image a').length) {
+            $('.cover-image a').on('click', function () {
+                let coverLink = $(this).attr('href');
+                let coverName = $(this).find('img').attr('data-name');
+                let publisherName = typeof (foodyGlobals['channel_publisher_name']) != "undefined" ? foodyGlobals['channel_publisher_name'] : '';
+                if (coverLink != '') {
+                    if (coverLink.toLowerCase().indexOf('utm') < 0 && coverLink.toLowerCase().indexOf('foody') >= 0) {
+                        eventCallback('', 'מתחם פידים', 'לחיצה על קאבר (הפניה פנימה)', coverName, ' מפרסם', publisherName);
+                    } else if (coverLink.toLowerCase().indexOf('utm') >= 0 || coverLink.toLowerCase().indexOf('foody') < 0) {
+                        eventCallback('', 'מתחם פידים', 'לחיצה על קאבר (הפניה החוצה)', coverName, ' מפרסם', publisherName);
+                    }
+                }
+            });
+        }
     }
 });
 
