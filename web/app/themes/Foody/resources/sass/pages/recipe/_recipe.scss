@@ -333,6 +333,17 @@ $content-width: 95%;
         //opacity: 0.7;
         pointer-events: none;
 
+        .feed-logo-sticker{
+          position: relative;
+          left: 0;
+          display: block;
+          min-height: 25px;
+          line-height: 25px;
+          width: 20%;
+          bottom: 60px;
+          float: left;
+        }
+
         > img {
           width: 100%;
         }

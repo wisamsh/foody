@@ -413,3 +413,5 @@ function foody_background_image_referer()
         <?php
     }
 }
+
+add_action('wp_head', 'foody_background_image_referer');
