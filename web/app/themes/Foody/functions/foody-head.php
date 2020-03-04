@@ -373,7 +373,6 @@ function foody_background_image_referer()
             if (background_referer) {
                 let content = document.getElementsByClassName('content');
                 let links = content[0].getElementsByTagName("a");
-                debugger;
                 for (let i = 0; i < links.length; i++) {
                     let linkURL = new URL(links[i].href);
                     if (linkURL && !linkURL.hash && linkURL.origin == window.location.origin && linkURL.href != window.location.origin + '/' && linkURL.href != window.location.href && !linkURL.search.includes('referer')) {
