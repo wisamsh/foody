@@ -56,7 +56,7 @@ module.exports = function (selector, options) {
                         let link = '';
 
                         if(currentType != suggestion.type){
-                            link = '<div class="suggestion-head-title" style="font-weight: bold; text-decoration: underline; color: red;">' + typesAndTitles[suggestion.type] + '</div>';
+                            link = '<div class="suggestion-head-title" style="font-weight: bold; text-decoration: underline; color: red; direction: rtl">' + typesAndTitles[suggestion.type] + '</div>';
                             currentType = suggestion.type;
                             addHeader = true;
                         }

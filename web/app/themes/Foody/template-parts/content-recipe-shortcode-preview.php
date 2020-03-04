@@ -13,9 +13,16 @@ $show_favorite = foody_get_array_default($template_args, 'show_favorite', true);
 if (!foody_is_registration_open()) {
     $show_favorite = false;
 }
+
+if(is_array($_GET) && isset($_GET['referer'])){
+    $short_code_link = $foody_page->link.'?referer='.$_GET['referer'];
+}
+else{
+    $short_code_link = $foody_page->link;
+}
 ?>
 
-<div class="recipe-shortcode-container" onclick="window.open('<?php echo $foody_page->link; ?>')">
+<div class="recipe-shortcode-container" onclick="window.open('<?php echo $short_code_link; ?>')">
 <!--    <a href="--><?php //echo $foody_page->link ?><!--">-->
         <div class="details-container">
 
