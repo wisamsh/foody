@@ -521,11 +521,20 @@ function foody_posts_page_script()
         get_post_type() == 'foody_recipe' ||
         get_post_type() == 'foody_feed_channel' ||
         is_page_template('page-templates/items.php')) {
+
+        /* facebook pixel */
         $pixel_code = get_field('pixel_code');
         if (!empty($pixel_code)) {
             $pixel_code = add_script_tags($pixel_code);
             echo $pixel_code;
         }
+
+        /* google pixel */
+        $pixel_code_google = get_field('pixel_code_google');
+        if (!empty($pixel_code_google)) {
+            echo $pixel_code_google;
+        }
+
     }
 }
 
@@ -564,18 +573,16 @@ function add_script_tags($code)
         }
     }
     if (strpos($change_code, '<script>') == false) {
-        if($has_img_tag){
-            $change_code =  '<script>' . $split_string[0];
-        }
-        else {
+        if ($has_img_tag) {
+            $change_code = '<script>' . $split_string[0];
+        } else {
             $change_code = '<script>' . $change_code;
         }
     }
     if (strpos($change_code, '</script>') == false) {
         if ($has_img_tag) {
-            $change_code .=  '</script>' . '<img' . $split_string[1];
-        }
-        else {
+            $change_code .= '</script>' . '<noscript>' . '<img' . $split_string[1] . '</noscript>';
+        } else {
             $change_code = $change_code . '</script>';
         }
     }
