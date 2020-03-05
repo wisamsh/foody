@@ -24,8 +24,10 @@
 
     <?php
     if(!is_array($_REQUEST) || !isset($_REQUEST['action']) || $_REQUEST['action'] != 'foody_filter') {
-        $args = ['have_sidebar' => true];
-        foody_get_template_part(get_template_directory() . '/template-parts/common/not-found-suggestion.php', $args);
+        if(is_array($_GET) && isset($_GET['s'])) {
+            $args = ['have_sidebar' => true];
+            foody_get_template_part(get_template_directory() . '/template-parts/common/not-found-suggestion.php', $args);
+        }
     }
     ?>
 
