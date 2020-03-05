@@ -74,7 +74,7 @@ class Foody_Ingredient extends Foody_Post
                     'title' => $substitute_ingredient['substitute_ingredient']->post_title,
                     'conversion' => $substitute_ingredient['conversion'],
                     'text' => $substitute_ingredient['text'],
-                    'original_ingredient_text' => isset($substitute_ingredient['original_ingredient_text']) ? substitute_ingredient['original_ingredient_text'] : '',
+                    'original_ingredient_text' => isset($substitute_ingredient['original_ingredient_text']) ? $substitute_ingredient['original_ingredient_text'] : '',
                     'text_color' => $substitute_ingredient['text_color'],
                     'show_everywhere' => $substitute_ingredient['show_everywhere'],
                     'post' => $substitute_ingredient['substitute_ingredient'],
