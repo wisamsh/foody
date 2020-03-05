@@ -41,7 +41,7 @@ if ( empty( $link ) ) {
     }
 }
 if ( ! empty( $link ) ) {
-	$a = '<a href="' . $link['url'] . '" target="' . $link['target'] . '"></a>';
+	$a = '<a href="' . $link['url'] . '" target="' . $link['target'] . '">';
 }
 
 $mobile_image = $image;
