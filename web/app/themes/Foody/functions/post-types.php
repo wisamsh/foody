@@ -525,13 +525,14 @@ function foody_posts_page_script()
         /* facebook pixel */
         $pixel_code = get_field('pixel_code');
         if (!empty($pixel_code)) {
-            $pixel_code = add_script_tags($pixel_code);
+            $pixel_code = remove_unnecessary_tags($pixel_code);
             echo $pixel_code;
         }
 
         /* google pixel */
         $pixel_code_google = get_field('pixel_code_google');
         if (!empty($pixel_code_google)) {
+            $pixel_code_google = remove_unnecessary_tags($pixel_code_google);
             echo $pixel_code_google;
         }
 
@@ -588,4 +589,14 @@ function add_script_tags($code)
     }
 
     return $change_code;
+}
+
+function remove_unnecessary_tags($pixel_code){
+    $pixel_code = str_replace('<p>','',$pixel_code);
+    $pixel_code = str_replace('</p>','',$pixel_code);
+    $pixel_code = str_replace('<br />','',$pixel_code);
+    $pixel_code = str_replace('<br/>','',$pixel_code);
+    $pixel_code = str_replace('<br>','',$pixel_code);
+
+    return $pixel_code;
 }
