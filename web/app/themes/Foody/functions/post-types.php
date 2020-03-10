@@ -517,20 +517,42 @@ function foody_set_custom_page_var($page)
 
 function foody_posts_page_script()
 {
-    if (get_post_type() == 'post' ||
-        get_post_type() == 'foody_recipe' ||
-        get_post_type() == 'foody_feed_channel' ||
+    $referer_google = false;
+    $referer_facebook = false;
+
+    $post_type = get_post_type();
+    if ($post_type == 'post' ||
+        $post_type  == 'foody_recipe' ||
+        $post_type  == 'foody_feed_channel' ||
         is_page_template('page-templates/items.php')) {
 
+        /** from feed area */
+        if($post_type == 'foody_recipe' || $post_type == 'post'){
+            if(is_array($_GET) && isset($_GET['referer'])){
+                $enable_google = get_field('google_set_for_recipes', $_GET['referer']);
+                $enable_facebook = get_field('facebook_set_for_recipes', $_GET['referer']);
+
+                if($enable_facebook) {
+                    $referer_facebook = $_GET['referer'];
+                }
+                if($enable_google){
+                    $referer_google = $_GET['referer'];
+                }
+            }
+        }
+
         /* facebook pixel */
-        $pixel_code = get_field('pixel_code');
+        $pixel_code = get_field('pixel_code', $referer_facebook);
         if (!empty($pixel_code)) {
+            if (strpos($pixel_code, '<script>') == false || strpos($pixel_code, '</script>') == false) {
+                $pixel_code = add_script_tags($pixel_code);
+            }
             $pixel_code = remove_unnecessary_tags($pixel_code);
             echo $pixel_code;
         }
 
         /* google pixel */
-        $pixel_code_google = get_field('pixel_code_google');
+        $pixel_code_google = get_field('pixel_code_google', $referer_google);
         if (!empty($pixel_code_google)) {
             $pixel_code_google = remove_unnecessary_tags($pixel_code_google);
             echo $pixel_code_google;
