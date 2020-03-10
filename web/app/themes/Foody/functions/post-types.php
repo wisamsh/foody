@@ -545,7 +545,7 @@ function foody_posts_page_script()
         $pixel_code = get_field('pixel_code', $referer_facebook);
         if (!empty($pixel_code)) {
             if (strpos($pixel_code, '<script>') == false || strpos($pixel_code, '</script>') == false) {
-                $pixel_code = add_script_tags($pixel_code);
+                $pixel_code = add_script_tags(html_entity_decode($pixel_code));
             }
             $pixel_code = remove_unnecessary_tags($pixel_code);
             echo $pixel_code;
@@ -619,6 +619,7 @@ function remove_unnecessary_tags($pixel_code){
     $pixel_code = str_replace('<br />','',$pixel_code);
     $pixel_code = str_replace('<br/>','',$pixel_code);
     $pixel_code = str_replace('<br>','',$pixel_code);
+    $pixel_code = str_replace('<p style="direction: ltr;">','',$pixel_code);
 
     return $pixel_code;
 }
