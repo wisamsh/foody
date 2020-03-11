@@ -546,7 +546,7 @@ function foody_posts_page_script()
         if (!empty($pixel_code)) {
             if (strpos($pixel_code, '<script>') == false || strpos($pixel_code, '</script>') == false) {
                 $pixel_code = html_entity_decode($pixel_code,ENT_QUOTES | ENT_XML1, 'UTF-8');
-                $pixel_code = add_script_tags(handle_apostrophes_on_title($pixel_code));
+                $pixel_code = add_script_tags(handle_bad_apostrophe($pixel_code));
             }
             $pixel_code = remove_unnecessary_tags($pixel_code);
             echo $pixel_code;
@@ -631,5 +631,5 @@ function handle_bad_apostrophe($pixel_code){
     $pixel_code_result = str_replace("’", "'", $pixel_code_result);
     $pixel_code_result = str_replace("′", "'", $pixel_code_result);
 
-    return $pixel_code;
+    return $pixel_code_result;
 }
