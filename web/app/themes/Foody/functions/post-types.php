@@ -544,8 +544,8 @@ function foody_posts_page_script()
         /* facebook pixel */
         $pixel_code = get_field('pixel_code', $referer_facebook);
         if (!empty($pixel_code)) {
+            $pixel_code = html_entity_decode($pixel_code);
             if (strpos($pixel_code, '<script>') == false || strpos($pixel_code, '</script>') == false) {
-                $pixel_code = html_entity_decode($pixel_code,ENT_QUOTES | ENT_XML1, 'UTF-8');
                 $pixel_code = add_script_tags(handle_bad_apostrophe($pixel_code));
             }
             $pixel_code = remove_unnecessary_tags($pixel_code);
@@ -556,6 +556,7 @@ function foody_posts_page_script()
         /* google pixel */
         $pixel_code_google = get_field('pixel_code_google', $referer_google);
         if (!empty($pixel_code_google)) {
+            $pixel_code_google = html_entity_decode($pixel_code_google);
             $pixel_code_google = remove_unnecessary_tags($pixel_code_google);
             echo $pixel_code_google;
         }
@@ -622,6 +623,7 @@ function remove_unnecessary_tags($pixel_code){
     $pixel_code = str_replace('<br/>','',$pixel_code);
     $pixel_code = str_replace('<br>','',$pixel_code);
     $pixel_code = str_replace('<p style="direction: ltr;">','',$pixel_code);
+    $pixel_code = str_replace('<!– Facebook Pixel Code –>','',$pixel_code);
 
     return $pixel_code;
 }
@@ -630,6 +632,7 @@ function handle_bad_apostrophe($pixel_code){
     $pixel_code_result = str_replace("‘", "'", $pixel_code);
     $pixel_code_result = str_replace("’", "'", $pixel_code_result);
     $pixel_code_result = str_replace("′", "'", $pixel_code_result);
+
 
     return $pixel_code_result;
 }
