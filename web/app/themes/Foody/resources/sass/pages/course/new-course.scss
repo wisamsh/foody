@@ -1,0 +1,80 @@
+.foody_course-template-foody-course-new {
+  $margin-boxes: 2rem;
+  $title-size: 28px;
+
+  .sticky-registration {
+    opacity: 0;
+    pointer-events: none;
+    background-color: #01010178;
+    position: fixed;
+    width: 100%;
+    padding: 1rem 0;
+    top: 0;
+    left: 0;
+    text-align: center;
+    z-index: 999999999;
+    @import "course-registration-button";
+  }
+
+  #primary {
+
+    text-align: right;
+
+    .divider {
+      margin: 10px 1rem;
+      height: 1px;
+      background: #cccccc;
+    }
+
+    .course-cover {
+      position: relative;
+      .cover-image {
+        img {
+          border-radius: 0px;
+        }
+      }
+      .host-image{
+        width: 25%;
+        position: relative;
+        right: 170px;
+        top: -125px;
+        z-index: 9999;
+
+        img{
+          border-radius: 100%;
+        }
+      }
+
+      .course-information{
+        background-color: white;
+        top: -241px;
+        display: flex;
+        justify-content: space-between;
+        margin: 0;
+        position: relative;
+
+        .cover-textual-information{
+          text-align: center;
+          width: 50%;
+          margin-left: 12%;
+
+          .course-title{
+            font-size: 29px;
+            font-weight: 500;
+          }
+          .course-host-name{
+            font-size: 40px;
+            font-weight: 500;
+            color: red;
+          }
+          .course-cover-text{
+            width: 65%;
+            margin: 0 auto;
+            font-size: 18px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
