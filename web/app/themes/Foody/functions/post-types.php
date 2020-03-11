@@ -624,6 +624,7 @@ function remove_unnecessary_tags($pixel_code){
     $pixel_code = str_replace('<br>','',$pixel_code);
     $pixel_code = str_replace('<p style="direction: ltr;">','',$pixel_code);
     $pixel_code = str_replace('<!– Facebook Pixel Code –>','',$pixel_code);
+    $pixel_code = str_replace('<!-- Facebook Pixel Code -->','',$pixel_code);
 
     return $pixel_code;
 }
