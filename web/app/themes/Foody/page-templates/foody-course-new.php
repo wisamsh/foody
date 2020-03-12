@@ -34,7 +34,17 @@ if ((!empty($purchase_link) && isset($purchase_link['url']) && !empty($purchase_
             </section>
             <section class="gift-and-purchase-buttons">
                 <?php
-                $course->get_gift_and_purchase_buttons();
+                $course->get_gift_and_purchase_buttons_div();
+                ?>
+            </section>
+            <section class="what-waiting-section">
+                <?php
+                $course->get_whats_waiting_section();
+                ?>
+            </section>
+            <section class="video-section">
+                <?php
+                $course->get_video_section();
                 ?>
             </section>
         </div>

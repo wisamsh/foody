@@ -19,6 +19,7 @@
   #primary {
 
     text-align: right;
+    background: white;
 
     .divider {
       margin: 10px 1rem;
@@ -28,24 +29,26 @@
 
     .course-cover {
       position: relative;
+
       .cover-image {
         img {
           border-radius: 0px;
         }
       }
-      .host-image{
+
+      .host-image {
         width: 25%;
         position: relative;
         right: 170px;
         top: -125px;
         z-index: 9999;
 
-        img{
+        img {
           border-radius: 100%;
         }
       }
 
-      .course-information{
+      .course-information {
         background-color: white;
         top: -241px;
         display: flex;
@@ -53,21 +56,23 @@
         margin: 0;
         position: relative;
 
-        .cover-textual-information{
+        .cover-textual-information {
           text-align: center;
           width: 50%;
           margin-left: 12%;
 
-          .course-title{
+          .course-title {
             font-size: 29px;
             font-weight: 500;
           }
-          .course-host-name{
+
+          .course-host-name {
             font-size: 40px;
             font-weight: 500;
             color: red;
           }
-          .course-cover-text{
+
+          .course-cover-text {
             width: 65%;
             margin: 0 auto;
             font-size: 18px;
@@ -76,7 +81,7 @@
         }
       }
 
-      .additional-data{
+      .additional-data {
         background-color: white;
         position: relative;
         font-size: 20px;
@@ -85,26 +90,38 @@
         top: -275px;
         padding-right: 12%;
 
-        .additional-data-text{
+        .additional-data-text {
           width: 40%;
           font-weight: bold;
         }
-        .promotion-title{
+
+        .promotion-title {
           color: red;
           width: 33%;
           font-weight: 500;
         }
-        .promotion-text{
+
+        .promotion-text {
           width: 67%;
           font-weight: 500;
         }
-        .post-ratings{
+
+        .post-ratings {
           border: 1px solid red;
           padding: 10px;
           border-radius: 10px;
           position: relative;
           top: 25px;
           width: fit-content;
+
+          .ratings-index {
+            position: relative;
+            bottom: 15px;
+            right: 11px;
+            font-size: 14px;
+            color: var(--color__primary);
+            font-weight: 600;
+          }
         }
 
         .numbers-and-bottom-image {
@@ -120,17 +137,172 @@
             align-self: flex-end;
             justify-content: space-between;
 
-            .course-number{
+            .course-number {
               color: red;
               font-weight: 500;
             }
-            .course-number-key{
+
+            .course-number-key {
               font-weight: 500;
               font-size: 22px;
             }
           }
         }
       }
+    }
+
+    .gift-and-purchase-buttons {
+      position: relative;
+      top: -310px;
+
+      .buttons-container {
+        align-items: center;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: 500;
+
+        .purchase-button-div,
+        .gift-button-div {
+          margin: 0 1%;
+          border: 1px red solid;
+          border-radius: 30px;
+          padding: 1% 0;
+          width: 320px;
+          text-align: center;
+        }
+
+        .purchase-button-div {
+          background-color: red;
+          color: white;
+        }
+
+        .gift-button-div {
+          color: red;
+
+          > img {
+            position: relative;
+            right: 12px;
+            bottom: 5px;
+          }
+        }
+      }
+    }
+
+    .what-waiting-section{
+      margin: 3%;
+      box-shadow: 0px 0px 13px -3px grey;
+      top: -310px;
+      position: relative;
+
+      .course-what-waiting{
+        display: flex;
+        flex-direction: column;
+
+        .what-waiting-title-image-container{
+          display: flex;
+          flex-direction: row;
+
+          img{
+            width: 17%;
+          }
+          .what-waiting-title{
+            font-size: 30px;
+            color: red;
+            font-weight: 600;
+            align-self: center;
+            right: 18%;
+            position: relative;
+          }
+        }
+
+        .course-content-items{
+          position: relative;
+          top: -62px;
+          z-index: 999;
+          padding: 6%;
+
+          .course-content-items-row{
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 2%;
+
+            .course-content-item{
+              display: flex;
+              flex-direction: column;
+              width: 25%;
+
+              .item-title{
+                font-size: 11px;
+                text-align: center;
+                background: red;
+                color: white;
+                font-weight: 500;
+                border-radius: 0 0px 7px 7px;
+              }
+            }
+          }
+        }
+        > img{
+          width: 18%;
+          position: absolute;
+          align-self: flex-end;
+          bottom: 0;
+        }
+      }
+    }
+
+    .video-section{
+      position: relative;
+      top: -356px;
+
+      .course-main-video{
+        .course-main-video-image-container{
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+
+          .top-image{
+            width: 18%;
+            top: 28px;
+            align-self: flex-start;
+            position: relative;
+          }
+
+          .main-video{
+            position: relative;
+            z-index: 99999999;
+          }
+
+          .video-section-purchase{
+            margin: 3% 1% 0 1%;
+            border: 1px red solid;
+            border-radius: 30px;
+            padding: 1% 0;
+            width: 320px;
+            text-align: center;
+            background: red;
+            color: white;
+            font-size: 20px;
+            font-weight: 500;
+          }
+
+          .bottom-image{
+            width: 35%;
+            align-self: flex-end;
+            bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(mobileonly) {
+  .foody_course-template-page-templates {
+    #primary {
+
     }
   }
 }
