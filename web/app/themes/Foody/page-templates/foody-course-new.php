@@ -32,6 +32,11 @@ if ((!empty($purchase_link) && isset($purchase_link['url']) && !empty($purchase_
                     $course->get_cover_section();
                     ?>
             </section>
+            <section class="gift-and-purchase-buttons">
+                <?php
+                $course->get_gift_and_purchase_buttons();
+                ?>
+            </section>
         </div>
     </div>
     </div>

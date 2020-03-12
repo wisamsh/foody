@@ -75,6 +75,62 @@
           }
         }
       }
+
+      .additional-data{
+        background-color: white;
+        position: relative;
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        top: -275px;
+        padding-right: 12%;
+
+        .additional-data-text{
+          width: 40%;
+          font-weight: bold;
+        }
+        .promotion-title{
+          color: red;
+          width: 33%;
+          font-weight: 500;
+        }
+        .promotion-text{
+          width: 67%;
+          font-weight: 500;
+        }
+        .post-ratings{
+          border: 1px solid red;
+          padding: 10px;
+          border-radius: 10px;
+          position: relative;
+          top: 25px;
+          width: fit-content;
+        }
+
+        .numbers-and-bottom-image {
+          display: flex;
+          position: relative;
+          top: -77px;
+
+          .course-numbers-container {
+            display: flex;
+            flex-direction: row;
+            float: left;
+            width: 78%;
+            align-self: flex-end;
+            justify-content: space-between;
+
+            .course-number{
+              color: red;
+              font-weight: 500;
+            }
+            .course-number-key{
+              font-weight: 500;
+              font-size: 22px;
+            }
+          }
+        }
+      }
     }
   }
 }

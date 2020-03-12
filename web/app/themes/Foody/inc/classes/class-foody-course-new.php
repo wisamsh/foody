@@ -56,6 +56,10 @@ class Foody_Course_new
         }
     }
 
+    public function get_gift_and_purchase_buttons(){
+
+    }
+
     private function get_additional_data($cover_section){
         $background_images = $this->get_background_images_by_section($cover_section);
         $more_about_course = isset($cover_section['more_about_course']) ? $cover_section['more_about_course'] : '';
@@ -65,10 +69,42 @@ class Foody_Course_new
 
         $additional_data_section = '<div class="additional-data">';
         $more_about_course_div = '<div class="additional-data-text">' . $more_about_course . '</div>';
-        $promotion_title_div = '<div class="$promotion-title">' . $promotion_title . '</div>';
-        $promotion_text_div = '<div class="promotion_text">' . $promotion_text . '</div>';
+        $promotion_title_div = '<div class="promotion-title">' . $promotion_title . '</div>';
+        $promotion_text_div = '<div class="promotion-text">' . $promotion_text . '</div>';
         $rating =  do_shortcode('[ratings]');
-        $course_numbers_div = $this->get_course_numbers_div();
+        $course_numbers_div = $this->get_course_numbers_div($course_numbers);
+
+        if($course_numbers_div != '' && isset($background_images['bottom']) && $background_images['bottom'] != ''){
+            $course_numbers_div = '<div class="numbers-and-bottom-image">' . $course_numbers_div;
+        }
+
+        $additional_data_section .= $more_about_course_div .  $promotion_title_div . $promotion_text_div . $rating . $course_numbers_div;
+
+        if(isset($background_images['bottom'])) {
+            $additional_data_section .= "<img src=\"". $background_images['bottom']."\"></div></div>";
+        }
+        else{
+            $additional_data_section .= "</div>";
+        }
+
+        echo $additional_data_section;
+
+    }
+
+    private function get_course_numbers_div($course_numbers){
+        $texts_for_numbers = ['num_of_videos' => __('סרטונים'), 'time_of_video' => __('ממוצע כל סרטון'), 'course_duration' => __('קורס כולל'), 'course_level' => __('רמה')];
+        $course_numbers_div = '';
+
+        if(isset($course_numbers) && is_array($course_numbers)){
+            $course_numbers_div =  '<div class="course-numbers-container">';
+            foreach ($course_numbers as $key => $number){
+                $course_numbers_div .= '<div class="course-number-item">';
+                $course_numbers_div .= '<div class="course-number">'. $number . '</div>';
+                $course_numbers_div .= '<div class="course-number-key">'. $texts_for_numbers[$key] . '</div></div>';
+            }
+            $course_numbers_div .= '</div>';
+        }
+        return $course_numbers_div;
     }
 
     private function get_course_cover_information($cover_section){
@@ -125,7 +161,6 @@ class Foody_Course_new
             'link'         => ''
         ) );
     }
-
 
     /*
      * populate floating buttons and course video
