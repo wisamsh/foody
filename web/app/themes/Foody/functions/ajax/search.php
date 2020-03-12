@@ -266,6 +266,7 @@ function find_posts_by_title_and_type($titles, $post_type, $is_autocomplete, $ha
             }
         }
         if($post_type == 'foody_ingredient'){
+            $titles = esc_sql($titles);
             $titles = '%'.$titles.'%';
         }
         if ($two_options_for_title) {
