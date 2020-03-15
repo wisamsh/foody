@@ -55,12 +55,118 @@ class Foody_Course_new
         }
     }
 
-    public function get_always_wanted_section(){
+    public function get_always_wanted_section()
+    {
+        $alwayes_wanted_div = '';
+        if (is_array($this->course_data['alwayes_wanted_section']) && isset($this->course_data['alwayes_wanted_section'])) {
+            $alwayes_wanted_section = $this->course_data['alwayes_wanted_section'];
+            $background_images = $this->get_background_images_by_section($alwayes_wanted_section);
 
+            $alwayes_wanted_title = isset($alwayes_wanted_section['alwayes_wanted_title']) ? $alwayes_wanted_section['alwayes_wanted_title'] : '';
+            $alwayes_wanted_subtitle = isset($alwayes_wanted_section['alwayes_wanted_subtitle']) ? $alwayes_wanted_section['alwayes_wanted_subtitle'] : '';
+            $alwayes_wanted_text = isset($alwayes_wanted_section['alwayes_wanted_text']) ? $alwayes_wanted_section['alwayes_wanted_text'] : '';
+            $alwayes_wanted_image = isset($alwayes_wanted_section['alwayes_wanted_image']) ? $alwayes_wanted_section['alwayes_wanted_image'] : '';
+            $alwayes_wanted_image = is_array($alwayes_wanted_image) && isset($alwayes_wanted_image['url']) ? $alwayes_wanted_image['url'] : '';
+
+            $purchase_button_link = $this->get_floating_purchase_button();
+            $purchase_button_text = isset($purchase_button_link['title']) ? $purchase_button_link['title'] : '';
+            $purchase_button_link = isset($purchase_button_link['url']) ? $purchase_button_link['url'] : '';
+
+
+            /** creating html for each element */
+            $alwayes_wanted_title_div = '<h2 class="always-wanted-title">' . $alwayes_wanted_title . '</h2>';
+            $alwayes_wanted_image_div = '<img class="always-wanted-main-image" src="' . $alwayes_wanted_image . '">';
+            $alwayes_wanted_subtitle_div = '<h5 class="always-wanted-subtitle">' . $alwayes_wanted_subtitle . '</h5>';
+            $alwayes_wanted_subtitle_paragraph = '<p class="always-wanted-text">' . $alwayes_wanted_text . '</p>';
+            $alwayes_wanted_purchase = "<a class='always-wanted-section-purchase' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a>";
+
+            $alwayes_wanted_div = '<div class="always-wanted-container">' . $alwayes_wanted_title_div . $alwayes_wanted_image_div . $alwayes_wanted_subtitle_div . $alwayes_wanted_subtitle_paragraph . $alwayes_wanted_purchase;
+
+            if (isset($background_images['bottom']) && $background_images['bottom'] != '') {
+                $alwayes_wanted_div .= "<img class='bottom-image' src=\"" . $background_images['bottom'] . "\"></div>";
+            } else {
+                $alwayes_wanted_div .= "</div>";
+            }
+        }
+        echo $alwayes_wanted_div;
     }
 
-    public function get_video_section(){
-        $video_section ='';
+    public function get_buy_kit_section()
+    {
+        $buy_kit_div = '';
+        if (is_array($this->course_data['buy_kit_section']) && isset($this->course_data['buy_kit_section'])) {
+            $buy_kit_section = $this->course_data['buy_kit_section'];
+            $background_images = $this->get_background_images_by_section($buy_kit_section);
+
+            $buy_kit_title = isset($buy_kit_section['buy_kit_title']) ? $buy_kit_section['buy_kit_title'] : '';
+            $buy_kit_subtitle = isset($buy_kit_section['buy_kit_subtitle']) ? $buy_kit_section['buy_kit_subtitle'] : '';
+            $buy_kit_details = isset($buy_kit_section['kit_details']) ? $buy_kit_section['kit_details'] : [];
+            $buy_kit_price = isset($buy_kit_section['kit_price']) ? $buy_kit_section['kit_price'] : '';
+            $buy_kit_image = isset($buy_kit_section['buy_kit_image']) ? $buy_kit_section['buy_kit_image'] : '';
+            $buy_kit_image = is_array($buy_kit_image) && isset($buy_kit_image['url']) ? $buy_kit_image['url'] : '';
+
+            $purchase_button_link = isset($buy_kit_section['kit_buy_link']) ? $buy_kit_section['kit_buy_link'] : [];
+            $purchase_button_text = isset($purchase_button_link['title']) ? $purchase_button_link['title'] : '';
+            $purchase_button_link = isset($purchase_button_link['url']) ? $purchase_button_link['url'] : '';
+
+            /** creating html for each element */
+            $buy_kit_title_div = '<h2 class="buy-kit-title">' . $buy_kit_title . '</h2>';
+            $buy_kit_image_div = '<img class="buy-kit-main-image" src="' . $buy_kit_image . '">';
+            $buy_kit_details = $this->get_kit_details_html($buy_kit_subtitle, $buy_kit_details, $buy_kit_price);
+            $kit_purchase = "<a class='buy-kit-section-purchase' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a>";
+
+            if (isset($background_images['top'])) {
+                $buy_kit_div = "<div class=\"buy-kit-container\"><div class='buy-kit-title-image-container'><img class='top-image' src=\"" . $background_images['top'] . "\">";
+            } else {
+                $buy_kit_div = '<div class="buy-kit-container"><div class="buy-kit-title-image-container">';
+            }
+
+            $buy_kit_div .= $buy_kit_title_div . '</div>' . $buy_kit_image_div . $buy_kit_details ;
+
+            if (isset($background_images['bottom']) && $background_images['bottom'] != '') {
+                $buy_kit_div .= "<div class=\"buy-kit-purchase-image-container\"><img class='bottom-image' src=\"" . $background_images['bottom'] . "\">".$kit_purchase."</div></div>";
+            } else {
+                $buy_kit_div .= $kit_purchase . "</div>";
+            }
+        }
+        echo $buy_kit_div;
+    }
+
+    public function get_syllabus_section(){
+        $syllabus_div = '';
+        if (is_array($this->course_data['syllabus_section']) && isset($this->course_data['syllabus_section'])) {
+            $syllabus_data = $this->course_data['syllabus_section'];
+            $background_images = $this->get_background_images_by_section($syllabus_data);
+            $chapters_section = $this->get_chapters_section($syllabus_data['chapters']);
+            $syllabus_title_div = isset($syllabus_data['syllabus_title']) && $syllabus_data['syllabus_title'] != '' ?  '<h2 class="syllabus-title">'. $syllabus_data['syllabus_title'] . '</h2>' : '';
+
+            $purchase_button_link = $this->get_floating_purchase_button();
+            $purchase_button_text = isset($purchase_button_link['title']) ? $purchase_button_link['title'] : '';
+            $purchase_button_link = isset($purchase_button_link['url']) ? $purchase_button_link['url'] : '';
+            $purchase_button_link = "<a class='buy-kit-section-purchase' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a>";
+
+
+
+            if (isset($background_images['top'])) {
+                $syllabus_div = "<div class=\"syllabus-container\"><div class='syllabus-title-image-container'><img class='top-image' src=\"" . $background_images['top'] . "\">";
+            } else {
+                $syllabus_div = '<div class="syllabus-container"><div class="syllabus-title-image-container">';
+            }
+
+            $syllabus_div .= $syllabus_title_div . '</div>' . $chapters_section ;
+
+            if (isset($background_images['bottom']) && $background_images['bottom'] != '') {
+                $syllabus_div .= "<div class=\"syllabus-purchase-image-container\"><img class='bottom-image' src=\"" . $background_images['bottom'] . "\">".$purchase_button_link."</div></div>";
+            } else {
+                $syllabus_div .= $purchase_button_link . "</div>";
+            }
+        }
+        echo $syllabus_div;
+    }
+
+    public function get_video_section()
+    {
+        $video_section = '';
         if (is_array($this->course_data['course_video_group']) && isset($this->course_data['course_video_group'])) {
             $video_group = $this->course_data['course_video_group'];
             $background_images = $this->get_background_images_by_section($video_group);
@@ -68,7 +174,7 @@ class Foody_Course_new
             $purchase_button_text = isset($purchase_button_link['title']) ? $purchase_button_link['title'] : '';
             $purchase_button_link = isset($purchase_button_link['url']) ? $purchase_button_link['url'] : '';
 
-            if(isset($video_group['course_video']) && !empty($video_group['course_video'])){
+            if (isset($video_group['course_video']) && !empty($video_group['course_video'])) {
                 $video = $video_group['course_video'];
 
                 $video_div = '<div class="main-video">' . $video . '</div>';
@@ -82,10 +188,9 @@ class Foody_Course_new
                 $video_section .= $video_div;
 
                 if (isset($background_images['bottom']) && $background_images['bottom'] != '') {
-                    $video_section .= "<a class='video-section-purchase' href='". $purchase_button_link ."' >".$purchase_button_text."</a><img class='bottom-image' src=\"" . $background_images['bottom'] . "\"></div>";
-                }
-                else{
-                    $video_section .= "<a class='video-section-purchase' href='". $purchase_button_link ."' >".$purchase_button_text."</a></div>";
+                    $video_section .= "<a class='video-section-purchase' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a><img class='bottom-image' src=\"" . $background_images['bottom'] . "\"></div>";
+                } else {
+                    $video_section .= "<a class='video-section-purchase' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a></div>";
                 }
             }
         }
@@ -128,7 +233,7 @@ class Foody_Course_new
             $background_images = $this->get_background_images_by_section($what_waiting_section);
             $course_content_items = isset($what_waiting_section['course_content_items']) ? $what_waiting_section['course_content_items'] : '';
 
-            $what_waiting_title_div = '<div class="what-waiting-title">' . $what_waiting_title . '</div>';
+            $what_waiting_title_div = '<h2 class="what-waiting-title">' . $what_waiting_title . '</h2>';
             $course_content_items_div = $this->get_course_content_items_div($course_content_items);
 
             if (isset($background_images['top'])) {
@@ -141,12 +246,60 @@ class Foody_Course_new
 
             if (isset($background_images['bottom']) && $background_images['bottom'] != '') {
                 $course_what_waiting .= "<img src=\"" . $background_images['bottom'] . "\"></div>";
-            }
-            else{
+            } else {
                 $course_what_waiting .= '</div>';
             }
         }
         echo $course_what_waiting;
+    }
+
+    private function get_chapters_section($chapters){
+        $chapters_container ='';
+        if(isset($chapters)) {
+            $chapters_container = '<div class="chapters-container">';
+            $chapter_number = 1;
+            foreach ($chapters as $chapter) {
+                $chapter_title_div =  isset($chapter['chapter_name']) ? '<h5 class="chapter-title">'. $chapter['chapter_name'] .'</h5>' : '';
+                $chapter_summery_div =  isset($chapter['chapter_summery']) ? '<p class="chapter-summery">'. $chapter['chapter_summery'] .'</p>' : '';
+                $chapter_bullets_div =  isset($chapter['chapter_bullets']) ? '<div class="chapter-bullets ">'.$this->get_ul_list($chapter['chapter_bullets'],'bullet_row'). '</div>' : '';
+                $chapter_icon = '<i class="collapse-icon" src="'.get_template_directory_uri().'/resources/images/stroke-379.svg"></i>';
+                $chapter_div = '<div class="chapter-container"><a class="chapter-details-wrap" data-toggle="collapse" href="#chapter'. $chapter_number .'"><div class="chapter-details">'. $chapter_title_div .$chapter_icon. $chapter_summery_div .'</div></a>';
+
+                /** add bullets collapse */
+                $chapter_div .= '<div class="collapse" id="chapter'. $chapter_number .'"><div class="chapter-bullets">'. $chapter_bullets_div . '</div></div></div>';
+                $chapters_container .= $chapter_div;
+                $chapter_number++;
+            }
+            $chapters_container .= '</div>';
+        }
+        return$chapters_container;
+    }
+
+    private function get_kit_details_html($kit_title, $kit_details, $kit_price)
+    {
+        $kit_details_div = '<div class="kit-details-container">';
+
+        $kit_details_title_div = '<h5 class="buy-kit-subtitle">' . $kit_title . '</h5>';
+        $kit_details = $this->get_ul_list($kit_details, 'kit_detail_row');
+        $kit_price_div = '<div class="buy-kit-price">' . $kit_price . '</div>';
+
+        return $kit_details_div . $kit_details_title_div . $kit_details . $kit_price_div . '</div>';
+
+    }
+
+    private function get_ul_list($list, $key)
+    {
+        $ul_li_list = '';
+        if (!empty($list)) {
+            $ul_li_list = '<ul class="details-list">';
+            foreach ($list as $item) {
+                if (isset($item[$key]) && $item[$key] != '') {
+                    $ul_li_list .= '<li class="details-item">' . $item[$key] . '</li>';
+                }
+            }
+            $ul_li_list .= '</ul>';
+        }
+        return $ul_li_list;
     }
 
     private function get_course_content_items_div($course_content_items)
@@ -169,7 +322,7 @@ class Foody_Course_new
                         $course_content_items_section .= $course_content_item;
                     }
                 }
-                if($index % 3 == 2){
+                if ($index % 3 == 2) {
                     $course_content_items_section .= '</div>';
                 }
             }
@@ -242,7 +395,7 @@ class Foody_Course_new
 
         /** title and host */
         $title_div = '<div class="course-title">' . $course_title . '</div>';
-        $host_div = '<div class="course-host-name">' . $host_name . '</div>';
+        $host_div = '<h2 class="course-host-name">' . $host_name . '</h2>';
         $text_div = '<div class="course-cover-text">' . $page_cover_text . '</div>';
 
         $course_information .= '<div class="cover-textual-information">' . $title_div . $host_div . $text_div . '</div></div>';
@@ -282,10 +435,6 @@ class Foody_Course_new
         ));
     }
 
-    /*
-     * populate floating buttons and course video
-     * section will remain in $course_data property
-     */
     private function populate_course_properties()
     {
         $course_data = $this->course_data;

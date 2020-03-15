@@ -70,6 +70,7 @@
             font-size: 40px;
             font-weight: 500;
             color: red;
+            text-align: center;
           }
 
           .course-cover-text {
@@ -190,24 +191,25 @@
       }
     }
 
-    .what-waiting-section{
+    .what-waiting-section {
       margin: 3%;
       box-shadow: 0px 0px 13px -3px grey;
       top: -310px;
       position: relative;
 
-      .course-what-waiting{
+      .course-what-waiting {
         display: flex;
         flex-direction: column;
 
-        .what-waiting-title-image-container{
+        .what-waiting-title-image-container {
           display: flex;
           flex-direction: row;
 
-          img{
+          img {
             width: 17%;
           }
-          .what-waiting-title{
+
+          .what-waiting-title {
             font-size: 30px;
             color: red;
             font-weight: 600;
@@ -217,23 +219,23 @@
           }
         }
 
-        .course-content-items{
+        .course-content-items {
           position: relative;
           top: -62px;
           z-index: 999;
           padding: 6%;
 
-          .course-content-items-row{
+          .course-content-items-row {
             display: flex;
             justify-content: space-around;
             margin-bottom: 2%;
 
-            .course-content-item{
+            .course-content-item {
               display: flex;
               flex-direction: column;
               width: 25%;
 
-              .item-title{
+              .item-title {
                 font-size: 11px;
                 text-align: center;
                 background: red;
@@ -244,7 +246,8 @@
             }
           }
         }
-        > img{
+
+        > img {
           width: 18%;
           position: absolute;
           align-self: flex-end;
@@ -253,29 +256,29 @@
       }
     }
 
-    .video-section{
+    .video-section {
       position: relative;
       top: -356px;
 
-      .course-main-video{
-        .course-main-video-image-container{
+      .course-main-video {
+        .course-main-video-image-container {
           align-items: center;
           display: flex;
           flex-direction: column;
 
-          .top-image{
+          .top-image {
             width: 18%;
             top: 28px;
             align-self: flex-start;
             position: relative;
           }
 
-          .main-video{
+          .main-video {
             position: relative;
             z-index: 99999999;
           }
 
-          .video-section-purchase{
+          .video-section-purchase {
             margin: 3% 1% 0 1%;
             border: 1px red solid;
             border-radius: 30px;
@@ -288,10 +291,251 @@
             font-weight: 500;
           }
 
-          .bottom-image{
+          .bottom-image {
             width: 35%;
             align-self: flex-end;
             bottom: 0;
+          }
+        }
+      }
+    }
+
+    .always-wanted-section {
+      margin: 3%;
+      box-shadow: 0px 0px 13px -3px grey;
+      top: -386px;
+      position: relative;
+
+      .always-wanted-container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        .always-wanted-title {
+          font-size: 30px;
+          color: red;
+          font-weight: 600;
+          align-self: center;
+          position: relative;
+          width: 60%;
+          text-align: center;
+        }
+
+        .always-wanted-subtitle {
+          color: red;
+          margin-top: 2%;
+          text-align: center;
+          font-size: 20px;
+        }
+
+        .always-wanted-text {
+          font-size: 16px;
+          padding: 0px 23%;
+          font-weight: bold;
+        }
+
+        .always-wanted-section-purchase {
+          border: 1px red solid;
+          border-radius: 30px;
+          padding: 1% 0;
+          width: 320px;
+          text-align: center;
+          background: red;
+          color: white;
+          font-size: 20px;
+          font-weight: 500;
+          margin: 0 auto;
+        }
+
+        .bottom-image {
+          width: 60%;
+          align-self: center;
+        }
+      }
+    }
+
+    .buy-kit-section {
+      margin: 3%;
+      box-shadow: 0px 0px 13px -3px grey;
+      top: -386px;
+      position: relative;
+
+      .buy-kit-container {
+        display: flex;
+        flex-direction: column;
+
+        .buy-kit-title-image-container {
+          display: flex;
+          flex-direction: row;
+
+          img {
+            width: 17%;
+            position: relative;
+            top: 80px;
+          }
+
+          .buy-kit-title {
+            font-size: 30px;
+            color: red;
+            font-weight: 600;
+            align-self: center;
+            position: relative;
+            width: 60%;
+            text-align: center;
+          }
+        }
+
+        .buy-kit-main-image {
+          padding: 0px 17%;
+        }
+
+        .kit-details-container {
+          padding: 0 15%;
+
+          .buy-kit-subtitle {
+            color: red;
+            margin-top: 2%;
+            font-size: 20px;
+          }
+
+          .kit-details-item {
+            font-weight: 500;
+            line-height: 20px;
+          }
+
+          .buy-kit-price {
+            color: red;
+            font-weight: 500;
+            line-height: 20px;
+          }
+        }
+
+        .buy-kit-purchase-image-container {
+          display: flex;
+          flex-direction: row-reverse;
+
+          .bottom-image {
+            bottom: 47px;
+            width: 24%;
+            position: relative;
+          }
+
+          .buy-kit-section-purchase {
+            border: 1px red solid;
+            border-radius: 30px;
+            padding: 1% 0;
+            width: 320px;
+            text-align: center;
+            background: red;
+            color: white;
+            font-size: 20px;
+            font-weight: 500;
+            height: fit-content;
+            align-self: center;
+            left: 90px;
+            position: relative;
+          }
+        }
+      }
+    }
+
+    .syllabus-section {
+      margin: 3%;
+      box-shadow: 0px 0px 13px -3px grey;
+      top: -386px;
+      position: relative;
+
+      .syllabus-container {
+        display: flex;
+        flex-direction: column;
+
+        .syllabus-title-image-container {
+          display: flex;
+          flex-direction: row;
+
+          .top-image {
+            width: 17%;
+            position: relative;
+          }
+
+          .syllabus-title {
+            font-size: 30px;
+            color: red;
+            font-weight: 600;
+            align-self: center;
+            position: relative;
+            width: 65%;
+            text-align: center;
+          }
+        }
+
+        .chapters-container {
+          text-align: center;
+          padding: 0 15%;
+
+          .chapter-container {
+            .chapter-details {
+              width: 82%;
+              margin: 0 auto;
+              border: 1px red solid;
+              border-radius: 30px;
+              padding: 2% 0;
+              text-align: center;
+              line-height: 16px;
+
+              .chapter-title {
+                font-size: 17px;
+                text-align: center;
+                color: red;
+                font-weight: 400;
+              }
+
+              .chapter-summery {
+                padding: 0px 20%;
+                margin-bottom: 0;
+              }
+            }
+
+            .chapter-details:before {
+              background: url("../images/stroke-379.svg") no-repeat;
+              content: "";
+              display: block;
+              width: 100%;
+              height: 15px;
+              position: relative;
+              right: -30px;
+              top: 30px;
+            }
+
+            .collapse {
+              &.show {
+                > .chapter-bullets {
+                  background-color: red;
+                  width: 82%;
+                  margin: 0px auto;
+                  border: 1px solid red;
+                  border-radius: 0 0 30px 30px;
+                  padding: 2% 0px;
+                  text-align: center;
+                  line-height: 16px;
+                  padding: 0 18% 0 0;
+                  -webkit-transition: 0.1s ease-out;
+                  transition-delay: 1s;
+
+                  .details-list {
+                    font-size: 17px;
+                    color: white;
+                    font-weight: 500;
+                  }
+                }
+              }
+
+              &:not(.show){
+                > .chapter-bullets {
+                  display: none;
+                }
+              }
+            }
           }
         }
       }

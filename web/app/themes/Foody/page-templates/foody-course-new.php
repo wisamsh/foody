@@ -52,6 +52,16 @@ if ((!empty($purchase_link) && isset($purchase_link['url']) && !empty($purchase_
                 $course->get_always_wanted_section();
                 ?>
             </section>
+            <section class="buy-kit-section">
+                <?php
+                $course->get_buy_kit_section();
+                ?>
+            </section>
+            <section class="syllabus-section">
+                <?php
+                $course->get_syllabus_section();
+                ?>
+            </section>
         </div>
     </div>
     </div>
