@@ -47,6 +47,11 @@ if ((!empty($purchase_link) && isset($purchase_link['url']) && !empty($purchase_
                 $course->get_video_section();
                 ?>
             </section>
+            <section class="always-wanted-section">
+                <?php
+                $course->get_always_wanted_section();
+                ?>
+            </section>
         </div>
     </div>
     </div>

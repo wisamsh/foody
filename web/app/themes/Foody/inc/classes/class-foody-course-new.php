@@ -55,6 +55,10 @@ class Foody_Course_new
         }
     }
 
+    public function get_always_wanted_section(){
+
+    }
+
     public function get_video_section(){
         $video_section ='';
         if (is_array($this->course_data['course_video_group']) && isset($this->course_data['course_video_group'])) {
