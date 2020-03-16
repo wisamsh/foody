@@ -1,1 +1,1 @@
-{"foody-local.co.il":"m1","white-label.co.il":"m3"}
+{"foody-local.co.il":"m1","white-label.co.il":"m3","foody.test":"m1"}

@@ -1,6 +1,26 @@
+@import "../../variables-site/colors";
+
 .foody_course-template-foody-course-new {
   $margin-boxes: 2rem;
   $title-size: 28px;
+
+  .course-v2-purchase-button {
+    border: 1px $color__primary solid;
+    border-radius: 30px;
+    padding: 1% 0;
+    width: 320px;
+    display: inline-block;
+    text-align: center;
+    background: $color__primary;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  h2 {
+    text-align: center;
+    margin: 25px 0;
+  }
 
   .sticky-registration {
     opacity: 0;
@@ -32,15 +52,15 @@
 
       .cover-image {
         img {
-          border-radius: 0px;
+          border-radius: 0;
         }
       }
 
       .host-image {
         width: 25%;
-        position: relative;
+        position: absolute;
         right: 170px;
-        top: -125px;
+        top: 170px;
         z-index: 9999;
 
         img {
@@ -50,11 +70,9 @@
 
       .course-information {
         background-color: white;
-        top: -241px;
         display: flex;
         justify-content: space-between;
         margin: 0;
-        position: relative;
 
         .cover-textual-information {
           text-align: center;
@@ -69,7 +87,7 @@
           .course-host-name {
             font-size: 40px;
             font-weight: 500;
-            color: red;
+            color: $color__primary;
             text-align: center;
           }
 
@@ -84,11 +102,9 @@
 
       .additional-data {
         background-color: white;
-        position: relative;
         font-size: 20px;
         display: flex;
         flex-direction: column;
-        top: -275px;
         padding-right: 12%;
 
         .additional-data-text {
@@ -97,7 +113,7 @@
         }
 
         .promotion-title {
-          color: red;
+          color: $color__primary;
           width: 33%;
           font-weight: 500;
         }
@@ -139,7 +155,7 @@
             justify-content: space-between;
 
             .course-number {
-              color: red;
+              color: $color__primary;
               font-weight: 500;
             }
 
@@ -154,7 +170,6 @@
 
     .gift-and-purchase-buttons {
       position: relative;
-      top: -310px;
 
       .buttons-container {
         align-items: center;
@@ -167,7 +182,7 @@
         .purchase-button-div,
         .gift-button-div {
           margin: 0 1%;
-          border: 1px red solid;
+          border: 1px $color__primary solid;
           border-radius: 30px;
           padding: 1% 0;
           width: 320px;
@@ -175,12 +190,12 @@
         }
 
         .purchase-button-div {
-          background-color: red;
+          background-color: $color__primary;
           color: white;
         }
 
         .gift-button-div {
-          color: red;
+          color: $color__primary;
 
           > img {
             position: relative;
@@ -193,13 +208,13 @@
 
     .what-waiting-section {
       margin: 3%;
-      box-shadow: 0px 0px 13px -3px grey;
-      top: -310px;
+      box-shadow: 0 0 13px -3px grey;
       position: relative;
 
       .course-what-waiting {
         display: flex;
         flex-direction: column;
+        position: relative;
 
         .what-waiting-title-image-container {
           display: flex;
@@ -211,7 +226,7 @@
 
           .what-waiting-title {
             font-size: 30px;
-            color: red;
+            color: $color__primary;
             font-weight: 600;
             align-self: center;
             right: 18%;
@@ -238,10 +253,10 @@
               .item-title {
                 font-size: 11px;
                 text-align: center;
-                background: red;
+                background: $color__primary;
                 color: white;
                 font-weight: 500;
-                border-radius: 0 0px 7px 7px;
+                border-radius: 0 0 7px 7px;
               }
             }
           }
@@ -258,7 +273,6 @@
 
     .video-section {
       position: relative;
-      top: -356px;
 
       .course-main-video {
         .course-main-video-image-container {
@@ -280,12 +294,12 @@
 
           .video-section-purchase {
             margin: 3% 1% 0 1%;
-            border: 1px red solid;
+            border: 1px $color__primary solid;
             border-radius: 30px;
             padding: 1% 0;
             width: 320px;
             text-align: center;
-            background: red;
+            background: $color__primary;
             color: white;
             font-size: 20px;
             font-weight: 500;
@@ -302,8 +316,7 @@
 
     .always-wanted-section {
       margin: 3%;
-      box-shadow: 0px 0px 13px -3px grey;
-      top: -386px;
+      box-shadow: 0 0 13px -3px grey;
       position: relative;
 
       .always-wanted-container {
@@ -313,7 +326,7 @@
 
         .always-wanted-title {
           font-size: 30px;
-          color: red;
+          color: $color__primary;
           font-weight: 600;
           align-self: center;
           position: relative;
@@ -322,7 +335,7 @@
         }
 
         .always-wanted-subtitle {
-          color: red;
+          color: $color__primary;
           margin-top: 2%;
           text-align: center;
           font-size: 20px;
@@ -330,20 +343,12 @@
 
         .always-wanted-text {
           font-size: 16px;
-          padding: 0px 23%;
+          padding: 0 23%;
           font-weight: bold;
         }
 
         .always-wanted-section-purchase {
-          border: 1px red solid;
-          border-radius: 30px;
-          padding: 1% 0;
-          width: 320px;
-          text-align: center;
-          background: red;
-          color: white;
-          font-size: 20px;
-          font-weight: 500;
+          @extend .course-v2-purchase-button;
           margin: 0 auto;
         }
 
@@ -356,8 +361,7 @@
 
     .buy-kit-section {
       margin: 3%;
-      box-shadow: 0px 0px 13px -3px grey;
-      top: -386px;
+      box-shadow: 0 0 13px -3px grey;
       position: relative;
 
       .buy-kit-container {
@@ -376,7 +380,7 @@
 
           .buy-kit-title {
             font-size: 30px;
-            color: red;
+            color: $color__primary;
             font-weight: 600;
             align-self: center;
             position: relative;
@@ -386,14 +390,14 @@
         }
 
         .buy-kit-main-image {
-          padding: 0px 17%;
+          padding: 0 17%;
         }
 
         .kit-details-container {
           padding: 0 15%;
 
           .buy-kit-subtitle {
-            color: red;
+            color: $color__primary;
             margin-top: 2%;
             font-size: 20px;
           }
@@ -404,7 +408,7 @@
           }
 
           .buy-kit-price {
-            color: red;
+            color: $color__primary;
             font-weight: 500;
             line-height: 20px;
           }
@@ -421,12 +425,12 @@
           }
 
           .buy-kit-section-purchase {
-            border: 1px red solid;
+            border: 1px $color__primary solid;
             border-radius: 30px;
             padding: 1% 0;
             width: 320px;
             text-align: center;
-            background: red;
+            background: $color__primary;
             color: white;
             font-size: 20px;
             font-weight: 500;
@@ -441,8 +445,7 @@
 
     .syllabus-section {
       margin: 3%;
-      box-shadow: 0px 0px 13px -3px grey;
-      top: -386px;
+      box-shadow: 0 0 13px -3px grey;
       position: relative;
 
       .syllabus-container {
@@ -452,6 +455,7 @@
         .syllabus-title-image-container {
           display: flex;
           flex-direction: row;
+          justify-content: center;
 
           .top-image {
             width: 17%;
@@ -460,7 +464,7 @@
 
           .syllabus-title {
             font-size: 30px;
-            color: red;
+            color: $color__primary;
             font-weight: 600;
             align-self: center;
             position: relative;
@@ -474,11 +478,15 @@
           padding: 0 15%;
 
           .chapter-container {
+            border: 1px $color__primary solid;
+            border-radius: 30px;
+            transition: all 0.3s ease-out;
+            margin-bottom: 25px;
+
             .chapter-details {
-              width: 82%;
               margin: 0 auto;
-              border: 1px red solid;
-              border-radius: 30px;
+
+
               padding: 2% 0;
               text-align: center;
               line-height: 16px;
@@ -486,12 +494,12 @@
               .chapter-title {
                 font-size: 17px;
                 text-align: center;
-                color: red;
+                color: $color__primary;
                 font-weight: 400;
               }
 
               .chapter-summery {
-                padding: 0px 20%;
+                padding: 0 20%;
                 margin-bottom: 0;
               }
             }
@@ -505,41 +513,203 @@
               position: relative;
               right: -30px;
               top: 30px;
+              transition: transform 0.3s ease-out;
             }
 
-            .collapse {
-              &.show {
-                > .chapter-bullets {
-                  background-color: red;
-                  width: 82%;
-                  margin: 0px auto;
-                  border: 1px solid red;
-                  border-radius: 0 0 30px 30px;
-                  padding: 2% 0px;
-                  text-align: center;
-                  line-height: 16px;
-                  padding: 0 18% 0 0;
-                  -webkit-transition: 0.1s ease-out;
-                  transition-delay: 1s;
+            .chapter-bullets {
+              width: 82%;
+              max-height: 0;
+              margin: 20px auto 0;
+              text-align: center;
+              line-height: 16px;
+              transition: all 0.3s ease-out;
+              overflow: hidden;
 
-                  .details-list {
-                    font-size: 17px;
-                    color: white;
-                    font-weight: 500;
-                  }
+              .details-list {
+                font-size: 17px;
+                max-height: 0;
+                font-weight: 500;
+                transition: all 0.3s ease-out;
+              }
+
+            }
+
+            &.show-details {
+
+              .chapter-details {
+                border-bottom: 1px $color__primary solid;
+
+                &:before {
+                  transform: rotateX(180deg);
                 }
               }
 
-              &:not(.show){
-                > .chapter-bullets {
-                  display: none;
-                }
+              .chapter-bullets {
+                max-height: 1000px;
+              }
+
+              .details-list {
+                max-height: 1000px;
               }
             }
+
           }
         }
       }
     }
+
+    .faq-section {
+      box-shadow: 0 0 13px -3px grey;
+      margin: 3%;
+
+      .faq-container {
+
+        h2 {
+          color: $color__primary;
+        }
+
+        padding-bottom: 20px;
+
+        .faq-list {
+
+          max-width: 680px;
+          margin: 0 auto;
+          text-align: center;
+
+          .faq-item {
+            position: relative;
+            border: 1px $color__primary solid;
+            border-radius: 30px;
+            overflow: hidden;
+            padding: 20px 0;
+            margin-bottom: 20px;
+
+            &:after {
+              background: url("../images/stroke-379.svg") no-repeat;
+              content: "";
+              display: block;
+              width: 26px;
+              height: 15px;
+              position: absolute;
+              left: 30px;
+              transition: all 0.3s ease-out;
+              top: 50%;
+              transform: translateY(-50%);
+            }
+
+            .faq-item-q {
+
+
+            }
+
+            .faq-item-a {
+              max-height: 0;
+              height: 0;
+              overflow: hidden;
+              transition: all 0.3s ease-out;
+            }
+
+            &.show-details {
+
+              &:after {
+                top: 0;
+                transform: translateY(20px) rotateY(180deg);
+              }
+
+              .faq-item-q {
+                border-bottom: 1px $color__primary solid;
+                padding-bottom: 20px;
+              }
+
+              .faq-item-a {
+                max-height: 500px;
+                height: auto;
+                margin-top: 20px;
+              }
+            }
+          }
+        }
+
+        .course-v2-purchase-button {
+          margin: 0 auto;
+          display: block;
+        }
+      }
+    }
+
+    .testimonials-section {
+
+
+      .testimonials-container {
+
+        margin: 0 auto;
+
+
+        h2 {
+          color: white;
+          padding: 20px 0;
+          margin: 0;
+          background-color: $color__primary;
+        }
+
+        .testimonials-slider {
+
+          background-color: $color__primary;
+
+          .slick-list {
+            max-width: 700px;
+            margin: 0 auto;
+          }
+
+          .testimonial-item {
+            padding: 0 10px;
+          }
+
+          .arrow {
+            width: 13px;
+            height: 26px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+
+            &.arrow-prev {
+              right: 110px;
+            }
+
+            &.arrow-next {
+              left: 110px;
+            }
+          }
+        }
+
+        .video-container {
+          width: 100%;
+          margin-top: 40px;
+
+          iframe {
+            width: 700px;
+            margin: 0 auto;
+            display: block;
+          }
+        }
+
+        .course-v2-purchase-button {
+          display: block;
+          margin: 20px auto;
+        }
+      }
+    }
+
+    .recommendations-section {
+      max-width: 700px;
+      margin: 0 auto;
+
+      h2 {
+        color: $color__primary;
+      }
+    }
+
+
   }
 }
 
