@@ -65,6 +65,14 @@ if ( ( ! empty( $purchase_link ) && isset( $purchase_link['url'] ) && ! empty( $
 
 			<?php endif; ?>
 
+			<?php if ( $course->should_show_section( 'banner_image_group' ) ) : ?>
+                <section class="banner-section">
+					<?php
+					$course->get_banner_image();
+					?>
+                </section>
+			<?php endif; ?>
+
 			<?php if ( $course->should_show_section( 'alwayes_wanted_section' ) ): ?>
                 <section class="always-wanted-section">
 					<?php

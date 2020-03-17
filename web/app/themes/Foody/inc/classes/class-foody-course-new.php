@@ -106,7 +106,7 @@ class Foody_Course_new {
 			$buy_kit_title_div = '<h2 class="buy-kit-title">' . $buy_kit_title . '</h2>';
 			$buy_kit_image_div = '<img class="buy-kit-main-image" src="' . $buy_kit_image . '">';
 			$buy_kit_details   = $this->get_kit_details_html( $buy_kit_subtitle, $buy_kit_details, $buy_kit_price );
-			$kit_purchase      = "<a class='buy-kit-section-purchase' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a>";
+			$kit_purchase      = "<a class='course-v2-purchase-button' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a>";
 
 			if ( isset( $background_images['top'] ) ) {
 				$buy_kit_div = "<div class=\"buy-kit-container\"><div class='buy-kit-title-image-container'><img class='top-image' src=\"" . $background_images['top'] . "\">";
@@ -186,6 +186,21 @@ class Foody_Course_new {
 			}
 		}
 		echo $video_section;
+	}
+
+	public function get_banner_image() {
+		if ( ! empty( $banner = $this->course_data['banner_image_group'] ) ) {
+			$image_key = 'banner_image';
+			if ( wp_is_mobile() ) {
+				$image_key = "{$image_key}_mobile";
+			}
+
+			$image = $banner[ $image_key ];
+
+			if ( ! empty( $image ) ) {
+				echo "<img class='banner-image' src='{$image['url']}' alt='{$image['alt']}' >";
+			}
+		}
 	}
 
 	public function get_gift_and_purchase_buttons_div() {
@@ -312,7 +327,7 @@ class Foody_Course_new {
 
 		foreach ( $list as $item ) {
 
-			$item_content = "<div class=\"faq-item\"> <div class=\"faq-item-q\">{$item['question']}</div> <div class=\"faq-item-a\">{$item['answer']}</div> </div>";
+			$item_content = "<div class=\"faq-item\"> <div class=\"faq-item-q\"><span>{$item['question']}</span></div> <div class=\"faq-item-a\">{$item['answer']}</div> </div>";
 
 			$content .= $item_content;
 		}
@@ -379,7 +394,7 @@ class Foody_Course_new {
 				$content .= "<h2> {$title} </h2>";
 			}
 
-			$recommendations_container = "<div class='d-flex justify-content-between'>";
+			$recommendations_container = "<div class='d-flex justify-content-between flex-column flex-lg-row recommendations-items-wrapper'>";
 
 			foreach ( $items as $item ) {
 
@@ -479,8 +494,19 @@ class Foody_Course_new {
 		$more_about_course_div   = '<div class="additional-data-text">' . $more_about_course . '</div>';
 		$promotion_title_div     = '<div class="promotion-title">' . $promotion_title . '</div>';
 		$promotion_text_div      = '<div class="promotion-text">' . $promotion_text . '</div>';
-		$rating                  = do_shortcode( '[ratings]' );
-		$course_numbers_div      = $this->get_course_numbers_div( $course_numbers );
+
+		$rating_image_key = "rating_image";
+		if ( wp_is_mobile() ) {
+			$rating_image_key = "{$rating_image_key}_mobile";
+		}
+
+		$rating = '';
+
+		if ( ! empty( $rating_image = $cover_section[ $rating_image_key ] ) ) {
+			$rating = "<img class='rating' src='{$rating_image['url']}' alt='{$rating_image['alt']}'>";
+		}
+
+		$course_numbers_div = $this->get_course_numbers_div( $course_numbers );
 
 		if ( $course_numbers_div != '' && isset( $background_images['bottom'] ) && $background_images['bottom'] != '' ) {
 			$course_numbers_div = '<div class="numbers-and-bottom-image">' . $course_numbers_div;
@@ -526,8 +552,8 @@ class Foody_Course_new {
 		$page_cover_text   = isset( $cover_section['page_cover_text'] ) ? $cover_section['page_cover_text'] : '';
 		$background_images = $this->get_background_images_by_section( $cover_section );
 
-
-		if ( isset( $background_images['top'] ) ) {
+		$has_top_image = ! empty( $background_images['top'] );
+		if ( $has_top_image ) {
 			$course_information = "<div class=\"course-information\"><img src=\"" . $background_images['top'] . "\">";
 		} else {
 			$course_information = '<div class="course-information">';
@@ -538,7 +564,11 @@ class Foody_Course_new {
 		$host_div  = '<h2 class="course-host-name">' . $host_name . '</h2>';
 		$text_div  = '<div class="course-cover-text">' . $page_cover_text . '</div>';
 
-		$course_information .= '<div class="cover-textual-information">' . $title_div . $host_div . $text_div . '</div></div>';
+		$information_classes = "cover-textual-information";
+		if ( ! $has_top_image ) {
+			$information_classes = "$information_classes no-top-image";
+		}
+		$course_information .= '<div class="' . $information_classes . '">' . $title_div . $host_div . $text_div . '</div></div>';
 
 		echo $course_information;
 	}
@@ -546,11 +576,19 @@ class Foody_Course_new {
 	private function get_background_images_by_section( $section ) {
 		$background_images = [];
 
-		if ( isset( $section['top_background_image'] ) && isset( $section['top_background_image']['url'] ) ) {
-			$background_images['top'] = $section['top_background_image']['url'];
+		$top_image_key    = 'top_background_image';
+		$bottom_image_key = 'bottom_background_image';
+
+		if ( wp_is_mobile() ) {
+			$top_image_key    = "{$top_image_key}_mobile";
+			$bottom_image_key = "{$bottom_image_key}_mobile";
 		}
-		if ( isset( $section['bottom_background_image'] ) && isset( $section['bottom_background_image']['url'] ) ) {
-			$background_images['bottom'] = $section['bottom_background_image']['url'];
+
+		if ( isset( $section[ $top_image_key ] ) && isset( $section[ $top_image_key ]['url'] ) ) {
+			$background_images['top'] = $section[ $top_image_key ]['url'];
+		}
+		if ( isset( $section[ $bottom_image_key ] ) && isset( $section[ $bottom_image_key ]['url'] ) ) {
+			$background_images['bottom'] = $section[ $bottom_image_key ]['url'];
 		}
 
 		return $background_images;
