@@ -89,6 +89,7 @@
           .course-title {
             font-size: 29px;
             font-weight: 500;
+            line-height: 1;
           }
 
           .course-host-name {
@@ -96,6 +97,9 @@
             font-weight: 500;
             color: $color__primary;
             text-align: center;
+            line-height: 1;
+            margin-top: 0;
+            margin-bottom: 10px;
           }
 
           .course-cover-text {
