@@ -15,6 +15,7 @@
     color: white;
     font-size: 20px;
     font-weight: 500;
+    margin: 0 auto 20px;
   }
 
   h2 {
@@ -188,11 +189,13 @@
         .purchase-button-div {
           background-color: $color__primary;
           color: white;
+          margin-left: 10px;
         }
 
         .gift-button-div {
           color: $color__primary;
           background-color: white;
+          margin-right: 10px;
 
           > img {
             position: relative;
@@ -557,12 +560,11 @@
       margin: 3%;
 
       .faq-container {
+        padding-bottom: 20px;
 
         h2 {
           color: $color__primary;
         }
-
-        padding-bottom: 20px;
 
         .faq-list {
 
@@ -724,7 +726,9 @@
     }
 
     .sticky-registration {
-
+      a {
+        margin-bottom: 10px;
+      }
     }
 
     #primary {
@@ -997,7 +1001,7 @@
           }
 
           .always-wanted-text {
-            padding: 0;
+            padding: 10px;
             font-size: 14px;
           }
 
@@ -1218,6 +1222,7 @@
 
           .faq-list {
             font-size: 14px;
+            max-width: 90%;
 
             .faq-item {
 
