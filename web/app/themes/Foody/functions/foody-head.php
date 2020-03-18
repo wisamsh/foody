@@ -79,6 +79,9 @@ function foody_js_globals_main($vars)
         }
         if ($vars['post']['type'] === "foody_course") {
             $vars['post']['hostName'] = get_field('host_name', $vars['post']['ID']);
+            if(empty(['post']['hostName'])){
+                $vars['post']['hostName'] = get_field('course_page_main_cover_section_host_name', $vars['post']['ID']);
+            }
         }
     }
 
@@ -155,6 +158,17 @@ function channel_publisher_name($vars){
 }
 
 add_filter('foody_js_globals', 'channel_publisher_name');
+
+function page_template_name($vars){
+    $template_slug = get_page_template_slug();
+    $template_name  = str_replace('page-templates/', '', $template_slug);
+    $template_name  = str_replace('.php', '', $template_name);
+    $vars['page_template_name'] = $template_name;
+
+    return $vars;
+}
+
+add_filter('foody_js_globals', 'page_template_name');
 
 function foody_set_og_image()
 {

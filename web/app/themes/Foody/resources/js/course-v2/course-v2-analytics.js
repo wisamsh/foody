@@ -4,7 +4,7 @@ const timeInPageDelta = 30;
 const Vimeo = require('@vimeo/player');
 
 jQuery(document).ready(($) => {
-    if(foodyGlobals['page_template_name'] == "foody-course-efrat") {
+    if(foodyGlobals['page_template_name'] == "foody-course-new") {
 
         let secondsInPage = 0;
 
