@@ -62,7 +62,6 @@
         position: absolute;
         right: 170px;
         top: 170px;
-        z-index: 9999;
 
         img {
           border-radius: 100%;
@@ -79,7 +78,6 @@
           text-align: center;
           width: 50%;
           margin-left: 12%;
-          z-index: 2;
 
           &.no-top-image {
             width: 100%;
