@@ -33,7 +33,8 @@
     top: 0;
     left: 0;
     text-align: center;
-    z-index: 999999999;    margin: 0px 0.5rem;
+    z-index: 999999999;
+    margin: 0px 0.5rem;
     display: flex;
     justify-content: center;
     @import "course-registration-button";
@@ -41,6 +42,7 @@
     .button-purchase,
     .gift-purchase {
       width: fit-content;
+
       a {
         margin: 0 0.5rem;
       }
@@ -567,11 +569,10 @@
       }
     }
 
-    .images-section{
-      .image-container{
-        box-shadow: 0 0 13px -3px grey;
-        margin: 3%;
-      }
+    .images-section {
+      position: relative;
+      box-shadow: 0 0 13px -3px grey;
+      margin: 3%;
     }
 
     .faq-section {
@@ -746,6 +747,7 @@
 
     .sticky-registration {
       margin: 0;
+
       a {
         margin-bottom: 10px;
       }
