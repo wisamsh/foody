@@ -99,7 +99,7 @@ if ( ( ! empty( $purchase_link ) && isset( $purchase_link['url'] ) && ! empty( $
                 </section>
 			<?php endif; ?>
             <?php if ( $course->should_show_section( 'images_section' ) ): ?>
-                <section class="faq-section">
+                <section class="images-section">
                     <?php
                     $course->get_images_section();
                     ?>
