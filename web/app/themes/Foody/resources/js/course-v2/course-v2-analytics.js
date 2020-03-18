@@ -89,7 +89,7 @@ jQuery(document).ready(($) => {
             });
         });
 
-        let frameMain = $('.cover-video iframe');
+        let frameMain = $('.video-section .main-video iframe');
         if (!frameMain[0]['src'].includes('youtube')) {
             let player = new Vimeo.default(frameMain);
 
@@ -130,7 +130,7 @@ jQuery(document).ready(($) => {
 
         }
 
-        let frameSecond = $('.cover-video iframe');
+        let frameSecond = $('.testimonials-section .video-container iframe');
         if (!frameSecond[0]['src'].includes('youtube')) {
             let player = new Vimeo.default(frameSecond);
 
