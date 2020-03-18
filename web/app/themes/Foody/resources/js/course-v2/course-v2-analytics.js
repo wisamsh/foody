@@ -89,13 +89,87 @@ jQuery(document).ready(($) => {
             });
         });
 
-        /** video */
-        //
-        // let $video = $('.featured-content-container #video');
-        // let videoStopped = false;
-        //
-        // doVideoAnalytics()
+        let frameMain = $('.cover-video iframe');
+        if (!frameMain[0]['src'].includes('youtube')) {
+            let player = new Vimeo.default(frameMain);
 
+            let playerEvents = [
+                {
+                    event: 'play',
+                    label: 'הפעלה',
+                },
+                {
+                    event: 'timeupdate',
+                    label: 'התקדמות',
+                },
+                {
+                    event: 'pause',
+                    label: 'עצירה',
+                }
+            ];
+
+            let sentEvents = {
+                play: {},
+                timeupdate: {},
+                pause: {}
+            };
+
+            playerEvents.forEach((event) => {
+                player.on(event.event, (e) => {
+                    let percent = parseFloat(e.percent);
+                    percent = parseFloat(percent.toFixed(1)) * 100;
+                    // send event only if video time
+                    if (event.event == 'timeupdate' && percent % 10 === 0 && !(sentEvents[event.event][String(percent)])) {
+                        sentEvents[event.event][String(percent)] = true;
+                        eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent + '%', foodyGlobals.post['hostName']);
+                    } else if (event.event != 'timeupdate') {
+                        eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent + '%', foodyGlobals.post['hostName']);
+                    }
+                });
+            });
+
+        }
+
+        let frameSecond = $('.cover-video iframe');
+        if (!frameSecond[0]['src'].includes('youtube')) {
+            let player = new Vimeo.default(frameSecond);
+
+            let playerEvents = [
+                {
+                    event: 'play',
+                    label: 'הפעלה',
+                },
+                {
+                    event: 'timeupdate',
+                    label: 'התקדמות',
+                },
+                {
+                    event: 'pause',
+                    label: 'עצירה',
+                }
+            ];
+
+            let sentEvents = {
+                play: {},
+                timeupdate: {},
+                pause: {}
+            };
+
+            playerEvents.forEach((event) => {
+                player.on(event.event, (e) => {
+                    let percent = parseFloat(e.percent);
+                    percent = parseFloat(percent.toFixed(1)) * 100;
+                    // send event only if video time
+                    if (event.event == 'timeupdate' && percent % 10 === 0 && !(sentEvents[event.event][String(percent)])) {
+                        sentEvents[event.event][String(percent)] = true;
+                        eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent + '%', foodyGlobals.post['hostName']);
+                    } else if (event.event != 'timeupdate') {
+                        eventCallback('', analyticsCategory, 'צפייה בווידאו', event.label, 'מיקום', percent + '%', foodyGlobals.post['hostName']);
+                    }
+                });
+            });
+
+        }
 
         /**
          * Scroll listener
@@ -140,124 +214,6 @@ jQuery(document).ready(($) => {
         }
     }
 });
-
-// function doVideoAnalytics(video) {
-//     if (video && video.length) {
-//         jQuery.each(video, (index, videoElem) => {
-//
-//             let videoId = jQuery(videoElem).data('video-id');
-//             let ytPlayer = require('../common/youtubePlayer');
-//
-//             let playerContainer = jQuery(videoElem).siblings('.video-container');
-//
-//             let player = ytPlayer(playerContainer, videoId);
-//
-//
-//             /*
-//              * @see https://developers.google.com/youtube/iframe_api_reference#Events
-//              * -1 (unstarted)
-//              * 0 (ended)
-//              * 1 (playing)
-//              * 2 (paused)
-//              * 3 (buffering)
-//              * 5 (video cued).
-//              * */
-//             let firstPlay = true;
-//             let timeUpdater;
-//             let videoTime = 0;
-//             let sentPercentage = {};
-//             player.on('stateChange', (event) => {
-//
-//                 switch (event.data) {
-//                     // video ended
-//                     case 0:
-//                         clearInterval(timeUpdater);
-//                         sentPercentage = {};
-//                         break;
-//
-//                     // video playing
-//                     case 1:
-//                         timeUpdater = setInterval(updateTime, 1000);
-//                         if (firstPlay) {
-//                             firstPlay = false;
-//                             eventCallback(event, 'מתכון', 'צפייה בווידאו', 'הפעלה', 'מיקום', '0%');
-//                         } else {
-//                             let durationPromise = player.getDuration();
-//                             let currPromise = player.getCurrentTime();
-//                             Promise.all([durationPromise, currPromise]).then(function (values) {
-//                                 let passPercentage = Math.round((values[1] / values[0]) * 100);
-//                                 let reminder = passPercentage % 10;
-//                                 if (reminder <= 5) {
-//                                     passPercentage = passPercentage - reminder;
-//                                 } else {
-//                                     let addToRoundUp = 10 - reminder;
-//                                     passPercentage = passPercentage + addToRoundUp;
-//                                 }
-//                                 if(videoStopped){
-//                                     eventCallback(event, 'מתכון', 'צפייה בווידאו', 'הפעלה מחדש לאחר הפסקה', 'מיקום', passPercentage + '%');
-//                                     videoStopped = false;
-//                                 }
-//                                 eventCallback(event, 'מתכון', 'צפייה בווידאו', 'התקדמות', 'מיקום', passPercentage + '%');
-//                             });
-//                         }
-//                         analytics.timeEvent('recipe video');
-//                         break;
-//                     // video paused
-//                     case 2:
-//                         clearInterval(timeUpdater);
-//                         let pausedDurationPromise = player.getDuration();
-//                         let pausedCurrPromise = player.getCurrentTime();
-//                         Promise.all([pausedDurationPromise, pausedCurrPromise]).then(function (values) {
-//                             let passPercentage = Math.round((values[1] / values[0]) * 100);
-//                             if (passPercentage % 10 != 0) {
-//                                 let reminder = passPercentage % 10;
-//                                 if (reminder <= 5) {
-//                                     passPercentage = passPercentage - reminder;
-//                                 } else {
-//                                     let addToRoundUp = 10 - reminder;
-//                                     passPercentage = passPercentage + addToRoundUp;
-//                                 }
-//                             }
-//                             eventCallback(event, 'מתכון', 'עצירת ווידאו', 'עצירה', 'מיקום', passPercentage + '%');
-//                             videoStopped = true;
-//                         });
-//
-//
-//                         analytics.event('recipe video', {
-//                             id: foodyGlobals.objectID,
-//                             title: foodyGlobals.title
-//                         });
-//                         break;
-//                 }
-//             });
-//
-//
-//         });
-//     }
-// }
-
-function updateTime() {
-    let oldTime = videoTime;
-    if (player && player.getCurrentTime) {
-        videoTime = player.getCurrentTime();
-    }
-    if (videoTime !== oldTime) {
-        let durationPromise = player.getDuration();
-        onProgress([durationPromise, videoTime]);
-    }
-}
-
-function onProgress(event) {
-    Promise.all(event).then(function (values) {
-        let passPercentage = Math.round((values[1] / values[0]) * 100);
-        //Send event only for 0, 10, 20, 30, etc...
-        if (passPercentage % 10 == 0 && !sentPercentage[passPercentage]) {
-            sentPercentage[passPercentage] = true;
-            eventCallback('', 'מתכון', 'צפייה בווידאו', 'התקדמות', 'מיקום', passPercentage + '%');
-        }
-    });
-}
-
 
 function toMinutes(secondsInPage) {
     if (secondsInPage % 60 == 0) {

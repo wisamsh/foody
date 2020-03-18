@@ -322,6 +322,16 @@ class Foody_Course_new {
 		echo $faq_div;
 	}
 
+	public function get_images_section(){
+        $content = '<div class="image-container">';
+        $desktop_image = isset($content['desktop_image']) ? $content['desktop_image'] : '';
+        $mobile_image = isset($content['mobile_image']) ? $content['mobile_image'] : '';
+
+        if(!empty($desktop_image) || !empty($mobile_image)) {
+            $this->get_cover_or_host_images($desktop_image, $mobile_image, 'content-cover-image.php');
+        }
+    }
+
 	private function get_faq_list( $list ) {
 		$content = '<div class="faq-list">';
 
