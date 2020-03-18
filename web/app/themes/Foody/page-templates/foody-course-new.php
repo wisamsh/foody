@@ -14,14 +14,16 @@ $course = new Foody_Course_new();
 $purchase_link = $course->get_floating_purchase_button();
 $gift_link     = $course->get_floating_gift_button();
 if ( ( ! empty( $purchase_link ) && isset( $purchase_link['url'] ) && ! empty( $purchase_link['url'] ) ) || ( ! empty( $gift_link ) && isset( $gift_link['url'] ) && ! empty( $gift_link['url'] ) ) ) {
-	echo '<div class="sticky-registration">';
+	echo '<div class="sticky-registration"><div class="button-purchase">';
 	if ( isset( $purchase_link['url'] ) ) {
 		foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $purchase_link ) );
 	}
+    echo '</div>';
+    echo '<div class="gift-purchase">';
 	if ( isset( $gift_link['url'] ) ) {
 		foody_get_template_part( get_template_directory() . '/template-parts/common/link.php', array( 'link' => $gift_link ) );
 	}
-	echo '</div>';
+	echo '</div></div>';
 }
 
 ?>
@@ -96,7 +98,13 @@ if ( ( ! empty( $purchase_link ) && isset( $purchase_link['url'] ) && ! empty( $
 					?>
                 </section>
 			<?php endif; ?>
-
+            <?php if ( $course->should_show_section( 'images_section' ) ): ?>
+                <section class="images-section">
+                    <?php
+                    $course->get_images_section();
+                    ?>
+                </section>
+            <?php endif; ?>
 			<?php if ( $course->should_show_section( 'faq_section' ) ): ?>
                 <section class="faq-section">
 					<?php
