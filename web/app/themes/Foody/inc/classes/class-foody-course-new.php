@@ -4,6 +4,7 @@ class Foody_Course_new {
 
 	private $course_data = [];
 	private $floating_buttons = [];
+	private $links_taget = 'blank';
 
 	/**
 	 * Course constructor.
@@ -213,13 +214,13 @@ class Foody_Course_new {
 		if ( isset( $purchase_button['url'] ) && ! empty( $purchase_button['url'] ) ) {
 			$has_button           = true;
 			$purchase_button_text = isset( $purchase_button['title'] ) && ! empty( $purchase_button['title'] ) ? $purchase_button['title'] : __( 'לרכישה' );
-			$purchase_button_div  = '<a class="purchase-button-div" href="' . $purchase_button['url'] . '">' . $purchase_button_text . '</a>';
+			$purchase_button_div  = '<a class="purchase-button-div" href="' . $purchase_button['url'] . '" target="'.$this->links_taget.'">' . $purchase_button_text . '</a>';
 		}
 
 		if ( isset( $gift_button['url'] ) && ! empty( $gift_button['url'] ) ) {
 			$has_button       = true;
 			$gift_button_text = isset( $gift_button['title'] ) && ! empty( $gift_button['title'] ) ? $gift_button['title'] : __( 'לרכישה' );
-			$gift_button_div  = '<a class="gift-button-div" href="' . $gift_button['url'] . '">' . $gift_button_text . '<img src="' . get_template_directory_uri() . '/resources/images/group-3.svg"/></a>';
+			$gift_button_div  = '<a class="gift-button-div" href="' . $gift_button['url'] . '" target="'.$this->links_taget.'">' . $gift_button_text . '<img src="' . get_template_directory_uri() . '/resources/images/group-3.svg"/></a>';
 		}
 
 		if ( $has_button ) {
