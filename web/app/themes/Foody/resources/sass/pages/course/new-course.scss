@@ -149,7 +149,6 @@
         flex-direction: column;
         padding-right: 12%;
         position: relative;
-        margin-top: -4%;
 
         .additional-data-text {
           width: 50%;
@@ -877,7 +876,7 @@
         }
 
         .host-image {
-          width: 165px;
+          width: 180px;
           right: -20px;
           top: calc(230px - (150px / 2));
 
@@ -971,11 +970,11 @@
                 width: 50%;
 
                 .course-number {
-                  font-size: 16px;
+                  font-size: 20px;
                 }
 
                 .course-number-key {
-                  font-size: 16px;
+                  font-size: 20px;
                 }
               }
             }
@@ -1067,6 +1066,8 @@
 
                 .item-title {
                   border-radius: 0 0 7px 7px;
+                  font-weight: bold;
+                  font-size: 13px;
                 }
               }
             }
@@ -1361,7 +1362,7 @@
             align-items: center;
 
             .bottom-image {
-              max-width: 50%;
+              width: 50%;
             }
 
             .course-v2-purchase-button {
@@ -1524,6 +1525,19 @@
             font-size: 14px;
           }
         }
+      }
+
+      .images-section{
+        padding: 0 2%;
+
+        > .cover-image{
+          padding: 0;
+          margin: 0;
+        }
+      }
+
+      .banner-section {
+        padding: 0 3%;
       }
     }
   }
