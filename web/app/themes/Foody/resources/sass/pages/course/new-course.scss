@@ -39,9 +39,10 @@
     justify-content: center;
     @import "course-registration-button";
 
-    .button-purchase{
+    .button-purchase {
       margin-left: 10px;
       width: fit-content;
+
       a {
         margin: 10px 1%;
         border: 1px solid #ed3d48;
@@ -288,7 +289,7 @@
               flex-direction: column;
               width: 27%;
 
-              .item-image{
+              .item-image {
                 border-radius: 0 0 7px 7px;
               }
 
@@ -604,9 +605,10 @@
           display: flex;
           flex-direction: row-reverse;
 
-          .bottom-image{
+          .bottom-image {
             width: 30%;
           }
+
           .course-v2-purchase-button {
             border: 1px #ED3D48 solid;
             border-radius: 30px;
@@ -626,17 +628,11 @@
       }
     }
 
-<<<<<<< HEAD
     .images-section {
-      position: relative;
-      margin: 3%;
-=======
-    .images-section{
-      .image-container{
+      .image-container {
         box-shadow: 0 0 13px -3px grey;
         margin: 2%;
       }
->>>>>>> new-course-template
     }
 
     .faq-section {
@@ -647,10 +643,12 @@
         .faq-title-image-container {
           display: flex;
           flex-direction: column;
-          .top-image{
+
+          .top-image {
             width: 30%;
             position: absolute;
           }
+
           h2 {
             color: $color__primary;
           }
@@ -715,12 +713,15 @@
             }
           }
         }
+
         .faq-purchase-image-container {
           display: flex;
           flex-direction: row-reverse;
-          .bottom-image{
+
+          .bottom-image {
             max-width: 30%;
           }
+
           .course-v2-purchase-button {
             height: fit-content;
             margin-top: 8%;
@@ -829,11 +830,8 @@
       flex-direction: column;
       margin: 0;
 
-<<<<<<< HEAD
-      a {
-        margin-bottom: 10px;
-=======
-      .button-purchase {
+
+      button-purchase {
         margin: 0;
         a {
           font-size: 20px;
@@ -845,7 +843,6 @@
         a {
           font-size: 20px;
         }
->>>>>>> new-course-template
       }
     }
 
@@ -932,9 +929,10 @@
             font-weight: 500;
           }
 
-          .rating{
+          .rating {
             max-width: 200px;
           }
+
           .numbers-and-bottom-image {
             display: flex;
             position: initial;
@@ -960,6 +958,7 @@
 
               .course-number-item {
                 width: 50%;
+
                 .course-number {
                   font-size: 16px;
                 }
@@ -1122,6 +1121,7 @@
 
         .always-wanted-container {
           margin-top: 4%;
+
           .always-wanted-title {
             font-size: 20px;
             color: $color__primary;
@@ -1342,14 +1342,16 @@
 
             }
           }
+
           .syllabus-purchase-image-container {
             display: flex;
             flex-direction: column-reverse;
             align-items: center;
 
-            .bottom-image{
+            .bottom-image {
               max-width: 50%;
             }
+
             .course-v2-purchase-button {
               display: block;
               margin: 20px auto;
