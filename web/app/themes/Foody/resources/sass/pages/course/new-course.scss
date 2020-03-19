@@ -392,6 +392,7 @@
           margin-top: 2%;
           text-align: center;
           font-size: 20px;
+          font-weight: bold;
         }
 
         .always-wanted-text {
@@ -815,9 +816,23 @@
     }
 
     .sticky-registration {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
       margin: 0;
-      a {
-        margin-bottom: 10px;
+
+      .button-purchase {
+        margin: 0;
+        a {
+          font-size: 20px;
+        }
+      }
+
+      .gift-purchase {
+        margin: 0;
+        a {
+          font-size: 20px;
+        }
       }
     }
 
@@ -836,12 +851,12 @@
 
           img {
             border-radius: 0;
-            height: 230px;
+            height: fit-content;
           }
         }
 
         .host-image {
-          width: 150px;
+          width: 165px;
           right: -20px;
           top: calc(230px - (150px / 2));
 
@@ -854,7 +869,7 @@
           .cover-textual-information {
             margin-left: 0;
             padding: 0 15px 15px;
-            text-align: right;
+            text-align: center;
             margin-right: auto;
             width: 66%;
             line-height: 1.2;
@@ -865,21 +880,21 @@
             }
 
             .course-title {
-              font-size: 20px;
+              font-size: 25px;
               margin-bottom: 0;
             }
 
             .course-host-name {
               margin-top: 0;
-              font-size: 25px;
+              font-size: 30px;
               margin-left: 0;
-              text-align: right;
+              text-align: center;
             }
 
             .course-cover-text {
-              font-size: 10px;
+              font-size: 14px;
               margin-left: 0;
-              font-weight: 500;
+              font-weight: bold;
               width: 100%;
             }
           }
@@ -887,7 +902,7 @@
 
         .additional-data {
           font-size: 16px;
-          padding: 0 25px 25px;
+          padding: 0 25px 15px;
 
           .additional-data-text {
             width: 100%;
@@ -904,7 +919,9 @@
             font-weight: 500;
           }
 
-
+          .rating{
+            max-width: 200px;
+          }
           .numbers-and-bottom-image {
             display: flex;
             position: initial;
@@ -916,13 +933,28 @@
 
           .course-numbers-container {
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 15px;
 
-            .course-number {
-              font-size: 16px;
-            }
+            .numbers-row {
+              display: flex;
+              position: relative;
+              width: 100%;
+              text-align: center;
+              margin-bottom: 3%;
 
-            .course-number-key {
-              font-size: 16px;
+              .course-number-item {
+                width: 50%;
+                .course-number {
+                  font-size: 16px;
+                }
+
+                .course-number-key {
+                  font-size: 16px;
+                }
+              }
             }
           }
         }
@@ -930,6 +962,8 @@
 
       .gift-and-purchase-buttons {
         position: relative;
+        margin-top: -2%;
+        border-top: 2px solid;
 
         .buttons-container {
           align-items: center;
@@ -977,16 +1011,15 @@
           .what-waiting-title-image-container {
             justify-content: center;
 
-
             img {
-              width: 17%;
+              width: 35%;
               z-index: 1;
               position: absolute;
               right: 0;
             }
 
             .what-waiting-title {
-              font-size: 20px;
+              font-size: 26px;
               position: initial;
               z-index: 2;
             }
@@ -1024,6 +1057,7 @@
 
       .video-section {
         position: relative;
+        margin-top: 0;
 
         .course-main-video {
           .course-main-video-image-container {
@@ -1074,7 +1108,7 @@
       .always-wanted-section {
 
         .always-wanted-container {
-
+          margin-top: 4%;
           .always-wanted-title {
             font-size: 20px;
             color: $color__primary;
@@ -1198,7 +1232,7 @@
             }
 
             .syllabus-title {
-              font-size: 30px;
+              font-size: 25px;
               color: $color__primary;
               font-weight: 600;
               align-self: center;
@@ -1239,7 +1273,9 @@
                 }
 
                 .chapter-title {
-                  font-size: 15px;
+                  font-size: 17px;
+                  font-weight: bold;
+                  padding-top: 2%;
                 }
 
                 .chapter-summery {
@@ -1247,12 +1283,14 @@
                   margin-bottom: 0;
                   max-width: 70%;
                   margin: 0 auto;
+                  font-size: 17px;
+                  margin-top: -2%;
                 }
               }
 
 
               .chapter-bullets {
-                width: 82%;
+                width: 100%;
                 max-height: 0;
                 margin: 20px auto 0;
                 text-align: center;
@@ -1261,6 +1299,7 @@
                 overflow: hidden;
 
                 .details-list {
+                  width: 100%;
                   font-size: 17px;
                   max-height: 0;
                   font-weight: 500;
@@ -1290,10 +1329,19 @@
 
             }
           }
+          .syllabus-purchase-image-container {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
 
-          .course-v2-purchase-button {
-            display: block;
-            margin: 20px auto;
+            .bottom-image{
+              max-width: 50%;
+            }
+            .course-v2-purchase-button {
+              display: block;
+              margin: 20px auto;
+              height: fit-content;
+            }
           }
         }
       }
@@ -1306,6 +1354,7 @@
 
           h2 {
             color: $color__primary;
+            font-size: 25px;
           }
 
           padding-bottom: 20px;
@@ -1317,6 +1366,7 @@
             .faq-item {
 
               &:after {
+                left: 20px;
               }
 
               .faq-item-q {
@@ -1325,6 +1375,7 @@
                   max-width: 70%;
                   margin: 0 auto;
                   padding: 0 10px;
+                  font-weight: bold;
                 }
               }
 
@@ -1338,8 +1389,8 @@
               &.show-details {
 
                 &:after {
-                  top: 0;
-                  transform: translateY(20px) rotateY(180deg);
+                  left: 20px;
+                  transform: translateY(20px) rotateX(180deg);
                 }
 
                 .faq-item-q {

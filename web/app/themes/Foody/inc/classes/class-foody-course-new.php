@@ -536,6 +536,7 @@ class Foody_Course_new {
 	}
 
 	private function get_course_numbers_div( $course_numbers ) {
+	    $is_mobile = wp_is_mobile();
 		$texts_for_numbers  = [
 			'num_of_videos'   => __( 'סרטונים' ),
 			'time_of_video'   => __( 'ממוצע כל סרטון' ),
@@ -546,10 +547,21 @@ class Foody_Course_new {
 
 		if ( isset( $course_numbers ) && is_array( $course_numbers ) ) {
 			$course_numbers_div = '<div class="course-numbers-container">';
+			$counter = 0;
+
 			foreach ( $course_numbers as $key => $number ) {
+                if($is_mobile && $counter % 2 == 0){
+                    $course_numbers_div .= '<div class="numbers-row">';
+                }
+
 				$course_numbers_div .= '<div class="course-number-item">';
 				$course_numbers_div .= '<div class="course-number">' . $number . '</div>';
 				$course_numbers_div .= '<div class="course-number-key">' . $texts_for_numbers[ $key ] . '</div></div>';
+				$counter++;
+
+				if($is_mobile && $counter % 2 == 0){
+                    $course_numbers_div .= '</div>';
+                }
 			}
 			$course_numbers_div .= '</div>';
 		}
