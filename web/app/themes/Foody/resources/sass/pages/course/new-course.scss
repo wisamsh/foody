@@ -90,7 +90,7 @@
       }
 
       .host-image {
-        width: 24%;
+        width: 25%;
         position: absolute;
         right: 180px;
         top: 170px;
@@ -110,7 +110,7 @@
         .cover-textual-information {
           text-align: center;
           width: 50%;
-          margin-left: 12%;
+          margin-left: 9%;
           margin-top: 2%;
 
           &.no-top-image {
@@ -135,7 +135,6 @@
           }
 
           .course-cover-text {
-            width: 65%;
             margin: 0 auto;
             font-size: 18px;
             font-weight: bold;
@@ -208,6 +207,7 @@
 
     .gift-and-purchase-buttons {
       position: relative;
+      border-top: 1px solid darkgray;
 
       .buttons-container {
         text-align: center;
@@ -260,6 +260,7 @@
           flex-direction: row;
 
           img {
+            position: absolute;
             width: 17%;
           }
 
@@ -268,14 +269,14 @@
             color: $color__primary;
             font-weight: 600;
             align-self: center;
-            right: 18%;
             position: relative;
+            margin: auto;
+            top: 40px;
           }
         }
 
         .course-content-items {
           position: relative;
-          top: -62px;
           z-index: 999;
           padding: 6%;
 
@@ -471,6 +472,11 @@
           }
         }
 
+        > .course-v2-purchase-button{
+          position: relative;
+          right: 32%;
+        }
+
         .buy-kit-purchase-image-container {
           display: flex;
           flex-direction: row-reverse;
@@ -504,7 +510,8 @@
 
           .top-image {
             width: 17%;
-            position: relative;
+            position: absolute;
+            z-index: 1;
           }
 
           .syllabus-title {
@@ -515,12 +522,14 @@
             position: relative;
             width: 65%;
             text-align: center;
+            margin: 3% auto;
           }
         }
 
         .chapters-container {
           text-align: center;
           padding: 0 15%;
+          z-index: 2;
 
           .chapter-container {
             border: 1px $color__primary solid;
@@ -629,10 +638,7 @@
     }
 
     .images-section {
-      .image-container {
-        box-shadow: 0 0 13px -3px grey;
-        margin: 2%;
-      }
+      padding: 0 2%;
     }
 
     .faq-section {
@@ -712,6 +718,11 @@
               }
             }
           }
+        }
+
+        > .course-v2-purchase-button{
+          position: relative;
+          right: 32%;
         }
 
         .faq-purchase-image-container {
@@ -1031,6 +1042,7 @@
             }
 
             .what-waiting-title {
+              margin-top: 3%;
               font-size: 26px;
               position: initial;
               z-index: 2;
@@ -1420,6 +1432,10 @@
                 }
               }
             }
+          }
+
+          > .course-v2-purchase-button {
+            right: 0;
           }
 
           .course-v2-purchase-button {
