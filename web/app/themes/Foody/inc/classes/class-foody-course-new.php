@@ -4,6 +4,7 @@ class Foody_Course_new {
 
 	private $course_data = [];
 	private $floating_buttons = [];
+	private $links_target = 'blank';
 
 	/**
 	 * Course constructor.
@@ -72,7 +73,7 @@ class Foody_Course_new {
 			$alwayes_wanted_image_div          = '<img class="always-wanted-main-image" src="' . $alwayes_wanted_image . '">';
 			$alwayes_wanted_subtitle_div       = '<h5 class="always-wanted-subtitle">' . $alwayes_wanted_subtitle . '</h5>';
 			$alwayes_wanted_subtitle_paragraph = '<p class="always-wanted-text">' . $alwayes_wanted_text . '</p>';
-			$alwayes_wanted_purchase           = "<a class='always-wanted-section-purchase' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a>";
+			$alwayes_wanted_purchase           = "<a class='always-wanted-section-purchase' href='" . $purchase_button_link . "' target=\"'.$this->links_target.'\">" . $purchase_button_text . "</a>";
 
 			$alwayes_wanted_div = '<div class="always-wanted-container">' . $alwayes_wanted_title_div . $alwayes_wanted_image_div . $alwayes_wanted_subtitle_div . $alwayes_wanted_subtitle_paragraph . $alwayes_wanted_purchase;
 
@@ -106,7 +107,7 @@ class Foody_Course_new {
 			$buy_kit_title_div = '<h2 class="buy-kit-title">' . $buy_kit_title . '</h2>';
 			$buy_kit_image_div = '<img class="buy-kit-main-image" src="' . $buy_kit_image . '">';
 			$buy_kit_details   = $this->get_kit_details_html( $buy_kit_subtitle, $buy_kit_details, $buy_kit_price );
-			$kit_purchase      = "<a class='course-v2-purchase-button' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a>";
+			$kit_purchase      = "<a class='course-v2-purchase-button' href='" . $purchase_button_link . "' target=\"'.$this->links_target.'\">" . $purchase_button_text . "</a>";
 
 			if ( isset( $background_images['top'] ) ) {
 				$buy_kit_div = "<div class=\"buy-kit-container\"><div class='buy-kit-title-image-container'><img class='top-image' src=\"" . $background_images['top'] . "\">";
@@ -136,7 +137,7 @@ class Foody_Course_new {
 			$purchase_button_link = $this->get_floating_purchase_button();
 			$purchase_button_text = isset( $purchase_button_link['title'] ) ? $purchase_button_link['title'] : '';
 			$purchase_button_link = isset( $purchase_button_link['url'] ) ? $purchase_button_link['url'] : '';
-			$purchase_button_link = "<a class='course-v2-purchase-button' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a>";
+			$purchase_button_link = "<a class='course-v2-purchase-button' href='" . $purchase_button_link . "' target=\"'.$this->links_target.'\" >" . $purchase_button_text . "</a>";
 
 
 			if ( isset( $background_images['top'] ) ) {
@@ -179,9 +180,9 @@ class Foody_Course_new {
 				$video_section .= $video_div;
 
 				if ( isset( $background_images['bottom'] ) && $background_images['bottom'] != '' ) {
-					$video_section .= "<a class='video-section-purchase' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a><img class='bottom-image' src=\"" . $background_images['bottom'] . "\"></div>";
+					$video_section .= "<a class='video-section-purchase' href='" . $purchase_button_link . "' target=\"'.$this->links_target.'\">" . $purchase_button_text . "</a><img class='bottom-image' src=\"" . $background_images['bottom'] . "\"></div>";
 				} else {
-					$video_section .= "<a class='video-section-purchase' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a></div>";
+					$video_section .= "<a class='video-section-purchase' href='" . $purchase_button_link . "' target=\"'.$this->links_target.'\">" . $purchase_button_text . "</a></div>";
 				}
 			}
 		}
@@ -213,13 +214,13 @@ class Foody_Course_new {
 		if ( isset( $purchase_button['url'] ) && ! empty( $purchase_button['url'] ) ) {
 			$has_button           = true;
 			$purchase_button_text = isset( $purchase_button['title'] ) && ! empty( $purchase_button['title'] ) ? $purchase_button['title'] : __( 'לרכישה' );
-			$purchase_button_div  = '<a class="purchase-button-div" href="' . $purchase_button['url'] . '">' . $purchase_button_text . '</a>';
+			$purchase_button_div  = '<a class="purchase-button-div" href="' . $purchase_button['url'] . '" target="'.$this->links_target.'">' . $purchase_button_text . '</a>';
 		}
 
 		if ( isset( $gift_button['url'] ) && ! empty( $gift_button['url'] ) ) {
 			$has_button       = true;
 			$gift_button_text = isset( $gift_button['title'] ) && ! empty( $gift_button['title'] ) ? $gift_button['title'] : __( 'לרכישה' );
-			$gift_button_div  = '<a class="gift-button-div" href="' . $gift_button['url'] . '">' . $gift_button_text . '<img src="' . get_template_directory_uri() . '/resources/images/group-3.svg"/></a>';
+			$gift_button_div  = '<a class="gift-button-div" href="' . $gift_button['url'] . '" target="'.$this->links_target.'">' . $gift_button_text . '<img src="' . get_template_directory_uri() . '/resources/images/group-3.svg"/></a>';
 		}
 
 		if ( $has_button ) {
@@ -302,7 +303,7 @@ class Foody_Course_new {
 			$purchase_button_link = $this->get_floating_purchase_button();
 			$purchase_button_text = isset( $purchase_button_link['title'] ) ? $purchase_button_link['title'] : '';
 			$purchase_button_link = isset( $purchase_button_link['url'] ) ? $purchase_button_link['url'] : '';
-			$purchase_button_link = "<a class='course-v2-purchase-button' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a>";
+			$purchase_button_link = "<a class='course-v2-purchase-button' href='" . $purchase_button_link . "' target=\"'.$this->links_target.'\">" . $purchase_button_text . "</a>";
 
 
 			if ( isset( $background_images['top'] ) ) {
@@ -386,7 +387,7 @@ class Foody_Course_new {
 			$purchase_button_link = $this->get_floating_purchase_button();
 			$purchase_button_text = isset( $purchase_button_link['title'] ) ? $purchase_button_link['title'] : '';
 			$purchase_button_link = isset( $purchase_button_link['url'] ) ? $purchase_button_link['url'] : '';
-			$purchase_button_link = "<a class='course-v2-purchase-button' href='" . $purchase_button_link . "' >" . $purchase_button_text . "</a>";
+			$purchase_button_link = "<a class='course-v2-purchase-button' href='" . $purchase_button_link . "' target=\"'.$this->links_target.'\">" . $purchase_button_text . "</a>";
 
 			$testimonials_content .= "$purchase_button_link</div>";
 		}
@@ -535,20 +536,32 @@ class Foody_Course_new {
 	}
 
 	private function get_course_numbers_div( $course_numbers ) {
+	    $is_mobile = wp_is_mobile();
 		$texts_for_numbers  = [
 			'num_of_videos'   => __( 'סרטונים' ),
 			'time_of_video'   => __( 'ממוצע כל סרטון' ),
 			'course_duration' => __( 'קורס כולל' ),
-			'course_level'    => __( 'לכל הרמות' )
+			'course_level'    => __( 'רמה' )
 		];
 		$course_numbers_div = '';
 
 		if ( isset( $course_numbers ) && is_array( $course_numbers ) ) {
 			$course_numbers_div = '<div class="course-numbers-container">';
+			$counter = 0;
+
 			foreach ( $course_numbers as $key => $number ) {
+                if($is_mobile && $counter % 2 == 0){
+                    $course_numbers_div .= '<div class="numbers-row">';
+                }
+
 				$course_numbers_div .= '<div class="course-number-item">';
 				$course_numbers_div .= '<div class="course-number">' . $number . '</div>';
 				$course_numbers_div .= '<div class="course-number-key">' . $texts_for_numbers[ $key ] . '</div></div>';
+				$counter++;
+
+				if($is_mobile && $counter % 2 == 0){
+                    $course_numbers_div .= '</div>';
+                }
 			}
 			$course_numbers_div .= '</div>';
 		}
