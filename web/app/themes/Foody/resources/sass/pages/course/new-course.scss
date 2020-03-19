@@ -38,11 +38,30 @@
     justify-content: center;
     @import "course-registration-button";
 
-    .button-purchase,
+    .button-purchase{
+      margin-left: 10px;
+      width: fit-content;
+      a {
+        margin: 10px 1%;
+        border: 1px solid #ed3d48;
+        border-radius: 30px;
+        padding: 1% 0px;
+        width: 320px;
+        text-align: center;
+      }
+    }
+
     .gift-purchase {
       width: fit-content;
       a {
-        margin: 0 0.5rem;
+        margin: 10px 1%;
+        border: 1px solid #ed3d48;
+        border-radius: 30px;
+        padding: 1% 0;
+        width: 320px;
+        text-align: center;
+        background-color: #fff;
+        color: $color__primary;
       }
     }
   }
@@ -68,13 +87,14 @@
       }
 
       .host-image {
-        width: 25%;
+        width: 24%;
         position: absolute;
-        right: 170px;
+        right: 180px;
         top: 170px;
 
         img {
           border-radius: 100%;
+          border: 1px white solid;
         }
       }
 
@@ -88,6 +108,7 @@
           text-align: center;
           width: 50%;
           margin-left: 12%;
+          margin-top: 2%;
 
           &.no-top-image {
             width: 100%;
@@ -95,13 +116,13 @@
           }
 
           .course-title {
-            font-size: 29px;
+            font-size: 33px;
             font-weight: 500;
             line-height: 1;
           }
 
           .course-host-name {
-            font-size: 40px;
+            font-size: 45px;
             font-weight: 500;
             color: $color__primary;
             text-align: center;
@@ -114,26 +135,28 @@
             width: 65%;
             margin: 0 auto;
             font-size: 18px;
-            font-weight: 500;
+            font-weight: bold;
           }
         }
       }
 
       .additional-data {
         background-color: white;
-        font-size: 20px;
+        font-size: 25px;
         display: flex;
         flex-direction: column;
         padding-right: 12%;
+        position: relative;
+        margin-top: -4%;
 
         .additional-data-text {
-          width: 40%;
+          width: 50%;
           font-weight: bold;
         }
 
         .promotion-title {
           color: $color__primary;
-          width: 33%;
+          width: 41%;
           font-weight: 500;
         }
 
@@ -173,7 +196,7 @@
             left: 0;
             bottom: 0;
             z-index: 1;
-            max-width: 15%;
+            max-width: 18%;
           }
         }
 
@@ -222,6 +245,7 @@
       margin: 3%;
       box-shadow: 0 0 13px -3px grey;
       position: relative;
+      z-index: 2;
 
       .course-what-waiting {
         display: flex;
@@ -260,15 +284,22 @@
             .course-content-item {
               display: flex;
               flex-direction: column;
-              width: 25%;
+              width: 27%;
+
+              .item-image{
+                border-radius: 0 0 7px 7px;
+              }
 
               .item-title {
-                font-size: 11px;
+                font-size: 12px;
                 text-align: center;
                 background: $color__primary;
                 color: white;
                 font-weight: 500;
                 border-radius: 0 0 7px 7px;
+                padding: 1% 0;
+                bottom: 20px;
+                position: relative;
               }
             }
           }
@@ -285,6 +316,7 @@
 
     .video-section {
       position: relative;
+      margin-top: -8%;
 
       .course-main-video {
         .course-main-video-image-container {
@@ -297,6 +329,7 @@
             top: 28px;
             align-self: flex-start;
             position: relative;
+            z-index: 1;
           }
 
           .main-video {
@@ -335,7 +368,7 @@
     }
 
     .always-wanted-section {
-      margin: 3%;
+      margin: 0 3% 3% 3%;
       box-shadow: 0 0 13px -3px grey;
       position: relative;
 
@@ -464,7 +497,6 @@
         .syllabus-title-image-container {
           display: flex;
           flex-direction: row;
-          justify-content: center;
 
           .top-image {
             width: 17%;
@@ -564,13 +596,37 @@
 
           }
         }
+
+        .syllabus-purchase-image-container {
+          display: flex;
+          flex-direction: row-reverse;
+
+          .bottom-image{
+            width: 30%;
+          }
+          .course-v2-purchase-button {
+            border: 1px #ED3D48 solid;
+            border-radius: 30px;
+            padding: 1% 0;
+            width: 320px;
+            display: inline-block;
+            text-align: center;
+            background: #ED3D48;
+            color: white;
+            font-size: 20px;
+            font-weight: 500;
+            height: fit-content;
+            margin-top: 8%;
+            margin-left: 5%;
+          }
+        }
       }
     }
 
     .images-section{
       .image-container{
         box-shadow: 0 0 13px -3px grey;
-        margin: 3%;
+        margin: 2%;
       }
     }
 
@@ -579,16 +635,22 @@
       margin: 3%;
 
       .faq-container {
-        padding-bottom: 20px;
-
-        h2 {
-          color: $color__primary;
+        .faq-title-image-container {
+          display: flex;
+          flex-direction: column;
+          .top-image{
+            width: 30%;
+            position: absolute;
+          }
+          h2 {
+            color: $color__primary;
+          }
         }
 
         .faq-list {
 
           max-width: 680px;
-          margin: 0 auto;
+          margin: 2% auto 0 auto;
           text-align: center;
 
           .faq-item {
@@ -644,10 +706,18 @@
             }
           }
         }
-
-        .course-v2-purchase-button {
-          margin: 0 auto;
-          display: block;
+        .faq-purchase-image-container {
+          display: flex;
+          flex-direction: row-reverse;
+          .bottom-image{
+            max-width: 30%;
+          }
+          .course-v2-purchase-button {
+            height: fit-content;
+            margin-top: 8%;
+            margin-left: 7%;
+            display: block;
+          }
         }
       }
     }

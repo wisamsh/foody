@@ -540,7 +540,7 @@ class Foody_Course_new {
 			'num_of_videos'   => __( 'סרטונים' ),
 			'time_of_video'   => __( 'ממוצע כל סרטון' ),
 			'course_duration' => __( 'קורס כולל' ),
-			'course_level'    => __( 'לכל הרמות' )
+			'course_level'    => __( 'רמה' )
 		];
 		$course_numbers_div = '';
 
