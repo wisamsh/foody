@@ -93,6 +93,7 @@ module.exports = env => {
             searchResults: ["./resources/js/search-results.entry", "./resources/js/page-load.entry"],
             feedChannel: ["./resources/js/feed-channel.entry", "./resources/js/page-load.entry"],
             coursev2: ["./resources/js/course-v2.entry", "./resources/js/page-load.entry"],
+            courseshomepage: ["./resources/js/courses-homepage.entry", "./resources/js/page-load.entry"],
             style: ["./resources/sass/app.scss"],
             // homepage: ["./resources/sass/homepage_app.scss"],
         },

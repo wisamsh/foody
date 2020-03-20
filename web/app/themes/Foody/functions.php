@@ -226,6 +226,11 @@ function foody_scripts()
             wp_enqueue_script('foody-script-course-v2', $course_v2_asset, false, false, true);
         }
 
+        if (is_page_template('page-templates/foody-courses-homepage.php')) {
+            $courses_homepage_asset = foody_get_versioned_asset('courseshomepage');
+            wp_enqueue_script('foody-script-courses-homepage', $courses_homepage_asset, false, false, true);
+        }
+
         if (is_page_template('page-templates/foody-course-efrat.php')) {
             $course_asset = foody_get_versioned_asset('course');
             wp_enqueue_script('foody-script-course', $course_asset, false, false, true);

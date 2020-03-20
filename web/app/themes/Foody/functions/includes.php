@@ -51,6 +51,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-blocks.php";
 require_once get_template_directory() . "/inc/classes/class-foody-comment-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-how-i-did-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-homepage.php";
+require_once get_template_directory() . "/inc/classes/class-foody-courses-homepage.php";
 require_once get_template_directory() . "/inc/classes/class-foody-white-label-homepage.php";
 require_once get_template_directory() . "/inc/classes/class-foody-campaign.php";
 require_once get_template_directory() . "/inc/classes/class-foody-campaign-extended.php";
@@ -64,6 +65,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-ingredient.php
 require_once get_template_directory() . "/inc/classes/class-foody-recipe.php";
 require_once get_template_directory() . "/inc/classes/class-foody-course.php";
 require_once get_template_directory() . "/inc/classes/class-foody-course-new.php";
+require_once get_template_directory() . "/inc/classes/class-foody-courses-homepage.php";
 require_once get_template_directory() . "/inc/classes/class-foody-playlist.php";
 require_once get_template_directory() . "/inc/classes/class-foody-channel.php";
 require_once get_template_directory() . "/inc/classes/class-foody-grid.php";
