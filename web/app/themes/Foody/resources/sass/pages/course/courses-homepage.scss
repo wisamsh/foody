@@ -17,6 +17,20 @@
     background-color: white;
     text-align: center;
 
+    .course-cover{
+      .cover-video-container{
+        max-width: 100vw;
+        z-index: 2;
+        position: relative;
+
+        iframe{
+          max-width: 100%;
+          width: 100%;
+          max-height: 65vw;
+        }
+      }
+    }
+
     .courses-section {
       padding: 5px 0;
 
@@ -128,6 +142,67 @@
         }
       }
     }
+
+    .advantages-section{
+      .advantages-container{
+        position: relative;
+
+        .top-image{
+          width: 30%;
+          position: absolute;
+          left: 0;
+          top: -28px;
+        }
+
+        .advantages-cover-container{
+          margin: 6%;
+          box-shadow: 0 0 13px -3px grey;
+          position: relative;
+          border-radius: 5px;
+
+          .cover-image{
+            border-radius: 5px;
+          }
+
+
+        }
+
+        .advantages-main-text{
+          padding: 0px 6%;
+          font-size: 18px;
+          font-weight: bold;
+          line-height: 1.5rem;
+        }
+
+        .advantages-list-container{
+          position: relative;
+          z-index: 2;
+          padding-bottom: 21%;
+
+          .advantages-list-row{
+            .advantages-item{
+              .item-icon{
+                width: 15%;
+                margin-bottom: 3%;
+              }
+
+              .item-text{
+                white-space: pre-wrap;
+                line-height: 1.1rem;
+                font-weight: bold;
+              }
+            }
+          }
+        }
+        .bottom-image{
+          width: 30%;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          z-index: 1;
+        }
+      }
+    }
   }
 }
 
@@ -136,7 +211,32 @@
     $margin-boxes: 2rem;
     $title-size: 28px;
 
+    #masthead{
+      position: relative;
+    }
+
     #primary {
+      .course-cover{
+        .cover-video-container{
+          max-width: 1000px;
+          margin: 0 auto;
+          .cover-video{
+            position: relative;
+            padding-bottom: 56.25%;
+            max-width: 940px;
+            margin: 0 auto;
+            z-index: 2;
+
+            iframe{
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
       .cover-image {
         img {
           max-height: fit-content;
@@ -219,6 +319,50 @@
               left: 0;
               width: 25%;
             }
+          }
+        }
+      }
+
+      .advantages-section{
+        .advantages-container{
+          .top-image{
+            width: 20%;
+          }
+
+          .advantages-cover-container{
+            margin: 3% 12%;
+          }
+
+          .advantages-main-text{
+            padding: 0px 6%;
+            white-space: pre;
+            font-size: 21px;
+          }
+
+          .advantages-list-container{
+            padding-bottom: 10%;
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+            position: relative;
+
+            .advantages-list-row{
+              position: relative;
+              z-index: 2;
+              display: flex;
+              flex-direction: row;
+              justify-content: space-evenly;
+
+              .advantages-item{
+                .item-icon{
+                  width: 45%;
+                }
+              }
+            }
+          }
+
+          .bottom-image{
+            width: 20%;
           }
         }
       }

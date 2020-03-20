@@ -4,6 +4,7 @@ class Foody_Courses_Homepage
 {
 
     private $homepage_data = [];
+    private $cover_video = '';
 
     /**
      * Homepage constructor.
@@ -13,6 +14,20 @@ class Foody_Courses_Homepage
         $this->homepage_data = get_field('courses_homepage');
     }
 
+    public function has_cover_video()
+    {
+        $has_video = isset($this->homepage_data['cover_section']['cover_video']) && !empty($this->homepage_data['cover_section']['cover_video']);
+        if ($has_video) {
+            $this->cover_video = $this->homepage_data['cover_section']['cover_video'];
+        }
+
+        return $has_video;
+    }
+
+    public function get_cover_video()
+    {
+        echo '<div class="cover-video-container"><div class="cover-video">' . $this->cover_video . '</div></div>';
+    }
 
     public function should_show_section($section_name)
     {
@@ -26,6 +41,27 @@ class Foody_Courses_Homepage
         $this->get_cover($cover_section['image_desktop'], $cover_section['image_mobile'], 'content-cover-image.php');
     }
 
+    public function get_advantages_section()
+    {
+        $advantages_section = $this->homepage_data['advantages_section'];
+        $background_images = $this->get_background_images_by_section($advantages_section);
+        $has_cover_video = isset($advantages_section['cover_video']) && !empty($advantages_section['cover_video']);
+        $main_text = isset($advantages_section['main_text']) ? $advantages_section['main_text'] : '';
+        $cover_image_desktop = isset($advantages_section['image_desktop']) ? $advantages_section['image_desktop'] : '';
+        $cover_image_mobile = isset($advantages_section['image_mobile']) ? $advantages_section['image_mobile'] : '';
+
+        /** building the html */
+        $cover = $has_cover_video ? '<div class="cover-video">' . $this->cover_video . '</div></div>' : '<img class="cover-image" src="' . $this->get_relevant_image($cover_image_desktop, $cover_image_mobile) . '">';
+        $cover_div = '<div class="advantages-cover-container">' . $cover . '</div>';
+        $top_background_image = isset($background_images['top']) ? '<img class="top-image" src="' . $background_images['top'] . '">' : '';
+        $bottom_background_image = isset($background_images['bottom']) ? '<img class="bottom-image" src="' . $background_images['bottom'] . '">' : '';
+        $main_text_paragraph = '<p class="advantages-main-text">' . $main_text . '</p>';
+        $advantages_list_div = isset($advantages_section['advantages_list']) ? $this->get_advantages_list_div($advantages_section['advantages_list']) : '';
+        $advantages_container = '<div class="advantages-container">' . $top_background_image . $cover_div . $main_text_paragraph . $advantages_list_div . $bottom_background_image . '</div>';
+
+        echo $advantages_container;
+    }
+
     public function get_courses_section()
     {
         $courses_section = $this->homepage_data['courses_section'];
@@ -36,7 +72,7 @@ class Foody_Courses_Homepage
         /** building the html */
         $main_text_div = '<p class="main-text">' . $main_text . '</p>';
         $title_div = '<h2 class="title">' . $title . '</h2>';
-        $courses_list_div = isset($courses_section['courses_list']) ? $this->get_courses_list_div($courses_section['courses_list'], 'courses_section') : '';
+        $courses_list_div = isset($courses_section['courses_list']) ? $this->get_courses_list_div($courses_section['courses_list']) : '';
 
         if (isset($background_images['top'])) {
             $courses_section_div = "<div class=\"courses-list\"><div class='title-image-container'>" . $main_text_div . "<img class='top-image' src=\"" . $background_images['top'] . "\"></div>";
@@ -76,7 +112,42 @@ class Foody_Courses_Homepage
         return $link_url;
     }
 
-    private function get_courses_list_div($courses_list, $section_name)
+    private function get_advantages_list_div($advantages_list)
+    {
+        $advantages_list_section = '';
+        if (is_array($advantages_list)) {
+            $advantages_list_section = '<div class="advantages-list-container">';
+
+            foreach ($advantages_list as $index => $item) {
+                if ($index % 2 == 0) {
+                    $advantages_list_section .= '<div class="advantages-list-row">';
+                }
+                if (isset($advantages_list[$index]) && is_array($advantages_list[$index])) {
+                    if (isset($item['icon']) && isset($item['icon']['url'])) {
+                        $icon_div = '<img class="item-icon" src="' . $item['icon']['url'] . '"/>';
+                        $text = isset($item['text']) ? $item['text'] : '';
+                        $text_div = '<p class="item-text">' . $text . '</p>';
+                        $advantages_content_item = '<div class="advantages-item">' . $icon_div . $text_div . '</div>';
+
+                        $advantages_list_section .= $advantages_content_item;
+                    }
+                }
+                if ($index % 2 == 1) {
+                    $advantages_list_section .= '</div>';
+                }
+            }
+            if (count($advantages_list) % 2 == 0) {
+                $advantages_list_section .= '</div>';
+            } else {
+                $advantages_list_section .= '</div></div>';
+            }
+        }
+
+        return $advantages_list_section;
+    }
+
+    private
+    function get_courses_list_div($courses_list)
     {
         $courses_list_section = '';
         if (is_array($courses_list)) {
@@ -95,15 +166,14 @@ class Foody_Courses_Homepage
                         $item_div = '<img class="item-image" src="' . $item['image']['url'] . '"/>';
                         $host_name = isset($item['host_name']) ? '<span class="host-name">' . $item['host_name'] . '</span>' : '';
                         $course_name = isset($item['course_name']) ? '<span class="host-name">' . $item['course_name'] . '</span>' : '';
-                        $course_content_item .= $item_div . '<div class="course-name-container">' .$host_name . $course_name . '</div></div>';
+                        $course_content_item .= $item_div . '<div class="course-name-container">' . $host_name . $course_name . '</div></div>';
 
                         /** bottom part of list item */
                         $course_summary = $this->get_course_details_and_pricing($item);
                         $course_content_item .= '<div class="course-item-bottom">' . $course_summary . '</div>';
                         if (isset($item['link'])) {
                             $course_content_item .= '</a></div>';
-                        }
-                        else{
+                        } else {
                             $course_content_item .= '</div>';
                         }
 
@@ -114,7 +184,11 @@ class Foody_Courses_Homepage
                     $courses_list_section .= '</div>';
                 }
             }
-            $courses_list_section .= '</div>';
+            if (count($courses_list) % 3 == 0) {
+                $courses_list_section .= '</div>';
+            } else {
+                $courses_list_section .= '</div></div>';
+            }
         }
 
         return $courses_list_section;
@@ -128,7 +202,7 @@ class Foody_Courses_Homepage
             $action_text = isset($course_item['action_item_text']) ? $course_item['action_item_text'] : '';
 
             /** pricing row */
-            $courses_details_div = '<span class="pricing-row"><span class="sale-text">' . __('מחיר מבצע! ') . '</span><span class="new-price">' . $money_char . $course_item['new_price'] . ' ' .'</span>';
+            $courses_details_div = '<span class="pricing-row"><span class="sale-text">' . __('מחיר מבצע! ') . '</span><span class="new-price">' . $money_char . $course_item['new_price'] . ' ' . '</span>';
             $courses_details_div .= __('במקום ') . $money_char . $course_item['old_price'] . ' ' . '</span>';
 
             /** action item row */
@@ -159,6 +233,16 @@ class Foody_Courses_Homepage
         return $background_images;
     }
 
+    private function get_relevant_image($image_desktop, $image__mobile)
+    {
+        $image = wp_is_mobile() ? $image__mobile : $image_desktop;
+
+        if (!empty($image) && isset($image['url'])) {
+            $image = $image['url'];
+        }
+
+        return $image;
+    }
 
     private function get_cover($cover_desktop, $cover_mobile, $template_part)
     {
@@ -177,6 +261,4 @@ class Foody_Courses_Homepage
             'link' => ''
         ));
     }
-
-
 }
