@@ -5,6 +5,8 @@ class Foody_Courses_Homepage
 
     private $homepage_data = [];
     private $cover_video = '';
+    private $bottom_banner = '';
+
 
     /**
      * Homepage constructor.
@@ -14,6 +16,32 @@ class Foody_Courses_Homepage
         $this->homepage_data = get_field('courses_homepage');
     }
 
+    /** return true if has relevant banner and store it on $bottom_banner  */
+    public function has_banner_image(){
+        $has_mobile = isset($this->homepage_data['image_mobile']) && !empty($this->homepage_data['image_mobile']);
+        $has_desktop = isset($this->homepage_data['image_desktop']) && !empty($this->homepage_data['image_desktop']);
+
+        if(wp_is_mobile()){
+            if($has_mobile){
+                $result = true;
+                $this->bottom_banner = $this->homepage_data['image_mobile'];
+            }
+            else{
+                $result = false;
+            }
+        }
+        elseif($has_desktop){
+            $result = true;
+            $this->bottom_banner = $this->homepage_data['image_desktop'];
+        }
+        else{
+            $result = false;
+        }
+
+        return $result;
+    }
+
+    /** return true if has cover video and store it on $cover_video  */
     public function has_cover_video()
     {
         $has_video = isset($this->homepage_data['cover_section']['cover_video']) && !empty($this->homepage_data['cover_section']['cover_video']);
@@ -27,6 +55,11 @@ class Foody_Courses_Homepage
     public function get_cover_video()
     {
         echo '<div class="cover-video-container"><div class="cover-video">' . $this->cover_video . '</div></div>';
+    }
+
+    public function get_banner_image()
+    {
+        echo '<div class="bottom-banner-container"><img class="bottom-banner" src="'. $this->bottom_banner['url'] .'">';
     }
 
     public function should_show_section($section_name)
@@ -45,14 +78,14 @@ class Foody_Courses_Homepage
     {
         $advantages_section = $this->homepage_data['advantages_section'];
         $background_images = $this->get_background_images_by_section($advantages_section);
-        $has_cover_video = isset($advantages_section['cover_video']) && !empty($advantages_section['cover_video']);
+        $has_cover_video = isset($advantages_section['video']) && !empty($advantages_section['video']);
         $main_text = isset($advantages_section['main_text']) ? $advantages_section['main_text'] : '';
         $cover_image_desktop = isset($advantages_section['image_desktop']) ? $advantages_section['image_desktop'] : '';
         $cover_image_mobile = isset($advantages_section['image_mobile']) ? $advantages_section['image_mobile'] : '';
 
         /** building the html */
-        $cover = $has_cover_video ? '<div class="cover-video">' . $this->cover_video . '</div></div>' : '<img class="cover-image" src="' . $this->get_relevant_image($cover_image_desktop, $cover_image_mobile) . '">';
-        $cover_div = '<div class="advantages-cover-container">' . $cover . '</div>';
+        $cover = $has_cover_video ? '<div class="cover-video">' . $advantages_section['video'] . '</div>' : '<img class="cover-image" src="' . $this->get_relevant_image($cover_image_desktop, $cover_image_mobile) . '">';
+        $cover_div =  $has_cover_video ? $cover : '<div class="advantages-cover-container">' . $cover . '</div>';
         $top_background_image = isset($background_images['top']) ? '<img class="top-image" src="' . $background_images['top'] . '">' : '';
         $bottom_background_image = isset($background_images['bottom']) ? '<img class="bottom-image" src="' . $background_images['bottom'] . '">' : '';
         $main_text_paragraph = '<p class="advantages-main-text">' . $main_text . '</p>';
@@ -91,6 +124,23 @@ class Foody_Courses_Homepage
         echo $courses_section_div;
     }
 
+    public function get_team_section()
+    {
+        $team_section = $this->homepage_data['team_section'];
+        $background_images = $this->get_background_images_by_section($team_section);
+        $title = isset($team_section['title']) ? $team_section['title'] : '';
+
+
+        /** building the html */
+        $title_div = '<h2 class="title">' . $title . '</h2>';
+        $top_background_image = isset($background_images['top']) ? '<img class="top-image" src="' . $background_images['top'] . '">' : '';
+        $bottom_background_image = isset($background_images['bottom']) ? '<img class="bottom-image" src="' . $background_images['bottom'] . '">' : '';
+        $team_list_div = isset($team_section['hosts_list']) ? $this->get_team_list_div($team_section['hosts_list']) : '';
+
+        $team_container = '<div class="team-container">' . $top_background_image  . $title_div . $team_list_div . $bottom_background_image . '</div>';
+        echo $team_container;
+    }
+
     public function get_course_item_link($item, $key)
     {
         $link_url = '';
@@ -110,6 +160,41 @@ class Foody_Courses_Homepage
         }
 
         return $link_url;
+    }
+
+    private function get_team_list_div($team_list)
+    {
+        $team_list_section = '';
+        if (is_array($team_list)) {
+            $team_list_section = '<div class="team-list-container">';
+
+            foreach ($team_list as $index => $item) {
+                if (isset($team_list[$index]) && is_array($team_list[$index])) {
+                    if (isset($item['image']) && isset($item['image']['url'])) {
+                        $image_div = '<img class="item-image" src="' . $item['image']['url'] . '"/>';
+                        $host_name = isset($item['host_name']) ? $item['host_name'] : '';
+                        $text = isset($item['summary']) ? $item['summary'] : '';
+                        $course_details = $this->get_course_details_and_pricing($item);
+
+                        $title_div = '<h5 class="host-name">' . $host_name .'</h5>';
+                        $text_div = '<p class="item-text">' . $text . '</p>';
+                        $course_button_div = '<div class="course-item-button">' . $course_details . '</div>';
+
+                        if(wp_is_mobile()) {
+                            $team_content_item = '<div class="team-item">' . $image_div . $title_div . $text_div . $course_button_div . '</div>';
+                        }
+                        else{
+                            $team_content_item = '<div class="team-item">' . $image_div . '<div class="team-item-info">' . $title_div . $text_div . $course_button_div . '</div></div>';
+                        }
+
+                        $team_list_section .= $team_content_item;
+                    }
+                }
+            }
+            $team_list_section .= '</div>';
+        }
+
+        return $team_list_section;
     }
 
     private function get_advantages_list_div($advantages_list)
@@ -146,8 +231,7 @@ class Foody_Courses_Homepage
         return $advantages_list_section;
     }
 
-    private
-    function get_courses_list_div($courses_list)
+    private function get_courses_list_div($courses_list)
     {
         $courses_list_section = '';
         if (is_array($courses_list)) {

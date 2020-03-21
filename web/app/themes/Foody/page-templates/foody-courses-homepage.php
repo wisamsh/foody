@@ -70,7 +70,20 @@ $courses_homepage = new Foody_Courses_Homepage();
                     ?>
                 </section>
             <?php endif; ?>
-
+            <?php if ($courses_homepage->should_show_section('team_section')): ?>
+                <section class="team-section">
+                    <?php
+                    $courses_homepage->get_team_section();
+                    ?>
+                </section>
+            <?php endif; ?>
+            <?php if ( $courses_homepage->has_banner_image() ) : ?>
+                <section class="banner-section">
+                    <?php
+                    $courses_homepage->get_banner_image();
+                    ?>
+                </section>
+            <?php endif; ?>
 
         </div>
     </div>
