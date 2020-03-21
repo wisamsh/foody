@@ -525,6 +525,10 @@
           margin: 6% 0 3% 0;
         }
 
+        .team-list-container:not(:last-child) {
+          padding-bottom: 5%;
+        }
+
         .team-list-container {
           padding-bottom: 5%;
 
