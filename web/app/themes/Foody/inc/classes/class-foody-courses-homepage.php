@@ -17,24 +17,22 @@ class Foody_Courses_Homepage
     }
 
     /** return true if has relevant banner and store it on $bottom_banner  */
-    public function has_banner_image(){
+    public function has_banner_image()
+    {
         $has_mobile = isset($this->homepage_data['image_mobile']) && !empty($this->homepage_data['image_mobile']);
         $has_desktop = isset($this->homepage_data['image_desktop']) && !empty($this->homepage_data['image_desktop']);
 
-        if(wp_is_mobile()){
-            if($has_mobile){
+        if (wp_is_mobile()) {
+            if ($has_mobile) {
                 $result = true;
                 $this->bottom_banner = $this->homepage_data['image_mobile'];
-            }
-            else{
+            } else {
                 $result = false;
             }
-        }
-        elseif($has_desktop){
+        } elseif ($has_desktop) {
             $result = true;
             $this->bottom_banner = $this->homepage_data['image_desktop'];
-        }
-        else{
+        } else {
             $result = false;
         }
 
@@ -59,7 +57,7 @@ class Foody_Courses_Homepage
 
     public function get_banner_image()
     {
-        echo '<div class="bottom-banner-container"><img class="bottom-banner" src="'. $this->bottom_banner['url'] .'">';
+        echo '<div class="bottom-banner-container"><img class="bottom-banner" src="' . $this->bottom_banner['url'] . '">';
     }
 
     public function should_show_section($section_name)
@@ -85,7 +83,7 @@ class Foody_Courses_Homepage
 
         /** building the html */
         $cover = $has_cover_video ? '<div class="cover-video">' . $advantages_section['video'] . '</div>' : '<img class="cover-image" src="' . $this->get_relevant_image($cover_image_desktop, $cover_image_mobile) . '">';
-        $cover_div =  $has_cover_video ? $cover : '<div class="advantages-cover-container">' . $cover . '</div>';
+        $cover_div = $has_cover_video ? $cover : '<div class="advantages-cover-container">' . $cover . '</div>';
         $top_background_image = isset($background_images['top']) ? '<img class="top-image" src="' . $background_images['top'] . '">' : '';
         $bottom_background_image = isset($background_images['bottom']) ? '<img class="bottom-image" src="' . $background_images['bottom'] . '">' : '';
         $main_text_paragraph = '<p class="advantages-main-text">' . $main_text . '</p>';
@@ -137,7 +135,7 @@ class Foody_Courses_Homepage
         $bottom_background_image = isset($background_images['bottom']) ? '<img class="bottom-image" src="' . $background_images['bottom'] . '">' : '';
         $team_list_div = isset($team_section['hosts_list']) ? $this->get_team_list_div($team_section['hosts_list']) : '';
 
-        $team_container = '<div class="team-container">' . $top_background_image  . $title_div . $team_list_div . $bottom_background_image . '</div>';
+        $team_container = '<div class="team-container">' . $top_background_image . $title_div . $team_list_div . $bottom_background_image . '</div>';
         echo $team_container;
     }
 
@@ -174,16 +172,16 @@ class Foody_Courses_Homepage
                         $image_div = '<img class="item-image" src="' . $item['image']['url'] . '"/>';
                         $host_name = isset($item['host_name']) ? $item['host_name'] : '';
                         $text = isset($item['summary']) ? $item['summary'] : '';
+                        $link = isset($item['link']) && !empty($item['link']) && isset($item['link']['url']) ? $item['link']['url'] : '';
                         $course_details = $this->get_course_details_and_pricing($item);
 
-                        $title_div = '<h5 class="host-name">' . $host_name .'</h5>';
+                        $title_div = '<h5 class="host-name">' . $host_name . '</h5>';
                         $text_div = '<p class="item-text">' . $text . '</p>';
-                        $course_button_div = '<div class="course-item-button">' . $course_details . '</div>';
+                        $course_button_div = '<a href="' . $link . '" class="course-item-button">' . $course_details . '</a>';
 
-                        if(wp_is_mobile()) {
+                        if (wp_is_mobile()) {
                             $team_content_item = '<div class="team-item">' . $image_div . $title_div . $text_div . $course_button_div . '</div>';
-                        }
-                        else{
+                        } else {
                             $team_content_item = '<div class="team-item">' . $image_div . '<div class="team-item-info">' . $title_div . $text_div . $course_button_div . '</div></div>';
                         }
 
