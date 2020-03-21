@@ -177,7 +177,12 @@ class Foody_Courses_Homepage
 
                         $title_div = '<h5 class="host-name">' . $host_name . '</h5>';
                         $text_div = '<p class="item-text">' . $text . '</p>';
-                        $course_button_div = '<a href="' . $link . '" class="course-item-button">' . $course_details . '</a>';
+                        if($link != '') {
+                            $course_button_div = '<a href="' . $link . '" class="course-item-button">' . $course_details . '</a>';
+                        }
+                        else{
+                            $course_button_div = '<div class="course-item-button">' . $course_details . '</div>';
+                        }
 
                         if (wp_is_mobile()) {
                             $team_content_item = '<div class="team-item">' . $image_div . $title_div . $text_div . $course_button_div . '</div>';
