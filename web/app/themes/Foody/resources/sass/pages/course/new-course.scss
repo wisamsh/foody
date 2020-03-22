@@ -164,6 +164,8 @@
         .promotion-text {
           width: 67%;
           font-weight: bold;
+          font-size: 27px;
+          color: $color__primary;
 
           //.crossed-price{
           //  color: $color__primary;
@@ -197,6 +199,7 @@
         }
 
         .numbers-and-bottom-image {
+          padding-top: 2%;
           img {
             position: absolute;
             left: 0;
@@ -940,6 +943,7 @@
           .promotion-text {
             width: 100%;
             font-weight: bold;
+            font-size: 18px;
 
           }
 
