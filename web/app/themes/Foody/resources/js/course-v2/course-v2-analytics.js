@@ -131,7 +131,7 @@ jQuery(document).ready(($) => {
         }
 
         let frameSecond = $('.testimonials-section .video-container iframe');
-        if (frameMain.length && !frameSecond[0]['src'].includes('youtube')) {
+        if (frameSecond.length && !frameSecond[0]['src'].includes('youtube')) {
             let player = new Vimeo.default(frameSecond);
 
             let playerEvents = [
