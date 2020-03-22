@@ -285,15 +285,17 @@ class Foody_Courses_Homepage
     {
         $courses_details_div = '';
         $money_char = '₪';
-        if (isset($course_item['old_price']) && !empty($course_item['old_price']) && isset($course_item['new_price']) && !empty($course_item['new_price'])) {
+        if (isset($course_item['old_price'])&& isset($course_item['new_price'])) {
             /** add line through */
             $old_price = $this->add_line_on_old_price($course_item['old_price'],$course_item['old_price']);
             $action_text = isset($course_item['action_item_text']) ? $course_item['action_item_text'] : '';
 
-            /** pricing row */
-            $courses_details_div = '<span class="pricing-row"><span class="sale-text">' . __('מחיר מבצע! ') . '</span><span class="new-price">' . $money_char . $course_item['new_price'] . ' ' . '</span>';
-            $courses_details_div .= __('במקום ') . $money_char . $old_price . ' ' . '</span>';
-
+            if(!empty($course_item['old_price'])  && !empty($course_item['new_price'])) {
+                /** pricing row */
+                $courses_details_div = '<span class="pricing-row"><span class="sale-text">' . __('מחיר מבצע! ') . '</span><span class="new-price">' . $money_char . $course_item['new_price'] . ' ' . '</span>';
+                $courses_details_div .= __('במקום ') . $money_char . $old_price . ' ' . '</span>';
+            }
+            if(!empty($course_item['action_item_text']) )
             /** action item row */
             $courses_details_div .= '<span class="action-item-text">' . $action_text . '</span>';
         }

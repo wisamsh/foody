@@ -129,6 +129,9 @@
                   color: $color__primary;
                 }
 
+                .action-item-text:first-child{
+                  margin: 3%;
+                }
               }
             }
           }
@@ -370,7 +373,7 @@
         .cover-image {
           img {
             max-height: fit-content;
-            padding: 0 12%;
+            padding: 2% 12%;
           }
         }
       }
