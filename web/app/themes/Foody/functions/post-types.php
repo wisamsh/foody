@@ -519,6 +519,7 @@ function foody_posts_page_script()
 {
     $referer_google = false;
     $referer_facebook = false;
+    $referer_taboola = false;
 
     $post_type = get_post_type();
     if ($post_type == 'post' ||
@@ -531,6 +532,7 @@ function foody_posts_page_script()
             if(is_array($_GET) && isset($_GET['referer'])){
                 $enable_google = get_field('google_set_for_recipes', $_GET['referer']);
                 $enable_facebook = get_field('facebook_set_for_recipes', $_GET['referer']);
+                $enable_taboola = get_field('taboola_set_for_recipes', $_GET['referer']);
 
                 if($enable_facebook) {
                     $referer_facebook = $_GET['referer'];
@@ -538,6 +540,10 @@ function foody_posts_page_script()
                 if($enable_google){
                     $referer_google = $_GET['referer'];
                 }
+                if($enable_taboola){
+                    $referer_taboola = $_GET['referer'];
+                }
+
             }
         }
 
@@ -550,6 +556,17 @@ function foody_posts_page_script()
             }
             $pixel_code = remove_unnecessary_tags($pixel_code);
             echo $pixel_code;
+        }
+
+        /* taboola pixel */
+        $pixel_code_taboola = get_field('pixel_code_taboola', $referer_taboola);
+        if (!empty($pixel_code_taboola)) {
+            $pixel_code_taboola = html_entity_decode($pixel_code_taboola);
+            if (strpos($pixel_code_taboola, '<script>') == false || strpos($pixel_code_taboola, '</script>') == false) {
+                $pixel_code_taboola = add_script_tags(handle_bad_apostrophe($pixel_code_taboola));
+            }
+            $pixel_code_taboola = remove_unnecessary_tags($pixel_code_taboola);
+            echo $pixel_code_taboola;
         }
 
 
