@@ -248,11 +248,11 @@ class Foody_Courses_Homepage
                     if (isset($item['image']) && isset($item['image']['url'])) {
 
                         /** top part of list item */
-                        $link = isset($item['link']) ? '<a class="course-link" href="' . $this->get_course_item_link($item, 'link') . '">' : '';
+                        $link = isset($item['link']) && isset($item['link']['url']) && !empty($item['link']['url']) ? '<a class="course-link" href="' . $this->get_course_item_link($item, 'link') . '">' : '';
                         $course_content_item = '<div class="course-item">' . $link . '<div class="course-item-top">';
                         $item_div = '<img class="item-image" src="' . $item['image']['url'] . '"/>';
                         $host_name = isset($item['host_name']) ? '<span class="host-name">' . $item['host_name'] . '</span>' : '';
-                        $course_name = isset($item['course_name']) ? '<span class="host-name">' . $item['course_name'] . '</span>' : '';
+                        $course_name = isset($item['course_name']) ? '<span class="course-name">' . $item['course_name'] . '</span>' : '';
                         $course_content_item .= $item_div . '<div class="course-name-container">' . $host_name . $course_name . '</div></div>';
 
                         /** bottom part of list item */
