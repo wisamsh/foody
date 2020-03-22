@@ -286,11 +286,13 @@ class Foody_Courses_Homepage
         $courses_details_div = '';
         $money_char = '₪';
         if (isset($course_item['old_price']) && !empty($course_item['old_price']) && isset($course_item['new_price']) && !empty($course_item['new_price'])) {
+            /** add line through */
+            $old_price = $this->add_line_on_old_price($course_item['old_price'],$course_item['old_price']);
             $action_text = isset($course_item['action_item_text']) ? $course_item['action_item_text'] : '';
 
             /** pricing row */
             $courses_details_div = '<span class="pricing-row"><span class="sale-text">' . __('מחיר מבצע! ') . '</span><span class="new-price">' . $money_char . $course_item['new_price'] . ' ' . '</span>';
-            $courses_details_div .= __('במקום ') . $money_char . $course_item['old_price'] . ' ' . '</span>';
+            $courses_details_div .= __('במקום ') . $money_char . $old_price . ' ' . '</span>';
 
             /** action item row */
             $courses_details_div .= '<span class="action-item-text">' . $action_text . '</span>';
@@ -347,5 +349,14 @@ class Foody_Courses_Homepage
             'mobile_image' => $mobile_image,
             'link' => ''
         ));
+    }
+
+    private function add_line_on_old_price($old_price, $text){
+        $crossed_old_price = '<span class="crossed-price" style="text-decoration: line-through;">'.$old_price . '</span>';
+
+        if(!empty($old_price) && strpos($text, $old_price) !== false){
+            return str_replace($old_price, $crossed_old_price , $text);
+        }
+        return $text;
     }
 }

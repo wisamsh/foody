@@ -52,6 +52,7 @@ module.exports = (function () {
                 if (_object == '') {
                     object = decodeURI(window.location.pathname.replace('/courses/', '').replace(/-/g, ' '));
                     object = (object.length < 150) ? object : object.slice(0, 150);
+                    object = object.slice(-1) == '/' ? object.slice(0,-1) : object;
                 } else {
                     object = _object;
                 }
