@@ -688,7 +688,7 @@ class Foody_Course_new
 
         if ($not_empty_section) {
             foreach ($this->course_data[$section_name] as $item) {
-                if(!empty($item)){
+                if(!empty($item) && $item !== false){
                     return true;
                 }
                 else {
