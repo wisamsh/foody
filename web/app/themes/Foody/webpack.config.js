@@ -94,6 +94,7 @@ module.exports = env => {
             feedChannel: ["./resources/js/feed-channel.entry", "./resources/js/page-load.entry"],
             coursev2: ["./resources/js/course-v2.entry", "./resources/js/page-load.entry"],
             courseshomepage: ["./resources/js/courses-homepage.entry", "./resources/js/page-load.entry"],
+            courseregister: ["./resources/js/course-register.entry", "./resources/js/page-load.entry"],
             style: ["./resources/sass/app.scss"],
             // homepage: ["./resources/sass/homepage_app.scss"],
         },

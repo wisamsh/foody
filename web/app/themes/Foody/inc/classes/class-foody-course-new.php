@@ -4,6 +4,8 @@ class Foody_Course_new
 {
 
     private $course_data = [];
+    private $course_register_data = [];
+    private $course_ragister_slug ;
     private $floating_buttons = [];
     private $links_target = 'blank';
     private $old_price = '';
@@ -18,11 +20,40 @@ class Foody_Course_new
         $this->populate_course_properties();
     }
 
+    public function is_redirect_to_register_page()
+    {
+        $this->course_register_data = get_field('course_register_data');
+        if (isset($this->course_register_data['enable_redirect']) && $this->course_register_data['enable_redirect'] !== false) {
+            $this->course_ragister_slug = __('הרשמה-לקורסים');
+            return true;
+        }
+        return false;
+    }
+
+    public function get_redirect_link()
+    {
+        global $post;
+        $course_id = $post->ID;
+        $link_text = isset($this->course_register_data['register_link_text']) ? $this->course_register_data['register_link_text'] : '';
+        $link = [
+            'url' => get_home_url() . '/'.  $this->course_ragister_slug .'/?course_id=' . $course_id,
+            'target' => 'blank',
+            'title' => $link_text
+            ];
+
+        return $link;
+    }
+
     public function get_floating_purchase_button()
     {
-        $floating_purchase_button = '';
-        if (isset($this->floating_buttons['floating_purchase_button'])) {
-            $floating_purchase_button = $this->floating_buttons['floating_purchase_button'];
+        if( $this->is_redirect_to_register_page()){
+            $floating_purchase_button = $this->get_redirect_link();
+        }
+        else {
+            $floating_purchase_button = '';
+            if (isset($this->floating_buttons['floating_purchase_button'])) {
+                $floating_purchase_button = $this->floating_buttons['floating_purchase_button'];
+            }
         }
 
         return $floating_purchase_button;
@@ -675,7 +706,7 @@ class Foody_Course_new
                 unset($this->course_data['floating_buttons']);
             }
 
-            if(isset($course_data['old_price'])){
+            if (isset($course_data['old_price'])) {
                 $this->old_price = $course_data['old_price'];
                 unset($this->course_data['old_price']);
             }
@@ -688,10 +719,9 @@ class Foody_Course_new
 
         if ($not_empty_section) {
             foreach ($this->course_data[$section_name] as $item) {
-                if(!empty($item) && $item !== false){
+                if (!empty($item) && $item !== false) {
                     return true;
-                }
-                else {
+                } else {
                     $not_empty_section = false;
                 }
             }
@@ -700,11 +730,12 @@ class Foody_Course_new
         return $not_empty_section;
     }
 
-    private function add_line_on_old_price($old_price, $text){
-        $crossed_old_price = '<span class="crossed-price" style="text-decoration: line-through;">'.$old_price . '</span>';
+    private function add_line_on_old_price($old_price, $text)
+    {
+        $crossed_old_price = '<span class="crossed-price" style="text-decoration: line-through;">' . $old_price . '</span>';
 
-        if(!empty($old_price) && strpos($text, $old_price) != false){
-            return str_replace($old_price, $crossed_old_price , $text);
+        if (!empty($old_price) && strpos($text, $old_price) != false) {
+            return str_replace($old_price, $crossed_old_price, $text);
         }
 
         return $text;

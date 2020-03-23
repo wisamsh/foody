@@ -4,9 +4,7 @@
  * Template Name: Foody Courses Homepage
  *
  * Created by PhpStorm.
- * User: omerfishman
- * Date: 3/31/19
- * Time: 7:30 PM
+ * User: daniel
  */
 get_header();
 $courses_homepage = new Foody_Courses_Homepage();

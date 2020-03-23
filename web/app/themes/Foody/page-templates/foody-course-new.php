@@ -4,9 +4,7 @@
  * Template Post Type: foody_course
  *
  * Created by PhpStorm.
- * User: omerfishman
- * Date: 3/31/19
- * Time: 7:30 PM
+ * User: daniel
  */
 get_header();
 $course = new Foody_Course_new();
