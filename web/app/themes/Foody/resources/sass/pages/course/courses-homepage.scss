@@ -71,7 +71,7 @@
 
         .title {
           padding: 0 8%;
-          font-size: 22px;
+          font-size: 24px;
           position: relative;
           z-index: 2;
           margin: 8% auto 7%;
@@ -84,7 +84,7 @@
 
           .courses-list-row {
             .course-item {
-              margin: 0 15% 5% 15%;
+              margin: 0 8% 5% 8%;
               border: 1px #ED3D48 solid;
               border-radius: 10px;
 
@@ -116,7 +116,7 @@
                 flex-direction: column;
 
                 .pricing-row {
-                  font-size: 14px;
+                  font-size: 18px;
                   font-weight: 500;
 
                   .sale-text {
@@ -133,7 +133,7 @@
                   margin-top: -3%;
                   margin-bottom: 1%;
                   font-weight: 500;
-                  font-size: 16px;
+                  font-size: 18px;
                   color: $color__primary;
                 }
 
@@ -418,7 +418,7 @@
               display: flex;
               flex-direction: row;
               justify-content: space-evenly;
-              padding: 0px 14%;
+              padding: 0px 8%;
               margin: 2% 0;
 
               .course-item {
@@ -437,7 +437,7 @@
 
                 .course-item-bottom {
                   .pricing-row {
-                    font-size: 13px !important;
+                    font-size: 15px !important;
                   }
 
                   .action-item-text {
