@@ -31,7 +31,6 @@ class Foody_Course_register
 
     public function get_form_section()
     {
-        $background_images = $this->get_background_images_by_section($this->page_data);
         $course_price = isset($this->course_data['final_price']) ? $this->course_data['final_price'] : '';
         $coupon_text = isset($this->course_data['coupon_group']) ? $this->get_coupon_text($this->course_data['coupon_group']) : false;
 
@@ -46,13 +45,16 @@ class Foody_Course_register
         $form_section = '<div class="form-container">' . $title_div . $form_div . $coupon_and_price_div . $newsletter_terms_checkboxs . $buttons;
 
 
-        if (isset($background_images['bottom']) && $background_images['bottom'] != '') {
-            $form_section .= "<img class='bottom-image' src=\"" . $background_images['bottom'] . "\"></div>";
-        } else {
-            $form_section .= "</div>";
-        }
+
 
         echo $form_section;
+    }
+
+    public function get_bottom_image(){
+        $background_images = $this->get_background_images_by_section($this->page_data);
+        if (isset($background_images['bottom']) && $background_images['bottom'] != '') {
+            echo "<img class='bottom-image' src=\"" . $background_images['bottom'] . "\">";
+        }
     }
 
     private function get_course_data()
@@ -156,7 +158,30 @@ class Foody_Course_register
 
     private function get_buttons_section()
     {
+        $enable_credit = isset($this->page_data['enable_credit_button']) && $this->page_data['enable_credit_button'];
+        $enable_bit = isset($this->page_data['enable_bit_button']) && $this->page_data['enable_bit_button'];
+        $buttons_div = '';
 
+        $course_payment_link = isset($this->course_data['register_link_text']) ? $this->course_data['register_link_text'] : __('לרכישה') ;
+
+        if($enable_credit || $enable_bit){
+            $buttons_div = '<div class="button-container">';
+        }
+        if($enable_credit){
+            $link_to_purchase = isset($this->course_data['link_to_purchase']) && isset($this->course_data['link_to_purchase']['url']) ? $this->course_data['link_to_purchase']['url'] : '' ;
+            $credit_button = '<div class="credit-card-pay" data-link="' . get_permalink(get_page_by_path('paycourse')) .'?link=' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></a>';
+            $buttons_div .= $credit_button ;
+
+        }
+
+        if($enable_credit){
+        }
+
+        if($enable_credit || $enable_bit){
+            $buttons_div .= '</div>';
+        }
+
+        return $buttons_div;
     }
 
     private function get_form()

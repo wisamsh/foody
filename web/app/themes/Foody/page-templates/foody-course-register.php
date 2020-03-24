@@ -21,7 +21,7 @@ $register_page = new Foody_Course_register($course_id);
             <section class="form-section">
                 <?php $register_page->get_form_section(); ?>
             </section>
-
+            <?php $register_page->get_bottom_image(); ?>
         </div>
 
     </div>

@@ -2,6 +2,10 @@
 
 .page-template-foody-course-register {
 
+  #masthead{
+    z-index: 999;
+  }
+
   #primary{
     background-color: white;
     .cover-section{
@@ -43,7 +47,13 @@
       }
     }
 
+    .form-section:not(:last-child){
+      padding-bottom: 48%;
+    }
+
     .form-section{
+      position: relative;
+      z-index: 2;
       .form-container{
         .form-title{
           text-align: center;
@@ -56,7 +66,13 @@
               display: flex;
               flex-direction: column;
               align-items: baseline;
+              padding: 0;
 
+              label{
+                position: initial;
+                font-size: 16px;
+                color: black;
+              }
               input{
                 width: 100%;
               }
@@ -113,6 +129,42 @@
           }
         }
       }
+
+      .button-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 8% 0 0 0;
+
+        .credit-card-pay{
+          border: 1px solid $color__primary;
+          border-radius: 5px;
+          width: 51%;
+          text-align: center;
+          display: inline-block;
+          background: $color__primary;
+          color: white;
+          font-weight: bold;
+          margin: 0 2%;
+          padding: 2% 3% 2% 12%;
+          position: relative;
+          font-size: 13px;
+
+          img{
+            width: 20%;
+            position: absolute;
+            left: 3%;
+            bottom: 16%;
+          }
+        }
+      }
+    }
+
+    .bottom-image{
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50%;
     }
   }
 }
