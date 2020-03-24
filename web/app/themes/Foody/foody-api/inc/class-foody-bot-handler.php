@@ -57,6 +57,11 @@ class Foody_BotHandler
     {
         $this->helperArr = [];
         $index = 0;
+        $utm = '';
+
+        if(isset($params['utm'])){
+            $utm = $params['utm'];
+        }
 
         $posts = $this->getPosts($params, 0);
 
@@ -73,6 +78,12 @@ class Foody_BotHandler
 
         if (count($posts) > 4) {
             array_splice($posts, 4);
+        }
+
+        foreach ($posts as $index => $post) {
+            if(isset($posts[$index]['url']) &&  $posts[$index]['url'] != ''){
+                $posts[$index]['url'] = $posts[$index]['url'] . $utm;
+            }
         }
 
         return $posts;
@@ -92,7 +103,8 @@ class Foody_BotHandler
 
         $difficulty_level = $overview['difficulty_level'];
 
-        $short_link_with_utm = wp_get_shortlink($post->ID) . '&utm_source=Foody%20Bot&utm_medium=Bot&utm_campaign=Bot';
+//        $short_link_with_utm = wp_get_shortlink($post->ID) . '&utm_source=Foody%20Bot&utm_medium=Bot&utm_campaign=Bot';
+        $short_link_with_utm = wp_get_shortlink($post->ID);
 
         $item = [
             'title' => $post->post_title,
@@ -628,7 +640,7 @@ and meta_key = 'plural_name';";
             $arr = (isset($arr[0])) ? $arr[0] : [];
             $has_plural_in_title = false;
 
-            if($arr->meta_value != ''){
+            if(isset($arr->meta_value) && $arr->meta_value != ''){
                 $has_plural_in_title = strpos($title, $arr->meta_value) !== false;
             }
             $has_singular_in_title = strpos($title, $ingredient) !== false;
