@@ -64,10 +64,6 @@ jQuery(document).ready(($) => {
                 } else {
                     error.insertAfter(element);
                 }
-            },
-            submitHandler: function (form) {
-                grecaptcha.reset();
-                grecaptcha.execute();
             }
         });
 
@@ -79,7 +75,26 @@ jQuery(document).ready(($) => {
                 let phone = $('#phone-number').val().length != 0 && !$('#phone-number').hasClass('error') ? $('#phone-number').val() : false;
 
                 if(email && firstName && lastName && phone){
-                    let link  = $(this).attr('data-link');
+                    let link  = $(this).attr('data-link') + '?ExtCUserEmail=' + email + '&ExtCInvoiceTo=' + 'לכבוד ' + firstName + ' ' + lastName + '&ExtMobilPhone=' + phone;
+                    let iframe = '<iframe src="'+ link +'" style="width: 100%;\n' +
+                    'height: auto;\n' +
+                    'min-height: 1200px;\n' +
+                    'padding-top: 3%;\n' +
+                    'border: none;"></iframe>';
+
+                    $('.bottom-image').remove();
+                    $('.form-section').replaceWith(iframe);
+                }
+                else{
+                    let fields = { '#email': email ,'#first-name' : firstName,'#last-name' : lastName, '#phone-number' : phone };
+                   for(let field in fields){
+                        if(!fields[field]){
+                            $(field).attr('style', 'border-color: red');
+                        }
+                        else {
+                            $(field).attr('style', 'border-color: #ccc');
+                        }
+                    }
                 }
             });
         }

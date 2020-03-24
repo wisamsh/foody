@@ -168,8 +168,8 @@ class Foody_Course_register
             $buttons_div = '<div class="button-container">';
         }
         if($enable_credit){
-            $link_to_purchase = isset($this->course_data['link_to_purchase']) && isset($this->course_data['link_to_purchase']['url']) ? $this->course_data['link_to_purchase']['url'] : '' ;
-            $credit_button = '<div class="credit-card-pay" data-link="' . get_permalink(get_page_by_path('paycourse')) .'?link=' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></a>';
+            $link_to_purchase = isset($this->course_data['link_for_purchase']) && isset($this->course_data['link_for_purchase']['url']) ? $this->course_data['link_for_purchase']['url'] : '' ;
+            $credit_button = '<div class="credit-card-pay" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
             $buttons_div .= $credit_button ;
 
         }

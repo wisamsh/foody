@@ -8,8 +8,12 @@
  */
 get_header();
 global $post;
-if (isset($_GET) && !empty($_GET) && isset($_GET['alterLink'])){
+$params = ['email' => 'ExtCUserEmail', 'name' => 'ExtCInvoiceTo', 'phone' => 'ExtMobilPhone'];
+if (isset($_GET) && !empty($_GET) && isset($_GET['link'])){
     $link = urldecode($_GET['link']);
+    if(isset($_GET[$params['email']]) && isset($_GET[$params['name']]) &&  isset($_GET[$params['phone']])){
+        $link .= '?'. $params['email'] .'=' . $_GET[$params['email']] . '&'. $params['name'] .'=' . $_GET[$params['name']] . '&'. $params['phone'] .'=' . $_GET[$params['phone']];
+    }
 }
 ?>
     <div id="main-content" class="main-content">
