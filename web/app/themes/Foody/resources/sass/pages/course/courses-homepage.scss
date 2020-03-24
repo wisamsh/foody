@@ -499,16 +499,18 @@
             z-index: 2;
             display: flex;
             flex-direction: row;
-            justify-content: space-evenly;
             align-items: flex-end;
             margin-bottom: 5%;
             height: 150px;
+            justify-content: center;
 
             .advantages-item {
               display: flex;
               flex-direction: column;
               align-items: center;
               height: inherit;
+              width: 30%;
+              margin: 0 10%;
 
               .item-icon {
                 width: 30%;
