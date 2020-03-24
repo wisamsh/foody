@@ -19,31 +19,31 @@ class Foody_Course_register
 
     public function get_cover_section()
     {
-        $course_data = $this->course_data =  $this->get_course_data();
+        $course_data = $this->course_data = $this->get_course_data();
 
         /** host image */
         $this->get_host_images($course_data['host_image'], $course_data['host_image_mobile'], 'content-course-host-image.php');
-
 
         /** cover title and texts */
         $register_subtext = isset($course_data['register_subtext']) ? $course_data['register_subtext'] : '';
         $this->get_course_cover_information($course_data['course_name'], $register_subtext);
     }
 
-    public function get_form_section(){
-        $background_images  = $this->get_background_images_by_section($this->page_data);
+    public function get_form_section()
+    {
+        $background_images = $this->get_background_images_by_section($this->page_data);
         $course_price = isset($this->course_data['final_price']) ? $this->course_data['final_price'] : '';
-        $coupon_text =  isset($this->course_data['coupon_group']) ? $this->get_coupon_text($this->course_data['coupon_group']) : false;
+        $coupon_text = isset($this->course_data['coupon_group']) ? $this->get_coupon_text($this->course_data['coupon_group']) : false;
 
         $title_div = '<h5 class="form-title">' . __('הרשמה:') . '</h5>';
-        $form_div = '';
+        $form_div = $this->get_form();
         $price_div = '<span class="price-line">' . __('מחיר הקורס ') . __('₪') . $course_price . '</span>';
-        $coupon_div =  $coupon_text !== false ? '<span class="coupon-line">' . $coupon_text . '</span>' : '';
+        $coupon_div = $coupon_text !== false ? '<span class="coupon-line">' . $coupon_text . '</span>' : '';
         $coupon_and_price_div = '<div class="coupon-and-price-container">' . $price_div . $coupon_div . '</div>';
-        $newsletter_terms_checkboxs = $this->get_newsletter_terms_checkboxs();
+        $newsletter_terms_checkboxs = $this->get_newsletter_terms_checkboxes();
         $buttons = $this->get_buttons_section();
 
-        $form_section = '<div class="form-container">' . $title_div . $form_div . $coupon_and_price_div . $newsletter_terms_checkboxs . $buttons ;
+        $form_section = '<div class="form-container">' . $title_div . $form_div . $coupon_and_price_div . $newsletter_terms_checkboxs . $buttons;
 
 
         if (isset($background_images['bottom']) && $background_images['bottom'] != '') {
@@ -74,7 +74,7 @@ class Foody_Course_register
         $text_div = '<div class="course-cover-text">' . $register_subtext . '</div>';
 
 
-        $course_information .=   $title_div .  $text_div . '</div></div>';
+        $course_information .= $title_div . $text_div . '</div>';
 
         echo $course_information;
     }
@@ -119,44 +119,68 @@ class Foody_Course_register
         return $background_images;
     }
 
-    private function get_coupon_text($group){
-        if(isset($group['enable_coupon_text']) && $group['enable_coupon_text']){
+    private function get_coupon_text($group)
+    {
+        if (isset($group['enable_coupon_text']) && $group['enable_coupon_text']) {
             return isset($group['coupon_text']) ? $group['coupon_text'] : false;
         }
 
         return false;
     }
 
-    private function get_newsletter_terms_checkboxs(){
-        $newsletter_terms_checkboxs = '';
+    private function get_newsletter_terms_checkboxes()
+    {
+        $newsletter_terms_checkboxes = '';
         $newsletter_div = '';
         $has_newsletter = false;
-        if(isset($this->page_data['newsletter_group'])){
+        if (isset($this->page_data['newsletter_group'])) {
             $newsletter_group = $this->page_data['newsletter_group'];
-            if(isset($newsletter_group['enable_newsletter']) && $newsletter_group['enable_newsletter'] !== false){
+            if (isset($newsletter_group['enable_newsletter']) && $newsletter_group['enable_newsletter'] !== false) {
                 $newsletter_text = isset($newsletter_group['newsletter_text']) ? $newsletter_group['newsletter_text'] : '';
-                $newsletter_div = $newsletter_text != '' ? '<label><input type="checkbox" value="checked" id="newsletter" />' . $newsletter_text . '</label>' : '';
+                $newsletter_div = $newsletter_text != '' ? '<div class="checkbox-label"><input type="checkbox" value="checked" id="newsletter" /><label>' . $newsletter_text . '</label></div>' : '';
                 $has_newsletter = true;
             }
 
         }
-        $terms_text = __('הנני מאשר את ') . '<a class="terms-link" href="'. get_permalink( get_page_by_path( 'תנאי-שימוש' )) .'">' .__('תנאי השימוש') . '</a>' . __(' באתר');
-        $terms_div = '<label><input type="checkbox" value="checked" id="terms" />' . $terms_text . '</label>';
+        $terms_text = __('הנני מאשר את ') . '<a class="terms-link" href="' . get_permalink(get_page_by_path('תנאי-שימוש')) . '">' . __('תנאי השימוש') . '</a>' . __(' באתר');
+        $terms_div = '<div class="checkbox-label"><input type="checkbox" value="checked" id="terms" /><label>' . $terms_text . '</label></div>';
 
-        $newsletter_terms_checkboxs .= '<div class="newsletter-and-terms">';
-        if($has_newsletter){
-            $newsletter_terms_checkboxs .= $newsletter_div;
+        $newsletter_terms_checkboxes .= '<div class="newsletter-and-terms">';
+        if ($has_newsletter) {
+            $newsletter_terms_checkboxes .= $newsletter_div;
         }
 
-        $newsletter_terms_checkboxs .= $terms_div . '</div>';
-
-        return $newsletter_terms_checkboxs;
+        $newsletter_terms_checkboxes .= $terms_div . '</div>';
+        return $newsletter_terms_checkboxes;
     }
 
-    private function get_buttons_section(){
+    private function get_buttons_section()
+    {
 
     }
 
+    private function get_form()
+    {
+        $form_container = '<div class="container-fluid" <div class="row"><form id="course-register-form" action="" class="row">';
 
+        $form_fields = [
+            'email' => ['type' => 'email', 'name' => 'email', 'label' => 'כתובת מייל:'],
+            'first-name' => ['type' => 'text', 'name' => 'first_name', 'label' => 'שם פרטי:'],
+            'last-name' => ['type' => 'text', 'name' => 'last_name', 'label' => 'שם משפחה:'],
+            'phone-number' => ['type' => 'tel', 'name' => 'phone_number', 'label' => 'מספר טלפון:']
+        ];
 
+        foreach ($form_fields as $key => $field_data){
+            $form_group = '<div class="form-group col-12 required-input">';
+            $label = '<label for="'. $key .'">' . __( $field_data['label'], 'foody') . '</label>';
+            $input = '<input type="'. $field_data['type'] .'" id="'. $key .'" name="'. $field_data['name'] .'" required>';
+
+            $form_group .= $label . $input . '</div>';
+            $form_container .= $form_group;
+        }
+
+        $form_container .= '</form></div></div>';
+
+        return $form_container;
+    }
 }

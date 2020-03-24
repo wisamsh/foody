@@ -232,8 +232,8 @@ function foody_scripts()
         }
 
         if (is_page_template('page-templates/foody-course-register.php')) {
-            $courses_homepage_asset = foody_get_versioned_asset('courseregister');
-            wp_enqueue_script('foody-script-course-register', $courses_homepage_asset, false, false, true);
+            $courses_register_asset = foody_get_versioned_asset('courseregister');
+            wp_enqueue_script('foody-script-course-register', $courses_register_asset, false, false, true);
         }
 
         if (is_page_template('page-templates/foody-course-efrat.php')) {
