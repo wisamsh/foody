@@ -230,7 +230,8 @@ class Foody_HomePage
 	    $current_date_time = $datetime->format( 'Y-m-d H:i' );
 
 	    $response = [];
-	    foreach ( $posts as $post ) {
+	    $posts_list = is_array($posts) ? $posts : [];
+	    foreach ( $posts_list as $post ) {
 		    $item_found         = [];
 		    $last_selected_date = '0-0-0 00:00';
 		    if ( isset( $post['featured_item'] ) ) {
