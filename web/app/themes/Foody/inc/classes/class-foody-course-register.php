@@ -35,18 +35,9 @@ class Foody_Course_register
         $coupon_text = isset($this->course_data['coupon_group']) ? $this->get_coupon_text($this->course_data['coupon_group']) : false;
 
         $title_div = '<h5 class="form-title">' . __('הרשמה:') . '</h5>';
-        $form_div = $this->get_form();
-        $price_div = '<span class="price-line">' . __('מחיר הקורס ') . __('₪') . $course_price . '</span>';
-        $coupon_div = $coupon_text !== false ? '<span class="coupon-line">' . $coupon_text . '</span>' : '';
-        $coupon_and_price_div = '<div class="coupon-and-price-container">' . $price_div . $coupon_div . '</div>';
-        $newsletter_terms_checkboxs = $this->get_newsletter_terms_checkboxes();
-        $buttons = $this->get_buttons_section();
+        $form_div = $this->get_form($course_price, $coupon_text);
 
-        $form_section = '<div class="form-container">' . $title_div . $form_div . $coupon_and_price_div . $newsletter_terms_checkboxs . $buttons;
-
-
-
-
+        $form_section = '<div class="form-container">' . $title_div . $form_div ;
         echo $form_section;
     }
 
@@ -145,7 +136,7 @@ class Foody_Course_register
 
         }
         $terms_text = __('הנני מאשר את ') . '<a class="terms-link" href="' . get_permalink(get_page_by_path('תנאי-שימוש')) . '">' . __('תנאי השימוש') . '</a>' . __(' באתר');
-        $terms_div = '<div class="checkbox-label"><input type="checkbox" value="checked" id="terms" /><label>' . $terms_text . '</label></div>';
+        $terms_div = '<div class="checkbox-label"><input type="checkbox" value="checked" name="terms" id="terms" required/><label for="terms" class="terms-label">' . $terms_text . '</label></div>';
 
         $newsletter_terms_checkboxes .= '<div class="newsletter-and-terms">';
         if ($has_newsletter) {
@@ -169,7 +160,8 @@ class Foody_Course_register
         }
         if($enable_credit){
             $link_to_purchase = isset($this->course_data['link_for_purchase']) && isset($this->course_data['link_for_purchase']['url']) ? $this->course_data['link_for_purchase']['url'] : '' ;
-            $credit_button = '<div class="credit-card-pay" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
+            $link_thank_you = isset($this->course_data['link_thank_you']) ? $this->course_data['link_thank_you'] : get_home_url();
+            $credit_button = '<div class="credit-card-pay" data-thank-you="'. $link_thank_you . '?course_id='.  $this->course_id .'" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
             $buttons_div .= $credit_button ;
 
         }
@@ -184,7 +176,7 @@ class Foody_Course_register
         return $buttons_div;
     }
 
-    private function get_form()
+    private function get_form($course_price, $coupon_text)
     {
         $form_container = '<div class="container-fluid" <div class="row"><form id="course-register-form" action="" class="row">';
 
@@ -204,8 +196,39 @@ class Foody_Course_register
             $form_container .= $form_group;
         }
 
-        $form_container .= '</form></div></div>';
+        $price_div = '<span class="price-line">' . __('מחיר הקורס ') . __('₪') . $course_price . '</span>';
+        $coupon_div = $coupon_text !== false ? '<span class="coupon-line">' . $coupon_text . '</span>' : '';
+        $coupon_and_price_div = '<div class="coupon-and-price-container">' . $price_div . $coupon_div . '</div>';
+        $newsletter_terms_checkboxes = $this->get_newsletter_terms_checkboxes();
+        $buttons = $this->get_buttons_section();
+
+        $form_container .= $coupon_and_price_div. $newsletter_terms_checkboxes . $buttons. '</form></div></div>';
 
         return $form_container;
     }
 }
+
+function foody_sign_to_newsletter_by_email() {
+
+    $response ='';
+    $marketing = isset( $_POST['marketing'] ) ? $_POST['marketing'] : false;
+
+
+    $email = isset( $_POST['email'] ) ? $_POST['email'] : false;
+
+    if ( $marketing ) {
+        if ( ! empty( $email ) ) {
+            $response = foody_register_newsletter( $email );
+        }
+    }
+
+
+    $user = get_user_by( 'email', $email );
+
+    if($user !== false) {
+        update_user_meta( $user->ID, 'seen_approvals', true );
+    }
+}
+
+add_action( 'wp_ajax_foody_sign_to_newsletter_by_email', 'foody_sign_to_newsletter_by_email' );
+

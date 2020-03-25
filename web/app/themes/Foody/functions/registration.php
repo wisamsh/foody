@@ -218,10 +218,14 @@ function foody_register_newsletter( $email ) {
 
 	$user = get_user_by( 'email', $email );
 
-	$result = in_array( $response, $valid_responses );
+	if($user !== false) {
 
-	update_user_meta( $user->ID, 'newsletter', $result );
+        $result = in_array($response, $valid_responses);
 
+        update_user_meta($user->ID, 'newsletter', $result);
+    }
+
+	return $response;
 }
 
 function get_viplus_url() {

@@ -67,32 +67,52 @@ jQuery(document).ready(($) => {
             }
         });
 
-        if($('.credit-card-pay').length){
+        if ($('.credit-card-pay').length) {
             $('.credit-card-pay').on('click', function () {
                 let email = $('#email').val().length != 0 && !$('#email').hasClass('error') ? $('#email').val() : false;
                 let firstName = $('#first-name').val().length != 0 && !$('#first-name').hasClass('error') ? $('#first-name').val() : false;
                 let lastName = $('#last-name').val().length != 0 && !$('#last-name').hasClass('error') ? $('#last-name').val() : false;
                 let phone = $('#phone-number').val().length != 0 && !$('#phone-number').hasClass('error') ? $('#phone-number').val() : false;
 
-                if(email && firstName && lastName && phone){
-                    let link  = $(this).attr('data-link') + '?ExtCUserEmail=' + email + '&ExtCInvoiceTo=' + 'לכבוד ' + firstName + ' ' + lastName + '&ExtMobilPhone=' + phone;
-                    let iframe = '<iframe src="'+ link +'" style="width: 100%;\n' +
-                    'height: auto;\n' +
-                    'min-height: 1200px;\n' +
-                    'padding-top: 3%;\n' +
-                    'border: none;"></iframe>';
+                let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
+                if (termsAccepted && email && firstName && lastName && phone) {
+                    let thankYou = $(this).attr('data-thank-you').length != 0 ? $(this).attr('data-thank-you') : '';
+                    let link = $(this).attr('data-link') + '?ExtCUserEmail=' + email + '&ExtCInvoiceTo=' + 'לכבוד ' + firstName + ' ' + lastName + '&ExtMobilPhone=' + phone + '&SuccessRedirectUrl=' + thankYou;
+                    let iframe = '<iframe id="card-pay-frame" src="' + link + '" style="width: 100%;\n' +
+                        'height: auto;\n' +
+                        'min-height: 1200px;\n' +
+                        'padding-top: 3%;\n' +
+                        'border: none;" onload="iframeLoaded()"></iframe>';
 
+
+                    foodyAjax({
+                        action: 'foody_sign_to_newsletter_by_email',
+                        data: {
+                            marketing: $('.newsletter-and-terms #newsletter').prop('checked'),
+                            email: email
+                        }
+                    });
+
+                    $('.cover-section').remove();
                     $('.bottom-image').remove();
                     $('.form-section').replaceWith(iframe);
-                }
-                else{
-                    let fields = { '#email': email ,'#first-name' : firstName,'#last-name' : lastName, '#phone-number' : phone };
-                   for(let field in fields){
-                        if(!fields[field]){
+                } else {
+                    let fields = {
+                        '#email': email,
+                        '#first-name': firstName,
+                        '#last-name': lastName,
+                        '#phone-number': phone,
+                        '#terms' : termsAccepted
+                    };
+                    for (let field in fields) {
+                        if (!fields[field]) {
+                            if(field == '#terms'){
+                                let errorMsg = '<span class="terms-error">' + '*אנא אשר/י את תנאי השימוש' + '</span>';
+                                $('.newsletter-and-terms').after(errorMsg);
+                            }
                             $(field).attr('style', 'border-color: red');
-                        }
-                        else {
-                            $(field).attr('style', 'border-color: #ccc');
+                        } else {
+                            $('.terms-error').remove();
                         }
                     }
                 }
@@ -100,3 +120,12 @@ jQuery(document).ready(($) => {
         }
     }
 });
+
+function iframeLoaded() {
+    var iFrameID = $('#card-pay-frame');
+    if(iFrameID) {
+        // here you can make the height, I delete it first, then I make it again
+        iFrameID.height = "";
+        iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
+    }
+}

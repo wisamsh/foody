@@ -108,7 +108,6 @@
         display: flex;
         flex-direction: column;
         text-align: right;
-        padding: 0px 3%;
 
         .checkbox-label {
           display: flex;
@@ -117,7 +116,7 @@
         }
 
         input {
-          height: 22px;
+          height: 17px;
           width: 5%;
         }
 
@@ -133,11 +132,21 @@
         }
       }
 
+      .terms-error{
+        text-align: right;
+        display: block;
+        color: $color__primary;
+        font-family: Assistant;
+        font-weight: bold;
+        font-size: 12px;
+      }
+
       .button-container {
         display: flex;
         flex-direction: row;
         justify-content: center;
         margin: 8% 0 0 0;
+        width: 100%;
 
         .credit-card-pay {
           border: 1px solid $color__primary;
@@ -212,6 +221,7 @@
           .container-fluid {
             #course-register-form {
               padding: 0 15%;
+              flex-direction: column;
             }
           }
         }
@@ -222,21 +232,33 @@
         }
 
         .newsletter-and-terms {
+          padding: 0;
+          input{
+            width: unset;
+          }
           label {
-            width: 92%;
+            width: 95%;
             white-space: pre;
             font-size: 16px;
             font-weight: 500;
           }
         }
 
+        .terms-error{
+          text-align: right;
+          display: block;
+          color: $color__primary;
+          font-family: Assistant;
+          font-weight: bold;
+        }
+
         .button-container {
           .credit-card-pay {
-            width: 24%;
-            padding: 2% 3% 2% 6%;
+            width: 28%;
+            padding: 2% 1% 2% 6%;
 
             img {
-              bottom: 24%;
+              bottom: 30%;
             }
           }
         }
@@ -244,6 +266,27 @@
 
       .bottom-image {
         width: 30%;
+      }
+    }
+  }
+}
+
+.page-template-foody-courses-thank-you{
+
+  #masthead,
+  footer{
+    display: none;
+  }
+
+  #primary {
+    background: white;
+
+
+    .foody-content{
+      .thank-you-text{
+        white-space: pre;
+        text-align: center;
+        font-size: 28px;
       }
     }
   }
