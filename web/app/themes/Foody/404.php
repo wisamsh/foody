@@ -78,4 +78,5 @@ $homepage->init();
     </div><!-- #primary -->
 
 <?php
+//comment for test staging
 get_footer();
