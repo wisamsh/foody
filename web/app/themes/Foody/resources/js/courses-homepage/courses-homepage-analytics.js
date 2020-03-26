@@ -134,12 +134,11 @@ jQuery(document).ready(($) => {
             let coursesLinks =  $('.courses-section .courses-list-container .course-link');
             coursesLinks.on('click', function () {
                 if ($(this).attr('href') != '') {
-                    let hostNameContainer = $(this).find('.host-name')
-                    let courseNameContainer = $(this).find('.course-name');
+                    let courseHostContainer = $(this).find('.course-name-container');
                     let sectionTitleContainer = $(this).closest('section').find('.title');
 
-                    let courseName = courseNameContainer.length ? courseNameContainer[0].innerText : '';
-                    let hostName = hostNameContainer.length ? hostNameContainer[0].innerText : '';
+                    let courseName = courseHostContainer.attr('data-course');
+                    let hostName = courseHostContainer.attr('data-host');
                     let sectionTitle = sectionTitleContainer.length ? sectionTitleContainer[0].innerText : '';
 
                     eventCallback('', analyticsCategory, 'בחירת קורס', courseName, 'מיקום', sectionTitle, hostName);

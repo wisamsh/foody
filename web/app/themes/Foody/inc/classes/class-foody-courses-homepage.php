@@ -253,7 +253,15 @@ class Foody_Courses_Homepage
                         $item_div = '<img class="item-image" src="' . $item['image']['url'] . '"/>';
                         $host_name = isset($item['host_name']) ? '<span class="host-name">' . $item['host_name'] . '</span>' : '';
                         $course_name = isset($item['course_name']) ? '<span class="course-name">' . $item['course_name'] . '</span>' : '';
-                        $course_content_item .= $item_div . '<div class="course-name-container">' . $host_name . $course_name . '</div></div>';
+
+                        $use_host_course_names = isset($item['enable_dynamic_details']) ? $item['enable_dynamic_details'] : false;
+
+                        if($use_host_course_names) {
+                            $course_content_item .= $item_div . '<div class="course-name-container" data-host="'. $item['host_name'] . '"  data-course="'. $item['course_name'] . '">' . $host_name . $course_name . '</div></div>';
+                        }
+                        else{
+                            $course_content_item .= $item_div . '<div class="course-name-container" data-host="'. $item['host_name'] . '"  data-course="'. $item['course_name'] . '"></div></div>';
+                        }
 
                         /** bottom part of list item */
                         $course_summary = $this->get_course_details_and_pricing($item);
