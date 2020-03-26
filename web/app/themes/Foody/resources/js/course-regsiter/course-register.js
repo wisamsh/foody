@@ -76,13 +76,16 @@ jQuery(document).ready(($) => {
 
                 let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
                 if (termsAccepted && email && firstName && lastName && phone) {
+                    let mailInvoice = $(this).attr('data-invoice-mail').length != 0 ? $(this).attr('data-invoice-mail') : '';
+                    let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:'+ mailInvoice +'">'+ mailInvoice +'</a></span>' : '';
                     let thankYou = $(this).attr('data-thank-you').length != 0 ? $(this).attr('data-thank-you') : '';
                     let link = $(this).attr('data-link') + '?ExtCUserEmail=' + email + '&ExtCInvoiceTo=' + 'לכבוד ' + firstName + ' ' + lastName + '&ExtMobilPhone=' + phone + '&SuccessRedirectUrl=' + thankYou;
+
                     let iframe = '<iframe id="card-pay-frame" src="' + link + '" style="width: 100%;\n' +
                         'height: auto;\n' +
                         'min-height: 1200px;\n' +
                         'padding-top: 3%;\n' +
-                        'border: none;" onload="iframeLoaded()"></iframe>';
+                        'border: none;"></iframe>';
 
 
                     foodyAjax({
@@ -91,11 +94,12 @@ jQuery(document).ready(($) => {
                             marketing: $('.newsletter-and-terms #newsletter').prop('checked'),
                             email: email
                         }
-                    });
+                    }, function () {});
 
                     $('.cover-section').remove();
                     $('.bottom-image').remove();
                     $('.form-section').replaceWith(iframe);
+                    $('#card-pay-frame').after(mailNotice);
                 } else {
                     let fields = {
                         '#email': email,
@@ -118,14 +122,19 @@ jQuery(document).ready(($) => {
                 }
             });
         }
+
+        // $('.thank-you-text').on('load', function () {
+        //     $('.invoice-notice').remove();
+        // });
+
+        // $('#card-pay-frame').on('load',function () {
+        //     debugger;
+        //     let iFrameID = $('#card-pay-frame');
+        //     if(iFrameID.length) {
+        //         // here you can make the height, I delete it first, then I make it again
+        //         iFrameID.height = "";
+        //         iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
+        //     }
+        // });
     }
 });
-
-function iframeLoaded() {
-    var iFrameID = $('#card-pay-frame');
-    if(iFrameID) {
-        // here you can make the height, I delete it first, then I make it again
-        iFrameID.height = "";
-        iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
-    }
-}

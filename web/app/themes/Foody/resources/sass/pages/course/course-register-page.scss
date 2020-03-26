@@ -132,7 +132,7 @@
         }
       }
 
-      .terms-error{
+      .terms-error {
         text-align: right;
         display: block;
         color: $color__primary;
@@ -161,6 +161,7 @@
           padding: 2% 3% 2% 12%;
           position: relative;
           font-size: 13px;
+          cursor: pointer;
 
           img {
             width: 20%;
@@ -177,6 +178,30 @@
       left: 0;
       bottom: 0;
       width: 50%;
+    }
+
+    .invoice-notice {
+      float: right;
+      background: white;
+      width: 100%;
+      text-align: right;
+      position: relative;
+      font-weight: bold;
+      font-size: 11px;
+      padding-bottom: 4%;
+
+      a {
+        text-decoration: underline !important;
+        color: blue !important;
+      }
+
+      a:hover {
+        color: red !important;
+      }
+
+      a:active {
+        color: red !important;
+      }
     }
   }
 }
@@ -233,9 +258,11 @@
 
         .newsletter-and-terms {
           padding: 0;
-          input{
+
+          input {
             width: unset;
           }
+
           label {
             width: 95%;
             white-space: pre;
@@ -244,7 +271,7 @@
           }
         }
 
-        .terms-error{
+        .terms-error {
           text-align: right;
           display: block;
           color: $color__primary;
@@ -268,6 +295,12 @@
         width: 30%;
       }
     }
+
+
+    .invoice-notice {
+      font-size: 15px;
+      padding-bottom: 2%;
+    }
   }
 }
 
@@ -281,13 +314,68 @@
   #primary {
     background: white;
 
+    .site-content{
+      padding-top: 0;
+    }
+
 
     .foody-content{
       .thank-you-text{
-        white-space: pre;
+        white-space: pre-wrap;
         text-align: center;
-        font-size: 28px;
+        font-size: 1.4rem;
+        padding: 5%;
       }
     }
   }
 }
+
+//.page-template-foody-courses-thank-you {
+//  #masthead,
+//  footer {
+//    display: none;
+//  }
+//
+//  .content-area {
+//    background: white;
+//
+//    .site-content {
+//      padding-top: 0;
+//
+//      .container {
+//        .foody-content {
+//          .thank-you-text {
+//            font-size: 17px;
+//            white-space: pre-wrap;
+//            line-height: 1.7;
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
+//
+//@include breakpoint(desktop) {
+//  .page-template-foody-courses-thank-you {
+//    #masthead,
+//    footer {
+//      display: none;
+//    }
+//
+//    .content-area {
+//      background: white;
+//
+//      .site-content {
+//        .container {
+//          .foody-content {
+//            .thank-you-text {
+//              white-space: pre;
+//              text-align: center;
+//              font-size: 28px;
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
