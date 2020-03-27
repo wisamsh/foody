@@ -129,7 +129,7 @@ class Foody_Registration {
 						$last_name    = sanitize_text_field( $_POST['last_name'] );
 						$password     = sanitize_text_field( $_POST['password'] );
 						$phone_number = sanitize_text_field( $_POST['phone_number'] );
-						$terms        = sanitize_text_field( $_POST['terms'] );
+						//$terms        = sanitize_text_field( $_POST['terms'] );
 						$marketing    = sanitize_text_field( $_POST['marketing'] );
 						$e_book       = sanitize_text_field( $_POST['e-book'] );
 					}
@@ -141,7 +141,7 @@ class Foody_Registration {
 						'last_name',
 						'password',
 						'phone_number',
-						'terms',
+						//'terms',
 						'marketing',
 						'e_book'
 					];
