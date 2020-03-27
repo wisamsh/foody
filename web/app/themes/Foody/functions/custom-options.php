@@ -27,6 +27,7 @@ register_setting( 'reading', 'foody_show_followers_count_views' );
 
 $page_name_search_options   = __( 'הגדרות חיפוש - פודי', 'foody' );
 $page_name_purchase_buttons = __( 'כפתורי רכישה', 'foody' );
+$page_name_purchase_buttons_new = __( 'כפתורי רכישה חדשים', 'foody' );
 
 /** @var array $options_pages
  * All ACF Options Pages.
@@ -43,12 +44,19 @@ $options_pages = array(
 		'icon_url'   => 'dashicons-search'
 	),
 	array(
-		'page_title' => $page_name_purchase_buttons,
-		'menu_title' => $page_name_purchase_buttons,
-		'menu_slug'  => 'foody-purchase-options.php',
-		'post_id'    => 'foody_purchase_options',
-		'icon_url'   => 'dashicons-cart'
-	)
+        'page_title' => $page_name_purchase_buttons,
+        'menu_title' => $page_name_purchase_buttons,
+        'menu_slug'  => 'foody-purchase-options.php',
+        'post_id'    => 'foody_purchase_options',
+        'icon_url'   => 'dashicons-cart'
+    ),array(
+        'page_title' => $page_name_purchase_buttons_new,
+        'menu_title' => $page_name_purchase_buttons_new,
+        'menu_slug'  => 'foody-purchase-options-new.php',
+        'post_id'    => 'foody_purchase_options-new',
+        'icon_url'   => 'dashicons-cart'
+    )
+
 );
 
 

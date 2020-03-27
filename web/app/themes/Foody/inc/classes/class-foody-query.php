@@ -574,10 +574,12 @@ class Foody_Query
 
     private function get_args($args = [])
     {
-        return array_merge(
-            self::$default_args,
-            $args
-        );
+        if(is_array($args)) {
+            return array_merge(
+                self::$default_args,
+                $args
+            );
+        }
     }
 
     private function get_param($variableName, $default = null)
