@@ -186,6 +186,7 @@ function __search_by_title_only($search, $wp_query)
     $search =
     $searchand = '';
 
+    $counter = 0;
     $index = 0;
     $users_amount = count((array)$q['search_terms']);
     $apostrophes_types = ["’", "׳", "'"];
@@ -220,9 +221,20 @@ function __search_by_title_only($search, $wp_query)
             $index++;
         } else {
             $term = esc_sql($wpdb->esc_like($term));
-            $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
+            if($two_options_for_title && is_search()) {
+                if (count((array)$q['search_terms']) - 1 == $counter) {
+                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'))";
+
+                } else {
+                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
+                }
+            } else {
+                $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
+            }
             $searchand = ' AND ';
         }
+
+        $counter ++;
     }
 
     if (!empty($search)) {
@@ -255,6 +267,7 @@ function find_posts_by_title_and_type($titles, $post_type, $is_autocomplete, $ha
             $title = esc_sql($titles);
             $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and (post_title like '%$title%'" . $other_options . ") and post_type = '$post_type'";
         } else {
+            $title = esc_sql($titles);
             $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and post_title like '%$titles%' and post_type = '$post_type'";
         }
     } else {
