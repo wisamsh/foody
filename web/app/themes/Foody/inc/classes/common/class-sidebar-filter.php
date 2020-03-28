@@ -187,7 +187,7 @@ class SidebarFilter {
 		$type = $list['type'];
 
 		// the items in this section
-		$values = $list['values'];
+		$values = is_array($list['values']) ? $list['values'] : [];
 
 		$exclude_all = $list['exclude_all'];
 
