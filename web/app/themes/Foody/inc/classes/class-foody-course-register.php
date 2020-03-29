@@ -130,13 +130,13 @@ class Foody_Course_register
             $newsletter_group = $this->page_data['newsletter_group'];
             if (isset($newsletter_group['enable_newsletter']) && $newsletter_group['enable_newsletter'] !== false) {
                 $newsletter_text = isset($newsletter_group['newsletter_text']) ? $newsletter_group['newsletter_text'] : '';
-                $newsletter_div = $newsletter_text != '' ? '<div class="checkbox-label"><input type="checkbox" value="checked" id="newsletter" /><label>' . $newsletter_text . '</label></div>' : '';
+                $newsletter_div = $newsletter_text != '' ? '<div class="checkbox-label"><input class="form-checkbox" type="checkbox" value="checked" id="newsletter" /><label>' . $newsletter_text . '</label></div>' : '';
                 $has_newsletter = true;
             }
 
         }
         $terms_text = __('הנני מאשר את ') . '<a class="terms-link" href="' . get_permalink(get_page_by_path('תנאי-שימוש')) . '">' . __('תנאי השימוש') . '</a>' . __(' באתר');
-        $terms_div = '<div class="checkbox-label"><input type="checkbox" value="checked" name="terms" id="terms" required/><label for="terms" class="terms-label">' . $terms_text . '</label></div>';
+        $terms_div = '<div class="checkbox-label"><input class="form-checkbox" type="checkbox" value="checked" name="terms" id="terms" required/><label for="terms" class="terms-label">' . $terms_text . '</label></div>';
 
         $newsletter_terms_checkboxes .= '<div class="newsletter-and-terms">';
         if ($has_newsletter) {
@@ -162,7 +162,7 @@ class Foody_Course_register
             $link_to_purchase = isset($this->course_data['link_for_purchase']) && isset($this->course_data['link_for_purchase']['url']) ? $this->course_data['link_for_purchase']['url'] : '' ;
             $link_thank_you = isset($this->course_data['link_thank_you']) ? $this->course_data['link_thank_you'] : get_home_url();
             $invoice_mail = isset($this->page_data['mail_invoice']) ? $this->page_data['mail_invoice'] : '';
-            $credit_button = '<div class="credit-card-pay" data-invoice-mail="'. $invoice_mail .'" data-thank-you="'. $link_thank_you . '?course_id='.  $this->course_id .'" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
+            $credit_button = '<div class="credit-card-pay"  data-item-price="'. $this->course_data['final_price'] .'" data-item-name="'. $this->course_data['item_name'] .'" data-invoice-mail="'. $invoice_mail .'" data-thank-you="'. $link_thank_you . '?course_id='.  $this->course_id .'" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
             $buttons_div .= $credit_button ;
 
         }

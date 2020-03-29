@@ -79,7 +79,10 @@ jQuery(document).ready(($) => {
                     let mailInvoice = $(this).attr('data-invoice-mail').length != 0 ? $(this).attr('data-invoice-mail') : '';
                     let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:'+ mailInvoice +'">'+ mailInvoice +'</a></span>' : '';
                     let thankYou = $(this).attr('data-thank-you').length != 0 ? $(this).attr('data-thank-you') : '';
-                    let link = $(this).attr('data-link') + '?ExtCUserEmail=' + email + '&ExtCInvoiceTo=' + 'לכבוד ' + firstName + ' ' + lastName + '&ExtMobilPhone=' + phone + '&SuccessRedirectUrl=' + thankYou;
+                    let enableMarketing = $('.newsletter-and-terms #newsletter').prop('checked') ? 'מאשר קבלת דואר' : 'לא מאשר קבלת דואר';
+                    let price = $(this).data('item-price');
+                    let itemName = $(this).data('item-name');
+                    let link = $(this).attr('data-link') + '?sum=' + price + '&description=' + itemName + '&ExtCUserEmail=' + email + '&ExtCInvoiceTo=' + firstName + ' ' + lastName + '&ExtMobilPhone=' + phone + '&SuccessRedirectUrl=' + thankYou + '&custom_field_10=' + enableMarketing;
 
                     let iframe = '<iframe id="card-pay-frame" src="' + link + '" style="width: 100%;\n' +
                         'height: auto;\n' +
@@ -88,13 +91,13 @@ jQuery(document).ready(($) => {
                         'border: none;"></iframe>';
 
 
-                    foodyAjax({
-                        action: 'foody_sign_to_newsletter_by_email',
-                        data: {
-                            marketing: $('.newsletter-and-terms #newsletter').prop('checked'),
-                            email: email
-                        }
-                    }, function () {});
+                    // foodyAjax({
+                    //     action: 'foody_sign_to_newsletter_by_email',
+                    //     data: {
+                    //         marketing: $('.newsletter-and-terms #newsletter').prop('checked'),
+                    //         email: email
+                    //     }
+                    // }, function () {});
 
                     $('.cover-section').remove();
                     $('.bottom-image').remove();
@@ -112,16 +115,32 @@ jQuery(document).ready(($) => {
                         if (!fields[field]) {
                             if(field == '#terms'){
                                 let errorMsg = '<span class="terms-error">' + '*אנא אשר/י את תנאי השימוש' + '</span>';
-                                $('.newsletter-and-terms').after(errorMsg);
+                                if($('.terms-error').length == 0 ) {
+                                    $('.newsletter-and-terms').after(errorMsg);
+                                }
                             }
-                            $(field).attr('style', 'border-color: red');
+                            else {
+                                $("#course-register-form").validate().element(field);
+                            }
                         } else {
                             $('.terms-error').remove();
                         }
                     }
                 }
             });
+            $('#card-pay-frame').load(function () {
+                this.attr('src', link);
+            })
+
         }
+        // $('#course-register-form input').focusout(function () {
+        //     if(!$(this).hasClass('form-checkbox')){
+        //         if($(this).hasClass('foody-input-error') && $(this).val().length){
+        //             $(this).removeClass('foody-input-error');
+        //             $(this).attr('style', 'border-color: #ccc')
+        //         }
+        //     }
+        // });
 
         // $('.thank-you-text').on('load', function () {
         //     $('.invoice-notice').remove();

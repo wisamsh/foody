@@ -43,7 +43,7 @@
 
         .course-cover-text {
           line-height: 1rem;
-          white-space: pre;
+          white-space: normal;
         }
       }
     }
@@ -122,7 +122,7 @@
 
         label {
           width: 92%;
-          white-space: pre;
+          white-space: normal;
           font-size: 12px;
           font-weight: 500;
 
@@ -201,6 +201,19 @@
 
       a:active {
         color: red !important;
+      }
+    }
+  }
+
+  @media only screen and (orientation: landscape) {
+    /* css rules */
+    #primary {
+      .form-section {
+        .button-container {
+          .credit-card-pay {
+            width: 40%;
+          }
+        }
       }
     }
   }
@@ -304,23 +317,23 @@
   }
 }
 
-.page-template-foody-courses-thank-you{
+.page-template-foody-courses-thank-you {
 
   #masthead,
-  footer{
+  footer {
     display: none;
   }
 
   #primary {
     background: white;
 
-    .site-content{
+    .site-content {
       padding-top: 0;
     }
 
 
-    .foody-content{
-      .thank-you-text{
+    .foody-content {
+      .thank-you-text {
         white-space: pre-wrap;
         text-align: center;
         font-size: 1.4rem;
