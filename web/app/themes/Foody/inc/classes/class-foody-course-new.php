@@ -553,7 +553,7 @@ class Foody_Course_new
         $more_about_course = isset($cover_section['more_about_course']) ? $cover_section['more_about_course'] : '';
         $promotion_title = isset($cover_section['promotion_title']) ? $cover_section['promotion_title'] : '';
         $new_price = isset($cover_section['new_price']) ? '₪'.$cover_section['new_price'] : '';
-        $old_price = isset($cover_section['old_price']) ? '₪'.$this->add_line_on_old_price($this->old_price, $cover_section['old_price']) : '';
+        $old_price = isset($cover_section['old_price']) ? '₪'.$this->add_line_on_old_price($cover_section['old_price'], $cover_section['old_price']) : '';
         $course_numbers = (isset($cover_section['course_numbers']) && is_array($cover_section['course_numbers'])) ? $cover_section['course_numbers'] : [];
 
         $additional_data_section = '<div class="additional-data">';
@@ -707,10 +707,10 @@ class Foody_Course_new
                 unset($this->course_data['floating_buttons']);
             }
 
-            if (isset($course_data['old_price'])) {
-                $this->old_price = $course_data['old_price'];
-                unset($this->course_data['old_price']);
-            }
+//            if (isset($course_data['old_price'])) {
+//                $this->old_price = $course_data['old_price'];
+//                unset($this->course_data['old_price']);
+//            }
         }
     }
 
