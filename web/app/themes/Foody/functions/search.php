@@ -34,17 +34,18 @@ function foody_where_filter($where)
                 $author_id = 0;
                 $ingredients = [];
             } else {
-                $author_id = foody_search_user_by_name($search);
-                if (!$author_id) {
-                    $ingredients = find_posts_by_title_and_type($search, 'foody_ingredient', false, true);
-                    if (!empty($ingredients)) {
-                        $ingredients = array_map(function ($post) {
-                            return $post->post_title;
-                        }, $ingredients);
+                if (strstr($where, " AND (($wpdb->posts.post_title")) {
+                    $author_id = foody_search_user_by_name($search);
+                    if (!$author_id) {
+                        $ingredients = find_posts_by_title_and_type($search, 'foody_ingredient', false, true);
+                        if (!empty($ingredients)) {
+                            $ingredients = array_map(function ($post) {
+                                return $post->ID;
+                            }, $ingredients);
+                        }
                     }
                 }
-            }
-            if (strstr($where, " AND (($wpdb->posts.post_title")) {
+
                 if ($author_id) {
                     //if(!isset($_POST['action']) || $_POST['action'] !== 'load_more'){
                     $authors_feed_areas = get_feed_areas_from_author_name($search);
@@ -60,13 +61,21 @@ function foody_where_filter($where)
                     $replace_count = 1;
                     $where = str_replace($where_replace, " AND ( $author_search OR $feed_areas_search (($wpdb->posts.post_title", $where, $replace_count);
                 } elseif (!empty($ingredients)) {
-                    $esc_ingredient = esc_sql($search);
+//                    $esc_ingredient = esc_sql($search);
 //                    $esc_ingredient = esc_sql($ingredients[0]);
+//                    $ingredient_search = "SELECT post_id FROM {$wpdb->postmeta} as postmeta
+//JOIN {$wpdb->posts} as posts
+//where posts.ID = postmeta.post_id
+//	AND meta_key like 'ingredients_ingredients_groups_%_ingredients_%_ingredient'
+//	AND meta_value IN (SELECT ID FROM {$wpdb->posts} where post_title like '%$esc_ingredient%' and post_status = 'publish' AND post_type = 'foody_ingredient')
+//    AND post_status = 'publish'
+//group by post_id ";
+                    $ingredients = implode(",", $ingredients);
                     $ingredient_search = "SELECT post_id FROM {$wpdb->postmeta} as postmeta 
 JOIN {$wpdb->posts} as posts
 where posts.ID = postmeta.post_id 
 	AND meta_key like 'ingredients_ingredients_groups_%_ingredients_%_ingredient'
-	AND meta_value IN (SELECT ID FROM {$wpdb->posts} where post_title like '%$esc_ingredient%' and post_status = 'publish' AND post_type = 'foody_ingredient')
+	AND meta_value IN ({$ingredients})
     AND post_status = 'publish'
 group by post_id ";
                     $where_replace = " AND (($wpdb->posts.post_title";
