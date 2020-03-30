@@ -80,9 +80,9 @@ jQuery(document).ready(($) => {
                     let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:'+ mailInvoice +'">'+ mailInvoice +'</a></span>' : '';
                     let thankYou = $(this).attr('data-thank-you').length != 0 ? $(this).attr('data-thank-you') : '';
                     let enableMarketing = $('.newsletter-and-terms #newsletter').prop('checked') ? 'מאשר קבלת דואר' : 'לא מאשר קבלת דואר';
-                    let price = $(this).data('item-price');
-                    let itemName = $(this).data('item-name');
-                    let link = $(this).attr('data-link') + '?sum=' + price + '&description=' + itemName + '&ExtCUserEmail=' + email + '&ExtCInvoiceTo=' + firstName + ' ' + lastName + '&ExtMobilPhone=' + phone + '&SuccessRedirectUrl=' + thankYou + '&custom_field_10=' + enableMarketing;
+                    // let price = $(this).data('item-price');
+                    // let itemName = $(this).data('item-name');
+                    let link = $(this).attr('data-link') +  '?ExtCUserEmail=' + email + '&ExtCInvoiceTo=' + firstName + ' ' + lastName + '&ExtMobilPhone=' + phone + '&SuccessRedirectUrl=' + thankYou + '&custom_field_10=' + enableMarketing;
 
                     let iframe = '<iframe id="card-pay-frame" src="' + link + '" style="width: 100%;\n' +
                         'height: auto;\n' +
