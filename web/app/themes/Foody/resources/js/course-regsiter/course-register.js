@@ -86,9 +86,9 @@ jQuery(document).ready(($) => {
 
                     let iframe = '<iframe id="card-pay-frame" src="' + link + '" style="width: 100%;\n' +
                         'height: auto;\n' +
-                        'min-height: 1200px;\n' +
+                        'min-height: 1500px;\n' +
                         'padding-top: 3%;\n' +
-                        'border: none;"></iframe>';
+                        'border: none;" scrolling="no"></iframe>';
 
 
                     // foodyAjax({
