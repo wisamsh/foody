@@ -559,7 +559,7 @@ class Foody_Course_new
         $additional_data_section = '<div class="additional-data">';
         $more_about_course_div = '<div class="additional-data-text">' . $more_about_course . '</div>';
         $promotion_title_div = '<div class="promotion-title">' . $promotion_title . '</div>';
-        $promotion_text_div = '<span class="pricing-row"><span class="new-price">'. $new_price .' </span><span class="old-price">'. $old_price .' <span/></span>';;
+        $promotion_text_div = '<span class="pricing-row"><span class="new-price">'. $new_price .' </span><span class="old-price">'. $old_price .'</span/></span>';;
 
         $rating_image_key = "rating_image";
         if (wp_is_mobile()) {
