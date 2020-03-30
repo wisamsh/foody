@@ -553,13 +553,13 @@ class Foody_Course_new
         $more_about_course = isset($cover_section['more_about_course']) ? $cover_section['more_about_course'] : '';
         $promotion_title = isset($cover_section['promotion_title']) ? $cover_section['promotion_title'] : '';
         $new_price = isset($cover_section['new_price']) ? '₪'.$cover_section['new_price'] : '';
-        $old_price = isset($cover_section['old_price']) ? '₪'.$this->add_line_on_old_price($cover_section['old_price'], $cover_section['old_price']) : '';
+        $old_price = isset($cover_section['old_price']) ? '₪'.$cover_section['old_price'] : '';
         $course_numbers = (isset($cover_section['course_numbers']) && is_array($cover_section['course_numbers'])) ? $cover_section['course_numbers'] : [];
 
         $additional_data_section = '<div class="additional-data">';
         $more_about_course_div = '<div class="additional-data-text">' . $more_about_course . '</div>';
         $promotion_title_div = '<div class="promotion-title">' . $promotion_title . '</div>';
-        $promotion_text_div = '<span class="pricing-row"><span class="new-price">'. $new_price .' </span><span class="old-price">'. $old_price .'</span/></span>';;
+        $promotion_text_div = '<span class="pricing-row"><span class="new-price">'. $new_price .' </span><span class="old-price"  class="crossed-price" style="text-decoration: line-through;">'. $old_price .'</span/></span>';
 
         $rating_image_key = "rating_image";
         if (wp_is_mobile()) {
@@ -731,14 +731,14 @@ class Foody_Course_new
         return $not_empty_section;
     }
 
-    private function add_line_on_old_price($old_price, $text)
-    {
-        $crossed_old_price = '<span class="crossed-price" style="text-decoration: line-through;">' . $old_price . '</span>';
-
-        if (!empty($old_price) && strpos($text, $old_price) != false) {
-            return str_replace($old_price, $crossed_old_price, $text);
-        }
-
-        return $text;
-    }
+//    private function add_line_on_old_price($old_price, $text)
+//    {
+//        $crossed_old_price = '<span class="crossed-price" style="text-decoration: line-through;">' . $old_price . '</span>';
+//
+//        if (!empty($old_price) && strpos($text, $old_price) != false) {
+//            return str_replace($old_price, $crossed_old_price, $text);
+//        }
+//
+//        return $text;
+//    }
 }
