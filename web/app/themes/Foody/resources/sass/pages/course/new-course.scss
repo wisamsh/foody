@@ -166,10 +166,20 @@
           font-weight: bold;
           font-size: 30px;
           color: $color__primary;
+        }
 
-          //.crossed-price{
-          //  color: $color__primary;
-          //}
+        .pricing-row{
+          .old-price{
+            font-weight: bold;
+            font-size: 25px;
+            color: black;
+          }
+
+          .new-price{
+            font-weight: 700;
+            font-size: 30px;
+            color: $color__primary;
+          }
         }
 
         .rating {
@@ -945,6 +955,20 @@
             font-weight: bold;
             font-size: 21px;
 
+          }
+
+          .pricing-row{
+            .old-price{
+              font-weight: bold;
+              font-size: 16px;
+              color: black;
+            }
+
+            .new-price{
+              font-weight: 700;
+              font-size: 23px;
+              color: $color__primary;
+            }
           }
 
           .rating {
