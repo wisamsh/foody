@@ -334,6 +334,8 @@
 
 
     .foody-content {
+      min-height: 1500px;
+
       .thank-you-text {
         white-space: pre-wrap;
         text-align: center;
@@ -344,53 +346,3 @@
     }
   }
 }
-
-//.page-template-foody-courses-thank-you {
-//  #masthead,
-//  footer {
-//    display: none;
-//  }
-//
-//  .content-area {
-//    background: white;
-//
-//    .site-content {
-//      padding-top: 0;
-//
-//      .container {
-//        .foody-content {
-//          .thank-you-text {
-//            font-size: 17px;
-//            white-space: pre-wrap;
-//            line-height: 1.7;
-//          }
-//        }
-//      }
-//    }
-//  }
-//}
-//
-//@include breakpoint(desktop) {
-//  .page-template-foody-courses-thank-you {
-//    #masthead,
-//    footer {
-//      display: none;
-//    }
-//
-//    .content-area {
-//      background: white;
-//
-//      .site-content {
-//        .container {
-//          .foody-content {
-//            .thank-you-text {
-//              white-space: pre;
-//              text-align: center;
-//              font-size: 28px;
-//            }
-//          }
-//        }
-//      }
-//    }
-//  }
-//}
