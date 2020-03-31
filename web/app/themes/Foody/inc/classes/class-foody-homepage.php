@@ -231,6 +231,7 @@ class Foody_HomePage
 
 	    $response = [];
 	    $posts_list = is_array($posts) ? $posts : [];
+
 	    foreach ( $posts_list as $post ) {
 		    $item_found         = [];
 		    $last_selected_date = '0-0-0 00:00';

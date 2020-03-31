@@ -836,7 +836,7 @@ class Foody_Ingredient extends Foody_Post
         if ($amount_object['amount'] > 1) {
             // original is plural
             if ($amount_object['amount'] * $convertion_value <= 1) {
-                $single = $amount_object['unit_tax']->name;
+                $single = isset($amount_object['unit_tax']->name) ? $amount_object['unit_tax']->name : '';
                 $amount_object['unit'] = $single && $single != '' ? $single : $amount_object['unit'];
             }
         } else {

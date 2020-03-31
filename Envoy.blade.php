@@ -21,7 +21,7 @@ $deploy_date = date('YmdHis');
 $release = 'release_' . $deploy_date;
 $shared_drive = '/home/ubuntu/foody-shared-efs/';
 
-if( $target === 'prod1' || $target === 'prod2' || $target === 'prod3' ){
+if( $target === 'prod1' || $target === 'prod2' || $target === 'prod3' || $target === 'prod4' || $target === 'prod5' || $target === 'prod6' || $target === 'prod7' || $target === 'prod8'){
     echo 'Deploy to production';
     $global_uploads_dir = $shared_drive . 'uploads';
 }
@@ -35,7 +35,12 @@ $servers = [
     'medio-dev' => 'ubuntu@foody.moveodevelop.com',
     'prod1' => 'ubuntu@34.253.214.81',
     'prod2' => 'ubuntu@54.72.141.143',
-    'prod3' => 'ubuntu@34.242.248.233'
+    'prod3' => 'ubuntu@34.242.248.233',
+    'prod4' => 'ubuntu@52.49.88.182',
+    'prod5' => 'ubuntu@34.242.140.24',
+    'prod6' => 'ubuntu@34.250.226.233',
+    'prod7' => 'ubuntu@34.245.234.96',
+    'prod8' => 'ubuntu@34.241.6.70'
 ];
 
 if (!isset($branch)){
@@ -93,6 +98,7 @@ sudo rm -rf assets-{{ $release }}.tar.gz
 mv version-hash.txt {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}/build/
 
 sudo ln -s {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}/inc/plugins/wp-oauth-server {{ $release_dir }}/{{ $release }}/web/app/plugins/wp-oauth-server
+sudo ln -s {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}/inc/plugins/wordpress-social-login {{ $release_dir }}/{{ $release }}/web/app/plugins/wordpress-social-login
 
 
 cd {{ $release_dir }}/{{ $release }};

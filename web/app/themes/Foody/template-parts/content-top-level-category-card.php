@@ -55,7 +55,8 @@ if ( is_wp_error( $link ) ) {
 				<?php foreach ( $template_args['categories'] as $category ): ?>
                     <h4 class="sub-categories-title"><?php echo $category['title'] ?></h4>
                     <ul class="sub-categories">
-						<?php foreach ( $category['categories'] as $sub_category ): ?>
+                        <?php $sub_categories = is_array($category['categories']) ? $category['categories'] : [] ; ?>
+						<?php foreach ( $sub_categories as $sub_category ): ?>
                             <li>
                                 <a href="<?php echo $sub_category['link'] ?>">
 									<?php echo $sub_category['title']; ?>

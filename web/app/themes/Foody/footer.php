@@ -102,41 +102,42 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
             $use_general_banner = false;
             $banners_list = get_field('banners_list', $feed_area_id);
             $banner = $footer->get_relevant_banner($banners_list[0]['banner']);
+            if (!empty($banner)) {
+                $link_page = get_page_by_title(__('Gift card'));
+                if ($banner['is_iframe']) {
+                    $button_link = get_permalink($link_page->ID) . '?alterLink=' . urlencode($banner['link']['url']);
+                } else {
+                    $button_link = $banner['link']['url'];
+                }
 
-            $link_page = get_page_by_title(__('Gift card'));
-            if ($banner['is_iframe']) {
-                $button_link = get_permalink($link_page->ID).'?alterLink='.urlencode($banner['link']['url']);
-            } else {
-                $button_link = $banner['link']['url'];
-            }
-
-            if ($banner['enable_banner_without_text']) {
-                $banner_args = [
-                    'dest_id' => $link_page->ID,
-                    'page_id' => 'popup-banner',
-                    'desktop_img' => $banner['image_without_text']['url'],
-                    'mobile_img' => $banner['image_without_text_mobile']['url'],
-                    'banner_link' => $button_link,
-                    'button_text' => $banner['text_for_button'],
-                    'is_iframe' => $banner['is_iframe'],
-                    'name'      => $banner['name'],
-                    'publisher' => $banner['publisher']
-                ];
-                foody_get_template_part(get_template_directory() . '/template-parts/common/popup-banner.php', $banner_args);
-            } else {
-                $banner_args = [
-                    'dest_id' => $link_page->ID,
-                    'page_id' => 'popup-banner',
-                    'desktop_img' => $banner['image_with_text']['url'],
-                    'mobile_img' => $banner['image_with_text_mobile']['url'],
-                    'banner_text' => $banner['text_for_banner'],
-                    'banner_link' => $button_link,
-                    'button_text' => $banner['text_for_button'],
-                    'is_iframe' => $banner['is_iframe'],
-                    'name'      => $banner['name'],
-                    'publisher' => $banner['publisher']
-                ];
-                foody_get_template_part(get_template_directory() . '/template-parts/common/popup-banner.php', $banner_args);
+                if ($banner['enable_banner_without_text']) {
+                    $banner_args = [
+                        'dest_id' => $link_page->ID,
+                        'page_id' => 'popup-banner',
+                        'desktop_img' => $banner['image_without_text']['url'],
+                        'mobile_img' => $banner['image_without_text_mobile']['url'],
+                        'banner_link' => $button_link,
+                        'button_text' => $banner['text_for_button'],
+                        'is_iframe' => $banner['is_iframe'],
+                        'name' => $banner['name'],
+                        'publisher' => $banner['publisher']
+                    ];
+                    foody_get_template_part(get_template_directory() . '/template-parts/common/popup-banner.php', $banner_args);
+                } else {
+                    $banner_args = [
+                        'dest_id' => $link_page->ID,
+                        'page_id' => 'popup-banner',
+                        'desktop_img' => $banner['image_with_text']['url'],
+                        'mobile_img' => $banner['image_with_text_mobile']['url'],
+                        'banner_text' => $banner['text_for_banner'],
+                        'banner_link' => $button_link,
+                        'button_text' => $banner['text_for_button'],
+                        'is_iframe' => $banner['is_iframe'],
+                        'name' => $banner['name'],
+                        'publisher' => $banner['publisher']
+                    ];
+                    foody_get_template_part(get_template_directory() . '/template-parts/common/popup-banner.php', $banner_args);
+                }
             }
         }
     }

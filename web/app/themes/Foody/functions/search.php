@@ -119,6 +119,8 @@ function foody_search_user_by_name($name, $single = true)
 {
     global $wpdb;
 
+    $esc_name = esc_sql($name);
+
     $query =
         "SELECT user_id
               FROM $wpdb->usermeta 
@@ -127,11 +129,11 @@ function foody_search_user_by_name($name, $single = true)
               or ( meta_key='last_name' AND meta_value LIKE '%%%s%%' )";
 
     $args = [
-        $name,
-        $name
+        $esc_name,
+        $esc_name
     ];
 
-    $name_parts = explode(' ', trim($name));
+    $name_parts = explode(' ', trim($esc_name));
 
 
     if (count($name_parts) > 1) {
