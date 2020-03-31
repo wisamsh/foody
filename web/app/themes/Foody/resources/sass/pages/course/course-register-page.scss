@@ -18,12 +18,12 @@
 
       .host-image {
         border-radius: 100%;
-        width: 45%;
+        width: 36%;
+        padding-right: 2%;
 
         img {
           border-radius: 100%;
           position: relative;
-          right: -30%;
           border: 1px solid red;
         }
       }
@@ -32,9 +32,8 @@
         align-self: center;
         text-align: center;
         font-size: 17px;
-        margin-right: -8%;
         font-weight: bold;
-        width: 55%;
+        width: 60%;
 
         .course-title {
           font-size: 22px;
