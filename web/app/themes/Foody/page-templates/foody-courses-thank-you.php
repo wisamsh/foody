@@ -11,11 +11,15 @@ $course_id = '';
 $has_course = false;
 $has_content = false;
 $has_cover = false;
+$course_name = '';
+$host_name = '';
 
 if (isset($_GET)) {
     if (isset($_GET['course_id'])) {
         $course_id = $_GET['course_id'];
         $has_course = true;
+        $host_name = get_field('course_page_main_cover_section_host_name', $course_id);
+        $course_name = get_field('course_register_data_item_name', $course_id);
     }
 }
 get_header();
@@ -59,7 +63,7 @@ get_header();
                         $content = get_field('course_register_data_thank_you_text', $course_id);
                         if ($content != '' || $content != false) {
                             ?>
-                            <p class="thank-you-text"> <?php echo $content; ?> </p>
+                            <p class="thank-you-text" data-course="<?php echo $course_name; ?>" data-host="<?php echo $host_name; ?>"> <?php echo $content; ?> </p>
                             <?php
                             $has_content = true;
                         }

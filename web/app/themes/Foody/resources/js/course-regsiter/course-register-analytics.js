@@ -29,7 +29,9 @@ let analyticsCategory = 'קורסים';
 
     if(foodyGlobals['page_template_name'] == "foody-courses-thank-you") {
         /** page load **/
-        eventCallback('', analyticsCategory, 'רכישה בוצעה בהצלחה', courseName, 'מיקום', 'מסך סיום תהליך רכישה', hostName);
+        let courseNameThankYou = $('.thank-you-text').length && $('.thank-you-text').data('course').length ? $('.thank-you-text').data('course') : '';
+        let hostNameThankYou = $('.thank-you-text').length && $('.thank-you-text').data('host').length ? $('.thank-you-text').data('host') : '';
+        eventCallback('', analyticsCategory, 'רכישה בוצעה בהצלחה', courseNameThankYou, 'מיקום', 'מסך סיום תהליך רכישה', hostNameThankYou);
     }
 
 });

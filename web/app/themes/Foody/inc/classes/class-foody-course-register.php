@@ -162,7 +162,9 @@ class Foody_Course_register
             $link_to_purchase = isset($this->course_data['link_for_purchase']) && isset($this->course_data['link_for_purchase']['url']) ? $this->course_data['link_for_purchase']['url'] : '' ;
             $link_thank_you = isset($this->course_data['link_thank_you']) ? $this->course_data['link_thank_you'] : get_home_url();
             $invoice_mail = isset($this->page_data['mail_invoice']) ? $this->page_data['mail_invoice'] : '';
-            $credit_button = '<div class="credit-card-pay"  data-item-name="'. $this->course_data['item_name'] .'" data-invoice-mail="'. $invoice_mail .'" data-thank-you="'. $link_thank_you . '?course_id='.  $this->course_id .'" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
+            $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
+
+            $credit_button = '<div class="credit-card-pay"  data-item-name="'. $course_name .'" data-invoice-mail="'. $invoice_mail .'" data-thank-you="'. $link_thank_you . '?course_id='.  $this->course_id .'" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
             $buttons_div .= $credit_button ;
 
         }
