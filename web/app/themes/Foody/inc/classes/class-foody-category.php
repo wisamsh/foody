@@ -120,6 +120,13 @@ class Foody_Category extends Foody_Term implements Foody_ContentWithSidebar {
 	public function before_content() {
 		$cover_image = get_field( 'cover_image', $this->term->taxonomy . '_' . $this->term->term_id );
 		if ( ! empty( $cover_image ) ) {
+		    $cover_link = get_field( 'cover_link', $this->term->taxonomy . '_' . $this->term->term_id );
+		    if(! empty( $cover_link )){
+                $cover_link = ['url' => $cover_link, 'target' => '_blank'];
+                if(is_array($cover_image)) {
+                    $cover_image = array_merge($cover_image , ['link' => $cover_link]);
+                    }
+            }
 			foody_get_template_part( get_template_directory() . '/template-parts/content-cover-image.php', $cover_image );
 		}
 	}

@@ -523,28 +523,33 @@ function foody_posts_page_script()
 
     $post_type = get_post_type();
     if ($post_type == 'post' ||
-        $post_type  == 'foody_recipe' ||
-        $post_type  == 'foody_feed_channel' ||
-        is_page_template('page-templates/items.php')) {
+        $post_type == 'foody_recipe' ||
+        $post_type == 'foody_feed_channel' ||
+        is_page_template('page-templates/items.php') ||
+        is_category()) {
 
         /** from feed area */
-        if($post_type == 'foody_recipe' || $post_type == 'post'){
-            if(is_array($_GET) && isset($_GET['referer'])){
+        if ($post_type == 'foody_recipe' || $post_type == 'post') {
+            if (is_array($_GET) && isset($_GET['referer'])) {
                 $enable_google = get_field('google_set_for_recipes', $_GET['referer']);
                 $enable_facebook = get_field('facebook_set_for_recipes', $_GET['referer']);
                 $enable_taboola = get_field('taboola_set_for_recipes', $_GET['referer']);
 
-                if($enable_facebook) {
+                if ($enable_facebook) {
                     $referer_facebook = $_GET['referer'];
                 }
-                if($enable_google){
+                if ($enable_google) {
                     $referer_google = $_GET['referer'];
                 }
-                if($enable_taboola){
+                if ($enable_taboola) {
                     $referer_taboola = $_GET['referer'];
                 }
 
             }
+        }
+
+        if (is_category()){
+            $referer_facebook = $referer_google = $referer_taboola = get_queried_object();
         }
 
         /* facebook pixel */
@@ -633,20 +638,22 @@ function add_script_tags($code)
     return $change_code;
 }
 
-function remove_unnecessary_tags($pixel_code){
-    $pixel_code = str_replace('<p>','',$pixel_code);
-    $pixel_code = str_replace('</p>','',$pixel_code);
-    $pixel_code = str_replace('<br />','',$pixel_code);
-    $pixel_code = str_replace('<br/>','',$pixel_code);
-    $pixel_code = str_replace('<br>','',$pixel_code);
-    $pixel_code = str_replace('<p style="direction: ltr;">','',$pixel_code);
-    $pixel_code = str_replace('<!– Facebook Pixel Code –>','',$pixel_code);
-    $pixel_code = str_replace('<!-- Facebook Pixel Code -->','',$pixel_code);
+function remove_unnecessary_tags($pixel_code)
+{
+    $pixel_code = str_replace('<p>', '', $pixel_code);
+    $pixel_code = str_replace('</p>', '', $pixel_code);
+    $pixel_code = str_replace('<br />', '', $pixel_code);
+    $pixel_code = str_replace('<br/>', '', $pixel_code);
+    $pixel_code = str_replace('<br>', '', $pixel_code);
+    $pixel_code = str_replace('<p style="direction: ltr;">', '', $pixel_code);
+    $pixel_code = str_replace('<!– Facebook Pixel Code –>', '', $pixel_code);
+    $pixel_code = str_replace('<!-- Facebook Pixel Code -->', '', $pixel_code);
 
     return $pixel_code;
 }
 
-function handle_bad_apostrophe($pixel_code){
+function handle_bad_apostrophe($pixel_code)
+{
     $pixel_code_result = str_replace("‘", "'", $pixel_code);
     $pixel_code_result = str_replace("’", "'", $pixel_code_result);
     $pixel_code_result = str_replace("′", "'", $pixel_code_result);
