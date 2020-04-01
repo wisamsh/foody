@@ -153,7 +153,7 @@ class Foody_Course_register
         $enable_bit = isset($this->page_data['enable_bit_button']) && $this->page_data['enable_bit_button'];
         $buttons_div = '';
 
-        $course_payment_link = isset($this->course_data['register_link_text']) ? $this->course_data['register_link_text'] : __('לרכישה') ;
+        $course_payment_link = isset($this->course_data['register_link_text_form']) ? $this->course_data['register_link_text_form'] : __('לרכישה') ;
 
         if($enable_credit || $enable_bit){
             $buttons_div = '<div class="button-container">';
