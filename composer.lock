@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "29f56ebc2f1d6396e86f3ed24a26250e",
+    "content-hash": "933a6ea55186505ddf0ffe129af05a46",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -168,6 +168,15 @@
             "dist": {
                 "type": "zip",
                 "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9MTMxNzg3fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTIzIDEyOjE1OjI5"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "enrico-battocchi/duplicate-post",
+            "version": "3.2.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/duplicate-post.3.2.4.zip"
             },
             "type": "wordpress-plugin"
         },

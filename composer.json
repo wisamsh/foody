@@ -293,6 +293,18 @@
     {
       "type": "package",
       "package": {
+        "name": "enrico-battocchi/duplicate-post",
+        "version": "3.2.4",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://downloads.wordpress.org/plugin/duplicate-post.3.2.4.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
         "name": "wp-api/basic-auth",
         "version": "1.0.0",
         "type": "wordpress-plugin",
@@ -343,7 +355,8 @@
     "wp-api/basic-auth": "^1.0",
     "psr/log": "1.1.0",
     "squizlabs/php_codesniffer": "3.4.2",
-    "symfony/polyfill-ctype": "1.11.0"
+    "symfony/polyfill-ctype": "1.11.0",
+    "enrico-battocchi/duplicate-post": "^3.2"
   },
   "require-dev": {
   },
