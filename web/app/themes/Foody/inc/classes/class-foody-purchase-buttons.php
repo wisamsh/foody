@@ -75,27 +75,26 @@ class Foody_PurchaseButtons {
 	 */
 	public function get_buttons_for_post( $post ) {
 		$buttons = [];
+        $args['types'] = [];
 		if ( ! empty( $this->options ) ) {
 			// only allow button with defined filters
 			$options = array_filter( $this->options, function ( $option ) {
-				return ! empty( $option['filters_list'] );
+				return ! empty( $option['filter'] );
 			} );
 
 			foreach ( $options as $option ) {
 
-
-				$filters = [];
+			    $option_filter = get_field('filters_list', $option['filter']->ID);
 
 				// consider all filters lists
-				foreach ( $option['filters_list'] as $list ) {
+				foreach ( $option_filter as  $list ) {
 					if ( is_array( $list ) ) {
-						$filters = array_merge( $filters, $list );
+                        $filter = SidebarFilter::parse_search_args($list);
+                        foreach ($filter as $filter_type){
+                            array_push($args['types'], $filter_type);
+                        }
 					}
 				}
-
-				$args = [
-					'types' => SidebarFilter::parse_search_args( $filters )
-				];
 
 				$context      = 'purchase_buttons';
 				$context_args = [ 'id' => $post ];
@@ -126,6 +125,68 @@ class Foody_PurchaseButtons {
 		return $buttons;
 
 	}
+
+
+    /**
+     * @param int $post
+     *
+     * @return array purchase buttons relevant to post
+     * @throws Exception
+     */
+//    public function get_buttons_for_post( $post ) {
+//        $buttons = [];
+//        $args['types'] = [];
+//        if ( ! empty( $this->options ) ) {
+//            // only allow button with defined filters
+//            $options = array_filter( $this->options, function ( $option ) {
+//                return ! empty( $option['filters_list'] );
+//            } );
+//
+//            foreach ( $options as $option ) {
+//
+//                $filters = [];
+//
+//                // consider all filters lists
+//                foreach ( $option['filters_list'] as  $list ) {
+//                    if ( is_array( $list ) ) {
+//                        $filter = SidebarFilter::parse_search_args($list);
+//                        foreach ($filter as $filter_type){
+//                            array_push($args['types'], $filter_type);
+//                        }
+//                    }
+//                }
+//
+//
+//                $context      = 'purchase_buttons';
+//                $context_args = [ 'id' => $post ];
+//
+//                // Creating WP_args for search query parameter.
+//                $wp_args     = [];
+//                $foody_query = Foody_Query::get_instance();
+//                $query_args = $foody_query->get_query( 'purchase_buttons', $context_args );
+//                $wp_args = array_merge( $wp_args, $query_args );
+//
+//                // purchase_buttons will invoke purchase_buttons ffn
+//                // in class Foody_Query
+//                $foody_search = new Foody_Search( $context, $context_args );
+//
+//                $result = $foody_search->query( $args, $wp_args );
+//
+//                // $post exists in query, add
+//                // button options to buttons
+//                if ( ! empty( $result['posts'] ) ) {
+//                    $copy = array_merge_recursive( [], $option );
+//                    unset( $copy['filters_list'] );
+//                    $buttons[] = $copy;
+//                }
+//            }
+//
+//        }
+//
+//        return $buttons;
+//
+//    }
+
 
 	/*
 	 *
@@ -163,7 +224,12 @@ class Foody_PurchaseButtons {
 		]
 	 * */
 	private function load_options() {
-		$options       = get_field( 'buttons', 'foody_purchase_options' );
+		$options       = get_field( 'buttons', 'foody_purchase_options-new' );
 		$this->options = $options;
 	}
+
+//    private function load_options() {
+//        $options       = get_field( 'buttons', 'foody_purchase_options' );
+//        $this->options = $options;
+//    }
 }

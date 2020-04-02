@@ -48,6 +48,9 @@ abstract class Foody_Post implements Foody_ContentWithSidebar {
 
 	public $featured_image_alt;
 
+    private $purchase_buttons = '';
+    private $purchase_buttons_fetched = false;
+
 	/**
 	 * FoodyPost constructor.
 	 *
@@ -504,17 +507,25 @@ abstract class Foody_Post implements Foody_ContentWithSidebar {
 	}
 
 	public function the_purchase_buttons( $classes = '', $echo = true ) {
-		$foody_purchase_buttons = Foody_PurchaseButtons::get_instance();
-		$buttons                = $foody_purchase_buttons->get_buttons_for_post( $this->id );
-		$content                = '';
-		if ( ! empty( $buttons ) ) {
-			$content = foody_get_template_part(
-				get_template_directory() . '/template-parts/content-purchase-buttons.php',
-				[ 'classes' => $classes, 'buttons' => $buttons, 'return' => ! $echo ]
-			);
-		}
+        $buttons = '';
+	    if(!$this->purchase_buttons_fetched) {
+            $foody_purchase_buttons = Foody_PurchaseButtons::get_instance();
+            $buttons = $foody_purchase_buttons->get_buttons_for_post($this->id);
+            $this->purchase_buttons = $buttons;
+            $this->purchase_buttons_fetched = true;
+        }
+	    else{
+            $buttons = $this->purchase_buttons;
+        }
+	    $content = '';
+	    if (!empty($buttons)) {
+	        $content = foody_get_template_part(
+	            get_template_directory() . '/template-parts/content-purchase-buttons.php',
+                ['classes' => $classes, 'buttons' => $buttons, 'return' => !$echo]
+            );
+	    }
 
-		return $content;
+	    return $content;
 	}
 
 	public function newsletter() {
