@@ -588,6 +588,23 @@ function ingredients_export_adjustments()
     Foody_ingredients_exporter::generate_xlsx();
 }
 
+function update_filters_cache_menu_options()
+{
+    $user_id = get_current_user_id();
+    $user_meta=get_userdata($user_id);
+
+    if(is_array($user_meta->roles) && in_array('administrator', $user_meta->roles)) {
+        add_submenu_page('edit.php?post_type=foody_filter', 'update filters cache', __('עדכן cache של פילטרים'), 'administrator', 'update_filters_cache', 'foody_update_filters_cache', 19);
+    }
+}
+add_action('admin_menu', 'update_filters_cache_menu_options');
+
+function foody_update_filters_cache()
+{
+    update_filters_cache();
+    echo '<h1>' . __("ה - cache של הפילטרים עודכן בהצלחה") . '</h1>';
+}
+
 //function rss_post_thumbnail($content) {
 //    global $post;
 //    if(has_post_thumbnail($post->ID)) {
@@ -615,12 +632,11 @@ function custom_rss_feed()
 
 function rss_campaign_tracking($post_permalink)
 {
-    $maariv_RSS_slugs = ['/maariv-rss/','/maariv2-rss/'];
-    if(isset($GLOBALS['path']) && in_array($GLOBALS['path'],$maariv_RSS_slugs)) {
+    $maariv_RSS_slugs = ['/maariv-rss/', '/maariv2-rss/'];
+    if (isset($GLOBALS['path']) && in_array($GLOBALS['path'], $maariv_RSS_slugs)) {
         return $post_permalink . '?utm_source=Maariv%20site&utm_medium=promos&utm_campaign=maariv%20food';
-    }
-    else{
-        return $post_permalink ;
+    } else {
+        return $post_permalink;
     }
 }
 
@@ -631,7 +647,7 @@ add_filter('the_permalink_rss', 'rss_campaign_tracking');
 add_filter('posts_orderby', 'order_search_by_posttype', 10, 2);
 function order_search_by_posttype($orderby, $wp_query)
 {
-    if ((isset($wp_query->query['post_type']) && $wp_query->query['post_type'] == 'acf-field') || (isset($_REQUEST['sort']) && $_REQUEST['sort'] != '') ) {
+    if ((isset($wp_query->query['post_type']) && $wp_query->query['post_type'] == 'acf-field') || (isset($_REQUEST['sort']) && $_REQUEST['sort'] != '')) {
         return $orderby;
     }
     if ($wp_query->is_search || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more') || (isset($_POST['action']) && $_POST['action'] == 'foody_filter')))) :
@@ -644,24 +660,26 @@ function order_search_by_posttype($orderby, $wp_query)
     endif;
     return $orderby;
 }
+
 // WHEN {$wpdb->prefix}posts.post_type = 'foody_recipe' THEN '2'
 //                 WHEN {$wpdb->prefix}posts.post_type = 'post' THEN '3'
 //
 
-function my_wp_is_mobile() {
+function my_wp_is_mobile()
+{
     static $is_mobile;
 
-    if ( isset($is_mobile) )
+    if (isset($is_mobile))
         return $is_mobile;
 
-    if ( empty($_SERVER['HTTP_USER_AGENT']) ) {
+    if (empty($_SERVER['HTTP_USER_AGENT'])) {
         $is_mobile = false;
     } elseif (
         strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Silk/') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Kindle') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry') !== false
-        || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false ) {
+        || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false) {
         $is_mobile = true;
     } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false && strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') == false && strpos($_SERVER['HTTP_USER_AGENT'], 'Tablet') == false) {
         $is_mobile = true;
@@ -672,4 +690,23 @@ function my_wp_is_mobile() {
     }
 
     return $is_mobile;
+}
+
+add_action('init', 'register_update_filter_cache');
+function register_update_filter_cache()
+{
+    // Make sure this event hasn't been scheduled
+    if (!wp_next_scheduled('foody_update_filters_cache_hook')) {
+        // Schedule the event
+        wp_schedule_event(time(), 'five_minutes', 'foody_update_filters_cache_hook');
+    }
+}
+
+add_filter('cron_schedules', 'foody_add_cron_interval');
+function foody_add_cron_interval($schedules)
+{
+    $schedules['five_minutes'] = array(
+        'interval' => 300,
+        'display' => esc_html__('Every 5 Minute'),);
+    return $schedules;
 }

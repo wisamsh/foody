@@ -463,6 +463,9 @@ class Foody_Query
 
     public function purchase_buttons($post_id)
     {
+        if(empty($post_id)){
+            return self::get_args();
+        }
         return self::get_args([
             'post__in' => [
                 $post_id

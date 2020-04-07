@@ -40,7 +40,9 @@ $servers = [
     'prod5' => 'ubuntu@34.242.140.24',
     'prod6' => 'ubuntu@34.250.226.233',
     'prod7' => 'ubuntu@34.245.234.96',
-    'prod8' => 'ubuntu@34.241.6.70'
+    'prod8' => 'ubuntu@34.241.6.70',
+    'prod-clone1' => 'ubuntu@34.254.198.248',
+    'prod-clone2' => 'ubuntu@34.242.201.112'
 ];
 
 if (!isset($branch)){
@@ -68,9 +70,6 @@ scp assets-{{  $release }}.tar.gz {{ $servers[$target] }}:~
 scp ./build/version-hash.txt {{ $servers[$target] }}:~
 rm -rf assets-{{  $release }}.tar.gz
 
-wp plugin list --format=json > ./plugins-export.json
-scp ./plugins-export.json {{ $servers[$target] }}:~
-rm ./plugins-export.json
 @endtask
 
 
@@ -110,8 +109,6 @@ sudo chgrp -R www-data {{ $release }};
 sudo chmod -R ug+rwx {{ $release }};
 
 cd {{ $release_dir }}/{{ $release }};
-
-wp foody-cli activate_plugins ~/plugins-export.json --require=web/app/mu-plugins/foody-cli/foody-cli.php
 
 echo 'Updating symlinks...'
 sudo ln -nfs {{ $release_dir }}/{{ $release }} {{ $app_dir }};
