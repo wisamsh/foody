@@ -695,10 +695,12 @@ function my_wp_is_mobile()
 add_action('init', 'register_update_filter_cache');
 function register_update_filter_cache()
 {
-    // Make sure this event hasn't been scheduled
-    if (!wp_next_scheduled('foody_update_filters_cache_hook')) {
-        // Schedule the event
-        wp_schedule_event(time(), 'five_minutes', 'foody_update_filters_cache_hook');
+    if( defined( 'FOODY_FILTERS_CACHE' ) && FOODY_FILTERS_CACHE) {
+        // Make sure this event hasn't been scheduled
+        if (!wp_next_scheduled('foody_update_filters_cache_hook')) {
+            // Schedule the event
+            wp_schedule_event(time(), 'five_minutes', 'foody_update_filters_cache_hook');
+        }
     }
 }
 
