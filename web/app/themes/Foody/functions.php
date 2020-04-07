@@ -590,8 +590,20 @@ function ingredients_export_adjustments()
 
 function update_filters_cache_menu_options()
 {
+    $current_blog_id = get_current_blog_id();
+    $switched = false;
+
+    if($current_blog_id != 1){
+        switch_to_blog(1);
+        $switched = true;
+    }
+
     $user_id = get_current_user_id();
     $user_meta=get_userdata($user_id);
+
+    if($switched){
+        switch_to_blog($current_blog_id);
+    }
 
     if(is_array($user_meta->roles) && in_array('administrator', $user_meta->roles)) {
         add_submenu_page('edit.php?post_type=foody_filter', 'update filters cache', __('עדכן cache של פילטרים'), 'administrator', 'update_filters_cache', 'foody_update_filters_cache', 19);
