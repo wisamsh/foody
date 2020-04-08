@@ -22,6 +22,7 @@ $recipe = $template_args['recipe'];
       "@context": "http://schema.org/",
       "@type": "Recipe",
 <?php
+    $author_name_for_schema = strpos($recipe->getAuthorName(), '"') !== false ? addslashes($recipe->getAuthorName()) : $recipe->getAuthorName();
     $aggregateRating =  $recipe->get_jsonld_aggregateRating();
     if($aggregateRating != false)
     { ?>
@@ -32,7 +33,7 @@ $recipe = $template_args['recipe'];
       "image": "<?php echo $recipe->getImage() ?>",
       "author": {
         "@type": "Person",
-        "name": "<?php echo addslashes( $recipe->getAuthorName() ) ?>"
+        "name": "<?php echo $author_name_for_schema?>"
       },
       "datePublished": "<?php echo get_the_date( 'Y-m-d' ) ?>",
       "description": "<?php echo str_replace('"','',$recipe->getDescription()) ?>",

@@ -41,7 +41,7 @@ function foody_get_main_site_url() {
 	return foody_add_scheme( foody_get_main_site_domain() );
 }
 
-function foody_add_scheme( $url, $scheme = 'http://' ) {
+function foody_add_scheme( $url, $scheme = 'https://' ) {
 	return parse_url( $url, PHP_URL_SCHEME ) === null ?
 		$scheme . $url : $url;
 }

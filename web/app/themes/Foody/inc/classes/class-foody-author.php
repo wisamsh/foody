@@ -154,6 +154,7 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
             'header' => [
                 'sort' => true
             ],
+            'title_el' => 'h2',
             'return' => true
         ];
 
