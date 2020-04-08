@@ -194,6 +194,10 @@ header {
 
         .algolia-autocomplete {
           width: 100%;
+
+          input{
+            line-height: 0;
+          }
         }
 
         //input {
