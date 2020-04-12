@@ -713,12 +713,6 @@ function register_update_filter_cache()
             // Schedule the event
             wp_schedule_event(strtotime('21:00:00'), 'daily', 'foody_update_filters_cache_hook');
         }
-        else{
-            $timestamp = wp_next_scheduled( 'foody_update_filters_cache_hook' );
-            wp_unschedule_event( $timestamp, 'foody_update_filters_cache_hook' );
-
-        }
-
     }
 }
 
