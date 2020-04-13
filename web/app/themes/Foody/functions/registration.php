@@ -38,7 +38,7 @@ add_filter( 'wsl_hook_alter_provider_scope', 'wsl_change_default_permissions', 1
  * @param int $user_id
  */
 function auto_login_new_user( $user_id ) {
-	if ( ! is_admin() ) {
+	if ( ! is_admin() && !is_rest() ) {
 		wp_set_current_user( $user_id );
 		wp_set_auth_cookie( $user_id );
 		$redirect_url = home_url( 'הרשמה' );
@@ -50,6 +50,35 @@ function auto_login_new_user( $user_id ) {
 
 add_action( 'user_register', 'auto_login_new_user' );
 
+
+/**
+ * Checks if the current request is a WP REST API request.
+ *
+ * Case #1: After WP_REST_Request initialisation
+ * Case #2: Support "plain" permalink settings
+ * Case #3: It can happen that WP_Rewrite is not yet initialized,
+ *          so do this (wp-settings.php)
+ * Case #4: URL Path begins with wp-json/ (your REST prefix)
+ *          Also supports WP installations in subfolders
+ *
+ * @returns boolean
+ * @author matzeeable
+ */
+function is_rest() {
+    $prefix = rest_get_url_prefix( );
+    if (defined('REST_REQUEST') && REST_REQUEST // (#1)
+        || isset($_GET['rest_route']) // (#2)
+        && strpos( trim( $_GET['rest_route'], '\\/' ), $prefix , 0 ) === 0)
+        return true;
+    // (#3)
+    global $wp_rewrite;
+    if ($wp_rewrite === null) $wp_rewrite = new WP_Rewrite();
+
+    // (#4)
+    $rest_url = wp_parse_url( trailingslashit( rest_url( ) ) );
+    $current_url = wp_parse_url( add_query_arg( array( ) ) );
+    return strpos( $current_url['path'], $rest_url['path'], 0 ) === 0;
+}
 
 function foody_user_login( $user_login, $user ) {
 
