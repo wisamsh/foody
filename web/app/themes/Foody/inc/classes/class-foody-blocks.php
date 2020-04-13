@@ -47,20 +47,26 @@ class Foody_Blocks {
 
 		/** @var WP_Post $filter_post */
 		$filter_post = isset( $block['filter'] ) ? $block['filter'] : null;
+        $filters_rule_mapping = Foody_FiltersRuleMapping::get_instance();
+        $rules_list = $filters_rule_mapping->getRules();
 
 
 		if ( ! empty( $filter_post ) && $filter_post ) {
-
-			$filter = get_field( 'filters_list', $filter_post->ID );
-
-			$types = SidebarFilter::parse_search_args_array( $filter );
-
-			$args = [
-				'types' => $types,
-				'sort'  => 'popular_desc'
-			];
-
-			$posts = $this->foody_search->query( $args )['posts'];
+		    if(isset($rules_list[$filter_post->ID]) && !empty($rules_list[$filter_post->ID])){
+		        foreach ($rules_list[$filter_post->ID] as $id){
+                    array_push($posts, get_post($id));
+                }
+            }
+//			$filter = get_field( 'filters_list', $filter_post->ID );
+//
+//			$types = SidebarFilter::parse_search_args_array( $filter );
+//
+//			$args = [
+//				'types' => $types,
+//				'sort'  => 'popular_desc'
+//			];
+//
+//			$posts = $this->foody_search->query( $args )['posts'];
 		}
 
 		return $posts;
