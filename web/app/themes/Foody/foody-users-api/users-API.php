@@ -107,7 +107,7 @@ function users_api_update_user(WP_REST_Request $request_data)
         return $response;
     } else {
         $email_address = $body['email'];
-        $password = isset($body['password']) ? $body['password'] : '';
+        $password = isset($body['pass']) ? $body['pass'] : '';
 
         /** update password if not empty **/
         if ($password != '') {
@@ -120,7 +120,7 @@ function users_api_update_user(WP_REST_Request $request_data)
                 $response = users_api_generate_error_response($error);
                 return $response;
             }
-            $updated_user_fields['password'] = $password;
+            $updated_user_fields['pass'] = $password;
         }
 
         try {
