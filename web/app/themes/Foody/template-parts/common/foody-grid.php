@@ -52,6 +52,10 @@ $title_el = foody_get_array_default($template_args, 'title_el', 'h3');
     $grid_header = $settings['header'];
     ?>
     <section class="grid-header row">
+        <?php  if (empty($grid_header['title'])) {
+            $title_el = 'div';
+        }
+        ?>
 
         <<?php echo $title_el ?> class="title col-12 col-lg-6">
         <?php
