@@ -43,7 +43,7 @@ $recipe = $template_args['recipe'];
       "recipeYield": "<?php echo $recipe->number_of_dishes ?>",
       "recipeCategory": "<?php echo addslashes( $recipe->get_primary_category_name() ) ?>",
       "recipeIngredient": <?php echo $recipe->get_ingredients_jsonld() ?>,
-      "recipeInstructions": "<?php echo str_replace('"' ,'״',str_replace(array("\r", "\n", "\t"), "",wp_strip_all_tags(get_the_content($recipe))))  ?>"
+      "recipeInstructions": "<?php echo str_replace('/',' ', str_replace('"' ,'״',str_replace(array("\r", "\n", "\t"), "",wp_strip_all_tags(get_the_content($recipe)))))  ?>"
 }
 
 
