@@ -45,6 +45,9 @@ class Foody_Ingredient extends Foody_Post
 
     public $substitute_ingredients_list = [];
 
+    private $regex_pattern_for_special_chars = "^[^\\\p{Hebrew} a-zA-Z0-9]{1,}$";
+    //private $regex_pattern_for_special_chars = "/^[^1-9\\\a-z\\\u{0590}-\\\u{05fe} ]+$/i";
+
     /**
      * Foody_Ingredient constructor.
      *
@@ -70,7 +73,9 @@ class Foody_Ingredient extends Foody_Post
         $substitute_ingredients = get_field('substitute_ingredients_list', $this->id);
         if (is_array($substitute_ingredients)) {
             foreach ($substitute_ingredients as $substitute_ingredient) {
-                $this->substitute_ingredients_list[$substitute_ingredient['substitute_ingredient']->post_title] = [
+                $substitute_ingredient_title = str_replace(['-', '-', '_', '_'], '', $substitute_ingredient['substitute_ingredient']->post_title);
+//                $substitute_ingredient_title = preg_replace($this->regex_pattern_for_special_chars, '', $substitute_ingredient['substitute_ingredient']->post_title);
+                $this->substitute_ingredients_list[$substitute_ingredient_title] = [
                     'title' => $substitute_ingredient['substitute_ingredient']->post_title,
                     'conversion' => $substitute_ingredient['conversion'],
                     'text' => $substitute_ingredient['text'],
@@ -168,7 +173,7 @@ class Foody_Ingredient extends Foody_Post
 
                 // has substitute ingredient
                 if ($this->recipe_substitute_ingredient != null && $this->recipe_substitute_ingredient->getTitle() != '') {
-                    $recipe_substitute_ingredient_title = $this->recipe_substitute_ingredient->getTitle();
+                    $recipe_substitute_ingredient_title = str_replace(['-', '-', '&#8211;', '_', '_'], '', $this->recipe_substitute_ingredient->getTitle());
                     if (is_array($this->substitute_ingredients_list) && $recipe_substitute_ingredient_title != '' && isset($this->substitute_ingredients_list[$recipe_substitute_ingredient_title])) {
                         $convertion_value = $this->substitute_ingredients_list[$recipe_substitute_ingredient_title]['conversion'];
                         $get_substitute_ingredient_data_attr = array($this->recipe_substitute_ingredient, 'get_substitute_ingredient_data_attr');
@@ -272,7 +277,7 @@ class Foody_Ingredient extends Foody_Post
             }
 
             if ($this->recipe_substitute_ingredient != null && $this->recipe_substitute_ingredient->getTitle() != '') {
-                $recipe_substitute_ingredient_title = $this->recipe_substitute_ingredient->getTitle();
+                $recipe_substitute_ingredient_title = str_replace(['-', '-', '&#8211;', '_', '_'], '', $this->recipe_substitute_ingredient->getTitle());
                 if (is_array($this->substitute_ingredients_list) && $recipe_substitute_ingredient_title != '' && isset($this->substitute_ingredients_list[$recipe_substitute_ingredient_title])) {
                     $has_substitute = true;
                     $substitute_amounts = [];
@@ -761,7 +766,7 @@ class Foody_Ingredient extends Foody_Post
     public function get_substitute_ingredient($substitute_ingredients_details_filter)
     {
         if ($this->recipe_substitute_ingredient != null && $this->recipe_substitute_ingredient->getTitle() != '' && !$this->substitute_ingredient_everywhere) {
-            $recipe_substitute_ingredient_title = $this->recipe_substitute_ingredient->getTitle();
+            $recipe_substitute_ingredient_title =  str_replace(['-', '-', '&#8211;', '_', '_'], '', $this->recipe_substitute_ingredient->getTitle());
             $recipe_substitute_ingredient_text = isset($this->substitute_ingredients_list[$recipe_substitute_ingredient_title]) ? $this->substitute_ingredients_list[$recipe_substitute_ingredient_title]['text'] : '';
             $recipe_original_ingredient_text = isset($this->substitute_ingredients_list[$recipe_substitute_ingredient_title]) ? $this->substitute_ingredients_list[$recipe_substitute_ingredient_title]['original_ingredient_text'] : '';
             $recipe_substitute_ingredient_text_color = isset($this->substitute_ingredients_list[$recipe_substitute_ingredient_title]) ? $this->substitute_ingredients_list[$recipe_substitute_ingredient_title]['text_color'] : '';
