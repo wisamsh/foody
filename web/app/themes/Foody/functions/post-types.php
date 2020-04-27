@@ -520,6 +520,7 @@ function foody_posts_page_script()
     $referer_google = false;
     $referer_facebook = false;
     $referer_taboola = false;
+    $referer_outbrain = false;
 
     $post_type = get_post_type();
     if ($post_type == 'post' ||
@@ -536,6 +537,7 @@ function foody_posts_page_script()
                 $enable_google = get_field('google_set_for_recipes', $_GET['referer']);
                 $enable_facebook = get_field('facebook_set_for_recipes', $_GET['referer']);
                 $enable_taboola = get_field('taboola_set_for_recipes', $_GET['referer']);
+                $enable_outbrain = get_field('outbrain_set_for_recipes', $_GET['referer']);
 
                 if ($enable_facebook) {
                     $referer_facebook = $_GET['referer'];
@@ -546,11 +548,14 @@ function foody_posts_page_script()
                 if ($enable_taboola) {
                     $referer_taboola = $_GET['referer'];
                 }
+                if ($enable_outbrain) {
+                    $referer_outbrain = $_GET['referer'];
+                }
             }
         }
 
         if (is_category()){
-            $referer_facebook = $referer_google = $referer_taboola = get_queried_object();
+            $referer_outbrain = $referer_facebook = $referer_google = $referer_taboola = get_queried_object();
         }
 
         /* facebook pixel */
@@ -574,6 +579,18 @@ function foody_posts_page_script()
             $pixel_code_taboola = remove_unnecessary_tags($pixel_code_taboola);
             echo $pixel_code_taboola;
         }
+
+        /* outbrain pixel */
+        $pixel_code_outbrain = get_field('pixel_code_outbrain', $referer_outbrain);
+        if (!empty($pixel_code_outbrain)) {
+            $pixel_code_outbrain = html_entity_decode($pixel_code_outbrain);
+            if (strpos($pixel_code_outbrain, '<script') == false || strpos($pixel_code_outbrain, '</script>') == false) {
+                $pixel_code_outbrain = add_script_tags(handle_bad_apostrophe($pixel_code_outbrain));
+            }
+            $pixel_code_outbrain = remove_unnecessary_tags($pixel_code_outbrain);
+            echo $pixel_code_outbrain;
+        }
+
 
 
         /* google pixel */
@@ -621,7 +638,7 @@ function add_script_tags($code)
             $has_img_tag = true;
         }
     }
-    if (strpos($change_code, '<script>') == false) {
+    if (strpos($change_code, '<script>') == false && strpos($change_code, '<script') == false) {
         if ($has_img_tag) {
             $change_code = '<script>' . $split_string[0];
         } else {
