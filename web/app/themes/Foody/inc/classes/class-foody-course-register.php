@@ -169,7 +169,11 @@ class Foody_Course_register
 
         }
 
-        if($enable_credit){
+        if($enable_bit){
+            $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
+
+            $bit_button = '<div data-item-name="'. $course_name .'" class="bit-pay"  />לתשלום בביט</div>';
+            $buttons_div .= $bit_button ;
         }
 
         if($enable_credit || $enable_bit){

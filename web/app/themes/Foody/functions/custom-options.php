@@ -22,6 +22,7 @@ register_setting( 'general', 'foody_show_newsletter_popup' );
 register_setting( 'general', 'foody_id_for_newsletter' );
 register_setting( 'general', 'foody_show_google_login' );
 register_setting( 'general', 'foody_title_for_extra_content' );
+register_setting( 'general', 'foody_mail_for_courses_data' );
 register_setting( 'reading', 'foody_show_post_views' );
 register_setting( 'reading', 'foody_show_followers_count_views' );
 
@@ -205,6 +206,9 @@ function foody_custom_options() {
 	//text for extra content
     add_settings_field( 'foody_title_for_extra_content', __( 'כותרת לתוכן נוסף', 'foody' ), 'foody_title_for_extra_content_callback', 'general', 'foody_general_settings' );
 
+    // mail for courses data
+    add_settings_field( 'foody_mail_for_courses_data', __( 'מייל להעברת מידע על משתמש קורס חדש', 'foody' ), 'foody_mail_for_courses_data_callback', 'general', 'foody_general_settings' );
+
 
 }
 
@@ -304,6 +308,11 @@ function foody_show_followers_count_callback() {
 function foody_title_for_extra_content_callback(){
     $options = get_option( 'foody_title_for_extra_content', false );
     echo '<input value="' . $options . '"type="text" id="foody_title_for_extra_content" name="foody_title_for_extra_content">';
+}
+
+function foody_mail_for_courses_data_callback(){
+    $options = get_option( 'foody_mail_for_courses_data', false );
+    echo '<input value="' . $options . '"type="text" id="foody_mail_for_courses_data" name="foody_mail_for_courses_data">';
 }
 
 //add_filter('manage_edit-units_columns', 'add_units_columns');

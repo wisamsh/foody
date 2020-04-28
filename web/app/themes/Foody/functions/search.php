@@ -156,8 +156,8 @@ function foody_search_user_by_name($name, $single = true)
         $query = "$query $full_name_search";
     }
 
-    $query_authors = "AND user_id IN (SELECT user_id FROM $wpdb->usermeta WHERE meta_key = 'wp_capabilities' AND meta_value = 'a:1:{s:6:\"author\";b:1;}') ";
-
+    $query_authors = " AND user_id IN (SELECT user_id FROM $wpdb->usermeta WHERE meta_key = 'wp_capabilities' AND meta_value = 'a:1:{s:6:\"author\";b:1;}') ";
+    //$query .= $query_authors;
 
     $query = $wpdb->prepare($query, $args);
 

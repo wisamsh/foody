@@ -147,6 +147,21 @@
         margin: 8% 0 0 0;
         width: 100%;
 
+        .bit-pay{
+          border: 1px solid dodgerblue;
+          border-radius: 5px;
+          text-align: center;
+          display: inline-block;
+          background: dodgerblue;
+          color: white;
+          font-weight: bold;
+          margin: 0 2%;
+          padding: 2% 3% 2% 4%;
+          position: relative;
+          font-size: 13px;
+          cursor: pointer;
+        }
+
         .credit-card-pay {
           border: 1px solid $color__primary;
           border-radius: 5px;

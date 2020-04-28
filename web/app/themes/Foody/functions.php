@@ -724,3 +724,25 @@ function foody_add_cron_interval($schedules)
         'display' => esc_html__('Every 5 Minute'),);
     return $schedules;
 }
+
+//function foody_remove_course_members_menus(){
+//    remove_menu_page( 'edit.php?post_type=foody_course_users' );
+//}
+//add_action( 'admin_menu', 'foody_remove_course_members_menus' );
+
+add_action('init', 'foody_rem_editor_from_post_type_foody_organizations');
+function foody_rem_editor_from_post_type_foody_organizations() {
+    remove_post_type_support( 'foody_organizations', 'editor' );
+}
+
+function foody_remove_meta_boxes_post_type_foody_organizations() {
+    remove_meta_box('wpseo_meta', 'foody_organizations', 'normal');
+    remove_meta_box( 'postexcerpt' , 'foody_organizations' , 'normal' );
+    remove_meta_box('trackbacksdiv', 'foody_organizations', 'normal');
+    remove_meta_box('commentstatusdiv', 'foody_organizations', 'normal');
+    remove_meta_box('authordiv', 'foody_organizations', 'normal');
+    remove_meta_box('postimagediv', 'foody_organizations', 'normal');
+
+
+}
+add_action('add_meta_boxes', 'foody_remove_meta_boxes_post_type_foody_organizations', 100);

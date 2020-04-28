@@ -67,6 +67,65 @@ jQuery(document).ready(($) => {
             }
         });
 
+        if($('.bit-pay').length){
+            $('.bit-pay').on('click', function () {
+                let email = $('#email').val().length != 0 && !$('#email').hasClass('error') ? $('#email').val() : false;
+                let firstName = $('#first-name').val().length != 0 && !$('#first-name').hasClass('error') ? $('#first-name').val() : false;
+                let lastName = $('#last-name').val().length != 0 && !$('#last-name').hasClass('error') ? $('#last-name').val() : false;
+                let phone = $('#phone-number').val().length != 0 && !$('#phone-number').hasClass('error') ? $('#phone-number').val() : false;
+                let enableMarketing = $('.newsletter-and-terms #newsletter').prop('checked') ? true : false;
+                let courseName = $(this).attr('data-item-name').length != 0 ? $(this).attr('data-item-name') : false;
+
+                let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
+                if (termsAccepted && email && firstName && lastName && phone && courseName) {
+                    // temp => only send data to members plugin
+                    // todo: add supprot for bit pay
+
+                    let data_of_member = {
+                        'email': email,
+                        'name': firstName + ' ' + lastName,
+                        'phone': phone,
+                        'date': get_current_date(),
+                        'enable_marketing': enableMarketing,
+                        'course_name': courseName,
+                        'price': '299', // dummy,  todo: get real price from coupon and pricing table
+                        'payment_method': 'ביט',
+                        'transaction_id': 111, // dummy,  todo: get real transaction_id from bit purchase confirmation,
+                        'coupon': 'test' // dummy,  todo: get real coupon from coupon and pricing table
+                    };
+
+                    // jQuery.ajax({
+                    //     type: "POST",
+                    //     url: admin_url,
+                    //     dataType:"json",
+                    //     contentType: "application/json; charset=utf-8",
+                    //     data: {
+                    //         action: 'data_custom_ajax',
+                    //         memberData: JSON.stringify(data_of_member),
+                    //     },
+                    //     cache: false,
+                    //     success: function(data){
+                    //         alert('good');
+                    //     }
+                    //
+                    // });
+
+                    foodyAjax({
+                        action: 'foody_add_course_member_to_table',
+                        data: {
+                            memberData: JSON.stringify(data_of_member),
+                        }
+                    }, function (
+                    ) {
+                        alert('nice...');
+                    });
+                }
+                else {
+                    validate_fields(email, firstName, lastName, phone, termsAccepted);
+                }
+            });
+        }
+
         if ($('.credit-card-pay').length) {
             $('.credit-card-pay').on('click', function () {
                 let email = $('#email').val().length != 0 && !$('#email').hasClass('error') ? $('#email').val() : false;
@@ -104,28 +163,7 @@ jQuery(document).ready(($) => {
                     $('.form-section').replaceWith(iframe);
                     $('#card-pay-frame').after(mailNotice);
                 } else {
-                    let fields = {
-                        '#email': email,
-                        '#first-name': firstName,
-                        '#last-name': lastName,
-                        '#phone-number': phone,
-                        '#terms' : termsAccepted
-                    };
-                    for (let field in fields) {
-                        if (!fields[field]) {
-                            if(field == '#terms'){
-                                let errorMsg = '<span class="terms-error">' + '*אנא אשר/י את תנאי השימוש' + '</span>';
-                                if($('.terms-error').length == 0 ) {
-                                    $('.newsletter-and-terms').after(errorMsg);
-                                }
-                            }
-                            else {
-                                $("#course-register-form").validate().element(field);
-                            }
-                        } else {
-                            $('.terms-error').remove();
-                        }
-                    }
+                    validate_fields(email, firstName, lastName, phone, termsAccepted);
                 }
             });
             $('#card-pay-frame').load(function () {
@@ -157,3 +195,37 @@ jQuery(document).ready(($) => {
         // });
     }
 });
+
+function get_current_date() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    return  yyyy+'-'+mm+'-'+dd;
+}
+
+function validate_fields(email, firstName, lastName, phone, termsAccepted) {
+    let fields = {
+        '#email': email,
+        '#first-name': firstName,
+        '#last-name': lastName,
+        '#phone-number': phone,
+        '#terms' : termsAccepted
+    };
+    for (let field in fields) {
+        if (!fields[field]) {
+            if(field == '#terms'){
+                let errorMsg = '<span class="terms-error">' + '*אנא אשר/י את תנאי השימוש' + '</span>';
+                if($('.terms-error').length == 0 ) {
+                    $('.newsletter-and-terms').after(errorMsg);
+                }
+            }
+            else {
+                $("#course-register-form").validate().element(field);
+            }
+        } else {
+            $('.terms-error').remove();
+        }
+    }
+}

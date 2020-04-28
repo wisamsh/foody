@@ -113,7 +113,13 @@ function register_post_types()
             'query_var' => false,
             'publicly_queryable' => false,
             'public' => false
-        )
+        ),
+        'organizations' => array(
+            'id' => 'organizations',
+            'name' => 'ארגונים לקורסים',
+            'singular_name' => 'ארגון לקורסים',
+            'show_in_menu' => is_main_site()
+        ),
     );
 
     foreach ($post_types as $type) {
@@ -553,7 +559,6 @@ function foody_posts_page_script()
                 }
             }
         }
-
         if (is_category()){
             $referer_outbrain = $referer_facebook = $referer_google = $referer_taboola = get_queried_object();
         }
