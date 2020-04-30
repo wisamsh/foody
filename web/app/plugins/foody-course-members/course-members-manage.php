@@ -25,7 +25,7 @@ function add_admin_page_content()
 {
     add_menu_page('משתמשי קורסים', 'משתמשי קורסים', 'administrator', __FILE__, 'members_table_admin_page', 'dashicons-admin-users');
     add_submenu_page('foody-course-members/course-members-manage.php', 'הוסף משתמש חדש', 'הוסף חדש', 'administrator', 'add_new_member', 'add_new_member_page', 1);
-    //add_submenu_page('foody-course-members/course-members-manage.php', '', __('ייצא משתמשי קורסים'), 'administrator', 'export_courses_members_table_admin_page', 'courses_members_export', 2);
+    add_submenu_page('foody-course-members/course-members-manage.php', 'עדכון משתמש', '', 'administrator', 'update_course_member', 'update_course_member', 2);
 
 }
 
@@ -137,16 +137,39 @@ function create_courses_mail_body($member_data)
     return $mail_body;
 }
 
-function courses_members_exporter_menu_options()
+
+function update_course_member()
 {
+    require 'courses-members-update.php';
 }
 
-add_action('admin_menu', 'ingredients_delta_export_menu_options');
+function get_courses_list(){
+    $query_courses = new WP_Query(array(
+        'post_type' => 'foody_course',
+        'posts_per_page' => -1,
+        'fields' => 'ids',
+        'post_status' => 'publish'
+    ));
 
-
-function courses_members_export()
-{
-    Foody_courses_members_exporter::generate_xlsx();
+    $courses_list = [];
+    if (isset($query_courses->posts) && is_array($query_courses->posts)) {
+        foreach ($query_courses->posts as $id){
+            $course_name = get_field('course_register_data_item_name', $id);
+            if(!empty($course_name)){
+                // new course template
+                array_push($courses_list, $course_name);
+            }
+            else{
+                $course_name = get_field('course_name_html', $id);
+                // old course tamplate - html
+                if(!empty($course_name)) {
+                    // new course template
+                    array_push($courses_list, $course_name);
+                }
+            }
+        }
+    }
+    return $courses_list;
 }
 
 function get_orginazations_list(){

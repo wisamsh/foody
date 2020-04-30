@@ -1,31 +1,5 @@
 <?php
-
-$query_courses = new WP_Query(array(
-    'post_type' => 'foody_course',
-    'posts_per_page' => -1,
-    'fields' => 'ids',
-    'post_status' => 'publish'
-));
-
-$courses_list = [];
-if (isset($query_courses->posts) && is_array($query_courses->posts)) {
-    foreach ($query_courses->posts as $id){
-        $course_name = get_field('course_register_data_item_name', $id);
-        if(!empty($course_name)){
-            // new course template
-            array_push($courses_list, $course_name);
-        }
-        else{
-            $course_name = get_field('course_name_html', $id);
-            // old course tamplate - html
-            if(!empty($course_name)) {
-                // new course template
-                array_push($courses_list, $course_name);
-            }
-        }
-    }
-}
-
+$courses_list = get_courses_list();
 $organizations_list = get_orginazations_list();
 ?>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">

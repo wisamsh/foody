@@ -59,8 +59,9 @@ class Courses_Members_List extends WP_List_Table
                 'מס׳ טרנזקציה' => $transaction_id,
                 'קופון' => $coupon,
                 'תאריך רכישה' => $purchase_date,
-                'זיכוי' => !empty($transaction_id) ? '<div href="" style="cursor: pointer; text-decoration: underline; color: blue" onclick="getRefund()">לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
+                'זיכוי' => !empty($transaction_id) ? '<div style="cursor: pointer; text-decoration: underline; color: blue" onclick="getRefund()">לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
+                'עריכה' => '<div onclick="getUpdate('. $member_id .')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
             );
         }
 
@@ -103,6 +104,7 @@ class Courses_Members_List extends WP_List_Table
                 'תאריך רכישה' => $purchase_date,
                 'זיכוי' => !empty($transaction_id) ? '<div href="" style="cursor: pointer; text-decoration: underline; color: blue" onclick="getRefund()">לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
+                'עריכה' => '<div onclick="getUpdate('. $member_id .')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
             );
         }
 
@@ -139,6 +141,7 @@ class Courses_Members_List extends WP_List_Table
             case 'זיכוי':
             case 'שיוך ארגוני':
             case 'הערה':
+            case 'עריכה':
                 return $item[$column_name];
             default:
                 return print_r($item, true); //Show the whole array for troubleshooting purposes
@@ -170,6 +173,7 @@ class Courses_Members_List extends WP_List_Table
             'קופון' => __('קופון'),
             'זיכוי' => __('זיכוי'),
             'הערה' => __('הערה'),
+            'עריכה' => __('עריכה'),
         ];
 
         return $columns;
@@ -191,6 +195,7 @@ class Courses_Members_List extends WP_List_Table
             'מס׳ טרנזקציה' => array('מס׳ טרנזקציה', true),
             'קופון' => array('קופון', true),
             'הערה' => array('הערה', false),
+            'עריכה' => array('עריכה', false),
         );
 
         return $sortable_columns;
