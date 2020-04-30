@@ -18,6 +18,7 @@
 function foody_where_filter($where)
 {
     global $wpdb;
+    $char_limit = 50;
     if (is_search() || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more') || (isset($_POST['action']) && $_POST['action'] == 'foody_filter')))) {
         $author_id = 0;
         $ingredients = [];
@@ -30,6 +31,11 @@ function foody_where_filter($where)
             $search = str_replace("&#039;", "'", $search);
         }
         if ($search != '') {
+            // max chars => 50
+            if (isset($search) && mb_strlen($search) > $char_limit) {
+                $search = mb_substr($search, 0, $char_limit);
+                //str_replace($temp, $q['s'], $search);
+            }
             if (get_page_by_title($search, OBJECT, 'post') || get_page_by_title($search, OBJECT, 'foody_recipe')) {
                 $author_id = 0;
                 $ingredients = [];
