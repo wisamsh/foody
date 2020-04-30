@@ -87,9 +87,9 @@ $organizations_list = get_orginazations_list();
                         <option disabled selected value> -- בחר/י שיטת תשלום --</option>
                         <option value="ביט"> ביט</option>
                         <option value="כרטיס אשראי"> כרטיס אשראי</option>
-                        <option value="כרטיס אשראי"> ועד עובדים</option>
+                        <option value="ועד עובדים"> ועד עובדים</option>
                         <option value="buy me">buy me </option>
-                        <option value="כרטיס אשראי"> אחר</option>
+                        <option value="אחר"> אחר</option>
                     </select>
                 </div>
                 <hr>

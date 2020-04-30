@@ -53,7 +53,7 @@ function members_table_admin_page()
         $transaction_id = $_POST['transaction_id'];
         $coupon = $_POST['coupon'];
         $purchase_date = $_POST['purchase_date'];
-        $organization = isset( $_POST['organization'] ) ? $_POST['organization'] : '';
+        $organization = isset($_POST['organization']) ? $_POST['organization'] : '';
         $note = $_POST['note'];
 
         $send_data = $_POST['send_data'] == 'true' ? true : false;
@@ -73,23 +73,44 @@ function members_table_admin_page()
         $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, price_paid, organization, payment_method, transaction_id, coupon, purchase_date, note)
                 VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$price_paid','$organization','$payment_method','$transaction_id','$coupon','$purchase_date','$note')");
         echo "<script>location.replace('admin.php?page=foody-course-members%2Fcourse-members-manage.php');</script>";
-
-
     }
 
+    if (isset($_POST['update'])) {
+        $table_fields = ['member_email', 'first_name', 'last_name', 'phone', 'course_name', 'price_paid', 'payment_method', 'coupon', 'purchase_date', 'organization', 'note'];
+        $member_id = $_POST['member_id'];
 
+        $update_query = 'UPDATE ' . $table_name . ' SET ';
+        foreach ($table_fields as $table_field) {
+            if (isset($_POST[$table_field])) {
+                $update_query .= $table_field . "= " . "'" .$_POST[$table_field] . "'" . ',';
+            }
+        }
+
+        if(substr($update_query, -1) == ','){
+            $update_query = substr($update_query, 0, -1);
+        }
+
+        $update_query .= " WHERE member_id=".$member_id;
+//        $member_email = $_POST['member_email'];
+//        $first_name = $_POST['first_name'];
+//        $last_name = $_POST['last_name'];
+//        $phone = $_POST['phone'];
+//        $course_name = $_POST['course_name'];
+//        $price_paid = $_POST['course_price'];
+//        $payment_method = $_POST['payment_method'];
+//        $coupon = $_POST['coupon'];
+//        $purchase_date = $_POST['purchase_date'];
+//        $organization = isset($_POST['organization']) ? $_POST['organization'] : '';
+//        $note = $_POST['note'];
+//        $wpdb->query("UPDATE $table_name SET member_email='$member_email',first_name='$first_name',last_name='$last_name',phone='$phone', lat='$course_name', lng='$lng' WHERE id='$id'");
+        $wpdb->query($update_query);
+        echo "<script>location.replace('admin.php?page=foody-course-members%2Fcourse-members-manage.php');</script>";
+    }
     ?>
 
-    <!--    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
     <div class="container-fluid">
-
-        <?php
-        require 'members-list.php';
-        //require 'taxiUpdateForm.php';
-        ?>
-
+        <?php require 'members-list.php'; ?>
     </div>
-
     <?php
 }
 
@@ -101,11 +122,10 @@ function send_new_course_member_date($member_data)
         $body = create_courses_mail_body($member_data);
         $headers = array('Content-Type: text/html; charset=UTF-8');
 
-        $mail_sent = wp_mail( $to, $subject, $body, $headers );
-        if($mail_sent){
+        $mail_sent = wp_mail($to, $subject, $body, $headers);
+        if ($mail_sent) {
             //finish
-        }
-        else{
+        } else {
             // Error
         }
 
@@ -143,7 +163,8 @@ function update_course_member()
     require 'courses-members-update.php';
 }
 
-function get_courses_list(){
+function get_courses_list()
+{
     $query_courses = new WP_Query(array(
         'post_type' => 'foody_course',
         'posts_per_page' => -1,
@@ -153,16 +174,15 @@ function get_courses_list(){
 
     $courses_list = [];
     if (isset($query_courses->posts) && is_array($query_courses->posts)) {
-        foreach ($query_courses->posts as $id){
+        foreach ($query_courses->posts as $id) {
             $course_name = get_field('course_register_data_item_name', $id);
-            if(!empty($course_name)){
+            if (!empty($course_name)) {
                 // new course template
                 array_push($courses_list, $course_name);
-            }
-            else{
+            } else {
                 $course_name = get_field('course_name_html', $id);
                 // old course tamplate - html
-                if(!empty($course_name)) {
+                if (!empty($course_name)) {
                     // new course template
                     array_push($courses_list, $course_name);
                 }
@@ -172,7 +192,8 @@ function get_courses_list(){
     return $courses_list;
 }
 
-function get_orginazations_list(){
+function get_orginazations_list()
+{
     $query = new WP_Query(array(
         'post_type' => 'foody_organizations',
         'posts_per_page' => -1,
