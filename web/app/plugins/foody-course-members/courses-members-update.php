@@ -49,7 +49,7 @@ if (isset($_GET['update']) && $_GET['update'] && isset($_GET['id'])) {
                 <div class="col-1 offset-md-1 p-3">
                     <label for="member-email" class="font-weight-bold pl-2">מייל<span class="required-astrix">*</span></label>
                     <input class="form-control" name="member_email" id="member-email" type="email"
-                           value="<?php echo $email; ?> required">
+                           value="<?php echo $email; ?>" required>
                 </div>
                 <hr>
 
