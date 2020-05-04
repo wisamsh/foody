@@ -61,7 +61,7 @@ class Courses_Members_List extends WP_List_Table
                 'תאריך רכישה' => $purchase_date,
                 'זיכוי' => !empty($transaction_id) ? '<div style="cursor: pointer; text-decoration: underline; color: blue" onclick="getRefund()">לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
-                'עריכה' => '<div onclick="getUpdate('. $member_id .')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
+                'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
             );
         }
 
@@ -104,7 +104,7 @@ class Courses_Members_List extends WP_List_Table
                 'תאריך רכישה' => $purchase_date,
                 'זיכוי' => !empty($transaction_id) ? '<div href="" style="cursor: pointer; text-decoration: underline; color: blue" onclick="getRefund()">לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
-                'עריכה' => '<div onclick="getUpdate('. $member_id .')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
+                'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
             );
         }
 
@@ -228,25 +228,28 @@ class Courses_Members_List extends WP_List_Table
 
         $sortable = $this->get_sortable_columns();
 
-        // $this->_column_headers = array($columns, $hidden, $sortable);
-        $members_list = $this->get_courses_members();
-
         /* If the value is not NULL, do a search for it. */
         if (is_array($search)) {
             $members_list = $this->advanced_search($search);
         } elseif (isset($_POST['export_clicked']) && $_POST['export_clicked'] == 'true') {
-            if(isset($_POST['search'])){
+            if (isset($_POST['search'])) {
                 $export_query = $this->get_regular_search_query($_POST['search']);
-            }
-            else {
+            } else {
                 $export_query = $this->get_advanced_search_query($_POST);
             }
             Foody_courses_members_exporter::generate_xlsx($export_query);
         } else {
             /** regular search */
-            $search_query = $this->get_regular_search_query($search);
-            $members_list = $wpdb->get_results($search_query, ARRAY_A);
-            $members_list = $this->search_results_to_courses_members($members_list);
+            if (isset($_POST['s']) && !empty($search)) {
+                $search_query = $this->get_regular_search_query($search);
+                $members_list = $wpdb->get_results($search_query, ARRAY_A);
+                $members_list = $this->search_results_to_courses_members($members_list);
+            }
+            /** get all members */
+            else{
+                // $this->_column_headers = array($columns, $hidden, $sortable);
+                $members_list = $this->get_courses_members();
+            }
         }
 
         if ($this->record_count() != 0) {
@@ -330,7 +333,8 @@ class Courses_Members_List extends WP_List_Table
         return $search_query;
     }
 
-    private function get_regular_search_query($search){
+    private function get_regular_search_query($search)
+    {
         global $wpdb;
         $table_colomns = ['member_id', 'member_email', 'first_name', 'last_name', 'phone', 'marketing_status', 'course_name', 'price_paid', 'payment_method', 'transaction_id', 'coupon', 'purchase_date'];
         $table_name = $wpdb->prefix . 'foody_courses_members';

@@ -13,6 +13,7 @@ Author: Danielk
 defined('ABSPATH');
 require 'courses-members-export.php';
 require 'courses-members-ajax.php';
+require 'coupons-section/courses-coupons-export.php';
 
 //activation
 register_activation_hook(__FILE__, 'members_table_install');
@@ -27,11 +28,134 @@ function add_admin_page_content()
     add_submenu_page('foody-course-members/course-members-manage.php', 'הוסף משתמש חדש', 'הוסף חדש', 'administrator', 'add_new_member', 'add_new_member_page', 1);
     add_submenu_page('foody-course-members/course-members-manage.php', 'עדכון משתמש', '', 'administrator', 'update_course_member', 'update_course_member', 2);
 
+    // coupons system init
+    add_menu_page('רשימת קופונים', 'רשימת קופונים', 'administrator', 'coupons_table_admin_page', 'coupons_table_admin_page_func', 'dashicons-tickets');
+    add_submenu_page('coupons_table_admin_page', 'הוסף קופון חדש', 'הוסף חדש', 'administrator', 'add_new_coupon', 'add_new_coupon_page', 1);
+
+
 }
 
 function add_new_member_page()
 {
     require 'add_new_course_member.php';
+}
+
+function add_new_coupon_page()
+{
+    require 'coupons-section/add_new_coupon.php';
+}
+
+function coupons_table_admin_page_func()
+{
+    global $wpdb;
+    $is_general = false;
+    $table_name = $wpdb->prefix . 'foody_courses_coupons';
+
+    if (isset($_POST['new_coupon'])) {
+        $coupon_name = $_POST['coupon'];
+        $coupon_type = $_POST['coupon_type'];
+        $course_name = is_array($_POST['course_name']) ? get_courses_names($_POST['course_name']) : $_POST['course_name'];
+        $creation_date = $_POST['creation_date'];
+        $expiration_date = $_POST['expiration_date'];
+        $coupon_value = $_POST['coupon_value'];
+        $organization = isset($_POST['organization']) ? $_POST['organization'] : '';
+        $max_amount = $_POST['max_amount'];
+        $used_amount = 0;
+        $invoice_desc = $_POST['invoice_desc'];
+
+        /** add to coupons table */
+        $wpdb->query("INSERT INTO {$table_name} (coupon, coupon_type, course_name, creation_date, expiration_date, coupon_value, organization, max_amount, used_amount, invoice_desc)
+                VALUES('$coupon_name','$coupon_type','$course_name','$creation_date','$expiration_date','$coupon_value','$organization','$max_amount','$used_amount','$invoice_desc')");
+
+        $coupon_id = $wpdb->insert_id;
+
+        /** add to coupons_meta table */
+        switch ($coupon_type) {
+            case __('כללי'):
+                add_to_meta_table('general', ['coupon_id', 'coupon_code', 'course_id'], ['coupon_id' => $coupon_id, 'coupon_code' => $coupon_name, 'courses_ids' => $_POST['course_name']], $max_amount);
+                break;
+            case __('חח״ע'):
+                add_to_meta_table('unique', ['coupon_id', 'coupon_prefix', 'coupon_code', 'used'], ['coupon_id' => $coupon_id, 'coupon_prefix' => $coupon_name, 'used' => 0], $max_amount);
+                break;
+        }
+
+        echo "<script>location.replace('admin.php?page=coupons_table_admin_page');</script>";
+    }
+
+    if(isset($_POST['unique_coupons_id'])){
+        Foody_courses_coupons_exporter::generate_xlsx($_POST['unique_coupons_id']);
+    }
+
+    ?>
+    <div class="container-fluid">
+        <?php require 'coupons-section/coupons-list.php'; ?>
+    </div>
+    <?php
+}
+
+function get_courses_names($ids_list){
+    $courses_names = '';
+    $list_length = count($ids_list);
+
+    foreach ($ids_list as $index => $id){
+        $is_last_iteration = $list_length - 1 == $index;
+
+        $course_name = get_field('course_register_data_item_name', $id);
+        if (!empty($course_name)) {
+            // new course template
+            if($is_last_iteration){
+                $courses_names .= $course_name;
+            }
+            else{
+                $courses_names .= $course_name . ',';
+            }
+        } else {
+            $course_name = get_field('course_name_html', $id);
+            // old course template - html
+            if (!empty($course_name)) {
+                if($is_last_iteration){
+                    $courses_names .= $course_name;
+                }
+                else{
+                    $courses_names .= $course_name . ',';
+                }
+            }
+        }
+    }
+    return $courses_names;
+}
+
+function add_to_meta_table($table_type, $fields, $data, $amount)
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'foody_' . $table_type . '_coupons_meta';
+    $query_fields = '(' . implode(', ', $fields) . ')';
+    $insert_query = "INSERT INTO {$table_name} {$query_fields} VALUES ";
+
+    if ($table_type == 'unique') {
+        for ($i = 0; $i < $amount; $i++) {
+            $is_last_iteration = $amount - 1 == $i;
+            if ($is_last_iteration) {
+                // last iteration
+                $insert_query .= '(' . $data['coupon_id'] . ', ' . "'" . $data['coupon_prefix'] . "'" . ', ' . "'" . substr(md5(uniqid()), 16) . "'" . ', ' . $data['used'] . ');';
+            } else {
+                $insert_query .= '(' . $data['coupon_id'] . ', ' . "'" . $data['coupon_prefix'] . "'" . ', ' . "'" . substr(md5(uniqid()), 16) . "'" . ', ' . $data['used'] . '), ';
+            }
+        }
+    } else {
+        // general coupon
+        $num_of_ids = count($data['courses_ids']);
+        foreach ($data['courses_ids'] as $id => $course_id) {
+            if ($num_of_ids - 1 == $id) {
+                // last iteration
+                $insert_query .= '(' . $data['coupon_id'] . ', ' . "'" . $data['coupon_code'] . "'" . ', ' . $course_id . ');';
+            } else {
+                $insert_query .= '(' . $data['coupon_id'] . ', ' . "'" . $data['coupon_code'] . "'" . ', ' . $course_id . '), ';
+            }
+        }
+    }
+
+    return $wpdb->query($insert_query);
 }
 
 function members_table_admin_page()
@@ -82,27 +206,15 @@ function members_table_admin_page()
         $update_query = 'UPDATE ' . $table_name . ' SET ';
         foreach ($table_fields as $table_field) {
             if (isset($_POST[$table_field])) {
-                $update_query .= $table_field . "= " . "'" .$_POST[$table_field] . "'" . ',';
+                $update_query .= $table_field . "= " . "'" . $_POST[$table_field] . "'" . ',';
             }
         }
 
-        if(substr($update_query, -1) == ','){
+        if (substr($update_query, -1) == ',') {
             $update_query = substr($update_query, 0, -1);
         }
 
-        $update_query .= " WHERE member_id=".$member_id;
-//        $member_email = $_POST['member_email'];
-//        $first_name = $_POST['first_name'];
-//        $last_name = $_POST['last_name'];
-//        $phone = $_POST['phone'];
-//        $course_name = $_POST['course_name'];
-//        $price_paid = $_POST['course_price'];
-//        $payment_method = $_POST['payment_method'];
-//        $coupon = $_POST['coupon'];
-//        $purchase_date = $_POST['purchase_date'];
-//        $organization = isset($_POST['organization']) ? $_POST['organization'] : '';
-//        $note = $_POST['note'];
-//        $wpdb->query("UPDATE $table_name SET member_email='$member_email',first_name='$first_name',last_name='$last_name',phone='$phone', lat='$course_name', lng='$lng' WHERE id='$id'");
+        $update_query .= " WHERE member_id=" . $member_id;
         $wpdb->query($update_query);
         echo "<script>location.replace('admin.php?page=foody-course-members%2Fcourse-members-manage.php');</script>";
     }
@@ -163,7 +275,7 @@ function update_course_member()
     require 'courses-members-update.php';
 }
 
-function get_courses_list()
+function get_courses_list($for_coupons = false)
 {
     $query_courses = new WP_Query(array(
         'post_type' => 'foody_course',
@@ -178,13 +290,21 @@ function get_courses_list()
             $course_name = get_field('course_register_data_item_name', $id);
             if (!empty($course_name)) {
                 // new course template
-                array_push($courses_list, $course_name);
+                if ($for_coupons) {
+                    $courses_list[$id] = $course_name;
+                } else {
+                    array_push($courses_list, $course_name);
+                }
             } else {
                 $course_name = get_field('course_name_html', $id);
                 // old course tamplate - html
                 if (!empty($course_name)) {
                     // new course template
-                    array_push($courses_list, $course_name);
+                    if ($for_coupons) {
+                        $courses_list[$id] = $course_name;
+                    } else {
+                        array_push($courses_list, $course_name);
+                    }
                 }
             }
         }
