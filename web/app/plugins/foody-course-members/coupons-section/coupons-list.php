@@ -151,3 +151,8 @@ $has_filters = false;
 <!--    </div>-->
 <!--</form>-->
 </div>
+<script type="application/javascript">
+    function getUpdate(id) {
+        window.location = 'http://foody-local.co.il/wp/wp-admin/admin.php?page=update_coupon&update=true&id='+id;
+    }
+</script>

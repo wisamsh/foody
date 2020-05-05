@@ -56,6 +56,7 @@ class Coupons_List extends WP_List_Table
                 'מספר קופונים' => $max_amount,
                 'נוצלו' => $used_amount,
                 'תיאור לחשבונית' => $invoice_desc,
+                'עריכה' => '<div onclick="getUpdate(' . $coupon_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
             );
 
             if($coupon_type == 'חח״ע'){
@@ -140,6 +141,7 @@ class Coupons_List extends WP_List_Table
             case 'נוצלו':
             case 'תיאור לחשבונית':
             case 'ייצא קופונים':
+            case 'עריכה':
                 return $item[$column_name];
             default:
                 return print_r($item, true); //Show the whole array for troubleshooting purposes
@@ -169,6 +171,7 @@ class Coupons_List extends WP_List_Table
             'נוצלו' => __('נוצלו'),
             'תיאור לחשבונית' => __('תיאור לחשבונית'),
             'ייצא קופונים' => __('ייצא קופונים'),
+            'עריכה' => __('עריכה'),
         ];
 
         return $columns;

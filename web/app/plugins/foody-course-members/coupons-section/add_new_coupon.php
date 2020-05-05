@@ -65,7 +65,7 @@ $current_date_time = $datetime->format('Y-m-d');
                 <div class="col-1 p-3">
                     <label for="coupon-value" class="font-weight-bold pl-2">ערך קופון<span
                                 class="required-astrix">*</span></label>
-                    <input class="form-control" name="coupon_value" id="coupon-value" type="number">
+                    <input class="form-control" name="coupon_value" id="coupon-value" type="number" min="1">
                 </div>
                 <hr>
                 <div class="col-2 p-3">
