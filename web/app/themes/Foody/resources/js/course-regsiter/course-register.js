@@ -3,11 +3,11 @@
  */
 
 jQuery(document).ready(($) => {
-
-
     let textNormalizer = function (value) {
         return $.trim(value);
     };
+
+    $('#redeem-coupon').on('click', redeemCoupon);
 
     $('#course-register-form .checkbox').on('click', function () {
         let $input = $(this).prev('input[type="checkbox"]');
@@ -79,11 +79,13 @@ jQuery(document).ready(($) => {
                 let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
                 if (termsAccepted && email && firstName && lastName && phone && courseName) {
                     // temp => only send data to members plugin
-                    // todo: add supprot for bit pay
+                    // todo: here - add support for bit pay
 
+                    //after bit payment confirmed
                     let data_of_member = {
                         'email': email,
-                        'name': firstName + ' ' + lastName,
+                        'first_name': firstName ,
+                        'last_name': lastName ,
                         'phone': phone,
                         'date': get_current_date(),
                         'enable_marketing': enableMarketing,
@@ -94,26 +96,12 @@ jQuery(document).ready(($) => {
                         'coupon': 'test' // dummy,  todo: get real coupon from coupon and pricing table
                     };
 
-                    // jQuery.ajax({
-                    //     type: "POST",
-                    //     url: admin_url,
-                    //     dataType:"json",
-                    //     contentType: "application/json; charset=utf-8",
-                    //     data: {
-                    //         action: 'data_custom_ajax',
-                    //         memberData: JSON.stringify(data_of_member),
-                    //     },
-                    //     cache: false,
-                    //     success: function(data){
-                    //         alert('good');
-                    //     }
-                    //
-                    // });
+
 
                     foodyAjax({
                         action: 'foody_add_course_member_to_table',
                         data: {
-                            memberData: JSON.stringify(data_of_member),
+                            memberData: data_of_member,
                         }
                     }, function (
                     ) {
@@ -149,14 +137,6 @@ jQuery(document).ready(($) => {
                         'padding-top: 3%;\n' +
                         'border: none;" scrolling="no"></iframe>';
 
-
-                    // foodyAjax({
-                    //     action: 'foody_sign_to_newsletter_by_email',
-                    //     data: {
-                    //         marketing: $('.newsletter-and-terms #newsletter').prop('checked'),
-                    //         email: email
-                    //     }
-                    // }, function () {});
 
                     $('.cover-section').remove();
                     $('.bottom-image').remove();
@@ -197,10 +177,10 @@ jQuery(document).ready(($) => {
 });
 
 function get_current_date() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
 
     return  yyyy+'-'+mm+'-'+dd;
 }
@@ -229,3 +209,21 @@ function validate_fields(email, firstName, lastName, phone, termsAccepted) {
         }
     }
 }
+
+function redeemCoupon() {
+    debugger
+    let couponCode = $('#coupon-input').val();
+    if(couponCode.length){
+        foodyAjax({
+            action: 'foody_get_coupon_value',
+            data: {
+                coupon_code: couponCode,
+                course_name: $(this).attr('data-course-name')
+            }
+        }, function() {
+
+        });
+    }
+}
+
+

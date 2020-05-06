@@ -279,9 +279,52 @@
           }
         }
 
-        .coupon-and-price-container {
-          padding: 0 1%;
-          margin: 3% auto;
+        // no coupon
+        //.coupon-and-price-container {
+        //  padding: 0 1%;
+        //  margin: 3% auto;
+        //}
+
+        // have coupon
+        .coupon-and-price-container{
+          align-self: center;
+          margin: 5% 0;
+          width: 50%;
+
+          .coupon-and-price{
+            margin: 9% 0;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            text-align: center;
+            line-height: 1.5;
+
+            .coupon-input-container{
+              display: flex;
+              flex-direction: row;
+              margin-top: 3%;
+              justify-content: space-evenly;
+
+              span{
+                padding: 0;
+              }
+
+              #redeem-coupon{
+                border: 1px solid #ED3D48;
+                border-radius: 5px;
+                width: 51%;
+                text-align: center;
+                display: inline-block;
+                background: #ED3D48;
+                color: white;
+                font-weight: bold;
+                margin: 0 2%;
+                padding: 2%;
+                position: relative;
+                font-size: 13px;
+              }
+            }
+          }
         }
 
         .newsletter-and-terms {

@@ -59,10 +59,9 @@ class Coupons_List extends WP_List_Table
                 'עריכה' => '<div onclick="getUpdate(' . $coupon_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
             );
 
-            if($coupon_type == 'חח״ע'){
-                $coupons_list[$coupon_id]['ייצא קופונים'] = '<form method="post" id="export-unique-coupons-form"><input type="text" id="unique-coupons-id" name="unique_coupons_id" value="'. $coupon_id .'" hidden><input type="submit" id="export-unique-coupons-submit" class="button" value="ייצא קופונים"></form>';
-            }
-            else{
+            if ($coupon_type == 'חח״ע') {
+                $coupons_list[$coupon_id]['ייצא קופונים'] = '<form method="post" id="export-unique-coupons-form"><input type="text" id="unique-coupons-id" name="unique_coupons_id" value="' . $coupon_id . '" hidden><input type="submit" id="export-unique-coupons-submit" class="button" value="ייצא קופונים"></form>';
+            } else {
                 $coupons_list[$coupon_id]['ייצא קופונים'] = '';
             }
         }
@@ -71,48 +70,49 @@ class Coupons_List extends WP_List_Table
         return $coupons_list;
     }
 
-//    public function search_results_to_courses_members($search_results)
-//    {
-//        $members_list = [];
-//
-//        foreach ($search_results as $search_result) {
-//            $member_id = $search_result['member_id'];
-//            $member_email = $search_result['member_email'];
-//            $full_name = $search_result['first_name'] . ' ' . $search_result['last_name'];
-//            $phone = $search_result['phone'];
-//            $enable_marketing = $search_result['marketing_status'];
-//            $course_name = $search_result['course_name'];
-//            $price_paid = $search_result['price_paid'];
-//            $payment_method = $search_result['payment_method'];
-//            $transaction_id = $search_result['transaction_id'];
-//            $coupon = $search_result['coupon'];
-//            $purchase_date = $search_result['purchase_date'];
-//            $organization = $search_result['organization'];
-//            $note = $search_result['note'];
-//
-//
-//            $members_list[$member_id] = array(
-//                'ID' => $member_id,
-//                'מייל' => $member_email,
-//                'שם' => $full_name,
-//                'טלפון' => $phone,
-//                'דיוור' => $enable_marketing ? __('אושר') : __('לא אושר'),
-//                'שם הקורס' => $course_name,
-//                'סכום ששולם' => $price_paid,
-//                'שיוך ארגוני' => $organization,
-//                'סוג תשלום' => $payment_method,
-//                'מס׳ טרנזקציה' => $transaction_id,
-//                'קופון' => $coupon,
-//                'תאריך רכישה' => $purchase_date,
-//                'זיכוי' => !empty($transaction_id) ? '<div href="" style="cursor: pointer; text-decoration: underline; color: blue" onclick="getRefund()">לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
-//                'הערה' => $note,
-//                'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
-//            );
-//        }
-//
-//        $this->members_count = count($members_list);
-//        return $members_list;
-//    }
+    public function search_results_to_coupons($search_results)
+    {
+        $coupons_list = [];
+
+        foreach ($search_results as $search_result) {
+            $coupon_id = $search_result['coupon_id'];
+            $coupon_name = $search_result['coupon'];
+            $coupon_type = $search_result['coupon_type'];
+            $course_name = $search_result['course_name'];
+            $creation_date = $search_result['creation_date'];
+            $expiration_date = $search_result['expiration_date'];
+            $coupon_value = $search_result['coupon_value'];
+            $organization = $search_result['organization'];
+            $max_amount = $search_result['max_amount'];
+            $used_amount = $search_result['used_amount'];
+            $invoice_desc = $search_result['invoice_desc'];
+
+
+            $coupons_list[$coupon_id] = array(
+                'ID' => $coupon_id,
+                'קופון' => $coupon_name,
+                'סוג קופון' => $coupon_type,
+                'שם קורס' => $course_name,
+                'תאריך יצירה' => $creation_date,
+                'תאריך תפוגה' => $expiration_date,
+                'ערך קופון' => $coupon_value,
+                'שיוך אגוני' => $organization,
+                'מספר קופונים' => $max_amount,
+                'נוצלו' => $used_amount,
+                'תיאור לחשבונית' => $invoice_desc,
+                'עריכה' => '<div onclick="getUpdate(' . $coupon_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
+            );
+
+            if ($coupon_type == 'חח״ע') {
+                $coupons_list[$coupon_id]['ייצא קופונים'] = '<form method="post" id="export-unique-coupons-form"><input type="text" id="unique-coupons-id" name="unique_coupons_id" value="' . $coupon_id . '" hidden><input type="submit" id="export-unique-coupons-submit" class="button" value="ייצא קופונים"></form>';
+            } else {
+                $coupons_list[$coupon_id]['ייצא קופונים'] = '';
+            }
+        }
+
+        $this->coupons_count = count($coupons_list);
+        return $coupons_list;
+    }
 
 
     public function record_count()
@@ -158,7 +158,6 @@ class Coupons_List extends WP_List_Table
     function get_columns()
     {
         $columns = [
-            //'cb' => '<input type="checkbox" />',
             'ID' => 'ID',
             'קופון' => __('קופון'),
             'סוג קופון' => __('סוג קופון'),
@@ -227,22 +226,13 @@ class Coupons_List extends WP_List_Table
         // $this->_column_headers = array($columns, $hidden, $sortable);
         $coupons_list = $this->get_coupons();
 
-        /* If the value is not NULL, do a search for it. */
-//        if (is_array($search)) {
-//            $members_list = $this->advanced_search($search);
-//        } elseif (isset($_POST['export_clicked']) && $_POST['export_clicked'] == 'true') {
-//            if (isset($_POST['search'])) {
-//                $export_query = $this->get_regular_search_query($_POST['search']);
-//            } else {
-//                $export_query = $this->get_advanced_search_query($_POST);
-//            }
-//            Foody_courses_members_exporter::generate_xlsx($export_query);
-//        } else {
-//            /** regular search */
-//            $search_query = $this->get_regular_search_query($search);
-//            $members_list = $wpdb->get_results($search_query, ARRAY_A);
-//            $members_list = $this->search_results_to_courses_members($members_list);
-//        }
+        if ($search) {
+            /** regular search */
+            $search_query = $this->get_regular_search_query($search);
+            $coupons_list = $wpdb->get_results($search_query, ARRAY_A);
+            $coupons_list = $this->search_results_to_coupons($coupons_list);
+        }
+
 
         if ($this->record_count() != 0) {
             usort($coupons_list, array(&$this, 'usort_reorder'));
@@ -328,8 +318,8 @@ class Coupons_List extends WP_List_Table
     private function get_regular_search_query($search)
     {
         global $wpdb;
-        $table_colomns = ['member_id', 'member_email', 'first_name', 'last_name', 'phone', 'marketing_status', 'course_name', 'price_paid', 'payment_method', 'transaction_id', 'coupon', 'purchase_date'];
-        $table_name = $wpdb->prefix . 'foody_courses_members';
+        $table_colomns = ['coupon_id', 'coupon', 'coupon_type', 'course_name', 'creation_date', 'expiration_date', 'coupon_value', 'organization', 'max_amount', 'used_amount', 'invoice_desc'];
+        $table_name = $wpdb->prefix . 'foody_courses_coupons';
 
         $search_words = [];
         $num_of_columns = count($table_colomns);
@@ -341,23 +331,10 @@ class Coupons_List extends WP_List_Table
         $search_query = "SELECT * FROM {$table_name} WHERE ";
         /* Notice how you can search multiple columns for your search term easily, and return one data set */
         foreach ($table_colomns as $index => $table_colomn) {
-            if ($table_colomn == 'first_name' || $table_colomn == 'last_name') {
-                if (empty($search_words)) {
-                    // only one word
-                    array_push($search_words, $search);
-                }
-
-                foreach ($search_words as $search_word) {
-                    $search_query .= $table_colomn . " LIKE '%%%{$search_word}%%' OR ";
-                }
-
+            if ($num_of_columns - 1 > $index) {
+                $search_query .= $table_colomn . " LIKE '%%%{$search}%%' OR ";
             } else {
-
-                if ($num_of_columns - 1 > $index) {
-                    $search_query .= $table_colomn . " LIKE '%%%{$search}%%' OR ";
-                } else {
-                    $search_query .= $table_colomn . " LIKE '%%%{$search}%%'";
-                }
+                $search_query .= $table_colomn . " LIKE '%%%{$search}%%'";
             }
         }
 

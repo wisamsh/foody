@@ -13,6 +13,7 @@ Author: Danielk
 defined('ABSPATH');
 require 'courses-members-export.php';
 require 'courses-members-ajax.php';
+require 'coupons-section/coupons-ajax.php';
 require 'coupons-section/courses-coupons-export.php';
 
 //activation
@@ -315,21 +316,15 @@ function send_new_course_member_date($member_data)
         $body = create_courses_mail_body($member_data);
         $headers = array('Content-Type: text/html; charset=UTF-8');
 
-        $mail_sent = wp_mail($to, $subject, $body, $headers);
-        if ($mail_sent) {
-            //finish
-        } else {
-            // Error
-        }
-
+        return wp_mail($to, $subject, $body, $headers);
     } else {
-        // Error
+        return false;
     }
 }
 
 function create_courses_mail_body($member_data)
 {
-    $enable_marketing_text = $member_data['$enable_marketing'] ? __('מאשר קבלת דואר') : __('לא מאשר קבלת דואר');
+    $enable_marketing_text = $member_data['enable_marketing'] ? __('מאשר קבלת דואר') : __('לא מאשר קבלת דואר');
 
     $mail_body = '<p>';
     $mail_body .= 'querystring__UserEmail: ' . $member_data['phone'];

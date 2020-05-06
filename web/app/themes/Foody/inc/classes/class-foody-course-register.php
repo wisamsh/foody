@@ -185,6 +185,7 @@ class Foody_Course_register
 
     private function get_form($course_price, $coupon_text)
     {
+        $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
         $form_container = '<div class="container-fluid" <div class="row"><form id="course-register-form" action="" class="row">';
 
         $form_fields = [
@@ -204,8 +205,16 @@ class Foody_Course_register
         }
 
         $price_div = '<span class="price-line">' . __('מחיר הקורס ') . __('₪') . $course_price . '</span>';
+        /** no coupon insert **/
         $coupon_div = $coupon_text !== false ? '<span class="coupon-line">' . $coupon_text . '</span>' : '';
         $coupon_and_price_div = '<div class="coupon-and-price-container">' . $price_div . $coupon_div . '</div>';
+        /** end -  no coupon insert **/
+
+        /** with coupon insert **/
+        $coupon_div = '<span class="coupon-line">' . __('הכנס קוד קופון') . '</span><div class="coupon-input-container"><input type="text" id="coupon-input" name="coupon_input"><div name="redeem_coupon" id="redeem-coupon" data-course-name="'. $course_name .'">'. __('ממש קופון') .'</div></div>';
+        $coupon_and_price_div = '<div class="coupon-and-price-container"><div class="coupon-and-price"> ' . $price_div . $coupon_div . '</div></div>';
+        /** end -  with coupon insert **/
+
         $newsletter_terms_checkboxes = $this->get_newsletter_terms_checkboxes();
         $buttons = $this->get_buttons_section();
 
