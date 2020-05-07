@@ -54,9 +54,10 @@ function coupons_table_admin_page_func()
         $coupon_name = $_POST['coupon'];
         $coupon_type = $_POST['coupon_type'];
         $course_name = is_array($_POST['course_name']) ? get_courses_names($_POST['course_name']) : $_POST['course_name'];
+        $courses_ids = is_array($_POST['course_name']) ? implode(',', $_POST['course_name']) : implode(',', [$_POST['course_name']]);
         $creation_date = $_POST['creation_date'];
         $expiration_date = $_POST['expiration_date'];
-        $coupon_value = $_POST['coupon_value'];
+        $coupon_value = $_POST['percentages'] ? $_POST['coupon_value'].'%' :  $_POST['coupon_value'];
         $organization = isset($_POST['organization']) ? $_POST['organization'] : '';
         $max_amount = $_POST['max_amount'];
         $used_amount = 0;
@@ -74,7 +75,7 @@ function coupons_table_admin_page_func()
                 add_to_meta_table('general', ['coupon_id', 'coupon_code', 'course_id'], ['coupon_id' => $coupon_id, 'coupon_code' => $coupon_name, 'courses_ids' => $_POST['course_name']], $max_amount);
                 break;
             case __('חח״ע'):
-                add_to_meta_table('unique', ['coupon_id', 'coupon_prefix', 'coupon_code', 'used'], ['coupon_id' => $coupon_id, 'coupon_prefix' => $coupon_name, 'used' => 0], $max_amount);
+                add_to_meta_table('unique', ['coupon_id', 'coupon_prefix', 'coupon_code', 'used', 'courses_ids'], ['coupon_id' => $coupon_id, 'coupon_prefix' => $coupon_name, 'used' => 0, 'courses_ids' => $courses_ids], $max_amount);
                 break;
         }
 
@@ -86,10 +87,12 @@ function coupons_table_admin_page_func()
     }
 
     if (isset($_POST['update'])) {
-        $table_fields = ['expiration_date', 'coupon_value', 'max_amount', 'invoice_desc'];
+        $table_fields = ['expiration_date', 'course_name','coupon_value', 'max_amount', 'invoice_desc'];
         $coupon_id = $_POST['coupon_id'];
         $new_coupon_amount = $_POST['max_amount'];
         $coupons = $wpdb->get_results("SELECT * FROM $table_name WHERE coupon_id='$coupon_id'");
+        $course_name = is_array($_POST['course_name']) ? get_courses_names($_POST['course_name']) : $_POST['course_name'];
+        $courses_ids = is_array($_POST['course_name']) ? implode(',', $_POST['course_name']) : implode(',', [$_POST['course_name']]);
 
         foreach ($coupons as $coupon) {
             $old_coupon_amount = $coupon->max_amount;
@@ -98,10 +101,16 @@ function coupons_table_admin_page_func()
             $coupon_name = $coupon->coupon;
         }
 
-
         $update_query = 'UPDATE ' . $table_name . ' SET ';
         foreach ($table_fields as $table_field) {
-            if (isset($_POST[$table_field])) {
+            if($table_field == 'coupon_value'){
+                $coupon_value = $_POST['percentages'] ? $_POST['coupon_value'].'%' :  $_POST['coupon_value'];
+                $update_query .= $table_field . "= " . "'" . $coupon_value . "'" . ',';
+            }
+            elseif ($table_field == 'course_name'){
+                $update_query .= $table_field . "= " . "'" . $course_name . "'" . ',';
+            }
+            elseif (isset($_POST[$table_field])) {
                 $update_query .= $table_field . "= " . "'" . $_POST[$table_field] . "'" . ',';
             }
         }
@@ -115,18 +124,30 @@ function coupons_table_admin_page_func()
 
 
         /** add to coupons_meta table */
+        $amount_delta = get_the_delta_of_amounts($old_coupon_amount, $new_coupon_amount, $used_coupon_amount);
         if ($coupon_type == 'חח״ע') {
-            $amount_delta = get_the_delta_of_amounts($old_coupon_amount, $new_coupon_amount, $used_coupon_amount);
+            $unique_coupons_table = $wpdb->prefix . 'foody_unique_coupons_meta';
             if ($amount_delta['delta'] > 0) {
                 switch ($amount_delta['action']) {
                     case 'delete':
                         remove_meta_from_table('unique', ['coupon_id' => $coupon_id, 'coupon_prefix' => $coupon_name], $amount_delta['delta']);
                         break;
                     case 'insert':
-                        add_to_meta_table('unique', ['coupon_id', 'coupon_prefix', 'coupon_code', 'used'], ['coupon_id' => $coupon_id, 'coupon_prefix' => $coupon_name, 'used' => 0], $amount_delta['delta']);
+                        add_to_meta_table('unique', ['coupon_id', 'coupon_prefix', 'coupon_code', 'used','courses_ids'], ['coupon_id' => $coupon_id, 'coupon_prefix' => $coupon_name, 'used' => 0, 'courses_ids' => $courses_ids], $amount_delta['delta']);
                         break;
                 }
             }
+            $courses_ids_update_query = "UPDATE {$unique_coupons_table} SET courses_ids = '".$courses_ids. "' WHERE coupon_id = ".$coupon_id;
+            $wpdb->query($courses_ids_update_query);
+        }
+        else{
+            // general coupons table
+            //delete all prev db rows for coupon
+            $general_coupons_table = $wpdb->prefix . 'foody_general_coupons_meta';
+            $delete_query = "DELETE FROM  {$general_coupons_table} WHERE coupon_id=".$coupon_id;
+            $wpdb->query($delete_query);
+
+            add_to_meta_table('general', ['coupon_id', 'coupon_code', 'course_id'], ['coupon_id' => $coupon_id, 'coupon_code' => $coupon_name, 'courses_ids' => $_POST['course_name']], $amount_delta['delta']);
         }
 
         echo "<script>location.replace('admin.php?page=coupons_table_admin_page');</script>";
@@ -203,9 +224,9 @@ function add_to_meta_table($table_type, $fields, $data, $amount)
             $is_last_iteration = $amount - 1 == $i;
             if ($is_last_iteration) {
                 // last iteration
-                $insert_query .= '(' . $data['coupon_id'] . ', ' . "'" . $data['coupon_prefix'] . "'" . ', ' . "'" . substr(md5(uniqid()), 16) . "'" . ', ' . $data['used'] . ');';
+                $insert_query .= '(' . $data['coupon_id'] . ', ' . "'" . $data['coupon_prefix'] . "'" . ', ' . "'" . substr(md5(uniqid()), 16) . "'" . ', ' . $data['used'] . ', ' . "'" . $data['courses_ids'] . "'". ');';
             } else {
-                $insert_query .= '(' . $data['coupon_id'] . ', ' . "'" . $data['coupon_prefix'] . "'" . ', ' . "'" . substr(md5(uniqid()), 16) . "'" . ', ' . $data['used'] . '), ';
+                $insert_query .= '(' . $data['coupon_id'] . ', ' . "'" . $data['coupon_prefix'] . "'" . ', ' . "'" . substr(md5(uniqid()), 16) . "'" . ', ' . $data['used']  . ', ' . "'" . $data['courses_ids'] . "'". '), ';
             }
         }
     } else {

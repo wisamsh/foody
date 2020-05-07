@@ -30,7 +30,6 @@ $current_date_time = $datetime->format('Y-m-d');
                     <input class="form-control" name="coupon" id="coupon" type="text" required>
                 </div>
                 <hr>
-
                 <div class="col-1 p-3">
                     <label for="coupon-type" class="font-weight-bold pl-2">סוג קופון<span
                                 class="required-astrix">*</span></label>
@@ -41,25 +40,35 @@ $current_date_time = $datetime->format('Y-m-d');
                     </select>
                 </div>
                 <hr id="coupon-type-hr">
-<!--                <div class="col-2 p-3">-->
-<!--                    <label for="course-name" class="font-weight-bold pl-2" style="margin-left: 2%">שם קורס<span-->
-<!--                                class="required-astrix">*</span></label>-->
-<!--                    <select id="course-name" name="course_name[]"  class="selectpicker" multiple required>-->
-<!--                        --><?php
-//                        if (!empty($courses_list)) {
-//                            echo '<option disabled value> -- בחר/י קורס/ים -- </option>';
-//                            foreach ($courses_list as $id => $course_name) {
-//                                echo '<option value="' . $id . '" >' . $course_name . '</option>';
-//                            }
-//                        }
-//                        ?>
-<!--                    </select>-->
-<!--                </div>-->
-<!--                <hr>-->
+                <div class="col-2 p-3">
+                    <label for="course-name" class="font-weight-bold pl-2" style="margin-left: 2%">שם קורס<span
+                                class="required-astrix">*</span></label>
+                    <select id="course-name" name="course_name[]"  class="selectpicker" multiple required>
+                        <?php
+                        if (!empty($courses_list)) {
+                            echo '<option disabled value> -- בחר/י קורס/ים -- </option>';
+                            foreach ($courses_list as $id => $course_name) {
+                                echo '<option value="' . $id . '" >' . $course_name . '</option>';
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <hr>
                 <div class="col-1 offset-md-1 p-3">
                     <label for="expiration-date" class="font-weight-bold pl-2">תאריך תפוגה<span class="required-astrix">*</span></label>
                     <input class="form-control" name="expiration_date" id="expiration-date" type="date"
                            value="<?php echo $current_date_time; ?>" required>
+                </div>
+                <hr>
+                <div class="col-2 p-3" style="display: flex; flex-direction: column">
+                    <h5 style="text-decoration: underline">סוג ערך קופון<span class="required-astrix">*</span></h5>
+                    <label style="margin-left: 2%;">אחוז
+                        <input type="radio" name="percentages" value="true" required="true"/>
+                    </label>
+                    <label style="margin-left: 2%">שקלים
+                        <input type="radio" name="percentages" value="false"/>
+                    </label>
                 </div>
                 <hr>
                 <div class="col-1 p-3">
@@ -88,12 +97,6 @@ $current_date_time = $datetime->format('Y-m-d');
                     <input class="form-control" name="max_amount" id="max-amount" type="number" required>
                 </div>
                 <hr>
-<!--                <div class="col-2 p-3">-->
-<!--                    <label for="used-amount" class="font-weight-bold pl-2">קופונים ששומשו<span-->
-<!--                                class="required-astrix">*</span></label>-->
-<!--                    <input class="form-control" name="used_amount" id="used-amount" type="number" required>-->
-<!--                </div>-->
-<!--                <hr>-->
                 <div class="col-2 p-3">
                     <label for="invoice-desc" class="font-weight-bold pl-2">תיאור לחשבונית<span class="required-astrix">*</span></label>
                     <input class="form-control" name="invoice_desc" id="invoice-desc" type="text" required>
@@ -116,20 +119,20 @@ $current_date_time = $datetime->format('Y-m-d');
     <script type="text/javascript">
         jQuery(document).ready(function () {
 
-            $('#coupon-type').on('change', function () {
-                let val  = $(this).val();
-                if(val == 'כללי'){
-                    create_select_courses_dropdown(true);
-                }
-                else if(val == 'חח״ע'){
-                    create_select_courses_dropdown(false);
-                }
-                else{
-                    if($('#course-name').length){
-                        $('#course-name').remove();
-                    }
-                }
-            });
+            // $('#coupon-type').on('change', function () {
+            //     let val  = $(this).val();
+            //     if(val == 'כללי'){
+            //         create_select_courses_dropdown(true);
+            //     }
+            //     else if(val == 'חח״ע'){
+            //         create_select_courses_dropdown(true);
+            //     }
+            //     else{
+            //         if($('#course-name').length){
+            //             $('#course-name').remove();
+            //         }
+            //     }
+            // });
         });
 
         function create_select_courses_dropdown(is_multi) {
