@@ -1,7 +1,7 @@
 /**
  * Created by moveosoftware on 10/9/18.
  */
-
+let FoodyLoader = require('../common/foody-loader');
 jQuery(document).ready(($) => {
     let textNormalizer = function (value) {
         return $.trim(value);
@@ -211,16 +211,30 @@ function validate_fields(email, firstName, lastName, phone, termsAccepted) {
 }
 
 function redeemCoupon() {
-    debugger
+    let foodyLoader = new FoodyLoader({container: $('#course-register-form')});
     let couponCode = $('#coupon-input').val();
     if(couponCode.length){
+        foodyLoader.attach();
         foodyAjax({
             action: 'foody_get_coupon_value',
             data: {
-                coupon_code: couponCode,
+                course_id: $(this).attr('data-course-id'),
+                coupon_code: couponCode.trim(),
                 course_name: $(this).attr('data-course-name')
             }
-        }, function() {
+        }, function(err, data) {
+            if (err) {
+                console.log(err)
+            }
+            else {
+                if(data.data.new_price){
+                    let discounted_price = Math.floor(data.data.new_price);
+                    $('#coupon-input')[0].value = 0;
+                    $('#course-price')[0].innerText = discounted_price;
+                    foodyLoader.detach();
+
+                }
+            }
 
         });
     }
