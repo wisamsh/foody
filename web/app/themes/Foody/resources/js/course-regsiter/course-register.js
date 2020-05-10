@@ -229,10 +229,9 @@ function redeemCoupon() {
             else {
                 if(data.data.new_price){
                     let discounted_price = Math.floor(data.data.new_price);
-                    $('#coupon-input')[0].value = 0;
+                    $('#coupon-input')[0].value = '';
                     $('#course-price')[0].innerText = discounted_price;
                     foodyLoader.detach();
-
                 }
             }
 
