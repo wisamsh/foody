@@ -762,13 +762,11 @@ and (meta_key ='first_name' or meta_key = 'last_name')";
                 $last_full_name = $first_name . ' ';
                 $last_full_name_reversed = ' ' . $first_name;
             } elseif ($authors_result->meta_key == 'last_name') {
-                if (!empty($authors_result->meta_value)) {
                     $last_name = strpos($authors_result->meta_value, "'") !=false ? str_replace(["'", "\'", "\\"], "", $authors_result->meta_value) : $authors_result->meta_value;
                     $last_full_name .= $last_name;
                     $last_full_name_reversed = $last_name . $last_full_name_reversed;
                     $insert_query .= "'" . $last_name . "', '" . $last_full_name . "', '" . $last_full_name_reversed . "'),";
                     $last_full_name = '';
-                }
             }
         }
         $last_char = substr($insert_query, -1);
