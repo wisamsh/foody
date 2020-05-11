@@ -757,13 +757,13 @@ and (meta_key ='first_name' or meta_key = 'last_name')";
 
         foreach ($authors_results as $index => $authors_result) {
             if ($authors_result->meta_key == 'first_name') {
-                $first_name = $esc_name = esc_sql($authors_result->meta_value);
+                $first_name = strpos($authors_result->meta_value, "'") !=false ? str_replace(["'", "\'", "\\"], "׳", $authors_result->meta_value) : $authors_result->meta_value;
                 $insert_query .= "(" . $authors_result->user_id . ",'" .$first_name . "', ";
                 $last_full_name = $first_name . ' ';
                 $last_full_name_reversed = ' ' . $first_name;
             } elseif ($authors_result->meta_key == 'last_name') {
                 if (!empty($authors_result->meta_value)) {
-                    $last_name = $esc_name = esc_sql($authors_result->meta_value);
+                    $last_name = strpos($authors_result->meta_value, "'") !=false ? str_replace(["'", "\'", "\\"], "׳", $authors_result->meta_value) : $authors_result->meta_value;
                     $last_full_name .= $last_name;
                     $last_full_name_reversed = $last_name . $last_full_name_reversed;
                     $insert_query .= "'" . $last_name . "', '" . $last_full_name . "', '" . $last_full_name_reversed . "'),";
@@ -792,14 +792,15 @@ function foody_add_new_author_to_authors_table()
         $first_name = isset($_POST['first_name']) ? $_POST['first_name'] : '';
         $last_name = isset($_POST['last_name']) ? $_POST['last_name'] : '';
 
-        $first_name =  $esc_name = esc_sql($first_name);
-        $last_name =  $esc_name = esc_sql($last_name);
+        $first_name = strpos($first_name, "'") !=false ? str_replace(["'", "\'", "\\"], "", $first_name) : $first_name;
+        $last_name = strpos($last_name, "'") !=false ? str_replace(["'", "\'", "\\"], "", $last_name) : $last_name;
+
         $role = isset($_POST['role']) ? $_POST['role'] : false;
 
         if ($author_id && $role == 'author' && (!empty($first_name) || !empty($last_name))) {
             $full_name = $first_name . ' ' . $last_name;
             $reversed_full_name = $last_name . ' ' . $first_name;
-            $insert_update_query = "INSERT INTO {$author_table_name} (`author_id`, `first_name`, `last_name`, `full_name`, `reversed_full_name`) VALUES ({$author_id}, '{$first_name}', '{$last_name}', '{$full_name}') 
+            $insert_update_query = "INSERT INTO {$author_table_name} (`author_id`, `first_name`, `last_name`, `full_name`, `reversed_full_name`) VALUES ({$author_id}, '{$first_name}', '{$last_name}', '{$full_name}', ' {$reversed_full_name}') 
 ON DUPLICATE KEY UPDATE 
 first_name='{$first_name}',
 last_name='{$last_name}',
