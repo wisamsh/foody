@@ -757,14 +757,16 @@ and (meta_key ='first_name' or meta_key = 'last_name')";
 
         foreach ($authors_results as $index => $authors_result) {
             if ($authors_result->meta_key == 'first_name') {
-                $insert_query .= "(" . $authors_result->user_id . ",'" . $authors_result->meta_value . "', ";
-                $last_full_name = $authors_result->meta_value . ' ';
-                $last_full_name_reversed = ' ' . $authors_result->meta_value;
+                $first_name = $esc_name = esc_sql($authors_result->meta_value);
+                $insert_query .= "(" . $authors_result->user_id . ",'" .$first_name . "', ";
+                $last_full_name = $first_name . ' ';
+                $last_full_name_reversed = ' ' . $first_name;
             } elseif ($authors_result->meta_key == 'last_name') {
                 if (!empty($authors_result->meta_value)) {
-                    $last_full_name .= $authors_result->meta_value;
-                    $last_full_name_reversed = $authors_result->meta_value . $last_full_name_reversed;
-                    $insert_query .= "'" . $authors_result->meta_value . "', '" . $last_full_name . "', '" . $last_full_name_reversed . "'),";
+                    $last_name = $esc_name = esc_sql($authors_result->meta_value);
+                    $last_full_name .= $last_name;
+                    $last_full_name_reversed = $last_name . $last_full_name_reversed;
+                    $insert_query .= "'" . $last_name . "', '" . $last_full_name . "', '" . $last_full_name_reversed . "'),";
                     $last_full_name = '';
                 }
             }
@@ -789,6 +791,9 @@ function foody_add_new_author_to_authors_table()
         $author_id = isset($_POST['user_id']) ? $_POST['user_id'] : false;
         $first_name = isset($_POST['first_name']) ? $_POST['first_name'] : '';
         $last_name = isset($_POST['last_name']) ? $_POST['last_name'] : '';
+
+        $first_name =  $esc_name = esc_sql($first_name);
+        $last_name =  $esc_name = esc_sql($last_name);
         $role = isset($_POST['role']) ? $_POST['role'] : false;
 
         if ($author_id && $role == 'author' && (!empty($first_name) || !empty($last_name))) {
