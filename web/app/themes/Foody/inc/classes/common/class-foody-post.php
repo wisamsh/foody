@@ -630,6 +630,16 @@ abstract class Foody_Post implements Foody_ContentWithSidebar {
 	}
 
 	public function get_feed_logo($feed_id){
+        $recipe_logos = get_field( 'logos_list', $this->post->ID );
+        if(!empty($recipe_logos)) {
+            foreach ($recipe_logos as $recipe_logo_pair) {
+                foreach ($recipe_logo_pair['feed_areas'] as $feed_area_id)
+                    if ($feed_area_id == $feed_id) {
+                        return isset($recipe_logo_pair['recipe_logo']['url']) ? $recipe_logo_pair['recipe_logo']['url'] : '';
+                    }
+            }
+        }
+
         $logo = get_field( 'feed_logo', $feed_id );
         return isset($logo['url']) ? $logo['url'] : '';
     }

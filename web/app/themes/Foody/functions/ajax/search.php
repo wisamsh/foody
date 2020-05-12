@@ -159,6 +159,7 @@ add_action('wp_ajax_nopriv_foody_filter', 'foody_ajax_filter');
 function __search_by_title_only($search, $wp_query)
 {
     global $wpdb;
+    $char_limit = 50;
 
     if (empty($search)) {
         return $search;
@@ -166,9 +167,16 @@ function __search_by_title_only($search, $wp_query)
     $is_user = false;
     $is_ingredient = false;
     $q = $wp_query->query_vars;
+    // max chars => 50
+    if (isset($q['s']) && mb_strlen($q['s']) > $char_limit) {
+        $temp = $q['s'];
+        $q['s'] = mb_substr($q['s'], 0, $char_limit);
+        //str_replace($temp, $q['s'], $search);
+    }
     $n = !empty($q['exact']) ? '' : '%';
 
-    if ((is_search() || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more') || (isset($_POST['action']) && $_POST['action'] == 'foody_filter')))) && isset($q['s'])) {
+    if ((is_search() || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more') || (isset($_POST['action']) && $_POST['action'] == 'foody_filter'))))
+        && isset($q['s'])) {
         if (!get_page_by_title($q['s'], OBJECT, 'post') && !get_page_by_title($q['s'], OBJECT, 'foody_recipe')) {
             $users = foody_search_user_by_name($q['s']);
             if (!isset($users) || empty($users)) {
@@ -190,21 +198,28 @@ function __search_by_title_only($search, $wp_query)
     $index = 0;
     $users_amount = count((array)$q['search_terms']);
     $apostrophes_types = ["’", "׳", "'"];
+    $has_apostrophes = false;
+    $two_options_for_title = false;
+
+
 
     foreach ((array)$q['search_terms'] as $term) {
-        $two_options_for_title = false;
-        foreach ($apostrophes_types as $apostrophes_type) {
-            $other_options = handle_apostrophes_on_title($apostrophes_type, $term, true);
-            if ($other_options != false) {
-                $two_options_for_title = true;
-                break;
+        if (strpos($q['s'], "’") || strpos($q['s'], "׳") || strpos($q['s'], "'")) {
+            $two_options_for_title = false;
+            $has_apostrophes = true;
+            foreach ($apostrophes_types as $apostrophes_type) {
+                $other_options = handle_apostrophes_on_title($apostrophes_type, $term, true);
+                if ($other_options != false) {
+                    $two_options_for_title = true;
+                    break;
+                }
             }
         }
         if ($is_user || $is_ingredient) {
             if ($index == $users_amount - 1) {
                 $term = esc_sql($wpdb->esc_like($term));
                 if ($two_options_for_title) {
-                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'". $other_options ."))";
+                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'" . $other_options . "))";
                 } else {
                     $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'))";
                 }
@@ -212,7 +227,7 @@ function __search_by_title_only($search, $wp_query)
             } else {
                 $term = esc_sql($wpdb->esc_like($term));
                 if ($two_options_for_title) {
-                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'". $other_options .")";
+                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'" . $other_options . ")";
                 } else {
                     $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
                 }
@@ -221,9 +236,9 @@ function __search_by_title_only($search, $wp_query)
             $index++;
         } else {
             $term = esc_sql($wpdb->esc_like($term));
-            if($two_options_for_title && is_search()) {
+            if ($two_options_for_title && is_search()) {
                 if (count((array)$q['search_terms']) - 1 == $counter) {
-                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'))";
+                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'". $other_options . ")";
 
                 } else {
                     $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
@@ -234,7 +249,7 @@ function __search_by_title_only($search, $wp_query)
             $searchand = ' AND ';
         }
 
-        $counter ++;
+        $counter++;
     }
 
     if (!empty($search)) {
@@ -278,9 +293,9 @@ function find_posts_by_title_and_type($titles, $post_type, $is_autocomplete, $ha
                 break;
             }
         }
-        if($post_type == 'foody_ingredient'){
+        if ($post_type == 'foody_ingredient') {
             $titles = esc_sql($titles);
-            $titles = '%'.$titles.'%';
+            $titles = '%' . $titles . '%';
         }
         if ($two_options_for_title) {
             $query = "SELECT * FROM {$wpdb->posts} WHERE post_status = 'publish' and (post_title like '$titles'" . $other_options . " ) and post_type = '$post_type'";

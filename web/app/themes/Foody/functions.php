@@ -593,22 +593,23 @@ function update_filters_cache_menu_options()
     $current_blog_id = get_current_blog_id();
     $switched = false;
 
-    if($current_blog_id != 1){
+    if ($current_blog_id != 1) {
         switch_to_blog(1);
         $switched = true;
     }
 
     $user_id = get_current_user_id();
-    $user_meta=get_userdata($user_id);
+    $user_meta = get_userdata($user_id);
 
-    if($switched){
+    if ($switched) {
         switch_to_blog($current_blog_id);
     }
 
-    if(is_array($user_meta->roles) && in_array('administrator', $user_meta->roles)) {
+    if (is_array($user_meta->roles) && in_array('administrator', $user_meta->roles)) {
         add_submenu_page('edit.php?post_type=foody_filter', 'update filters cache', __('עדכן cache של פילטרים'), 'administrator', 'update_filters_cache', 'foody_update_filters_cache', 19);
     }
 }
+
 add_action('admin_menu', 'update_filters_cache_menu_options');
 
 function foody_update_filters_cache()
@@ -724,6 +725,93 @@ function foody_add_cron_interval($schedules)
         'display' => esc_html__('Every 5 Minute'),);
     return $schedules;
 }
+
+
+function foody_add_update_authors_list_settings_tab()
+{
+    add_submenu_page('users.php', null, __('עדכון רשימת היוצרים'), 'administrator', 'foody_update_authors_list', 'foody_update_authors_list_func', 20);
+}
+
+add_action('admin_menu', 'foody_add_update_authors_list_settings_tab');
+
+
+function foody_update_authors_list_func()
+{
+    if (is_admin() && is_user_logged_in() && current_user_can('administrator')) {
+        global $wpdb;
+        $new_table_name = $wpdb->prefix . 'foody_authors_names';
+        $users_table = $wpdb->prefix . 'users';
+        $usermeta_table = $wpdb->prefix . 'usermeta';
+        $last_full_name = '';
+        $last_full_name_reversed = '';
+        $insert_query = "INSERT INTO {$new_table_name} (`author_id`, `first_name`, `last_name`, `full_name`, `reversed_full_name`) VALUES ";
+
+        $fetch_authors_query = "SELECT user_id, meta_key, meta_value FROM {$usermeta_table}
+where user_id IN (SELECT ID FROM {$users_table} as users
+join {$usermeta_table} as usersmeta
+on users.ID = usersmeta.user_id 
+where usersmeta.meta_key = 'wp_capabilities' and usersmeta.meta_value = 'a:1:{s:6:\"author\";b:1;}')
+and (meta_key ='first_name' or meta_key = 'last_name')";
+
+        $authors_results = $wpdb->get_results($fetch_authors_query);
+
+        foreach ($authors_results as $index => $authors_result) {
+            if ($authors_result->meta_key == 'first_name') {
+                $first_name = strpos($authors_result->meta_value, "'") !=false ? str_replace(["'", "\'", "\\"], "", $authors_result->meta_value) : $authors_result->meta_value;
+                $insert_query .= "(" . $authors_result->user_id . ",'" .$first_name . "', ";
+                $last_full_name = $first_name . ' ';
+                $last_full_name_reversed = ' ' . $first_name;
+            } elseif ($authors_result->meta_key == 'last_name') {
+                    $last_name = strpos($authors_result->meta_value, "'") !=false ? str_replace(["'", "\'", "\\"], "", $authors_result->meta_value) : $authors_result->meta_value;
+                    $last_full_name .= $last_name;
+                    $last_full_name_reversed = $last_name . $last_full_name_reversed;
+                    $insert_query .= "'" . $last_name . "', '" . $last_full_name . "', '" . $last_full_name_reversed . "'),";
+                    $last_full_name = '';
+            }
+        }
+        $last_char = substr($insert_query, -1);
+        if ($last_char == ',') {
+            $insert_query = substr($insert_query, 0, -1);
+        }
+
+        $wpdb->query($insert_query);
+
+        echo "<script>location.replace('index.php');</script>";
+    }
+}
+
+function foody_add_new_author_to_authors_table()
+{
+    global $wpdb;
+    $author_table_name = $wpdb->prefix . 'foody_authors_names';
+
+    if (is_admin() && is_user_logged_in() && current_user_can('administrator')) {
+        $author_id = isset($_POST['user_id']) ? $_POST['user_id'] : false;
+        $first_name = isset($_POST['first_name']) ? $_POST['first_name'] : '';
+        $last_name = isset($_POST['last_name']) ? $_POST['last_name'] : '';
+
+        $first_name = strpos($first_name, "'") !=false ? str_replace(["'", "\'", "\\"], "", $first_name) : $first_name;
+        $last_name = strpos($last_name, "'") !=false ? str_replace(["'", "\'", "\\"], "", $last_name) : $last_name;
+
+        $role = isset($_POST['role']) ? $_POST['role'] : false;
+
+        if ($author_id && $role == 'author' && (!empty($first_name) || !empty($last_name))) {
+            $full_name = $first_name . ' ' . $last_name;
+            $reversed_full_name = $last_name . ' ' . $first_name;
+            $insert_update_query = "INSERT INTO {$author_table_name} (`author_id`, `first_name`, `last_name`, `full_name`, `reversed_full_name`) VALUES ({$author_id}, '{$first_name}', '{$last_name}', '{$full_name}', ' {$reversed_full_name}') 
+ON DUPLICATE KEY UPDATE 
+first_name='{$first_name}',
+last_name='{$last_name}',
+full_name='{$full_name}',
+reversed_full_name='{$reversed_full_name}'";
+
+            $wpdb->query($insert_update_query);
+        }
+    }
+}
+
+add_action('edit_user_profile_update', 'foody_add_new_author_to_authors_table');
+
 
 //function foody_remove_course_members_menus(){
 //    remove_menu_page( 'edit.php?post_type=foody_course_users' );

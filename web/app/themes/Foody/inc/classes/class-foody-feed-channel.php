@@ -99,9 +99,9 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
 
 					$block_fn = "draw_{$type}_block";
 					if ( method_exists( $this->blocks_drawer, $block_fn ) ) {
-					    if($logo = get_field( 'feed_logo', $this->post->ID )){
+					    //if($logo = get_field( 'feed_logo', $this->post->ID )){
 					        $block['feed_area_id'] = $this->post->ID;
-                        }
+                        //}
 						$block_options = call_user_func( [ $this->blocks_drawer, $block_fn ], $block );
 						if ( ! empty( $block_options ) && ! empty( $block_options['content'] ) ) {
 							$this->blocks_drawer->wrap_block( $block_options );

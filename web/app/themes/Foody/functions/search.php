@@ -18,6 +18,7 @@
 function foody_where_filter($where)
 {
     global $wpdb;
+    $char_limit = 50;
     if (is_search() || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more') || (isset($_POST['action']) && $_POST['action'] == 'foody_filter')))) {
         $author_id = 0;
         $ingredients = [];
@@ -30,6 +31,11 @@ function foody_where_filter($where)
             $search = str_replace("&#039;", "'", $search);
         }
         if ($search != '') {
+            // max chars => 50
+            if (isset($search) && mb_strlen($search) > $char_limit) {
+                $search = mb_substr($search, 0, $char_limit);
+                //str_replace($temp, $q['s'], $search);
+            }
             if (get_page_by_title($search, OBJECT, 'post') || get_page_by_title($search, OBJECT, 'foody_recipe')) {
                 $author_id = 0;
                 $ingredients = [];
@@ -55,7 +61,9 @@ function foody_where_filter($where)
                             $feed_areas_search .= "($wpdb->posts.post_title = '{$authors_feed_area}') OR ";
                         }
                     }
-
+                    if(count($author_id) > 0){
+                        $author_id = $author_id[0];
+                    }
                     $author_search = "($wpdb->posts.post_author = {$author_id})";
                     $where_replace = " AND (($wpdb->posts.post_title";
                     $replace_count = 1;
@@ -120,70 +128,87 @@ function foody_search_user_by_name($name, $single = true)
     global $wpdb;
 
     $esc_name = esc_sql($name);
+    $table_name =  $wpdb->prefix . 'foody_authors_names';
 
-    $query =
-        "SELECT user_id
-              FROM $wpdb->usermeta 
-              WHERE 
-              ( meta_key='first_name' AND meta_value LIKE '%%%s%%' ) 
-              or ( meta_key='last_name' AND meta_value LIKE '%%%s%%' )";
+    $query = "SELECT author_id from {$table_name} where (first_name LIKE '%%%s%%') OR (last_name LIKE '%%%s%%') OR (full_name LIKE '%%%s%%') OR (reversed_full_name LIKE '%%%s%%')";
 
     $args = [
+        $esc_name,
+        $esc_name,
         $esc_name,
         $esc_name
     ];
 
-    $name_parts = explode(' ', trim($esc_name));
-
-
-    if (count($name_parts) > 1) {
-        $full_name_search = "
-
-           ";
-
-        $first_name = [];
-        while (count($name_parts) > 1) {
-            $first_name[] = array_shift($name_parts);
-
-            $first_name_search = implode(' ', $first_name);
-            $last_name_search = implode(' ', $name_parts);
-            $full_name_search .= "
-                   or ( meta_key='first_name' AND meta_value LIKE '%%$first_name_search%%' )
-                   or ( meta_key='last_name' AND meta_value LIKE '%%$last_name_search%%' )
-                ";
-        }
-
-        $query = "$query $full_name_search";
-    }
-
-    $query_authors = " AND user_id IN (SELECT user_id FROM $wpdb->usermeta WHERE meta_key = 'wp_capabilities' AND meta_value = 'a:1:{s:6:\"author\";b:1;}') ";
-    //$query .= $query_authors;
-
     $query = $wpdb->prepare($query, $args);
-
     $result = $wpdb->get_results($query);
 
+    $result = array_map(function ($user) {
+        return $user->author_id;
+    }, $result);
 
-    if (!empty($result)) {
-        $result = array_map(function ($user) {
-            return $user->user_id;
-        }, $result);
-
-        $ids = implode(',', $result);
-
-        $query = "SELECT user_id from $wpdb->usermeta where user_id IN ($ids) and meta_value LIKE '%\"author\"%'";
-
-        if ($single) {
-            $result = $wpdb->get_var($query);
-        } else {
-            $result = $wpdb->get_results($query);
-            if (!empty($result) && is_array($result)) {
-                $result = array_map(function ($user) {
-                    return $user->user_id;
-                }, $result);
-            }
-        }
-    }
+//    $query =
+//        "SELECT user_id
+//              FROM $wpdb->usermeta
+//              WHERE
+//              ( meta_key='first_name' AND meta_value LIKE '%%%s%%' )
+//              or ( meta_key='last_name' AND meta_value LIKE '%%%s%%' ) ";
+//
+//    $args = [
+//        $esc_name,
+//        $esc_name
+//    ];
+//
+//    $name_parts = explode(' ', trim($esc_name));
+//
+//
+//    if (count($name_parts) > 1) {
+//        $full_name_search = "
+//
+//           ";
+//
+//        $first_name = [];
+//        while (count($name_parts) > 1) {
+//            $first_name[] = array_shift($name_parts);
+//
+//            $first_name_search = implode(' ', $first_name);
+//            $last_name_search = implode(' ', $name_parts);
+//            $full_name_search .= "
+//                   or ( meta_key='first_name' AND meta_value LIKE '%%$first_name_search%%' )
+//                   or ( meta_key='last_name' AND meta_value LIKE '%%$last_name_search%%' )
+//                ";
+//        }
+//
+//        $query = "$query $full_name_search";
+//    }
+//
+//    $query_authors = "AND user_id IN (SELECT user_id FROM $wpdb->usermeta WHERE meta_key = 'wp_capabilities' AND meta_value = 'a:1:{s:6:\"author\";b:1;}') ";
+//
+//
+//    $query = $wpdb->prepare($query, $args);
+//
+//    $result = $wpdb->get_results($query);
+//
+//
+//    if (!empty($result)) {
+//        $result = array_map(function ($user) {
+//            return $user->user_id;
+//        }, $result);
+//
+//        $ids = implode(',', $result);
+//
+//        $query = "SELECT user_id from $wpdb->usermeta where user_id IN ($ids) and meta_value LIKE '%\"author\"%'";
+//
+//        if ($single) {
+//            $result = $wpdb->get_var($query);
+//        } else {
+//            $result = $wpdb->get_results($query);
+//            if (!empty($result) && is_array($result)) {
+//                $result = array_map(function ($user) {
+//                    return $user->user_id;
+//                }, $result);
+//            }
+//        }
+//    }
 
 
     return $result;
