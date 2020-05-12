@@ -3,6 +3,21 @@
  */
 let FoodyLoader = require('../common/foody-loader');
 jQuery(document).ready(($) => {
+    let buttonHeight;
+
+    if ($(window).width() < 768) {
+        buttonHeight = 59;
+    } else {
+        buttonHeight = 52;
+    }
+    BitPayment.Buttons({
+        onCreate: function (openBitPaymentPage) {
+            let transaction = {transactionSerialId: '111', paymentInitiationId: '222'};
+            openBitPaymentPage(transaction);
+        },
+        style: {height: buttonHeight}
+    }).render('#bitcom-button-container');
+
     let textNormalizer = function (value) {
         return $.trim(value);
     };
@@ -67,7 +82,7 @@ jQuery(document).ready(($) => {
             }
         });
 
-        if($('.bit-pay').length){
+        if ($('.bit-pay').length) {
             $('.bit-pay').on('click', function () {
                 let email = $('#email').val().length != 0 && !$('#email').hasClass('error') ? $('#email').val() : false;
                 let firstName = $('#first-name').val().length != 0 && !$('#first-name').hasClass('error') ? $('#first-name').val() : false;
@@ -84,8 +99,8 @@ jQuery(document).ready(($) => {
                     //after bit payment confirmed
                     let data_of_member = {
                         'email': email,
-                        'first_name': firstName ,
-                        'last_name': lastName ,
+                        'first_name': firstName,
+                        'last_name': lastName,
                         'phone': phone,
                         'date': get_current_date(),
                         'enable_marketing': enableMarketing,
@@ -97,18 +112,15 @@ jQuery(document).ready(($) => {
                     };
 
 
-
                     foodyAjax({
                         action: 'foody_add_course_member_to_table',
                         data: {
                             memberData: data_of_member,
                         }
-                    }, function (
-                    ) {
+                    }, function () {
                         alert('nice...');
                     });
-                }
-                else {
+                } else {
                     validate_fields(email, firstName, lastName, phone, termsAccepted);
                 }
             });
@@ -124,12 +136,12 @@ jQuery(document).ready(($) => {
                 let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
                 if (termsAccepted && email && firstName && lastName && phone) {
                     let mailInvoice = $(this).attr('data-invoice-mail').length != 0 ? $(this).attr('data-invoice-mail') : '';
-                    let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:'+ mailInvoice +'">'+ mailInvoice +'</a></span>' : '';
+                    let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:' + mailInvoice + '">' + mailInvoice + '</a></span>' : '';
                     let thankYou = $(this).attr('data-thank-you').length != 0 ? $(this).attr('data-thank-you') : '';
                     let enableMarketing = $('.newsletter-and-terms #newsletter').prop('checked') ? 'מאשר קבלת דואר' : 'לא מאשר קבלת דואר';
                     // let price = $(this).data('item-price');
                     // let itemName = $(this).data('item-name');
-                    let link = $(this).attr('data-link') +  '?ExtCUserEmail=' + email + '&ExtCInvoiceTo=' + firstName + ' ' + lastName + '&ExtMobilPhone=' + phone + '&SuccessRedirectUrl=' + thankYou + '&custom_field_10=' + enableMarketing;
+                    let link = $(this).attr('data-link') + '?ExtCUserEmail=' + email + '&ExtCInvoiceTo=' + firstName + ' ' + lastName + '&ExtMobilPhone=' + phone + '&SuccessRedirectUrl=' + thankYou + '&custom_field_10=' + enableMarketing;
 
                     let iframe = '<iframe id="card-pay-frame" src="' + link + '" style="width: 100%;\n' +
                         'height: auto;\n' +
@@ -182,7 +194,7 @@ function get_current_date() {
     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     let yyyy = today.getFullYear();
 
-    return  yyyy+'-'+mm+'-'+dd;
+    return yyyy + '-' + mm + '-' + dd;
 }
 
 function validate_fields(email, firstName, lastName, phone, termsAccepted) {
@@ -191,17 +203,16 @@ function validate_fields(email, firstName, lastName, phone, termsAccepted) {
         '#first-name': firstName,
         '#last-name': lastName,
         '#phone-number': phone,
-        '#terms' : termsAccepted
+        '#terms': termsAccepted
     };
     for (let field in fields) {
         if (!fields[field]) {
-            if(field == '#terms'){
+            if (field == '#terms') {
                 let errorMsg = '<span class="terms-error">' + '*אנא אשר/י את תנאי השימוש' + '</span>';
-                if($('.terms-error').length == 0 ) {
+                if ($('.terms-error').length == 0) {
                     $('.newsletter-and-terms').after(errorMsg);
                 }
-            }
-            else {
+            } else {
                 $("#course-register-form").validate().element(field);
             }
         } else {
@@ -213,7 +224,7 @@ function validate_fields(email, firstName, lastName, phone, termsAccepted) {
 function redeemCoupon() {
     let foodyLoader = new FoodyLoader({container: $('#course-register-form')});
     let couponCode = $('#coupon-input').val();
-    if(couponCode.length){
+    if (couponCode.length) {
         foodyLoader.attach();
         foodyAjax({
             action: 'foody_get_coupon_value',
@@ -222,12 +233,11 @@ function redeemCoupon() {
                 coupon_code: couponCode.trim(),
                 course_name: $(this).attr('data-course-name')
             }
-        }, function(err, data) {
+        }, function (err, data) {
             if (err) {
                 console.log(err)
-            }
-            else {
-                if(data.data.new_price){
+            } else {
+                if (data.data.new_price) {
                     let discounted_price = Math.floor(data.data.new_price);
                     $('#coupon-input')[0].value = '';
                     $('#course-price')[0].innerText = discounted_price;

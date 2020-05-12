@@ -88,18 +88,42 @@
         flex-direction: column;
         align-items: center;
         border: 1px solid $color__primary;
-        width: fit-content;
         padding: 0 3%;
-        line-height: 1.3;
         margin: 5% auto;
+        width: 70%;
+        text-align: center;
+        line-height: 1.5;
 
-        .price-line {
-          font-weight: bold;
-          color: $color__primary;
-        }
+        .coupon-and-price {
+          display: flex;
+          flex-direction: column;
 
-        .coupon-line {
-          font-weight: bold;
+          .price-line {
+            font-weight: bold;
+            color: $color__primary;
+          }
+
+          .coupon-line {
+            font-weight: bold;
+          }
+
+          .coupon-input-container {
+            #redeem-coupon {
+              border: 1px solid #ED3D48;
+              border-radius: 5px;
+              width: 51%;
+              text-align: center;
+              display: inline-block;
+              background: #ED3D48;
+              color: white;
+              font-weight: bold;
+              margin: 2%;
+              padding: 2%;
+              position: relative;
+              font-size: 13px;
+              cursor: pointer;
+            }
+          }
         }
       }
 
@@ -146,8 +170,9 @@
         justify-content: center;
         margin: 8% 0 0 0;
         width: 100%;
+        height: 59px;
 
-        .bit-pay{
+        .bit-pay {
           border: 1px solid dodgerblue;
           border-radius: 5px;
           text-align: center;
@@ -165,7 +190,7 @@
         .credit-card-pay {
           border: 1px solid $color__primary;
           border-radius: 5px;
-          width: 51%;
+          width: 45%;
           text-align: center;
           display: inline-block;
           background: $color__primary;
@@ -180,12 +205,23 @@
           img {
             width: 20%;
             position: absolute;
-            left: 3%;
-            bottom: 16%;
+            left: 6%;
+            bottom: 32%;
+          }
+        }
+
+        #bitcom-button-container {
+          width: 45%;
+          display: inline-block;
+          height: inherit;
+
+          #payment-button {
+            background: linear-gradient(darkblue, darkturquoise);
           }
         }
       }
     }
+
 
     .bottom-image {
       position: absolute;
@@ -217,6 +253,7 @@
         color: red !important;
       }
     }
+
   }
 
   @media only screen and (orientation: landscape) {
@@ -231,6 +268,7 @@
       }
     }
   }
+
 }
 
 @include breakpoint(desktop) {
@@ -286,30 +324,30 @@
         //}
 
         // have coupon
-        .coupon-and-price-container{
+        .coupon-and-price-container {
           align-self: center;
           margin: 5% 0;
           width: 50%;
 
-          .coupon-and-price{
-            margin: 9% 0;
+          .coupon-and-price {
+            margin: 5% 0;
             display: flex;
             flex-direction: column;
             width: 100%;
             text-align: center;
             line-height: 1.5;
 
-            .coupon-input-container{
+            .coupon-input-container {
               display: flex;
               flex-direction: row;
               margin-top: 3%;
               justify-content: space-evenly;
 
-              span{
+              span {
                 padding: 0;
               }
 
-              #redeem-coupon{
+              #redeem-coupon {
                 border: 1px solid #ED3D48;
                 border-radius: 5px;
                 width: 51%;
@@ -352,12 +390,25 @@
         }
 
         .button-container {
+          height: 52px;
+
           .credit-card-pay {
             width: 28%;
             padding: 2% 1% 2% 6%;
 
             img {
               bottom: 30%;
+              left: 3%;
+            }
+          }
+
+          #bitcom-button-container {
+            width: 28%;
+            display: inline-block;
+            height: inherit;
+
+            #payment-button {
+              background: linear-gradient(darkblue, darkturquoise);
             }
           }
         }
