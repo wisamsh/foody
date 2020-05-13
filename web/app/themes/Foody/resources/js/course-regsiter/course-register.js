@@ -4,25 +4,65 @@
 let FoodyLoader = require('../common/foody-loader');
 jQuery(document).ready(($) => {
     let buttonHeight;
+    let used_coupon_details = null;
+    let form_fields = [
+        '#email',
+        '#first-name',
+        '#last-name',
+        '#phone-number',
+        '#terms',
+        '#newsletter',
+        '#coupon-input',
+        '#redeem-coupon'
+    ];
+
+    /** BIT button creation */
 
     if ($(window).width() < 768) {
         buttonHeight = 59;
     } else {
         buttonHeight = 52;
     }
-    BitPayment.Buttons({
-        onCreate: function (openBitPaymentPage) {
-            let transaction = {transactionSerialId: '111', paymentInitiationId: '222'};
-            openBitPaymentPage(transaction);
-        },
-        style: {height: buttonHeight}
-    }).render('#bitcom-button-container');
+
+
+    /** BIT button creation end */
+    //
+    // $('.dropdown-toggle').dropdown();
+    //
+    // $('.dropdown-item').on('click', function () {
+    //     let selected = $(this)[0].innerText;
+    //     $('.dropdown-toggle')[0].innerText = selected;
+    //
+    //     switch (selected) {
+    //         case 'ביט':
+    //             //do bit flow
+    //             break;
+    //         case 'כרטיס אשראי':
+    //             //do credit flow
+    //             foodyAjax({
+    //                 action: 'foody_get_credit_button_section',
+    //                 data: {}
+    //             }, function (err, data) {
+    //                 if (err) {
+    //                     console.log(err)
+    //                 } else {
+    //                     if (data.data.credit_section) {
+    //                         let vb =  data.data.credit_section;
+    //                     }
+    //                 }
+    //
+    //             });
+    //             break;
+    //     }
+    // });
 
     let textNormalizer = function (value) {
         return $.trim(value);
     };
 
-    $('#redeem-coupon').on('click', redeemCoupon);
+    $('#redeem-coupon').on('click', function () {
+        used_coupon_details = redeemCoupon();
+    });
 
     $('#course-register-form .checkbox').on('click', function () {
         let $input = $(this).prev('input[type="checkbox"]');
@@ -94,7 +134,43 @@ jQuery(document).ready(($) => {
                 let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
                 if (termsAccepted && email && firstName && lastName && phone && courseName) {
                     // temp => only send data to members plugin
-                    // todo: here - add support for bit pay
+                    let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details)
+
+                    // todo: load bit pay button
+                    $.each( form_fields, function( index, value ){
+                        $(value).attr('disabled', true);
+                        if(value == '#redeem-coupon'){
+                            $(value).attr('style', 'cursor: not-allowed');
+                        }
+                    });
+
+                    //load bit button
+                    let bitTransactionId = 111; // mock
+                    let bitPaymentInitiationId = 222; // mock
+
+                    foodyAjax({
+                        action: 'foody_start_bit_pay_process',
+                        data: {
+                        }
+                    }, function (err, data) {
+                        if (err) {
+                            console.log(err)
+                        } else {
+
+                        }
+                    });
+
+                    $('.button-container').after('<div class="bit-button-container"><span class="bit-btn-text">לחץ כאן להשלמת תשלום בביט</span><div id="bitcom-button-container"></div></div>');
+                    $(this).attr('disabled', true);
+                    $(this).attr('style', 'cursor: not-allowed');
+
+                    BitPayment.Buttons({
+                        onCreate: function (openBitPaymentPage) {
+                            let transaction = {transactionSerialId: bitTransactionId, paymentInitiationId: bitPaymentInitiationId};
+                            openBitPaymentPage(transaction);
+                        },
+                        style: {height: buttonHeight}
+                    }).render('#bitcom-button-container');
 
                     //after bit payment confirmed
                     let data_of_member = {
@@ -105,21 +181,21 @@ jQuery(document).ready(($) => {
                         'date': get_current_date(),
                         'enable_marketing': enableMarketing,
                         'course_name': courseName,
-                        'price': '299', // dummy,  todo: get real price from coupon and pricing table
+                        'price': couponAndPriceObj.price,
                         'payment_method': 'ביט',
-                        'transaction_id': 111, // dummy,  todo: get real transaction_id from bit purchase confirmation,
-                        'coupon': 'test' // dummy,  todo: get real coupon from coupon and pricing table
+                        'transaction_id': bitPaymentInitiationId, // dummy,  todo: get real transaction_id from bit purchase confirmation,
+                        'coupon': couponAndPriceObj.coupon
                     };
 
 
-                    foodyAjax({
-                        action: 'foody_add_course_member_to_table',
-                        data: {
-                            memberData: data_of_member,
-                        }
-                    }, function () {
-                        alert('nice...');
-                    });
+                    // foodyAjax({
+                    //     action: 'foody_add_course_member_to_table',
+                    //     data: {
+                    //         memberData: data_of_member,
+                    //     }
+                    // }, function () {
+                    //     alert('nice...');
+                    // });
                 } else {
                     validate_fields(email, firstName, lastName, phone, termsAccepted);
                 }
@@ -135,11 +211,11 @@ jQuery(document).ready(($) => {
 
                 let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
                 if (termsAccepted && email && firstName && lastName && phone) {
+                    let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details);
                     let mailInvoice = $(this).attr('data-invoice-mail').length != 0 ? $(this).attr('data-invoice-mail') : '';
                     let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:' + mailInvoice + '">' + mailInvoice + '</a></span>' : '';
                     let thankYou = $(this).attr('data-thank-you').length != 0 ? $(this).attr('data-thank-you') : '';
                     let enableMarketing = $('.newsletter-and-terms #newsletter').prop('checked') ? 'מאשר קבלת דואר' : 'לא מאשר קבלת דואר';
-                    // let price = $(this).data('item-price');
                     // let itemName = $(this).data('item-name');
                     let link = $(this).attr('data-link') + '?ExtCUserEmail=' + email + '&ExtCInvoiceTo=' + firstName + ' ' + lastName + '&ExtMobilPhone=' + phone + '&SuccessRedirectUrl=' + thankYou + '&custom_field_10=' + enableMarketing;
 
@@ -229,9 +305,9 @@ function redeemCoupon() {
         foodyAjax({
             action: 'foody_get_coupon_value',
             data: {
-                course_id: $(this).attr('data-course-id'),
+                course_id: $('#redeem-coupon').attr('data-course-id'),
                 coupon_code: couponCode.trim(),
-                course_name: $(this).attr('data-course-name')
+                course_name: $('#redeem-coupon').attr('data-course-name')
             }
         }, function (err, data) {
             if (err) {
@@ -240,13 +316,49 @@ function redeemCoupon() {
                 if (data.data.new_price) {
                     let discounted_price = Math.floor(data.data.new_price);
                     $('#coupon-input')[0].value = '';
+                    $('#coupon-input').remove();
+                    $('#redeem-coupon').remove();
                     $('#course-price')[0].innerText = discounted_price;
+                    $('.coupon-line')[0].innerText = "ערך הקופון ירד מהמחיר";
                     foodyLoader.detach();
+                    return {'coupon': couponCode, 'discounted_price': discounted_price};
+                } else {
+                    return {'coupon': null, 'discounted_price': discounted_price}
                 }
             }
 
         });
     }
+}
+
+function     getCoursePrice() {
+    foodyAjax({
+        action: 'foody_get_course_price',
+        data: {
+            course_id: $('.course-information').attr('data-course-id'),
+        }
+    }, function (err, data) {
+        if (err) {
+            console.log(err)
+        } else {
+            if (data.data.course_id) {
+                return data.data.course_id;
+            }
+        }
+    });
+}
+
+function checkCouponAndGetCouponAndPrice(used_coupon_details) {
+    let coupon = used_coupon_details != null && typeof (used_coupon_details.coupon) != "undefined" ? used_coupon_details.coupon : null;
+    let discounted_price = used_coupon_details != null && typeof (used_coupon_details.discounted_price) != "undefined" ? used_coupon_details.discounted_price : null;
+    let price = getCoursePrice();
+
+    if (used_coupon_details != null) {
+        // didn't enter a coupon
+        price = discounted_price;
+    }
+
+    return {'coupon' : coupon, 'price': price};
 }
 
 

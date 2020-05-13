@@ -49,3 +49,10 @@ function foody_add_course_member_to_table()
 
 add_action('wp_ajax_foody_nopriv_add_course_member_to_table', 'foody_add_course_member_to_table');
 add_action('wp_ajax_foody_add_course_member_to_table', 'foody_add_course_member_to_table');
+
+function foody_get_course_price(){
+    $course_id = $_POST['course_id'];
+    return wp_send_json_success(['course_id' => (int)get_field('course_register_data_final_price', $course_id)]);
+}
+add_action('wp_ajax_foody_nopriv_get_course_price', 'foody_get_course_price');
+add_action('wp_ajax_foody_get_course_price', 'foody_get_course_price');

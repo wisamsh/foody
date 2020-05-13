@@ -220,6 +220,26 @@
           }
         }
       }
+
+      .bit-button-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 3% 0;
+        flex-direction: column;
+
+        .bit-btn-text {
+          text-align: right;
+          font-size: 14px;
+          font-weight: bold;
+          text-decoration: underline;
+        }
+
+        #bitcom-button-container {
+          margin-top: 3%;
+          width: 50%;
+        }
+      }
     }
 
 
@@ -381,6 +401,30 @@
           }
         }
 
+        .select_payment_method_section {
+          width: fit-content;
+          margin: 4% 0;
+
+          #dropdownMenuLink {
+            background: white;
+            color: red;
+            font-size: 17px;
+            border: 1px solid #ED3D48;
+            border-radius: 5px;
+            width: 115%;
+
+            .dropdown-menu {
+              left: 0;
+              right: 0;
+            }
+          }
+
+          .dropdown-toggle::after {
+            position: relative;
+            right: 7%;
+          }
+        }
+
         .terms-error {
           text-align: right;
           display: block;
@@ -410,6 +454,19 @@
             #payment-button {
               background: linear-gradient(darkblue, darkturquoise);
             }
+          }
+        }
+
+        .bit-button-container {
+          width: 50%;
+          margin: 3% 19%;
+
+          .bit-btn-text {
+            font-size: 16px;
+          }
+
+          #bitcom-button-container {
+            width: 59%;
           }
         }
       }

@@ -15,6 +15,9 @@ class Foody_Course_register
         $this->course_data = get_field('course_register_data', $course_id);
         $this->page_data = get_field('register_page_data');
         $this->course_id = $course_id;
+
+//        add_action('wp_ajax_foody_get_credit_button_section', array( $this,'foody_get_credit_button_section'));
+//        add_action('wp_ajax_foody_nopriv_get_credit_button_section', array( $this,'foody_get_credit_button_section'));
     }
 
     public function get_cover_section()
@@ -37,11 +40,12 @@ class Foody_Course_register
         $title_div = '<h5 class="form-title">' . __('הרשמה:') . '</h5>';
         $form_div = $this->get_form($course_price, $coupon_text);
 
-        $form_section = '<div class="form-container">' . $title_div . $form_div ;
+        $form_section = '<div class="form-container">' . $title_div . $form_div;
         echo $form_section;
     }
 
-    public function get_bottom_image(){
+    public function get_bottom_image()
+    {
         $background_images = $this->get_background_images_by_section($this->page_data);
         if (isset($background_images['bottom']) && $background_images['bottom'] != '') {
             echo "<img class='bottom-image' src=\"" . $background_images['bottom'] . "\">";
@@ -60,10 +64,10 @@ class Foody_Course_register
 
     private function get_course_cover_information($course_name, $register_subtext)
     {
-        $course_information = '<div class="course-information">';
+        $course_information = '<div class="course-information" data-course-id = ' . $this->course_id . '>';
         $host_name = get_field('course_page_main_cover_section_host_name', $this->course_id);
         /** title and host */
-        $title_div = '<div class="course-title" data-host="'. $host_name .'">' . $course_name . '</div>';
+        $title_div = '<div class="course-title" data-host="' . $host_name . '">' . $course_name . '</div>';
         $text_div = '<div class="course-cover-text">' . $register_subtext . '</div>';
 
 
@@ -153,31 +157,32 @@ class Foody_Course_register
         $enable_bit = isset($this->page_data['enable_bit_button']) && $this->page_data['enable_bit_button'];
         $buttons_div = '';
 
-        $course_payment_link = isset($this->course_data['register_link_text_form']) ? $this->course_data['register_link_text_form'] : __('לרכישה') ;
+        $course_payment_link = isset($this->course_data['register_link_text_form']) ? $this->course_data['register_link_text_form'] : __('לרכישה');
 
-        if($enable_credit || $enable_bit){
+        if ($enable_credit || $enable_bit) {
             $buttons_div = '<div class="button-container">';
         }
-        if($enable_credit){
-            $link_to_purchase = isset($this->course_data['link_for_purchase']) && isset($this->course_data['link_for_purchase']['url']) ? $this->course_data['link_for_purchase']['url'] : '' ;
+
+        if ($enable_bit) {
+            $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
+
+            $bit_button = '<div data-item-name="'. $course_name .'" class="bit-pay"  />המשך לתשלום באמצעות ביט</div>';
+//             $bit_button = '<div id="bitcom-button-container"></div>';
+            $buttons_div .= $bit_button;
+        }
+
+        if ($enable_credit) {
+            $link_to_purchase = isset($this->course_data['link_for_purchase']) && isset($this->course_data['link_for_purchase']['url']) ? $this->course_data['link_for_purchase']['url'] : '';
             $link_thank_you = isset($this->course_data['link_thank_you']) ? $this->course_data['link_thank_you'] : get_home_url();
             $invoice_mail = isset($this->page_data['mail_invoice']) ? $this->page_data['mail_invoice'] : '';
             $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
 
-            $credit_button = '<div class="credit-card-pay"  data-item-name="'. $course_name .'" data-invoice-mail="'. $invoice_mail .'" data-thank-you="'. $link_thank_you . '?course_id='.  $this->course_id .'" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
-            $buttons_div .= $credit_button ;
+            $credit_button = '<div class="credit-card-pay"  data-item-name="' . $course_name . '" data-invoice-mail="' . $invoice_mail . '" data-thank-you="' . $link_thank_you . '?course_id=' . $this->course_id . '" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
+            $buttons_div .= $credit_button;
 
         }
 
-        if($enable_bit){
-            $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
-
-//            $bit_button = '<div data-item-name="'. $course_name .'" class="bit-pay"  />לתשלום בביט</div>';
-            $bit_button = '<div id="bitcom-button-container"></div>';
-            $buttons_div .= $bit_button ;
-        }
-
-        if($enable_credit || $enable_bit){
+        if ($enable_credit || $enable_bit) {
             $buttons_div .= '</div>';
         }
 
@@ -196,56 +201,117 @@ class Foody_Course_register
             'phone-number' => ['type' => 'tel', 'name' => 'phone_number', 'label' => 'מספר טלפון:']
         ];
 
-        foreach ($form_fields as $key => $field_data){
+        foreach ($form_fields as $key => $field_data) {
             $form_group = '<div class="form-group col-12 required-input">';
-            $label = '<label for="'. $key .'">' . __( $field_data['label'], 'foody') . '</label>';
-            $input = '<input type="'. $field_data['type'] .'" id="'. $key .'" name="'. $field_data['name'] .'" required>';
+            $label = '<label for="' . $key . '">' . __($field_data['label'], 'foody') . '</label>';
+            $input = '<input type="' . $field_data['type'] . '" id="' . $key . '" name="' . $field_data['name'] . '" required>';
 
             $form_group .= $label . $input . '</div>';
             $form_container .= $form_group;
         }
 
-        $price_div = '<span class="price-line">' . __('מחיר הקורס ') . __('₪') . '<span id="course-price">'.$course_price .'</span></span>';
+        $price_div = '<span class="price-line">' . __('מחיר הקורס ') . __('₪') . '<span id="course-price">' . $course_price . '</span></span>';
         /** no coupon insert **/
         $coupon_div = $coupon_text !== false ? '<span class="coupon-line">' . $coupon_text . '</span>' : '';
         $coupon_and_price_div = '<div class="coupon-and-price-container">' . $price_div . $coupon_div . '</div>';
         /** end -  no coupon insert **/
 
         /** with coupon insert **/
-        $coupon_div = '<span class="coupon-line">' . __('הכנס קוד קופון') . '</span><div class="coupon-input-container"><input type="text" id="coupon-input" name="coupon_input"><div name="redeem_coupon" id="redeem-coupon" data-course-id="'. $this->course_id .'" data-course-name="'. $course_name .'">'. __('ממש קופון') .'</div></div>';
+        $coupon_div = '<span class="coupon-line">' . __('הכנס קוד קופון') . '</span><div class="coupon-input-container"><input type="text" id="coupon-input" name="coupon_input"><div name="redeem_coupon" id="redeem-coupon" data-course-id="' . $this->course_id . '" data-course-name="' . $course_name . '">' . __('ממש קופון') . '</div></div>';
         $coupon_and_price_div = '<div class="coupon-and-price-container"><div class="coupon-and-price"> ' . $price_div . $coupon_div . '</div></div>';
         /** end -  with coupon insert **/
 
         $newsletter_terms_checkboxes = $this->get_newsletter_terms_checkboxes();
+//        $choose_payment = $this->get_payment_method_select();
         $buttons = $this->get_buttons_section();
 
-        $form_container .= $coupon_and_price_div. $newsletter_terms_checkboxes . $buttons. '</form></div></div>';
+        $form_container .= $coupon_and_price_div . $newsletter_terms_checkboxes . $buttons . '</form></div></div>';
 
         return $form_container;
     }
+
+    private function get_payment_method_select()
+    {
+        $enable_credit = isset($this->page_data['enable_credit_button']) && $this->page_data['enable_credit_button'];
+        $enable_bit = isset($this->page_data['enable_bit_button']) && $this->page_data['enable_bit_button'];
+
+
+        if ($enable_bit && $enable_credit) {
+            $select_payment_method_section = '<div class="dropdown select_payment_method_section"><a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">בחר אמצעי תשלום</a>';
+            $select_payment_method_section .= '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">';
+            $select_payment_method_section .= '<div class="dropdown-item" >ביט</div>';
+            $select_payment_method_section .= '<div class="dropdown-item" >כרטיס אשראי</div>';
+            $select_payment_method_section .= '</div></div>';
+            return $select_payment_method_section;
+        } elseif ($enable_bit && $enable_credit) {
+            $select_payment_method_section = '<div class="get_payment_method_section"><div class="get_payment_method">הצג אמצעי תשלום</div></div>';
+            return $select_payment_method_section;
+        }
+        return false;
+    }
+
+//    public function foody_get_credit_button_section()
+//    {
+////        $enable_credit = isset($this->page_data['enable_credit_button']) && $this->page_data['enable_credit_button'];
+////        $enable_bit = isset($this->page_data['enable_bit_button']) && $this->page_data['enable_bit_button'];
+////    $buttons_div = '';
+//
+//        $course_payment_link = isset($this->course_data['register_link_text_form']) ? $this->course_data['register_link_text_form'] : __('לרכישה');
+//
+////        if($enable_credit || $enable_bit){
+//        $buttons_div = '<div class="button-container">';
+////        }
+////        if($enable_credit){
+//        $link_to_purchase = isset($this->course_data['link_for_purchase']) && isset($this->course_data['link_for_purchase']['url']) ? $this->course_data['link_for_purchase']['url'] : '';
+//        $link_thank_you = isset($this->course_data['link_thank_you']) ? $this->course_data['link_thank_you'] : get_home_url();
+//        $invoice_mail = isset($this->page_data['mail_invoice']) ? $this->page_data['mail_invoice'] : '';
+//        $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
+//
+//        $credit_button = '<div class="credit-card-pay"  data-item-name="' . $course_name . '" data-invoice-mail="' . $invoice_mail . '" data-thank-you="' . $link_thank_you . '?course_id=' . $this->course_id . '" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
+//        $buttons_div .= $credit_button;
+//
+////        }
+////
+////        if($enable_bit){
+////            $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
+////
+//////            $bit_button = '<div data-item-name="'. $course_name .'" class="bit-pay"  />לתשלום בביט</div>';
+////            $bit_button = '<div id="bitcom-button-container"></div>';
+////            $buttons_div .= $bit_button ;
+////        }
+//
+////        if($enable_credit || $enable_bit){
+//        $buttons_div .= '</div>';
+////        }
+//
+//        return wp_send_json_success(['credit_section' => $buttons_div]);
+//    }
 }
 
-function foody_sign_to_newsletter_by_email() {
+function foody_sign_to_newsletter_by_email()
+{
 
-    $response ='';
-    $marketing = isset( $_POST['marketing'] ) ? $_POST['marketing'] : false;
+    $response = '';
+    $marketing = isset($_POST['marketing']) ? $_POST['marketing'] : false;
 
 
-    $email = isset( $_POST['email'] ) ? $_POST['email'] : false;
+    $email = isset($_POST['email']) ? $_POST['email'] : false;
 
-    if ( $marketing ) {
-        if ( ! empty( $email ) ) {
-            $response = foody_register_newsletter( $email );
+    if ($marketing) {
+        if (!empty($email)) {
+            $response = foody_register_newsletter($email);
         }
     }
 
 
-    $user = get_user_by( 'email', $email );
+    $user = get_user_by('email', $email);
 
-    if($user !== false) {
-        update_user_meta( $user->ID, 'seen_approvals', true );
+    if ($user !== false) {
+        update_user_meta($user->ID, 'seen_approvals', true);
     }
 }
 
-add_action( 'wp_ajax_foody_sign_to_newsletter_by_email', 'foody_sign_to_newsletter_by_email' );
+add_action('wp_ajax_foody_sign_to_newsletter_by_email', 'foody_sign_to_newsletter_by_email');
+
+
 
