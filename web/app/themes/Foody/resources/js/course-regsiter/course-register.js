@@ -3,6 +3,7 @@
  */
 let FoodyLoader = require('../common/foody-loader');
 jQuery(document).ready(($) => {
+    let price = getCoursePrice();
     let buttonHeight;
     let used_coupon_details = null;
     let form_fields = [
@@ -132,7 +133,7 @@ jQuery(document).ready(($) => {
                 let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
                 if (termsAccepted && email && firstName && lastName && phone && courseName) {
                     // temp => only send data to members plugin
-                    let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details);
+                    let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
                     let foodyLoader = new FoodyLoader({container: $('#course-register-form')});
 
                     // todo: load bit pay button
@@ -160,7 +161,7 @@ jQuery(document).ready(($) => {
                         }
                     }, function (err, data) {
                         if (err) {
-                            console.log(err)
+                            console.log(err);
                             foodyLoader.detach();
                         } else {
                             if (data.data.single_payment_ids) {
@@ -234,7 +235,7 @@ jQuery(document).ready(($) => {
 
                 let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
                 if (termsAccepted && email && firstName && lastName && phone) {
-                    let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details);
+                    let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
                     let mailInvoice = $(this).attr('data-invoice-mail').length != 0 ? $(this).attr('data-invoice-mail') : '';
                     let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:' + mailInvoice + '">' + mailInvoice + '</a></span>' : '';
                     let thankYou = $(this).attr('data-thank-you').length != 0 ? $(this).attr('data-thank-you') : '';
@@ -371,10 +372,9 @@ function getCoursePrice() {
     });
 }
 
-function checkCouponAndGetCouponAndPrice(used_coupon_details) {
+function checkCouponAndGetCouponAndPrice(used_coupon_details, price) {
     let coupon = used_coupon_details != null && typeof (used_coupon_details.coupon) != "undefined" ? used_coupon_details.coupon : null;
     let discounted_price = used_coupon_details != null && typeof (used_coupon_details.discounted_price) != "undefined" ? used_coupon_details.discounted_price : null;
-    let price = getCoursePrice();
 
     if (used_coupon_details != null) {
         // didn't enter a coupon
