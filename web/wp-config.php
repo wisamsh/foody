@@ -17,4 +17,4 @@ require_once(dirname(__DIR__) . '/vendor/autoload.php');
 require_once(dirname(__DIR__) . '/config/application.php');
 require_once(ABSPATH . 'wp-settings.php');
 /** Define aksimet API Key */
-define('WPCOM_API_KEY','948076c250dc');
+define('WPCOM_API_KEY','63b942b7c4e1');
