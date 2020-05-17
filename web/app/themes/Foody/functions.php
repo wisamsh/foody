@@ -707,7 +707,7 @@ function my_wp_is_mobile()
 
 function foody_is_ios()
 {
-    if(isset($_SERVER['HTTP_USER_AGENT'])) {
+    if (isset($_SERVER['HTTP_USER_AGENT'])) {
         //Detect special conditions devices
         $iPod = stripos($_SERVER['HTTP_USER_AGENT'], "iPod");
         $iPhone = stripos($_SERVER['HTTP_USER_AGENT'], "iPhone");
@@ -830,12 +830,10 @@ add_filter('quadmenu_nav_menu_css_class', 'foody_safari_hook_nav_menu_css_class'
 
 function foody_safari_hook_nav_menu_css_class($classes = array(), $item, $args)
 {
-    if (foody_is_ios()) {
-        if ((strpos($item->post_title, '(') || strpos($item->post_title, ')')) && !preg_match("/[a-zA-Z]/i", $item->post_title)) {
-            $classes[] = 'iso-navmenu-item';
-        } else {
-            $classes[] = '';
-        }
+    if ((strpos($item->post_title, '(') || strpos($item->post_title, ')')) && !preg_match("/[a-zA-Z]/i", $item->post_title)) {
+        $classes[] = 'iso-navmenu-item';
+    } else {
+        $classes[] = '';
     }
     return $classes;
 }
