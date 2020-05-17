@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "933a6ea55186505ddf0ffe129af05a46",
+    "content-hash": "ab9cc483765cdf8ab37cdc604b73a840",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -21,6 +21,15 @@
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/contact-form-cfdb7.1.2.4.1.zip"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "automattic/akismet-anti-spam",
+            "version": "4.1.5",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/akismet.4.1.5.zip"
             },
             "type": "wordpress-plugin"
         },
