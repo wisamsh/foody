@@ -16,7 +16,6 @@ jQuery(document).ready(($) => {
         '#redeem-coupon'
     ];
 
-    /** BIT button creation */
 
     if ($(window).width() < 768) {
         buttonHeight = 59;
@@ -25,7 +24,6 @@ jQuery(document).ready(($) => {
     }
 
 
-    /** BIT button creation end */
     //
     // $('.dropdown-toggle').dropdown();
     //
@@ -134,7 +132,8 @@ jQuery(document).ready(($) => {
                 let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
                 if (termsAccepted && email && firstName && lastName && phone && courseName) {
                     // temp => only send data to members plugin
-                    let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details)
+                    let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details);
+                    let foodyLoader = new FoodyLoader({container: $('#course-register-form')});
 
                     // todo: load bit pay button
                     $.each( form_fields, function( index, value ){
@@ -143,20 +142,32 @@ jQuery(document).ready(($) => {
                             $(value).attr('style', 'cursor: not-allowed');
                         }
                     });
+                    $(this).off('click');
 
                     //load bit button
-                    let bitTransactionId = 111; // mock
-                    let bitPaymentInitiationId = 222; // mock
+                    let bitTransactionId = null;
+                    let bitPaymentInitiationId = null;
 
+                    foodyLoader.attach();
                     foodyAjax({
                         action: 'foody_start_bit_pay_process',
                         data: {
+                            email: email,
+                            first_name: firstName,
+                            last_name: lastName,
+                            price: couponAndPriceObj.price,
+                            item_name: courseName
                         }
                     }, function (err, data) {
                         if (err) {
                             console.log(err)
+                            foodyLoader.detach();
                         } else {
-
+                            if (data.data.single_payment_ids) {
+                                bitTransactionId = data.data.single_payment_ids['transactionSerialId'];
+                                bitPaymentInitiationId = data.data.single_payment_ids['paymentInitiationId'];
+                            }
+                            foodyLoader.detach();
                         }
                     });
 
@@ -186,6 +197,18 @@ jQuery(document).ready(($) => {
                         'transaction_id': bitPaymentInitiationId, // dummy,  todo: get real transaction_id from bit purchase confirmation,
                         'coupon': couponAndPriceObj.coupon
                     };
+
+
+
+                    /** create invoice after purchase been verified */
+
+                    // foodyAjax({
+                    //     action: 'foody_create_and_send_invoice',
+                    //     data: {
+                    //     }
+                    // }, function () {
+                    //     alert('nice...');
+                    // });
 
 
                     // foodyAjax({
@@ -331,7 +354,7 @@ function redeemCoupon() {
     }
 }
 
-function     getCoursePrice() {
+function getCoursePrice() {
     foodyAjax({
         action: 'foody_get_course_price',
         data: {
