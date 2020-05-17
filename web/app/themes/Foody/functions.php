@@ -705,6 +705,17 @@ function my_wp_is_mobile()
     return $is_mobile;
 }
 
+function foody_is_ios()
+{
+    //Detect special conditions devices
+    $iPod = stripos($_SERVER['HTTP_USER_AGENT'], "iPod");
+    $iPhone = stripos($_SERVER['HTTP_USER_AGENT'], "iPhone");
+    $iPad = stripos($_SERVER['HTTP_USER_AGENT'], "iPad");
+    $safari = strpos($_SERVER['HTTP_USER_AGENT'], 'Safari');
+
+    return $iPod || $iPhone || $iPad || $safari;
+}
+
 add_action('init', 'register_update_filter_cache');
 function register_update_filter_cache()
 {
@@ -757,16 +768,16 @@ and (meta_key ='first_name' or meta_key = 'last_name')";
 
         foreach ($authors_results as $index => $authors_result) {
             if ($authors_result->meta_key == 'first_name') {
-                $first_name = strpos($authors_result->meta_value, "'") !=false ? str_replace(["'", "\'", "\\"], "", $authors_result->meta_value) : $authors_result->meta_value;
-                $insert_query .= "(" . $authors_result->user_id . ",'" .$first_name . "', ";
+                $first_name = strpos($authors_result->meta_value, "'") != false ? str_replace(["'", "\'", "\\"], "", $authors_result->meta_value) : $authors_result->meta_value;
+                $insert_query .= "(" . $authors_result->user_id . ",'" . $first_name . "', ";
                 $last_full_name = $first_name . ' ';
                 $last_full_name_reversed = ' ' . $first_name;
             } elseif ($authors_result->meta_key == 'last_name') {
-                    $last_name = strpos($authors_result->meta_value, "'") !=false ? str_replace(["'", "\'", "\\"], "", $authors_result->meta_value) : $authors_result->meta_value;
-                    $last_full_name .= $last_name;
-                    $last_full_name_reversed = $last_name . $last_full_name_reversed;
-                    $insert_query .= "'" . $last_name . "', '" . $last_full_name . "', '" . $last_full_name_reversed . "'),";
-                    $last_full_name = '';
+                $last_name = strpos($authors_result->meta_value, "'") != false ? str_replace(["'", "\'", "\\"], "", $authors_result->meta_value) : $authors_result->meta_value;
+                $last_full_name .= $last_name;
+                $last_full_name_reversed = $last_name . $last_full_name_reversed;
+                $insert_query .= "'" . $last_name . "', '" . $last_full_name . "', '" . $last_full_name_reversed . "'),";
+                $last_full_name = '';
             }
         }
         $last_char = substr($insert_query, -1);
@@ -790,8 +801,8 @@ function foody_add_new_author_to_authors_table()
         $first_name = isset($_POST['first_name']) ? $_POST['first_name'] : '';
         $last_name = isset($_POST['last_name']) ? $_POST['last_name'] : '';
 
-        $first_name = strpos($first_name, "'") !=false ? str_replace(["'", "\'", "\\"], "", $first_name) : $first_name;
-        $last_name = strpos($last_name, "'") !=false ? str_replace(["'", "\'", "\\"], "", $last_name) : $last_name;
+        $first_name = strpos($first_name, "'") != false ? str_replace(["'", "\'", "\\"], "", $first_name) : $first_name;
+        $last_name = strpos($last_name, "'") != false ? str_replace(["'", "\'", "\\"], "", $last_name) : $last_name;
 
         $role = isset($_POST['role']) ? $_POST['role'] : false;
 
@@ -812,3 +823,17 @@ reversed_full_name='{$reversed_full_name}'";
 
 add_action('edit_user_profile_update', 'foody_add_new_author_to_authors_table');
 
+add_filter('quadmenu_nav_menu_css_class', 'foody_safari_hook_nav_menu_css_class', 10, 4);
+
+function foody_safari_hook_nav_menu_css_class($classes = array(), $item, $args)
+{
+    if (foody_is_ios()) {
+        if ((strpos($item->post_title, '(') || strpos($item->post_title, ')')) && !preg_match("/[a-zA-Z]/i", $item->post_title)) {
+        $classes[] = 'iso-navmenu-item';
+        }
+        else{
+            $classes[] ='';
+        }
+    }
+    return $classes;
+}

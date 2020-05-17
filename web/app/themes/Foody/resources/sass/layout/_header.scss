@@ -11,6 +11,16 @@ body {
     }
   }
 
+  .quadmenu-item {
+    &.iso-navmenu-item {
+      .quadmenu-text {
+        unicode-bidi: bidi-override !important;
+        direction: rtl !important;
+        text-align: right !important;
+      }
+    }
+  }
+
   // Fix Nagish-li fixed menu
   .accessibe-quicknav-default.accessibe-rtl.accessibe-ready {
     display: none !important;
@@ -195,7 +205,7 @@ header {
         .algolia-autocomplete {
           width: 100%;
 
-          input{
+          input {
             line-height: 0;
           }
         }
@@ -324,6 +334,7 @@ header {
                 .quadmenu-text {
                   word-break: break-word;
                 }
+
                 .quadmenu-description {
                   display: none !important;
                 }
@@ -450,13 +461,11 @@ header {
         direction: rtl;
 
 
-
-
         .foody-search-suggestions {
           width: 100%;
           padding: 0;
 
-          .suggestion-head-title{
+          .suggestion-head-title {
             font-weight: bold;
           }
 
@@ -865,6 +874,7 @@ header {
                 .quadmenu-text {
 
                 }
+
                 .quadmenu-description {
                   display: none !important;
                 }
@@ -878,6 +888,7 @@ header {
             a {
               .quadmenu-item-content {
                 font-weight: 900;
+
                 .quadmenu-description {
                   display: none !important;
                 }
@@ -911,6 +922,7 @@ header {
                 .quadmenu-text {
 
                 }
+
                 .quadmenu-description {
                   display: none !important;
                 }
@@ -1387,6 +1399,7 @@ header {
                 .quadmenu-description {
                   display: none !important;
                 }
+
                 .quadmenu-caret {
                   left: 0 !important;
                   width: fit-content;
@@ -1727,5 +1740,3 @@ header {
     }
   }
 }
-
-
