@@ -43,6 +43,6 @@ if (isset($_POST['s'])) {
 </div>
 <script type="application/javascript">
     function getUpdate(id) {
-        window.location = 'http://foody-local.co.il/wp/wp-admin/admin.php?page=update_coupon&update=true&id=' + id;
+        window.location =  window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=update_coupon&update=true&id=' + id;
     }
 </script>

@@ -45,6 +45,7 @@ class Courses_Members_List extends WP_List_Table
             $coupon = $member->coupon;
             $purchase_date = $member->purchase_date;
             $note = $member->note;
+            $status = $member->status;
 
             $members_list[$member_id] = array(
                 'ID' => $member_id,
@@ -61,6 +62,7 @@ class Courses_Members_List extends WP_List_Table
                 'תאריך רכישה' => $purchase_date,
                 'זיכוי' => !empty($transaction_id) ? '<div style="cursor: pointer; text-decoration: underline; color: blue" onclick="getRefund()">לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
+                'סטאטוס' => $status,
                 'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
             );
         }
@@ -87,6 +89,7 @@ class Courses_Members_List extends WP_List_Table
             $purchase_date = $search_result['purchase_date'];
             $organization = $search_result['organization'];
             $note = $search_result['note'];
+            $status = $search_result['status'];
 
 
             $members_list[$member_id] = array(
@@ -104,6 +107,7 @@ class Courses_Members_List extends WP_List_Table
                 'תאריך רכישה' => $purchase_date,
                 'זיכוי' => !empty($transaction_id) ? '<div href="" style="cursor: pointer; text-decoration: underline; color: blue" onclick="getRefund()">לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
+                'סטאטוס' => $status,
                 'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
             );
         }
@@ -141,6 +145,7 @@ class Courses_Members_List extends WP_List_Table
             case 'זיכוי':
             case 'שיוך ארגוני':
             case 'הערה':
+            case 'סטאטוס':
             case 'עריכה':
                 return $item[$column_name];
             default:
@@ -173,6 +178,7 @@ class Courses_Members_List extends WP_List_Table
             'קופון' => __('קופון'),
             'זיכוי' => __('זיכוי'),
             'הערה' => __('הערה'),
+            'סטאטוס' => __('סטאטוס'),
             'עריכה' => __('עריכה'),
         ];
 
@@ -195,6 +201,7 @@ class Courses_Members_List extends WP_List_Table
             'מס׳ טרנזקציה' => array('מס׳ טרנזקציה', true),
             'קופון' => array('קופון', true),
             'הערה' => array('הערה', false),
+            'סטאטוס' => array('סטאטוס', true),
             'עריכה' => array('עריכה', false),
         );
 
@@ -321,6 +328,9 @@ class Courses_Members_List extends WP_List_Table
 
         foreach ($filters_list as $key => $filter) {
             $current_filter = !empty($search[$key]) ? $search[$key] : false;
+            if($key == 'marketing_filter' && is_int($search[$key])){
+                $current_filter = $search[$key];
+            }
             if ($current_filter) {
                 if ($not_first) {
                     $search_query .= $added_and . "{$filter} = '{$current_filter}'";
@@ -336,7 +346,7 @@ class Courses_Members_List extends WP_List_Table
     private function get_regular_search_query($search)
     {
         global $wpdb;
-        $table_colomns = ['member_id', 'member_email', 'first_name', 'last_name', 'phone', 'marketing_status', 'course_name', 'price_paid', 'payment_method', 'transaction_id', 'coupon', 'purchase_date'];
+        $table_colomns = ['member_id', 'member_email', 'first_name', 'last_name', 'phone', 'marketing_status', 'course_name', 'price_paid', 'payment_method', 'transaction_id', 'coupon', 'purchase_date', 'status'];
         $table_name = $wpdb->prefix . 'foody_courses_members';
 
         $search_words = [];

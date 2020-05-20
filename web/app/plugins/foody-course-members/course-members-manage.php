@@ -58,7 +58,7 @@ function coupons_table_admin_page_func()
         $courses_ids = is_array($_POST['course_name']) ? implode(',', $_POST['course_name']) : implode(',', [$_POST['course_name']]);
         $creation_date = $_POST['creation_date'];
         $expiration_date = $_POST['expiration_date'];
-        $coupon_value = $_POST['percentages'] ? $_POST['coupon_value'].'%' :  $_POST['coupon_value'];
+        $coupon_value = $_POST['percentages'] != 'false' ? $_POST['coupon_value'].'%' :  $_POST['coupon_value'];
         $organization = isset($_POST['organization']) ? $_POST['organization'] : '';
         $max_amount = $_POST['max_amount'];
         $used_amount = 0;
@@ -105,7 +105,7 @@ function coupons_table_admin_page_func()
         $update_query = 'UPDATE ' . $table_name . ' SET ';
         foreach ($table_fields as $table_field) {
             if($table_field == 'coupon_value'){
-                $coupon_value = $_POST['percentages'] ? $_POST['coupon_value'].'%' :  $_POST['coupon_value'];
+                $coupon_value = $_POST['percentages'] != 'false' ? $_POST['coupon_value'].'%' :  $_POST['coupon_value'];
                 $update_query .= $table_field . "= " . "'" . $coupon_value . "'" . ',';
             }
             elseif ($table_field == 'course_name'){
@@ -283,12 +283,13 @@ function members_table_admin_page()
         $purchase_date = $_POST['purchase_date'];
         $organization = isset($_POST['organization']) ? $_POST['organization'] : '';
         $note = $_POST['note'];
+        $status = 'paid';
 
         $send_data = $_POST['send_data'] == 'true' ? true : false;
 
         if ($send_data) {
             // todo: if true send data to schooler
-            send_new_course_member_date([
+            send_new_course_member_data([
                 'member_email' => $member_email,
                 'phone' => $phone,
                 'name' => $first_name . ' ' . $last_name,
@@ -298,8 +299,8 @@ function members_table_admin_page()
             ]);
         }
 
-        $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, price_paid, organization, payment_method, transaction_id, coupon, purchase_date, note)
-                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$price_paid','$organization','$payment_method','$transaction_id','$coupon','$purchase_date','$note')");
+        $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, price_paid, organization, payment_method, transaction_id, coupon, purchase_date, note, status, payment_method_id)
+                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$price_paid','$organization','$payment_method','$transaction_id','$coupon','$purchase_date','$note','$status','-1')");
         echo "<script>location.replace('admin.php?page=foody-course-members%2Fcourse-members-manage.php');</script>";
     }
 
@@ -330,7 +331,7 @@ function members_table_admin_page()
     <?php
 }
 
-function send_new_course_member_date($member_data)
+function send_new_course_member_data($member_data)
 {
     $to = get_option('foody_mail_for_courses_data');
     if (!empty($to)) {
@@ -346,7 +347,7 @@ function send_new_course_member_date($member_data)
 
 function create_courses_mail_body($member_data)
 {
-    $enable_marketing_text = $member_data['enable_marketing'] ? __('מאשר קבלת דואר') : __('לא מאשר קבלת דואר');
+    $enable_marketing_text = $member_data['enable_marketing'] == 'true' ? __('מאשר קבלת דואר') : __('לא מאשר קבלת דואר');
 
     $mail_body = '<p>';
     $mail_body .= 'querystring__UserEmail: ' . $member_data['phone'];

@@ -834,3 +834,16 @@ function foody_remove_meta_boxes_post_type_foody_organizations() {
 
 }
 add_action('add_meta_boxes', 'foody_remove_meta_boxes_post_type_foody_organizations', 100);
+
+function foody_setInterval($func, $milliseconds)
+{
+    $continue_interval = true;
+    $seconds=(int)$milliseconds/1000;
+    while($continue_interval)
+    {
+        $continue_interval = $func();
+        if($continue_interval) {
+            sleep($seconds);
+        }
+    }
+}

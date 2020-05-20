@@ -162,6 +162,6 @@ else {
     }
 
     function getUpdate(id) {
-        window.location = 'http://foody-local.co.il/wp/wp-admin/admin.php?page=update_course_member&update=true&id='+id;
+        window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=update_course_member&update=true&id='+id;
     }
 </script>
