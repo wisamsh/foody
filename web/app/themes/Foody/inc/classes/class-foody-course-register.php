@@ -165,8 +165,8 @@ class Foody_Course_register
 
         if ($enable_bit) {
             $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
-
-            $bit_button = '<div data-item-name="'. $course_name .'" class="bit-pay"  />המשך לתשלום באמצעות ביט</div>';
+            $link_thank_you = isset($this->course_data['link_thank_you']) ? $this->course_data['link_thank_you'] : get_home_url();
+            $bit_button = '<div data-thank-you="' . $link_thank_you . '?course_id=' . $this->course_id .'" data-item-name="'. $course_name .'" class="bit-pay" />המשך לתשלום באמצעות ביט</div>';
 //             $bit_button = '<div id="bitcom-button-container"></div>';
             $buttons_div .= $bit_button;
         }

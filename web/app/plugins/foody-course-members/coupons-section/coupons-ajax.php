@@ -29,7 +29,7 @@ function foody_get_coupon_value()
             if (isset($coupon->max_amount) && isset($coupon->used_amount) && isset($coupon->gen_coupons_held) && ($coupon->max_amount > $coupon->used_amount + $coupon->gen_coupons_held)) {
                 update_general_copupon_columns($coupon->coupon_id,['gen_coupons_held' => $coupon->gen_coupons_held + 1]);
                 $new_price = get_modified_course_price($course_id, $coupon->coupon_value, $original_price);
-                $coupon_id = $coupon[0]->coupon_id;
+                $coupon_id = $coupon->coupon_id;
                 $coupon_type = 'general';
             }
         }
