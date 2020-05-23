@@ -219,7 +219,7 @@ function do_delete_bit_transaction($paymentInitiationId)
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2/single-payments/62D2D620-E3D7-4A37-82D6-74B5A92528FF",
+                CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2/single-payments/".$paymentInitiationId,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
