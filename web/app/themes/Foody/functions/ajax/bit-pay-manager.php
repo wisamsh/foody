@@ -35,7 +35,7 @@ function foody_bitcom_transaction_complete()
 
     if ($payment_initiation_id && $member_data) {
         $coupon_details = null;
-        if($coupon_id && $coupon_type && $coupon_code){
+        if ($coupon_id && $coupon_type && $coupon_code) {
             $coupon_details = ['id' => $coupon_id, 'type' => $coupon_type, 'coupon_code' => $coupon_code];
         }
         foody_query_process_for_bit_status($payment_initiation_id, $member_data, $coupon_details);
@@ -46,6 +46,64 @@ function foody_bitcom_transaction_complete()
 
 add_action('wp_ajax_foody_nopriv_bitcom_transaction_complete', 'foody_bitcom_transaction_complete');
 add_action('wp_ajax_foody_bitcom_transaction_complete', 'foody_bitcom_transaction_complete');
+
+function foody_bit_refund_process()
+{
+    if (isset($_POST['paymentInitiation_id']) && $_POST['paymentInitiation_id']) {
+        $token = Bit_Token_Manager::get_token();
+        $cert_path = get_certificate_data();
+        $subscription_key = get_option('foody_subscription_key_for_bit', false);
+        $bit_transaction_id_and_status = get_id_and_status_by_paymentInitiationId($_POST['paymentInitiation_id']);
+        if (isset($bit_transaction_id_and_status->bit_trans_id)) {
+            $ids_and_price_paid_obj = get_columns_data_by_paymentMethodId($bit_transaction_id_and_status->bit_trans_id, ['member_id', 'price_paid']);
+            if (isset($ids_and_price_paid_obj->price_paid) && isset($ids_and_price_paid_obj->member_id)) {
+                $curl = curl_init();
+
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2/refund",
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => "{\n    \"creditAmount\": " . $ids_and_price_paid_obj->price_paid . ",\n    \"currencyTypeCode\": 1,\n    \"externalSystemReference\": \"bit_trans_" . $bit_transaction_id_and_status->bit_trans_id . "\",\n    \"paymentInitiationId\": \"" . $_POST['paymentInitiation_id'] . "\",\n    \"refundExternalSystemReference\": \"bit_trans_" . $bit_transaction_id_and_status->bit_trans_id . "_refund\"\n}",
+                    CURLOPT_HTTPHEADER => array(
+                        "Authorization: Bearer " . $token,
+                        "Content-Type: application/json;charset=UTF-8",
+                        "Ocp-Apim-Subscription-Key: " . $subscription_key
+                    ),
+                ));
+
+                curl_setopt($curl, CURLOPT_SSLCERT, $cert_path);
+
+                $response = curl_exec($curl);
+                $response_json = json_decode($response);
+
+                curl_close($curl);
+
+                if (isset($response_json->requestStatusCode) && isset($response_json->issuerAuthorizationNumber)) {
+                    $is_refunded = !bit_handle_status_code($response_json->requestStatusCode);
+                    if ($is_refunded) {
+                        update_pre_pay_bit_data_by_id_and_cloumns($bit_transaction_id_and_status->bit_trans_id, ['status' => 'refunded', 'authorization_number' => $response_json->issuerAuthorizationNumber]);
+                        update_course_member_by_id_and_cloumns($ids_and_price_paid_obj->member_id, ['status' => 'refunded']);
+                        return wp_send_json_success(['msg' => __('העסקה עם מזהה ' . $ids_and_price_paid_obj->member_id . ' בוטלה')]);
+                    }
+                } else {
+                    wp_send_json_error(array(
+                        'error' => __('הזיכוי נכשל')
+                    ));
+                }
+
+            }
+        }
+    }
+
+}
+
+add_action('wp_ajax_foody_nopriv_bit_refund_process', 'foody_bit_refund_process');
+add_action('wp_ajax_foody_bit_refund_process', 'foody_bit_refund_process');
 
 function get_payment_status($payment_initiation_id, $member_data)
 {
@@ -79,7 +137,7 @@ function get_payment_status($payment_initiation_id, $member_data)
     return isset($response_json->requestStatusCode) ? $response_json->requestStatusCode : $response_json;
 }
 
-function bit_handle_status_code($code, $payment_initiation_id, $member_data, $coupon_details)
+function bit_handle_status_code($code, $payment_initiation_id = null, $member_data = null, $coupon_details = null)
 {
     $result = '';
     switch ($code) {
@@ -97,6 +155,7 @@ function bit_handle_status_code($code, $payment_initiation_id, $member_data, $co
             break;
         case 10:
             // refund confirmed - final
+            $result = false;
             break;
         case 7:
             // time expired - final
@@ -136,7 +195,7 @@ function bit_handle_status_code($code, $payment_initiation_id, $member_data, $co
             if (is_array($ids_and_authorization_number) && isset($ids_and_authorization_number['trans_id']) && isset($ids_and_authorization_number['issuerAuthorizationNumber'])) {
                 update_pre_pay_bit_data_by_id_and_cloumns($ids_and_authorization_number['trans_id'], ['status' => 'paid', 'authorization_number' => $ids_and_authorization_number['issuerAuthorizationNumber']]);
                 update_course_member_by_id_and_cloumns($ids_and_authorization_number['member_id'], ['status' => 'paid']);
-                if($coupon_details != null){
+                if ($coupon_details != null) {
                     update_coupon_to_used($coupon_details);
                 }
             }
@@ -151,8 +210,8 @@ function bit_handle_status_code($code, $payment_initiation_id, $member_data, $co
 function do_delete_bit_transaction($paymentInitiationId)
 {
     $bit_transaction_id_and_status = get_id_and_status_by_paymentInitiationId($paymentInitiationId);
-    $member_id = get_id_and_member_price_paid_by_paymentInitiationId($paymentInitiationId);
     if (isset($bit_transaction_id_and_status->bit_trans_id) && isset($bit_transaction_id_and_status->status)) {
+        $member_id = get_columns_data_by_paymentMethodId($bit_transaction_id_and_status->bit_trans_id, ['member_id', 'price_paid']);
         if ($bit_transaction_id_and_status->status != 'pending' && isset($member_id->member_id)) {
             $token = Bit_Token_Manager::get_token();
             $cert_path = get_certificate_data();
@@ -248,7 +307,7 @@ function do_bit_payment_capture($paymentInitiationId)
     $response = false;
     if (isset($bit_transaction_data->bit_trans_id)) {
         $bit_trans_id = 'bit_trans_' . $bit_transaction_data->bit_trans_id;
-        $member_id_and_price_paid = get_id_and_member_price_paid_by_paymentInitiationId($bit_transaction_data->bit_trans_id);
+        $member_id_and_price_paid = get_columns_data_by_paymentMethodId($bit_transaction_data->bit_trans_id, ['member_id', 'price_paid']);
         if (isset($member_id_and_price_paid->price_paid)) {
             $curl = curl_init();
 
@@ -299,11 +358,12 @@ function get_pre_pay_bit_data_by_paymentInitiationId($paymentInitiationId)
 
 }
 
-function get_id_and_member_price_paid_by_paymentInitiationId($payment_method_id)
+function get_columns_data_by_paymentMethodId($payment_method_id, $columns)
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_members';
-    $query = "SELECT member_id,price_paid FROM {$table_name} where payment_method_id = " . $payment_method_id;
+    $columns_to_return = implode(',', $columns);
+    $query = "SELECT {$columns_to_return} FROM {$table_name} where payment_method_id = " . $payment_method_id;
 
     $result = $wpdb->get_results($query);
     $result = is_array($result) && isset($result[0]) ? $result[0] : $result;
@@ -315,7 +375,7 @@ function get_id_and_status_by_paymentInitiationId($paymentInitiationId)
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_pre_payment_bit';
-    $query = "SELECT bit_trans_id, status FROM {$table_name} where bit_paymentInitiationId = " . $paymentInitiationId;
+    $query = "SELECT bit_trans_id, status FROM {$table_name} where bit_paymentInitiationId = '" . $paymentInitiationId."'";
 
     $result = $wpdb->get_results($query);
     $result = is_array($result) && isset($result[0]) ? $result[0] : $result;
@@ -398,38 +458,41 @@ function insert_new_pending_payment()
     return $last_id;
 }
 
-function update_coupon_to_used($coupon_details){
-    if(isset($coupon_details['id']) && isset($coupon_details['type']) && isset($coupon_details['coupon_code'])){
-        if($coupon_details['type'] == 'unique'){
+function update_coupon_to_used($coupon_details)
+{
+    if (isset($coupon_details['id']) && isset($coupon_details['type']) && isset($coupon_details['coupon_code'])) {
+        if ($coupon_details['type'] == 'unique') {
             $coupon_code_array = explode('_', $coupon_details['coupon_code']);
             update_unique_coupon_to_used($coupon_details['id'], $coupon_code_array[1]);
             update_unique_coupon_to_used_in_all_coupons_table($coupon_details['id']);
-        }
-        else{
+        } else {
             update_general_coupon_to_used($coupon_details['id']);
         }
     }
 }
 
-function update_unique_coupon_to_used($id, $coupon_code){
+function update_unique_coupon_to_used($id, $coupon_code)
+{
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_unique_coupons_meta';
     $update_query = "UPDATE {$table_name} SET pending = 0, used = 1 WHERE coupon_id= {$id} AND coupon_code = '{$coupon_code}'";
     return $wpdb->query($update_query);
 }
 
-function update_unique_coupon_to_used_in_all_coupons_table($id){
+function update_unique_coupon_to_used_in_all_coupons_table($id)
+{
     global $wpdb;
-    $table_name = $wpdb->prefix . 'foody_courses_members';
-    $update_query = "UPDATE {$table_name} SET (used_amount = used_amount + 1) WHERE coupon_id= {$id}";
+    $table_name = $wpdb->prefix . 'foody_courses_coupons';
+    $update_query = "UPDATE {$table_name} SET used_amount = used_amount + 1 WHERE coupon_id= {$id}";
     return $wpdb->query($update_query);
 }
 
 
-function update_general_coupon_to_used($id){
+function update_general_coupon_to_used($id)
+{
     global $wpdb;
-    $table_name = $wpdb->prefix . 'foody_courses_members';
-    $update_query = "UPDATE {$table_name} SET (gen_coupons_held = gen_coupons_held -1 , used_amount = used_amount + 1) WHERE coupon_id= {$id}";
+    $table_name = $wpdb->prefix . 'foody_courses_coupons';
+    $update_query = "UPDATE {$table_name} SET gen_coupons_held = gen_coupons_held -1 , used_amount = used_amount + 1 WHERE coupon_id= {$id}";
     return $wpdb->query($update_query);
 }
 

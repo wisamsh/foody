@@ -350,7 +350,7 @@ function create_courses_mail_body($member_data)
     $enable_marketing_text = $member_data['enable_marketing'] == 'true' ? __('מאשר קבלת דואר') : __('לא מאשר קבלת דואר');
 
     $mail_body = '<p>';
-    $mail_body .= 'querystring__UserEmail: ' . $member_data['phone'];
+    $mail_body .= 'querystring__UserEmail: ' . $member_data['email'];
     $mail_body .= '</p>';
     $mail_body .= '<p>';
     $mail_body .= 'querystring__intTo: ' . $member_data['name'];

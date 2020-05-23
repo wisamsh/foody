@@ -111,6 +111,17 @@ function foody_js_globals() {
 
 		<?php
 	}
+	else{
+        $vars['ajax']      = admin_url( 'admin-ajax.php' );
+        $js = wp_json_encode( $vars );
+
+        ?>
+        <script async defer>
+            foodyGlobals = <?php echo $js?>;
+        </script>
+
+        <?php
+    }
 }
 
 function foody_js_messages() {
@@ -120,6 +131,7 @@ function foody_js_messages() {
 }
 
 add_action( 'wp_head', 'foody_js_globals', - 10000 );
+add_action( 'admin_head', 'foody_js_globals', - 10000 );
 
 ///**
 // * Include posts from authors in the search results where

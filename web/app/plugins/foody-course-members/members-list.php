@@ -12,11 +12,11 @@ if (isset($_POST['s'])) {
     $filters_data = ['search' => $_POST['s']];
     $has_filters = true;
 } elseif (!isset($_POST['export_clicked']) && (isset($_POST['date_from']) && isset($_POST['date_to'])
-    || isset($_POST['payment_filter'])
-    || isset($_POST['course_filter'])
-    || isset($_POST['marketing_filter'])
-    || isset($_POST['organization_filter'])
-    || isset($_POST['coupon_filter']))) {
+        || isset($_POST['payment_filter'])
+        || isset($_POST['course_filter'])
+        || isset($_POST['marketing_filter'])
+        || isset($_POST['organization_filter'])
+        || isset($_POST['coupon_filter']))) {
 
     $date_from = isset($_POST['date_from']) ? $_POST['date_from'] : '';
     $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : '';
@@ -42,19 +42,32 @@ if (isset($_POST['s'])) {
     $myListTable->prepare_items($filters_data);
     $has_filters = true;
 
-}
-elseif (isset($_POST['export_clicked']) && isset($_POST['search'])){
+} elseif (isset($_POST['export_clicked']) && isset($_POST['search'])) {
     $myListTable->prepare_items($_POST['search']);
     $filters_data = ['search' => $_POST['search']];
     $has_filters = true;
-}
-else {
+} else {
     $myListTable->prepare_items();
     $has_filters = false;
 }
 ?>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
 <style>
+    #overlay {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+        cursor: pointer;
+    }
     .filter-row {
         display: flex;
         flex-direction: column;
@@ -69,6 +82,7 @@ else {
         text-decoration: underline;
     }
 </style>
+<div id="overlay" onclick=""> אנא המתינו... </div>
 <form method="post" id="search-from">
     <?php
     $myListTable->search_box('Search', 'search-id');
@@ -76,7 +90,7 @@ else {
 </form>
 <form method="post">
     <input type="hidden" name="page" value="test_list_table">
-<?php
+    <?php
     $myListTable->display();
     ?>
     <div class="search-box" style="float: right; margin-top: 2%;">
@@ -139,7 +153,7 @@ else {
     <div class="row filter-row" style="align-items: flex-end;">
         <input type="text" id="export-clicked" name="export_clicked" value="true" hidden>
         <?php
-        if($has_filters) {
+        if ($has_filters) {
             foreach ($filters_data as $filter_name => $filter_value) {
                 if (!empty($filter_value)) {
                     echo '<input type="text"  name="' . $filter_name . '" value="' . $filter_value . '" hidden>';
@@ -151,17 +165,41 @@ else {
     </div>
 </form>
 </div>
-
 <script type="application/javascript">
-    function getRefund() {
+    function getRefund(bitPaymentInitiationId) {
         var isRefund = confirm("האם לבצע זיכוי?");
         if (isRefund) {
             //todo: ajax call that take care of Refund
+            startLoader();
+            foodyAjax({
+                action: 'foody_bit_refund_process',
+                data: {
+                    paymentInitiation_id: bitPaymentInitiationId
+                }
+            }, function (err, data) {
+                if (err) {
+                    stopLoader();
+                    console.log(err);
+                } else {
+                    if(data.data.msg){
+                        stopLoader();
+                        alert(data.data.msg);
+                        window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=foody-course-members%2Fcourse-members-manage.php';
+                    }
+                }
+            });
         }
-        alert("זיכוי לא בוצע!")
     }
 
     function getUpdate(id) {
-        window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=update_course_member&update=true&id='+id;
+        window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=update_course_member&update=true&id=' + id;
+    }
+
+    function startLoader() {
+        document.getElementById("overlay").style.display = "block";
+    }
+
+    function stopLoader() {
+        document.getElementById("overlay").style.display = "none";
     }
 </script>

@@ -60,7 +60,7 @@ class Courses_Members_List extends WP_List_Table
                 'מס׳ טרנזקציה' => $transaction_id,
                 'קופון' => $coupon,
                 'תאריך רכישה' => $purchase_date,
-                'זיכוי' => !empty($transaction_id) ? '<div style="cursor: pointer; text-decoration: underline; color: blue" onclick="getRefund()">לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
+                'זיכוי' => !empty($transaction_id) && $status == 'paid' ? '<div onclick="getRefund(\''. $transaction_id . '\');" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
                 'סטאטוס' => $status,
                 'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
@@ -105,7 +105,7 @@ class Courses_Members_List extends WP_List_Table
                 'מס׳ טרנזקציה' => $transaction_id,
                 'קופון' => $coupon,
                 'תאריך רכישה' => $purchase_date,
-                'זיכוי' => !empty($transaction_id) ? '<div href="" style="cursor: pointer; text-decoration: underline; color: blue" onclick="getRefund()">לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
+                'זיכוי' => !empty($transaction_id) && $status == 'paid' ? '<div onclick="getRefund(\''. $transaction_id . '\');" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
                 'סטאטוס' => $status,
                 'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
