@@ -720,9 +720,11 @@ function register_update_filter_cache()
 add_filter('cron_schedules', 'foody_add_cron_interval');
 function foody_add_cron_interval($schedules)
 {
-    $schedules['five_minutes'] = array(
-        'interval' => 300,
-        'display' => esc_html__('Every 5 Minute'),);
+    if(!isset($schedules['one_minute'])) {
+        $schedules['one_minute'] = array(
+            'interval' => 60,
+            'display' => esc_html__('Every Minute'),);
+    }
     return $schedules;
 }
 
@@ -812,11 +814,6 @@ reversed_full_name='{$reversed_full_name}'";
 
 add_action('edit_user_profile_update', 'foody_add_new_author_to_authors_table');
 
-
-//function foody_remove_course_members_menus(){
-//    remove_menu_page( 'edit.php?post_type=foody_course_users' );
-//}
-//add_action( 'admin_menu', 'foody_remove_course_members_menus' );
 
 add_action('init', 'foody_rem_editor_from_post_type_foody_organizations');
 function foody_rem_editor_from_post_type_foody_organizations() {

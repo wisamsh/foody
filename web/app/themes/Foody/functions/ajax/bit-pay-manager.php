@@ -10,12 +10,10 @@ add_action('wp_ajax_foody_get_course_price', 'foody_get_course_price');
 
 function foody_start_bit_pay_process()
 {
-    $token = Bit_Token_Manager::get_token();
-
     // add new pending payment to db
     $pending_payment_id = insert_new_pending_payment();
     if ($pending_payment_id != false) {
-        $single_payment_ids = do_single_payment_bit($token, $pending_payment_id, $_POST['memberData']);
+        $single_payment_ids = do_single_payment_bit($pending_payment_id, $_POST['memberData']);
 
         wp_send_json_success(['single_payment_ids' => $single_payment_ids]);
     }
@@ -39,6 +37,7 @@ function foody_bitcom_transaction_complete()
             $coupon_details = ['id' => $coupon_id, 'type' => $coupon_type, 'coupon_code' => $coupon_code];
         }
         foody_query_process_for_bit_status($payment_initiation_id, $member_data, $coupon_details);
+        wp_send_json_success(['msg' => 'complete...']);
     } else {
         // todo: handle error
     }
@@ -50,45 +49,21 @@ add_action('wp_ajax_foody_bitcom_transaction_complete', 'foody_bitcom_transactio
 function foody_bit_refund_process()
 {
     if (isset($_POST['paymentInitiation_id']) && $_POST['paymentInitiation_id']) {
-        $token = Bit_Token_Manager::get_token();
-        $cert_path = get_certificate_data();
-        $subscription_key = get_option('foody_subscription_key_for_bit', false);
         $bit_transaction_id_and_status = get_id_and_status_by_paymentInitiationId($_POST['paymentInitiation_id']);
         if (isset($bit_transaction_id_and_status->bit_trans_id)) {
             $ids_and_price_paid_obj = get_columns_data_by_paymentMethodId($bit_transaction_id_and_status->bit_trans_id, ['member_id', 'price_paid']);
             if (isset($ids_and_price_paid_obj->price_paid) && isset($ids_and_price_paid_obj->member_id)) {
-                $curl = curl_init();
+                $request_url_path = '/refund';
+                $request_body = "{\n    \"creditAmount\": " . $ids_and_price_paid_obj->price_paid . ",\n    \"currencyTypeCode\": 1,\n    \"externalSystemReference\": \"bit_trans_" . $bit_transaction_id_and_status->bit_trans_id . "\",\n    \"paymentInitiationId\": \"" . $_POST['paymentInitiation_id'] . "\",\n    \"refundExternalSystemReference\": \"bit_trans_" . $bit_transaction_id_and_status->bit_trans_id . "_refund\"\n}";
 
-                curl_setopt_array($curl, array(
-                    CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2/refund",
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => "",
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 0,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => "POST",
-                    CURLOPT_POSTFIELDS => "{\n    \"creditAmount\": " . $ids_and_price_paid_obj->price_paid . ",\n    \"currencyTypeCode\": 1,\n    \"externalSystemReference\": \"bit_trans_" . $bit_transaction_id_and_status->bit_trans_id . "\",\n    \"paymentInitiationId\": \"" . $_POST['paymentInitiation_id'] . "\",\n    \"refundExternalSystemReference\": \"bit_trans_" . $bit_transaction_id_and_status->bit_trans_id . "_refund\"\n}",
-                    CURLOPT_HTTPHEADER => array(
-                        "Authorization: Bearer " . $token,
-                        "Content-Type: application/json;charset=UTF-8",
-                        "Ocp-Apim-Subscription-Key: " . $subscription_key
-                    ),
-                ));
-
-                curl_setopt($curl, CURLOPT_SSLCERT, $cert_path);
-
-                $response = curl_exec($curl);
-                $response_json = json_decode($response);
-
-                curl_close($curl);
+                $response_json = bit_api_request("POST", $request_url_path, $request_body);
 
                 if (isset($response_json->requestStatusCode) && isset($response_json->issuerAuthorizationNumber)) {
                     $is_refunded = !bit_handle_status_code($response_json->requestStatusCode);
                     if ($is_refunded) {
                         update_pre_pay_bit_data_by_id_and_cloumns($bit_transaction_id_and_status->bit_trans_id, ['status' => 'refunded', 'authorization_number' => $response_json->issuerAuthorizationNumber]);
                         update_course_member_by_id_and_cloumns($ids_and_price_paid_obj->member_id, ['status' => 'refunded']);
-                        return wp_send_json_success(['msg' => __('העסקה עם מזהה ' . $ids_and_price_paid_obj->member_id . ' בוטלה')]);
+                        wp_send_json_success(['msg' => __('העסקה עם מזהה ' . $ids_and_price_paid_obj->member_id . ' בוטלה')]);
                     }
                 } else {
                     wp_send_json_error(array(
@@ -107,39 +82,14 @@ add_action('wp_ajax_foody_bit_refund_process', 'foody_bit_refund_process');
 
 function get_payment_status($payment_initiation_id, $member_data)
 {
-    $token = Bit_Token_Manager::get_token();
-    $cert_path = get_certificate_data();
-    $subscription_key = get_option('foody_subscription_key_for_bit', false);
+    $request_url_path = '/single-payments/' . $payment_initiation_id;
 
-    $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2/single-payments/" . $payment_initiation_id,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => array(
-            "Authorization: Bearer " . $token,
-            "Ocp-Apim-Subscription-Key: " . $subscription_key,
-            "Content-Type: application/json;charset=UTF-8"
-        ),
-    ));
-    curl_setopt($curl, CURLOPT_SSLCERT, $cert_path);
-
-    $response = curl_exec($curl);
-    $response_json = json_decode($response);
-
-    curl_close($curl);
+    $response_json = bit_api_request("GET", $request_url_path);
     return isset($response_json->requestStatusCode) ? $response_json->requestStatusCode : $response_json;
 }
 
 function bit_handle_status_code($code, $payment_initiation_id = null, $member_data = null, $coupon_details = null)
 {
-    $result = '';
     switch ($code) {
         case 11:
             // payment confirmed - final
@@ -213,33 +163,10 @@ function do_delete_bit_transaction($paymentInitiationId)
     if (isset($bit_transaction_id_and_status->bit_trans_id) && isset($bit_transaction_id_and_status->status)) {
         $member_id = get_columns_data_by_paymentMethodId($bit_transaction_id_and_status->bit_trans_id, ['member_id', 'price_paid']);
         if ($bit_transaction_id_and_status->status != 'pending' && isset($member_id->member_id)) {
-            $token = Bit_Token_Manager::get_token();
-            $cert_path = get_certificate_data();
-            $subscription_key = get_option('foody_subscription_key_for_bit', false);
-            $curl = curl_init();
+            $request_url_path = '/single-payments/' . $paymentInitiationId;
 
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2/single-payments/".$paymentInitiationId,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "DELETE",
-                CURLOPT_HTTPHEADER => array(
-                    "Authorization: Bearer " . $token,
-                    "Content-Type: application/json;charset=UTF-8",
-                    "Ocp-Apim-Subscription-Key: " . $subscription_key
-                ),
-            ));
+            $response_json = bit_api_request("DELETE", $request_url_path);
 
-            curl_setopt($curl, CURLOPT_SSLCERT, $cert_path);
-
-            $response = curl_exec($curl);
-            $response_json = json_decode($response);
-
-            curl_close($curl);
             if (isset($response_json->requestStatusCode) && $response_json->requestStatusCode == 2) {
                 update_pre_pay_bit_data_by_id_and_cloumns($bit_transaction_id_and_status->bit_trans_id, ['status' => 'canceled']);
                 update_course_member_by_id_and_cloumns($bit_transaction_id_and_status->bit_trans_id, ['status' => 'canceled']);
@@ -248,44 +175,18 @@ function do_delete_bit_transaction($paymentInitiationId)
     }
 }
 
-function do_single_payment_bit($token, $id, $member_data)
+function do_single_payment_bit($id, $member_data)
 {
-    $cert_path = get_certificate_data();
-    $subscription_key = get_option('foody_subscription_key_for_bit', false);
     $amount = isset($_POST['price']) ? doubleval($_POST['price']) : false;
     $item_name = isset($_POST['item_name']) ? $_POST['item_name'] : false;
     $franchisingId = 32;
     $bit_trans_id = 'bit_trans_' . $id;
 
-
-    $curl = curl_init();
-
+    $request_url_path = '/single-payments';
     $request_body = "{\r\n  \"currencyTypeCode\": 1,\r\n  \"debitMethodCode\": 2,\r\n  \"externalSystemReference\": \"" . $bit_trans_id . "\",\r\n  \"franchisingId\": \"" . $franchisingId .
         "\",\r\n  \"requestAmount\":" . $amount . ",\r\n  \"requestSubjectDescription\": \"" . __($item_name) . "\"\r\n}\r\n";
 
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2/single-payments",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => $request_body,
-        CURLOPT_HTTPHEADER => array(
-            "Authorization: Bearer " . $token,
-            "Content-Type: application/json;charset=UTF-8",
-            "Ocp-Apim-Subscription-Key: " . $subscription_key,
-        ),
-    ));
-
-    curl_setopt($curl, CURLOPT_SSLCERT, $cert_path);
-
-    $response = curl_exec($curl);
-    $response_json = json_decode($response);
-
-    curl_close($curl);
+    $response_json = bit_api_request("POST", $request_url_path, $request_body);
     if (isset($response_json->paymentInitiationId) && isset($response_json->transactionSerialId)) {
         $member_data['transaction_id'] = $response_json->paymentInitiationId;
         $member_data['payment_method_id'] = $id;
@@ -300,42 +201,19 @@ function do_single_payment_bit($token, $id, $member_data)
 
 function do_bit_payment_capture($paymentInitiationId)
 {
-    $token = Bit_Token_Manager::get_token();
-    $cert_path = get_certificate_data();
-    $subscription_key = get_option('foody_subscription_key_for_bit', false);
     $bit_transaction_data = get_pre_pay_bit_data_by_paymentInitiationId($paymentInitiationId);
     $response = false;
     if (isset($bit_transaction_data->bit_trans_id)) {
         $bit_trans_id = 'bit_trans_' . $bit_transaction_data->bit_trans_id;
         $member_id_and_price_paid = get_columns_data_by_paymentMethodId($bit_transaction_data->bit_trans_id, ['member_id', 'price_paid']);
         if (isset($member_id_and_price_paid->price_paid)) {
-            $curl = curl_init();
 
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2/single-payments/" . $paymentInitiationId . "/capture",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => "{\n\t\"requestAmount\": " . (float)$member_id_and_price_paid->price_paid . ",\n\t\"currencyTypeCode\": 1 , \n\t\"externalSystemReference\": \"" . $bit_trans_id . "\",\n\t\"paymentInitiationId\": \"" . $paymentInitiationId . "\", \n\t\"sourceTransactionId\": " . $bit_transaction_data->bit_trans_id . "\n}\n",
-                CURLOPT_HTTPHEADER => array(
-                    "Authorization: Bearer " . $token,
-                    "Content-Type: application/json;charset=UTF-8",
-                    "Ocp-Apim-Subscription-Key: " . $subscription_key
-                ),
-            ));
-            curl_setopt($curl, CURLOPT_SSLCERT, $cert_path);
-
-
-            $response = curl_exec($curl);
-            $jason_response = json_decode($response);
-
-            curl_close($curl);
-            if (isset($jason_response->issuerAuthorizationNumber)) {
-                $response = ['member_id' => $member_id_and_price_paid->member_id, 'trans_id' => $bit_transaction_data->bit_trans_id, 'issuerAuthorizationNumber' => $jason_response->issuerAuthorizationNumber];
+            $request_url_path = "/single-payments/" . $paymentInitiationId . "/capture";
+            // "POST"
+            $request_body = "{\n\t\"requestAmount\": " . (float)$member_id_and_price_paid->price_paid . ",\n\t\"currencyTypeCode\": 1 , \n\t\"externalSystemReference\": \"" . $bit_trans_id . "\",\n\t\"paymentInitiationId\": \"" . $paymentInitiationId . "\", \n\t\"sourceTransactionId\": " . $bit_transaction_data->bit_trans_id . "\n}\n";
+            $json_response = bit_api_request("POST", $request_url_path, $request_body);
+            if (isset($json_response->issuerAuthorizationNumber)) {
+                $response = ['member_id' => $member_id_and_price_paid->member_id, 'trans_id' => $bit_transaction_data->bit_trans_id, 'issuerAuthorizationNumber' => $json_response->issuerAuthorizationNumber];
             } else {
                 $response = false;
             }
@@ -343,6 +221,46 @@ function do_bit_payment_capture($paymentInitiationId)
     }
     return $response;
 
+}
+
+function bit_api_request($request_type, $request_url_path, $request_body = null)
+{
+    $token = Bit_Token_Manager::get_token();
+    $cert_path = get_certificate_data();
+    $subscription_key = get_option('foody_subscription_key_for_bit', false);
+
+    $curl_data_array = array(
+        CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2" . $request_url_path,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => $request_type,
+        CURLOPT_HTTPHEADER => array(
+            "Authorization: Bearer " . $token,
+            "Content-Type: application/json;charset=UTF-8",
+            "Ocp-Apim-Subscription-Key: " . $subscription_key,
+        ));
+
+    if ($request_type == "POST" || $request_body != null) {
+        $curl_data_array[CURLOPT_POSTFIELDS] = $request_body;
+    }
+
+    $curl = curl_init();
+
+
+    curl_setopt_array($curl, $curl_data_array);
+
+    curl_setopt($curl, CURLOPT_SSLCERT, $cert_path);
+
+    $response = curl_exec($curl);
+    $response_json = json_decode($response);
+
+    curl_close($curl);
+
+    return $response_json;
 }
 
 function get_pre_pay_bit_data_by_paymentInitiationId($paymentInitiationId)
@@ -375,7 +293,7 @@ function get_id_and_status_by_paymentInitiationId($paymentInitiationId)
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_pre_payment_bit';
-    $query = "SELECT bit_trans_id, status FROM {$table_name} where bit_paymentInitiationId = '" . $paymentInitiationId."'";
+    $query = "SELECT bit_trans_id, status FROM {$table_name} where bit_paymentInitiationId = '" . $paymentInitiationId . "'";
 
     $result = $wpdb->get_results($query);
     $result = is_array($result) && isset($result[0]) ? $result[0] : $result;
@@ -437,6 +355,15 @@ function get_certificate_data()
     return $cert_path;
 }
 
+function bit_escape_name($name){
+    $escaped_name = $name;
+    if(strpos($name,"'" ) == false){
+        $escaped_name = str_replace("'","\'", $name);
+    }
+
+    return $escaped_name;
+}
+
 function insert_new_pending_payment()
 {
     $email = isset($_POST['email']) ? $_POST['email'] : false;
@@ -487,7 +414,6 @@ function update_unique_coupon_to_used_in_all_coupons_table($id)
     return $wpdb->query($update_query);
 }
 
-
 function update_general_coupon_to_used($id)
 {
     global $wpdb;
@@ -496,6 +422,21 @@ function update_general_coupon_to_used($id)
     return $wpdb->query($update_query);
 }
 
+function bit_recurring_fetch_transaction_status($task, $item)
+{
+    if( defined( 'FOODY_BIT_FETCH_STATUS_PROCESS' ) && FOODY_BIT_FETCH_STATUS_PROCESS) {
+        // Make sure this event hasn't been scheduled
+        if (!wp_next_scheduled('foody_bit_fetch_status_process')) {
+            // Schedule the event
+            wp_schedule_event(time(), 'Every Minute', 'foody_bit_fetch_status_process', array($task, $item));
+        }
+    }
+}
+
+//function bit_fetch_status_process($task, $item){
+//    $task->handle_current_bit_status($item['payment_initiation_id'], $item['member_data'], $item['coupon_details']);
+//}
+//add_action('foody_bit_fetch_status_process','bit_fetch_status_process', 10, 2);
 
 class Bit_Token_Manager
 {

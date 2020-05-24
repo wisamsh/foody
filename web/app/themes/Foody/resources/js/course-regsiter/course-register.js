@@ -30,16 +30,11 @@ jQuery(document).ready(($) => {
                         '#redeem-coupon'
                     ];
 
-
                     if ($(window).width() < 768) {
                         buttonHeight = 59;
                     } else {
                         buttonHeight = 52;
                     }
-
-                    let textNormalizer = function (value) {
-                        return $.trim(value);
-                    };
 
                     $('#redeem-coupon').on('click', function () {
                         redeemCoupon();
@@ -50,6 +45,10 @@ jQuery(document).ready(($) => {
                         let checked = $input.prop('checked');
                         $input.prop('checked', checked);
                     });
+
+                    let textNormalizer = function (value) {
+                        return $.trim(value);
+                    };
 
                     if ($("#course-register-form").length) {
                         $("#course-register-form").validate({
@@ -105,17 +104,9 @@ jQuery(document).ready(($) => {
 
                         if ($('.bit-pay').length) {
                             $('.bit-pay').on('click', function () {
-                                let email = $('#email').val().length != 0 && !$('#email').hasClass('error') ? $('#email').val() : false;
-                                let firstName = $('#first-name').val().length != 0 && !$('#first-name').hasClass('error') ? $('#first-name').val() : false;
-                                let lastName = $('#last-name').val().length != 0 && !$('#last-name').hasClass('error') ? $('#last-name').val() : false;
-                                let phone = $('#phone-number').val().length != 0 && !$('#phone-number').hasClass('error') ? removeSpacesAndDashFromPhone($('#phone-number').val()) : false;
-                                let enableMarketing = $('.newsletter-and-terms #newsletter').prop('checked') ? true : false;
-                                let courseName = $(this).attr('data-item-name').length != 0 ? $(this).attr('data-item-name') : false;
-                                let thankYou = $(this).attr('data-thank-you').length != 0 ? $(this).attr('data-thank-you') : '';
+                                let inputsObj = get_all_form_inputs(this);
 
-
-                                let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
-                                if (termsAccepted && email && firstName && lastName && phone && courseName) {
+                                if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone && inputsObj.courseName) {
                                     // temp => only send data to members plugin
                                     let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
                                     let foodyLoader = new FoodyLoader({container: $('#course-register-form')});
@@ -134,13 +125,13 @@ jQuery(document).ready(($) => {
                                     let bitPaymentInitiationId = null;
                                     let bitTableId = null;
                                     let data_of_member = {
-                                        'email': email,
-                                        'first_name': firstName,
-                                        'last_name': lastName,
-                                        'phone': phone,
+                                        'email': inputsObj.email,
+                                        'first_name': inputsObj.firstName,
+                                        'last_name': inputsObj.lastName,
+                                        'phone': inputsObj.phone,
                                         'purchase_date': get_current_date(),
-                                        'enable_marketing': enableMarketing,
-                                        'course_name': courseName,
+                                        'enable_marketing': inputsObj.enableMarketing,
+                                        'course_name': inputsObj.courseName,
                                         'price': couponAndPriceObj.price,
                                         'payment_method': 'ביט',
                                         'transaction_id': '-1',
@@ -152,11 +143,11 @@ jQuery(document).ready(($) => {
                                     foodyAjax({
                                             action: 'foody_start_bit_pay_process',
                                             data: {
-                                                email: email,
-                                                first_name: firstName,
-                                                last_name: lastName,
+                                                email: inputsObj.email,
+                                                first_name: inputsObj.firstName,
+                                                last_name: inputsObj.lastName,
                                                 price: couponAndPriceObj.price,
-                                                item_name: courseName,
+                                                item_name: inputsObj.courseName,
                                                 memberData: data_of_member
                                             }
                                         }, function (err, data) {
@@ -192,9 +183,11 @@ jQuery(document).ready(($) => {
                                                                         couponType: couponAndPriceObj.coupon_type,
                                                                         couponCode: couponAndPriceObj.coupon
                                                                     }
-                                                                }, function () {
+                                                                }, function (err, data) {
                                                                     // show approval page
-                                                                    window.location = thankYou;
+                                                                    if (data.data.msg) {
+                                                                        window.location = inputsObj.thankYou;
+                                                                    }
                                                                 });
                                                             },
                                                             style: {
@@ -228,20 +221,21 @@ jQuery(document).ready(($) => {
 
                         if ($('.credit-card-pay').length) {
                             $('.credit-card-pay').on('click', function () {
-                                let email = $('#email').val().length != 0 && !$('#email').hasClass('error') ? $('#email').val() : false;
-                                let firstName = $('#first-name').val().length != 0 && !$('#first-name').hasClass('error') ? $('#first-name').val() : false;
-                                let lastName = $('#last-name').val().length != 0 && !$('#last-name').hasClass('error') ? $('#last-name').val() : false;
-                                let phone = $('#phone-number').val().length != 0 && !$('#phone-number').hasClass('error') ? $('#phone-number').val() : false;
+                                // let email = $('#email').val().length != 0 && !$('#email').hasClass('error') ? $('#email').val() : false;
+                                // let firstName = $('#first-name').val().length != 0 && !$('#first-name').hasClass('error') ? $('#first-name').val() : false;
+                                // let lastName = $('#last-name').val().length != 0 && !$('#last-name').hasClass('error') ? $('#last-name').val() : false;
+                                // let phone = $('#phone-number').val().length != 0 && !$('#phone-number').hasClass('error') ? $('#phone-number').val() : false;
+                                // let enableMarketing = $('.newsletter-and-terms #newsletter').prop('checked') ? 'מאשר קבלת דואר' : 'לא מאשר קבלת דואר';
+                                // let courseName = $(this).attr('data-item-name').length != 0 ? $(this).attr('data-item-name') : false;
+                                // let thankYou = $(this).attr('data-thank-you').length != 0 ? $(this).attr('data-thank-you') : '';
+                                // let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
+                                let inputsObj = get_all_form_inputs(this);
 
-                                let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
-                                if (termsAccepted && email && firstName && lastName && phone) {
+                                if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone) {
                                     let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
                                     let mailInvoice = $(this).attr('data-invoice-mail').length != 0 ? $(this).attr('data-invoice-mail') : '';
                                     let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:' + mailInvoice + '">' + mailInvoice + '</a></span>' : '';
-                                    let thankYou = $(this).attr('data-thank-you').length != 0 ? $(this).attr('data-thank-you') : '';
-                                    let enableMarketing = $('.newsletter-and-terms #newsletter').prop('checked') ? 'מאשר קבלת דואר' : 'לא מאשר קבלת דואר';
-                                    // let itemName = $(this).data('item-name');
-                                    let link = $(this).attr('data-link') + '?ExtCUserEmail=' + email + '&ExtCInvoiceTo=' + firstName + ' ' + lastName + '&ExtMobilPhone=' + phone + '&SuccessRedirectUrl=' + thankYou + '&custom_field_10=' + enableMarketing;
+                                    let link = $(this).attr('data-link') + '?ExtCUserEmail=' + inputsObj.email + '&ExtCInvoiceTo=' + inputsObj.firstName + ' ' + inputsObj.lastName + '&ExtMobilPhone=' + inputsObj.phone + '&SuccessRedirectUrl=' + inputsObj.thankYou + '&custom_field_10=' + inputsObj.enableMarketing;
 
                                     let iframe = '<iframe id="card-pay-frame" src="' + link + '" style="width: 100%;\n' +
                                         'height: auto;\n' +
@@ -255,7 +249,7 @@ jQuery(document).ready(($) => {
                                     $('.form-section').replaceWith(iframe);
                                     $('#card-pay-frame').after(mailNotice);
                                 } else {
-                                    validate_fields(email, firstName, lastName, phone, termsAccepted);
+                                    validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
                                 }
                             });
                             $('#card-pay-frame').load(function () {
@@ -323,9 +317,12 @@ jQuery(document).ready(($) => {
                             return;
                         } else {
                             foodyLoader.detach();
-                            alert('קופון לא זמין');
+                            if (typeof data.data.msg != 'undefined' && data.data.msg == 'expired') {
+                                alert('פג תוקף הקופון');
+                            } else {
+                                alert('קופון לא זמין');
+                            }
                             used_coupon_details = {'coupon': null, 'discounted_price': data.data.price};
-                            return;
                         }
                     }
 
@@ -407,4 +404,17 @@ function removeSpacesAndDashFromPhone(phone) {
     }
 
     return phoneResult;
+}
+
+function get_all_form_inputs(button_pressed){
+    let _email = $('#email').val().length != 0 && !$('#email').hasClass('error') ? $('#email').val() : false;
+    let _firstName = $('#first-name').val().length != 0 && !$('#first-name').hasClass('error') ? $('#first-name').val() : false;
+    let _lastName = $('#last-name').val().length != 0 && !$('#last-name').hasClass('error') ? $('#last-name').val() : false;
+    let _phone = $('#phone-number').val().length != 0 && !$('#phone-number').hasClass('error') ? removeSpacesAndDashFromPhone($('#phone-number').val()) : false;
+    let _enableMarketing = $('.newsletter-and-terms #newsletter').prop('checked') ? true : false;
+    let _courseName = $(button_pressed).attr('data-item-name').length != 0 ? $(button_pressed).attr('data-item-name') : false;
+    let _thankYou = $(button_pressed).attr('data-thank-you').length != 0 ? $(button_pressed).attr('data-thank-you') : '';
+    let _termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
+
+    return {email: _email, firstName: _firstName, lastName: _lastName, phone: _phone, enableMarketing: _enableMarketing, courseName: _courseName, thankYou: _thankYou, termsAccepted: _termsAccepted}
 }

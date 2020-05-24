@@ -41,7 +41,12 @@ class Foody_BitServerQueryProcess extends WP_Background_Process
 
     protected function handle_current_bit_status($payment_initiation_id, $member_data, $coupon_details)
     {
-        $number_of_seconds = 60;
+//        $status = get_payment_status($payment_initiation_id, $member_data);
+//        if (!is_array($status)) {
+//            $continue_interval = bit_handle_status_code($status, $payment_initiation_id, $member_data, $coupon_details);
+//            return $continue_interval;
+//        }
+        $number_of_seconds = 30;
         foody_setInterval(function () use ($payment_initiation_id, $member_data, $coupon_details) {
             $status = get_payment_status($payment_initiation_id, $member_data);
             if (!is_array($status)) {
@@ -50,5 +55,4 @@ class Foody_BitServerQueryProcess extends WP_Background_Process
             }
         }, $number_of_seconds*1000);
     }
-
 }

@@ -9,6 +9,8 @@ function foody_get_coupon_value()
     $coupon_type = null;
     $original_price = (int)get_field('course_register_data_final_price', $course_id);
     $new_price = '';
+    $current_date = strtotime(date("Y-m-d"));
+    $expired = false;
 
     if ($coupon_code && $course_name && $course_id) {
         if (strpos($coupon_code, '_') != false) {
@@ -16,21 +18,33 @@ function foody_get_coupon_value()
             $coupon_details = explode('_', $coupon_code);
             if (count($coupon_details) == 2) {
                 $coupon = get_unique_coupon($coupon_details, $course_name);
-                if (isset($coupon->used) && $coupon->used == '0'  && isset($coupon->pending) && $coupon->pending == '0') {
-                    update_unique_copupon_columns($coupon->coupon_id, $coupon_details, ['pending' => 1]);
-                    $new_price = get_modified_course_price($course_id, $coupon->coupon_value, $original_price);
-                    $coupon_id = $coupon->coupon_id;
-                    $coupon_type = 'unique';
+                if (isset($coupon->used) && $coupon->used == '0' && isset($coupon->pending) && $coupon->pending == '0' && isset($coupon->expiration_date)) {
+                    $expiration_date = strtotime($coupon->expiration_date);
+                    if ($expiration_date >= $current_date) {
+                        update_unique_copupon_columns($coupon->coupon_id, $coupon_details, ['pending' => 1]);
+                        $new_price = get_modified_course_price($course_id, $coupon->coupon_value, $original_price);
+                        $coupon_id = $coupon->coupon_id;
+                        $coupon_type = 'unique';
+                    }
+                    else{
+                        $expired = true;
+                    }
                 }
             }
         } else {
             /** general coupon */
             $coupon = get_general_coupon($coupon_code, $course_id);
-            if (isset($coupon->max_amount) && isset($coupon->used_amount) && isset($coupon->gen_coupons_held) && ($coupon->max_amount > $coupon->used_amount + $coupon->gen_coupons_held)) {
-                update_general_copupon_columns($coupon->coupon_id,['gen_coupons_held' => $coupon->gen_coupons_held + 1]);
-                $new_price = get_modified_course_price($course_id, $coupon->coupon_value, $original_price);
-                $coupon_id = $coupon->coupon_id;
-                $coupon_type = 'general';
+            if (isset($coupon->max_amount) && isset($coupon->used_amount) && isset($coupon->gen_coupons_held) && ($coupon->max_amount > $coupon->used_amount + $coupon->gen_coupons_held) && isset($coupon->expiration_date)) {
+                $expiration_date = strtotime($coupon->expiration_date);
+                if ($expiration_date >= $current_date) {
+                    update_general_copupon_columns($coupon->coupon_id, ['gen_coupons_held' => $coupon->gen_coupons_held + 1]);
+                    $new_price = get_modified_course_price($course_id, $coupon->coupon_value, $original_price);
+                    $coupon_id = $coupon->coupon_id;
+                    $coupon_type = 'general';
+                }
+                else{
+                    $expired = true;
+                }
             }
         }
     } else {
@@ -40,7 +54,12 @@ function foody_get_coupon_value()
     if ($new_price !== false && (!empty($new_price) || $new_price === 0)) {
         wp_send_json_success(['new_price' => $new_price, 'id' => $coupon_id, 'couponType' => $coupon_type]);
     } else {
-        wp_send_json_success(['wp_send_json_success' => 'no discount', 'price' => $original_price]);
+        if($expired){
+            wp_send_json_success(['msg' => 'expired', 'price' => $original_price]);
+        }
+        else {
+            wp_send_json_success(['msg' => 'no discount', 'price' => $original_price]);
+        }
     }
 }
 
@@ -54,7 +73,7 @@ function get_modified_course_price($course_id, $coupon_value, $original_price)
         //percentages
         $discount_percentages = (int)str_replace('%', '', $coupon_value);
         $new_price = $original_price - ($original_price * $discount_percentages) / 100;
-    } elseif($original_price - (int)$coupon_value >= 0) {
+    } elseif ($original_price - (int)$coupon_value >= 0) {
         $new_price = $original_price - (int)$coupon_value;
     }
 
@@ -101,7 +120,8 @@ ON coupons.coupon_id = general_coupons.coupon_id WHERE general_coupons.coupon_co
     }
 }
 
-function update_unique_copupon_columns($coupon_id, $coupon_details, $columns){
+function update_unique_copupon_columns($coupon_id, $coupon_details, $columns)
+{
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_unique_coupons_meta';
 
@@ -120,7 +140,8 @@ function update_unique_copupon_columns($coupon_id, $coupon_details, $columns){
     return $wpdb->query($update_query);
 }
 
-function update_general_copupon_columns($coupon_id, $columns){
+function update_general_copupon_columns($coupon_id, $columns)
+{
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_coupons';
 
