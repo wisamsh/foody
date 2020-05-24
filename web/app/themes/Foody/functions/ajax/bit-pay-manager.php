@@ -12,8 +12,8 @@ function foody_start_bit_pay_process()
 {
     // add new pending payment to db
     $pending_payment_id = insert_new_pending_payment();
-    if ($pending_payment_id != false) {
-        $single_payment_ids = do_single_payment_bit($pending_payment_id, $_POST['memberData']);
+    if ($pending_payment_id != false && isset($_POST['memberData']) && isset($_POST['isMobile']) && isset($_POST['thankYou'])) {
+        $single_payment_ids = do_single_payment_bit( $pending_payment_id, $_POST['memberData'], $_POST['isMobile'], $_POST['thankYou']);
 
         wp_send_json_success(['single_payment_ids' => $single_payment_ids]);
     }
@@ -43,8 +43,8 @@ function foody_bitcom_transaction_complete()
     }
 }
 
-add_action('wp_ajax_foody_nopriv_bitcom_transaction_complete', 'foody_bitcom_transaction_complete');
-add_action('wp_ajax_foody_bitcom_transaction_complete', 'foody_bitcom_transaction_complete');
+//add_action('wp_ajax_foody_nopriv_bitcom_transaction_complete', 'foody_bitcom_transaction_complete');
+//add_action('wp_ajax_foody_bitcom_transaction_complete', 'foody_bitcom_transaction_complete');
 
 function foody_bit_refund_process()
 {
@@ -93,6 +93,7 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
     switch ($code) {
         case 11:
             // payment confirmed - final
+            update_course_member_by_id_and_cloumns($member_data['member_id'], ['status' => 'paid']);
             send_new_course_member_data([
                 'member_email' => $member_data['email'],
                 'phone' => $member_data['phone'],
@@ -109,7 +110,7 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
             break;
         case 7:
             // time expired - final
-            do_delete_bit_transaction($payment_initiation_id);
+            do_delete_bit_transaction($payment_initiation_id, $coupon_details);
             $result = false;
             break;
         case 2:
@@ -118,12 +119,12 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
             break;
         case 3:
             // canceled by client before money is held - final
-            do_delete_bit_transaction($payment_initiation_id);
+            do_delete_bit_transaction($payment_initiation_id, $coupon_details);
             $result = false;
             break;
         case 15:
             // payment failed - final
-            do_delete_bit_transaction($payment_initiation_id);
+            do_delete_bit_transaction($payment_initiation_id, $coupon_details);
             $result = false;
             break;
         case 16:
@@ -144,10 +145,10 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
             $ids_and_authorization_number = do_bit_payment_capture($payment_initiation_id);
             if (is_array($ids_and_authorization_number) && isset($ids_and_authorization_number['trans_id']) && isset($ids_and_authorization_number['issuerAuthorizationNumber'])) {
                 update_pre_pay_bit_data_by_id_and_cloumns($ids_and_authorization_number['trans_id'], ['status' => 'paid', 'authorization_number' => $ids_and_authorization_number['issuerAuthorizationNumber']]);
-                update_course_member_by_id_and_cloumns($ids_and_authorization_number['member_id'], ['status' => 'paid']);
                 if ($coupon_details != null) {
                     update_coupon_to_used($coupon_details);
                 }
+                $result = $ids_and_authorization_number['member_id'];
             }
             break;
         default:
@@ -157,25 +158,35 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
     return $result;
 }
 
-function do_delete_bit_transaction($paymentInitiationId)
+function do_delete_bit_transaction($paymentInitiationId, $coupon_details)
 {
     $bit_transaction_id_and_status = get_id_and_status_by_paymentInitiationId($paymentInitiationId);
     if (isset($bit_transaction_id_and_status->bit_trans_id) && isset($bit_transaction_id_and_status->status)) {
         $member_id = get_columns_data_by_paymentMethodId($bit_transaction_id_and_status->bit_trans_id, ['member_id', 'price_paid']);
-        if ($bit_transaction_id_and_status->status != 'pending' && isset($member_id->member_id)) {
+        if ($bit_transaction_id_and_status->status == 'pending' && isset($member_id->member_id)) {
             $request_url_path = '/single-payments/' . $paymentInitiationId;
 
             $response_json = bit_api_request("DELETE", $request_url_path);
 
             if (isset($response_json->requestStatusCode) && $response_json->requestStatusCode == 2) {
                 update_pre_pay_bit_data_by_id_and_cloumns($bit_transaction_id_and_status->bit_trans_id, ['status' => 'canceled']);
-                update_course_member_by_id_and_cloumns($bit_transaction_id_and_status->bit_trans_id, ['status' => 'canceled']);
+                update_course_member_by_id_and_cloumns($member_id->member_id, ['status' => 'canceled']);
+
+                if (isset($coupon_details['id']) && isset($coupon_details['type']) && isset($coupon_details['coupon_code'])) {
+                    if ($coupon_details['type'] == 'unique') {
+                        $coupon_code_array = explode('_', $coupon_details['coupon_code']);
+                        update_unique_coupon_to_free($coupon_details['id'], $coupon_code_array[1]);
+                        update_unique_coupon_to_free_in_all_coupons_table($coupon_details['id']);
+                    } else {
+                        update_general_coupon_to_free($coupon_details['id']);
+                    }
+                }
             }
         }
     }
 }
 
-function do_single_payment_bit($id, $member_data)
+function do_single_payment_bit($id, $member_data, $isMobile, $thank_you_page = null)
 {
     $amount = isset($_POST['price']) ? doubleval($_POST['price']) : false;
     $item_name = isset($_POST['item_name']) ? $_POST['item_name'] : false;
@@ -193,7 +204,13 @@ function do_single_payment_bit($id, $member_data)
 
         update_pre_pay_bit_data_by_id_and_cloumns($id, ['bit_paymentInitiationId' => $response_json->paymentInitiationId, 'bit_transactionSerialId' => $response_json->transactionSerialId]);
         foody_add_course_member_to_table($member_data);
-        return ['paymentInitiationId' => $response_json->paymentInitiationId, 'transactionSerialId' => $response_json->transactionSerialId, 'paymentMethodId' => $id];
+        if ($isMobile) {
+            $phoneSchema = $isMobile == 'Android' ? $response_json->applicationSchemeAndroid : $response_json->applicationSchemeIos;
+            $phoneSchema = add_merchantURL_to_mobile_schema($phoneSchema, $thank_you_page);
+            return ['paymentInitiationId' => $response_json->paymentInitiationId, 'transactionSerialId' => $response_json->transactionSerialId, 'paymentMethodId' => $id, 'mobileSchema' => $phoneSchema];
+        } else {
+            return ['paymentInitiationId' => $response_json->paymentInitiationId, 'transactionSerialId' => $response_json->transactionSerialId, 'paymentMethodId' => $id];
+        }
     } else {
         return false;
     }
@@ -355,10 +372,11 @@ function get_certificate_data()
     return $cert_path;
 }
 
-function bit_escape_name($name){
+function bit_escape_name($name)
+{
     $escaped_name = $name;
-    if(strpos($name,"'" ) == false){
-        $escaped_name = str_replace("'","\'", $name);
+    if (strpos($name, "'") == false) {
+        $escaped_name = str_replace("'", "\'", $name);
     }
 
     return $escaped_name;
@@ -406,11 +424,27 @@ function update_unique_coupon_to_used($id, $coupon_code)
     return $wpdb->query($update_query);
 }
 
+function update_unique_coupon_to_free($id, $coupon_code)
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'foody_unique_coupons_meta';
+    $update_query = "UPDATE {$table_name} SET pending = 0 WHERE coupon_id= {$id} AND coupon_code = '{$coupon_code}'";
+    return $wpdb->query($update_query);
+}
+
 function update_unique_coupon_to_used_in_all_coupons_table($id)
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_coupons';
     $update_query = "UPDATE {$table_name} SET used_amount = used_amount + 1 WHERE coupon_id= {$id}";
+    return $wpdb->query($update_query);
+}
+
+function update_unique_coupon_to_free_in_all_coupons_table($id)
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'foody_courses_coupons';
+    $update_query = "UPDATE {$table_name} SET used_amount = used_amount - 1 WHERE coupon_id= {$id}";
     return $wpdb->query($update_query);
 }
 
@@ -422,21 +456,59 @@ function update_general_coupon_to_used($id)
     return $wpdb->query($update_query);
 }
 
-function bit_recurring_fetch_transaction_status($task, $item)
+function update_general_coupon_to_free($id)
 {
-    if( defined( 'FOODY_BIT_FETCH_STATUS_PROCESS' ) && FOODY_BIT_FETCH_STATUS_PROCESS) {
-        // Make sure this event hasn't been scheduled
-        if (!wp_next_scheduled('foody_bit_fetch_status_process')) {
-            // Schedule the event
-            wp_schedule_event(time(), 'Every Minute', 'foody_bit_fetch_status_process', array($task, $item));
-        }
-    }
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'foody_courses_coupons';
+    $update_query = "UPDATE {$table_name} SET gen_coupons_held = gen_coupons_held -1 WHERE coupon_id= {$id}";
+    return $wpdb->query($update_query);
 }
 
-//function bit_fetch_status_process($task, $item){
-//    $task->handle_current_bit_status($item['payment_initiation_id'], $item['member_data'], $item['coupon_details']);
-//}
-//add_action('foody_bit_fetch_status_process','bit_fetch_status_process', 10, 2);
+function add_merchantURL_to_mobile_schema($mobile_schema, $thank_you_page)
+{
+    $add_to_schema = '';
+    if ($thank_you_page != null && strpos($thank_you_page, '?') != false) {
+        $thank_you_page_arr = explode('?', $thank_you_page);
+        $thank_you_page_params = explode('=', $thank_you_page_arr[1]);
+        $add_to_schema = '%26return_scheme%3D' . $thank_you_page_arr[0] . '%3F' . $thank_you_page_params[0] . '%253D' . $thank_you_page_params[1];
+    }
+    return $mobile_schema . $add_to_schema;
+}
+
+function bit_fetch_status_process()
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'foody_courses_members';
+    $payment_method = __('ביט');
+    $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}'";
+
+    $pending_payments = $wpdb->get_results($query);
+    $pending_payments = is_array($pending_payments) ? $pending_payments : [];
+
+    foreach ($pending_payments as $pending_payment) {
+        $data_of_member = [
+            'member_id' => $pending_payment->member_id,
+            'email' => $pending_payment->member_email,
+            'first_name' => $pending_payment->first_name,
+            'last_name' => $pending_payment->last_name,
+            'phone' => $pending_payment->phone,
+            'purchase_date' => $pending_payment->purchase_date,
+            'enable_marketing' => $pending_payment->marketing_status == 1 ?  'true' : 'false',
+            'course_name' => $pending_payment->course_name,
+            'price' => $pending_payment->price_paid,
+            'payment_method' => $pending_payment->payment_method,
+            'transaction_id' => $pending_payment->transaction_id,
+            'coupon' => $pending_payment->coupon,
+            'status' => $pending_payment->status,
+            'payment_method_id' => $pending_payment->payment_method_id
+        ];
+
+        $coupon_details = get_coupon_data_by_name($pending_payment->coupon);
+
+        foody_query_process_for_bit_status($pending_payment->transaction_id, $data_of_member, $coupon_details);
+    }
+}
+add_action('foody_bit_fetch_status_processes', 'bit_fetch_status_process');
 
 class Bit_Token_Manager
 {

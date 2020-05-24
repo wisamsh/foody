@@ -25,8 +25,7 @@ function foody_get_coupon_value()
                         $new_price = get_modified_course_price($course_id, $coupon->coupon_value, $original_price);
                         $coupon_id = $coupon->coupon_id;
                         $coupon_type = 'unique';
-                    }
-                    else{
+                    } else {
                         $expired = true;
                     }
                 }
@@ -41,8 +40,7 @@ function foody_get_coupon_value()
                     $new_price = get_modified_course_price($course_id, $coupon->coupon_value, $original_price);
                     $coupon_id = $coupon->coupon_id;
                     $coupon_type = 'general';
-                }
-                else{
+                } else {
                     $expired = true;
                 }
             }
@@ -54,10 +52,9 @@ function foody_get_coupon_value()
     if ($new_price !== false && (!empty($new_price) || $new_price === 0)) {
         wp_send_json_success(['new_price' => $new_price, 'id' => $coupon_id, 'couponType' => $coupon_type]);
     } else {
-        if($expired){
+        if ($expired) {
             wp_send_json_success(['msg' => 'expired', 'price' => $original_price]);
-        }
-        else {
+        } else {
             wp_send_json_success(['msg' => 'no discount', 'price' => $original_price]);
         }
     }
@@ -158,4 +155,68 @@ function update_general_copupon_columns($coupon_id, $columns)
     $update_query .= " WHERE coupon_id=" . $coupon_id;
 
     return $wpdb->query($update_query);
+}
+
+/**
+ * $coupon_id = isset($_POST['couponId']) ? $_POST['couponId'] : false;
+ * $coupon_type = isset($_POST['couponType']) ? $_POST['couponType'] : false;
+ * $coupon_code = isset($_POST['couponCode']) ? $_POST['couponCode'] : false;
+ */
+function get_coupon_data_by_name($name)
+{
+    $coupon_data = [];
+    if (strpos($name, '_') != false) {
+        /** unique coupon */
+        $coupon_details = explode('_', $name);
+        if (count($coupon_details) == 2) {
+            $coupon_data = [
+                'id' => get_unique_coupon_id($coupon_details[0], $coupon_details[1]),
+                'type' => __('חח״ע'),
+                'coupon_code' => $name
+            ];
+        }
+    } else {
+        $coupon_data = [
+            'id' => get_general_coupon_id($name),
+            'type' => __('כללי'),
+            'coupon_code' => $name
+        ];
+    }
+
+
+    return $coupon_data;
+}
+
+function get_unique_coupon_id($coupon_prefix, $coupon_code)
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'foody_unique_coupons_meta';
+    $coupon_details = [];
+
+    $query = "SELECT coupon_id FROM {$table_name} WHERE coupon_prefix = '" . $coupon_prefix . "' AND coupon_code = '" . $coupon_code . "'";
+    $results = $wpdb->get_results($query);
+    $results = is_array($results) ? $results : [];
+
+    foreach ($results as $result) {
+        $coupon_details = $result;
+    }
+
+    return $coupon_details;
+}
+
+function get_general_coupon_id($coupon_code)
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'foody_courses_coupons';
+    $coupon_details = [];
+
+    $query = "SELECT coupon_id FROM {$table_name} WHERE coupon = '" . $coupon_code . "' AND coupon_type = '" . __('כללי') . "'";
+    $results = $wpdb->get_results($query);
+    $results = is_array($results) ? $results : [];
+
+    foreach ($results as $result) {
+        $coupon_details = $result->coupon_id;
+    }
+
+    return $coupon_details;
 }

@@ -242,6 +242,8 @@
         }
 
         #bitcom-button-container {
+          color: white;
+          background: linear-gradient(135deg, dodgerblue, darkturquoise); ;
           margin-top: 3%;
           width: 50%;
         }
@@ -472,6 +474,7 @@
           }
 
           #bitcom-button-container {
+            background: none;
             width: 59%;
           }
         }

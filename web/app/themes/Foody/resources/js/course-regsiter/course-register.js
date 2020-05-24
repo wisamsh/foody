@@ -5,6 +5,8 @@ let FoodyLoader = require('../common/foody-loader');
 let price;
 let used_coupon_details = null;
 let startedBitPayment = false;
+let mobileOS = foodyGlobals.isMobile ? getMobileOperatingSystem() : false;
+let mon = false;
 jQuery(document).ready(($) => {
     if (foodyGlobals.page_template_name == "foody-course-register") {
         foodyAjax({
@@ -148,13 +150,18 @@ jQuery(document).ready(($) => {
                                                 last_name: inputsObj.lastName,
                                                 price: couponAndPriceObj.price,
                                                 item_name: inputsObj.courseName,
-                                                memberData: data_of_member
+                                                memberData: data_of_member,
+                                                isMobile: mobileOS,
+                                                thankYou: inputsObj.thankYou
                                             }
                                         }, function (err, data) {
                                             if (err) {
                                                 console.log(err);
                                                 foodyLoader.detach();
                                             } else {
+                                                if(data.data.mobileSchema){
+                                                    $('.button-container').after('<div class="bit-button-container"><span class="bit-btn-text">לחץ כאן להשלמת תשלום בביט</span><span class="bit-notice-text">*חשוב לא לסגור את העמוד עד סיום הרכישה בביט</span><a href="' + data.data.mobileSchema + '" id="bitcom-button-container">תשלום בביט</a></div>');
+                                                }
                                                 if (data.data.single_payment_ids) {
                                                     bitTransactionId = data.data.single_payment_ids['transactionSerialId'];
                                                     bitPaymentInitiationId = data.data.single_payment_ids['paymentInitiationId'];
@@ -174,21 +181,22 @@ jQuery(document).ready(($) => {
                                                             },
                                                             onApproved: function (details) {
                                                                 //after bit payment confirmed
-                                                                foodyAjax({
-                                                                    action: 'foody_bitcom_transaction_complete',
-                                                                    data: {
-                                                                        paymentInitiationId: details.paymentInitiationId,
-                                                                        memberData: data_of_member,
-                                                                        couponId: couponAndPriceObj.coupon_id,
-                                                                        couponType: couponAndPriceObj.coupon_type,
-                                                                        couponCode: couponAndPriceObj.coupon
-                                                                    }
-                                                                }, function (err, data) {
-                                                                    // show approval page
-                                                                    if (data.data.msg) {
-                                                                        window.location = inputsObj.thankYou;
-                                                                    }
-                                                                });
+                                                                window.location = inputsObj.thankYou;
+                                                                // foodyAjax({
+                                                                //     action: 'foody_bitcom_transaction_complete',
+                                                                //     data: {
+                                                                //         paymentInitiationId: details.paymentInitiationId,
+                                                                //         memberData: data_of_member,
+                                                                //         couponId: couponAndPriceObj.coupon_id,
+                                                                //         couponType: couponAndPriceObj.coupon_type,
+                                                                //         couponCode: couponAndPriceObj.coupon
+                                                                //     }
+                                                                // }, function (err, data) {
+                                                                //     // show approval page
+                                                                //     if (data.data.msg) {
+                                                                //         window.location = inputsObj.thankYou;
+                                                                //     }
+                                                                // });
                                                             },
                                                             style: {
                                                                 height: buttonHeight
@@ -213,7 +221,7 @@ jQuery(document).ready(($) => {
 
 
                                 } else {
-                                    validate_fields(email, firstName, lastName, phone, termsAccepted);
+                                    validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
                                 }
                             })
                             ;
@@ -417,4 +425,24 @@ function get_all_form_inputs(button_pressed){
     let _termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
 
     return {email: _email, firstName: _firstName, lastName: _lastName, phone: _phone, enableMarketing: _enableMarketing, courseName: _courseName, thankYou: _thankYou, termsAccepted: _termsAccepted}
+}
+
+function getMobileOperatingSystem() {
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    // // Windows Phone must come first because its UA also contains "Android"
+    // if (/windows phone/i.test(userAgent)) {
+    //     return "Windows Phone";
+    // }
+
+    if (/android/i.test(userAgent)) {
+        return "Android";
+    }
+
+    // iOS detection from: http://stackoverflow.com/a/9039885/177710
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+    }
+
+    return false;
 }
