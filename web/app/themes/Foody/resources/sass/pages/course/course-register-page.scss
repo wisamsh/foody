@@ -241,11 +241,12 @@
           text-align: right;
         }
 
-        #bitcom-button-container {
-          color: white;
-          background: linear-gradient(135deg, dodgerblue, darkturquoise); ;
+        #bitcom-button-container-mobile {
+          background: url("../images/bit_button.svg") no-repeat;
+          content: ' ';
+          height: 55px;
           margin-top: 3%;
-          width: 50%;
+          width: 100%;
         }
       }
     }

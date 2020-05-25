@@ -444,7 +444,7 @@ function update_unique_coupon_to_free_in_all_coupons_table($id)
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_coupons';
-    $update_query = "UPDATE {$table_name} SET used_amount = used_amount - 1 WHERE coupon_id= {$id}";
+    $update_query = "UPDATE {$table_name} SET gen_coupons_held = gen_coupons_held - 1 WHERE coupon_id= {$id} AND gen_coupons_held > 0";
     return $wpdb->query($update_query);
 }
 
@@ -460,7 +460,7 @@ function update_general_coupon_to_free($id)
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_coupons';
-    $update_query = "UPDATE {$table_name} SET gen_coupons_held = gen_coupons_held -1 WHERE coupon_id= {$id}";
+    $update_query = "UPDATE {$table_name} SET gen_coupons_held = gen_coupons_held -1 WHERE coupon_id= {$id} AND gen_coupons_held > 0";
     return $wpdb->query($update_query);
 }
 
