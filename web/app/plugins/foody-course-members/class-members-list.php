@@ -331,7 +331,7 @@ class Courses_Members_List extends WP_List_Table
             if($key == 'marketing_filter' && is_int($search[$key])){
                 $current_filter = $search[$key];
             }
-            if ($current_filter) {
+            if ($current_filter !== false) {
                 if ($not_first) {
                     $search_query .= $added_and . "{$filter} = '{$current_filter}'";
                 } else {

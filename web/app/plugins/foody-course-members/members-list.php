@@ -122,7 +122,7 @@ if (isset($_POST['s'])) {
         <div class="row filter-row">
             <label for="marketing-filter" style="font-weight: bold">דיוור:</label>
             <select id="marketing-filter" name="marketing_filter">
-                <option selected value=""> -- בחר/י שיטת תשלום --</option>
+                <option selected value=""> -- בחר/י האם אושר דיוור --</option>
                 <option value="אושר"> אושר</option>
                 <option value="לא אושר"> לא אושר</option>
             </select>
