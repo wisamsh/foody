@@ -171,14 +171,14 @@ function get_coupon_data_by_name($name)
         if (count($coupon_details) == 2) {
             $coupon_data = [
                 'id' => get_unique_coupon_id($coupon_details[0], $coupon_details[1]),
-                'type' => __('חח״ע'),
+                'type' => 'unique',
                 'coupon_code' => $name
             ];
         }
     } else {
         $coupon_data = [
             'id' => get_general_coupon_id($name),
-            'type' => __('כללי'),
+            'type' => 'general',
             'coupon_code' => $name
         ];
     }
