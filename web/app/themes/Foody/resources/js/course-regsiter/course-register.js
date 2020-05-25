@@ -162,7 +162,7 @@ jQuery(document).ready(($) => {
                                                 if(data.data.mobileSchema){
                                                     $('.button-container').after('<div class="bit-button-container"><span class="bit-btn-text">לחץ כאן להשלמת תשלום בביט</span><span class="bit-notice-text">*חשוב לא לסגור את העמוד עד סיום הרכישה בביט</span><a href="' + data.data.mobileSchema + '" id="bitcom-button-container">תשלום בביט</a></div>');
                                                 }
-                                                if (data.data.single_payment_ids) {
+                                                else if (data.data.single_payment_ids) {
                                                     bitTransactionId = data.data.single_payment_ids['transactionSerialId'];
                                                     bitPaymentInitiationId = data.data.single_payment_ids['paymentInitiationId'];
                                                     bitTableId = data.data.single_payment_ids['paymentMethodId'];
