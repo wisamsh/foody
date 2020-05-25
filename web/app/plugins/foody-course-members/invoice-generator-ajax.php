@@ -7,7 +7,7 @@ function foody_create_and_send_invoice(){
         $v = 'nice';
     }
 }
-add_action('wp_ajax_foody_nopriv_create_and_send_invoice', 'foody_create_and_send_invoice');
+add_action('wp_ajax_nopriv_foody_create_and_send_invoice', 'foody_create_and_send_invoice');
 add_action('wp_ajax_foody_create_and_send_invoice', 'foody_create_and_send_invoice');
 
 function get_api_token(){

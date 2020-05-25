@@ -5,9 +5,8 @@ function foody_get_course_price()
     return wp_send_json_success(['course_price' => (float)get_field('course_register_data_final_price', $course_id)]);
 }
 
-add_action('wp_ajax_foody_nopriv_get_course_price', 'foody_get_course_price');
+add_action('wp_ajax_nopriv_foody_get_course_price', 'foody_get_course_price');
 add_action('wp_ajax_foody_get_course_price', 'foody_get_course_price');
-
 function foody_start_bit_pay_process()
 {
     // add new pending payment to db
@@ -19,7 +18,7 @@ function foody_start_bit_pay_process()
     }
 }
 
-add_action('wp_ajax_foody_nopriv_start_bit_pay_process', 'foody_start_bit_pay_process');
+add_action('wp_ajax_nopriv_foody_start_bit_pay_process', 'foody_start_bit_pay_process');
 add_action('wp_ajax_foody_start_bit_pay_process', 'foody_start_bit_pay_process');
 
 
@@ -77,7 +76,7 @@ function foody_bit_refund_process()
 
 }
 
-add_action('wp_ajax_foody_nopriv_bit_refund_process', 'foody_bit_refund_process');
+add_action('wp_ajax_nopriv_foody_bit_refund_process', 'foody_bit_refund_process');
 add_action('wp_ajax_foody_bit_refund_process', 'foody_bit_refund_process');
 
 function get_payment_status($payment_initiation_id, $member_data)

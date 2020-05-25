@@ -6,14 +6,15 @@ let price;
 let used_coupon_details = null;
 let startedBitPayment = false;
 let mobileOS = foodyGlobals.isMobile ? getMobileOperatingSystem() : false;
-let mon = false;
+let isIOS = mobileOS == "iOS";
 jQuery(document).ready(($) => {
     if (foodyGlobals.page_template_name == "foody-course-register") {
         foodyAjax({
             action: 'foody_get_course_price',
             data: {
                 course_id: $('.course-information').attr('data-course-id'),
-            }
+            },
+            isIos: mobileOS
         }, function (err, data) {
             if (err) {
                 console.log(err)
@@ -160,7 +161,7 @@ jQuery(document).ready(($) => {
                                                 foodyLoader.detach();
                                             } else {
                                                 if(data.data.single_payment_ids.mobileSchema){
-                                                    $('.button-container').after('<div class="bit-button-container"><span class="bit-btn-text">לחץ כאן להשלמת תשלום בביט</span><span class="bit-notice-text">*חשוב לא לסגור את העמוד עד סיום הרכישה בביט</span><a href="' + data.data.single_payment_ids.mobileSchema + '" id="bitcom-button-container-mobile"></a></div>');
+                                                    $('.button-container').after('<div class="bit-button-container"><span class="bit-btn-text">לחץ כאן להשלמת תשלום בביט</span><span class="bit-notice-text">*חשוב לא לסגור את העמוד עד סיום הרכישה בביט</span><a type="button" href="' + data.data.single_payment_ids.mobileSchema + '" id="bitcom-button-container-mobile"></a></div>');
                                                     foodyLoader.detach();
                                                 }
                                                 else if (data.data.single_payment_ids) {
