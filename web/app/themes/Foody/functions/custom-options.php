@@ -28,6 +28,7 @@ register_setting( 'general', 'foody_client_secret_for_invoice' );
 register_setting( 'general', 'foody_subscription_key_for_bit' );
 register_setting( 'general', 'foody_client_id_for_bit');
 register_setting( 'general', 'foody_client_secret_for_bit');
+register_setting( 'general', 'foody_identifier_trans_bit');
 register_setting( 'reading', 'foody_show_post_views' );
 register_setting( 'reading', 'foody_show_followers_count_views' );
 
@@ -222,6 +223,7 @@ function foody_custom_options() {
     add_settings_field( 'foody_subscription_key_for_bit', __( 'מפתח עבור API ביט', 'foody' ), 'foody_subscription_key_for_bit_callback', 'general', 'foody_general_settings' );
     add_settings_field( 'foody_client_id_for_bit', __( 'מזהה עבור API ביט', 'foody' ), 'foody_client_id_for_bit_callback', 'general', 'foody_general_settings' );
     add_settings_field( 'foody_client_secret_for_bit', __( 'סיסמא עבור API ביט', 'foody' ), 'foody_client_secret_for_bit_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_identifier_trans_bit', __( 'מזהה עבור טרנזקציות', 'foody' ), 'foody_identifier_trans_bit_callback', 'general', 'foody_general_settings' );
 
 
 }
@@ -347,6 +349,11 @@ function foody_client_id_for_bit_callback(){
 function foody_client_secret_for_bit_callback(){
     $options = get_option( 'foody_client_secret_for_bit', false );
     echo '<input value="' . $options . '"type="text" id="foody_client_secret_for_bit" name="foody_client_secret_for_bit">';
+}
+
+function foody_identifier_trans_bit_callback(){
+    $options = get_option( 'foody_identifier_trans_bit', false );
+    echo '<input value="' . $options . '"type="text" id="foody_identifier_trans_bit" name="foody_identifier_trans_bit">';
 }
 
 function foody_subscription_key_for_bit_callback(){
