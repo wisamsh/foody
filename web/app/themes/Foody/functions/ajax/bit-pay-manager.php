@@ -212,7 +212,7 @@ function do_single_payment_bit($id, $member_data, $isMobile, $thank_you_page = n
         }
         if ($isMobile != "false") {
             $phoneSchema = $isMobile == 'Android' ? $response_json->applicationSchemeAndroid : $response_json->applicationSchemeIos;
-            $phoneSchema = add_merchantURL_to_mobile_schema($phoneSchema, $thank_you_page);
+            $phoneSchema = $isMobile == 'Android' ?  add_merchantURL_to_mobile_schema($phoneSchema, $thank_you_page) : $phoneSchema;
             return ['paymentInitiationId' => $response_json->paymentInitiationId, 'transactionSerialId' => $response_json->transactionSerialId, 'paymentMethodId' => $id, 'mobileSchema' => $phoneSchema];
         } else {
             return ['paymentInitiationId' => $response_json->paymentInitiationId, 'transactionSerialId' => $response_json->transactionSerialId, 'paymentMethodId' => $id];
