@@ -160,11 +160,10 @@ jQuery(document).ready(($) => {
                                                 console.log(err);
                                                 foodyLoader.detach();
                                             } else {
-                                                if(data.data.single_payment_ids.mobileSchema){
-                                                    $('.button-container').after('<div class="bit-button-container"><span class="bit-btn-text">לחץ כאן להשלמת תשלום בביט</span><span class="bit-notice-text">*חשוב לא לסגור את העמוד עד סיום הרכישה בביט</span><a type="button" href="' + data.data.single_payment_ids.mobileSchema + '" id="bitcom-button-container-mobile"></a></div>');
+                                                if (data.data.single_payment_ids.mobileSchema) {
+                                                    $('.button-container').after('<div class="bit-button-container"><span class="bit-btn-text">לחץ כאן להשלמת תשלום בביט</span><span class="bit-notice-text">*חשוב לא לסגור את העמוד עד סיום הרכישה בביט</span><a href="' + data.data.single_payment_ids.mobileSchema + '" id="bitcom-button-container-mobile"></a></div>');
                                                     foodyLoader.detach();
-                                                }
-                                                else if (data.data.single_payment_ids) {
+                                                } else if (data.data.single_payment_ids) {
                                                     bitTransactionId = data.data.single_payment_ids['transactionSerialId'];
                                                     bitPaymentInitiationId = data.data.single_payment_ids['paymentInitiationId'];
                                                     bitTableId = data.data.single_payment_ids['paymentMethodId'];
@@ -401,7 +400,7 @@ function removeSpacesAndDashFromPhone(phone) {
     return phoneResult;
 }
 
-function get_all_form_inputs(button_pressed){
+function get_all_form_inputs(button_pressed) {
     let _email = $('#email').val().length != 0 && !$('#email').hasClass('error') ? $('#email').val() : false;
     let _firstName = $('#first-name').val().length != 0 && !$('#first-name').hasClass('error') ? $('#first-name').val() : false;
     let _lastName = $('#last-name').val().length != 0 && !$('#last-name').hasClass('error') ? $('#last-name').val() : false;
@@ -411,7 +410,16 @@ function get_all_form_inputs(button_pressed){
     let _thankYou = $(button_pressed).attr('data-thank-you').length != 0 ? $(button_pressed).attr('data-thank-you') : '';
     let _termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
 
-    return {email: _email, firstName: _firstName, lastName: _lastName, phone: _phone, enableMarketing: _enableMarketing, courseName: _courseName, thankYou: _thankYou, termsAccepted: _termsAccepted}
+    return {
+        email: _email,
+        firstName: _firstName,
+        lastName: _lastName,
+        phone: _phone,
+        enableMarketing: _enableMarketing,
+        courseName: _courseName,
+        thankYou: _thankYou,
+        termsAccepted: _termsAccepted
+    }
 }
 
 function getMobileOperatingSystem() {
@@ -434,18 +442,18 @@ function getMobileOperatingSystem() {
     return false;
 }
 
-function getRoundedPrice(price){
+function getRoundedPrice(price) {
     let roundedPrice;
     let decimal_part = getDecimal(price);
     decimal_part = decimal_part.toFixed(1);
 
-    if(decimal_part < 0.25 ){
+    if (decimal_part < 0.25) {
         roundedPrice = Math.floor(price);
-    }
-    else if((decimal_part > 0.25 && decimal_part <= 0.5 ) || (decimal_part >= 0.5 && decimal_part > 0.75)){
+    } else if (decimal_part > 0.25 && decimal_part <= 0.5) {
         roundedPrice = Math.floor(price) + 0.5;
-    }
-    else if(decimal_part > 0.75){
+    } else if (decimal_part >= 0.5 && decimal_part < 0.75) {
+        roundedPrice = Math.floor(price) + 0.5;
+    } else if (decimal_part > 0.75) {
         roundedPrice = Math.ceil(price);
     }
 
