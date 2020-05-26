@@ -229,13 +229,13 @@ function do_bit_payment_capture($paymentInitiationId)
     if (isset($bit_transaction_data->bit_trans_id)) {
         $prefix_for_trans = get_option('foody_identifier_trans_bit', false);
         $bit_trans_id = 'bit_trans_' . $prefix_for_trans . '_' . $bit_transaction_data->bit_trans_id;
-        $bit_sourceTransactionId = 'bit_source_trans_' . $prefix_for_trans . '_' . $bit_transaction_data->bit_trans_id;
+        $bit_sourceTransactionId = '000' . $bit_transaction_data->bit_trans_id;
         $member_id_and_price_paid = get_columns_data_by_paymentMethodId($bit_transaction_data->bit_trans_id, ['member_id', 'price_paid']);
         if (isset($member_id_and_price_paid->price_paid)) {
 
             $request_url_path = "/single-payments/" . $paymentInitiationId . "/capture";
             // "POST"
-            $request_body = "{\n\t\"requestAmount\": " . (float)$member_id_and_price_paid->price_paid . ",\n\t\"currencyTypeCode\": 1 , \n\t\"externalSystemReference\": \"" . $bit_trans_id . "\",\n\t\"paymentInitiationId\": \"" . $paymentInitiationId . "\", \n\t\"sourceTransactionId\": " . $bit_sourceTransactionId . "\n}\n";
+            $request_body = "{\n\t\"requestAmount\": " . (float)$member_id_and_price_paid->price_paid . ",\n\t\"currencyTypeCode\": 1 , \n\t\"externalSystemReference\": \"" . $bit_trans_id . "\",\n\t\"paymentInitiationId\": \"" . $paymentInitiationId . "\", \n\t\"sourceTransactionId\": \"" . $bit_sourceTransactionId . "\"\n}\n";
             $json_response = bit_api_request("POST", $request_url_path, $request_body);
             if (isset($json_response->issuerAuthorizationNumber)) {
                 $response = ['member_id' => $member_id_and_price_paid->member_id, 'trans_id' => $bit_transaction_data->bit_trans_id, 'issuerAuthorizationNumber' => $json_response->issuerAuthorizationNumber];

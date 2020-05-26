@@ -112,7 +112,7 @@ jQuery(document).ready(($) => {
                                 if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone && inputsObj.courseName) {
                                     // temp => only send data to members plugin
                                     let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
-                                    let foodyLoader = new FoodyLoader({container: $('#course-register-form')});
+                                    let foodyLoader = new FoodyLoader({container: $('.button-container')});
 
                                     // todo: load bit pay button
                                     $.each(form_fields, function (index, value) {
@@ -184,21 +184,6 @@ jQuery(document).ready(($) => {
                                                             onApproved: function (details) {
                                                                 //after bit payment confirmed
                                                                 window.location = inputsObj.thankYou;
-                                                                // foodyAjax({
-                                                                //     action: 'foody_bitcom_transaction_complete',
-                                                                //     data: {
-                                                                //         paymentInitiationId: details.paymentInitiationId,
-                                                                //         memberData: data_of_member,
-                                                                //         couponId: couponAndPriceObj.coupon_id,
-                                                                //         couponType: couponAndPriceObj.coupon_type,
-                                                                //         couponCode: couponAndPriceObj.coupon
-                                                                //     }
-                                                                // }, function (err, data) {
-                                                                //     // show approval page
-                                                                //     if (data.data.msg) {
-                                                                //         window.location = inputsObj.thankYou;
-                                                                //     }
-                                                                // });
                                                             },
                                                             style: {
                                                                 height: buttonHeight
@@ -295,7 +280,7 @@ jQuery(document).ready(($) => {
         });
 
         function redeemCoupon() {
-            let foodyLoader = new FoodyLoader({container: $('#course-register-form')});
+            let foodyLoader = new FoodyLoader({container: $('.coupon-and-price-container')});
             let couponCode = $('#coupon-input').val();
             if (couponCode.length) {
                 foodyLoader.attach();
