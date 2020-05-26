@@ -101,6 +101,7 @@ require_once get_template_directory() . '/inc/classes/common/class-foody-mailer.
 require_once get_template_directory() . '/inc/classes/class-foody-commercial-rule-mapping.php';
 require_once get_template_directory() . '/inc/classes/class-foody-filters-rule-mapping.php';
 require_once get_template_directory() . '/inc/foody-ingredients-wp-list-table.php';
+require_once get_template_directory() . '/inc/foody-green-invoice-generator.php';
 
 /*
  * Widgets

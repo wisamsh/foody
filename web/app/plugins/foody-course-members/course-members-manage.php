@@ -13,7 +13,6 @@ Author: Danielk
 defined('ABSPATH');
 require 'courses-members-export.php';
 require 'courses-members-ajax.php';
-require 'invoice-generator-ajax.php';
 require 'coupons-section/coupons-ajax.php';
 require 'coupons-section/courses-coupons-export.php';
 

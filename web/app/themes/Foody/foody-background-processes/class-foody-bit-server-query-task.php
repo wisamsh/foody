@@ -33,7 +33,7 @@ class Foody_BitServerQueryProcess extends WP_Background_Process
             $this->handle_current_bit_status($item['payment_initiation_id'], $item['member_data'], $item['coupon_details']);
 
         } catch (Exception $e) {
-            Foody_WhiteLabelLogger::exception($e);
+            /// what supposed to happen if API have an error while fetching transaction status
         }
 
         return false;
@@ -41,9 +41,13 @@ class Foody_BitServerQueryProcess extends WP_Background_Process
 
     protected function handle_current_bit_status($payment_initiation_id, $member_data, $coupon_details)
     {
-        $status = get_payment_status($payment_initiation_id, $member_data);
-        if (!is_array($status)) {
-             bit_handle_status_code($status, $payment_initiation_id, $member_data, $coupon_details);
+        try {
+            $status = get_payment_status($payment_initiation_id, $member_data);
+            if (!is_array($status)) {
+                bit_handle_status_code($status, $payment_initiation_id, $member_data, $coupon_details);
+            }
+        } catch (Exception $e){
+            throw $e;
         }
 //        $number_of_seconds = 30;
 //        foody_setInterval(function () use ($payment_initiation_id, $member_data, $coupon_details) {

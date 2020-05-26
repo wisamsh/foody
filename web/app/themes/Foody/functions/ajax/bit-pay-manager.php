@@ -12,12 +12,15 @@ function foody_start_bit_pay_process()
     // add new pending payment to db
     $pending_payment_id = insert_new_pending_payment();
     if ($pending_payment_id != false && isset($_POST['memberData']) && isset($_POST['isMobile']) && isset($_POST['thankYou'])) {
-        $single_payment_ids = do_single_payment_bit($pending_payment_id, $_POST['memberData'], $_POST['isMobile'], $_POST['thankYou']);
-
-        wp_send_json_success(['single_payment_ids' => $single_payment_ids]);
+        try {
+            $single_payment_ids = do_single_payment_bit($pending_payment_id, $_POST['memberData'], $_POST['isMobile'], $_POST['thankYou']);
+            wp_send_json_success(['single_payment_ids' => $single_payment_ids]);
+        } catch (Exception $e) {
+            update_pre_pay_bit_data_by_id_and_cloumns($pending_payment_id, ['status' => 'canceled']);
+            wp_send_json_error(['msg' => __('יש בעיה עם אמצעי התשלום, אנא נסה שנית מאוחר יותר או בחר אמצעי תשלום אחר')]);
+        }
     }
 }
-
 add_action('wp_ajax_nopriv_foody_start_bit_pay_process', 'foody_start_bit_pay_process');
 add_action('wp_ajax_foody_start_bit_pay_process', 'foody_start_bit_pay_process');
 
@@ -76,18 +79,20 @@ function foody_bit_refund_process()
             }
         }
     }
-
 }
-
 add_action('wp_ajax_nopriv_foody_bit_refund_process', 'foody_bit_refund_process');
 add_action('wp_ajax_foody_bit_refund_process', 'foody_bit_refund_process');
 
 function get_payment_status($payment_initiation_id, $member_data)
 {
     $request_url_path = '/single-payments/' . $payment_initiation_id;
-
     $response_json = bit_api_request("GET", $request_url_path);
-    return isset($response_json->requestStatusCode) ? $response_json->requestStatusCode : $response_json;
+    if (isset($response_json->requestStatusCode)) {
+        return $response_json->requestStatusCode;
+    } else {
+        $error_handler = new Bit_API_Error_handler($response_json);
+        $error_handler->throw_new_error();
+    }
 }
 
 function bit_handle_status_code($code, $payment_initiation_id = null, $member_data = null, $coupon_details = null)
@@ -104,31 +109,28 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
                 'price' => $member_data['price'],
                 'enable_marketing' => $member_data['enable_marketing']
             ]);
+            foody_create_and_send_invoice([
+                'client_email' => $member_data['email'],
+                'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
+                'phone' => $member_data['phone']
+                ], $member_data['course_name'] ,$member_data['price']);
             $result = false;
             break;
         case 10:
             // refund confirmed - final
             $result = false;
             break;
-        case 7:
-            // time expired - final
-            do_delete_bit_transaction($payment_initiation_id, $coupon_details);
-            $result = false;
-            break;
-        case 2:
-            // canceled by business or failed - final
-            $result = false;
-            break;
-        case 3:
-            // canceled by client before money is held - final
-            do_delete_bit_transaction($payment_initiation_id, $coupon_details);
-            $result = false;
-            break;
-        case 15:
-            // payment failed - final
-            do_delete_bit_transaction($payment_initiation_id, $coupon_details);
-            $result = false;
-            break;
+        case 2: // canceled by business or failed - final
+        case 3: // canceled by client before money is held - final
+        case 7: // time expired - final
+        case 15: // payment failed - final
+            try {
+                do_delete_bit_transaction($payment_initiation_id, $coupon_details);
+                $result = false;
+                break;
+            } catch (Exception $e){
+                throw $e;
+            }
         case 16:
             // refund failed - final
             $result = false;
@@ -151,6 +153,10 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
                     update_coupon_to_used($coupon_details);
                 }
                 $result = $ids_and_authorization_number['member_id'];
+            }
+            else{
+                $error_handler = new Bit_API_Error_handler($ids_and_authorization_number);
+                $error_handler->throw_new_error();
             }
             break;
         default:
@@ -183,6 +189,9 @@ function do_delete_bit_transaction($paymentInitiationId, $coupon_details)
                         update_general_coupon_to_free($coupon_details['id']);
                     }
                 }
+            } else {
+                $error_handler = new Bit_API_Error_handler($response_json);
+                $error_handler->throw_new_error();
             }
         }
     }
@@ -218,7 +227,8 @@ function do_single_payment_bit($id, $member_data, $isMobile, $thank_you_page = n
             return ['paymentInitiationId' => $response_json->paymentInitiationId, 'transactionSerialId' => $response_json->transactionSerialId, 'paymentMethodId' => $id];
         }
     } else {
-        return false;
+        $error_handler = new Bit_API_Error_handler($response_json);
+        $error_handler->throw_new_error();
     }
 }
 
@@ -240,7 +250,7 @@ function do_bit_payment_capture($paymentInitiationId)
             if (isset($json_response->issuerAuthorizationNumber)) {
                 $response = ['member_id' => $member_id_and_price_paid->member_id, 'trans_id' => $bit_transaction_data->bit_trans_id, 'issuerAuthorizationNumber' => $json_response->issuerAuthorizationNumber];
             } else {
-                $response = false;
+                $response = $json_response;
             }
         }
     }
@@ -250,42 +260,46 @@ function do_bit_payment_capture($paymentInitiationId)
 
 function bit_api_request($request_type, $request_url_path, $request_body = null)
 {
-    $token = Bit_Token_Manager::get_token();
-    $cert_path = get_certificate_data();
-    $subscription_key = get_option('foody_subscription_key_for_bit', false);
+    try {
+        $token = Bit_Token_Manager::get_token();
+        $cert_path = get_certificate_data();
+        $subscription_key = get_option('foody_subscription_key_for_bit', false);
 
-    $curl_data_array = array(
-        CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2" . $request_url_path,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => $request_type,
-        CURLOPT_HTTPHEADER => array(
-            "Authorization: Bearer " . $token,
-            "Content-Type: application/json;charset=UTF-8",
-            "Ocp-Apim-Subscription-Key: " . $subscription_key,
-        ));
+        $curl_data_array = array(
+            CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2" . $request_url_path,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => $request_type,
+            CURLOPT_HTTPHEADER => array(
+                "Authorization: Bearer " . $token,
+                "Content-Type: application/json;charset=UTF-8",
+                "Ocp-Apim-Subscription-Key: " . $subscription_key,
+            ));
 
-    if ($request_type == "POST" || $request_body != null) {
-        $curl_data_array[CURLOPT_POSTFIELDS] = $request_body;
+        if ($request_type == "POST" || $request_body != null) {
+            $curl_data_array[CURLOPT_POSTFIELDS] = $request_body;
+        }
+
+        $curl = curl_init();
+
+
+        curl_setopt_array($curl, $curl_data_array);
+
+        curl_setopt($curl, CURLOPT_SSLCERT, $cert_path);
+
+        $response = curl_exec($curl);
+        $response_json = json_decode($response);
+
+        curl_close($curl);
+
+        return $response_json;
+    } catch (Exception $e) {
+        throw $e;
     }
-
-    $curl = curl_init();
-
-
-    curl_setopt_array($curl, $curl_data_array);
-
-    curl_setopt($curl, CURLOPT_SSLCERT, $cert_path);
-
-    $response = curl_exec($curl);
-    $response_json = json_decode($response);
-
-    curl_close($curl);
-
-    return $response_json;
 }
 
 function get_pre_pay_bit_data_by_paymentInitiationId($paymentInitiationId)
@@ -580,6 +594,9 @@ class Bit_Token_Manager
         if ($token_json && isset($token_json->expires_in) && isset($token_json->access_token)) {
             self::$token = $token_json->access_token;
             self::$token_expiration_time = date("m/d/Y h:i:s a", time() + $token_json->expires_in);
+        } else {
+            $error_handler = new Bit_API_Error_handler($token_json);
+            $error_handler->throw_new_error();
         }
         return self::$token;
     }
@@ -601,7 +618,7 @@ class Bit_Token_Manager
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "client_id=" . $client_id . "&client_secret=" . $client_secret . "&response_type=token&scope=bit_payment",
+            CURLOPT_POSTFIELDS => "client_id=" . $client_id . "&client_secret=" . $client_secret . "&response_type=token&scope=bit_payments",
             CURLOPT_HTTPHEADER => array(
                 "Ocp-Apim-Subscription-Key: " . $subscription_key,
                 "Content-Type: application/x-www-form-urlencoded"
@@ -616,5 +633,30 @@ class Bit_Token_Manager
 
         curl_close($curl);
         return $response_json;
+    }
+}
+
+class Bit_API_Error_handler
+{
+    public $error_code;
+    public $msg;
+    public $incident_id;
+
+    function __construct($json_response)
+    {
+        $this->error_code = isset($json_response->statusCode) ? $json_response->statusCode : null;
+        $this->msg = isset($json_response->message) ? $json_response->message : null;
+        $this->incident_id = isset($json_response->incidentId) ? $json_response->incidentId : null;
+    }
+
+    public function throw_new_error()
+    {
+        if ($this->error_code && $this->msg) {
+            throw new Exception($this->msg, $this->error_code);
+        } elseif (isset($this->incident_id)) {
+            throw new Exception($this->incident_id);
+        } else {
+            throw new Exception('unknown');
+        }
     }
 }
