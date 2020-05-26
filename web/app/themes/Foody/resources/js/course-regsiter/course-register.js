@@ -443,23 +443,11 @@ function getMobileOperatingSystem() {
 }
 
 function getRoundedPrice(price) {
-    let roundedPrice;
-    let decimal_part = getDecimal(price);
-    decimal_part = decimal_part.toFixed(1);
+    let roundedPrice = price.toFixed(1);
 
-    if (decimal_part < 0.25) {
-        roundedPrice = Math.floor(price);
-    } else if (decimal_part > 0.25 && decimal_part <= 0.5) {
-        roundedPrice = Math.floor(price) + 0.5;
-    } else if (decimal_part >= 0.5 && decimal_part < 0.75) {
-        roundedPrice = Math.floor(price) + 0.5;
-    } else if (decimal_part > 0.75) {
-        roundedPrice = Math.ceil(price);
+    if (roundedPrice < 1) {
+        roundedPrice = 1;
     }
 
     return roundedPrice;
-}
-
-function getDecimal(n) {
-    return (n - Math.floor(n));
 }
