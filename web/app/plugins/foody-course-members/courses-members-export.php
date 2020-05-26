@@ -34,6 +34,7 @@ class Foody_courses_members_exporter
         $sheet->setCellValue('K1', 'Coupon');
         $sheet->setCellValue('L1', 'Purchase Date');
         $sheet->setCellValue('M1', 'Note');
+        $sheet->setCellValue('N1', 'status');
 
         $courses_members = self::get_all_courses_members($query);
 
@@ -56,6 +57,7 @@ class Foody_courses_members_exporter
             $sheet->setCellValue('K'.$row, $courses_member->coupon);
             $sheet->setCellValue('L'.$row, $courses_member->purchase_date);
             $sheet->setCellValue('M'.$row, $courses_member->note);
+            $sheet->setCellValue('N'.$row, $courses_member->status);
             $row++;
         }
 

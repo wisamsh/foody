@@ -296,7 +296,7 @@ jQuery(document).ready(($) => {
                         console.log(err)
                     } else {
                         if (typeof data.data.new_price != 'undefined' && (typeof data.data.id != 'undefined' && data.data.id != null) && (typeof data.data.couponType != 'undefined' && data.data.couponType != null)) {
-                            let discounted_price = Math.floor(data.data.new_price);
+                            let discounted_price = getRoundedPrice(data.data.new_price);
                             $('#coupon-input')[0].value = '';
                             $('#coupon-input').remove();
                             $('#redeem-coupon').remove();
@@ -432,4 +432,26 @@ function getMobileOperatingSystem() {
     }
 
     return false;
+}
+
+function getRoundedPrice(price){
+    let roundedPrice;
+    let decimal_part = getDecimal(price);
+    decimal_part = decimal_part.toFixed(1);
+
+    if(decimal_part < 0.25 ){
+        roundedPrice = Math.floor(price);
+    }
+    else if((decimal_part > 0.25 && decimal_part <= 0.5 ) || (decimal_part >= 0.5 && decimal_part > 0.75)){
+        roundedPrice = Math.floor(price) + 0.5;
+    }
+    else if(decimal_part > 0.75){
+        roundedPrice = Math.ceil(price);
+    }
+
+    return roundedPrice;
+}
+
+function getDecimal(n) {
+    return (n - Math.floor(n));
 }
