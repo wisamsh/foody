@@ -618,7 +618,7 @@ class Bit_Token_Manager
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "client_id=" . $client_id . "&client_secret=" . $client_secret . "&response_type=token&scope=bit_payments",
+            CURLOPT_POSTFIELDS => "client_id=" . $client_id . "&client_secret=" . $client_secret . "&response_type=token&scope=bit_payment",
             CURLOPT_HTTPHEADER => array(
                 "Ocp-Apim-Subscription-Key: " . $subscription_key,
                 "Content-Type: application/x-www-form-urlencoded"
