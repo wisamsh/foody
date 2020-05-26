@@ -175,7 +175,7 @@ function do_delete_bit_transaction($paymentInitiationId, $coupon_details)
                     if ($coupon_details['type'] == 'unique') {
                         $coupon_code_array = explode('_', $coupon_details['coupon_code']);
                         update_unique_coupon_to_free($coupon_details['id'], $coupon_code_array[1]);
-                        update_unique_coupon_to_free_in_all_coupons_table($coupon_details['id']);
+                        //update_unique_coupon_to_free_in_all_coupons_table($coupon_details['id']);
                     } else {
                         update_general_coupon_to_free($coupon_details['id']);
                     }
@@ -203,7 +203,7 @@ function do_single_payment_bit($id, $member_data, $isMobile, $thank_you_page = n
 
         update_pre_pay_bit_data_by_id_and_cloumns($id, ['bit_paymentInitiationId' => $response_json->paymentInitiationId, 'bit_transactionSerialId' => $response_json->transactionSerialId]);
         foody_add_course_member_to_table($member_data);
-        if ($isMobile) {
+        if ($isMobile == "true") {
             $phoneSchema = $isMobile == 'Android' ? $response_json->applicationSchemeAndroid : $response_json->applicationSchemeIos;
             $phoneSchema = add_merchantURL_to_mobile_schema($phoneSchema, $thank_you_page);
             return ['paymentInitiationId' => $response_json->paymentInitiationId, 'transactionSerialId' => $response_json->transactionSerialId, 'paymentMethodId' => $id, 'mobileSchema' => $phoneSchema];

@@ -54,12 +54,15 @@ class Foody_Course_register
 
     private function get_course_data()
     {
+        $course_data = isset($this->course_data) ? $this->course_data : [];
+        $course_id = isset($this->course_id) ? $this->course_id : '';
+
         return array_merge([
             'course_name' => get_the_title($this->course_id),
-            'host_name' => get_field('course_page_main_cover_section_host_name', $this->course_id),
-            'host_image' => get_field('course_page_main_cover_section_host_image', $this->course_id),
-            'host_image_mobile' => get_field('course_page_main_cover_section_host_image_mobile', $this->course_id),
-        ], $this->course_data);
+            'host_name' => get_field('course_page_main_cover_section_host_name', $course_id),
+            'host_image' => get_field('course_page_main_cover_section_host_image', $course_id),
+            'host_image_mobile' => get_field('course_page_main_cover_section_host_image_mobile', $course_id),
+        ], $course_data);
     }
 
     private function get_course_cover_information($course_name, $register_subtext)

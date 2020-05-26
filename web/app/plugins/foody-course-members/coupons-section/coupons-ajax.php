@@ -60,7 +60,7 @@ function foody_get_coupon_value()
     }
 }
 
-add_action('wp_ajax_foody_nopriv_get_coupon_value', 'foody_get_coupon_value');
+add_action('wp_ajax_nopriv_foody_get_coupon_value', 'foody_get_coupon_value');
 add_action('wp_ajax_foody_get_coupon_value', 'foody_get_coupon_value');
 
 function get_modified_course_price($course_id, $coupon_value, $original_price)

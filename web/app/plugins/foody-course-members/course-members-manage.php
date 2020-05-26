@@ -63,10 +63,11 @@ function coupons_table_admin_page_func()
         $max_amount = $_POST['max_amount'];
         $used_amount = 0;
         $invoice_desc = $_POST['invoice_desc'];
+        $gen_coupons_held = $coupon_type == 'כללי' ? 0 : -1;
 
         /** add to coupons table */
-        $wpdb->query("INSERT INTO {$table_name} (coupon, coupon_type, course_name, creation_date, expiration_date, coupon_value, organization, max_amount, used_amount, invoice_desc)
-                VALUES('$coupon_name','$coupon_type','$course_name','$creation_date','$expiration_date','$coupon_value','$organization','$max_amount','$used_amount','$invoice_desc')");
+        $wpdb->query("INSERT INTO {$table_name} (coupon, coupon_type, course_name, creation_date, expiration_date, coupon_value, organization, max_amount, used_amount, gen_coupons_held, invoice_desc)
+                VALUES('$coupon_name','$coupon_type','$course_name','$creation_date','$expiration_date','$coupon_value','$organization','$max_amount','$used_amount','$gen_coupons_held','$invoice_desc')");
 
         $coupon_id = $wpdb->insert_id;
 
