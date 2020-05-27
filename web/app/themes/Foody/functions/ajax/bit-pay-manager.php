@@ -53,7 +53,7 @@ function foody_bit_refund_process()
     if (isset($_POST['paymentInitiation_id']) && $_POST['paymentInitiation_id']) {
         $bit_transaction_id_and_status = get_id_and_status_by_paymentInitiationId($_POST['paymentInitiation_id']);
         if (isset($bit_transaction_id_and_status->bit_trans_id)) {
-            $ids_and_price_paid_obj = get_columns_data_by_paymentMethodId($bit_transaction_id_and_status->bit_trans_id, ['member_id', 'price_paid']);
+            $ids_and_price_paid_obj = get_columns_data_by_paymentMethodId($bit_transaction_id_and_status->bit_trans_id, ['*']);
             if (isset($ids_and_price_paid_obj->price_paid) && isset($ids_and_price_paid_obj->member_id)) {
                 $prefix_for_trans = get_option('foody_identifier_trans_bit', false);
                 $bit_trans_id = 'bit_trans_' . $prefix_for_trans . '_' . $bit_transaction_id_and_status->bit_trans_id;
@@ -68,6 +68,7 @@ function foody_bit_refund_process()
                     if ($is_refunded) {
                         update_pre_pay_bit_data_by_id_and_cloumns($bit_transaction_id_and_status->bit_trans_id, ['status' => 'refunded', 'authorization_number' => $response_json->issuerAuthorizationNumber]);
                         update_course_member_by_id_and_cloumns($ids_and_price_paid_obj->member_id, ['status' => 'refunded']);
+                        foody_create_and_send_refund_invoice($ids_and_price_paid_obj);
                         wp_send_json_success(['msg' => __('העסקה עם מזהה ' . $ids_and_price_paid_obj->member_id . ' בוטלה')]);
                     }
                 } else {
@@ -109,7 +110,7 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
                 'price' => $member_data['price'],
                 'enable_marketing' => $member_data['enable_marketing']
             ]);
-            foody_create_and_send_invoice([
+            foody_create_and_send_purchase_invoice([
                 'client_email' => $member_data['email'],
                 'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
                 'phone' => $member_data['phone']

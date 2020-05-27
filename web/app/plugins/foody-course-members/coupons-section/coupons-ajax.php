@@ -4,7 +4,6 @@ function foody_get_coupon_value()
     $coupon_code = isset($_POST['coupon_code']) ? $_POST['coupon_code'] : '';
     $course_name = isset($_POST['course_name']) ? $_POST['course_name'] : '';
     $course_id = isset($_POST['course_id']) ? $_POST['course_id'] : '';
-    $coupon = false;
     $coupon_id = null;
     $coupon_type = null;
     $original_price = (int)get_field('course_register_data_final_price', $course_id);
@@ -165,22 +164,24 @@ function update_general_copupon_columns($coupon_id, $columns)
 function get_coupon_data_by_name($name)
 {
     $coupon_data = [];
-    if (strpos($name, '_') != false) {
-        /** unique coupon */
-        $coupon_details = explode('_', $name);
-        if (count($coupon_details) == 2) {
+    if(!empty($name)) {
+        if (strpos($name, '_') != false) {
+            /** unique coupon */
+            $coupon_details = explode('_', $name);
+            if (count($coupon_details) == 2) {
+                $coupon_data = [
+                    'id' => get_unique_coupon_id($coupon_details[0], $coupon_details[1]),
+                    'type' => 'unique',
+                    'coupon_code' => $name
+                ];
+            }
+        } else {
             $coupon_data = [
-                'id' => get_unique_coupon_id($coupon_details[0], $coupon_details[1]),
-                'type' => 'unique',
+                'id' => get_general_coupon_id($name),
+                'type' => 'general',
                 'coupon_code' => $name
             ];
         }
-    } else {
-        $coupon_data = [
-            'id' => get_general_coupon_id($name),
-            'type' => 'general',
-            'coupon_code' => $name
-        ];
     }
 
 

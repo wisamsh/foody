@@ -7,6 +7,7 @@ class Foody_courses_coupons_exporter
 {
     public static function generate_xlsx($id)
     {
+        $coupons_prefix = '';
         ob_end_clean();
         ob_start();
         //make a new spreadsheet object
@@ -37,13 +38,16 @@ class Foody_courses_coupons_exporter
             $sheet->setCellValue('B'.$row, $coupon->coupon_prefix.'_'.$coupon->coupon_code);
             $sheet->setCellValue('C'.$row, $coupon_used);
             $row++;
+            if(empty($coupons_prefix)){
+                $coupons_prefix = $coupon->coupon_prefix;
+            }
         }
 
 
 //set the header first, so the result will be treated as an xlsx file.
         header('Content-Type: application/vnd.ms-excel');
 //make it an attachment so we can define filename
-        header('Content-Disposition: attachment;filename="Courses-members.xlsx"');
+        header('Content-Disposition: attachment;filename="'. $coupons_prefix .'-unique-coupons-list.xlsx"');
 
 //create IOFactory object
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');

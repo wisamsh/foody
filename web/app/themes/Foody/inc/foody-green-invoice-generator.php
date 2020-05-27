@@ -1,17 +1,38 @@
 <?php
 
-function foody_create_and_send_invoice($client_obj, $course_name, $price)
+function foody_create_and_send_purchase_invoice($client_obj, $course_name, $price)
 {
     $token = Green_Invoice_Token_Manager::get_token();
     if ($token != false) {
         // generate invoice
-        generate_new_invoice($token, $client_obj, $course_name, $price);
+        $response = generate_new_invoice($token, $client_obj, $course_name, $price);
     }
 }
 
-function generate_new_invoice($token, $client_obj, $course_name, $price)
+function foody_create_and_send_refund_invoice($client_obj)
 {
-    $request_body = get_invoice_request_body($client_obj, $course_name, $price);
+    $client_email = isset($client_obj->member_email) && !empty($client_obj->member_email) ? $client_obj->member_email : false;
+    $client_name = isset($client_obj->first_name) && isset($client_obj->last_name) && !empty($client_obj->first_name) && !empty($client_obj->last_name) ? $client_obj->first_name . ' ' . $client_obj->last_name : false;
+    $client_phone = isset($client_obj->phone) && !empty($client_obj->phone) ? $client_obj->phone : false;
+    $price = isset($client_obj->price_paid) && !empty($client_obj->price_paid) ? $client_obj->price_paid : false;
+    $course_name = isset($client_obj->course_name) && !empty($client_obj->course_name) ? $client_obj->course_name : false;
+
+    if($client_email && $client_name && $client_phone && $price && $course_name) {
+        $token = Green_Invoice_Token_Manager::get_token();
+        if ($token != false) {
+            // generate invoice
+            $response = generate_new_invoice($token, [
+                'client_email' => $client_email,
+                'name' => $client_name,
+                'phone' => $client_phone
+            ], $course_name, $price, true);
+        }
+    }
+}
+
+function generate_new_invoice($token, $client_obj, $course_name, $price, $is_refund = false)
+{
+    $request_body = get_invoice_request_body($client_obj, $course_name, $price, $is_refund);
 
     $curl = curl_init();
 
