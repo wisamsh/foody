@@ -61,15 +61,15 @@ function generate_new_invoice($token, $client_obj, $course_name, $price, $is_ref
     return $response_json;
 }
 
-
 function get_invoice_request_body($client_obj, $course_name, $price, $is_refund = false)
 {
-    $admin_email = get_option('admin_email');
+    $admin_email = get_option('foody_email_for_courses_invoices');
     $invoice_type = $is_refund ? 330 : 320;
     $current_date = date("Y-m-d", time());
+    $text_for_description = $is_refund ? __('חשבונית לזיכוי רכישת הקורס: ״'). $course_name . '״' :   __('חשבונית מס קבלה לרכישת הקורס: ״'). $course_name . '״';
 
     $requset_body = [
-        "description" => 'InvoiceReceipt_No_',
+        "description" => $text_for_description,
         "remarks" => "",
         "footer" => "",
         "emailContent" => $admin_email,
