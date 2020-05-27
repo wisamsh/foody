@@ -108,7 +108,8 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
                 'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
                 'course_name' => $member_data['course_name'],
                 'price' => $member_data['price'],
-                'enable_marketing' => $member_data['enable_marketing']
+                'enable_marketing' => $member_data['enable_marketing'],
+                'coupon' => $member_data['coupon']
             ]);
             foody_create_and_send_purchase_invoice([
                 'client_email' => $member_data['email'],
