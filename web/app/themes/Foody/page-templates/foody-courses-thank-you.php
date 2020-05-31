@@ -40,9 +40,11 @@ if (isset($_GET)) {
             $status = get_payment_status($payment_initiation_id);
             if (!is_array($status)) {
                 if($status == 2 || $status == 3 || $status == 7){
+                    $payment_method = true;
                     $payment_status = 'canceled';
                 }
                 else{
+                    $payment_method = true;
                     $payment_status = 'approved';
                 }
             }

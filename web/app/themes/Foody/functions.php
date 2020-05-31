@@ -861,7 +861,7 @@ add_filter( 'body_class','foody_body_add_bit_class', 10, 1 );
 function foody_body_add_bit_class( $classes ) {
     $class_to_add = 'foody-payment-bit';
 
-    if(isset($_GET) && isset($_GET['payment_method']) && $_GET['payment_method'] == __('ביט')){
+    if(isset($_GET) && (isset($_GET['payment_method']) && $_GET['payment_method'] == __('ביט')) || (isset($_GET['course_id']) && strpos($_GET['course_id'], ',') != false)){
         $classes[] = $class_to_add;
     }
 
