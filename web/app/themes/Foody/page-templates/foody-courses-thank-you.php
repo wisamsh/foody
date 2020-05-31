@@ -35,6 +35,9 @@ if (isset($_GET)) {
                 if($status == 2 || $status == 3 || $status == 7){
                     $payment_status = 'canceled';
                 }
+                else{
+                    $payment_status = 'approved';
+                }
             }
         }
     }
