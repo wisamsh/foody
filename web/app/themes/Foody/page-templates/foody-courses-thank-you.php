@@ -22,8 +22,20 @@ if (isset($_GET)) {
         $has_course = true;
         $host_name = get_field('course_page_main_cover_section_host_name', $course_id);
         $course_name = get_field('course_register_data_item_name', $course_id);
-        if($payment_method && $payment_method == __('ביט')){
-            apply_filters('body_class',[]);
+        if ($payment_method && $payment_method == __('ביט')) {
+            apply_filters('body_class', []);
+        }
+    }
+
+    if (isset($_GET['mobile'])) {
+        $payment_initiation_id = isset($_GET['payment_initiation_id']) && !empty($_GET['payment_initiation_id']) ? $_GET['payment_initiation_id'] : false;
+        if ($payment_initiation_id) {
+            $status = get_payment_status($payment_initiation_id);
+            if (!is_array($status)) {
+                if($status == 2 || $status == 3 || $status == 7){
+                    $payment_status = 'canceled';
+                }
+            }
         }
     }
 }
@@ -69,11 +81,9 @@ get_header();
                     if ($has_course) {
                         if ($payment_method && $payment_status && $payment_status == 'canceled') {
                             $content = get_field('course_register_data_bit_cancel_text', $course_id);
-                        }
-                        elseif ($payment_method && $payment_status && $payment_status == 'approved'){
+                        } elseif ($payment_method && $payment_status && $payment_status == 'approved') {
                             $content = get_field('course_register_data_bit_thank_you_text', $course_id);
-                        }
-                        else{
+                        } else {
                             $content = get_field('course_register_data_thank_you_text', $course_id);
                         }
                         if ($content != '' || $content != false) {

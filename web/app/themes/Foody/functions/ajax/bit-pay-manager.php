@@ -285,7 +285,7 @@ function do_single_payment_bit($id, $member_data, $isMobile, $thank_you_page = n
         }
         if ($isMobile != "false") {
             $phoneSchema = $isMobile == 'Android' ? $response_json->applicationSchemeAndroid : $response_json->applicationSchemeIos;
-            $phoneSchema = add_merchantURL_to_mobile_schema($phoneSchema, $thank_you_page);
+            $phoneSchema = add_merchantURL_to_mobile_schema($phoneSchema, $thank_you_page, $response_json->paymentInitiationId);
             return ['paymentInitiationId' => $response_json->paymentInitiationId, 'transactionSerialId' => $response_json->transactionSerialId, 'paymentMethodId' => $id, 'mobileSchema' => $phoneSchema];
         } else {
             return ['paymentInitiationId' => $response_json->paymentInitiationId, 'transactionSerialId' => $response_json->transactionSerialId, 'paymentMethodId' => $id];
@@ -588,7 +588,7 @@ function get_gen_coupons_held_by_coupon_id($id)
     return $gen_coupons_held;
 }
 
-function add_merchantURL_to_mobile_schema($mobile_schema, $thank_you_page)
+function add_merchantURL_to_mobile_schema($mobile_schema, $thank_you_page, $paymentInitiationId)
 {
     $add_to_schema = '';
     if ($thank_you_page != null && strpos($thank_you_page, '?') != false) {
@@ -597,7 +597,9 @@ function add_merchantURL_to_mobile_schema($mobile_schema, $thank_you_page)
         $thank_you_page_params = explode('=', $thank_you_page_arr[1]);
         $thank_you_url_param_key = urlencode(urlencode($thank_you_page_params[0]));
         $thank_you_url_param_value = urlencode(urlencode($thank_you_page_params[1]));
-        $add_to_schema = '%26return_scheme%3D' . $thank_you_param . '%3F' . $thank_you_url_param_key . '%253D' . $thank_you_url_param_value;
+        $payment_initiation_id_key = urlencode(urlencode('payment_initiation_id'));
+        $payment_initiation_id_value = urlencode(urlencode($paymentInitiationId));
+        $add_to_schema = '%26return_scheme%3D' . $thank_you_param . '%3F' . $thank_you_url_param_key . '%253D' . $thank_you_url_param_value. '%3F' . $payment_initiation_id_key . '%253D' . $payment_initiation_id_value;
     }
     return $mobile_schema . $add_to_schema;
 }
