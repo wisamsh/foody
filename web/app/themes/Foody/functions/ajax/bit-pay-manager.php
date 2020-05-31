@@ -603,7 +603,7 @@ function add_merchantURL_to_mobile_schema($mobile_schema, $thank_you_page, $paym
         $mobile_params_param_value = urlencode(urlencode($mobile_params[1]));
         $payment_initiation_id_key = urlencode(urlencode('payment_initiation_id'));
         $payment_initiation_id_value = urlencode(urlencode($paymentInitiationId));
-        $add_to_schema = '%26return_scheme%3D' . $thank_you_param . '%3F' . $thank_you_url_param_key . '%253D' . $thank_you_url_param_value. '%26' . $mobile_params_param_key . '%253D' . $mobile_params_param_value .  '%26' . $payment_initiation_id_key . '%253D' . $payment_initiation_id_value;
+        $add_to_schema = '%26return_scheme%3D' . $thank_you_param . '%3F' . $thank_you_url_param_key . '%253D' . $thank_you_url_param_value.','. $payment_initiation_id_value;
     }
     return $mobile_schema . $add_to_schema;
 }

@@ -15,11 +15,19 @@ $course_name = '';
 $host_name = '';
 
 if (isset($_GET)) {
+    $payment_initiation_id = false;
     if (isset($_GET['course_id'])) {
         $course_id = $_GET['course_id'];
         $payment_method = isset($_GET['payment_method']) ? $_GET['payment_method'] : false;
         $payment_status = $payment_method && isset($_GET['status']) ? $_GET['status'] : false;
         $has_course = true;
+        if(strpos($course_id, ',') != false){
+            $params = explode(',' , $course_id);
+            if(is_array($params) && isset($params[0])  && isset($params[1])){
+                $course_id = $params[0];
+                $payment_initiation_id = $params[1];
+            }
+        }
         $host_name = get_field('course_page_main_cover_section_host_name', $course_id);
         $course_name = get_field('course_register_data_item_name', $course_id);
         if ($payment_method && $payment_method == __('ביט')) {
@@ -27,8 +35,7 @@ if (isset($_GET)) {
         }
     }
 
-    if (isset($_GET['mobile'])) {
-        $payment_initiation_id = isset($_GET['payment_initiation_id']) && !empty($_GET['payment_initiation_id']) ? $_GET['payment_initiation_id'] : false;
+    if (wp_is_mobile()) {
         if ($payment_initiation_id) {
             $status = get_payment_status($payment_initiation_id);
             if (!is_array($status)) {
