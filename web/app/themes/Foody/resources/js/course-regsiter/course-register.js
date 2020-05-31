@@ -4,9 +4,8 @@
 let FoodyLoader = require('../common/foody-loader');
 let price;
 let used_coupon_details = null;
-let startedBitPayment = false;
 let mobileOS = foodyGlobals.isMobile ? getMobileOperatingSystem() : false;
-let isIOS = mobileOS == "iOS";
+
 jQuery(document).ready(($) => {
     if (foodyGlobals.page_template_name == "foody-course-register") {
         foodyAjax({
@@ -160,7 +159,7 @@ jQuery(document).ready(($) => {
                                                 console.log(err);
                                                 foodyLoader.detach();
                                             } else {
-                                                if (typeof data.data.single_payment_ids != 'undefined' && typeof data.data.single_payment_ids.mobileSchema  != 'undefined' && data.data.single_payment_ids.mobileSchema) {
+                                                if (typeof data.data.single_payment_ids != 'undefined' && typeof data.data.single_payment_ids.mobileSchema != 'undefined' && data.data.single_payment_ids.mobileSchema) {
                                                     $('.button-container').after('<div class="bit-button-container"><span class="bit-btn-text">לחץ כאן להשלמת תשלום בביט</span><span class="bit-notice-text">*חשוב לא לסגור את העמוד עד סיום הרכישה בביט</span><a href="' + data.data.single_payment_ids.mobileSchema + '" id="bitcom-button-container-mobile"></a></div>');
                                                     foodyLoader.detach();
                                                 } else if (typeof data.data.single_payment_ids != 'undefined' && typeof data.data.single_payment_ids != 'undefined' && data.data.single_payment_ids) {
@@ -182,16 +181,44 @@ jQuery(document).ready(($) => {
                                                             },
                                                             onApproved: function (details) {
                                                                 //after bit payment confirmed
-                                                                window.location = inputsObj.thankYou;
+                                                                window.location = inputsObj.thankYou + '&payment_method=ביט&status=approved';
+                                                                // foodyLoader.attach();
+                                                                // foodyAjax({
+                                                                //     action: 'foody_bitcom_transaction_complete',
+                                                                //     data: {
+                                                                //         paymentInitiationId: details.paymentInitiationId,
+                                                                //         coupon: couponAndPriceObj.coupon
+                                                                //     }
+                                                                // }, function (err, data) {
+                                                                //     if (err) {
+                                                                //         alert(err.data.msg);
+                                                                //         location.reload();
+                                                                //     }
+                                                                //     else{
+                                                                //         if(data === 'captured') {
+                                                                //             window.location = inputsObj.thankYou;
+                                                                //         }
+                                                                //         else{
+                                                                //             // todo: pending pay page ...
+                                                                //         }
+                                                                //     }
+                                                                // });
                                                             },
+                                                            onCancel: function (details) {
+                                                                // Show a Cancellation Page
+                                                                window.location = inputsObj.thankYou + '&payment_method=ביט&status=canceled'
+                                                            },
+                                                            onTimeout: function (details) {
+                                                                location.reload();
+                                                            },
+
                                                             style: {
                                                                 height: buttonHeight
                                                             }
                                                         }
                                                     ).render('#bitcom-button-container');
-                                                }
-                                                else {
-                                                    if(typeof data.success  != 'undefined' && !data.success && data.data.msg){
+                                                } else {
+                                                    if (typeof data.success != 'undefined' && !data.success && data.data.msg) {
                                                         foodyLoader.detach();
                                                         alert(data.data.msg);
 

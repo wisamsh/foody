@@ -495,30 +495,57 @@
 }
 
 .page-template-foody-courses-thank-you {
-
-  #masthead,
-  footer {
-    display: none;
-  }
-
-  #primary {
-    background: white;
-
-    .site-content {
-      padding-top: 0;
+  &:not(.foody-payment-bit) {
+    #masthead,
+    footer {
+      display: none;
     }
 
+    #primary {
+      background: white;
 
-    .foody-content {
-      min-height: 1500px;
+      .site-content {
+        padding-top: 0;
+      }
 
-      .thank-you-text {
-        white-space: pre-wrap;
-        text-align: center;
-        font-size: 1.4rem;
-        padding: 5%;
+
+      .foody-content {
         min-height: 1500px;
+
+        .thank-you-text {
+          white-space: pre-wrap;
+          text-align: center;
+          font-size: 1.4rem;
+          padding: 5%;
+          min-height: 1500px;
+        }
       }
     }
   }
 }
+.page-template-foody-courses-thank-you {
+  &.foody-payment-bit {
+
+    #primary {
+      background: white;
+
+      .site-content {
+        padding-top: 0;
+      }
+
+
+      .foody-content {
+        //min-height: 1500px;
+
+        .thank-you-text {
+          white-space: pre-wrap;
+          text-align: center;
+          font-size: 1.4rem;
+          padding: 5%;
+          //min-height: 1500px;
+        }
+      }
+    }
+  }
+}
+

@@ -17,9 +17,14 @@ $host_name = '';
 if (isset($_GET)) {
     if (isset($_GET['course_id'])) {
         $course_id = $_GET['course_id'];
+        $payment_method = isset($_GET['payment_method']) ? $_GET['payment_method'] : false;
+        $payment_status = $payment_method && isset($_GET['status']) ? $_GET['status'] : false;
         $has_course = true;
         $host_name = get_field('course_page_main_cover_section_host_name', $course_id);
         $course_name = get_field('course_register_data_item_name', $course_id);
+        if($payment_method && $payment_method == __('ביט')){
+            apply_filters('body_class',[]);
+        }
     }
 }
 get_header();
@@ -54,16 +59,27 @@ get_header();
                     <?php bootstrap_breadcrumb(); ?>
 
                 <?php endif; ?>
-
-                <?php echo the_title('<h1 class="title mt-0 mb-0">', '</h1>') ?>
+                <?php if ($payment_method && $payment_status && $payment_status == 'canceled') {
+                    echo '<h1 class="title mt-0 mb-0"> העסקה בוטלה </h1>';
+                } else {
+                    echo the_title('<h1 class="title mt-0 mb-0">', '</h1>');
+                } ?>
                 <div class="foody-content">
-
                     <?php
                     if ($has_course) {
-                        $content = get_field('course_register_data_thank_you_text', $course_id);
+                        if ($payment_method && $payment_status && $payment_status == 'canceled') {
+                            $content = get_field('course_register_data_bit_cancel_text', $course_id);
+                        }
+                        elseif ($payment_method && $payment_status && $payment_status == 'approved'){
+                            $content = get_field('course_register_data_bit_thank_you_text', $course_id);
+                        }
+                        else{
+                            $content = get_field('course_register_data_thank_you_text', $course_id);
+                        }
                         if ($content != '' || $content != false) {
                             ?>
-                            <p class="thank-you-text" data-course="<?php echo $course_name; ?>" data-host="<?php echo $host_name; ?>"> <?php echo $content; ?> </p>
+                            <p class="thank-you-text" data-course="<?php echo $course_name; ?>"
+                               data-host="<?php echo $host_name; ?>"> <?php echo $content; ?> </p>
                             <?php
                             $has_content = true;
                         }
@@ -75,7 +91,6 @@ get_header();
 
                 <?php Foody_Seo::seo() ?>
             </div>
-
 
         </div><!-- #content -->
 
