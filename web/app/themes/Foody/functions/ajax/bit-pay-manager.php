@@ -594,12 +594,16 @@ function add_merchantURL_to_mobile_schema($mobile_schema, $thank_you_page, $paym
     if ($thank_you_page != null && strpos($thank_you_page, '?') != false) {
         $thank_you_page_arr = explode('?', $thank_you_page);
         $thank_you_param = urlencode(urlencode($thank_you_page_arr[0]));
-        $thank_you_page_params = explode('=', $thank_you_page_arr[1]);
-        $thank_you_url_param_key = urlencode(urlencode($thank_you_page_params[0]));
-        $thank_you_url_param_value = urlencode(urlencode($thank_you_page_params[1]));
+        $thank_you_page_params = explode('&', $thank_you_page_arr[1]);
+        $course_params = explode('=', $thank_you_page_params[0]);
+        $mobile_params = explode('=', $thank_you_page_params[1]);
+        $thank_you_url_param_key = urlencode(urlencode($course_params[0]));
+        $thank_you_url_param_value = urlencode(urlencode($course_params[1]));
+        $mobile_params_param_key = urlencode(urlencode($mobile_params[0]));
+        $mobile_params_param_value = urlencode(urlencode($mobile_params[1]));
         $payment_initiation_id_key = urlencode(urlencode('payment_initiation_id'));
         $payment_initiation_id_value = urlencode(urlencode($paymentInitiationId));
-        $add_to_schema = '%26return_scheme%3D' . $thank_you_param . '%3F' . $thank_you_url_param_key . '%253D' . $thank_you_url_param_value. '%3F' . $payment_initiation_id_key . '%253D' . $payment_initiation_id_value;
+        $add_to_schema = '%26return_scheme%3D' . $thank_you_param . '%3F' . $thank_you_url_param_key . '%253D' . $thank_you_url_param_value. '%3F' . $mobile_params_param_key . '%253D' . $mobile_params_param_value .  '%3F' . $payment_initiation_id_key . '%253D' . $payment_initiation_id_value;
     }
     return $mobile_schema . $add_to_schema;
 }
