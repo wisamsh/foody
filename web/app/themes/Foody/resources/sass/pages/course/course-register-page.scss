@@ -94,6 +94,15 @@
         text-align: center;
         line-height: 1.5;
 
+        .price-line {
+          font-weight: bold;
+          color: $color__primary;
+        }
+
+        .coupon-line {
+          font-weight: bold;
+        }
+
         .coupon-and-price {
           display: flex;
           flex-direction: column;
@@ -236,13 +245,14 @@
         }
 
         .bit-notice-text{
-          color: red;
+          color: $color__primary;
           font-weight: bold;
           text-align: right;
         }
 
         #bitcom-button-container-mobile {
-          background: url("../images/bit_button.svg") no-repeat;
+          background: url("../images/bit_button.svg") center no-repeat ;
+          border-radius: 5%;
           content: ' ';
           height: 55px;
           margin-top: 3%;
@@ -294,6 +304,37 @@
             width: 40%;
           }
         }
+      }
+    }
+  }
+
+  #coupon-dialog-expired,
+  #coupon-dialog-unavailable {
+    text-align: center;
+    .modal-dialog{
+      top: 30%;
+
+      .modal-header{
+        background: $color__primary;
+        color: white;
+        display: flex;
+        flex-direction: row-reverse;
+
+        button{
+          color: white;
+          padding: 0 !important;
+          margin: -1rem -1rem -1rem -1rem !important;
+        }
+
+        .modal-title{
+          margin: 0 auto;
+          padding-bottom: 2%;
+        }
+      }
+
+      .modal-body{
+        color: $color__primary;
+        font-weight: bold;
       }
     }
   }

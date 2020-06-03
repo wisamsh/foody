@@ -7,6 +7,19 @@ let used_coupon_details = null;
 let mobileOS = foodyGlobals.isMobile ? getMobileOperatingSystem() : false;
 
 jQuery(document).ready(($) => {
+    if($('#coupon-input').length){
+        // let dialogElm = '<div id="coupon-dialog-expired" title="Basic dialog">\n' +
+        //     '  <p>פג תוקף הקופון</p>\n' +
+        //     '</div>\n' +
+        //     '<div id="coupon-dialog-unavailable" title="Basic dialog">\n' +
+        //     '  <p>קופון לא זמין</p>\n' +
+        //     '</div>';
+        let expiredModalElm = createAlertModal('coupon-dialog-expired', 'פג תוקף הקופון');
+        let unavailableModalElm = createAlertModal('coupon-dialog-unavailable', 'הקופון לא זמין');
+
+        $('body').append(expiredModalElm);
+        $('body').append(unavailableModalElm);
+    }
     if (foodyGlobals.page_template_name == "foody-course-register") {
         foodyAjax({
             action: 'foody_get_course_price',
@@ -111,7 +124,8 @@ jQuery(document).ready(($) => {
                                 if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone && inputsObj.courseName) {
                                     // temp => only send data to members plugin
                                     let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
-                                    let foodyLoader = new FoodyLoader({container: $('.button-container')});
+                                    let foodyLoader = new FoodyLoader({container: $('.button-container'), id: 'buttons-loader'});
+
 
                                     // todo: load bit pay button
                                     $.each(form_fields, function (index, value) {
@@ -141,7 +155,7 @@ jQuery(document).ready(($) => {
                                         'status': 'pending',
                                         'payment_method_id': '-1'
                                     };
-                                    foodyLoader.attach();
+                                    foodyLoader.attach({topPercentage: 20});
                                     foodyAjax({
                                             action: 'foody_start_bit_pay_process',
                                             data: {
@@ -219,9 +233,10 @@ jQuery(document).ready(($) => {
                                                     ).render('#bitcom-button-container');
                                                 } else {
                                                     if (typeof data.success != 'undefined' && !data.success && data.data.msg) {
+                                                        let expiredModalElm = createAlertModal('bit-error-dialog', data.data.msg);
+                                                        $('body').append(expiredModalElm);
                                                         foodyLoader.detach();
-                                                        alert(data.data.msg);
-
+                                                        $("#bit-error-dialog").modal({backdrop: true});
                                                     }
                                                 }
                                             }
@@ -313,10 +328,10 @@ jQuery(document).ready(($) => {
         });
 
         function redeemCoupon() {
-            let foodyLoader = new FoodyLoader({container: $('.coupon-and-price-container')});
+            let foodyLoader = new FoodyLoader({container: $('.coupon-and-price-container'), id:'coupon-loader'});
             let couponCode = $('#coupon-input').val();
             if (couponCode.length) {
-                foodyLoader.attach();
+                foodyLoader.attach({topPercentage: 20});
                 foodyAjax({
                     action: 'foody_get_coupon_value',
                     data: {
@@ -346,9 +361,9 @@ jQuery(document).ready(($) => {
                         } else {
                             foodyLoader.detach();
                             if (typeof data.data.msg != 'undefined' && data.data.msg == 'expired') {
-                                alert('פג תוקף הקופון');
+                                $("#coupon-dialog-expired").modal({backdrop: true});
                             } else {
-                                alert('קופון לא זמין');
+                                $("#coupon-dialog-unavailable").modal({backdrop: true});
                             }
                             used_coupon_details = {'coupon': null, 'discounted_price': data.data.price};
                         }
@@ -484,4 +499,25 @@ function getRoundedPrice(price) {
     }
 
     return roundedPrice;
+}
+
+function createAlertModal(id, msg) {
+    let modalElm = '<div class="modal fade" id="' + id + '" role="dialog">\n' +
+        '    <div class="modal-dialog">\n' +
+        '    \n' +
+        '      <!-- Modal content-->\n' +
+        '      <div class="modal-content">\n' +
+        '        <div class="modal-header">\n' +
+        '          <button type="button" class="close" data-dismiss="modal">&times;</button>\n' +
+        '          <h4 class="modal-title">שגיאה</h4>\n' +
+        '        </div>\n' +
+        '        <div class="modal-body">\n' +
+        '          <p>' + msg + '</p>\n' +
+        '        </div>\n' +
+        '      </div>\n' +
+        '      \n' +
+        '    </div>\n' +
+        '  </div>';
+
+    return modalElm;
 }

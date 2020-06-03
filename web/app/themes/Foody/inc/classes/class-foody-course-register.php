@@ -36,9 +36,10 @@ class Foody_Course_register
     {
         $course_price = isset($this->course_data['final_price']) ? $this->course_data['final_price'] : '';
         $coupon_text = isset($this->course_data['coupon_group']) ? $this->get_coupon_text($this->course_data['coupon_group']) : false;
+        $coupon_enable_insert = isset($this->course_data['coupon_group']) ? $this->enable_coupon_insert($this->course_data['coupon_group']) : false;
 
         $title_div = '<h5 class="form-title">' . __('הרשמה:') . '</h5>';
-        $form_div = $this->get_form($course_price, $coupon_text);
+        $form_div = $this->get_form($course_price, $coupon_text, $coupon_enable_insert);
 
         $form_section = '<div class="form-container">' . $title_div . $form_div;
         echo $form_section;
@@ -128,6 +129,15 @@ class Foody_Course_register
         return false;
     }
 
+    private function enable_coupon_insert($group)
+    {
+        if (isset($group['enable_coupon_insert'])) {
+            return $group['enable_coupon_insert'];
+        }
+
+        return false;
+    }
+
     private function get_newsletter_terms_checkboxes()
     {
         $newsletter_terms_checkboxes = '';
@@ -196,7 +206,7 @@ class Foody_Course_register
         return $buttons_div;
     }
 
-    private function get_form($course_price, $coupon_text)
+    private function get_form($course_price, $coupon_text, $coupon_enable_insert)
     {
         $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
         $form_container = '<div class="container-fluid" <div class="row"><form id="course-register-form" action="" class="row">';
@@ -224,8 +234,10 @@ class Foody_Course_register
         /** end -  no coupon insert **/
 
         /** with coupon insert **/
-        $coupon_div = '<span class="coupon-line">' . __('הכנס קוד קופון') . '</span><div class="coupon-input-container"><input type="text" id="coupon-input" name="coupon_input"><div name="redeem_coupon" id="redeem-coupon" data-course-id="' . $this->course_id . '" data-course-name="' . $course_name . '">' . __('ממש קופון') . '</div></div>';
-        $coupon_and_price_div = '<div class="coupon-and-price-container"><div class="coupon-and-price"> ' . $price_div . $coupon_div . '</div></div>';
+        if($coupon_enable_insert) {
+            $coupon_div = '<span class="coupon-line">' . __('הכנס קוד קופון') . '</span><div class="coupon-input-container"><input type="text" id="coupon-input" name="coupon_input"><div name="redeem_coupon" id="redeem-coupon" data-course-id="' . $this->course_id . '" data-course-name="' . $course_name . '">' . __('ממש קופון') . '</div></div>';
+            $coupon_and_price_div = '<div class="coupon-and-price-container"><div class="coupon-and-price"> ' . $price_div . $coupon_div . '</div></div>';
+        }
         /** end -  with coupon insert **/
 
         $newsletter_terms_checkboxes = $this->get_newsletter_terms_checkboxes();
