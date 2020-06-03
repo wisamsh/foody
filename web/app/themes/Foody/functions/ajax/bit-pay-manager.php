@@ -89,6 +89,13 @@ function foody_bit_refund_process()
                         foody_create_and_send_refund_invoice($ids_and_price_paid_obj);
                         wp_send_json_success(['msg' => __('העסקה עם מזהה ' . $ids_and_price_paid_obj->member_id . ' בוטלה')]);
                     }
+                    else{
+                        if($response_json->requestStatusCode == 4 || $response_json->requestStatusCode == 14 ){
+                            wp_send_json_error(array(
+                                'error' => __('הזיכוי בהמתנה אנא נסו שוב בדקות הקרובות')
+                            ));
+                        }
+                    }
                 } else {
                     wp_send_json_error(array(
                         'error' => __('הזיכוי נכשל')
