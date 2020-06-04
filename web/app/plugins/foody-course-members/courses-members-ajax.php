@@ -13,6 +13,7 @@ function foody_add_course_member_to_table($custom_val)
     $phone = $custom_val['phone'];
     $enable_marketing = $custom_val['enable_marketing'] == 'true' ? 1 : 0;
     $course_name = $custom_val['course_name'];
+    $course_id = $custom_val['course_id'];
     $price_paid = $custom_val['price'];
     $payment_method = $custom_val['payment_method'];
     $transaction_id = $custom_val['transaction_id'];
@@ -23,8 +24,8 @@ function foody_add_course_member_to_table($custom_val)
 
 
 
-    $member_added_to_table = $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, price_paid, organization, payment_method, transaction_id, coupon, purchase_date, note, status, payment_method_id)
-                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$price_paid','','$payment_method','$transaction_id','$coupon','$purchase_date','','$status','$payment_method_id')");
+    $member_added_to_table = $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, coupon, purchase_date, note, status, payment_method_id)
+                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$course_id','$price_paid','','$payment_method','$transaction_id','$coupon','$purchase_date','','$status','$payment_method_id')");
 
 //    if($mail_sent && $member_added_to_table) {
 //        wp_send_json_success();

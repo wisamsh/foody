@@ -181,10 +181,18 @@ if (isset($_POST['s'])) {
                     stopLoader();
                     console.log(err);
                 } else {
-                    if(data.data.msg){
+                    debugger;
+                    if(typeof data.data.msg != 'undefined'){
                         stopLoader();
                         alert(data.data.msg);
                         window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=foody-course-members%2Fcourse-members-manage.php';
+                    }
+                    else{
+                        if(typeof data.data.error != 'undefined'){
+                            stopLoader();
+                            alert(data.data.error);
+                            window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=foody-course-members%2Fcourse-members-manage.php';
+                        }
                     }
                 }
             });

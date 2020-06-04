@@ -272,7 +272,10 @@ function members_table_admin_page()
         $last_name = $_POST['last_name'];
         $phone = $_POST['phone'];
         $enable_marketing = $_POST['enable_marketing'] == 'true' ? 1 : 0;
-        $course_name = $_POST['course_name'];
+
+        $course_obj = explode(':', $_POST['course_name'] );
+        $course_id = $course_obj[0];
+        $course_name = $course_obj[1];
         $price_paid = $_POST['course_price'];
         $payment_method = $_POST['payment_method'];
         $transaction_id = $_POST['transaction_id'];
@@ -293,11 +296,11 @@ function members_table_admin_page()
                 'price' => $price_paid,
                 'enable_marketing' => $enable_marketing,
                 'coupon' => $coupon
-            ]);
+            ], $course_id);
         }
 
-        $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, price_paid, organization, payment_method, transaction_id, coupon, purchase_date, note, status, payment_method_id)
-                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$price_paid','$organization','$payment_method','$transaction_id','$coupon','$purchase_date','$note','$status','-1')");
+        $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, coupon, purchase_date, note, status, payment_method_id)
+                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$course_id','$price_paid','$organization','$payment_method','$transaction_id','$coupon','$purchase_date','$note','$status','-1')");
         echo "<script>location.replace('admin.php?page=foody-course-members%2Fcourse-members-manage.php');</script>";
     }
 
@@ -308,7 +311,14 @@ function members_table_admin_page()
         $update_query = 'UPDATE ' . $table_name . ' SET ';
         foreach ($table_fields as $table_field) {
             if (isset($_POST[$table_field])) {
-                $update_query .= $table_field . "= " . "'" . $_POST[$table_field] . "'" . ',';
+                if($table_field == 'course_name'){
+                    $course_obj = explode(':', $_POST['course_name'] );
+                    $update_query .= "course_name= " . "'" . $course_obj[1] . "'" . ',';
+                    $update_query .= "course_id= " . "'" . $course_obj[0] . "'" . ',';
+                }
+                else {
+                    $update_query .= $table_field . "= " . "'" . $_POST[$table_field] . "'" . ',';
+                }
             }
         }
 
@@ -328,9 +338,9 @@ function members_table_admin_page()
     <?php
 }
 
-function send_new_course_member_data($member_data)
+function send_new_course_member_data($member_data, $course_id)
 {
-    $to = get_option('foody_mail_for_courses_data');
+    $to = get_field('course_register_data_schooler_mail_box', $course_id);
     if (!empty($to)) {
         $subject = 'New Course Member';
         $body = create_courses_mail_body($member_data);
@@ -362,6 +372,9 @@ function create_courses_mail_body($member_data)
     $mail_body .= 'querystring__suminfull: ' . $member_data['price'];
     $mail_body .= '</p>';
     $mail_body .= '<p>';
+    $mail_body .= 'querystring__Custom5: ' . __('רשימה ראשית');
+    $mail_body .= '</p>';
+    $mail_body .= '<p>';
     $mail_body .= 'querystring__Custom10: ' . $enable_marketing_text;
     $mail_body .= '</p>';
     if (!empty($member_data['coupon'])) {
@@ -384,7 +397,7 @@ function update_coupon_page()
     require 'coupons-section/courses-coupons-update.php';
 }
 
-function get_courses_list($for_coupons = false)
+function get_courses_list($for_coupons = true)
 {
     $query_courses = new WP_Query(array(
         'post_type' => 'foody_course',

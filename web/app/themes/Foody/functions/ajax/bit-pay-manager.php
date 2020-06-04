@@ -155,7 +155,7 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
                 'price' => $member_data['price'],
                 'enable_marketing' => $member_data['enable_marketing'],
                 'coupon' => $member_data['coupon']
-            ]);
+            ], $member_data['course_id']);
             foody_create_and_send_purchase_invoice([
                 'client_email' => $member_data['email'],
                 'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
@@ -595,6 +595,24 @@ function get_gen_coupons_held_by_coupon_id($id)
     return $gen_coupons_held;
 }
 
+function get_coupon_by_payment_initiation_id($payment_initiation_id)
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'foody_courses_members';
+    $coupon= '';
+
+    $query = "SELECT coupon FROM {$table_name} where transaction_id ='" . $payment_initiation_id . "'";
+
+    $results = $wpdb->get_results($query);
+    $results = is_array($results) ? $results : [];
+
+    foreach ($results as $result) {
+        $coupon = isset($result->coupon) ? $result->coupon : '';
+    }
+
+    return $coupon;
+}
+
 function add_merchantURL_to_mobile_schema($mobile_schema, $thank_you_page, $paymentInitiationId)
 {
     $add_to_schema = '';
@@ -635,6 +653,7 @@ function bit_fetch_status_process()
             'purchase_date' => $pending_payment->purchase_date,
             'enable_marketing' => $pending_payment->marketing_status == 1 ? 'true' : 'false',
             'course_name' => $pending_payment->course_name,
+            'course_id' => $pending_payment->course_id,
             'price' => $pending_payment->price_paid,
             'payment_method' => $pending_payment->payment_method,
             'transaction_id' => $pending_payment->transaction_id,

@@ -13,6 +13,7 @@ $has_content = false;
 $has_cover = false;
 $course_name = '';
 $host_name = '';
+$coupon_name = '';
 
 if (isset($_GET)) {
     $payment_initiation_id = false;
@@ -20,6 +21,7 @@ if (isset($_GET)) {
         $course_id = $_GET['course_id'];
         $payment_method = isset($_GET['payment_method']) ? $_GET['payment_method'] : false;
         $payment_status = $payment_method && isset($_GET['status']) ? $_GET['status'] : false;
+        $payment_initiation_id = $payment_method && isset($_GET['paymentInitiation']) ? $_GET['paymentInitiation'] : false;
         $has_course = true;
         if(strpos($course_id, ',') != false){
             $params = explode(',' , $course_id);
@@ -49,6 +51,10 @@ if (isset($_GET)) {
                 }
             }
         }
+    }
+
+    if($payment_initiation_id){
+        $coupon_name = get_coupon_by_payment_initiation_id($payment_initiation_id);
     }
 }
 get_header();
@@ -93,15 +99,20 @@ get_header();
                     if ($has_course) {
                         if ($payment_method && $payment_status && $payment_status == 'canceled') {
                             $content = get_field('course_register_data_bit_cancel_text', $course_id);
+                            $canceled = true;
                         } elseif ($payment_method && $payment_status && $payment_status == 'approved') {
                             $content = get_field('course_register_data_bit_thank_you_text', $course_id);
+                            $canceled = false;
                         } else {
                             $content = get_field('course_register_data_thank_you_text', $course_id);
+                            $canceled = false;
+
                         }
                         if ($content != '' || $content != false) {
+                            $page_content_class = $canceled ? 'cancellation-text' : 'thank-you-text';
                             ?>
-                            <p class="thank-you-text" data-course="<?php echo $course_name; ?>"
-                               data-host="<?php echo $host_name; ?>"> <?php echo $content; ?> </p>
+                            <p class="<?php echo $page_content_class; ?>" data-course="<?php echo $course_name; ?>"
+                               data-host="<?php echo $host_name; ?>" data-coupon-used="<?php echo $coupon_name; ?>"> <?php echo $content; ?> </p>
                             <?php
                             $has_content = true;
                         }

@@ -79,16 +79,16 @@ if (isset($_GET['update']) && $_GET['update'] && isset($_GET['id'])) {
                         if (!empty($courses_list)) {
                             if (empty($member_course_name)) {
                                 echo '<option disabled selected value> -- בחר/י קורס -- </option>';
-                                foreach ($courses_list as $course_name) {
-                                    echo '<option value="' . $course_name . '" >' . $course_name . '</option>';
+                                foreach ($courses_list as $index => $course_name) {
+                                    echo '<option value="' . $index . ':' . $course_name . '" >' . $course_name . '</option>';
                                 }
                             } else {
                                 echo '<option disabledd value> -- בחר/י קורס -- </option>';
-                                foreach ($courses_list as $course_name) {
+                                foreach ($courses_list as $index => $course_name) {
                                     if ($course_name != $member_course_name) {
-                                        echo '<option value="' . $course_name . '" >' . $course_name . '</option>';
+                                        echo '<option value="' . $index . ':' . $course_name . '" >' . $course_name . '</option>';
                                     } else {
-                                        echo '<option selected value="' . $course_name . '" >' . $course_name . '</option>';
+                                        echo '<option selected value="' . $index . ':' . $course_name . '" >' . $course_name . '</option>';
                                     }
                                 }
                             }

@@ -184,7 +184,6 @@ class Foody_Course_register
             } else {
                 $bit_button = '<div data-thank-you="' . $link_thank_you . '?course_id=' . $this->course_id . '" data-item-name="' . $course_name . '" class="bit-pay" />המשך לתשלום באמצעות ביט</div>';
             }
-//             $bit_button = '<div id="bitcom-button-container"></div>';
             $buttons_div .= $bit_button;
         }
 

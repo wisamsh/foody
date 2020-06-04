@@ -125,7 +125,8 @@ jQuery(document).ready(($) => {
                                     // temp => only send data to members plugin
                                     let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
                                     let foodyLoader = new FoodyLoader({container: $('.button-container'), id: 'buttons-loader'});
-
+                                    let urlParams =  getUrlVars();
+                                    let course_id = typeof urlParams.course_id != 'undefined' ? urlParams.course_id : '';
 
                                     // todo: load bit pay button
                                     $.each(form_fields, function (index, value) {
@@ -148,6 +149,7 @@ jQuery(document).ready(($) => {
                                         'purchase_date': get_current_date(),
                                         'enable_marketing': inputsObj.enableMarketing,
                                         'course_name': inputsObj.courseName,
+                                        'course_id': urlParams.course_id,
                                         'price': couponAndPriceObj.price,
                                         'payment_method': 'ביט',
                                         'transaction_id': '-1',
@@ -195,7 +197,7 @@ jQuery(document).ready(($) => {
                                                             },
                                                             onApproved: function (details) {
                                                                 //after bit payment confirmed
-                                                                window.location = inputsObj.thankYou + '&payment_method=ביט&status=approved';
+                                                                window.location = inputsObj.thankYou + '&payment_method=ביט&status=approved&paymentInitiation=' + bitPaymentInitiationId;
                                                                 // foodyLoader.attach();
                                                                 // foodyAjax({
                                                                 //     action: 'foody_bitcom_transaction_complete',
@@ -220,7 +222,7 @@ jQuery(document).ready(($) => {
                                                             },
                                                             onCancel: function (details) {
                                                                 // Show a Cancellation Page
-                                                                window.location = inputsObj.thankYou + '&payment_method=ביט&status=canceled'
+                                                                window.location = inputsObj.thankYou + '&payment_method=ביט&status=canceled&paymentInitiation=' + bitPaymentInitiationId;
                                                             },
                                                             onTimeout: function (details) {
                                                                 location.reload();
@@ -520,4 +522,12 @@ function createAlertModal(id, msg) {
         '  </div>';
 
     return modalElm;
+}
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+        vars[key] = value;
+    });
+    return vars;
 }

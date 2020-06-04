@@ -22,7 +22,7 @@ register_setting( 'general', 'foody_show_newsletter_popup' );
 register_setting( 'general', 'foody_id_for_newsletter' );
 register_setting( 'general', 'foody_show_google_login' );
 register_setting( 'general', 'foody_title_for_extra_content' );
-register_setting( 'general', 'foody_mail_for_courses_data' );
+//register_setting( 'general', 'foody_mail_for_courses_data' );
 register_setting( 'general', 'foody_client_id_for_invoice' );
 register_setting( 'general', 'foody_client_secret_for_invoice' );
 register_setting( 'general', 'foody_subscription_key_for_bit' );
@@ -214,7 +214,7 @@ function foody_custom_options() {
     add_settings_field( 'foody_title_for_extra_content', __( 'כותרת לתוכן נוסף', 'foody' ), 'foody_title_for_extra_content_callback', 'general', 'foody_general_settings' );
 
     // mail for courses data
-    add_settings_field( 'foody_mail_for_courses_data', __( 'מייל להעברת מידע על משתמש קורס חדש', 'foody' ), 'foody_mail_for_courses_data_callback', 'general', 'foody_general_settings' );
+//    add_settings_field( 'foody_mail_for_courses_data', __( 'מייל להעברת מידע על משתמש קורס חדש', 'foody' ), 'foody_mail_for_courses_data_callback', 'general', 'foody_general_settings' );
 
     // GreenInvoice credentials
     add_settings_field( 'foody_client_id_for_invoice', __( 'מזהה עבור מחולל חשבוניות', 'foody' ), 'foody_client_id_for_invoice_callback', 'general', 'foody_general_settings' );

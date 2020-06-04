@@ -4,7 +4,7 @@ $organizations_list = get_orginazations_list();
 ?>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <style>
-        .required-astrix{
+        .required-astrix {
             color: red;
         }
     </style>
@@ -14,12 +14,14 @@ $organizations_list = get_orginazations_list();
         <form action="admin.php?page=foody-course-members%2Fcourse-members-manage.php" method="post">
             <div class="form-row pt-3">
                 <div class="col-1 offset-md-1 p-3">
-                    <label for="purchase-date" class="font-weight-bold pl-2">תאריך רכישה<span class="required-astrix">*</span></label>
+                    <label for="purchase-date" class="font-weight-bold pl-2">תאריך רכישה<span
+                                class="required-astrix">*</span></label>
                     <input class="form-control" name="purchase_date" id="purchase-date" type="date" required>
                 </div>
                 <hr>
                 <div class="col-1 offset-md-1 p-3">
-                    <label for="member-email" class="font-weight-bold pl-2">מייל<span class="required-astrix">*</span></label>
+                    <label for="member-email" class="font-weight-bold pl-2">מייל<span
+                                class="required-astrix">*</span></label>
                     <input class="form-control" name="member_email" id="member-email" type="email" required>
                 </div>
                 <hr>
@@ -52,20 +54,21 @@ $organizations_list = get_orginazations_list();
                     </label>
                 </div>
                 <hr>
-<!---->
-<!--                <div class="col-2 p-3">-->
-<!--                    <label for="course-name" class="font-weight-bold pl-2" >שם קורס<span class="required-astrix">*</span></label>-->
-<!--                    <input class="form-control" name="course_name" id="course-name" type="text" required>-->
-<!--                </div>-->
-<!--                <hr>-->
+                <!---->
+                <!--                <div class="col-2 p-3">-->
+                <!--                    <label for="course-name" class="font-weight-bold pl-2" >שם קורס<span class="required-astrix">*</span></label>-->
+                <!--                    <input class="form-control" name="course_name" id="course-name" type="text" required>-->
+                <!--                </div>-->
+                <!--                <hr>-->
                 <div class="col-2 p-3">
-                    <label for="course-name" class="font-weight-bold pl-2" style="margin-left: 2%">שם קורס<span class="required-astrix">*</span></label>
+                    <label for="course-name" class="font-weight-bold pl-2" style="margin-left: 2%">שם קורס<span
+                                class="required-astrix">*</span></label>
                     <select id="course-name" name="course_name" required>
                         <?php
                         if (!empty($courses_list)) {
                             echo '<option disabled selected value> -- בחר/י קורס -- </option>';
-                            foreach ($courses_list as $course_name) {
-                                echo '<option value="' . $course_name . '" >' . $course_name . '</option>';
+                            foreach ($courses_list as $index => $course_name) {
+                                echo '<option value="' . $index . ':' . $course_name . '" >' . $course_name . '</option>';
                             }
                         }
                         ?>
@@ -74,7 +77,8 @@ $organizations_list = get_orginazations_list();
                 <hr>
 
                 <div class="col-2 p-3">
-                    <label for="course-price" class="font-weight-bold pl-2" style="margin-left: 2%">מחיר ששולם<span class="required-astrix">*</span></label>
+                    <label for="course-price" class="font-weight-bold pl-2" style="margin-left: 2%">מחיר ששולם<span
+                                class="required-astrix">*</span></label>
                     <input name="course_price" id="course-price" type="number" placeholder="0.0" step="0.01" min="0"
                            required>
                 </div>
@@ -88,7 +92,7 @@ $organizations_list = get_orginazations_list();
                         <option value="ביט"> ביט</option>
                         <option value="כרטיס אשראי"> כרטיס אשראי</option>
                         <option value="ועד עובדים"> ועד עובדים</option>
-                        <option value="buy me">buy me </option>
+                        <option value="buy me">buy me</option>
                         <option value="אחר"> אחר</option>
                     </select>
                 </div>
@@ -140,7 +144,7 @@ $organizations_list = get_orginazations_list();
 
                 <div class="col-2 pt-5 text-center">
                     <button type="submit" name="new_member" class="btn btn-primary mb-2" style="margin-top: 2%;">
-                          משתמש קורס חדש
+                        משתמש קורס חדש
                     </button>
                 </div>
             </div>
