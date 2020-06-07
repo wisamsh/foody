@@ -197,7 +197,8 @@ class Foody_Footer
         if ($show_accessibility) {
 
             ?>
-            <script async defer>
+            <!--   old in comment   -->
+            <!-- <script async defer>
                 setTimeout(() => {
                     (function (document, tag) {
                         var script = document.createElement(tag);
@@ -227,7 +228,44 @@ class Foody_Footer
                         };
                     }(document, 'script'));
                 });
-            </script>
+            </script>-->
+            <script>
+                (function (document, tag) {
+                    var script = document.createElement(tag);
+                    var element = document.getElementsByTagName('body')[0];
+                    script.src = 'https://acsbap.com/apps/app/assets/js/acsb.js';
+                    script.async = true;
+                    script.defer = true;
+                    (typeof element === 'undefined' ? document.getElementsByTagName('html')[0] : element).appendChild(script);
+                    script.onload = function () {
+                        acsbJS.init({
+                            statementLink: '',
+                            feedbackLink: '',
+                            footerHtml: '',
+                            hideMobile: false,
+                            hideTrigger: false,
+                            language: 'he',
+                            position: 'right',
+                            leadColor: '#146ff8',
+                            triggerColor: '#146ff8',
+                            triggerRadius: '50%',
+                            triggerPositionX: 'right',
+                            triggerPositionY: 'bottom',
+                            triggerIcon: 'default',
+                            triggerSize: 'medium',
+                            triggerOffsetX: 20,
+                            triggerOffsetY: 20,
+                            mobile: {
+                                triggerSize: 'small',
+                                triggerPositionX: 'left',
+                                triggerPositionY: 'center',
+                                triggerOffsetX: 0,
+                                triggerOffsetY: 0,
+                                triggerRadius: '0'
+                            }
+                        });
+                    };
+                }(document, 'script'));</script>
             <?php
         }
 
