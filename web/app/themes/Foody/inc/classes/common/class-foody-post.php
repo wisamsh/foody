@@ -792,4 +792,26 @@ abstract class Foody_Post implements Foody_ContentWithSidebar {
 	public function is_homepage(){
 	    return (is_front_page() || (isset($_POST) && isset($_POST['data']) && isset($_POST['data']['context']) && $_POST['data']['context'] == 'homepage') || (isset($_POST) && isset($_POST['action']) && $_POST['action'] == 'load_homepage_feed'));
     }
+
+    public function escape_AuthorName_for_schema(){
+        $escape_AuthorName = strpos($this->getAuthorName(), '"') !== false ? addslashes($this->getAuthorName()) : $this->getAuthorName();
+
+        if(strpos($escape_AuthorName, "'") != false){
+            $escape_AuthorName = str_replace("'", '', $escape_AuthorName);
+        }
+
+        if(strpos($escape_AuthorName, "׳")!= false){
+            $escape_AuthorName = str_replace("׳", '', $escape_AuthorName);
+        }
+
+        if(strpos($escape_AuthorName, "`")!= false){
+            $escape_AuthorName = str_replace("`", '', $escape_AuthorName);
+        }
+
+        if(strpos($escape_AuthorName,  "’")!= false){
+            $escape_AuthorName = str_replace( "’", '', $escape_AuthorName);
+        }
+
+        return $escape_AuthorName;
+    }
 }

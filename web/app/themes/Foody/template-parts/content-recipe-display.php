@@ -22,7 +22,7 @@ $recipe = $template_args['recipe'];
       "@context": "http://schema.org/",
       "@type": "Recipe",
 <?php
-    $author_name_for_schema = strpos($recipe->getAuthorName(), '"') !== false ? addslashes($recipe->getAuthorName()) : $recipe->getAuthorName();
+    $author_name_for_schema = $recipe->escape_AuthorName_for_schema();
     $aggregateRating =  $recipe->get_jsonld_aggregateRating();
     if($aggregateRating != false)
     { ?>
