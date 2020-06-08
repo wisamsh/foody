@@ -7,7 +7,7 @@ let used_coupon_details = null;
 let mobileOS = foodyGlobals.isMobile ? getMobileOperatingSystem() : false;
 
 jQuery(document).ready(($) => {
-    if($('#coupon-input').length){
+    if ($('#coupon-input').length) {
         // let dialogElm = '<div id="coupon-dialog-expired" title="Basic dialog">\n' +
         //     '  <p>פג תוקף הקופון</p>\n' +
         //     '</div>\n' +
@@ -124,9 +124,11 @@ jQuery(document).ready(($) => {
                                 if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone && inputsObj.courseName) {
                                     // temp => only send data to members plugin
                                     let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
-                                    let foodyLoader = new FoodyLoader({container: $('.button-container'), id: 'buttons-loader'});
-                                    let urlParams =  getUrlVars();
-                                    let course_id = typeof urlParams.course_id != 'undefined' ? urlParams.course_id : '';
+                                    let foodyLoader = new FoodyLoader({
+                                        container: $('.button-container'),
+                                        id: 'buttons-loader'
+                                    });
+                                    let urlParams = getUrlVars();
 
                                     // todo: load bit pay button
                                     $.each(form_fields, function (index, value) {
@@ -275,24 +277,64 @@ jQuery(document).ready(($) => {
                                 // let thankYou = $(this).attr('data-thank-you').length != 0 ? $(this).attr('data-thank-you') : '';
                                 // let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
                                 let inputsObj = get_all_form_inputs(this);
+                                let urlParams = getUrlVars();
 
                                 if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone) {
+                                    let foodyLoader = new FoodyLoader({
+                                        container: $('.button-container'),
+                                        id: 'buttons-loader'
+                                    });
                                     let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
                                     let mailInvoice = $(this).attr('data-invoice-mail').length != 0 ? $(this).attr('data-invoice-mail') : '';
-                                    let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:' + mailInvoice + '">' + mailInvoice + '</a></span>' : '';
-                                    let link = $(this).attr('data-link') + '?ExtCUserEmail=' + inputsObj.email + '&ExtCInvoiceTo=' + inputsObj.firstName + ' ' + inputsObj.lastName + '&ExtMobilPhone=' + inputsObj.phone + '&SuccessRedirectUrl=' + inputsObj.thankYou + '&custom_field_10=' + inputsObj.enableMarketing;
+                                    // let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:' + mailInvoice + '">' + mailInvoice + '</a></span>' : '';
+                                    // let link = $(this).attr('data-link') + '?ExtCUserEmail=' + inputsObj.email + '&ExtCInvoiceTo=' + inputsObj.firstName + ' ' + inputsObj.lastName + '&ExtMobilPhone=' + inputsObj.phone + '&SuccessRedirectUrl=' + inputsObj.thankYou + '&custom_field_10=' + inputsObj.enableMarketing;
 
-                                    let iframe = '<iframe id="card-pay-frame" src="' + link + '" style="width: 100%;\n' +
-                                        'height: auto;\n' +
-                                        'min-height: 1500px;\n' +
-                                        'padding-top: 3%;\n' +
-                                        'border: none;" scrolling="no"></iframe>';
+                                    let data_of_member = {
+                                        'email': inputsObj.email,
+                                        'first_name': inputsObj.firstName,
+                                        'last_name': inputsObj.lastName,
+                                        'phone': inputsObj.phone,
+                                        'purchase_date': get_current_date(),
+                                        'enable_marketing': inputsObj.enableMarketing,
+                                        'course_name': inputsObj.courseName,
+                                        'course_id': urlParams.course_id,
+                                        'price': couponAndPriceObj.price,
+                                        'payment_method': 'כרטיס אשראי',
+                                        'transaction_id': '-1',
+                                        'coupon': couponAndPriceObj.coupon,
+                                        'status': 'pending',
+                                        'payment_method_id': '-1'
+                                    };
+
+                                    foodyLoader.attach({topPercentage: 20});
+                                    foodyAjax({
+                                        action: 'foody_start_cardcom_pay_process',
+                                        data: {
+                                            memberData: data_of_member,
+                                            isMobile: mobileOS,
+                                            thankYou: inputsObj.thankYou
+                                        }
+                                    }, function (err, data) {
+                                        if (err) {
+                                            console.log(err);
+                                            foodyLoader.detach();
+                                        } else {
+                                            foodyLoader.detach();
+                                            let link = data.data.iframe_url;
+                                            let iframe = '<iframe  runat="server" id="card-pay-frame" src="' + link + '" style="width: 100%;\n' +
+                                                'height: 1035px;\n' +
+                                                'max-height: 1500px;\n' +
+                                                'min-height: 700px;\n' +
+                                                'padding-top: 3%;\n' +
+                                                'border: none;" scrolling="no"></iframe>';
 
 
-                                    $('.cover-section').remove();
-                                    $('.bottom-image').remove();
-                                    $('.form-section').replaceWith(iframe);
-                                    $('#card-pay-frame').after(mailNotice);
+                                            $('.cover-section').remove();
+                                            $('.bottom-image').remove();
+                                            $('.form-section').replaceWith(iframe);
+                                            // $('#card-pay-frame').after(mailNotice);
+                                        }
+                                    });
                                 } else {
                                     validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
                                 }
@@ -330,7 +372,7 @@ jQuery(document).ready(($) => {
         });
 
         function redeemCoupon() {
-            let foodyLoader = new FoodyLoader({container: $('.coupon-and-price-container'), id:'coupon-loader'});
+            let foodyLoader = new FoodyLoader({container: $('.coupon-and-price-container'), id: 'coupon-loader'});
             let couponCode = $('#coupon-input').val();
             if (couponCode.length) {
                 foodyLoader.attach({topPercentage: 20});

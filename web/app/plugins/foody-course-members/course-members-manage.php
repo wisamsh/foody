@@ -299,8 +299,8 @@ function members_table_admin_page()
             ], $course_id);
         }
 
-        $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, coupon, purchase_date, note, status, payment_method_id)
-                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$course_id','$price_paid','$organization','$payment_method','$transaction_id','$coupon','$purchase_date','$note','$status','-1')");
+        $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, credit_low_profile_code, coupon, purchase_date, note, status, payment_method_id)
+                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$course_id','$price_paid','$organization','$payment_method','$transaction_id','' ,'$coupon','$purchase_date','$note','$status','-1')");
         echo "<script>location.replace('admin.php?page=foody-course-members%2Fcourse-members-manage.php');</script>";
     }
 
