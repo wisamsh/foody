@@ -110,20 +110,22 @@ function foody_bit_refund_process()
 add_action('wp_ajax_nopriv_foody_bit_refund_process', 'foody_bit_refund_process');
 add_action('wp_ajax_foody_bit_refund_process', 'foody_bit_refund_process');
 
-function get_member_data_for_finish_process($payment_initiation_id)
+function get_member_data_for_finish_process($payment_initiation_id, $is_credit_card = false)
 {
     $member_data = [];
-    $member_results = get_columns_data_by_paymentMethodId($payment_initiation_id, ['*']);
+    $member_results = get_columns_data_by_paymentMethodId($payment_initiation_id, ['*'], $is_credit_card);
     if (!empty($member_results)) {
         $member_data = [
-            'email' => $member_results->email,
+            'id' => $member_results->member_id,
+            'email' => $member_results->member_id,
             'phone' => $member_results->phone,
             'first_name' => $member_results->first_name,
             'last_name ' => $member_results->last_name,
             'course_name' => $member_results->course_name,
             'price' => $member_results->price_paid,
             'enable_marketing' => $member_results->marketing_status == 1 ? 'true' : 'false',
-            'coupon' => $member_results->coupon
+            'coupon' => $member_results->coupon,
+            'status' => $member_results->status
         ];
     }
     return $member_data;
@@ -386,12 +388,18 @@ function get_pre_pay_bit_data_by_paymentInitiationId($paymentInitiationId)
 
 }
 
-function get_columns_data_by_paymentMethodId($payment_method_id, $columns)
+function get_columns_data_by_paymentMethodId($payment_method_id, $columns, $is_credit_card = false)
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_members';
     $columns_to_return = implode(',', $columns);
-    $query = "SELECT {$columns_to_return} FROM {$table_name} where payment_method_id = " . $payment_method_id;
+
+    if($is_credit_card) {
+        $query = "SELECT {$columns_to_return} FROM {$table_name} where credit_low_profile_code = " . '"' . $payment_method_id . '"';
+    }
+    else{
+        $query = "SELECT {$columns_to_return} FROM {$table_name} where payment_method_id = " . $payment_method_id;
+    }
 
     $result = $wpdb->get_results($query);
     $result = is_array($result) && isset($result[0]) ? $result[0] : $result;
@@ -602,6 +610,24 @@ function get_coupon_by_payment_initiation_id($payment_initiation_id)
     $coupon= '';
 
     $query = "SELECT coupon FROM {$table_name} where transaction_id ='" . $payment_initiation_id . "'";
+
+    $results = $wpdb->get_results($query);
+    $results = is_array($results) ? $results : [];
+
+    foreach ($results as $result) {
+        $coupon = isset($result->coupon) ? $result->coupon : '';
+    }
+
+    return $coupon;
+}
+
+function get_coupon_by_credit_low_profile_code($credit_low_profile_code)
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'foody_courses_members';
+    $coupon= '';
+
+    $query = "SELECT coupon FROM {$table_name} where credit_low_profile_code ='" . $credit_low_profile_code . "'";
 
     $results = $wpdb->get_results($query);
     $results = is_array($results) ? $results : [];

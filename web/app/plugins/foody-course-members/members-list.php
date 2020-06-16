@@ -166,36 +166,67 @@ if (isset($_POST['s'])) {
 </form>
 </div>
 <script type="application/javascript">
-    function getRefund(bitPaymentInitiationId) {
+    function getRefund(bitPaymentInitiationId, element) {
+        let paymentMethod = $(element).data('method');
+        let memberID = $(element).data('member-id');
         var isRefund = confirm("האם לבצע זיכוי?");
         if (isRefund) {
-            //todo: ajax call that take care of Refund
-            startLoader();
-            foodyAjax({
-                action: 'foody_bit_refund_process',
-                data: {
-                    paymentInitiation_id: bitPaymentInitiationId
-                }
-            }, function (err, data) {
-                if (err) {
-                    stopLoader();
-                    console.log(err);
-                } else {
-                    debugger;
-                    if(typeof data.data.msg != 'undefined'){
-                        stopLoader();
-                        alert(data.data.msg);
-                        window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=foody-course-members%2Fcourse-members-manage.php';
+            if(paymentMethod == 'ביט') {
+                //todo: ajax call that take care of Refund
+                startLoader();
+                foodyAjax({
+                    action: 'foody_bit_refund_process',
+                    data: {
+                        paymentInitiation_id: bitPaymentInitiationId
                     }
-                    else{
-                        if(typeof data.data.error != 'undefined'){
+                }, function (err, data) {
+                    if (err) {
+                        stopLoader();
+                        console.log(err);
+                    } else {
+                        debugger;
+                        if (typeof data.data.msg != 'undefined') {
                             stopLoader();
-                            alert(data.data.error);
+                            alert(data.data.msg);
                             window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=foody-course-members%2Fcourse-members-manage.php';
+                        } else {
+                            if (typeof data.data.error != 'undefined') {
+                                stopLoader();
+                                alert(data.data.error);
+                                window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=foody-course-members%2Fcourse-members-manage.php';
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
+            else if(paymentMethod == 'כרטיס אשראי'){
+                startLoader();
+                foodyAjax({
+                    action: 'foody_cardcom_refund_process',
+                    data: {
+                        internalDealNumber: bitPaymentInitiationId,
+                        memberID: memberID
+                    }
+                }, function (err, data) {
+                    if (err) {
+                        stopLoader();
+                        console.log(err);
+                    } else {
+                        debugger;
+                        if (typeof data.data.msg != 'undefined') {
+                            stopLoader();
+                            alert(data.data.msg);
+                            window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=foody-course-members%2Fcourse-members-manage.php';
+                        } else {
+                            if (typeof data.data.error != 'undefined') {
+                                stopLoader();
+                                alert(data.data.error);
+                                window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=foody-course-members%2Fcourse-members-manage.php';
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
 
