@@ -14,8 +14,6 @@ $homepage->init();
 ?>
 
     <div class="homepage">
-        <?php Rav_Messer_API_Handler::add_member_to_rav_messer(['member_email' => 'nikdanjes@gmail.com', 'name' => __('דניאל בדיקות'), 'phone' => '0546660870'],__('צילום אוכל בהגשת אפרת ליכטנשטט')); ?>
-
 		<?php $homepage->cover_photo() ?>
 
         <div class="content">

@@ -41,20 +41,6 @@ function foody_bitcom_transaction_complete()
                 update_coupon_to_used($coupon_details);
             }
             wp_send_json_success('captured');
-//            $member_data = get_member_data_for_finish_process($payment_initiation_id);
-//            $status = get_payment_status($payment_initiation_id);
-//            $handle_massage = bit_handle_status_code($status, $payment_initiation_id, $member_data, $coupon_details);
-//            if($handle_massage !== false){
-//                if($handle_massage == 'transaction completed'){
-//                    wp_send_json_success($handle_massage);
-//                }
-//                else{
-//                    wp_send_json_error(['msg' => $handle_massage]);
-//                }
-//            }
-//            else{
-//                wp_send_json_success('payment still pending');
-//            }
         } else {
             wp_send_json_error(['msg' => __('התרחשה שגיאה ב- capture')]);
         }
@@ -62,7 +48,6 @@ function foody_bitcom_transaction_complete()
         wp_send_json_error(['msg' => __('payment id - התרחשה שגיאה ברכישה')]);
     }
 }
-
 add_action('wp_ajax_nopriv_foody_bitcom_transaction_complete', 'foody_bitcom_transaction_complete');
 add_action('wp_ajax_foody_bitcom_transaction_complete', 'foody_bitcom_transaction_complete');
 
@@ -71,23 +56,36 @@ function foody_bit_refund_process()
     if (isset($_POST['paymentInitiation_id']) && $_POST['paymentInitiation_id']) {
         $bit_transaction_id_and_status = get_id_and_status_by_paymentInitiationId($_POST['paymentInitiation_id']);
         if (isset($bit_transaction_id_and_status->bit_trans_id)) {
-            $ids_and_price_paid_obj = get_columns_data_by_paymentMethodId($bit_transaction_id_and_status->bit_trans_id, ['*']);
-            if (isset($ids_and_price_paid_obj->price_paid) && isset($ids_and_price_paid_obj->member_id)) {
+            $member_data = get_columns_data_by_paymentMethodId($bit_transaction_id_and_status->bit_trans_id, ['*']);
+            if (isset($member_data->price_paid) && isset($member_data->member_id)) {
                 $prefix_for_trans = get_option('foody_identifier_trans_bit', false);
                 $bit_trans_id = 'bit_trans_' . $prefix_for_trans . '_' . $bit_transaction_id_and_status->bit_trans_id;
 
                 $request_url_path = '/refund';
-                $request_body = "{\n    \"creditAmount\": " . $ids_and_price_paid_obj->price_paid . ",\n    \"currencyTypeCode\": 1,\n    \"externalSystemReference\": \"" . $bit_trans_id . "\",\n    \"paymentInitiationId\": \"" . $_POST['paymentInitiation_id'] . "\",\n    \"refundExternalSystemReference\": \"" . $bit_trans_id . "_refund\"\n}";
+                $request_body = "{\n    \"creditAmount\": " . $member_data->price_paid . ",\n    \"currencyTypeCode\": 1,\n    \"externalSystemReference\": \"" . $bit_trans_id . "\",\n    \"paymentInitiationId\": \"" . $_POST['paymentInitiation_id'] . "\",\n    \"refundExternalSystemReference\": \"" . $bit_trans_id . "_refund\"\n}";
 
                 $response_json = bit_api_request("POST", $request_url_path, $request_body);
 
                 if (isset($response_json->requestStatusCode) && isset($response_json->issuerAuthorizationNumber)) {
                     $is_refunded = bit_handle_status_code($response_json->requestStatusCode);
                     if ($is_refunded) {
+                        // update bit pre paid table
                         update_pre_pay_bit_data_by_id_and_cloumns($bit_transaction_id_and_status->bit_trans_id, ['status' => 'refunded', 'authorization_number' => $response_json->issuerAuthorizationNumber]);
-                        update_course_member_by_id_and_cloumns($ids_and_price_paid_obj->member_id, ['status' => 'refunded']);
-                        foody_create_and_send_refund_invoice($ids_and_price_paid_obj);
-                        wp_send_json_success(['msg' => __('העסקה עם מזהה ' . $ids_and_price_paid_obj->member_id . ' בוטלה')]);
+
+                        // update course member table
+                        update_course_member_by_id_and_cloumns($member_data->member_id, ['status' => 'refunded']);
+
+                        // remove member user from course at Rav Messer
+                        Rav_Messer_API_Handler::remove_member_from_rav_messer_list([
+                            'member_email' => $member_data->member_email,
+                            'course_name' => $member_data->course_name,
+                            'name' => $member_data->first_name . ' ' . $member_data->last_name,
+                            'phone' => $member_data->phone
+                        ]);
+
+                        // send refund invoice
+                        foody_create_and_send_refund_invoice($member_data);
+                        wp_send_json_success(['msg' => __('העסקה עם מזהה ' . $member_data->member_id . ' בוטלה')]);
                     }
                     else{
                         if($response_json->requestStatusCode == 4 || $response_json->requestStatusCode == 14 ){
@@ -106,7 +104,6 @@ function foody_bit_refund_process()
         }
     }
 }
-
 add_action('wp_ajax_nopriv_foody_bit_refund_process', 'foody_bit_refund_process');
 add_action('wp_ajax_foody_bit_refund_process', 'foody_bit_refund_process');
 
@@ -147,6 +144,7 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
         case 11:
             // payment confirmed - final
             update_course_member_by_id_and_cloumns($member_data['member_id'], ['status' => 'paid']);
+
             send_new_course_member_data([
                 'member_email' => $member_data['email'],
                 'phone' => $member_data['phone'],
@@ -156,11 +154,22 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
                 'enable_marketing' => $member_data['enable_marketing'],
                 'coupon' => $member_data['coupon']
             ], $member_data['course_id']);
+
+            Rav_Messer_API_Handler::add_member_to_rav_messer(
+                [
+                    'member_email' => $member_data['email'],
+                    'course_name' => $member_data['course_name'],
+                    'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
+                    'phone' => $member_data['phone']
+                ],
+                $member_data['course_name']);
+
             foody_create_and_send_purchase_invoice([
                 'client_email' => $member_data['email'],
                 'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
                 'phone' => $member_data['phone']
             ], $member_data['course_name'], $member_data['price']);
+
             $result = 'transaction completed';
             break;
         case 10:
@@ -232,17 +241,6 @@ function do_delete_bit_transaction($paymentInitiationId, $coupon_details)
             $response_json = bit_api_request("DELETE", $request_url_path);
 
             if (isset($response_json->requestStatusCode) && $response_json->requestStatusCode == 2) {
-//                update_pre_pay_bit_data_by_id_and_cloumns($bit_transaction_id_and_status->bit_trans_id, ['status' => 'canceled']);
-//                update_course_member_by_id_and_cloumns($member_id->member_id, ['status' => 'canceled']);
-//                if (isset($coupon_details['id']) && !is_array($coupon_details['id']) && isset($coupon_details['type']) && isset($coupon_details['coupon_code'])) {
-////                    if ($coupon_details['type'] == 'unique') {
-////                        $coupon_code_array = explode('_', $coupon_details['coupon_code']);
-////                        update_unique_coupon_to_free($coupon_details['id'], $coupon_code_array[1]);
-////                        //update_unique_coupon_to_free_in_all_coupons_table($coupon_details['id']);
-////                    } else {
-////                        update_general_coupon_to_free($coupon_details['id']);
-////                    }
-////                }
                 update_tables_after_cancellation($bit_transaction_id_and_status->bit_trans_id, $member_id->member_id, $coupon_details);
             } else {
                 $error_handler = new Bit_API_Error_handler($response_json);
