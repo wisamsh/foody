@@ -14,7 +14,6 @@ $homepage->init();
 ?>
 
     <div class="homepage">
-
 		<?php $homepage->cover_photo() ?>
 
         <div class="content">

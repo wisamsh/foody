@@ -722,7 +722,7 @@ function foody_is_ios()
 add_action('init', 'register_update_filter_cache');
 function register_update_filter_cache()
 {
-    if (defined('FOODY_FILTERS_CACHE') && FOODY_FILTERS_CACHE) {
+    if( defined( 'FOODY_FILTERS_CACHE' ) && FOODY_FILTERS_CACHE) {
         // Make sure this event hasn't been scheduled
         if (!wp_next_scheduled('foody_update_filters_cache_hook')) {
             // Schedule the event
@@ -734,9 +734,11 @@ function register_update_filter_cache()
 add_filter('cron_schedules', 'foody_add_cron_interval');
 function foody_add_cron_interval($schedules)
 {
-    $schedules['five_minutes'] = array(
-        'interval' => 300,
-        'display' => esc_html__('Every 5 Minute'),);
+    if(!isset($schedules['one_minute'])) {
+        $schedules['one_minute'] = array(
+            'interval' => 60,
+            'display' => esc_html__('Every Minute'),);
+    }
     return $schedules;
 }
 
@@ -836,4 +838,58 @@ function foody_safari_hook_nav_menu_css_class($classes = array(), $item, $args)
         $classes[] = '';
     }
     return $classes;
+}
+
+add_action('init', 'foody_rem_editor_from_post_type_foody_organizations');
+function foody_rem_editor_from_post_type_foody_organizations() {
+    remove_post_type_support( 'foody_organizations', 'editor' );
+}
+
+function foody_remove_meta_boxes_post_type_foody_organizations() {
+    remove_meta_box('wpseo_meta', 'foody_organizations', 'normal');
+    remove_meta_box( 'postexcerpt' , 'foody_organizations' , 'normal' );
+    remove_meta_box('trackbacksdiv', 'foody_organizations', 'normal');
+    remove_meta_box('commentstatusdiv', 'foody_organizations', 'normal');
+    remove_meta_box('authordiv', 'foody_organizations', 'normal');
+    remove_meta_box('postimagediv', 'foody_organizations', 'normal');
+
+
+}
+add_action('add_meta_boxes', 'foody_remove_meta_boxes_post_type_foody_organizations', 100);
+
+function foody_setInterval($func, $milliseconds)
+{
+    $continue_interval = true;
+    $seconds=(int)$milliseconds/1000;
+    while($continue_interval)
+    {
+        $continue_interval = $func();
+        if($continue_interval) {
+            sleep($seconds);
+        }
+    }
+}
+
+function bit_recurring_fetch_transaction_status()
+{
+    if (defined('FOODY_BIT_FETCH_STATUS_PROCESS') && FOODY_BIT_FETCH_STATUS_PROCESS) {
+        // Make sure this event hasn't been scheduled
+        if (!wp_next_scheduled('foody_bit_fetch_status_processes')) {
+            // Schedule the event
+            wp_schedule_event(time(), 'one_minute', 'foody_bit_fetch_status_processes');
+        }
+    }
+}
+add_action('init', 'bit_recurring_fetch_transaction_status');
+
+add_filter( 'body_class','foody_body_add_bit_class', 10, 1 );
+function foody_body_add_bit_class( $classes ) {
+    $class_to_add = 'foody-payment-bit';
+
+    if(isset($_GET) && (isset($_GET['payment_method']) && $_GET['payment_method'] == __('ביט')) || (isset($_GET['course_id']) && strpos($_GET['course_id'], ',') != false)){
+        $classes[] = $class_to_add;
+    }
+
+    return $classes;
+
 }

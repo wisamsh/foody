@@ -22,6 +22,19 @@ register_setting( 'general', 'foody_show_newsletter_popup' );
 register_setting( 'general', 'foody_id_for_newsletter' );
 register_setting( 'general', 'foody_show_google_login' );
 register_setting( 'general', 'foody_title_for_extra_content' );
+//register_setting( 'general', 'foody_mail_for_courses_data' );
+register_setting( 'general', 'foody_client_id_for_invoice' );
+register_setting( 'general', 'foody_client_secret_for_invoice' );
+register_setting( 'general', 'foody_subscription_key_for_bit' );
+register_setting( 'general', 'foody_client_id_for_bit');
+register_setting( 'general', 'foody_client_secret_for_bit');
+register_setting( 'general', 'foody_identifier_trans_bit');
+register_setting( 'general', 'foody_email_for_courses_invoices');
+register_setting( 'general', 'foody_courses_admin_email');
+register_setting( 'general', 'foody_consumer_key_for_ravmesser');
+register_setting( 'general', 'foody_consumer_secret_for_ravmesser');
+register_setting( 'general', 'foody_access_token_for_ravmesser');
+register_setting( 'general', 'foody_token_secret_for_ravmesser');
 register_setting( 'reading', 'foody_show_post_views' );
 register_setting( 'reading', 'foody_show_followers_count_views' );
 
@@ -205,6 +218,28 @@ function foody_custom_options() {
 	//text for extra content
     add_settings_field( 'foody_title_for_extra_content', __( 'כותרת לתוכן נוסף', 'foody' ), 'foody_title_for_extra_content_callback', 'general', 'foody_general_settings' );
 
+    // mail for courses data
+    add_settings_field( 'foody_courses_admin_email', __( 'מייל אדמין - מערכת הקורסים', 'foody' ), 'foody_courses_admin_email_callback', 'general', 'foody_general_settings' );
+
+    // GreenInvoice credentials
+    add_settings_field( 'foody_client_id_for_invoice', __( 'מזהה עבור מחולל חשבוניות', 'foody' ), 'foody_client_id_for_invoice_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_client_secret_for_invoice', __( 'סיסמא עבור מחולל חשבוניות', 'foody' ), 'foody_client_secret_for_invoice_callback', 'general', 'foody_general_settings' );
+
+    // Bit credentials
+    add_settings_field( 'foody_subscription_key_for_bit', __( 'מפתח עבור API ביט', 'foody' ), 'foody_subscription_key_for_bit_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_client_id_for_bit', __( 'מזהה עבור API ביט', 'foody' ), 'foody_client_id_for_bit_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_client_secret_for_bit', __( 'סיסמא עבור API ביט', 'foody' ), 'foody_client_secret_for_bit_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_identifier_trans_bit', __( 'מזהה עבור טרנזקציות', 'foody' ), 'foody_identifier_trans_bit_callback', 'general', 'foody_general_settings' );
+
+    //Rav Messer credentials
+    add_settings_field( 'foody_consumer_key_for_ravmesser', __( 'מפתח צרכן עבור API רב מסר', 'foody' ), 'foody_consumer_key_for_ravmesser_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_consumer_secret_for_ravmesser', __( 'סוד צרכן עבור API רב מסר', 'foody' ), 'foody_consumer_secret_for_ravmesser_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_access_token_for_ravmesser', __( 'טוקן עבור API רב מסר', 'foody' ), 'foody_access_token_for_ravmesser_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_token_secret_for_ravmesser', __( 'סוד לטוקן עבור API רב מסר', 'foody' ), 'foody_token_secret_for_ravmesser_callback', 'general', 'foody_general_settings' );
+
+    //Green invoice email - courses
+    add_settings_field( 'foody_email_for_courses_invoices', __( 'מייל עבור חשבונית קורסים', 'foody' ), 'foody_email_for_courses_invoices_callback', 'general', 'foody_general_settings' );
+
 
 }
 
@@ -305,6 +340,73 @@ function foody_title_for_extra_content_callback(){
     $options = get_option( 'foody_title_for_extra_content', false );
     echo '<input value="' . $options . '"type="text" id="foody_title_for_extra_content" name="foody_title_for_extra_content">';
 }
+
+function foody_mail_for_courses_data_callback(){
+    $options = get_option( 'foody_mail_for_courses_data', false );
+    echo '<input value="' . $options . '"type="text" id="foody_mail_for_courses_data" name="foody_mail_for_courses_data">';
+}
+
+function foody_client_id_for_invoice_callback(){
+    $options = get_option( 'foody_client_id_for_invoice', false );
+    echo '<input value="' . $options . '"type="text" id="foody_client_id_for_invoice" name="foody_client_id_for_invoice">';
+}
+
+function foody_client_secret_for_invoice_callback(){
+    $options = get_option( 'foody_client_secret_for_invoice', false );
+    echo '<input value="' . $options . '"type="text" id="foody_client_secret_for_invoice" name="foody_client_secret_for_invoice">';
+}
+
+function foody_client_id_for_bit_callback(){
+    $options = get_option( 'foody_client_id_for_bit', false );
+    echo '<input value="' . $options . '"type="text" id="foody_client_id_for_bit" name="foody_client_id_for_bit">';
+}
+
+function foody_client_secret_for_bit_callback(){
+    $options = get_option( 'foody_client_secret_for_bit', false );
+    echo '<input value="' . $options . '"type="text" id="foody_client_secret_for_bit" name="foody_client_secret_for_bit">';
+}
+
+function foody_identifier_trans_bit_callback(){
+    $options = get_option( 'foody_identifier_trans_bit', false );
+    echo '<input value="' . $options . '"type="text" id="foody_identifier_trans_bit" name="foody_identifier_trans_bit">';
+}
+
+function foody_email_for_courses_invoices_callback(){
+    $options = get_option( 'foody_email_for_courses_invoices', false );
+    echo '<input value="' . $options . '"type="text" id="foody_email_for_courses_invoices" name="foody_email_for_courses_invoices">';
+}
+
+function foody_subscription_key_for_bit_callback(){
+    $options = get_option( 'foody_subscription_key_for_bit', false );
+    echo '<input value="' . $options . '"type="text" id="foody_subscription_key_for_bit" name="foody_subscription_key_for_bit">';
+}
+
+function foody_courses_admin_email_callback(){
+    $options = get_option( 'foody_courses_admin_email', false );
+    echo '<input value="' . $options . '"type="text" id="foody_courses_admin_email" name="foody_courses_admin_email">';
+}
+
+function foody_consumer_key_for_ravmesser_callback(){
+    $options = get_option( 'foody_consumer_key_for_ravmesser', false );
+    echo '<input value="' . $options . '"type="text" id="foody_consumer_key_for_ravmesser" name="foody_consumer_key_for_ravmesser">';
+}
+
+function foody_consumer_secret_for_ravmesser_callback(){
+    $options = get_option( 'foody_consumer_secret_for_ravmesser', false );
+    echo '<input value="' . $options . '"type="text" id="foody_consumer_secret_for_ravmesser" name="foody_consumer_secret_for_ravmesser">';
+}
+
+function foody_access_token_for_ravmesser_callback(){
+    $options = get_option( 'foody_access_token_for_ravmesser', false );
+    echo '<input value="' . $options . '"type="text" id="foody_access_token_for_ravmesser" name="foody_access_token_for_ravmesser">';
+}
+
+
+function foody_token_secret_for_ravmesser_callback(){
+    $options = get_option( 'foody_token_secret_for_ravmesser', false );
+    echo '<input value="' . $options . '"type="text" id="foody_token_secret_for_ravmesser" name="foody_token_secret_for_ravmesser">';
+}
+
 
 //add_filter('manage_edit-units_columns', 'add_units_columns');
 //

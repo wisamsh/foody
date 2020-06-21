@@ -21,16 +21,23 @@ if (!is_multisite() || is_main_site()) {
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <?php } ?>
     <meta name="theme-color" content="#ED3D48">
     <link rel="profile" href="http://gmpg.org/xfn/11">
 
     <?php Foody_Header::google_tag_manager(); ?>
-    <?php if(get_current_blog_id() == 2){ ?>
-        <script data-ad-client="ca-pub-3607762765478350" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <?php if (get_current_blog_id() == 2) { ?>
+        <script data-ad-client="ca-pub-3607762765478350" async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <?php } ?>
     <?php wp_head(); ?>
 
 </head>
+<?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
+    <script src="https://public.bankhapoalim.co.il/bitcom/sdk"></script>
+<?php } ?>
 
 <body <?php body_class(); ?> dir="rtl">
 <?php //do_action('foody_after_body') ?>
@@ -161,7 +168,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                             <?php echo $user->get_image() ?>
                         </a>
                         <div class="user-name-header title">
-                            <?php echo __('שלום'). " " .  $user->user->first_name; ?>
+                            <?php echo __('שלום') . " " . $user->user->first_name; ?>
                         </div>
                     </div>
 

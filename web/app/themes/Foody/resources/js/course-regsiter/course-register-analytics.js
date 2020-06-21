@@ -1,9 +1,10 @@
 jQuery(document).ready(($) => {
-let analyticsCategory = 'קורסים';
-    let courseName='';
-    let hostName='';
+    let analyticsCategory = 'קורסים';
+    let courseName = '';
+    let hostName = '';
 
-    if(foodyGlobals['page_template_name'] == "foody-course-register") {
+    // course register page
+    if (foodyGlobals['page_template_name'] == "foody-course-register") {
         courseName = $('.credit-card-pay').length && $('.credit-card-pay').data('item-name').length ? $('.credit-card-pay').data('item-name') : '';
         hostName = $('.course-title').length && $('.course-title').data('host').length ? $('.course-title').data('host') : '';
 
@@ -15,27 +16,75 @@ let analyticsCategory = 'קורסים';
             let inputFields = $('#course-register-form input');
             let submited = true;
             inputFields.each(function () {
-                if($(this).hasClass('error') || ($(this).attr('id') == 'terms' && !$(this).prop('checked') )){
+                if ($(this).hasClass('error') || ($(this).attr('id') == 'terms' && !$(this).prop('checked'))) {
                     submited = false;
                     return submited;
                 }
             });
 
-            if(submited){
+            if (submited) {
                 eventCallback('', analyticsCategory, 'השלמת רישום ומעבר לרכישה', courseName, 'מיקום', 'טופס הרשמה', hostName);
+            }
+        });
+
+        $('.bit-pay').on('click', function () {
+            let inputFields = $('#course-register-form input');
+            let submited = true;
+            inputFields.each(function () {
+                if ($(this).hasClass('error') || ($(this).attr('id') == 'terms' && !$(this).prop('checked'))) {
+                    submited = false;
+                    return submited;
+                }
+            });
+
+            if (submited) {
+                eventCallback('', analyticsCategory, 'השלמת רישום ומעבר לרכישה (bit)', courseName, 'מיקום', 'טופס הרשמה', hostName);
             }
         });
     }
 
-    if(foodyGlobals['page_template_name'] == "foody-courses-thank-you") {
+    // course register thank you page
+    if (foodyGlobals['page_template_name'] == "foody-courses-thank-you") {
         /** page load **/
-        let courseNameThankYou = $('.thank-you-text').length && $('.thank-you-text').data('course').length ? $('.thank-you-text').data('course') : '';
-        let hostNameThankYou = $('.thank-you-text').length && $('.thank-you-text').data('host').length ? $('.thank-you-text').data('host') : '';
-        eventCallback('', analyticsCategory, 'רכישה בוצעה בהצלחה', courseNameThankYou, 'מיקום', 'מסך סיום תהליך רכישה', hostNameThankYou);
+        let urlParams ='';
+        let textClass = $('.thank-you-text').length ? '.thank-you-text' : false;
+        textClass = !textClass && $('.cancellation-text').length ? '.cancellation-text' : textClass;
+
+        let courseNameThankYou = $(textClass).data('course').length ? $(textClass).data('course') : '';
+        let hostNameThankYou = $(textClass).data('host').length ? $(textClass).data('host') : '';
+        let couponName = $(textClass).data('coupon-used').toString().length ? $(textClass).data('coupon-used').toString() : '';
+
+        if(!foodyGlobals.isMobile) {
+            urlParams = getUrlVars();
+        }
+        else{
+            if($('.foody-payment-bit').length){
+                let _status = $('.thank-you-text').length ? 'approved' :  'canceled';
+                urlParams = {payment_method: 'ביט', status: _status};
+            }
+        }
+        if (typeof urlParams.payment_method != 'undefined' && typeof urlParams.status != 'undefined' && decodeURI(urlParams.payment_method) == 'ביט') {
+            couponName = couponName.length ? couponName : 'ללא קופון';
+            if (urlParams.status == 'approved') {
+                eventCallback('', analyticsCategory, 'רכישה בוצעה בהצלחה (bit)', courseNameThankYou, 'מיקום', 'מסך סיום תהליך רכישה', hostNameThankYou, couponName);
+            }
+            else{
+                eventCallback('', analyticsCategory, 'הודעת כישלון בביצוע תשלום (bit)', courseNameThankYou, 'מיקום', 'מסך סיום תהליך רכישה', hostNameThankYou, couponName);
+            }
+        } else {
+            eventCallback('', analyticsCategory, 'רכישה בוצעה בהצלחה', courseNameThankYou, 'מיקום', 'מסך סיום תהליך רכישה', hostNameThankYou);
+        }
     }
 
 });
 
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+        vars[key] = value;
+    });
+    return vars;
+}
 
 /**
  * Handle events and fire analytics dataLayer.push
@@ -46,7 +95,7 @@ let analyticsCategory = 'קורסים';
  * @param cdDesc
  * @param cdValue
  */
-function eventCallback(event, category, action, label, cdDesc, cdValue, hostName = '') {
+function eventCallback(event, category, action, label, cdDesc, cdValue, hostName = '', item_category = '') {
 
     /**
      * Logged in user ID
@@ -60,7 +109,7 @@ function eventCallback(event, category, action, label, cdDesc, cdValue, hostName
         label,
         customerID,
         '',
-        '',
+        item_category,
         hostName,
         '',
         '',

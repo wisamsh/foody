@@ -224,6 +224,17 @@ if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || f
 $footer->add_nagish_li_script();
 
 ?>
-
 </body>
+<?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<?php } ?>
+<?php if(strpos(get_page_template(), 'foody-course-register.php')) { ?>
+    <style>
+        /* Media query for mobile viewport */
+        @media screen and (max-width: 400px) { #bitcom-button-container { width: 100%; } }
+        /* Media query for desktop viewport */
+        @media screen and (min-width: 400px) { #bitcom-button-container { width: 250px; } }
+    </style>
+<?php } ?>
 </html>
