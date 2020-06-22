@@ -42,7 +42,7 @@ class Foody_BitServerQueryProcess extends WP_Background_Process
 
     protected function handle_current_bit_status($payment_initiation_id, $member_data, $coupon_details)
     {
-//        if (FOODY_BIT_FETCH_STATUS_PROCESS) {
+        if (FOODY_BIT_FETCH_STATUS_PROCESS) {
             try {
                 $status = get_payment_status($payment_initiation_id, $member_data);
                 if (!is_array($status)) {
@@ -53,6 +53,6 @@ class Foody_BitServerQueryProcess extends WP_Background_Process
             } catch (Exception $e) {
                 throw $e;
             }
-//        }
+        }
     }
 }

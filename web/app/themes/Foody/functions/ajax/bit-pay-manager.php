@@ -218,7 +218,12 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
                 if ($coupon_details != null) {
                     update_coupon_to_used($coupon_details);
                 }
-//                $result = $ids_and_authorization_number['member_id'];
+
+                // try to check capture
+                $status = get_payment_status($payment_initiation_id, $member_data);
+                if ($status == 11) {
+                    bit_handle_status_code($status, $payment_initiation_id, $member_data);
+                }
             } else {
                 $error_handler = new Bit_API_Error_handler($ids_and_authorization_number);
                 $error_handler->throw_new_error();
