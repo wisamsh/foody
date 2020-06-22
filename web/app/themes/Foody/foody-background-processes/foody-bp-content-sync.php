@@ -53,13 +53,15 @@ add_action('save_post_foody_feed_channel', 'foody_add_commercial_mappings_rules'
 
 function foody_query_process_for_bit_status($payment_initiation_id, $member_data, $coupon_details)
 {
-    global $add_query_process_for_bit_status;
-    try {
-        $add_query_process_for_bit_status
-            ->push_to_queue(['payment_initiation_id' => $payment_initiation_id, 'member_data' => $member_data, 'coupon_details' => $coupon_details])
-            ->save()
-            ->dispatch();
-    } catch (Exception $e) {
-        Foody_WhiteLabelLogger::exception($e);
+    if (FOODY_BIT_FETCH_STATUS_PROCESS) {
+        global $add_query_process_for_bit_status;
+        try {
+            $add_query_process_for_bit_status
+                ->push_to_queue(['payment_initiation_id' => $payment_initiation_id, 'member_data' => $member_data, 'coupon_details' => $coupon_details])
+                ->save()
+                ->dispatch();
+        } catch (Exception $e) {
+            Foody_WhiteLabelLogger::exception($e);
+        }
     }
 }
