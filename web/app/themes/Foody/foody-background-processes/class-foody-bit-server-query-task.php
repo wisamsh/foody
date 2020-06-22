@@ -34,6 +34,7 @@ class Foody_BitServerQueryProcess extends WP_Background_Process
 
         } catch (Exception $e) {
             /// what supposed to happen if API have an error while fetching transaction status
+            /// todo: add mail send t coursesManager
         }
 
         return false;
@@ -41,21 +42,17 @@ class Foody_BitServerQueryProcess extends WP_Background_Process
 
     protected function handle_current_bit_status($payment_initiation_id, $member_data, $coupon_details)
     {
-        try {
-            $status = get_payment_status($payment_initiation_id, $member_data);
-            if (!is_array($status)) {
-                bit_handle_status_code($status, $payment_initiation_id, $member_data, $coupon_details);
+        if (FOODY_BIT_FETCH_STATUS_PROCESS) {
+            try {
+                $status = get_payment_status($payment_initiation_id, $member_data);
+                if (!is_array($status)) {
+                    if (FOODY_BIT_FETCH_STATUS_PROCESS) {
+                        bit_handle_status_code($status, $payment_initiation_id, $member_data, $coupon_details);
+                    }
+                }
+            } catch (Exception $e) {
+                throw $e;
             }
-        } catch (Exception $e){
-            throw $e;
         }
-//        $number_of_seconds = 30;
-//        foody_setInterval(function () use ($payment_initiation_id, $member_data, $coupon_details) {
-//            $status = get_payment_status($payment_initiation_id, $member_data);
-//            if (!is_array($status)) {
-//                $continue_interval = bit_handle_status_code($status, $payment_initiation_id ,$member_data, $coupon_details);
-//                return $continue_interval;
-//            }
-//        }, $number_of_seconds*1000);
     }
 }

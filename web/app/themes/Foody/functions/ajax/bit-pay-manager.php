@@ -48,6 +48,7 @@ function foody_bitcom_transaction_complete()
         wp_send_json_error(['msg' => __('payment id - התרחשה שגיאה ברכישה')]);
     }
 }
+
 add_action('wp_ajax_nopriv_foody_bitcom_transaction_complete', 'foody_bitcom_transaction_complete');
 add_action('wp_ajax_foody_bitcom_transaction_complete', 'foody_bitcom_transaction_complete');
 
@@ -86,9 +87,8 @@ function foody_bit_refund_process()
                         // send refund invoice
                         foody_create_and_send_refund_invoice($member_data);
                         wp_send_json_success(['msg' => __('העסקה עם מזהה ' . $member_data->member_id . ' בוטלה')]);
-                    }
-                    else{
-                        if($response_json->requestStatusCode == 4 || $response_json->requestStatusCode == 14 ){
+                    } else {
+                        if ($response_json->requestStatusCode == 4 || $response_json->requestStatusCode == 14) {
                             wp_send_json_error(array(
                                 'error' => __('הזיכוי בהמתנה אנא נסו שוב בדקות הקרובות')
                             ));
@@ -104,6 +104,7 @@ function foody_bit_refund_process()
         }
     }
 }
+
 add_action('wp_ajax_nopriv_foody_bit_refund_process', 'foody_bit_refund_process');
 add_action('wp_ajax_foody_bit_refund_process', 'foody_bit_refund_process');
 
@@ -189,7 +190,7 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
         case 7: // time expired - final
             $result = 'canceled and deleted';
             $pre_pay_data = get_id_and_status_by_paymentInitiationId($payment_initiation_id);
-            if(isset($pre_pay_data->bit_trans_id)) {
+            if (isset($pre_pay_data->bit_trans_id)) {
                 $member_and_trans_data = get_columns_data_by_paymentMethodId($pre_pay_data->bit_trans_id, ['member_id']);
                 if (isset($member_and_trans_data->member_id) && $coupon_details !== null) {
                     update_tables_after_cancellation($pre_pay_data->bit_trans_id, $member_and_trans_data->member_id, $coupon_details);
@@ -597,7 +598,7 @@ function get_coupon_by_payment_initiation_id($payment_initiation_id)
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_members';
-    $coupon= '';
+    $coupon = '';
 
     $query = "SELECT coupon FROM {$table_name} where transaction_id ='" . $payment_initiation_id . "'";
 
@@ -626,43 +627,45 @@ function add_merchantURL_to_mobile_schema($mobile_schema, $thank_you_page, $paym
         $mobile_params_param_value = urlencode(urlencode($mobile_params[1]));
         $payment_initiation_id_key = urlencode(urlencode('payment_initiation_id'));
         $payment_initiation_id_value = urlencode(urlencode($paymentInitiationId));
-        $add_to_schema = '%26return_scheme%3D' . $thank_you_param . '%3F' . $thank_you_url_param_key . '%253D' . $thank_you_url_param_value.','. $payment_initiation_id_value;
+        $add_to_schema = '%26return_scheme%3D' . $thank_you_param . '%3F' . $thank_you_url_param_key . '%253D' . $thank_you_url_param_value . ',' . $payment_initiation_id_value;
     }
     return $mobile_schema . $add_to_schema;
 }
 
 function bit_fetch_status_process()
 {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'foody_courses_members';
-    $payment_method = __('ביט');
-    $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}'";
+    if (FOODY_BIT_FETCH_STATUS_PROCESS) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'foody_courses_members';
+        $payment_method = __('ביט');
+        $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}'";
 
-    $pending_payments = $wpdb->get_results($query);
-    $pending_payments = is_array($pending_payments) ? $pending_payments : [];
+        $pending_payments = $wpdb->get_results($query);
+        $pending_payments = is_array($pending_payments) ? $pending_payments : [];
 
-    foreach ($pending_payments as $pending_payment) {
-        $data_of_member = [
-            'member_id' => $pending_payment->member_id,
-            'email' => $pending_payment->member_email,
-            'first_name' => $pending_payment->first_name,
-            'last_name' => $pending_payment->last_name,
-            'phone' => $pending_payment->phone,
-            'purchase_date' => $pending_payment->purchase_date,
-            'enable_marketing' => $pending_payment->marketing_status == 1 ? 'true' : 'false',
-            'course_name' => $pending_payment->course_name,
-            'course_id' => $pending_payment->course_id,
-            'price' => $pending_payment->price_paid,
-            'payment_method' => $pending_payment->payment_method,
-            'transaction_id' => $pending_payment->transaction_id,
-            'coupon' => $pending_payment->coupon,
-            'status' => $pending_payment->status,
-            'payment_method_id' => $pending_payment->payment_method_id
-        ];
+        foreach ($pending_payments as $pending_payment) {
+            $data_of_member = [
+                'member_id' => $pending_payment->member_id,
+                'email' => $pending_payment->member_email,
+                'first_name' => $pending_payment->first_name,
+                'last_name' => $pending_payment->last_name,
+                'phone' => $pending_payment->phone,
+                'purchase_date' => $pending_payment->purchase_date,
+                'enable_marketing' => $pending_payment->marketing_status == 1 ? 'true' : 'false',
+                'course_name' => $pending_payment->course_name,
+                'course_id' => $pending_payment->course_id,
+                'price' => $pending_payment->price_paid,
+                'payment_method' => $pending_payment->payment_method,
+                'transaction_id' => $pending_payment->transaction_id,
+                'coupon' => $pending_payment->coupon,
+                'status' => $pending_payment->status,
+                'payment_method_id' => $pending_payment->payment_method_id
+            ];
 
-        $coupon_details = get_coupon_data_by_name($pending_payment->coupon);
+            $coupon_details = get_coupon_data_by_name($pending_payment->coupon);
 
-        foody_query_process_for_bit_status($pending_payment->transaction_id, $data_of_member, $coupon_details);
+            foody_query_process_for_bit_status($pending_payment->transaction_id, $data_of_member, $coupon_details);
+        }
     }
 }
 
