@@ -669,7 +669,15 @@ function bit_fetch_status_process()
 
             $coupon_details = get_coupon_data_by_name($pending_payment->coupon);
 
-            foody_query_process_for_bit_status($pending_payment->transaction_id, $data_of_member, $coupon_details);
+//            foody_query_process_for_bit_status($pending_payment->transaction_id, $data_of_member, $coupon_details);
+            try {
+                $status = get_payment_status($pending_payment->transaction_id, $data_of_member);
+                if (!is_array($status)) {
+                    bit_handle_status_code($status, $pending_payment->transaction_id, $data_of_member, $coupon_details);
+                }
+            } catch (Exception $e) {
+                // handle error
+            }
         }
     }
 }
