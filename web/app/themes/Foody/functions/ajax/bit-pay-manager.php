@@ -639,13 +639,15 @@ function add_merchantURL_to_mobile_schema($mobile_schema, $thank_you_page, $paym
 
 function bit_fetch_status_process()
 {
-    if (FOODY_BIT_FETCH_STATUS_PROCESS) {
+//    if (FOODY_BIT_FETCH_STATUS_PROCESS) {
         global $wpdb;
         $table_name = $wpdb->prefix . 'foody_courses_members';
         $payment_method = __('ביט');
         $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}'";
+        $update_query = "UPDATE {$table_name} SET status='in_progress' where member_id > 0 AND status = 'pending'";
 
         $pending_payments = $wpdb->get_results($query);
+        $wpdb->query($update_query);
         $pending_payments = is_array($pending_payments) ? $pending_payments : [];
 
         foreach ($pending_payments as $pending_payment) {
@@ -678,7 +680,7 @@ function bit_fetch_status_process()
 //            } catch (Exception $e) {
 //                // handle error
 //            }
-        }
+//        }
     }
 }
 
