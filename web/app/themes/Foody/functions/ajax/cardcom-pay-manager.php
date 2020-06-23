@@ -31,35 +31,57 @@ function foody_start_cardcom_pay_process()
 add_action('wp_ajax_nopriv_foody_start_cardcom_pay_process', 'foody_start_cardcom_pay_process');
 add_action('wp_ajax_foody_start_cardcom_pay_process', 'foody_start_cardcom_pay_process');
 
+function get_cardcom_credentials(){
+
+    $credentials = false;
+    $terminal_number = get_option('foody_terminal_number_for_cardcom_api');
+    $terminal_number = !empty($terminal_number) ? $terminal_number : false; # Company terminal
+
+    $user_name = get_option('foody_username_for_cardcom_api');
+    $user_name = !empty($user_name) ? $user_name : false;   # API User
+
+    $password = get_option('foody_password_for_cardcom_api');
+    $password = !empty($password) ? $password : false;
+
+    if($terminal_number && $user_name && $password){
+        $credentials = ['terminal_number' => $terminal_number, 'user_name' => $user_name, 'password' => $password];
+    }
+
+    return $credentials;
+}
 
 function foody_cardcom_refund_process()
 {
     $internal_deal_number = $_POST['internalDealNumber'];
     $member_id = $_POST['memberID'];
-    $TerminalNumber = 1000; # Company terminal
-    $UserName = 'barak9611';   # API User
-    $password = 'c1234567!';
 
-    $var = null;
-    $request_url = 'https://secure.cardcom.solutions/Interface/LowProfile.aspx?terminalnumber=' . $TerminalNumber . '&name=' . $UserName . '&pass=' . $password . '&internalDealNumber=' . $internal_deal_number;
+    $cardcom_credentials = get_cardcom_credentials();
 
-    try {
-        $result = cardcom_do_curl($var, $request_url, 'GET');
-        parse_str($result, $responseArray);
+    if($cardcom_credentials !== false) {
 
-        // update member in table with transaction id
-        update_course_member_by_id_and_cloumns($member_id, ['status' => 'refunded']);
+        $var = null;
+        $request_url = 'https://secure.cardcom.solutions/Interface/LowProfile.aspx?terminalnumber=' . $cardcom_credentials['terminal_number'] . '&name=' . $cardcom_credentials['user_name'] . '&pass=' . $cardcom_credentials['password'] . '&internalDealNumber=' . $internal_deal_number;
 
-        if($responseArray['ResponseCode'] == "0") {
-            return wp_send_json_success(['msg' => __('העסקה עם מזהה ' . $member_id . ' בוטלה')]);
+        try {
+            $result = cardcom_do_curl($var, $request_url, 'GET');
+            parse_str($result, $responseArray);
+
+            // update member in table with transaction id
+            update_course_member_by_id_and_cloumns($member_id, ['status' => 'refunded']);
+
+            if ($responseArray['ResponseCode'] == "0") {
+                return wp_send_json_success(['msg' => __('העסקה עם מזהה ' . $member_id . ' בוטלה')]);
+            } else {
+                wp_send_json_error(array(
+                    'error' => __('הזיכוי נכשל')
+                ));
+            }
+        } catch (Exception $exception) {
+            return wp_send_json_error(['error' => $exception->getMessage()]);
         }
-        else{
-            wp_send_json_error(array(
-                'error' => __('הזיכוי נכשל')
-            ));
-        }
-    } catch (Exception $exception) {
-        return wp_send_json_error(['error' => $exception->getMessage()]);
+    }
+    else{
+        wp_send_json_error(['error' => __('חסרים פרטי הגישה לקארדקום')]);
     }
 }
 
@@ -69,62 +91,66 @@ add_action('wp_ajax_foody_cardcom_refund_process', 'foody_cardcom_refund_process
 
 function generate_dynamic_cardcom_form($added_id, $member_data, $thank_you_page)
 {
-    $TerminalNumber = 1000; # Company terminal
-    $UserName = 'barak9611';   # API User
-    $IsIframe = true;   # Iframe or Redirect
-    $Operation = 1;  # = 1 - Bill Only , 2- Bill And Create Token , 3 - Token Only , 4 - Suspended Deal (Order).
+    $cardcom_credentials = get_cardcom_credentials();
+    if($cardcom_credentials !== false) {
+        $IsIframe = true;   # Iframe or Redirect
+        $Operation = 1;  # = 1 - Bill Only , 2- Bill And Create Token , 3 - Token Only , 4 - Suspended Deal (Order).
 
-    $vars = array();
-    $vars['TerminalNumber'] = $TerminalNumber;
-    $vars['UserName'] = $UserName;
-    $vars["APILevel"] = "10"; // req
-    $vars['codepage'] = '65001'; // unicode
-    $vars["Operation"] = $Operation;
+        $vars = array();
+        $vars['TerminalNumber'] = $cardcom_credentials['terminal_number'];
+        $vars['UserName'] = $cardcom_credentials['user_name'];
+        $vars["APILevel"] = "10"; // req
+        $vars['codepage'] = '65001'; // unicode
+        $vars["Operation"] = $Operation;
 
-    $vars["Language"] = 'he';   // page languge he- hebrew , en - english , ru , ar
-    $vars["CoinID"] = '1'; // billing coin , 1- NIS , 2- USD other , article :  http://kb.cardcom.co.il/article/AA-00247/0
-    $vars["SumToBill"] = $member_data['price'];// Sum To Bill
-    $vars['ProductName'] = $member_data['course_name']; // Product Name , will how if no invoice will be created.
+        $vars["Language"] = 'he';   // page languge he- hebrew , en - english , ru , ar
+        $vars["CoinID"] = '1'; // billing coin , 1- NIS , 2- USD other , article :  http://kb.cardcom.co.il/article/AA-00247/0
+        $vars["SumToBill"] = $member_data['price'];// Sum To Bill
+        $vars['ProductName'] = $member_data['course_name']; // Product Name , will how if no invoice will be created.
 
 
-    $vars['SuccessRedirectUrl'] = $thank_you_page; // Success Page
-    $vars['ErrorRedirectUrl'] = $thank_you_page; // Error Page
+        $vars['SuccessRedirectUrl'] = $thank_you_page; // Success Page
+        $vars['ErrorRedirectUrl'] = $thank_you_page; // Error Page
 
-// Other Optional vars :
+        // Other Optional vars :
 
-    $vars["CancelType"] = "2"; # show Cancel button on start ,
-    $vars["CancelUrl"] = $thank_you_page; //todo: think how to show in thank-you page that canceled
-    $vars['IndicatorUrl'] = get_home_url() . '/app/themes/Foody/functions/ajax/cardcom-response-listener.php'; // Indicator Url \ Notify URL . after use -  http://kb.cardcom.co.il/article/AA-00240/0
+        $vars["CancelType"] = "2"; # show Cancel button on start ,
+        $vars["CancelUrl"] = $thank_you_page; //todo: think how to show in thank-you page that canceled || return to purchase page
+        $vars['IndicatorUrl'] = get_home_url() . '/app/themes/Foody/functions/ajax/cardcom-response-listener.php'; // Indicator Url \ Notify URL . after use -  http://kb.cardcom.co.il/article/AA-00240/0
 
-    $vars["ReturnValue"] = $added_id; // Optional , ,recommended , value that will be return and save in CardCom system
-    $vars["MaxNumOfPayments"] = "1"; // max num of payments to show  to the user
+        $vars["ReturnValue"] = $added_id; // Optional , ,recommended , value that will be return and save in CardCom system
+        $vars["MaxNumOfPayments"] = "1"; // max num of payments to show  to the user
 
-    $vars["ShowInvoiceHead"] = "false"; //  if show & edit Invoice Details on the page.
-    $vars["InvoiceHeadOperation"] = "0"; //  0 = no create & show Invoice.  1 =(default)create Invoice.  2 = show Details Invoice but not create Invoice !
+        $vars["ShowInvoiceHead"] = "false"; //  if show & edit Invoice Details on the page.
+        $vars["InvoiceHeadOperation"] = "0"; //  0 = no create & show Invoice.  1 =(default)create Invoice.  2 = show Details Invoice but not create Invoice !
 
-    // Send Data To Bill Gold Server
-    try {
-        $result = cardcom_do_curl($vars, 'https://secure.cardcom.solutions/Interface/LowProfile.aspx');
-        parse_str($result, $responseArray);
+        // Send Data To Bill Gold Server
+        try {
+            $result = cardcom_do_curl($vars, 'https://secure.cardcom.solutions/Interface/LowProfile.aspx');
+            parse_str($result, $responseArray);
 
-        # Is Deal OK
-        if ($responseArray['ResponseCode'] == "0") {
-            # Iframe or  Redicet User :
-            if ($IsIframe && isset($responseArray['LowProfileCode']) && isset($responseArray['url'])) {
-                return ['url' => $responseArray['url'], 'LowProfileCode' => $responseArray['LowProfileCode']];
-            } else  // redirect
-            {
-                header("Location:" . $responseArray['url']);
+            # Is Deal OK
+            if ($responseArray['ResponseCode'] == "0") {
+                # Iframe or  Redicet User :
+                if ($IsIframe && isset($responseArray['LowProfileCode']) && isset($responseArray['url'])) {
+                    return ['url' => $responseArray['url'], 'LowProfileCode' => $responseArray['LowProfileCode']];
+                } else  // redirect
+                {
+                    header("Location:" . $responseArray['url']);
+                }
+
+            } # Show Error to developer only
+            else {
+                if (isset($responseArray['Description'])) {
+                    throw new Exception($responseArray['Description']);
+                }
             }
-
-        } # Show Error to developer only
-        else {
-            if (isset($responseArray['Description'])) {
-                throw new Exception($responseArray['Description']);
-            }
+        } catch (Exception $exception) {
+            throw $exception;
         }
-    } catch (Exception $exception) {
-        throw $exception;
+    }
+    else{
+        throw new Exception( __('חסרים פרטי הגישה לקארדקום'));
     }
 }
 
@@ -132,48 +158,71 @@ function generate_dynamic_cardcom_form($added_id, $member_data, $thank_you_page)
 function check_cardcom_purchase($low_profile_code)
 {
     $member_data = get_member_data_for_finish_process($low_profile_code, true);
-    $TerminalNumber = 1000; # Company terminal
-    $UserName = 'barak9611';   # API User
+    $cardcom_credentials = get_cardcom_credentials();
+    if($cardcom_credentials !== false) {
 
-    #Get Deal information
-    $vars = array(
-        'TerminalNumber' => $TerminalNumber,
-        'LowProfileCode' => $low_profile_code,
-        'UserName' => $UserName
-    );
+        #Get Deal information
+        $vars = array(
+            'TerminalNumber' => $cardcom_credentials['terminal_number'],
+            'LowProfileCode' => $low_profile_code,
+            'UserName' => $cardcom_credentials['user_name']
+        );
 
-    if (isset($member_data['status']) && $member_data['status'] == 'pending') {
-        try {
-            $result = cardcom_do_curl($vars, 'https://secure.cardcom.solutions/Interface/BillGoldGetLowProfileIndicator.aspx');
-            $output = array();
-            parse_str($result, $output);
+        if (isset($member_data['status']) && $member_data['status'] == 'pending') {
+            try {
+                $result = cardcom_do_curl($vars, 'https://secure.cardcom.solutions/Interface/BillGoldGetLowProfileIndicator.aspx');
+                $output = array();
+                parse_str($result, $output);
 
-            if ($output['ResponseCode'] == '0' && $output['OperationResponse'] == '0' && isset($output['InternalDealNumber'])
-                && isset($member_data['id'])) { #  Found the  LowProfile , validate is deal was OK!
-                #  if $output['DealResponse']  == 0
-                #  if $output['TokenResponse']  == 0
-                #  if $output['InvoiceResponseCode']  == 0
-                #  if $output['InvoiceResponseCode']  == 0
-                #  See : http://kb.cardcom.co.il/article/AA-00240/51/ for more information
+                if ($output['ResponseCode'] == '0' && $output['OperationResponse'] == '0' && isset($output['InternalDealNumber'])
+                    && isset($member_data['id'])) { #  Found the  LowProfile , validate is deal was OK!
+                    #  if $output['DealResponse']  == 0
+                    #  if $output['TokenResponse']  == 0
+                    #  if $output['InvoiceResponseCode']  == 0
+                    #  if $output['InvoiceResponseCode']  == 0
+                    #  See : http://kb.cardcom.co.il/article/AA-00240/51/ for more information
 
 
-                // update table to paid and transaction_id
-                update_course_member_by_id_and_cloumns($member_data['id'], ['transaction_id' => $output['InternalDealNumber'], 'status' => 'paid']);
+                    // update table to paid and transaction_id
+                    update_course_member_by_id_and_cloumns($member_data['id'], ['transaction_id' => $output['InternalDealNumber'], 'status' => 'paid']);
 
-                // update table to paid and transaction_id
-                $coupon_details = get_coupon_data_by_name($member_data['coupon']);
-                update_coupon_to_used($coupon_details);
-                return 'result: ' . $output['InternalDealNumber'];
+                    // update coupon to used
+                    $coupon_details = get_coupon_data_by_name($member_data['coupon']);
+                    update_coupon_to_used($coupon_details);
 
-            } else { # some error , send email to developer
+                    // send mail to zappier
+                    send_new_course_member_data([
+                        'member_email' => $member_data['email'],
+                        'phone' => $member_data['phone'],
+                        'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
+                        'course_name' => $member_data['course_name'],
+                        'price' => $member_data['price'],
+                        'enable_marketing' => $member_data['enable_marketing'],
+                        'coupon' => $member_data['coupon']
+                    ], $member_data['course_id']);
+
+                    foody_create_and_send_purchase_invoice([
+                        'client_email' => $member_data['email'],
+                        'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
+                        'phone' => $member_data['phone']
+                    ], $member_data['course_name'], $member_data['price']);
+
+                    return 'transaction completed with Internal Deal Number: ' . $output['InternalDealNumber'];
+
+                } else { # some error , send email to developer
+                    // todo
+                    return 'Error : ' . $result;
+                }
+            } catch (Exception $exception) {
                 // todo
-                echo 'Error : ' . $result;
             }
-        } catch (Exception $exception) {
-            // todo
+        } else {
+            return 'result: member is no longer pending';
         }
-    } else {
-        return 'result: member is no longer pending';
+    }
+    else{
+        // error credentials
+        return 'error: '. __('חסרים פרטי הגישה לקארדקום');
     }
 }
 
