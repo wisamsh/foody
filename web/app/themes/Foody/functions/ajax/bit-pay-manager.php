@@ -141,6 +141,7 @@ function get_payment_status($payment_initiation_id, $member_data = null)
 
 function bit_handle_status_code($code, $payment_initiation_id = null, $member_data = null, $coupon_details = null)
 {
+    global $wpdb;
     switch ($code) {
         case 11:
             // payment confirmed - final
@@ -207,6 +208,11 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
         case 14:
         case 17:
             // request still pending we need to keep asking the server for final result
+            // update status back to pending
+            $table_name = $wpdb->prefix . 'foody_courses_members';
+            $update_query = "UPDATE {$table_name} SET status='pending' where member_id ={$member_data['member_id']}  AND status = 'in_progress'";
+            $wpdb->query($update_query);
+
             $result = false;
             break;
         case 9:
@@ -223,6 +229,11 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
                 $status = get_payment_status($payment_initiation_id, $member_data);
                 if ($status == 11) {
                     bit_handle_status_code($status, $payment_initiation_id, $member_data);
+                }
+                else{
+                    $table_name = $wpdb->prefix . 'foody_courses_members';
+                    $update_query = "UPDATE {$table_name} SET status='pending' where member_id ={$member_data['member_id']}  AND status = 'in_progress'";
+                    $wpdb->query($update_query);
                 }
             } else {
                 $error_handler = new Bit_API_Error_handler($ids_and_authorization_number);
@@ -640,46 +651,46 @@ function add_merchantURL_to_mobile_schema($mobile_schema, $thank_you_page, $paym
 function bit_fetch_status_process()
 {
 //    if (FOODY_BIT_FETCH_STATUS_PROCESS) {
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'foody_courses_members';
-        $payment_method = __('ביט');
-        $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}'";
-        $update_query = "UPDATE {$table_name} SET status='in_progress' where member_id > 0 AND status = 'pending'";
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'foody_courses_members';
+    $payment_method = __('ביט');
+    $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}'";
+    $update_query = "UPDATE {$table_name} SET status='in_progress' where member_id > 0 AND status = 'pending' AND payment_method = '{$payment_method}'";
 
-        $pending_payments = $wpdb->get_results($query);
-        $wpdb->query($update_query);
-        $pending_payments = is_array($pending_payments) ? $pending_payments : [];
+    $pending_payments = $wpdb->get_results($query);
+    $wpdb->query($update_query);
+    $pending_payments = is_array($pending_payments) ? $pending_payments : [];
 
-        foreach ($pending_payments as $pending_payment) {
-            $data_of_member = [
-                'member_id' => $pending_payment->member_id,
-                'email' => $pending_payment->member_email,
-                'first_name' => $pending_payment->first_name,
-                'last_name' => $pending_payment->last_name,
-                'phone' => $pending_payment->phone,
-                'purchase_date' => $pending_payment->purchase_date,
-                'enable_marketing' => $pending_payment->marketing_status == 1 ? 'true' : 'false',
-                'course_name' => $pending_payment->course_name,
-                'course_id' => $pending_payment->course_id,
-                'price' => $pending_payment->price_paid,
-                'payment_method' => $pending_payment->payment_method,
-                'transaction_id' => $pending_payment->transaction_id,
-                'coupon' => $pending_payment->coupon,
-                'status' => $pending_payment->status,
-                'payment_method_id' => $pending_payment->payment_method_id
-            ];
+    foreach ($pending_payments as $pending_payment) {
+        $data_of_member = [
+            'member_id' => $pending_payment->member_id,
+            'email' => $pending_payment->member_email,
+            'first_name' => $pending_payment->first_name,
+            'last_name' => $pending_payment->last_name,
+            'phone' => $pending_payment->phone,
+            'purchase_date' => $pending_payment->purchase_date,
+            'enable_marketing' => $pending_payment->marketing_status == 1 ? 'true' : 'false',
+            'course_name' => $pending_payment->course_name,
+            'course_id' => $pending_payment->course_id,
+            'price' => $pending_payment->price_paid,
+            'payment_method' => $pending_payment->payment_method,
+            'transaction_id' => $pending_payment->transaction_id,
+            'coupon' => $pending_payment->coupon,
+            'status' => $pending_payment->status,
+            'payment_method_id' => $pending_payment->payment_method_id
+        ];
 
-            $coupon_details = get_coupon_data_by_name($pending_payment->coupon);
+        $coupon_details = get_coupon_data_by_name($pending_payment->coupon);
 
 //            foody_query_process_for_bit_status($pending_payment->transaction_id, $data_of_member, $coupon_details);
-            try {
-                $status = get_payment_status($pending_payment->transaction_id, $data_of_member);
-                if (!is_array($status)) {
-                    bit_handle_status_code($status, $pending_payment->transaction_id, $data_of_member, $coupon_details);
-                }
-            } catch (Exception $e) {
-                // handle error
+        try {
+            $status = get_payment_status($pending_payment->transaction_id, $data_of_member);
+            if (!is_array($status)) {
+                bit_handle_status_code($status, $pending_payment->transaction_id, $data_of_member, $coupon_details);
             }
+        } catch (Exception $e) {
+            // handle error
+        }
 //        }
     }
 }
