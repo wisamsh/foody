@@ -84,13 +84,17 @@ function foody_cardcom_refund_process()
 {
     $internal_deal_number = $_POST['internalDealNumber'];
     $member_id = $_POST['memberID'];
-    $member_data = get_member_data_for_finish_process($_POST['internalDealNumber'], false);
+    $member_data = get_member_data_for_finish_process($_POST['internalDealNumber'], false, 'transaction_id');
 
     $cardcom_credentials = get_cardcom_credentials();
 
     if ($cardcom_credentials !== false) {
         $var = null;
-        $request_url = 'https://secure.cardcom.solutions/Interface/LowProfile.aspx?terminalnumber=' . $cardcom_credentials['terminal_number'] . '&name=' . $cardcom_credentials['user_name'] . '&pass=' . $cardcom_credentials['password'] . '&internalDealNumber=' . $internal_deal_number;
+        $request_url = 'https://secure.cardcom.solutions/Interface/CancelDeal.aspx?terminalnumber=' .
+            $cardcom_credentials['terminal_number'] .
+            '&name=' . $cardcom_credentials['user_name'] . '&pass=' .
+            $cardcom_credentials['password'] .
+            '&internalDealNumber=' . $internal_deal_number;
 
         try {
             $result = cardcom_do_curl($var, $request_url, 'GET');
@@ -98,7 +102,7 @@ function foody_cardcom_refund_process()
 
             if ($responseArray['ResponseCode'] == "0") {
                 // update member in table with transaction id
-                update_course_member_by_id_and_cloumns($member_id, ['status' => 'refunded']);
+                update_course_member_by_id_and_cloumns($member_id, ['status' => 'refunded', 'transaction_id' => $responseArray['internalDealNumber']]);
                 // remove member user from course at Rav Messer
                 Rav_Messer_API_Handler::remove_member_from_rav_messer_list([
                         'member_email' => $member_data->member_email,
@@ -329,4 +333,31 @@ function cardcom_do_curl($vars, $PostVarsURL, $method = 'post')
         echo "No curl_init";
         die();
     }
+}
+
+function get_member_data_for_finish_process($payment_initiation_id, $is_credit_card = false, $credit_search_by = 'credit_low_profile_code')
+{
+    $member_data = [];
+    $member_results = get_columns_data_by_paymentMethodId($payment_initiation_id, ['*'], $is_credit_card, $credit_search_by);
+    if (!empty($member_results)) {
+        if ($is_credit_card) {
+            $member_data = [
+                'id' => $member_results->member_id,
+                'email' => $member_results->member_email,
+                'phone' => $member_results->phone,
+                'first_name' => $member_results->first_name,
+                'last_name' => $member_results->last_name,
+                'course_name' => $member_results->course_name,
+                'course_id' => $member_results->course_id,
+                'price' => $member_results->price_paid,
+                'enable_marketing' => $member_results->marketing_status == 1 ? 'true' : 'false',
+                'coupon' => $member_results->coupon,
+                'status' => $member_results->status
+            ];
+        }
+        else{
+            $member_data = $member_results;
+        }
+    }
+    return $member_data;
 }

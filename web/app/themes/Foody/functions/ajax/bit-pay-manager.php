@@ -107,32 +107,6 @@ function foody_bit_refund_process()
 add_action('wp_ajax_nopriv_foody_bit_refund_process', 'foody_bit_refund_process');
 add_action('wp_ajax_foody_bit_refund_process', 'foody_bit_refund_process');
 
-function get_member_data_for_finish_process($payment_initiation_id, $is_credit_card = false)
-{
-    $member_data = [];
-    $member_results = get_columns_data_by_paymentMethodId($payment_initiation_id, ['*'], $is_credit_card);
-    if (!empty($member_results)) {
-        if ($is_credit_card) {
-            $member_data = [
-                'id' => $member_results->member_id,
-                'email' => $member_results->member_id,
-                'phone' => $member_results->phone,
-                'first_name' => $member_results->first_name,
-                'last_name' => $member_results->last_name,
-                'course_name' => $member_results->course_name,
-                'course_id' => $member_results->course_id,
-                'price' => $member_results->price_paid,
-                'enable_marketing' => $member_results->marketing_status == 1 ? 'true' : 'false',
-                'coupon' => $member_results->coupon,
-                'status' => $member_results->status
-            ];
-        }
-        else{
-            $member_data = $member_results;
-        }
-    }
-    return $member_data;
-}
 
 function get_payment_status($payment_initiation_id, $member_data = null)
 {
@@ -342,7 +316,7 @@ function bit_api_request($request_type, $request_url_path, $request_body = null)
         $subscription_key = get_option('foody_subscription_key_for_bit', false);
 
         $curl_data_array = array(
-            CURLOPT_URL => "https://api.bankhapoalim.co.il/payments/bit/v2" . $request_url_path,
+            CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2" . $request_url_path,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -391,17 +365,17 @@ function get_pre_pay_bit_data_by_paymentInitiationId($paymentInitiationId)
 
 }
 
-function get_columns_data_by_paymentMethodId($payment_method_id, $columns, $is_credit_card = false)
+function get_columns_data_by_paymentMethodId($payment_method_id, $columns, $is_credit_card = false, $credit_search_by = 'credit_low_profile_code')
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_members';
     $columns_to_return = implode(',', $columns);
 
-    if($is_credit_card) {
-        $query = "SELECT {$columns_to_return} FROM {$table_name} where credit_low_profile_code = " . '"' . $payment_method_id . '"';
+    if($is_credit_card || $credit_search_by !='credit_low_profile_code') {
+        $query = "SELECT {$columns_to_return} FROM {$table_name} where ". $credit_search_by ." = " . '"' . $payment_method_id . '"';
     }
     else{
-        $query = "SELECT {$columns_to_return} FROM {$table_name} where payment_method_id = " . $payment_method_id;
+        $query = "SELECT {$columns_to_return} FROM {$table_name} where payment_method_id = " . $payment_method_id ;
     }
 
     $result = $wpdb->get_results($query);
@@ -735,7 +709,7 @@ class Bit_Token_Manager
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.bankhapoalim.co.il/bank/auth/clients/token",
+            CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/bank/auth/clients/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,

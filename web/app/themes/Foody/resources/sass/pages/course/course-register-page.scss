@@ -53,7 +53,6 @@
 
     .form-section {
       position: relative;
-      z-index: 2;
 
       .form-container {
         .form-title {
@@ -180,13 +179,14 @@
         margin: 8% 0 0 0;
         width: 100%;
         height: 59px;
+        z-index: 2;
 
         .bit-pay {
           border: 1px solid dodgerblue;
           border-radius: 5px;
           text-align: center;
           display: inline-block;
-          background: dodgerblue;
+          background-image: linear-gradient(62deg, #5EB3B9,#355381);
           color: white;
           font-weight: bold;
           margin: 0 2%;

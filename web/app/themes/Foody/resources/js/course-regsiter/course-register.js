@@ -262,75 +262,69 @@ jQuery(document).ready(($) => {
 
                         if ($('.credit-card-pay').length) {
                             $('.credit-card-pay').on('click', function () {
-                                // let email = $('#email').val().length != 0 && !$('#email').hasClass('error') ? $('#email').val() : false;
-                                // let firstName = $('#first-name').val().length != 0 && !$('#first-name').hasClass('error') ? $('#first-name').val() : false;
-                                // let lastName = $('#last-name').val().length != 0 && !$('#last-name').hasClass('error') ? $('#last-name').val() : false;
-                                // let phone = $('#phone-number').val().length != 0 && !$('#phone-number').hasClass('error') ? $('#phone-number').val() : false;
-                                // let enableMarketing = $('.newsletter-and-terms #newsletter').prop('checked') ? 'מאשר קבלת דואר' : 'לא מאשר קבלת דואר';
-                                // let courseName = $(this).attr('data-item-name').length != 0 ? $(this).attr('data-item-name') : false;
-                                // let thankYou = $(this).attr('data-thank-you').length != 0 ? $(this).attr('data-thank-you') : '';
-                                // let termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
-                                let inputsObj = get_all_form_inputs(this);
-                                let urlParams = getUrlVars();
+                                if ($(this).prop('disabled') === "false") {
+                                    let inputsObj = get_all_form_inputs(this);
+                                    let urlParams = getUrlVars();
 
-                                if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone) {
-                                    let foodyLoader = new FoodyLoader({
-                                        container: $('.button-container'),
-                                        id: 'buttons-loader'
-                                    });
-                                    let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
-                                    let mailInvoice = $(this).attr('data-invoice-mail').length != 0 ? $(this).attr('data-invoice-mail') : '';
-                                    // let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:' + mailInvoice + '">' + mailInvoice + '</a></span>' : '';
-                                    // let link = $(this).attr('data-link') + '?ExtCUserEmail=' + inputsObj.email + '&ExtCInvoiceTo=' + inputsObj.firstName + ' ' + inputsObj.lastName + '&ExtMobilPhone=' + inputsObj.phone + '&SuccessRedirectUrl=' + inputsObj.thankYou + '&custom_field_10=' + inputsObj.enableMarketing;
+                                    if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone) {
+                                        let foodyLoader = new FoodyLoader({
+                                            container: $('.button-container'),
+                                            id: 'buttons-loader'
+                                        });
+                                        let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
+                                        let mailInvoice = $(this).attr('data-invoice-mail').length != 0 ? $(this).attr('data-invoice-mail') : '';
+                                        // let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:' + mailInvoice + '">' + mailInvoice + '</a></span>' : '';
+                                        // let link = $(this).attr('data-link') + '?ExtCUserEmail=' + inputsObj.email + '&ExtCInvoiceTo=' + inputsObj.firstName + ' ' + inputsObj.lastName + '&ExtMobilPhone=' + inputsObj.phone + '&SuccessRedirectUrl=' + inputsObj.thankYou + '&custom_field_10=' + inputsObj.enableMarketing;
 
-                                    let data_of_member = {
-                                        'email': inputsObj.email,
-                                        'first_name': inputsObj.firstName,
-                                        'last_name': inputsObj.lastName,
-                                        'phone': inputsObj.phone,
-                                        'purchase_date': get_current_date(),
-                                        'enable_marketing': inputsObj.enableMarketing,
-                                        'course_name': inputsObj.courseName,
-                                        'course_id': urlParams.course_id,
-                                        'price': couponAndPriceObj.price,
-                                        'payment_method': 'כרטיס אשראי',
-                                        'transaction_id': '-1',
-                                        'coupon': couponAndPriceObj.coupon,
-                                        'status': 'pending',
-                                        'payment_method_id': '-1'
-                                    };
+                                        let data_of_member = {
+                                            'email': inputsObj.email,
+                                            'first_name': inputsObj.firstName,
+                                            'last_name': inputsObj.lastName,
+                                            'phone': inputsObj.phone,
+                                            'purchase_date': get_current_date(),
+                                            'enable_marketing': inputsObj.enableMarketing,
+                                            'course_name': inputsObj.courseName,
+                                            'course_id': urlParams.course_id,
+                                            'price': couponAndPriceObj.price,
+                                            'payment_method': 'כרטיס אשראי',
+                                            'transaction_id': '-1',
+                                            'coupon': couponAndPriceObj.coupon,
+                                            'status': 'pending',
+                                            'payment_method_id': '-1'
+                                        };
 
-                                    foodyLoader.attach({topPercentage: 20});
-                                    foodyAjax({
-                                        action: 'foody_start_cardcom_pay_process',
-                                        data: {
-                                            memberData: data_of_member,
-                                            isMobile: mobileOS,
-                                            thankYou: inputsObj.thankYou
-                                        }
-                                    }, function (err, data) {
-                                        if (err) {
-                                            console.log(err);
-                                            foodyLoader.detach();
-                                        } else {
-                                            foodyLoader.detach();
-                                            let link = data.data.iframe_url;
-                                            let iframe = '<iframe  runat="server" id="card-pay-frame" src="' + link + '" style="width: 100%;\n' +
-                                                'height: 1035px;\n' +
-                                                'max-height: 1500px;\n' +
-                                                'min-height: 700px;\n' +
-                                                'padding-top: 3%;\n' +
-                                                'border: none;" scrolling="no"></iframe>';
+                                        foodyLoader.attach({topPercentage: 20});
+                                        foodyAjax({
+                                            action: 'foody_start_cardcom_pay_process',
+                                            data: {
+                                                memberData: data_of_member,
+                                                isMobile: mobileOS,
+                                                thankYou: inputsObj.thankYou
+                                            }
+                                        }, function (err, data) {
+                                            if (err) {
+                                                console.log(err);
+                                                foodyLoader.detach();
+                                            } else {
+                                                foodyLoader.detach();
+                                                let link = data.data.iframe_url;
+                                                let iframe = '<iframe  runat="server" id="card-pay-frame" src="' + link + '" style="width: 100%;\n' +
+                                                    'height: 1035px;\n' +
+                                                    'max-height: 1500px;\n' +
+                                                    'min-height: 700px;\n' +
+                                                    'padding-top: 3%;\n' +
+                                                    'border: none;" scrolling="no"></iframe>';
 
 
-                                            $('.cover-section').remove();
-                                            $('.bottom-image').remove();
-                                            $('.form-section').replaceWith(iframe);
-                                            // $('#card-pay-frame').after(mailNotice);
-                                        }
-                                    });
-                                } else {
-                                    validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
+                                                $('.cover-section').remove();
+                                                $('.bottom-image').remove();
+                                                $('.form-section').replaceWith(iframe);
+                                                // $('#card-pay-frame').after(mailNotice);
+                                            }
+                                        });
+                                    } else {
+                                        validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
+                                    }
                                 }
                             });
                             $('#card-pay-frame').load(function () {
@@ -369,7 +363,7 @@ jQuery(document).ready(($) => {
             let foodyLoader = new FoodyLoader({container: $('.coupon-and-price-container'), id: 'coupon-loader'});
             let couponCode = $('#coupon-input').val();
             if (couponCode.length) {
-                $('#credit-card-pay').prop('disabled',true);
+                $('.credit-card-pay').prop('disabled',"true");
                 foodyLoader.attach({topPercentage: 20});
                 foodyAjax({
                     action: 'foody_get_coupon_value',
@@ -397,7 +391,7 @@ jQuery(document).ready(($) => {
                                 'coupon_type': data.data.couponType
                             };
                             foodyLoader.detach();
-                            $('#credit-card-pay').prop('disabled',false);
+                            $('.credit-card-pay').prop('disabled',"false");
                             return;
                         } else {
                             used_coupon_details = {'coupon': null, 'discounted_price': data.data.price};
@@ -407,7 +401,7 @@ jQuery(document).ready(($) => {
                             } else {
                                 $("#coupon-dialog-unavailable").modal({backdrop: true});
                             }
-                            $('#credit-card-pay').prop('disabled',false);
+                            $('.credit-card-pay').prop('disabled',"false");
                         }
                     }
 

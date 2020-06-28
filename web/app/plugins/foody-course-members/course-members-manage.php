@@ -354,7 +354,8 @@ function send_new_course_member_data($member_data, $course_id)
 
 function create_courses_mail_body($member_data)
 {
-    $enable_marketing_text = $member_data['enable_marketing'] == 'true' ? __('מאשר קבלת דואר') : __('לא מאשר קבלת דואר');
+    $enable_marketing_text = $member_data['enable_marketing'] == 'true' ? "TRUE" : 'FALSE';
+//    $enable_marketing_text = $member_data['enable_marketing'] == 'true' ? __('מאשר קבלת דואר') : __('לא מאשר קבלת דואר');
 
     $mail_body = '<p>';
     $mail_body .= 'querystring__UserEmail: ' . $member_data['member_email'];
