@@ -262,7 +262,7 @@ jQuery(document).ready(($) => {
 
                         if ($('.credit-card-pay').length) {
                             $('.credit-card-pay').on('click', function () {
-                                if ($(this).prop('disabled') === "false") {
+                                if (typeof $(this).prop('disabled') == 'undefined' || $(this).prop('disabled') === "false") {
                                     let inputsObj = get_all_form_inputs(this);
                                     let urlParams = getUrlVars();
 
@@ -363,7 +363,7 @@ jQuery(document).ready(($) => {
             let foodyLoader = new FoodyLoader({container: $('.coupon-and-price-container'), id: 'coupon-loader'});
             let couponCode = $('#coupon-input').val();
             if (couponCode.length) {
-                $('.credit-card-pay').prop('disabled',"true");
+                $('.credit-card-pay').prop('disabled', "true");
                 foodyLoader.attach({topPercentage: 20});
                 foodyAjax({
                     action: 'foody_get_coupon_value',
@@ -391,7 +391,7 @@ jQuery(document).ready(($) => {
                                 'coupon_type': data.data.couponType
                             };
                             foodyLoader.detach();
-                            $('.credit-card-pay').prop('disabled',"false");
+                            $('.credit-card-pay').prop('disabled', "false");
                             return;
                         } else {
                             used_coupon_details = {'coupon': null, 'discounted_price': data.data.price};
@@ -401,7 +401,7 @@ jQuery(document).ready(($) => {
                             } else {
                                 $("#coupon-dialog-unavailable").modal({backdrop: true});
                             }
-                            $('.credit-card-pay').prop('disabled',"false");
+                            $('.credit-card-pay').prop('disabled', "false");
                         }
                     }
 
