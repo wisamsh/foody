@@ -36,7 +36,7 @@ function update_course_member_by_credit_low_profile_code_and_cloumns($id, $table
 {
     global $wpdb;
 
-    $member_data = get_columns_data_by_paymentMethodId($id, ['member_id','status'], true);
+    $member_data = get_columns_data_by_paymentMethodId($id, ['member_id', 'status'], true);
     $member_id = isset($member_id->member_id) ? $member_data->member_id : $member_data;
     $trans_status = isset($member_id->status) ? $member_data->status : false;
 
@@ -96,10 +96,10 @@ function foody_cardcom_refund_process()
             $result = cardcom_do_curl($var, $request_url, 'GET');
             parse_str($result, $responseArray);
 
-            // update member in table with transaction id
-            update_course_member_by_id_and_cloumns($member_id, ['status' => 'refunded']);
 
             if ($responseArray['ResponseCode'] == "0") {
+                // update member in table with transaction id
+                update_course_member_by_id_and_cloumns($member_id, ['status' => 'refunded']);
                 return wp_send_json_success(['msg' => __('העסקה עם מזהה ' . $member_id . ' בוטלה')]);
             } else {
                 wp_send_json_error(array(
@@ -241,10 +241,10 @@ function check_cardcom_purchase($low_profile_code)
                     return 'transaction completed with Internal Deal Number: ' . $output['InternalDealNumber'];
 
                 } else { # some error , send email to developer
-                    if($output['DealResponse'] != 0){
+                    if ($output['DealResponse'] != 0) {
                         //rejected => cancel
                         $canceled = update_course_member_by_id_and_cloumns($member_data['member_id'], ['status' => 'canceled']);
-                        if($canceled && !empty($member_data['coupon'])){
+                        if ($canceled && !empty($member_data['coupon'])) {
                             $coupon_details = get_coupon_data_by_name($_GET['coupon']);
                             if ($coupon_details['type'] == 'unique') {
                                 $coupon_code_array = explode('_', $coupon_details['coupon_code']);
@@ -267,7 +267,7 @@ function check_cardcom_purchase($low_profile_code)
         $admin_email = get_option('foody_email_for_courses_invoices');
         if (!empty($to)) {
             $subject = 'CardCom Error';
-            $body = $mail_body = '<p> error: ' . __('חסרים פרטי הגישה לקארדקום') .'</p>';
+            $body = $mail_body = '<p> error: ' . __('חסרים פרטי הגישה לקארדקום') . '</p>';
             $headers = array('Content-Type: text/html; charset=UTF-8');
             wp_mail($to, $subject, $body, $headers);
             return wp_mail($admin_email, $subject, $body, $headers);
