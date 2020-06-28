@@ -230,6 +230,14 @@ function check_cardcom_purchase($low_profile_code)
                         'coupon' => $member_data['coupon']
                     ], $member_data['course_id']);
 
+                    Rav_Messer_API_Handler::add_member_to_rav_messer(
+                        [
+                            'member_email' => $member_data['email'],
+                            'course_name' => $member_data['course_name'],
+                            'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
+                            'phone' => $member_data['phone']
+                        ]);
+
                     foody_create_and_send_purchase_invoice([
                         'client_email' => $member_data['email'],
                         'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
