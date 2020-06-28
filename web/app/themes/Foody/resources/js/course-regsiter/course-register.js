@@ -8,12 +8,6 @@ let mobileOS = foodyGlobals.isMobile ? getMobileOperatingSystem() : false;
 
 jQuery(document).ready(($) => {
     if ($('#coupon-input').length) {
-        // let dialogElm = '<div id="coupon-dialog-expired" title="Basic dialog">\n' +
-        //     '  <p>פג תוקף הקופון</p>\n' +
-        //     '</div>\n' +
-        //     '<div id="coupon-dialog-unavailable" title="Basic dialog">\n' +
-        //     '  <p>קופון לא זמין</p>\n' +
-        //     '</div>';
         let expiredModalElm = createAlertModal('coupon-dialog-expired', 'פג תוקף הקופון');
         let unavailableModalElm = createAlertModal('coupon-dialog-unavailable', 'הקופון לא זמין');
 
@@ -375,6 +369,7 @@ jQuery(document).ready(($) => {
             let foodyLoader = new FoodyLoader({container: $('.coupon-and-price-container'), id: 'coupon-loader'});
             let couponCode = $('#coupon-input').val();
             if (couponCode.length) {
+                $('#credit-card-pay').prop('disabled',true);
                 foodyLoader.attach({topPercentage: 20});
                 foodyAjax({
                     action: 'foody_get_coupon_value',
@@ -394,22 +389,25 @@ jQuery(document).ready(($) => {
                             $('#redeem-coupon').remove();
                             $('#course-price')[0].innerText = discounted_price;
                             $('.coupon-line')[0].innerText = "ערך הקופון ירד מהמחיר";
-                            foodyLoader.detach();
+
                             used_coupon_details = {
                                 'coupon': couponCode,
                                 'discounted_price': discounted_price,
                                 'coupon_id': data.data.id,
                                 'coupon_type': data.data.couponType
                             };
+                            foodyLoader.detach();
+                            $('#credit-card-pay').prop('disabled',false);
                             return;
                         } else {
+                            used_coupon_details = {'coupon': null, 'discounted_price': data.data.price};
                             foodyLoader.detach();
                             if (typeof data.data.msg != 'undefined' && data.data.msg == 'expired') {
                                 $("#coupon-dialog-expired").modal({backdrop: true});
                             } else {
                                 $("#coupon-dialog-unavailable").modal({backdrop: true});
                             }
-                            used_coupon_details = {'coupon': null, 'discounted_price': data.data.price};
+                            $('#credit-card-pay').prop('disabled',false);
                         }
                     }
 

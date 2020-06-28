@@ -37,8 +37,8 @@ function update_course_member_by_credit_low_profile_code_and_cloumns($id, $table
     global $wpdb;
 
     $member_data = get_columns_data_by_paymentMethodId($id, ['member_id', 'status'], true);
-    $member_id = isset($member_id->member_id) ? $member_data->member_id : $member_data;
-    $trans_status = isset($member_id->status) ? $member_data->status : false;
+    $member_id = isset($member_data->member_id) ? $member_data->member_id : $member_data;
+    $trans_status = isset($member_data->status) ? $member_data->status : false;
 
     if ($member_id && $trans_status && $trans_status == 'pending') {
         $table_name = $wpdb->prefix . 'foody_courses_members';
@@ -88,21 +88,12 @@ function foody_cardcom_refund_process()
     $cardcom_credentials = get_cardcom_credentials();
 
     if ($cardcom_credentials !== false) {
-        // for debugging
-        $myfile = fopen("cardcomLogs.txt", "w");
-        //
-
         $var = null;
         $request_url = 'https://secure.cardcom.solutions/Interface/LowProfile.aspx?terminalnumber=' . $cardcom_credentials['terminal_number'] . '&name=' . $cardcom_credentials['user_name'] . '&pass=' . $cardcom_credentials['password'] . '&internalDealNumber=' . $internal_deal_number;
 
         try {
             $result = cardcom_do_curl($var, $request_url, 'GET');
             parse_str($result, $responseArray);
-
-            // for debugging
-            fwrite($myfile, (string)$result);
-            fclose($myfile);
-            //
 
             if ($responseArray['ResponseCode'] == "0") {
                 // update member in table with transaction id
