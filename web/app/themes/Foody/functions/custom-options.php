@@ -35,6 +35,11 @@ register_setting( 'general', 'foody_terminal_number_for_cardcom_api');
 register_setting( 'general', 'foody_username_for_cardcom_api');
 register_setting( 'general', 'foody_password_for_cardcom_api');
 
+register_setting( 'general', 'foody_courses_admin_email');
+register_setting( 'general', 'foody_consumer_key_for_ravmesser');
+register_setting( 'general', 'foody_consumer_secret_for_ravmesser');
+register_setting( 'general', 'foody_access_token_for_ravmesser');
+register_setting( 'general', 'foody_token_secret_for_ravmesser');
 register_setting( 'reading', 'foody_show_post_views' );
 register_setting( 'reading', 'foody_show_followers_count_views' );
 
@@ -237,6 +242,12 @@ function foody_custom_options() {
     add_settings_field( 'foody_password_for_cardcom_api', __( 'סיסמא עבור API קארדקום', 'foody' ), 'foody_password_for_cardcom_api_callback', 'general', 'foody_general_settings' );
 
 
+    //Rav Messer credentials
+    add_settings_field( 'foody_consumer_key_for_ravmesser', __( 'מפתח צרכן עבור API רב מסר', 'foody' ), 'foody_consumer_key_for_ravmesser_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_consumer_secret_for_ravmesser', __( 'סוד צרכן עבור API רב מסר', 'foody' ), 'foody_consumer_secret_for_ravmesser_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_access_token_for_ravmesser', __( 'טוקן עבור API רב מסר', 'foody' ), 'foody_access_token_for_ravmesser_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_token_secret_for_ravmesser', __( 'סוד לטוקן עבור API רב מסר', 'foody' ), 'foody_token_secret_for_ravmesser_callback', 'general', 'foody_general_settings' );
+
     //Green invoice email - courses
     add_settings_field( 'foody_email_for_courses_invoices', __( 'מייל עבור חשבונית קורסים', 'foody' ), 'foody_email_for_courses_invoices_callback', 'general', 'foody_general_settings' );
 
@@ -395,6 +406,33 @@ function foody_password_for_cardcom_api_callback(){
     $options = get_option( 'foody_password_for_cardcom_api', false );
     echo '<input value="' . $options . '"type="text" id="foody_password_for_cardcom_api" name="foody_password_for_cardcom_api">';
 }
+
+function foody_courses_admin_email_callback(){
+    $options = get_option( 'foody_courses_admin_email', false );
+    echo '<input value="' . $options . '"type="text" id="foody_courses_admin_email" name="foody_courses_admin_email">';
+}
+
+function foody_consumer_key_for_ravmesser_callback(){
+    $options = get_option( 'foody_consumer_key_for_ravmesser', false );
+    echo '<input value="' . $options . '"type="text" id="foody_consumer_key_for_ravmesser" name="foody_consumer_key_for_ravmesser">';
+}
+
+function foody_consumer_secret_for_ravmesser_callback(){
+    $options = get_option( 'foody_consumer_secret_for_ravmesser', false );
+    echo '<input value="' . $options . '"type="text" id="foody_consumer_secret_for_ravmesser" name="foody_consumer_secret_for_ravmesser">';
+}
+
+function foody_access_token_for_ravmesser_callback(){
+    $options = get_option( 'foody_access_token_for_ravmesser', false );
+    echo '<input value="' . $options . '"type="text" id="foody_access_token_for_ravmesser" name="foody_access_token_for_ravmesser">';
+}
+
+
+function foody_token_secret_for_ravmesser_callback(){
+    $options = get_option( 'foody_token_secret_for_ravmesser', false );
+    echo '<input value="' . $options . '"type="text" id="foody_token_secret_for_ravmesser" name="foody_token_secret_for_ravmesser">';
+}
+
 
 //add_filter('manage_edit-units_columns', 'add_units_columns');
 //
