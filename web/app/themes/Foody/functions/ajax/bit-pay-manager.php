@@ -234,17 +234,6 @@ function do_delete_bit_transaction($paymentInitiationId, $coupon_details)
             $response_json = bit_api_request("DELETE", $request_url_path);
 
             if (isset($response_json->requestStatusCode) && $response_json->requestStatusCode == 2) {
-//                update_pre_pay_bit_data_by_id_and_cloumns($bit_transaction_id_and_status->bit_trans_id, ['status' => 'canceled']);
-//                update_course_member_by_id_and_cloumns($member_id->member_id, ['status' => 'canceled']);
-//                if (isset($coupon_details['id']) && !is_array($coupon_details['id']) && isset($coupon_details['type']) && isset($coupon_details['coupon_code'])) {
-////                    if ($coupon_details['type'] == 'unique') {
-////                        $coupon_code_array = explode('_', $coupon_details['coupon_code']);
-////                        update_unique_coupon_to_free($coupon_details['id'], $coupon_code_array[1]);
-////                        //update_unique_coupon_to_free_in_all_coupons_table($coupon_details['id']);
-////                    } else {
-////                        update_general_coupon_to_free($coupon_details['id']);
-////                    }
-////                }
                 update_tables_after_cancellation($bit_transaction_id_and_status->bit_trans_id, $member_id->member_id, $coupon_details);
             } else {
                 $error_handler = new Bit_API_Error_handler($response_json);
@@ -263,7 +252,6 @@ function update_tables_after_cancellation($bit_trans_id, $member_id, $coupon_det
         if ($coupon_details['type'] == 'unique') {
             $coupon_code_array = explode('_', $coupon_details['coupon_code']);
             update_unique_coupon_to_free($coupon_details['id'], $coupon_code_array[1]);
-            //update_unique_coupon_to_free_in_all_coupons_table($coupon_details['id']);
         } else {
             update_general_coupon_to_free($coupon_details['id']);
         }

@@ -59,9 +59,6 @@ if (isset($_GET)) {
             $coupon_name = get_coupon_by_credit_low_profile_code($credit_low_profile_code);
             check_cardcom_purchase($credit_low_profile_code);
         }
-        else{
-            // todo: set pending to canceled, and if coupon unused
-        }
     }
 }
 get_header();
