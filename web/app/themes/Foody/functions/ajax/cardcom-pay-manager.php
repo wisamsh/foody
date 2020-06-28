@@ -84,6 +84,7 @@ function foody_cardcom_refund_process()
 {
     $internal_deal_number = $_POST['internalDealNumber'];
     $member_id = $_POST['memberID'];
+    $member_data = get_member_data_for_finish_process($_POST['internalDealNumber'], false);
 
     $cardcom_credentials = get_cardcom_credentials();
 
@@ -98,6 +99,16 @@ function foody_cardcom_refund_process()
             if ($responseArray['ResponseCode'] == "0") {
                 // update member in table with transaction id
                 update_course_member_by_id_and_cloumns($member_id, ['status' => 'refunded']);
+                // remove member user from course at Rav Messer
+                Rav_Messer_API_Handler::remove_member_from_rav_messer_list([
+                        'member_email' => $member_data->member_email,
+                        'course_name' => $member_data->course_name,
+                        'name' => $member_data->first_name . ' ' . $member_data->last_name,
+                        'phone' =>  $member_data->phone,
+                    ]);
+
+                // send refund invoice
+                foody_create_and_send_refund_invoice($member_data);
                 return wp_send_json_success(['msg' => __('העסקה עם מזהה ' . $member_id . ' בוטלה')]);
             } else {
                 wp_send_json_error(array(

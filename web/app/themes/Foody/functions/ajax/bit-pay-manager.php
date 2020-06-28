@@ -112,19 +112,24 @@ function get_member_data_for_finish_process($payment_initiation_id, $is_credit_c
     $member_data = [];
     $member_results = get_columns_data_by_paymentMethodId($payment_initiation_id, ['*'], $is_credit_card);
     if (!empty($member_results)) {
-        $member_data = [
-            'id' => $member_results->member_id,
-            'email' => $member_results->member_id,
-            'phone' => $member_results->phone,
-            'first_name' => $member_results->first_name,
-            'last_name' => $member_results->last_name,
-            'course_name' => $member_results->course_name,
-            'course_id' => $member_results->course_id,
-            'price' => $member_results->price_paid,
-            'enable_marketing' => $member_results->marketing_status == 1 ? 'true' : 'false',
-            'coupon' => $member_results->coupon,
-            'status' => $member_results->status
-        ];
+        if ($is_credit_card) {
+            $member_data = [
+                'id' => $member_results->member_id,
+                'email' => $member_results->member_id,
+                'phone' => $member_results->phone,
+                'first_name' => $member_results->first_name,
+                'last_name' => $member_results->last_name,
+                'course_name' => $member_results->course_name,
+                'course_id' => $member_results->course_id,
+                'price' => $member_results->price_paid,
+                'enable_marketing' => $member_results->marketing_status == 1 ? 'true' : 'false',
+                'coupon' => $member_results->coupon,
+                'status' => $member_results->status
+            ];
+        }
+        else{
+            $member_data = $member_results;
+        }
     }
     return $member_data;
 }
