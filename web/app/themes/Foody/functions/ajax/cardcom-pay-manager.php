@@ -88,6 +88,9 @@ function foody_cardcom_refund_process()
     $cardcom_credentials = get_cardcom_credentials();
 
     if ($cardcom_credentials !== false) {
+        // for debugging
+        $myfile = fopen("cardcomLogs.txt", "w");
+        //
 
         $var = null;
         $request_url = 'https://secure.cardcom.solutions/Interface/LowProfile.aspx?terminalnumber=' . $cardcom_credentials['terminal_number'] . '&name=' . $cardcom_credentials['user_name'] . '&pass=' . $cardcom_credentials['password'] . '&internalDealNumber=' . $internal_deal_number;
@@ -96,6 +99,10 @@ function foody_cardcom_refund_process()
             $result = cardcom_do_curl($var, $request_url, 'GET');
             parse_str($result, $responseArray);
 
+            // for debugging
+            fwrite($myfile, (string)$result);
+            fclose($myfile);
+            //
 
             if ($responseArray['ResponseCode'] == "0") {
                 // update member in table with transaction id
