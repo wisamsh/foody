@@ -102,7 +102,7 @@ function foody_cardcom_refund_process()
 
             if ($responseArray['ResponseCode'] == "0") {
                 // update member in table with transaction id
-                update_course_member_by_id_and_cloumns($member_id, ['status' => 'refunded', 'transaction_id' => $responseArray['internalDealNumber']]);
+                update_course_member_by_id_and_cloumns($member_id, ['status' => 'refunded', 'transaction_id' => $responseArray['InternalDealNumber']]);
                 // remove member user from course at Rav Messer
                 Rav_Messer_API_Handler::remove_member_from_rav_messer_list([
                         'member_email' => $member_data->member_email,
