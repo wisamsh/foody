@@ -30,6 +30,11 @@ register_setting( 'general', 'foody_client_id_for_bit');
 register_setting( 'general', 'foody_client_secret_for_bit');
 register_setting( 'general', 'foody_identifier_trans_bit');
 register_setting( 'general', 'foody_email_for_courses_invoices');
+
+register_setting( 'general', 'foody_terminal_number_for_cardcom_api');
+register_setting( 'general', 'foody_username_for_cardcom_api');
+register_setting( 'general', 'foody_password_for_cardcom_api');
+
 register_setting( 'general', 'foody_courses_admin_email');
 register_setting( 'general', 'foody_consumer_key_for_ravmesser');
 register_setting( 'general', 'foody_consumer_secret_for_ravmesser');
@@ -219,7 +224,7 @@ function foody_custom_options() {
     add_settings_field( 'foody_title_for_extra_content', __( 'כותרת לתוכן נוסף', 'foody' ), 'foody_title_for_extra_content_callback', 'general', 'foody_general_settings' );
 
     // mail for courses data
-    add_settings_field( 'foody_courses_admin_email', __( 'מייל אדמין - מערכת הקורסים', 'foody' ), 'foody_courses_admin_email_callback', 'general', 'foody_general_settings' );
+//    add_settings_field( 'foody_mail_for_courses_data', __( 'מייל להעברת מידע על משתמש קורס חדש', 'foody' ), 'foody_mail_for_courses_data_callback', 'general', 'foody_general_settings' );
 
     // GreenInvoice credentials
     add_settings_field( 'foody_client_id_for_invoice', __( 'מזהה עבור מחולל חשבוניות', 'foody' ), 'foody_client_id_for_invoice_callback', 'general', 'foody_general_settings' );
@@ -230,6 +235,12 @@ function foody_custom_options() {
     add_settings_field( 'foody_client_id_for_bit', __( 'מזהה עבור API ביט', 'foody' ), 'foody_client_id_for_bit_callback', 'general', 'foody_general_settings' );
     add_settings_field( 'foody_client_secret_for_bit', __( 'סיסמא עבור API ביט', 'foody' ), 'foody_client_secret_for_bit_callback', 'general', 'foody_general_settings' );
     add_settings_field( 'foody_identifier_trans_bit', __( 'מזהה עבור טרנזקציות', 'foody' ), 'foody_identifier_trans_bit_callback', 'general', 'foody_general_settings' );
+
+    // Cardcom credentials
+    add_settings_field( 'foody_terminal_number_for_cardcom_api', __( 'מספר טרמינל(מסוף) עבור API קארדקום', 'foody' ), 'foody_terminal_number_for_cardcom_api_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_username_for_cardcom_api', __( 'שם משתמש עבור API קארדקום', 'foody' ), 'foody_username_for_cardcom_api_callback', 'general', 'foody_general_settings' );
+    add_settings_field( 'foody_password_for_cardcom_api', __( 'סיסמא עבור API קארדקום', 'foody' ), 'foody_password_for_cardcom_api_callback', 'general', 'foody_general_settings' );
+
 
     //Rav Messer credentials
     add_settings_field( 'foody_consumer_key_for_ravmesser', __( 'מפתח צרכן עבור API רב מסר', 'foody' ), 'foody_consumer_key_for_ravmesser_callback', 'general', 'foody_general_settings' );
@@ -379,6 +390,21 @@ function foody_email_for_courses_invoices_callback(){
 function foody_subscription_key_for_bit_callback(){
     $options = get_option( 'foody_subscription_key_for_bit', false );
     echo '<input value="' . $options . '"type="text" id="foody_subscription_key_for_bit" name="foody_subscription_key_for_bit">';
+}
+
+function foody_terminal_number_for_cardcom_api_callback(){
+    $options = get_option( 'foody_terminal_number_for_cardcom_api', false );
+    echo '<input value="' . $options . '"type="text" id="foody_terminal_number_for_cardcom_api" name="foody_terminal_number_for_cardcom_api">';
+}
+
+function foody_username_for_cardcom_api_callback(){
+    $options = get_option( 'foody_username_for_cardcom_api', false );
+    echo '<input value="' . $options . '"type="text" id="foody_username_for_cardcom_api" name="foody_username_for_cardcom_api">';
+}
+
+function foody_password_for_cardcom_api_callback(){
+    $options = get_option( 'foody_password_for_cardcom_api', false );
+    echo '<input value="' . $options . '"type="text" id="foody_password_for_cardcom_api" name="foody_password_for_cardcom_api">';
 }
 
 function foody_courses_admin_email_callback(){

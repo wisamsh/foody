@@ -22,10 +22,12 @@ if (isset($_GET)) {
         $payment_method = isset($_GET['payment_method']) ? $_GET['payment_method'] : false;
         $payment_status = $payment_method && isset($_GET['status']) ? $_GET['status'] : false;
         $payment_initiation_id = $payment_method && isset($_GET['paymentInitiation']) ? $_GET['paymentInitiation'] : false;
+        $credit_low_profile_code = isset($_GET['lowprofilecode']) ? $_GET['lowprofilecode'] : false;
+        $canceled = $credit_low_profile_code && isset($_GET['canceled']) ? $_GET['canceled'] : false;
         $has_course = true;
-        if(strpos($course_id, ',') != false){
-            $params = explode(',' , $course_id);
-            if(is_array($params) && isset($params[0])  && isset($params[1])){
+        if (strpos($course_id, ',') != false) {
+            $params = explode(',', $course_id);
+            if (is_array($params) && isset($params[0]) && isset($params[1])) {
                 $course_id = $params[0];
                 $payment_initiation_id = $params[1];
             }
@@ -37,24 +39,26 @@ if (isset($_GET)) {
         }
     }
 
-    if (wp_is_mobile()) {
-        if ($payment_initiation_id) {
-            $status = get_payment_status($payment_initiation_id);
-            if (!is_array($status)) {
-                if($status == 2 || $status == 3 || $status == 7){
-                    $payment_method = true;
-                    $payment_status = 'canceled';
-                }
-                else{
-                    $payment_method = true;
-                    $payment_status = 'approved';
-                }
+    if (wp_is_mobile() && $payment_initiation_id) {
+        $status = get_payment_status($payment_initiation_id);
+        if (!is_array($status)) {
+            if ($status == 2 || $status == 3 || $status == 7) {
+                $payment_method = true;
+                $payment_status = 'canceled';
+            } else {
+                $payment_method = true;
+                $payment_status = 'approved';
             }
         }
     }
 
-    if($payment_initiation_id){
+    if ($payment_initiation_id) {
         $coupon_name = get_coupon_by_payment_initiation_id($payment_initiation_id);
+    } elseif ($credit_low_profile_code){
+        if(!$canceled) {
+            $coupon_name = get_coupon_by_credit_low_profile_code($credit_low_profile_code);
+            check_cardcom_purchase($credit_low_profile_code);
+        }
     }
 }
 get_header();
@@ -83,7 +87,7 @@ get_header();
                     </div>
                 <?php endif; ?>
             <?php } ?>
-            <div class="container container-max-880">
+            <div id="thank-you-container" class="container container-max-880">
                 <?php if (function_exists('bootstrap_breadcrumb')): ?>
 
                     <?php bootstrap_breadcrumb(); ?>
@@ -112,7 +116,8 @@ get_header();
                             $page_content_class = $canceled ? 'cancellation-text' : 'thank-you-text';
                             ?>
                             <p class="<?php echo $page_content_class; ?>" data-course="<?php echo $course_name; ?>"
-                               data-host="<?php echo $host_name; ?>" data-coupon-used="<?php echo $coupon_name; ?>"> <?php echo $content; ?> </p>
+                               data-host="<?php echo $host_name; ?>"
+                               data-coupon-used="<?php echo $coupon_name; ?>"> <?php echo $content; ?> </p>
                             <?php
                             $has_content = true;
                         }

@@ -299,8 +299,8 @@ function members_table_admin_page()
             ], $course_id);
         }
 
-        $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, coupon, purchase_date, note, status, payment_method_id)
-                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$course_id','$price_paid','$organization','$payment_method','$transaction_id','$coupon','$purchase_date','$note','$status','-1')");
+        $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, credit_low_profile_code, coupon, purchase_date, note, status, payment_method_id)
+                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$course_id','$price_paid','$organization','$payment_method','$transaction_id','' ,'$coupon','$purchase_date','$note','$status','-1')");
         echo "<script>location.replace('admin.php?page=foody-course-members%2Fcourse-members-manage.php');</script>";
     }
 
@@ -354,7 +354,8 @@ function send_new_course_member_data($member_data, $course_id)
 
 function create_courses_mail_body($member_data)
 {
-    $enable_marketing_text = $member_data['enable_marketing'] == 'true' ? __('מאשר קבלת דואר') : __('לא מאשר קבלת דואר');
+    $enable_marketing_text = $member_data['enable_marketing'] == 'true' ? "TRUE" : 'FALSE';
+//    $enable_marketing_text = $member_data['enable_marketing'] == 'true' ? __('מאשר קבלת דואר') : __('לא מאשר קבלת דואר');
 
     $mail_body = '<p>';
     $mail_body .= 'querystring__UserEmail: ' . $member_data['member_email'];

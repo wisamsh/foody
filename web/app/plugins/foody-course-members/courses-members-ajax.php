@@ -1,11 +1,8 @@
 <?php
-function foody_add_course_member_to_table($custom_val)
+function foody_add_course_member_to_table($custom_val, $return_id = false)
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_members';
-
-    //if we got here -> bit payment confirmed
-//    $custom_val = $_POST['memberData'];
 
     $member_email = $custom_val['email'];
     $first_name = $custom_val['first_name'];
@@ -22,28 +19,25 @@ function foody_add_course_member_to_table($custom_val)
     $status = $custom_val['status'];
     $payment_method_id = $custom_val['payment_method_id'];
 
-
-
-    $member_added_to_table = $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, coupon, purchase_date, note, status, payment_method_id)
-                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$course_id','$price_paid','','$payment_method','$transaction_id','$coupon','$purchase_date','','$status','$payment_method_id')");
-
-//    if($mail_sent && $member_added_to_table) {
-//        wp_send_json_success();
-//    }
-    if($member_added_to_table) {
-        return true;
+    if($payment_method == __('כרטיס אשראי')) {
+        $member_added_to_table = $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, credit_low_profile_code, coupon, purchase_date, note, status, payment_method_id)
+                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$course_id','$price_paid','','$payment_method','-1','$transaction_id','$coupon','$purchase_date','','$status','$payment_method_id')");
     }
-//    elseif ($mail_sent){
-//        wp_send_json_success();
-//    }
-//    elseif ($member_added_to_table){
-//        wp_send_json_success();
-//    }
     else{
-//        wp_send_json_error();
+        $member_added_to_table = $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, credit_low_profile_code, coupon, purchase_date, note, status, payment_method_id)
+                VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$course_id','$price_paid','','$payment_method','$transaction_id','-1','$coupon','$purchase_date','','$status','$payment_method_id')");
+    }
+
+
+    $member_id = $wpdb->insert_id;
+
+    if ($member_added_to_table) {
+        if ($return_id) {
+            return $member_id;
+        } else {
+            return true;
+        }
+    } else {
         return false;
     }
 }
-
-//add_action('wp_ajax_foody_nopriv_add_course_member_to_table', 'foody_add_course_member_to_table');
-//add_action('wp_ajax_foody_add_course_member_to_table', 'foody_add_course_member_to_table');

@@ -47,6 +47,8 @@ class Courses_Members_List extends WP_List_Table
             $note = $member->note;
             $status = $member->status;
 
+            $payment_method_refund  = $payment_method == __('ביט') || $payment_method == __('כרטיס אשראי');
+
             $members_list[$member_id] = array(
                 'ID' => $member_id,
                 'מייל' => $member_email,
@@ -60,7 +62,7 @@ class Courses_Members_List extends WP_List_Table
                 'מס׳ טרנזקציה' => $transaction_id,
                 'קופון' => $coupon,
                 'תאריך רכישה' => $purchase_date,
-                'זיכוי' => !empty($transaction_id) && $status == 'paid' && $payment_method == 'ביט' ? '<div onclick="getRefund(\''. $transaction_id . '\');" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
+                'זיכוי' => $payment_method_refund && !empty($transaction_id) && $transaction_id != -1 && $status == 'paid' ? '<div data-member-id="'. $member_id .'" data-method="'. $payment_method .'" onclick="getRefund(\''. $transaction_id . '\', this);" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
                 'סטאטוס' => $status,
                 'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
@@ -91,6 +93,7 @@ class Courses_Members_List extends WP_List_Table
             $note = $search_result['note'];
             $status = $search_result['status'];
 
+            $payment_method_refund  = $payment_method == __('ביט') || $payment_method == __('כרטיס אשראי');
 
             $members_list[$member_id] = array(
                 'ID' => $member_id,
@@ -105,7 +108,7 @@ class Courses_Members_List extends WP_List_Table
                 'מס׳ טרנזקציה' => $transaction_id,
                 'קופון' => $coupon,
                 'תאריך רכישה' => $purchase_date,
-                'זיכוי' => !empty($transaction_id) && $status == 'paid' && $payment_method == 'ביט' ? '<div onclick="getRefund(\''. $transaction_id . '\');" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
+                'זיכוי' => $payment_method_refund && !empty($transaction_id) && $transaction_id != -1 && $status == 'paid' ? '<div data-member-id="'. $member_id .'" data-method="'. $payment_method .'" onclick="getRefund(\''. $transaction_id . '\', this);" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
                 'סטאטוס' => $status,
                 'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'

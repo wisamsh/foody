@@ -35,6 +35,8 @@ require_once get_template_directory() . '/functions/ajax/load-more.php';
 require_once get_template_directory() . '/functions/ajax/edit-user.php';
 require_once get_template_directory() . '/functions/ajax/page-load.php';
 require_once get_template_directory() . '/functions/ajax/bit-pay-manager.php';
+require_once get_template_directory() . '/functions/ajax/cardcom-pay-manager.php';
+//require_once get_template_directory() . '/functions/ajax/cardcom-response-listener.php';
 //require_once get_template_directory() . '/functions/ajax/duplicate-titles.php';
 
 function foody_parse_checkbox( $key ) {

@@ -640,7 +640,7 @@ class Foody_Course_new
         }
 
         /** title and host */
-        $title_div = '<div class="course-title">' . $course_title . '</div>';
+        $title_div = '<h1 class="course-title">' . $course_title . '</h1>';
         $host_div = '<h2 class="course-host-name">' . $host_name . '</h2>';
         $text_div = '<div class="course-cover-text">' . $page_cover_text . '</div>';
 

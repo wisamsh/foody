@@ -108,24 +108,6 @@ function foody_bit_refund_process()
 add_action('wp_ajax_nopriv_foody_bit_refund_process', 'foody_bit_refund_process');
 add_action('wp_ajax_foody_bit_refund_process', 'foody_bit_refund_process');
 
-function get_member_data_for_finish_process($payment_initiation_id)
-{
-    $member_data = [];
-    $member_results = get_columns_data_by_paymentMethodId($payment_initiation_id, ['*']);
-    if (!empty($member_results)) {
-        $member_data = [
-            'email' => $member_results->email,
-            'phone' => $member_results->phone,
-            'first_name' => $member_results->first_name,
-            'last_name ' => $member_results->last_name,
-            'course_name' => $member_results->course_name,
-            'price' => $member_results->price_paid,
-            'enable_marketing' => $member_results->marketing_status == 1 ? 'true' : 'false',
-            'coupon' => $member_results->coupon
-        ];
-    }
-    return $member_data;
-}
 
 function get_payment_status($payment_initiation_id, $member_data = null)
 {
@@ -276,7 +258,6 @@ function update_tables_after_cancellation($bit_trans_id, $member_id, $coupon_det
         if ($coupon_details['type'] == 'unique') {
             $coupon_code_array = explode('_', $coupon_details['coupon_code']);
             update_unique_coupon_to_free($coupon_details['id'], $coupon_code_array[1]);
-            //update_unique_coupon_to_free_in_all_coupons_table($coupon_details['id']);
         } else {
             update_general_coupon_to_free($coupon_details['id']);
         }
@@ -352,7 +333,7 @@ function bit_api_request($request_type, $request_url_path, $request_body = null)
         $subscription_key = get_option('foody_subscription_key_for_bit', false);
 
         $curl_data_array = array(
-            CURLOPT_URL => "https://api.bankhapoalim.co.il/payments/bit/v2" . $request_url_path,
+            CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2" . $request_url_path,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -401,12 +382,18 @@ function get_pre_pay_bit_data_by_paymentInitiationId($paymentInitiationId)
 
 }
 
-function get_columns_data_by_paymentMethodId($payment_method_id, $columns)
+function get_columns_data_by_paymentMethodId($payment_method_id, $columns, $is_credit_card = false, $credit_search_by = 'credit_low_profile_code')
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_members';
     $columns_to_return = implode(',', $columns);
-    $query = "SELECT {$columns_to_return} FROM {$table_name} where payment_method_id = " . $payment_method_id;
+
+    if($is_credit_card || $credit_search_by !='credit_low_profile_code') {
+        $query = "SELECT {$columns_to_return} FROM {$table_name} where ". $credit_search_by ." = " . '"' . $payment_method_id . '"';
+    }
+    else{
+        $query = "SELECT {$columns_to_return} FROM {$table_name} where payment_method_id = " . $payment_method_id ;
+    }
 
     $result = $wpdb->get_results($query);
     $result = is_array($result) && isset($result[0]) ? $result[0] : $result;
@@ -628,6 +615,24 @@ function get_coupon_by_payment_initiation_id($payment_initiation_id)
     return $coupon;
 }
 
+function get_coupon_by_credit_low_profile_code($credit_low_profile_code)
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'foody_courses_members';
+    $coupon= '';
+
+    $query = "SELECT coupon FROM {$table_name} where credit_low_profile_code ='" . $credit_low_profile_code . "'";
+
+    $results = $wpdb->get_results($query);
+    $results = is_array($results) ? $results : [];
+
+    foreach ($results as $result) {
+        $coupon = isset($result->coupon) ? $result->coupon : '';
+    }
+
+    return $coupon;
+}
+
 function add_merchantURL_to_mobile_schema($mobile_schema, $thank_you_page, $paymentInitiationId)
 {
     $add_to_schema = '';
@@ -733,7 +738,7 @@ class Bit_Token_Manager
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.bankhapoalim.co.il/bank/auth/clients/token",
+            CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/bank/auth/clients/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,

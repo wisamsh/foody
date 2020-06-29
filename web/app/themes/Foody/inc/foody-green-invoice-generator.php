@@ -37,7 +37,7 @@ function generate_new_invoice($token, $client_obj, $course_name, $price, $is_ref
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.greeninvoice.co.il/api/v1/documents",
+        CURLOPT_URL => "https://sandbox.d.greeninvoice.co.il/api/v1/documents",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -173,7 +173,7 @@ class Green_Invoice_Token_Manager
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.greeninvoice.co.il/api/v1/account/token",
+            CURLOPT_URL => "https://sandbox.d.greeninvoice.co.il/api/v1/account/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
