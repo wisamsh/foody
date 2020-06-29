@@ -31,12 +31,12 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
     function the_featured_content()
     {
         $image = get_field('cover_image', "user_{$this->author->ID}");
-        if($image) {
+//        if($image) {
             ?>
             <img src=" <?php echo $image['url'] ?> " alt="<?php echo $this->author->display_name ?>">
 
             <?php
-        }
+//        }
     }
 
     function the_sidebar_content()
