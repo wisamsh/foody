@@ -105,11 +105,11 @@ function foody_cardcom_refund_process()
                 update_course_member_by_id_and_cloumns($member_id, ['status' => 'refunded', 'transaction_id' => $responseArray['InternalDealNumber']]);
                 // remove member user from course at Rav Messer
                 Rav_Messer_API_Handler::remove_member_from_rav_messer_list([
-                        'member_email' => $member_data->member_email,
-                        'course_name' => $member_data->course_name,
-                        'name' => $member_data->first_name . ' ' . $member_data->last_name,
-                        'phone' =>  $member_data->phone,
-                    ]);
+                    'member_email' => $member_data->member_email,
+                    'course_name' => $member_data->course_name,
+                    'name' => $member_data->first_name . ' ' . $member_data->last_name,
+                    'phone' => $member_data->phone,
+                ]);
 
                 // send refund invoice
                 foody_create_and_send_refund_invoice($member_data);
@@ -262,17 +262,15 @@ function check_cardcom_purchase($low_profile_code)
                     return 'transaction completed with Internal Deal Number: ' . $output['InternalDealNumber'];
 
                 } else { # some error , send email to developer
-                    if ($output['DealResponse'] != 0) {
-                        //rejected => cancel
-                        $canceled = update_course_member_by_id_and_cloumns($member_data['member_id'], ['status' => 'canceled']);
-                        if ($canceled && !empty($member_data['coupon'])) {
-                            $coupon_details = get_coupon_data_by_name($_GET['coupon']);
-                            if ($coupon_details['type'] == 'unique') {
-                                $coupon_code_array = explode('_', $coupon_details['coupon_code']);
-                                update_unique_coupon_to_free($coupon_details['id'], $coupon_code_array[1]);
-                            } else {
-                                update_general_coupon_to_free($coupon_details['id']);
-                            }
+                    //rejected => cancel
+                    $canceled = update_course_member_by_id_and_cloumns($member_data['member_id'], ['status' => 'canceled']);
+                    if ($canceled && !empty($member_data['coupon'])) {
+                        $coupon_details = get_coupon_data_by_name($_GET['coupon']);
+                        if ($coupon_details['type'] == 'unique') {
+                            $coupon_code_array = explode('_', $coupon_details['coupon_code']);
+                            update_unique_coupon_to_free($coupon_details['id'], $coupon_code_array[1]);
+                        } else {
+                            update_general_coupon_to_free($coupon_details['id']);
                         }
                     }
                 }
@@ -354,8 +352,7 @@ function get_member_data_for_finish_process($payment_initiation_id, $is_credit_c
                 'coupon' => $member_results->coupon,
                 'status' => $member_results->status
             ];
-        }
-        else{
+        } else {
             $member_data = $member_results;
         }
     }
