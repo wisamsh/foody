@@ -14,8 +14,10 @@ $item = $template_args;
 
     <!--    <img src="--><?php //echo $item['image'] ?><!--" alt="--><?php //echo $item['name'] ?><!--">-->
 	<?php
-	if ( ! in_array( $item['type'], [ 'followed_feed_channels' ] ) ) {
-		echo $item['image'];
+	if ( ! in_array( $item['type'], [ 'followed_feed_channels' ] ) || get_page_template_slug() == 'page-templates/profile.php' ) {
+	    if(!empty($item['image'])) {
+            echo $item['image'];
+        }
 	}
 	?>
 
