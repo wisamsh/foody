@@ -45,34 +45,34 @@ jQuery(document).ready(($) => {
 
     // course register thank you page
     if (foodyGlobals['page_template_name'] == "foody-courses-thank-you") {
-        /** page load **/
-        let urlParams ='';
-        let textClass = $('.thank-you-text').length ? '.thank-you-text' : false;
-        textClass = !textClass && $('.cancellation-text').length ? '.cancellation-text' : textClass;
+        if ($('#thank-you-container').length) {
+            /** page load **/
+            let urlParams = '';
+            let textClass = $('.thank-you-text').length ? '.thank-you-text' : false;
+            textClass = !textClass && $('.cancellation-text').length ? '.cancellation-text' : textClass;
 
-        let courseNameThankYou = $(textClass).data('course').length ? $(textClass).data('course') : '';
-        let hostNameThankYou = $(textClass).data('host').length ? $(textClass).data('host') : '';
-        let couponName = $(textClass).data('coupon-used').toString().length ? $(textClass).data('coupon-used').toString() : '';
+            let courseNameThankYou = $(textClass).data('course').length ? $(textClass).data('course') : '';
+            let hostNameThankYou = $(textClass).data('host').length ? $(textClass).data('host') : '';
+            let couponName = $(textClass).data('coupon-used').toString().length ? $(textClass).data('coupon-used').toString() : '';
 
-        if(!foodyGlobals.isMobile) {
-            urlParams = getUrlVars();
-        }
-        else{
-            if($('.foody-payment-bit').length){
-                let _status = $('.thank-you-text').length ? 'approved' :  'canceled';
-                urlParams = {payment_method: 'ביט', status: _status};
+            if (!foodyGlobals.isMobile) {
+                urlParams = getUrlVars();
+            } else {
+                if ($('.foody-payment-bit').length) {
+                    let _status = $('.thank-you-text').length ? 'approved' : 'canceled';
+                    urlParams = {payment_method: 'ביט', status: _status};
+                }
             }
-        }
-        if (typeof urlParams.payment_method != 'undefined' && typeof urlParams.status != 'undefined' && decodeURI(urlParams.payment_method) == 'ביט') {
-            couponName = couponName.length ? couponName : 'ללא קופון';
-            if (urlParams.status == 'approved') {
-                eventCallback('', analyticsCategory, 'רכישה בוצעה בהצלחה (bit)', courseNameThankYou, 'מיקום', 'מסך סיום תהליך רכישה', hostNameThankYou, couponName);
+            if (typeof urlParams.payment_method != 'undefined' && typeof urlParams.status != 'undefined' && decodeURI(urlParams.payment_method) == 'ביט') {
+                couponName = couponName.length ? couponName : 'ללא קופון';
+                if (urlParams.status == 'approved') {
+                    eventCallback('', analyticsCategory, 'רכישה בוצעה בהצלחה (bit)', courseNameThankYou, 'מיקום', 'מסך סיום תהליך רכישה', hostNameThankYou, couponName);
+                } else {
+                    eventCallback('', analyticsCategory, 'הודעת כישלון בביצוע תשלום (bit)', courseNameThankYou, 'מיקום', 'מסך סיום תהליך רכישה', hostNameThankYou, couponName);
+                }
+            } else {
+                eventCallback('', analyticsCategory, 'רכישה בוצעה בהצלחה', courseNameThankYou, 'מיקום', 'מסך סיום תהליך רכישה', hostNameThankYou);
             }
-            else{
-                eventCallback('', analyticsCategory, 'הודעת כישלון בביצוע תשלום (bit)', courseNameThankYou, 'מיקום', 'מסך סיום תהליך רכישה', hostNameThankYou, couponName);
-            }
-        } else {
-            eventCallback('', analyticsCategory, 'רכישה בוצעה בהצלחה', courseNameThankYou, 'מיקום', 'מסך סיום תהליך רכישה', hostNameThankYou);
         }
     }
 

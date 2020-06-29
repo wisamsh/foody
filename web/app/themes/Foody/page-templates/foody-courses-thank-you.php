@@ -87,7 +87,7 @@ get_header();
                     </div>
                 <?php endif; ?>
             <?php } ?>
-            <div class="container container-max-880">
+            <div id="thank-you-container" class="container container-max-880">
                 <?php if (function_exists('bootstrap_breadcrumb')): ?>
 
                     <?php bootstrap_breadcrumb(); ?>

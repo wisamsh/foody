@@ -7,6 +7,7 @@ let used_coupon_details = null;
 let mobileOS = foodyGlobals.isMobile ? getMobileOperatingSystem() : false;
 
 jQuery(document).ready(($) => {
+    window.scroll(0,0);
     if ($('#coupon-input').length) {
         let expiredModalElm = createAlertModal('coupon-dialog-expired', 'פג תוקף הקופון');
         let unavailableModalElm = createAlertModal('coupon-dialog-unavailable', 'הקופון לא זמין');
@@ -313,11 +314,12 @@ jQuery(document).ready(($) => {
                                                     'max-height: 1500px;\n' +
                                                     'min-height: 700px;\n' +
                                                     'padding-top: 3%;\n' +
-                                                    'border: none;" scrolling="no"></iframe>';
+                                                    'border: none;" onload="scroll(0,0);" scrolling="no"></iframe>';
 
 
                                                 $('.cover-section').remove();
                                                 $('.bottom-image').remove();
+                                                window.scroll(0,0);
                                                 $('.form-section').replaceWith(iframe);
                                                 // $('#card-pay-frame').after(mailNotice);
                                             }
@@ -408,6 +410,10 @@ jQuery(document).ready(($) => {
                 });
             }
         }
+    }
+
+    if(foodyGlobals.page_template_name = "foody-courses-thank-you"){
+        window.scroll(0,0);
     }
 });
 
