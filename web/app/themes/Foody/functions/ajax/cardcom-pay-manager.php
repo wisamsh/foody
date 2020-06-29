@@ -199,6 +199,84 @@ function generate_dynamic_cardcom_form($added_id, $member_data, $thank_you_page)
     }
 }
 
+function check_cardcom_purchase_from_notifier($operation_response_params)
+{
+    $low_profile_code = !empty($operation_response_params['lowprofilecode']) ? $operation_response_params['lowprofilecode'] : false;
+    $operation_response = !empty($operation_response_params['OperationResponse']) || $operation_response_params['OperationResponse'] === "0" ? $operation_response_params['OperationResponse'] : false;
+    $internalDealNumber = !empty($operation_response_params['InternalDealNumber']) ? $operation_response_params['InternalDealNumber'] : false;
+
+    if ($low_profile_code !== false && ($operation_response !== false || $operation_response_params['OperationResponse'] === '0')) {
+        $member_data = get_member_data_for_finish_process($low_profile_code, true);
+        if (!empty($member_data)) {
+            if (isset($member_data['status']) && $member_data['status'] == 'pending') {
+                if (($operation_response == '0' || $operation_response === 0)) {
+
+                    $coupon_details = get_coupon_data_by_name($member_data['coupon']);
+
+                    if ($internalDealNumber) {
+                        $paid = update_course_member_by_id_and_cloumns($member_data['id'], ['transaction_id' => $internalDealNumber, 'status' => 'paid']);
+                    } else {
+                        $paid = update_course_member_by_id_and_cloumns($member_data['id'], ['status' => 'paid']);
+                    }
+
+                    // update coupon to used
+                    update_coupon_to_used($coupon_details);
+
+                    // send mail to zappier
+                    send_new_course_member_data([
+                        'member_email' => $member_data['email'],
+                        'phone' => $member_data['phone'],
+                        'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
+                        'course_name' => $member_data['course_name'],
+                        'price' => $member_data['price'],
+                        'enable_marketing' => $member_data['enable_marketing'],
+                        'coupon' => $member_data['coupon']
+                    ], $member_data['course_id']);
+
+                    Rav_Messer_API_Handler::add_member_to_rav_messer(
+                        [
+                            'member_email' => $member_data['email'],
+                            'course_name' => $member_data['course_name'],
+                            'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
+                            'phone' => $member_data['phone']
+                        ]);
+
+                    foody_create_and_send_purchase_invoice([
+                        'client_email' => $member_data['email'],
+                        'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
+                        'phone' => $member_data['phone']
+                    ], $member_data['course_name'], $member_data['price']);
+                    if ($paid) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else { # some error
+                    //rejected => cancel
+                    $canceled = update_course_member_by_id_and_cloumns($member_data['id'], ['status' => 'canceled']);
+                    if ($canceled) {
+                        $coupon_details = get_coupon_data_by_name($member_data['coupon']);
+                        if (isset($coupon_details['type'])) {
+                            if ($coupon_details['type'] == 'unique') {
+                                $coupon_code_array = explode('_', $coupon_details['coupon_code']);
+                                update_unique_coupon_to_free($coupon_details['id'], $coupon_code_array[1]);
+                            } else {
+                                update_general_coupon_to_free($coupon_details['id']);
+                            }
+                        }
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+    return false;
+}
+
 //Todo : what happens when user didnt finish purchase and didnt canceled
 function check_cardcom_purchase($low_profile_code)
 {
@@ -264,19 +342,18 @@ function check_cardcom_purchase($low_profile_code)
                 } else { # some error , send email to developer
                     //rejected => cancel
                     $canceled = update_course_member_by_id_and_cloumns($member_data['member_id'], ['status' => 'canceled']);
-                    if ($canceled && !empty($member_data['coupon'])) {
-                        $coupon_details = get_coupon_data_by_name($_GET['coupon']);
-                        if ($coupon_details['type'] == 'unique') {
-                            $coupon_code_array = explode('_', $coupon_details['coupon_code']);
-                            update_unique_coupon_to_free($coupon_details['id'], $coupon_code_array[1]);
-                        } else {
-                            update_general_coupon_to_free($coupon_details['id']);
+                    if ($canceled) {
+                        $coupon_details = get_coupon_data_by_name($member_data['coupon']);
+                        if (isset($coupon_details['type'])) {
+                            if ($coupon_details['type'] == 'unique') {
+                                $coupon_code_array = explode('_', $coupon_details['coupon_code']);
+                                update_unique_coupon_to_free($coupon_details['id'], $coupon_code_array[1]);
+                            } else {
+                                update_general_coupon_to_free($coupon_details['id']);
+                            }
                         }
                     }
                 }
-                $return_code = http_response_code(200); // this will get previous response code and set a new one to 200
-                $return_code = http_response_code();
-                return $return_code;
             } catch (Exception $exception) {
                 // todo
             }

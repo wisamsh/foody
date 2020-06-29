@@ -8,6 +8,11 @@ $_SERVER['REQUEST_URI'] = '/';
 require_once '../../../../../../web/wp/wp-load.php';
 //require_once '../web/wp/wp-load.php';
 
-if(is_array($_GET) && isset($_GET['lowprofilecode'])){
-    check_cardcom_purchase($_GET['lowprofilecode']);
+if(is_array($_GET) && isset($_GET['lowprofilecode']) && isset($_GET['OperationResponse'])){
+    $updated = check_cardcom_purchase_from_notifier($_GET);
+    if($updated) {
+        $return_code = http_response_code(200); // this will get previous response code and set a new one to 200
+        $return_code = http_response_code();
+        return $return_code;
+    }
 }
