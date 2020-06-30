@@ -14,6 +14,7 @@ function foody_start_bit_pay_process()
     if ($pending_payment_id != false && isset($_POST['memberData']) && isset($_POST['isMobile']) && isset($_POST['thankYou'])) {
         try {
             $single_payment_ids = do_single_payment_bit($pending_payment_id, $_POST['memberData'], $_POST['isMobile'], $_POST['thankYou']);
+
             wp_send_json_success(['single_payment_ids' => $single_payment_ids]);
         } catch (Exception $e) {
             update_pre_pay_bit_data_by_id_and_cloumns($pending_payment_id, ['status' => 'canceled']);
@@ -235,7 +236,7 @@ function do_delete_bit_transaction($paymentInitiationId, $coupon_details)
     $bit_transaction_id_and_status = get_id_and_status_by_paymentInitiationId($paymentInitiationId);
     if (isset($bit_transaction_id_and_status->bit_trans_id) && isset($bit_transaction_id_and_status->status)) {
         $member_id = get_columns_data_by_paymentMethodId($bit_transaction_id_and_status->bit_trans_id, ['member_id', 'price_paid']);
-        if ($bit_transaction_id_and_status->status == 'pending' && isset($member_id->member_id)) {
+        if (($bit_transaction_id_and_status->status == 'pending' ||$bit_transaction_id_and_status->status == 'in_progress') && isset($member_id->member_id)) {
             $request_url_path = '/single-payments/' . $paymentInitiationId;
 
             $response_json = bit_api_request("DELETE", $request_url_path);
