@@ -68,7 +68,8 @@ function foody_bit_refund_process()
                 $response_json = bit_api_request("POST", $request_url_path, $request_body);
 
                 if (isset($response_json->requestStatusCode) && isset($response_json->issuerAuthorizationNumber)) {
-                    $is_refunded = bit_handle_status_code($response_json->requestStatusCode);
+
+                    $is_refunded = bit_handle_status_code($response_json->requestStatusCode, ['member_id' => $member_data->member_id]);
                     if ($is_refunded) {
                         // update bit pre paid table
                         update_pre_pay_bit_data_by_id_and_cloumns($bit_transaction_id_and_status->bit_trans_id, ['status' => 'refunded', 'authorization_number' => $response_json->issuerAuthorizationNumber]);
