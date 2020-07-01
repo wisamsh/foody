@@ -15,6 +15,13 @@ function foody_start_bit_pay_process()
         try {
             $single_payment_ids = do_single_payment_bit($pending_payment_id, $_POST['memberData'], $_POST['isMobile'], $_POST['thankYou']);
 
+            // set wp-cron job to start
+            // Make sure this event hasn't been scheduled
+            if (!wp_next_scheduled('foody_bit_fetch_status_processes')) {
+                // Schedule the event
+                wp_schedule_event(time(), 'one_minute', 'foody_bit_fetch_status_processes');
+            }
+
             wp_send_json_success(['single_payment_ids' => $single_payment_ids]);
         } catch (Exception $e) {
             update_pre_pay_bit_data_by_id_and_cloumns($pending_payment_id, ['status' => 'canceled']);
@@ -213,8 +220,7 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
                 $status = get_payment_status($payment_initiation_id, $member_data);
                 if ($status == 11) {
                     bit_handle_status_code($status, $payment_initiation_id, $member_data);
-                }
-                else{
+                } else {
                     $table_name = $wpdb->prefix . 'foody_courses_members';
                     $update_query = "UPDATE {$table_name} SET status='pending' where member_id ={$member_data['member_id']}  AND status = 'in_progress'";
                     $wpdb->query($update_query);
@@ -236,7 +242,7 @@ function do_delete_bit_transaction($paymentInitiationId, $coupon_details)
     $bit_transaction_id_and_status = get_id_and_status_by_paymentInitiationId($paymentInitiationId);
     if (isset($bit_transaction_id_and_status->bit_trans_id) && isset($bit_transaction_id_and_status->status)) {
         $member_id = get_columns_data_by_paymentMethodId($bit_transaction_id_and_status->bit_trans_id, ['member_id', 'price_paid']);
-        if (($bit_transaction_id_and_status->status == 'pending' ||$bit_transaction_id_and_status->status == 'in_progress') && isset($member_id->member_id)) {
+        if (($bit_transaction_id_and_status->status == 'pending' || $bit_transaction_id_and_status->status == 'in_progress') && isset($member_id->member_id)) {
             $request_url_path = '/single-payments/' . $paymentInitiationId;
 
             $response_json = bit_api_request("DELETE", $request_url_path);
@@ -390,11 +396,10 @@ function get_columns_data_by_paymentMethodId($payment_method_id, $columns, $is_c
     $table_name = $wpdb->prefix . 'foody_courses_members';
     $columns_to_return = implode(',', $columns);
 
-    if($is_credit_card || $credit_search_by !='credit_low_profile_code') {
-        $query = "SELECT {$columns_to_return} FROM {$table_name} where ". $credit_search_by ." = " . '"' . $payment_method_id . '"';
-    }
-    else{
-        $query = "SELECT {$columns_to_return} FROM {$table_name} where payment_method_id = " . $payment_method_id ;
+    if ($is_credit_card || $credit_search_by != 'credit_low_profile_code') {
+        $query = "SELECT {$columns_to_return} FROM {$table_name} where " . $credit_search_by . " = " . '"' . $payment_method_id . '"';
+    } else {
+        $query = "SELECT {$columns_to_return} FROM {$table_name} where payment_method_id = " . $payment_method_id;
     }
 
     $result = $wpdb->get_results($query);
@@ -621,7 +626,7 @@ function get_coupon_by_credit_low_profile_code($credit_low_profile_code)
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_members';
-    $coupon= '';
+    $coupon = '';
 
     $query = "SELECT coupon FROM {$table_name} where credit_low_profile_code ='" . $credit_low_profile_code . "'";
 
@@ -698,7 +703,13 @@ function bit_fetch_status_process()
         } catch (Exception $e) {
             // handle error
         }
+
 //        }
+    }
+
+    $pending_payments = $wpdb->get_results($query);
+    if(empty($pending_payments)){
+        wp_clear_scheduled_hook("foody_bit_fetch_status_processes");
     }
 }
 
