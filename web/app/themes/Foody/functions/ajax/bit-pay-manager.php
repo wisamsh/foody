@@ -15,12 +15,12 @@ function foody_start_bit_pay_process()
         try {
             $single_payment_ids = do_single_payment_bit($pending_payment_id, $_POST['memberData'], $_POST['isMobile'], $_POST['thankYou']);
 
-            // set wp-cron job to start
-            // Make sure this event hasn't been scheduled
-            if (!wp_next_scheduled('foody_bit_fetch_status_processes')) {
-                // Schedule the event
-                wp_schedule_event(time(), 'one_minute', 'foody_bit_fetch_status_processes');
-            }
+//            // set wp-cron job to start
+//            // Make sure this event hasn't been scheduled
+//            if (!wp_next_scheduled('foody_bit_fetch_status_processes')) {
+//                // Schedule the event
+//                wp_schedule_event(time(), 'one_minute', 'foody_bit_fetch_status_processes');
+//            }
 
             wp_send_json_success(['single_payment_ids' => $single_payment_ids]);
         } catch (Exception $e) {
@@ -667,8 +667,10 @@ function bit_fetch_status_process()
     $current_server = FOODY_INSTANCE_NUM;
     $table_name = $wpdb->prefix . 'foody_courses_members';
     $payment_method = __('ביט');
-    $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}' AND server_number= {$current_server}";
-    $update_query = "UPDATE {$table_name} SET status='in_progress' where member_id > 0 AND status = 'pending' AND payment_method = '{$payment_method}' AND server_number= {$current_server}";
+    $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}'";
+    $update_query = "UPDATE {$table_name} SET status='in_progress' where member_id > 0 AND status = 'pending' AND payment_method = '{$payment_method}'";
+//    $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}' AND server_number= {$current_server}";
+//    $update_query = "UPDATE {$table_name} SET status='in_progress' where member_id > 0 AND status = 'pending' AND payment_method = '{$payment_method}' AND server_number= {$current_server}";
 
     $pending_payments = $wpdb->get_results($query);
     $wpdb->query($update_query);
@@ -690,8 +692,8 @@ function bit_fetch_status_process()
             'transaction_id' => $pending_payment->transaction_id,
             'coupon' => $pending_payment->coupon,
             'status' => $pending_payment->status,
-            'payment_method_id' => $pending_payment->payment_method_id,
-            'server_number' => $pending_payment->server_number
+            'payment_method_id' => $pending_payment->payment_method_id
+//            'server_number' => $pending_payment->server_number
         ];
 
         $coupon_details = get_coupon_data_by_name($pending_payment->coupon);
@@ -709,10 +711,10 @@ function bit_fetch_status_process()
 //        }
     }
 
-    $pending_payments = $wpdb->get_results($query);
-    if(empty($pending_payments)){
-        wp_clear_scheduled_hook("foody_bit_fetch_status_processes");
-    }
+//    $pending_payments = $wpdb->get_results($query);
+//    if(empty($pending_payments)){
+//        wp_clear_scheduled_hook("foody_bit_fetch_status_processes");
+//    }
 }
 
 add_action('foody_bit_fetch_status_processes', 'bit_fetch_status_process');
