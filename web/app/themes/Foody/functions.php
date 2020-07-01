@@ -870,17 +870,17 @@ function foody_setInterval($func, $milliseconds)
     }
 }
 
-//function bit_recurring_fetch_transaction_status()
-//{
-//    if (defined('FOODY_BIT_FETCH_STATUS_PROCESS')) {
-//        // Make sure this event hasn't been scheduled
-//        if (!wp_next_scheduled('foody_bit_fetch_status_processes')) {
-//            // Schedule the event
-//            wp_schedule_event(time(), 'one_minute', 'foody_bit_fetch_status_processes');
-//        }
-//    }
-//}
-//add_action('init', 'bit_recurring_fetch_transaction_status');
+function bit_recurring_fetch_transaction_status()
+{
+    if (defined('FOODY_BIT_FETCH_STATUS_PROCESS')) {
+        // Make sure this event hasn't been scheduled
+        if (!wp_next_scheduled('foody_bit_fetch_status_processes')) {
+            // Schedule the event
+            wp_schedule_event(time(), 'one_minute', 'foody_bit_fetch_status_processes');
+        }
+    }
+}
+add_action('init', 'bit_recurring_fetch_transaction_status');
 
 add_filter( 'body_class','foody_body_add_bit_class', 10, 1 );
 function foody_body_add_bit_class( $classes ) {
