@@ -341,7 +341,7 @@ function bit_api_request($request_type, $request_url_path, $request_body = null)
         $subscription_key = get_option('foody_subscription_key_for_bit', false);
 
         $curl_data_array = array(
-            CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2" . $request_url_path,
+            CURLOPT_URL => "https://api.bankhapoalim.co.il/payments/bit/v2" . $request_url_path,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -462,7 +462,7 @@ function update_course_member_by_id_and_cloumns($id, $table_columns)
 
 function get_certificate_data()
 {
-    $pfx_path = get_template_directory() . '/inc/certificates/partner12-pre-poalim-api.pfx';
+    $pfx_path = get_template_directory() . '/inc/certificates/partner12-poalim-api.pfx';
     $pfx_pass = 'Aa123456';
     $pfx_values = [];
 
@@ -753,7 +753,7 @@ class Bit_Token_Manager
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/bank/auth/clients/token",
+            CURLOPT_URL => "https://api.bankhapoalim.co.il/bank/auth/clients/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
