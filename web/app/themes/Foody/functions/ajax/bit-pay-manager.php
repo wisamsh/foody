@@ -341,7 +341,7 @@ function bit_api_request($request_type, $request_url_path, $request_body = null)
         $subscription_key = get_option('foody_subscription_key_for_bit', false);
 
         $curl_data_array = array(
-            CURLOPT_URL => "https://api.bankhapoalim.co.il/payments/bit/v2" . $request_url_path,
+            CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/payments/bit/v2" . $request_url_path,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -462,7 +462,7 @@ function update_course_member_by_id_and_cloumns($id, $table_columns)
 
 function get_certificate_data()
 {
-    $pfx_path = get_template_directory() . '/inc/certificates/partner12-poalim-api.pfx';
+    $pfx_path = get_template_directory() . '/inc/certificates/partner12-pre-poalim-api.pfx';
     $pfx_pass = 'Aa123456';
     $pfx_values = [];
 
@@ -664,10 +664,11 @@ function bit_fetch_status_process()
 {
 //    if (FOODY_BIT_FETCH_STATUS_PROCESS) {
     global $wpdb;
+    $current_server = FOODY_INSTANCE_NUM;
     $table_name = $wpdb->prefix . 'foody_courses_members';
     $payment_method = __('ביט');
-    $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}'";
-    $update_query = "UPDATE {$table_name} SET status='in_progress' where member_id > 0 AND status = 'pending' AND payment_method = '{$payment_method}'";
+    $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}' AND server_number= {$current_server}";
+    $update_query = "UPDATE {$table_name} SET status='in_progress' where member_id > 0 AND status = 'pending' AND payment_method = '{$payment_method}' AND server_number= {$current_server}";
 
     $pending_payments = $wpdb->get_results($query);
     $wpdb->query($update_query);
@@ -689,12 +690,13 @@ function bit_fetch_status_process()
             'transaction_id' => $pending_payment->transaction_id,
             'coupon' => $pending_payment->coupon,
             'status' => $pending_payment->status,
-            'payment_method_id' => $pending_payment->payment_method_id
+            'payment_method_id' => $pending_payment->payment_method_id,
+            'server_number' => $pending_payment->server_number
         ];
 
         $coupon_details = get_coupon_data_by_name($pending_payment->coupon);
 
-//            foody_query_process_for_bit_status($pending_payment->transaction_id, $data_of_member, $coupon_details);
+//       foody_query_process_for_bit_status($pending_payment->transaction_id, $data_of_member, $coupon_details);
         try {
             $status = get_payment_status($pending_payment->transaction_id, $data_of_member);
             if (!is_array($status)) {
@@ -751,7 +753,7 @@ class Bit_Token_Manager
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.bankhapoalim.co.il/bank/auth/clients/token",
+            CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/bank/auth/clients/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
