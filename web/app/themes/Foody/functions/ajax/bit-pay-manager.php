@@ -663,8 +663,8 @@ function add_merchantURL_to_mobile_schema($mobile_schema, $thank_you_page, $paym
 function bit_fetch_status_process()
 {
 //    if (FOODY_BIT_FETCH_STATUS_PROCESS) {
+//    $current_server = FOODY_INSTANCE_NUM;
     global $wpdb;
-    $current_server = FOODY_INSTANCE_NUM;
     $table_name = $wpdb->prefix . 'foody_courses_members';
     $payment_method = __('ביט');
     $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}'";
