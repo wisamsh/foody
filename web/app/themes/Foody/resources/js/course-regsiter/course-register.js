@@ -484,6 +484,7 @@ function checkCouponAndGetCouponAndPrice(used_coupon_details, price) {
 function removeSpacesAndDashFromPhone(phone) {
     let phoneResult = phone;
     if (phone.indexOf("-") >= 0) {
+        
         phoneResult = phone.replace('-', '');
         phoneResult = phoneResult.replace(/\s/g, '');
     }
@@ -534,13 +535,13 @@ function getMobileOperatingSystem() {
 }
 
 function getRoundedPrice(price) {
-    let roundedPrice = price.toFixed(1);
+    let roundedPriceRes = price.toFixed(1);
 
-    if (roundedPrice < 1) {
-        roundedPrice = 1;
+    if (roundedPriceRes < 1) {
+        roundedPriceRes = 1;
     }
 
-    return roundedPrice;
+    return roundedPriceRes;
 }
 
 function createAlertModal(id, msg) {
