@@ -68,7 +68,7 @@ function foody_bit_refund_process()
                 $response_json = bit_api_request("POST", $request_url_path, $request_body);
 
                 if (isset($response_json->requestStatusCode) && isset($response_json->issuerAuthorizationNumber)) {
-                    $is_refunded = bit_handle_status_code($response_json->requestStatusCode);
+                    $is_refunded = bit_handle_status_code($response_json->requestStatusCode, ['member_id' => $member_data->member_id]);
                     if ($is_refunded) {
                         // update bit pre paid table
                         update_pre_pay_bit_data_by_id_and_cloumns($bit_transaction_id_and_status->bit_trans_id, ['status' => 'refunded', 'authorization_number' => $response_json->issuerAuthorizationNumber]);
@@ -229,8 +229,7 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
                 $status = get_payment_status($payment_initiation_id, $member_data);
                 if ($status == 11) {
                     bit_handle_status_code($status, $payment_initiation_id, $member_data);
-                }
-                else{
+                } else {
                     $table_name = $wpdb->prefix . 'foody_courses_members';
                     $update_query = "UPDATE {$table_name} SET status='pending' where member_id ={$member_data['member_id']}  AND status = 'in_progress'";
                     $wpdb->query($update_query);
@@ -252,7 +251,8 @@ function do_delete_bit_transaction($paymentInitiationId, $coupon_details)
     $bit_transaction_id_and_status = get_id_and_status_by_paymentInitiationId($paymentInitiationId);
     if (isset($bit_transaction_id_and_status->bit_trans_id) && isset($bit_transaction_id_and_status->status)) {
         $member_id = get_columns_data_by_paymentMethodId($bit_transaction_id_and_status->bit_trans_id, ['member_id', 'price_paid']);
-        if ($bit_transaction_id_and_status->status == 'pending' && isset($member_id->member_id)) {
+        if (($bit_transaction_id_and_status->status == 'pending' || $bit_transaction_id_and_status->status == 'in_progress') && isset($member_id->member_id)) {
+//        if ($bit_transaction_id_and_status->status == 'pending' && isset($member_id->member_id)) {
             $request_url_path = '/single-payments/' . $paymentInitiationId;
 
             $response_json = bit_api_request("DELETE", $request_url_path);
