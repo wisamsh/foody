@@ -16,15 +16,17 @@ function foody_create_and_send_refund_invoice($client_obj)
     $client_phone = isset($client_obj->phone) && !empty($client_obj->phone) ? $client_obj->phone : false;
     $price = isset($client_obj->price_paid) && !empty($client_obj->price_paid) ? $client_obj->price_paid : false;
     $course_name = isset($client_obj->course_name) && !empty($client_obj->course_name) ? $client_obj->course_name : false;
+    $payment_method = isset($client_obj->payment_method) && !empty($client_obj->payment_method) ? $client_obj->payment_method : false;
 
-    if($client_email && $client_name && $client_phone && $price && $course_name) {
+    if ($client_email && $client_name && $client_phone && $price && $course_name && $payment_method) {
         $token = Green_Invoice_Token_Manager::get_token();
         if ($token != false) {
             // generate invoice
             $response = generate_new_invoice($token, [
                 'client_email' => $client_email,
                 'name' => $client_name,
-                'phone' => $client_phone
+                'phone' => $client_phone,
+                'payment_method' => $payment_method
             ], $course_name, $price, true);
         }
     }
@@ -38,6 +40,7 @@ function generate_new_invoice($token, $client_obj, $course_name, $price, $is_ref
 
     curl_setopt_array($curl, array(
         CURLOPT_URL => "https://api.greeninvoice.co.il/api/v1/documents",
+//        CURLOPT_URL => "https://sandbox.d.greeninvoice.co.il/api/v1/documents",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -66,7 +69,9 @@ function get_invoice_request_body($client_obj, $course_name, $price, $is_refund 
     $admin_email = get_option('foody_email_for_courses_invoices');
     $invoice_type = $is_refund ? 330 : 320;
     $current_date = date("Y-m-d", time());
-    $text_for_description = $is_refund ? __('חשבונית לזיכוי רכישת הקורס: ״'). $course_name . '״' :   __('חשבונית מס קבלה לרכישת הקורס: ״'). $course_name . '״';
+    $text_for_description = $is_refund ? __('חשבונית לזיכוי רכישת הקורס: ״') . $course_name . '״' : __('חשבונית מס קבלה לרכישת הקורס: ״') . $course_name . '״';
+    $is_bit = $client_obj['payment_method'] == 'ביט';
+    $payment_type = $is_bit ? 10 : 3;
 
     $requset_body = [
         "description" => $text_for_description,
@@ -115,7 +120,7 @@ function get_invoice_request_body($client_obj, $course_name, $price, $is_refund 
         "payment" => [
             [
                 "date" => $current_date,
-                "type" => 10,
+                "type" => $payment_type,
                 "price" => $price,
                 "currency" => "ILS",
                 "currencyRate" => 1,
@@ -125,7 +130,7 @@ function get_invoice_request_body($client_obj, $course_name, $price, $is_refund 
                 "chequeNum" => "",
                 "accountId" => "",
                 "transactionId" => "",
-                "appType" => "1",
+                "appType" => $is_bit ? "1" : "",
                 "subType" => "",
                 "cardType" => "",
                 "cardNum" => "",
@@ -174,6 +179,7 @@ class Green_Invoice_Token_Manager
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.greeninvoice.co.il/api/v1/account/token",
+//            CURLOPT_URL => "https://sandbox.d.greeninvoice.co.il/api/v1/account/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,

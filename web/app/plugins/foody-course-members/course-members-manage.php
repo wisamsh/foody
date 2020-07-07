@@ -297,6 +297,14 @@ function members_table_admin_page()
                 'enable_marketing' => $enable_marketing,
                 'coupon' => $coupon
             ], $course_id);
+
+            Rav_Messer_API_Handler::add_member_to_rav_messer(
+                [
+                    'member_email' => $member_email,
+                    'course_name' => $course_name,
+                    'name' => $first_name . ' ' . $last_name,
+                    'phone' => $phone
+                ]);
         }
 
         $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, credit_low_profile_code, coupon, purchase_date, note, status, payment_method_id)

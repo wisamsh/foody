@@ -244,7 +244,8 @@ function check_cardcom_purchase_from_notifier($operation_response_params)
                     foody_create_and_send_purchase_invoice([
                         'client_email' => $member_data['email'],
                         'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
-                        'phone' => $member_data['phone']
+                        'phone' => $member_data['phone'],
+                        'payment_method' => $member_data['payment_method']
                     ], $member_data['course_name'], $member_data['price']);
                     if ($paid) {
                         return true;
@@ -334,7 +335,8 @@ function check_cardcom_purchase($low_profile_code)
                     foody_create_and_send_purchase_invoice([
                         'client_email' => $member_data['email'],
                         'name' => $member_data['first_name'] . ' ' . $member_data['last_name'],
-                        'phone' => $member_data['phone']
+                        'phone' => $member_data['phone'],
+                        'payment_method' => $member_data['payment_method']
                     ], $member_data['course_name'], $member_data['price']);
 
                     return 'transaction completed with Internal Deal Number: ' . $output['InternalDealNumber'];
@@ -425,6 +427,7 @@ function get_member_data_for_finish_process($payment_initiation_id, $is_credit_c
                 'course_name' => $member_results->course_name,
                 'course_id' => $member_results->course_id,
                 'price' => $member_results->price_paid,
+                'payment_method' => $member_results->payment_method,
                 'enable_marketing' => $member_results->marketing_status == 1 ? 'true' : 'false',
                 'coupon' => $member_results->coupon,
                 'status' => $member_results->status

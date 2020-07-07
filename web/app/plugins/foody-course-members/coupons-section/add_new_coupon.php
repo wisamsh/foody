@@ -99,8 +99,8 @@ $general_coupons_list = get_all_unused_general_coupons_names();
                 </div>
                 <hr>
                 <div class="col-2 p-3">
-                    <label for="invoice-desc" class="font-weight-bold pl-2">תיאור לחשבונית<span class="required-astrix">*</span></label>
-                    <input class="form-control" name="invoice_desc" id="invoice-desc" type="text" required>
+                    <label for="invoice-desc" class="font-weight-bold pl-2">תיאור לחשבונית</label>
+                    <input class="form-control" name="invoice_desc" id="invoice-desc" type="text">
                 </div>
                 <hr>
                 <div class="col-2 pt-5 text-center">
