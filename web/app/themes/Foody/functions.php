@@ -663,7 +663,7 @@ function order_search_by_posttype($orderby, $wp_query)
     if ((isset($wp_query->query['post_type']) && $wp_query->query['post_type'] == 'acf-field') || (isset($_REQUEST['sort']) && $_REQUEST['sort'] != '')) {
         return $orderby;
     }
-    if ($wp_query->is_search || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more') || (isset($_POST['action']) && $_POST['action'] == 'foody_filter')))) :
+    if ($wp_query->is_search || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more' &&  (!isset($_POST['context']) || $_POST['context'] != 'category')) || (isset($_POST['action']) && $_POST['action'] == 'foody_filter')))) :
         global $wpdb;
         $orderby =
             "
