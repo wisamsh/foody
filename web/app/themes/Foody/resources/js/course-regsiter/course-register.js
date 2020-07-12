@@ -195,27 +195,6 @@ jQuery(document).ready(($) => {
                                                             onApproved: function (details) {
                                                                 //after bit payment confirmed
                                                                 window.location = inputsObj.thankYou + '&payment_method=ביט&status=approved&paymentInitiation=' + bitPaymentInitiationId;
-                                                                // foodyLoader.attach();
-                                                                // foodyAjax({
-                                                                //     action: 'foody_bitcom_transaction_complete',
-                                                                //     data: {
-                                                                //         paymentInitiationId: details.paymentInitiationId,
-                                                                //         coupon: couponAndPriceObj.coupon
-                                                                //     }
-                                                                // }, function (err, data) {
-                                                                //     if (err) {
-                                                                //         alert(err.data.msg);
-                                                                //         location.reload();
-                                                                //     }
-                                                                //     else{
-                                                                //         if(data === 'captured') {
-                                                                //             window.location = inputsObj.thankYou;
-                                                                //         }
-                                                                //         else{
-                                                                //             // todo: pending pay page ...
-                                                                //         }
-                                                                //     }
-                                                                // });
                                                             },
                                                             onCancel: function (details) {
                                                                 // Show a Cancellation Page
@@ -241,19 +220,6 @@ jQuery(document).ready(($) => {
                                             }
                                         }
                                     );
-
-
-                                    /** create invoice after purchase been verified */
-
-                                    // foodyAjax({
-                                    //     action: 'foody_create_and_send_invoice',
-                                    //     data: {
-                                    //     }
-                                    // }, function () {
-                                    //     alert('nice...');
-                                    // });
-
-
                                 } else {
                                     validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
                                 }
@@ -334,28 +300,6 @@ jQuery(document).ready(($) => {
                             })
 
                         }
-// $('#course-register-form input').focusout(function () {
-//     if(!$(this).hasClass('form-checkbox')){
-//         if($(this).hasClass('foody-input-error') && $(this).val().length){
-//             $(this).removeClass('foody-input-error');
-//             $(this).attr('style', 'border-color: #ccc')
-//         }
-//     }
-// });
-
-// $('.thank-you-text').on('load', function () {
-//     $('.invoice-notice').remove();
-// });
-
-// $('#card-pay-frame').on('load',function () {
-//     debugger;
-//     let iFrameID = $('#card-pay-frame');
-//     if(iFrameID.length) {
-//         // here you can make the height, I delete it first, then I make it again
-//         iFrameID.height = "";
-//         iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
-//     }
-// });
                     }
                 }
             }
@@ -411,7 +355,6 @@ jQuery(document).ready(($) => {
             }
         }
     }
-
     if(foodyGlobals.page_template_name = "foody-courses-thank-you"){
         window.scroll(0,0);
     }
@@ -516,11 +459,6 @@ function get_all_form_inputs(button_pressed) {
 
 function getMobileOperatingSystem() {
     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-    // // Windows Phone must come first because its UA also contains "Android"
-    // if (/windows phone/i.test(userAgent)) {
-    //     return "Windows Phone";
-    // }
 
     if (/android/i.test(userAgent)) {
         return "Android";
