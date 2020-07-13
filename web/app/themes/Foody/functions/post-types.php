@@ -559,7 +559,7 @@ function foody_posts_page_script()
                 }
             }
         }
-        if (is_category()){
+        if (is_category()) {
             $referer_outbrain = $referer_facebook = $referer_google = $referer_taboola = get_queried_object();
         }
 
@@ -597,12 +597,12 @@ function foody_posts_page_script()
         }
 
 
-
         /* google pixel */
         $pixel_code_google = get_field('pixel_code_google', $referer_google);
         if (!empty($pixel_code_google)) {
             $pixel_code_google = html_entity_decode($pixel_code_google);
             $pixel_code_google = remove_unnecessary_tags($pixel_code_google);
+            $pixel_code_google = add_script_tags_google($pixel_code_google);
             echo $pixel_code_google;
         }
 
@@ -673,6 +673,62 @@ function remove_unnecessary_tags($pixel_code)
     $pixel_code = str_replace('<!-- Facebook Pixel Code -->', '', $pixel_code);
 
     return $pixel_code;
+}
+
+function add_script_tags_google($pixel_code)
+{
+    $delimiter = '<!--';
+    $opposite_delimiter = '-->';
+    $res_array = [];
+    $changed = false;
+    $counter = 0;
+    $last_pushed= 0;
+
+    $pixel_code = str_replace(['‘','’'], "'", $pixel_code);
+    $splited_code = preg_split("~(" . $delimiter . ")~", $pixel_code, -1, PREG_SPLIT_DELIM_CAPTURE);
+    foreach ($splited_code as $code) {
+        if ($code != $delimiter && !empty($code)) {
+            if (strpos($code, '<script>') == false && strpos($code, '<script') == false) {
+                $splited_sub_code = preg_split("~(". $opposite_delimiter . ")~", $code, -1, PREG_SPLIT_DELIM_CAPTURE);
+                if ($splited_sub_code != false) {
+                    if(isset($splited_sub_code[1]) && $splited_sub_code[1] == $opposite_delimiter){
+                        $splited_sub_code[1] = '-->'. "\r\n" .'<script>';
+                    }
+                    array_push($res_array,implode("", $splited_sub_code));
+                    $last_pushed = count($res_array);
+                    $counter++;
+                }
+
+                $changed = true;
+            }
+            if (strpos($code, '</script>') == false) {
+                if($last_pushed != $counter) {
+                    array_push($res_array, $code."\r\n".'</script>'."\r\n");
+                    $counter++;
+                }
+                else{
+                    $res_array[$last_pushed -1] = $res_array[$last_pushed -1]."\r\n".'</script>'."\r\n";
+                }
+                $changed = true;
+            }
+        } elseif (!empty($code)) {
+            $counter++;
+            array_push($res_array, $code);
+        }
+    }
+    if ($changed) {
+        $pixel_code = '';
+        foreach ($res_array as $code_part) {
+            $pixel_code .= $code_part;
+        }
+    }
+
+    return $pixel_code;
+}
+
+function insertAtPosition($string, $insert, $position)
+{
+    return implode($insert, str_split($string, $position));
 }
 
 function handle_bad_apostrophe($pixel_code)
