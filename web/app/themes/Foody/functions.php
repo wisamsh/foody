@@ -663,7 +663,9 @@ function order_search_by_posttype($orderby, $wp_query)
     if ((isset($wp_query->query['post_type']) && $wp_query->query['post_type'] == 'acf-field') || (isset($_REQUEST['sort']) && $_REQUEST['sort'] != '')) {
         return $orderby;
     }
-    if ($wp_query->is_search || (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more' &&  (!isset($_POST['context']) || $_POST['context'] != 'category')) || (isset($_POST['action']) && $_POST['action'] == 'foody_filter')))) :
+    if ($wp_query->is_search ||
+        (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more' && (!isset($_POST['context']) || $_POST['context'] != 'category')) ||
+                (isset($_POST['action']) && $_POST['action'] == 'foody_filter' && (isset($_POST['data']) && (!isset($_POST['data']['context']) || $_POST['data']['context'] != "category")))))) :
         global $wpdb;
         $orderby =
             "
@@ -722,7 +724,7 @@ function foody_is_ios()
 add_action('init', 'register_update_filter_cache');
 function register_update_filter_cache()
 {
-    if( defined( 'FOODY_FILTERS_CACHE' ) && FOODY_FILTERS_CACHE) {
+    if (defined('FOODY_FILTERS_CACHE') && FOODY_FILTERS_CACHE) {
         // Make sure this event hasn't been scheduled
         if (!wp_next_scheduled('foody_update_filters_cache_hook')) {
             // Schedule the event
@@ -734,7 +736,7 @@ function register_update_filter_cache()
 add_filter('cron_schedules', 'foody_add_cron_interval');
 function foody_add_cron_interval($schedules)
 {
-    if(!isset($schedules['one_minute'])) {
+    if (!isset($schedules['one_minute'])) {
         $schedules['one_minute'] = array(
             'interval' => 60,
             'display' => esc_html__('Every Minute'),);
@@ -841,13 +843,15 @@ function foody_safari_hook_nav_menu_css_class($classes = array(), $item, $args)
 }
 
 add_action('init', 'foody_rem_editor_from_post_type_foody_organizations');
-function foody_rem_editor_from_post_type_foody_organizations() {
-    remove_post_type_support( 'foody_organizations', 'editor' );
+function foody_rem_editor_from_post_type_foody_organizations()
+{
+    remove_post_type_support('foody_organizations', 'editor');
 }
 
-function foody_remove_meta_boxes_post_type_foody_organizations() {
+function foody_remove_meta_boxes_post_type_foody_organizations()
+{
     remove_meta_box('wpseo_meta', 'foody_organizations', 'normal');
-    remove_meta_box( 'postexcerpt' , 'foody_organizations' , 'normal' );
+    remove_meta_box('postexcerpt', 'foody_organizations', 'normal');
     remove_meta_box('trackbacksdiv', 'foody_organizations', 'normal');
     remove_meta_box('commentstatusdiv', 'foody_organizations', 'normal');
     remove_meta_box('authordiv', 'foody_organizations', 'normal');
@@ -855,16 +859,16 @@ function foody_remove_meta_boxes_post_type_foody_organizations() {
 
 
 }
+
 add_action('add_meta_boxes', 'foody_remove_meta_boxes_post_type_foody_organizations', 100);
 
 function foody_setInterval($func, $milliseconds)
 {
     $continue_interval = true;
-    $seconds=(int)$milliseconds/1000;
-    while($continue_interval)
-    {
+    $seconds = (int)$milliseconds / 1000;
+    while ($continue_interval) {
         $continue_interval = $func();
-        if($continue_interval) {
+        if ($continue_interval) {
             sleep($seconds);
         }
     }
@@ -880,13 +884,15 @@ function bit_recurring_fetch_transaction_status()
         }
     }
 }
+
 add_action('init', 'bit_recurring_fetch_transaction_status');
 
-add_filter( 'body_class','foody_body_add_bit_class', 10, 1 );
-function foody_body_add_bit_class( $classes ) {
+add_filter('body_class', 'foody_body_add_bit_class', 10, 1);
+function foody_body_add_bit_class($classes)
+{
     $class_to_add = 'foody-payment-bit';
 
-    if(isset($_GET) && (isset($_GET['payment_method']) && $_GET['payment_method'] == __('ביט')) || (isset($_GET['course_id']) && strpos($_GET['course_id'], ',') != false)){
+    if (isset($_GET) && (isset($_GET['payment_method']) && $_GET['payment_method'] == __('ביט')) || (isset($_GET['course_id']) && strpos($_GET['course_id'], ',') != false)) {
         $classes[] = $class_to_add;
     }
 

@@ -117,9 +117,40 @@ function foody_ajax_filter()
 
     $foody_search = new Foody_Search($context, $context_args);
 
+
+    if (is_array($_POST) &&
+        isset($_POST['data']) &&
+        ((isset($_POST['action']) && $_POST['action'] = "foody_filter" && $_POST['action'] = "foody_filter") ||
+            (is_array($_REQUEST) && isset($_REQUEST['action']) && $_REQUEST['action'] = "foody_filter")) &&
+        isset($_POST['data']['context']) &&
+        $_POST['data']['context'] === 'category' &&
+        isset($_POST['data']['context_args']) &&
+        is_array($_POST['data']['context_args']) &&
+        $_POST['data']['context_args'][0] &&
+        !isset($_POST['data']['types'])) {
+
+        $pinned_posts = get_field('pinned_recipes', get_term_by('term_taxonomy_id', $_POST['data']['context_args'][0]));
+        if ($pinned_posts) {
+            //'post__not_in' => $recipes_ids,
+            $recipes_ids = array_map(function ($item) {
+//                    /** @var Foody_Recipe $recipe */
+                return $item['recipe']->ID;
+            }, $pinned_posts);
+
+            $wp_args['post__not_in'] = $recipes_ids;
+        }
+    }
+
     $query = $foody_search->query($filter, $wp_args);
 
     $posts = $query['posts'];
+
+    if (!empty($pinned_posts)) {
+        $pinned_posts = array_reverse($pinned_posts);
+        foreach ($pinned_posts as $post) {
+            array_unshift($posts, $post['recipe']);
+        }
+    }
 
     $posts = array_map('Foody_Post::create', $posts);
 
@@ -202,7 +233,6 @@ function __search_by_title_only($search, $wp_query)
     $two_options_for_title = false;
 
 
-
     foreach ((array)$q['search_terms'] as $term) {
         if (strpos($q['s'], "’") || strpos($q['s'], "׳") || strpos($q['s'], "'")) {
             $two_options_for_title = false;
@@ -238,7 +268,7 @@ function __search_by_title_only($search, $wp_query)
             $term = esc_sql($wpdb->esc_like($term));
             if ($two_options_for_title && is_search()) {
                 if (count((array)$q['search_terms']) - 1 == $counter) {
-                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'". $other_options . ")";
+                    $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}'" . $other_options . ")";
 
                 } else {
                     $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";

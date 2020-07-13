@@ -45,6 +45,19 @@ function foody_ajax_load_more() {
 				$error = $page_args->get_error_message();
 			} else {
 
+                if(is_array($_POST) && isset($_POST['context'])  && $_POST['context'] === 'category' && isset($_POST['context_args'])   &&  is_array($_POST['context_args']) && $_POST['context_args'][0] ){
+                    $pinned_posts = get_field('pinned_recipes',  get_term_by( 'term_taxonomy_id', $_POST['context_args'][0]));
+                    if($pinned_posts){
+                        //'post__not_in' => $recipes_ids,
+                        $recipes_ids = array_map(function ($item) {
+//                    /** @var Foody_Recipe $recipe */
+                            return $item['recipe']->ID;
+                        }, $pinned_posts);
+
+                        $page_args['post__not_in'] = $recipes_ids;
+                    }
+                }
+
 				unset( $filter['context'] );
 
 				if ( empty( $filter['types'] ) || ! is_array( $filter['types'] ) ) {
@@ -69,6 +82,7 @@ function foody_ajax_load_more() {
 //                }
 
 				$query = $foody_search->build_query( $filter, $page_args, $sort );
+
 
 				$next = $query->max_num_pages > $page;
 
