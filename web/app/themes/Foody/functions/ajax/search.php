@@ -134,6 +134,7 @@ function foody_ajax_filter()
             //'post__not_in' => $recipes_ids,
             $recipes_ids = array_map(function ($item) {
 //                    /** @var Foody_Recipe $recipe */
+                $item['recipe']->pinned = $_POST['data']['context_args'][0];
                 return $item['recipe']->ID;
             }, $pinned_posts);
 

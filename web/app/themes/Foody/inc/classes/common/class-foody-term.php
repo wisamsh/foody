@@ -126,11 +126,12 @@ abstract class Foody_Term
                 //'post__not_in' => $recipes_ids,
                 $recipes_ids = array_map(function ($item) {
 //                    /** @var Foody_Recipe $recipe */
+                    $item['recipe']->pinned = $this->id;
                     return $item['recipe']->ID;
                 }, $pinned_posts);
 
                 $args['post__not_in'] = $recipes_ids;
-                $args['post_per_page'] = 12 - count($recipes_ids);
+//                $args['post_per_page'] = 12 - count($recipes_ids);
             }
         }
 
@@ -139,8 +140,8 @@ abstract class Foody_Term
         $posts = $query->get_posts();
 
         if ($this instanceof Foody_Category && !empty($pinned_posts)) {
-            $pinned_posts = array_reverse($pinned_posts);
-            foreach ($pinned_posts as $post ){
+            $pinned_posts_reverse = array_reverse($pinned_posts);
+            foreach ($pinned_posts_reverse as $post) {
                 array_unshift($posts, $post['recipe']);
             }
         }

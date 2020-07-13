@@ -44,6 +44,18 @@ $lazy = ! empty( $template_args['lazy'] );
                 </div>
 
 			<?php endif; ?>
+
+            <?php if (isset($article->post->pinned) && $article->post->pinned):
+
+                $label = $article->get_pinned_recipe_lable($article->post->pinned);
+                if (!empty($label)) {
+                    ?>
+                    <div class="recipe-label">
+                        <span><?php echo $label ?> </span>
+                    </div>
+                <?php } ?>
+            <?php endif; ?>
+
             <?php if (isset($args['feed_area_id']) && $args['feed_area_id'] && ! empty( $logo = $article->get_feed_logo($args['feed_area_id']))  ): ?>
 
                 <img class="feed-logo-sticker" src="<?php echo $logo;?>">
