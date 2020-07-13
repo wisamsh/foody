@@ -664,8 +664,8 @@ function order_search_by_posttype($orderby, $wp_query)
         return $orderby;
     }
     if ($wp_query->is_search ||
-        (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more' && (!isset($_POST['context']) || $_POST['context'] != 'category')) ||
-                (isset($_POST['action']) && $_POST['action'] == 'foody_filter' && (isset($_POST['data']) && (!isset($_POST['data']['context']) || $_POST['data']['context'] != "category")))))) :
+        (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more' && (isset($_POST['context']) && $_POST['context'] != 'category')) ||
+                (isset($_POST['action']) && $_POST['action'] == 'foody_filter' && (isset($_POST['data']) && (isset($_POST['data']['context']) && $_POST['data']['context'] != "category")))))) :
         global $wpdb;
         $orderby =
             "
