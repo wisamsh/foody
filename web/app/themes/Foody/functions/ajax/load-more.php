@@ -45,7 +45,7 @@ function foody_ajax_load_more() {
 				$error = $page_args->get_error_message();
 			} else {
 
-                if(is_array($_POST) && isset($_POST['context'])  && $_POST['context'] === 'category' && isset($_POST['context_args'])   &&  is_array($_POST['context_args']) && $_POST['context_args'][0] ){
+                if(is_array($_POST) && isset($_POST['context'])  && $_POST['context'] === 'category' && isset($_POST['context_args'])   &&  is_array($_POST['context_args']) && $_POST['context_args'][0] &&  empty($_POST['sort'] )){
                     $pinned_posts = get_field('pinned_recipes',  get_term_by( 'term_taxonomy_id', $_POST['context_args'][0]));
                     if($pinned_posts){
                         //'post__not_in' => $recipes_ids,
