@@ -11,7 +11,8 @@ const classes = {
     unpinned: 'header-unpin',
 };
 
-
+debugger;
+if(foodyGlobals);
 function onScroll() {
     currentScrollY = window.pageYOffset;
     if (currentScrollY < lastKnownScrollY) {

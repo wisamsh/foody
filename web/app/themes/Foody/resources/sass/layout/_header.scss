@@ -804,8 +804,10 @@ header {
     }
 
     header {
-      &.header-unpin {
-        transform: translateY(-110px);
+      &:not(.recipe-header) {
+        &.header-unpin {
+          transform: translateY(-110px);
+        }
       }
     }
   }

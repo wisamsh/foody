@@ -64,8 +64,8 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
     </div>
 <?php endif; ?>
 <div id="page" class="site">
-
-    <header id="masthead" class="site-header no-print">
+    <?php $post_type = isset($post) && isset($post->post_type) ? $post->post_type : '';?>
+    <header id="masthead" class="site-header no-print <?php if($post_type == 'foody_recipe'){echo 'recipe-header';} ?>">
         <?php if (is_multisite() && !is_main_site()): ?>
             <?php $header->the_foody_collaboration(false); ?>
         <?php endif; ?>
