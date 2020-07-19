@@ -14,15 +14,15 @@ jQuery(document).ready(($) => {
 
         $('.credit-card-pay').on('click', function () {
             let inputFields = $('#course-register-form input');
-            let submited = true;
+            let isSubmited = true;
             inputFields.each(function () {
                 if ($(this).hasClass('error') || ($(this).attr('id') == 'terms' && !$(this).prop('checked'))) {
-                    submited = false;
-                    return submited;
+                    isSubmited = false;
+                    return isSubmited;
                 }
             });
 
-            if (submited) {
+            if (isSubmited) {
                 eventCallback('', analyticsCategory, 'השלמת רישום ומעבר לרכישה', courseName, 'מיקום', 'טופס הרשמה', hostName);
             }
         });
