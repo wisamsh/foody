@@ -16,7 +16,7 @@ if ( isset( $_GET['login'] ) ) {
 $foody_lost_password = isset( $_REQUEST['checkemail'] ) && $_REQUEST['checkemail'] == 'confirm' && false;
 ?>
 
-<div class="login-title">התחברות</div>
+<h1 class="login-title">התחברות</h1>
 <p>
 	<?php echo $text ?>
 </p>

@@ -71,8 +71,8 @@ class Foody_Course_register
         $course_information = '<div class="course-information" data-course-id = ' . $this->course_id . '>';
         $host_name = get_field('course_page_main_cover_section_host_name', $this->course_id);
         /** title and host */
-        $title_div = '<div class="course-title" data-host="' . $host_name . '">' . $course_name . '</div>';
-        $text_div = '<div class="course-cover-text">' . $register_subtext . '</div>';
+        $title_div = '<h1 class="course-title" data-host="' . $host_name . '">' . $course_name . '</h1>';
+        $text_div = '<h2 class="course-cover-text">' . $register_subtext . '</h2>';
 
 
         $course_information .= $title_div . $text_div . '</div>';

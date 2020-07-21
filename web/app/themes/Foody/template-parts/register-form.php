@@ -15,7 +15,7 @@ if ($failed) {
 }
 ?>
 
-<h2>הגיע הזמן שנכיר</h2>
+<h1 style="font-family: Assistant; color: var(--color__primary); font-weight: 900; font-size: 24px;">הגיע הזמן שנכיר</h1>
 <p>
     <?php echo $text ?>
 </p>

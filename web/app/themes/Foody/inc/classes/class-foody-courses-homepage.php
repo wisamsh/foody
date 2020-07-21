@@ -102,7 +102,7 @@ class Foody_Courses_Homepage
 
         /** building the html */
         $main_text_div = '<p class="main-text">' . $main_text . '</p>';
-        $title_div = '<h2 class="title">' . $title . '</h2>';
+        $title_div = '<h1 class="title">' . $title . '</h1>';
         $courses_list_div = isset($courses_section['courses_list']) ? $this->get_courses_list_div($courses_section['courses_list']) : '';
 
         if (isset($background_images['top'])) {
