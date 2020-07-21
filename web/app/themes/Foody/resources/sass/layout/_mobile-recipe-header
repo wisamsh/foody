@@ -1,0 +1,309 @@
+$social-icon-size: 21px;
+$header-height: 76px;
+$run-height: 30px;
+
+.search-overlay {
+  &.floating-mobile-header {
+    opacity: 0;
+    transition: opacity .3s linear, z-index .3s linear;
+    position: fixed;
+    top: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
+    background-color: transparent;
+
+    &.open {
+      opacity: 1;
+      height: 100vh;
+      width: 100vw;
+      z-index: 100000000;
+
+      .input-container {
+        opacity: 1;
+        width: 100vw;
+        z-index: 100000000;
+
+        .overlay-white {
+          opacity: 1;
+        }
+      }
+    }
+
+    .input-container {
+      transition: opacity .3s linear;
+      opacity: 0;
+      background-color: white;
+      width: 100vw;
+      height: 60px;
+      color: var(--color__primary);
+      position: relative;
+      border: solid 1px rgba(151, 151, 151, 0.4);
+
+      .algolia-autocomplete {
+        width: 100%;
+        height: 100%;
+      }
+
+      input {
+        box-shadow: none;
+        width: 100%;
+        height: 100%;
+        line-height: 60px;
+        border: none;
+        text-align: right;
+        padding-left: 45px;
+        text-overflow: ellipsis;
+        padding-right: 20px;
+        font-size: 24px;
+      }
+
+      span.close {
+        font-size: 28px;
+        position: absolute;
+        line-height: 60px;
+        font-weight: bold;
+        color: var(--color__primary);
+        top: 0;
+        left: 20px;
+        padding: 0 10px;
+      }
+
+      .foody-dropdown-menu {
+        width: 100vw;
+        border-radius: 0;
+        background-color: #ffffff;
+        border: solid 1px rgba(151, 151, 151, 0.4);
+        border-top: 0;
+        padding: 0;
+        text-align: right;
+        margin-top: 1px;
+        right: 0;
+        direction: rtl;
+
+
+        .foody-search-suggestions {
+          width: 100%;
+          padding: 0;
+
+          .suggestion-head-title {
+            font-weight: bold;
+          }
+
+          .foody-search-suggestion {
+            font-size: 22px;
+            padding: 7px 20px;
+
+            &.foody-cursor {
+              border-radius: 0;
+              background-color: #f5f5f5;
+            }
+
+            a {
+              span {
+              }
+
+            }
+          }
+        }
+      }
+    }
+
+
+    .overlay-white {
+      transition: all .3s linear;
+      background-color: white;
+      opacity: 0;
+      height: calc(100vh - 60px);
+
+
+    }
+  }
+}
+
+.related-content-overlay {
+  &.floating-mobile-header {
+    display: none;
+
+    &.open {
+      display: block;
+      width: 100%;
+      height: 100vh;
+      position: fixed;
+      z-index: 1000000000;
+
+      .black-overlay{
+        height: 49%;
+        opacity: 0.9;
+        background: black;
+      }
+
+      .related-recipes-container{
+        height: 55%;
+        background: #fdebec;
+        display: flex;
+        flex-direction: column;
+        padding: 13px;
+
+        .similar-content-listing-block-title{
+          float: right;
+          text-align: right;
+          font-size: 17px;
+        }
+
+        .similar-content-items{
+          padding: 0;
+          margin: 2px 0;
+
+          .similar-content-item{
+            list-style-type: none;
+
+            .similar-content-item-listing{
+              .similar-content-listing-title{
+                font-size: 12.5px;
+                text-align: center;
+                font-weight: bold;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.sticky_bottom_header {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 9999999999999;
+  bottom: 0;
+  width: 100%;
+  height: 65px;
+
+  .navbar {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .04);
+    height: 65px;
+    background-color: #fff;
+
+    .container-fluid {
+      &.foody-navbar-container {
+        position: relative;
+
+        .site-branding {
+          position: absolute;
+          top: -23px;
+          right: calc(45vw - 30px);
+
+          .logo-container-mobile {
+            .custom-logo-link {
+              outline: none;
+              border: none;
+
+              img {
+                width: 60px;
+              }
+            }
+          }
+        }
+
+        .accessibility {
+          .icon-acces:before {
+            content: "\E926";
+            color: var(--color__primary);
+            font-size: 18px;
+            vertical-align: middle;
+          }
+        }
+
+        .related-content-btn-container {
+          margin-left: 31%;
+
+          .related-content-btn {
+            display: table-caption;
+            text-align: center;
+            line-height: 1;
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--color__primary);
+          }
+        }
+
+        .social-btn-container {
+          margin-right: 6%;
+          position: relative;
+
+          .social-buttons-container {
+            &.hidden {
+              display: none;
+              height: 0;
+              top: 100%;
+              transition: height 2s ease-in-out;
+            }
+
+            background: white;
+            max-width: unset;
+            position: absolute;
+            top: -225px;
+            left: -9px;
+            width: 50px;
+            height: fit-content;
+            box-shadow: 0 8px 11px 0 grey;
+            border-radius: 6px;
+
+            .social {
+              .essb_links {
+                display: flex;
+                justify-content: center;
+
+                li {
+                  a {
+                    border: 1px solid var(--color__primary);
+                    border-radius: 20px;
+                    margin-bottom: 4px;
+                    margin-right: 0;
+
+                    .essb_icon {
+                      color: var(--color__primary);
+                      width: 28px;
+                      height: 28px;
+
+                      &:before {
+                        top: 5px !important;
+                        left: 5px !important;
+                      }
+                    }
+                  }
+                }
+              }
+
+              &:before {
+                content: "";
+                width: 0;
+                height: 0;
+                position: absolute;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-top: 10px solid white;
+                border-bottom: 10px solid transparent;
+                right: 17px;
+                bottom: -36px;
+              }
+            }
+          }
+
+          .icon-share:before {
+            background-image: url("../images/icons/share@3x.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            content: '';
+            vertical-align: middle;
+            display: block;
+            width: 23px;
+            height: 23px;
+          }
+        }
+      }
+    }
+  }
+}

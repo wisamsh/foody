@@ -2,7 +2,6 @@ let toggleScreenLock = require('../common/screenLock');
 require('./mobile-header-scroll');
 jQuery(document).ready(function ($) {
 
-
     let $header = $('#masthead');
     let navbar = $('#foody-navbar-collapse');
 
@@ -183,4 +182,39 @@ jQuery(document).ready(function ($) {
         }
     }
 
+    /** new mobile header **/
+    let switchedToCleanLogo = false;
+    let onLoadScroll = false;
+    let oldPageYOffset = 0;
+
+    if($('.social-btn-container').length && $('.social-buttons-container').length){
+        $('.social-btn-container').on('click', function () {
+            $('.social-buttons-container').toggleClass('hidden');
+        });
+    }
+
+    if($('.related-content-btn').length && $('.related-content-overlay').length){
+        $('.related-content-btn').on('click', function () {
+            $('.related-content-overlay').toggleClass('open');
+        });
+    }
+
+    // $(window).on('scroll', function () {
+    //     if(onLoadScroll && !switchedToCleanLogo) {
+    //         let newImageElement = '<embed src="'+ foodyGlobals.imagesUri + 'clean-foody.svg' +'" class="attachment-full size-full" alt="" logo="">';
+    //         $('.sticky_bottom_header .custom-logo-link img').replaceWith(newImageElement);
+    //         switchedToCleanLogo = true;
+    //     }
+    //     else{
+    //         onLoadScroll = true;
+    //     }
+    // });
+
+
+
+
 });
+
+function hasRealyScrolled(oldPageYOffset) {
+    return window.pageYOffset != oldPageYOffset;
+}

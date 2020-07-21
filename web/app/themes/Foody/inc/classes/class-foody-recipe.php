@@ -956,13 +956,14 @@ class Foody_Recipe extends Foody_Post
         return "";
     }
 
-    public function get_similar_content()
+    public function get_similar_content($title = false)
     {
         $similar_contents = get_field('similar_content', $this->get_id());
         $not_in_random = [];
         array_push($not_in_random, $this->get_id());
         $counter = 0;
         $title_of_section = (get_option('foody_title_for_extra_content')) ? get_option('foody_title_for_extra_content') : __('תוכן נוסף');
+        $title_of_section = $title ? $title : $title_of_section;
         $args = ['title' => $title_of_section, 'items' => []];
 
         if ($similar_contents) {

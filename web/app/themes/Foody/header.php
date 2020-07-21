@@ -64,8 +64,10 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
     </div>
 <?php endif; ?>
 <div id="page" class="site">
-    <?php $post_type = isset($post) && isset($post->post_type) ? $post->post_type : '';?>
-    <header id="masthead" class="site-header no-print <?php if($post_type == 'foody_recipe'){echo 'recipe-header';} ?>">
+    <?php $post_type = isset($post) && isset($post->post_type) ? $post->post_type : ''; ?>
+    <header id="masthead" class="site-header no-print <?php if ($post_type == 'foody_recipe' && wp_is_mobile()) {
+        echo 'hidden-recipe-header';
+    } ?>">
         <?php if (is_multisite() && !is_main_site()): ?>
             <?php $header->the_foody_collaboration(false); ?>
         <?php endif; ?>
@@ -193,6 +195,118 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
         <!-- #site-navigation -->
     </header><!-- #masthead -->
+    <?php if ($post_type == 'foody_recipe' && wp_is_mobile()) { ?>
+        <div class="search-overlay floating-mobile-header d-lg-none">
+
+            <div class="input-container">
+                <input type="search" class="search-autocomplete">
+                <span class="close">&times;</span>
+            </div>
+            <div class="overlay-white">
+
+            </div>
+
+        </div>
+        <div class="related-content-overlay floating-mobile-header">
+            <div class="black-overlay">
+            </div>
+            <?php
+            $recipe = Foody_PageContentFactory::get_instance()->get_page();
+            if (!empty(get_field('active_similar_content', $recipe->get_id()) && get_field('active_similar_content', $recipe->get_id())[0] == __('הצג'))) { ?>
+                <div class="related-recipes-container">
+                    <?php $recipe->get_similar_content('מתכונים נוספים שכדאי להכיר'); ?>
+                </div>
+            <?php } ?>
+        </div>
+        <div class="sticky_bottom_header no-print">
+            <div class="socials d-none d-lg-block">
+
+                <section class="header-top-container  d-none d-lg-flex">
+                    <?php $header->the_socials_bar() ?>
+
+                    <div class="search-bar search-bar-container">
+                        <?php get_search_form(); ?>
+                    </div>
+                    <?php if (is_multisite() && !is_main_site()): ?>
+                        <?php $header->the_foody_collaboration(true); ?>
+                    <?php endif; ?>
+                    <?php
+
+
+                    if (!wp_is_mobile() && $show_accessibility):
+
+                        ?>
+                        <button type="button" class="btn btn-default navbar-btn  d-none d-lg-block accessibility"
+                                data-acsb="trigger" aria-label="פתיחת תפריט נגישות">
+                            <?php $header->accessibility(); ?>
+                            <div id="accessibility-container"></div>
+                        </button>
+                    <?php endif; ?>
+                </section>
+
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg <?php $header->the_logo_nav_mode() ?>"
+                 role="navigation">
+                <div class="container-fluid foody-navbar-container">
+                    <div class="site-branding">
+                        <div class="logo-container-mobile <?php $header->the_logo_mode() ?> d-block d-lg-none">
+                            <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
+                                    data-target="#foody-navbar-collapse"
+                                    aria-controls="foody-navbar-collapse" aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                <?php
+                                $logo_id = get_theme_mod('custom_logo');
+                                echo wp_get_attachment_image($logo_id, 'full', false, 'logo');
+                                ?>
+                                <!--                                <i class="navbar-toggler-icon icon-menu-mobile"></i>-->
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <?php if ($show_accessibility): ?>
+                        <button type="button" class="btn btn-default navbar-btn d-block d-lg-none accessibility"
+                                data-acsb="trigger" aria-label="פתיחת תפריט נגישות">
+                            <?php $header->accessibility(); ?>
+                            <div id="accessibility-container"></div>
+                        </button>
+                    <?php endif; ?>
+
+                    <div class="related-content-btn-container">
+                        <span class="related-content-btn">מתכונים נוספים</span>
+                    </div>
+
+                    <div class="social-btn-container">
+                        <i class="icon-share"></i>
+                        <div class="social-buttons-container hidden">
+                            <?php foody_get_template_part(
+                                get_template_directory() . '/template-parts/content-social-actions-mobile-menu.php'
+                            );
+                            ?>
+                        </div>
+                    </div>
+
+                    <!--                                    --><?php
+                    //                                    $nav_args = array(
+                    //                                        'theme_location' => 'primary',
+                    //                                    );
+                    //
+                    //                                    wp_nav_menu($nav_args);
+                    //                                    ?>
+
+                    <!--                    --><?php //Foody_Header::whatsapp(['d-block', 'd-lg-none']) ?>
+                    <!---->
+                    <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none"
+                            aria-label="חיפוש">
+
+                        <img src="
+                    <?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="search-bar">
+
+                    </button>
+                </div>
+            </nav>
+        </div>
+    <?php } ?>
 
     <div id="content" class="site-content">
         <?php
