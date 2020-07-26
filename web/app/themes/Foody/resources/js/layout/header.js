@@ -109,10 +109,18 @@ jQuery(document).ready(function ($) {
     });
 
     $('footer #popup-banner .close').on('click',function () {
+        if($('.sticky_bottom_header').length){
+            $('.sticky_bottom_header').css("bottom","0");
+        }
         sessionStorage.setItem('banner-popup-closed','true');
     });
 
     $('#popup-banner').on('shown.bs.modal', function() {
+        debugger;
+        if($('.sticky_bottom_header').length){
+            let newBottom = $('#popup-banner .modal-dialog').height();
+            $('.sticky_bottom_header').css("bottom",newBottom);
+        }
         $(document).off('focusin.modal');
     });
 
