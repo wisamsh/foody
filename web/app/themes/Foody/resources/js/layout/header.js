@@ -112,6 +112,9 @@ jQuery(document).ready(function ($) {
     $('footer #popup-banner .close').on('click', function () {
         if ($('.sticky_bottom_header').length) {
             $('.sticky_bottom_header').css("bottom", "0");
+            $('.sticky_bottom_header #quadmenu').css("bottom", "8%");
+            $('.sticky_bottom_header .navbar-header').css("bottom", "48vh");
+            $('.related-content-overlay .related-recipes-container').css("bottom", "65px");
         }
         sessionStorage.setItem('banner-popup-closed', 'true');
     });
@@ -119,8 +122,15 @@ jQuery(document).ready(function ($) {
     $('#popup-banner').on('shown.bs.modal', function () {
         debugger;
         if ($('.sticky_bottom_header').length) {
-            let newBottom = $('#popup-banner .modal-dialog').height();
-            $('.sticky_bottom_header').css("bottom", newBottom);
+            let newBottomHeader = $('#popup-banner .modal-dialog').height();
+            let newBottomMenu = newBottomHeader + parseFloat($('.sticky_bottom_header #quadmenu').css('bottom'));
+            let newBottomMenuHeader = newBottomHeader + parseFloat($('.sticky_bottom_header .navbar-header').css('bottom'));
+            let newBottomRelatedRecipes = newBottomHeader + 65;
+            $('.sticky_bottom_header').css("bottom", newBottomHeader);
+            $('.sticky_bottom_header #quadmenu').css("bottom", newBottomMenu);
+            $('.sticky_bottom_header .navbar-header').css("bottom", newBottomMenuHeader);
+            $('.related-content-overlay .related-recipes-container').css("bottom", newBottomRelatedRecipes);
+
         }
         $(document).off('focusin.modal');
     });
@@ -209,7 +219,7 @@ jQuery(document).ready(function ($) {
 
     if ($('.sticky_bottom_header .navbar-toggler.custom-logo-link').length) {
         $('.sticky_bottom_header .navbar-toggler.custom-logo-link').on('click', function (e) {
-            if(!switchedToHamburgerLogo){
+            if (!switchedToHamburgerLogo) {
                 return;
             }
             if ($('.sticky_bottom_header .quadmenu-navbar-collapse').length) {
@@ -223,14 +233,13 @@ jQuery(document).ready(function ($) {
                     $('.navbar-header').toggleClass('hidden');
                 }
 
-                if(!expended){
+                if (!expended) {
                     $('.sticky_bottom_header #quadmenu').css('height', '45%');
-                    $('.sticky_bottom_header #quadmenu')[0].scrollTop=0;
-                    let closeImage = '<img class="foody-logo-text logo-close" src="'+foodyGlobals.imagesUri + "close-menu-logo.svg"+'">';
+                    $('.sticky_bottom_header #quadmenu')[0].scrollTop = 0;
+                    let closeImage = '<img class="foody-logo-text logo-close" src="' + foodyGlobals.imagesUri + "close-menu-logo.svg" + '">';
                     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(closeImage);
-                }
-                else{
-                    let hamburgerImage = '<img class="foody-logo-text logo-hamburger" src="'+foodyGlobals.imagesUri + "hamburger.svg"+'">';
+                } else {
+                    let hamburgerImage = '<img class="foody-logo-text logo-hamburger" src="' + foodyGlobals.imagesUri + "hamburger.svg" + '">';
                     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(hamburgerImage);
                     $('.sticky_bottom_header #quadmenu').css('height', '0');
                 }
@@ -238,10 +247,10 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    if($('.sticky_bottom_header').length) {
+    if ($('.sticky_bottom_header').length) {
         $(window).on('scroll', function () {
-            if (!initialScrollEvent) {
-                let hamburgerImage = '<img class="foody-logo-text logo-hamburger" src="'+foodyGlobals.imagesUri + "hamburger.svg"+'">';
+            if (!initialScrollEvent && !switchedToHamburgerLogo) {
+                let hamburgerImage = '<img class="foody-logo-text logo-hamburger" src="' + foodyGlobals.imagesUri + "hamburger.svg" + '">';
                 $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(hamburgerImage);
                 switchedToHamburgerLogo = true;
             }

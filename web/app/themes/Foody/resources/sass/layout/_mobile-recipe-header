@@ -133,13 +133,15 @@ $run-height: 30px;
       z-index: 1000000000;
 
       .black-overlay {
-        height: 49%;
+        height: 55%;
+        opacity: 0.9;
         opacity: 0.9;
         background: black;
       }
 
       .related-recipes-container {
-        height: 55%;
+        position: fixed;
+        bottom: 65px;
         background: #fdebec;
         display: flex;
         flex-direction: column;
