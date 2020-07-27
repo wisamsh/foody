@@ -2,6 +2,7 @@ let toggleScreenLock = require('../common/screenLock');
 require('./mobile-header-scroll');
 jQuery(document).ready(function ($) {
 
+    let initialScrollEvent = true;
     let $header = $('#masthead');
     let navbar = $('#foody-navbar-collapse');
 
@@ -12,7 +13,7 @@ jQuery(document).ready(function ($) {
 
     let englishRgx = /^[a-zA-Z\- _]+$/;
 
-    if($('.user-name-header').length && englishRgx.test($('.user-name-header')[0].innerText)){
+    if ($('.user-name-header').length && englishRgx.test($('.user-name-header')[0].innerText)) {
         $('.user-name-header').attr('style', 'direction: ltr');
     }
 
@@ -65,7 +66,7 @@ jQuery(document).ready(function ($) {
         let key = e.which;
         if (key === 13) {
             let search = $(e.target).val();
-            if(search){
+            if (search) {
                 window.location = '/?s=' + search;
             }
             return false;
@@ -82,7 +83,7 @@ jQuery(document).ready(function ($) {
 
     // Click custom accessibility widget
     if (foodyGlobals.show_custom_accessibility && foodyGlobals.custom_accessibility_class) {
-        $('.navbar-btn.accessibility').on('click',function (e) {
+        $('.navbar-btn.accessibility').on('click', function (e) {
             e.stopPropagation();
             $(foodyGlobals.custom_accessibility_class).click();
         });
@@ -90,7 +91,7 @@ jQuery(document).ready(function ($) {
 
     //popup banner
     $(window).on('scroll', function () {
-        if(!sessionStorage.getItem('banner-popup-closed')) {
+        if (!sessionStorage.getItem('banner-popup-closed')) {
             let popupBanner = $('#popup-banner');
             if (popupBanner.length && !bannerPoped) {
                 popupBanner.modal({
@@ -108,18 +109,18 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $('footer #popup-banner .close').on('click',function () {
-        if($('.sticky_bottom_header').length){
-            $('.sticky_bottom_header').css("bottom","0");
+    $('footer #popup-banner .close').on('click', function () {
+        if ($('.sticky_bottom_header').length) {
+            $('.sticky_bottom_header').css("bottom", "0");
         }
-        sessionStorage.setItem('banner-popup-closed','true');
+        sessionStorage.setItem('banner-popup-closed', 'true');
     });
 
-    $('#popup-banner').on('shown.bs.modal', function() {
+    $('#popup-banner').on('shown.bs.modal', function () {
         debugger;
-        if($('.sticky_bottom_header').length){
+        if ($('.sticky_bottom_header').length) {
             let newBottom = $('#popup-banner .modal-dialog').height();
-            $('.sticky_bottom_header').css("bottom",newBottom);
+            $('.sticky_bottom_header').css("bottom", newBottom);
         }
         $(document).off('focusin.modal');
     });
@@ -130,19 +131,19 @@ jQuery(document).ready(function ($) {
     //         showNewsletterModal();
     //     }, 5000);
     // }
-    if($('#newsletter-modal').length) {
+    if ($('#newsletter-modal').length) {
         $(window).on('scroll', function () {
             timeIdle = 0;
         });
     }
 
-    if($('#newsletter-modal').length) {
-        let interval =  setInterval(function () {
+    if ($('#newsletter-modal').length) {
+        let interval = setInterval(function () {
             timeIdle++;
             if (timeIdle == 10) {
                 showNewsletterModal();
             }
-            if(sessionStorage.getItem('newsletter-popup-closed')){
+            if (sessionStorage.getItem('newsletter-popup-closed')) {
                 clearInterval(interval);
             }
         }, 1000);
@@ -153,13 +154,13 @@ jQuery(document).ready(function ($) {
     });
 
     $('#newsletter-modal').on('hidden.bs.modal', function () {
-        $('#newsletter-modal').attr('style','display: none !important');
-        sessionStorage.setItem('newsletter-popup-closed','true');
+        $('#newsletter-modal').attr('style', 'display: none !important');
+        sessionStorage.setItem('newsletter-popup-closed', 'true');
     });
 
-    $('#newsletter-modal .wpcf7-form .wpcf7-submit').on('click',function () {
+    $('#newsletter-modal .wpcf7-form .wpcf7-submit').on('click', function () {
         let isEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if((typeof $('#newsletter-modal .wpcf7-form .wpcf7-email')[0] != "undefined") &&
+        if ((typeof $('#newsletter-modal .wpcf7-form .wpcf7-email')[0] != "undefined") &&
             ($('#newsletter-modal .wpcf7-form .wpcf7-email')[0].value != '') &&
             (isEmail.test($('#newsletter-modal .wpcf7-form .wpcf7-email')[0].value))) {
             let seconds = 0;
@@ -176,49 +177,77 @@ jQuery(document).ready(function ($) {
     });
 
 
-    if($('.phone-link').length){
-        if(window.innerWidth > 736){
-            $('.phone-link').each(function (index,value) {
+    if ($('.phone-link').length) {
+        if (window.innerWidth > 736) {
+            $('.phone-link').each(function (index, value) {
                 let number = value.innerText;
-                let numberDiv = $('<span style="white-space: nowrap;">'+number+'</span>');
+                let numberDiv = $('<span style="white-space: nowrap;">' + number + '</span>');
                 numberDiv.insertAfter(value);
                 value.remove();
             });
-        }
-        else{
+        } else {
             $('.phone-link').attr('style', 'white-space: nowrap');
         }
     }
 
     /** new mobile header **/
-    let switchedToCleanLogo = false;
+    let switchedToHamburgerLogo = false;
     let onLoadScroll = false;
     let oldPageYOffset = 0;
 
-    if($('.social-btn-container').length && $('.social-buttons-container').length){
+    if ($('.social-btn-container').length && $('.social-buttons-container').length) {
         $('.social-btn-container').on('click', function () {
             $('.social-buttons-container').toggleClass('hidden');
         });
     }
 
-    if($('.related-content-btn').length && $('.related-content-overlay').length){
+    if ($('.related-content-btn').length && $('.related-content-overlay').length) {
         $('.related-content-btn').on('click', function () {
             $('.related-content-overlay').toggleClass('open');
         });
     }
 
-    // $(window).on('scroll', function () {
-    //     if(onLoadScroll && !switchedToCleanLogo) {
-    //         let newImageElement = '<embed src="'+ foodyGlobals.imagesUri + 'clean-foody.svg' +'" class="attachment-full size-full" alt="" logo="">';
-    //         $('.sticky_bottom_header .custom-logo-link img').replaceWith(newImageElement);
-    //         switchedToCleanLogo = true;
-    //     }
-    //     else{
-    //         onLoadScroll = true;
-    //     }
-    // });
+    if ($('.sticky_bottom_header .navbar-toggler.custom-logo-link').length) {
+        $('.sticky_bottom_header .navbar-toggler.custom-logo-link').on('click', function (e) {
+            if(!switchedToHamburgerLogo){
+                return;
+            }
+            if ($('.sticky_bottom_header .quadmenu-navbar-collapse').length) {
+                let expended = $('.sticky_bottom_header .quadmenu-navbar-collapse').prop('.aria-expanded');
+                $('.sticky_bottom_header .quadmenu-navbar-collapse').prop('.aria-expanded', !expended);
+                $('.sticky_bottom_header .quadmenu-navbar-collapse').toggleClass('in');
 
 
+                if ($('.navbar-overlay').length && $('.navbar-header').length) {
+                    $('.navbar-overlay').toggleClass('hidden');
+                    $('.navbar-header').toggleClass('hidden');
+                }
+
+                if(!expended){
+                    $('.sticky_bottom_header #quadmenu').css('height', '45%');
+                    $('.sticky_bottom_header #quadmenu')[0].scrollTop=0;
+                    let closeImage = '<img class="foody-logo-text logo-close" src="'+foodyGlobals.imagesUri + "close-menu-logo.svg"+'">';
+                    $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(closeImage);
+                }
+                else{
+                    let hamburgerImage = '<img class="foody-logo-text logo-hamburger" src="'+foodyGlobals.imagesUri + "hamburger.svg"+'">';
+                    $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(hamburgerImage);
+                    $('.sticky_bottom_header #quadmenu').css('height', '0');
+                }
+            }
+        });
+    }
+
+    if($('.sticky_bottom_header').length) {
+        $(window).on('scroll', function () {
+            if (!initialScrollEvent) {
+                let hamburgerImage = '<img class="foody-logo-text logo-hamburger" src="'+foodyGlobals.imagesUri + "hamburger.svg"+'">';
+                $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(hamburgerImage);
+                switchedToHamburgerLogo = true;
+            }
+            initialScrollEvent = false;
+        });
+    }
 
 
 });

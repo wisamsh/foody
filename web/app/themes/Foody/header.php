@@ -211,6 +211,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
             <div class="black-overlay">
             </div>
             <?php
+            /** @var Foody_Recipe $recipe */
             $recipe = Foody_PageContentFactory::get_instance()->get_page();
             if (!empty(get_field('active_similar_content', $recipe->get_id()) && get_field('active_similar_content', $recipe->get_id())[0] == __('הצג'))) { ?>
                 <div class="related-recipes-container">
@@ -254,10 +255,12 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                     data-target="#foody-navbar-collapse"
                                     aria-controls="foody-navbar-collapse" aria-expanded="false"
                                     aria-label="Toggle navigation">
-                                <?php
-                                $logo_id = get_theme_mod('custom_logo');
-                                echo wp_get_attachment_image($logo_id, 'full', false, 'logo');
-                                ?>
+<!--                                --><?php
+//                                $logo_id = get_theme_mod('custom_logo');
+//                                echo wp_get_attachment_image($logo_id, 'full', false, 'logo');
+//                                ?>
+<!--                                <img class="clean-foody-logo" src="--><?php //echo $GLOBALS['images_dir'];?><!--/clean-foody.svg">-->
+                                <img class="foody-logo-text" src="<?php echo $GLOBALS['images_dir'];?>/foody_logo-with-white.svg">
                                 <!--                                <i class="navbar-toggler-icon icon-menu-mobile"></i>-->
                             </button>
                         </div>
@@ -285,14 +288,24 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                             ?>
                         </div>
                     </div>
+                    <div class="navbar-overlay hidden">
+                    </div>
+                    <div class="navbar-header hidden">
+<!--                        <img src="--><?php //echo $GLOBALS['images_dir'] . 'top-mobile-menu.png' ?><!--" class="top-mobile-menu">-->
+                        <div class="signup-purchase-container">
+                            <?php if(!is_user_logged_in()) { ?>
+                                <a class="signup-login-link" href="<?php echo get_permalink( get_page_by_path( 'התחברות' ));?>">הרשמו ל-FOODY »</a>
+                            <?php }
+                            $recipe->the_purchase_buttons(); ?>
+                        </div>
+                    </div>
+                    <?php
+                    $nav_args = array(
+                        'theme_location' => 'primary',
+                    );
 
-                    <!--                                    --><?php
-                    //                                    $nav_args = array(
-                    //                                        'theme_location' => 'primary',
-                    //                                    );
-                    //
-                    //                                    wp_nav_menu($nav_args);
-                    //                                    ?>
+                    wp_nav_menu($nav_args);
+                    ?>
 
                     <!--                    --><?php //Foody_Header::whatsapp(['d-block', 'd-lg-none']) ?>
                     <!---->

@@ -132,34 +132,34 @@ $run-height: 30px;
       position: fixed;
       z-index: 1000000000;
 
-      .black-overlay{
+      .black-overlay {
         height: 49%;
         opacity: 0.9;
         background: black;
       }
 
-      .related-recipes-container{
+      .related-recipes-container {
         height: 55%;
         background: #fdebec;
         display: flex;
         flex-direction: column;
         padding: 13px;
 
-        .similar-content-listing-block-title{
+        .similar-content-listing-block-title {
           float: right;
           text-align: right;
           font-size: 17px;
         }
 
-        .similar-content-items{
+        .similar-content-items {
           padding: 0;
           margin: 2px 0;
 
-          .similar-content-item{
+          .similar-content-item {
             list-style-type: none;
 
-            .similar-content-item-listing{
-              .similar-content-listing-title{
+            .similar-content-item-listing {
+              .similar-content-listing-title {
                 font-size: 12.5px;
                 text-align: center;
                 font-weight: bold;
@@ -190,7 +190,123 @@ $run-height: 30px;
       &.foody-navbar-container {
         position: relative;
 
+        .navbar-overlay {
+          &.hidden {
+            display: none;
+          }
+
+          height: 100vh;
+          position: fixed;
+          bottom: 53vh;
+          width: 100vw;
+          right: 0;
+          background: black;
+          opacity: 0.9;
+        }
+
+        .navbar-header {
+          &.hidden {
+            display: none;
+          }
+
+          height: 34vh;
+          position: fixed;
+          bottom: 48vh;
+          width: 100vw;
+          right: 0;
+          background: #fdebec;
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+
+          .signup-purchase-container {
+            background-image: url("../images/top-mobile-menu.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            height: 100%;
+            padding-top: 5%;
+
+            .signup-login-link{
+              font-size: 17px;
+              font-weight: bold;
+              color: #ffffff;
+              opacity: 0.8;
+
+              &:hover{
+                opacity: 1;
+              }
+
+              &:active{
+                color: #ffffff;
+              }
+            }
+            .purchase-buttons {
+              margin-top: 5%;
+              .purchase-button-container {
+                margin: auto;
+              }
+            }
+          }
+        }
+
+        #quadmenu {
+          display: flex;
+          flex-direction: column-reverse;
+          position: fixed;
+          bottom: 8%;
+          width: 100vw;
+          right: 0;
+          background: #fdebec;
+          box-shadow: unset;
+          //height: 84%;
+          overflow: scroll;
+
+          .quadmenu-container {
+            background: #fdebec;
+
+            .quadmenu-navbar-header {
+              background: #fdebec;
+
+              .quadmenu-navbar-toggle {
+                display: none;
+              }
+            }
+
+            .quadmenu-navbar-collapse {
+              background: #fdebec;
+              padding-bottom: 5%;
+
+              .quadmenu-dropdown-menu {
+                background: #fdebec;
+              }
+
+              .quadmenu-item-content {
+                background: #fdebec;
+                text-align: right;
+                color: $color__primary;
+
+                .quadmenu-text {
+                  color: $color__primary;
+                  font-weight: bold;
+                }
+
+                .quadmenu-caret {
+                  background: #fdebec;
+                  color: $color__primary;
+                  left: 0;
+                  width: fit-content;
+                }
+              }
+
+              ul {
+                margin-left: 0;
+              }
+            }
+          }
+        }
+
         .site-branding {
+          z-index: 10000;
           position: absolute;
           top: -23px;
           right: calc(45vw - 30px);
@@ -199,6 +315,39 @@ $run-height: 30px;
             .custom-logo-link {
               outline: none;
               border: none;
+              position: relative;
+              background-image: url("../images/clean-foody.svg");
+              z-index: 100000000;
+              width: 62px;
+              height: 60px;
+              background-repeat: no-repeat;
+              background-size: cover;
+
+              .clean-foody-logo {
+                position: absolute;
+              }
+
+              .foody-logo-text {
+                position: absolute;
+                left: 0;
+                top: 29%;
+                height: 30px;
+                width: 91px;
+
+                &.logo-close {
+                  width: 20px;
+                  height: 19px;
+                  left: 35%;
+                  top: 35%;
+                }
+
+                &.logo-hamburger {
+                  top: 35%;
+                  width: 24px;
+                  left: 32%;
+                  height: auto;
+                }
+              }
 
               img {
                 width: 60px;
@@ -230,7 +379,7 @@ $run-height: 30px;
         }
 
         .social-btn-container {
-          margin-right: 6%;
+          margin-right: 12%;
           position: relative;
 
           .social-buttons-container {
