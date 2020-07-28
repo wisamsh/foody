@@ -6,6 +6,16 @@
 jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'post')) {
         let scrollsArr = {'0': false, '25': false, '50': false, '75': false, '100': false};
+        let feedPublisher = "אין";
+
+        var publishers = ['אין'];
+        if (foodyGlobals['post']['publisher'] || $('.sponsors-container').length) {
+            publishers = [];
+        }
+        if (foodyGlobals['post']['publisher']) {
+            feedPublisher = foodyGlobals['post']['publisher'];
+            //publishers.push(publisher);
+        }
 
         /**
          * Page Load
@@ -108,9 +118,22 @@ jQuery(document).ready(($) => {
         /**
          * Purchase button clicked
          */
-        let purchaseBtn = $('.purchase-buttons .purchase-button-container a');
-        purchaseBtn.click((event)=>{
-            eventCallback(event,'כתבה', 'לחיצה לרכישה', '', '', '');
+        // let purchaseBtn = $('.purchase-buttons .purchase-button-container a');
+        // purchaseBtn.click((event)=>{
+        //     eventCallback(event,'כתבה', 'לחיצה לרכישה', '', '', '');
+        // });
+
+        /**
+         * Purchase buttons
+         */
+        let purchaseBtn = jQuery(document.getElementsByClassName('purchase-button-container'));
+        purchaseBtn.delegate('a', 'click', function (event) {
+            let analyticsLabel = $(this).parent().attr('data-analytics');
+            if (!analyticsLabel) {
+                analyticsLabel = this.innerText;
+            }
+            eventCallback(event, 'מתכון', 'לחיצה לרכישה', analyticsLabel, 'מפרסם', feedPublisher,'','');
+            // nonInteraction = false;
         });
 
         /**
