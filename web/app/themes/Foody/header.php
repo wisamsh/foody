@@ -255,13 +255,10 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                     data-target="#foody-navbar-collapse"
                                     aria-controls="foody-navbar-collapse" aria-expanded="false"
                                     aria-label="Toggle navigation">
-<!--                                --><?php
-//                                $logo_id = get_theme_mod('custom_logo');
-//                                echo wp_get_attachment_image($logo_id, 'full', false, 'logo');
-//                                ?>
-<!--                                <img class="clean-foody-logo" src="--><?php //echo $GLOBALS['images_dir'];?><!--/clean-foody.svg">-->
-                                <img class="foody-logo-text" src="<?php echo $GLOBALS['images_dir'];?>/foody_logo-with-white.svg">
-                                <!--                                <i class="navbar-toggler-icon icon-menu-mobile"></i>-->
+<!--                                <img class="foody-logo-text" src="--><?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
+                                <div class="foody-logo-text"></div>
+                                <div class="foody-logo-hamburger hidden"></div>
+                                <div class="foody-logo-close hidden"></div>
                             </button>
                         </div>
 

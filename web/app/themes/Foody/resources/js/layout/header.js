@@ -202,8 +202,14 @@ jQuery(document).ready(function ($) {
 
     /** new mobile header **/
     let switchedToHamburgerLogo = false;
+    let closedLogoIsShown = false;
+    let foodyTextLogoIsShow = false;
     let onLoadScroll = false;
     let oldPageYOffset = 0;
+
+    if($(window).scrollTop() < 110){
+        foodyTextLogoIsShow = true;
+    }
 
     if ($('.social-btn-container').length && $('.social-buttons-container').length) {
         $('.social-btn-container').on('click', function () {
@@ -219,7 +225,8 @@ jQuery(document).ready(function ($) {
 
     if ($('.sticky_bottom_header .navbar-toggler.custom-logo-link').length) {
         $('.sticky_bottom_header .navbar-toggler.custom-logo-link').on('click', function (e) {
-            if (!switchedToHamburgerLogo) {
+            if (!switchedToHamburgerLogo || foodyTextLogoIsShow) {
+                window.location.href = window.location.origin;
                 return;
             }
             if ($('.sticky_bottom_header .quadmenu-navbar-collapse').length) {
@@ -236,11 +243,18 @@ jQuery(document).ready(function ($) {
                 if (!expended) {
                     $('.sticky_bottom_header #quadmenu').css('height', '45%');
                     $('.sticky_bottom_header #quadmenu')[0].scrollTop = 0;
-                    let closeImage = '<img class="foody-logo-text logo-close" src="' + foodyGlobals.imagesUri + "close-menu-logo.svg" + '">';
-                    $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(closeImage);
+                    // let closeImage = '<img class="foody-logo-text logo-close" src="' + foodyGlobals.imagesUri + "close-menu-logo.svg" + '">';
+                    // $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(closeImage);
+                    $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-hamburger').toggleClass('hidden');
+                    $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-close').toggleClass('hidden');
+                    closedLogoIsShown = true;
                 } else {
-                    let hamburgerImage = '<img class="foody-logo-text logo-hamburger" src="' + foodyGlobals.imagesUri + "hamburger.svg" + '">';
-                    $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(hamburgerImage);
+                    // let hamburgerImage = '<img class="foody-logo-text logo-hamburger" src="' + foodyGlobals.imagesUri + "hamburger.svg" + '">';
+                    // $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(hamburgerImage);
+                    $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-close').toggleClass('hidden');
+                    $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-hamburger').toggleClass('hidden');
+                    closedLogoIsShown = false;
+
                     $('.sticky_bottom_header #quadmenu').css('height', '0');
                 }
             }
@@ -249,18 +263,50 @@ jQuery(document).ready(function ($) {
 
     if ($('.sticky_bottom_header').length) {
         $(window).on('scroll', function () {
-            if (!initialScrollEvent && !switchedToHamburgerLogo) {
-                let hamburgerImage = '<img class="foody-logo-text logo-hamburger" src="' + foodyGlobals.imagesUri + "hamburger.svg" + '">';
-                $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(hamburgerImage);
-                switchedToHamburgerLogo = true;
+            if($(window).scrollTop() < 110){
+                if(switchedToHamburgerLogo && !foodyTextLogoIsShow) {
+                    if(!closedLogoIsShown) {
+                        //         let foodyTextImage = '<img class="foody-logo-text" src="' + foodyGlobals.imagesUri + "foody_logo-with-white.svg" + '">';
+                        //         $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(foodyTextImage);
+                        $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-hamburger').toggleClass('hidden');
+                        $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').toggleClass('hidden');
+                        switchedToHamburgerLogo = false;
+                    }
+                }
             }
-            initialScrollEvent = false;
+            else{
+            //     let hamburgerImage = '<img class="foody-logo-text logo-hamburger" src="' + foodyGlobals.imagesUri + "hamburger.svg" + '">';
+            //     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(hamburgerImage);
+                if(!switchedToHamburgerLogo) {
+                    $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').toggleClass('hidden');
+                    $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-hamburger').toggleClass('hidden');
+                    switchedToHamburgerLogo = true;
+                    foodyTextLogoIsShow = false;
+                }
+            }
         });
     }
 
-
+    // function AnimateRotate(angle, elementSelector) {
+    //     // caching the object for performance reasons
+    //     var elem = $(elementSelector);
+    //
+    //     // we use a pseudo object for the animation
+    //     // (starts from `0` to `angle`), you can name it as you want
+    //     $({deg: 0}).animate({deg: angle}, {
+    //         duration: 2000,
+    //         step: function(now) {
+    //             // in the step-callback (that is fired each step of the animation),
+    //             // you can use the `now` paramter which contains the current
+    //             // animation-position (`0` up to `angle`)
+    //             elem.css({
+    //                 transform: 'rotate(' + now + 'deg)'
+    //             });
+    //         }
+    //     });
+    // }
+    //
+    // function sleep(ms) {
+    //     return new Promise(resolve => setTimeout(resolve, ms));
+    // }
 });
-
-function hasRealyScrolled(oldPageYOffset) {
-    return window.pageYOffset != oldPageYOffset;
-}

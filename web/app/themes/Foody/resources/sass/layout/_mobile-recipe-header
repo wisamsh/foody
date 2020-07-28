@@ -329,27 +329,76 @@ $run-height: 30px;
                 position: absolute;
               }
 
-              .foody-logo-text {
+              .foody-logo-text{
+                &.hidden{
+                  display: none;
+                  //transform: rotateZ(360deg);
+                }
                 position: absolute;
                 left: 0;
                 top: 29%;
                 height: 30px;
-                width: 91px;
-
-                &.logo-close {
-                  width: 20px;
-                  height: 19px;
-                  left: 35%;
-                  top: 35%;
-                }
-
-                &.logo-hamburger {
-                  top: 35%;
-                  width: 24px;
-                  left: 32%;
-                  height: auto;
-                }
+                background-repeat: no-repeat;
+                background-size: contain;
+                right: 0;
+                background-image: url("../images/foody_logo-with-white.svg");
+                //transition: transform 1s, background-image 1s;
               }
+
+              .foody-logo-hamburger{
+                &.hidden{
+                  display: none;
+                  //transform: rotateZ(360deg);
+                }
+                position: absolute;
+                left: 31%;
+                top: 36%;
+                height: 19px;
+                background-repeat: no-repeat;
+                background-size: contain;
+                right: 0;
+                background-image: url("../images/hamburger.svg");
+                //transition: transform 1s, background-image 1s;
+              }
+
+              .foody-logo-close{
+                &.hidden{
+                  display: none;
+                  //transform: rotateZ(360deg);
+                }
+                position: absolute;
+                left: 33%;
+                top: 36%;
+                height: 19px;
+                background-repeat: no-repeat;
+                background-size: contain;
+                right: 0;
+                background-image: url("../images/close-menu-logo.svg");
+                //transition: transform 1s, background-image 1s;
+              }
+
+              //.foody-logo-text {
+              //  position: absolute;
+              //  left: 0;
+              //  top: 29%;
+              //  height: 30px;
+              //  width: 91px;
+              //
+              //
+              //  &.logo-close {
+              //    width: 20px;
+              //    height: 19px;
+              //    left: 35%;
+              //    top: 35%;
+              //  }
+              //
+              //  &.logo-hamburger {
+              //    top: 35%;
+              //    width: 24px;
+              //    left: 32%;
+              //    height: auto;
+              //  }
+              //}
 
               img {
                 width: 60px;
