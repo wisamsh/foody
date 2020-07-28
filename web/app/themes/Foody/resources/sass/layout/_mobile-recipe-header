@@ -192,116 +192,143 @@ $run-height: 30px;
       &.foody-navbar-container {
         position: relative;
 
-        .navbar-overlay {
-          &.hidden {
-            display: none;
-          }
-
+        .navbar-container {
+          position: fixed;
           height: 100vh;
-          position: fixed;
-          bottom: 53vh;
           width: 100vw;
+          bottom: 0;
           right: 0;
-          background: black;
-          opacity: 0.9;
-        }
+          transition: all 0.5s ease-in;
 
-        .navbar-header {
-          &.hidden {
-            display: none;
+          &.hidden{
+            height: 0;
+            transition: all 0.5s ease-in;
+            //bottom: 0;
+          }
+          .navbar-overlay {
+            &.hidden {
+              //display: none;
+              height: 0;
+              bottom: 0;
+            }
+
+            height: 100vh;
+            position: fixed;
+            bottom: 53vh;
+            width: 100vw;
+            right: 0;
+            background: black;
+            opacity: 0.9;
+            //transition: all 0.1s ease-in;
           }
 
-          height: 34vh;
-          position: fixed;
-          bottom: 48vh;
-          width: 100vw;
-          right: 0;
-          background: #fdebec;
-          display: flex;
-          flex-direction: column;
-          text-align: center;
+          .navbar-header {
+            &.hidden {
+              //display: none;
+              height: 0;
+              bottom: 0;
 
-          .signup-purchase-container {
-            background-image: url("../images/top-mobile-menu.png");
-            background-repeat: no-repeat;
-            background-size: contain;
-            height: 100%;
-            padding-top: 5%;
-
-            .signup-login-link{
-              font-size: 17px;
-              font-weight: bold;
-              color: #ffffff;
-              opacity: 0.8;
-
-              &:hover{
-                opacity: 1;
-              }
-
-              &:active{
-                color: #ffffff;
-              }
-            }
-            .purchase-buttons {
-              margin-top: 5%;
-              .purchase-button-container {
-                margin: auto;
-              }
-            }
-          }
-        }
-
-        #quadmenu {
-          display: flex;
-          flex-direction: column-reverse;
-          position: fixed;
-          bottom: 8%;
-          width: 100vw;
-          right: 0;
-          background: #fdebec;
-          box-shadow: unset;
-          //height: 84%;
-          overflow: scroll;
-
-          .quadmenu-container {
-            background: #fdebec;
-
-            .quadmenu-navbar-header {
-              background: #fdebec;
-
-              .quadmenu-navbar-toggle {
+              .signup-purchase-container {
                 display: none;
               }
             }
 
-            .quadmenu-navbar-collapse {
+            height: 34vh;
+            position: fixed;
+            bottom: 48vh;
+            width: 100vw;
+            right: 0;
+            background: #fdebec;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            //transition: all 0.2s ease-in;
+
+            .signup-purchase-container {
+              background-image: url("../images/top-mobile-menu.png");
+              background-repeat: no-repeat;
+              background-size: contain;
+              height: 100%;
+              padding-top: 5%;
+
+              .signup-login-link {
+                font-size: 17px;
+                font-weight: bold;
+                color: #ffffff;
+                opacity: 0.8;
+
+                &:hover {
+                  opacity: 1;
+                }
+
+                &:active {
+                  color: #ffffff;
+                }
+              }
+
+              .purchase-buttons {
+                margin-top: 5%;
+
+                .purchase-button-container {
+                  margin: auto;
+                }
+              }
+            }
+          }
+
+          #quadmenu {
+            display: flex;
+            flex-direction: column-reverse;
+            position: fixed;
+            bottom: 8%;
+            width: 100vw;
+            right: 0;
+            background: #fdebec;
+            box-shadow: unset;
+            //height: 84%;
+            overflow: scroll;
+            //transition: all 0.5s ease-in;
+
+            .quadmenu-container {
               background: #fdebec;
-              padding-bottom: 5%;
 
-              .quadmenu-dropdown-menu {
+              .quadmenu-navbar-header {
                 background: #fdebec;
+
+                .quadmenu-navbar-toggle {
+                  display: none;
+                }
               }
 
-              .quadmenu-item-content {
+              .quadmenu-navbar-collapse {
                 background: #fdebec;
-                text-align: right;
-                color: $color__primary;
+                padding-bottom: 5%;
 
-                .quadmenu-text {
-                  color: $color__primary;
-                  font-weight: bold;
-                }
-
-                .quadmenu-caret {
+                .quadmenu-dropdown-menu {
                   background: #fdebec;
-                  color: $color__primary;
-                  left: 0;
-                  width: fit-content;
                 }
-              }
 
-              ul {
-                margin-left: 0;
+                .quadmenu-item-content {
+                  background: #fdebec;
+                  text-align: right;
+                  color: $color__primary;
+
+                  .quadmenu-text {
+                    color: $color__primary;
+                    font-weight: bold;
+                  }
+
+                  .quadmenu-caret {
+                    background: #fdebec;
+                    color: $color__primary;
+                    left: 0;
+                    width: fit-content;
+                  }
+                }
+
+                ul {
+                  margin-left: 0;
+                }
               }
             }
           }

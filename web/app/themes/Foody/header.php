@@ -255,7 +255,8 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                     data-target="#foody-navbar-collapse"
                                     aria-controls="foody-navbar-collapse" aria-expanded="false"
                                     aria-label="Toggle navigation">
-<!--                                <img class="foody-logo-text" src="--><?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
+                                <!--                                <img class="foody-logo-text" src="-->
+                                <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
                                 <div class="foody-logo-text"></div>
                                 <div class="foody-logo-hamburger hidden"></div>
                                 <div class="foody-logo-close hidden"></div>
@@ -285,25 +286,29 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                             ?>
                         </div>
                     </div>
-                    <div class="navbar-overlay hidden">
-                    </div>
-                    <div class="navbar-header hidden">
-<!--                        <img src="--><?php //echo $GLOBALS['images_dir'] . 'top-mobile-menu.png' ?><!--" class="top-mobile-menu">-->
-                        <div class="signup-purchase-container">
-                            <?php if(!is_user_logged_in()) { ?>
-                                <a class="signup-login-link" href="<?php echo get_permalink( get_page_by_path( 'התחברות' ));?>">הרשמו ל-FOODY »</a>
-                            <?php }
-                            $recipe->the_purchase_buttons(); ?>
+                    <div class="navbar-container hidden">
+                        <div class="navbar-overlay hidden">
                         </div>
+                        <div class="navbar-header hidden">
+                            <!--                        <img src="-->
+                            <?php //echo $GLOBALS['images_dir'] . 'top-mobile-menu.png' ?><!--" class="top-mobile-menu">-->
+                            <div class="signup-purchase-container">
+                                <?php if (!is_user_logged_in()) { ?>
+                                    <a class="signup-login-link"
+                                       href="<?php echo get_permalink(get_page_by_path('התחברות')); ?>">הרשמו ל-FOODY
+                                        »</a>
+                                <?php }
+                                $recipe->the_purchase_buttons(); ?>
+                            </div>
+                        </div>
+                        <?php
+                        $nav_args = array(
+                            'theme_location' => 'primary',
+                        );
+
+                        wp_nav_menu($nav_args);
+                        ?>
                     </div>
-                    <?php
-                    $nav_args = array(
-                        'theme_location' => 'primary',
-                    );
-
-                    wp_nav_menu($nav_args);
-                    ?>
-
                     <!--                    --><?php //Foody_Header::whatsapp(['d-block', 'd-lg-none']) ?>
                     <!---->
                     <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none"
