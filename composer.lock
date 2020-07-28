@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab9cc483765cdf8ab37cdc604b73a840",
+    "content-hash": "614da1add203e59d9078723c0a520373",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -1107,10 +1107,10 @@
         },
         {
             "name": "smash-baloon/instagram-feed",
-            "version": "1.12.2",
+            "version": "2.4.5",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.12.2.zip"
+                "url": "https://downloads.wordpress.org/plugin/instagram-feed.2.4.5.zip"
             },
             "type": "wordpress-plugin"
         },

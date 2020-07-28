@@ -54,11 +54,11 @@
       "type": "package",
       "package": {
         "name": "smash-baloon/instagram-feed",
-        "version": "1.12.2",
+        "version": "2.4.5",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/instagram-feed.1.12.2.zip"
+          "url": "https://downloads.wordpress.org/plugin/instagram-feed.2.4.5.zip"
         }
       }
     },
@@ -361,7 +361,7 @@
     "w3-total-cache": "0.9.7.4",
     "enrique-chavez/jwt-authentication-for-wp-rest-api": "^1.2",
     "humanmade/Restsplain": "^1.0",
-    "smash-baloon/instagram-feed": "1.12.2",
+    "smash-baloon/instagram-feed": "2.4.5",
     "phpoffice/phpspreadsheet": "1.8.0",
     "onesignal/onesignal": "^1.17",
     "wp-api/basic-auth": "^1.0",
