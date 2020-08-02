@@ -699,32 +699,38 @@ abstract class Foody_Post implements Foody_ContentWithSidebar {
 	}
 
 	public function the_video_box() {
-		if ( $this->post != null ) {
-			if ( have_rows( 'video', $this->post->ID ) ) {
-				while ( have_rows( 'video', $this->post->ID ) ): the_row();
-					$video_url = get_sub_field( 'url' );
+        $isRecipe = $this instanceof Foody_Recipe;
+	    if($isRecipe){
+            return;
+        }
+	    else{
+            if ($this->post != null) {
+                if (have_rows('video', $this->post->ID)) {
+                    while (have_rows('video', $this->post->ID)): the_row();
+                        $video_url = get_sub_field('url');
 
-					if ( $video_url && count( $parts = explode( 'v=', $video_url ) ) > 1 ) {
+                        if ($video_url && count($parts = explode('v=', $video_url)) > 1) {
 
-						$query    = explode( '&', $parts[1] );
-						$video_id = $query[0];
-						$args     = array(
-							'id'      => $video_id,
-							'post_id' => $this->id
-						);
-						foody_get_template_part( get_template_directory() . '/template-parts/content-recipe-video.php', $args );
-					} else {
-						echo get_the_post_thumbnail( $this->id, 'foody-main' );
-						if (isset($_GET['referer']) && $_GET['referer'] && ! empty( $logo = $this->get_feed_logo($_GET['referer']))){
-                            echo '<img class="feed-logo-sticker" src="'.$logo.'">';
+                            $query = explode('&', $parts[1]);
+                            $video_id = $query[0];
+                            $args = array(
+                                'id' => $video_id,
+                                'post_id' => $this->id
+                            );
+                            foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
+                        } else {
+                            echo get_the_post_thumbnail($this->id, 'foody-main');
+                            if (isset($_GET['referer']) && $_GET['referer'] && !empty($logo = $this->get_feed_logo($_GET['referer']))) {
+                                echo '<img class="feed-logo-sticker" src="' . $logo . '">';
+                            }
                         }
-					}
 
-				endwhile;
-			} else {
-				echo get_the_post_thumbnail( $this->id, 'foody-main' );
-			}
-		}
+                    endwhile;
+                } else {
+                    //echo get_the_post_thumbnail($this->id, 'foody-main');
+                }
+            }
+        }
 	}
 
 	protected function init_video() {

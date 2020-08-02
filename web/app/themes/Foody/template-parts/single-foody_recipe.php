@@ -12,7 +12,7 @@
 $recipe = $template_args['page'];
 
 foody_get_template_part(
-	get_template_directory() . '/template-parts/content-recipe-display-old.php',
+	get_template_directory() . '/template-parts/content-recipe-display.php',
 	[
 		'recipe' => $recipe
 	]
