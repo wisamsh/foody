@@ -23,7 +23,7 @@ if ( ! foody_is_registration_open() ) {
     </h1>
 
     <!-- Description -->
-    <div class="description">
+    <div class="description <?php if(wp_is_mobile()){ echo 'show-read-more';}?>">
 		<?php echo $foody_page->getDescription() ?>
     </div>
 

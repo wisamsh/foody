@@ -73,6 +73,16 @@ $content-width: 95%;
   $content-padding: 20px;
   .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .single-post {
 
+    .show-read-more {
+      .more-text {
+        display: none;
+      }
+
+      .read-more{
+        color:  var(--color__primary);
+      }
+    }
+
     #content.site-content{
         padding-top: 0px;
     }

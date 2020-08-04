@@ -195,6 +195,23 @@ jQuery(document).ready(($) => {
         $('.slider-for').slick(sliderMainData);
         $('.slider-nav').slick(sliderNavData);
     }
+
+    $(".show-read-more").each(function(){
+        let myStr = $.trim($(this).text());
+        let maxLength = 85;
+        if(myStr.length > maxLength){
+            let newStr = myStr.substring(0, maxLength);
+            newStr = newStr.substr(0, Math.min(newStr.length, newStr.lastIndexOf(" ")));
+            let removedStr = myStr.substring(maxLength, myStr.length);
+            $(this).empty().html(newStr);
+            $(this).append(' <a href="javascript:void(0);" class="read-more">עוד...</a>');
+            $(this).append('<span class="more-text">' + removedStr + '</span>');
+        }
+    });
+    $(".read-more").click(function(){
+        $(this).siblings(".more-text").contents().unwrap();
+        $(this).remove();
+    });
 });
 
 /**
