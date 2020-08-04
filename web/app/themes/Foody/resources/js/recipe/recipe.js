@@ -8,7 +8,9 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
 
     window.scroller();
 
-    let $video = $('.featured-content-container #video');
+    // let $video = $('.featured-content-container #video');
+    let $video = !foodyGlobals.isMobile ? $('.featured-content-container #video') : $('.featured-content-container .slider-for #video');
+
     let videoStopped = false;
 
     if ($video && $video.length) {
@@ -65,7 +67,7 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                                         let addToRoundUp = 10 - reminder;
                                         passPercentage = passPercentage + addToRoundUp;
                                     }
-                                    if(videoStopped){
+                                    if (videoStopped) {
                                         eventCallback(event, 'מתכון', 'צפייה בווידאו', 'הפעלה מחדש לאחר הפסקה', 'מיקום', passPercentage + '%');
                                         videoStopped = false;
                                     }
@@ -136,16 +138,16 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
         showLoginModal();
     });
 
-    if($('.content > .details-container .post-ratings > img').length){
+    if ($('.content > .details-container .post-ratings > img').length) {
         $.each($('.content > .details-container .post-ratings > img'), function (indexArr) {
-            $(this).before('<span class="ratings-index">' + (indexArr+1) + '</span>');
+            $(this).before('<span class="ratings-index">' + (indexArr + 1) + '</span>');
         });
     }
 
 }
 
 jQuery(document).ready(($) => {
-    if($('.rating-digits').length) {
+    if ($('.rating-digits').length) {
         if ($('.post-ratings')[0].innerText != "") {
             $('.rating-digits').remove();
         }
@@ -161,6 +163,37 @@ jQuery(document).ready(($) => {
                 $('.rating-digits').remove();
             }
         });
+    }
+
+    if ($('.slider-nav').length) {
+        let slideToShow = $('.slider-for .item').length > 4 ? 4 : $('.slider-for .item').length;
+        let sliderMainData = {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            prevArrow: '<div class="arrow arrow-prev"></div>',
+            nextArrow: '<div class="arrow arrow-next"></div>',
+            fade: true,
+            asNavFor: '.slider-nav',
+            rtl: true
+        };
+
+        let sliderNavData = {
+            slidesToShow: slideToShow,
+            slidesToScroll: 1,
+            asNavFor: '.slider-for',
+            dots: false,
+            focusOnSelect: true,
+            rtl: true
+        };
+        if ($('.slider-for .item').length > 4) {
+            sliderNavData.nextArrow = '<div class="arrow arrow-next"></div>';
+            sliderNavData.prevArrow = '<div class="arrow arrow-prev"></div>';
+        } else {
+            sliderNavData.arrows = false;
+        }
+
+        $('.slider-for').slick(sliderMainData);
+        $('.slider-nav').slick(sliderNavData);
     }
 });
 

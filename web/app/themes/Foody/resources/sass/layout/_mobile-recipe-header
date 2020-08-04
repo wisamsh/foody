@@ -235,7 +235,7 @@ $run-height: 30px;
 
             height: 34vh;
             position: fixed;
-            bottom: 48vh;
+            bottom: 53vh;
             width: 100vw;
             right: 0;
             background: #fdebec;

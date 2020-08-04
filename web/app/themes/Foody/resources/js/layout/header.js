@@ -113,18 +113,17 @@ jQuery(document).ready(function ($) {
         if ($('.sticky_bottom_header').length) {
             $('.sticky_bottom_header').css("bottom", "0");
             $('.sticky_bottom_header #quadmenu').css("bottom", "8%");
-            $('.sticky_bottom_header .navbar-header').css("bottom", "48vh");
+            $('.sticky_bottom_header .navbar-header').css("bottom", "53vh");
             $('.related-content-overlay .related-recipes-container').css("bottom", "65px");
         }
         sessionStorage.setItem('banner-popup-closed', 'true');
     });
 
     $('#popup-banner').on('shown.bs.modal', function () {
-        debugger;
         if ($('.sticky_bottom_header').length) {
             let newBottomHeader = $('#popup-banner .modal-dialog').height();
             let newBottomMenu = newBottomHeader + parseFloat($('.sticky_bottom_header #quadmenu').css('bottom'));
-            let newBottomMenuHeader = newBottomHeader + parseFloat($('.sticky_bottom_header .navbar-header').css('bottom'));
+            let newBottomMenuHeader = newBottomHeader + $(window).height() * 0.53;
             let newBottomRelatedRecipes = newBottomHeader + 65;
             $('.sticky_bottom_header').css("bottom", newBottomHeader);
             $('.sticky_bottom_header #quadmenu').css("bottom", newBottomMenu);
