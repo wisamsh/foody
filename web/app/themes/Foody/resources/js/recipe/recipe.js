@@ -197,13 +197,13 @@ jQuery(document).ready(($) => {
     }
 
     $(".show-read-more").each(function(){
-        let myStr = $.trim($(this).text());
+        let str = $.trim($(this).text());
         let maxLength = 85;
-        if(myStr.length > maxLength){
-            let newStr = myStr.substring(0, maxLength);
+        if(str.length > maxLength){
+            let newStr = str.substring(0, maxLength);
             let indexToStartSubstring =  Math.min(newStr.length, newStr.lastIndexOf(" "));
             newStr = newStr.substr(0,indexToStartSubstring);
-            let removedStr = myStr.substring(indexToStartSubstring, myStr.length);
+            let removedStr = str.substring(indexToStartSubstring, str.length);
             $(this).empty().html(newStr);
             $(this).append(' <a href="javascript:void(0);" class="read-more">עוד...</a>');
             $(this).append('<span class="more-text">' + removedStr + '</span>');
