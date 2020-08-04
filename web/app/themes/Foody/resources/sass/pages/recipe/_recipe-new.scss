@@ -157,6 +157,10 @@ $content-width: 95%;
                 transform: unset !important;
 
                 .item{
+                  .play-btn{
+                    right: 45% !important;
+                  }
+
                   img{
                     margin: auto;
                   }
