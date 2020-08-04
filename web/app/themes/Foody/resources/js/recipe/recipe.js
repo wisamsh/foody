@@ -201,8 +201,9 @@ jQuery(document).ready(($) => {
         let maxLength = 85;
         if(myStr.length > maxLength){
             let newStr = myStr.substring(0, maxLength);
-            newStr = newStr.substr(0, Math.min(newStr.length, newStr.lastIndexOf(" ")));
-            let removedStr = myStr.substring(maxLength, myStr.length);
+            let indexToStartSubstring =  Math.min(newStr.length, newStr.lastIndexOf(" "));
+            newStr = newStr.substr(0,indexToStartSubstring);
+            let removedStr = myStr.substring(indexToStartSubstring, myStr.length);
             $(this).empty().html(newStr);
             $(this).append(' <a href="javascript:void(0);" class="read-more">עוד...</a>');
             $(this).append('<span class="more-text">' + removedStr + '</span>');
