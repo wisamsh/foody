@@ -216,7 +216,7 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    if ($('.related-content-btn').length && $('.related-content-overlay').length) {
+    if ($('.related-content-btn').length && $('.related-content-overlay').length && $('.similar-content-items').length) {
         $('.related-content-btn').on('click', function () {
             $('.related-content-overlay').toggleClass('open');
         });
