@@ -73,6 +73,11 @@ $content-width: 95%;
   $content-padding: 20px;
   .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .single-post {
 
+    a:active,
+    a:hover{
+      color:unset
+    }
+
     .show-read-more {
       .more-text {
         display: none;
@@ -438,9 +443,17 @@ $content-width: 95%;
 
             .favorite {
               text-align: center;
+              display: flex;
+              flex-direction: row;
 
               i {
                 display: block;
+                margin: auto 0;
+              }
+              span{
+                color: black;
+                font-size: 17px;
+                margin-right: 7%;
               }
             }
           }
@@ -466,6 +479,20 @@ $content-width: 95%;
 
         .social {
           justify-content: space-between;
+        }
+      }
+
+      .promotion-area{
+        .promotion-link{
+          .promotion-text{
+            white-space: pre-line;
+            padding: 5%;
+            background: var(--color__primary);
+            color: #ffffff;
+            line-height: 1.3;
+            text-align: center;
+            margin: 2% 0;
+          }
         }
       }
 

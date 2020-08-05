@@ -121,11 +121,11 @@ class Foody_Recipe extends Foody_Post
         $recipe_id = $this->getId();
         $categories = wp_get_post_categories($recipe_id);
         $techniques = $this->the_techniques(false);
-        if($techniques != false) {
+        if ($techniques != false) {
             $techniques = array_map(function ($technique_post) {
                 return $technique_post->ID;
             }, $this->the_techniques(false));
-        } else{
+        } else {
             $techniques = [];
         }
 
@@ -232,7 +232,7 @@ class Foody_Recipe extends Foody_Post
             $sponsor_name = isset($sponsor->name) ? $sponsor->name : '';
             $sponsor_taxonomy = isset($sponsor->taxonomy) ? $sponsor->taxonomy : '';
             $sponsor_term_id = isset($sponsor->term_id) ? $sponsor->term_id : '';
-            $sponsor_link = get_field('link', $sponsor_taxonomy  . '_' . $sponsor_term_id);
+            $sponsor_link = get_field('link', $sponsor_taxonomy . '_' . $sponsor_term_id);
 
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-recipe-sponsor.php',
@@ -1052,5 +1052,19 @@ class Foody_Recipe extends Foody_Post
             }
         }
         foody_get_template_part(get_template_directory() . '/template-parts/content-similar-content-listing.php', $args);
+    }
+
+    function the_promotion_area($promotion_area_group)
+    {
+        $promotion_text = $promotion_area_group['text'];
+        $has_link = isset($promotion_area_group['link']) && is_array($promotion_area_group['link']);
+        $promotion_link = $has_link && isset($promotion_area_group['link']['url']) ? $promotion_area_group['link']['url'] : false;
+        $promotion_area_element ='<p class="promotion-text">'.$promotion_text .'</p>';
+        if($promotion_link){
+            $link_target = $has_link && isset($promotion_area_group['link']['target']) ? $promotion_area_group['link']['target'] : '';
+            $promotion_area_element = '<a class="promotion-link" href="'. $promotion_area_group['link']['url'] .'" target="'.$link_target.'" >'.$promotion_area_element.'</a>';
+        }
+
+        echo $promotion_area_element;
     }
 }

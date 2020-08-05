@@ -80,15 +80,15 @@ if ( ! foody_is_registration_open() ) {
     </section>
 
     <!-- Social buttons -->
-    <section class="">
-		<?php foody_get_template_part(
-			get_template_directory() . '/template-parts/content-social-actions.php',
-			[
-				'extra_content' => $foody_page->the_purchase_buttons( 'd-none d-lg-flex', false )
-			]
-		);
-		?>
-    </section>
+<!--    <section class="">-->
+<!--		--><?php //foody_get_template_part(
+//			get_template_directory() . '/template-parts/content-social-actions.php',
+//			[
+//				'extra_content' => $foody_page->the_purchase_buttons( 'd-none d-lg-flex', false )
+//			]
+//		);
+//		?>
+<!--    </section>-->
 
 
 </div>
