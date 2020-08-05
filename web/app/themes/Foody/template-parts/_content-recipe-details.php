@@ -45,7 +45,8 @@ if ( ! foody_is_registration_open() ) {
 					'foody_page'    => $foody_page,
 					'show_favorite' => $show_favorite,
 					'hide'          => [
-						'views' => true // wp_is_mobile()
+						'views' => true,
+                        'date' => true// wp_is_mobile()
 					]
 				);
 
