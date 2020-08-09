@@ -24,6 +24,7 @@ if (!is_multisite() || is_main_site()) {
     <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <?php } ?>
+    <meta name="google-site-verification" content="0onpCxafciFIuZuFGZ0w-_blKWe82J34Br2rAq1Tid4" />
     <meta name="theme-color" content="#ED3D48">
     <link rel="profile" href="http://gmpg.org/xfn/11">
 
