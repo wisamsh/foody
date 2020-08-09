@@ -92,7 +92,7 @@ if (isset($_REQUEST['s']) && !isset($_REQUEST['export_clicked'])) {
 </form>
 <form method="get">
     <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
-<!--    <input type="hidden" name="page" value="test_list_table">-->
+    <!--    <input type="hidden" name="page" value="test_list_table">-->
     <?php
     $myListTable->display();
     ?>
@@ -229,6 +229,38 @@ if (isset($_REQUEST['s']) && !isset($_REQUEST['export_clicked'])) {
                     }
                 });
             }
+        }
+    }
+
+    function deleteRow(memberID) {
+        debugger;
+        var isDelete = confirm("האם למחוק שורה?");
+        if (isDelete) {
+            startLoader();
+            foodyAjax({
+                action: 'foody_delete_row',
+                data: {
+                    memberID: memberID
+                }
+            }, function (err, data) {
+                if (err) {
+                    stopLoader();
+                    console.log(err);
+                } else {
+                    debugger;
+                    if (typeof data.data.msg != 'undefined') {
+                        stopLoader();
+                        alert(data.data.msg);
+                        window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=foody-course-members%2Fcourse-members-manage.php';
+                    } else {
+                        if (typeof data.data.error != 'undefined') {
+                            stopLoader();
+                            alert(data.data.error);
+                            window.location = window.location.protocol + '//' + window.location.hostname + '/wp/wp-admin/admin.php?page=foody-course-members%2Fcourse-members-manage.php';
+                        }
+                    }
+                }
+            });
         }
     }
 

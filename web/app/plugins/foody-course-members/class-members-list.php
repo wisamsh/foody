@@ -26,7 +26,7 @@ class Courses_Members_List extends WP_List_Table
     {
         global $wpdb;
         $table_name = $wpdb->prefix . 'foody_courses_members';
-        $query = "SELECT * FROM {$table_name}";
+        $query = "SELECT * FROM {$table_name} WHERE deleted = 0";
 
         $members = $wpdb->get_results($query);
         $members_list = [];
@@ -65,7 +65,8 @@ class Courses_Members_List extends WP_List_Table
                 'זיכוי' => $payment_method_refund && !empty($transaction_id) && $transaction_id != -1 && $status == 'paid' ? '<div data-member-id="' . $member_id . '" data-method="' . $payment_method . '" onclick="getRefund(\'' . $transaction_id . '\', this);" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
                 'סטאטוס' => $status,
-                'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
+                'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>',
+                'מחיקה' => '<div onclick="deleteRow(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: red" >לחץ למחיקה</div>'
             );
         }
 
@@ -111,7 +112,8 @@ class Courses_Members_List extends WP_List_Table
                 'זיכוי' => $payment_method_refund && !empty($transaction_id) && $transaction_id != -1 && $status == 'paid' ? '<div data-member-id="' . $member_id . '" data-method="' . $payment_method . '" onclick="getRefund(\'' . $transaction_id . '\', this);" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
                 'סטאטוס' => $status,
-                'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
+                'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>',
+                'מחיקה' => '<div onclick="deleteRow(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: red" >לחץ למחיקה</div>'
             );
         }
 
@@ -150,6 +152,7 @@ class Courses_Members_List extends WP_List_Table
             case 'הערה':
             case 'סטאטוס':
             case 'עריכה':
+            case 'מחיקה':
                 return $item[$column_name];
             default:
                 return print_r($item, true); //Show the whole array for troubleshooting purposes
@@ -183,6 +186,7 @@ class Courses_Members_List extends WP_List_Table
             'הערה' => __('הערה'),
             'סטאטוס' => __('סטאטוס'),
             'עריכה' => __('עריכה'),
+            'מחיקה' => __('מחיקה'),
         ];
 
         return $columns;
@@ -206,6 +210,7 @@ class Courses_Members_List extends WP_List_Table
             'הערה' => array('הערה', false),
             'סטאטוס' => array('סטאטוס', true),
             'עריכה' => array('עריכה', false),
+            'מחיקה' => array('מחיקה', false),
         );
 
         return $sortable_columns;
@@ -344,6 +349,8 @@ class Courses_Members_List extends WP_List_Table
                 }
             }
         }
+
+        $search_query .= ' AND deleted = 0';
         return $search_query;
     }
 
@@ -383,6 +390,7 @@ class Courses_Members_List extends WP_List_Table
             }
         }
 
+        $search_query .= ' AND deleted = 0';
         return $search_query;
     }
 

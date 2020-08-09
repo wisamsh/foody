@@ -42,3 +42,24 @@ function foody_add_course_member_to_table($custom_val, $return_id = false)
         return false;
     }
 }
+
+function foody_delete_row()
+{
+    $member_id =  isset($_POST['memberID']) ? $_POST['memberID'] : false;
+    if ($member_id) {
+        $updated = update_course_member_by_id_and_cloumns($member_id, ['deleted' => 1]);
+
+        if($updated){
+            wp_send_json_success(['msg' => __('השורה עם מזהה ' . $member_id . ' נמחקה')]);
+        }
+        else{
+            wp_send_json_error(['error' => 'המחיקה לא צלחה, אנא נסו שוב']);
+        }
+    } else {
+        wp_send_json_error(['error' => 'missing member id']);
+    }
+
+}
+
+add_action('wp_ajax_nopriv_foody_delete_row', 'foody_delete_row');
+add_action('wp_ajax_foody_delete_row', 'foody_delete_row');
