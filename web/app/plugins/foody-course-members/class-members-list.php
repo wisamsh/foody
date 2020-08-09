@@ -47,7 +47,7 @@ class Courses_Members_List extends WP_List_Table
             $note = $member->note;
             $status = $member->status;
 
-            $payment_method_refund  = $payment_method == __('ביט') || $payment_method == __('כרטיס אשראי');
+            $payment_method_refund = $payment_method == __('ביט') || $payment_method == __('כרטיס אשראי');
 
             $members_list[$member_id] = array(
                 'ID' => $member_id,
@@ -62,7 +62,7 @@ class Courses_Members_List extends WP_List_Table
                 'מס׳ טרנזקציה' => $transaction_id,
                 'קופון' => $coupon,
                 'תאריך רכישה' => $purchase_date,
-                'זיכוי' => $payment_method_refund && !empty($transaction_id) && $transaction_id != -1 && $status == 'paid' ? '<div data-member-id="'. $member_id .'" data-method="'. $payment_method .'" onclick="getRefund(\''. $transaction_id . '\', this);" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
+                'זיכוי' => $payment_method_refund && !empty($transaction_id) && $transaction_id != -1 && $status == 'paid' ? '<div data-member-id="' . $member_id . '" data-method="' . $payment_method . '" onclick="getRefund(\'' . $transaction_id . '\', this);" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
                 'סטאטוס' => $status,
                 'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
@@ -93,7 +93,7 @@ class Courses_Members_List extends WP_List_Table
             $note = $search_result['note'];
             $status = $search_result['status'];
 
-            $payment_method_refund  = $payment_method == __('ביט') || $payment_method == __('כרטיס אשראי');
+            $payment_method_refund = $payment_method == __('ביט') || $payment_method == __('כרטיס אשראי');
 
             $members_list[$member_id] = array(
                 'ID' => $member_id,
@@ -108,7 +108,7 @@ class Courses_Members_List extends WP_List_Table
                 'מס׳ טרנזקציה' => $transaction_id,
                 'קופון' => $coupon,
                 'תאריך רכישה' => $purchase_date,
-                'זיכוי' => $payment_method_refund && !empty($transaction_id) && $transaction_id != -1 && $status == 'paid' ? '<div data-member-id="'. $member_id .'" data-method="'. $payment_method .'" onclick="getRefund(\''. $transaction_id . '\', this);" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
+                'זיכוי' => $payment_method_refund && !empty($transaction_id) && $transaction_id != -1 && $status == 'paid' ? '<div data-member-id="' . $member_id . '" data-method="' . $payment_method . '" onclick="getRefund(\'' . $transaction_id . '\', this);" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לזיכוי</div>' : __('לחץ לזיכוי'),
                 'הערה' => $note,
                 'סטאטוס' => $status,
                 'עריכה' => '<div onclick="getUpdate(' . $member_id . ')" style="cursor: pointer; text-decoration: underline; color: blue" >לחץ לעריכה</div>'
@@ -250,13 +250,12 @@ class Courses_Members_List extends WP_List_Table
             Foody_courses_members_exporter::generate_xlsx($export_query);
         } else {
             /** regular search */
-            if (isset($_POST['s']) && !empty($search)) {
+            if (isset($_REQUEST['s']) && !empty($search)) {
                 $search_query = $this->get_regular_search_query($search);
                 $members_list = $wpdb->get_results($search_query, ARRAY_A);
                 $members_list = $this->search_results_to_courses_members($members_list);
-            }
-            /** get all members */
-            else{
+            } /** get all members */
+            else {
                 // $this->_column_headers = array($columns, $hidden, $sortable);
                 $members_list = $this->get_courses_members();
             }
@@ -271,10 +270,12 @@ class Courses_Members_List extends WP_List_Table
             $per_page = 30;
             $current_page = $this->get_pagenum();
             $total_items = $this->record_count();
+            $number_of_pages = $this->get_number_of_pages($total_items, $per_page);
 
             $this->set_pagination_args([
                 'total_items' => $total_items, //WE have to calculate the total number of items
-                'per_page' => $per_page //WE have to determine how many items to show on a page
+                'per_page' => $per_page, //WE have to determine how many items to show on a page
+                'total_pages' => $number_of_pages
             ]);
 
             $members_list = array_slice($members_list, (($current_page - 1) * $per_page), $per_page);
@@ -331,7 +332,7 @@ class Courses_Members_List extends WP_List_Table
 
         foreach ($filters_list as $key => $filter) {
             $current_filter = !empty($search[$key]) ? $search[$key] : false;
-            if($key == 'marketing_filter' && is_int($search[$key])){
+            if ($key == 'marketing_filter' && is_int($search[$key])) {
                 $current_filter = $search[$key];
             }
             if ($current_filter !== false) {
@@ -383,6 +384,24 @@ class Courses_Members_List extends WP_List_Table
         }
 
         return $search_query;
+    }
+
+    private function get_number_of_pages($total_items, $per_page)
+    {
+        $number_of_pages = $total_items/$per_page;
+        if($number_of_pages < 1){
+            $number_of_pages = 1;
+        }
+        elseif ($this->is_decimal($number_of_pages)){
+            $number_of_pages = floor($number_of_pages) + 1;
+        }
+
+        return intval($number_of_pages);
+    }
+
+    private function is_decimal($val)
+    {
+        return is_numeric($val) && floor($val) != $val;
     }
 }
 

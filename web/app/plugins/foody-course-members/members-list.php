@@ -7,24 +7,24 @@ $filters_data = [];
 $has_filters = false;
 
 
-if (isset($_POST['s'])) {
-    $myListTable->prepare_items($_POST['s']);
-    $filters_data = ['search' => $_POST['s']];
+if (isset($_REQUEST['s']) && !isset($_REQUEST['export_clicked'])) {
+    $myListTable->prepare_items($_REQUEST['s']);
+    $filters_data = ['search' => $_REQUEST['s']];
     $has_filters = true;
-} elseif (!isset($_POST['export_clicked']) && (isset($_POST['date_from']) && isset($_POST['date_to'])
-        || isset($_POST['payment_filter'])
-        || isset($_POST['course_filter'])
-        || isset($_POST['marketing_filter'])
-        || isset($_POST['organization_filter'])
-        || isset($_POST['coupon_filter']))) {
+} elseif (!isset($_REQUEST['export_clicked']) && (isset($_GET['date_from']) && isset($_GET['date_to'])
+        || isset($_GET['payment_filter'])
+        || isset($_GET['course_filter'])
+        || isset($_GET['marketing_filter'])
+        || isset($_GET['organization_filter'])
+        || isset($_GET['coupon_filter']))) {
 
-    $date_from = isset($_POST['date_from']) ? $_POST['date_from'] : '';
-    $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : '';
-    $payment_filter = isset($_POST['payment_filter']) ? $_POST['payment_filter'] : '';
-    $course_filter = isset($_POST['course_filter']) ? $_POST['course_filter'] : '';
-    $marketing_filter = isset($_POST['marketing_filter']) ? $_POST['marketing_filter'] : '';
-    $organization_filter = isset($_POST['organization_filter']) ? $_POST['organization_filter'] : '';
-    $coupon_filter = isset($_POST['coupon_filter']) ? $_POST['coupon_filter'] : '';
+    $date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
+    $date_to = isset($_GET['date_to']) ? $_GET['date_to'] : '';
+    $payment_filter = isset($_GET['payment_filter']) ? $_GET['payment_filter'] : '';
+    $course_filter = isset($_GET['course_filter']) ? $_GET['course_filter'] : '';
+    $marketing_filter = isset($_GET['marketing_filter']) ? $_GET['marketing_filter'] : '';
+    $organization_filter = isset($_GET['organization_filter']) ? $_GET['organization_filter'] : '';
+    $coupon_filter = isset($_GET['coupon_filter']) ? $_GET['coupon_filter'] : '';
 
     if (!empty($marketing_filter)) {
         $marketing_filter = $marketing_filter == __('אושר') ? 1 : 0;
@@ -64,10 +64,11 @@ if (isset($_POST['s'])) {
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: rgba(0,0,0,0.5);
+        background-color: rgba(0, 0, 0, 0.5);
         z-index: 2;
         cursor: pointer;
     }
+
     .filter-row {
         display: flex;
         flex-direction: column;
@@ -82,14 +83,16 @@ if (isset($_POST['s'])) {
         text-decoration: underline;
     }
 </style>
-<div id="overlay" onclick=""> אנא המתינו... </div>
-<form method="post" id="search-from">
+<div id="overlay" onclick=""> אנא המתינו...</div>
+<form method="get" id="search-from">
+    <input type="hidden" name="page" value="<?= esc_attr($_REQUEST['page']) ?>"/>
     <?php
     $myListTable->search_box('Search', 'search-id');
     ?>
 </form>
-<form method="post">
-    <input type="hidden" name="page" value="test_list_table">
+<form method="get">
+    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
+<!--    <input type="hidden" name="page" value="test_list_table">-->
     <?php
     $myListTable->display();
     ?>
@@ -171,7 +174,7 @@ if (isset($_POST['s'])) {
         let memberID = $(element).data('member-id');
         var isRefund = confirm("האם לבצע זיכוי?");
         if (isRefund) {
-            if(paymentMethod == 'ביט') {
+            if (paymentMethod == 'ביט') {
                 //todo: ajax call that take care of Refund
                 startLoader();
                 foodyAjax({
@@ -198,8 +201,7 @@ if (isset($_POST['s'])) {
                         }
                     }
                 });
-            }
-            else if(paymentMethod == 'כרטיס אשראי'){
+            } else if (paymentMethod == 'כרטיס אשראי') {
                 startLoader();
                 foodyAjax({
                     action: 'foody_cardcom_refund_process',
