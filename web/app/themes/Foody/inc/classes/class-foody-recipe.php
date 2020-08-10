@@ -25,6 +25,8 @@ class Foody_Recipe extends Foody_Post
 
     public $substitute_all_button;
 
+    private $calories_per_dish;
+
 
     /**
      * Recipe constructor.
@@ -111,7 +113,8 @@ class Foody_Recipe extends Foody_Post
 
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-recipe-overview.php',
-                $this->overview
+                ['overview' => $this->overview,
+                    'recipe' =>$this]
             );
         }
     }
@@ -201,16 +204,17 @@ class Foody_Recipe extends Foody_Post
         $title = get_field('nutritions_title', $this->post->ID);
 
         if (empty($title)) {
-            $title = __('ערכים תזונתיים');
+            $title = __('ערכים תזונתיים לפי מנה אחת');
         }
 
         if (!empty($this->nutrients)) {
-            $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
+
+//            $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
 
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-nutritions.php',
                 [
-                    'nutritions' => $nutrients,
+                    'nutritions' => $this->nutrients,
                     'title' => $title,
                     'dishes_amount' => $this->getNumberOfDishes(),
                     'dishes_title' => $this->the_amount_title()
@@ -364,11 +368,12 @@ class Foody_Recipe extends Foody_Post
 
     public function preview()
     {
-        $content = get_field('preview', $this->post->ID, false);
+        $content = get_field('preview', $this->post->ID, true);
 
-        if (!empty($content)) {
-            $content = foody_normalize_content($content);
-        }
+//        if (!empty($content)) {
+//            $content = foody_normalize_content($content, true);
+//        }
+        $content = '<div class="foody-content show-read-more">'. $content . '</div>';
 
         echo $content;
     }
@@ -386,8 +391,8 @@ class Foody_Recipe extends Foody_Post
     public function init()
     {
         $this->init_ingredients();
-        $this->init_overview();
         $this->init_nutrients();
+        $this->init_overview();
     }
 
     private function ingredients_to_string()
@@ -410,11 +415,19 @@ class Foody_Recipe extends Foody_Post
 
         $difficulty_level = $overview['difficulty_level'];
 
+        if ($this->has_nutrients()) {
+            $this->calories_per_dish = $this->get_calories();
+        }
+
+
         $this->overview = array(
-            'preparation_time' => $this->get_recipe_time($overview['preparation_time']),
-            'total_time' => $this->get_recipe_time($overview['total_time']),
-            'difficulty_level' => $difficulty_level,
-            'ingredients_count' => $this->ingredients_count
+            'ingredients_count' => ['text' => $this->ingredients_count, 'icon' => 'ingedients@3x.png'],
+            'time' => [
+                'preparation_time' => ['text' => $this->get_recipe_time($overview['preparation_time'], true, true), 'icon' => 'clock@3x.png'],
+                'total_time' => ['text' => $this->get_recipe_time($overview['total_time'], true, true), 'icon' => null]
+            ],
+            'calories_per_dish' => ['text' => $this->calories_per_dish, 'icon' => 'kcal@3x.png'],
+            'difficulty_level' => ['text' => $difficulty_level, 'icon' => null],
         );
 
     }
@@ -456,7 +469,7 @@ class Foody_Recipe extends Foody_Post
         return $str;
     }
 
-    private function get_recipe_time($time_field, $local = true)
+    private function get_recipe_time($time_field, $local = true, $shortText = false)
     {
         if (!$local) {
             global $locale;
@@ -500,7 +513,11 @@ class Foody_Recipe extends Foody_Post
         }
 
         if (!empty($times['minutes'])) {
-            $unit = 'דקות';
+            if(!$shortText) {
+                $unit = 'דקות';
+            } else {
+                $unit = "דק׳";
+            }
             $singular = 'דקה';
             if (!$local) {
                 $unit = 'Minutes';
@@ -1059,12 +1076,26 @@ class Foody_Recipe extends Foody_Post
         $promotion_text = $promotion_area_group['text'];
         $has_link = isset($promotion_area_group['link']) && is_array($promotion_area_group['link']);
         $promotion_link = $has_link && isset($promotion_area_group['link']['url']) ? $promotion_area_group['link']['url'] : false;
-        $promotion_area_element ='<p class="promotion-text">'.$promotion_text .'</p>';
-        if($promotion_link){
+        $promotion_area_element = '<p class="promotion-text">' . $promotion_text . '</p>';
+        if ($promotion_link) {
             $link_target = $has_link && isset($promotion_area_group['link']['target']) ? $promotion_area_group['link']['target'] : '';
-            $promotion_area_element = '<a class="promotion-link" href="'. $promotion_area_group['link']['url'] .'" target="'.$link_target.'" >'.$promotion_area_element.'</a>';
+            $promotion_area_element = '<a class="promotion-link" href="' . $promotion_area_group['link']['url'] . '" target="' . $link_target . '" >' . $promotion_area_element . '</a>';
         }
 
         echo $promotion_area_element;
+    }
+
+    function get_calories()
+    {
+        $calories_per_dish = 0;
+        foreach ($this->nutrients as $nutrient) {
+            if (is_array($nutrient) && isset($nutrient['name']) && isset($nutrient['valuePerDish'])) {
+                if ($nutrient['name'] === __('קלוריות')) {
+                    $calories_per_dish = $nutrient['valuePerDish'];
+                }
+            }
+        }
+
+        return $calories_per_dish;
     }
 }

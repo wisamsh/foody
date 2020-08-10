@@ -1669,7 +1669,7 @@ function foody_array_to_substitute_data_attr( $data ) {
     return $data_attrs;
 }
 
-function foody_normalize_content( $content ) {
+function foody_normalize_content( $content , $is_recipe_content = false) {
 	if ( function_exists( 'footabc_add_code_to_content' ) ) {
 		remove_filter( 'the_content', 'footabc_add_code_to_content' );
 	}
@@ -1682,6 +1682,9 @@ function foody_normalize_content( $content ) {
 
 	$content = str_replace( '&nbsp;', " ", $content );
 	$content = preg_replace( '/\s+/', ' ', $content );
+	if($is_recipe_content) {
+        $content = str_replace('foody-content', "foody-content show-read-more", $content);
+    }
 
 	return $content;
 

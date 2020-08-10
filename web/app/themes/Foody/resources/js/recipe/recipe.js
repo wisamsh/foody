@@ -4,13 +4,14 @@
 
 // noinspection ES6ModulesDependencies
 //TODO:: Change category from מתכון to כתבה if necessary !
+// import * as player from "youtube-player";
+let player;
 if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGlobals.post.type == 'post')) {
 
     window.scroller();
 
     // let $video = $('.featured-content-container #video');
     let $video = !foodyGlobals.isMobile ? $('.featured-content-container #video') : $('.featured-content-container .slider-for #video');
-
     let videoStopped = false;
 
     if ($video && $video.length) {
@@ -24,7 +25,7 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
 
                 let playerContainer = jQuery(videoElem).siblings('.video-container');
 
-                let player = ytPlayer(playerContainer, videoId);
+                player = ytPlayer(playerContainer, videoId);
 
 
                 /*
@@ -194,11 +195,24 @@ jQuery(document).ready(($) => {
 
         $('.slider-for').slick(sliderMainData);
         $('.slider-nav').slick(sliderNavData);
+
+        $('.slider .arrow').on('click', function () {
+            // let currentActive = $('.slider-for .slick-track').find('iframe');
+            if(typeof player !== 'undefined'){
+                player.pauseVideo();
+            }
+        });
     }
 
     $(".show-read-more").each(function(){
         let str = $.trim($(this).text());
-        let maxLength = 85;
+        let maxLength;
+        if($(this).hasClass('description')) {
+            maxLength = 85;
+        }
+        else{
+            maxLength = 135;
+        }
         if(str.length > maxLength){
             let newStr = str.substring(0, maxLength);
             let indexToStartSubstring =  Math.min(newStr.length, newStr.lastIndexOf(" "));
@@ -213,6 +227,18 @@ jQuery(document).ready(($) => {
         $(this).siblings(".more-text").contents().unwrap();
         $(this).remove();
     });
+
+    if($('.overview-nutrients .value').length && $('.overview-nutrients .recipe-nutrition').length){
+        $('.overview-nutrients .value').on('click', function () {
+            $('.overview-nutrients .value').toggleClass('open');
+            $('.overview-nutrients .recipe-nutrition').toggleClass('open');
+        });
+
+        $('.overview-nutrients .close-btn').on('click', function () {
+            $('.overview-nutrients .recipe-nutrition').toggleClass('open');
+            $('.overview-nutrients .value').toggleClass('open');
+        });
+    }
 });
 
 /**

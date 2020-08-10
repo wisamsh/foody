@@ -7,26 +7,26 @@
  */
 
 /** @noinspection PhpUndefinedVariableInspection */
-$nutritions   = $template_args['nutritions'];
-$title        = $template_args['title'];
-$dishes       = $template_args['dishes_amount'];
+$nutritions = $template_args['nutritions'];
+$title = $template_args['title'];
+$dishes = $template_args['dishes_amount'];
 $dishes_title = $template_args['dishes_title'];
 
 $disclaimer = __(
-	"הערכים התזונתיים המופיעים במתכון חושבו על פי חומרי הגלם הספציפיים המופיעים וכל שינוי באופן הכנה, בסוג המוצר ו/או וחברת המצרך ו/או כמויות שונות יוביל לשינוי הערכים.
+    "הערכים התזונתיים המופיעים במתכון חושבו על פי חומרי הגלם הספציפיים המופיעים וכל שינוי באופן הכנה, בסוג המוצר ו/או וחברת המצרך ו/או כמויות שונות יוביל לשינוי הערכים.
 אתר פודי וחברת מדיפוד בע\"מ אינן אחראיות לכל שינוי כאמור ו/או על השימוש במתכון ובאחריות המשתמש לבדוק את ערכים התזונתיים בעצמו בטרם השימוש במתכון."
 );
 
-$disclaimer = sprintf( '<div> <span class="close">&times;</span><div>%s</div></div>', $disclaimer );
+$disclaimer = sprintf('<div> <span class="close">&times;</span><div>%s</div></div>', $disclaimer);
 
 
 ?>
-
-<h2 class="title">
-	<?php echo $title ?>
-
-    <span class="glyphicon glyphicon-info-sign disclaimer" data-toggle="tooltip" data-placement="bottom"
-          title='<?php echo $disclaimer ?>' data-content="<?php echo esc_html( $disclaimer ) ?>" data-html="true">
+<div class="nutrition-container">
+    <h2 class="title">
+        <?php echo $title ?>
+        <!-- disclaimer   -->
+        <span class="glyphicon glyphicon-info-sign disclaimer" data-toggle="tooltip" data-placement="bottom"
+              title='<?php echo $disclaimer ?>' data-content="<?php echo esc_html($disclaimer) ?>" data-html="true">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22px"
                  height="22px" viewBox="0 0 22 22" version="1.1">
         <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
@@ -45,65 +45,98 @@ $disclaimer = sprintf( '<div> <span class="close">&times;</span><div>%s</div></d
         </g>
     </svg>
     </span>
+    </h2>
+    <?php
+    $count = 0;
+    $num_in_row = 3;
+    foreach ($nutritions
 
-
-</h2>
-
-<div class="nutrition-container">
-
-    <div class="nutritions-header">
-        <span class="clearfix"></span>
-        <span>
-            לפי <?php echo $dishes_title['singular'] ?>
-        </span>
-        <span>
-            לפי
-            <span class="nutrients-header-dishes-amount">
-                <?php echo $dishes ?>
-            </span>
-            <?php echo $dishes_title['plural'] ?>
-        </span>
-    </div>
-
-    <div class="nutritions row">
-		<?php
-		$count = 0;
-		foreach ( $nutritions as $nutrition ): ?>
-
-            <div class="col-12 nutrition">
-
-				<?php foreach ( $nutrition as $item ): ?>
-                    <div class="nutrition-row <?php echo( ++ $count % 2 ? "odd" : "even" ) ?>"
-                         data-name="<?php echo $item['data_name'] ?>"
-                         data-original=" <?php echo $item['value'] ?>">
+             as $nutrition) {
+        if ($count % $num_in_row == 0) {
+            echo '<div class="nutritions row">';
+        }
+        ?>
+        <div class="col-12 nutrition">
+            <!--        --><?php //foreach ($nutrition as $item): ?>
+            <div class="nutrition-row <?php echo($count % 2 ? "even" : "odd") ?>"
+                 data-name="<?php echo $nutrition['data_name'] ?>"
+                 data-original=" <?php echo $nutrition['value'] ?>">
 
                         <span class="name">
-                            <?php echo $item['name'] ?>
+                            <?php echo $nutrition['name'] ?>
                         </span>
 
-                        <span class="dish-nutrition">
+                <span class="dish-nutrition">
                             <span class="value">
-                                <?php echo $item['valuePerDish'] ?>
+                                <?php echo $nutrition['valuePerDish'] ?>
                             </span>
                             <span class="unit">
-                                <?php echo $item['unit'] ?>
+                                <?php echo $nutrition['unit'] ?>
                             </span>
                         </span>
 
-                        <span class="chosen-dishes-nutrition">
+                <span class="chosen-dishes-nutrition">
                             <span class="value">
-                                <?php echo $item['value'] ?>
+                                <?php echo $nutrition['value'] ?>
                             </span>
                             <span class="unit">
-                                <?php echo $item['unit'] ?>
+                                <?php echo $nutrition['unit'] ?>
                             </span>
                         </span>
-                    </div>
-                    <div class="clearfix"></div>
-
-				<?php endforeach; ?>
             </div>
-
-		<?php endforeach; ?>
+            <div class="clearfix"></div>
+        </div>
+        <?php
+//        endforeach;
+        if ($count % $num_in_row == $num_in_row - 1) {
+            echo '</div>';
+        }
+        $count++;
+    }
+    ?>
+    <div class="close-btn">
+        <?php echo __('סגור'); ?>
     </div>
 </div>
+<!--<div class="nutritions row">-->
+<!--    --><?php
+//    $count = 0;
+//    foreach ($nutritions as $nutrition): ?>
+<!---->
+<!--        <div class="col-12 nutrition">-->
+<!---->
+<!--            --><?php //foreach ($nutrition as $item): ?>
+<!--                <div class="nutrition-row --><?php //echo(++$count % 2 ? "odd" : "even") ?><!--"-->
+<!--                     data-name="--><?php //echo $item['data_name'] ?><!--"-->
+<!--                     data-original=" --><?php //echo $item['value'] ?><!--">-->
+<!---->
+<!--                        <span class="name">-->
+<!--                            --><?php //echo $item['name'] ?>
+<!--                        </span>-->
+<!---->
+<!--                    <span class="dish-nutrition">-->
+<!--                            <span class="value">-->
+<!--                                --><?php //echo $item['valuePerDish'] ?>
+<!--                            </span>-->
+<!--                            <span class="unit">-->
+<!--                                --><?php //echo $item['unit'] ?>
+<!--                            </span>-->
+<!--                        </span>-->
+<!---->
+<!--                    <span class="chosen-dishes-nutrition">-->
+<!--                            <span class="value">-->
+<!--                                --><?php //echo $item['value'] ?>
+<!--                            </span>-->
+<!--                            <span class="unit">-->
+<!--                                --><?php //echo $item['unit'] ?>
+<!--                            </span>-->
+<!--                        </span>-->
+<!--                </div>-->
+<!--                <div class="clearfix"></div>-->
+<!---->
+<!--            --><?php //endforeach; ?>
+<!--        </div>-->
+<!---->
+<!--    --><?php //endforeach; ?>
+<!--</div>-->
+<!--</div>-->
