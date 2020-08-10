@@ -60,17 +60,17 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
         <?php $recipe->the_promotion_area($promotion_area_group); ?>
     </section>
 <?php } ?>
-    <!---->
-    <!--<section class="recipe-overview">-->
-    <!---->
-    <!--	--><?php //$recipe->the_overview() ?>
-    <!---->
-    <!--    <section class="preview">-->
-    <!--		--><?php //$recipe->preview(); ?>
-    <!--    </section>-->
-    <!---->
-    <!--</section>-->
-    <!---->
+
+    <section class="recipe-overview">
+
+    	<?php $recipe->the_overview() ?>
+
+        <section class="preview">
+    		<?php $recipe->preview(); ?>
+        </section>
+
+    </section>
+
 <?php //if($recipe->substitute_all_button != null){ ?>
     <!--    <section class="substitute-all">-->
     <!--        <div class="substitute-all-btn" data-opposite="--><?php //echo $recipe->substitute_all_button['restore'];?><!--" data-current="substitute" style="display: none">-->
