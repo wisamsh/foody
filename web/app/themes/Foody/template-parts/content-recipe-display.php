@@ -71,6 +71,17 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
 
     </section>
 
+<?php
+$comments_rating_preps_group = get_field('comments_rating_component', $recipe->id);
+if(isset($comments_rating_preps_group['enable_component']) && $comments_rating_preps_group['enable_component']){
+    ?>
+    <section class="comments-rating-prep-container">
+<!--        --><?php //$recipe->get_comments_rating_preps_component($comments_rating_preps_group['number_of_preps']) ?>
+    </section>
+    <?php
+}
+?>
+
 <?php //if($recipe->substitute_all_button != null){ ?>
     <!--    <section class="substitute-all">-->
     <!--        <div class="substitute-all-btn" data-opposite="--><?php //echo $recipe->substitute_all_button['restore'];?><!--" data-current="substitute" style="display: none">-->

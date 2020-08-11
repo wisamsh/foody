@@ -211,7 +211,7 @@ jQuery(document).ready(($) => {
             maxLength = 85;
         }
         else{
-            maxLength = 135;
+            maxLength = 125;
         }
         if(str.length > maxLength){
             let newStr = str.substring(0, maxLength);
