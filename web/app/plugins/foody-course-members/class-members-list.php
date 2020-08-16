@@ -46,6 +46,7 @@ class Courses_Members_List extends WP_List_Table
             $purchase_date = $member->purchase_date;
             $note = $member->note;
             $status = $member->status;
+            $address = $member->address;
 
             $payment_method_refund = $payment_method == __('ביט') || $payment_method == __('כרטיס אשראי');
 
@@ -54,6 +55,7 @@ class Courses_Members_List extends WP_List_Table
                 'מייל' => $member_email,
                 'שם' => $full_name,
                 'טלפון' => $phone,
+                'כתובת' => $address,
                 'דיוור' => $enable_marketing ? __('אושר') : __('לא אושר'),
                 'שם הקורס' => $course_name,
                 'סכום ששולם' => $price_paid,
@@ -93,6 +95,7 @@ class Courses_Members_List extends WP_List_Table
             $organization = $search_result['organization'];
             $note = $search_result['note'];
             $status = $search_result['status'];
+            $address = $search_result['address'];
 
             $payment_method_refund = $payment_method == __('ביט') || $payment_method == __('כרטיס אשראי');
 
@@ -101,6 +104,7 @@ class Courses_Members_List extends WP_List_Table
                 'מייל' => $member_email,
                 'שם' => $full_name,
                 'טלפון' => $phone,
+                'כתובת' => $address,
                 'דיוור' => $enable_marketing ? __('אושר') : __('לא אושר'),
                 'שם הקורס' => $course_name,
                 'סכום ששולם' => $price_paid,
@@ -140,6 +144,7 @@ class Courses_Members_List extends WP_List_Table
             case 'מייל':
             case 'שם':
             case 'טלפון':
+            case 'כתובת':
             case 'תאריך רכישה':
             case 'דיוור':
             case 'שם הקורס':
@@ -174,6 +179,7 @@ class Courses_Members_List extends WP_List_Table
             'מייל' => __('מייל'),
             'שם' => __('שם'),
             'טלפון' => __('טלפון'),
+            'כתובת' => __('כתובת'),
             'תאריך רכישה' => __('תאריך רכישה'),
             'דיוור' => __('דיוור'),
             'שם הקורס' => __('שם הקורס'),
@@ -199,6 +205,7 @@ class Courses_Members_List extends WP_List_Table
             'מייל' => array('מייל', true),
             'שם' => array('קטגוריות', true),
             'טלפון' => array('טלפון', false),
+            'כתובת' => array('כתובת', false),
             'תאריך רכישה' => array('תאריך רכישה', true),
             'דיוור' => array('דיוור', true),
             'שם הקורס' => array('שם הקורס', true),
@@ -357,7 +364,7 @@ class Courses_Members_List extends WP_List_Table
     private function get_regular_search_query($search)
     {
         global $wpdb;
-        $table_colomns = ['member_id', 'member_email', 'first_name', 'last_name', 'phone', 'marketing_status', 'course_name', 'price_paid', 'payment_method', 'transaction_id', 'coupon', 'purchase_date', 'status'];
+        $table_colomns = ['member_id', 'member_email', 'first_name', 'last_name', 'phone', 'address', 'marketing_status', 'course_name', 'price_paid', 'payment_method', 'transaction_id', 'coupon', 'purchase_date', 'status'];
         $table_name = $wpdb->prefix . 'foody_courses_members';
 
         $search_words = [];
@@ -396,11 +403,10 @@ class Courses_Members_List extends WP_List_Table
 
     private function get_number_of_pages($total_items, $per_page)
     {
-        $number_of_pages = $total_items/$per_page;
-        if($number_of_pages < 1){
+        $number_of_pages = $total_items / $per_page;
+        if ($number_of_pages < 1) {
             $number_of_pages = 1;
-        }
-        elseif ($this->is_decimal($number_of_pages)){
+        } elseif ($this->is_decimal($number_of_pages)) {
             $number_of_pages = floor($number_of_pages) + 1;
         }
 

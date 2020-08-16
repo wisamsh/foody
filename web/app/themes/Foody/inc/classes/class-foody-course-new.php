@@ -8,6 +8,7 @@ class Foody_Course_new
     private $course_ragister_slug ;
     private $floating_buttons = [];
     private $links_target = 'blank';
+    private $is_cal_customer = false;
     private $old_price = '';
 
     /**
@@ -16,13 +17,13 @@ class Foody_Course_new
     public function __construct()
     {
         $this->course_data = get_field('course_page');
-
+        $this->course_register_data = get_field('course_register_data');
         $this->populate_course_properties();
+        $this->is_cal_customer = $this->is_cal_customer();
     }
 
     public function is_redirect_to_register_page()
     {
-        $this->course_register_data = get_field('course_register_data');
         if (isset($this->course_register_data['enable_redirect']) && $this->course_register_data['enable_redirect'] !== false) {
             $this->course_ragister_slug = __('הרשמה-לקורסים');
             return true;
@@ -729,6 +730,10 @@ class Foody_Course_new
         }
 
         return $not_empty_section;
+    }
+
+    private function is_cal_customer(){
+        return isset($this->course_register_data['is_cal_customers']) && $this->course_register_data['is_cal_customers'];
     }
 
 //    private function add_line_on_old_price($old_price, $text)
