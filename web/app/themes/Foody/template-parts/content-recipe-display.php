@@ -76,7 +76,7 @@ $comments_rating_preps_group = get_field('comments_rating_component', $recipe->i
 if(isset($comments_rating_preps_group['enable_component']) && $comments_rating_preps_group['enable_component']){
     ?>
     <section class="comments-rating-prep-container">
-<!--        --><?php //$recipe->get_comments_rating_preps_component($comments_rating_preps_group['number_of_preps']) ?>
+        <?php $recipe->get_comments_rating_preps_component($comments_rating_preps_group['number_of_preps']) ?>
     </section>
     <?php
 }
@@ -187,10 +187,10 @@ if(isset($comments_rating_preps_group['enable_component']) && $comments_rating_p
     <!---->
     <!--</section>-->
     <!---->
-    <!--<section class="recipe-how-i-did no-print">-->
-    <!--	--><?php //$recipe->how_i_did(); ?>
-    <!---->
-    <!--</section>-->
+    <section class="recipe-how-i-did no-print">
+    	<?php $recipe->how_i_did(); ?>
+
+    </section>
     <!---->
     <!--<section class="recipe-comments no-print">-->
     <!--	--><?php //$recipe->comments(); ?>

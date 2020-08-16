@@ -114,7 +114,7 @@ class Foody_Recipe extends Foody_Post
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-recipe-overview.php',
                 ['overview' => $this->overview,
-                    'recipe' =>$this]
+                    'recipe' => $this]
             );
         }
     }
@@ -373,7 +373,7 @@ class Foody_Recipe extends Foody_Post
 //        if (!empty($content)) {
 //            $content = foody_normalize_content($content, true);
 //        }
-        $content = '<div class="foody-content show-read-more">'. $content . '</div>';
+        $content = '<div class="foody-content show-read-more">' . $content . '</div>';
 
         echo $content;
     }
@@ -513,7 +513,7 @@ class Foody_Recipe extends Foody_Post
         }
 
         if (!empty($times['minutes'])) {
-            if(!$shortText) {
+            if (!$shortText) {
                 $unit = 'דקות';
             } else {
                 $unit = "דק׳";
@@ -1097,5 +1097,39 @@ class Foody_Recipe extends Foody_Post
         }
 
         return $calories_per_dish;
+    }
+
+    function get_comments_rating_preps_component($number_of_preps)
+    {
+        $num_of_comments = get_comments_number($this->id);
+        $mock_rating = '<div class="rating">'.__('אזור דירוג').'</div>';
+
+        $number_of_preps = $this->get_number_of_approved_preps() + intval($number_of_preps);
+
+        $preps_element_title = '<div class="preparations-share-title">'.__('כבר הכנתם?').'</div>';
+        $preps_element_link =  '<div class="preparations-share-title">'.__('שתפו אותנו').'</div>';
+        $preps_elements = '<div class="preparations-share" data-numOfPreps="'. $number_of_preps .'">'.$preps_element_title.$preps_element_link.'</div>';
+
+        $comments_element_title = '<div class="comments-title">' .__('רוצים להגיב?').'</div>';
+        $comments_element_link = '<div class="comments-link">' .__('לחצו כאו').'</div>';
+        $comments_elements = '<div class="preparations-share" data-numOfComments="'. $num_of_comments .'">'.$comments_element_title.$comments_element_link.'</div>';
+
+        echo $preps_elements.$mock_rating.$comments_elements;
+    }
+
+    function get_number_of_approved_preps(){
+        $preps_comments = get_comments( array( 'type' => 'how_i_did', 'post_id' => $this->id ) );
+
+        $approved_comments = array_filter( $preps_comments, function ( $preps_comments ) {
+            return $this->filter_comments( $preps_comments );
+        } );
+
+        return count( $approved_comments );
+    }
+
+    function filter_comments( $comment ) {
+        $author = get_user_by( 'email', $comment->comment_author_email );
+
+        return $comment->comment_approved || ( ! $comment->comment_approved && $author->ID == get_current_user_id() );
     }
 }
