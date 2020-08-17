@@ -52,6 +52,7 @@ $recipe = $template_args['recipe'];
 
 
 
+
     </script>
 <?php
 $promotion_area_group = get_field('promotion_area', $recipe->id);
@@ -63,17 +64,17 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
 
     <section class="recipe-overview">
 
-    	<?php $recipe->the_overview() ?>
+        <?php $recipe->the_overview() ?>
 
         <section class="preview">
-    		<?php $recipe->preview(); ?>
+            <?php $recipe->preview(); ?>
         </section>
 
     </section>
 
 <?php
 $comments_rating_preps_group = get_field('comments_rating_component', $recipe->id);
-if(isset($comments_rating_preps_group['enable_component']) && $comments_rating_preps_group['enable_component']){
+if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_preps_group['enable_component']) {
     ?>
     <section class="comments-rating-prep-container">
         <?php $recipe->get_comments_rating_preps_component($comments_rating_preps_group['number_of_preps']) ?>
@@ -82,47 +83,44 @@ if(isset($comments_rating_preps_group['enable_component']) && $comments_rating_p
 }
 ?>
 
-<?php if($recipe->substitute_all_button != null){ ?>
-        <section class="substitute-all">
-            <div class="substitute-all-btn" data-opposite="<?php echo $recipe->substitute_all_button['restore'];?>" data-current="substitute" style="display: none">
-                <?php echo $recipe->substitute_all_button['substitute'];?>
-            </div>
-        </section>
+<?php if ($recipe->substitute_all_button != null) { ?>
+    <section class="substitute-all">
+        <div class="substitute-all-btn" data-opposite="<?php echo $recipe->substitute_all_button['restore']; ?>"
+             data-current="substitute" style="display: none">
+            <?php echo $recipe->substitute_all_button['substitute']; ?>
+        </div>
+    </section>
 <?php } ?>
 
     <section class="recipe-ingredients box">
 
         <div class="recipe-ingredients-top row justify-content-between">
             <h2 class="title">
-    			<?php echo $recipe->the_ingredients_title() ?>
+                <?php echo $recipe->the_ingredients_title() ?>
             </h2>
             <div class="amount-container">
-    			<?php $recipe->calculator(); ?>
+                <?php $recipe->calculator(); ?>
             </div>
         </div>
 
         <div class="recipe-ingredients-container row">
 
-    		<?php $recipe->the_ingredients() ?>
+            <?php $recipe->the_ingredients() ?>
         </div>
 
+        <div class="ingredients-area-links no-print">
+            <?php $recipe->the_conversion_table_link(); ?>
+            <div class="transform-to-vegetarian"><?php echo __('המרת המתכון לטבעוני') ?></div>
+        </div>
     </section>
-    <!---->
-    <!--<section class="conversion-table-link no-print">-->
-    <!--	--><?php //$recipe->the_conversion_table_link() ?>
-    <!--</section>-->
-    <!---->
-    <!--<section class="recipe-purchase-buttons d-block d-lg-none">-->
-    <!--	--><?php //$recipe->the_purchase_buttons(); ?>
-    <!--</section>-->
-    <!---->
-    <!--<section class="recipe-content">-->
-    <!---->
-    <!--    <div class="content-container">-->
-    <!--		--><?php //echo $recipe->body ?>
-    <!--    </div>-->
-    <!---->
-    <!--</section>-->
+    <section class="purchase-buttons">
+        <?php $recipe->the_purchase_buttons(); ?>
+    </section>
+    <section class="recipe-content">
+
+            <?php $recipe->get_relevant_content(); ?>
+
+    </section>
     <!---->
     <!---->
 <?php //$recipe->the_notes() ?>
@@ -188,7 +186,7 @@ if(isset($comments_rating_preps_group['enable_component']) && $comments_rating_p
     <!--</section>-->
     <!---->
     <section class="recipe-how-i-did no-print">
-    	<?php $recipe->how_i_did(); ?>
+        <?php $recipe->how_i_did(); ?>
 
     </section>
     <!---->

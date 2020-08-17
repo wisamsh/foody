@@ -145,27 +145,6 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
         });
     }
 
-}
-
-jQuery(document).ready(($) => {
-    if ($('.rating-digits').length) {
-        if ($('.post-ratings')[0].innerText != "") {
-            $('.rating-digits').remove();
-        }
-
-        $('.post-ratings img').on('keypress', function () {
-            if ($('.rating-digits').length) {
-                $('.rating-digits').remove();
-            }
-        });
-
-        $('.post-ratings img').on('click', function () {
-            if ($('.rating-digits').length) {
-                $('.rating-digits').remove();
-            }
-        });
-    }
-
     if ($('.slider-nav').length) {
         let slideToShow = $('.slider-for .item').length > 4 ? 4 : $('.slider-for .item').length;
         let sliderMainData = {
@@ -198,37 +177,64 @@ jQuery(document).ready(($) => {
 
         $('.slider .arrow').on('click', function () {
             // let currentActive = $('.slider-for .slick-track').find('iframe');
-            if(typeof player !== 'undefined'){
+            if (typeof player !== 'undefined') {
                 player.pauseVideo();
             }
         });
     }
 
-    $(".show-read-more").each(function(){
+    if ($('.slider.recipe-content-steps')) {
+        $('.slider.recipe-content-steps').slick({
+            rtl: true,
+            prevArrow: '<div class="arrow arrow-prev">&#x27F6; לשלב הקודם</div>',
+            nextArrow: '<div class="arrow arrow-next"> לשלב הבא &#x27F5; </div>',
+        });
+    }
+}
+
+jQuery(document).ready(($) => {
+    if ($('.rating-digits').length) {
+        if ($('.post-ratings')[0].innerText != "") {
+            $('.rating-digits').remove();
+        }
+
+        $('.post-ratings img').on('keypress', function () {
+            if ($('.rating-digits').length) {
+                $('.rating-digits').remove();
+            }
+        });
+
+        $('.post-ratings img').on('click', function () {
+            if ($('.rating-digits').length) {
+                $('.rating-digits').remove();
+            }
+        });
+    }
+
+    $(".show-read-more").each(function () {
         let str = $.trim($(this).text());
         let maxLength;
-        if($(this).hasClass('description')) {
+        if ($(this).hasClass('description')) {
             maxLength = 85;
-        }
-        else{
+        } else {
             maxLength = 125;
         }
-        if(str.length > maxLength){
+        if (str.length > maxLength) {
             let newStr = str.substring(0, maxLength);
-            let indexToStartSubstring =  Math.min(newStr.length, newStr.lastIndexOf(" "));
-            newStr = newStr.substr(0,indexToStartSubstring);
+            let indexToStartSubstring = Math.min(newStr.length, newStr.lastIndexOf(" "));
+            newStr = newStr.substr(0, indexToStartSubstring);
             let removedStr = str.substring(indexToStartSubstring, str.length);
             $(this).empty().html(newStr);
             $(this).append(' <a href="javascript:void(0);" class="read-more">עוד...</a>');
             $(this).append('<span class="more-text">' + removedStr + '</span>');
         }
     });
-    $(".read-more").click(function(){
+    $(".read-more").click(function () {
         $(this).siblings(".more-text").contents().unwrap();
         $(this).remove();
     });
 
-    if($('.overview-nutrients .value').length && $('.overview-nutrients .recipe-nutrition').length){
+    if ($('.overview-nutrients .value').length && $('.overview-nutrients .recipe-nutrition').length) {
         $('.overview-nutrients .value').on('click', function () {
             $('.overview-nutrients .value').toggleClass('open');
             $('.overview-nutrients .recipe-nutrition').toggleClass('open');
@@ -240,7 +246,7 @@ jQuery(document).ready(($) => {
         });
     }
 
-    if($('.amount-container > .plus-icon').length && $('.amount-container > .minus-icon').length && $('.amount-container #number-of-dishes').length){
+    if ($('.amount-container > .plus-icon').length && $('.amount-container > .minus-icon').length && $('.amount-container #number-of-dishes').length) {
         $('.amount-container > .plus-icon').on('click', function () {
             let currentAmount = parseInt($('.amount-container #number-of-dishes').val());
             $('.amount-container #number-of-dishes').val(++currentAmount);
@@ -249,8 +255,8 @@ jQuery(document).ready(($) => {
 
         $('.amount-container > .minus-icon').on('click', function () {
             let currentAmount = parseInt($('.amount-container #number-of-dishes').val());
-            if(currentAmount > 1)
-            $('.amount-container #number-of-dishes').val(--currentAmount);
+            if (currentAmount > 1)
+                $('.amount-container #number-of-dishes').val(--currentAmount);
             $('.amount-container #number-of-dishes').trigger('input');
         });
     }

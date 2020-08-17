@@ -1102,34 +1102,90 @@ class Foody_Recipe extends Foody_Post
     function get_comments_rating_preps_component($number_of_preps)
     {
         $num_of_comments = get_comments_number($this->id);
-        $mock_rating = '<div class="rating">'.__('אזור דירוג').'</div>';
+        $mock_rating = '<div class="rating">' . __('אזור דירוג') . '</div>';
 
         $number_of_preps = $this->get_number_of_approved_preps() + intval($number_of_preps);
 
-        $preps_element_title = '<div class="preparations-share-title">'.__('כבר הכנתם?').'</div>';
-        $preps_element_link =  '<div class="preparation-share-title">'.__('שתפו אותנו').'</div>';
-        $preps_elements = '<div class="preparations-share" data-numOfPreps="'. $number_of_preps .'">'.$preps_element_title.$preps_element_link.'</div>';
+        $preps_element_title = '<div class="preparations-share-title">' . __('כבר הכנתם?') . '</div>';
+        $preps_element_link = '<div class="preparation-share-title">' . __('שתפו אותנו') . '</div>';
+        $preps_elements = '<div class="preparations-share" data-numOfPreps="' . $number_of_preps . '">' . $preps_element_title . $preps_element_link . '</div>';
 
-        $comments_element_title = '<div class="comments-title">' .__('רוצים להגיב?').'</div>';
-        $comments_element_link = '<div class="comments-link">' .__('לחצו כאו').'</div>';
-        $comments_elements = '<div class="comments-link-container" data-numOfComments="'. $num_of_comments .'">'.$comments_element_title.$comments_element_link.'</div>';
+        $comments_element_title = '<div class="comments-title">' . __('רוצים להגיב?') . '</div>';
+        $comments_element_link = '<div class="comments-link">' . __('לחצו כאו') . '</div>';
+        $comments_elements = '<div class="comments-link-container" data-numOfComments="' . $num_of_comments . '">' . $comments_element_title . $comments_element_link . '</div>';
 
-        echo $preps_elements.$mock_rating.$comments_elements;
+        echo $preps_elements . $mock_rating . $comments_elements;
     }
 
-    function get_number_of_approved_preps(){
-        $preps_comments = get_comments( array( 'type' => 'how_i_did', 'post_id' => $this->id ) );
+    function get_number_of_approved_preps()
+    {
+        $preps_comments = get_comments(array('type' => 'how_i_did', 'post_id' => $this->id));
 
-        $approved_comments = array_filter( $preps_comments, function ( $preps_comments ) {
-            return $this->filter_comments( $preps_comments );
-        } );
+        $approved_comments = array_filter($preps_comments, function ($preps_comments) {
+            return $this->filter_comments($preps_comments);
+        });
 
-        return count( $approved_comments );
+        return count($approved_comments);
     }
 
-    function filter_comments( $comment ) {
-        $author = get_user_by( 'email', $comment->comment_author_email );
+    function filter_comments($comment)
+    {
+        $author = get_user_by('email', $comment->comment_author_email);
 
-        return $comment->comment_approved || ( ! $comment->comment_approved && $author->ID == get_current_user_id() );
+        return $comment->comment_approved || (!$comment->comment_approved && $author->ID == get_current_user_id());
+    }
+
+    function get_relevant_content()
+    {
+        $content_in_steps = get_field('recipe_steps', $this->id);
+        if (is_array($content_in_steps)) {
+            if (isset($content_in_steps['enable_recipe_by_steps']) && $content_in_steps['enable_recipe_by_steps'] && isset($content_in_steps['steps'])) {
+                echo '<div class="content-steps-container">'.$this->get_content_as_steps($content_in_steps['steps']).'</div>';
+                return;
+            }
+        }
+        echo '<div class="content-container">'.$this->body.'</div>';
+    }
+
+    function get_content_as_steps($steps)
+    {
+        $slider = '<div class="slider recipe-content-steps justify-content-between">';
+        $counter = 1;
+        foreach ($steps as $step) {
+            $image_content ='';
+            $image_text='';
+            $image_credit='';
+
+            if($counter === 1){
+                $item = '<div class="step first-step">';
+            }
+            elseif (count($steps) === $counter){
+                $item = '<div class="step last-step">';
+            }
+            else {
+                $item = '<div class="step">';
+            }
+            $title = '<div class="step-text">' . $counter++ . '. ' . $step['text'] . '</div>';
+
+            if (is_array($step['image'])) {
+                $image_content = "<img src='{$step['image']['url']}' alt='{$step['image']['alt']}' />";
+            }
+
+            if (!empty($step['image_text'])) {
+                $image_text = '<span class="image-text">' . $step['image_text'] . '.' . '</span>';
+            }
+
+            if (!empty($step['image_text'])) {
+                $image_credit = '<span class="image-credit"><span class="image-credit-prefix">' . __(' צילום: ') . '</span>' . $step['image_credit'] . '</span>';
+            }
+
+            $item .= $title.$image_content.'<div class="image-description">'.$image_text.$image_credit .'</div>';
+
+            $item .= '</div>';
+
+            $slider .= $item;
+        }
+        $slider.='</div>';
+        return $slider;
     }
 }

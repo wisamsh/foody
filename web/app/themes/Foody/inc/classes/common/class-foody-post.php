@@ -785,8 +785,6 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 $slider = '';
                 $images_for_slider = is_array($images_for_slider) ? $images_for_slider : [];
 
-//                $images_for_slider = array_column($images_for_slider, 'testimonial_image');
-
                 foreach ($images_for_slider as $image) {
                     $counter++;
 
