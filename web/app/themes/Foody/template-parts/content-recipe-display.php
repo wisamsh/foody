@@ -82,31 +82,31 @@ if(isset($comments_rating_preps_group['enable_component']) && $comments_rating_p
 }
 ?>
 
-<?php //if($recipe->substitute_all_button != null){ ?>
-    <!--    <section class="substitute-all">-->
-    <!--        <div class="substitute-all-btn" data-opposite="--><?php //echo $recipe->substitute_all_button['restore'];?><!--" data-current="substitute" style="display: none">-->
-    <!--            --><?php //echo $recipe->substitute_all_button['substitute'];?>
-    <!--        </div>-->
-    <!--    </section>-->
-<?php //} ?>
-    <!---->
-    <!--<section class="recipe-ingredients box">-->
-    <!---->
-    <!--    <div class="recipe-ingredients-top row justify-content-between">-->
-    <!--        <h2 class="title">-->
-    <!--			--><?php //echo $recipe->the_ingredients_title() ?>
-    <!--        </h2>-->
-    <!--        <div class="amount-container">-->
-    <!--			--><?php //$recipe->calculator(); ?>
-    <!--        </div>-->
-    <!--    </div>-->
-    <!---->
-    <!--    <div class="recipe-ingredients-container row">-->
-    <!---->
-    <!--		--><?php //$recipe->the_ingredients() ?>
-    <!--    </div>-->
-    <!---->
-    <!--</section>-->
+<?php if($recipe->substitute_all_button != null){ ?>
+        <section class="substitute-all">
+            <div class="substitute-all-btn" data-opposite="<?php echo $recipe->substitute_all_button['restore'];?>" data-current="substitute" style="display: none">
+                <?php echo $recipe->substitute_all_button['substitute'];?>
+            </div>
+        </section>
+<?php } ?>
+
+    <section class="recipe-ingredients box">
+
+        <div class="recipe-ingredients-top row justify-content-between">
+            <h2 class="title">
+    			<?php echo $recipe->the_ingredients_title() ?>
+            </h2>
+            <div class="amount-container">
+    			<?php $recipe->calculator(); ?>
+            </div>
+        </div>
+
+        <div class="recipe-ingredients-container row">
+
+    		<?php $recipe->the_ingredients() ?>
+        </div>
+
+    </section>
     <!---->
     <!--<section class="conversion-table-link no-print">-->
     <!--	--><?php //$recipe->the_conversion_table_link() ?>

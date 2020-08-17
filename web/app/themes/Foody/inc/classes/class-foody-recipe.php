@@ -1107,12 +1107,12 @@ class Foody_Recipe extends Foody_Post
         $number_of_preps = $this->get_number_of_approved_preps() + intval($number_of_preps);
 
         $preps_element_title = '<div class="preparations-share-title">'.__('כבר הכנתם?').'</div>';
-        $preps_element_link =  '<div class="preparations-share-title">'.__('שתפו אותנו').'</div>';
+        $preps_element_link =  '<div class="preparation-share-title">'.__('שתפו אותנו').'</div>';
         $preps_elements = '<div class="preparations-share" data-numOfPreps="'. $number_of_preps .'">'.$preps_element_title.$preps_element_link.'</div>';
 
         $comments_element_title = '<div class="comments-title">' .__('רוצים להגיב?').'</div>';
         $comments_element_link = '<div class="comments-link">' .__('לחצו כאו').'</div>';
-        $comments_elements = '<div class="preparations-share" data-numOfComments="'. $num_of_comments .'">'.$comments_element_title.$comments_element_link.'</div>';
+        $comments_elements = '<div class="comments-link-container" data-numOfComments="'. $num_of_comments .'">'.$comments_element_title.$comments_element_link.'</div>';
 
         echo $preps_elements.$mock_rating.$comments_elements;
     }
