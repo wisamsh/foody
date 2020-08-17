@@ -801,6 +801,10 @@ $content-width: 95%;
             flex-direction: row;
             margin: 3% 0;
 
+            >label{
+              margin: auto;
+            }
+
             > .amount-container{
               border: 2px solid #fef5f6;
               border-radius: 44px;

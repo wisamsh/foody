@@ -239,6 +239,21 @@ jQuery(document).ready(($) => {
             $('.overview-nutrients .value').toggleClass('open');
         });
     }
+
+    if($('.amount-container > .plus-icon').length && $('.amount-container > .minus-icon').length && $('.amount-container #number-of-dishes').length){
+        $('.amount-container > .plus-icon').on('click', function () {
+            let currentAmount = parseInt($('.amount-container #number-of-dishes').val());
+            $('.amount-container #number-of-dishes').val(++currentAmount);
+            $('.amount-container #number-of-dishes').trigger('input');
+        });
+
+        $('.amount-container > .minus-icon').on('click', function () {
+            let currentAmount = parseInt($('.amount-container #number-of-dishes').val());
+            if(currentAmount > 1)
+            $('.amount-container #number-of-dishes').val(--currentAmount);
+            $('.amount-container #number-of-dishes').trigger('input');
+        });
+    }
 });
 
 /**
