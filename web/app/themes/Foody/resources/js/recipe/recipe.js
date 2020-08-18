@@ -260,6 +260,10 @@ jQuery(document).ready(($) => {
             $('.amount-container #number-of-dishes').trigger('input');
         });
     }
+
+    if($('.recipe-content-steps .slick-current').length){
+
+    }
 });
 
 /**
