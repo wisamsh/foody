@@ -317,7 +317,7 @@ class Foody_Course_new
                 $chapter_div = '<div class="chapter-container"><div class="chapter-details">' . $chapter_title_div . $chapter_icon . $chapter_summery_div . '</div>';
 
                 /** add bullets collapse */
-                $chapter_div .= '<div class="" id="chapter' . $chapter_number . '"><div class="chapter-bullets">' . $chapter_bullets_div . '</div></div></div>';
+                $chapter_div .= '<div class="chapter" id="chapter' . $chapter_number . '"><div class="chapter-bullets">' . $chapter_bullets_div . '</div></div></div>';
                 $chapters_container .= $chapter_div;
                 $chapter_number++;
             }
@@ -386,9 +386,9 @@ class Foody_Course_new
     {
         $content = '<div class="faq-list">';
 
-        foreach ($list as $item) {
+        foreach ($list as $index => $item) {
 
-            $item_content = "<div class=\"faq-item\"> <div class=\"faq-item-q\"><span>{$item['question']}</span></div> <div class=\"faq-item-a\">{$item['answer']}</div> </div>";
+            $item_content = "<div class=\"faq-item\"> <div data-index=". $index ." class=\"faq-item-q\"><span>{$item['question']}</span></div> <div class=\"faq-item-a\">{$item['answer']}</div> </div>";
 
             $content .= $item_content;
         }
