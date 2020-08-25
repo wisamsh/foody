@@ -53,6 +53,7 @@ $recipe = $template_args['recipe'];
 
 
 
+
     </script>
 <?php
 $promotion_area_group = get_field('promotion_area', $recipe->id);
@@ -118,41 +119,37 @@ if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_
     </section>
     <section class="recipe-content">
 
-            <?php $recipe->get_relevant_content(); ?>
+        <?php $recipe->get_relevant_content(); ?>
 
     </section>
-    <!---->
-    <!---->
-<?php //$recipe->the_notes() ?>
-    <!---->
-    <!--<section class="recipe-sponsor-container box no-print">-->
-    <!---->
-    <!--	--><?php //$recipe->the_sponsor() ?>
-    <!---->
-    <!--</section>-->
-    <!---->
-<?php //if ( $recipe->show_google_adx() ): ?>
-    <!--    <section class="google-adx-container col-lg-9 col-12">-->
-    <!--		--><?php //$recipe->the_google_adx(); ?>
+
+<?php $recipe->the_notes() ?>
+    <!--    -->
+    <!--    <section class="recipe-sponsor-container box no-print">-->
+    <!--    -->
+    <!--    	--><?php //$recipe->the_sponsor() ?>
+    <!--    -->
     <!--    </section>-->
-<?php //endif; ?>
-    <!---->
-<?php //if (!empty(get_field('active_similar_content', $recipe->get_id()) && get_field('active_similar_content', $recipe->get_id())[0] == __('הצג'))): ?>
-    <!---->
-    <!--    <section class="recipe_similar_content">-->
-    <!--        --><?php //$recipe->get_similar_content(); ?>
-    <!--    </section>-->
-<?php //endif;?>
-    <!---->
-<?php //if ( $recipe->has_nutrients() ): ?>
-    <!---->
-    <!--    <section class="recipe-nutrition box no-print">-->
-    <!---->
-    <!--		--><?php //$recipe->the_nutrition() ?>
-    <!---->
-    <!--    </section>-->
-    <!---->
-<?php //endif; ?>
+
+<?php if ($recipe->show_google_adx()): ?>
+    <section class="google-adx-container col-lg-9 col-12">
+        <?php $recipe->the_google_adx(); ?>
+    </section>
+<?php endif; ?>
+<?php
+$similar_content = get_field('similar_content_group', $recipe->get_id());
+if (!empty($similar_content) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
+    <section class="recipe_similar_content">
+        <?php $recipe->get_similar_content($similar_content); ?>
+    </section>
+<?php } ?>
+<?php
+$enable_tip = get_field('enable_tip', $recipe->get_id());
+if (!empty($enable_tip) && $enable_tip) { ?>
+    <section class="system-tip-container">
+        <?php $recipe->get_system_tip(); ?>
+    </section>
+<?php } ?>
     <!---->
     <!--<section class="recipe-categories categories no-print">-->
     <!--	--><?php //$recipe->the_categories() ?>

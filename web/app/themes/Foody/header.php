@@ -213,9 +213,10 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
             <?php
             /** @var Foody_Recipe $recipe */
             $recipe = Foody_PageContentFactory::get_instance()->get_page();
-            if (!empty(get_field('active_similar_content', $recipe->get_id()) && get_field('active_similar_content', $recipe->get_id())[0] == __('הצג'))) { ?>
+            $similar_content = get_field('similar_content_group', $recipe->get_id());
+            if (!empty($similar_content) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
                 <div class="related-recipes-container">
-                    <?php $recipe->get_similar_content('מתכונים נוספים שכדאי להכיר'); ?>
+                    <?php $recipe->get_similar_content($similar_content); ?>
                 </div>
             <?php } ?>
         </div>

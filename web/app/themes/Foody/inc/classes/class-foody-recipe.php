@@ -973,18 +973,39 @@ class Foody_Recipe extends Foody_Post
         return "";
     }
 
-    public function get_similar_content($title = false)
+    public function get_system_tip()
     {
-        $similar_contents = get_field('similar_content', $this->get_id());
+        $tip_group = get_field('system_tip_group', $this->get_id());
+        $content_type = $tip_group['content_type'];
+
+        $tip_title_element = '<div class="title-container"><img src="'. $GLOBALS['images_dir'] . 'icons/tip.svg' .'" alt="tip"><h2 class="title">' . $tip_group['title'] . '</h2></div>';
+
+        if ($content_type == 'טקסט'){
+            $tip_content = '<p class="tip-text">'.$tip_group['text'].'</p>';
+        }
+        else{
+            $tip_content = '<img class="tip-image" src="'.$tip_group['image']['url'].'">';
+        }
+
+        if(is_array($tip_group['link']) && !empty($tip_group['link']['url'])){
+            echo '<div class="system-tip"><a class="tip-link" href="'. $tip_group['link']['url'] .'" target="'. $tip_group['link']['target'] .'">'.$tip_title_element.$tip_content.'</a></div>';
+        }
+        else {
+            echo '<div class="system-tip">' . $tip_title_element . $tip_content . '</div>';
+        }
+
+    }
+
+    public function get_similar_content($similar_contents)
+    {
         $not_in_random = [];
         array_push($not_in_random, $this->get_id());
         $counter = 0;
-        $title_of_section = (get_option('foody_title_for_extra_content')) ? get_option('foody_title_for_extra_content') : __('תוכן נוסף');
-        $title_of_section = $title ? $title : $title_of_section;
+        $title_of_section = isset($similar_contents['title']) && !empty($similar_contents['title']) ? $similar_contents['title'] : __('תוכן נוסף');
         $args = ['title' => $title_of_section, 'items' => []];
 
-        if ($similar_contents) {
-            foreach ($similar_contents as $content) {
+        if ($similar_contents['similar_content']) {
+            foreach ($similar_contents['similar_content'] as $content) {
                 if ($content['post'] != false) {
                     array_push($not_in_random, $content['post']->ID);
                     $current_post = Foody_Post::create($content['post']);
@@ -1140,11 +1161,11 @@ class Foody_Recipe extends Foody_Post
         $content_in_steps = get_field('recipe_steps', $this->id);
         if (is_array($content_in_steps)) {
             if (isset($content_in_steps['enable_recipe_by_steps']) && $content_in_steps['enable_recipe_by_steps'] && isset($content_in_steps['steps'])) {
-                echo '<div class="content-steps-container">'.$this->get_content_as_steps($content_in_steps['steps']).'</div>';
+                echo '<div class="content-steps-container">' . $this->get_content_as_steps($content_in_steps['steps']) . '</div>';
                 return;
             }
         }
-        echo '<div class="content-container">'.$this->body.'</div>';
+        echo '<div class="content-container">' . $this->body . '</div>';
     }
 
     function get_content_as_steps($steps)
@@ -1152,17 +1173,15 @@ class Foody_Recipe extends Foody_Post
         $slider = '<div class="slider recipe-content-steps justify-content-between">';
         $counter = 1;
         foreach ($steps as $step) {
-            $image_content ='';
-            $image_text='';
-            $image_credit='';
+            $image_content = '';
+            $image_text = '';
+            $image_credit = '';
 
-            if($counter === 1){
+            if ($counter === 1) {
                 $item = '<div class="step first-step">';
-            }
-            elseif (count($steps) === $counter){
+            } elseif (count($steps) === $counter) {
                 $item = '<div class="step last-step">';
-            }
-            else {
+            } else {
                 $item = '<div class="step">';
             }
             $title = '<div class="step-text">' . $counter++ . '. ' . $step['text'] . '</div>';
@@ -1179,13 +1198,13 @@ class Foody_Recipe extends Foody_Post
                 $image_credit = '<span class="image-credit"><span class="image-credit-prefix">' . __(' צילום: ') . '</span>' . $step['image_credit'] . '</span>';
             }
 
-            $item .= $title.$image_content.'<div class="image-description">'.$image_text.$image_credit .'</div>';
+            $item .= $title . $image_content . '<div class="image-description">' . $image_text . $image_credit . '</div>';
 
             $item .= '</div>';
 
             $slider .= $item;
         }
-        $slider.='</div>';
+        $slider .= '</div>';
         return $slider;
     }
 }

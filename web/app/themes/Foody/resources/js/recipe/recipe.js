@@ -186,9 +186,12 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
     if ($('.slider.recipe-content-steps')) {
         $('.slider.recipe-content-steps').slick({
             rtl: true,
+            infinite: false,
             prevArrow: '<div class="arrow arrow-prev">&#x27F6; לשלב הקודם</div>',
             nextArrow: '<div class="arrow arrow-next"> לשלב הבא &#x27F5; </div>',
         });
+
+        $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:grey');
     }
 }
 
@@ -262,9 +265,28 @@ jQuery(document).ready(($) => {
     }
 
     if($('.recipe-content-steps .slick-current').length){
-
+        $('.slider.recipe-content-steps').on('swipe', changeStyleOfArrows);
+        $('.slider.recipe-content-steps .arrow-prev, .slider.recipe-content-steps .arrow-next').on('click', changeStyleOfArrows);
     }
 });
+
+function changeStyleOfArrows() {
+    let stepElem = $('.recipe-content-steps .slick-current').find('.step');
+    if(stepElem.length){
+        if($(stepElem).hasClass('first-step')){
+            $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:grey');
+            $('.slider.recipe-content-steps .arrow-next').attr('style', 'color:rgb(64, 64, 64)');
+        }
+        else if($(stepElem).hasClass('last-step')){
+            $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:rgb(64, 64, 64)');
+            $('.slider.recipe-content-steps .arrow-next').attr('style', 'color:grey');
+        }
+        else{
+            $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:rgb(64, 64, 64)');
+            $('.slider.recipe-content-steps .arrow-next').attr('style', 'color:rgb(64, 64, 64)');
+        }
+    }
+}
 
 /**
  * Handle events and fire analytics dataLayer.push
