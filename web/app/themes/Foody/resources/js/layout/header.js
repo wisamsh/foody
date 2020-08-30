@@ -183,4 +183,16 @@ jQuery(document).ready(function ($) {
         }
     }
 
+    if($('.brands-toggle-mobile .navbar-toggler').length){
+        $('.brands-toggle-mobile .navbar-toggler').on('click', function () {
+            $('.brands-toggle-mobile .brands-avenue-mobile .close').removeClass('hide');
+            $('.brands-toggle-mobile .brands-avenue-mobile').addClass('open');
+        });
+
+        $('.brands-toggle-mobile .brands-avenue-mobile .close').on('click', function () {
+            $(this).addClass('hide');
+            $('.brands-toggle-mobile .brands-avenue-mobile').removeClass('open');
+        });
+    }
+
 });
