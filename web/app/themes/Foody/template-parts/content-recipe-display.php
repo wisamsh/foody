@@ -186,12 +186,12 @@ if (!empty($enable_tip) && $enable_tip) { ?>
         <?php $recipe->how_i_did(); ?>
 
     </section>
-    <!---->
-    <!--<section class="recipe-comments no-print">-->
-    <!--	--><?php //$recipe->comments(); ?>
-    <!--</section>-->
-    <!---->
-    <!---->
+
+    <section class="recipe-comments no-print">
+    	<?php $recipe->comments(); ?>
+    </section>
+
+
     <!--<section class="recipe-sidebar-mobile d-block d-lg-none no-print">-->
     <!--	--><?php //$recipe->the_mobile_sidebar_content(); ?>
     <!--</section>-->
