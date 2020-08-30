@@ -57,7 +57,7 @@
       .brands-title{
         width: 50%;
         text-align: center;
-        color: red;
+        color: $color__primary;
         margin: 3% auto;
       }
 
@@ -116,11 +116,11 @@
     align-items: center;
 
 
-    .brand-title{
+    .brands-title{
       width: 25%;
       text-align: center;
       margin: 2%;
-      color: red;
+      color: $color__primary;
     }
 
     ul.brands-list{
