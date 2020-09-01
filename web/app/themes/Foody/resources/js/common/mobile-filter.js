@@ -33,6 +33,12 @@ jQuery(document).ready(($) => {
                         }
                     }
 
+                    // if mobile menu open => close it
+                    if($('header .navbar-toggler').length && $('header .quadmenu-navbar-toggle').length && !$('header .quadmenu-navbar-toggle').hasClass('collapsed')){
+                        $('header .quadmenu-navbar-toggle').click();
+                    }
+
+
                     $mobileFilter.addClass('open');
 
                     $(window).click(function () {

@@ -194,6 +194,11 @@ jQuery(document).ready(function ($) {
                 }
             }
 
+            // if mobile menu open => close it
+            if($('header .navbar-toggler').length && $('header .quadmenu-navbar-toggle').length && !$('header .quadmenu-navbar-toggle').hasClass('collapsed')){
+                $('header .quadmenu-navbar-toggle').click();
+            }
+
             $('.brands-toggle-mobile .brands-avenue-mobile').addClass('open');
         });
 
