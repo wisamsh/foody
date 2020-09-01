@@ -25,6 +25,14 @@ jQuery(document).ready(($) => {
                 });
                 $mobileFilterBtn.click((event) => {
                     event.stopPropagation();
+
+                    // if brands avenue is open => close it
+                    if($('.brands-toggle-mobile .brands-avenue-mobile').length){
+                        if($('.brands-toggle-mobile .brands-avenue-mobile').hasClass('open')){
+                            $('.brands-avenue-mobile').removeClass('open');
+                        }
+                    }
+
                     $mobileFilter.addClass('open');
 
                     $(window).click(function () {

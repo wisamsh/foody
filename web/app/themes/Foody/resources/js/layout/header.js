@@ -186,6 +186,14 @@ jQuery(document).ready(function ($) {
     if($('.brands-toggle-mobile .navbar-toggler').length){
         $('.brands-toggle-mobile .navbar-toggler').on('click', function () {
             $('.brands-toggle-mobile .brands-avenue-mobile .close').removeClass('hide');
+
+            // if mobile filter is open => close it
+            if($('.filter-mobile .navbar-toggler').length){
+                if($('.mobile-filter').hasClass('open')){
+                    $('.mobile-filter').removeClass('open');
+                }
+            }
+
             $('.brands-toggle-mobile .brands-avenue-mobile').addClass('open');
         });
 
