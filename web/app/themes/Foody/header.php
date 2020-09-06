@@ -221,7 +221,8 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
             if (isset($brands_avenue_group['brands']) && !empty($brands_avenue_group['brands'])) {
                 foody_get_template_part(get_template_directory() . '/template-parts/common/foody-brands-mobile.php', [
                     'brands' => $brands_avenue_group['brands'],
-                    'title' => $brands_avenue_group['title']
+                    'title' => $brands_avenue_group['title'],
+                    'mobile_btn' => $brands_avenue_group['mobile_text']
                 ]);
             }
         }
