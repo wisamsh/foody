@@ -117,6 +117,17 @@ jQuery(document).ready(($) => {
             pageCounter++;
             eventCallback('', 'עמוד קטגוריה', 'עוד מתכונים', foodyGlobals['title'], 'מיקום', pageCounter, '', foodyGlobals['title']);
         });
+
+        /** click on cover image **/
+        $('.cover-image a').on('click', function () {
+            let link = $(this).attr('href');
+            if (link.toLowerCase().indexOf('utm') < 0 && link.toLowerCase().indexOf('foody') >= 0) {
+                eventCallback('', 'עמוד קטגוריה', 'לחיצה על קאבר (הפניה פנימה)', categoryName, '', '', '', categoryName);
+            }
+            else if (link.toLowerCase().indexOf('utm') >= 0 || link.toLowerCase().indexOf('foody') < 0) {
+                eventCallback('', 'עמוד קטגוריה', 'לחיצה על קאבר (הפניה החוצה)', categoryName, '', '', '', categoryName);
+            }
+        });
     }
 });
 
