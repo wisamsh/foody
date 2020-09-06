@@ -7,6 +7,7 @@ jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'post')) {
         let scrollsArr = {'0': false, '25': false, '50': false, '75': false, '100': false};
         let feedPublisher = "אין";
+        let primaryCategory = $('.breadcrumb > li').last()[0].innerText;
 
         var publishers = ['אין'];
         if (foodyGlobals['post']['publisher'] || $('.sponsors-container').length) {
@@ -20,7 +21,12 @@ jQuery(document).ready(($) => {
         /**
          * Page Load
          */
-        eventCallback(null, 'כתבה', 'טעינה', 'קטגוריה ראשית', 'מפרסם', foodyGlobals['author_name']);
+        if (feedPublisher == "") {
+            eventCallback(null, 'כתבה', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), '', primaryCategory);
+        }
+        else{
+            eventCallback(null, 'כתבה', 'טעינה', 'קטגוריה ראשית', 'מפרסם',feedPublisher, '', primaryCategory);
+        }
 
 
         /**
@@ -146,10 +152,10 @@ jQuery(document).ready(($) => {
             let imageContainer = $(this).has('img');
             if (imageContainer.length) {
                 text = $(imageContainer[0].children[0]).attr('alt');
-                eventCallback(event, 'כתבה', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', '','תמונה');
+                eventCallback(event, 'כתבה', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', 'תמונה');
             } else {
                 text = $(this)[0].innerHTML;
-                eventCallback(event, 'כתבה', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', '','קישור');
+                eventCallback(event, 'כתבה', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', 'קישור');
             }
         });
 
@@ -166,7 +172,7 @@ jQuery(document).ready(($) => {
  * @param cdDesc
  * @param cdValue
  */
-function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', object = '') {
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', object = '', item_category) {
 
     /**
      * Recipe name
@@ -176,7 +182,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
     /**
      * Item category
      */
-    let item_category = '';
+    let _item_category = item_category;
 
     /**
      * Chef Name
