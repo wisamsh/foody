@@ -8,13 +8,14 @@
 
 $foody_brands = $template_args['brands'];
 $foody_brands_title = $template_args['title'];
+$floating_mobile_btn= $template_args['mobile_btn'];
 ?>
 
 
 <div class="brands-toggle-mobile d-block d-lg-none no-print">
     <button class="navbar-toggler filter-btn" type="button" data-toggle="drawer"
             data-target="#dw-p2" aria-label="<?php echo __('למותגים', 'foody'); ?>">
-        <?php echo __('למותגים', 'foody'); ?>
+        <?php echo __($floating_mobile_btn, 'foody'); ?>
     </button>
 
 
