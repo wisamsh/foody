@@ -64,6 +64,95 @@ $content-width: 95%;
 }
 
 .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
+  #upload-image-modal {
+
+    .modal-header {
+      background-image: linear-gradient(78deg, #ec3849, #f35644);
+      color: white;
+      padding: 10px;
+      place-items: center;
+
+      .modal-title {
+        font-size: 32px;
+        font-weight: 900;
+      }
+
+      .close {
+        color: white;
+        opacity: 1;
+        font-size: 32px;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .modal-body {
+      padding-bottom: 0;
+
+      .image-container {
+        text-align: center;
+
+        img {
+          width: 33%;
+          clip-path: inset(0 round 3px);
+          margin-bottom: 15px;
+        }
+      }
+
+      .comment-input-container {
+        width: 100%;
+        border-radius: 3px;
+        background-color: #ffffff;
+        border: solid 1px #e5e5e5;
+        padding: 15px;
+
+        input.comment {
+          display: block;
+          border: none;
+          box-shadow: none;
+          width: 100%;
+        }
+
+        label {
+          text-align: right;
+          display: block;
+          font-family: $font__assistant;
+          font-size: 22px;
+          font-weight: bold;
+        }
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      button.btn {
+        margin: 10px 0;
+        box-shadow: none;
+        font-family: $font__assistant;
+        font-size: 22px;
+        padding: 0;
+        border-radius: 0;
+
+        &.btn-approve {
+          color: var(--color__primary);
+          font-weight: bold;
+          padding-right: 10px;
+        }
+
+        &.btn-cancel {
+          padding-left: 10px;
+          border-left: 1px solid var(--color__divider);
+        }
+
+      }
+
+    }
+
+    .modal-footer {
+      display: none;
+    }
+  }
 
 }
 
@@ -732,6 +821,16 @@ $content-width: 95%;
           .comments-title {
             font-weight: bold;
           }
+
+          .preparation-share-title{
+            color: $color__primary;
+            text-decoration: underline !important;
+          }
+
+          .num-of-preps{
+            font-weight: bold;
+            color: $color__primary;
+          }
         }
 
         .rating {
@@ -1320,6 +1419,80 @@ $content-width: 95%;
 
           .note {
 
+          }
+        }
+      }
+
+      .recipe-how-i-did{
+        width: 100%;
+
+        .how-i-did-cover{
+          width: 100vw;
+        }
+
+        .comments-area-header{
+          display: flex;
+          flex-direction: column;
+          background: $color__primary;
+          padding: 2%;
+          position: relative;
+
+          .title{
+            color: white;
+            text-align: center;
+            margin-left: 15%;
+          }
+
+          .btn-container{
+            position: absolute;
+            background: white;
+            font-size: 23px;
+            font-weight: bold;
+            border-radius: 60%;
+            width: 12%;
+            padding: 1%;
+            left: 14%;
+
+            .btn-text{
+              text-align: center;
+              border-radius: 60%;
+              border: $color__primary 1px solid;
+              color: $color__primary;
+              margin: auto;
+            }
+          }
+
+          .add-image{
+            color:white;
+
+            #image-upload-hidden{
+              label{
+                width: 100%;
+
+                .icon-camera{
+                  margin-left: 1%;
+
+                  &:before{
+                    content: "\e921";
+                  }
+                }
+                span{
+                  text-decoration: underline;
+                }
+              }
+
+              #attachment{
+                display: none;
+              }
+            }
+          }
+        }
+
+        #accordion-how-i-did-accordion{
+          .foody-accordion-content{
+            .foody-accordion-title{
+              display: none;
+            }
           }
         }
       }

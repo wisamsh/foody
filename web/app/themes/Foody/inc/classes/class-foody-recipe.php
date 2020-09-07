@@ -1128,11 +1128,11 @@ class Foody_Recipe extends Foody_Post
         $number_of_preps = $this->get_number_of_approved_preps() + intval($number_of_preps);
 
         $preps_element_title = '<div class="preparations-share-title">' . __('כבר הכנתם?') . '</div>';
-        $preps_element_link = '<div class="preparation-share-title">' . __('שתפו אותנו') . '</div>';
+        $preps_element_link = '<a href="#how-i-did" class="preparation-share-title">' . __('שתפו אותנו') . '</a>';
         $preps_elements = '<div class="preparations-share" data-numOfPreps="' . $number_of_preps . '">' . $preps_element_title . $preps_element_link . '</div>';
 
         $comments_element_title = '<div class="comments-title">' . __('רוצים להגיב?') . '</div>';
-        $comments_element_link = '<div class="comments-link">' . __('לחצו כאו') . '</div>';
+        $comments_element_link = '<div class="comments-link">' . __('לחצו כאן') . '</div>';
         $comments_elements = '<div class="comments-link-container" data-numOfComments="' . $num_of_comments . '">' . $comments_element_title . $comments_element_link . '</div>';
 
         echo $preps_elements . $mock_rating . $comments_elements;
@@ -1146,7 +1146,10 @@ class Foody_Recipe extends Foody_Post
             return $this->filter_comments($preps_comments);
         });
 
-        return count($approved_comments);
+        $preps_made = get_post_meta($this->id, 'num_of_preps');
+        $preps_made = is_array($preps_made) && !empty($preps_made) ? intval($preps_made[0]) : 0;
+
+        return count($approved_comments) + $preps_made;
     }
 
     function filter_comments($comment)

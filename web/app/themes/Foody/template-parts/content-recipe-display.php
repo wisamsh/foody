@@ -54,6 +54,7 @@ $recipe = $template_args['recipe'];
 
 
 
+
     </script>
 <?php
 $promotion_area_group = get_field('promotion_area', $recipe->id);
@@ -182,13 +183,16 @@ if (!empty($enable_tip) && $enable_tip) { ?>
     <!---->
     <!--</section>-->
     <!---->
+
+<?php if (get_field('enable_share_execute', $recipe->id)) { ?>
     <section class="recipe-how-i-did no-print">
         <?php $recipe->how_i_did(); ?>
 
     </section>
+<?php } ?>
 
     <section class="recipe-comments no-print">
-    	<?php $recipe->comments(); ?>
+        <?php $recipe->comments(); ?>
     </section>
 
 
