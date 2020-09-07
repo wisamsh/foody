@@ -899,3 +899,8 @@ function foody_body_add_bit_class($classes)
     return $classes;
 
 }
+
+add_filter('the_content', 'addClassToLinks');
+function addClassToLinks($content){
+    return str_replace( '<a ', "<a class='post-content-link'", $content);
+}
