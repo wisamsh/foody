@@ -1122,7 +1122,7 @@ class Foody_Recipe extends Foody_Post
 
     function get_comments_rating_preps_component($number_of_preps)
     {
-        $num_of_comments = get_comments_number($this->id);
+        $num_of_comments = count(get_comments(array('type' => 'comment', 'post_id' => $this->id)));
         $mock_rating = '<div class="rating">' . __('אזור דירוג') . '</div>';
 
         $number_of_preps = $this->get_number_of_approved_preps() + intval($number_of_preps);
@@ -1132,7 +1132,7 @@ class Foody_Recipe extends Foody_Post
         $preps_elements = '<div class="preparations-share" data-numOfPreps="' . $number_of_preps . '">' . $preps_element_title . $preps_element_link . '</div>';
 
         $comments_element_title = '<div class="comments-title">' . __('רוצים להגיב?') . '</div>';
-        $comments_element_link = '<div class="comments-link">' . __('לחצו כאן') . '</div>';
+        $comments_element_link = '<a href="#comments" class="comments-link">' . __('לחצו כאן') . '</a>';
         $comments_elements = '<div class="comments-link-container" data-numOfComments="' . $num_of_comments . '">' . $comments_element_title . $comments_element_link . '</div>';
 
         echo $preps_elements . $mock_rating . $comments_elements;

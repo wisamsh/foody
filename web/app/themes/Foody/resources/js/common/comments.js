@@ -64,6 +64,28 @@ jQuery(document).ready(($) => {
             $commentForm[0].reset();
 
             $parent.add($commentForm).removeClass('open');
+
+            if ($('.comments-rating-prep-container .comments-link-container .num-of-comments').length) {
+                let currentNumOfPreps = parseInt($('.comments-rating-prep-container .comments-link-container .num-of-comments')[0].innerText) + 1;
+                $('.comments-rating-prep-container .comments-link-container .num-of-comments')[0].innerText = currentNumOfPreps;
+            } else {
+                if ($('.comments-rating-prep-container .comments-link-container').length && typeof $('.comments-rating-prep-container .comments-link-container').attr('data-numofcomments') !== 'undefined') {
+                    let currentNumOfPreps = parseInt($('.comments-rating-prep-container .comments-link-container').attr('data-numofcomments')) + 1;
+                    let newElem = '<a href="#comments" class="comments-link-container"><div class="comments-title">כבר הגיבו</div><div class="num-of-comments">' + currentNumOfPreps + '</div></a>';
+
+                    $('.comments-rating-prep-container .comments-link-container').replaceWith(newElem);
+                    if($('#comments > .title').length){
+                        if(currentNumOfPreps == 1){
+                            $('#comments > .title')[0].innerText = 'תגובה אחת';
+                        }
+                        else{
+                            if(currentNumOfPreps != 0){
+                                $('#comments > .title')[0].innerText = 'תגובות ('+ currentNumOfPreps +')';
+                            }
+                        }
+                    }
+                }
+            }
         };
 
         let form = '#commentform';

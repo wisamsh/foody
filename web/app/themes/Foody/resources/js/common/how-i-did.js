@@ -20,10 +20,19 @@ $(document).ready(() => {
 
     let loader = new FoodyLoader({container: $formContainer});
 
-    let addImageBtn = $('.comments-area-header .btn-container');
+    let madeDishBtn = $('.comments-area-header .btn-container');
 
-    addImageBtn.on('click', function () {
+    if(madeDishBtn.length && !canMarkedPrepared(foodyGlobals.ID)){
+        let newElem = '<a href="#how-i-did" class="preparations-share"><div class="preparations-share-title">כבר הכינו</div><div class="num-of-preps">'
+            + parseInt($('.comments-rating-prep-container .preparations-share').attr('data-numofpreps')) + '</div></a>';
+
+        $('.comments-rating-prep-container .preparations-share').replaceWith(newElem);
+        replaceElemWithCheckMark(madeDishBtn);
+    }
+
+    madeDishBtn.on('click', function () {
         if (canMarkedPrepared(foodyGlobals.ID) && $('.comments-rating-prep-container .preparations-share .num-of-preps').length == 0) {
+            loader.attach();
             foodyAjax({
                 action: 'foody_increment_made_recipe',
                 data: {
@@ -32,16 +41,19 @@ $(document).ready(() => {
             }, function (err, data) {
                 if (err) {
                     console.log(err)
+                    loader.detach();
                 } else {
                     setAsPrepared(foodyGlobals.ID);
                     if ($('.comments-rating-prep-container .preparations-share').length &&
                         typeof $('.comments-rating-prep-container .preparations-share').attr('data-numofpreps') !== 'undefined'
                     ) {
                         let currentNumOfPreps = parseInt($('.comments-rating-prep-container .preparations-share').attr('data-numofpreps')) + 1;
-                        let newElem = '<div class="preparations-share"><div class="preparations-share-title">כבר הכינו</div><div class="num-of-preps">' + currentNumOfPreps + '</div></div>';
+                        let newElem = '<a href="#how-i-did" class="preparations-share"><div class="preparations-share-title">כבר הכינו</div><div class="num-of-preps">' + currentNumOfPreps + '</div></a>';
 
                         $('.comments-rating-prep-container .preparations-share').replaceWith(newElem);
+                        replaceElemWithCheckMark(madeDishBtn);
                     }
+                    loader.detach();
                 }
             });
         }
@@ -65,13 +77,14 @@ $(document).ready(() => {
 
         if ($('.comments-rating-prep-container .preparations-share .num-of-preps').length) {
             let currentNumOfPreps = parseInt($('.comments-rating-prep-container .preparations-share .num-of-preps')[0].innerText) + 1;
-            $('.comments-rating-prep-container .preparations-share .num-of-preps').innerText = currentNumOfPreps;
+            $('.comments-rating-prep-container .preparations-share .num-of-preps')[0].innerText = currentNumOfPreps;
         } else {
             if ($('.comments-rating-prep-container .preparations-share').length && typeof $('.comments-rating-prep-container .preparations-share').attr('data-numofpreps') !== 'undefined') {
                 let currentNumOfPreps = parseInt($('.comments-rating-prep-container .preparations-share').attr('data-numofpreps')) + 1;
-                let newElem = '<div class="preparations-share"><div class="preparations-share-title">כבר הכינו</div><div class="num-of-preps">' + currentNumOfPreps + '</div></div>';
+                let newElem = '<a href="#how-i-did" class="preparations-share"><div class="preparations-share-title">כבר הכינו</div><div class="num-of-preps">' + currentNumOfPreps + '</div></a>';
 
                 $('.comments-rating-prep-container .preparations-share').replaceWith(newElem);
+                replaceElemWithCheckMark(madeDishBtn);
             }
         }
     };
@@ -261,4 +274,10 @@ function setAsPrepared(recipeId) {
     }
 
     sessionStorage.setItem('has_prepared', JSON.stringify(hasPrepared));
+}
+
+
+function replaceElemWithCheckMark(elemToReplace) {
+    let checkIcon = '<span class="check-icon">&#10003;</span>';
+    elemToReplace.replaceWith(checkIcon);
 }
