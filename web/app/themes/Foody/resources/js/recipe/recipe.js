@@ -264,24 +264,69 @@ jQuery(document).ready(($) => {
         });
     }
 
-    if($('.recipe-content-steps .slick-current').length){
+    if ($('.recipe-content-steps .slick-current').length) {
         $('.slider.recipe-content-steps').on('swipe', changeStyleOfArrows);
         $('.slider.recipe-content-steps .arrow-prev, .slider.recipe-content-steps .arrow-next').on('click', changeStyleOfArrows);
+    }
+
+
+
+    let selectorsArr = {'.recipe-categories':'cat-read-more', '.recipe-accessories':'acc-read-more', '.recipe-techniques':'teq-read-more', '.recipe-tags': 'tag-read-more'};
+    for(let key in selectorsArr){
+        if ($(key + ' ul li').length) {
+            let twoRowsHeight = parseInt($(key + ' ul li').outerHeight(true)) * 2;
+            let originalSize = parseInt($(key + ' ul').outerHeight(true));
+            if (originalSize > twoRowsHeight) {
+                $(key + ' ul').attr('style', 'height:' + twoRowsHeight + 'px; overflow: hidden');
+                $(key).append(' <a data-original-size ="' + originalSize + '" class="' + selectorsArr[key] + '" href="javascript:void(0);">עוד...</a>');
+            }
+        }
+    }
+
+
+    // read more categories
+    if ($('.recipe-categories .post-categories li').length && $('.cat-read-more').length) {
+        $('.cat-read-more').on('click', function () {
+            $('.recipe-categories .post-categories').attr('style', 'height:' + parseInt($(this).attr('data-original-size')) + 'px');
+            $(this).remove();
+        });
+    }
+
+    // read more accessories
+    if ($('.recipe-accessories ul li').length && $('.acc-read-more').length) {
+        $('.acc-read-more').on('click', function () {
+            $('.recipe-accessories ul').attr('style', 'height:' + parseInt($(this).attr('data-original-size')) + 'px');
+            $(this).remove();
+        });
+    }
+
+    // read more accessories
+    if ($('.recipe-techniques ul li').length &&  $('.teq-read-more').length) {
+        $('.teq-read-more').on('click', function () {
+            $('.recipe-techniques ul').attr('style', 'height:' + parseInt($(this).attr('data-original-size')) + 'px');
+            $(this).remove();
+        });
+    }
+
+    // read more accessories
+    if ($('.recipe-tags ul li').length &&  $('.tag-read-more').length) {
+        $('.tag-read-more').on('click', function () {
+            $('.recipe-tags ul').attr('style', 'height:' + parseInt($(this).attr('data-original-size')) + 'px');
+            $(this).remove();
+        });
     }
 });
 
 function changeStyleOfArrows() {
     let stepElem = $('.recipe-content-steps .slick-current').find('.step');
-    if(stepElem.length){
-        if($(stepElem).hasClass('first-step')){
+    if (stepElem.length) {
+        if ($(stepElem).hasClass('first-step')) {
             $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:grey');
             $('.slider.recipe-content-steps .arrow-next').attr('style', 'color:rgb(64, 64, 64)');
-        }
-        else if($(stepElem).hasClass('last-step')){
+        } else if ($(stepElem).hasClass('last-step')) {
             $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:rgb(64, 64, 64)');
             $('.slider.recipe-content-steps .arrow-next').attr('style', 'color:grey');
-        }
-        else{
+        } else {
             $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:rgb(64, 64, 64)');
             $('.slider.recipe-content-steps .arrow-next').attr('style', 'color:rgb(64, 64, 64)');
         }

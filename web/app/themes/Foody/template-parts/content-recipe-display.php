@@ -125,12 +125,12 @@ if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_
     </section>
 
 <?php $recipe->the_notes() ?>
-    <!--    -->
-    <!--    <section class="recipe-sponsor-container box no-print">-->
-    <!--    -->
-    <!--    	--><?php //$recipe->the_sponsor() ?>
-    <!--    -->
-    <!--    </section>-->
+
+        <section class="recipe-sponsor-container box no-print">
+
+        	<?php $recipe->the_sponsor() ?>
+
+        </section>
 
 <?php if ($recipe->show_google_adx()): ?>
     <section class="google-adx-container col-lg-9 col-12">
@@ -151,38 +151,7 @@ if (!empty($enable_tip) && $enable_tip) { ?>
         <?php $recipe->get_system_tip(); ?>
     </section>
 <?php } ?>
-    <!---->
-    <!--<section class="recipe-categories categories no-print">-->
-    <!--	--><?php //$recipe->the_categories() ?>
-    <!--</section>-->
-    <!---->
-    <!--<section class="recipe-accessories">-->
-    <!--	--><?php //$recipe->the_accessories() ?>
-    <!--</section>-->
-    <!---->
-    <!--<section class="recipe-techniques">-->
-    <!--	--><?php //$recipe->the_techniques() ?>
-    <!--</section>-->
-    <!---->
-<?php //if ( $recipe->has_tags() ): ?>
-    <!---->
-    <!--    <section class="recipe-tags tags no-print">-->
-    <!---->
-    <!--        <h2 class="title">-->
-    <!--			--><?php //echo __( 'תגיות', 'foody' ) ?>
-    <!--        </h2>-->
-    <!---->
-    <!--		--><?php //$recipe->the_tags() ?>
-    <!---->
-    <!--    </section>-->
-    <!---->
-<?php //endif; ?>
-    <!---->
-    <!--<section class="newsletter no-print">-->
-    <!--	--><?php //$recipe->newsletter(); ?>
-    <!---->
-    <!--</section>-->
-    <!---->
+
 
 <?php if (get_field('enable_share_execute', $recipe->id)) { ?>
     <section class="recipe-how-i-did no-print">
@@ -195,13 +164,43 @@ if (!empty($enable_tip) && $enable_tip) { ?>
         <?php $recipe->comments(); ?>
     </section>
 
+    <section class="recipe-categories categories no-print">
+    	<?php $recipe->the_categories() ?>
+    </section>
 
-    <!--<section class="recipe-sidebar-mobile d-block d-lg-none no-print">-->
-    <!--	--><?php //$recipe->the_mobile_sidebar_content(); ?>
-    <!--</section>-->
-    <!---->
-<?php //if ( function_exists( 'footabc_add_code_to_content' ) ): ?>
-    <!--    <section class="footab-container">-->
-    <!--		--><?php //echo footabc_add_code_to_content(); ?>
-    <!--    </section>-->
-<?php //endif; ?>
+    <section class="recipe-accessories accessories no-print">
+    	<?php $recipe->the_accessories() ?>
+    </section>
+
+    <section class="recipe-techniques techniques no-print">
+    	<?php $recipe->the_techniques() ?>
+    </section>
+
+<?php if ( $recipe->has_tags() ): ?>
+
+        <section class="recipe-tags tags no-print">
+
+            <h2 class="title">
+    			<?php echo __( 'תגיות', 'foody' ) ?>
+            </h2>
+
+    		<?php $recipe->the_tags() ?>
+
+        </section>
+
+<?php endif; ?>
+
+<!--    <section class="recipe-sidebar-mobile d-block d-lg-none no-print">-->
+<!--    	--><?php //$recipe->the_mobile_sidebar_content(); ?>
+<!--    </section>-->
+
+    <section class="newsletter no-print">
+        <?php $recipe->newsletter(); ?>
+
+    </section>
+
+<?php if ( function_exists( 'footabc_add_code_to_content' ) ): ?>
+        <section class="footab-container">
+    		<?php echo footabc_add_code_to_content(); ?>
+        </section>
+<?php endif; ?>

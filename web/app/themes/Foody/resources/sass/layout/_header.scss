@@ -368,6 +368,7 @@ header {
 
     .foody-search-suggestions {
       width: 100%;
+      overflow: scroll;
 
       .foody-search-suggestion {
         font-size: 18px;
@@ -464,6 +465,7 @@ header {
         .foody-search-suggestions {
           width: 100%;
           padding: 0;
+          overflow: scroll;
 
           .suggestion-head-title {
             font-weight: bold;
@@ -1619,6 +1621,7 @@ header {
 
     .foody-dropdown-menu {
       .foody-search-suggestions {
+        overflow: scroll;
 
         .foody-search-suggestion {
 
@@ -1655,6 +1658,7 @@ header {
         .foody-dropdown-menu {
 
           .foody-search-suggestions {
+            overflow: scroll;
 
             .foody-search-suggestion {
               &.foody-cursor {
