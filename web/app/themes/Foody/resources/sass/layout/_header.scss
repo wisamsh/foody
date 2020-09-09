@@ -806,8 +806,28 @@ header {
     }
 
     header {
-        &.header-unpin {
-          transform: translateY(-110px);
+      &.header-unpin {
+        transform: translateY(-110px);
+      }
+    }
+  }
+
+  body {
+    #page {
+      .search-overlay {
+        &.floating-mobile-header {
+
+          .input-container {
+
+            .foody-dropdown-menu {
+
+              .foody-search-suggestions {
+                overflow: scroll;
+                height: 85vh;
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -818,7 +838,7 @@ header {
     transition: transform 0.25s ease-in-out;
     z-index: 1;
 
-    &.hidden-recipe-header{
+    &.hidden-recipe-header {
       display: none !important;
     }
 
