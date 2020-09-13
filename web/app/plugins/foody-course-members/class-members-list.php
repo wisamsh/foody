@@ -317,6 +317,7 @@ class Courses_Members_List extends WP_List_Table
     {
         global $wpdb;
         $table_name = $wpdb->prefix . 'foody_courses_members';
+        $filtered = false;
 
         $filters_list = ['payment_filter' => 'payment_method',
             'course_filter' => 'course_name',
@@ -340,12 +341,14 @@ class Courses_Members_List extends WP_List_Table
                 $search_query .= " WHERE purchase_date BETWEEN '{$date_from}' AND '{$date_to}'";
             }
             $not_first = true;
+            $filtered = true;
         }
 
         foreach ($filters_list as $key => $filter) {
             $current_filter = !empty($search[$key]) ? $search[$key] : false;
-            if ($key == 'marketing_filter' && is_int($search[$key])) {
+            if ($key == 'marketing_filter' && $current_filter !== false && is_int($search[$key])) {
                 $current_filter = $search[$key];
+                $filtered = true;
             }
             if ($current_filter !== false) {
                 if ($not_first) {
@@ -353,11 +356,12 @@ class Courses_Members_List extends WP_List_Table
                 } else {
                     $search_query .= " WHERE {$filter} = '{$current_filter}'";
                     $not_first = true;
+                    $filtered = true;
                 }
             }
         }
 
-        $search_query .= ' AND deleted = 0';
+        $search_query .= $filtered ? ' AND deleted = 0' : ' WHERE deleted = 0';
         return $search_query;
     }
 
