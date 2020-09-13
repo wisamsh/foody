@@ -1380,7 +1380,7 @@ $content-width: 95%;
         .content-container {
           max-width: calc(100% - #{$content-padding});
           margin: 0 auto;
-          
+
           :not(h2) {
           }
 
@@ -1689,8 +1689,17 @@ $content-width: 95%;
               margin: 0;
               justify-content: space-between;
               margin-top: 20px;
+              padding: 0;
+              width: 100%;
 
               .how-i-did {
+                position: relative;
+                width: 100%;
+                min-height: 1px;
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-bottom: 5%;
+
                 .image-container {
 
                   img {
@@ -1700,6 +1709,7 @@ $content-width: 95%;
 
                 .author {
                   padding: 10px 0 0;
+                  text-align: right;
 
                   .author-name {
                     font-family: $font__main;
