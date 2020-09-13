@@ -1457,12 +1457,13 @@ $content-width: 95%;
             position: absolute;
             font-size: 26px;
             font-weight: bold;
-            width: 11%;
-            left: 14%;
+            width: 44px;
+            height: 44px;
             color: white;
             border-radius: 60%;
             border: 1px solid;
             text-align: center;
+            left: 9%;
           }
 
           .btn-container{
@@ -1471,9 +1472,11 @@ $content-width: 95%;
             font-size: 23px;
             font-weight: bold;
             border-radius: 60%;
-            width: 12%;
+            //width: 12%;
             padding: 1%;
-            left: 14%;
+            left: 9%;
+            width: 44px;
+            height: 44px;
 
             .btn-text{
               text-align: center;
@@ -1481,6 +1484,8 @@ $content-width: 95%;
               border: $color__primary 1px solid;
               color: $color__primary;
               margin: auto;
+              width: 36px;
+              height: 36px;
             }
           }
 
