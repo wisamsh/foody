@@ -225,16 +225,18 @@ $content-width: 95%;
           }
 
           .slick-slide {
-            &.slick-active {
+            //&.slick-active {
               img {
                 width: 100vw;
-                max-height: 38vh;
+                //max-height: 38vh;
+                height: 38vh
               }
 
               iframe.video-container {
-                min-height: 31vh;
+                //min-height: 31vh;
+                height: 38vh
               }
-            }
+            //}
           }
         }
 
