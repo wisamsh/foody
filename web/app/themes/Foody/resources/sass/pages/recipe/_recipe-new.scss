@@ -1379,7 +1379,8 @@ $content-width: 95%;
 
         .content-container {
           max-width: calc(100% - #{$content-padding});
-
+          margin: 0 auto;
+          
           :not(h2) {
           }
 
