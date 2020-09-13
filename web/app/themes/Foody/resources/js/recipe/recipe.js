@@ -175,12 +175,24 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
         $('.slider-for').slick(sliderMainData);
         $('.slider-nav').slick(sliderNavData);
 
-        $('.slider .arrow').on('click', function () {
-            // let currentActive = $('.slider-for .slick-track').find('iframe');
+        $(' .slider.slider-nav').on('swipe', function () {
             if (typeof player !== 'undefined') {
                 player.pauseVideo();
             }
         });
+
+        $('.slider .arrow').on('click', function () {
+            if (typeof player !== 'undefined') {
+                player.pauseVideo();
+            }
+        });
+
+        $('.slider.slider-nav .slick-slide').on('click', function () {
+          let currentNavItem = $('.slider.slider-nav .slick-current').find('.play-btn');
+          if(!currentNavItem.length){
+              player.pauseVideo();
+          }
+        })
     }
 
     if ($('.slider.recipe-content-steps')) {
