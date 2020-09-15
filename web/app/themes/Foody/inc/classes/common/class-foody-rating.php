@@ -40,12 +40,22 @@ class Foody_Rating
         if ($this->foody_has_rating($post_id)) {
             return $this->foody_get_populated_ratings($post_id);
         } else {
-            return $this->foody_get_empty_rating($post_id);
+            return $this->foody_get_empty_rating();
         }
     }
 
-    function foody_get_empty_rating($post_id){
+    function foody_get_empty_rating(){
+        $num_of_start = 5;
+        $empty_stars_prefix = 'rating/rating-empty-';
+        $rating_elements ='<div class="rating-stars-container">';
 
+        for($index = 1; $index<=$num_of_start; $index++){
+            $rating_elements += '<img class="empty-star" data-index="'. $index .'" src="'.  $GLOBALS['images_dir'] . 'icons/'.$empty_stars_prefix . $index .'">';
+        }
+
+        $rating_elements += '</div>';
+
+        return $rating_elements;
     }
 
     function foody_get_populated_ratings($post_id)
