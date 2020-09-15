@@ -121,16 +121,18 @@
       text-align: center;
       margin: 2%;
       color: $color__primary;
+      font-size: 2vw;
     }
 
     ul.brands-list{
-
+      margin-left: 0;
       li.brand-item-container{
         list-style: none;
         margin: 12% 0;
 
         img{
-          max-width: 150px;
+          //max-width: 150px;
+          max-width: 80%;
         }
       }
     }
