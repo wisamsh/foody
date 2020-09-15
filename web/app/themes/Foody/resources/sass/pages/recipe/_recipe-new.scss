@@ -1170,6 +1170,10 @@ $content-width: 95%;
 
       section.purchase-buttons {
         margin-bottom: 3%;
+
+        .purchase-buttons{
+          width: 100%;
+        }
       }
 
 
@@ -1486,6 +1490,7 @@ $content-width: 95%;
               margin: auto;
               width: 36px;
               height: 36px;
+              font-size: 1.3rem;
             }
           }
 
@@ -1706,6 +1711,8 @@ $content-width: 95%;
                 margin-bottom: 5%;
 
                 .image-container {
+                  display: flex;
+                  justify-content: center;
 
                   img {
                     height: 10em;
@@ -1753,14 +1760,39 @@ $content-width: 95%;
         }
 
         #how-i-did-modal {
+          max-height: 93vh;
+          overflow: scroll;
+
+          .modal-header{
+            background-color: $color__primary;
+            color: #fff;
+            padding: 0;
+
+            .modal-title{
+              font-family: Assistant;
+              font-size: 28px;
+              font-weight: 900;
+              place-self: center;
+              margin-right: 20px;
+            }
+          }
+
           #content {
             padding-top: 0;
             min-height: unset;
           }
 
           .close {
+            float: left;
+            margin: 0;
+            background: none;
+            opacity: 1;
             span {
               font-size: 32px;
+              float: left;
+              margin: 0;
+              color: #fff;
+              opacity: 1;
             }
           }
         }
