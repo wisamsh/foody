@@ -139,7 +139,7 @@ if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_
 <?php endif; ?>
 <?php
 $similar_content = get_field('similar_content_group', $recipe->get_id());
-if (!empty($similar_content) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
+if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
     <section class="recipe_similar_content">
         <?php $recipe->get_similar_content($similar_content); ?>
     </section>

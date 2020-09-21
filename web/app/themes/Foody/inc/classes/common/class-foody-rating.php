@@ -35,25 +35,33 @@ class Foody_Rating
         return $wpdb->get_results($query);
     }
 
-    function foody_get_the_rating($post_id)
+    function foody_get_the_rating($post_id, $part_of_component = false)
     {
         if ($this->foody_has_rating($post_id)) {
             return $this->foody_get_populated_ratings($post_id);
         } else {
-            return $this->foody_get_empty_rating();
+            return $this->foody_get_empty_rating($part_of_component);
         }
     }
 
-    function foody_get_empty_rating(){
+    function foody_get_empty_rating($part_of_component = false){
+        $header_text = $part_of_component ? __('דרגו את המתכון') : __('דרגו');
+        $rating_header = '<div class="rating-header">'. $header_text .'</div>';
+        $rating_stars = $this->foody_get_empty_stars();
+
+        return $rating_header.$rating_stars;
+    }
+
+    function foody_get_empty_stars(){
         $num_of_start = 5;
         $empty_stars_prefix = 'rating/rating-empty-';
         $rating_elements ='<div class="rating-stars-container">';
 
         for($index = 1; $index<=$num_of_start; $index++){
-            $rating_elements += '<img class="empty-star" data-index="'. $index .'" src="'.  $GLOBALS['images_dir'] . 'icons/'.$empty_stars_prefix . $index .'">';
+            $rating_elements .= '<img class="empty-star" data-index="'. $index .'" src="'.  $GLOBALS['images_dir'] . 'icons/'.$empty_stars_prefix . $index .'.png">';
         }
 
-        $rating_elements += '</div>';
+        $rating_elements .= '</div>';
 
         return $rating_elements;
     }
@@ -74,37 +82,31 @@ class Foody_Rating
         $rating_header = '<div class="rating-header"><span class="num-of-rates">' . $num_of_rates . ' ' . $rated_text . ' ' . '</span><span class="rating-avrage">[' . __('ציון') . ' ' . $avrage_rating . ']</span></div>';
 
         if (!$this->user_rated($post_id, get_current_user_id())) {
-            $rating_ui = $this->get_empty_stars();
+            $rating_ui = $this->foody_get_empty_stars();
         } else {
-            $rating_ui = $this->get_results_stars();
+            $rating_ui = $this->get_results_stars($avrage_rating);
         }
 
         return $rating_header . $rating_ui;
     }
 
-    function get_empty_stars(){
+    function get_results_stars($average_rating){
+        $num_of_stars = 5;
+        $rating_elements ='<div class="rating-stars-container">';
 
+        for($index = 1; $index<=$num_of_stars; $index++){
+            $class = $index <= $average_rating ? 'full-star' : 'star';
+            $image_path = $index <= $average_rating ? 'icons/rating/rating-full-' : 'icons/rating/rating-empty-';
+            $rating_elements .= '<img class="' . $class .'" data-index="'. $index .'" src="'.  $GLOBALS['images_dir'] . $image_path . $index .'.png">';
+        }
+
+        $rating_elements .= '</div>';
+
+        return $rating_elements;
     }
 
-    function get_results_stars(){
 
-    }
-
-    function foody_add_rating($post_id, $rating, $user_id)
-    {
-        global $wpdb;
-        $table = $wpdb->prefix . $this->table_name;
-
-        $username = $user_id != 0 ? get_userdata($user_id)->user_nicename : 'Guest';
-        $rating_ip = $this->foody_get_ip();
-        $post_title = get_post($post_id)->post_title;
-
-        /** add to coupons table */
-        $wpdb->query("INSERT INTO {$table} (postid, posttitle, rating, ip, username, userid)
-                VALUES('$post_id','$post_title','$rating','$rating_ip','$username','$user_id')");
-    }
-
-    private function user_rated($post_id, $user_id)
+    function user_rated($post_id, $user_id)
     {
         global $wpdb;
         $table = $wpdb->prefix . $this->table_name;
@@ -116,7 +118,7 @@ class Foody_Rating
         return count($result) > 0;
     }
 
-    private function foody_get_ip()
+    function foody_get_ip()
     {
         $keys_list = ['HTTP_CF_CONNECTING_IP', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR'];
         foreach ($keys_list as $key) {
@@ -130,5 +132,29 @@ class Foody_Rating
             }
         }
     }
-
 }
+
+function foody_add_rating()
+{
+    global $wpdb;
+    $rating_obj = new Foody_Rating();
+    $table_name = 'foody_ratings';
+    $table = $wpdb->prefix . $table_name;
+    $post_id = $_POST['postID'];
+    $rating = $_POST['rating'];
+    $user_id = get_current_user_id();
+
+    $username = $user_id != 0 ? get_userdata($user_id)->user_nicename : 'Guest';
+    $rating_ip = $rating_obj->foody_get_ip();
+    $post_title = get_post($post_id)->post_title;
+
+    /** add to coupons table */
+    $wpdb->query("INSERT INTO {$table} (postid, posttitle, rating, ip, username, userid)
+                VALUES('$post_id','$post_title','$rating','$rating_ip','$username','$user_id')");
+
+    $calc_rating = ['details' => $rating_obj->foody_get_the_rating($post_id, false), 'component' => $rating_obj->foody_get_the_rating($post_id, true)];
+
+    wp_send_json_success($calc_rating);
+}
+add_action('wp_ajax_nopriv_foody_add_rating', 'foody_add_rating');
+add_action('wp_ajax_foody_add_rating', 'foody_add_rating');

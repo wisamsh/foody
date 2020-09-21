@@ -838,7 +838,7 @@ class Foody_Recipe extends Foody_Post
     {
         global $post;
         ?>
-        <section class="ratings-wrapper">
+        <section class="ratings-wrapper <?php echo $this->rating->foody_has_rating($post->ID) ? '' : 'empty'?>">
             <?php
             echo $this->rating->foody_get_the_rating($post->ID);
             ?>
@@ -1139,7 +1139,7 @@ class Foody_Recipe extends Foody_Post
     function get_comments_rating_preps_component($number_of_preps)
     {
         $num_of_comments = count(get_comments(array('type' => 'comment', 'post_id' => $this->id)));
-        $rating = '<div class="rating">' . $this->rating->foody_get_the_rating($this->id) . '</div>';
+        $rating = '<div class="rating">' . $this->rating->foody_get_the_rating($this->id, true) . '</div>';
 
         $number_of_preps = $this->get_number_of_approved_preps() + intval($number_of_preps);
 
