@@ -27,7 +27,7 @@ class Foody_Recipe extends Foody_Post
 
     private $calories_per_dish;
 
-    private $rating;
+    public $rating;
 
 
     /**

@@ -615,6 +615,11 @@ $content-width: 95%;
         .shortcode-recipe-link {
           font-size: 20px;
         }
+
+        .rating-stars-container{
+          display: flex;
+          flex-direction: row;
+        }
       }
 
       .recipe-overview {

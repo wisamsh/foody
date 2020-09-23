@@ -300,7 +300,12 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_featured_content()
     {
-        $this->the_video_box();
+        if(get_page_template_slug() === 'foody_recipe'){
+            $this->the_video_box_new();
+        }
+        else {
+            $this->the_video_box();
+        }
     }
 
     public function show_google_adx()
@@ -739,7 +744,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return $robots_str;
     }
 
-    public function the_video_box()
+    public function the_video_box_new()
     {
         $isRecipe = $this instanceof Foody_Recipe;
         $show_slider = false;
@@ -849,6 +854,37 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             }
         }
     }
+
+    public function the_video_box()
+    {
+        if ($this->post != null) {
+            if (have_rows('video', $this->post->ID)) {
+                while (have_rows('video', $this->post->ID)): the_row();
+                    $video_url = get_sub_field('url');
+
+                    if ($video_url && count($parts = explode('v=', $video_url)) > 1) {
+
+                        $query = explode('&', $parts[1]);
+                        $video_id = $query[0];
+                        $args = array(
+                            'id' => $video_id,
+                            'post_id' => $this->id
+                        );
+                        foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
+                    } else {
+                        echo get_the_post_thumbnail($this->id, 'foody-main');
+                        if (isset($_GET['referer']) && $_GET['referer'] && !empty($logo = $this->get_feed_logo($_GET['referer']))) {
+                            echo '<img class="feed-logo-sticker" src="' . $logo . '">';
+                        }
+                    }
+
+                endwhile;
+            } else {
+                echo get_the_post_thumbnail($this->id, 'foody-main');
+            }
+        }
+    }
+
 
     protected function init_video()
     {

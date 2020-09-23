@@ -68,7 +68,11 @@ else{
                             ?>
 
                             <section class="rating-container d-block d-lg-block">
-                                <?php Foody_Recipe::ratings() ?>
+                                <?php //Foody_Recipe::ratings() ?>
+                                <?php
+                                echo $foody_page->rating->foody_has_rating($foody_page->id) ?
+                                $foody_page->rating->foody_get_populated_ratings($foody_page->id, false) : $foody_page->rating->foody_get_empty_stars();
+                                ?>
                             </section>
 
                         </section>
