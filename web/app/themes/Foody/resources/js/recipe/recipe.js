@@ -150,8 +150,8 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
         let sliderMainData = {
             slidesToShow: 1,
             slidesToScroll: 1,
-            prevArrow: '<div class="arrow arrow-prev"></div>',
-            nextArrow: '<div class="arrow arrow-next"></div>',
+            nextArrow: '<div class="arrow arrow-prev"></div>',
+            prevArrow: '<div class="arrow arrow-next"></div>',
             fade: true,
             asNavFor: '.slider-nav',
             rtl: true
@@ -166,8 +166,8 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
             rtl: true
         };
         if ($('.slider-for .item').length > 4) {
-            sliderNavData.nextArrow = '<div class="arrow arrow-next"></div>';
-            sliderNavData.prevArrow = '<div class="arrow arrow-prev"></div>';
+            sliderNavData.prevArrow = '<div class="arrow arrow-next"></div>';
+            sliderNavData.nextArrow = '<div class="arrow arrow-prev"></div>';
         } else {
             sliderNavData.arrows = false;
         }
@@ -199,12 +199,22 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
         $('.slider.recipe-content-steps').slick({
             rtl: true,
             infinite: false,
-            prevArrow: '<div class="arrow arrow-prev">&#x27F6; לשלב הקודם</div>',
-            nextArrow: '<div class="arrow arrow-next"> לשלב הבא &#x27F5; </div>',
+            nextArrow: '<div class="arrow arrow-prev"></div>',
+            prevArrow: '<div class="arrow arrow-next"></div>',
         });
 
         $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:grey');
     }
+    // if ($('.slider.recipe-content-steps')) {
+    //     $('.slider.recipe-content-steps').slick({
+    //         rtl: true,
+    //         infinite: false,
+    //         prevArrow: '<div class="arrow arrow-prev">&#x27F6; לשלב הקודם</div>',
+    //         nextArrow: '<div class="arrow arrow-next"> לשלב הבא &#x27F5; </div>',
+    //     });
+    //
+    //     $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:grey');
+    // }
 }
 
 jQuery(document).ready(($) => {
