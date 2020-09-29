@@ -300,7 +300,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
     public function the_featured_content()
     {
-        if(get_page_template_slug() === 'foody_recipe'){
+        if($this instanceof Foody_Recipe){
             $this->the_video_box_new();
         }
         else {
