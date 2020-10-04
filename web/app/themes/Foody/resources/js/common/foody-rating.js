@@ -7,15 +7,16 @@ jQuery(document).ready(($) => {
                 $('.comments-rating-prep-container .rating .empty-star').length )){
             $('.ratings-wrapper .rating-stars-container .empty-star,' +
                 '.comments-rating-prep-container .rating .empty-star').on('click', function () {
-
+                    let parentContainerIsWrapper = $(this).closest('.ratings-wrapper').length;
                 let starIndex = $(this).attr('data-index');
-                let container = $(this).closest('.ratings-wrapper').length ? '.ratings-wrapper' : '.comments-rating-prep-container .rating';
+                let topPracent = parentContainerIsWrapper ? 27 : 15;
+                let container = parentContainerIsWrapper ? '.ratings-wrapper' : '.comments-rating-prep-container .rating';
                 let foodyLoader = new FoodyLoader({
                     container: $(container),
                     id: 'rating-loader'
                 });
 
-                foodyLoader.attach({topPercentage: 0});
+                foodyLoader.attach({topPercentage: topPracent});
                 foodyAjax({
                     action: 'foody_add_rating',
                     data: {
