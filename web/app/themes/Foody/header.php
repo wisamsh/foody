@@ -64,7 +64,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
     </div>
 <?php endif; ?>
 <div id="page" class="site">
-    <?php $post_type = isset($post) && isset($post->post_type) ? $post->post_type : ''; ?>
+    <?php $post_type = is_single() && isset($post) && isset($post->post_type) ? $post->post_type : ''; ?>
     <header id="masthead" class="site-header no-print <?php if ($post_type == 'foody_recipe' && wp_is_mobile()) {
         echo 'hidden-recipe-header';
     } ?>">
@@ -195,7 +195,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
         <!-- #site-navigation -->
     </header><!-- #masthead -->
-    <?php if ($post_type == 'foody_recipe' && wp_is_mobile()) { ?>
+    <?php if (is_single() && $post_type == 'foody_recipe' && wp_is_mobile()) { ?>
         <div class="search-overlay floating-mobile-header d-lg-none">
 
             <div class="input-container">
@@ -211,14 +211,17 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
             <div class="black-overlay">
             </div>
             <?php
-            /** @var Foody_Recipe $recipe */
-            $recipe = Foody_PageContentFactory::get_instance()->get_page();
-            $similar_content = get_field('similar_content_group', $recipe->get_id());
-            if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
-                <div class="related-recipes-container">
-                    <?php $recipe->get_similar_content($similar_content); ?>
-                </div>
-            <?php } ?>
+            if(is_single()) {
+                /** @var Foody_Recipe $recipe */
+                $recipe = Foody_PageContentFactory::get_instance()->get_page();
+                $id = method_exists($recipe, 'get_id') ? $recipe->get_id() : false;
+                $similar_content = get_field('similar_content_group', $id);
+                if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
+                    <div class="related-recipes-container">
+                        <?php $recipe->get_similar_content($similar_content); ?>
+                    </div>
+                <?php }
+            } ?>
         </div>
         <div class="sticky_bottom_header no-print">
             <div class="socials d-none d-lg-block">
@@ -299,7 +302,10 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                        href="<?php echo get_permalink(get_page_by_path('התחברות')); ?>">הרשמו ל-FOODY
                                         »</a>
                                 <?php }
-                                $recipe->the_purchase_buttons(); ?>
+                                if (is_single() && method_exists($recipe, 'the_purchase_buttons')) {
+                                    $recipe->the_purchase_buttons();
+                                }
+                                ?>
                             </div>
                         </div>
                         <?php
