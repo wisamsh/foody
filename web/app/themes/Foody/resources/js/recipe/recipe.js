@@ -240,9 +240,9 @@ jQuery(document).ready(($) => {
         let str = $.trim($(this).text());
         let maxLength;
         if ($(this).hasClass('description')) {
-            maxLength = 85;
+            maxLength = foodyGlobals.isMobile ? 85 : 170;
         } else {
-            maxLength = 125;
+            maxLength = foodyGlobals.isMobile ? 125 : 310;
         }
         if (str.length > maxLength) {
             let newStr = str.substring(0, maxLength);

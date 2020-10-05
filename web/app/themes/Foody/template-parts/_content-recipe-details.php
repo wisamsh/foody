@@ -23,7 +23,7 @@ if ( ! foody_is_registration_open() ) {
     </h1>
 
     <!-- Description -->
-    <div class="description <?php if(wp_is_mobile()){ echo 'show-read-more';}?>">
+    <div class="description show-read-more">
 		<?php echo $foody_page->getDescription() ?>
     </div>
 
@@ -53,11 +53,6 @@ if ( ! foody_is_registration_open() ) {
 				foody_get_template_part( get_template_directory() . '/template-parts/content-post-bullets.php', $args );
 
 				?>
-				<?php if ( ! wp_is_mobile() ): ?>
-                    <section class="rating-container d-lg-block">
-						<?php $foody_page instanceof Foody_Recipe ? $foody_page->ratings_new() : Foody_Recipe::ratings() ?>
-                    </section>
-				<?php endif; ?>
             </section>
 
 			<?php if ( $show_favorite ): ?>
@@ -72,9 +67,13 @@ if ( ! foody_is_registration_open() ) {
 						)
 					);
 					?>
+                    <?php if ( ! wp_is_mobile() ): ?>
+                    <section class="rating-container d-lg-block">
+                        <?php $foody_page instanceof Foody_Recipe ? $foody_page->ratings_new() : Foody_Recipe::ratings() ?>
+                    </section>
+                    <?php endif; ?>
                 </section>
 			<?php endif; ?>
-
         </section>
 
     </section>
@@ -88,16 +87,16 @@ if ( ! foody_is_registration_open() ) {
         </section>
     <?php endif; ?>
 
-    <!-- Social buttons -->
-<!--    <section class="">-->
-<!--		--><?php //foody_get_template_part(
-//			get_template_directory() . '/template-parts/content-social-actions.php',
-//			[
-//				'extra_content' => $foody_page->the_purchase_buttons( 'd-none d-lg-flex', false )
-//			]
-//		);
-//		?>
-<!--    </section>-->
+<!--     Social buttons-->
+    <section class="">
+		<?php foody_get_template_part(
+			get_template_directory() . '/template-parts/content-social-actions.php',
+			[
+				//'extra_content' => $foody_page->the_purchase_buttons( 'd-none d-lg-flex', false )
+			]
+		);
+		?>
+    </section>
 
 
 </div>
