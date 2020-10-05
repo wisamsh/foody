@@ -54,8 +54,8 @@ if ( ! foody_is_registration_open() ) {
 
 				?>
 				<?php if ( ! wp_is_mobile() ): ?>
-                    <section class="rating-container d-none d-lg-block">
-						<?php Foody_Recipe::ratings() ?>
+                    <section class="rating-container d-lg-block">
+						<?php $foody_page instanceof Foody_Recipe ? $foody_page->ratings_new() : Foody_Recipe::ratings() ?>
                     </section>
 				<?php endif; ?>
             </section>
@@ -78,6 +78,15 @@ if ( ! foody_is_registration_open() ) {
         </section>
 
     </section>
+
+    <?php if ( wp_is_mobile() ): ?>
+
+
+        <section class="rating-container d-lg-block">
+<!--            --><?php //$foody_page->ratings_new() ?>
+            <?php $foody_page instanceof Foody_Recipe ? $foody_page->ratings_new() : Foody_Recipe::ratings() ?>
+        </section>
+    <?php endif; ?>
 
     <!-- Social buttons -->
 <!--    <section class="">-->

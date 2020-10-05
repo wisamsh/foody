@@ -226,21 +226,19 @@ $content-width: 95%;
 
           .slick-slide {
             //&.slick-active {
-            img {
-              width: 100vw;
-              //max-height: 38vh;
-              height: 38vh
-            }
+              img {
+                width: 100vw;
+                //max-height: 38vh;
+                height: 38vh
+              }
 
-            iframe.video-container {
-              //min-height: 31vh;
-              height: 38vh
-            }
-
+              iframe.video-container {
+                //min-height: 31vh;
+                height: 38vh
+              }
             //}
           }
         }
-
 
         .slider-nav {
           display: flex;
@@ -827,18 +825,18 @@ $content-width: 95%;
             color: #404040;
           }
 
-          .preparation-share-title {
+          .preparation-share-title{
             color: $color__primary;
             text-decoration: underline !important;
           }
 
-          .comments-link {
+          .comments-link{
             color: $color__primary;
             text-decoration: underline !important;
           }
 
           .num-of-comments,
-          .num-of-preps {
+          .num-of-preps{
             font-weight: bold;
             color: $color__primary;
           }
@@ -1173,7 +1171,7 @@ $content-width: 95%;
       section.purchase-buttons {
         margin-bottom: 3%;
 
-        .purchase-buttons {
+        .purchase-buttons{
           width: 100%;
         }
       }
@@ -1328,48 +1326,22 @@ $content-width: 95%;
               display: flex;
               background: #fdebec;
 
-              .slick-arrow {
-                content: '';
-                position: absolute;
-                z-index: 100;
-                background-color: white;
-                opacity: 0.7;
-                padding: 6%;
-                background-repeat: no-repeat;
-                background-position: center;
-                top: 34%;
-
-                //&:hover{
-                //  opacity: 1;
-                //}
-              }
-
               .arrow-prev {
-                background-image: url("../images/icons/left-arrow.svg");
-                left: 0;
+                display: block;
+                position: absolute;
+                bottom: 0;
+                font-size: 13px;
+                padding: 1% 2%;
               }
 
               .arrow-next {
-                background-image: url("../images/icons/right-arrow.svg");
-                right: 0;
+                display: block;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                font-size: 13px;
+                padding: 1% 2%;
               }
-
-            // .arrow-prev {
-            //  display: block;
-            //  position: absolute;
-            //  bottom: 0;
-            //  font-size: 13px;
-            //  padding: 1% 2%;
-            //}
-            //
-            //  .arrow-next {
-            //    display: block;
-            //    position: absolute;
-            //    bottom: 0;
-            //    left: 0;
-            //    font-size: 13px;
-            //    padding: 1% 2%;
-            //  }
 
               .slick-list {
                 margin: 6% 0;
@@ -1465,27 +1437,27 @@ $content-width: 95%;
         }
       }
 
-      .recipe-how-i-did {
+      .recipe-how-i-did{
         width: 100%;
 
-        .how-i-did-cover {
+        .how-i-did-cover{
           width: 100vw;
         }
 
-        .comments-area-header {
+        .comments-area-header{
           display: flex;
           flex-direction: column;
           background: $color__primary;
           padding: 2%;
           position: relative;
 
-          .title {
+          .title{
             color: white;
             text-align: center;
             margin-left: 15%;
           }
 
-          .check-icon {
+          .check-icon{
             position: absolute;
             font-size: 26px;
             font-weight: bold;
@@ -1498,7 +1470,7 @@ $content-width: 95%;
             left: 9%;
           }
 
-          .btn-container {
+          .btn-container{
             position: absolute;
             background: white;
             font-size: 23px;
@@ -1510,7 +1482,7 @@ $content-width: 95%;
             width: 44px;
             height: 44px;
 
-            .btn-text {
+            .btn-text{
               text-align: center;
               border-radius: 60%;
               border: $color__primary 1px solid;
@@ -1522,36 +1494,35 @@ $content-width: 95%;
             }
           }
 
-          .add-image {
-            color: white;
+          .add-image{
+            color:white;
 
-            #image-upload-hidden {
-              label {
+            #image-upload-hidden{
+              label{
                 width: 100%;
 
-                .icon-camera {
+                .icon-camera{
                   margin-left: 1%;
 
-                  &:before {
+                  &:before{
                     content: "\e921";
                   }
                 }
-
-                span {
+                span{
                   text-decoration: underline;
                 }
               }
 
-              #attachment {
+              #attachment{
                 display: none;
               }
             }
           }
         }
 
-        #accordion-how-i-did-accordion {
-          .foody-accordion-content {
-            .foody-accordion-title {
+        #accordion-how-i-did-accordion{
+          .foody-accordion-content{
+            .foody-accordion-title{
               display: none;
             }
           }
@@ -1560,19 +1531,19 @@ $content-width: 95%;
 
       .recipe-comments {
         #comments {
-          .title {
+          .title{
             font-size: 22px;
             padding: 20px;
           }
 
-          #accordion-comments-accordion {
-            .foody-accordion-content {
-              .foody-accordion-title {
+          #accordion-comments-accordion{
+            .foody-accordion-content{
+              .foody-accordion-title{
                 display: none;
               }
 
-              #comments-accordion {
-                .card-body {
+              #comments-accordion{
+                .card-body{
                   background-color: #fafafa;
                 }
               }
@@ -1792,12 +1763,12 @@ $content-width: 95%;
           max-height: 93vh;
           overflow: scroll;
 
-          .modal-header {
+          .modal-header{
             background-color: $color__primary;
             color: #fff;
             padding: 0;
 
-            .modal-title {
+            .modal-title{
               font-family: Assistant;
               font-size: 28px;
               font-weight: 900;
@@ -1816,7 +1787,6 @@ $content-width: 95%;
             margin: 0;
             background: none;
             opacity: 1;
-
             span {
               font-size: 32px;
               float: left;
@@ -1953,12 +1923,10 @@ $content-width: 95%;
 
       .system-tip-container {
         padding: 4%;
-
         .system-tip {
           background: #fef5f6;
           padding: 5%;
           border-radius: 15px;
-
           .title-container {
             display: flex;
             margin-bottom: 3%;

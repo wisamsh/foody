@@ -27,6 +27,8 @@ class Foody_Recipe extends Foody_Post
 
     private $calories_per_dish;
 
+    public $rating;
+
 
     /**
      * Recipe constructor.
@@ -48,6 +50,8 @@ class Foody_Recipe extends Foody_Post
                 'restore' => $restore_text
             ];
         }
+
+        $this->rating = new Foody_Rating();
     }
 
 
@@ -818,14 +822,28 @@ class Foody_Recipe extends Foody_Post
     {
         global $post;
         if (function_exists('the_ratings') && !empty($post)) {
+
             ?>
             <section class="ratings-wrapper">
-                <!--                <span class="rating-digits" id="lowest-rating">1</span>-->
-                <?php echo do_shortcode('[ratings]') ?>
-                <!--                <span class="rating-digits" id="highest-rating">5</span>-->
+                <!-- <span class="rating-digits" id="lowest-rating">1</span>-->
+                <?php echo do_shortcode('[ratings]')
+                ?>
+                <!-- <span class="rating-digits" id="highest-rating">5</span>-->
             </section>
             <?php
         }
+    }
+
+    public function ratings_new()
+    {
+        global $post;
+        ?>
+        <section class="ratings-wrapper <?php echo $this->rating->foody_has_rating($post->ID) ? '' : 'empty'?>">
+            <?php
+            echo $this->rating->foody_get_the_rating($post->ID);
+            ?>
+        </section>
+        <?php
     }
 
 
@@ -978,19 +996,17 @@ class Foody_Recipe extends Foody_Post
         $tip_group = get_field('system_tip_group', $this->get_id());
         $content_type = $tip_group['content_type'];
 
-        $tip_title_element = '<div class="title-container"><img src="'. $GLOBALS['images_dir'] . 'icons/tip.svg' .'" alt="tip"><h2 class="title">' . $tip_group['title'] . '</h2></div>';
+        $tip_title_element = '<div class="title-container"><img src="' . $GLOBALS['images_dir'] . 'icons/tip.svg' . '" alt="tip"><h2 class="title">' . $tip_group['title'] . '</h2></div>';
 
-        if ($content_type == 'טקסט'){
-            $tip_content = '<p class="tip-text">'.$tip_group['text'].'</p>';
-        }
-        else{
-            $tip_content = '<img class="tip-image" src="'.$tip_group['image']['url'].'">';
+        if ($content_type == 'טקסט') {
+            $tip_content = '<p class="tip-text">' . $tip_group['text'] . '</p>';
+        } else {
+            $tip_content = '<img class="tip-image" src="' . $tip_group['image']['url'] . '">';
         }
 
-        if(is_array($tip_group['link']) && !empty($tip_group['link']['url'])){
-            echo '<div class="system-tip"><a class="tip-link" href="'. $tip_group['link']['url'] .'" target="'. $tip_group['link']['target'] .'">'.$tip_title_element.$tip_content.'</a></div>';
-        }
-        else {
+        if (is_array($tip_group['link']) && !empty($tip_group['link']['url'])) {
+            echo '<div class="system-tip"><a class="tip-link" href="' . $tip_group['link']['url'] . '" target="' . $tip_group['link']['target'] . '">' . $tip_title_element . $tip_content . '</a></div>';
+        } else {
             echo '<div class="system-tip">' . $tip_title_element . $tip_content . '</div>';
         }
 
@@ -1123,7 +1139,7 @@ class Foody_Recipe extends Foody_Post
     function get_comments_rating_preps_component($number_of_preps)
     {
         $num_of_comments = count(get_comments(array('type' => 'comment', 'post_id' => $this->id)));
-        $mock_rating = '<div class="rating">' . __('אזור דירוג') . '</div>';
+        $rating = '<div class="rating">' . $this->rating->foody_get_the_rating($this->id, true) . '</div>';
 
         $number_of_preps = $this->get_number_of_approved_preps() + intval($number_of_preps);
 
@@ -1135,7 +1151,7 @@ class Foody_Recipe extends Foody_Post
         $comments_element_link = '<a href="#comments" class="comments-link">' . __('לחצו כאן') . '</a>';
         $comments_elements = '<div class="comments-link-container" data-numOfComments="' . $num_of_comments . '">' . $comments_element_title . $comments_element_link . '</div>';
 
-        echo $preps_elements . $mock_rating . $comments_elements;
+        echo $preps_elements . $rating . $comments_elements;
     }
 
     function get_number_of_approved_preps()

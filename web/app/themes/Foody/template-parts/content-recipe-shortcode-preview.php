@@ -27,7 +27,7 @@ else{
         <div class="details-container">
 
             <div class="<?php echo $foody_page->has_video ? ' video-featured-content featured-content-container' : '' ?>">
-                <?php $foody_page->the_featured_content() ?>
+                <?php $foody_page->the_featured_content(true) ?>
             </div>
 
             <div class="details container">
@@ -68,7 +68,11 @@ else{
                             ?>
 
                             <section class="rating-container d-block d-lg-block">
-                                <?php Foody_Recipe::ratings() ?>
+                                <?php //Foody_Recipe::ratings() ?>
+                                <?php
+                                echo $foody_page->rating->foody_has_rating($foody_page->id) ?
+                                $foody_page->rating->foody_get_populated_ratings($foody_page->id, false) : $foody_page->rating->foody_get_empty_stars();
+                                ?>
                             </section>
 
                         </section>
