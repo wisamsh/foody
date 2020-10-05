@@ -53,7 +53,7 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
 		);
 	}
 
-	public function the_featured_content() {
+	public function the_featured_content($shortcode = false) {
 		$image = get_field( 'cover_image', $this->getId() );
 
 		?>

@@ -40,6 +40,37 @@ jQuery(document).ready(($) => {
                     }
                 });
             });
+
+            $('.ratings-wrapper .rating-stars-container .empty-star,' +
+                '.comments-rating-prep-container .rating .empty-star').on('mouseover', function () {
+                toggleRatingIcons(this, true);
+            });
+
+            $('.ratings-wrapper .rating-stars-container .empty-star,' +
+                '.comments-rating-prep-container .rating .empty-star').on('mouseout', function () {
+                toggleRatingIcons(this, false);
+            });
         }
     }
 });
+
+function toggleRatingIcons(currentStar, mouseOver) {
+    let currentStarIndex = $(currentStar).attr('data-index');
+    const starIcon = mouseOver ? 'icons/rating/rating-full-' : 'icons/rating/rating-empty-', iconSuffix = '.png';
+    let otherStars = mouseOver ? $(currentStar).siblings() : $($(currentStar).siblings().get().reverse());
+
+    if(!mouseOver) {
+        $(currentStar).attr('src', foodyGlobals.imagesUri + starIcon + currentStarIndex + iconSuffix);
+    }
+
+    otherStars.each((index, star) => {
+        let starIndex = $(star).attr('data-index');
+        if(starIndex < currentStarIndex){
+            $(star).attr('src', foodyGlobals.imagesUri + starIcon + starIndex + iconSuffix);
+        }
+    });
+
+    if(mouseOver) {
+        $(currentStar).attr('src', foodyGlobals.imagesUri + starIcon + currentStarIndex + iconSuffix);
+    }
+}

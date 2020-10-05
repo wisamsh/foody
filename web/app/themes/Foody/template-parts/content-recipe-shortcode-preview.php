@@ -27,7 +27,7 @@ else{
         <div class="details-container">
 
             <div class="<?php echo $foody_page->has_video ? ' video-featured-content featured-content-container' : '' ?>">
-                <?php $foody_page->the_featured_content() ?>
+                <?php $foody_page->the_featured_content(true) ?>
             </div>
 
             <div class="details container">

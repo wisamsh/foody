@@ -30,10 +30,10 @@ class Foody_Playlist extends Foody_Post {
 	}
 
 
-	public function the_featured_content() {
+    public function the_featured_content($shortcode = false){
 		$current_recipe = $this->get_current_recipe();
 
-		$current_recipe->the_featured_content();
+		$current_recipe->the_featured_content($shortcode = false);
 	}
 
 	public function the_sidebar_content( $args = array() ) {

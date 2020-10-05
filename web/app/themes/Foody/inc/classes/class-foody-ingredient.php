@@ -133,7 +133,7 @@ class Foody_Ingredient extends Foody_Post
     }
 
 
-    public function the_featured_content()
+    public function the_featured_content($shortcode = false)
     {
 
     }

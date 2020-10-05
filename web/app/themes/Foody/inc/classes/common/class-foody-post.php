@@ -298,9 +298,9 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return $primary;
     }
 
-    public function the_featured_content()
+    public function the_featured_content( $shortcode = false)
     {
-        if($this instanceof Foody_Recipe){
+        if($this instanceof Foody_Recipe && !$shortcode){
             $this->the_video_box_new();
         }
         else {
