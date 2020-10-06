@@ -40,7 +40,7 @@ $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rat
         <div class="description social-title">
             <?php
             if (get_post_type() == 'foody_recipe') {
-                echo __('שתפו את המתכון');
+                echo __('שתפו');
             } else if (get_post_type() == 'post') {
                 echo __('שתפו את הכתבה');
             } else if (get_post_type() == 'foody_feed_channel') {

@@ -88,7 +88,7 @@ if ( ! foody_is_registration_open() ) {
     <?php endif; ?>
 
 <!--     Social buttons-->
-    <section class="">
+    <section class="social-buttons-container">
 		<?php foody_get_template_part(
 			get_template_directory() . '/template-parts/content-social-actions.php',
 			[

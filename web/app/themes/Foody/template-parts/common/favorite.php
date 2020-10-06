@@ -23,14 +23,14 @@ $show_text = ! empty( $template_args['show_text'] );
 
 $favorite = [
 	'icon'        => 'icon-heart',
-	'text'        => 'הוספה למועדפים',
+	'text'        => 'שמרו',
 	'mobile_text' => 'שמרו'
 ];
 
 if ( $foody_post->favorite ) {
 	$favorite = [
 		'icon'        => 'icon-favorite-pressed',
-		'text'        => 'נשמר במועדפים',
+		'text'        => 'נשמר',
 		'mobile_text' => 'נשמר'
 	];
 }
