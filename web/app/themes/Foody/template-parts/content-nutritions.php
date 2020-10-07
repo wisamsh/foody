@@ -48,7 +48,8 @@ $disclaimer = sprintf('<div> <span class="close">&times;</span><div>%s</div></di
     </h2>
     <?php
     $count = 0;
-    $num_in_row = 3;
+    $num_in_row = wp_is_mobile() ? 3 : 6;
+    $col_num = wp_is_mobile() ? 12 : 1;
     foreach ($nutritions
 
              as $nutrition) {
@@ -56,7 +57,7 @@ $disclaimer = sprintf('<div> <span class="close">&times;</span><div>%s</div></di
             echo '<div class="nutritions row">';
         }
         ?>
-        <div class="col-12 nutrition">
+        <div class="col-<?php echo $col_num ?> nutrition">
             <!--        --><?php //foreach ($nutrition as $item): ?>
             <div class="nutrition-row <?php echo($count % 2 ? "even" : "odd") ?>"
                  data-name="<?php echo $nutrition['data_name'] ?>"

@@ -87,7 +87,7 @@ $labels = array(
             <?php if ($key !== 'difficulty_level') { ?>
                 <li class="overview-item col-1">
                     <?php if ($key === 'time') { ?>
-                        <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['preparation_time']['icon'] ?>">
+                        <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['preparation_time']['icon-desktop'] ?>">
                         <div class="item-container">
                             <div class="key-value">
                                 <span class="key"><?php echo $labels['preparation_time'] ?></span><?php echo ' ' . $value['preparation_time']['text'] ?>
@@ -97,7 +97,7 @@ $labels = array(
                             </div>
                         </div>
                     <?php } else { ?>
-                        <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['icon'] ?>">
+                        <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['icon-desktop'] ?>">
                         <div class="item-container">
                             <div class="key">
                                 <?php echo $labels[$key] ?>
@@ -125,7 +125,9 @@ $labels = array(
         </li>
         <li class="overview-item col-1">
             <div class="value kosher">
-                <?php echo __('כשר'); ?>
+                <span>
+                    <?php echo __('כשר'); ?>
+                </span>
             </div>
         </li>
     </ul>

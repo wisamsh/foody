@@ -403,7 +403,7 @@ $content-width: 95%;
 
     section.promotion-area{
       margin-top: 7%;
-      padding: 1% 2%;
+      padding: 1% 2% 0 2%;
 
       .promotion-text{
         white-space: pre-line;
@@ -421,7 +421,183 @@ $content-width: 95%;
       background: #ffffff;
 
       .overview-lists-container-desktop {
+        display: block;
+        margin: 0.9rem 0.7rem;
+        border-radius: 4.3px;
+        background-color: #fef5f6;
 
+
+        .overview.row{
+          margin: 0;
+          padding:1% 0 0 0;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-evenly;
+          list-style: none;
+
+          .overview-item{
+            list-style: none;
+            border-radius: 4.3px;
+            background-color: #ffffff;
+            font-size: 0.9rem;
+            text-align: center;
+            max-width: 19%;
+            flex: unset;
+            padding: 1% 2%;
+
+            img{
+              width: 37px;
+            }
+
+            .kosher,
+            .difficulty-container{
+              display: flex;
+              flex-direction: row;
+              font-size: 0.8rem;
+              margin: 26% 7%;
+              text-align: center;
+            }
+
+            .difficulty-container{
+              justify-content: space-evenly;
+
+              .value,
+              .key{
+                margin: auto 0;
+              }
+            }
+
+            .kosher{
+              span{
+                height: 100%;
+                margin: auto;
+              }
+            }
+
+            .item-container{
+              font-size: 0.8rem;
+
+              .key-value{
+                .key{
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
+
+        .overview-nutrients{
+          width: 100%;
+          flex-wrap: unset;
+          margin: 0;
+          padding: 1%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-evenly;
+
+          .overview-item{
+            list-style: none;
+            border-radius: 4.3px;
+            background-color: #ffffff;
+            font-size: 0.9rem;
+            text-align: center;
+            flex: unset;
+            width: 100%;
+            max-width: unset;
+            display: flex;
+            padding: 2%;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--color__primary);
+
+            .value{
+              &:not(.open){
+                display: none;
+              }
+
+              text-decoration: underline;
+              font-size: 1rem;
+              display: block;
+             }
+
+            .recipe-nutrition{
+              display: block;
+              width: 96%;
+
+              &:not(.open){
+                display: none;
+              }
+
+              .nutrition-container{
+                .title{
+                  display: block;
+                  font-size: 1rem;
+                  text-align: center;
+
+                  span {
+                    width: 0.9rem;
+                    height: 0.9rem;
+                  }
+                }
+
+                .nutritions.row{
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-around;
+                  margin: 3% 0;
+
+                  .nutrition{
+                    flex: unset;
+                    max-width: 16%;
+                    padding: 0;
+
+                    .nutrition-row{
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                      margin: auto;
+                      width: 100%;
+                      height: 100%;
+
+                      .name{
+                        font-size: 0.8rem;
+                        color: #404040;
+                      }
+
+                      .dish-nutrition{
+                        font-size: 0.7rem;
+                        color: #404040;
+                        display: flex;
+                        width: 55%;
+                        margin: auto;
+                        justify-content: space-around;
+
+                        .value{
+                          font-size: 0.7rem;
+                          text-decoration: none;
+                          margin: auto;
+                        }
+
+                        .unit{
+                          margin: auto;
+                        }
+                      }
+
+                      .chosen-dishes-nutrition{
+                        display: none;
+                      }
+                    }
+                  }
+                }
+
+                .close-btn{
+                  text-decoration: underline;
+                  font-size: 1rem;
+                }
+              }
+            }
+          }
+        }
       }
 
       .overview-lists-container {
