@@ -78,11 +78,11 @@
       "type": "package",
       "package": {
         "name": "yoast/wordpress-seo",
-        "version": "9.5",
+        "version": "13.5",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/wordpress-seo.9.5.zip"
+          "url": "https://downloads.wordpress.org/plugin/wordpress-seo.13.5.zip"
         }
       }
     },
@@ -340,7 +340,7 @@
     "andrewozz/tinymce-advanced": "^4.7",
     "xamin/handlebars.php": "^0.10.4",
     "phospr/fraction": "^1.2",
-    "yoast/wordpress-seo": "9.5",
+    "yoast/wordpress-seo": "13.5",
     "mixpanel/mixpanel-php": "2.6.2",
     "joe-dolson/wp-accessibility": "^1.6",
     "takayuki-miyoshi/contact-form-7": "^5.0",

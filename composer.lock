@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "614da1add203e59d9078723c0a520373",
+    "content-hash": "c40fae6df6c6722b04fa9c44a1f0c009",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -1388,10 +1388,10 @@
         },
         {
             "name": "yoast/wordpress-seo",
-            "version": "9.5",
+            "version": "13.5",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.9.5.zip"
+                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.13.5.zip"
             },
             "type": "wordpress-plugin"
         },
