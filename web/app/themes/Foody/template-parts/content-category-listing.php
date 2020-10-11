@@ -16,11 +16,12 @@ if ( empty( $name ) ) {
 }
 
 $target = isset( $template_args['target'] ) ? $template_args['target'] : '_self';
+$disable_referrer = isset($template_args['disable_referrer']) && $template_args['disable_referrer'] ? 1 : 0;
 
 ?>
 
 <a href="<?php /** @noinspection PhpUndefinedVariableInspection */
-echo $template_args['link']; ?>" target="<?php echo $target ?>" class="col">
+echo $template_args['link']; ?>" target="<?php echo $target ?>" class="col" data-disable_referrer="<?php echo $disable_referrer ?>">
     <div class="category-listing">
         <div class="image-container">
             <picture class="lazyload">
