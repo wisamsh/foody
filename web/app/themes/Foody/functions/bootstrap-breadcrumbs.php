@@ -39,7 +39,7 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
 
         if (is_single() && !is_category() && !is_page()) {
 
-            $foody_post = Foody_Post::create(get_post());
+            $foody_post = Foody_Post::create(get_post(), false);
             if (!empty($foody_post)) {
                 $cat = $foody_post->get_primary_category();
                 if (!empty($cat)) {

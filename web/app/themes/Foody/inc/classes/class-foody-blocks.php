@@ -300,7 +300,7 @@ class Foody_Blocks {
 				extract( $item );
 
 
-				$foody_post = Foody_Post::create( $post );
+				$foody_post = Foody_Post::create( $post, false );
 
 				if ( ! empty( $title ) ) {
 					$foody_post->setTitle( $title );

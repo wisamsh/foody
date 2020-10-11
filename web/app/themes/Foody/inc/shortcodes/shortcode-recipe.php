@@ -19,7 +19,7 @@ function foody_recipe_shortcode( $attrs ) {
 	$display = '';
 	if ( $post_id != $attrs['recipe'] ) {
 		$post            = get_post( $attrs['recipe'] );
-		$recipe          = new Foody_Recipe( $post );
+		$recipe          = new Foody_Recipe( $post, false );
 		$attrs['recipe'] = $recipe;
 		$display         = foody_get_template_part( get_template_directory() . '/template-parts/content-recipe-shortcode-preview.php', $attrs );
 	}

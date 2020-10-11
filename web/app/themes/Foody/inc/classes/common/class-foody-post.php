@@ -57,7 +57,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
      *
      * @param WP_Post $post
      */
-    public function __construct(WP_Post $post = null)
+    public function __construct(WP_Post $post = null, $load_content = true)
     {
 
         $this->stub_images = array(
@@ -101,7 +101,9 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             }
 
 
-            $this->body = apply_filters('the_content', $post->post_content);
+            if($load_content) {
+                $this->body = apply_filters('the_content', $post->post_content);
+            }
             $this->link = get_permalink($this->id);
 
         } else {
@@ -582,10 +584,10 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
      * on the WP_Post::post_type field.
      *
      * @param stdClass|WP_Post $post
-     *
+     * @param boolean $load_content
      * @return Foody_Post
      */
-    public static function create($post)
+    public static function create($post, $load_content = true)
     {
         if (is_numeric($post)) {
             $post = get_post($post);
@@ -598,7 +600,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
         switch ($type) {
             case 'foody_recipe':
-                $foody_post = new Foody_Recipe($post);
+                $foody_post = new Foody_Recipe($post, $load_content);
                 break;
             case 'foody_playlist':
                 $foody_post = new Foody_Playlist($post);
@@ -610,7 +612,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 $foody_post = new Foody_Feed_Filter($post);
                 break;
             default:
-                $foody_post = new Foody_Article($post);
+                $foody_post = new Foody_Article($post, $load_content);
                 break;
         }
 

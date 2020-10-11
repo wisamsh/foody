@@ -30,10 +30,11 @@ class Foody_Recipe extends Foody_Post
      * Recipe constructor.
      *
      * @param WP_Post|null $post
+     * @param boolean $load_content
      */
-    public function __construct(WP_Post $post = null)
+    public function __construct(WP_Post $post = null, $load_content = true)
     {
-        parent::__construct($post);
+        parent::__construct($post,  $load_content);
         $this->init_video();
         $this->duration = $this->video['duration'];
 
@@ -1017,7 +1018,7 @@ class Foody_Recipe extends Foody_Post
 
             $the_query = new WP_Query($query_args);
             foreach ($the_query->posts as $post) {
-                $current_post = Foody_Post::create($post);
+                $current_post = Foody_Post::create($post, false);
                 $args_to_push = [
                     'title' => $current_post->getTitle(),
                     'image' => $current_post->getImage(),
