@@ -88,9 +88,7 @@ class Foody_HomePage
         $args = $foody_query->get_query('homepage', [], true);
 
         $posts = $query->query($args);
-
-//        $posts = array_map('Foody_Post::create', $posts);
-
+        
         foreach ($posts as $key => $post){
             $posts[$key] = Foody_Post::create($post, false);
         }
