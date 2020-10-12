@@ -176,6 +176,7 @@ class Foody_Blocks {
 				 */
 				extract( $item );
 
+				$disable_referrer = isset($item['disable_referrer']) ? $item['disable_referrer'] : false;
 
 				if ( empty( $title ) ) {
 					$title = $category->name;
@@ -206,7 +207,8 @@ class Foody_Blocks {
 				}
 				$link      = $link['url'];
 				$return    = true;
-				$item_args = compact( 'title', 'image', 'link', 'target', 'mobile_image', 'return' );
+
+				$item_args = compact( 'title', 'image', 'link', 'target', 'mobile_image', 'return', 'disable_referrer' );
 
 				return $item_args;
 
@@ -298,7 +300,7 @@ class Foody_Blocks {
 				extract( $item );
 
 
-				$foody_post = Foody_Post::create( $post );
+				$foody_post = Foody_Post::create( $post, false );
 
 				if ( ! empty( $title ) ) {
 					$foody_post->setTitle( $title );
