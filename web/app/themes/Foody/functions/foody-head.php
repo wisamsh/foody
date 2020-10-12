@@ -389,7 +389,8 @@ function foody_background_image_referer()
                 let links = content[0].getElementsByTagName("a");
                 for (let i = 0; i < links.length; i++) {
                     let linkURL = new URL(links[i].href);
-                    if (linkURL && !linkURL.hash && linkURL.origin == window.location.origin && linkURL.href != window.location.origin + '/' && linkURL.href != window.location.href && !linkURL.search.includes('referer')) {
+                    let disableReferrer = typeof $(links[i]).attr('data-disable_referrer') != 'undefined' && parseInt($(links[i]).attr('data-disable_referrer')) === 1;
+                    if (!disableReferrer && linkURL && !linkURL.hash && linkURL.origin == window.location.origin && linkURL.href != window.location.origin + '/' && linkURL.href != window.location.href && !linkURL.search.includes('referer')) {
                         if (links[i].href.includes('?')) {
                             links[i].href += '&referer=' + background_referer;
                         } else {
