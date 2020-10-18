@@ -229,6 +229,12 @@ $content-width: 95%;
             height: 467px;
           }
 
+          img{
+            max-width: 720px;
+            max-height: 480px;
+            margin: auto;
+          }
+
           //}
         }
       }
