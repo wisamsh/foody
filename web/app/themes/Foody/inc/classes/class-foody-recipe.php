@@ -995,7 +995,7 @@ class Foody_Recipe extends Foody_Post
     {
         $tip_group = get_field('system_tip_group', $this->get_id());
         $content_type = $tip_group['content_type'];
-
+        $content_class = $content_type == 'טקסט' ? 'text-content' : 'image-content';
         $tip_title_element = '<div class="title-container"><img src="' . $GLOBALS['images_dir'] . 'icons/tip.svg' . '" alt="tip"><h2 class="title">' . $tip_group['title'] . '</h2></div>';
 
         if ($content_type == 'טקסט') {
@@ -1005,9 +1005,9 @@ class Foody_Recipe extends Foody_Post
         }
 
         if (is_array($tip_group['link']) && !empty($tip_group['link']['url'])) {
-            echo '<div class="system-tip"><a class="tip-link" href="' . $tip_group['link']['url'] . '" target="' . $tip_group['link']['target'] . '">' . $tip_title_element . $tip_content . '</a></div>';
+            echo '<a class="tip-link" href="' . $tip_group['link']['url'] . '" target="' . $tip_group['link']['target'] . '"><div class="system-tip '. $content_class  .'">' . $tip_title_element . $tip_content . '</div></a>';
         } else {
-            echo '<div class="system-tip">' . $tip_title_element . $tip_content . '</div>';
+            echo '<div class="system-tip ' . $content_class .'">' . $tip_title_element . $tip_content . '</div>';
         }
 
     }
@@ -1180,7 +1180,7 @@ class Foody_Recipe extends Foody_Post
         $content_in_steps = get_field('recipe_steps', $this->id);
         if (is_array($content_in_steps)) {
             if (isset($content_in_steps['enable_recipe_by_steps']) && $content_in_steps['enable_recipe_by_steps'] && isset($content_in_steps['steps'])) {
-                echo '<div class="content-steps-container">' . $this->get_content_as_steps($content_in_steps['steps']) . '</div>';
+                echo '<div class="content-steps-container"><h2 class="steps-title">'. __('אופן ההכנה') .'</h2> ' . $this->get_content_as_steps($content_in_steps['steps']) . '</div>';
                 return;
             }
         }
@@ -1206,7 +1206,11 @@ class Foody_Recipe extends Foody_Post
             $title = '<div class="step-text">' . $counter++ . '. ' . $step['text'] . '</div>';
 
             if (is_array($step['image'])) {
-                $image_content = "<img src='{$step['image']['url']}' alt='{$step['image']['alt']}' />";
+                $image_content = "<img class='desktop-image' src='{$step['image']['url']}' alt='{$step['image']['alt']}' />";
+            }
+
+            if(is_array($step['image_mobile'])) {
+                $image_content .= "<img class='mobile-image' src='{$step['image_mobile']['url']}' alt='{$step['image_mobile']['alt']}' />";
             }
 
             if (!empty($step['image_text'])) {
@@ -1225,5 +1229,9 @@ class Foody_Recipe extends Foody_Post
         }
         $slider .= '</div>';
         return $slider;
+    }
+
+    function is_content_by_steps(){
+        return get_field('recipe_steps_enable_recipe_by_steps', $this->id);
     }
 }

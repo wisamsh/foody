@@ -118,18 +118,13 @@ if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_
     <section class="purchase-buttons">
         <?php $recipe->the_purchase_buttons(); ?>
     </section>
-    <section class="recipe-content">
-
+    <section class="recipe-content <?php echo $recipe->is_content_by_steps() ? 'with-steps' : ''?>">
         <?php $recipe->get_relevant_content(); ?>
-
     </section>
 
 <?php $recipe->the_notes() ?>
-
         <section class="recipe-sponsor-container box no-print">
-
         	<?php $recipe->the_sponsor() ?>
-
         </section>
 
 <?php if ($recipe->show_google_adx()): ?>

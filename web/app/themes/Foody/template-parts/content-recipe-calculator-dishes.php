@@ -14,10 +14,10 @@ $recipe = $template_args['recipe'];
     <?php echo $recipe->amount_for ?>
 </label>
 <div class="amount-container">
-    <img src="<?php echo $GLOBALS['images_dir'] . 'icons/plus.svg' ?>" alt="plus" class="plus-icon">
+    <img src="<?php echo $GLOBALS['images_dir'] . 'icons/plus.png' ?>" alt="plus" class="plus-icon">
     <input name="amount" type="number" id="number-of-dishes" min="1" inputmode="numeric" pattern="[0-9]*"
            value="<?php echo $recipe->getNumberOfDishes() ?>"
            data-amount="<?php echo $recipe->getNumberOfDishes() ?>"
     >
-    <img src="<?php echo $GLOBALS['images_dir'] . 'icons/minus.svg' ?>" alt="minus" class="minus-icon">
+    <img src="<?php echo $GLOBALS['images_dir'] . 'icons/minus.png' ?>" alt="minus" class="minus-icon">
 </div>
