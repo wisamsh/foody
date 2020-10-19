@@ -787,7 +787,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             }
             if ($images_for_slider || $show_slider) {
                 $show_slider = true;
-                $slider = '';
+                $slider = $slider_nav = '';
                 $images_for_slider = is_array($images_for_slider) ? $images_for_slider : [];
 
                 foreach ($images_for_slider as $image) {
