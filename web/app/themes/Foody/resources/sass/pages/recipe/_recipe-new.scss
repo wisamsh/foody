@@ -325,7 +325,7 @@ $content-width: 95%;
 
       .details.container {
         position: relative;
-
+        margin-bottom: 7%;
         h1 {
           margin: 0;
         }
@@ -359,7 +359,7 @@ $content-width: 95%;
                 position: absolute;
                 left: 0;
                 width: 100%;
-                bottom: -25px;
+                bottom: -40px;
                 float: left;
 
                 .ratings-wrapper {
@@ -371,7 +371,6 @@ $content-width: 95%;
                   &:not(.empty){
                     flex-direction: column;
                     position: relative;
-                    top: 20px;
 
                     .rating-stars-container,
                     .rating-header{
@@ -482,7 +481,7 @@ $content-width: 95%;
               display: flex;
               flex-direction: row;
               font-size: 0.8rem;
-              margin: 26% 7%;
+              margin: 26% 0;
               text-align: center;
             }
 
@@ -504,6 +503,15 @@ $content-width: 95%;
 
             .item-container{
               font-size: 0.8rem;
+              .key{
+                font-weight: bold;
+              }
+
+              .difficulty-container{
+                .key{
+                  color: var(--color__primary);
+                }
+              }
 
               .key-value{
                 .key{
@@ -751,6 +759,12 @@ $content-width: 95%;
                 color: var(--color__primary);
                 border: none;
                 padding: 0;
+
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                  -webkit-appearance: none;
+                  margin: 0;
+                }
               }
             }
 
@@ -768,6 +782,50 @@ $content-width: 95%;
               //}
             }
           }
+
+         .filter-option {
+           padding-right: 0;
+           font-size: 18px;
+           padding-left: 4px;
+         }
+
+         .foody-select {
+
+           button {
+             padding-right: 0;
+             font-size: 18px;
+           }
+
+           .filter-option {
+             .filter-option-inner-inner {
+               white-space: normal;
+               line-height: normal;
+               padding-left: 4px;
+             }
+           }
+
+         }
+
+         label {
+           font-size: 17px;
+           padding-left: 12px;
+           line-height: $input-height;
+           vertical-align: middle;
+           margin: auto 0;
+         }
+
+         input {
+           width: 2.5em;
+           height: $input-height;
+           border-radius: 2px;
+           box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+           background-color: #ffffff;
+           border: solid 1px rgba(151, 151, 151, 0.13);
+           font-size: 24px;
+           font-weight: bold;
+           text-align: center;
+           color: var(--color__primary);
+         }
         }
       }
 
