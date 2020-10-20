@@ -492,6 +492,11 @@ $content-width: 95%;
               .key{
                 margin: auto 0;
               }
+
+              .key{
+                color: var(--color__primary);
+                font-weight: bold;
+              }
             }
 
             .kosher{
@@ -505,12 +510,6 @@ $content-width: 95%;
               font-size: 0.8rem;
               .key{
                 font-weight: bold;
-              }
-
-              .difficulty-container{
-                .key{
-                  color: var(--color__primary);
-                }
               }
 
               .key-value{
