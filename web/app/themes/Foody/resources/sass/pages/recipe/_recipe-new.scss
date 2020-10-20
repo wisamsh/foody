@@ -253,14 +253,17 @@ $content-width: 95%;
               width: 100% !important;
               transform: unset !important;
 
-              .item {
+              .slick-slide {
 
-                .play-btn {
-                  right: 45% !important;
-                }
+                .item {
 
-                img {
-                  margin: auto;
+                  .play-btn {
+                    right: 35% !important;
+                  }
+
+                  img {
+                    margin: auto;
+                  }
                 }
               }
             }
@@ -304,19 +307,21 @@ $content-width: 95%;
 
               .item {
                 padding: 0px 2%;
-              }
 
-              img {
-                width: 154px;
-                height: 101px;
-              }
 
-              img.play-btn {
-                position: absolute;
-                width: 65px;
-                height: auto;
-                right: 25%;
-                top: 16%;
+                img {
+                  width: 154px;
+                  height: 101px;
+                  margin: auto;
+                }
+
+                img.play-btn {
+                  position: absolute;
+                  width: 65px;
+                  height: auto;
+                  top: 16%;
+                  right: 35%;
+                }
               }
             }
           }
@@ -1505,8 +1510,8 @@ $content-width: 95%;
                 transform: unset !important;
 
                 .item {
-                  .play-btn {
-                    right: 45% !important;
+                  img.play-btn {
+                    right: 40% !important;
                   }
 
                   img {
