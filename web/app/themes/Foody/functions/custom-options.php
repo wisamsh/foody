@@ -22,6 +22,7 @@ register_setting( 'general', 'foody_show_newsletter_popup' );
 register_setting( 'general', 'foody_id_for_newsletter' );
 register_setting( 'general', 'foody_show_google_login' );
 register_setting( 'general', 'foody_title_for_extra_content' );
+register_setting( 'general', 'foody_remove_foodys_link_footer' );
 //register_setting( 'general', 'foody_mail_for_courses_data' );
 register_setting( 'general', 'foody_client_id_for_invoice' );
 register_setting( 'general', 'foody_client_secret_for_invoice' );
@@ -197,6 +198,11 @@ function foody_custom_options() {
 		'foody_settings_section_description',
 		'general'
 	);
+
+    // remove foody's link on footer
+    if(get_current_blog_id() != 1){
+        add_settings_field( 'foody_remove_foodys_link_footer', __( 'הסר לינק Foody 2020 בפוטר', 'foody' ), 'foody_remove_foodys_link_footer_callback', 'general', 'foody_general_settings' );
+    }
 
 	// Should show Ingredients
 	add_settings_field( 'foody_conversion_table_link_show', __( 'הצגת קישור לטבלת המרות', 'foody' ), 'foody_conversion_table_link_show_callback', 'general', 'foody_general_settings' );
@@ -440,6 +446,12 @@ function foody_token_secret_for_ravmesser_callback(){
     echo '<input value="' . $options . '"type="text" id="foody_token_secret_for_ravmesser" name="foody_token_secret_for_ravmesser">';
 }
 
+
+function foody_remove_foodys_link_footer_callback(){
+    $options = get_option( 'foody_remove_foodys_link_footer', false );
+    $checked = $options ? 'checked' : '';
+    echo '<input ' . $checked . ' type="checkbox" id="foody_remove_foodys_link_footer" name="foody_remove_foodys_link_footer">';
+}
 
 //add_filter('manage_edit-units_columns', 'add_units_columns');
 //
