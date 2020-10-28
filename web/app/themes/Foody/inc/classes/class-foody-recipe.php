@@ -1234,4 +1234,11 @@ class Foody_Recipe extends Foody_Post
     function is_content_by_steps(){
         return get_field('recipe_steps_enable_recipe_by_steps', $this->id);
     }
+
+    function get_take_me_to_recipe_btn(){
+        $btn_image_url = get_field('take_to_recipe_btn')['url'];
+        $btn_image_alt = get_field('take_to_recipe_btn')['alt'];
+
+        echo "<a class='take_to_recipe_link' href='#recipe-ingredients'><img class='take-me-to-recipe' src='". $btn_image_url ."' alt='". $btn_image_alt ."'></a>";
+    }
 }

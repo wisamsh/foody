@@ -94,7 +94,7 @@ if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_
     </section>
 <?php } ?>
 
-    <section class="recipe-ingredients box">
+    <section id="recipe-ingredients" class="recipe-ingredients box">
 
         <div class="recipe-ingredients-top row justify-content-between">
             <h2 class="title">

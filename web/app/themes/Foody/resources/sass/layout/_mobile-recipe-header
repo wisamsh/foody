@@ -235,9 +235,9 @@ $run-height: 30px;
               }
             }
 
-            height: 34vh;
+            height: 41vh;
             position: fixed;
-            bottom: 53vh;
+            bottom: 49vh;
             width: 100vw;
             right: 0;
             background: #fdebec;
@@ -258,6 +258,10 @@ $run-height: 30px;
                 font-weight: bold;
                 color: #ffffff;
                 opacity: 0.8;
+
+                .ripple-container{
+                  display: none;
+                }
 
                 &:hover {
                   opacity: 1;
