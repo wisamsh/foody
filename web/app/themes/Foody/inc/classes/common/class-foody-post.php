@@ -795,7 +795,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
                     $item = '<div class="item">';
 
-                    $image_content = "<img src='{$image['url']}' alt='{$image['alt']}' />";
+                    $image_content = "<img src='{$image['image']['url']}' alt='{$image['image']['alt']}' />";
 
                     $item .= $image_content;
 
