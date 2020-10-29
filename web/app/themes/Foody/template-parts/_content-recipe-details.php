@@ -92,11 +92,10 @@ if ( ! foody_is_registration_open() ) {
             ?>
         </section>
 
-        <?php if(get_field('enable_take_to_recipe')){ ?>
-            <section class="take-me-to-recipe-container desktop">
+
+            <section class="take-me-to-recipe-container desktop <?php echo get_field('enable_take_to_recipe') ? '' : 'hidden'?>">
                 <?php $foody_page->get_take_me_to_recipe_btn() ?>
             </section>
-        <?php } ?>
 
         <?php if ( ! wp_is_mobile() ): ?>
             <section class="rating-container d-lg-block">

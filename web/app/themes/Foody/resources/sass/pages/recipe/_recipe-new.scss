@@ -416,6 +416,7 @@ $content-width: 95%;
                 margin-top: 0;
                 margin-bottom: 0;
                 font-weight: bold;
+                margin-left: 0.7rem;
               }
 
               .essb_links {
@@ -454,6 +455,10 @@ $content-width: 95%;
             display: flex;
             justify-content: center;
             width: 35%;
+
+            &.hidden{
+              visibility: hidden;
+            }
 
             img.take-me-to-recipe{
               width: 170px;
