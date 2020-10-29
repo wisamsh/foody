@@ -164,7 +164,7 @@ function foody_add_rating()
 
     $username = $user_id != 0 ? get_userdata($user_id)->user_nicename : 'Guest';
     $rating_ip = $rating_obj->foody_get_ip();
-    $post_title = get_post($post_id)->post_title;
+    $post_title = addslashes(get_post($post_id)->post_title);
 
     /** add to coupons table */
     $wpdb->query("INSERT INTO {$table} (postid, posttitle, rating, ip, username, userid)

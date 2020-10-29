@@ -420,7 +420,7 @@ class Foody_Recipe extends Foody_Post
         $difficulty_level = $overview['difficulty_level'];
 
         if ($this->has_nutrients()) {
-            $this->calories_per_dish = $this->get_calories();
+            $this->calories_per_dish = round($this->get_calories());
         }
 
 
@@ -1110,10 +1110,17 @@ class Foody_Recipe extends Foody_Post
 
     function the_promotion_area($promotion_area_group)
     {
+        $enable_background = isset($promotion_area_group['enable_background']) ? $promotion_area_group['enable_background'] : false;
+        $background_color = isset($promotion_area_group['background_color']) && $enable_background != false ? $promotion_area_group['background_color'] : false;
         $promotion_text = $promotion_area_group['text'];
         $has_link = isset($promotion_area_group['link']) && is_array($promotion_area_group['link']);
         $promotion_link = $has_link && isset($promotion_area_group['link']['url']) ? $promotion_area_group['link']['url'] : false;
-        $promotion_area_element = '<p class="promotion-text">' . $promotion_text . '</p>';
+
+        if($enable_background != false && $background_color != false){
+            $promotion_area_element = '<p class="promotion-text" style="background-color: '. $background_color .'">' . $promotion_text . '</p>';
+        } else {
+            $promotion_area_element = '<p class="promotion-text">' . $promotion_text . '</p>';
+        }
         if ($promotion_link) {
             $link_target = $has_link && isset($promotion_area_group['link']['target']) ? $promotion_area_group['link']['target'] : '';
             $promotion_area_element = '<a class="promotion-link" href="' . $promotion_area_group['link']['url'] . '" target="' . $link_target . '" >' . $promotion_area_element . '</a>';

@@ -160,6 +160,7 @@ $run-height: 30px;
 
           .similar-content-item {
             list-style-type: none;
+            padding: 0px 7px;
 
             .similar-content-item-listing {
               .similar-content-listing-title {
@@ -253,6 +254,7 @@ $run-height: 30px;
               height: 100%;
               padding-top: 5%;
 
+              .hello-user,
               .signup-login-link {
                 font-size: 17px;
                 font-weight: bold;

@@ -301,7 +301,10 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                     <a class="signup-login-link"
                                        href="<?php echo get_permalink(get_page_by_path('התחברות')); ?>">הרשמו ל-FOODY
                                         »</a>
-                                <?php }
+                                <?php } else {
+
+                                    echo "<div class='hello-user' >" . __('שלום') . " " . $user->user->first_name . "</div>";
+                                }
                                 if (is_single() && method_exists($recipe, 'the_purchase_buttons')) {
                                     $recipe->the_purchase_buttons();
                                 }

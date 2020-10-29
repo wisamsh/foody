@@ -9,7 +9,7 @@ jQuery(document).ready(($) => {
                 '.comments-rating-prep-container .rating .empty-star').on('click', function () {
                     let parentContainerIsWrapper = $(this).closest('.ratings-wrapper').length;
                 let starIndex = $(this).attr('data-index');
-                let topPracent = parentContainerIsWrapper ? 27 : 15;
+                let topPracent = parentContainerIsWrapper ? 75 : 15;
                 let container = parentContainerIsWrapper ? '.ratings-wrapper' : '.comments-rating-prep-container .rating';
                 let foodyLoader = new FoodyLoader({
                     container: $(container),

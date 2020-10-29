@@ -680,12 +680,12 @@ $content-width: 95%;
                       height: 100%;
 
                       .name{
-                        font-size: 0.8rem;
+                        font-size: 0.9rem;
                         color: #404040;
                       }
 
                       .dish-nutrition{
-                        font-size: 0.7rem;
+                        font-size: 0.9rem;
                         color: #404040;
                         display: flex;
                         width: 55%;
@@ -693,7 +693,8 @@ $content-width: 95%;
                         justify-content: space-around;
 
                         .value{
-                          font-size: 0.7rem;
+                          font-size: 0.9rem;
+                          padding-left: 3px;
                           text-decoration: none;
                           margin: auto;
                         }
@@ -793,7 +794,7 @@ $content-width: 95%;
         margin-top: 5%;
         text-decoration: underline;
         color: var(--color__primary);
-        font-size: 0.8rem;
+        font-size: 20px;
       }
 
       .recipe-ingredients-top{
@@ -1233,7 +1234,7 @@ $content-width: 95%;
             padding: 0 3px;
 
             img {
-              clip-path: inset(0 round .3rem);
+              //clip-path: inset(0 round .3rem);
             }
 
             .similar-content-listing-title {
@@ -1698,20 +1699,26 @@ $content-width: 95%;
           margin: 0;
           font-size: 18px;
           display: flex;
-          width: 54%;
+          width: 57%;
           margin: auto;
+
+          img{
+            width:30px;
+          }
 
           &:not(.empty){
             flex-direction: column;
 
             .rating-stars-container,
             .rating-header{
+              font-weight: bold;
               margin: auto;
             }
           }
 
           .rating-header{
             margin-left: 4%;
+            font-weight: bold;
           }
 
           .rating-digits {
@@ -2255,6 +2262,10 @@ $content-width: 95%;
         padding: 10px 0;
         margin-top: 0;
         $input-height: 35px;
+
+        .ingredients-area-links {
+          font-size: 20px;
+        }
 
         > .difference-nutrient {
           display: flex;
@@ -3106,7 +3117,7 @@ $content-width: 95%;
               margin: 0;
 
               img {
-                clip-path: inset(0 round .3rem);
+                //clip-path: inset(0 round .3rem);
               }
 
               .similar-content-listing-title {

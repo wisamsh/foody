@@ -23,7 +23,7 @@ if ( ! foody_is_registration_open() ) {
     </h1>
 
     <!-- Description -->
-    <div class="description show-read-more">
+    <div class="description">
 		<?php echo $foody_page->getDescription() ?>
     </div>
 

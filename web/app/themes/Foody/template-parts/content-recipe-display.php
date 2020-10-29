@@ -112,7 +112,9 @@ if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_
 
         <div class="ingredients-area-links no-print">
             <?php $recipe->the_conversion_table_link(); ?>
-            <div class="transform-to-vegetarian"><?php echo __('המרת המתכון לטבעוני') ?></div>
+            <?php if(get_field('enable_vegan_btn', $recipe->get_id())){ ?>
+                <div class="transform-to-vegetarian"><?php echo __('המרת המתכון לטבעוני') ?></div>
+            <?php } ?>
         </div>
     </section>
     <section class="purchase-buttons">
@@ -132,13 +134,7 @@ if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_
         <?php $recipe->the_google_adx(); ?>
     </section>
 <?php endif; ?>
-<?php
-$similar_content = get_field('similar_content_group', $recipe->get_id());
-if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
-    <section class="recipe_similar_content">
-        <?php $recipe->get_similar_content($similar_content); ?>
-    </section>
-<?php } ?>
+
 <?php
 $enable_tip = get_field('enable_tip', $recipe->get_id());
 if (!empty($enable_tip) && $enable_tip) { ?>
@@ -146,6 +142,15 @@ if (!empty($enable_tip) && $enable_tip) { ?>
         <?php $recipe->get_system_tip(); ?>
     </section>
 <?php } ?>
+
+<?php
+$similar_content = get_field('similar_content_group', $recipe->get_id());
+if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
+    <section class="recipe_similar_content">
+        <?php $recipe->get_similar_content($similar_content); ?>
+    </section>
+<?php } ?>
+
 
 
 <?php if (get_field('enable_share_execute', $recipe->id)) { ?>
