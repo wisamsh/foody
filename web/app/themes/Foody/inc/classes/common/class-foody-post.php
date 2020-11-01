@@ -502,7 +502,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             if (wp_is_mobile()) {
                 $template = '/comments-mobile.php';
             }
-            comments_template($template);
+            comments_template($template, true);
         }
     }
 

@@ -330,7 +330,8 @@ class Foody_Recipe extends Foody_Post
         }
 
         comments_template(
-            $template
+            $template,
+            true
         );
     }
 

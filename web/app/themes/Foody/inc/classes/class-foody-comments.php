@@ -16,14 +16,17 @@ class Foody_Comments {
 	}
 
 
-	public function list_comments( $args = null ) {
+	public function list_comments( $args = null , $is_recipe = false) {
 		if ( $args == null ) {
 			$args = $this->get_list_comments_args();
 		}
 
-//        $comments = get_comments(array('type' => 'comment', 'post_id' => get_the_ID()));
-
-		wp_list_comments( $args );
+        if($is_recipe) {
+            $comments = get_comments(array('type' => 'comment', 'post_id' => get_the_ID()));
+            wp_list_comments( $args , $comments);
+        } else {
+            wp_list_comments($args);
+        }
 	}
 
 

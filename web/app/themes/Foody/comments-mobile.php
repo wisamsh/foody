@@ -47,7 +47,7 @@ $foody_comments = new Foody_Comments();
 
             <ol id="comments-list" class="comment-list">
                 <?php
-                $foody_comments->list_comments();
+                $foody_comments->list_comments(null, true);
                 ?>
             </ol><!-- .comment-list -->
 

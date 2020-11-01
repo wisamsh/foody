@@ -18,7 +18,7 @@
 if ( post_password_required() ) {
 	return;
 }
-
+global $post;
 $foody_comments = new Foody_Comments();
 
 ?>
@@ -51,14 +51,19 @@ $foody_comments = new Foody_Comments();
 	<?php if ( $have_comments ) : ?>
         <ol id="comments-list" class="comment-list">
 			<?php
-			$foody_comments->list_comments();
+			$foody_comments->list_comments(null, true);
 			?>
         </ol><!-- .comment-list -->
 
 
 		<?php
-		$cpage = get_query_var( 'cpage', 1 );
-
+//		$cpage = get_query_var( 'cpage', 1 );
+        $per_page = 4;
+        $cpage = ( ceil( get_comments( array(
+                        'post_id' => $post->ID,
+                        'type'  => 'comment',
+                        'count' => true
+                    ) ) / $per_page ) - 1 );
 
 		if ( $cpage > 1 ) {
 
@@ -72,6 +77,7 @@ $foody_comments = new Foody_Comments();
 			echo '
                 <script async defer>
                 if(!ajaxurl){
+                    debugger;
                     var ajaxurl = \'' . site_url( 'wp-admin/admin-ajax.php' ) . '\';
                     var parent_post_id = ' . get_the_ID() . '
                 }

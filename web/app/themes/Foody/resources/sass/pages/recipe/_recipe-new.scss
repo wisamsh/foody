@@ -192,6 +192,11 @@ $content-width: 95%;
     .details-container {
       padding-bottom: 0;
 
+      .featured-content-container {
+        position: relative;
+        visibility: hidden;
+      }
+
       .slider-for {
         display: flex;
         flex-direction: row-reverse;
@@ -255,14 +260,18 @@ $content-width: 95%;
 
               .slick-slide {
 
-                .item {
+                div {
+                  text-align: center;
+                  .item {
+                    position: relative;
 
-                  .play-btn {
-                    right: 35% !important;
-                  }
+                    //.play-btn {
+                    //  right: 35% !important;
+                    //}
 
-                  img {
-                    margin: auto;
+                    img {
+                      margin: auto;
+                    }
                   }
                 }
               }
@@ -795,6 +804,7 @@ $content-width: 95%;
         text-decoration: underline;
         color: var(--color__primary);
         font-size: 20px;
+        font-weight: bold;
       }
 
       .recipe-ingredients-top{
@@ -1593,7 +1603,7 @@ $content-width: 95%;
 
                 .item {
                   img.play-btn {
-                    right: 40% !important;
+                    //right: 40% !important;
                   }
 
                   img {

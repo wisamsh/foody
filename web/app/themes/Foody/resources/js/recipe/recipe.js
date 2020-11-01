@@ -8,6 +8,9 @@
 let player;
 if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGlobals.post.type == 'post')) {
 
+    // sliders data
+    var sliderMainData  = false, sliderNavData = false;
+
     window.scroller();
 
     // let $video = $('.featured-content-container #video');
@@ -146,8 +149,8 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
     }
 
     if ($('.slider-nav').length) {
-        let slideToShow = $('.slider-for .item').length > 3 ? 3 : $('.slider-for .item').length;
-        let sliderMainData = {
+        let slideToShow = $('.slider-for .item').length > 4 ? 3 : $('.slider-for .item').length;
+        sliderMainData = {
             slidesToShow: 1,
             slidesToScroll: 1,
             nextArrow: '<div class="arrow arrow-prev"></div>',
@@ -157,7 +160,7 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
             rtl: true
         };
 
-        let sliderNavData = {
+        sliderNavData = {
             slidesToShow: slideToShow,
             slidesToScroll: 1,
             asNavFor: '.slider-for',
@@ -166,15 +169,12 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
             focusOnSelect: true,
             rtl: true
         };
-        if ($('.slider-for .item').length > 4) {
+        if ($('.slider-for .item').length > 3) {
             sliderNavData.prevArrow = '<div class="arrow arrow-next"></div>';
             sliderNavData.nextArrow = '<div class="arrow arrow-prev"></div>';
         } else {
             sliderNavData.arrows = false;
         }
-
-        $('.slider-for').slick(sliderMainData);
-        $('.slider-nav').slick(sliderNavData);
 
         $(' .slider.slider-nav').on('swipe', function () {
             if (typeof player !== 'undefined') {
@@ -219,6 +219,19 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
 }
 
 jQuery(document).ready(($) => {
+
+    if(sliderMainData){
+        $('.slider-for').slick(sliderMainData);
+    }
+
+    if(sliderNavData){
+        $('.slider-nav').slick(sliderNavData);
+    }
+
+    if($('.featured-content-container')){
+        $('.featured-content-container').attr('style', 'visibility: visible');
+    }
+
     if ($('.rating-digits').length) {
         if ($('.post-ratings')[0].innerText != "") {
             $('.rating-digits').remove();

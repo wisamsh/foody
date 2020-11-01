@@ -519,6 +519,10 @@ header {
       .foody-navbar-container {
         @include site-width();
         position: relative;
+
+        .menu-recipe-mobile{
+          display: none !important;
+        }
       }
 
       &.navbar-light {
