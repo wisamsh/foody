@@ -774,7 +774,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $main_image_obj = $this->get_main_image_meta();
             $main_image_element = $main_image_obj ? "<div class='item'><img src='{$main_image_obj['url']}' alt='{$main_image_obj['alt']}' /></div>" : false;
             $video_element = !empty($video_element) ? $video_element : false;
-            $images_for_slider = get_field('images_gallery', $this->id);
+            $images_for_slider = get_field('images_gallery_repeater', $this->id);
             $counter = 0;
 
             if ($main_image_element && $video_element) {
