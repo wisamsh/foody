@@ -146,7 +146,7 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
     }
 
     if ($('.slider-nav').length) {
-        let slideToShow = $('.slider-for .item').length > 4 ? 4 : $('.slider-for .item').length;
+        let slideToShow = $('.slider-for .item').length > 3 ? 3 : $('.slider-for .item').length;
         let sliderMainData = {
             slidesToShow: 1,
             slidesToScroll: 1,
@@ -162,6 +162,7 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
             slidesToScroll: 1,
             asNavFor: '.slider-for',
             dots: false,
+            centerMode: true,
             focusOnSelect: true,
             rtl: true
         };
