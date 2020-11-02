@@ -113,7 +113,7 @@ $labels = array(
             <?php }
         endforeach; ?>
 
-        <li class="overview-item col-1">
+        <li class="overview-item difficulty col-1">
             <div class="difficulty-container">
                 <div class="key">
                     <?php echo $labels['difficulty_level'] ?>

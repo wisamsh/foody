@@ -1152,7 +1152,7 @@ class Foody_Recipe extends Foody_Post
         $number_of_preps = $this->get_number_of_approved_preps() + intval($number_of_preps);
 
         $preps_element_title = '<div class="preparations-share-title">' . __('כבר הכנתם?') . '</div>';
-        $preps_element_link = '<a href="#how-i-did" class="preparation-share-title">' . __('שתפו אותנו') . '</a>';
+        $preps_element_link = '<a href="#how-i-did" class="preparation-share-link">' . __('שתפו אותנו') . '</a>';
         $preps_elements = '<div class="preparations-share" data-numOfPreps="' . $number_of_preps . '">' . $preps_element_title . $preps_element_link . '</div>';
 
         $comments_element_title = '<div class="comments-title">' . __('רוצים להגיב?') . '</div>';

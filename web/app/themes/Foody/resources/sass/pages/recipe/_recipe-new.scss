@@ -346,12 +346,20 @@ $content-width: 95%;
           font-size: 1.7rem;
         }
 
+        .description{
+          font-size: 1.1rem;
+        }
+
         .recipe-details {
           .content-details-bullets-container {
             display: flex;
             justify-content: space-between;
             padding: 0;
             position: relative;
+
+            > li{
+              font-size: 17px;
+            }
 
             .wrapper {
               margin: auto 0;
@@ -373,36 +381,6 @@ $content-width: 95%;
               .kosher-sign {
                 display: none;
               }
-
-              //.rating-container {
-              //  position: absolute;
-              //  left: 0;
-              //  width: 100%;
-              //  bottom: -40px;
-              //  float: left;
-              //
-              //  .ratings-wrapper {
-              //    display: flex;
-              //    flex-direction: row;
-              //    width: 54%;
-              //    float: left;
-              //
-              //    &:not(.empty){
-              //      flex-direction: column;
-              //      position: relative;
-              //
-              //      .rating-stars-container,
-              //      .rating-header{
-              //        padding: 0;
-              //      }
-              //    }
-              //
-              //    .rating-header{
-              //      padding-left: 6%;
-              //      font-weight: bold;
-              //    }
-              //  }
-              //}
             }
           }
         }
@@ -489,6 +467,7 @@ $content-width: 95%;
               margin-bottom: 0;
               flex-direction: row;
               float: left;
+              font-size: 17px;
 
               &:not(.empty) {
                 flex-direction: column;
@@ -520,6 +499,7 @@ $content-width: 95%;
 
       .promotion-text{
         white-space: pre-line;
+        font-size: 15.5px;
         padding: 1%;
         background: var(--color__primary);
         color: #ffffff;
@@ -562,13 +542,17 @@ $content-width: 95%;
               width: 37px;
             }
 
+            &.difficulty{
+              padding: 0;
+            }
+
             .kosher,
             .difficulty-container{
               display: flex;
               flex-direction: row;
-              font-size: 0.8rem;
               margin: 26% 0;
               text-align: center;
+              font-size: 15.5px;
             }
 
             .difficulty-container{
@@ -593,7 +577,9 @@ $content-width: 95%;
             }
 
             .item-container{
-              font-size: 0.8rem;
+              font-size: 15.5px;
+              line-height: 1.2;
+
               .key{
                 font-weight: bold;
               }
@@ -620,7 +606,7 @@ $content-width: 95%;
             list-style: none;
             border-radius: 4.3px;
             background-color: #ffffff;
-            font-size: 0.9rem;
+            font-size: 15.5px;
             text-align: center;
             flex: unset;
             width: 100%;
@@ -639,7 +625,7 @@ $content-width: 95%;
               }
 
               text-decoration: underline;
-              font-size: 1rem;
+              font-size: 15.5px;
               display: block;
              }
 
@@ -739,6 +725,12 @@ $content-width: 95%;
       .preview{
         text-align: right;
         padding: 0 2.5%;
+
+        .foody-content{
+          > p{
+            font-size: 17.5px;
+          }
+        }
       }
     }
 
@@ -760,16 +752,15 @@ $content-width: 95%;
         .comments-title {
           font-weight: bold;
           color: #404040;
+          font-size: 13px;
         }
 
-        .preparation-share-title {
-          color: $color__primary;
-          text-decoration: underline !important;
-        }
-
+        .preparation-share-link,
         .comments-link {
           color: $color__primary;
           text-decoration: underline !important;
+          font-size: 16.5px;
+          font-weight: bold;
         }
 
         .num-of-comments,
@@ -786,6 +777,10 @@ $content-width: 95%;
         width: 37%;
         text-align: center;
         font-weight: bold;
+
+        .rating-header{
+          font-size: 13px;
+        }
       }
     }
 
@@ -814,7 +809,7 @@ $content-width: 95%;
         flex-direction: column;
 
         .title{
-          font-size: 20px;
+          font-size: 17px;
           margin-bottom: 0;
           line-height: 35px;
           padding-right: 0;
@@ -850,7 +845,7 @@ $content-width: 95%;
                 border-radius: 2px;
                 box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.03);
                 background-color: #ffffff;
-                font-size: 24px;
+                font-size: 17px;
                 font-weight: bold;
                 text-align: center;
                 color: var(--color__primary);
@@ -867,8 +862,9 @@ $content-width: 95%;
 
             .plus-icon,
             .minus-icon {
-              width: 32px;
-              height: 32px;
+              width: 28px;
+              height: 28px;
+              margin-top: 4px;
 
               &:hover{
                 cursor: pointer;
@@ -976,6 +972,7 @@ $content-width: 95%;
               }
 
               .ingredient {
+                font-size: 17.5px;
                 display: inline-flex;
               }
 
@@ -1022,7 +1019,7 @@ $content-width: 95%;
 
           .ingredients-group-title {
             max-width: 100%;
-            font-size: 20px;
+            font-size: 17px;
           }
 
           ul {
@@ -1209,13 +1206,17 @@ $content-width: 95%;
 
     section.recipe-notes{
       .title{
-        font-size: 20px;
+        font-size: 17px;
         line-height: 35px;
         padding-right: 0;
         color: #ed3d48;
         max-width: 95%;
         margin: 0 auto;
         font-weight: bold;
+      }
+
+      .notes{
+        font-size: 15.5px;
       }
     }
 
@@ -1231,7 +1232,7 @@ $content-width: 95%;
 
       ul {
         list-style: none;
-        margin: 0;
+        margin: 0 0 3% 0;
         padding: 0;
 
         li.col {
@@ -1253,7 +1254,7 @@ $content-width: 95%;
               line-height: 1;
               text-align: center;
               font-family: Assistant;
-              font-size: 16px;
+              font-size: 12.5px;
             }
 
           }
@@ -1296,7 +1297,7 @@ $content-width: 95%;
           }
 
           .title{
-            font-size: 1rem;
+            font-size: 17.5px;
             margin: auto 0;
           }
         }
@@ -1308,6 +1309,7 @@ $content-width: 95%;
         .tip-text{
           text-align: right;
           margin: 0;
+          font-size: 17.5px;
         }
       }
     }
@@ -1330,6 +1332,7 @@ $content-width: 95%;
           color: white;
           text-align: center;
           margin-left: 15%;
+          font-size: 24px;
         }
 
         .check-icon {
@@ -1343,7 +1346,7 @@ $content-width: 95%;
           border: 1px solid;
           text-align: center;
           top: 15%;
-          right: 35%;
+          right: 29%;
         }
 
         .btn-container {
@@ -1355,14 +1358,18 @@ $content-width: 95%;
           //width: 12%;
           padding: 1%;
           top: 15%;
-          right: 35%;
+          right: 29%;
           width: 44px;
           height: 44px;
 
+          &:hover{
+            cursor: pointer;
+          }
+
           .btn-text {
             position: absolute;
-            top: 12%;
-            left: 10%;
+            top: 9%;
+            left: 9%;
             text-align: center;
             border-radius: 60%;
             border: $color__primary 1px solid;
@@ -1376,7 +1383,7 @@ $content-width: 95%;
 
         .add-image {
           color: white;
-          width: 50%;
+          width: 56%;
           margin: auto 0;
 
           #image-upload-hidden {
@@ -1393,6 +1400,7 @@ $content-width: 95%;
 
               span {
                 text-decoration: underline;
+                font-size: 13px;
               }
             }
 
@@ -1484,14 +1492,19 @@ $content-width: 95%;
     section.recipe-comments{
       display: block;
       #comments{
+
         .comments-title{
-          font-size: 20px;
+          font-size: 17px;
           line-height: 35px;
           padding-right: 0;
           color: #ed3d48;
           max-width: 95%;
           margin: 0 auto;
           font-weight: bold;
+        }
+
+        #comments-list{
+          background-color: #fafafa;
         }
       }
     }
@@ -1504,6 +1517,12 @@ $content-width: 95%;
         font-size: 20px;
         line-height: 35px;
         font-weight: bold;
+      }
+
+      > ul{
+        li{
+          font-size: 13px;
+        }
       }
     }
   }
@@ -1708,10 +1727,10 @@ $content-width: 95%;
 
         .ratings-wrapper {
           margin: 0;
-          font-size: 18px;
           display: flex;
           width: 57%;
           margin: auto;
+          font-size: 17px;
 
           img{
             width:30px;
@@ -2192,6 +2211,12 @@ $content-width: 95%;
         .preview {
           text-align: right;
           padding: 0 0.7rem;
+
+          .foody-content{
+            > p{
+              font-size: 17.5px;
+            }
+          }
         }
       }
 
@@ -2220,9 +2245,11 @@ $content-width: 95%;
             text-decoration: underline !important;
           }
 
+          .preparation-share-link,
           .comments-link {
             color: $color__primary;
             text-decoration: underline !important;
+            font-size: 14.5px;
           }
 
           .num-of-comments,
@@ -2430,7 +2457,7 @@ $content-width: 95%;
 
             .ingredients-group-title {
               max-width: 100%;
-              font-size: 20px;
+              font-size: 17px;
             }
 
             ul {
@@ -2664,7 +2691,7 @@ $content-width: 95%;
           .title {
             color: white;
             text-align: center;
-            margin-left: 15%;
+            margin-left: 0;
           }
 
           .check-icon {
