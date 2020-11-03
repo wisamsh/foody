@@ -15,7 +15,7 @@ $recipe = $template_args['recipe'];
 </label>
 <div class="amount-container">
     <img src="<?php echo $GLOBALS['images_dir'] . 'icons/plus.png' ?>" alt="plus" class="plus-icon">
-    <input name="amount" type="number" id="number-of-dishes" min="1" inputmode="numeric" pattern="[0-9]*"
+    <input name="amount" type="number" id="number-of-dishes" min="1" max="99" inputmode="numeric" pattern="[0-9]*"
            value="<?php echo $recipe->getNumberOfDishes() ?>"
            data-amount="<?php echo $recipe->getNumberOfDishes() ?>"
     >

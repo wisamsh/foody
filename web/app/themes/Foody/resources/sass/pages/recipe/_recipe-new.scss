@@ -64,6 +64,36 @@ $content-width: 95%;
 }
 
 .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
+  .tooltip {
+    margin-top: -4px;
+
+    .tooltip-inner {
+      background: white;
+      box-shadow: rgba(0, 0, 0, 0.3) 0 3px 10px;
+      color: var(--color__text-primary-dark);
+      font-family: $font__assistant;
+      padding: 10px 20px 20px;
+
+      .close {
+        float: none !important;
+        text-align: left;
+        display: none;
+        color: var(--color__text-primary-dark);
+        opacity: 1;
+      }
+
+      div {
+        text-align: right;
+      }
+    }
+
+    .arrow {
+      &:before {
+        border-bottom-color: #fff;
+      }
+    }
+  }
+
   .show-read-more {
     .more-text {
       display: none;
@@ -471,7 +501,6 @@ $content-width: 95%;
 
               &:not(.empty) {
                 flex-direction: column;
-                position: relative;
 
                 .rating-stars-container,
                 .rating-header {
@@ -1347,6 +1376,7 @@ $content-width: 95%;
           text-align: center;
           top: 15%;
           right: 29%;
+          padding-right: 3px;
         }
 
         .btn-container {
@@ -1401,6 +1431,11 @@ $content-width: 95%;
               span {
                 text-decoration: underline;
                 font-size: 13px;
+              }
+
+              .icon-camera:hover,
+              > span:hover{
+                cursor: pointer;
               }
             }
 
@@ -2007,7 +2042,7 @@ $content-width: 95%;
 
         .overview-lists-container {
           display: block;
-          margin: 0.9rem 0.7rem;
+          margin: 0.9rem 0.3rem;
           border-radius: 4.3px;
           background-color: #fef5f6;
 

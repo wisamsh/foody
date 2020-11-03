@@ -175,25 +175,6 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
         } else {
             sliderNavData.arrows = false;
         }
-
-        $(' .slider.slider-nav').on('swipe', function () {
-            if (typeof player !== 'undefined') {
-                player.pauseVideo();
-            }
-        });
-
-        $('.slider .arrow').on('click', function () {
-            if (typeof player !== 'undefined') {
-                player.pauseVideo();
-            }
-        });
-
-        $('.slider.slider-nav .slick-slide').on('click', function () {
-          let currentNavItem = $('.slider.slider-nav .slick-current').find('.play-btn');
-          if(!currentNavItem.length){
-              player.pauseVideo();
-          }
-        })
     }
 
     if ($('.slider.recipe-content-steps')) {
@@ -227,6 +208,28 @@ jQuery(document).ready(($) => {
     if(sliderNavData){
         $('.slider-nav').slick(sliderNavData);
     }
+
+    $(' .slider.slider-nav').on('swipe', function () {
+        debugger
+        if (typeof player !== 'undefined') {
+            player.pauseVideo();
+        }
+    });
+
+    $('.slider .arrow').on('click', function () {
+        debugger
+        if (typeof player !== 'undefined') {
+            player.pauseVideo();
+        }
+    });
+
+    $('.slider.slider-nav .slick-slide').on('click', function () {
+        debugger
+        let currentNavItem = $('.slider.slider-nav .slick-current').find('.play-btn');
+        if(!currentNavItem.length){
+            player.pauseVideo();
+        }
+    });
 
     if($('.featured-content-container')){
         $('.featured-content-container').attr('style', 'visibility: visible');
@@ -288,8 +291,10 @@ jQuery(document).ready(($) => {
     if ($('.amount-container > .plus-icon').length && $('.amount-container > .minus-icon').length && $('.amount-container #number-of-dishes').length) {
         $('.amount-container > .plus-icon').on('click', function () {
             let currentAmount = parseInt($('.amount-container #number-of-dishes').val());
-            $('.amount-container #number-of-dishes').val(++currentAmount);
-            $('.amount-container #number-of-dishes').trigger('input');
+            if (currentAmount < 99) {
+                $('.amount-container #number-of-dishes').val(++currentAmount);
+                $('.amount-container #number-of-dishes').trigger('input');
+            }
         });
 
         $('.amount-container > .minus-icon').on('click', function () {

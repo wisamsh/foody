@@ -32,7 +32,9 @@ $(document).ready(() => {
 
     madeDishBtn.on('click', function () {
         if (canMarkedPrepared(foodyGlobals.ID) && $('.comments-rating-prep-container .preparations-share .num-of-preps').length == 0) {
-            loader.attach();
+            // loader.attach();
+            replaceElemWithCheckMark(madeDishBtn);
+            setAsPrepared(foodyGlobals.ID);
             foodyAjax({
                 action: 'foody_increment_made_recipe',
                 data: {
@@ -43,7 +45,6 @@ $(document).ready(() => {
                     console.log(err)
                     loader.detach();
                 } else {
-                    setAsPrepared(foodyGlobals.ID);
                     if ($('.comments-rating-prep-container .preparations-share').length &&
                         typeof $('.comments-rating-prep-container .preparations-share').attr('data-numofpreps') !== 'undefined'
                     ) {
@@ -51,9 +52,7 @@ $(document).ready(() => {
                         let newElem = '<a href="#how-i-did" class="preparations-share"><div class="preparations-share-title">כבר הכינו</div><div class="num-of-preps">' + currentNumOfPreps + '</div></a>';
 
                         $('.comments-rating-prep-container .preparations-share').replaceWith(newElem);
-                        replaceElemWithCheckMark(madeDishBtn);
                     }
-                    loader.detach();
                 }
             });
         }
