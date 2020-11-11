@@ -13,9 +13,12 @@ $classes = 'register';
 if ($failed) {
     $classes = "$classes failed";
 }
+
+$title = get_field('page_title');
+$title = isset($title) && !empty($title) ? $title : __('הגיע הזמן שנכיר');
 ?>
 
-<h1 style="font-family: Assistant; color: var(--color__primary); font-weight: 900; font-size: 24px;">הגיע הזמן שנכיר</h1>
+<h1 style="font-family: Assistant; color: var(--color__primary); font-weight: 900; font-size: 24px;"><?php echo $title;?></h1>
 <p>
     <?php echo $text ?>
 </p>
@@ -142,7 +145,11 @@ echo do_shortcode('[wordpress_social_login]');
                 <div class="md-checkbox col-12">
                     <input id="check-marketing" type="checkbox" checked name="marketing">
                     <label for="check-marketing">
-                        <?php echo __('הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר') ?>
+                        <?php
+                        $newsletter_text = get_field('newsletter_text');
+                        $newsletter_text = isset($newsletter_text) && !empty($newsletter_text)? $newsletter_text :__('הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר');
+                        echo $newsletter_text;
+                        ?>
                     </label>
                 </div>
                 <?php if (get_field('show')): ?>
@@ -173,7 +180,11 @@ echo do_shortcode('[wordpress_social_login]');
                     >
                     </div>
                     <button type="submit" class="btn btn-primary" aria-label="הירשם">
-                        <?php echo __('הירשם') ?>
+                        <?php
+                        $btn_text = get_field('btn_text');
+                        $btn_text = isset($btn_text) && !empty($btn_text)? $btn_text : __('הירשם');
+                        echo $btn_text;
+                        ?>
                     </button>
                 </div>
 
