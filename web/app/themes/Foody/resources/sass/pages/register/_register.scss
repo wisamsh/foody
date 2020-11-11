@@ -1,16 +1,18 @@
 @import "../../layout/content-with-images";
 
 .cover-image{
-  background-color: white;
+  &.register-page {
+    background-color: white;
 
-  > picture{
-    margin: auto;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    > picture {
+      margin: auto;
+      width: 100%;
+      display: flex;
+      justify-content: center;
 
-    img{
-      max-width: 50%;
+      img {
+        max-width: 50%;
+      }
     }
   }
 }
@@ -290,10 +292,12 @@
 }
 
 @include breakpoint(mobileonly) {
-  .cover-image{
-    > picture{
-      img{
-        max-width: unset;
+  .cover-image {
+    &.register-page {
+      > picture {
+        img {
+          max-width: unset;
+        }
       }
     }
   }
