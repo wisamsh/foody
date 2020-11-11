@@ -85,9 +85,11 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
         <ul>
             <?php $footer->display_menu_items($footer->footer_pages) ?>
         </ul>
+        <?php if((get_current_blog_id() == 1) || (get_current_blog_id() != 1 && !get_option( 'foody_remove_foodys_link_footer', false ))){ ?>
         <section class="foody-israel-footer">
             <?php $footer->the_foody_israel(true); ?>
         </section>
+        <?php } ?>
         <?php if (get_theme_mod('foody_show_moveo_logo', true)) : ?>
             <section class="powered-by">
                 <?php $footer->the_moveo() ?>

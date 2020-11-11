@@ -154,7 +154,9 @@ class Foody_Footer
                     $items[sizeof($items)][] = $this->moveo();
                 }
 
-                $items[sizeof($items) + 1][] = $this->the_foody_israel();
+                if (get_current_blog_id() == 1 || (get_current_blog_id() != 1 && !get_option('foody_remove_foodys_link_footer', false))) {
+                    $items[sizeof($items) + 1][] = $this->the_foody_israel();
+                }
             }
 
 
