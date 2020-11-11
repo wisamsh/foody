@@ -7,6 +7,7 @@
  */
 
 $cover_name = '';
+$is_register_page = false;
 
 if ( isset( $template_args ) ) {
 	if ( ! isset( $template_args['image'] ) ) {
@@ -19,6 +20,9 @@ if ( isset( $template_args ) ) {
 	}
 	if ( isset($template_args['type'] ) ) {
 	   $cover_name = get_field('cover_name' );
+    }
+	if(isset($template_args['is_register'])){
+	    $is_register_page = $template_args['is_register'];
     }
 }
 
@@ -56,7 +60,7 @@ if ( isset( $template_args['mobile_image'] ) ) {
 
 ?>
 
-<div class="cover-image">
+<div class="cover-image <?php echo $is_register_page ? 'register-page' : ''?>">
 	<?php if ( isset( $a ) ) {
 		echo $a;
 	} ?>
