@@ -14,12 +14,13 @@ $image_left  = get_field( 'left_image' );
 
 $cover_image = get_field('cover_image');
 $cover_image_mobile = get_field('mobile_cover_image');
-
+global $post;
 if(isset($cover_image['url']) || isset($cover_image_mobile['url'])) {
     foody_get_template_part(get_template_directory() . '/template-parts/content-cover-image.php', array(
         'image' => $cover_image,
         'mobile_image' => $cover_image_mobile,
-        'link' => ''
+        'link' => '',
+        'is_register' => isset($post) && isset($post->post_title) && $post->post_title == __('הרשמה')
     ));
 }
 ?>
