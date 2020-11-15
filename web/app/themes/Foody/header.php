@@ -33,6 +33,15 @@ if (!is_multisite() || is_main_site()) {
         <script data-ad-client="ca-pub-3607762765478350" async
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <?php } ?>
+    <?php
+    // show walkMe feature
+    if(get_current_blog_id() == 1 && get_option( 'foody_show_walkme', false )){
+        $walkme_script = get_option( 'foody_google_walkme_script', '' );
+        if(!empty($walkme_script)){
+           echo $walkme_script;
+        }
+    }
+    ?>
     <?php wp_head(); ?>
 
 </head>
