@@ -337,6 +337,9 @@ function wsl_process_login_end() {
 	// store user hybridauth profile (wslusersprofiles), contacts (wsluserscontacts) and buddypress mapping
 	wsl_process_login_update_wsl_user_data( $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile, $wp_user );
 
+	//added by daniel 15.11.20202
+    $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
+
 	// finally create a wordpress session for the user
 	wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile, $wp_user );
 }
