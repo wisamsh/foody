@@ -889,8 +889,9 @@ add_action('init', 'bit_recurring_fetch_transaction_status');
 
 function redirect_social_login($user_id, $provider, $hybridauth_user_profile, $redirect_to){
     $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
+    return $redirect_to;
 }
-add_action('wsl_hook_process_login_before_wp_safe_redirect', 'redirect_social_login');
+add_action('wsl_hook_process_login_before_wp_safe_redirect', 'redirect_social_login',10,4);
 
 add_filter('body_class', 'foody_body_add_bit_class', 10, 1);
 function foody_body_add_bit_class($classes)
