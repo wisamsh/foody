@@ -51,7 +51,8 @@ function foody_logged_redirect() {
 
 	if ( in_array( $slug, $signon_pages ) && is_user_logged_in() ) {
 		if ( ! isset( $_REQUEST['registered'] ) ) {
-			wp_redirect( home_url() );
+//			wp_redirect( home_url() );
+            wp_redirect(get_permalink(get_page_by_path('השלמת-רישום')));
 			die();
 		}
 	}
