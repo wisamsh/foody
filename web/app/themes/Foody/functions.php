@@ -887,6 +887,7 @@ function bit_recurring_fetch_transaction_status()
 
 add_action('init', 'bit_recurring_fetch_transaction_status');
 
+
 add_filter('body_class', 'foody_body_add_bit_class', 10, 1);
 function foody_body_add_bit_class($classes)
 {

@@ -32,10 +32,18 @@ $campaign_link = get_field( 'campaign_link', $page );
     <input class="marketing-approved" type="hidden" value="<?php echo $marketing ?>">
     <input class="e-book-approved" type="hidden" value="<?php echo $eBook ?>">
 
-    <p>
+    <?php if($eBook !== "1"){ ?>
+    <p class="no-ebook">
 		<?php
 		echo __( 'נרשמת בהצלחה, עכשיו נשאר לארגן את המטבח לארוחה הבאה.', 'foody' );
 		?>
+    </p>
+    <?php } else { ?>
+    <p class="with-ebook">
+        <?php
+        echo '<p style="text-align: center"><span style="font-size: 18pt">איזה כיף לכם שאתם חברים של פודי!</span></p>
+<p style="text-align: center"><span style="font-size: 18pt">בתיבת המייל שלכם מחכה לכם החוברת המתכונים הדיגיטלית לחג!</span></p>';
+        } ?>
     </p>
 
 
