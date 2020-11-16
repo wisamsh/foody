@@ -18,6 +18,8 @@ register_setting( 'general', 'foody_conversion_table_link_text' );
 register_setting( 'general', 'foody_google_tag_manager_id' );
 register_setting( 'general', 'foody_show_google_adx' );
 register_setting( 'general', 'foody_google_adx_script' );
+register_setting( 'general', 'foody_show_walkme' );
+register_setting( 'general', 'foody_google_walkme_script' );
 register_setting( 'general', 'foody_show_newsletter_popup' );
 register_setting( 'general', 'foody_id_for_newsletter' );
 register_setting( 'general', 'foody_show_google_login' );
@@ -223,6 +225,10 @@ function foody_custom_options() {
 	add_settings_field( 'foody_show_google_adx', __( 'הצג רכיב Google AdX', 'foody' ), 'foody_show_google_adx_callback', 'general', 'foody_general_settings' );
 	add_settings_field( 'foody_google_adx_script', __( 'סקריפט רכיב Google AdX', 'foody' ), 'foody_google_adx_script_callback', 'general', 'foody_general_settings' );
 
+	// Show Google AdX feature
+	add_settings_field( 'foody_show_walkme', __( 'הצג רכיב Walkme', 'foody' ), 'foody_show_walkme_callback', 'general', 'foody_general_settings' );
+	add_settings_field( 'foody_google_walkme_script', __( 'סקריפט רכיב Walkme', 'foody' ), 'foody_google_walkme_script_callback', 'general', 'foody_general_settings' );
+
 	// show newsletter popup
     add_settings_field( 'foody_show_newsletter_popup', __( 'הצג newsletter popup', 'foody' ), 'foody_show_newsletter_popup_callback', 'general', 'foody_general_settings' );
     add_settings_field( 'foody_id_for_newsletter', __( 'מזהה newsletter', 'foody' ), 'foody_id_for_newsletter_callback', 'general', 'foody_general_settings' );
@@ -334,6 +340,18 @@ function foody_show_google_adx_callback() {
 function foody_google_adx_script_callback() {
 	$content = get_option( 'foody_google_adx_script', '' );
 	echo '<textarea id="foody_google_adx_script" name="foody_google_adx_script" rows="5" cols="50">' . $content . '</textarea>';
+}
+
+// Show Walkme feature
+function foody_show_walkme_callback() {
+	$options = get_option( 'foody_show_walkme', false );
+	$checked = $options ? 'checked' : '';
+	echo '<input ' . $checked . ' type="checkbox" id="foody_show_walkme" name="foody_show_walkme">';
+}
+
+function foody_google_walkme_script_callback() {
+	$content = get_option( 'foody_google_walkme_script', '' );
+	echo '<textarea id="foody_google_walkme_script" name="foody_google_walkme_script" rows="5" cols="50">' . $content . '</textarea>';
 }
 
 function foody_show_newsletter_popup_callback() {
