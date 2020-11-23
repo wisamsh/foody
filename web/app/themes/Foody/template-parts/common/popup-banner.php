@@ -55,9 +55,6 @@ $show_image_as_link = empty($button_text);
                 </div>
                 <?php } else {
                 ?>
-<!--                --><?php //if($show_image_as_link){ ?>
-<!--                <a class="link-wrapper" href="--><?php //echo $banner_link?><!--">-->
-<!--                    --><?php //} ?>
                 <div class="banner-image-container"
                      style="background-image: url(<?php echo $desktop_image; ?>)">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -72,9 +69,6 @@ $show_image_as_link = empty($button_text);
             <?php } ?>
             <?php } else {
                 ?>
-<!--            --><?php //if($show_image_as_link){ ?>
-<!--            <a class="link-wrapper" href="--><?php //echo $banner_link?><!--">-->
-<!--                --><?php //} ?>
                 <?php if (wp_is_mobile()) { ?>
                     <div class="banner-image-container"
                          style="background-image: url(<?php echo $mobile_image; ?>)">
@@ -107,9 +101,6 @@ $show_image_as_link = empty($button_text);
                         </div>
                     </div>
                 <?php } ?>
-<!--                --><?php //if($show_image_as_link){ ?>
-<!--                    </a>-->
-<!--                    --><?php //} ?>
             <?php } ?>
         </div>
             <?php if($show_image_as_link){ ?>
