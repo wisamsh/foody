@@ -45,6 +45,7 @@ register_setting( 'general', 'foody_access_token_for_ravmesser');
 register_setting( 'general', 'foody_token_secret_for_ravmesser');
 register_setting( 'reading', 'foody_show_post_views' );
 register_setting( 'reading', 'foody_show_followers_count_views' );
+register_setting( 'reading', 'foody_mail_to_notify_posts' );
 
 $page_name_search_options   = __( 'הגדרות חיפוש - פודי', 'foody' );
 $page_name_purchase_buttons = __( 'כפתורי רכישה', 'foody' );
@@ -239,6 +240,9 @@ function foody_custom_options() {
 	// Toggle channel & authors followers visibility
 	add_settings_field( 'foody_show_followers_count_views', __( 'הצג כמות עוקבים', 'foody' ), 'foody_show_followers_count_callback', 'reading' );
 
+    // Toggle post views visibility
+    add_settings_field( 'foody_mail_to_notify_posts', __( 'מייל לעדכון על מתכונים/כתבות חדשים', 'foody' ), 'foody_mail_to_notify_posts_callback', 'reading' );
+
 	//text for extra content
     add_settings_field( 'foody_title_for_extra_content', __( 'כותרת לתוכן נוסף', 'foody' ), 'foody_title_for_extra_content_callback', 'general', 'foody_general_settings' );
 
@@ -376,6 +380,11 @@ function foody_show_followers_count_callback() {
 	$checked = $options ? 'checked' : '';
 	echo '<input ' . $checked . ' type="checkbox" id="foody_show_followers_count_views" name="foody_show_followers_count_views">';
 	echo '<p class="description">הצג/הסר כמות עוקבים אחר ערוצים/מתחמי פידים/יוצרים</p>';
+}
+
+function foody_mail_to_notify_posts_callback(){
+    $options = get_option( 'foody_mail_to_notify_posts', false );
+    echo '<input value="' . $options . '"type="text" id="foody_mail_to_notify_posts" name="foody_mail_to_notify_posts">';
 }
 
 function foody_title_for_extra_content_callback(){
