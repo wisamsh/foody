@@ -905,3 +905,72 @@ add_filter('the_content', 'addClassToLinks');
 function addClassToLinks($content){
     return str_replace( '<a ', "<a class='post-content-link'", $content);
 }
+
+add_action( 'transition_post_status', 'foody_on_creation_not_update', 10, 3 );
+function foody_on_creation_not_update( $new_status, $old_status, $post )
+{
+    if ( 'publish' !== $new_status || 'publish' === $old_status )
+        return;
+
+    if ( 'foody_recipe' == $post->post_type  ||  'post' == $post->post_type){
+        $mail_to_notify = get_option( 'foody_mail_to_notify_posts', false );
+        if($mail_to_notify) {
+            $site = '';
+            $blog_number = get_current_blog_id();
+
+            switch ($blog_number) {
+                case 1:
+                    $site = __('פודי');
+                    break;
+                case 2:
+                    $site = _('קרין');
+                    break;
+                case 3:
+                    $site = _('ברימאג');
+                    break;
+                case 5:
+                    $site = _('דניאל עמית');
+                    break;
+                default:
+                    return;
+                    break;
+            }
+            foody_send_email_notification($mail_to_notify, $site, $post);
+        }
+    } else {
+        return;
+    }
+}
+
+function foody_send_email_notification($to, $site_name, $post){
+        $subject = __('פרסום מתכון חדש');
+        $body = foody_create_email_notification_body($site_name, $post);
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+
+        return wp_mail($to, $subject, $body, $headers);
+}
+
+function foody_create_email_notification_body($site_name, $post)
+{
+
+    $mail_body = '<p style="text-decoration: underline; font-weight: bold">';
+    $mail_body .=  __(' :שם המתכון/כתבה') ;
+    $mail_body .= '</p>';
+    $mail_body .= '<p>';
+    $mail_body .= $post->post_title;
+    $mail_body .= '</p>';
+    $mail_body .= '<p style="text-decoration: underline; font-weight: bold">';
+    $mail_body .= __(' :קישור למתכון/כתבה');
+    $mail_body .= '</p>';
+    $mail_body .= '<p>';
+    $mail_body .= get_permalink($post->ID);
+    $mail_body .= '</p>';
+    $mail_body .= '<p style="text-decoration: underline; font-weight: bold">';
+    $mail_body .=  __(' :הגיע מהאתר');
+    $mail_body .= '</p>';
+    $mail_body .= '<p>';
+    $mail_body .=  $site_name;
+    $mail_body .= '</p>';
+
+    return $mail_body;
+}
