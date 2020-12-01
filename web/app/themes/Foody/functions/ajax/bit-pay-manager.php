@@ -674,7 +674,7 @@ function bit_fetch_status_process()
     $current_datetime = $date->format('Y-m-d H:i:s');
 
     $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}'";
-    $update_query = "UPDATE {$table_name} SET status='in_progress', in_progress_time={$current_datetime} where member_id > 0 AND status = 'pending' AND payment_method = '{$payment_method}'";
+    $update_query = "UPDATE {$table_name} SET status='in_progress', in_progress_time='{$current_datetime}' where member_id > 0 AND status = 'pending' AND payment_method = '{$payment_method}'";
 //    $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}' AND server_number= {$current_server}";
 //    $update_query = "UPDATE {$table_name} SET status='in_progress' where member_id > 0 AND status = 'pending' AND payment_method = '{$payment_method}' AND server_number= {$current_server}";
 
