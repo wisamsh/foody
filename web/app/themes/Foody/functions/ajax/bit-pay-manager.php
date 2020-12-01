@@ -202,7 +202,7 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
             // request still pending we need to keep asking the server for final result
             // update status back to pending
             $table_name = $wpdb->prefix . 'foody_courses_members';
-            $update_query = "UPDATE {$table_name} SET status='pending' where member_id ={$member_data['member_id']}  AND status = 'in_progress'";
+            $update_query = "UPDATE {$table_name} SET status='pending', in_progress_time=null where member_id ={$member_data['member_id']}  AND status = 'in_progress'";
             $wpdb->query($update_query);
 
             $result = false;
@@ -223,7 +223,7 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
                     bit_handle_status_code($status, $payment_initiation_id, $member_data);
                 } else {
                     $table_name = $wpdb->prefix . 'foody_courses_members';
-                    $update_query = "UPDATE {$table_name} SET status='pending' where member_id ={$member_data['member_id']}  AND status = 'in_progress'";
+                    $update_query = "UPDATE {$table_name} SET status='pending', in_progress_time=null where member_id ={$member_data['member_id']}  AND status = 'in_progress'";
                     $wpdb->query($update_query);
                 }
             } else {
@@ -670,8 +670,11 @@ function bit_fetch_status_process()
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_members';
     $payment_method = __('ביט');
+    $date = new DateTime("now", new DateTimeZone('Israel') );
+    $current_datetime = $date->format('Y-m-d H:i:s');
+
     $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}'";
-    $update_query = "UPDATE {$table_name} SET status='in_progress' where member_id > 0 AND status = 'pending' AND payment_method = '{$payment_method}'";
+    $update_query = "UPDATE {$table_name} SET status='in_progress', in_progress_time={$current_datetime} where member_id > 0 AND status = 'pending' AND payment_method = '{$payment_method}'";
 //    $query = "SELECT * FROM {$table_name} where status = 'pending' AND payment_method = '{$payment_method}' AND server_number= {$current_server}";
 //    $update_query = "UPDATE {$table_name} SET status='in_progress' where member_id > 0 AND status = 'pending' AND payment_method = '{$payment_method}' AND server_number= {$current_server}";
 
@@ -714,6 +717,9 @@ function bit_fetch_status_process()
 //        }
     }
 
+    // handle transaction is stuck on status "in_progress"
+    foody_bit_handle_stuck_in_progress($table_name, $payment_method);
+
 //    $pending_payments = $wpdb->get_results($query);
 //    if(empty($pending_payments)){
 //        wp_clear_scheduled_hook("foody_bit_fetch_status_processes");
@@ -721,6 +727,28 @@ function bit_fetch_status_process()
 }
 
 add_action('foody_bit_fetch_status_processes', 'bit_fetch_status_process');
+
+function foody_bit_handle_stuck_in_progress($table_name, $payment_method){
+    global $wpdb;
+    $query = "SELECT * FROM {$table_name} where status = 'in_progress' AND payment_method = '{$payment_method}'";
+    $in_progress_transactions = $wpdb->get_results($query);
+
+    $date = new DateTime("now", new DateTimeZone('Israel') );
+    $current_datetime = $date->format('Y-m-d H:i:s');
+    $current_datetime = strtotime($current_datetime);
+
+    foreach ($in_progress_transactions as $in_progress_transaction){
+        if($in_progress_transaction->in_progress_time != null){
+            $x = strtotime($in_progress_transaction->in_progress_time);
+            $interval = ($current_datetime - $x)/60;
+            if($interval >= 60){
+                // change status to pending
+                $update_query = "UPDATE {$table_name} SET status='pending', in_progress_time=null where member_id  = {$in_progress_transaction->member_id}";
+                $wpdb->query($update_query);
+            }
+        }
+    }
+}
 
 class Bit_Token_Manager
 {
