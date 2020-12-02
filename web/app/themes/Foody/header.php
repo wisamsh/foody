@@ -10,6 +10,7 @@
  */
 $header = new Foody_Header();
 $user = new Foody_User();
+$user_param = is_user_logged_in() ? $user->user->ID : false;
 $show_accessibility = get_theme_mod('foody_show_accessibility') || get_theme_mod('show_white_label_accessibility');
 // always show on main site
 if (!is_multisite() || is_main_site()) {
@@ -33,6 +34,9 @@ if (!is_multisite() || is_main_site()) {
         <script data-ad-client="ca-pub-3607762765478350" async
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <?php } ?>
+    <script>
+        var walkMeUser = <?php echo $user_param; ?>;
+    </script>
     <?php
     // show walkMe feature
     if(get_current_blog_id() == 1 && get_option( 'foody_show_walkme', false )){
