@@ -10,7 +10,7 @@
  */
 $header = new Foody_Header();
 $user = new Foody_User();
-$user_param = is_user_logged_in() ? $user->user->ID : false;
+$user_param = is_user_logged_in() ? $user->user->ID : 'false';
 $show_accessibility = get_theme_mod('foody_show_accessibility') || get_theme_mod('show_white_label_accessibility');
 // always show on main site
 if (!is_multisite() || is_main_site()) {
