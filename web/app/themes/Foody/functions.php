@@ -975,8 +975,8 @@ function foody_create_email_notification_body($site_name, $post)
     return $mail_body;
 }
 
-add_filter('wp_get_nav_menu_items','search_box_function', 10, 2);
-function search_box_function( $nav, $args ) {
+add_filter('wp_get_nav_menu_items','foody_remove_nav_items_description', 10, 2);
+function foody_remove_nav_items_description( $nav, $args ) {
     if( $args->name == 'Navbar' ){
         foreach ($nav as $item){
             if(isset($item->description) && !empty($item->description)){
