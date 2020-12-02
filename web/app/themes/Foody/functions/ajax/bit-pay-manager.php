@@ -172,13 +172,6 @@ function bit_handle_status_code($code, $payment_initiation_id = null, $member_da
             break;
         case 2: // canceled by business or failed - final
         case 15: // payment failed - final
-            try {
-                do_delete_bit_transaction($payment_initiation_id, $coupon_details);
-                $result = 'canceled and deleted';
-                break;
-            } catch (Exception $e) {
-                throw $e;
-            }
         case 3: // canceled by client before money is held - final
         case 7: // time expired - final
             $result = 'canceled and deleted';
