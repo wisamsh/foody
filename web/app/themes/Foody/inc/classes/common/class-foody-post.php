@@ -773,8 +773,12 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                         foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
                     } else {
                         echo get_the_post_thumbnail($this->id, 'foody-main');
-                        if (isset($_GET['referer']) && $_GET['referer'] && !empty($logo = $this->get_feed_logo($_GET['referer']))) {
-                            echo '<img class="feed-logo-sticker" src="' . $logo . '">';
+                        $feed_area_id = !empty($this->id) ? get_field('recipe_channel', $this->id) : get_field('recipe_channel');
+                        if ((isset($_GET['referer']) && $_GET['referer'] ) || $feed_area_id ) {
+                            $recipe_referer = isset($_GET['referer']) && $_GET['referer'] ? $_GET['referer'] : $feed_area_id;
+                            if(!empty($logo = $this->get_feed_logo($feed_area_id))){
+                                echo '<img class="feed-logo-sticker" src="' . $logo . '">';
+                            }
                         }
                     }
 

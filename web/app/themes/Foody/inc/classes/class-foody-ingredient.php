@@ -144,7 +144,7 @@ class Foody_Ingredient extends Foody_Post
         dynamic_sidebar('foody-social');
     }
 
-    public function the_amounts($echo = true)
+    public function the_amounts($echo = true, $recipe_id = false)
     {
         if ($this->amounts != null) {
 
@@ -211,7 +211,7 @@ class Foody_Ingredient extends Foody_Post
 
             $unit = $last['unit'];
             $this->amounts[] = $last;
-            $ing_html = $this->get_ingredient_html($amount, $display, $unit, $title, $show_after_ingredient, $length);
+            $ing_html = $this->get_ingredient_html($amount, $display, $unit, $title, $show_after_ingredient, $length, $recipe_id);
 
 
             if ($length > 1) {
@@ -242,7 +242,7 @@ class Foody_Ingredient extends Foody_Post
         return $content;
     }
 
-    public function get_ingredient_html($amount, $display, $unit, $title, $is_unit_after_title, $length)
+    public function get_ingredient_html($amount, $display, $unit, $title, $is_unit_after_title, $length, $recipe_id = false)
     {
         $has_substitute = false;
 
@@ -323,7 +323,7 @@ class Foody_Ingredient extends Foody_Post
                          ' . $unit . '
                     </span>';
 
-        $commercial_link = $this->get_sponsored_ingredient_link();
+        $commercial_link = $this->get_sponsored_ingredient_link($recipe_id);
         $ingredient_link = get_field('ingredient_link', $this->get_id());
 
         if ($this->has_alter_link) {
@@ -722,14 +722,14 @@ class Foody_Ingredient extends Foody_Post
      *
      * @return mixed|null|void
      */
-    public function the_sponsored_ingredient($echo = true)
+    public function the_sponsored_ingredient($echo = true, $recipe_id = false)
     {
         // Fetch rules for recipe
         $rules = Foody_CommercialRuleMapping::getByIngredientRecipe($this->recipe_id, $this->id);
         $sponsored_ingredient = '';
 
         if (!empty($rules)) {
-            $rules = foody_get_commercial_rules($rules);
+            $rules = foody_get_commercial_rules($rules,  $recipe_id);
             $sponsored_ingredient = foody_print_commercial_rules($rules);
         }
 
@@ -745,14 +745,14 @@ class Foody_Ingredient extends Foody_Post
      *
      * @return mixed|null|void
      */
-    public function get_sponsored_ingredient_link()
+    public function get_sponsored_ingredient_link( $recipe_id = false)
     {
         // Fetch rules for recipe
         $rules = Foody_CommercialRuleMapping::getByIngredientRecipe($this->recipe_id, $this->id);
         $link = null;
 
         if (!empty($rules)) {
-            $rules = foody_get_commercial_rules($rules);
+            $rules = foody_get_commercial_rules($rules, $recipe_id);
 
             if (!empty($rules)) {
                 $first_rule = array_shift($rules);
@@ -763,7 +763,7 @@ class Foody_Ingredient extends Foody_Post
         return $link;
     }
 
-    public function get_substitute_ingredient($substitute_ingredients_details_filter)
+    public function get_substitute_ingredient($substitute_ingredients_details_filter, $recipe_id = false)
     {
         if ($this->recipe_substitute_ingredient != null && $this->recipe_substitute_ingredient->getTitle() != '' && !$this->substitute_ingredient_everywhere) {
             $recipe_substitute_ingredient_title =  str_replace(['-', '-', '&#8211;', '_', '_'], '', $this->recipe_substitute_ingredient->getTitle());
@@ -784,7 +784,7 @@ class Foody_Ingredient extends Foody_Post
                         $substitute_ingredient_html = '<div class="substitute-ingredient" data-text="' . $recipe_substitute_ingredient_text . '" data-original-text="' . $recipe_original_ingredient_text . '" data-text-color="' . $recipe_substitute_ingredient_text_color . '" data-name="' . $substitute_ingredient['title'] . '"  data-url="' . get_permalink($substitute_ingredient['post']) . '">'. __('החלפה ל') . $substitute_ingredient['title'] . '</div>';
                         return $substitute_ingredient_html;
                     } else {
-                        $show_ingredient = $this->determine_substitute_display_by_filter($substitute_ingredient['filter'][0], $substitute_ingredients_details_filter);
+                        $show_ingredient = $this->determine_substitute_display_by_filter($substitute_ingredient['filter'][0], $substitute_ingredients_details_filter, $recipe_id);
                         if ($show_ingredient) {
                             $substitute_ingredient_html = '<div class="substitute-ingredient" data-text="' . $recipe_substitute_ingredient_text . '" data-original-text="' . $recipe_original_ingredient_text . '" data-text-color="' . $recipe_substitute_ingredient_text_color . '" data-name="' . $substitute_ingredient['title'] . '"  data-url="' . get_permalink($substitute_ingredient['post']) . '">' . __('החלפה ל') . $substitute_ingredient['title'] . '</div>';
                             return $substitute_ingredient_html;
@@ -795,7 +795,7 @@ class Foody_Ingredient extends Foody_Post
         }
     }
 
-    private function determine_substitute_display_by_filter($substitute_ingredient, $substitute_ingredients_details_filter)
+    private function determine_substitute_display_by_filter($substitute_ingredient, $substitute_ingredients_details_filter, $recipe_id = false)
     {
         $result = false;
         $exclude = $substitute_ingredient['exclude'];
@@ -826,10 +826,14 @@ class Foody_Ingredient extends Foody_Post
                 break;
             case 'feed':
                 $feed_area_id = $substitute_ingredient['filter_value_feed_area'];
+                $recipe_feed_area_connection = $recipe_id ? get_field('recipe_channel', $recipe_id) : get_field('recipe_channel');
+                $recipe_referer = isset($_GET['referer']) ? $_GET['referer'] : false;
+                $recipe_referer = $recipe_referer ? $recipe_referer : $recipe_feed_area_connection;
+
                 if ($exclude) {
-                    $result = (!isset($_GET['referer']) || (isset($_GET['referer']) && $feed_area_id != $_GET['referer']));
+                    $result = ((!isset($_GET['referer']) && !$recipe_feed_area_connection) || ((isset($_GET['referer']) || $recipe_feed_area_connection) && $feed_area_id != $recipe_referer));
                 } else {
-                    $result = (isset($_GET['referer']) && $feed_area_id == $_GET['referer']);
+                    $result = ((isset($_GET['referer'] ) || $recipe_feed_area_connection) && $feed_area_id == $recipe_feed_area_connection);
                 }
                 break;
         }
