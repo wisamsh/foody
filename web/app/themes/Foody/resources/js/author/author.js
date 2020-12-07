@@ -51,4 +51,9 @@ jQuery(document).ready(($) => {
         sort: '#sort-author-playlist-feed'
     });
 
+    //Add padding to content div if no image found to prevent image from being overflown
+    if($("body.author div.featured-content-container").find('img').length<=0){
+        $("body.author div.featured-content-container").css('padding-bottom','85px')
+    }
+
 });
