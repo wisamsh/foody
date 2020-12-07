@@ -18,6 +18,9 @@
     text-align: center;
 
     .course-cover {
+      .cover-image img{
+        max-height:unset;
+      }
       .cover-video-container {
         max-width: 100vw;
         z-index: 2;
@@ -84,9 +87,10 @@
 
           .courses-list-row {
             .course-item {
-              margin: 0 8% 5% 8%;
+              margin: 0 auto 5%;
               border: 1px #ED3D48 solid;
               border-radius: 10px;
+              max-width: 456px;
 
               .course-item-top {
                 position: relative;
@@ -110,6 +114,11 @@
                   // text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
                 }
               }
+              @media(max-width: 500px){
+                .course-item{
+                  margin: 0 8% 5%;
+                }
+              }
 
               .course-item-bottom {
                 display: flex;
@@ -130,7 +139,7 @@
                 }
 
                 .action-item-text {
-                  margin-top: -3%;
+                  margin-top: 0;
                   margin-bottom: 1%;
                   font-weight: 500;
                   font-size: 18px;
@@ -139,6 +148,13 @@
 
                 .action-item-text:first-child{
                   margin: 3%;
+                }
+                //To be replaced with relevant variable
+                @media(min-width:1120px){
+
+                  .action-item-text{
+                    margin-top: -3%;
+                  }
                 }
               }
             }
@@ -267,6 +283,12 @@
           display: flex;
           flex-direction: column;
 
+          @media(max-width:1120px){
+            .team-item{
+              max-width: 590px;
+            }
+          }
+
           .team-item {
             margin-bottom: 5%;
             position: relative;
@@ -274,6 +296,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            max-width:unset;
 
             .item-image {
               border-radius: 100%;
@@ -316,11 +339,17 @@
               }
 
               .action-item-text {
-                margin-top: -3%;
+                margin-top: 0;
                 margin-bottom: 1%;
                 font-weight: 500;
                 font-size: 16px;
                 color: $color__primary;
+              }
+              //To be replaced with relevant variable
+              @media(min-width:1120px){
+                .action-item-text{
+                  margin-top: -3%;
+                }
               }
             }
           }
