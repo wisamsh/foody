@@ -42,7 +42,10 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
             <?php
             //Close anchor tag if link exists
-            if($link)?></a>
+            if($link)
+                ?>
+                </a>
+                <?php
         }
     }
 
