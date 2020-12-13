@@ -18,10 +18,25 @@ if ( empty( $name ) ) {
 $target = isset( $template_args['target'] ) ? $template_args['target'] : '_self';
 $disable_referrer = isset($template_args['disable_referrer']) && $template_args['disable_referrer'] ? 1 : 0;
 
+$linked_area_id = '';
+$linked_area_name = '';
+if($disable_referrer && strpos($template_args['link'], 'areas')){
+    $linked_area_id = url_to_postid($template_args['link']);
+    if($linked_area_id){
+        $linked_area_name = get_the_title($linked_area_id);
+    }
+}
 ?>
 
+<?php
+if($linked_area_id && $linked_area_id != 0){ ?>
 <a href="<?php /** @noinspection PhpUndefinedVariableInspection */
-echo $template_args['link']; ?>" target="<?php echo $target ?>" class="col" data-disable_referrer="<?php echo $disable_referrer ?>">
+echo $template_args['link']; ?>" target="<?php echo $target ?>" class="col category-link" data-disable_referrer="<?php echo $disable_referrer ?>" data-area-id="<?php echo $linked_area_id ?>" data-area-name="<?php echo $linked_area_name ?>">
+<?php } else { ?>
+    <a href="<?php /** @noinspection PhpUndefinedVariableInspection */
+    echo $template_args['link']; ?>" target="<?php echo $target ?>" class="col" data-disable_referrer="<?php echo $disable_referrer ?>">
+<?php } ?>
+
     <div class="category-listing">
         <div class="image-container">
             <picture class="lazyload">

@@ -147,6 +147,7 @@ function channel_name($vars){
     }
     elseif (isset($post->ID) && isset($post->post_type) && $post->post_type == 'foody_recipe' && get_field('recipe_channel', $post->ID)){
         $vars['channel_name'] = get_the_title(get_field('recipe_channel', $post->ID));
+        $vars['referered_area'] = get_field('recipe_channel', $post->ID);
     }
     return $vars;
 }
