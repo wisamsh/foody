@@ -78,6 +78,8 @@ $content-width: 95%;
           }
 
           &::placeholder {
+            /*TODO: Uncomment font size*/
+            /*font-size: 16px;*/
             opacity: 0.5;
             font-size: 12px;
             text-align: right;
