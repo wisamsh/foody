@@ -14,8 +14,11 @@ if ( ! foody_is_registration_open() ) {
 	$show_favorite = false;
 }
 
-if(is_array($_GET) && isset($_GET['referer'])){
-    $short_code_link = $foody_page->link.'?referer='.$_GET['referer'];
+$feed_area_id = !empty($foody_page->id) ? get_field('recipe_channel', $foody_page->id) : get_field('recipe_channel');
+
+if((is_array($_GET) && isset($_GET['referer'])) || $feed_area_id){
+    $recipe_referer = is_array($_GET) && isset($_GET['referer']) ? $_GET['referer'] : $feed_area_id;
+    $short_code_link = $foody_page->link.'?referer='.$recipe_referer;
 }
 else{
     $short_code_link = $foody_page->link;

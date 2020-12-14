@@ -26,7 +26,7 @@ $show_image_as_link = empty($button_text);
 <div class="modal " tabindex="-1" role="dialog" id="<?php echo $id ?>">
     <div class="modal-dialog" role="document">
         <?php if($show_image_as_link){ ?>
-        <a class="link-wrapper" href="<?php echo $banner_link?>">
+        <a class="link-wrapper" href="<?php echo $banner_link?>" data-banner-name="<?php echo $banner_name; ?>" data-banner-publisher="<?php echo $publisher; ?>">
             <?php } ?>
         <div class="modal-content" data-banner-name="<?php echo $banner_name; ?>" data-banner-publisher="<?php echo $publisher; ?>">
             <div class="modal-body <?php echo $modal_body_class; ?>">

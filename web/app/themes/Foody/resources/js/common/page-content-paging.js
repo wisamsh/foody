@@ -130,6 +130,8 @@ module.exports = (function () {
         var idReferer = url.searchParams.get("referer");
         if(idReferer){
             ajaxSettings.data.referer = idReferer;
+        } else if(foodyGlobals['referered_area'] && foodyGlobals['referered_area'].length) {
+            ajaxSettings.data.referer = foodyGlobals['referered_area'];
         }
 
 

@@ -37,11 +37,15 @@ if ( empty( $image ) ) {
 }
 
 if ( empty( $link ) ) {
+    global $post;
 	$link = get_field( 'cover_link' );
-	// add link to cover that was referred by feed channel
-    if (isset($_GET) && isset($_GET['referer']) && $_GET['referer']) {
-        $link = get_field( 'cover_link' , $_GET['referer']);
-        $cover_name = get_field('cover_name', $_GET['referer'] );
+    $feed_area_id = !empty($post->id) ? get_field('recipe_channel', $post->id) : get_field('recipe_channel');
+
+    // add link to cover that was referred by feed channel
+    if ((isset($_GET) && isset($_GET['referer']) && $_GET['referer']) || $feed_area_id) {
+        $recipe_referer = isset($_GET) && isset($_GET['referer'] ) && $_GET['referer'] ? $_GET['referer'] : $feed_area_id;
+        $link = get_field( 'cover_link' , $recipe_referer);
+        $cover_name = get_field('cover_name', $recipe_referer );
     }
 }
 if ( ! empty( $link ) ) {
