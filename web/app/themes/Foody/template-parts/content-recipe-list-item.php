@@ -113,7 +113,7 @@ $lazy = !empty($template_args['lazy']);
                     </li>
                 <?php endif; ?>
                 <?php if ($show_favorite): ?>
-                    <li class="favorite-container">
+                    <li class="favorite-container" style="visibility: <?php echo get_option( 'foody_show_favorite', true ) ? 'visible' : 'hidden' ?>">
                         <?php
                         foody_get_template_part(
                             get_template_directory() . '/template-parts/common/favorite.php',
