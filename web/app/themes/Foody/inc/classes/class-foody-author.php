@@ -37,16 +37,18 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
             if ($image) {
                 //Add anchor tag if link exists
-                if ($link) ?><a href="<?php echo esc_url($link['url']) ?>">
-
+                if ($link){ ?>
+                <a href="<?php echo esc_url($link['url']) ?>">
+                <?php } ?>
                 <img src=" <?php echo $image['url'] ?> " alt="<?php echo $this->author->display_name ?>">
 
                 <?php
                 //Close anchor tag if link exists
-                if ($link)
+                if ($link) {
                     ?>
                     </a>
                     <?php
+                }
             }
         }
     }
