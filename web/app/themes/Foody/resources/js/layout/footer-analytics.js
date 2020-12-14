@@ -71,6 +71,19 @@ jQuery(document).ready(($) => {
             eventCallback('', page_type, 'הקלקה על באנר (הפניה החוצה)', bannerName, 'מפרסם', publisherName, 'באנר קידום');
         }
     });
+
+    /** banner popup no button - clicking on submitting **/
+    $('#popup-banner .modal-content .link-wrapper').on('click', function () {
+        isBannerPressed = true;
+        let bannerLink = $(this).attr('href');
+        let bannerName = $('#popup-banner .modal-content').attr('data-banner-name');
+        let publisherName = $('#popup-banner .modal-content').attr('data-banner-publisher');
+        if (bannerLink.toLowerCase().indexOf('utm') < 0 && bannerLink.toLowerCase().indexOf('foody') >= 0) {
+            eventCallback('', page_type, 'הקלקה על באנר (הפניה פנימה)', bannerName, 'מפרסם', publisherName, 'באנר קידום');
+        } else if (bannerLink.toLowerCase().indexOf('utm') >= 0 || bannerLink.toLowerCase().indexOf('foody') < 0) {
+            eventCallback('', page_type, 'הקלקה על באנר (הפניה החוצה)', bannerName, 'מפרסם', publisherName, 'באנר קידום');
+        }
+    });
 });
 
 function getHebrewPageName(englishName) {

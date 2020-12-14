@@ -50,7 +50,7 @@ $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rat
             }
             ?>
         </div>
-    <?php if(wp_is_mobile() && get_post_type() == 'foody_recipe') { ?>
+    <?php if(wp_is_mobile() && get_post_type() == 'foody_recipe' && get_option( 'foody_show_kosher')) { ?>
         <div class="kosher-sign">
             <?php echo __('כשר'); ?>
         </div>
