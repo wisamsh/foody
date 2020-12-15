@@ -23,8 +23,8 @@ $title = isset($title) && !empty($title) ? $title : __('הגיע הזמן שנכ
     <?php echo $text ?>
 </p>
 <p>כבר נרשמתם לאתר בעבר? כל מה שאתם צריכים זה
-    <span style="color: #ed3d48;">
-        <a style="color: #ed3d48;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>">להתחבר</a>
+    <span style="color: #e6392b;">
+        <a style="color: #e6392b;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>">להתחבר</a>
     </span>
 </p>
 <p>&nbsp;</p>
