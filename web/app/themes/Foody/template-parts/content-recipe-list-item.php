@@ -41,7 +41,7 @@ $lazy = !empty($template_args['lazy']);
 
             <?php endif; ?>
 
-            <?php if (!empty($label = $recipe->get_label())): ?>
+            <?php if ( $options = get_option( 'foody_preview_labels', false ) && !empty($label = $recipe->get_label())): ?>
 
                 <div class="recipe-label">
                     <span><?php echo $label ?> </span>
@@ -52,7 +52,7 @@ $lazy = !empty($template_args['lazy']);
             <?php if (isset($recipe->post->pinned) && $recipe->post->pinned):
 
                 $label = $recipe->get_pinned_recipe_lable($recipe->post->pinned);
-                if (!empty($label)) {
+                if ($options = get_option( 'foody_preview_labels', false ) && !empty($label)) {
                     ?>
                     <div class="recipe-label">
                         <span><?php echo $label ?> </span>
