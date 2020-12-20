@@ -16,6 +16,8 @@ jQuery(document).ready(($) => {
         if (foodyGlobals['post']['publisher']) {
             feedPublisher = foodyGlobals['post']['publisher'];
             //publishers.push(publisher);
+        } else if(foodyGlobals['channel_publisher_name']){
+            feedPublisher = foodyGlobals['channel_publisher_name'];
         }
 
         /**
