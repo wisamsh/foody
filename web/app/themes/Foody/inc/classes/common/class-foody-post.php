@@ -996,4 +996,16 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return false;
     }
 
+    function the_print_main_image(){
+        $image_id = get_post_thumbnail_id($this->post);
+        $image_url = get_the_post_thumbnail_url($this->post);
+        $image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', TRUE);
+
+        if($image_url && !empty($image_url)){
+            $image_alt = !empty($image_alt) ? $image_alt : 'main-image';
+            $image_elem = '<img src="'. $image_url .'" class="primary-image print" alt="'. $image_alt .'">';
+            echo $image_elem;
+        }
+    }
+
 }

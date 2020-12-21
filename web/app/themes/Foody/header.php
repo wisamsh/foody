@@ -332,7 +332,10 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
             </nav>
         </div>
     <?php } ?>
-
+    <?php if (is_single() && $post_type == 'foody_recipe') {
+        // add header for print
+        Foody_Header::getPrintHeader();
+    } ?>
     <div id="content" class="site-content">
         <?php
         if (wp_is_mobile()) {

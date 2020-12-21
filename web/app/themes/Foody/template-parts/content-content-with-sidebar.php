@@ -61,7 +61,7 @@ if (method_exists($foody_page, $css_fn)) {
 
                                 ?>
                                 <section class="details-container">
-                                    <div class="<?php foody_el_classes($featured_content_classes) ?>">
+                                    <div class="<?php foody_el_classes($featured_content_classes) ?> no-print">
                                         <?php $foody_page->the_featured_content() ?>
                                     </div>
                                     <?php if (!empty($foody_page->get_featured_content_credit())) : ?>

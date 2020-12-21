@@ -44,27 +44,16 @@ $recipe = $template_args['recipe'];
       "recipeIngredient": <?php echo $recipe->get_ingredients_jsonld() ?>,
       "recipeInstructions": "<?php echo str_replace(['/', "\\"], ' ', str_replace('"', '״', str_replace(array("\r", "\n", "\t"), "", wp_strip_all_tags(get_the_content($recipe))))) ?>"
 }
-
-
-
-
-
-
-
-
-
-
-
     </script>
 <?php
 $promotion_area_group = get_field('promotion_area', $recipe->id);
 if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text'])) { ?>
-    <section class="promotion-area">
+    <section class="promotion-area no-print">
         <?php $recipe->the_promotion_area($promotion_area_group); ?>
     </section>
 <?php } ?>
 
-    <section class="recipe-overview">
+    <section class="recipe-overview no-print">
 
         <?php $recipe->the_overview() ?>
 
@@ -73,12 +62,18 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
         </section>
 
     </section>
-
+  <section class="recipe-overview-print print">
+      <?php echo $recipe->the_print_overview() ?>
+      <div class="image-and-rating-print">
+          <?php echo $recipe->the_print_main_image() ?>
+          <?php echo $recipe->the_print_rating() ?>
+      </div>
+  </section>
 <?php
 $comments_rating_preps_group = get_field('comments_rating_component', $recipe->id);
 if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_preps_group['enable_component']) {
     ?>
-    <section class="comments-rating-prep-container">
+    <section class="comments-rating-prep-container no-print">
         <?php $recipe->get_comments_rating_preps_component($comments_rating_preps_group['number_of_preps']) ?>
     </section>
     <?php
@@ -97,10 +92,16 @@ if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_
     <section id="recipe-ingredients" class="recipe-ingredients box">
 
         <div class="recipe-ingredients-top row justify-content-between">
-            <h2 class="title">
+            <h2 class="title no-print">
                 <?php echo $recipe->the_ingredients_title() ?>
             </h2>
-            <div class="amount-container">
+            <div class="title-with-line print">
+                <h2 class="title">
+                    <?php echo $recipe->the_ingredients_title() ?>
+                </h2>
+                <hr class="title-line">
+            </div>
+            <div class="amount-container no-print">
                 <?php $recipe->calculator(); ?>
             </div>
         </div>
@@ -120,6 +121,7 @@ if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_
     <section class="purchase-buttons">
         <?php $recipe->the_purchase_buttons(); ?>
     </section>
+    <hr class="title-line">
     <section class="recipe-content <?php echo $recipe->is_content_by_steps() ? 'with-steps' : ''?>">
         <?php $recipe->get_relevant_content(); ?>
     </section>
@@ -146,7 +148,7 @@ if (!empty($enable_tip) && $enable_tip) { ?>
 <?php
 $similar_content = get_field('similar_content_group', $recipe->get_id());
 if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
-    <section class="recipe_similar_content">
+    <section class="recipe_similar_content no-print">
         <?php $recipe->get_similar_content($similar_content); ?>
     </section>
 <?php } ?>
@@ -204,3 +206,6 @@ if (!empty($similar_content) && !empty($similar_content['active_similar_content'
     		<?php echo footabc_add_code_to_content(); ?>
         </section>
 <?php endif; ?>
+<div class="print-footer print">
+    <span class="footer-text"><?php echo __('לעוד מתכונים חפשו פודי בגוגל או היכנסו ל- foody.co.il') ?></span>
+</div>

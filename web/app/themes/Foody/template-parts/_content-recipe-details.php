@@ -23,7 +23,11 @@ if ( ! foody_is_registration_open() ) {
     </h1>
 
     <!-- Description -->
-    <div class="description">
+    <div class="description no-print">
+		<?php echo $foody_page->getDescription() ?>
+    </div>
+
+    <div class="description-print print">
 		<?php echo $foody_page->getDescription() ?>
     </div>
 
@@ -67,9 +71,15 @@ if ( ! foody_is_registration_open() ) {
 						)
 					);
 					?>
+                    <?php if ( ! wp_is_mobile() ): ?>
+                    <section class="rating-container d-lg-block">
+                        <?php $foody_page instanceof Foody_Recipe ? $foody_page->ratings_new() : Foody_Recipe::ratings() ?>
+                    </section>
+                    <?php endif; ?>
                 </section>
 			<?php endif; ?>
         </section>
+
     </section>
 
     <?php if ( wp_is_mobile() ): ?>
@@ -81,7 +91,7 @@ if ( ! foody_is_registration_open() ) {
         </section>
     <?php endif; ?>
 
-    <section class="social-and-take-me-container">
+    <section class="social-and-take-me-container no-print">
 
 <!--     Social buttons-->
         <section class="social-buttons-container">
@@ -93,7 +103,7 @@ if ( ! foody_is_registration_open() ) {
         </section>
 
 
-            <section class="take-me-to-recipe-container desktop <?php echo get_field('enable_take_to_recipe') ? '' : 'hidden'?>">
+            <section class="take-me-to-recipe-container desktop no-print <?php echo get_field('enable_take_to_recipe') ? '' : 'hidden'?>">
                 <?php $foody_page->get_take_me_to_recipe_btn() ?>
             </section>
 

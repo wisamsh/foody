@@ -1249,4 +1249,26 @@ class Foody_Recipe extends Foody_Post
 
         echo "<a class='take_to_recipe_link' href='#recipe-ingredients'><img class='take-me-to-recipe' src='". $btn_image_url ."' alt='". $btn_image_alt ."'></a>";
     }
+
+    function the_print_overview(){
+        $overview_data=[
+            'ingredients_count' => ['title' => __('מרכיבים'), 'data' => isset($this->overview) && isset($this->overview['ingredients_count']) ? $this->overview['ingredients_count']['text'] : 0],
+            'preparation_time' => ['title' => __('זמן הכנה'), 'data' => isset($this->overview) && isset($this->overview['preparation_time']['text']) ? $this->overview['preparation_time']['text'] : 0],
+            'total_time' => ['title' => __('זמן כולל'), 'data' => isset($this->overview) && isset($this->overview['total_time']['text']) ? $this->overview['total_time']['text'] : 0],
+            'calories_per_dish' =>  ['title' => __('קלוריות'), 'data' => isset($this->overview) && isset($this->overview['calories_per_dish']) ? $this->overview['calories_per_dish']['text'] : 0],
+            'dishes_amount' => ['title' => __('כמות מנות'), 'data' => $this->getNumberOfDishes()]
+        ];
+
+        $table_element = '<table class="overview-table print"><tr>';
+        foreach ($overview_data as $key => $value) {
+            $table_element .= '<th><div class="cell-title">' . $value['title'] . '</div><div class="cell-value">' . $value['data'] . '</div> </th>';
+        }
+        $table_element .= '</tr></table>';
+
+        return $table_element;
+    }
+
+    function the_print_rating(){
+        return $this->rating->foody_get_the_rating($this->id, true, true);
+    }
 }

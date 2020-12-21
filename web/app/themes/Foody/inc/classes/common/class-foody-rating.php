@@ -35,17 +35,18 @@ class Foody_Rating
         return $wpdb->get_results($query);
     }
 
-    function foody_get_the_rating($post_id, $part_of_component = false)
+    function foody_get_the_rating($post_id, $part_of_component = false, $print = false)
     {
         if ($this->foody_has_rating($post_id)) {
             return $this->foody_get_populated_ratings($post_id);
         } else {
-            return $this->foody_get_empty_rating($part_of_component);
+            return $this->foody_get_empty_rating($part_of_component, $print);
         }
     }
 
-    function foody_get_empty_rating($part_of_component = false){
+    function foody_get_empty_rating($part_of_component = false, $print = false){
         $header_text = $part_of_component ? __('דרגו את המתכון') : __('דרגו');
+        $header_text = $print ? __('0 דירוגים') : $header_text;
         $rating_header = '<div class="rating-header">'. $header_text .'</div>';
         $rating_stars = $this->foody_get_empty_stars();
 
