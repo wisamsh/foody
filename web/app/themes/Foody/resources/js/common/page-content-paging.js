@@ -90,6 +90,8 @@ module.exports = (function () {
             let ref = that.locationUtils.getQuery('referer');
             if (ref && ref.length) {
                 createRefererLinks(ref);
+            } else if (foodyGlobals['referered_area']){
+                createRefererLinks(foodyGlobals['referered_area']);
             }
         });
     };

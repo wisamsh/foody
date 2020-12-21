@@ -12,6 +12,7 @@ $footer = new Foody_Footer();
 $post = get_post();
 $feed_area_id = 0;
 $use_general_banner = true;
+$page = get_queried_object();
 
 if (isset($_GET) && !empty($_GET) && isset($_GET['referer']) && $_GET['referer'] != 0) {
         if($post == null){
@@ -24,13 +25,16 @@ if (isset($_GET) && !empty($_GET) && isset($_GET['referer']) && $_GET['referer']
             $feed_area_id = $post->ID;
         }
 }
-elseif (isset($post) && $post->post_type == 'foody_recipe' && get_field('recipe_channel', $post->ID)){
+elseif (isset($post) && ($post->post_type == 'foody_recipe' || $post->post_type == 'post') && get_field('recipe_channel', $post->ID)){
     if (!get_field('activate_banner', $post->ID)) {
         $feed_area_id = get_field('recipe_channel', $post->ID);
     }
     else {
         $feed_area_id = $post->ID;
     }
+}
+elseif(isset($page->taxonomy) && $page->taxonomy === 'category' && get_field('recipe_channel', $page)){
+    $feed_area_id = get_field('recipe_channel', $page);
 }
 elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post_type == 'foody_recipe' || $post->post_type == 'post')) {
     $feed_area_id = $post->ID;

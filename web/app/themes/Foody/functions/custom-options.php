@@ -12,6 +12,7 @@ register_setting( 'discussion', 'whatsapp_phone_number' );
 register_setting( 'general', 'foody_404_text' );
 register_setting( 'general', 'foody_show_ingredients_conversion' );
 register_setting( 'general', 'foody_conversion_table_link_show' );
+register_setting( 'general', 'foody_preview_labels' );
 register_setting( 'general', 'foody_conversion_table_link' );
 register_setting( 'general', 'foody_conversion_table_link_target' );
 register_setting( 'general', 'foody_conversion_table_link_text' );
@@ -209,7 +210,10 @@ function foody_custom_options() {
         add_settings_field( 'foody_remove_foodys_link_footer', __( 'הסר לינק Foody 2020 בפוטר', 'foody' ), 'foody_remove_foodys_link_footer_callback', 'general', 'foody_general_settings' );
     }
 
-	// Should show Ingredients
+    //show recipes and articles labels
+    add_settings_field( 'foody_preview_labels', __( 'הצג לייבל/פלאח על מתכונים וכתבות' ), 'foody_preview_labels_callback', 'general','foody_general_settings' );
+
+    // Should show Ingredients
 	add_settings_field( 'foody_conversion_table_link_show', __( 'הצגת קישור לטבלת המרות', 'foody' ), 'foody_conversion_table_link_show_callback', 'general', 'foody_general_settings' );
 	add_settings_field( 'foody_conversion_table_link', __( 'קישור לטבלת המרות', 'foody' ), 'foody_conversion_table_link_callback', 'general', 'foody_general_settings' );
 	add_settings_field( 'foody_conversion_table_link_target', __( 'פתח טבלת המרות בחלון חדש', 'foody' ), 'foody_conversion_table_link_target_callback', 'general', 'foody_general_settings' );
@@ -304,6 +308,14 @@ function foody_conversion_table_link_show_callback() {
 function foody_conversion_table_link_callback() {
 	$options = get_option( 'foody_conversion_table_link', false );
 	echo '<input type="url" size="50" id="foody_conversion_table_link" name="foody_conversion_table_link" value="' . $options . '">';
+}
+
+
+//show recipes and articles labels
+function foody_preview_labels_callback() {
+    $options = get_option( 'foody_preview_labels', false );
+    $checked = $options ? 'checked' : '';
+    echo '<input ' . $checked . ' type="checkbox" id="foody_preview_labels" name="foody_preview_labels">';
 }
 
 // Show foody_conversion_table_link_target field

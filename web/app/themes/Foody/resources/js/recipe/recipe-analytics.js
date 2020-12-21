@@ -43,7 +43,7 @@ jQuery(document).ready(($) => {
         set_recipe_order_location(foodyGlobals.ID);
 
         $('h2').each(function (index) {
-            if($($('h2')[index]).css('color') == 'rgb(237, 61, 72)'){
+            if($($('h2')[index]).css('color') == 'rgb(230, 57, 43)'){
                 if($($('h2')[index]).length) {
                     redTitlesList[$($('h2')[index])[0].innerText] = $($('h2')[index]);
                     // redTitlesAppeared[$($('h2')[index])[0].innerText] = false;
@@ -58,6 +58,8 @@ jQuery(document).ready(($) => {
         if (foodyGlobals['post']['publisher']) {
             feedPublisher = foodyGlobals['post']['publisher'];
             //publishers.push(publisher);
+        } else if(foodyGlobals['channel_publisher_name']){
+            feedPublisher = foodyGlobals['channel_publisher_name'];
         }
 
         if ($('.sponsors-container').length) {

@@ -541,6 +541,7 @@ function foody_posts_page_script()
         /** from feed area */
         if ($post_type == 'foody_recipe' || $post_type == 'post') {
             $feed_area_id = isset($post->ID) ? get_field('recipe_channel', $post->ID) : get_field('recipe_channel');
+            $feed_area_id = is_category() ? get_field('recipe_channel', get_queried_object()) : $feed_area_id;
             if (is_array($_GET) && (isset($_GET['referer']) || $feed_area_id)) {
                 $referer = isset($_GET['referer']) ? $_GET['referer'] : $feed_area_id;
 
