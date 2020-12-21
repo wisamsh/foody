@@ -40,6 +40,7 @@ if ( empty( $link ) ) {
     global $post;
 	$link = get_field( 'cover_link' );
     $feed_area_id = !empty($post->id) ? get_field('recipe_channel', $post->id) : get_field('recipe_channel');
+    $feed_area_id = is_category() ? get_field('recipe_channel', get_queried_object()) : $feed_area_id;
 
     // add link to cover that was referred by feed channel
     if ((isset($_GET) && isset($_GET['referer']) && $_GET['referer']) || $feed_area_id) {
