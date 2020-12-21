@@ -33,7 +33,7 @@ $lazy = ! empty( $template_args['lazy'] );
                      alt="<?php echo foody_get_featured_image_alt( $feed_area ) ?>">
 
 			<?php endif; ?>
-			<?php if ( ! empty( $label = $feed_area->get_label() ) ): ?>
+			<?php if ($options = get_option( 'foody_preview_labels', false ) && ! empty( $label = $feed_area->get_label() ) ): ?>
 
                 <div class="recipe-label">
                     <span>
