@@ -169,7 +169,7 @@ class Foody_Recipe extends Foody_Post
         }, $this->ingredients_groups);
     }
 
-    public function the_notes()
+    public function the_notes($print = false)
     {
         $notes = null;
         $title = null;
@@ -181,7 +181,8 @@ class Foody_Recipe extends Foody_Post
 
         $template_args = [
             'notes' => $notes,
-            'title' => $title
+            'title' => $title,
+            'print' => $print
         ];
 
         if (array_not_empty($notes)) {
@@ -1192,7 +1193,29 @@ class Foody_Recipe extends Foody_Post
                 return;
             }
         }
-        echo '<div class="content-container">' . $this->body . '</div>';
+        $content_body = $this->body;
+        echo '<div class="content-container print-mobile">' . $content_body . '</div>';
+        $print_body = apply_filters('foody_print_version_for_content', $content_body);
+        echo '<div class="content-container print-desktop print"><div class="content-and-notes print">' . $print_body['content'] . $this->get_notes() . '</div><div class="content-images">' . $print_body['figures'].'</div></div>';
+    }
+
+    function get_notes(){
+        $notes = null;
+        $title = null;
+
+        while (have_rows('notes', $this->post->ID)): the_row();
+            $notes = get_sub_field('notes');
+            $title = get_sub_field('title');
+        endwhile;
+
+        $notes_element = '<section class="recipe-notes box print"><div class="title-with-line"><h2 class="title">'. $title .'</h2><hr class="title-line"></div><ul class="notes" title="הערות">';
+        foreach ( $notes as $note ):
+            $notes_element .= '<li class="note">'.$note["note"].'</li>';
+        endforeach;
+
+        $notes_element .='</ul></section>';
+
+        return $notes_element;
     }
 
     function get_content_as_steps($steps)

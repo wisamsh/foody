@@ -140,7 +140,7 @@ if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_
 <?php
 $enable_tip = get_field('enable_tip', $recipe->get_id());
 if (!empty($enable_tip) && $enable_tip) { ?>
-    <section class="system-tip-container">
+    <section class="system-tip-container no-print">
         <?php $recipe->get_system_tip(); ?>
     </section>
 <?php } ?>

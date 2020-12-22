@@ -3199,6 +3199,14 @@ $content-width: 95%;
       display: block;
     }
 
+    .print-desktop{
+      display: block;
+    }
+
+    .print-mobile{
+      display: none !important;
+    }
+
     //:not(.print){
     //  display: none;
     //}
@@ -3382,10 +3390,46 @@ $content-width: 95%;
         background-color: #ffffff !important;
 
         .content-container{
-          .foody-content{
-            .recipe-shortcode-container,
-            .article-shortcode-container{
-              display: none;
+          display: flex;
+          flex-direction: row;
+          .content-and-notes {
+            .foody-content {
+              .recipe-shortcode-container,
+              .article-shortcode-container {
+                display: none;
+              }
+            }
+
+            .recipe-notes{
+              .title-with-line{
+                display: flex;
+                flex-direction: row;
+                margin-top: 3%;
+                justify-content: space-between;
+
+                .title{
+                  padding-left: 2px;
+                }
+                .title-line{
+                  margin: auto 0;
+                  width: 90%;
+                  float: left;
+                  text-align: left;
+                  background-color: var(--color__primary);
+                  opacity: 0.3;
+                }
+              }
+              .notes{
+                margin: 0;
+              }
+            }
+          }
+
+          .content-images{
+            max-width: 200px;
+
+            figcaption{
+              font-size: 12px;
             }
           }
         }
