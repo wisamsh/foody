@@ -183,7 +183,7 @@ $recipe = $template_args['recipe'];
 	<?php $recipe->the_mobile_sidebar_content(); ?>
 </section>
 
-<?php if ( function_exists( 'footabc_add_code_to_content' ) ): ?>
+<?php if ( function_exists( 'footabc_add_code_to_content' ) && get_option( 'foody_show_taboola_feed', false )): ?>
     <section class="footab-container">
 		<?php echo footabc_add_code_to_content(); ?>
     </section>

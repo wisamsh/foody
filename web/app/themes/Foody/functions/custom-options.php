@@ -10,6 +10,7 @@ register_setting( 'discussion', 'hid_per_page' );
 register_setting( 'discussion', 'whatsapp_phone_number_toggle' );
 register_setting( 'discussion', 'whatsapp_phone_number' );
 register_setting( 'general', 'foody_404_text' );
+register_setting( 'general', 'foody_show_taboola_feed' );
 register_setting( 'general', 'foody_show_ingredients_conversion' );
 register_setting( 'general', 'foody_conversion_table_link_show' );
 register_setting( 'general', 'foody_preview_labels' );
@@ -210,6 +211,9 @@ function foody_custom_options() {
         add_settings_field( 'foody_remove_foodys_link_footer', __( 'הסר לינק Foody 2020 בפוטר', 'foody' ), 'foody_remove_foodys_link_footer_callback', 'general', 'foody_general_settings' );
     }
 
+    //show taboola feed on site
+    add_settings_field( 'foody_show_taboola_feed', __( 'הצג פיד טאבולה' ), 'foody_show_taboola_feed_callback', 'general','foody_general_settings' );
+
     //show recipes and articles labels
     add_settings_field( 'foody_preview_labels', __( 'הצג לייבל/פלאח על מתכונים וכתבות' ), 'foody_preview_labels_callback', 'general','foody_general_settings' );
 
@@ -310,6 +314,13 @@ function foody_conversion_table_link_callback() {
 	echo '<input type="url" size="50" id="foody_conversion_table_link" name="foody_conversion_table_link" value="' . $options . '">';
 }
 
+
+//show recipes and articles labels
+function foody_show_taboola_feed_callback() {
+    $options = get_option( 'foody_show_taboola_feed', false );
+    $checked = $options ? 'checked' : '';
+    echo '<input ' . $checked . ' type="checkbox" id="foody_show_taboola_feed" name="foody_show_taboola_feed">';
+}
 
 //show recipes and articles labels
 function foody_preview_labels_callback() {
