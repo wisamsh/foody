@@ -67,7 +67,7 @@ echo do_shortcode( '[wordpress_social_login]' );
 
             </div>
 
-            <form id="login-form" action="<?php echo wp_login_url( get_permalink(get_page_by_path('השלמת-רישום')) ); ?>" class="row" method="post">
+            <form id="login-form" action="<?php echo wp_login_url( home_url() ); ?>" class="row" method="post">
 
                 <div role="alert" class="alert foody-alert alert-dismissible alert-danger login-failed-alert">
                     <span><?php echo __( 'התחברות נכשלה. אנא ודא/י את כתובת המייל והסיסמא', 'foody' ); ?></span>
@@ -119,10 +119,10 @@ echo do_shortcode( '[wordpress_social_login]' );
                 </div>
 
 				<?php
-				$redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
-//				if ( strpos( $redirect_to, 'התחברות' ) !== false ) {
-//					$redirect_to = home_url();
-//				}
+				$redirect_to = get_permalink();
+				if ( strpos( $redirect_to, 'התחברות' ) !== false ) {
+					$redirect_to = home_url();
+				}
 				?>
 
                 <input type="hidden" name="redirect_to" value="<?php echo $redirect_to; ?>">
