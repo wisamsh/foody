@@ -776,7 +776,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                         $feed_area_id = !empty($this->id) ? get_field('recipe_channel', $this->id) : get_field('recipe_channel');
                         if ((isset($_GET['referer']) && $_GET['referer'] ) || $feed_area_id ) {
                             $recipe_referer = isset($_GET['referer']) && $_GET['referer'] ? $_GET['referer'] : $feed_area_id;
-                            if(!empty($logo = $this->get_feed_logo($recipe_referer))){
+                            $show_feed_logo = get_field('enable_logo_inside_recipes', $recipe_referer);
+                            if(!empty($logo = $this->get_feed_logo($recipe_referer)) && $show_feed_logo){
                                 echo '<img class="feed-logo-sticker" src="' . $logo . '">';
                             }
                         }
