@@ -364,6 +364,7 @@ function create_courses_mail_body($member_data)
 {
 //    $enable_marketing_text = $member_data['enable_marketing'] == 'true' ? "TRUE" : 'FALSE';
     $enable_marketing_text = $member_data['enable_marketing'] == 'true' ? __('מאשר קבלת דואר') : __('לא מאשר קבלת דואר');
+    $coupon = isset($member_data['coupon']) && !empty($member_data['coupon']) ? $member_data['coupon'] : '';
 
     $mail_body = '<p>';
     $mail_body .= 'querystring__UserEmail: ' . $member_data['member_email'];
@@ -386,11 +387,9 @@ function create_courses_mail_body($member_data)
     $mail_body .= '<p>';
     $mail_body .= 'querystring__Custom10: ' . $enable_marketing_text;
     $mail_body .= '</p>';
-    if (!empty($member_data['coupon'])) {
-        $mail_body .= '<p>';
-        $mail_body .= 'querystring__CouponNumber: ' . $member_data['coupon'];
-        $mail_body .= '</p>';
-    }
+    $mail_body .= '<p>';
+    $mail_body .= 'querystring__CouponNumber: ' . $coupon;
+    $mail_body .= '</p>';
 
     return $mail_body;
 }
