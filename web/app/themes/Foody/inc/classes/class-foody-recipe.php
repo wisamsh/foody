@@ -1202,18 +1202,20 @@ class Foody_Recipe extends Foody_Post
     function get_notes(){
         $notes = null;
         $title = null;
+        $notes_element ='';
 
         while (have_rows('notes', $this->post->ID)): the_row();
             $notes = get_sub_field('notes');
             $title = get_sub_field('title');
         endwhile;
 
-        $notes_element = '<section class="recipe-notes box print"><div class="title-with-line"><h2 class="title">'. $title .'</h2><hr class="title-line"></div><ul class="notes" title="הערות">';
-        foreach ( $notes as $note ):
-            $notes_element .= '<li class="note">'.$note["note"].'</li>';
-        endforeach;
-
-        $notes_element .='</ul></section>';
+        if(is_array($notes)) {
+            $notes_element = '<section class="recipe-notes box print"><div class="title-with-line"><h2 class="title">'. $title .'</h2><hr class="title-line"></div><ul class="notes" title="הערות">';
+            foreach ($notes as $note):
+                $notes_element .= '<li class="note">' . $note["note"] . '</li>';
+            endforeach;
+            $notes_element .= '</ul></section>';
+        }
 
         return $notes_element;
     }
