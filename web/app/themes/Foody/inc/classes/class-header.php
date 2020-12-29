@@ -173,11 +173,12 @@ class Foody_Header {
 		] );
 	}
 
-	public static function getPrintHeader(){
+	public static function getPrintHeader($mobile = false){
 	    $title_text = __('עוד מתכון מ-');
+	    $classes = $mobile ? 'print-header print-mobile' : 'print-header print-desktop';
 	    $title_element = '<h1 class="print-header-text print">'.$title_text.'</h1>';
 	    $image_element = foody_custom_logo_link(true);
 
-	    echo '<div class="print-header print">'.$title_element.$image_element.'</div>';
+	    echo '<div class="'. $classes .'">'.$title_element.$image_element.'</div>';
     }
 }

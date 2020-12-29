@@ -1485,7 +1485,8 @@ $content-width: 95%;
     }
   }
 }
-
+.print-mobile,
+.print-desktop,
 .print{
   display: none;
 }
@@ -3321,12 +3322,12 @@ $content-width: 95%;
 
         .overview-table{
           margin-right: 1%;
-          width: 76%;
+          width: 60%;
 
           th{
             border-radius: 4.3px;
             border: 2px solid #fef5f6;
-            padding: 0.5% 2%;
+            padding: 5px;
             text-align: center;
             font-size: 14.5px;
             width: 20.7%;
@@ -3456,6 +3457,14 @@ $content-width: 95%;
 
   @include breakpoint(mobileonly) {
     .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
+      .no-print,
+      .print-desktop{
+        display: none !important;
+      }
+
+      .print-mobile{
+        display: block;
+      }
 
     }
   }

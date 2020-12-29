@@ -51,7 +51,9 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
     <section class="promotion-area no-print">
         <?php $recipe->the_promotion_area($promotion_area_group); ?>
     </section>
-<?php } ?>
+<?php }
+Foody_Header::getPrintHeader(true);
+?>
 
     <section class="recipe-overview no-print">
 
@@ -62,7 +64,7 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
         </section>
 
     </section>
-  <section class="recipe-overview-print print">
+  <section class="recipe-overview-print print-desktop">
       <?php echo $recipe->the_print_overview() ?>
       <div class="image-and-rating-print">
           <?php echo $recipe->the_print_main_image() ?>
@@ -202,7 +204,7 @@ if (!empty($similar_content) && !empty($similar_content['active_similar_content'
     </section>
 
 <?php if ( function_exists( 'footabc_add_code_to_content' ) ): ?>
-        <section class="footab-container">
+        <section class="footab-container no-print">
     		<?php echo footabc_add_code_to_content(); ?>
         </section>
 <?php endif; ?>
