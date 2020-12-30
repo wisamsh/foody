@@ -986,3 +986,8 @@ function foody_remove_nav_items_description( $nav, $args ) {
     }
     return $nav;
 }
+
+add_filter( "use_block_editor_for_post_type", "foody_disable_gutenberg_editor" );
+function foody_disable_gutenberg_editor() {
+    return false;
+}
