@@ -173,6 +173,12 @@ $general_coupons_list = get_all_unused_general_coupons_names();
             });
         });
     </script>
+    <style>
+        .bootstrap-select.open div.dropdown-menu{
+            right: 0px;
+            left: unset;
+        }
+    </style>
 <?php
 function get_all_unused_general_coupons_names()
 {

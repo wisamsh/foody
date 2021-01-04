@@ -60,7 +60,7 @@ if ( ! foody_is_registration_open() ) {
             </section>
 
 			<?php if ( $show_favorite ): ?>
-                <section class="favorite-container">
+                <section class="favorite-container" style="visibility: <?php echo get_option( 'foody_show_favorite', true ) ? 'visible' : 'hidden' ?>">
 					<?php
 
 					foody_get_template_part(

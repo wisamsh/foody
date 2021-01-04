@@ -78,7 +78,7 @@ if ( ! foody_is_registration_open() ) {
 
     <!-- Favorite mobile -->
 	<?php if ( $show_favorite ): ?>
-        <section class="d-block d-xl-none favorite-container">
+        <section class="d-block d-xl-none favorite-container" style="visibility: <?php echo get_option( 'foody_show_favorite', true ) ? 'visible' : 'hidden' ?>">
 			<?php
 
 			foody_get_template_part(

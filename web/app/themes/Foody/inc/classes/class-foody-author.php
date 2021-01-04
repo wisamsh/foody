@@ -30,12 +30,26 @@ class Foody_Author implements Foody_ContentWithSidebar, Foody_Topic
 
     function the_featured_content()
     {
-        $image = get_field('cover_image', "user_{$this->author->ID}");
-        if($image) {
-            ?>
-            <img src=" <?php echo $image['url'] ?> " alt="<?php echo $this->author->display_name ?>">
+        if(isset($this->author) && $this->author && isset($this->author->ID) && $this->author->ID !== null ) {
+            $image = get_field('cover_image', "user_{$this->author->ID}");
+            //Add link to banner image
+            $link = get_field('cover_image_link', "user_{$this->author->ID}");
 
-            <?php
+            if ($image) {
+                //Add anchor tag if link exists
+                if ($link){ ?>
+                <a href="<?php echo esc_url($link['url']) ?>">
+                <?php } ?>
+                <img src=" <?php echo $image['url'] ?> " alt="<?php echo $this->author->display_name ?>">
+
+                <?php
+                //Close anchor tag if link exists
+                if ($link) {
+                    ?>
+                    </a>
+                    <?php
+                }
+            }
         }
     }
 

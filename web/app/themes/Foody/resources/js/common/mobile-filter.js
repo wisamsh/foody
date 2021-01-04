@@ -25,6 +25,20 @@ jQuery(document).ready(($) => {
                 });
                 $mobileFilterBtn.click((event) => {
                     event.stopPropagation();
+
+                    // if brands avenue is open => close it
+                    if($('.brands-toggle-mobile .brands-avenue-mobile').length){
+                        if($('.brands-toggle-mobile .brands-avenue-mobile').hasClass('open')){
+                            $('.brands-avenue-mobile').removeClass('open');
+                        }
+                    }
+
+                    // if mobile menu open => close it
+                    if($('header .navbar-toggler').length && $('header .quadmenu-navbar-toggle').length && !$('header .quadmenu-navbar-toggle').hasClass('collapsed')){
+                        $('header .quadmenu-navbar-toggle').click();
+                    }
+
+
                     $mobileFilter.addClass('open');
 
                     $(window).click(function () {

@@ -38,11 +38,18 @@
         .course-title {
           font-size: 22px;
           color: red;
+          text-align: center;
+          margin: 0;
+          font-weight: bold;
         }
 
         .course-cover-text {
+          font-size: 20px;
           line-height: 1rem;
           white-space: normal;
+          text-align: center;
+          margin: 0;
+          font-weight: bold;
         }
       }
     }
@@ -77,6 +84,12 @@
               input {
                 width: 100%;
               }
+            }
+
+            .address{
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
             }
           }
         }

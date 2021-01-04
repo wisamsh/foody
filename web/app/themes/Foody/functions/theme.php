@@ -11,8 +11,11 @@ function foody_get_background_image() {
     if($queried_object_id) {
         $background_image = get_field('background_image', get_queried_object_id());
         if (empty($background_image)) {
-            if (isset($_GET['referer'])) {
-                $referer_post = $_GET['referer'];
+            $post_id = get_the_ID();
+            $feed_area_id = !empty($post_id) ? get_field('recipe_channel', $post_id) : get_field('recipe_channel');
+            $feed_area_id = is_category() ? get_field('recipe_channel', get_queried_object()) : $feed_area_id;
+            if (isset($_GET['referer']) || $feed_area_id ) {
+                $referer_post = isset($_GET['referer']) ? $_GET['referer'] : $feed_area_id;
                 if (!empty($referer_post)) {
                     if (is_category() || is_tag() || in_array(get_post_type(), [
                             'post',

@@ -212,6 +212,58 @@ jQuery(document).ready(($) => {
                 eventCallback('', analyticsCategory, 'לקוחות ממליצים', foodyGlobals.post.title, '', '', foodyGlobals.post['hostName']);
             });
         }
+
+        /** faq section **/
+        if($('.faq-section').length){
+
+            let listOfFaqItems = [];
+            $('.faq-section .faq-list .faq-item .faq-item-q').each(function () {
+                listOfFaqItems[$(this).attr('data-index')] = false;
+            });
+
+            $('.faq-section .faq-list .faq-item:not(.show-details)').on('click', function () {
+
+                /** to bring the relevant child **/
+                let child  = $(this).find('.faq-item-q');
+                if(!listOfFaqItems[child.attr('data-index')]){
+                    let question = $(child).find('span');
+                    if(question.length){
+                        question = question[0].innerText;
+                        eventCallback('', analyticsCategory, 'פתיחת שאלה', foodyGlobals.post.title, 'מיקום', question, foodyGlobals.post['hostName']);
+                        listOfFaqItems[child.attr('data-index')] = true;
+                    }
+                }
+            });
+        }
+
+
+        if($('.syllabus-section').length){
+
+            let listOfSyllabusChapter = [];
+            $('.syllabus-section .chapters-container .chapter-container .chapter').each(function () {
+                if($(this).length) {
+                    listOfSyllabusChapter[$(this)[0].id] = false;
+                }
+            });
+
+            $('.syllabus-section .chapters-container .chapter-container:not(.show-details)').on('click', function () {
+
+                /** to bring the relevant child **/
+                let childDetails  = $(this).find('.chapter-details');
+                let childChapter  = $(this).find('.chapter');
+                if(childChapter.length) {
+                    let childChapterID = childChapter[0].id;
+                    if (!listOfSyllabusChapter[childChapterID]) {
+                        let titleElem = $(childDetails).find('.chapter-title');
+                        if (titleElem.length) {
+                            let title = titleElem[0].innerText;
+                            eventCallback('', analyticsCategory, 'פתיחת תוכן פרק', foodyGlobals.post.title, 'מיקום', title, foodyGlobals.post['hostName']);
+                            listOfSyllabusChapter[childChapterID] = true;
+                        }
+                    }
+                }
+            });
+        }
     }
 });
 
@@ -239,6 +291,7 @@ function eventCallback(event, category, action, label, cdDesc, cdValue, hostName
      * Logged in user ID
      */
     let customerID = foodyGlobals['loggedInUser'] ? foodyGlobals['loggedInUser'] : '';
+    let object = label;
 
     tagManager.pushDataLayer(
         category,
@@ -256,6 +309,7 @@ function eventCallback(event, category, action, label, cdDesc, cdValue, hostName
         '',
         cdDesc,
         cdValue,
-        ''
+        '',
+        object
     );
 }

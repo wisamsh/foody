@@ -34,10 +34,11 @@ class Foody_Recipe extends Foody_Post
      * Recipe constructor.
      *
      * @param WP_Post|null $post
+     * @param boolean $load_content
      */
-    public function __construct(WP_Post $post = null)
+    public function __construct(WP_Post $post = null, $load_content = true)
     {
-        parent::__construct($post);
+        parent::__construct($post,  $load_content);
         $this->init_video();
         $this->duration = $this->video['duration'];
 
@@ -59,17 +60,12 @@ class Foody_Recipe extends Foody_Post
     {
         $cover_image = get_field('cover_image');
         $mobile_image = get_field('mobile_cover_image');
+        $feed_area_id = get_field('recipe_channel');
 
-        if (isset($_GET['referer'])) {
-            $referer_post = $_GET['referer'];
+        if (isset($_GET['referer']) || $feed_area_id) {
+            $referer_post = isset($_GET['referer']) ? $_GET['referer'] : $feed_area_id;
             if (!empty($referer_post)) {
                 $cover_image = get_field('cover_image', $referer_post);
-            }
-        }
-
-        if (isset($_GET['referer'])) {
-            $referer_post = $_GET['referer'];
-            if (!empty($referer_post)) {
                 $mobile_image = get_field('mobile_cover_image', $referer_post);
             }
         }
@@ -144,7 +140,8 @@ class Foody_Recipe extends Foody_Post
             get_template_directory() . '/template-parts/content-recipe-ingredients.php',
             [
                 'groups' => array_merge([], $this->get_the_ingredients_groups()),
-                'substitute_ingredients_filters' => $substitute_ingredients_filters
+                'substitute_ingredients_filters' => $substitute_ingredients_filters,
+                'recipe_id' => $recipe_id
             ]
         );
 
@@ -877,9 +874,10 @@ class Foody_Recipe extends Foody_Post
 //			'zinc',
             'sugar'
         ];
-
-        if (isset($_GET['referer'])) {
-            $show_sugar = get_field('enable_sugar', $_GET['referer']);
+        $feed_area_id = get_field('recipe_channel');
+        if (isset($_GET['referer']) || $feed_area_id) {
+            $recipe_referer = isset($_GET['referer']) ? $_GET['referer'] : $feed_area_id;
+            $show_sugar = get_field('enable_sugar', $recipe_referer);
             if ($show_sugar) {
                 $excluded_nutrients = [
 //			'fibers',
@@ -1074,7 +1072,7 @@ class Foody_Recipe extends Foody_Post
 
             $the_query = new WP_Query($query_args);
             foreach ($the_query->posts as $post) {
-                $current_post = Foody_Post::create($post);
+                $current_post = Foody_Post::create($post, false);
                 $args_to_push = [
                     'title' => $current_post->getTitle(),
                     'image' => $current_post->getImage(),

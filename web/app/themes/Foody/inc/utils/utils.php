@@ -44,15 +44,16 @@ function view_count_display( $number, $precision = 0, $divisors = null, $label =
 	// Either way, use the last defined value for $divisor.
 	return number_format( $number / $divisor, $precision ) . sprintf( '<span class="view-count">' . $label . '</span>', $shorthand );
 }
-function foody_get_commercial_rules($rules){
+function foody_get_commercial_rules($rules, $recipe_id = false){
     // Filter rules - feed channel rules must be shown only under the correct feed channel.
     // Filter rules - date limited rules must be shown only when time is right.
-    $rules = array_filter( $rules, function ( $rule ) {
+    $rules = array_filter( $rules, function ( $rule ) use ($recipe_id) {
         $rule_id   = $rule['rule_id'];
         $rule_type = get_field( 'type', $rule_id );
 
         if ( $rule_type == 'area' ) {
-            if ( isset( $_GET['referer'] ) ) {
+            $feed_area_id = $recipe_id ? get_field('recipe_channel', $recipe_id) : get_field('recipe_channel') ;
+            if ( isset( $_GET['referer']) || $feed_area_id ) {
 
                 $rule_areas = get_field( 'comm_rule_area', $rule_id );
 
@@ -61,7 +62,7 @@ function foody_get_commercial_rules($rules){
                     return $area->ID;
                 }, $rule_areas );
 
-                $referer_post = $_GET['referer'];
+                $referer_post = isset( $_GET['referer']) ? $_GET['referer'] : $feed_area_id;
 
                 if ( ! empty( $referer_post ) ) {
                     if ( ! in_array( $referer_post, $rule_areas ) ) {

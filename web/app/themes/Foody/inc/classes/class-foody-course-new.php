@@ -8,6 +8,7 @@ class Foody_Course_new
     private $course_ragister_slug ;
     private $floating_buttons = [];
     private $links_target = 'blank';
+    private $is_cal_customer = false;
     private $old_price = '';
 
     /**
@@ -16,13 +17,13 @@ class Foody_Course_new
     public function __construct()
     {
         $this->course_data = get_field('course_page');
-
+        $this->course_register_data = get_field('course_register_data');
         $this->populate_course_properties();
+        $this->is_cal_customer = $this->is_cal_customer();
     }
 
     public function is_redirect_to_register_page()
     {
-        $this->course_register_data = get_field('course_register_data');
         if (isset($this->course_register_data['enable_redirect']) && $this->course_register_data['enable_redirect'] !== false) {
             $this->course_ragister_slug = __('הרשמה-לקורסים');
             return true;
@@ -316,7 +317,7 @@ class Foody_Course_new
                 $chapter_div = '<div class="chapter-container"><div class="chapter-details">' . $chapter_title_div . $chapter_icon . $chapter_summery_div . '</div>';
 
                 /** add bullets collapse */
-                $chapter_div .= '<div class="" id="chapter' . $chapter_number . '"><div class="chapter-bullets">' . $chapter_bullets_div . '</div></div></div>';
+                $chapter_div .= '<div class="chapter" id="chapter' . $chapter_number . '"><div class="chapter-bullets">' . $chapter_bullets_div . '</div></div></div>';
                 $chapters_container .= $chapter_div;
                 $chapter_number++;
             }
@@ -385,9 +386,9 @@ class Foody_Course_new
     {
         $content = '<div class="faq-list">';
 
-        foreach ($list as $item) {
+        foreach ($list as $index => $item) {
 
-            $item_content = "<div class=\"faq-item\"> <div class=\"faq-item-q\"><span>{$item['question']}</span></div> <div class=\"faq-item-a\">{$item['answer']}</div> </div>";
+            $item_content = "<div class=\"faq-item\"> <div data-index=". $index ." class=\"faq-item-q\"><span>{$item['question']}</span></div> <div class=\"faq-item-a\">{$item['answer']}</div> </div>";
 
             $content .= $item_content;
         }
@@ -729,6 +730,10 @@ class Foody_Course_new
         }
 
         return $not_empty_section;
+    }
+
+    private function is_cal_customer(){
+        return isset($this->course_register_data['is_cal_customers']) && $this->course_register_data['is_cal_customers'];
     }
 
 //    private function add_line_on_old_price($old_price, $text)

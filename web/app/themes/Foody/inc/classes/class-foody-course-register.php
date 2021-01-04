@@ -6,6 +6,7 @@ class Foody_Course_register
     private $course_data;
     private $page_data;
     private $course_id;
+    private $is_cal_customer = false;
 
     /**
      * register page constructor.
@@ -15,6 +16,7 @@ class Foody_Course_register
         $this->course_data = get_field('course_register_data', $course_id);
         $this->page_data = get_field('register_page_data');
         $this->course_id = $course_id;
+        $this->is_cal_customer = $this->is_cal_customer();
 
 //        add_action('wp_ajax_foody_get_credit_button_section', array( $this,'foody_get_credit_button_section'));
 //        add_action('wp_ajax_foody_nopriv_get_credit_button_section', array( $this,'foody_get_credit_button_section'));
@@ -71,8 +73,8 @@ class Foody_Course_register
         $course_information = '<div class="course-information" data-course-id = ' . $this->course_id . '>';
         $host_name = get_field('course_page_main_cover_section_host_name', $this->course_id);
         /** title and host */
-        $title_div = '<div class="course-title" data-host="' . $host_name . '">' . $course_name . '</div>';
-        $text_div = '<div class="course-cover-text">' . $register_subtext . '</div>';
+        $title_div = '<h1 class="course-title" data-host="' . $host_name . '">' . $course_name . '</h1>';
+        $text_div = '<h2 class="course-cover-text">' . $register_subtext . '</h2>';
 
 
         $course_information .= $title_div . $text_div . '</div>';
@@ -176,7 +178,7 @@ class Foody_Course_register
             $buttons_div = '<div class="button-container">';
         }
 
-        if ($enable_bit) {
+        if ($enable_bit && !$this->is_cal_customer) {
             $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
             $link_thank_you = isset($this->course_data['link_thank_you']) ? $this->course_data['link_thank_you'] : get_home_url();
             if (wp_is_mobile()) {
@@ -193,7 +195,7 @@ class Foody_Course_register
             $invoice_mail = isset($this->page_data['mail_invoice']) ? $this->page_data['mail_invoice'] : '';
             $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
 
-            $credit_button = '<div class="credit-card-pay"  data-item-name="' . $course_name . '" data-invoice-mail="' . $invoice_mail . '" data-thank-you="' . $link_thank_you . '?course_id=' . $this->course_id . '" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
+            $credit_button = '<div class="credit-card-pay" data-is-cal="'. $this->is_cal_customer .'"  data-item-name="' . $course_name . '" data-invoice-mail="' . $invoice_mail . '" data-thank-you="' . $link_thank_you . '?course_id=' . $this->course_id . '" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
             $buttons_div .= $credit_button;
 
         }
@@ -217,12 +219,36 @@ class Foody_Course_register
             'phone-number' => ['type' => 'tel', 'name' => 'phone_number', 'label' => 'מספר טלפון:']
         ];
 
-        foreach ($form_fields as $key => $field_data) {
-            $form_group = '<div class="form-group col-12 required-input">';
-            $label = '<label for="' . $key . '">' . __($field_data['label'], 'foody') . '</label>';
-            $input = '<input type="' . $field_data['type'] . '" id="' . $key . '" name="' . $field_data['name'] . '" required>';
+        if($this->is_cal_customer){
+            $form_fields['city-street'] = ['city'=>['type' => 'text', 'name' => 'city', 'label' => 'עיר:'], 'street' => ['type' => 'text', 'name' => 'street', 'label' => 'רחוב:']];
+            $form_fields['building-details'] = ['building_number' => ['type' => 'number', 'min' => 1, 'name' => 'building_number', 'label' => 'מס׳ בית:'], 'apt' => ['type' => 'number', 'min' => 0, 'name' => 'apt', 'label' => 'דירה:']];
+        }
 
-            $form_group .= $label . $input . '</div>';
+        foreach ($form_fields as $key => $field_data) {
+            // add address fields - only for CAL users
+            if($key === 'building-details' || $key === 'city-street'){
+                $form_group_wrapper = '<div class="'.$key.' address">';
+                $form_group ='';
+                foreach ($field_data as $sub_key=>$sub_field_data){
+                    $form_group = '<div class="form-group col-5 required-input">';
+                    $label = '<label for="' . $sub_key . '">' . __($sub_field_data['label'], 'foody') . '</label>';
+                    if($sub_field_data['type'] === 'number'){
+                        $input = '<input type="' . $sub_field_data['type'] . '" min="' . $sub_field_data['min'] . '" id="' . $sub_key . '" name="' . $sub_field_data['name'] . '" required>';
+
+                    } else {
+                        $input = '<input type="' . $sub_field_data['type'] . '" id="' . $sub_key . '" name="' . $sub_field_data['name'] . '" required>';
+                    }
+                    $form_group .= $label . $input . '</div>';
+                    $form_group_wrapper .= $form_group;
+                }
+                $form_group = $form_group_wrapper . '</div>';
+            }
+            else {
+                $form_group = '<div class="form-group col-12 required-input">';
+                $label = '<label for="' . $key . '">' . __($field_data['label'], 'foody') . '</label>';
+                $input = '<input type="' . $field_data['type'] . '" id="' . $key . '" name="' . $field_data['name'] . '" required>';
+                $form_group .= $label . $input . '</div>';
+            }
             $form_container .= $form_group;
         }
 
@@ -266,6 +292,10 @@ class Foody_Course_register
             return $select_payment_method_section;
         }
         return false;
+    }
+
+    private function is_cal_customer(){
+        return isset($this->course_data['is_cal_customers']) && $this->course_data['is_cal_customers'];
     }
 
 //    public function foody_get_credit_button_section()

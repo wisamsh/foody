@@ -118,12 +118,29 @@ echo do_shortcode( '[wordpress_social_login]' );
                     </button>
                 </div>
 
-				<?php
-				$redirect_to = get_permalink();
-				if ( strpos( $redirect_to, 'התחברות' ) !== false ) {
-					$redirect_to = home_url();
-				}
-				?>
+                <?php
+                $queried_object = get_queried_object();
+                // redirect to category/tag page
+                if(is_category() || is_tag()){
+                    $redirect_to =  get_term_link($queried_object);
+                }
+                // redirect to author page
+                elseif (is_author()){
+                    if(isset($queried_object->ID)) {
+                        $redirect_to = get_author_posts_url($queried_object->ID);
+                    } else{
+                        $redirect_to = home_url();
+                    }
+                }
+                // redirect to post page
+                else {
+                    $redirect_to = get_permalink();
+                }
+                // redirect to home page
+                if ( strpos( $redirect_to, 'התחברות' ) !== false ) {
+                    $redirect_to = home_url();
+                }
+                ?>
 
                 <input type="hidden" name="redirect_to" value="<?php echo $redirect_to; ?>">
 
