@@ -98,6 +98,7 @@ mv version-hash.txt {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}/build/
 
 sudo ln -s {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}/inc/plugins/wp-oauth-server {{ $release_dir }}/{{ $release }}/web/app/plugins/wp-oauth-server
 sudo ln -s {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}/inc/plugins/wordpress-social-login {{ $release_dir }}/{{ $release }}/web/app/plugins/wordpress-social-login
+sudo ln -s {{ $release_dir }}/{{ $release }}/{{ $theme_dir }}/inc/plugins/wp-user-avatar {{ $release_dir }}/{{ $release }}/web/app/plugins/wp-user-avatar
 
 
 cd {{ $release_dir }}/{{ $release }};
