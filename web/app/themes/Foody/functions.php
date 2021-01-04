@@ -918,7 +918,7 @@ add_filter('foody_print_version_for_content','print_version_content', 10, 1);
 function build_figure_html($figureDomElem){
     $children_elem = $figureDomElem->childNodes;
     $result_elem = '';
-    for ($index = 0; $index < $children_elem->count(); $index++){
+    for ($index = 0; $index < $children_elem->length; $index++){
         $current = $children_elem->item($index);
         switch ($current->tagName){
             case 'img':
