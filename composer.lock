@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "80874eb7952403f0d8cd225499bf8625",
+    "content-hash": "d9b88b504fb01ea06947001456c06257",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -204,15 +204,6 @@
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/ewww-image-optimizer.4.8.0.zip"
-            },
-            "type": "wordpress-plugin"
-        },
-        {
-            "name": "flippercode/wp-user-avatar",
-            "version": "2.1.6",
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-user-avatar.zip"
             },
             "type": "wordpress-plugin"
         },
