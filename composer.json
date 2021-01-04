@@ -197,18 +197,6 @@
     {
       "type": "package",
       "package": {
-        "name": "flippercode/wp-user-avatar",
-        "version": "2.1.6",
-        "type": "wordpress-plugin",
-        "dist": {
-          "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/wp-user-avatar.zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
         "name": "delicious-brains-inc/wp-ses",
         "version": "0.8.2",
         "type": "wordpress-plugin",
@@ -350,7 +338,6 @@
     "miljar/php-exif": "0.6.4",
     "delicious-brains/amazon-s3-and-cloudfront": "^2.0",
     "zaus-atlanticbt-spkane/forms-3rdparty-integration": "^1.7",
-    "flippercode/wp-user-avatar": "^2.1",
     "ext-json": "*",
     "delicious-brains-inc/wp-ses": "^0.8.2",
     "wordpressdotorg/wordpress-importer": "^0.6.4",

@@ -1194,7 +1194,8 @@ class Foody_Recipe extends Foody_Post
             }
         }
         $content_body = $this->body;
-        echo '<div class="content-container">' . $content_body . '</div>';
+        echo '<div class="content-container no-print">' . $content_body . '</div>';
+        echo '<div class="content-container print-mobile">' . $content_body . '</div>';
         $print_body = apply_filters('foody_print_version_for_content', $content_body);
         echo '<div class="content-container print-desktop print"><div class="content-and-notes print">' . $print_body['content'] . $this->get_notes() . '</div><div class="content-images">' . $print_body['figures'].'</div></div>';
     }

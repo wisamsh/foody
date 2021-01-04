@@ -3473,9 +3473,24 @@ $content-width: 95%;
       }
 
       .print-mobile{
-        display: block;
+        display: block !important;
       }
 
+
+      article.content{
+        .recipe-ingredients{
+          margin-top: 85px;
+
+          .recipe-ingredients-container{
+
+            flex-direction: column;
+
+            .ingredients-group{
+              max-width: 95%;
+            }
+          }
+        }
+      }
     }
   }
 }
