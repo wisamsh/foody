@@ -143,14 +143,16 @@ add_filter('foody_js_globals', 'campaign_name');
 function channel_name($vars){
     global $post;
     $page = get_queried_object();
+    $is_category = isset($page->taxonomy) && $page->taxonomy === 'category';
+    $is_search_or_author = is_search() || is_author();
     if(isset($_GET) && isset($_GET['referer']) && $_GET['referer']){
         $vars['channel_name'] = get_the_title($_GET['referer']);
     }
-    elseif (isset($post->ID) && isset($post->post_type) && ($post->post_type == 'foody_recipe' || $post->post_type === 'post') && get_field('recipe_channel', $post->ID)){
+    elseif (!$is_search_or_author && !$is_category && isset($post->ID) && isset($post->post_type) && ($post->post_type == 'foody_recipe' || $post->post_type === 'post') && get_field('recipe_channel', $post->ID)){
         $vars['channel_name'] = get_the_title(get_field('recipe_channel', $post->ID));
         $vars['referered_area'] = get_field('recipe_channel', $post->ID);
     }
-    elseif(isset($page->taxonomy) && $page->taxonomy === 'category' && get_field('recipe_channel', $page)) {
+    elseif(!$is_search_or_author && $is_category && get_field('recipe_channel', $page)) {
         $vars['channel_name'] = get_the_title(get_field('recipe_channel', $page));
         $vars['referered_area'] = get_field('recipe_channel', $page);
     }
