@@ -85,7 +85,7 @@ if ( ! foody_is_registration_open() ) {
     <?php if ( wp_is_mobile() ): ?>
 
 
-        <section class="rating-container d-lg-block">
+        <section class="rating-container no-print d-lg-block">
 <!--            --><?php //$foody_page->ratings_new() ?>
             <?php $foody_page instanceof Foody_Recipe ? $foody_page->ratings_new() : Foody_Recipe::ratings() ?>
         </section>
