@@ -3237,7 +3237,7 @@ $content-width: 95%;
     }
 
     article.content{
-      //width: calc(100% - 35%) !important;
+      width: calc(100% - 20%) !important;
       border: solid 1px #d5d5d5;
 
       .details-container{
@@ -3296,15 +3296,15 @@ $content-width: 95%;
           width: 40%;
           position: absolute;
           left: 0;
-          top: -110px;
+          top: -105px;
 
           > img {
             //width: 30%;
             //position: absolute;
             //left: 3%;
             //top: -110px;
-            max-width: 250px;
-            max-height: 230px;
+            max-width: 270px;
+            max-height: 250px;
             margin: auto;
           }
 
