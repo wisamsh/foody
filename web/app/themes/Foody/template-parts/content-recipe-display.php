@@ -52,7 +52,7 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
         <?php $recipe->the_promotion_area($promotion_area_group); ?>
     </section>
 <?php }
-Foody_Header::getPrintHeader(true);
+//Foody_Header::getPrintHeader(true);
 ?>
 
     <section class="recipe-overview no-print">

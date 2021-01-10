@@ -3237,7 +3237,7 @@ $content-width: 95%;
     }
 
     article.content{
-      width: calc(100% - 35%) !important;
+      //width: calc(100% - 35%) !important;
       border: solid 1px #d5d5d5;
 
       .details-container{
@@ -3465,32 +3465,32 @@ $content-width: 95%;
     }
   }
 
-  @include breakpoint(mobileonly) {
-    .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
-      .no-print,
-      .print-desktop{
-        display: none !important;
-      }
-
-      .print-mobile{
-        display: block !important;
-      }
-
-
-      article.content{
-        .recipe-ingredients{
-          margin-top: 85px;
-
-          .recipe-ingredients-container{
-
-            flex-direction: column;
-
-            .ingredients-group{
-              max-width: 95%;
-            }
-          }
-        }
-      }
-    }
-  }
+  //@include breakpoint(mobileonly) {
+  //  .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
+  //    .no-print,
+  //    .print-desktop{
+  //      display: none !important;
+  //    }
+  //
+  //    .print-mobile{
+  //      display: block !important;
+  //    }
+  //
+  //
+  //    article.content{
+  //      .recipe-ingredients{
+  //        margin-top: 85px;
+  //
+  //        .recipe-ingredients-container{
+  //
+  //          flex-direction: column;
+  //
+  //          .ingredients-group{
+  //            max-width: 95%;
+  //          }
+  //        }
+  //      }
+  //    }
+  //  }
+  //}
 }
