@@ -196,9 +196,9 @@ $run-height: 30px;
 
         .navbar-container {
           position: fixed;
-          height: 100vh;
+          height: 90vh;
           width: 100vw;
-          bottom: 0;
+          bottom: 8vh;
           right: 0;
           transition: all 0.5s ease-in;
 
@@ -478,6 +478,10 @@ $run-height: 30px;
         .social-btn-container {
           margin-right: 12%;
           position: relative;
+
+          &.active{
+            background-color: #ced4da;
+          }
 
           .social-buttons-container {
             &.hidden {

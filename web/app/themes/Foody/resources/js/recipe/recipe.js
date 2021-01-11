@@ -228,8 +228,24 @@ jQuery(document).ready(($) => {
         $('.slider-nav').slick(sliderNavData);
     }
 
-    $('.slider .arrow').on('click', function () {
+    $(' .slider.slider-nav').on('swipe', function () {
+        debugger
         if (typeof player !== 'undefined') {
+            player.pauseVideo();
+        }
+    });
+
+    $('.slider .arrow').on('click', function () {
+        debugger
+        if (typeof player !== 'undefined') {
+            player.pauseVideo();
+        }
+    });
+
+    $('.slider.slider-nav .slick-slide').on('click', function () {
+        debugger
+        let currentNavItem = $('.slider.slider-nav .slick-current').find('.play-btn');
+        if(!currentNavItem.length){
             player.pauseVideo();
         }
     });
