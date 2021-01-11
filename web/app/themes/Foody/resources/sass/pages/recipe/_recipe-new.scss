@@ -3347,7 +3347,8 @@ $content-width: 95%;
       }
 
       .recipe-ingredients{
-        margin-top: 85px;
+        margin-top: 85px !important;
+        padding-top: 50px;
 
         .recipe-ingredients-top{
           max-width: unset;
@@ -3355,7 +3356,7 @@ $content-width: 95%;
           .title-with-line {
             display: flex;
             flex-direction: row;
-            margin-top: 3%;
+            //margin-top: 3%;
             justify-content: space-between;
 
             .title {
@@ -3465,32 +3466,71 @@ $content-width: 95%;
     }
   }
 
-  //@include breakpoint(mobileonly) {
-  //  .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
-  //    .no-print,
-  //    .print-desktop{
-  //      display: none !important;
-  //    }
-  //
-  //    .print-mobile{
-  //      display: block !important;
-  //    }
-  //
-  //
-  //    article.content{
-  //      .recipe-ingredients{
-  //        margin-top: 85px;
-  //
-  //        .recipe-ingredients-container{
-  //
-  //          flex-direction: column;
-  //
-  //          .ingredients-group{
-  //            max-width: 95%;
-  //          }
-  //        }
-  //      }
-  //    }
-  //  }
-  //}
+  @include breakpoint(mobileonly) {
+    .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .archive.author, body[class~="foody_channel-template-channel"] {
+      //.no-print,
+      //.print-desktop{
+      //  display: none !important;
+      //}
+      //
+      //.print-mobile{
+      //  display: block !important;
+      //}
+
+
+      article.content{
+        .recipe-overview-print{
+
+          .image-and-rating-print {
+
+            .primary-image{
+              margin: 2% auto;
+            }
+
+            .rating-header{
+              margin: 3% auto 0 auto;
+              .num-of-rates{
+              }
+            }
+
+            .rating-stars-container{
+              //position: absolute;
+              //top: 150px;
+              //left: 29%;
+              margin: 0 auto;
+            }
+          }
+
+          .overview-table{
+            margin-right: 1%;
+            width: 50%;
+
+            th{
+              border-radius: 4.3px;
+              border: 2px solid #fef5f6;
+              padding: 5px;
+              text-align: center;
+              font-size: 14.5px;
+              width: 20.7%;
+
+              .cell-title{
+                color: var(--color__primary);;
+              }
+            }
+          }
+        }
+        .recipe-ingredients{
+          .recipe-ingredients-top{
+            .title-with-line{
+              width: 100%;
+            }
+          }
+          .recipe-ingredients-container{
+            .ingredients-group{
+            }
+          }
+        }
+      }
+    }
+  }
 }
