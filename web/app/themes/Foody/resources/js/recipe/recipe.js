@@ -228,6 +228,12 @@ jQuery(document).ready(($) => {
         $('.slider-nav').slick(sliderNavData);
     }
 
+    $('.slider .arrow').on('click', function () {
+        if (typeof player !== 'undefined') {
+            player.pauseVideo();
+        }
+    });
+
     if($('.featured-content-container')){
         $('.featured-content-container').attr('style', 'visibility: visible');
     }
