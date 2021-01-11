@@ -297,9 +297,14 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                             <!--                        <img src="-->
                             <?php //echo $GLOBALS['images_dir'] . 'top-mobile-menu.png' ?><!--" class="top-mobile-menu">-->
                             <div class="signup-purchase-container">
+                                <a class="homepage-link" href="<?php echo get_home_url(); ?>">
+                                    <div class="up-arrows">»</div>
+                                    <?php echo __('לעמוד הבית של ')?>
+                                    <span class="foody-name">FOODY</span>
+                                </a>
                                 <?php if (!is_user_logged_in()) { ?>
                                     <a class="signup-login-link"
-                                       href="<?php echo get_permalink(get_page_by_path('התחברות')); ?>">הרשמו ל-FOODY
+                                       href="<?php echo get_permalink(get_page_by_path('התחברות')); ?>">הרשמו ל-<span class="foody-name">FOODY</span>
                                         »</a>
                                 <?php } else {
 
