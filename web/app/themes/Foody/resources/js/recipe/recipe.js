@@ -311,13 +311,20 @@ jQuery(document).ready(($) => {
         $('.amount-container > .plus-icon').on('click', function () {
             let currentAmount = parseInt($('.amount-container #number-of-dishes').val());
             $('.amount-container #number-of-dishes').val(++currentAmount);
+            if($('.recipe-overview-print .overview-table  .cell-value.dishes_amount').length){
+                $('.recipe-overview-print .overview-table  .cell-value.dishes_amount')[0].innerText = currentAmount;
+            }
             $('.amount-container #number-of-dishes').trigger('input');
         });
 
         $('.amount-container > .minus-icon').on('click', function () {
             let currentAmount = parseInt($('.amount-container #number-of-dishes').val());
-            if (currentAmount > 1)
+            if (currentAmount > 1) {
                 $('.amount-container #number-of-dishes').val(--currentAmount);
+                if($('.recipe-overview-print .overview-table  .cell-value.dishes_amount').length){
+                    $('.recipe-overview-print .overview-table  .cell-value.dishes_amount')[0].innerText = currentAmount;
+                }
+            }
             $('.amount-container #number-of-dishes').trigger('input');
         });
     }

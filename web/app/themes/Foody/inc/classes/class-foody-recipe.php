@@ -1287,7 +1287,7 @@ class Foody_Recipe extends Foody_Post
 
         $table_element = '<table class="overview-table print"><tr>';
         foreach ($overview_data as $key => $value) {
-            $table_element .= '<th><div class="cell-title">' . $value['title'] . '</div><div class="cell-value">' . $value['data'] . '</div> </th>';
+            $table_element .= '<th><div class="cell-title '. $key .'">' . $value['title'] . '</div><div class="cell-value '. $key .'">' . $value['data'] . '</div> </th>';
         }
         $table_element .= '</tr></table>';
 
