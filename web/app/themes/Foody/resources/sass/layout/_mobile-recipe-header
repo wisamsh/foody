@@ -254,7 +254,7 @@ $run-height: 30px;
 
             height: 44vh;
             position: fixed;
-            bottom: 40vh;
+            bottom: 36vh;
             width: 100vw;
             right: 0;
             background: #fdebec;
@@ -266,7 +266,7 @@ $run-height: 30px;
             .signup-purchase-container {
               background-image: url("../images/top-mobile-menu.png");
               background-repeat: no-repeat;
-              background-size: 120vw 31vh;
+              background-size: 120vw 27vh;
               height: 100%;
               display: flex;
               flex-direction: column;
@@ -444,12 +444,13 @@ $run-height: 30px;
                 }
 
                 position: absolute;
-                left: 0;
-                top: 29%;
+                width: 70%;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 37%;
                 height: 30px;
                 background-repeat: no-repeat;
                 background-size: contain;
-                right: 0;
                 background-image: url("../images/foody_logo-with-white.svg");
                 //transition: transform 1s, background-image 1s;
               }

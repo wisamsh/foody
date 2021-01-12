@@ -3296,6 +3296,10 @@ $content-width: 95%;
       display: block;
     }
 
+    section{
+      page-break-before: always;
+    }
+
     .print-desktop{
       display: block;
     }
