@@ -236,9 +236,25 @@ $run-height: 30px;
               }
             }
 
-            height: 41vh;
+            &.one-purchase-button{
+              bottom: 44vh;
+
+              .signup-purchase-container{
+                background-size: 120vw 34vh;
+              }
+            }
+
+            &.two-purchase-button{
+              bottom: 49vh;
+
+              .signup-purchase-container{
+                background-size: 120vw 39vh;
+              }
+            }
+
+            height: 44vh;
             position: fixed;
-            bottom: 51vh;
+            bottom: 40vh;
             width: 100vw;
             right: 0;
             background: #fdebec;
@@ -250,11 +266,11 @@ $run-height: 30px;
             .signup-purchase-container {
               background-image: url("../images/top-mobile-menu.png");
               background-repeat: no-repeat;
-              background-size: 120vw 39vh;
+              background-size: 120vw 31vh;
               height: 100%;
               display: flex;
               flex-direction: column;
-              padding-top: 2%;
+              padding-top: 1%;
 
               .homepage-link{
                 font-size: 17px;
@@ -277,6 +293,22 @@ $run-height: 30px;
 
                 .foody-name{
                   font-weight: bold;
+                }
+              }
+
+              .signup-login-link {
+                display: flex;
+                justify-content: center;
+                flex-direction: row;
+
+                .foody-name,
+                .signup-text{
+                  margin: auto 0;
+                }
+
+                .up-arrows{
+                  font-size: 28px;
+                  margin: -6px 4px auto 0;
                 }
               }
 

@@ -293,7 +293,14 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                     <div class="navbar-container hidden">
                         <div class="navbar-overlay hidden">
                         </div>
-                        <div class="navbar-header hidden">
+                        <?php
+                            $navbar_purchase_class = '';
+                            $num_of_purchase_buttons = $recipe->has_purchase_buttons();
+                            if($num_of_purchase_buttons > 0){
+                                $navbar_purchase_class = $num_of_purchase_buttons < 2 ? 'one-purchase-button' : 'two-purchase-button';
+                            }
+                        ?>
+                        <div class="navbar-header <?php echo $navbar_purchase_class; ?> hidden ">
                             <!--                        <img src="-->
                             <?php //echo $GLOBALS['images_dir'] . 'top-mobile-menu.png' ?><!--" class="top-mobile-menu">-->
                             <div class="signup-purchase-container">
@@ -304,8 +311,8 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                 </a>
                                 <?php if (!is_user_logged_in()) { ?>
                                     <a class="signup-login-link"
-                                       href="<?php echo get_permalink(get_page_by_path('התחברות')); ?>">הרשמו ל-<span class="foody-name">FOODY</span>
-                                        »</a>
+                                       href="<?php echo get_permalink(get_page_by_path('התחברות')); ?>"><span class="singup-text">הרשמו ל-</span><span class="foody-name">FOODY</span>
+                                        <div class="up-arrows">»</div></a>
                                 <?php } else {
 
                                     echo "<div class='hello-user' >" . __('שלום') . " " . $user->user->first_name . "</div>";

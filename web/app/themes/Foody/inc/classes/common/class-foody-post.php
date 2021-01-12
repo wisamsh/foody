@@ -542,8 +542,16 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         );
     }
 
-    public function the_purchase_buttons($classes = '', $echo = true)
-    {
+    public function has_purchase_buttons(){
+        $buttons = $this->fetch_purchase_buttons();
+
+        if(is_array($buttons)){
+            return count($buttons);
+        }
+        return 0;
+    }
+
+    private function fetch_purchase_buttons(){
         $buttons = '';
         if (!$this->purchase_buttons_fetched) {
             $foody_purchase_buttons = Foody_PurchaseButtons::get_instance();
@@ -553,6 +561,14 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         } else {
             $buttons = $this->purchase_buttons;
         }
+
+        return $buttons;
+    }
+
+    public function the_purchase_buttons($classes = '', $echo = true)
+    {
+        $buttons = $this->fetch_purchase_buttons();
+
         $content = '';
         if (!empty($buttons)) {
             $content = foody_get_template_part(
