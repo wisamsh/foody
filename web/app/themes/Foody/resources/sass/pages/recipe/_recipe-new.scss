@@ -526,6 +526,7 @@ $content-width: 95%;
               .rating-header {
                 padding-left: 6%;
                 font-weight: bold;
+                font-size: 1.1rem;
               }
             }
           }
@@ -696,6 +697,21 @@ $content-width: 95%;
                   }
                 }
 
+                .nutritions:not(:nth-child(3n)){
+                  .nutrition {
+                    &:after {
+                      content: '';
+                      width: 60%;
+                      height: 1.5px;
+                      background: #fdebec;
+                      position: absolute;
+                      left: 50%;
+                      transform: translateX(-50%);
+                      bottom: -11px;
+                    }
+                  }
+                }
+
                 .nutritions.row{
                   display: flex;
                   flex-direction: row;
@@ -706,6 +722,10 @@ $content-width: 95%;
                     flex: unset;
                     max-width: 16%;
                     padding: 0;
+
+                    &:not(:last-child){
+                      border-left: 1.5px solid #fdebec;
+                    }
 
                     .nutrition-row{
                       display: flex;
@@ -2208,16 +2228,37 @@ $content-width: 95%;
                     }
                   }
 
+                  .nutritions:not(:nth-child(5n)){
+                    .nutrition {
+                      &:after {
+                          content: '';
+                          width: 60%;
+                          height: 1.5px;
+                          background: #fdebec;
+                          position: absolute;
+                          left: 50%;
+                          transform: translateX(-50%);
+                          bottom: -4px;
+                        }
+                      }
+                  }
+
                   .nutritions {
                     &.row {
                       display: flex;
                       flex-direction: row;
                       justify-content: space-around;
-                      margin: 3% 0;
+                      //margin: 3% 0;
 
                       .nutrition {
                         width: 31%;
                         flex: unset;
+                        padding: 3% 0;
+
+                        &:nth-child(2n){
+                          border-right: 1.5px solid #fdebec;
+                          border-left: 1.5px solid #fdebec;
+                        }
 
                         .nutrition-row {
                           width: fit-content;
