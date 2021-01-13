@@ -218,6 +218,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                 $similar_content = get_field('similar_content_group', $id);
                 if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
                     <div class="related-recipes-container">
+                        <div class="close-btn">&#10005;</div>
                         <?php $recipe->get_similar_content($similar_content); ?>
                     </div>
                 <?php }

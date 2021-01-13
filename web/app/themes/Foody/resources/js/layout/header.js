@@ -226,6 +226,12 @@ jQuery(document).ready(function ($) {
             hideAllOtherFloatingFooterDrawers('.related-content-overlay');
             $('.related-content-overlay').toggleClass('open');
         });
+
+        if($('.floating-mobile-header .related-recipes-container .close-btn').length){
+            $('.floating-mobile-header .related-recipes-container .close-btn').on('click', function () {
+                $('.related-content-overlay').toggleClass('open');
+            });
+        }
     }
 
     if ($('.sticky_bottom_header .navbar-toggler.custom-logo-link').length) {

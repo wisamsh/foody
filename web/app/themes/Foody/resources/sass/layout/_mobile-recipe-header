@@ -135,9 +135,8 @@ $run-height: 30px;
 
       .black-overlay {
         height: 55%;
-        opacity: 0.9;
-        opacity: 0.9;
-        background: black;
+        opacity: 0.8;
+        background: white;
       }
 
       .related-recipes-container {
@@ -148,10 +147,20 @@ $run-height: 30px;
         flex-direction: column;
         padding: 13px;
 
+        .close-btn{
+          width: fit-content;
+          position: absolute;
+          left: 10px;
+          top: 8px;
+          color: var(--color__text-title);
+          font-size: 20px;
+        }
+
         .similar-content-listing-block-title {
           float: right;
           text-align: right;
           font-size: 17px;
+          padding-bottom: 14px;
         }
 
         .similar-content-items {
@@ -220,8 +229,8 @@ $run-height: 30px;
             bottom: 53vh;
             width: 100vw;
             right: 0;
-            background: black;
-            opacity: 0.9;
+            opacity: 0.8;
+            background: white;
             //transition: all 0.1s ease-in;
           }
 
