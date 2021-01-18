@@ -82,6 +82,8 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                             break;
                         // video paused
                         case 2:
+                            //remove overlay
+
                             clearInterval(timeUpdater);
                             let pausedDurationPromise = player.getDuration();
                             let pausedCurrPromise = player.getCurrentTime();
@@ -149,15 +151,15 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
     }
 
     if ($('.slider-nav').length) {
-        let slideToShow = $('.slider-for .item').length > 4 ? 3 : $('.slider-for .item').length;
+        let slideToShow = $('.slider-for .item').length > 3 ? 3 : $('.slider-for .item').length;
         sliderMainData = {
             slidesToShow: 1,
             slidesToScroll: 1,
-            nextArrow: '<div class="arrow arrow-prev"></div>',
-            prevArrow: '<div class="arrow arrow-next"></div>',
+            arrows: false,
             fade: true,
             asNavFor: '.slider-nav',
-            rtl: true
+            rtl: true,
+            ifinite: false
         };
 
         sliderNavData = {
@@ -165,9 +167,11 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
             slidesToScroll: 1,
             asNavFor: '.slider-for',
             dots: false,
-            centerMode: true,
+            variableWidth: true,
             focusOnSelect: true,
-            rtl: true
+            centerPadding: '60px',
+            rtl: true,
+            ifinite: false
         };
         if ($('.slider-for .item').length > 3) {
             sliderNavData.prevArrow = '<div class="arrow arrow-next"></div>';
@@ -227,6 +231,16 @@ jQuery(document).ready(($) => {
     if(sliderNavData){
         $('.slider-nav').slick(sliderNavData);
     }
+
+    $('.video-overlay').on('click', function() {
+        // var $this = $(this);
+        // var offset = $this.offset();
+        // var width = $this.width();
+        // var height = $this.height();
+        //
+        // var centerX = offset.left + width / 2;
+        // var centerY = offset.top + height / 2;
+    });
 
     $(' .slider.slider-nav').on('swipe', function () {
         debugger

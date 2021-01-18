@@ -780,7 +780,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                             'post_id' => $this->id
                         );
 
-                        $video_element = '<div class="item"><span id="video" style="display: none;" data-video-id="' . $video_id . '"></span><div class="video-container no-print"></div></div>';
+                        $video_element = '<div class="item"><span id="video" style="display: none;" data-video-id="' . $video_id . '"></span><div class="video-overlay"></div><div class="video-container no-print"></div></div>';
                         $video_image = get_sub_field('image');
                     }
 
@@ -829,8 +829,9 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                     $slider_nav = "<div class='item'><img src='" . $GLOBALS['images_dir'] . 'icons/play.svg' . "' alt='play-icon' class='play-btn'><img src='{$video_image['url']}' alt='{$video_image['alt']}' /></div>" . $slider_nav;
                 }
 
-                if($counter <= 4) {
-                    $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between no-arrows">' . $slider_nav . '</div>';
+                if($counter <= 3) {
+                    $two_images = $counter == 2 ? 'two-images' : '';
+                    $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between no-arrows '. $two_images .'">' . $slider_nav . '</div>';
                 }
                 else{
                     $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between">' . $slider_nav . '</div>';
