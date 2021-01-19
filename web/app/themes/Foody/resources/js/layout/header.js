@@ -121,7 +121,7 @@ jQuery(document).ready(function ($) {
                 }
             }
             $('.sticky_bottom_header').css("bottom", "0");
-            $('.sticky_bottom_header #quadmenu').css("bottom", "8%");
+            $('.sticky_bottom_header #quadmenu').css("bottom", "7%");
             $('.sticky_bottom_header .navbar-header').css("bottom", bottom);
             $('.related-content-overlay .related-recipes-container').css("bottom", "65px");
         }
