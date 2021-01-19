@@ -83,6 +83,9 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                         // video paused
                         case 2:
                             //remove overlay
+                            if($('.video-overlay').length) {
+                                $('.video-overlay').toggleClass('closed');
+                            }
 
                             clearInterval(timeUpdater);
                             let pausedDurationPromise = player.getDuration();
@@ -233,13 +236,8 @@ jQuery(document).ready(($) => {
     }
 
     $('.video-overlay').on('click', function() {
-        // var $this = $(this);
-        // var offset = $this.offset();
-        // var width = $this.width();
-        // var height = $this.height();
-        //
-        // var centerX = offset.left + width / 2;
-        // var centerY = offset.top + height / 2;
+        $(this).toggleClass('closed');
+        player.playVideo();
     });
 
     $(' .slider.slider-nav').on('swipe', function () {

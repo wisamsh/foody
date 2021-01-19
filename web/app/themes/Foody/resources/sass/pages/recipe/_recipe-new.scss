@@ -1645,12 +1645,16 @@ $content-width: 95%;
           max-height: 38vh;
           margin-bottom: 10px;
 
-          //.video-overlay{
-          //  top: 0;
-          //  width: 100vw;
-          //  position: absolute;
-          //  height: 38vh;
-          //}
+          .video-overlay{
+            top: 0;
+            width: 100vw;
+            position: absolute;
+            height: 38vh;
+
+            &.closed{
+              height: 0;
+            }
+          }
 
           .slick-arrow {
             content: '';
