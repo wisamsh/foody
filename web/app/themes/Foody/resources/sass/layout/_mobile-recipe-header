@@ -362,7 +362,7 @@ $run-height: 30px;
             display: flex;
             flex-direction: column-reverse;
             position: fixed;
-            bottom: 8%;
+            bottom: 7%;
             width: 100vw;
             right: 0;
             background: #fdebec;

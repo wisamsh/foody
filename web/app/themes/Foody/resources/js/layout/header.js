@@ -112,9 +112,17 @@ jQuery(document).ready(function ($) {
 
     $('footer #popup-banner .close').on('click', function () {
         if ($('.sticky_bottom_header').length) {
+            let bottom = "36vh";
+            if($('.foody-navbar-container .navbar-container .navbar-header').length){
+                if($('.foody-navbar-container .navbar-container .navbar-header').hasClass('one-purchase-button')){
+                    bottom = '44vh';
+                } else if ($('.foody-navbar-container .navbar-container .navbar-header').hasClass('two-purchase-button')){
+                    bottom = '49vh;';
+                }
+            }
             $('.sticky_bottom_header').css("bottom", "0");
             $('.sticky_bottom_header #quadmenu').css("bottom", "8%");
-            $('.sticky_bottom_header .navbar-header').css("bottom", "53vh");
+            $('.sticky_bottom_header .navbar-header').css("bottom", bottom);
             $('.related-content-overlay .related-recipes-container').css("bottom", "65px");
         }
         sessionStorage.setItem('banner-popup-closed', 'true');
