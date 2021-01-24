@@ -282,6 +282,35 @@ header {
   }
 
   #quadmenu {
+    .quadmenu-container{
+      .quadmenu-navbar-collapse{
+        .quadmenu-navbar-nav {
+          .quadmenu-dropdown {
+            > a {
+              > .quadmenu-item-content {
+                .quadmenu-caret {
+                  .quadmenu-text {
+                    font-family: AfekBold !important;
+                    direction: rtl !important;
+                  }
+                }
+              }
+            }
+
+            > .quadmenu-dropdown-menu {
+              > .quadmenu-item-content {
+                .quadmenu-text {
+                  font-family: Afek !important;
+                  direction: rtl !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+
     &.quadmenu-is-horizontal {
       .quadmenu-navbar-nav {
 
@@ -355,7 +384,23 @@ header {
 
   #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
     padding-right: 0;
+    font-family: AfekBold !important;
+    direction: rtl;
   }
+
+  #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item .quadmenu-has-link a > .quadmenu-item-content > .quadmenu-text {
+    padding-right: 0;
+    font-family: Afek !important;
+    direction: rtl;
+  }
+
+    #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
+    padding-right: 0;
+    font-family: AfekBold !important;
+    direction: rtl;
+  }
+
+
 
   .foody-dropdown-menu {
     width: 100%;
@@ -466,7 +511,7 @@ header {
           padding: 0;
 
           .suggestion-head-title {
-            font-weight: bold;
+           font-family: $font__bold;
           }
 
           .foody-search-suggestion {
@@ -816,6 +861,22 @@ header {
     transition: transform 0.25s ease-in-out;
     z-index: 1;
 
+    #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
+      font-family: AfekBold !important;
+      direction: rtl;
+    }
+
+    #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item .quadmenu-has-link a > .quadmenu-item-content > .quadmenu-text {
+      font-family: Afek !important;
+      direction: rtl;
+    }
+
+    #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
+      padding-right: 0;
+      font-family: AfekBold !important;
+      direction: rtl;
+    }
+
     &.header-unpin {
       transform: translateY(-90px);
 
@@ -866,6 +927,28 @@ header {
     #quadmenu {
 
       .quadmenu-navbar-nav {
+
+        .quadmenu-dropdown{
+          > a {
+            > .quadmenu-item-content {
+              .quadmenu-caret {
+                .quadmenu-text {
+                  font-family: AfekBold !important;
+                  direction: rtl !important;
+                }
+              }
+            }
+          }
+
+          > .quadmenu-dropdown-menu{
+            > .quadmenu-item-content {
+                .quadmenu-text {
+                  font-family: Afek !important;
+                  direction: rtl !important;
+                }
+            }
+          }
+        }
 
         .quadmenu-dropdown-menu {
           li {
