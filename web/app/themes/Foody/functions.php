@@ -991,3 +991,40 @@ add_filter( "use_block_editor_for_post_type", "foody_disable_gutenberg_editor" )
 function foody_disable_gutenberg_editor() {
     return false;
 }
+
+function print_version_content($content)
+{
+    $dom = new DOMDocument();
+    $dom->loadHTML($content);
+    $figures = $dom->getElementsByTagName('figure');
+    $new_content = '';
+    $num_of_figures = $figures->length;
+    for ($index = 0; $index < $num_of_figures; $index++) {
+        $current = $figures->item(0);
+//       $new_content .= '<figure id="'. $current->getAttribute('id'). '" class='.$current->getAttribute('class').'" >';
+//       $new_content .= build_figure_html($current);
+//       $new_content .= '</figure>';
+        $current->parentNode->removeChild($current);
+    }
+    $content_elem = $dom->saveHTML();
+    return ['content' => $content_elem, 'figures' => $new_content];
+}
+
+add_filter('foody_print_version_for_content','print_version_content', 10, 1);
+
+function build_figure_html($figureDomElem)
+{
+    $children_elem = $figureDomElem->childNodes;
+    $result_elem = '';
+    for ($index = 0; $index < $children_elem->length; $index++) {
+        $current = $children_elem->item($index);
+        switch ($current->tagName) {
+            case 'img':
+                $result_elem .= '<img class="' . $current->getAttribute('class') . '" src="' . $current->getAttribute('src') . '" alt="' . $current->getAttribute('alt') . '" >';
+                break;
+            case 'figcaption':
+                $result_elem .= '<figcaption class="' . $current->getAttribute('class') . '" >' . $current->textContent . '</figcaption>';
+                break;
+        }
+    }
+}
