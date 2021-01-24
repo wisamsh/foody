@@ -68,7 +68,7 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
       <?php echo $recipe->the_print_overview() ?>
       <div class="image-and-rating-print">
           <?php echo $recipe->the_print_main_image() ?>
-          <?php echo $recipe->the_print_rating() ?>
+<!--          --><?php //echo $recipe->the_print_rating() ?>
       </div>
   </section>
 <?php
@@ -168,9 +168,11 @@ if (!empty($similar_content) && !empty($similar_content['active_similar_content'
         <?php $recipe->comments(); ?>
     </section>
 
+<?php if(has_category('',$recipe->id)): ?>
     <section class="recipe-categories categories no-print">
     	<?php $recipe->the_categories() ?>
     </section>
+<?php endif; ?>
 
     <section class="recipe-accessories accessories no-print">
     	<?php $recipe->the_accessories() ?>

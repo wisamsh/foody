@@ -903,9 +903,9 @@ function print_version_content($content){
     $num_of_figures = $figures->length;
    for ($index = 0; $index < $num_of_figures; $index++){
        $current = $figures->item(0);
-       $new_content .= '<figure id="'. $current->getAttribute('id'). '" class='.$current->getAttribute('class').'" >';
-       $new_content .= build_figure_html($current);
-       $new_content .= '</figure>';
+//       $new_content .= '<figure id="'. $current->getAttribute('id'). '" class='.$current->getAttribute('class').'" >';
+//       $new_content .= build_figure_html($current);
+//       $new_content .= '</figure>';
        $current->parentNode->removeChild($current);
    }
     $content_elem = $dom->saveHTML();

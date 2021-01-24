@@ -3515,7 +3515,7 @@ $content-width: 95%;
 
       .recipe-ingredients{
         margin-top: 85px !important;
-        padding-top: 50px;
+        //padding-top: 50px;
 
         .recipe-ingredients-top{
           max-width: unset;
@@ -3571,7 +3571,7 @@ $content-width: 95%;
           justify-content: space-between;
 
           .content-and-notes {
-            width: 65%;
+            width: 100%;
             .foody-content {
               .recipe-shortcode-container,
               .article-shortcode-container {
