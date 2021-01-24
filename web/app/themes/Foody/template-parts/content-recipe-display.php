@@ -138,7 +138,7 @@ $recipe = $template_args['recipe'];
 
 <?php endif; ?>
 
-<?php if(has_category($recipe->id)): ?>
+<?php if(has_category('', $recipe->id)): ?>
 <section class="recipe-categories categories no-print">
 	<?php $recipe->the_categories() ?>
 </section>
