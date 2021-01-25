@@ -386,19 +386,22 @@ header {
     padding-right: 0;
     font-family: AfekBold !important;
     direction: rtl;
+    font-size: 14px;
   }
 
   #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item .quadmenu-has-link a > .quadmenu-item-content > .quadmenu-text {
     padding-right: 0;
     font-family: Afek !important;
     direction: rtl;
+    font-size: 14px;
   }
 
     #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
-    padding-right: 0;
-    font-family: AfekBold !important;
-    direction: rtl;
-  }
+      padding-right: 0;
+      font-family: AfekBold !important;
+      direction: rtl;
+      font-size: 14px;
+    }
 
 
 
@@ -864,17 +867,20 @@ header {
     #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
       font-family: AfekBold !important;
       direction: rtl;
+      font-size: 17px;
     }
 
     #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item .quadmenu-has-link a > .quadmenu-item-content > .quadmenu-text {
       font-family: Afek !important;
       direction: rtl;
+      font-size: 17px;
     }
 
     #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
       padding-right: 0;
       font-family: AfekBold !important;
       direction: rtl;
+      font-size: 17px;
     }
 
     &.header-unpin {
