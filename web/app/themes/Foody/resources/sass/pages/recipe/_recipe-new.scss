@@ -232,6 +232,17 @@ $content-width: 95%;
         flex-direction: row-reverse;
         margin-bottom: 10px;
 
+        .video-overlay{
+          top: 0;
+          width: 100%;
+          position: absolute;
+          height: 100%;
+
+          &.closed{
+            height: 0;
+          }
+        }
+
         .slick-arrow {
           content: '';
           position: absolute;

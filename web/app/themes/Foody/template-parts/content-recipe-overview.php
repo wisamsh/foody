@@ -89,7 +89,7 @@ $labels = array(
                     <?php if ($key === 'time') { ?>
                         <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['preparation_time']['icon-desktop'] ?>">
                         <div class="item-container">
-                            <div class="key-value">
+                            <div class="key-value preparation-time">
                                 <span class="key"><?php echo $labels['preparation_time'] ?></span><?php echo ' ' . $value['preparation_time']['text'] ?>
                             </div>
                             <div class="key-value">

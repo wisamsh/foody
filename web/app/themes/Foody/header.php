@@ -278,8 +278,13 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                         </button>
                     <?php endif; ?>
 
+                    <?php
+                        $similar_content = get_field('similar_content_group', $recipe->get_id());
+                        $has_similar_content = !empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג');
+                        $class_has_similar_content = $has_similar_content ? '' : 'empty-related-content';
+                    ?>
                     <div class="related-content-btn-container">
-                        <span class="related-content-btn">מתכונים נוספים</span>
+                        <span class="related-content-btn <?php echo $class_has_similar_content; ?>">מתכונים נוספים</span>
                     </div>
 
                     <div class="social-btn-container">

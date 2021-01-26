@@ -235,20 +235,34 @@ jQuery(document).ready(($) => {
         $('.slider-nav').slick(sliderNavData);
     }
 
-    $('.video-overlay').on('click', function() {
-        $(this).toggleClass('closed');
-        player.playVideo();
+    let isSwiping = false;
+
+    $('.video-overlay').on('mousedown', function() {
+        isSwiping = false;
+    });
+
+    $('.video-overlay').on('mousemove', function() {
+        isSwiping = true;
+    });
+
+
+    $('.video-overlay').on('mouseup', function(e) {
+        if (isSwiping && e.button === 0) {
+            // swiping
+        } else {
+            // clicked
+            $(this).toggleClass('closed');
+            player.playVideo();
+        }
     });
 
     $(' .slider.slider-nav').on('swipe', function () {
-        debugger
         if (typeof player !== 'undefined') {
             player.pauseVideo();
         }
     });
 
     $('.slider .arrow').on('click', function () {
-        debugger
         if (typeof player !== 'undefined') {
             player.pauseVideo();
         }
