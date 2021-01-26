@@ -7,39 +7,41 @@ jQuery(document).ready(($) => {
                 $('.comments-rating-prep-container .rating .empty-star').length )){
             $('.ratings-wrapper .rating-stars-container .empty-star,' +
                 '.comments-rating-prep-container .rating .empty-star').on('click', function () {
-                    let parentContainerIsWrapper = $(this).closest('.ratings-wrapper').length;
-                let starIndex = $(this).attr('data-index');
-                let topPracent = parentContainerIsWrapper ? 100 : 15;
-                let container = parentContainerIsWrapper ? '.ratings-wrapper' : '.comments-rating-prep-container .rating';
-                let foodyLoader = new FoodyLoader({
-                    container: $(container),
-                    id: 'rating-loader'
-                });
+                    if (foodyGlobals['can_user_rate']) {
+                        let parentContainerIsWrapper = $(this).closest('.ratings-wrapper').length;
+                        let starIndex = $(this).attr('data-index');
+                        let topPracent = parentContainerIsWrapper ? 100 : 15;
+                        let container = parentContainerIsWrapper ? '.ratings-wrapper' : '.comments-rating-prep-container .rating';
+                        let foodyLoader = new FoodyLoader({
+                            container: $(container),
+                            id: 'rating-loader'
+                        });
 
-                foodyLoader.attach({topPercentage: topPracent});
-                foodyAjax({
-                    action: 'foody_add_rating',
-                    data: {
-                        postID: foodyGlobals.post.ID,
-                        rating: starIndex
-                    }
-                }, function (err, data) {
-                    if (err) {
-                        console.log(err);
-                        foodyLoader.detach();
-                    } else {
-                        foodyLoader.detach();
-                        if ($('.ratings-wrapper').length) {
-                            $('.ratings-wrapper').removeClass('empty');
-                            $('.ratings-wrapper')[0].innerHTML = data.data.details;
-                        }
+                        foodyLoader.attach({topPercentage: topPracent});
+                        foodyAjax({
+                            action: 'foody_add_rating',
+                            data: {
+                                postID: foodyGlobals.post.ID,
+                                rating: starIndex
+                            }
+                            }, function (err, data) {
+                            if (err) {
+                                console.log(err);
+                                foodyLoader.detach();
+                            } else {
+                                foodyLoader.detach();
+                                if ($('.social-and-take-me-container .rating-container .ratings-wrapper').length) {
+                                    $('.social-and-take-me-container .rating-container .ratings-wrapper').removeClass('empty');
+                                    $('.social-and-take-me-container .rating-container .ratings-wrapper')[0].innerHTML = data.data.details;
+                                }
 
-                        if ($('.comments-rating-prep-container .rating').length) {
-                            $('.comments-rating-prep-container .rating')[0].innerHTML = data.data.component;
-                        }
+                                if ($('.comments-rating-prep-container .rating').length) {
+                                    $('.comments-rating-prep-container .rating')[0].innerHTML = data.data.component;
+                                }
+                            }
+                        });
                     }
                 });
-            });
 
             $('.ratings-wrapper .rating-stars-container .empty-star,' +
                 '.comments-rating-prep-container .rating .empty-star').on('mouseover', function () {

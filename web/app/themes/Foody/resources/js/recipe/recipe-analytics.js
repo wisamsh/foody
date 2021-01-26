@@ -556,9 +556,54 @@ jQuery(document).ready(($) => {
         /******************* ********************/
 
         /** rating **/
-        $('.rating-stars-container > .empty-star').on('click', function() {
+        $('.details .rating-stars-container > .empty-star').on('click', function() {
             eventCallback('', 'מתכון', 'דרוג מתכון', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
         });
+
+        /** dishes amount change - buttons **/
+        $('.recipe-ingredients .recipe-ingredients-top .amount-container .amount-container .plus-icon, .recipe-ingredients .recipe-ingredients-top .amount-container .amount-container .minus-icon').on('click', function () {
+            let defaultValue = $('#number-of-dishes').length ? $('#number-of-dishes')[0].defaultValue : '';
+            let currentValue = $('#number-of-dishes').length ? $('#number-of-dishes')[0].value : '';
+            eventCallback(event, 'מתכון', 'שינוי מספר מנות', defaultValue, 'מספר מנות', currentValue, get_recipe_order_location());
+            nonInteraction = false;
+        });
+
+        /** select similar recipe from middle of page **/
+        $('section.recipe_similar_content .similar-content-items .similar-content-item-listing').on('click', function () {
+            let clickedRecipeName = $(this).find('> .similar-content-listing-title');
+            if(clickedRecipeName.length){
+                clickedRecipeName = clickedRecipeName.text().trim();
+            } else {
+                clickedRecipeName = '';
+            }
+            eventCallback('', 'מתכון', 'בחירת מתכון נוסף', clickedRecipeName, ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'מתכונים נוספים באמצע העמוד');
+        });
+
+        /** clicked link to share how you did **/
+        $('.comments-rating-prep-container .preparations-share .preparation-share-link').on('click', function () {
+            eventCallback('', 'מתכון', 'מעבר להעלאת תמונה', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'תפריט קישורים אמצעי');
+        });
+
+        /** clicked link to share how you did **/
+        $('.comments-rating-prep-container .comments-link-container .comments-link').on('click', function () {
+            eventCallback('', 'מתכון', 'מעבר להוספת תגובה', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'תפריט קישורים אמצעי');
+        });
+
+        /** rating from the middle of the page **/
+        $('.comments-rating-prep-container .rating-stars-container > .empty-star').on('click', function() {
+            eventCallback('', 'מתכון', 'דרוג מתכון', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'תפריט קישורים אמצעי');
+        });
+
+        /** clicked on link to - ומשקולות מידות **/
+        $('.recipe-ingredients .ingredients-area-links .sizes-and-weights').on('click', function() {
+            eventCallback('', 'מתכון', 'המרת מידות ומשקולות', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
+        });
+
+        /** clicked on transform-to-vegetarian **/
+        $('.recipe-ingredients .ingredients-area-links .transform-to-vegetarian').on('click', function() {
+            eventCallback('', 'מתכון', 'המרת מתכון לטבעוני', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
+        });
+
 
     }
 });

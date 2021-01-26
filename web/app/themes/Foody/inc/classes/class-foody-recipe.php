@@ -263,7 +263,7 @@ class Foody_Recipe extends Foody_Post
             $target = get_option('foody_conversion_table_link_target', false) ? '_blank' : '_self';
             $link_text = get_option('foody_conversion_table_link_text', false);
 
-            echo '<a href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
+            echo '<a class="sizes-and-weights" href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
         } else {
             echo '';
         }
