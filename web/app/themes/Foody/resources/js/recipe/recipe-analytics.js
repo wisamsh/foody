@@ -383,8 +383,8 @@ jQuery(document).ready(($) => {
         /** substitute ingredient **/
         $('.substitute-ingredient').on('click', function () {
             let substituteIngredientName = $(this).attr('data-name');
-            let parentIngredient = $(this).closest('.ingredients');
-            let shownIngredientName = (parentIngredient.find('.foody-u-link'))[0].innerText;
+            let parentOfIngredient = $(this).closest('.ingredients');
+            let shownIngredientName = (parentOfIngredient.find('.foody-u-link'))[0].innerText;
             let substituteLinkName = $(this)[0].innerText.replace('החלפה ל', '');
 
             if (substituteIngredientName == shownIngredientName) {
