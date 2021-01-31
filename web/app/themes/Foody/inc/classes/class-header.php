@@ -142,7 +142,7 @@ class Foody_Header {
                 echo '<a href="' . $foody_url . '" target="_blank">';
             }
 			echo '<span>' . $collab_text . '</span>';
-			echo '<img src="' . $GLOBALS['images_dir'] . 'foody-logo.svg" alt="Foody">';
+			echo '<img src="' . $GLOBALS['images_dir'] . 'foody-new-logo.svg" alt="Foody">';
 			echo '</a> ';
 			if ( $desktop ) {
 				echo '</span>';

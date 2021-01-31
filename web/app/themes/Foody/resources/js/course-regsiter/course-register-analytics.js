@@ -4,9 +4,12 @@ jQuery(document).ready(($) => {
     let hostName = '';
 
     // course register page
-    if (foodyGlobals['page_template_name'] == "foody-course-register") {
+    if (foodyGlobals['page_template_name'] == "foody-course-register" || foodyGlobals['page_template_name'] == "foody-courses-thank-you") {
         courseName = $('.credit-card-pay').length && $('.credit-card-pay').data('item-name').length ? $('.credit-card-pay').data('item-name') : '';
         hostName = $('.course-title').length && $('.course-title').data('host').length ? $('.course-title').data('host') : '';
+
+        let inputsListEventCalled = {'email': false, 'first-name': false, 'last-name': false, 'phone-number': false};
+        let inputsListTranslate = {'email': 'כתובת מייל', 'first-name': 'שם פרטי', 'last-name': 'שם משפחה', 'phone-number': 'מספר טלפון'};
 
         /** page load **/
         eventCallback('', analyticsCategory, 'טעינת טופס הרשמה', courseName, 'מיקום', 'טופס הרשמה', hostName);
@@ -14,15 +17,15 @@ jQuery(document).ready(($) => {
 
         $('.credit-card-pay').on('click', function () {
             let inputFields = $('#course-register-form input');
-            let submited = true;
+            let isSubmited = true;
             inputFields.each(function () {
                 if ($(this).hasClass('error') || ($(this).attr('id') == 'terms' && !$(this).prop('checked'))) {
-                    submited = false;
-                    return submited;
+                    isSubmited = false;
+                    return isSubmited;
                 }
             });
 
-            if (submited) {
+            if (isSubmited) {
                 eventCallback('', analyticsCategory, 'השלמת רישום ומעבר לרכישה', courseName, 'מיקום', 'טופס הרשמה', hostName);
             }
         });
@@ -39,6 +42,16 @@ jQuery(document).ready(($) => {
 
             if (submited) {
                 eventCallback('', analyticsCategory, 'השלמת רישום ומעבר לרכישה (bit)', courseName, 'מיקום', 'טופס הרשמה', hostName);
+            }
+        });
+
+
+
+        $('#email, #first-name, #last-name, #phone-number').on('keydown', function () {
+            let currentID = $(this)[0].id;
+            if(!inputsListEventCalled[currentID]){
+                inputsListEventCalled[currentID] = !inputsListEventCalled[currentID];
+                eventCallback('', analyticsCategory, 'מילוי טופס הרשמה', courseName, 'מיקום', inputsListTranslate[currentID], hostName);
             }
         });
     }

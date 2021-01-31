@@ -38,11 +38,18 @@
         .course-title {
           font-size: 22px;
           color: red;
+          text-align: center;
+          margin: 0;
+          font-weight: bold;
         }
 
         .course-cover-text {
+          font-size: 20px;
           line-height: 1rem;
           white-space: normal;
+          text-align: center;
+          margin: 0;
+          font-weight: bold;
         }
       }
     }
@@ -77,6 +84,12 @@
               input {
                 width: 100%;
               }
+            }
+
+            .address{
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
             }
           }
         }
@@ -167,7 +180,7 @@
         text-align: right;
         display: block;
         color: $color__primary;
-        font-family: Assistant;
+        font-family: Afek;
         font-weight: bold;
         font-size: 12px;
       }
@@ -479,7 +492,7 @@
           text-align: right;
           display: block;
           color: $color__primary;
-          font-family: Assistant;
+          font-family: Afek;
           font-weight: bold;
         }
 
@@ -487,7 +500,7 @@
           height: 52px;
 
           .credit-card-pay {
-            width: 28%;
+            width: 32%;
             padding: 2% 1% 2% 6%;
 
             img {

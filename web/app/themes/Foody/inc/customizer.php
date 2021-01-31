@@ -613,7 +613,7 @@ function foody_customize_register( $wp_customize ) {
         'text_for_button',
         array(
             'label'       => __( 'בחר טקסט לכפתור (עד 16 תווים)', 'foody' ),
-            'description' => __( '', 'foody' ),
+            'description' => __( 'אם לא מוכנס הכפתור לא יוצג', 'foody' ),
             'settings'    => 'text_for_button',
             'priority'    => 14,
             'section'     => 'foody_banner',

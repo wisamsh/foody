@@ -5,9 +5,10 @@ let FoodyLoader = require('../common/foody-loader');
 let price;
 let used_coupon_details = null;
 let mobileOS = foodyGlobals.isMobile ? getMobileOperatingSystem() : false;
+let calUser = false;
 
 jQuery(document).ready(($) => {
-    window.scroll(0,0);
+    window.scroll(0, 0);
     if ($('#coupon-input').length) {
         let expiredModalElm = createAlertModal('coupon-dialog-expired', 'פג תוקף הקופון');
         let unavailableModalElm = createAlertModal('coupon-dialog-unavailable', 'הקופון לא זמין');
@@ -99,6 +100,18 @@ jQuery(document).ready(($) => {
                                 phone_number: {
                                     required: 'מספר טלפון הינו שדה חובה',
                                     regex: 'מספר טלפון אינו תקין'
+                                },
+                                city:{
+                                    required: 'שם עיר הינו שדה חובה'
+                                },
+                                street:{
+                                    required: 'שם רחוב הינו שדה חובה'
+                                },
+                                building_number:{
+                                    required: 'מספר בניין הינו שדה חובה'
+                                },
+                                 apt:{
+                                    required: 'מספר דירה הינו שדה חובה'
                                 },
                                 terms: 'אנא אשר/י את תנאי השימוש',
                             },
@@ -221,7 +234,14 @@ jQuery(document).ready(($) => {
                                         }
                                     );
                                 } else {
-                                    validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
+                                    // validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
+                                    validate_fields({
+                                        'email': inputsObj.email,
+                                        'firstName': inputsObj.firstName,
+                                        'lastName': inputsObj.lastName,
+                                        'phone': inputsObj.phone,
+                                        'termsAccepted': inputsObj.termsAccepted
+                                    });
                                 }
                             })
                             ;
@@ -233,15 +253,13 @@ jQuery(document).ready(($) => {
                                     let inputsObj = get_all_form_inputs(this);
                                     let urlParams = getUrlVars();
 
-                                    if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone) {
+                                    if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone && is_valid_address(inputsObj)) {
                                         let foodyLoader = new FoodyLoader({
                                             container: $('.button-container'),
                                             id: 'buttons-loader'
                                         });
                                         let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
                                         let mailInvoice = $(this).attr('data-invoice-mail').length != 0 ? $(this).attr('data-invoice-mail') : '';
-                                        // let mailNotice = mailInvoice != '' ? '<span class="invoice-notice">*במידה ותרצה לשנות את שם החשבונית יש ליצור קשר במייל ' + '<a href="mailto:' + mailInvoice + '">' + mailInvoice + '</a></span>' : '';
-                                        // let link = $(this).attr('data-link') + '?ExtCUserEmail=' + inputsObj.email + '&ExtCInvoiceTo=' + inputsObj.firstName + ' ' + inputsObj.lastName + '&ExtMobilPhone=' + inputsObj.phone + '&SuccessRedirectUrl=' + inputsObj.thankYou + '&custom_field_10=' + inputsObj.enableMarketing;
 
                                         let data_of_member = {
                                             'email': inputsObj.email,
@@ -259,6 +277,10 @@ jQuery(document).ready(($) => {
                                             'status': 'pending',
                                             'payment_method_id': '-1'
                                         };
+
+                                        if(calUser){
+                                            data_of_member['address'] = inputsObj.city + " " + inputsObj.street + " " + inputsObj.building_number + ", " + inputsObj.apt;
+                                        }
 
                                         foodyLoader.attach({topPercentage: 20});
                                         foodyAjax({
@@ -285,13 +307,34 @@ jQuery(document).ready(($) => {
 
                                                 $('.cover-section').remove();
                                                 $('.bottom-image').remove();
-                                                window.scroll(0,0);
+                                                window.scroll(0, 0);
                                                 $('.form-section').replaceWith(iframe);
                                                 // $('#card-pay-frame').after(mailNotice);
                                             }
                                         });
                                     } else {
-                                        validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
+                                        if (calUser) {
+                                            validate_fields({
+                                                'email': inputsObj.email,
+                                                'firstName': inputsObj.firstName,
+                                                'lastName': inputsObj.lastName,
+                                                'phone': inputsObj.phone,
+                                                'termsAccepted': inputsObj.termsAccepted,
+                                                'city': inputsObj.city,
+                                                'street': inputsObj.street,
+                                                'building_number': inputsObj.building_number,
+                                                'apt': inputsObj.apt,
+                                            });
+                                        }
+                                        else {
+                                            validate_fields({
+                                                'email': inputsObj.email,
+                                                'firstName': inputsObj.firstName,
+                                                'lastName': inputsObj.lastName,
+                                                'phone': inputsObj.phone,
+                                                'termsAccepted': inputsObj.termsAccepted
+                                            });
+                                        }
                                     }
                                 }
                             });
@@ -304,6 +347,18 @@ jQuery(document).ready(($) => {
                 }
             }
         });
+
+        function is_valid_address(inputsObj) {
+            if (calUser) {
+                if ((typeof inputsObj.city !== 'undefined' && inputsObj.city) && (typeof inputsObj.street !== 'undefined' && inputsObj.street) && (typeof inputsObj.building_number !== 'undefined' && inputsObj.building_number) && (typeof inputsObj.apt !== 'undefined' && inputsObj.apt)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        }
 
         function redeemCoupon() {
             let foodyLoader = new FoodyLoader({container: $('.coupon-and-price-container'), id: 'coupon-loader'});
@@ -355,8 +410,8 @@ jQuery(document).ready(($) => {
             }
         }
     }
-    if(foodyGlobals.page_template_name = "foody-courses-thank-you"){
-        window.scroll(0,0);
+    if (foodyGlobals.page_template_name = "foody-courses-thank-you") {
+        window.scroll(0, 0);
     }
 });
 
@@ -369,14 +424,23 @@ function get_current_date() {
     return yyyy + '-' + mm + '-' + dd;
 }
 
-function validate_fields(email, firstName, lastName, phone, termsAccepted) {
+// function validate_fields(email, firstName, lastName, phone, termsAccepted) {
+function validate_fields(fieldsToValidate) {
     let fields = {
-        '#email': email,
-        '#first-name': firstName,
-        '#last-name': lastName,
-        '#phone-number': phone,
-        '#terms': termsAccepted
+        '#email': fieldsToValidate['email'],
+        '#first-name': fieldsToValidate['firstName'],
+        '#last-name': fieldsToValidate['lastName'],
+        '#phone-number': fieldsToValidate['phone'],
+        '#terms': fieldsToValidate['termsAccepted']
     };
+
+    if (calUser) {
+        fields['#city'] = fieldsToValidate['city'];
+        fields['#street'] = fieldsToValidate['street'];
+        fields['#building_number'] = fieldsToValidate['building_number'];
+        fields['#apt'] = fieldsToValidate['apt'];
+    }
+
     for (let field in fields) {
         if (!fields[field]) {
             if (field == '#terms') {
@@ -388,7 +452,9 @@ function validate_fields(email, firstName, lastName, phone, termsAccepted) {
                 $("#course-register-form").validate().element(field);
             }
         } else {
-            $('.terms-error').remove();
+            if (field == '#terms') {
+                $('.terms-error').remove();
+            }
         }
     }
 }
@@ -427,7 +493,7 @@ function checkCouponAndGetCouponAndPrice(used_coupon_details, price) {
 function removeSpacesAndDashFromPhone(phone) {
     let phoneResult = phone;
     if (phone.indexOf("-") >= 0) {
-        
+
         phoneResult = phone.replace('-', '');
         phoneResult = phoneResult.replace(/\s/g, '');
     }
@@ -445,7 +511,7 @@ function get_all_form_inputs(button_pressed) {
     let _thankYou = $(button_pressed).attr('data-thank-you').length != 0 ? $(button_pressed).attr('data-thank-you') : '';
     let _termsAccepted = $('.newsletter-and-terms #terms').prop('checked');
 
-    return {
+    let input_data = {
         email: _email,
         firstName: _firstName,
         lastName: _lastName,
@@ -454,7 +520,17 @@ function get_all_form_inputs(button_pressed) {
         courseName: _courseName,
         thankYou: _thankYou,
         termsAccepted: _termsAccepted
+    };
+
+    if ($('.button-container .credit-card-pay').length && $('.button-container .credit-card-pay').attr('data-is-cal').length && $('.button-container .credit-card-pay').attr('data-is-cal') === "1") {
+        calUser = true;
+        input_data['city'] = $('.form-container #city').length != 0 ? $('.form-container #city').val() : false;
+        input_data['street'] = $('.form-container #street').length != 0 ? $('.form-container #street').val() : false;
+        input_data['building_number'] = $('.building-details #building_number').length != 0 ? $('.building-details #building_number').val() : false;
+        input_data['apt'] = $('.building-details #apt').length != 0 ? $('.building-details #apt').val() : false;
     }
+
+    return input_data;
 }
 
 function getMobileOperatingSystem() {

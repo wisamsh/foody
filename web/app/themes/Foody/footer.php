@@ -12,9 +12,9 @@ $footer = new Foody_Footer();
 $post = get_post();
 $feed_area_id = 0;
 $use_general_banner = true;
+$page = get_queried_object();
 
-if (isset($_GET) && !empty($_GET)) {
-    if (isset($_GET['referer']) && $_GET['referer'] != 0) {
+if (isset($_GET) && !empty($_GET) && isset($_GET['referer']) && $_GET['referer'] != 0) {
         if($post == null){
             $feed_area_id = $_GET['referer'];
         }
@@ -24,7 +24,17 @@ if (isset($_GET) && !empty($_GET)) {
         else {
             $feed_area_id = $post->ID;
         }
+}
+elseif (isset($post) && ($post->post_type == 'foody_recipe' || $post->post_type == 'post') && get_field('recipe_channel', $post->ID)){
+    if (!get_field('activate_banner', $post->ID)) {
+        $feed_area_id = get_field('recipe_channel', $post->ID);
     }
+    else {
+        $feed_area_id = $post->ID;
+    }
+}
+elseif(isset($page->taxonomy) && $page->taxonomy === 'category' && get_field('recipe_channel', $page)){
+    $feed_area_id = get_field('recipe_channel', $page);
 }
 elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post_type == 'foody_recipe' || $post->post_type == 'post')) {
     $feed_area_id = $post->ID;
@@ -85,9 +95,11 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
         <ul>
             <?php $footer->display_menu_items($footer->footer_pages) ?>
         </ul>
+        <?php if((get_current_blog_id() == 1) || (get_current_blog_id() != 1 && !get_option( 'foody_remove_foodys_link_footer', false ))){ ?>
         <section class="foody-israel-footer">
             <?php $footer->the_foody_israel(true); ?>
         </section>
+        <?php } ?>
         <?php if (get_theme_mod('foody_show_moveo_logo', true)) : ?>
             <section class="powered-by">
                 <?php $footer->the_moveo() ?>

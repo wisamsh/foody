@@ -87,7 +87,7 @@ function export_import_foody_wp($newBlogId)
             Foody_WhiteLabelLogger::info("wp foody import command finished",['result'=>$result]);
 
             // duplicate acf field groups to new blog
-            foody_copy_acf($url);
+//            foody_copy_acf($url);
 
         } catch (Exception $e) {
             Foody_WhiteLabelLogger::info("error exporting to $export_file", ['error' => $e]);

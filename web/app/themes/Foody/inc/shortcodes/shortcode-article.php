@@ -19,7 +19,7 @@ function foody_article_shortcode( $attrs ) {
 	$display = '';
 	if ( $post_id != $attrs['article'] ) {
 		$post            = get_post( $attrs['article'] );
-        $article          = new Foody_Article( $post );
+        $article          = new Foody_Article( $post, false );
 		$attrs['article'] = $article;
 		$display         = foody_get_template_part( get_template_directory() . '/template-parts/content-article-shortcode-preview.php', $attrs );
 	}

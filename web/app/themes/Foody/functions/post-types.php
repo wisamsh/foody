@@ -523,6 +523,7 @@ function foody_set_custom_page_var($page)
 
 function foody_posts_page_script()
 {
+    global $post;
     $referer_google = false;
     $referer_facebook = false;
     $referer_taboola = false;
@@ -539,23 +540,27 @@ function foody_posts_page_script()
 
         /** from feed area */
         if ($post_type == 'foody_recipe' || $post_type == 'post') {
-            if (is_array($_GET) && isset($_GET['referer'])) {
-                $enable_google = get_field('google_set_for_recipes', $_GET['referer']);
-                $enable_facebook = get_field('facebook_set_for_recipes', $_GET['referer']);
-                $enable_taboola = get_field('taboola_set_for_recipes', $_GET['referer']);
-                $enable_outbrain = get_field('outbrain_set_for_recipes', $_GET['referer']);
+            $feed_area_id = isset($post->ID) ? get_field('recipe_channel', $post->ID) : get_field('recipe_channel');
+            $feed_area_id = is_category() ? get_field('recipe_channel', get_queried_object()) : $feed_area_id;
+            if (is_array($_GET) && (isset($_GET['referer']) || $feed_area_id)) {
+                $referer = isset($_GET['referer']) ? $_GET['referer'] : $feed_area_id;
+
+                $enable_google = get_field('google_set_for_recipes', $referer);
+                $enable_facebook = get_field('facebook_set_for_recipes', $referer);
+                $enable_taboola = get_field('taboola_set_for_recipes', $referer);
+                $enable_outbrain = get_field('outbrain_set_for_recipes', $referer);
 
                 if ($enable_facebook) {
-                    $referer_facebook = $_GET['referer'];
+                    $referer_facebook = $referer;
                 }
                 if ($enable_google) {
-                    $referer_google = $_GET['referer'];
+                    $referer_google = $referer;
                 }
                 if ($enable_taboola) {
-                    $referer_taboola = $_GET['referer'];
+                    $referer_taboola = $referer;
                 }
                 if ($enable_outbrain) {
-                    $referer_outbrain = $_GET['referer'];
+                    $referer_outbrain = $referer;
                 }
             }
         }

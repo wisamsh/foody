@@ -1,5 +1,22 @@
 @import "../../layout/content-with-images";
 
+.cover-image{
+  &.register-page {
+    background-color: white;
+
+    > picture {
+      margin: auto;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      img {
+        max-width: 50%;
+      }
+    }
+  }
+}
+
 .register, .login {
 
 
@@ -58,6 +75,7 @@
       &.btn-facebook {
         background-color: #3a539f;
         margin-right: 20px;
+        padding: 0 10px;
         .facebook-icon:after {
           background: url("../images/icons/facebook.svg") no-repeat;
           content: '';
@@ -74,6 +92,7 @@
         color: #5c5a5a;
         font-family: Roboto;
         font-weight: 500;
+        padding: 0 10px;
         .google-icon:before {
           content: '';
           background: url("../images/icons/Google-icon.svg") no-repeat;
@@ -193,7 +212,7 @@
 
       font-family: $font__assistant;
       font-size: 18px;
-      color: #ed3d48;
+      color: var(--color__primary);
 
     }
 
@@ -275,6 +294,16 @@
 }
 
 @include breakpoint(mobileonly) {
+  .cover-image {
+    &.register-page {
+      > picture {
+        img {
+          max-width: unset;
+        }
+      }
+    }
+  }
+
   .register, .login {
     &.failed {
       .login-failed-alert {

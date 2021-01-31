@@ -84,7 +84,7 @@
           line-height: 0.5;
           letter-spacing: -0.14px;
           text-align: center;
-          color: #ed3d48;
+          color: var(--color__primary);
           margin-top: 6%;
         }
 
@@ -93,7 +93,7 @@
           line-height: 0.5;
           letter-spacing: -0.14px;
           text-align: center;
-          color: #ed3d48;
+          color: var(--color__primary);
           margin-top: 12%;
 
           .third-line {
@@ -109,7 +109,7 @@
           line-height: 0.8;
           letter-spacing: -0.14px;
           text-align: center;
-          color: #ed3d48;
+          color: var(--color__primary);
           margin-top: 12%;
         }
 
@@ -129,7 +129,7 @@
             line-height: normal;
             letter-spacing: -0.11px;
             text-align: center;
-            color: #ed3d48;
+            color: var(--color__primary);
             padding: 10px 0;
             align-self: center;
             width: 73%;
@@ -204,14 +204,14 @@
             font-weight: bold;
             line-height: 0.6;
             letter-spacing: -0.1px;
-            color: #ed3d48;
+            color: var(--color__primary);
           }
 
           .banner-first-paragraph {
             font-size: 1rem;
             line-height: 0.6;
             letter-spacing: -0.04px;
-            color: #ed3d48;
+            color: var(--color__primary);
             padding-top: 8%;
             font-weight: 500;
 
@@ -226,7 +226,7 @@
           .banner-second-paragraph {
             font-size: 1rem;
             letter-spacing: -0.04px;
-            color: #ed3d48;
+            color: var(--color__primary);
             padding-top: 8%;
             font-weight: 500;
           }
@@ -243,7 +243,7 @@
               border-width: 1px;
               border-radius: 4.7px;
               font-weight: bold;
-              color: #ed3d48;
+              color: var(--color__primary);
               width: 65%;
               margin: 0 auto;
               padding: 2%;
@@ -742,7 +742,7 @@
 
           &::placeholder {
             opacity: 0.5;
-            font-size: 12px;
+            font-size: 16px;
             text-align: right;
             color: #4a4a4a;
           }
@@ -807,14 +807,14 @@
               font-weight: bold;
               line-height: 0.6;
               letter-spacing: -0.1px;
-              color: #ed3d48;
+              color: var(--color__primary);
             }
 
             .banner-first-paragraph {
               font-size: 1rem;
               line-height: 0.6;
               letter-spacing: -0.04px;
-              color: #ed3d48;
+              color: var(--color__primary);
               padding-top: 8%;
               font-weight: 500;
 
@@ -829,7 +829,7 @@
             .banner-second-paragraph {
               font-size: 1rem;
               letter-spacing: -0.04px;
-              color: #ed3d48;
+              color: var(--color__primary);
               padding-top: 8%;
               font-weight: 500;
             }
@@ -846,7 +846,7 @@
                 border-width: 1px;
                 border-radius: 4.7px;
                 font-weight: bold;
-                color: #ed3d48;
+                color: var(--color__primary);
                 width: 65%;
                 margin: 0 auto;
                 padding: 2%;

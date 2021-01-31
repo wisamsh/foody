@@ -106,8 +106,8 @@ $(document).ready(() => {
     if ($.validator) {
         $.validator.addMethod(
             "regex",
-            function (value, element, regexp) {
-                return this.optional(element) || regexp.test(value);
+            function (value, element, regexpr) {
+                return this.optional(element) || regexpr.test(value);
             }
         );
     }

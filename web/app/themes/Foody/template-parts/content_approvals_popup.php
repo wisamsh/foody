@@ -16,7 +16,7 @@ $show               = get_field( 'show', $registration_page );
         <div class="md-checkbox col-12">
             <input id="check-marketing" type="checkbox" checked name="marketing">
             <label for="check-marketing">
-				<?php echo __( 'הריני לאשר בזה קבלת דואר מאתר Foody הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר' ) ?>
+				<?php echo __( 'הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר' ) ?>
             </label>
         </div>
 	<?php endif; ?>
