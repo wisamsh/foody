@@ -26,7 +26,7 @@ class FoodyCommercialRulesOrdering_Plugin {
 		if ( ! is_admin() ) {
 			return false;
 		}
-		$screen = get_current_screen();
+        $screen = get_current_screen();
 		if ( empty( $screen ) || ! empty( $screen ) && $screen->id !== 'edit-foody_comm_rule' ) {
 			return false;
 		}
@@ -38,8 +38,8 @@ class FoodyCommercialRulesOrdering_Plugin {
 	}
 
 	protected function __construct() {
-		add_action( 'pre_get_posts', array( $this, 'alter_rules_search' ) );
-		add_action( 'admin_head', array( $this, 'sort_rules_js' ) );
+		add_action( 'admin_init', array( $this, 'alter_rules_search' ));
+		add_action( 'admin_head', array( $this, 'sort_rules_js' ));
 		add_action( 'wp_ajax_change_rule_order', array( $this, 'ajax_rule_update' ) );
 		add_action( 'save_post_foody_comm_rule', array( $this, 'set_rule_order_save' ) );
 		add_filter( 'manage_foody_comm_rule_posts_columns', array( $this, 'add_foody_comm_rule_id_column' ) );
