@@ -21,15 +21,8 @@ function foody_add_course_member_to_table($custom_val, $return_id = false)
 //    $server_number = FOODY_INSTANCE_NUM;
 
     if($payment_method == __('כרטיס אשראי')) {
-        if(isset($custom_val['address'])){
-            $address = $custom_val['address'];
-            $member_added_to_table = $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, address, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, credit_low_profile_code, coupon, purchase_date, note, status, payment_method_id)
-                VALUES('$member_email','$first_name','$last_name','$phone','$address','$enable_marketing','$course_name','$course_id','$price_paid','','$payment_method','-1','$transaction_id','$coupon','$purchase_date','','$status','$payment_method_id')");
-        }
-        else {
-            $member_added_to_table = $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, credit_low_profile_code, coupon, purchase_date, note, status, payment_method_id)
+        $member_added_to_table = $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, credit_low_profile_code, coupon, purchase_date, note, status, payment_method_id)
                 VALUES('$member_email','$first_name','$last_name','$phone','$enable_marketing','$course_name','$course_id','$price_paid','','$payment_method','-1','$transaction_id','$coupon','$purchase_date','','$status','$payment_method_id')");
-        }
     }
     else{
         $member_added_to_table = $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, credit_low_profile_code, coupon, purchase_date, note, status, payment_method_id)
@@ -49,24 +42,3 @@ function foody_add_course_member_to_table($custom_val, $return_id = false)
         return false;
     }
 }
-
-function foody_delete_row()
-{
-    $member_id =  isset($_POST['memberID']) ? $_POST['memberID'] : false;
-    if ($member_id) {
-        $updated = update_course_member_by_id_and_cloumns($member_id, ['deleted' => 1]);
-
-        if($updated){
-            wp_send_json_success(['msg' => __('השורה עם מזהה ' . $member_id . ' נמחקה')]);
-        }
-        else{
-            wp_send_json_error(['error' => 'המחיקה לא צלחה, אנא נסו שוב']);
-        }
-    } else {
-        wp_send_json_error(['error' => 'missing member id']);
-    }
-
-}
-
-add_action('wp_ajax_nopriv_foody_delete_row', 'foody_delete_row');
-add_action('wp_ajax_foody_delete_row', 'foody_delete_row');

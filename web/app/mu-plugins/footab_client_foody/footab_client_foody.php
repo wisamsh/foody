@@ -187,7 +187,7 @@ if (get_option('footabc_data')) {
 
     function footabc_add_code_to_content($content='')
     {
-        if ( (is_single() || is_singular('foody_recipe') || is_singular('recipe')) && in_the_loop() && is_main_query()) {
+        if ((is_single() || is_singular('foody_recipe') || is_singular('recipe')) && in_the_loop() && is_main_query()) {
             $footab_show = footabc_show_module();
             $footabc_data = get_option('footabc_data');
             $footabc_data = json_decode($footabc_data);
@@ -282,7 +282,7 @@ if (get_option('footabc_data')) {
 
     function footabc_taboola_head()
     {
-        $footab_show = footabc_show_module() && get_option( 'foody_show_taboola_feed', false );
+        $footab_show = footabc_show_module();
         if ($footab_show) {
             $footabc_data =  get_option('footabc_data');
             $footabc_data =  json_decode($footabc_data);
@@ -298,7 +298,7 @@ if (get_option('footabc_data')) {
 
     function footabc_taboola_footer()
     {
-        $footab_show = footabc_show_module() && get_option( 'foody_show_taboola_feed', false );
+        $footab_show = footabc_show_module();
         if ($footab_show) {
             $footabc_data =  get_option('footabc_data');
             $footabc_data =  json_decode($footabc_data);

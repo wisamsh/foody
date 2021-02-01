@@ -39,8 +39,8 @@ $organizations_list = get_orginazations_list();
                 <hr>
 
                 <div class="col-1 p-3">
-                    <label for="phone" class="font-weight-bold pl-2">טלפון</label>
-                    <input class="form-control" name="phone" id="phone" type="tel">
+                    <label for="phone" class="font-weight-bold pl-2">טלפון<span class="required-astrix">*</span></label>
+                    <input class="form-control" name="phone" id="phone" type="tel" required>
                 </div>
                 <hr>
 
