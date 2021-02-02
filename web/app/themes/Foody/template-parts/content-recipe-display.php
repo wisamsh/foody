@@ -196,14 +196,15 @@ if (!empty($similar_content) && !empty($similar_content['active_similar_content'
 
 <?php endif; ?>
 
-<!--    <section class="recipe-sidebar-mobile d-block d-lg-none no-print">-->
-<!--    	--><?php //$recipe->the_mobile_sidebar_content(); ?>
-<!--    </section>-->
-
     <section class="newsletter no-print">
         <?php $recipe->newsletter(); ?>
 
     </section>
+
+
+<section class="recipe-sidebar-mobile d-block d-lg-none no-print">
+    <?php $recipe->the_mobile_sidebar_content(); ?>
+</section>
 
 <?php if ( function_exists( 'footabc_add_code_to_content' ) ): ?>
         <section class="footab-container no-print">
