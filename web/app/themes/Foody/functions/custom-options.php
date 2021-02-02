@@ -10,18 +10,25 @@ register_setting( 'discussion', 'hid_per_page' );
 register_setting( 'discussion', 'whatsapp_phone_number_toggle' );
 register_setting( 'discussion', 'whatsapp_phone_number' );
 register_setting( 'general', 'foody_404_text' );
+register_setting( 'general', 'foody_show_taboola_feed' );
 register_setting( 'general', 'foody_show_ingredients_conversion' );
 register_setting( 'general', 'foody_conversion_table_link_show' );
+register_setting( 'general', 'foody_preview_labels' );
 register_setting( 'general', 'foody_conversion_table_link' );
 register_setting( 'general', 'foody_conversion_table_link_target' );
 register_setting( 'general', 'foody_conversion_table_link_text' );
 register_setting( 'general', 'foody_google_tag_manager_id' );
 register_setting( 'general', 'foody_show_google_adx' );
 register_setting( 'general', 'foody_google_adx_script' );
+register_setting( 'general', 'foody_show_kosher' );
+register_setting( 'general', 'foody_show_favorite' );
+register_setting( 'general', 'foody_show_walkme' );
+register_setting( 'general', 'foody_google_walkme_script' );
 register_setting( 'general', 'foody_show_newsletter_popup' );
 register_setting( 'general', 'foody_id_for_newsletter' );
 register_setting( 'general', 'foody_show_google_login' );
 register_setting( 'general', 'foody_title_for_extra_content' );
+register_setting( 'general', 'foody_remove_foodys_link_footer' );
 //register_setting( 'general', 'foody_mail_for_courses_data' );
 register_setting( 'general', 'foody_client_id_for_invoice' );
 register_setting( 'general', 'foody_client_secret_for_invoice' );
@@ -42,10 +49,12 @@ register_setting( 'general', 'foody_access_token_for_ravmesser');
 register_setting( 'general', 'foody_token_secret_for_ravmesser');
 register_setting( 'reading', 'foody_show_post_views' );
 register_setting( 'reading', 'foody_show_followers_count_views' );
+register_setting( 'reading', 'foody_mail_to_notify_posts' );
 
 $page_name_search_options   = __( 'הגדרות חיפוש - פודי', 'foody' );
 $page_name_purchase_buttons = __( 'כפתורי רכישה', 'foody' );
 $page_name_purchase_buttons_new = __( 'כפתורי רכישה חדשים', 'foody' );
+$page_name_brands_avenue = __( 'שדרת המותגים', 'foody' );
 
 /** @var array $options_pages
  * All ACF Options Pages.
@@ -72,6 +81,12 @@ $options_pages = array(
         'menu_title' => $page_name_purchase_buttons_new,
         'menu_slug'  => 'foody-purchase-options-new.php',
         'post_id'    => 'foody_purchase_options-new',
+        'icon_url'   => 'dashicons-cart'
+    ),array(
+        'page_title' => $page_name_brands_avenue,
+        'menu_title' => $page_name_brands_avenue,
+        'menu_slug'  => 'foody-brands-avenue.php',
+        'post_id'    => 'foody_brands_avenue',
         'icon_url'   => 'dashicons-cart'
     )
 
@@ -191,7 +206,18 @@ function foody_custom_options() {
 		'general'
 	);
 
-	// Should show Ingredients
+    // remove foody's link on footer
+    if(get_current_blog_id() != 1){
+        add_settings_field( 'foody_remove_foodys_link_footer', __( 'הסר לינק Foody 2020 בפוטר', 'foody' ), 'foody_remove_foodys_link_footer_callback', 'general', 'foody_general_settings' );
+    }
+
+    //show taboola feed on site
+    add_settings_field( 'foody_show_taboola_feed', __( 'הצג פיד טאבולה' ), 'foody_show_taboola_feed_callback', 'general','foody_general_settings' );
+
+    //show recipes and articles labels
+    add_settings_field( 'foody_preview_labels', __( 'הצג לייבל/פלאח על מתכונים וכתבות' ), 'foody_preview_labels_callback', 'general','foody_general_settings' );
+
+    // Should show Ingredients
 	add_settings_field( 'foody_conversion_table_link_show', __( 'הצגת קישור לטבלת המרות', 'foody' ), 'foody_conversion_table_link_show_callback', 'general', 'foody_general_settings' );
 	add_settings_field( 'foody_conversion_table_link', __( 'קישור לטבלת המרות', 'foody' ), 'foody_conversion_table_link_callback', 'general', 'foody_general_settings' );
 	add_settings_field( 'foody_conversion_table_link_target', __( 'פתח טבלת המרות בחלון חדש', 'foody' ), 'foody_conversion_table_link_target_callback', 'general', 'foody_general_settings' );
@@ -210,6 +236,14 @@ function foody_custom_options() {
 	add_settings_field( 'foody_show_google_adx', __( 'הצג רכיב Google AdX', 'foody' ), 'foody_show_google_adx_callback', 'general', 'foody_general_settings' );
 	add_settings_field( 'foody_google_adx_script', __( 'סקריפט רכיב Google AdX', 'foody' ), 'foody_google_adx_script_callback', 'general', 'foody_general_settings' );
 
+	// Show kosher and favorite
+	add_settings_field( 'foody_show_kosher', __( 'הצג כשר במתכונים', 'foody' ), 'foody_show_kosher_callback', 'general', 'foody_general_settings' );
+	add_settings_field( 'foody_show_favorite', __( 'הצג מועדפים באתר', 'foody' ), 'foody_show_favorite_callback', 'general', 'foody_general_settings' );
+
+	// Show Google AdX feature
+	add_settings_field( 'foody_show_walkme', __( 'הצג רכיב Walkme', 'foody' ), 'foody_show_walkme_callback', 'general', 'foody_general_settings' );
+	add_settings_field( 'foody_google_walkme_script', __( 'סקריפט רכיב Walkme', 'foody' ), 'foody_google_walkme_script_callback', 'general', 'foody_general_settings' );
+
 	// show newsletter popup
     add_settings_field( 'foody_show_newsletter_popup', __( 'הצג newsletter popup', 'foody' ), 'foody_show_newsletter_popup_callback', 'general', 'foody_general_settings' );
     add_settings_field( 'foody_id_for_newsletter', __( 'מזהה newsletter', 'foody' ), 'foody_id_for_newsletter_callback', 'general', 'foody_general_settings' );
@@ -220,11 +254,15 @@ function foody_custom_options() {
 	// Toggle channel & authors followers visibility
 	add_settings_field( 'foody_show_followers_count_views', __( 'הצג כמות עוקבים', 'foody' ), 'foody_show_followers_count_callback', 'reading' );
 
+    // Toggle post views visibility
+    add_settings_field( 'foody_mail_to_notify_posts', __( 'מייל לעדכון על מתכונים/כתבות חדשים', 'foody' ), 'foody_mail_to_notify_posts_callback', 'reading' );
+
 	//text for extra content
     add_settings_field( 'foody_title_for_extra_content', __( 'כותרת לתוכן נוסף', 'foody' ), 'foody_title_for_extra_content_callback', 'general', 'foody_general_settings' );
 
     // mail for courses data
 //    add_settings_field( 'foody_mail_for_courses_data', __( 'מייל להעברת מידע על משתמש קורס חדש', 'foody' ), 'foody_mail_for_courses_data_callback', 'general', 'foody_general_settings' );
+      add_settings_field( 'foody_courses_admin_email', __( 'מייל להעברת מידע על רב מסר', 'foody' ), 'foody_courses_admin_email_callback', 'general', 'foody_general_settings' );
 
     // GreenInvoice credentials
     add_settings_field( 'foody_client_id_for_invoice', __( 'מזהה עבור מחולל חשבוניות', 'foody' ), 'foody_client_id_for_invoice_callback', 'general', 'foody_general_settings' );
@@ -276,6 +314,21 @@ function foody_conversion_table_link_callback() {
 	echo '<input type="url" size="50" id="foody_conversion_table_link" name="foody_conversion_table_link" value="' . $options . '">';
 }
 
+
+//show recipes and articles labels
+function foody_show_taboola_feed_callback() {
+    $options = get_option( 'foody_show_taboola_feed', false );
+    $checked = $options ? 'checked' : '';
+    echo '<input ' . $checked . ' type="checkbox" id="foody_show_taboola_feed" name="foody_show_taboola_feed">';
+}
+
+//show recipes and articles labels
+function foody_preview_labels_callback() {
+    $options = get_option( 'foody_preview_labels', false );
+    $checked = $options ? 'checked' : '';
+    echo '<input ' . $checked . ' type="checkbox" id="foody_preview_labels" name="foody_preview_labels">';
+}
+
 // Show foody_conversion_table_link_target field
 function foody_conversion_table_link_target_callback() {
 	$options = get_option( 'foody_conversion_table_link_target', false );
@@ -323,6 +376,32 @@ function foody_google_adx_script_callback() {
 	echo '<textarea id="foody_google_adx_script" name="foody_google_adx_script" rows="5" cols="50">' . $content . '</textarea>';
 }
 
+// Show kosher
+function foody_show_kosher_callback() {
+	$options = get_option( 'foody_show_kosher', true );
+	$checked = $options ? 'checked' : '';
+	echo '<input ' . $checked . ' type="checkbox" id="foody_show_kosher" name="foody_show_kosher">';
+}
+
+// Show favorites
+function foody_show_favorite_callback() {
+    $options = get_option( 'foody_show_favorite', true );
+    $checked = $options ? 'checked' : '';
+    echo '<input ' . $checked . ' type="checkbox" id="foody_show_favorite" name="foody_show_favorite">';
+}
+
+// Show Walkme feature
+function foody_show_walkme_callback() {
+	$options = get_option( 'foody_show_walkme', false );
+	$checked = $options ? 'checked' : '';
+	echo '<input ' . $checked . ' type="checkbox" id="foody_show_walkme" name="foody_show_walkme">';
+}
+
+function foody_google_walkme_script_callback() {
+	$content = get_option( 'foody_google_walkme_script', '' );
+	echo '<textarea id="foody_google_walkme_script" name="foody_google_walkme_script" rows="5" cols="50">' . $content . '</textarea>';
+}
+
 function foody_show_newsletter_popup_callback() {
     $options = get_option( 'foody_show_newsletter_popup', false );
     $checked = $options ? 'checked' : '';
@@ -345,6 +424,11 @@ function foody_show_followers_count_callback() {
 	$checked = $options ? 'checked' : '';
 	echo '<input ' . $checked . ' type="checkbox" id="foody_show_followers_count_views" name="foody_show_followers_count_views">';
 	echo '<p class="description">הצג/הסר כמות עוקבים אחר ערוצים/מתחמי פידים/יוצרים</p>';
+}
+
+function foody_mail_to_notify_posts_callback(){
+    $options = get_option( 'foody_mail_to_notify_posts', false );
+    echo '<input value="' . $options . '"type="text" id="foody_mail_to_notify_posts" name="foody_mail_to_notify_posts">';
 }
 
 function foody_title_for_extra_content_callback(){
@@ -433,6 +517,12 @@ function foody_token_secret_for_ravmesser_callback(){
     echo '<input value="' . $options . '"type="text" id="foody_token_secret_for_ravmesser" name="foody_token_secret_for_ravmesser">';
 }
 
+
+function foody_remove_foodys_link_footer_callback(){
+    $options = get_option( 'foody_remove_foodys_link_footer', false );
+    $checked = $options ? 'checked' : '';
+    echo '<input ' . $checked . ' type="checkbox" id="foody_remove_foodys_link_footer" name="foody_remove_foodys_link_footer">';
+}
 
 //add_filter('manage_edit-units_columns', 'add_units_columns');
 //

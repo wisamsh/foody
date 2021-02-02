@@ -13,15 +13,18 @@ $classes = 'register';
 if ($failed) {
     $classes = "$classes failed";
 }
+
+$title = get_field('page_title');
+$title = isset($title) && !empty($title) ? $title : __('הגיע הזמן שנכיר');
 ?>
 
-<h2>הגיע הזמן שנכיר</h2>
+<h1 style="font-family: Assistant; color: var(--color__primary); font-weight: 900; font-size: 24px;"><?php echo $title;?></h1>
 <p>
     <?php echo $text ?>
 </p>
 <p>כבר נרשמתם לאתר בעבר? כל מה שאתם צריכים זה
-    <span style="color: #ed3d48;">
-        <a style="color: #ed3d48;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>">להתחבר</a>
+    <span style="color: #e6392b;">
+        <a style="color: #e6392b;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>">להתחבר</a>
     </span>
 </p>
 <p>&nbsp;</p>
@@ -142,7 +145,11 @@ echo do_shortcode('[wordpress_social_login]');
                 <div class="md-checkbox col-12">
                     <input id="check-marketing" type="checkbox" checked name="marketing">
                     <label for="check-marketing">
-                        <?php echo __('הריני לאשר בזה קבלת דואר מאתר Foody הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר') ?>
+                        <?php
+                        $newsletter_text = get_field('newsletter_text');
+                        $newsletter_text = isset($newsletter_text) && !empty($newsletter_text)? $newsletter_text :__('הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר');
+                        echo $newsletter_text;
+                        ?>
                     </label>
                 </div>
                 <?php if (get_field('show')): ?>
@@ -173,7 +180,11 @@ echo do_shortcode('[wordpress_social_login]');
                     >
                     </div>
                     <button type="submit" class="btn btn-primary" aria-label="הירשם">
-                        <?php echo __('הירשם') ?>
+                        <?php
+                        $btn_text = get_field('btn_text');
+                        $btn_text = isset($btn_text) && !empty($btn_text)? $btn_text : __('הירשם');
+                        echo $btn_text;
+                        ?>
                     </button>
                 </div>
 

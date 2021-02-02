@@ -7,6 +7,7 @@
  */
 
 $cover_name = '';
+$is_register_page = false;
 
 if ( isset( $template_args ) ) {
 	if ( ! isset( $template_args['image'] ) ) {
@@ -19,6 +20,9 @@ if ( isset( $template_args ) ) {
 	}
 	if ( isset($template_args['type'] ) ) {
 	   $cover_name = get_field('cover_name' );
+    }
+	if(isset($template_args['is_register'])){
+	    $is_register_page = $template_args['is_register'];
     }
 }
 
@@ -33,11 +37,16 @@ if ( empty( $image ) ) {
 }
 
 if ( empty( $link ) ) {
+    global $post;
 	$link = get_field( 'cover_link' );
-	// add link to cover that was referred by feed channel
-    if (isset($_GET) && isset($_GET['referer']) && $_GET['referer']) {
-        $link = get_field( 'cover_link' , $_GET['referer']);
-        $cover_name = get_field('cover_name', $_GET['referer'] );
+    $feed_area_id = !empty($post->id) ? get_field('recipe_channel', $post->id) : get_field('recipe_channel');
+    $feed_area_id = is_category() ? get_field('recipe_channel', get_queried_object()) : $feed_area_id;
+
+    // add link to cover that was referred by feed channel
+    if ((isset($_GET) && isset($_GET['referer']) && $_GET['referer']) || $feed_area_id) {
+        $recipe_referer = isset($_GET) && isset($_GET['referer'] ) && $_GET['referer'] ? $_GET['referer'] : $feed_area_id;
+        $link = get_field( 'cover_link' , $recipe_referer);
+        $cover_name = get_field('cover_name', $recipe_referer );
     }
 }
 if ( ! empty( $link ) ) {
@@ -56,7 +65,7 @@ if ( isset( $template_args['mobile_image'] ) ) {
 
 ?>
 
-<div class="cover-image">
+<div class="cover-image <?php echo $is_register_page ? 'register-page' : ''?>">
 	<?php if ( isset( $a ) ) {
 		echo $a;
 	} ?>

@@ -47,7 +47,7 @@ if ( $foody_post->favorite ) {
         </span>
 	<?php endif; ?>
 </div>
-<?php if(!wp_is_mobile() && $is_recipe) { ?>
+<?php if(!wp_is_mobile() && $is_recipe && get_option( 'foody_show_kosher')) { ?>
 
     <div class="kosher-sign">
         <?php echo __('כשר'); ?>

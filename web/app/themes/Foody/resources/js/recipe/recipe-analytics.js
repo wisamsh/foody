@@ -84,6 +84,8 @@ jQuery(document).ready(($) => {
         if (foodyGlobals['post']['publisher']) {
             feedPublisher = foodyGlobals['post']['publisher'];
             //publishers.push(publisher);
+        } else if(foodyGlobals['channel_publisher_name']){
+            feedPublisher = foodyGlobals['channel_publisher_name'];
         }
 
         if ($('.sponsors-container').length) {
@@ -275,7 +277,7 @@ jQuery(document).ready(($) => {
             if (!analyticsLabel) {
                 analyticsLabel = this.innerText;
             }
-            eventCallback(event, 'מתכון', 'לחיצה לרכישה', analyticsLabel, 'מפרסם', feedPublisher, get_recipe_order_location(),);
+            eventCallback(event, 'מתכון', 'לחיצה לרכישה', analyticsLabel, 'מפרסם', feedPublisher, get_recipe_order_location(),'');
             nonInteraction = false;
         });
 

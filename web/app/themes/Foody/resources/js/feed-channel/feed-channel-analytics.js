@@ -24,7 +24,13 @@ jQuery(document).ready(($) => {
         if ($('.category-listing').length) {
             $('.category-listing').on('click', function () {
                 let categoryName = $(this)[0].innerText;
-                eventCallback('', 'מתחם פידים', 'בחירת קטגוריה', categoryName);
+                let aTag = $(this).closest('a.category-link');
+                if(aTag.attr('data-disable_referrer').length){
+                    let name = aTag.attr('data-area-name').length ? aTag.attr('data-area-name') : categoryName;
+                    eventCallback('', 'מתחם פידים', 'בחירה במתחם אחר', name);
+                } else {
+                    eventCallback('', 'מתחם פידים', 'בחירת קטגוריה', categoryName, 'מיקום', 'קטגוריות');
+                }
             });
         }
 

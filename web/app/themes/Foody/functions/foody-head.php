@@ -74,8 +74,10 @@ function foody_js_globals_main($vars)
             'title' => get_the_title()
         ];
         if ($vars['post']['type'] === "foody_recipe") {
+            $feed_area_id = get_field('recipe_channel', $vars['post']['ID']);
+            $recipe_referer = isset($_GET['referer']) ? $_GET['referer'] : $feed_area_id;
             $vars['post']['categories'] = wp_get_post_terms($vars['post']['ID'], 'category');
-            $vars['post']['publisher'] = isset($_GET['referer']) ? get_field('publisher_name', $_GET['referer']) : '';
+            $vars['post']['publisher'] = $recipe_referer  ? get_field('publisher_name', $recipe_referer) : '';
         }
         if ($vars['post']['type'] === "foody_course") {
             $vars['post']['hostName'] = get_field('host_name', $vars['post']['ID']);
@@ -139,8 +141,20 @@ function campaign_name($vars)
 add_filter('foody_js_globals', 'campaign_name');
 
 function channel_name($vars){
+    global $post;
+    $page = get_queried_object();
+    $is_category = isset($page->taxonomy) && $page->taxonomy === 'category';
+    $is_search_or_author = is_search() || is_author();
     if(isset($_GET) && isset($_GET['referer']) && $_GET['referer']){
         $vars['channel_name'] = get_the_title($_GET['referer']);
+    }
+    elseif (!$is_search_or_author && !$is_category && isset($post->ID) && isset($post->post_type) && ($post->post_type == 'foody_recipe' || $post->post_type === 'post') && get_field('recipe_channel', $post->ID)){
+        $vars['channel_name'] = get_the_title(get_field('recipe_channel', $post->ID));
+        $vars['referered_area'] = get_field('recipe_channel', $post->ID);
+    }
+    elseif(!$is_search_or_author && $is_category && get_field('recipe_channel', $page)) {
+        $vars['channel_name'] = get_the_title(get_field('recipe_channel', $page));
+        $vars['referered_area'] = get_field('recipe_channel', $page);
     }
     return $vars;
 }
@@ -148,8 +162,19 @@ function channel_name($vars){
 add_filter('foody_js_globals', 'channel_name');
 
 function channel_publisher_name($vars){
+    global $post;
+    $page = get_queried_object();
+
     if(isset($_GET) && isset($_GET['referer']) && $_GET['referer']){
         $vars['channel_publisher_name'] = get_field('publisher_name' ,$_GET['referer']);
+    }
+    elseif (isset($post->ID) && isset($post->post_type) && ($post->post_type == 'foody_recipe' || $post->post_type === 'post') && get_field('recipe_channel', $post->ID)){
+        $recipe_referer = get_field('recipe_channel', $post->ID);
+        $vars['channel_publisher_name'] = get_field('publisher_name' ,$recipe_referer);
+    }
+    elseif(isset($page->taxonomy) && $page->taxonomy === 'category' && get_field('recipe_channel', $page)) {
+        $recipe_referer = get_field('recipe_channel', $page);
+        $vars['channel_publisher_name'] = get_field('publisher_name' ,$recipe_referer);
     }
     if (get_post_type() == 'foody_feed_channel') {
         $vars['channel_publisher_name'] = get_field('publisher_name');
@@ -400,7 +425,8 @@ function foody_background_image_referer()
                 let links = content[0].getElementsByTagName("a");
                 for (let i = 0; i < links.length; i++) {
                     let linkURL = new URL(links[i].href);
-                    if (linkURL && !linkURL.hash && linkURL.origin == window.location.origin && linkURL.href != window.location.origin + '/' && linkURL.href != window.location.href && !linkURL.search.includes('referer')) {
+                    let disableReferrer = typeof $(links[i]).attr('data-disable_referrer') != 'undefined' && parseInt($(links[i]).attr('data-disable_referrer')) === 1;
+                    if (!disableReferrer && linkURL && !linkURL.hash && linkURL.origin == window.location.origin && linkURL.href != window.location.origin + '/' && linkURL.href != window.location.href && !linkURL.search.includes('referer')) {
                         if (links[i].href.includes('?')) {
                             links[i].href += '&referer=' + background_referer;
                         } else {
@@ -425,7 +451,8 @@ function foody_background_image_referer()
 
         </script>
         <?php
-    } elseif ((isset($_GET['referer']) && !empty($_GET['referer'])) && (is_category() || is_tag() || get_post_type() == 'foody_filter')) {
+    }
+    elseif ((isset($_GET['referer']) && !empty($_GET['referer'])) && (is_category() || is_tag() || get_post_type() == 'foody_filter')) {
         ?>
         <script>
             jQuery(document).ready(($) => {
@@ -436,6 +463,40 @@ function foody_background_image_referer()
             });
         </script>
         <?php
+    }
+    elseif(get_post_type() == 'foody_recipe' || get_post_type() === "post"){
+        $channel_connection = get_field('recipe_channel');
+
+        if($channel_connection) {
+            ?>
+            <script>
+                jQuery(document).ready(($) => {
+                    setTimeout(() => {
+                        let background_referer = '' + <?php echo $channel_connection; ?>;
+                        // createRefererLinks(background_referer);
+                    })
+                });
+
+            </script>
+            <?php
+        }
+    }
+    elseif(is_category()){
+        $channel_connection = get_field('recipe_channel', get_queried_object());
+
+        if($channel_connection) {
+            ?>
+            <script>
+                jQuery(document).ready(($) => {
+                    setTimeout(() => {
+                        let background_referer = '' + <?php echo $channel_connection; ?>;
+                        createRefererLinks(background_referer);
+                    })
+                });
+
+            </script>
+            <?php
+        }
     }
 }
 

@@ -10,6 +10,7 @@
  */
 $header = new Foody_Header();
 $user = new Foody_User();
+$user_param = is_user_logged_in() ? $user->user->ID : 'false';
 $show_accessibility = get_theme_mod('foody_show_accessibility') || get_theme_mod('show_white_label_accessibility');
 // always show on main site
 if (!is_multisite() || is_main_site()) {
@@ -24,6 +25,7 @@ if (!is_multisite() || is_main_site()) {
     <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <?php } ?>
+    <meta name="google-site-verification" content="0onpCxafciFIuZuFGZ0w-_blKWe82J34Br2rAq1Tid4"/>
     <meta name="theme-color" content="#ED3D48">
     <link rel="profile" href="http://gmpg.org/xfn/11">
 
@@ -32,6 +34,18 @@ if (!is_multisite() || is_main_site()) {
         <script data-ad-client="ca-pub-3607762765478350" async
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <?php } ?>
+    <script>
+        var walkMeUser = <?php echo $user_param; ?>;
+    </script>
+    <?php
+    // show walkMe feature
+    if(get_current_blog_id() == 1 && get_option( 'foody_show_walkme', false )){
+        $walkme_script = get_option( 'foody_google_walkme_script', '' );
+        if(!empty($walkme_script)){
+           echo $walkme_script;
+        }
+    }
+    ?>
     <?php wp_head(); ?>
 
 </head>
@@ -354,8 +368,38 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
         // add header for print
         Foody_Header::getPrintHeader();
     } ?>
+    <?php
+    if(get_page_template_slug() === 'page-templates/homepage.php') {
+        $brands_avenue_group = get_field('brands_avenue', 'foody_brands_avenue');
+        if (isset($brands_avenue_group['brands']) && !empty($brands_avenue_group['brands'])) { ?>
+            <div class="brands-container">
+                <?php
+                foody_get_template_part(
+                    get_template_directory() . '/template-parts/common/foody-brands.php',
+                    array(
+                        'brands' => $brands_avenue_group['brands'],
+                        'title' => $brands_avenue_group['title']
+                    )
+                );
+                ?>
+            </div>
+            <?php
+        }
+    }
+    ?>
+
     <div id="content" class="site-content">
         <?php
+        if(get_page_template_slug() === 'page-templates/homepage.php') {
+            if (isset($brands_avenue_group['brands']) && !empty($brands_avenue_group['brands'])) {
+                foody_get_template_part(get_template_directory() . '/template-parts/common/foody-brands-mobile.php', [
+                    'brands' => $brands_avenue_group['brands'],
+                    'title' => $brands_avenue_group['title'],
+                    'mobile_btn' => $brands_avenue_group['mobile_text']
+                ]);
+            }
+        }
+
         if (wp_is_mobile()) {
             Foody_Header::whatsapp(['d-lg-block', 'floating', 'whatsapp-mobile']);
         } else {

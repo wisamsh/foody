@@ -34,7 +34,7 @@ body {
   .accept-label {
     max-width: 85%;
     display: inline-block;
-    font-size: 14px;
+    font-size: 16px;
   }
 
 }
@@ -177,7 +177,7 @@ footer.site-footer {
       }
 
       li {
-        font-size: 15px;
+        font-size: 16px;
         line-height: normal;
         text-align: right;
         padding: 0 0 7px;
@@ -308,7 +308,7 @@ footer.site-footer {
                   align-self: flex-end;
                   border-radius: 4px;
                   background-image: linear-gradient(71deg, #ec3849, #f35644);
-                  font-family: Assistant;
+                  font-family: Afek;
                   font-size: 21px;
                   font-weight: bold;
                   font-style: normal;
@@ -326,7 +326,7 @@ footer.site-footer {
                   z-index: 1;
                   align-self: flex-end;
                   color: #ffffff;
-                  font-family: Assistant;
+                  font-family: Afek;
                   font-weight: normal;
                   text-decoration: none;
                   opacity: .75;
@@ -366,7 +366,7 @@ footer.site-footer {
 
                   .banner-text {
                     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                    font-family: Assistant;
+                    font-family: Afek;
                     font-size: 22px;
                     font-weight: 800;
                     font-style: normal;
@@ -386,7 +386,7 @@ footer.site-footer {
                     width: 30%;
                     border-radius: 6px;
                     border: solid 1.5px #ffffff;
-                    font-family: Assistant;
+                    font-family: Afek;
                     font-size: 22px;
                     font-weight: 600;
                     font-style: normal;
@@ -415,7 +415,7 @@ footer.site-footer {
                     z-index: 1;
                     align-self: flex-end;
                     color: #ffffff;
-                    font-family: Assistant;
+                    font-family: Afek;
                     font-weight: normal;
                     text-decoration: none;
                     opacity: .75;
@@ -485,7 +485,7 @@ footer.site-footer {
                 align-self: flex-end;
                 border-radius: 4px;
                 background-image: linear-gradient(71deg, #ec3849, #f35644);
-                font-family: Assistant;
+                font-family: Afek;
                 font-size: 21px;
                 font-weight: bold;
                 font-style: normal;
@@ -503,7 +503,7 @@ footer.site-footer {
                 z-index: 1;
                 align-self: flex-end;
                 color: #ffffff;
-                font-family: Assistant;
+                font-family: Afek;
                 font-weight: normal;
                 text-decoration: none;
                 opacity: .75;
@@ -543,7 +543,7 @@ footer.site-footer {
 
                 .banner-text {
                   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                  font-family: Assistant;
+                  font-family: Afek;
                   font-size: 22px;
                   font-weight: 800;
                   font-style: normal;
@@ -559,11 +559,17 @@ footer.site-footer {
                   z-index: 1;
                 }
 
+                p:last-child{
+                  &.banner-text{
+                    width: 100%;
+                  }
+                }
+
                 .banner-button {
                   width: 30%;
                   border-radius: 6px;
                   border: solid 1.5px #ffffff;
-                  font-family: Assistant;
+                  font-family: Afek;
                   font-size: 22px;
                   font-weight: 600;
                   font-style: normal;
@@ -592,7 +598,7 @@ footer.site-footer {
                   z-index: 1;
                   align-self: flex-end;
                   color: #ffffff;
-                  font-family: Assistant;
+                  font-family: Afek;
                   font-weight: normal;
                   text-decoration: none;
                   opacity: .75;
@@ -979,7 +985,7 @@ footer.site-footer {
                   align-self: flex-end;
                   border-radius: 4px;
                   background-image: linear-gradient(71deg, #ec3849, #f35644);
-                  font-family: Assistant;
+                  font-family: Afek;
                   font-size: 14px;
                   font-weight: bold;
                   font-style: normal;
@@ -996,7 +1002,7 @@ footer.site-footer {
                 .close {
                   align-self: flex-end;
                   color: #ffffff;
-                  font-family: Assistant;
+                  font-family: Afek;
                   font-weight: normal;
                   text-decoration: none;
                   opacity: .75;
@@ -1037,7 +1043,7 @@ footer.site-footer {
 
                   .banner-text {
                     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                    font-family: Assistant;
+                    font-family: Afek;
                     font-size: 13px;
                     font-weight: 800;
                     font-style: normal;
@@ -1051,13 +1057,14 @@ footer.site-footer {
                     z-index: 1;
                     padding-left: 3%;
                     margin-bottom: 2%;
+                    margin: auto;
                   }
 
                   .banner-button {
                     width: fit-content;
                     border-radius: 8px;
                     border: solid 1.5px #ffffff;
-                    font-family: Assistant;
+                    font-family: Afek;
                     font-size: 12px;
                     font-weight: bold;
                     font-style: normal;
@@ -1089,7 +1096,7 @@ footer.site-footer {
                     z-index: 1;
                     align-self: flex-end;
                     color: #ffffff;
-                    font-family: Assistant;
+                    font-family: Afek;
                     font-weight: normal;
                     text-decoration: none;
                     opacity: 0.75;

@@ -45,6 +45,13 @@ jQuery(document).ready(function ($) {
     });
 
     $('header .navbar-toggler').on('click', () => {
+        // if brands avenue is open => close it
+        if($('.brands-toggle-mobile .brands-avenue-mobile').length){
+            if($('.brands-toggle-mobile .brands-avenue-mobile').hasClass('open')){
+                $('.brands-avenue-mobile').removeClass('open');
+            }
+        }
+
         $('.quadmenu-navbar-toggle').click();
     });
 
