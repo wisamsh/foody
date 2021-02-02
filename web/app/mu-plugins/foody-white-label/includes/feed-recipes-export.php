@@ -28,7 +28,7 @@ class Foody_feed_recipes_exporter
 
         $feed_recipes = self::get_all_feed_recipes($feed_id);
 
-        var_dump($feed_recipes);
+        
         $row = 2;
 
         foreach ($feed_recipes as $recipe){
