@@ -492,6 +492,39 @@ function any_script_in_footer()
 //add_action('wp_print_scripts', 'any_script_in_footer', 10000000000000);
 
 
+/* Foody-Feed-Channel- Add Meta box-> Extract Recipes to XL file */
+function add_custom_box_extract_recipes() {
+    $screens = [ 'foody_feed_channel' ];
+    foreach ( $screens as $screen ) {
+        add_meta_box(
+            'wporg_box_extract_recipes',                 // Unique ID
+            'ייצוא מתכונים לקובץ אקסל',      // Box title
+            'wporg_custom_box_html',  // Content callback, must be of type callable
+            $screen                            // Post type
+        );
+    }
+}
+add_action( 'add_meta_boxes', 'add_custom_box_extract_recipes' );
+
+function wporg_custom_box_html( $post ) {
+
+    ?>
+    <label for="wporg_field">ייצוא קובץ אקסל הכולל בתוכו את המתכונים של הפיד הנוכחי</label>
+    <br><br>
+    <form method="post" id="export-recipes-form">
+        <input type="text" id="unique-feed-id" name="unique_feed_id" value="<?php echo $post->ID; ?>" hidden>
+        <button type="submit" class="button button-primary button-large"> ייצוא קובץ אקסל</button>
+    </form>
+
+    <?php
+
+}
+
+if (isset($_POST['unique_feed_id'])) {
+    Foody_feed_recipes_exporter::generate_xlsx($_POST['unique_feed_id'], $title= get_the_title($_POST['unique_feed_id']) );
+}
+
+
 function hide_w3tc()
 {
     if (defined('WP_ENV') && WP_ENV == 'production') {

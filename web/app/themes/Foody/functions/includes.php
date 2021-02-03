@@ -135,6 +135,7 @@ require_once get_template_directory() . "/functions/actions.php";
 require_once get_template_directory() . "/functions/foody-ajax.php";
 require_once get_template_directory() . "/functions/acf-utils.php";
 require_once get_template_directory() . "/functions/editor.php";
+require_once get_template_directory() . "/functions/feed-recipes-export.php";
 require_once get_template_directory() . "/functions/http.php";
 require_once get_template_directory() . "/functions/redirects.php";
 require_once get_template_directory() . "/functions/menus.php";
