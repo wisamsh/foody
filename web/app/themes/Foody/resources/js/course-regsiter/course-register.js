@@ -247,6 +247,82 @@ jQuery(document).ready(($) => {
                             ;
                         }
 
+                        $('.button-container').on('click', 'div.free-pay', function () {
+                            let inputsObj = get_all_form_inputs(this);
+                            let urlParams = getUrlVars();
+
+                            if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone && is_valid_address(inputsObj)) {
+                                let foodyLoader = new FoodyLoader({
+                                    container: $('.button-container'),
+                                    id: 'buttons-loader'
+                                });
+                                let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
+                                let data_of_member = {
+                                    'email': inputsObj.email,
+                                    'first_name': inputsObj.firstName,
+                                    'last_name': inputsObj.lastName,
+                                    'phone': inputsObj.phone,
+                                    'purchase_date': get_current_date(),
+                                    'enable_marketing': inputsObj.enableMarketing,
+                                    'course_name': inputsObj.courseName,
+                                    'course_id': urlParams.course_id,
+                                    'price': couponAndPriceObj.price,
+                                    'payment_method': 'ללא עלות',
+                                    'transaction_id': '-1',
+                                    'coupon': couponAndPriceObj.coupon,
+                                    'status': 'pending',
+                                    'payment_method_id': '-1'
+                                };
+
+                                if(calUser){
+                                    data_of_member['address'] = inputsObj.city + " " + inputsObj.street + " " + inputsObj.building_number + ", " + inputsObj.apt;
+                                }
+
+                                foodyLoader.attach({topPercentage: 20});
+                                foodyAjax({
+                                    action: 'foody_start_free_pay_process',
+                                    data: {
+                                        memberData: data_of_member,
+                                        isMobile: mobileOS,
+                                        thankYou: inputsObj.thankYou
+                                    }
+                                }, function (err, data) {
+                                    if (err) {
+                                        console.log(err);
+                                        foodyLoader.detach();
+                                    } else {
+                                        foodyLoader.detach();
+                                        if(data.data == 'success'){
+                                            window.location.replace(inputsObj.thankYou+'&paid=1');
+                                        }
+                                    }
+                                });
+                            } else {
+                                if (calUser) {
+                                    validate_fields({
+                                        'email': inputsObj.email,
+                                        'firstName': inputsObj.firstName,
+                                        'lastName': inputsObj.lastName,
+                                        'phone': inputsObj.phone,
+                                        'termsAccepted': inputsObj.termsAccepted,
+                                        'city': inputsObj.city,
+                                        'street': inputsObj.street,
+                                        'building_number': inputsObj.building_number,
+                                        'apt': inputsObj.apt,
+                                    });
+                                }
+                                else {
+                                    validate_fields({
+                                        'email': inputsObj.email,
+                                        'firstName': inputsObj.firstName,
+                                        'lastName': inputsObj.lastName,
+                                        'phone': inputsObj.phone,
+                                        'termsAccepted': inputsObj.termsAccepted
+                                    });
+                                }
+                            }
+                        });
+
                         if ($('.credit-card-pay').length) {
                             $('.credit-card-pay').on('click', function () {
                                 if (typeof $(this).prop('disabled') == 'undefined' || $(this).prop('disabled') === "false") {
@@ -392,7 +468,14 @@ jQuery(document).ready(($) => {
                                 'coupon_type': data.data.couponType
                             };
                             foodyLoader.detach();
-                            $('.credit-card-pay').prop('disabled', "false");
+                            // handle coupon change the price to 0 => free
+                            if(discounted_price == 0 || discounted_price == 0.0){
+                                let freePurchaseButton = getFreePurchaseButton();
+                                $('.form-container .button-container').children().remove();
+                                $('.form-container .button-container').append(freePurchaseButton)
+                            } else {
+                                $('.credit-card-pay').prop('disabled', "false");
+                            }
                             return;
                         } else {
                             used_coupon_details = {'coupon': null, 'discounted_price': data.data.price};
@@ -551,8 +634,8 @@ function getMobileOperatingSystem() {
 function getRoundedPrice(price) {
     let roundedPriceRes = price.toFixed(1);
 
-    if (roundedPriceRes < 1) {
-        roundedPriceRes = 1;
+    if (roundedPriceRes < 0) {
+        roundedPriceRes = 0;
     }
 
     return roundedPriceRes;
@@ -585,4 +668,10 @@ function getUrlVars() {
         vars[key] = value;
     });
     return vars;
+}
+
+function getFreePurchaseButton() {
+    let courseName = $('.credit-card-pay').attr('data-item-name').length != 0 ? $('.credit-card-pay').attr('data-item-name') : false;
+    let thankYouPage = $('.credit-card-pay').attr('data-thank-you').length != 0 ? $('.credit-card-pay').attr('data-thank-you') : '';
+    return '<div data-thank-you="'+ thankYouPage +'" data-item-name="'+ courseName +'" class="free-pay">קבל את הקורס</div>';
 }

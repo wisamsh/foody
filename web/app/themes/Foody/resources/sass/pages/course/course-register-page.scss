@@ -209,7 +209,8 @@
           cursor: pointer;
         }
 
-        .credit-card-pay {
+        .credit-card-pay,
+        .free-pay{
           border: 1px solid $color__primary;
           border-radius: 5px;
           width: 45%;
@@ -230,6 +231,11 @@
             left: 6%;
             bottom: 32%;
           }
+        }
+
+        .free-pay{
+          padding: 2% !important;
+          margin: auto 2%;
         }
 
         #bitcom-button-container {
@@ -313,7 +319,8 @@
     #primary {
       .form-section {
         .button-container {
-          .credit-card-pay {
+          .credit-card-pay,
+          .free-pay {
             width: 40%;
           }
         }
@@ -499,8 +506,9 @@
         .button-container {
           height: 52px;
 
-          .credit-card-pay {
-            width: 32%;
+          .credit-card-pay,
+          .free-pay {
+            width: 28%;
             padding: 2% 1% 2% 6%;
 
             img {
@@ -549,7 +557,7 @@
 }
 
 .page-template-foody-courses-thank-you {
-  &:not(.foody-payment-bit) {
+  &:not(.foody-payment-bit):not(.foody-payed){
     #masthead,
     footer {
       display: none;
@@ -579,6 +587,30 @@
 }
 .page-template-foody-courses-thank-you {
   &.foody-payment-bit {
+
+    #primary {
+      background: white;
+
+      .site-content {
+        padding-top: 0;
+      }
+
+
+      .foody-content {
+        //min-height: 1500px;
+
+        .thank-you-text {
+          white-space: pre-wrap;
+          text-align: center;
+          font-size: 1.4rem;
+          padding: 5%;
+          //min-height: 1500px;
+        }
+      }
+    }
+  }
+
+  &.foody-payed {
 
     #primary {
       background: white;
