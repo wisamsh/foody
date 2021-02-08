@@ -13,7 +13,7 @@ function foody_start_free_pay_process()
                 $coupon_details = get_coupon_data_by_name($new_member_data['coupon']);
 
                 // update coupon to used
-                update_coupon_to_used($coupon_details);
+                update_coupon_to_used($coupon_details, true);
             }
 
             // send mail to zappier
