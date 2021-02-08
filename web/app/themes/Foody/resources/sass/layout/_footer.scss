@@ -633,6 +633,12 @@ footer.site-footer {
 
 @include breakpoint(mobileonly) {
 
+  .foody_recipe-template-content-with-sidebar{
+    footer{
+      padding-bottom: 75px;
+    }
+  }
+
   #newsletter-modal {
     &.show {
       display: flex !important;

@@ -381,6 +381,8 @@ $run-height: 30px;
 
             .quadmenu-container {
               background: #fdebec;
+              position: absolute;
+              top: 0;
 
               .quadmenu-navbar-header {
                 background: #fdebec;

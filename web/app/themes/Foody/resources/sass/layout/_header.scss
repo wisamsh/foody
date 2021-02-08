@@ -11,6 +11,16 @@ body {
     }
   }
 
+  #quadmenu {
+    .ripple-container {
+      display: none !important;
+    }
+  }
+
+  #quadmenu.quadmenu-default_theme .quadmenu-navbar-nav > li:not(.quadmenu-item-type-button).quadmenu-has-link:hover > a > .quadmenu-item-content, #quadmenu.quadmenu-default_theme .quadmenu-navbar-nav > li:not(.quadmenu-item-type-button).quadmenu-has-link.open > a > .quadmenu-item-content {
+    color: #383838;
+  }
+
   .quadmenu-item {
     &.iso-navmenu-item {
       .quadmenu-text {
@@ -282,6 +292,10 @@ header {
   }
 
   #quadmenu {
+    .ripple-container{
+      display: none !important;
+    }
+
     .quadmenu-container{
       .quadmenu-navbar-collapse{
         .quadmenu-navbar-nav {
@@ -290,9 +304,24 @@ header {
               > .quadmenu-item-content {
                 .quadmenu-caret {
                   .quadmenu-text {
+
                     font-family: AfekBold !important;
                     direction: rtl !important;
                   }
+                }
+              }
+
+              .ripple-container{
+                .ripple-decorator{
+                  background-color: transparent !important;
+                }
+              }
+            }
+
+            a{
+              .ripple-container{
+                .ripple-decorator{
+                  background-color: transparent !important;
                 }
               }
             }

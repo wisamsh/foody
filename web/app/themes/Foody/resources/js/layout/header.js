@@ -262,7 +262,7 @@ jQuery(document).ready(function ($) {
 
                 if (!expended) {
                     $('.sticky_bottom_header #quadmenu').css('height', '45%');
-                    $('.sticky_bottom_header #quadmenu')[0].scrollTop = 0;
+                    $('.sticky_bottom_header #quadmenu .quadmenu-container .quadmenu-navbar-collapse .quadmenu-navbar-nav').scrollTop();
                     // let closeImage = '<img class="foody-logo-text logo-close" src="' + foodyGlobals.imagesUri + "close-menu-logo.svg" + '">';
                     // $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(closeImage);
                     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-hamburger').toggleClass('hidden');

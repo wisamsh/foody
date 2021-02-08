@@ -365,7 +365,7 @@ jQuery(document).ready(($) => {
     let selectorsArr = {'.recipe-categories':'cat-read-more', '.recipe-accessories':'acc-read-more', '.recipe-techniques':'teq-read-more', '.recipe-tags': 'tag-read-more'};
     for(let key in selectorsArr){
         if ($(key + ' ul li').length) {
-            let twoRowsHeight = parseInt($(key + ' ul li').outerHeight(true)) * 2;
+            let twoRowsHeight = (parseInt($(key + ' ul li').outerHeight(true)) * 2) - 2;
             let originalSize = parseInt($(key + ' ul').outerHeight(true));
             if (originalSize > twoRowsHeight) {
                 $(key + ' ul').attr('style', 'height:' + twoRowsHeight + 'px; overflow: hidden');

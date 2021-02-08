@@ -30,9 +30,16 @@ jQuery(document).ready(($) => {
                                 foodyLoader.detach();
                             } else {
                                 foodyLoader.detach();
+                                //desktop
                                 if ($('.social-and-take-me-container .rating-container .ratings-wrapper').length) {
                                     $('.social-and-take-me-container .rating-container .ratings-wrapper').removeClass('empty');
                                     $('.social-and-take-me-container .rating-container .ratings-wrapper')[0].innerHTML = data.data.details;
+                                }
+
+                                //mobile
+                                if($('.details.container > .rating-container .ratings-wrapper').length){
+                                    $('.details.container > .rating-container .ratings-wrapper').removeClass('empty');
+                                    $('.details.container > .rating-container .ratings-wrapper')[0].innerHTML = data.data.details;
                                 }
 
                                 if ($('.comments-rating-prep-container .rating').length) {
