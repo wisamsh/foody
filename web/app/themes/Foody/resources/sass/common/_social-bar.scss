@@ -40,6 +40,15 @@
             }
           }
         }
+        &.essb_link_gmail {
+          a {
+            background-color: var(--color__social) !important;
+
+            &:hover {
+              background-color: #3a3a3a;
+            }
+          }
+        }
         &.essb_link_mail, &.essb_link_print {
 
           a {
