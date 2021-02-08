@@ -60,7 +60,7 @@ if (!is_multisite() || is_main_site()) {
 
 if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']))) {
     ?>
-    <img class="body-background" src="<?php echo $_SESSION['background_image']['url'] ?>"
+    <img class="body-background no-print" src="<?php echo $_SESSION['background_image']['url'] ?>"
          alt="<?php echo $_SESSION['background_image']['alt'] ?>">
     <?php
     unset($_SESSION['background_image']);
