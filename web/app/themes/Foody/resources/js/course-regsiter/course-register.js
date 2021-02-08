@@ -458,7 +458,7 @@ jQuery(document).ready(($) => {
 
         function redeemCoupon() {
             let foodyLoader = new FoodyLoader({container: $('.coupon-and-price-container'), id: 'coupon-loader'});
-            let couponCode = $('#coupon-input').val();
+            let couponCode =  $('#coupon-input').val().trim();
             if (couponCode.length) {
                 $('.credit-card-pay').prop('disabled', "true");
                 foodyLoader.attach({topPercentage: 20});
