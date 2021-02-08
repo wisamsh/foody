@@ -294,7 +294,7 @@ jQuery(document).ready(($) => {
                                     'payment_method_id': '-1'
                                 };
 
-                                if(calUser){
+                                if(withAddress){
                                     data_of_member['address'] = inputsObj.city + " " + inputsObj.street + " " + inputsObj.building_number + ", " + inputsObj.apt;
                                 }
 
@@ -318,7 +318,7 @@ jQuery(document).ready(($) => {
                                     }
                                 });
                             } else {
-                                if (calUser) {
+                                if (withAddress) {
                                     validate_fields({
                                         'email': inputsObj.email,
                                         'firstName': inputsObj.firstName,
