@@ -508,7 +508,7 @@ function insert_new_pending_payment()
     return $last_id;
 }
 
-function update_coupon_to_used($coupon_details)
+function update_coupon_to_used($coupon_details, $is_free = false)
 {
     if (isset($coupon_details['id']) && isset($coupon_details['type']) && isset($coupon_details['coupon_code'])) {
         if ($coupon_details['type'] == 'unique') {
@@ -516,7 +516,11 @@ function update_coupon_to_used($coupon_details)
             update_unique_coupon_to_used($coupon_details['id'], $coupon_code_array[1]);
             update_unique_coupon_to_used_in_all_coupons_table($coupon_details['id']);
         } else {
-            update_general_coupon_to_used($coupon_details['id']);
+            if($is_free){
+                update_general_coupon_to_used_no_held($coupon_details['id']);
+            } else {
+                update_general_coupon_to_used($coupon_details['id']);
+            }
         }
     }
 }
@@ -558,6 +562,14 @@ function update_general_coupon_to_used($id)
     global $wpdb;
     $table_name = $wpdb->prefix . 'foody_courses_coupons';
     $update_query = "UPDATE {$table_name} SET gen_coupons_held = gen_coupons_held -1 , used_amount = used_amount + 1 WHERE coupon_id= {$id}";
+    return $wpdb->query($update_query);
+}
+
+function update_general_coupon_to_used_no_held($id)
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'foody_courses_coupons';
+    $update_query = "UPDATE {$table_name} SET used_amount = used_amount + 1 WHERE coupon_id= {$id}";
     return $wpdb->query($update_query);
 }
 
@@ -701,6 +713,10 @@ function bit_fetch_status_process()
             'payment_method_id' => $pending_payment->payment_method_id
 //            'server_number' => $pending_payment->server_number
         ];
+
+        if(isset($pending_payment->address) && !empty($pending_payment->address)){
+            $data_of_member['address'] = $pending_payment->address;
+        }
 
         $coupon_details = get_coupon_data_by_name($pending_payment->coupon);
 

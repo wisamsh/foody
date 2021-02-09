@@ -6,7 +6,7 @@ class Foody_Course_register
     private $course_data;
     private $page_data;
     private $course_id;
-    private $is_cal_customer = false;
+    private $is_with_address = false;
 
     /**
      * register page constructor.
@@ -16,7 +16,7 @@ class Foody_Course_register
         $this->course_data = get_field('course_register_data', $course_id);
         $this->page_data = get_field('register_page_data');
         $this->course_id = $course_id;
-        $this->is_cal_customer = $this->is_cal_customer();
+        $this->is_with_address = $this->is_with_address();
 
 //        add_action('wp_ajax_foody_get_credit_button_section', array( $this,'foody_get_credit_button_section'));
 //        add_action('wp_ajax_foody_nopriv_get_credit_button_section', array( $this,'foody_get_credit_button_section'));
@@ -178,13 +178,13 @@ class Foody_Course_register
             $buttons_div = '<div class="button-container">';
         }
 
-        if ($enable_bit && !$this->is_cal_customer) {
+        if ($enable_bit) {
             $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
             $link_thank_you = isset($this->course_data['link_thank_you']) ? $this->course_data['link_thank_you'] : get_home_url();
             if (wp_is_mobile()) {
-                $bit_button = '<div data-thank-you="' . $link_thank_you . '?course_id=' . $this->course_id . '&mobile=true' . '" data-item-name="' . $course_name . '" class="bit-pay" />המשך לתשלום באמצעות ביט</div>';
+                $bit_button = '<div data-with-address="'. $this->is_with_address .'" data-thank-you="' . $link_thank_you . '?course_id=' . $this->course_id . '&mobile=true' . '" data-item-name="' . $course_name . '" class="bit-pay" />המשך לתשלום באמצעות ביט</div>';
             } else {
-                $bit_button = '<div data-thank-you="' . $link_thank_you . '?course_id=' . $this->course_id . '" data-item-name="' . $course_name . '" class="bit-pay" />המשך לתשלום באמצעות ביט</div>';
+                $bit_button = '<div data-with-address="'. $this->is_with_address .'" data-thank-you="' . $link_thank_you . '?course_id=' . $this->course_id . '" data-item-name="' . $course_name . '" class="bit-pay" />המשך לתשלום באמצעות ביט</div>';
             }
             $buttons_div .= $bit_button;
         }
@@ -195,7 +195,7 @@ class Foody_Course_register
             $invoice_mail = isset($this->page_data['mail_invoice']) ? $this->page_data['mail_invoice'] : '';
             $course_name = isset($this->course_data['item_name']) ? $this->course_data['item_name'] : '';
 
-            $credit_button = '<div class="credit-card-pay" data-is-cal="'. $this->is_cal_customer .'"  data-item-name="' . $course_name . '" data-invoice-mail="' . $invoice_mail . '" data-thank-you="' . $link_thank_you . '?course_id=' . $this->course_id . '" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
+            $credit_button = '<div class="credit-card-pay" data-with-address="'. $this->is_with_address .'"  data-item-name="' . $course_name . '" data-invoice-mail="' . $invoice_mail . '" data-thank-you="' . $link_thank_you . '?course_id=' . $this->course_id . '" data-link="' . $link_to_purchase . '">' . $course_payment_link . '<img src="' . get_template_directory_uri() . '/resources/images/course-register-button.svg"/></div>';
             $buttons_div .= $credit_button;
 
         }
@@ -219,7 +219,7 @@ class Foody_Course_register
             'phone-number' => ['type' => 'tel', 'name' => 'phone_number', 'label' => 'מספר טלפון:']
         ];
 
-        if($this->is_cal_customer){
+        if($this->is_with_address){
             $form_fields['city-street'] = ['city'=>['type' => 'text', 'name' => 'city', 'label' => 'עיר:'], 'street' => ['type' => 'text', 'name' => 'street', 'label' => 'רחוב:']];
             $form_fields['building-details'] = ['building_number' => ['type' => 'number', 'min' => 1, 'name' => 'building_number', 'label' => 'מס׳ בית:'], 'apt' => ['type' => 'number', 'min' => 0, 'name' => 'apt', 'label' => 'דירה:']];
         }
@@ -294,8 +294,8 @@ class Foody_Course_register
         return false;
     }
 
-    private function is_cal_customer(){
-        return isset($this->course_data['is_cal_customers']) && $this->course_data['is_cal_customers'];
+    private function is_with_address(){
+        return isset($this->course_data['is_with_address']) && $this->course_data['is_with_address'];
     }
 
 //    public function foody_get_credit_button_section()

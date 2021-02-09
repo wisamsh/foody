@@ -50,6 +50,7 @@ register_setting( 'general', 'foody_token_secret_for_ravmesser');
 register_setting( 'reading', 'foody_show_post_views' );
 register_setting( 'reading', 'foody_show_followers_count_views' );
 register_setting( 'reading', 'foody_mail_to_notify_posts' );
+register_setting( 'reading', 'foody_google_site_verification_id' );
 
 $page_name_search_options   = __( 'הגדרות חיפוש - פודי', 'foody' );
 $page_name_purchase_buttons = __( 'כפתורי רכישה', 'foody' );
@@ -257,6 +258,9 @@ function foody_custom_options() {
     // Toggle post views visibility
     add_settings_field( 'foody_mail_to_notify_posts', __( 'מייל לעדכון על מתכונים/כתבות חדשים', 'foody' ), 'foody_mail_to_notify_posts_callback', 'reading' );
 
+    // google-site-verification id
+    add_settings_field( 'foody_google_site_verification_id', __( 'מזהה עבור זיהוי סרטוני יוטיוב', 'foody' ), 'foody_google_site_verification_id_callback', 'reading' );
+
 	//text for extra content
     add_settings_field( 'foody_title_for_extra_content', __( 'כותרת לתוכן נוסף', 'foody' ), 'foody_title_for_extra_content_callback', 'general', 'foody_general_settings' );
 
@@ -429,6 +433,11 @@ function foody_show_followers_count_callback() {
 function foody_mail_to_notify_posts_callback(){
     $options = get_option( 'foody_mail_to_notify_posts', false );
     echo '<input value="' . $options . '"type="text" id="foody_mail_to_notify_posts" name="foody_mail_to_notify_posts">';
+}
+
+function foody_google_site_verification_id_callback(){
+    $options = get_option( 'foody_google_site_verification_id', false );
+    echo '<input value="' . $options . '"type="text" id="foody_google_site_verification_id" name="foody_google_site_verification_id">';
 }
 
 function foody_title_for_extra_content_callback(){
