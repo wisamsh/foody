@@ -5,7 +5,7 @@ let FoodyLoader = require('../common/foody-loader');
 let price;
 let used_coupon_details = null;
 let mobileOS = foodyGlobals.isMobile ? getMobileOperatingSystem() : false;
-let calUser = false;
+let withAddress = false;
 
 jQuery(document).ready(($) => {
     window.scroll(0, 0);
@@ -129,7 +129,7 @@ jQuery(document).ready(($) => {
                             $('.bit-pay').on('click', function () {
                                 let inputsObj = get_all_form_inputs(this);
 
-                                if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone && inputsObj.courseName) {
+                                if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone && inputsObj.courseName && is_valid_address(inputsObj)) {
                                     // temp => only send data to members plugin
                                     let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
                                     let foodyLoader = new FoodyLoader({
@@ -167,6 +167,11 @@ jQuery(document).ready(($) => {
                                         'status': 'pending',
                                         'payment_method_id': '-1'
                                     };
+
+                                    if(withAddress){
+                                        data_of_member['address'] = inputsObj.city + " " + inputsObj.street + " " + inputsObj.building_number + ", " + inputsObj.apt;
+                                    }
+
                                     foodyLoader.attach({topPercentage: 20});
                                     foodyAjax({
                                             action: 'foody_start_bit_pay_process',
@@ -234,7 +239,99 @@ jQuery(document).ready(($) => {
                                         }
                                     );
                                 } else {
-                                    // validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
+                                    if (withAddress) {
+                                        validate_fields({
+                                            'email': inputsObj.email,
+                                            'firstName': inputsObj.firstName,
+                                            'lastName': inputsObj.lastName,
+                                            'phone': inputsObj.phone,
+                                            'termsAccepted': inputsObj.termsAccepted,
+                                            'city': inputsObj.city,
+                                            'street': inputsObj.street,
+                                            'building_number': inputsObj.building_number,
+                                            'apt': inputsObj.apt,
+                                        });
+                                    }
+                                    else {
+                                        // validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
+                                        validate_fields({
+                                            'email': inputsObj.email,
+                                            'firstName': inputsObj.firstName,
+                                            'lastName': inputsObj.lastName,
+                                            'phone': inputsObj.phone,
+                                            'termsAccepted': inputsObj.termsAccepted
+                                        });
+                                    }
+                                }
+                            })
+                            ;
+                        }
+
+                        $('.button-container').on('click', 'div.free-pay', function () {
+                            let inputsObj = get_all_form_inputs(this);
+                            let urlParams = getUrlVars();
+
+                            if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone && is_valid_address(inputsObj)) {
+                                let foodyLoader = new FoodyLoader({
+                                    container: $('.button-container'),
+                                    id: 'buttons-loader'
+                                });
+                                let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
+                                let data_of_member = {
+                                    'email': inputsObj.email,
+                                    'first_name': inputsObj.firstName,
+                                    'last_name': inputsObj.lastName,
+                                    'phone': inputsObj.phone,
+                                    'purchase_date': get_current_date(),
+                                    'enable_marketing': inputsObj.enableMarketing,
+                                    'course_name': inputsObj.courseName,
+                                    'course_id': urlParams.course_id,
+                                    'price': couponAndPriceObj.price,
+                                    'payment_method': 'ללא עלות',
+                                    'transaction_id': '-1',
+                                    'coupon': couponAndPriceObj.coupon,
+                                    'status': 'pending',
+                                    'payment_method_id': '-1'
+                                };
+
+                                if(withAddress){
+                                    data_of_member['address'] = inputsObj.city + " " + inputsObj.street + " " + inputsObj.building_number + ", " + inputsObj.apt;
+                                }
+
+                                foodyLoader.attach({topPercentage: 20});
+                                foodyAjax({
+                                    action: 'foody_start_free_pay_process',
+                                    data: {
+                                        memberData: data_of_member,
+                                        isMobile: mobileOS,
+                                        thankYou: inputsObj.thankYou
+                                    }
+                                }, function (err, data) {
+                                    if (err) {
+                                        console.log(err);
+                                        foodyLoader.detach();
+                                    } else {
+                                        foodyLoader.detach();
+                                        if(data.data == 'success'){
+                                            window.location.replace(inputsObj.thankYou+'&paid=1');
+                                        }
+                                    }
+                                });
+                            } else {
+                                if (withAddress) {
+                                    validate_fields({
+                                        'email': inputsObj.email,
+                                        'firstName': inputsObj.firstName,
+                                        'lastName': inputsObj.lastName,
+                                        'phone': inputsObj.phone,
+                                        'termsAccepted': inputsObj.termsAccepted,
+                                        'city': inputsObj.city,
+                                        'street': inputsObj.street,
+                                        'building_number': inputsObj.building_number,
+                                        'apt': inputsObj.apt,
+                                    });
+                                }
+                                else {
                                     validate_fields({
                                         'email': inputsObj.email,
                                         'firstName': inputsObj.firstName,
@@ -243,9 +340,8 @@ jQuery(document).ready(($) => {
                                         'termsAccepted': inputsObj.termsAccepted
                                     });
                                 }
-                            })
-                            ;
-                        }
+                            }
+                        });
 
                         if ($('.credit-card-pay').length) {
                             $('.credit-card-pay').on('click', function () {
@@ -278,7 +374,7 @@ jQuery(document).ready(($) => {
                                             'payment_method_id': '-1'
                                         };
 
-                                        if(calUser){
+                                        if(withAddress){
                                             data_of_member['address'] = inputsObj.city + " " + inputsObj.street + " " + inputsObj.building_number + ", " + inputsObj.apt;
                                         }
 
@@ -313,7 +409,7 @@ jQuery(document).ready(($) => {
                                             }
                                         });
                                     } else {
-                                        if (calUser) {
+                                        if (withAddress) {
                                             validate_fields({
                                                 'email': inputsObj.email,
                                                 'firstName': inputsObj.firstName,
@@ -349,7 +445,7 @@ jQuery(document).ready(($) => {
         });
 
         function is_valid_address(inputsObj) {
-            if (calUser) {
+            if (withAddress) {
                 if ((typeof inputsObj.city !== 'undefined' && inputsObj.city) && (typeof inputsObj.street !== 'undefined' && inputsObj.street) && (typeof inputsObj.building_number !== 'undefined' && inputsObj.building_number) && (typeof inputsObj.apt !== 'undefined' && inputsObj.apt)) {
                     return true;
                 } else {
@@ -362,7 +458,7 @@ jQuery(document).ready(($) => {
 
         function redeemCoupon() {
             let foodyLoader = new FoodyLoader({container: $('.coupon-and-price-container'), id: 'coupon-loader'});
-            let couponCode = $('#coupon-input').val();
+            let couponCode =  $('#coupon-input').val().trim();
             if (couponCode.length) {
                 $('.credit-card-pay').prop('disabled', "true");
                 foodyLoader.attach({topPercentage: 20});
@@ -392,7 +488,14 @@ jQuery(document).ready(($) => {
                                 'coupon_type': data.data.couponType
                             };
                             foodyLoader.detach();
-                            $('.credit-card-pay').prop('disabled', "false");
+                            // handle coupon change the price to 0 => free
+                            if(discounted_price == 0 || discounted_price == 0.0){
+                                let freePurchaseButton = getFreePurchaseButton();
+                                $('.form-container .button-container').children().remove();
+                                $('.form-container .button-container').append(freePurchaseButton)
+                            } else {
+                                $('.credit-card-pay').prop('disabled', "false");
+                            }
                             return;
                         } else {
                             used_coupon_details = {'coupon': null, 'discounted_price': data.data.price};
@@ -434,7 +537,7 @@ function validate_fields(fieldsToValidate) {
         '#terms': fieldsToValidate['termsAccepted']
     };
 
-    if (calUser) {
+    if (withAddress) {
         fields['#city'] = fieldsToValidate['city'];
         fields['#street'] = fieldsToValidate['street'];
         fields['#building_number'] = fieldsToValidate['building_number'];
@@ -522,8 +625,9 @@ function get_all_form_inputs(button_pressed) {
         termsAccepted: _termsAccepted
     };
 
-    if ($('.button-container .credit-card-pay').length && $('.button-container .credit-card-pay').attr('data-is-cal').length && $('.button-container .credit-card-pay').attr('data-is-cal') === "1") {
-        calUser = true;
+    if (($('.button-container .credit-card-pay').length && $('.button-container .credit-card-pay').attr('data-with-address').length && $('.button-container .credit-card-pay').attr('data-with-address') === "1") ||
+        ($('.button-container .bit-pay').length && $('.button-container .bit-pay').attr('data-with-address').length && $('.button-container .bit-pay').attr('data-with-address') === "1")) {
+        withAddress = true;
         input_data['city'] = $('.form-container #city').length != 0 ? $('.form-container #city').val() : false;
         input_data['street'] = $('.form-container #street').length != 0 ? $('.form-container #street').val() : false;
         input_data['building_number'] = $('.building-details #building_number').length != 0 ? $('.building-details #building_number').val() : false;
@@ -551,8 +655,8 @@ function getMobileOperatingSystem() {
 function getRoundedPrice(price) {
     let roundedPriceRes = price.toFixed(1);
 
-    if (roundedPriceRes < 1) {
-        roundedPriceRes = 1;
+    if (roundedPriceRes < 0) {
+        roundedPriceRes = 0;
     }
 
     return roundedPriceRes;
@@ -585,4 +689,10 @@ function getUrlVars() {
         vars[key] = value;
     });
     return vars;
+}
+
+function getFreePurchaseButton() {
+    let courseName = $('.credit-card-pay').attr('data-item-name').length != 0 ? $('.credit-card-pay').attr('data-item-name') : false;
+    let thankYouPage = $('.credit-card-pay').attr('data-thank-you').length != 0 ? $('.credit-card-pay').attr('data-thank-you') : '';
+    return '<div data-thank-you="'+ thankYouPage +'" data-item-name="'+ courseName +'" class="free-pay">קבל את הקורס</div>';
 }

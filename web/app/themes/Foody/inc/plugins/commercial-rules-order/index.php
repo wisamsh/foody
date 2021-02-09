@@ -26,7 +26,7 @@ class FoodyCommercialRulesOrdering_Plugin {
 		if ( ! is_admin() ) {
 			return false;
 		}
-		$screen = get_current_screen();
+        $screen = get_current_screen();
 		if ( empty( $screen ) || ! empty( $screen ) && $screen->id !== 'edit-foody_comm_rule' ) {
 			return false;
 		}
