@@ -20,7 +20,7 @@ function foody_add_course_member_to_table($custom_val, $return_id = false)
     $payment_method_id = $custom_val['payment_method_id'];
 //    $server_number = FOODY_INSTANCE_NUM;
 
-    if($payment_method == __('כרטיס אשראי')) {
+    if($payment_method == __('כרטיס אשראי') || $payment_method == __('ללא עלות')) {
         if(isset($custom_val['address'])){
             $address = $custom_val['address'];
             $member_added_to_table = $wpdb->query("INSERT INTO {$table_name} (member_email, first_name, last_name, phone, address, marketing_status, course_name, course_id, price_paid, organization, payment_method, transaction_id, credit_low_profile_code, coupon, purchase_date, note, status, payment_method_id)
