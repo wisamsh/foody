@@ -888,13 +888,16 @@ function bit_recurring_fetch_transaction_status()
 add_action('init', 'bit_recurring_fetch_transaction_status');
 
 
-add_filter('body_class', 'foody_body_add_bit_class', 10, 1);
-function foody_body_add_bit_class($classes)
+add_filter('body_class', 'foody_body_add_bit_or_free_class', 10, 1);
+function foody_body_add_bit_or_free_class($classes)
 {
-    $class_to_add = 'foody-payment-bit';
+    $bit_class_to_add = 'foody-payment-bit';
+    $free_class_to_add = 'foody-payed';
 
     if (isset($_GET) && (isset($_GET['payment_method']) && $_GET['payment_method'] == __('ביט')) || (isset($_GET['course_id']) && strpos($_GET['course_id'], ',') != false)) {
-        $classes[] = $class_to_add;
+        $classes[] = $bit_class_to_add;
+    } elseif (isset($_GET) &&  (isset($_GET['paid']) && $_GET['paid'] == 1)){
+        $classes[] = $free_class_to_add;
     }
 
     return $classes;
