@@ -5,7 +5,7 @@ let FoodyLoader = require('../common/foody-loader');
 let price;
 let used_coupon_details = null;
 let mobileOS = foodyGlobals.isMobile ? getMobileOperatingSystem() : false;
-let calUser = false;
+let withAddress = false;
 
 jQuery(document).ready(($) => {
     window.scroll(0, 0);
@@ -274,7 +274,7 @@ jQuery(document).ready(($) => {
                                     'payment_method_id': '-1'
                                 };
 
-                                if(calUser){
+                                if(withAddress){
                                     data_of_member['address'] = inputsObj.city + " " + inputsObj.street + " " + inputsObj.building_number + ", " + inputsObj.apt;
                                 }
 
@@ -298,7 +298,7 @@ jQuery(document).ready(($) => {
                                     }
                                 });
                             } else {
-                                if (calUser) {
+                                if (withAddress) {
                                     validate_fields({
                                         'email': inputsObj.email,
                                         'firstName': inputsObj.firstName,
@@ -354,7 +354,7 @@ jQuery(document).ready(($) => {
                                             'payment_method_id': '-1'
                                         };
 
-                                        if(calUser){
+                                        if(withAddress){
                                             data_of_member['address'] = inputsObj.city + " " + inputsObj.street + " " + inputsObj.building_number + ", " + inputsObj.apt;
                                         }
 
@@ -389,7 +389,7 @@ jQuery(document).ready(($) => {
                                             }
                                         });
                                     } else {
-                                        if (calUser) {
+                                        if (withAddress) {
                                             validate_fields({
                                                 'email': inputsObj.email,
                                                 'firstName': inputsObj.firstName,
@@ -425,7 +425,7 @@ jQuery(document).ready(($) => {
         });
 
         function is_valid_address(inputsObj) {
-            if (calUser) {
+            if (withAddress) {
                 if ((typeof inputsObj.city !== 'undefined' && inputsObj.city) && (typeof inputsObj.street !== 'undefined' && inputsObj.street) && (typeof inputsObj.building_number !== 'undefined' && inputsObj.building_number) && (typeof inputsObj.apt !== 'undefined' && inputsObj.apt)) {
                     return true;
                 } else {
@@ -517,7 +517,7 @@ function validate_fields(fieldsToValidate) {
         '#terms': fieldsToValidate['termsAccepted']
     };
 
-    if (calUser) {
+    if (withAddress) {
         fields['#city'] = fieldsToValidate['city'];
         fields['#street'] = fieldsToValidate['street'];
         fields['#building_number'] = fieldsToValidate['building_number'];
@@ -606,7 +606,7 @@ function get_all_form_inputs(button_pressed) {
     };
 
     if ($('.button-container .credit-card-pay').length && $('.button-container .credit-card-pay').attr('data-is-cal').length && $('.button-container .credit-card-pay').attr('data-is-cal') === "1") {
-        calUser = true;
+        withAddress = true;
         input_data['city'] = $('.form-container #city').length != 0 ? $('.form-container #city').val() : false;
         input_data['street'] = $('.form-container #street').length != 0 ? $('.form-container #street').val() : false;
         input_data['building_number'] = $('.building-details #building_number').length != 0 ? $('.building-details #building_number').val() : false;
