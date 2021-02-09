@@ -8,7 +8,7 @@ class Foody_Course_new
     private $course_ragister_slug ;
     private $floating_buttons = [];
     private $links_target = 'blank';
-    private $is_cal_customer = false;
+    private $is_with_address = false;
     private $old_price = '';
 
     /**
@@ -19,7 +19,7 @@ class Foody_Course_new
         $this->course_data = get_field('course_page');
         $this->course_register_data = get_field('course_register_data');
         $this->populate_course_properties();
-        $this->is_cal_customer = $this->is_cal_customer();
+        $this->is_with_address = $this->is_with_address();
     }
 
     public function is_redirect_to_register_page()
@@ -732,8 +732,8 @@ class Foody_Course_new
         return $not_empty_section;
     }
 
-    private function is_cal_customer(){
-        return isset($this->course_register_data['is_cal_customers']) && $this->course_register_data['is_cal_customers'];
+    private function is_with_address(){
+        return isset($this->course_register_data['is_with_address']) && $this->course_register_data['is_with_address'];
     }
 
 //    private function add_line_on_old_price($old_price, $text)

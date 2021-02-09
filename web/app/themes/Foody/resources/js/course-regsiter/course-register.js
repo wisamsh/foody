@@ -129,7 +129,7 @@ jQuery(document).ready(($) => {
                             $('.bit-pay').on('click', function () {
                                 let inputsObj = get_all_form_inputs(this);
 
-                                if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone && inputsObj.courseName) {
+                                if (inputsObj.termsAccepted && inputsObj.email && inputsObj.firstName && inputsObj.lastName && inputsObj.phone && inputsObj.courseName && is_valid_address(inputsObj)) {
                                     // temp => only send data to members plugin
                                     let couponAndPriceObj = checkCouponAndGetCouponAndPrice(used_coupon_details, price);
                                     let foodyLoader = new FoodyLoader({
@@ -167,6 +167,11 @@ jQuery(document).ready(($) => {
                                         'status': 'pending',
                                         'payment_method_id': '-1'
                                     };
+
+                                    if(withAddress){
+                                        data_of_member['address'] = inputsObj.city + " " + inputsObj.street + " " + inputsObj.building_number + ", " + inputsObj.apt;
+                                    }
+
                                     foodyLoader.attach({topPercentage: 20});
                                     foodyAjax({
                                             action: 'foody_start_bit_pay_process',
@@ -234,14 +239,29 @@ jQuery(document).ready(($) => {
                                         }
                                     );
                                 } else {
-                                    // validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
-                                    validate_fields({
-                                        'email': inputsObj.email,
-                                        'firstName': inputsObj.firstName,
-                                        'lastName': inputsObj.lastName,
-                                        'phone': inputsObj.phone,
-                                        'termsAccepted': inputsObj.termsAccepted
-                                    });
+                                    if (withAddress) {
+                                        validate_fields({
+                                            'email': inputsObj.email,
+                                            'firstName': inputsObj.firstName,
+                                            'lastName': inputsObj.lastName,
+                                            'phone': inputsObj.phone,
+                                            'termsAccepted': inputsObj.termsAccepted,
+                                            'city': inputsObj.city,
+                                            'street': inputsObj.street,
+                                            'building_number': inputsObj.building_number,
+                                            'apt': inputsObj.apt,
+                                        });
+                                    }
+                                    else {
+                                        // validate_fields(inputsObj.email, inputsObj.firstName, inputsObj.lastName, inputsObj.phone, inputsObj.termsAccepted);
+                                        validate_fields({
+                                            'email': inputsObj.email,
+                                            'firstName': inputsObj.firstName,
+                                            'lastName': inputsObj.lastName,
+                                            'phone': inputsObj.phone,
+                                            'termsAccepted': inputsObj.termsAccepted
+                                        });
+                                    }
                                 }
                             })
                             ;
@@ -605,7 +625,8 @@ function get_all_form_inputs(button_pressed) {
         termsAccepted: _termsAccepted
     };
 
-    if ($('.button-container .credit-card-pay').length && $('.button-container .credit-card-pay').attr('data-is-cal').length && $('.button-container .credit-card-pay').attr('data-is-cal') === "1") {
+    if (($('.button-container .credit-card-pay').length && $('.button-container .credit-card-pay').attr('data-with-address').length && $('.button-container .credit-card-pay').attr('data-with-address') === "1") ||
+        ($('.button-container .bit-pay').length && $('.button-container .bit-pay').attr('data-with-address').length && $('.button-container .bit-pay').attr('data-with-address') === "1")) {
         withAddress = true;
         input_data['city'] = $('.form-container #city').length != 0 ? $('.form-container #city').val() : false;
         input_data['street'] = $('.form-container #street').length != 0 ? $('.form-container #street').val() : false;
