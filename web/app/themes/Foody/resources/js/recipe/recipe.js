@@ -6,6 +6,7 @@
 //TODO:: Change category from מתכון to כתבה if necessary !
 // import * as player from "youtube-player";
 let player;
+let videoThumbnail;
 if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGlobals.post.type == 'post')) {
 
     // sliders data
@@ -25,6 +26,8 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
 
                 let videoId = jQuery(videoElem).data('video-id');
                 let ytPlayer = require('../common/youtubePlayer');
+
+                videoThumbnail = '//img.youtube.com/vi/'+videoId+'/0.jpg';
 
                 let playerContainer = jQuery(videoElem).siblings('.video-container');
 
@@ -226,6 +229,10 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
 }
 
 jQuery(document).ready(($) => {
+debugger
+    if($('.slider-nav .video-image').length){
+        $('.slider-nav .video-image').attr('src', videoThumbnail)
+    }
 
     if(sliderMainData){
         $('.slider-for').slick(sliderMainData);
