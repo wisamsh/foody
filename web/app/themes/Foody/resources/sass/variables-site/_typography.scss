@@ -12,9 +12,25 @@ $raanan-unicode-range: 'U+0021-0039';
 @include font-face(Assistant, '../fonts/Assistant/Assistant-Regular', null, null, 'ttf');
 @include font-face(Assistant, '../fonts/Assistant/Assistant-Bold', 700, null, 'ttf');
 @include font-face(Assistant, '../fonts/Assistant/Assistant-SemiBold', 500, null, 'ttf');
-@include font-face(Afek, '../fonts/Afek/Afek-regular-aaa', null, null, 'otf');
-@include font-face(AfekBold, '../fonts/Afek/Afek-bold-aaa', 700, null, 'otf');
-@include font-face(AlmoniTzar, '../fonts/Almoni-tzar/Almoni-tzar-regular-aaa', null, null, 'otf');
+//@include font-face(Afek, '../fonts/Afek/Afek-regular-aaa', null, null, 'otf');
+//@include font-face(AfekBold, '../fonts/Afek/Afek-bold-aaa', 700, null, 'otf');
+//@include font-face(AlmoniTzar, '../fonts/Almoni-tzar/Almoni-tzar-regular-aaa', null, null, 'otf');
+
+@font-face {
+  font-family: 'AfekBold';
+  src: url('../fonts/Afek/Afek-bold-aaa.woff2') format('woff2'),  url('../fonts/Afek/Afek-bold-aaa.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Afek';
+  src: url('../fonts/Afek/afek-regular-aaa.woff2') format('woff2'),  url('../fonts/Afek/afek-regular-aaa.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'AlmoniTzar';
+  src: url('../fonts/Almoni-tzar/almoni-tzar-regular-aaa.woff2') format('woff2'),  url('../fonts/Almoni-tzar/almoni-tzar-regular-aaa.woff') format('woff');
+}
+
 
 $font__ariel-rounded: RaananSuper;
 $font__raanan: RaananSuper;
