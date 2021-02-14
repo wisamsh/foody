@@ -229,7 +229,7 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
 }
 
 jQuery(document).ready(($) => {
-debugger
+
     if($('.slider-nav .video-image').length){
         $('.slider-nav .video-image').attr('src', videoThumbnail)
     }
@@ -328,8 +328,8 @@ debugger
         $(this).remove();
     });
 
-    if ($('.overview-nutrients .value').length && $('.overview-nutrients .recipe-nutrition').length) {
-        $('.overview-nutrients .value').on('click', function () {
+    if ($('.overview-nutrients .overview-item > .value').length && $('.overview-nutrients .recipe-nutrition').length) {
+        $('.overview-nutrients .overview-item > .value').on('click', function () {
             $('.overview-nutrients .value').toggleClass('open');
             $('.overview-nutrients .recipe-nutrition').toggleClass('open');
         });

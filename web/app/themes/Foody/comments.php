@@ -77,7 +77,6 @@ $foody_comments = new Foody_Comments();
 			echo '
                 <script async defer>
                 if(!ajaxurl){
-                    debugger;
                     var ajaxurl = \'' . site_url( 'wp-admin/admin-ajax.php' ) . '\';
                     var parent_post_id = ' . get_the_ID() . '
                 }

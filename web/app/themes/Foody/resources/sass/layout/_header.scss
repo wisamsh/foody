@@ -3,6 +3,11 @@ $header-height: 76px;
 $run-height: 30px;
 
 body {
+
+  .comment-form-cookies-consent{
+    display: none;
+  }
+
   &.has-background {
     header {
       .socials {

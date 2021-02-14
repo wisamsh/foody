@@ -10,10 +10,10 @@ jQuery(document).ready(($) => {
                     if (foodyGlobals['can_user_rate']) {
                         let parentContainerIsWrapper = $(this).closest('.ratings-wrapper').length;
                         let starIndex = $(this).attr('data-index');
-                        let topPracent = parentContainerIsWrapper ? 100 : 15;
+                        let topPracent = parentContainerIsWrapper ? 100 : 8;
                         let container = parentContainerIsWrapper ? '.ratings-wrapper' : '.comments-rating-prep-container .rating';
                         let foodyLoader = new FoodyLoader({
-                            container: $(container),
+                            container: parentContainerIsWrapper ? $(container)[1] : $(container),
                             id: 'rating-loader'
                         });
 
