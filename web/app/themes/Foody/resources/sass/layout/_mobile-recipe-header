@@ -630,6 +630,15 @@ $run-height: 30px;
             height: 23px;
           }
         }
+
+        .btn-search,
+        .btn-search-close{
+          display: block;
+
+          &.hidden{
+            display: none !important;
+          }
+        }
       }
     }
   }

@@ -56,15 +56,15 @@ jQuery(document).ready(function ($) {
     $('.btn-search').on('click', function () {
         hideAllOtherFloatingFooterDrawers('.search-overlay');
         $searchOverlay.toggleClass('open');
-        if($('.sticky_bottom_header .foody-navbar-container .btn-search').length){
-            $('.sticky_bottom_header .foody-navbar-container .btn-search').toggleClass('search-close-btn');
-        }
+        $('.sticky_bottom_header .foody-navbar-container .btn-search').toggleClass('hidden');
+        $('.sticky_bottom_header .foody-navbar-container .btn-search-close').toggleClass('hidden');
         $('input', $searchOverlay).focus();
     });
 
-    $('.sticky_bottom_header .foody-navbar-container').on('click','.search-close-btn', function () {
+    $('.sticky_bottom_header .foody-navbar-container .btn-search-close').on('click', function () {
         $('.close', $searchOverlay).trigger('click');
-        $('.sticky_bottom_header .foody-navbar-container .btn-search').toggleClass('search-close-btn');
+        $('.sticky_bottom_header .foody-navbar-container .btn-search').toggleClass('hidden');
+        $('.sticky_bottom_header .foody-navbar-container .btn-search-close').toggleClass('hidden');
     });
 
     $('.close', $searchOverlay).on('click', () => {
@@ -345,6 +345,7 @@ jQuery(document).ready(function ($) {
 });
 
 function hideAllOtherFloatingFooterDrawers(drawerToOpen) {
+    let $searchOverlay = $('.search-overlay');
     switch(drawerToOpen) {
         case ".social-buttons-container":
             if($('.foody-navbar-container '+drawerToOpen).hasClass('hidden')){
@@ -358,9 +359,10 @@ function hideAllOtherFloatingFooterDrawers(drawerToOpen) {
 
                 if($('.search-overlay').hasClass('open')) {
                     // $('.search-overlay').toggleClass('open');
-                    if( $('.sticky_bottom_header .foody-navbar-container .btn-search').length) {
+                    if( $('.sticky_bottom_header .foody-navbar-container .btn-search').length && $('.sticky_bottom_header .foody-navbar-container .btn-search').hasClass('hidden')) {
                         $('.close', $searchOverlay).trigger('click');
-                        $('.sticky_bottom_header .foody-navbar-container .btn-search').toggleClass('search-close-btn');
+                        $('.sticky_bottom_header .foody-navbar-container .btn-search').toggleClass('hidden');
+                        $('.sticky_bottom_header .foody-navbar-container .btn-search-close').toggleClass('hidden');
                     }
                 }
             }
@@ -377,9 +379,10 @@ function hideAllOtherFloatingFooterDrawers(drawerToOpen) {
 
                 if($('.search-overlay').hasClass('open')) {
                     // $('.search-overlay').toggleClass('open');
-                    if( $('.sticky_bottom_header .foody-navbar-container .btn-search').length) {
+                    if( $('.sticky_bottom_header .foody-navbar-container .btn-search').length && $('.sticky_bottom_header .foody-navbar-container .btn-search').hasClass('hidden')) {
                         $('.close', $searchOverlay).trigger('click');
-                        $('.sticky_bottom_header .foody-navbar-container .btn-search').toggleClass('search-close-btn');
+                        $('.sticky_bottom_header .foody-navbar-container .btn-search').toggleClass('hidden');
+                        $('.sticky_bottom_header .foody-navbar-container .btn-search-close').toggleClass('hidden');
                     }
                 }
             }
@@ -394,12 +397,10 @@ function hideAllOtherFloatingFooterDrawers(drawerToOpen) {
                     $('.related-content-overlay').toggleClass('open');
                 }
 
-                if($('.search-overlay').hasClass('open')) {
-                    if( $('sticky_bottom_header .foody-navbar-container .btn-search').length) {
-                        $('.close', $searchOverlay).trigger('click');
-                        $('sticky_bottom_header .foody-navbar-container .btn-search').toggleClass('search-close-btn');
-                    }
-                    // $('.search-overlay').toggleClass('open');
+                if( $('.sticky_bottom_header .foody-navbar-container .btn-search').length && $('.sticky_bottom_header .foody-navbar-container .btn-search').hasClass('hidden')) {
+                    $('.close', $searchOverlay).trigger('click');
+                    $('.sticky_bottom_header .foody-navbar-container .btn-search').toggleClass('hidden');
+                    $('.sticky_bottom_header .foody-navbar-container .btn-search-close').toggleClass('hidden');
                 }
             }
             break;
@@ -414,10 +415,7 @@ function hideAllOtherFloatingFooterDrawers(drawerToOpen) {
                 }
 
                 if($('.related-content-overlay').hasClass('open')) {
-                    if( $('.sticky_bottom_header .foody-navbar-container .btn-search').length) {
-                        $('.close', $searchOverlay).trigger('click');
-                        $('.sticky_bottom_header .foody-navbar-container .btn-search').toggleClass('search-close-btn');
-                    }
+                    $('.related-content-overlay').toggleClass('open');
                 }
             }
             break;
