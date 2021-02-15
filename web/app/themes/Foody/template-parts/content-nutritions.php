@@ -20,8 +20,9 @@ $disclaimer = __(
 $disclaimer = sprintf('<div> <span class="close">&times;</span><div>%s</div></div>', $disclaimer);
 
 
+$is_odd = count($nutritions) % 2 !== 0;
 ?>
-<div class="nutrition-container">
+<div class="nutrition-container <?php echo $is_odd ? 'odd-nutritions' : '' ?>">
     <h2 class="title">
         <?php echo $title ?>
         <!-- disclaimer   -->
@@ -50,11 +51,15 @@ $disclaimer = sprintf('<div> <span class="close">&times;</span><div>%s</div></di
     $count = 0;
     $num_in_row = wp_is_mobile() ? 3 : 6;
     $col_num = wp_is_mobile() ? 12 : 1;
-    foreach ($nutritions
+    $nutritions_count = count($nutritions);
 
-             as $nutrition) {
+    foreach ($nutritions as $nutrition) {
         if ($count % $num_in_row == 0) {
-            echo '<div class="nutritions row">';
+            if($nutritions_count == $count + 1){
+                echo '<div class="nutritions last-row row">';
+            } else {
+                echo '<div class="nutritions row">';
+            }
         }
         ?>
         <div class="col-<?php echo $col_num ?> nutrition">
@@ -89,7 +94,17 @@ $disclaimer = sprintf('<div> <span class="close">&times;</span><div>%s</div></di
         </div>
         <?php
 //        endforeach;
-        if ($count % $num_in_row == $num_in_row - 1) {
+        if ($count % $num_in_row == $num_in_row - 1 || ($nutritions_count == $count + 1)) {
+            if(($nutritions_count == $count + 1) && $is_odd) {
+                for ($index = 1; $index < $num_in_row; $index++){
+                ?>
+                <div class="col-<?php echo $col_num ?> nutrition">
+                    <div class="nutrition-row-empty <?php echo(($count + $index + 1) % 2 ? "even" : "odd") ?>">
+
+                    </div>
+                </div>
+                <?php }
+            }
             echo '</div>';
         }
         $count++;

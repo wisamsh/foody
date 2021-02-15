@@ -728,17 +728,36 @@ $content-width: 95%;
                   }
                 }
 
-                .nutritions:not(:nth-child(3n)){
-                  .nutrition {
-                    &:after {
-                      content: '';
-                      width: 60%;
-                      height: 1.5px;
-                      background: #fdebec;
-                      position: absolute;
-                      left: 50%;
-                      transform: translateX(-50%);
-                      bottom: -11px;
+                &:not(.odd-nutritions) {
+                  .nutritions:not(:nth-child(3n)) {
+                    .nutrition {
+                      &:after {
+                        content: '';
+                        width: 60%;
+                        height: 1.5px;
+                        background: #fdebec;
+                        position: absolute;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        bottom: -11px;
+                      }
+                    }
+                  }
+                }
+
+                &.odd-nutritions{
+                  .nutritions:not(:nth-child(4n)){
+                    .nutrition {
+                      &:after {
+                        content: '';
+                        width: 60%;
+                        height: 1.5px;
+                        background: #fdebec;
+                        position: absolute;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        bottom: -4px;
+                      }
                     }
                   }
                 }
@@ -2283,9 +2302,10 @@ $content-width: 95%;
                     }
                   }
 
-                  .nutritions:not(:nth-child(5n)){
-                    .nutrition {
-                      &:after {
+                  &:not(.odd-nutritions) {
+                    .nutritions:not(:nth-child(5n)) {
+                      .nutrition {
+                        &:after {
                           content: '';
                           width: 60%;
                           height: 1.5px;
@@ -2296,13 +2316,31 @@ $content-width: 95%;
                           bottom: -4px;
                         }
                       }
+                    }
+                  }
+
+                  &.odd-nutritions{
+                    .nutritions:not(:nth-child(6n)){
+                      .nutrition {
+                        &:after {
+                          content: '';
+                          width: 60%;
+                          height: 1.5px;
+                          background: #fdebec;
+                          position: absolute;
+                          left: 50%;
+                          transform: translateX(-50%);
+                          bottom: -4px;
+                        }
+                      }
+                    }
                   }
 
                   .nutritions {
                     &.row {
                       display: flex;
                       flex-direction: row;
-                      justify-content: space-around;
+                      justify-content: space-between;
                       //margin: 3% 0;
 
                       .nutrition {
