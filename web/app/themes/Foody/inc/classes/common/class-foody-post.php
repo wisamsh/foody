@@ -804,7 +804,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             }
 
             $main_image_obj = $this->get_main_image_meta();
-            $main_image_element = $main_image_obj ? "<div class='item'><img src='{$main_image_obj['url']}' alt='{$main_image_obj['alt']}' /></div>" : false;
+            $main_image_alt = isset($main_image_obj['alt']) && !empty($main_image_obj['alt']) ? $main_image_obj['alt'] : '';
+            $main_image_element = $main_image_obj ? "<div class='item'><img src='{$main_image_obj['url']}' alt='{$main_image_alt}' /></div>" : false;
             $video_element = !empty($video_element) ? $video_element : false;
             $images_for_slider = get_field('images_gallery_repeater', $this->id);
             $counter = 0;
@@ -826,8 +827,8 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                     $counter++;
 
                     $item = '<div class="item">';
-
-                    $image_content = "<img src='{$image['image']['url']}' alt='{$image['image']['alt']}' />";
+                    $item_alt = isset($image['image']['alt']) && !empty($image['image']['alt']) ? $image['image']['alt'] : '';
+                    $image_content = "<img src='{$image['image']['url']}' alt='{$item_alt}' />";
 
                     $item .= $image_content;
 
