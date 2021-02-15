@@ -18,7 +18,7 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar {
 
 	public function the_details() {
 		foody_get_template_part(
-			get_template_directory() . '/template-parts/_content-recipe-details.php',
+			get_template_directory() . '/template-parts/_content-recipe-details-old.php',
 			[
 				'page'          => $this,
 				'show_favorite' => false
