@@ -908,7 +908,7 @@ $content-width: 95%;
           margin-bottom: 0;
           line-height: 35px;
           padding-right: 0;
-          color: #ed3d48;
+          color: var(--color__primary);
         }
 
        > .amount-container{
@@ -1227,7 +1227,7 @@ $content-width: 95%;
           font-size: 20px;
           line-height: 35px;
           padding-right: 0;
-          color: #ed3d48;
+          color: var(--color__primary);
           max-width: 95%;
           margin: 0 auto;
           font-weight: bold;
@@ -1304,7 +1304,7 @@ $content-width: 95%;
         font-size: 17px;
         line-height: 35px;
         padding-right: 0;
-        color: #ed3d48;
+        color: var(--color__primary);
         max-width: 95%;
         margin: 0 auto;
         font-weight: bold;
@@ -1598,7 +1598,7 @@ $content-width: 95%;
           font-size: 17px;
           line-height: 35px;
           padding-right: 0;
-          color: #ed3d48;
+          color: var(--color__primary);
           max-width: 95%;
           margin: 0 auto;
           font-weight: bold;

@@ -771,7 +771,7 @@ header {
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
-          color: #ED3D48;
+          color: var(--color__primary);;
         }
       }
 

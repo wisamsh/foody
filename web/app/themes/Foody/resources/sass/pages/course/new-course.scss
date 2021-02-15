@@ -639,13 +639,13 @@
           }
 
           .course-v2-purchase-button {
-            border: 1px #ED3D48 solid;
+            border: 1px var(--color__primary) solid;
             border-radius: 30px;
             padding: 1% 0;
             width: 320px;
             display: inline-block;
             text-align: center;
-            background: #ED3D48;
+            background: var(--color__primary);
             color: white;
             font-size: 20px;
             font-weight: 500;
