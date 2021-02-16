@@ -30,7 +30,7 @@ jQuery(document).ready(($) => {
             let $comment = $(addedCommentHTML);
             let approved = $('.waiting-approval', $comment).length == 0;
             if (approved) {
-                incrementCommentsCount('.recipe-comments .comments-title');
+                incrementCommentsCount('.recipe-comments .title');
             }
             // if this post already has comments
             if (commentlist.length > 0) {
@@ -76,7 +76,7 @@ jQuery(document).ready(($) => {
                     $('.comments-rating-prep-container .comments-link-container').replaceWith(newElem);
                     if($('#comments > .title').length){
                         if(currentNumOfPreps == 1){
-                            $('#comments > .title')[0].innerText = 'תגובה אחת';
+                            $('#comments > .title')[0].innerText = 'תגובה (1)';
                         }
                         else{
                             if(currentNumOfPreps != 0){
@@ -168,6 +168,10 @@ jQuery(document).ready(($) => {
                 let count = parseInt(matches[1]);
                 if (!isNaN(count)) {
                     count += 1;
+
+                    if(count > 1 && title.indexOf('תגובה') > -1){
+                        title = title.replace('תגובה', 'תגובות');
+                    }
 
                     title = title.replace(/[0-9]+/, count);
                     $(titleSelector).text(title);

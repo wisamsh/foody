@@ -16,18 +16,12 @@ class Foody_Comments {
 	}
 
 
-	public function list_comments( $args = null , $is_recipe = false) {
+	public function list_comments( $args = null) {
 		if ( $args == null ) {
 			$args = $this->get_list_comments_args();
 		}
 
-        if($is_recipe) {
-            $comments = get_comments(array('type' => 'comment', 'post_id' => get_the_ID()));
-//            $args['page'] = ceil( count($comments)/$args['per_page']) -1 ;
-            wp_list_comments( $args , $comments);
-        } else {
-            wp_list_comments($args);
-        }
+        wp_list_comments($args);
 	}
 
 
@@ -40,8 +34,7 @@ class Foody_Comments {
 			'walker'     => new Foody_CommentWalker(),
 			'per_page'   => get_option( 'comments_per_page' ),
 			'max_depth'  => 2,
-			'reply_text' => __( 'הוסף תגובה', 'Foody' ),
-            'page' => 0
+			'reply_text' => __( 'הוסף תגובה', 'Foody' )
 		);
 	}
 
