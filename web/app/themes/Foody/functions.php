@@ -1004,11 +1004,18 @@ function print_version_content($content)
     $num_of_figures = $figures->length;
     for ($index = 0; $index < $num_of_figures; $index++) {
         $current = $figures->item(0);
-//       $new_content .= '<figure id="'. $current->getAttribute('id'). '" class='.$current->getAttribute('class').'" >';
-//       $new_content .= build_figure_html($current);
-//       $new_content .= '</figure>';
         $current->parentNode->removeChild($current);
     }
+
+    $classname = 'wp-caption';
+    $finder = new DomXPath($dom);
+    $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
+
+    for ($index = 0; $index < $nodes->length; $index++){
+        $current = $nodes->item(0);
+        $current->parentNode->removeChild($current);
+    }
+
     $content_elem = $dom->saveHTML();
     return ['content' => $content_elem, 'figures' => $new_content];
 }

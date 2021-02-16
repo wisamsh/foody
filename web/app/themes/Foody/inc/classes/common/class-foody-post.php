@@ -842,6 +842,9 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                 }
 
                 if ($video_element) {
+                    if(!$main_image_element){
+                        $slider_nav = $main_image_element . $slider;
+                    }
                     $slider = $video_element . $slider;
                     $slider_nav = "<div class='item'><img src='" . $GLOBALS['images_dir'] . 'icons/play.svg' . "' alt='play-icon' class='play-btn'><img class='video-image' src='' alt='תמונת וידאו' /></div>" . $slider_nav;
                 }
@@ -1044,6 +1047,21 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $image_alt = !empty($image_alt) ? $image_alt : 'main-image';
             $image_elem = '<img src="'. $image_url .'" class="primary-image print" alt="'. $image_alt .'">';
             echo $image_elem;
+        } else {
+            $has_video = false;
+            if (have_rows('video', $this->post->ID)) {
+                while (have_rows('video', $this->post->ID)): the_row();
+                    $video_url = get_sub_field('url');
+                    if($video_url){
+                        $has_video = true;
+                    }
+                endwhile;
+            }
+
+            if($has_video) {
+                $image_elem = '<img src="" class="primary-image print" alt="video-image" data-is-video="1">';
+                echo $image_elem;
+            }
         }
     }
 
