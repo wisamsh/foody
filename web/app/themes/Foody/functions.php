@@ -1004,7 +1004,9 @@ function print_version_content($content)
     $num_of_figures = $figures->length;
     for ($index = 0; $index < $num_of_figures; $index++) {
         $current = $figures->item(0);
-        $current->parentNode->removeChild($current);
+        if(isset( $current->parentNode)) {
+            $current->parentNode->removeChild($current);
+        }
     }
 
     $classname = 'wp-caption';
@@ -1013,7 +1015,9 @@ function print_version_content($content)
 
     for ($index = 0; $index < $nodes->length; $index++){
         $current = $nodes->item(0);
-        $current->parentNode->removeChild($current);
+        if(isset( $current->parentNode)) {
+            $current->parentNode->removeChild($current);
+        }
     }
 
     $content_elem = $dom->saveHTML();
