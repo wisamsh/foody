@@ -24,7 +24,7 @@
 
       .image-container {
         position: relative;
-        clip-path: inset(0 round 4px);
+       // clip-path: inset(0 round 4px);
 
         img {
           width: 100%;
@@ -33,9 +33,9 @@
 
       .details {
         .post-title {
-          font-family: $font__bold;
-          font-size: 20px;
-          font-weight: bold;
+          font-family: 'Afek';
+          font-size: 16px;
+          font-weight: normal;
           margin-bottom: 0;
         }
 
@@ -55,6 +55,9 @@
             margin-right: 5px;
           }
         }
+      }
+      .excerpt{
+        font-size:11px;
       }
     }
   }
