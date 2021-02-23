@@ -418,7 +418,7 @@ header {
 
   #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
     padding-right: 0;
-    font-family: AfekBold !important;
+    font-family: Afek !important;
     direction: rtl;
     font-size: 14px;
   }
@@ -429,8 +429,13 @@ header {
     direction: rtl;
     font-size: 14px;
   }
-
-    #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
+    #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text{
+      padding-right: 0;
+      font-family: Afek !important;
+      direction: rtl;
+      font-size: 14px;
+    }
+    #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.bold.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
       padding-right: 0;
       font-family: AfekBold !important;
       direction: rtl;

@@ -564,7 +564,7 @@ $content-width: 95%;
 
               .rating-header {
                 padding-left: 6%;
-                font-weight: bold;
+                font-family: 'AfekBold';
                 font-size: 16px;
                 left: 2%;
                 position: relative !important;
@@ -1917,8 +1917,9 @@ $content-width: 95%;
         .ratings-wrapper {
           margin: 0;
           display: flex;
-          width: 100%;
-          margin: 11px 0;
+          width: 85%;
+          justify-content: center;
+          margin: 11px auto;
           font-size: 17px;
 
           img{
@@ -1928,9 +1929,13 @@ $content-width: 95%;
           &:not(.empty){
             flex-direction: row;
 
-            .rating-stars-container,
+            .rating-stars-container{
+              font-family: 'AfekBold';
+              margin: auto;
+            }
             .rating-header{
-              font-weight: bold;
+              margin-top:1%;
+              font-family: 'AfekBold';
               margin: auto;
             }
 
@@ -1938,7 +1943,8 @@ $content-width: 95%;
 
           .rating-header{
             margin-left: 4%;
-            font-weight: bold;
+            margin-top: 1%;
+            font-family: 'AfekBold';
           }
 
           .rating-digits {
