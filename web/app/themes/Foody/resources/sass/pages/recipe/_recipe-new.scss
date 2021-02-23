@@ -334,7 +334,7 @@ $content-width: 95%;
           width: 10px;
           z-index: 100;
           background-color: white;
-          padding: 0 20px;
+          padding: 0 6px;
           background-repeat: no-repeat;
           background-position: center;
           margin-bottom: 2%;
@@ -403,7 +403,7 @@ $content-width: 95%;
         margin-bottom: 0;
         h1 {
           margin: 0;
-          font-size: 28px;
+          font-size: 35px;
           font-weight: 900;
           line-height: 1.03;
           padding: 0!important;
@@ -716,6 +716,7 @@ $content-width: 95%;
 
               text-decoration: underline;
               font-size: 15.5px;
+              font-family: 'AfekBold';
               display: block;
              }
 
@@ -882,7 +883,7 @@ $content-width: 95%;
 
         .preparations-share-title,
         .comments-title {
-          font-weight: bold;
+          font-family: 'AfekBold';
           color: #404040;
           font-size: 13px;
         }
@@ -921,6 +922,7 @@ $content-width: 95%;
 
         .rating-header{
           font-size: 13px;
+          font-family: 'AfekBold';
         }
       }
     }
@@ -1163,6 +1165,7 @@ $content-width: 95%;
           .ingredients-group-title {
             max-width: 100%;
             font-size: 17px;
+            font-family: 'AfekBold';
           }
 
           ul {
@@ -1463,13 +1466,14 @@ $content-width: 95%;
       padding:15px;
       .how-i-did-cover {
         width: 100vw;
+        height: 55vh;
       }
 
       .comments-area-header {
         display: flex;
         flex-direction: row;
         background: $color__primary;
-        padding: 25px 20px;
+        padding: 20px 20px;
         position: relative;
 
         .title {
@@ -1503,7 +1507,7 @@ $content-width: 95%;
           border-radius: 60%;
           //width: 12%;
           padding: 1%;
-          top: 23%;
+          top: 21%;
           right: 35%;
           width: 42px;
           height: 42px;
@@ -1642,11 +1646,23 @@ $content-width: 95%;
         }
       }
     }
+    .recipe-categories, .recipe-accessories, .recipe-techniques, .recipe-tags {
+      margin:15px 11px;
+      .title{
+        font-size:18px;
+        font-family: 'AfekBold';
+      }
+    }
 
     section.recipe-comments{
       display: block;
+      background-color: #fafafa;
+      padding: 10px;
       #comments{
-
+        .title{
+          padding-right: 2px;
+          font-size: 20px;
+        }
         .comments-title{
           font-size: 17px;
           line-height: 35px;
@@ -1666,11 +1682,11 @@ $content-width: 95%;
     > section.categories,
     > section.accessories,
     > section.techniques,
-    > section.tags{
+    > section.tags{section.recipe-comments
       .title{
-        font-size: 20px;
+        font-size: 18px;
         line-height: 35px;
-        font-weight: bold;
+        font-family: 'AfekBold';
       }
 
       > ul{
@@ -1901,8 +1917,8 @@ $content-width: 95%;
         .ratings-wrapper {
           margin: 0;
           display: flex;
-          width: 57%;
-          margin: auto;
+          width: 100%;
+          margin: 11px 0;
           font-size: 17px;
 
           img{
@@ -1910,7 +1926,7 @@ $content-width: 95%;
           }
 
           &:not(.empty){
-            flex-direction: column;
+            flex-direction: row;
 
             .rating-stars-container,
             .rating-header{
@@ -2110,7 +2126,7 @@ $content-width: 95%;
 
           .favorite-container {
             padding: 5px 0;
-
+            margin-top: 1% !important;
             .favorite {
               text-align: center;
               display: flex;
@@ -2204,7 +2220,7 @@ $content-width: 95%;
               padding: 3%;
 
               img {
-                width: 37px;
+                width: 40px;
               }
 
               .item-container {
@@ -2282,7 +2298,7 @@ $content-width: 95%;
             width: 100%;
             flex-wrap: unset;
             margin: 0;
-            padding: 1%;
+            padding: 0% 1% 1% 1%;
             display: flex;
             flex-direction: row;
             justify-content: space-evenly;
@@ -2305,7 +2321,7 @@ $content-width: 95%;
               .value {
                 text-decoration: underline;
                 font-size: 1rem;
-
+                font-family: 'AfekBold';
                 &:not(.open) {
                   display: none;
                 }
@@ -2402,6 +2418,7 @@ $content-width: 95%;
 
                           .dish-nutrition {
                             font-size: 0.7rem;
+                            font-weight: normal;
                             color: #404040;
 
                             .value {
@@ -2433,6 +2450,8 @@ $content-width: 95%;
           padding: 0 0.7rem;
 
           .foody-content{
+            font-size: 17px;
+            line-height: 21px;
             > p{
               font-size: 17.5px;
             }
@@ -2486,6 +2505,7 @@ $content-width: 95%;
           width: 37%;
           text-align: center;
           font-weight: bold;
+          font-family: 'AfekBold';
         }
       }
 
@@ -2541,6 +2561,7 @@ $content-width: 95%;
             line-height: $input-height;
             padding-right: 0;
             align-self: start;
+            margin-top: -10px;
           }
 
           .amount-container {
@@ -2548,7 +2569,8 @@ $content-width: 95%;
             align-self: self-end;
             display: flex;
             flex-direction: row;
-            margin: 3% 0;
+            margin: -10px 0 3% 0;
+
 
             > label {
               margin: auto;
@@ -2678,11 +2700,12 @@ $content-width: 95%;
             .ingredients-group-title {
               max-width: 100%;
               font-size: 17px;
+              font-family: 'AfekBold';
             }
 
             ul {
 
-              border: 1px solid var(--color__divider);
+              //border: 1px solid var(--color__divider);
               margin: 0;
 
               li {
@@ -2692,11 +2715,11 @@ $content-width: 95%;
                 overflow-y: auto;
 
                 &:nth-child(odd) {
-                  background-color: white;
+                  background-color: #F3F3F3;
                 }
 
                 &:nth-child(even) {
-                  background-color: #f3f3f3;
+                  background-color: #FAFAFA;
                 }
 
                 .amount {
@@ -2848,7 +2871,8 @@ $content-width: 95%;
         }
 
         .foody-content {
-
+          font-size: 17px;
+          line-height: 21px;
           a {
             text-decoration: underline var(--color__primary) !important;
           }
@@ -2913,6 +2937,8 @@ $content-width: 95%;
             color: white;
             text-align: center;
             margin-left: 0;
+            position: relative;
+            left: 7%;
           }
 
           .check-icon {
@@ -2940,26 +2966,28 @@ $content-width: 95%;
             font-size: 23px;
             font-weight: bold;
             border-radius: 60%;
-            //width: 12%;
             padding: 1%;
-            left: 9%;
+            left: 8%;
+            margin-left: 12px;
             top: unset;
             right: unset;
-            width: 44px;
-            height: 44px;
+            width: 36px;
+            height: 36px;
 
             .btn-text {
               text-align: center;
               border-radius: 60%;
-              border: $color__primary 1px solid;
-              color: $color__primary;
+              border: #e6392b 1px solid;
+              color: #e6392b;
               margin: auto;
-              width: 36px;
-              height: 36px;
-              font-size: 1.3rem;
+              width: 30px;
+              height: 30px;
+              font-family: 'AfekBold';
+              font-size: 19px;
               position: absolute;
               top: 9%;
               left: 10%;
+              margin-top: 0px;
             }
           }
 
@@ -3000,11 +3028,13 @@ $content-width: 95%;
         }
       }
 
+
+
       .recipe-comments {
         #comments {
           .title {
             font-size: 22px;
-            padding: 20px;
+            padding: 0px;
           }
 
           #accordion-comments-accordion {
@@ -3016,12 +3046,15 @@ $content-width: 95%;
               #comments-accordion {
                 .card-body {
                   background-color: #fafafa;
+                  padding: 0px 10px;
                 }
               }
             }
           }
         }
       }
+
+
 
       .recipe-rating, .recipe-notes {
         max-width: calc(100% - #{$content-padding});
@@ -3337,7 +3370,7 @@ $content-width: 95%;
         }
 
         .load-more {
-          margin: 20px auto 40px;
+          margin: 20px auto 20px;
         }
       }
 
