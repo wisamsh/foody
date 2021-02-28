@@ -364,7 +364,7 @@ $run-height: 30px;
             display: flex;
             flex-direction: column-reverse;
             position: fixed;
-            bottom: 9%;
+            bottom: 8vh;
             width: 100vw;
             right: 0;
             background: #fdebec;
@@ -400,6 +400,11 @@ $run-height: 30px;
 
                 .quadmenu-dropdown-menu {
                   background: #fdebec;
+
+                 > ul{
+                    overflow: scroll;
+                    max-height: 39vh;
+                  }
                 }
 
                 .quadmenu-item-content {
@@ -422,6 +427,11 @@ $run-height: 30px;
 
                 ul {
                   margin-left: 0;
+                }
+
+                ul.quadmenu-navbar-nav{
+                  height: 45vh;
+                  overflow: scroll;
                 }
               }
             }

@@ -442,6 +442,8 @@ $content-width: 95%;
               .favorite {
                 span {
                   color: #404040;
+                  font-size: 17px;
+                  font-family:'Afek';
                 }
               }
 
@@ -472,9 +474,11 @@ $content-width: 95%;
               padding-left: 0;
 
               .social-title {
-                margin-top: 0;
+                margin-top: 1px;
                 margin-bottom: 0;
-                font-weight: bold;
+                font-family: 'Afek';
+                font-weight: bolder;
+                font-size:17px;
                 margin-left: 0.7rem;
               }
 
@@ -564,8 +568,9 @@ $content-width: 95%;
 
               .rating-header {
                 padding-left: 6%;
-                font-family: 'AfekBold';
-                font-size: 16px;
+                font-family: 'Afek';
+                font-weight: bolder;
+                font-size: 17px;
                 left: 2%;
                 position: relative !important;
               }
@@ -929,7 +934,7 @@ $content-width: 95%;
 
     .recipe-ingredients{
       box-shadow: 0 2px 4px 0 rgba(0,0,0,.02);
-      margin-top: -20px;
+      margin-top: -7px;
       margin-bottom: 10px;
       background-color: #fff;
       width: 100%;
@@ -1466,7 +1471,7 @@ $content-width: 95%;
       padding:15px;
       .how-i-did-cover {
         width: 100vw;
-        height: 55vh;
+        height: 270px;
       }
 
       .comments-area-header {
@@ -2122,6 +2127,7 @@ $content-width: 95%;
 
             li {
               display: block;
+
             }
 
             li:not(:first-child):before {
