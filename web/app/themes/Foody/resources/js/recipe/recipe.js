@@ -416,6 +416,10 @@ jQuery(document).ready(($) => {
             $(this).remove();
         });
     }
+
+    if ( $("#main > div > div.cover-image.no-print").length )  {
+       $("#main > div > aside").css('padding-top','15px')
+    }
 });
 
 function changeStyleOfArrows() {
