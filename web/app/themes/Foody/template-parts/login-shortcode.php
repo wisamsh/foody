@@ -140,8 +140,15 @@ echo do_shortcode( '[wordpress_social_login]' );
                 if ( strpos( $redirect_to, 'התחברות' ) !== false ) {
                     $redirect_to = home_url();
                 }
-                ?>
 
+                if($redirect_to === home_url() || $redirect_to === home_url().'/' || $redirect_to === rtrim(home_url(), '/')){
+                    if(strpos($redirect_to, '?') === false){
+                        $redirect_to = $redirect_to . '?logister_popup=1';
+                    } else {
+                        $redirect_to = $redirect_to . '&logister_popup=1';
+                    }
+                }
+                ?>
                 <input type="hidden" name="redirect_to" value="<?php echo $redirect_to; ?>">
 
             </form>
