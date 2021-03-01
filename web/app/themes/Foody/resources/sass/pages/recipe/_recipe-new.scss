@@ -586,7 +586,7 @@ $content-width: 95%;
 
       .promotion-text{
         white-space: pre-line;
-        font-size: 15.5px;
+        font-size: 15px;
         padding: 1%;
         background: var(--color__primary);
         color: #ffffff;
@@ -638,7 +638,7 @@ $content-width: 95%;
               flex-direction: row;
               margin: 35% 0;
               text-align: center;
-              font-size: 15.5px;
+              font-size: 15px;
             }
 
             .difficulty-container{
@@ -646,7 +646,7 @@ $content-width: 95%;
               flex-direction: row;
               margin: 26% 0;
               text-align: center;
-              font-size: 15.5px;
+              font-size: 15px;
             }
 
             .difficulty-container{
@@ -672,7 +672,7 @@ $content-width: 95%;
 
             .item-container{
               margin-top: 12px;
-              font-size: 14.5px;
+              font-size: 15px;
               line-height: 1.2;
 
               .key{
@@ -720,7 +720,7 @@ $content-width: 95%;
               }
 
               text-decoration: underline;
-              font-size: 15.5px;
+              font-size: 17px;
               font-family: 'AfekBold';
               display: block;
              }
@@ -736,7 +736,7 @@ $content-width: 95%;
               .nutrition-container{
                 .title{
                   display: block;
-                  font-size: 1rem;
+                  font-size: 17px;
                   text-align: center;
 
                   span {
@@ -810,12 +810,12 @@ $content-width: 95%;
                       height: 100%;
 
                       .name{
-                        font-size: 0.9rem;
+                        font-size: 15px;
                         color: #404040;
                       }
 
                       .dish-nutrition{
-                        font-size: 0.9rem;
+                        font-size: 15px;
                         font-weight: normal;
                         color: #404040;
                         display: flex;
@@ -824,7 +824,7 @@ $content-width: 95%;
                         justify-content: space-around;
 
                         .value{
-                          font-size: 0.9rem;
+                          font-size: 15px;
                           padding-left: 3px;
                           text-align: center;
                           text-decoration: none;
@@ -861,7 +861,7 @@ $content-width: 95%;
       .preview{
         text-align: right;
         padding: 0 2.5%;
-
+        font-size: 17px;
         .foody-content{
           > p{
             font-size: 17.5px;
@@ -890,7 +890,7 @@ $content-width: 95%;
         .comments-title {
           font-family: 'AfekBold';
           color: #404040;
-          font-size: 13px;
+          font-size: 14px;
         }
 
         .preparation-share-link,
@@ -926,7 +926,7 @@ $content-width: 95%;
         }
 
         .rating-header{
-          font-size: 13px;
+          font-size: 14px;
           font-family: 'AfekBold';
         }
       }
@@ -1367,7 +1367,7 @@ $content-width: 95%;
       }
 
       .notes{
-        font-size: 15.5px;
+        font-size: 17px;
       }
     }
 
@@ -1379,6 +1379,7 @@ $content-width: 95%;
       .similar-content-listing-block-title {
         text-align: right;
         margin-bottom: 10px;
+        font-size:17px !important;
       }
 
       ul {
@@ -1405,7 +1406,7 @@ $content-width: 95%;
               line-height: 1;
               text-align: center;
               font-family: Assistant;
-              font-size: 12.5px;
+              font-size: 15px;
             }
 
           }
@@ -1461,7 +1462,7 @@ $content-width: 95%;
         .tip-text{
           text-align: right;
           margin: 0;
-          font-size: 17.5px;
+          font-size: 17px;
         }
       }
     }
@@ -1500,7 +1501,7 @@ $content-width: 95%;
           border: 1px solid;
           text-align: center;
           top: 15%;
-          right: 29%;
+          right: 35%;
           padding-right: 3px;
         }
 
@@ -1557,7 +1558,7 @@ $content-width: 95%;
 
               span {
                 text-decoration: underline;
-                font-size: 13px;
+                font-size: 15px;
               }
 
               .icon-camera:hover,
@@ -1696,7 +1697,7 @@ $content-width: 95%;
 
       > ul{
         li{
-          font-size: 13px;
+          font-size: 14px;
         }
       }
     }
@@ -2279,7 +2280,7 @@ $content-width: 95%;
 
               .kosher,
               .difficulty-container{
-                font-size: 16px;
+                font-size: 15px;
               }
 
               .difficulty-container {
@@ -2332,7 +2333,7 @@ $content-width: 95%;
 
               .value {
                 text-decoration: underline;
-                font-size: 1rem;
+                font-size: 17px;
                 font-family: 'AfekBold';
                 &:not(.open) {
                   display: none;
@@ -2350,7 +2351,7 @@ $content-width: 95%;
 
                 .nutrition-container {
                   .title {
-                    font-size: 1rem;
+                    font-size: 17px;
                     text-align: center;
 
                     span {
@@ -2424,17 +2425,17 @@ $content-width: 95%;
                           margin: auto;
 
                           .name {
-                            font-size: 0.8rem;
+                            font-size: 15px;
                             color: #404040;
                           }
 
                           .dish-nutrition {
-                            font-size: 0.7rem;
+                            font-size: 15px;
                             font-weight: normal;
                             color: #404040;
 
                             .value {
-                              font-size: 0.7rem;
+                              font-size: 15px;
                               text-decoration: none;
                             }
                           }
@@ -3429,7 +3430,7 @@ $content-width: 95%;
                 line-height: 1;
                 text-align: center;
                 font-family: Assistant;
-                font-size: 13px;
+                font-size: 14px;
               }
             }
           }
