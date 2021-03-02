@@ -16,9 +16,57 @@ $raanan-unicode-range: 'U+0021-0039';
 //@include font-face(AfekBold, '../fonts/Afek/Afek-bold-aaa', 700, null, 'otf');
 //@include font-face(AlmoniTzar, '../fonts/Almoni-tzar/Almoni-tzar-regular-aaa', null, null, 'otf');
 
+
+@font-face{
+  font-family: 'Afek';
+  font-weight: 800; /*(ultrabold)*/
+  font-style: normal;
+  src: url('../fonts/Afek/afek-ultrabold-aaa.woff2') format('woff2'), url('../fonts/Afek/afek-ultrabold-aaa.woff') format('woff');
+}
+
+@font-face{
+  font-family: 'Afek';
+  font-weight: 200; /*(ultralight)*/
+  font-style: normal;
+  src: url('../fonts/Afek/afek-ultralight-aaa.woff2') format('woff2'), url('../fonts/Afek/afek-ultralight-aaa.woff') format('woff');
+}
+
+@font-face{
+  font-family: 'Afek';
+  font-weight: 700; /*(bold)*/
+  font-style: normal;
+  src: url('../fonts/Afek/afek-bold-aaa.woff2') format('woff2'), url('../fonts/Afek/afek-bold-aaa.woff') format('woff');
+}
+
+@font-face{
+  font-family: 'Afek';
+  font-weight: 600; /*(demibold)*/
+  font-style: normal;
+  src: url('../fonts/Afek/afek-demibold-aaa.woff2') format('woff2'), url('../fonts/Afek/afek-demibold-aaa.woff') format('woff');
+}
+@font-face{
+  font-family: 'Afek';
+  font-weight: 300; /*(light)*/
+  font-style: normal;
+  src: url('../fonts/Afek/afek-light-aaa.woff2') format('woff2'), url('../fonts/Afek/afek-light-aaa.woff') format('woff');
+}
+@font-face{
+  font-family: 'Afek';
+  font-weight: 500; /*(medium)*/
+  font-style: normal;
+  src: url('../fonts/Afek/afek-medium-aaa.woff2') format('woff2'), url('../fonts/Afek/afek-medium-aaa.woff') format('woff');
+}
+@font-face{
+  font-family: 'afek';
+  font-weight: 400; /*(regular)*/
+  font-style: normal;
+  src: url('../fonts/Afek/afek-regular-aaa.woff2') format('woff2'), url('../fonts/Afek/afek-regular-aaa.woff') format('woff');
+}
+
+
 @font-face {
   font-family: 'AfekBold';
-  src: url('../fonts/Afek/Afek-bold-aaa.woff2') format('woff2'),  url('../fonts/Afek/Afek-bold-aaa.woff') format('woff');
+  src: url('../fonts/Afek/afek-bold-aaa.woff2') format('woff2'),  url('../fonts/Afek/afek-bold-aaa.woff') format('woff');
   font-weight: 400;
 }
 
