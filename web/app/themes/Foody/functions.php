@@ -1004,7 +1004,6 @@ function foody_disable_gutenberg_editor() {
 function redirect_social_login2( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile  )
 {
     if(isset($_GET) && (isset($_GET['camping']) || isset($_GET['rishom']))){
-        console_log($_GET);
         $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
     }
 }
