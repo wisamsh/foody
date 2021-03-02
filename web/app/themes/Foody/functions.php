@@ -995,7 +995,16 @@ function foody_disable_gutenberg_editor() {
     return false;
 }
 
-function redirect_social_login($user_id, $provider, $hybridauth_user_profile, $redirect_to){
-    $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
+//function redirect_social_login($user_id, $provider, $hybridauth_user_profile, $redirect_to){
+//    $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
+//}
+//add_action('wsl_hook_process_login_before_wp_safe_redirect', 'redirect_social_login');
+
+
+function redirect_social_login2( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile  )
+{
+    if(isset($_GET) && (isset($_GET['camping']) || isset($_GET['rishom']))){
+        $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
+    }
 }
-add_action('wsl_hook_process_login_before_wp_safe_redirect', 'redirect_social_login');
+add_action( 'wsl_process_login_authenticate_wp_user_start', 'redirect_social_login2', 10, 5 );

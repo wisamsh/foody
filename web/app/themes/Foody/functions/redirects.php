@@ -52,9 +52,16 @@ function foody_logged_redirect() {
 //	if ( (in_array( $slug, $signon_pages ) || is_home()) && is_user_logged_in()) {
     if ( (in_array( $slug, $signon_pages ) || (is_front_page() && isset($_GET) && (isset($_GET['logister_popup']) || isset($_GET['redirect_to_provider'])))) && is_user_logged_in()) {
         if ( ! isset( $_REQUEST['registered']) ) {
-//			wp_redirect( home_url() );
-            wp_redirect(get_permalink(get_page_by_path('השלמת-רישום')));
-			die();
+            if( isset($_GET['camping']) ) {
+                wp_redirect( home_url() );
+                wp_redirect(get_permalink(get_page_by_path('השלמת-רישום')));
+                die();
+            }
+            else {
+                wp_redirect( home_url() );
+                die();
+            }
+//
 		}
 	}
 }

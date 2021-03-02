@@ -24,8 +24,12 @@ $foody_lost_password = isset( $_REQUEST['checkemail'] ) && $_REQUEST['checkemail
     <span>
     משתמשים חדשים?
 </span>
+    <?php if ( isset($_GET['camping']) ) { ?>
+        <a class="go-to-register" href="<?php echo get_permalink( get_page_by_path( 'הרשמה' ) ) ?>?rishom=true">הירשמו</a>
+    <?php } else { ?>
+        <a class="go-to-register" href="<?php echo get_permalink( get_page_by_path( 'הרשמה' ) ) ?>">הירשמו</a>
+    <?php } ?>
 
-    <a class="go-to-register" href="<?php echo get_permalink( get_page_by_path( 'הרשמה' ) ) ?>">הירשמו</a>
 
 </p>
 <?php
