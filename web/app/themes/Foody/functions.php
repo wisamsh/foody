@@ -1004,7 +1004,18 @@ function foody_disable_gutenberg_editor() {
 function redirect_social_login2( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile  )
 {
     if(isset($_GET) && (isset($_GET['camping']) || isset($_GET['rishom']))){
+        console_log($_GET);
         $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
     }
 }
 add_action( 'wsl_process_login_authenticate_wp_user_start', 'redirect_social_login2', 10, 5 );
+
+
+function console_log($output, $with_script_tags = true) {
+    $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
+        ');';
+    if ($with_script_tags) {
+        $js_code = '<script>' . $js_code . '</script>';
+    }
+    echo $js_code;
+}
