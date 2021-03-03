@@ -26,7 +26,7 @@ $title = isset($title) && !empty($title) ? $title : __('הגיע הזמן שנכ
     <span style="color: #e6392b;">
 
         <?php if ( isset($_GET['rishom']) ) { ?>
-            <a style="color: #e6392b;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>?camping=true">להתחבר</a>
+            <a style="color: #e6392b;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>?campaign=true">להתחבר</a>
         <?php } else { ?>
             <a style="color: #e6392b;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>">להתחבר</a>
         <?php } ?>

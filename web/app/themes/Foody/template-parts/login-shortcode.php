@@ -24,7 +24,7 @@ $foody_lost_password = isset( $_REQUEST['checkemail'] ) && $_REQUEST['checkemail
     <span>
     משתמשים חדשים?
 </span>
-    <?php if ( isset($_GET['camping']) ) { ?>
+    <?php if ( isset($_GET['campaign']) ) { ?>
         <a class="go-to-register" href="<?php echo get_permalink( get_page_by_path( 'הרשמה' ) ) ?>?rishom=true">הירשמו</a>
     <?php } else { ?>
         <a class="go-to-register" href="<?php echo get_permalink( get_page_by_path( 'הרשמה' ) ) ?>">הירשמו</a>
@@ -70,7 +70,7 @@ echo do_shortcode( '[wordpress_social_login]' );
                 <div class="divider col-5"></div>
 
             </div>
-
+            <?php $x=1; ?>
             <form id="login-form" action="<?php echo wp_login_url( home_url() ); ?>" class="row" method="post">
 
                 <div role="alert" class="alert foody-alert alert-dismissible alert-danger login-failed-alert">
@@ -123,6 +123,7 @@ echo do_shortcode( '[wordpress_social_login]' );
                 </div>
 
                 <?php
+
                 $queried_object = get_queried_object();
                 // redirect to category/tag page
                 if(is_category() || is_tag()){
