@@ -61,7 +61,7 @@ $registered_user_link = $e_book->registered_user_link;
 					<?php echo $content_link['title'] ?>
                 </a>
 			<?php else: ?>
-                <a class="btn btn-primary cta" href="<?php echo $content_link['url'] ?>?rishom=true"
+                <a class="btn btn-primary cta" href="<?php echo $content_link['url'] ?>"
                    target="<?php echo $content_link['target'] ?>">
 					<?php echo $content_link['title'] ?>
                 </a>

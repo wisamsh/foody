@@ -1003,9 +1003,9 @@ function foody_disable_gutenberg_editor() {
 
 function redirect_social_login2( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile  )
 {
-    if( isset($_GET['campaign']) ){
-        $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
-    }
+
+    $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
+
 }
 add_action( 'wsl_process_login_authenticate_wp_user_start', 'redirect_social_login2', 10, 5 );
 

@@ -24,13 +24,7 @@ $title = isset($title) && !empty($title) ? $title : __('הגיע הזמן שנכ
 </p>
 <p>כבר נרשמתם לאתר בעבר? כל מה שאתם צריכים זה
     <span style="color: #e6392b;">
-
-        <?php if ( isset($_GET['rishom']) ) { ?>
-            <a style="color: #e6392b;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>?campaign=true">להתחבר</a>
-        <?php } else { ?>
-            <a style="color: #e6392b;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>">להתחבר</a>
-        <?php } ?>
-
+        <a style="color: #e6392b;" href="<?php echo get_permalink(get_page_by_path('התחברות')) ?>">להתחבר</a>
     </span>
 </p>
 <p>&nbsp;</p>
