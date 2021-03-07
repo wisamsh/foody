@@ -420,6 +420,17 @@ jQuery(document).ready(($) => {
     if ( $("#main > div > div.cover-image.no-print").length )  {
        $("#main > div > aside").css('padding-top','15px')
     }
+
+    // Change Position of difficalty
+    if ($("#main .difficulty_level").html().trim() === "קשה מאוד" && $(window).width > 760 ) {
+        $("#main .difficulty-container").css('flex-direction','column')
+        $("#main .difficulty-container").css('top','7%')
+    }
+    if ($("#main .difficulty_level").html().trim() !== "קשה מאוד" ) {
+        $("#main .difficulty-container").css('top','8%')
+        $("#main  .overview-lists-container-desktop  .overview.row  li:nth-child(1)  .key").css('padding-top','2px')
+    }
+
 });
 
 function changeStyleOfArrows() {

@@ -538,7 +538,7 @@ $content-width: 95%;
           .rating-container {
             margin-top: 0;
             margin-bottom: 0;
-            width: 40%;
+            width: 43%;
 
             .ratings-wrapper {
               padding-top: 3%;
@@ -614,7 +614,13 @@ $content-width: 95%;
           flex-direction: row;
           justify-content: space-evenly;
           list-style: none;
-
+          .overview-item:nth-child(3){
+            .item-container{
+              .key{
+                padding-top:0px !important;
+              }
+            }
+          }
           .overview-item{
             list-style: none;
             border-radius: 4.3px;
@@ -645,6 +651,7 @@ $content-width: 95%;
               display: flex;
               flex-direction: row;
               margin: 26% 0;
+              position:relative;
               text-align: center;
               font-size: 15px;
             }
@@ -671,12 +678,13 @@ $content-width: 95%;
             }
 
             .item-container{
-              margin-top: 12px;
+              margin-top: 8px;
               font-size: 15px;
               line-height: 1.2;
 
               .key{
                 font-weight: bold;
+                padding-top: 3px;
               }
 
               .key-value{
@@ -2515,7 +2523,7 @@ $content-width: 95%;
           border-radius: 4.3px;
           border: 2px solid #fef5f6;
           padding: 0;
-          width: 37%;
+          width: 39%;
           text-align: center;
           font-weight: bold;
           font-family: 'AfekBold';
