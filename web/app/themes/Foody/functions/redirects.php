@@ -49,11 +49,27 @@ function foody_logged_redirect() {
 
 	$slug = urldecode( get_post_field( 'post_name', get_post() ) );
 
-	if ( (in_array( $slug, $signon_pages ) || is_home()) && is_user_logged_in()) {
-		if ( ! isset( $_REQUEST['registered'] ) ) {
-			wp_redirect( home_url() );
-//            wp_redirect(get_permalink(get_page_by_path('השלמת-רישום')));
-			die();
-		}
-	}
+    if ( (in_array( $slug, $signon_pages ) || is_home()) && is_user_logged_in()){
+        if ( ! isset( $_REQUEST['registered'])){
+            wp_redirect(get_permalink(get_page_by_path('השלמת-רישום')));
+            die();
+        }
+    }
+
+//	if ( (in_array( $slug, $signon_pages ) || is_home()) && is_user_logged_in()) {
+////    if ( in_array( $slug, $signon_pages ) && is_user_logged_in()) {
+//        if ( ! isset( $_REQUEST['registered']) && $anyParamNameValue) {
+////            if( isset($_GET['campaign']) ) {
+//               // wp_redirect( home_url() );
+//            $wp->remove_query_var('campaign');
+//                wp_redirect(get_permalink(get_page_by_path('השלמת-רישום')));
+//                die();
+////            }
+////            else {
+////                wp_redirect( home_url() );
+////                die();
+////            }
+//
+//		}
+//	}
 }
