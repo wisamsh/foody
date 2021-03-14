@@ -23,7 +23,7 @@ $recipe = $template_args['recipe'];
       "@type": "Recipe",
 <?php
         $author_name_for_schema = $recipe->escape_AuthorName_for_schema();
-        $aggregateRating = $recipe->get_jsonld_aggregateRating();
+        $aggregateRating = $recipe->get_jsonld_aggregateRating(get_the_ID());
         if ($aggregateRating != false) { ?>
       "aggregateRating": <?php echo $aggregateRating; ?>,
 <?php } ?>

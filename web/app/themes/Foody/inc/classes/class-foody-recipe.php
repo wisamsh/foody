@@ -949,19 +949,40 @@ class Foody_Recipe extends Foody_Post
         return json_encode($text, JSON_UNESCAPED_UNICODE);
     }
 
-    public function get_jsonld_aggregateRating()
+    function get_all_ratings_by_post_id($post_id, $column)
     {
-        $rating_val = get_post_meta($this->get_id(), 'ratings_average', true);
-        $rating_count = get_post_meta($this->get_id(), 'ratings_users', true);
+        global $wpdb;
+        $table = $wpdb->prefix . 'foody_ratings';
 
-        if ($rating_val === "" || $rating_count === "") {
+        $query = "SELECT {$column} FROM {$table} where postid = " . $post_id;
+
+        return $wpdb->get_results($query);
+    }
+
+    public function get_jsonld_aggregateRating($id)
+    {
+        $ratings = $this->get_all_ratings_by_post_id($id, '*');
+        $num_of_rates = count($ratings);
+        $ratings_sum = 0;
+
+        foreach ($ratings as $rating) {
+            $ratings_sum += floatval($rating->rating);
+        }
+
+        $average_rating = $ratings_sum / $num_of_rates;
+
+        // round to full int or half
+        $average_rating = round($average_rating*2)/2;
+
+
+        if ($average_rating === "" || $num_of_rates === "") {
             return false;
         }
 
         $json = [
             "@type" => "AggregateRating",
-            "ratingValue" => $rating_val,
-            "reviewCount" => $rating_count
+            "ratingValue" => $average_rating,
+            "reviewCount" => $num_of_rates
         ];
 
         return json_encode($json);

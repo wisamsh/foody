@@ -150,6 +150,11 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
         showLoginModal();
     });
 
+    $("#main > div > article > section.comments-rating-prep-container.no-print > div.comments-link-container > a").on('click',function (){
+       $("#commentform > div > span").addClass('is-focused')
+        $("#commentform > div > span > input").focus()
+    })
+
     if ($('.content > .details-container .post-ratings > img').length) {
         $.each($('.content > .details-container .post-ratings > img'), function (indexArr) {
             $(this).before('<span class="ratings-index">' + (indexArr + 1) + '</span>');
