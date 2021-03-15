@@ -149,11 +149,15 @@ if (!empty($enable_tip) && $enable_tip) { ?>
 
 <?php
 $similar_content = get_field('similar_content_group', $recipe->get_id());
-if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
+// && $similar_content['active_similar_content'][0] == __('הצג')
+//if (!empty($similar_content) && !empty($similar_content['active_similar_content']) ) { ?>
     <section class="recipe_similar_content no-print">
-        <?php $recipe->get_similar_content($similar_content); ?>
+        <?php
+
+            $recipe->get_similar_content($similar_content);
+        ?>
     </section>
-<?php } ?>
+<?php //} ?>
 
 
 
