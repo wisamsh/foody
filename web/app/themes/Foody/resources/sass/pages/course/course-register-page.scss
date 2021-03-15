@@ -13,7 +13,7 @@
       position: relative;
       display: flex;
       flex-direction: row;
-      border-bottom: 1px solid red;
+      border-bottom: 1px solid #ed3d48;
       padding: 3% 0;
 
       .host-image {
@@ -24,7 +24,7 @@
         img {
           border-radius: 100%;
           position: relative;
-          border: 1px solid red;
+          border: 1px solid #ed3d48;
         }
       }
 
@@ -37,7 +37,7 @@
 
         .course-title {
           font-size: 22px;
-          color: red;
+          color: #ed3d48;
           text-align: center;
           margin: 0;
           font-weight: bold;
@@ -477,7 +477,7 @@
 
           #dropdownMenuLink {
             background: white;
-            color: red;
+            color: #ed3d48;
             font-size: 17px;
             border: 1px solid #ED3D48;
             border-radius: 5px;

@@ -235,7 +235,7 @@ $md-checkbox-label-padding: .75em;
     &.error {
       &:before {
         // box
-        border: $md-checkbox-border-width solid red;
+        border: $md-checkbox-border-width solid #ed3d48;
       }
     }
   }
@@ -285,7 +285,7 @@ $md-checkbox-label-padding: .75em;
 .required-input label:not(.error):after {
   content: ' *';
   display: inline-block;
-  color: red;
+  color: #ed3d48;
   font-size: 22px;
   line-height: inherit;
 }
@@ -293,7 +293,7 @@ $md-checkbox-label-padding: .75em;
 label.error {
   text-align: right;
   display: block;
-  color: red !important;
+  color: #ed3d48 !important;
   font-family: $font__assistant;
   font-size: 18px;
   font-weight: bold;
