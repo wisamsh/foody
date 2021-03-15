@@ -73,14 +73,18 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
   </section>
 <?php
 $comments_rating_preps_group = get_field('comments_rating_component', $recipe->id);
-if (isset($comments_rating_preps_group['enable_component']) && $comments_rating_preps_group['enable_component']) {
-    ?>
-    <section class="comments-rating-prep-container no-print">
-        <?php $recipe->get_comments_rating_preps_component($comments_rating_preps_group['number_of_preps']) ?>
-    </section>
-    <?php
-}
-?>
+ if ( isset($comments_rating_preps_group['number_of_preps']) ){
+     $comments_rating_preps_group['number_of_preps'] = 7;
+     ?>
+     <section class="comments-rating-prep-container no-print">
+         <?php $recipe->get_comments_rating_preps_component($comments_rating_preps_group['number_of_preps']) ?>
+     </section>
+ <?php } else { ?>
+     <section class="comments-rating-prep-container no-print">
+         <?php $recipe->get_comments_rating_preps_component($comments_rating_preps_group['number_of_preps']) ?>
+     </section>
+ <?php } ?>
+
 
 <?php if ($recipe->substitute_all_button != null) { ?>
     <section class="substitute-all">
@@ -161,12 +165,12 @@ $similar_content = get_field('similar_content_group', $recipe->get_id());
 
 
 
-<?php if (get_field('enable_share_execute', $recipe->id)) { ?>
+
     <section class="recipe-how-i-did no-print">
         <?php $recipe->how_i_did(); ?>
 
     </section>
-<?php } ?>
+
 
     <section class="recipe-comments no-print">
         <?php $recipe->comments(); ?>

@@ -968,8 +968,11 @@ class Foody_Recipe extends Foody_Post
         foreach ($ratings as $rating) {
             $ratings_sum += floatval($rating->rating);
         }
-
-        $average_rating = $ratings_sum / $num_of_rates;
+        if( $num_of_rates == 0 ) {
+            $average_rating = 0;
+        } else {
+            $average_rating = $ratings_sum / $num_of_rates;
+        }
 
         // round to full int or half
         $average_rating = round($average_rating*2)/2;

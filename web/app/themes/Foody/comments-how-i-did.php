@@ -50,7 +50,9 @@ $upload_text = __('תעלו תמונה להשוויץ');
     <?php if ($cover_image !== false) {
         $alt = !empty($cover_image['alt']) ? $cover_image['alt'] : ''; ?>
         <img src="<?php echo $cover_image['url']; ?>" alt="<?php echo $cover_image['alt']; ?>" class="how-i-did-cover">
-    <?php } ?>
+    <?php } else { ?>
+        <img src="<?php echo get_the_post_thumbnail_url() ?>" alt="<?php echo esc_html ( get_the_title() ) ?>" class="how-i-did-cover" style="height: 450px;">
+   <?php } ?>
     <div class="comments-area-header">
         <?php if ($show_upload): ?>
             <h3 class="title"><?php echo $popup_title; ?></h3>
