@@ -151,8 +151,10 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
     });
 
     $("#main > div > article > section.comments-rating-prep-container.no-print > div.comments-link-container > a").on('click',function (){
-       $("#commentform > div > span").addClass('is-focused')
+        //$("#commentform > div > span").addClass('is-focused')
         $("#commentform > div > span > input").focus()
+        $("#comment").trigger("focus")
+        $("#comment").click()
     })
 
     if ($('.content > .details-container .post-ratings > img').length) {
