@@ -236,7 +236,9 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
 jQuery(document).ready(($) => {
 
     if($('.slider-nav .video-image').length){
-        $('.slider-nav .video-image').attr('src', videoThumbnail);
+        if ( $('.slider-nav .video-image').attr('src') === '' ){
+            $('.slider-nav .video-image').attr('src', videoThumbnail);
+        }
         if($('.primary-image.print').length && $('.primary-image.print').data('is-video') == '1'){
             $('.primary-image.print').attr('src', videoThumbnail);
         }

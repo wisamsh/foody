@@ -846,7 +846,11 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
                         $slider_nav = $main_image_element . $slider;
                     }
                     $slider = $video_element . $slider;
-                    $slider_nav = "<div class='item'><img src='" . $GLOBALS['images_dir'] . 'icons/play.svg' . "' alt='play-icon' class='play-btn'><img class='video-image' src='' alt='תמונת וידאו' /></div>" . $slider_nav;
+                    if( isset(get_field('video')['replace_image_youtube']['url']) ) {
+                        $slider_nav = "<div class='item'><img src='" . $GLOBALS['images_dir'] . 'icons/play.svg' . "' alt='play-icon' class='play-btn'><img class='video-image' src='" . get_field('video')['replace_image_youtube']['url'] . "' alt='תמונת וידאו' /></div>" . $slider_nav;
+                    } else {
+                        $slider_nav = "<div class='item'><img src='" . $GLOBALS['images_dir'] . 'icons/play.svg' . "' alt='play-icon' class='play-btn'><img class='video-image' src='' alt='תמונת וידאו' /></div>" . $slider_nav;
+                    }
                 }
 
                 if($counter <= 3) {
