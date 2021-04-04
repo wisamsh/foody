@@ -52,10 +52,10 @@ class FoodyTeam {
                         'compare' => '='
                     )
                 ),
-//                'orderby'  => 'meta_value_num',
-//                'meta_key' => 'menu_order',
-//                'order'    => 'ASC',
-//                'number'   => $num_of_authors
+                'orderby'  => 'meta_value_num',
+                'meta_key' => 'menu_order',
+                'order'    => 'ASC',
+                'number'   => $num_of_authors
             );
         }
 		else{
@@ -69,10 +69,10 @@ class FoodyTeam {
                         'compare' => '!='
                     )
                 ),
-//                'orderby'  => 'meta_value_num',
-//                'meta_key' => 'menu_order',
-//                'order'    => 'ASC',
-//                'number'   => $num_of_authors
+                'orderby'  => 'meta_value_num',
+                'meta_key' => 'menu_order',
+                'order'    => 'ASC',
+                'number'   => $num_of_authors
             );
         }
 
