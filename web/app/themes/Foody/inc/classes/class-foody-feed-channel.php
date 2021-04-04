@@ -37,6 +37,17 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
 	public function the_details() {
 		bootstrap_breadcrumb();
 		the_title( '<h1 class="title">', '</h1>' );
+
+        if( !empty(get_field('blocks', $this->id)[0]['items']) ) {
+            if ( count(get_field( 'blocks', $this->id )) <=1 ) {
+                // mobile filter
+                foody_get_template_part( get_template_directory() . '/template-parts/common/mobile-feed-filter.php', [
+                    'sidebar' => array( $this, 'sidebar' ),
+                    'wrap'    => true
+                ] );
+            }
+        }
+
 		if ( foody_is_registration_open() && ! empty( get_option( 'foody_show_followers_count_views' ) ) ) {
 			echo '<span class="followers-count">' . $this->get_followers_count() . '</span>';
 		}
@@ -114,9 +125,15 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
 
 
 	public function the_sidebar_content( $args = array() ) {
-		if ( get_field( 'hide_widgets', $this->id ) === false ) {
-			parent::the_sidebar_content( $args );
-		}
+	    if( !empty(get_field('blocks', $this->id)[0]['items']) ) {
+            if ( count(get_field( 'blocks', $this->id )) <=1 ) { ?>
+                <section class="sidebar-section foody-search-filter">
+                    <?php
+                    $foody_query = SidebarFilter::get_instance();
+                    $foody_query->the_filter();
+                    ?> </section>
+            <?php }
+        }
 	}
 
 	function topic_image($size = 96) {
