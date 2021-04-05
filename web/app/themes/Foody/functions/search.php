@@ -230,7 +230,7 @@ function foody_filters_acf_load_value($value)
 
         $screen = get_current_screen();
 
-        if ( !empty($screen) ){
+//        if ( !empty($screen) ){
             $relevant_screens = [
                 'edit-category',
                 'foody_channel',
@@ -247,7 +247,7 @@ function foody_filters_acf_load_value($value)
                 $value = $global_search_settings;
                 add_filter('acf/load_value/name=filters_list', 'foody_filters_acf_load_value', 1000, 1);
             }
-        }
+//        }
     }
 
     return $value;
