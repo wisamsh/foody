@@ -208,7 +208,7 @@ function foody_feed_ajax_filter()
             $foody_query = Foody_Query::get_instance();
             $query_args = $foody_query->get_query($context, $context_args);
             $wp_args = array_merge($wp_args, $query_args);
-            
+
             $foody_search = new Foody_Search($context, $context_args);
 
             if($wp_args && $wp_args['post__in']){
@@ -220,13 +220,6 @@ function foody_feed_ajax_filter()
             $query = $foody_search->query($filter, $wp_args);
 
             $posts = $query['posts'];
-
-            if (!empty($pinned_posts)) {
-                $pinned_posts = array_reverse($pinned_posts);
-                foreach ($pinned_posts as $post) {
-                    array_unshift($posts, $post['recipe']);
-                }
-            }
 
             $posts = array_map('Foody_Post::create', $posts);
 
