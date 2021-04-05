@@ -113,18 +113,20 @@ jQuery(document).ready(function ($) {
         sessionStorage.setItem('banner-popup-closed','true');
         if ($(window).width() < 768 ){
             $('.filter-mobile .filter-btn').css('bottom','22px');
+            $('.mobile-filter .show-recipes-container button').css('top','0px');
         }
     });
 
     if (sessionStorage.getItem('banner-popup-closed')==='true'){
         $('.filter-mobile .filter-btn').css('bottom','22px');
+        $('.mobile-filter .show-recipes-container button').css('top','0px');
     }
 
     $('#popup-banner').on('shown.bs.modal', function() {
         $(document).off('focusin.modal');
     });
 
-    
+
     if($('#newsletter-modal').length) {
         $(window).on('scroll', function () {
             timeIdle = 0;
