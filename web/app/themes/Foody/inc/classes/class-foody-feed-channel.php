@@ -37,14 +37,15 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
 	public function the_details() {
 		bootstrap_breadcrumb();
 		the_title( '<h1 class="title">', '</h1>' );
-
-        if( !empty(get_field('blocks', $this->id)[0]['items']) ) {
-            if ( count(get_field( 'blocks', $this->id )) <=1 ) {
-                // mobile filter
-                foody_get_template_part( get_template_directory() . '/template-parts/common/mobile-feed-filter.php', [
-                    'sidebar' => array( $this, 'sidebar' ),
-                    'wrap'    => true
-                ] );
+		if (isset($this->id)){
+            if( !empty(get_field('blocks', $this->id)[0]['items']) ) {
+                if ( count(get_field( 'blocks', $this->id )) <=1 ) {
+                    // mobile filter
+                    foody_get_template_part( get_template_directory() . '/template-parts/common/mobile-feed-filter.php', [
+                        'sidebar' => array( $this, 'sidebar' ),
+                        'wrap'    => true
+                    ] );
+                }
             }
         }
 
@@ -125,14 +126,16 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
 
 
 	public function the_sidebar_content( $args = array() ) {
-	    if( !empty(get_field('blocks', $this->id)[0]['items']) ) {
-            if ( count(get_field( 'blocks', $this->id )) <=1 ) { ?>
-                <section class="sidebar-section foody-search-filter">
-                    <?php
-                    $foody_query = SidebarFilter::get_instance();
-                    $foody_query->the_filter();
-                    ?> </section>
-            <?php }
+	    if( isset($this->id) ){
+            if( !empty(get_field('blocks', $this->id)[0]['items']) ) {
+                if ( count(get_field( 'blocks', $this->id )) <=1 ) { ?>
+                    <section class="sidebar-section foody-search-filter">
+                        <?php
+                        $foody_query = SidebarFilter::get_instance();
+                        $foody_query->the_filter();
+                        ?> </section>
+                <?php }
+            }
         }
 	}
 
