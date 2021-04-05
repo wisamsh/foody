@@ -181,7 +181,7 @@ class SidebarFilter {
 
 
 	public static function parse_search_args_array( $lists ) {
-//        if( !empty($lists) ){
+        if( !empty($lists) ){
             $lists = array_map( 'SidebarFilter::parse_search_args', $lists );
             $types = [];
             foreach ( $lists as $list ) {
@@ -191,7 +191,7 @@ class SidebarFilter {
             }
 
             return $types;
-//        }
+        }
 
 	}
 
