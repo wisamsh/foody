@@ -26,9 +26,6 @@ class FoodyCommercialRulesOrdering_Plugin {
 		if ( ! is_admin() ) {
 			return false;
 		}
-        if ( !function_exists( 'get_current_screen' ) ) {
-            require_once ABSPATH . '/wp-admin/includes/screen.php';
-        }
         $screen = get_current_screen();
 		if ( empty( $screen ) || ! empty( $screen ) && $screen->id !== 'edit-foody_comm_rule' ) {
 			return false;
