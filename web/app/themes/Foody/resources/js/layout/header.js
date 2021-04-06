@@ -109,6 +109,11 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    if ( !$('#popup-banner').length ) {
+        $('.filter-mobile .filter-btn').css('bottom','22px');
+        $('.mobile-filter .show-recipes-container button').css('top','0px');
+    }
+
     $('footer #popup-banner .close').on('click',function () {
         sessionStorage.setItem('banner-popup-closed','true');
         if ($(window).width() < 768 ){
