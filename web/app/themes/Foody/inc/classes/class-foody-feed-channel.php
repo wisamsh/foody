@@ -39,12 +39,26 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
 		the_title( '<h1 class="title">', '</h1>' );
 		if (isset($this->id)){
             if( !empty(get_field('blocks', $this->id)[0]['items']) ) {
-                if ( count(get_field( 'blocks', $this->id )) <=1 ) {
-                    // mobile filter
-                    foody_get_template_part( get_template_directory() . '/template-parts/common/mobile-feed-filter.php', [
-                        'sidebar' => array( $this, 'sidebar' ),
-                        'wrap'    => true
-                    ] );
+                $blocks = get_field( 'blocks', $this->id );
+                $count_manual=0;
+                $count_dynamic=0;
+                foreach ($blocks as $block) {
+                    if ($block['type'] === 'manual' ) {
+                        $count_manual ++;
+                    }
+                    if ($block['type'] === 'dynamic'){
+                        $count_dynamic ++;
+                    }
+                }
+                if ( $count_manual === 1 ) {
+                    if ( $count_dynamic === 0){
+                        // mobile filter
+                        foody_get_template_part( get_template_directory() . '/template-parts/common/mobile-feed-filter.php', [
+                            'sidebar' => array( $this, 'sidebar' ),
+                            'wrap'    => true
+                        ] );
+                    }
+
                 }
             }
         }
@@ -128,13 +142,28 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
 	public function the_sidebar_content( $args = array() ) {
 	    if( isset($this->id) ){
             if( !empty(get_field('blocks', $this->id)[0]['items']) ) {
-                if ( count(get_field( 'blocks', $this->id )) <=1 ) { ?>
+                $blocks = get_field( 'blocks', $this->id );
+                $count_manual=0;
+                $count_dynamic=0;
+                foreach ($blocks as $block) {
+                    if ($block['type'] === 'manual' ) {
+                        $count_manual ++;
+                    }
+                    if ($block['type'] === 'dynamic'){
+                        $count_dynamic ++;
+                    }
+                }
+                if ( $count_manual === 1 ) {
+                    if ( $count_dynamic === 0 ){
+
+                    ?>
                     <section class="sidebar-section foody-search-filter">
                         <?php
                         $foody_query = SidebarFilter::get_instance();
                         $foody_query->the_filter();
                         ?> </section>
                 <?php }
+                }
             }
         }
 	}
