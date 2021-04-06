@@ -162,7 +162,12 @@ class SidebarFilter {
             } else {
                if ( is_category() ) {
                    $referer= $_GET['referer'];
-                   $filters_list = get_field( 'filters_list', $referer );
+                   if ( !empty(get_field( 'filters_list', $referer ))) {
+                       $filters_list = get_field( 'filters_list', $referer );
+                   } else {
+                       $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                   }
+
                } else {
                    $filters_list = get_field( 'filters_list', $this->filters_post_id );
                }
