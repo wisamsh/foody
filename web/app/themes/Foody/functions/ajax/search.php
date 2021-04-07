@@ -203,7 +203,14 @@ function foody_feed_ajax_filter()
     // The ID comes from -> $context_arg[0]
     if( isset($context_args[0]) ){
         $wp_args = [];
-        $all_recipes = get_field('blocks',$context_args[0])[0]['items'];
+
+        $all_recipes = get_field('blocks',$context_args[0]);
+        foreach ($all_recipes as $recipe){
+            if ($recipe['type'] === 'manual'){
+                $all_recipes=$recipe['items'];
+                break;
+            }
+        }
         if ( !empty( $all_recipes ) ) {
             $foody_query = Foody_Query::get_instance();
             $query_args = $foody_query->get_query($context, $context_args);
