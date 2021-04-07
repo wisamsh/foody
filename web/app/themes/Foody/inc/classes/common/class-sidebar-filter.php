@@ -161,12 +161,47 @@ class SidebarFilter {
 
             } else {
                if ( is_category() ) {
-                   $referer= $_GET['referer'];
-                   if ( !empty(get_field( 'filters_list', $referer ))) {
-                       $filters_list = get_field( 'filters_list', $referer );
+                   if ( ! empty($_GET['referer']) ) {
+                       $referer= $_GET['referer'];
+                       $blocks = get_field( 'blocks', $referer );
+                       $count_manual=0;
+                       $count_dynamic=0;
+                       foreach ($blocks as $block) {
+                           if ($block['type'] === 'manual' ) {
+                               $count_manual ++;
+                           }
+                           if ($block['type'] === 'dynamic'){
+                               $count_dynamic ++;
+                           }
+                       }
+                       if ( $count_manual === 1 ) {
+                           if ( $count_dynamic === 0 and !empty(get_field( 'filters_list', $referer )) ){
+                               $filters_list = get_field( 'filters_list', $referer );
+                           } else {
+                               $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                           }
+                       }
+                       else {
+                           $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                       }
                    } else {
-                       $filters_list = get_field( 'filters_list', $this->filters_post_id );
+
+                        global $wp_query;
+                        if ( !empty (get_field('recipe_channel',$wp_query->get_queried_object() )) ){
+                            $recipe_channel= get_field('recipe_channel',$wp_query->get_queried_object() );
+                            if ( !empty (get_field( 'filters_list', $recipe_channel ))){
+                                $filters_list = get_field( 'filters_list', $recipe_channel );
+                            } else {
+                                $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                            }
+
+                        }
+                        else {
+                            $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                        }
+
                    }
+
 
                } else {
                    $filters_list = get_field( 'filters_list', $this->filters_post_id );
