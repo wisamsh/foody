@@ -1081,8 +1081,7 @@ class Foody_Recipe extends Foody_Post
             $query_args = array(
                 'post_type' => 'foody_recipe',
                 'posts_per_page' => (4 - $counter),
-                'order' => 'ASC',
-                'orderby' => 'rand',
+                'order' => 'DESC',
                 'post__not_in' => $not_in_random,
                 'meta_query' => [
                     [
