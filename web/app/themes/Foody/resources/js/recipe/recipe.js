@@ -379,6 +379,12 @@ jQuery(document).ready(($) => {
         $('.slider.recipe-content-steps .arrow-prev, .slider.recipe-content-steps .arrow-next').on('click', changeStyleOfArrows);
     }
 
+    $('.amount-container #number-of-dishes').on("keypress", function(event){
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            event.target.blur()
+        }
+    })
 
 
     let selectorsArr = {'.recipe-categories':'cat-read-more', '.recipe-accessories':'acc-read-more', '.recipe-techniques':'teq-read-more', '.recipe-tags': 'tag-read-more'};
