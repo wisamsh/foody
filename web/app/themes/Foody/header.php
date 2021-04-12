@@ -274,17 +274,37 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                 <div class="container-fluid foody-navbar-container">
                     <div class="site-branding">
                         <div class="logo-container-mobile <?php $header->the_logo_mode() ?> d-block d-lg-none">
-                            <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
-                                    data-target="#foody-navbar-collapse"
-                                    aria-controls="foody-navbar-collapse" aria-expanded="false"
-                                    aria-label="Toggle navigation">
-                                <!--                                <img class="foody-logo-text" src="-->
-                                <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
-                                <div class="foody-logo-text"></div>
-                                <div class="foody-logo-hamburger hidden"></div>
-                                <div class="foody-logo-close hidden"></div>
-                            </button>
+                            <?php
+                            if (is_main_site()) { ?>
+                                <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
+                                        data-target="#foody-navbar-collapse"
+                                        aria-controls="foody-navbar-collapse" aria-expanded="false"
+                                        aria-label="Toggle navigation">
+                                    <!--                                <img class="foody-logo-text" src="-->
+                                    <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
+                                    <div class="foody-logo-text"></div>
+                                    <div class="foody-logo-hamburger hidden"></div>
+                                    <div class="foody-logo-close hidden"></div>
+                                </button>
+                           <?php } else {
+                                $logo = get_theme_mod( 'custom_logo' );
+                                $image = wp_get_attachment_image_src( $logo , 'full' );
+                                $image_url = $image[0];
+                                ?>
+
+                                <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
+                                        data-target="#foody-navbar-collapse"
+                                        aria-controls="foody-navbar-collapse" aria-expanded="false"
+                                        aria-label="Toggle navigation">
+                                    <!--                                <img class="foody-logo-text" src="-->
+                                    <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
+                                    <div class="foody-logo-text-custom" style="background-image: url( <?php echo  $image_url  ?>)"></div>
+                                    <div class="foody-logo-hamburger hidden"></div>
+                                    <div class="foody-logo-close hidden"></div>
+                                </button>
+                         <?php    } ?>
                         </div>
+
 
                     </div>
 
@@ -328,23 +348,37 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                             <!--                        <img src="-->
                             <?php //echo $GLOBALS['images_dir'] . 'top-mobile-menu.png' ?><!--" class="top-mobile-menu">-->
                             <div class="signup-purchase-container">
-                                <a class="homepage-link" href="<?php echo get_home_url(); ?>">
-                                    <div class="up-arrows">»</div>
-                                    <?php echo __('לעמוד הבית של ')?>
-                                    <span class="foody-name">FOODY</span>
-                                </a>
-                                <?php if (!is_user_logged_in()) { ?>
-                                    <a class="signup-login-link"
-                                       href="<?php echo get_permalink(get_page_by_path('התחברות')); ?>"><span class="singup-text">הרשמו ל-</span><span class="foody-name">FOODY</span>
-                                        <div class="up-arrows">»</div></a>
-                                <?php } else {
+                                <?php if ( is_main_site() ) { ?>
+                                    <a class="homepage-link" href="<?php echo get_home_url(); ?>">
+                                        <div class="up-arrows">»</div>
+                                        <?php echo __('לעמוד הבית של ')?>
+                                        <span class="foody-name">FOODY</span>
+                                    </a>
+                                    <?php if (!is_user_logged_in()) { ?>
+                                        <a class="signup-login-link"
+                                           href="<?php echo get_permalink(get_page_by_path('התחברות')); ?>"><span class="singup-text">הרשמו ל-</span><span class="foody-name">FOODY</span>
+                                            <div class="up-arrows">»</div></a>
+                                    <?php } else {
 
-                                    echo "<div class='hello-user' >" . __('שלום') . " " . $user->user->first_name . "</div>";
-                                }
+                                        echo "<div class='hello-user' >" . __('שלום') . " " . $user->user->first_name . "</div>";
+                                    }
+                                    if (is_single() && method_exists($recipe, 'the_purchase_buttons')) {
+                                        $recipe->the_purchase_buttons();
+                                    }
+                                    ?>
+
+                              <?php } else { ?>
+                                    <a class="homepage-link" href="<?php echo get_home_url(); ?>">
+                                        <div class="up-arrows">»</div>
+                                        <?php echo __('לעמוד הבית של ')?>
+                                        <span class="foody-name"><?php echo get_bloginfo('name'); ?></span>
+                                    </a>
+                               <?php }
                                 if (is_single() && method_exists($recipe, 'the_purchase_buttons')) {
                                     $recipe->the_purchase_buttons();
                                 }
                                 ?>
+
                             </div>
                         </div>
                         <?php
