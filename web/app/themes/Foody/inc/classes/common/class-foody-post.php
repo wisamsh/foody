@@ -448,7 +448,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         }
 
         $posts = array_filter($posts, function ($post) {
-            return $post instanceof WP_Post && $post->ping_status === 'publish';
+            return $post instanceof WP_Post && $post->post_status === 'publish';
         });
 
         $items_to_fetch = self::$MAX__RELATED_ITEMS - count($posts);
