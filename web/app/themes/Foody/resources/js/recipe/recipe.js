@@ -346,6 +346,14 @@ jQuery(document).ready(($) => {
             $('.overview-nutrients .recipe-nutrition').toggleClass('open');
         });
 
+
+        $('.overview-lists-container .overview-nutrients .title').on('click',function (){
+            if ( $('.overview-nutrients .recipe-nutrition').hasClass('open') ){
+                $('.overview-nutrients .recipe-nutrition').toggleClass('open');
+                $('.overview-nutrients .value').toggleClass('open');
+            }
+        })
+
         $('.overview-nutrients .close-btn').on('click', function () {
             $('.overview-nutrients .recipe-nutrition').toggleClass('open');
             $('.overview-nutrients .value').toggleClass('open');
