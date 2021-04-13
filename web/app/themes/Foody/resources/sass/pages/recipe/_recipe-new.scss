@@ -234,6 +234,11 @@ $content-width: 95%;
       .featured-content-container {
         position: relative;
         visibility: hidden;
+        height: 475px;
+
+        .video-container {
+          height: 100%;
+        }
       }
 
       .slider-for {
@@ -1414,7 +1419,7 @@ $content-width: 95%;
               margin-top: 5px;
               line-height: 1;
               text-align: center;
-              font-family: Assistant;
+              font-family: Afek;
               font-size: 15px;
             }
 
@@ -2007,7 +2012,6 @@ $content-width: 95%;
           height: auto;
           //position: initial;
           padding-top: 0;
-
           .wp-post-image {
           }
 
@@ -2494,8 +2498,8 @@ $content-width: 95%;
         .comments-link-container {
           border-radius: 4.3px;
           border: 2px solid #fef5f6;
-          padding: 0.5% 3%;
-          width: 29%;
+          padding: 1.5% 1.5%;
+          width: 25%;
           text-align: center;
 
           .preparations-share-title,
@@ -2526,14 +2530,33 @@ $content-width: 95%;
         .rating {
           border-radius: 4.3px;
           border: 2px solid #fef5f6;
-          padding: 0;
-          width: 39%;
+          padding: 1.5% 0% !important;
+          width: 45%;
           text-align: center;
           font-weight: bold;
           font-family: 'AfekBold';
 
           #rating-loader {
             right:0;
+          }
+
+          .rating-stars-container {
+            margin-top: 2%;
+            .empty-star {
+              width:auto !important;
+              height: 33px;
+              margin: 0 0.4%;
+            }
+          }
+
+          .full-star {
+            height: 33px;
+            margin: 0 0.5%;
+          }
+
+          .star {
+            height: 33px !important;
+            margin: 0 0.5%;
           }
         }
       }
@@ -3447,7 +3470,7 @@ $content-width: 95%;
                 margin-top: 5px;
                 line-height: 1;
                 text-align: center;
-                font-family: Assistant;
+                font-family: Afek;
                 font-size: 14px;
               }
             }

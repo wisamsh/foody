@@ -288,7 +288,6 @@ jQuery(document).ready(($) => {
     });
 
     $('.slider.slider-nav .slick-slide').on('click', function () {
-        debugger
         let currentNavItem = $('.slider.slider-nav .slick-current').find('.play-btn');
         if(!currentNavItem.length){
             player.pauseVideo();
