@@ -162,7 +162,7 @@
       "type": "package",
       "package": {
         "name": "mega-menu/quadmenu",
-        "version": "1.7.3",
+        "version": "2.1.0",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
@@ -319,7 +319,8 @@
     "php": ">=5.6",
     "composer/installers": "1.6.0",
     "vlucas/phpdotenv": "^2.0.1",
-    "johnpbloch/wordpress": "5.6",
+    "johnpbloch/wordpress": "5.7.1",
+    "johnpbloch/wordpress-core": "5.7.1",
     "oscarotero/env": "^1.1.0",
     "roots/wp-password-bcrypt": "1.0.0",
     "roots/multisite-url-fixer": "^1.1",
@@ -334,7 +335,7 @@
     "takayuki-miyoshi/contact-form-7": "^5.3",
     "arshid/contact-form-cfdb7": "1.2.4.1",
     "lester-chan/wp-postratings": "1.86.1",
-    "mega-menu/quadmenu": "^1.7",
+    "mega-menu/quadmenu": "^2.1",
     "miljar/php-exif": "0.6.4",
     "delicious-brains/amazon-s3-and-cloudfront": "^2.0",
     "zaus-atlanticbt-spkane/forms-3rdparty-integration": "^1.7",
