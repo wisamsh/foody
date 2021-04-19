@@ -236,8 +236,8 @@ $content-width: 95%;
         visibility: hidden;
         height: auto;
 
-        .video-container {
-          height: 100%;
+        iframe.video-container {
+          height: 475px;
         }
       }
 

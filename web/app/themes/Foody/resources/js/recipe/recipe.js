@@ -15,7 +15,7 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
     window.scroller();
 
     // let $video = $('.featured-content-container #video');
-    let $video = !foodyGlobals.isMobile ? $('.featured-content-container #video') : $('.featured-content-container .slider-for #video');
+    let $video =  $('.featured-content-container #video') ;
     let videoStopped = false;
 
     if ($video && $video.length) {
