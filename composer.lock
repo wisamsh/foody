@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b098c6f81a4d33339c5397325b09ede",
+    "content-hash": "8342f69ebb6074107f5f422c052d761a",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -26,10 +26,10 @@
         },
         {
             "name": "automattic/akismet-anti-spam",
-            "version": "4.1.5",
+            "version": "4.1.9",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/akismet.4.1.5.zip"
+                "url": "https://downloads.wordpress.org/plugin/akismet.4.1.9.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -164,10 +164,10 @@
         },
         {
             "name": "delicious-brains/amazon-s3-and-cloudfront",
-            "version": "2.0.1",
+            "version": "2.5.3",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.2.0.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.2.5.3.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -218,10 +218,10 @@
         },
         {
             "name": "joe-dolson/wp-accessibility",
-            "version": "1.6.4",
+            "version": "1.7.7",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.6.4.zip"
+                "url": "https://downloads.wordpress.org/plugin/wp-accessibility.1.7.7.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -726,10 +726,10 @@
         },
         {
             "name": "onesignal/onesignal",
-            "version": "1.17.9",
+            "version": "2.2.1",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/onesignal-free-web-push-notifications.1.17.9.zip"
+                "url": "https://downloads.wordpress.org/plugin/onesignal-free-web-push-notifications.2.2.1.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -1100,10 +1100,10 @@
         },
         {
             "name": "smash-baloon/instagram-feed",
-            "version": "2.6.2",
+            "version": "2.9",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/instagram-feed.2.6.2.zip"
+                "url": "https://downloads.wordpress.org/plugin/instagram-feed.2.9.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -1251,10 +1251,10 @@
         },
         {
             "name": "takayuki-miyoshi/contact-form-7",
-            "version": "5.3.2",
+            "version": "5.4",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/contact-form-7.5.3.2.zip"
+                "url": "https://downloads.wordpress.org/plugin/contact-form-7.5.4.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -1322,10 +1322,10 @@
         },
         {
             "name": "w3-total-cache",
-            "version": "2.0.1",
+            "version": "2.1.2",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/w3-total-cache.2.0.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/w3-total-cache.2.1.2.zip"
             },
             "type": "wordpress-plugin"
         },
