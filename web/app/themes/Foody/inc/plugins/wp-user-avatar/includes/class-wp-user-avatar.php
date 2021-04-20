@@ -98,7 +98,7 @@ class WP_User_Avatar {
    * @uses wp_enqueue_script()
    * @uses wp_enqueue_media()
    * @uses wp_enqueue_style()
-   * @uses wp_localize_script()
+   * @uses wp_add_inline_script()
    * @uses wp_max_upload_size()
    * @uses wpua_get_avatar_original()
    * @uses wpua_is_author_or_above()
@@ -124,14 +124,14 @@ class WP_User_Avatar {
       wp_enqueue_script('jquery-ui-slider');
       wp_enqueue_style('wp-user-avatar-jqueryui', WPUA_URL.'css/jquery.ui.slider.css', "", null);
       // Default avatar
-      wp_localize_script('wp-user-avatar', 'wpua_custom', array('avatar_thumb' => $mustache_admin));
+        wp_add_inline_script('wp-user-avatar', 'wpua_custom', array('avatar_thumb' => $mustache_admin));
       // Settings control
       wp_enqueue_script('wp-user-avatar-admin', WPUA_URL.'js/wp-user-avatar-admin.js', array('wp-user-avatar'), WPUA_VERSION, true);
-      wp_localize_script('wp-user-avatar-admin', 'wpua_admin', array('upload_size_limit' => $wpua_upload_size_limit, 'max_upload_size' => wp_max_upload_size()));
+        wp_add_inline_script('wp-user-avatar-admin', 'wpua_admin', array('upload_size_limit' => $wpua_upload_size_limit, 'max_upload_size' => wp_max_upload_size()));
     } else {
       // Original user avatar
       $avatar_medium_src = (bool) $show_avatars == 1 ? $wpua_functions->wpua_get_avatar_original($user->user_email, 'medium') : includes_url().'images/blank.gif';
-      wp_localize_script('wp-user-avatar', 'wpua_custom', array('avatar_thumb' => $avatar_medium_src));
+        wp_add_inline_script('wp-user-avatar', 'wpua_custom', array('avatar_thumb' => $avatar_medium_src));
     }
   }
 
