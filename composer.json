@@ -313,7 +313,7 @@
           "url": "https://downloads.wordpress.org/plugin/akismet.4.1.5.zip"
         }
       }
-    } 
+    }
   ],
   "require": {
     "php": ">=5.6",
