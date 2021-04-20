@@ -1018,3 +1018,5 @@ function console_log($output, $with_script_tags = true) {
     }
     echo $js_code;
 }
+
+add_filter('doing_it_wrong_trigger_error', function () {return false;}, 10, 0);
