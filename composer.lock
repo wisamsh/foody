@@ -4,23 +4,23 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8342f69ebb6074107f5f422c052d761a",
+    "content-hash": "4b7562ecd510883b764e4fff8faeea1f",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
-            "version": "4.7.11",
+            "version": "5.6.0",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/tinymce-advanced.4.7.11.zip"
+                "url": "https://downloads.wordpress.org/plugin/tinymce-advanced.5.6.0.zip"
             },
             "type": "wordpress-plugin"
         },
         {
             "name": "arshid/contact-form-cfdb7",
-            "version": "1.2.4.1",
+            "version": "1.2.5.9",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/contact-form-cfdb7.1.2.4.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/contact-form-cfdb7.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -155,10 +155,10 @@
         },
         {
             "name": "delicious-brains-inc/wp-ses",
-            "version": "0.8.2",
+            "version": "1.4.5",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-ses.zip"
+                "url": "https://downloads.wordpress.org/plugin/wp-ses.1.4.5.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -173,7 +173,7 @@
         },
         {
             "name": "elliotcondon/advanced-custom-fields-pro",
-            "version": "5.6.10",
+            "version": "5.9.5",
             "dist": {
                 "type": "zip",
                 "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9MTMxNzg3fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTIzIDEyOjE1OjI5"
@@ -182,10 +182,10 @@
         },
         {
             "name": "enrico-battocchi/duplicate-post",
-            "version": "3.2.4",
+            "version": "4.1.2",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/duplicate-post.3.2.4.zip"
+                "url": "https://downloads.wordpress.org/plugin/duplicate-post.4.1.2.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -200,10 +200,10 @@
         },
         {
             "name": "exactly-www/ewww-image-optimizer",
-            "version": "4.8.0",
+            "version": "6.1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/ewww-image-optimizer.4.8.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/ewww-image-optimizer.6.1.1.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -357,19 +357,19 @@
         },
         {
             "name": "justinticktock/network-subsite-user-registration",
-            "version": "2.5",
+            "version": "3.4",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/network-subsite-user-registration.2.5.zip"
+                "url": "https://downloads.wordpress.org/plugin/network-subsite-user-registration.3.4.zip"
             },
             "type": "wordpress-plugin"
         },
         {
             "name": "lester-chan/wp-postratings",
-            "version": "1.86.1",
+            "version": "1.89",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-postratings.1.86.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/wp-postratings.1.89.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -1331,10 +1331,10 @@
         },
         {
             "name": "wordpressdotorg/wordpress-importer",
-            "version": "0.6.4",
+            "version": "0.7",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordpress-importer.0.6.4.zip"
+                "url": "https://downloads.wordpress.org/plugin/wordpress-importer.0.7.zip"
             },
             "type": "wordpress-plugin"
         },
@@ -1392,10 +1392,10 @@
         },
         {
             "name": "yoast/wordpress-seo",
-            "version": "13.0",
+            "version": "16.1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.13.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.16.1.1.zip"
             },
             "type": "wordpress-plugin"
         },
