@@ -748,7 +748,7 @@ function categoriesHits(publishers, feedPublisher, categoriesList) {
     }
     foodyGlobals['post']['categories'].forEach((category, index, array) => {
         if (category.name != primaryCategory) {
-            if (typeof (categoriesList[category.name]) != 'undefined') {
+             if (typeof (category) != 'undefined') {
                 if (feedPublisher == "") {
                     eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', publishers.join(', '), get_recipe_order_location(), category.name, purchaseButtonsStatus, ingredientsPromotion);
                 } else {
