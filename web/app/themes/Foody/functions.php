@@ -1018,3 +1018,10 @@ function console_log($output, $with_script_tags = true) {
     }
     echo $js_code;
 }
+
+if (defined('WP_ENV') && WP_ENV !== 'local') {
+
+    add_filter('doing_it_wrong_trigger_error', function () {
+        return false;
+    }, 10, 0);
+}
