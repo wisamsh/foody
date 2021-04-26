@@ -810,7 +810,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $images_for_slider = get_field('images_gallery_repeater', $this->id);
             $counter = 0;
 
-            if ($main_image_element && $video_element) {
+            if ($main_image_element ) {
                 $show_slider = true;
                 $counter = 2;
             }
@@ -855,10 +855,19 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
                 if($counter <= 3) {
                     $two_images = $counter == 2 ? 'two-images' : '';
-                    $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between no-arrows '. $two_images .'">' . $slider_nav . '</div>';
+                    if ( empty( $slider_nav ) ){
+                        $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between no-arrows '. $two_images .'">' . $slider . '</div>';
+                    } else {
+                        $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between no-arrows '. $two_images .'">' . $slider_nav . '</div>';
+                    }
                 }
                 else{
-                    $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between">' . $slider_nav . '</div>';
+                    if ( empty($slider_nav) ){
+                        $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between">' . $slider . '</div>';
+                    } else {
+                        $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between">' . $slider_nav . '</div>';
+                    }
+
                 }
 
                 if ($show_slider) {
