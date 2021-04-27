@@ -59,7 +59,7 @@ $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rat
     <?php echo $social_icons ?>
     <?php if (wp_is_mobile() && is_single() && in_array(get_post_type(), ['foody_recipe', 'post'])): ?>
         <section class="d-block d-lg-none">
-            <?php Foody_Recipe::ratings() ?>
+            <?php // Foody_Recipe::ratings() ?>
         </section>
     <?php endif; ?>
 

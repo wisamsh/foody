@@ -54,7 +54,7 @@ if ( ! foody_is_registration_open() ) {
 				?>
 				<?php if ( ! wp_is_mobile() ): ?>
                     <section class="rating-container d-none d-lg-block">
-						<?php Foody_Recipe::ratings() ?>
+						<?php // Foody_Recipe::ratings() ?>
                     </section>
 				<?php endif; ?>
             </section>
