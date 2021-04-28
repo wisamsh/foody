@@ -122,6 +122,7 @@ class FoodyTeam {
 						$order ++;
 					}
 					$content .= '</div>';
+
 				}
 				break;
 

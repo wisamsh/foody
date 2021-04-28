@@ -267,6 +267,17 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
         }
       }
 
+      #accordion-foody-filter {
+        .md-checkbox {
+          label {
+            font-family: Assistant;
+            font-size: 20px;
+            display: table-cell;
+            padding-right: 1em;
+          }
+        }
+      }
+
     }
   }
 

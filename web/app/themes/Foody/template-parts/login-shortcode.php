@@ -24,9 +24,7 @@ $foody_lost_password = isset( $_REQUEST['checkemail'] ) && $_REQUEST['checkemail
     <span>
     משתמשים חדשים?
 </span>
-
     <a class="go-to-register" href="<?php echo get_permalink( get_page_by_path( 'הרשמה' ) ) ?>">הירשמו</a>
-
 </p>
 <?php
 echo do_shortcode( '[wordpress_social_login]' );
@@ -119,6 +117,7 @@ echo do_shortcode( '[wordpress_social_login]' );
                 </div>
 
                 <?php
+
                 $queried_object = get_queried_object();
                 // redirect to category/tag page
                 if(is_category() || is_tag()){
@@ -140,8 +139,15 @@ echo do_shortcode( '[wordpress_social_login]' );
                 if ( strpos( $redirect_to, 'התחברות' ) !== false ) {
                     $redirect_to = home_url();
                 }
-                ?>
 
+                if($redirect_to === home_url() || $redirect_to === home_url().'/' || $redirect_to === rtrim(home_url(), '/')){
+                    if(strpos($redirect_to, '?') === false){
+                        $redirect_to = $redirect_to . '?logister_popup=1';
+                    } else {
+                        $redirect_to = $redirect_to . '&logister_popup=1';
+                    }
+                }
+                ?>
                 <input type="hidden" name="redirect_to" value="<?php echo $redirect_to; ?>">
 
             </form>

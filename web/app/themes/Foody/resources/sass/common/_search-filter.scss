@@ -67,7 +67,7 @@ aside {
       font-family: $font__bold;
       font-size: 1rem;
       position: fixed;
-      bottom: 22px;
+      bottom: 100px;
       right: 15px;
       &:active, &:hover, &:focus {
         border: 0;
@@ -108,6 +108,7 @@ aside {
         width: 100%;
         font-size: 32px;
         color: #ffffff;
+        top:-70px;
       }
     }
 

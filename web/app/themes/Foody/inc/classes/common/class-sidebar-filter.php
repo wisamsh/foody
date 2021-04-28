@@ -15,6 +15,7 @@ class SidebarFilter {
 
 	const FILTER_SECTIONS_SELECTOR = 'sections';
 
+    private static $instance;
 	private $engine;
 
 	private $filters_post_id = self::FILTER_OPTIONS_ID;
@@ -25,6 +26,15 @@ class SidebarFilter {
 	public function __construct() {
 		$this->engine = new Handlebars;
 	}
+
+    public static function get_instance()
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new SidebarFilter();
+        }
+
+        return self::$instance;
+    }
 
 
 	public function get_filter() {
@@ -125,7 +135,81 @@ class SidebarFilter {
 			// a list of filtering sections
 			// as configured in Foody Search Options page
 			// in the admin
-			$filters_list = get_field( 'filters_list', $this->filters_post_id );
+
+           if ('foody_feed_channel' === get_post_type()) {
+               $blocks = get_field( 'blocks', get_the_ID() );
+               $count_manual=0;
+               $count_dynamic=0;
+               foreach ($blocks as $block) {
+                   if ($block['type'] === 'manual' ) {
+                       $count_manual ++;
+                   }
+                   if ($block['type'] === 'dynamic'){
+                       $count_dynamic ++;
+                   }
+               }
+                if ( $count_manual = 1  ) {
+                    if ( $count_dynamic === 0 ) {
+                        if ( get_field('filters_list',get_the_ID()) ) {
+                            $filters_list = get_field( 'filters_list', get_the_ID() );
+                        } else {
+                            $filters_list = get_field( 'filters_list',$this->filters_post_id );
+                        }
+                    }
+
+                }
+
+            } else {
+               if ( is_category() ) {
+                   if ( ! empty($_GET['referer']) ) {
+                       $referer= $_GET['referer'];
+                       $blocks = get_field( 'blocks', $referer );
+                       $count_manual=0;
+                       $count_dynamic=0;
+                       foreach ($blocks as $block) {
+                           if ($block['type'] === 'manual' ) {
+                               $count_manual ++;
+                           }
+                           if ($block['type'] === 'dynamic'){
+                               $count_dynamic ++;
+                           }
+                       }
+                       if ( $count_manual === 1 ) {
+                           if ( $count_dynamic === 0 and !empty(get_field( 'filters_list', $referer )) ){
+                               $filters_list = get_field( 'filters_list', $referer );
+                           } else {
+                               $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                           }
+                       }
+                       else {
+                           $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                       }
+                   } else {
+
+                        global $wp_query;
+                        if ( !empty (get_field('recipe_channel',$wp_query->get_queried_object() )) ){
+                            $recipe_channel= get_field('recipe_channel',$wp_query->get_queried_object() );
+                            if ( !empty (get_field( 'filters_list', $recipe_channel ))){
+                                $filters_list = get_field( 'filters_list', $recipe_channel );
+                            } else {
+                                $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                            }
+
+                        }
+                        else {
+                            $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                        }
+
+                   }
+
+
+               } else {
+                   $filters_list = get_field( 'filters_list', $this->filters_post_id );
+               }
+
+
+            }
+
 
 
 			$lists = array_map( function ( $list ) {
@@ -160,17 +244,18 @@ class SidebarFilter {
 
 
 	public static function parse_search_args_array( $lists ) {
+        if( !empty($lists) ){
+            $lists = array_map( 'SidebarFilter::parse_search_args', $lists );
+            $types = [];
+            foreach ( $lists as $list ) {
+                foreach ( $list as $item ) {
+                    $types[] = $item;
+                }
+            }
 
-		$lists = array_map( 'SidebarFilter::parse_search_args', $lists );
-		$types = [];
+            return $types;
+        }
 
-		foreach ( $lists as $list ) {
-			foreach ( $list as $item ) {
-				$types[] = $item;
-			}
-		}
-
-		return $types;
 	}
 
 	/**
@@ -278,3 +363,4 @@ class SidebarFilter {
 	}
 
 }
+
