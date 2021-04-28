@@ -811,7 +811,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             $counter = 0;
 
             if ($main_image_element ) {
-                $show_slider = true;
+                $show_slider = false;
                 $counter = 2;
             }
             else{
