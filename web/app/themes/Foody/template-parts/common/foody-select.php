@@ -23,6 +23,7 @@
 
 
 	?>
+    <label class="choose-pan-title" for="number-of-dishes"> בחרו סוג תבנית: </label>
     <select <?php echo $data_attrs ?> class="foody-select foody-sort col-" title="<?php echo $name ?>"
                                       name="<?php echo $name ?>"
                                       id="<?php echo $id ?>">

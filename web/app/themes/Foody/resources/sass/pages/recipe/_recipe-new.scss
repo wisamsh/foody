@@ -984,10 +984,16 @@ $content-width: 95%;
           flex-direction: row;
           width: 100%;
           margin-top: -20px;
-
+          padding-bottom: 15px;
           label{
             margin: auto 0 auto 2%;
           }
+
+         label.choose-pan-title{
+           padding-top: 26px;
+           font-size: 18px;
+           font-family: 'AfekBold';
+         }
 
           > .amount-container {
             padding-left: 0;
