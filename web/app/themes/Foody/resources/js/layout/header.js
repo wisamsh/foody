@@ -36,6 +36,9 @@ jQuery(document).ready(function ($) {
 
     });
 
+    if (sessionStorage.getItem('banner-popup-closed') === 'true' && $('.filter-mobile .filter-btn').length) {
+        $('.filter-mobile .filter-btn').css('bottom','22px')
+    }
     window.addEventListener("orientationchange", function () {
         if (foodyGlobals.isTablet && navbarShown) {
             if (screen.orientation.angle === 90) {
@@ -132,25 +135,12 @@ jQuery(document).ready(function ($) {
             $('.sticky_bottom_header #quadmenu').css("bottom", "7%");
             $('.sticky_bottom_header .navbar-header').css("bottom", bottom);
             $('.related-content-overlay .related-recipes-container').css("bottom", "65px");
+        } else {
+            $('.filter-mobile .filter-btn').css('bottom','22px');
         }
         sessionStorage.setItem('banner-popup-closed', 'true');
-    if ( !$('#popup-banner').length ) {
-        $('.filter-mobile .filter-btn').css('bottom','22px');
-        $('.mobile-filter .show-recipes-container button').css('top','0px');
-    }
 
-    $('footer #popup-banner .close').on('click',function () {
-        sessionStorage.setItem('banner-popup-closed','true');
-        if ($(window).width() < 768 ){
-            $('.filter-mobile .filter-btn').css('bottom','22px');
-            $('.mobile-filter .show-recipes-container button').css('top','0px');
-        }
     });
-
-    if (sessionStorage.getItem('banner-popup-closed')==='true'){
-        $('.filter-mobile .filter-btn').css('bottom','22px');
-        $('.mobile-filter .show-recipes-container button').css('top','0px');
-    }
 
     $('#popup-banner').on('shown.bs.modal', function () {
         if ($('.sticky_bottom_header').length) {
@@ -167,8 +157,6 @@ jQuery(document).ready(function ($) {
         $(document).off('focusin.modal');
     });
 
-
-    if($('#newsletter-modal').length) {
     // if($('#newsletter-modal').length) {
     //     setTimeout(function () {
     //         // load popup after 5 second
@@ -366,8 +354,8 @@ jQuery(document).ready(function ($) {
                 }
             }
             else{
-            //     let hamburgerImage = '<img class="foody-logo-text logo-hamburger" src="' + foodyGlobals.imagesUri + "hamburger.svg" + '">';
-            //     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(hamburgerImage);
+                //     let hamburgerImage = '<img class="foody-logo-text logo-hamburger" src="' + foodyGlobals.imagesUri + "hamburger.svg" + '">';
+                //     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').replaceWith(hamburgerImage);
                 if(!switchedToHamburgerLogo) {
                     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').toggleClass('hidden');
                     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text-custom').toggleClass('hidden');
