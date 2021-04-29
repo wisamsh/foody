@@ -27,7 +27,7 @@ if (empty($btn_text)) {
 
 $popup_title = $component_data['text'];
 if (empty($popup_title)) {
-    $popup_title = 'תראו מה יצא לי';
+    $popup_title = 'הכנתם את המתכון?';
 }
 
 $cover_image = $component_data['image_desktop'];
