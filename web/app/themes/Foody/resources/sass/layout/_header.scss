@@ -934,7 +934,8 @@ header {
     z-index: 1;
 
     #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
-      font-family: AfekBold !important;
+      font-family: Afek !important;
+      font-weight: 600;
       direction: rtl;
       font-size: 17px;
     }
@@ -944,7 +945,6 @@ header {
       direction: rtl;
       font-size: 17px;
     }
-
     #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
       padding-right: 0;
       font-family: AfekBold !important;
@@ -1012,8 +1012,9 @@ header {
             > .quadmenu-item-content {
               .quadmenu-caret {
                 .quadmenu-text {
-                  font-family: AfekBold !important;
+                  font-family: Afek !important;
                   direction: rtl !important;
+                  font-weight: 600;
                 }
               }
             }
@@ -1034,7 +1035,8 @@ header {
             a {
               .quadmenu-item-content {
                 .quadmenu-text {
-
+                  font-family: Afek !important;
+                  direction: rtl !important;
                 }
 
                 .quadmenu-description {
