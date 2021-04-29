@@ -24,7 +24,7 @@
 
 	?>
     <?php if ('foody_recipe' === get_post_type() && !is_search()) { ?>
-        <label class="choose-pan-title" for="number-of-dishes"> בחרו סוג תבנית: </label>
+        <label class="choose-pan-title" for="number-of-dishes"> בחרו סוג תבנית </label>
    <?php } ?>
     <select <?php echo $data_attrs ?> class="foody-select foody-sort col-" title="<?php echo $name ?>"
                                       name="<?php echo $name ?>"
