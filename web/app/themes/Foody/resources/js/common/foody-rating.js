@@ -1,7 +1,7 @@
 let FoodyLoader = require('../common/foody-loader');
 
 jQuery(document).ready(($) => {
-    // debugger;
+    debugger;
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGlobals.post.type == 'post')) {
          if (foodyGlobals['can_user_rate'] ){
             $('.ratings-wrapper .rating-stars-container .empty-star' +
