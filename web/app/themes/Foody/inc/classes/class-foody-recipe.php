@@ -991,6 +991,21 @@ class Foody_Recipe extends Foody_Post
         return json_encode($json);
     }
 
+    public function get_images_gallery_repeater(){
+        $images_for_slider = get_field('images_gallery_repeater', $this->id);
+        if ( $images_for_slider ) {
+            $item=[];
+            foreach ($images_for_slider as $image) {
+                $item[]=$image['image']['url'];
+            }
+
+            return stripslashes(json_encode($item));
+        } else {
+            return '"'.$this->getImage().'"';
+        }
+
+    }
+
     public function get_tags_names()
     {
         return array_map(function ($tag) {

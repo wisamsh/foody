@@ -29,7 +29,7 @@ $recipe = $template_args['recipe'];
 <?php } ?>
       "name": "<?php echo addslashes(get_the_title()) ?>",
       "nutrition": <?php echo $recipe->get_jsonld_nutrients() ?>,
-      "image": "<?php echo $recipe->getImage() ?>",
+      "image": <?php echo $recipe->get_images_gallery_repeater() ?>,
       "author": {
         "@type": "Person",
         "name": "<?php echo $author_name_for_schema ?>"
