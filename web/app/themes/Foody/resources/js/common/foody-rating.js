@@ -2,9 +2,7 @@ let FoodyLoader = require('../common/foody-loader');
 
 jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGlobals.post.type == 'post')) {
-        if (foodyGlobals['can_user_rate'] &&
-            ($('.ratings-wrapper .rating-stars-container .empty-star').length ||
-                $('.comments-rating-prep-container .rating .empty-star').length )){
+        if (foodyGlobals['can_user_rate'] ){
             $('.ratings-wrapper .rating-stars-container .empty-star,' +
                 '.comments-rating-prep-container .rating .empty-star').on('click', function () {
                     if (foodyGlobals['can_user_rate']) {
@@ -57,6 +55,16 @@ jQuery(document).ready(($) => {
 
             $('.ratings-wrapper .rating-stars-container .empty-star,' +
                 '.comments-rating-prep-container .rating .empty-star').on('mouseout', function () {
+                toggleRatingIcons(this, false);
+            });
+
+            $('.ratings-wrapper .rating-stars-container .full-star,' +
+                '.comments-rating-prep-container .rating .full-star').on('mouseover', function () {
+                toggleRatingIcons(this, true);
+            });
+
+            $('.ratings-wrapper .rating-stars-container .full-star,' +
+                '.comments-rating-prep-container .rating .full-star').on('mouseout', function () {
                 toggleRatingIcons(this, false);
             });
         }
