@@ -131,7 +131,7 @@ class Foody_Rating
         $table = $wpdb->prefix . $this->table_name;
         $ip = $this->foody_get_ip();
 
-        $query = "SELECT rating_id FROM {$table} WHERE postid = {$post_id} AND (userid = {$user_id} AND ip = '{$ip}')";
+        $query = "SELECT rating_id FROM {$table} WHERE postid = {$post_id} AND ip = '{$ip}'";
         $result = $wpdb->get_results($query);
 
         return count($result) > 0;
