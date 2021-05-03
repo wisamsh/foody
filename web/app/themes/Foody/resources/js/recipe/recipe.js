@@ -357,6 +357,15 @@ jQuery(document).ready(($) => {
             $('.overview-nutrients .recipe-nutrition').toggleClass('open');
             $('.overview-nutrients .value').toggleClass('open');
         });
+
+            $(window).scroll(function () {
+                $('.single-foody_recipe .tooltip').css('display','none')
+            })
+
+            $('.overview-lists-container .overview-nutrients .title svg').on('click',function (){
+                $('.single-foody_recipe .tooltip').css('display','block')
+            })
+
     }
 
     if ($('.amount-container > .plus-icon').length && $('.amount-container > .minus-icon').length && $('.amount-container #number-of-dishes').length) {
