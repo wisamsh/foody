@@ -3,13 +3,12 @@ let FoodyLoader = require('../common/foody-loader');
 jQuery(document).ready(($) => {
     // debugger;
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGlobals.post.type == 'post')) {
-         if (foodyGlobals['can_user_rate'] ){
-            $('.ratings-wrapper .rating-stars-container .empty-star' +
-                '.comments-rating-prep-container .rating .empty-star' +
-                '.ratings-wrapper .rating-stars-container .full-star' +
-                '.comments-rating-prep-container .rating .full-star' +
-                '.ratings-wrapper .rating-stars-container .star' +
-                '.comments-rating-prep-container .rating-stars-container .star').on('click', function () {
+        if (foodyGlobals['can_user_rate'] &&
+            ($('.ratings-wrapper .rating-stars-container .empty-star').length ||
+                $('.comments-rating-prep-container .rating .empty-star').length )){
+
+            $('.ratings-wrapper .rating-stars-container .empty-star,' +
+                '.comments-rating-prep-container .rating .empty-star').on('click', function () {
                     if (foodyGlobals['can_user_rate']) {
                         let parentContainerIsWrapper = $(this).closest('.ratings-wrapper').length;
                         let starIndex = $(this).attr('data-index');
@@ -63,25 +62,6 @@ jQuery(document).ready(($) => {
                 toggleRatingIcons(this, false);
             });
 
-            $('.ratings-wrapper .rating-stars-container .full-star,' +
-                '.comments-rating-prep-container .rating .full-star').on('mouseover', function () {
-                toggleRatingIcons(this, true);
-            });
-
-            $('.ratings-wrapper .rating-stars-container .full-star,' +
-                '.comments-rating-prep-container .rating .full-star').on('mouseout', function () {
-                toggleRatingIcons(this, false);
-            });
-
-            $('.ratings-wrapper .rating-stars-container .star,' +
-                '.comments-rating-prep-container .rating .star').on('mouseover', function () {
-                toggleRatingIcons(this, true);
-            });
-
-            $('.ratings-wrapper .rating-stars-container .star,' +
-                '.comments-rating-prep-container .rating .star').on('mouseout', function () {
-                toggleRatingIcons(this, false);
-            });
 
          }
      }
