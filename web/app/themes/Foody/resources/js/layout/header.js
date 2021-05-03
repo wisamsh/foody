@@ -35,10 +35,8 @@ jQuery(document).ready(function ($) {
         }
 
     });
+    
 
-    if (sessionStorage.getItem('banner-popup-closed') === 'true' && $('.filter-mobile .filter-btn').length) {
-        $('.filter-mobile .filter-btn').css('bottom','22px')
-    }
     window.addEventListener("orientationchange", function () {
         if (foodyGlobals.isTablet && navbarShown) {
             if (screen.orientation.angle === 90) {
@@ -46,6 +44,17 @@ jQuery(document).ready(function ($) {
             }
         }
     });
+
+    if (!$("#popup-banner").length && $('.filter-mobile .filter-btn').length){
+        $('.filter-mobile .filter-btn').css('bottom','22px')
+        $('.show-recipes-container button').css('top','-10px')
+    }
+
+    if (sessionStorage.getItem('banner-popup-closed') === 'true' && $('.filter-mobile .filter-btn').length) {
+        $('.filter-mobile .filter-btn').css('bottom','22px')
+        $('.show-recipes-container button').css('top','-10px')
+    }
+
 
     let autocomplete = require('../common/autocomplete');
 
@@ -136,7 +145,8 @@ jQuery(document).ready(function ($) {
             $('.sticky_bottom_header .navbar-header').css("bottom", bottom);
             $('.related-content-overlay .related-recipes-container').css("bottom", "65px");
         } else {
-            $('.filter-mobile .filter-btn').css('bottom','22px');
+            $('.show-recipes-container button').css('top','-10px')
+             $('.filter-mobile .filter-btn').css('bottom','22px');
         }
         sessionStorage.setItem('banner-popup-closed', 'true');
 
