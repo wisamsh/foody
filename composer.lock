@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e76dbbcb5f2f992f9a5e243e374bc331",
+    "content-hash": "698c905764cd4cc0a5d0b19551c14918",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -1335,6 +1335,15 @@
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/w3-total-cache.2.0.1.zip"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "webp-converter-for-media",
+            "version": "3.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/webp-converter-for-media.zip"
             },
             "type": "wordpress-plugin"
         },
