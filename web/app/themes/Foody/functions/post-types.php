@@ -22,7 +22,7 @@ function register_post_types()
             'id' => 'accessory',
             'name' => 'אביזרים',
             'singular_name' => 'אביזר',
-            'show_in_menu' => is_main_site()
+            'show_in_menu' => is_main_site() || get_current_blog_id() == 2
         ),
         'technique' => array(
             'id' => 'technique',
