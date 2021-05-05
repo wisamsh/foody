@@ -145,6 +145,8 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
     }
 
 
+
+
     $('.must-log-in a, .comment-reply-login').on('click', function (e) {
         e.preventDefault();
         showLoginModal();
@@ -236,6 +238,21 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
 }
 
 jQuery(document).ready(($) => {
+
+    if ( $('.foody-pan-select').length > 0 ) {
+        let foody_pan_count = true;
+        $('.foody-pan-select .foody-select').on('click', function(){
+            if ( foody_pan_count ) {
+                $('.foody-pan-select .filter-option').after('<div class="foody-up-arrow"></div>')
+                foody_pan_count = !foody_pan_count
+            } else {
+                $('.foody-pan-select .foody-up-arrow').remove()
+                foody_pan_count = !foody_pan_count
+            }
+
+        })
+    }
+
 
     if($('.slider-nav .video-image').length){
         if ( $('.slider-nav .video-image').attr('src') === '' ){

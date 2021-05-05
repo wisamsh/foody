@@ -1047,7 +1047,7 @@ $content-width: 95%;
          .filter-option {
            padding-right: 0;
            padding-top: 24px;
-           font-size: 18px;
+           font-size: 20px;
            padding-left: 4px;
          }
 
@@ -1064,6 +1064,94 @@ $content-width: 95%;
                line-height: normal;
                padding-left: 4px;
              }
+           }
+
+         }
+         .foody-pan-select {
+           border: 1px solid var(--color__primary);
+           border-radius: 25px;
+           height: 37px;
+           width: 230px !important;
+           padding: 0px 14px 0px 20px;
+
+           button {
+             padding-right: 0;
+             font-size: 18px;
+           }
+
+           .filter-option {
+             padding-right: 0;
+             padding-top: 23px;
+             font-size: 17px;
+             padding-left: 4px;
+
+             .filter-option-inner-inner {
+               color: var(--color__primary);
+               white-space: nowrap;
+               overflow: hidden;
+               text-overflow: ellipsis;
+               line-height: normal;
+               padding-left: 4px;
+             }
+           }
+
+           .dropdown-menu {
+             left: -9px !important;
+             border-radius: 26px;
+             width: 236px;
+             padding-top: 0px;
+             padding-bottom: 0px;
+             li {
+                 a {
+                   color: var(--color__primary) !important;
+                   font-size:17px !important;
+                   transition: 0.1s !important;
+                 }
+
+                 a:hover{
+                   color: #fef0f1 !important;
+                   background: var(--color__primary) !important;
+                 }
+             }
+
+           }
+
+           .dropdown-toggle {
+             padding-top: 2px;
+             margin-bottom: 0;
+             font-size: $dropdown-toggle-size;
+             line-height: normal;
+             //height: $dropdown-toggle-size;
+             &:after {
+               background-image: url(http://foody-local.co.il/app/themes/Foody/resources/images/icons/down-arrow.png);
+               height: 28px;
+               width: 28px;
+               border-style: none !important;
+               border: 0;
+               background-repeat: no-repeat;
+               position: absolute;
+               top: 24px;
+               object-fit: cover;
+               left: -6px;
+               background-size: 22px 21px;
+               z-index: 1;
+             }
+           }
+
+           .foody-up-arrow {
+             background-image: url(http://foody-local.co.il/app/themes/Foody/resources/images/icons/upper-arrow.png);
+             height: 39px;
+             width: 28px;
+             border-style: none !important;
+             border: 0;
+             background-repeat: no-repeat;
+             position: absolute;
+             top: 2px;
+             -o-object-fit: cover;
+             object-fit: cover;
+             left: -15px;
+             background-size: 29px 28px;
+             z-index: 2;
            }
 
          }
@@ -2680,6 +2768,22 @@ $content-width: 95%;
 
             }
 
+            .foody-pan-select {
+              button {
+                padding-right: 0;
+                font-size: 18px;
+              }
+
+              .filter-option {
+                .filter-option-inner-inner {
+                  white-space: normal;
+                  line-height: normal;
+                  padding-left: 4px;
+                }
+              }
+
+            }
+
             label {
               font-size: 17px;
               padding-left: 12px;
@@ -2734,6 +2838,22 @@ $content-width: 95%;
               select {
                 left: unset;
               }
+            }
+
+            .foody-pan-select {
+              button {
+                padding-right: 0;
+                font-size: 18px;
+              }
+
+              .filter-option {
+                .filter-option-inner-inner {
+                  white-space: normal;
+                  line-height: normal;
+                  padding-left: 4px;
+                }
+              }
+
             }
 
             label {
