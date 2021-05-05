@@ -1123,7 +1123,7 @@ $content-width: 95%;
              line-height: normal;
              //height: $dropdown-toggle-size;
              &:after {
-               background-image: url(http://foody-local.co.il/app/themes/Foody/resources/images/icons/down-arrow.png);
+               background-image: url("../images/icons/down-arrow.png");
                height: 28px;
                width: 28px;
                border-style: none !important;
@@ -1139,7 +1139,7 @@ $content-width: 95%;
            }
 
            .foody-up-arrow {
-             background-image: url(http://foody-local.co.il/app/themes/Foody/resources/images/icons/upper-arrow.png);
+             background-image: url("../images/icons/upper-arrow.png");
              height: 39px;
              width: 28px;
              border-style: none !important;
