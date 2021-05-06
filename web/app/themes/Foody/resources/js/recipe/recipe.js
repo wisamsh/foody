@@ -241,8 +241,15 @@ jQuery(document).ready(($) => {
 
     if ( $('.foody-pan-select').length > 0 ) {
 
+
         let foody_pan_count = true;
         $('.foody-pan-select .foody-select').on('click', function(){
+
+            $('.foody-pan-select .dropdown-menu .dropdown-item .text').each(function (){
+                if ( $(this).text().length > 30 ) {
+                    $(this).css('white-space','normal')
+                }
+            })
 
            if ( foody_pan_count ) {
                 $('.foody-pan-select .filter-option').after('<div class="foody-up-arrow"></div>')
