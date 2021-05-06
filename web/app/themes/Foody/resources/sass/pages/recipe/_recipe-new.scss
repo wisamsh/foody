@@ -1068,10 +1068,7 @@ $content-width: 95%;
 
          }
          .foody-pan-select {
-           border: 1px solid var(--color__primary);
-           border-radius: 25px;
-           width: 230px !important;
-           padding: 0px 14px 0px 20px;
+
 
            button {
              padding-right: 0;
@@ -1089,7 +1086,10 @@ $content-width: 95%;
                white-space: normal;
                text-overflow: ellipsis;
                line-height: normal;
+               margin-left: 20px;
                padding-left: 4px;
+               top: -2px;
+               position: relative;
              }
            }
 
@@ -1119,6 +1119,12 @@ $content-width: 95%;
              margin-bottom: 0;
              font-size: $dropdown-toggle-size;
              line-height: normal;
+             border: 1px solid var(--color__primary);
+             border-radius: 25px;
+             width: max-content;
+             padding: 0px 14px 0px 20px;
+             float: right;
+             height: 38px;
              //height: $dropdown-toggle-size;
              &:after {
                background-image: url("../images/icons/down-arrow.png");
@@ -1130,7 +1136,7 @@ $content-width: 95%;
                position: absolute;
                top: 24px;
                object-fit: cover;
-               left: -6px;
+               left: 16px;
                background-size: 22px 21px;
                z-index: 1;
              }
@@ -1147,7 +1153,7 @@ $content-width: 95%;
              top: 2px;
              -o-object-fit: cover;
              object-fit: cover;
-             left: -15px;
+             left: 6px;
              background-size: 29px 28px;
              z-index: 2;
            }
