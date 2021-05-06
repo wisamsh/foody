@@ -1096,7 +1096,7 @@ $content-width: 95%;
            .dropdown-menu {
              left: -9px !important;
              border-radius: 26px;
-             width: 236px;
+             width: max-content;
              padding-top: 0px;
              padding-bottom: 0px;
              li {
