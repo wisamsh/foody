@@ -1142,6 +1142,13 @@ $content-width: 95%;
              }
            }
 
+           .foody-dropdown-ellipsis {
+             white-space: nowrap;
+             width:100%;
+             overflow: hidden;
+             text-overflow: ellipsis;
+           }
+
            .foody-up-arrow {
              background-image: url("../images/icons/upper-arrow.png");
              height: 39px;

@@ -221,7 +221,7 @@ window.calculator = function (selector) {
             let sumBaseValue =  nutrientBaseValue / originalNumberOfDishes
 
              if ( originalNumberOfDishes === 1 ) {
-                 console.log('original')
+                 // console.log('original')
                 $(this).text(original)
              }
 
@@ -230,7 +230,7 @@ window.calculator = function (selector) {
                 $(this).text(fixedBaseValue)
             } else {
                 if ( originalNumberOfDishes === 1 ) {
-                    console.log('original')
+                    // console.log('original')
                     $(this).text(original)
                 } else {
                     let fixedBaseValue = sumBaseValue.toFixed(2);
@@ -366,7 +366,7 @@ function updateNutrients(originalNumberOfDishes, val, dontChange = true, reset) 
         } else {
             $('.ingredients .amount').each(function () {
                 nutrientBaseValue = $(this).attr(`data-${nutrient}`);
-                console.log('nutrientBaseValue ', nutrientBaseValue);
+                // console.log('nutrientBaseValue ', nutrientBaseValue);
                 if (!nutrientBaseValue) {
                     nutrientBaseValue = 0;
                 }
@@ -385,7 +385,7 @@ function updateNutrients(originalNumberOfDishes, val, dontChange = true, reset) 
                     totalValueForNutrient += nutrientBaseValue;
                 }
 
-                console.log('totalValueForNutrient for ' + nutrient, totalValueForNutrient);
+                // console.log('totalValueForNutrient for ' + nutrient, totalValueForNutrient);
                 $(this).text(nutrientBaseValue)
             });
         }

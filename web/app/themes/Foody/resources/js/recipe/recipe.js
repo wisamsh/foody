@@ -240,17 +240,33 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
 jQuery(document).ready(($) => {
 
     if ( $('.foody-pan-select').length > 0 ) {
+
         let foody_pan_count = true;
         $('.foody-pan-select .foody-select').on('click', function(){
-            if ( foody_pan_count ) {
+
+           if ( foody_pan_count ) {
                 $('.foody-pan-select .filter-option').after('<div class="foody-up-arrow"></div>')
                 foody_pan_count = !foody_pan_count
-            } else {
+            }
+           if ( !foody_pan_count ){
                 $('.foody-pan-select .foody-up-arrow').remove()
                 foody_pan_count = !foody_pan_count
             }
 
+            if ( $(window).width() < 768 ) {
+                if (  $('.foody-pan-select .dropdown-menu .dropdown-item').text().length > 25 ) {
+                    $('.foody-pan-select .filter-option .filter-option-inner-inner').css('white-space','inherit')
+                    $('.foody-pan-select .dropdown-toggle').addClass('foody-dropdown-ellipsis')
+                }
+                if ( $('.foody-pan-select .dropdown-menu .dropdown-item').text().length < 25 ) {
+                    $('.foody-pan-select .filter-option .filter-option-inner-inner').css('white-space','normal')
+                    $('.foody-pan-select .dropdown-toggle').removeClass('foody-dropdown-ellipsis')
+                }
+            }
+
         })
+
+
     }
 
 
