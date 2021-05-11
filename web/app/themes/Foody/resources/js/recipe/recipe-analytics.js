@@ -575,7 +575,19 @@ jQuery(document).ready(($) => {
             eventCallback(event, 'מתכון', 'שינוי מספר מנות', defaultValue, 'מספר מנות', currentValue, get_recipe_order_location());
             nonInteraction = false;
         });
+        /** Pans type change - buttons **/
 
+        if ( $('.foody-pan-select').length > 0 ) {
+            console.log('working')
+            $('.foody-pan-select').on('click',function(){
+                $('.foody-pan-select .dropdown-item').each( function(index){
+                    $(this).unbind().click( function () {
+                        eventCallback(event, 'מתכון', 'שינוי סוג תבנית', defaultValue, 'סוג תבנית', currentValue, get_recipe_order_location());
+                    })
+                })
+            })
+
+        }
             /** select similar recipe from middle of page **/
         $('section.recipe_similar_content .similar-content-items .similar-content-item-listing').on('click', function () {
             let clickedRecipeName = $(this).find('> .similar-content-listing-title');
