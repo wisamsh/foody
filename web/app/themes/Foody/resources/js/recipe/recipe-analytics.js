@@ -528,7 +528,13 @@ jQuery(document).ready(($) => {
 
         /******************* ********************/
 
-
+        /**************** Promotion Area ****************/
+        if ( $('.promotion-area').length > 0  ) {
+            $('.promotion-area').on('click',function() {
+                eventCallback('', 'מתכון', 'לחיצה על אזור קידום', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
+            })
+        }
+        /******************* ********************/
 
         /**************** show more ****************/
 
@@ -575,10 +581,9 @@ jQuery(document).ready(($) => {
             eventCallback(event, 'מתכון', 'שינוי מספר מנות', defaultValue, 'מספר מנות', currentValue, get_recipe_order_location());
             nonInteraction = false;
         });
-        /** Pans type change - buttons **/
 
+        /** Pans type change - buttons **/
         if ( $('.foody-pan-select').length > 0 ) {
-            console.log('working')
             $('.foody-pan-select').on('click',function(){
                 $('.foody-pan-select .dropdown-item').each( function(index){
                     $(this).unbind().click( function () {
@@ -586,9 +591,9 @@ jQuery(document).ready(($) => {
                     })
                 })
             })
-
         }
-            /** select similar recipe from middle of page **/
+
+        /** select similar recipe from middle of page **/
         $('section.recipe_similar_content .similar-content-items .similar-content-item-listing').on('click', function () {
             let clickedRecipeName = $(this).find('> .similar-content-listing-title');
             if(clickedRecipeName.length){
@@ -614,6 +619,11 @@ jQuery(document).ready(($) => {
             eventCallback('', 'מתכון', 'דרוג מתכון', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'תפריט קישורים אמצעי');
         });
 
+        /** clicked on made the recipe - הכנת את המתכון **/
+        $('.recipe-how-i-did .btn-container .btn-text').on('click', function() {
+            eventCallback('', 'מתכון', 'הכנתם את המתכון', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
+        });
+
         /** clicked on link to - ומשקולות מידות **/
         $('.recipe-ingredients .ingredients-area-links .sizes-and-weights').on('click', function() {
             eventCallback('', 'מתכון', 'המרת מידות ומשקולות', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
@@ -623,6 +633,7 @@ jQuery(document).ready(($) => {
         $('.recipe-ingredients .ingredients-area-links .transform-to-vegetarian').on('click', function() {
             eventCallback('', 'מתכון', 'המרת מתכון לטבעוני', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
         });
+
 
 
     }
