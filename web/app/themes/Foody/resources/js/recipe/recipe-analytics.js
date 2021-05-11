@@ -522,7 +522,13 @@ jQuery(document).ready(($) => {
             eventCallback('', 'מתכון', 'החלפת תמונה', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'גלריה ראשית');
         });
 
+        $('.slider.slider-for .video-overlay').on('click', function () {
+             eventCallback('', 'מתכון', 'צפיה בסרטון ראשי', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'גלריה ראשית');
+        });
+
         /******************* ********************/
+
+
 
         /**************** show more ****************/
 
@@ -570,7 +576,7 @@ jQuery(document).ready(($) => {
             nonInteraction = false;
         });
 
-        /** select similar recipe from middle of page **/
+            /** select similar recipe from middle of page **/
         $('section.recipe_similar_content .similar-content-items .similar-content-item-listing').on('click', function () {
             let clickedRecipeName = $(this).find('> .similar-content-listing-title');
             if(clickedRecipeName.length){
