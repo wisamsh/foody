@@ -531,7 +531,7 @@ jQuery(document).ready(($) => {
         /**************** Promotion Area ****************/
         if ( $('.promotion-area').length > 0  ) {
             $('.promotion-area').on('click',function() {
-                eventCallback('', 'מתכון', 'לחיצה על אזור קידום', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
+                eventCallback('', 'מתכון', 'לחיצה על אזור קידום', $('.promotion-area').text().trim(), ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
             })
         }
         /******************* ********************/
@@ -587,7 +587,8 @@ jQuery(document).ready(($) => {
             $('.foody-pan-select').on('click',function(){
                 $('.foody-pan-select .dropdown-item').each( function(index){
                     $(this).unbind().click( function () {
-                        eventCallback(event, 'מתכון', 'שינוי סוג תבנית', defaultValue, 'סוג תבנית', currentValue, get_recipe_order_location());
+                        console.log($(this).text().trim())
+                        eventCallback(event, 'מתכון', 'שינוי סוג תבנית', $(this).text().trim(), 'סוג תבנית', get_recipe_order_location());
                     })
                 })
             })
@@ -621,7 +622,7 @@ jQuery(document).ready(($) => {
 
         /** clicked on made the recipe - הכנת את המתכון **/
         $('.recipe-how-i-did .btn-container .btn-text').on('click', function() {
-            eventCallback('', 'מתכון', 'הכנתם את המתכון', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
+            eventCallback('', 'מתכון', 'הכנתם את המתכון', $('.recipe-how-i-did .btn-container .btn-text').text(), ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
         });
 
         /** clicked on link to - ומשקולות מידות **/
