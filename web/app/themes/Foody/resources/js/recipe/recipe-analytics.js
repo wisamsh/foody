@@ -532,7 +532,7 @@ jQuery(document).ready(($) => {
         if ( $('.promotion-area').length > 0  ) {
             $('.promotion-area').on('click',function() {
                 let txt = $('.promotion-area').text().trim()
-                eventCallback('', 'מתכון', 'לחיצה על אזור קידום', txt, ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
+                eventCallback('', 'מתכון', 'לחיצה על אזור קידום', txt);
             })
         }
         /******************* ********************/
