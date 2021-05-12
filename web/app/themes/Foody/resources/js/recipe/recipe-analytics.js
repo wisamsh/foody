@@ -531,7 +531,8 @@ jQuery(document).ready(($) => {
         /**************** Promotion Area ****************/
         if ( $('.promotion-area').length > 0  ) {
             $('.promotion-area').on('click',function() {
-                eventCallback('', 'מתכון', 'לחיצה על אזור קידום', $('.promotion-area').text().trim(), ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
+                let txt = $('.promotion-area').text().trim()
+                eventCallback('', 'מתכון', 'לחיצה על אזור קידום', txt, ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
             })
         }
         /******************* ********************/
