@@ -203,7 +203,7 @@ class Foody_HomePage
                     }, $promoted_group['items'])
                 ];
 
-                foody_get_template_part(get_template_directory() . '/template-parts/content-promotions-listing.php', $args);
+//                foody_get_template_part(get_template_directory() . '/template-parts/content-promotions-listing.php', $args);
 
             }
         }

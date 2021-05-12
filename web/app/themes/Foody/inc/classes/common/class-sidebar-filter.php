@@ -60,10 +60,7 @@ class SidebarFilter {
 			'title_icon'    => 'icon-filter'
 		);
 
-		return foody_get_template_part(
-			get_template_directory() . '/template-parts/common/accordion.php',
-			$main_accordion_args
-		);
+		return ;
 	}
 
 
