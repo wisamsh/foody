@@ -587,7 +587,6 @@ jQuery(document).ready(($) => {
             $('.foody-pan-select').on('click',function(){
                 $('.foody-pan-select .dropdown-item').each( function(index){
                     $(this).unbind().click( function () {
-                        console.log($(this).text().trim())
                         eventCallback(event, 'מתכון', 'שינוי סוג תבנית', $(this).text().trim(), 'סוג תבנית', get_recipe_order_location());
                     })
                 })
