@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e76dbbcb5f2f992f9a5e243e374bc331",
+    "content-hash": "2e999ca5f944211a21632c0724c3000e",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -236,7 +236,7 @@
         },
         {
             "name": "johnpbloch/wordpress",
-            "version": "5.7.1",
+            "version": "5.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress.git",
@@ -249,7 +249,7 @@
                 "shasum": ""
             },
             "require": {
-                "johnpbloch/wordpress-core": "5.7.1",
+                "johnpbloch/wordpress-core": "5.7.2",
                 "johnpbloch/wordpress-core-installer": "^1.0 || ^2.0",
                 "php": ">=5.6.20"
             },
@@ -275,7 +275,7 @@
         },
         {
             "name": "johnpbloch/wordpress-core",
-            "version": "5.7.1",
+            "version": "5.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core.git",
@@ -292,7 +292,7 @@
                 "php": ">=5.6.20"
             },
             "provide": {
-                "wordpress/core-implementation": "5.7.1"
+                "wordpress/core-implementation": "5.7.2"
             },
             "type": "wordpress-core",
             "notification-url": "https://packagist.org/downloads/",
