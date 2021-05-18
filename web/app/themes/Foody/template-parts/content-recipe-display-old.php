@@ -23,7 +23,7 @@ $recipe = $template_args['recipe'];
       "@type": "Recipe",
 <?php
     $author_name_for_schema = $recipe->escape_AuthorName_for_schema();
-    $aggregateRating =  $recipe->get_jsonld_aggregateRating();
+    $aggregateRating =  $recipe->get_jsonld_aggregateRating_old();
     if($aggregateRating != false)
     { ?>
       "aggregateRating": <?php echo $aggregateRating;?>,
@@ -124,7 +124,7 @@ $recipe = $template_args['recipe'];
 <?php if (!empty(get_field('active_similar_content', $recipe->get_id()) && get_field('active_similar_content', $recipe->get_id())[0] == __('הצג'))): ?>
 
     <section class="recipe_similar_content">
-        <?php $recipe->get_similar_content(); ?>
+        <?php $recipe->get_similar_content_old(); ?>
     </section>
 <?php endif;?>
 
@@ -132,7 +132,7 @@ $recipe = $template_args['recipe'];
 
     <section class="recipe-nutrition box no-print">
 
-		<?php $recipe->the_nutrition() ?>
+		<?php $recipe->the_nutrition_old() ?>
 
     </section>
 

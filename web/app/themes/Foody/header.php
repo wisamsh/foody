@@ -92,7 +92,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 <?php endif; ?>
 <div id="page" class="site">
     <?php $post_type = is_single() && isset($post) && isset($post->post_type) ? $post->post_type : ''; ?>
-    <header id="masthead" class="site-header no-print <?php if ($post_type == 'foody_recipe' && wp_is_mobile()) {
+    <header id="masthead" class="site-header no-print <?php if ($post_type == 'foody_recipe' && wp_is_mobile() && in_category('עוגות', get_the_ID()) ) {
         echo 'hidden-recipe-header';
     } ?>">
         <?php if (is_multisite() && !is_main_site()): ?>
@@ -222,7 +222,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
         <!-- #site-navigation -->
     </header><!-- #masthead -->
-    <?php if (is_single() && $post_type == 'foody_recipe' && wp_is_mobile()) { ?>
+    <?php if (is_single() && $post_type == 'foody_recipe' && wp_is_mobile() && in_category('עוגות', get_the_ID())) { ?>
         <div class="search-overlay floating-mobile-header d-lg-none">
 
             <div class="input-container">
@@ -247,7 +247,10 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                 //if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
                     <div class="related-recipes-container">
                         <div class="close-btn">&#10005;</div>
-                        <?php $recipe->get_similar_content($similar_content); ?>
+                        <?php $recipe->get_similar_content($similar_content);
+                        $cat = wp_get_post_categories( the_ID() );
+                        $x = 1;
+                        ?>
                     </div>
                 <?php //}
             } ?>

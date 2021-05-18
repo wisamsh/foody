@@ -6,7 +6,8 @@
  * Date: 5/16/18
  * Time: 6:23 PM
  */
-class Foody_Recipe extends Foody_Post
+require_once 'class-foody-recipe-old.php';
+class Foody_Recipe extends Foody_Recipe_Old
 {
 
     public $ingredients_title;
