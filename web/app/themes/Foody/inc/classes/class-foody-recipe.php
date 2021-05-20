@@ -261,7 +261,13 @@ class Foody_Recipe extends Foody_Recipe_Old
             $target = get_option('foody_conversion_table_link_target', false) ? '_blank' : '_self';
             $link_text = get_option('foody_conversion_table_link_text', false);
 
-            echo '<a class="sizes-and-weights" href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
+            if ( in_category( 'עוגות', get_the_ID() ) ) {
+                echo '<a class="sizes-and-weights" href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
+
+            } else {
+                echo '<a href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
+
+            }
         } else {
             echo '';
         }
@@ -423,16 +429,24 @@ class Foody_Recipe extends Foody_Recipe_Old
             $this->calories_per_dish = round($this->get_calories());
         }
 
-
-        $this->overview = array(
-            'ingredients_count' => ['text' => $this->ingredients_count, 'icon' => 'ingedients@3x.png', 'icon-desktop' => 'ingedients@2x.png'],
-            'time' => [
-                'preparation_time' => ['text' => $this->get_recipe_time($overview['preparation_time'], true, true), 'icon' => 'clock@3x.png', 'icon-desktop' => 'clock@2x.png'],
-                'total_time' => ['text' => $this->get_recipe_time($overview['total_time'], true, true), 'icon' => null]
-            ],
-            'calories_per_dish' => ['text' => $this->calories_per_dish, 'icon' => 'kcal@3x.png', 'icon-desktop' => 'kcal@2x.png'],
-            'difficulty_level' => ['text' => $difficulty_level, 'icon' => null],
-        );
+        if ( in_category( 'עוגות', get_the_ID() ) ){
+            $this->overview = array(
+                'ingredients_count' => ['text' => $this->ingredients_count, 'icon' => 'ingedients@3x.png', 'icon-desktop' => 'ingedients@2x.png'],
+                'time' => [
+                    'preparation_time' => ['text' => $this->get_recipe_time($overview['preparation_time'], true, true), 'icon' => 'clock@3x.png', 'icon-desktop' => 'clock@2x.png'],
+                    'total_time' => ['text' => $this->get_recipe_time($overview['total_time'], true, true), 'icon' => null]
+                ],
+                'calories_per_dish' => ['text' => $this->calories_per_dish, 'icon' => 'kcal@3x.png', 'icon-desktop' => 'kcal@2x.png'],
+                'difficulty_level' => ['text' => $difficulty_level, 'icon' => null],
+            );
+        } else {
+            $this->overview = array(
+                'preparation_time' => $this->get_recipe_time($overview['preparation_time']),
+                'total_time' => $this->get_recipe_time($overview['total_time']),
+                'difficulty_level' => $difficulty_level,
+                'ingredients_count' => $this->ingredients_count
+            );
+        }
 
     }
 

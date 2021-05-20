@@ -15,7 +15,7 @@ abstract class Foody_Recipe_Old extends Foody_Post
 
     public $nutrients;
 
-    public $overview;
+
 
     public $ingredients_groups;
 
@@ -101,7 +101,7 @@ abstract class Foody_Recipe_Old extends Foody_Post
         $this->duration = $duration;
     }
 
-    public function the_overview()
+    public function the_overview_old()
     {
         if ($this->post != null) {
 
@@ -205,7 +205,7 @@ abstract class Foody_Recipe_Old extends Foody_Post
             $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
 
             foody_get_template_part(
-                get_template_directory() . '/template-parts/content-nutritions.php',
+                get_template_directory() . '/template-parts/old-recipe/content-nutritions.php',
                 [
                     'nutritions' => $nutrients,
                     'title' => $title,
@@ -243,19 +243,6 @@ abstract class Foody_Recipe_Old extends Foody_Post
         }
     }
 
-    public function the_conversion_table_link()
-    {
-        $show = get_option('foody_conversion_table_link_show', false);
-        if ($show) {
-            $link = get_option('foody_conversion_table_link', false);
-            $target = get_option('foody_conversion_table_link_target', false) ? '_blank' : '_self';
-            $link_text = get_option('foody_conversion_table_link_text', false);
-
-            echo '<a href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
-        } else {
-            echo '';
-        }
-    }
 
     public function the_accessories()
     {
@@ -274,26 +261,7 @@ abstract class Foody_Recipe_Old extends Foody_Post
 
 
 
-    public function the_techniques($print = true)
-    {
-        $posts = [];
-        $title = '';
 
-        while (have_rows('techniques', $this->post->ID)): the_row();
-            $posts = get_sub_field('techniques');
-            $title = get_sub_field('title');
-        endwhile;
-
-//		if ( empty( $posts ) ) {
-//			$posts = foody_get_serialized_field_by_meta( 'techniques_techniques', $this->id );
-//		}
-
-        if ($print) {
-            $this->posts_bullets($posts, $title);
-        } else {
-            return $posts;
-        }
-    }
 
     public function how_i_did()
     {
@@ -344,7 +312,7 @@ abstract class Foody_Recipe_Old extends Foody_Post
         parent::the_sidebar_content($args);
     }
 
-    public function preview()
+    public function preview_old()
     {
         $content = get_field('preview', $this->post->ID, false);
 

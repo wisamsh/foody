@@ -5,6 +5,9 @@ window.EXIF = require('exif-js');
 jQuery(document).ready(function () {
     window.scroller = require('../common/scroll-progress');
 
+    if ( foodyGlobals['post']['categories'] ){
+        console.log("Yes David")
+    }
     require('./recipe');
     require('./recipe-analytics');
     require('./foody-calculator');

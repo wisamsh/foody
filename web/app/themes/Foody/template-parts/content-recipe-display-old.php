@@ -56,7 +56,7 @@ $recipe = $template_args['recipe'];
 
 <section class="recipe-overview">
 
-	<?php $recipe->the_overview() ?>
+	<?php $recipe->the_overview_old() ?>
 
     <section class="preview">
 		<?php $recipe->preview(); ?>
@@ -142,11 +142,11 @@ $recipe = $template_args['recipe'];
 	<?php $recipe->the_categories() ?>
 </section>
 
-<section class="recipe-accessories">
+<section class="recipe-accessories accessories no-print">
 	<?php $recipe->the_accessories() ?>
 </section>
 
-<section class="recipe-techniques">
+<section class="recipe-techniques techniques no-print">
 	<?php $recipe->the_techniques() ?>
 </section>
 
