@@ -995,6 +995,7 @@ function foody_disable_gutenberg_editor() {
     return false;
 }
 
+
 function print_version_content($content)
 {
     $dom = new DOMDocument();
@@ -1056,6 +1057,7 @@ function redirect_social_login2( $user_id, $provider, $redirect_to, $adapter, $h
 
 }
 add_action( 'wsl_process_login_authenticate_wp_user_start', 'redirect_social_login2', 10, 5 );
+
 
 
 function console_log($output, $with_script_tags = true) {
