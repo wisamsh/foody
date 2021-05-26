@@ -12,7 +12,7 @@ $title = $template_args['title'];
 
 ?>
 
-<section class="recipe-notes box">
+<section class="recipe-notes-old box">
 
     <h2 class="title">
         <?php echo $title ?>

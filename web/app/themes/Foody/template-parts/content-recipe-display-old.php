@@ -72,9 +72,9 @@ $recipe = $template_args['recipe'];
     </section>
 <?php } ?>
 
-<section class="recipe-ingredients box">
+<section class="recipe-ingredients old box">
 
-    <div class="recipe-ingredients-top row justify-content-between">
+    <div class="recipe-ingredients-top old row justify-content-between">
         <h2 class="title">
 			<?php echo $recipe->the_ingredients_title() ?>
         </h2>
@@ -83,14 +83,14 @@ $recipe = $template_args['recipe'];
         </div>
     </div>
 
-    <div class="recipe-ingredients-container row">
+    <div class="recipe-ingredients-container old row">
 
 		<?php $recipe->the_ingredients() ?>
     </div>
 
 </section>
 
-<section class="conversion-table-link no-print">
+<section class="conversion-table-link-old no-print">
 	<?php $recipe->the_conversion_table_link() ?>
 </section>
 
@@ -98,7 +98,7 @@ $recipe = $template_args['recipe'];
 	<?php $recipe->the_purchase_buttons(); ?>
 </section>
 
-<section class="recipe-content">
+<section class="recipe-content old">
 
     <div class="content-container">
 		<?php echo $recipe->body ?>
@@ -109,7 +109,7 @@ $recipe = $template_args['recipe'];
 
 <?php $recipe->the_notes() ?>
 
-<section class="recipe-sponsor-container box no-print">
+<section class="recipe-sponsor-container-old box no-print">
 
 	<?php $recipe->the_sponsor() ?>
 
@@ -123,14 +123,14 @@ $recipe = $template_args['recipe'];
 
 <?php if (!empty(get_field('active_similar_content', $recipe->get_id()) && get_field('active_similar_content', $recipe->get_id())[0] == __('הצג'))): ?>
 
-    <section class="recipe_similar_content">
+    <section class="recipe_similar_content-old">
         <?php $recipe->get_similar_content_old(); ?>
     </section>
 <?php endif;?>
 
 <?php if ( $recipe->has_nutrients() ): ?>
 
-    <section class="recipe-nutrition box no-print">
+    <section class="recipe-nutrition-old box no-print">
 
 		<?php $recipe->the_nutrition_old() ?>
 
@@ -138,21 +138,21 @@ $recipe = $template_args['recipe'];
 
 <?php endif; ?>
 
-<section class="recipe-categories categories no-print">
+<section class="recipe-categories-old categories no-print">
 	<?php $recipe->the_categories() ?>
 </section>
 
-<section class="recipe-accessories accessories no-print">
+<section class="recipe-accessories-old accessories no-print">
 	<?php $recipe->the_accessories() ?>
 </section>
 
-<section class="recipe-techniques techniques no-print">
+<section class="recipe-techniques-old techniques no-print">
 	<?php $recipe->the_techniques() ?>
 </section>
 
 <?php if ( $recipe->has_tags() ): ?>
 
-    <section class="recipe-tags tags no-print">
+    <section class="recipe-tags-old tags no-print">
 
         <h2 class="title">
 			<?php echo __( 'תגיות', 'foody' ) ?>
@@ -169,7 +169,7 @@ $recipe = $template_args['recipe'];
 
 </section>
 
-<section class="recipe-how-i-did no-print">
+<section class="recipe-how-i-did-old no-print">
 	<?php $recipe->how_i_did(); ?>
 
 </section>

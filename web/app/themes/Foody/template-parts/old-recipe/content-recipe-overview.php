@@ -15,7 +15,7 @@ $labels = array(
 
 ?>
 
-<ul class="overview row">
+<ul class="overview-old row">
 
     <?php foreach ( $template_args as $key => $value ) : ?>
 

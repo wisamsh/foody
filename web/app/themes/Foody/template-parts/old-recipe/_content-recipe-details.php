@@ -15,7 +15,7 @@ if ( ! foody_is_registration_open() ) {
     $show_favorite = false;
 }
 ?>
-<div class="details container">
+<div class="details-old container">
     <?php bootstrap_breadcrumb() ?>
 
     <h1 class="col p-0">
@@ -64,7 +64,7 @@ if ( ! foody_is_registration_open() ) {
                     <?php
 
                     foody_get_template_part(
-                        get_template_directory() . '/template-parts/common/favorite.php',
+                        get_template_directory() . '/template-parts/old-recipe/favorite-old.php',
                         array(
                             'post'      => $foody_page,
                             'show_text' => true,

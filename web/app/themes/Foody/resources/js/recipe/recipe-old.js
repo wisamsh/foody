@@ -136,8 +136,8 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
         showLoginModal();
     });
 
-    if($('.content > .details-container .post-ratings > img').length){
-        $.each($('.content > .details-container .post-ratings > img'), function (indexArr) {
+    if($('.content > .details-container-old .post-ratings > img').length){
+        $.each($('.content > .details-container-old .post-ratings > img'), function (indexArr) {
             $(this).before('<span class="ratings-index">' + (indexArr+1) + '</span>');
         });
     }

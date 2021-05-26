@@ -663,7 +663,7 @@ abstract class Foody_Recipe_Old extends Foody_Post
     public function the_details()
     {
         foody_get_template_part(
-            get_template_directory() . '/template-parts/_content-recipe-details.php',
+            get_template_directory() . '/template-parts/old-recipe/_content-recipe-details.php',
             [
                 'page' => $this
             ]
