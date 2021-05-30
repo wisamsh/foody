@@ -17,7 +17,7 @@ jQuery(document).ready(($) => {
                         let foodyLoader;
                         if ( $(window).width() < 768){
                             foodyLoader = new FoodyLoader({
-                                container: $(container) ,
+                                container: $('.comments-rating-prep-container .rating') ,
                                 id: 'rating-loader'
                             });
                         } else {
