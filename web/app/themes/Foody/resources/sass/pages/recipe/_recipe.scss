@@ -1793,7 +1793,7 @@ $content-width: 95%;
               margin-right: 5px;
 
               .content-details-bullets{
-
+                display: block;
                 li {
                   display: block;
                 }
@@ -1831,7 +1831,7 @@ $content-width: 95%;
 
         .overview-old {
           padding: 10px 0;
-          max-width: calc(100% - #{$content-padding});
+          max-width: 100%;
 
           li {
             //padding-bottom: 20px;
@@ -2235,6 +2235,26 @@ $content-width: 95%;
     @include max-width-section;
     margin-left: 0;
     max-width: 100%;
+    .header {
+      padding: 10px;
+      .add-image {
+        label {
+          font-size: 17px;
+          i::before{
+            font-size: 16px;
+          }
+        }
+      }
+
+      .comments-title {
+        float: right;
+        margin: 0;
+        padding: 15px 0;
+        font-family: Assistant;
+        font-weight: 900;
+        font-size: 20px;
+      }
+    }
 
     #accordion-how-i-did-accordion {
 
@@ -2252,31 +2272,7 @@ $content-width: 95%;
         }
       }
 
-      .header {
-        .add-image {
-          width: 100%;
 
-          .label {
-            width: 100%;
-            font-size: 17px;
-            padding: 18px 10px;
-            text-align: center;
-
-            i::before{
-              font-size: 16px;
-            }
-          }
-        }
-
-        .comments-title {
-          float: right;
-          margin: 0;
-          padding: 15px 0;
-          font-family: Assistant;
-          font-weight: 900;
-          font-size: 20px;
-        }
-      }
 
       .card-body {
         padding: 20px;
