@@ -78,9 +78,18 @@ $recipe = $template_args['recipe'];
         <h2 class="title">
 			<?php echo $recipe->the_ingredients_title() ?>
         </h2>
-        <div class="amount-container">
-			<?php $recipe->calculator(); ?>
-        </div>
+        <?php if(get_field('ingredients_use_pan_conversion', get_the_ID())) { ?>
+            <div class="amount-container pan-container">
+                <?php $recipe->calculator(); ?>
+            </div>
+        <?php } else { ?>
+            <div class="amount-container">
+			    <?php $recipe->calculator(); ?>
+             </div>
+       <?php } ?>
+
+
+
     </div>
 
     <div class="recipe-ingredients-container old row">

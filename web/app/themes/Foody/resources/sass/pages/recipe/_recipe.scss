@@ -578,13 +578,15 @@ $content-width: 95%;
           position: relative;
           top: 13px;
         }
-
-        .amount-container {
+         .amount-container.pan-container{
+           display: flex !important;
+         }
+         .amount-container {
           padding-left: 0;
           align-self: center;
           display: block !important;
           .filter-option {
-            padding-right: 0;
+            padding-right: 10px;
             font-size: 18px;
             padding-left: 4px;
           }
@@ -1785,7 +1787,8 @@ $content-width: 95%;
           }
 
           .amount-container {
-
+            margin: 0;
+            margin-top: 5px;
             .foody-select {
               select {
                 left: unset;
@@ -1793,7 +1796,7 @@ $content-width: 95%;
             }
 
             label {
-
+              margin-top:15px;
             }
 
             input {
