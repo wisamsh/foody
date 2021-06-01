@@ -92,9 +92,13 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 <?php endif; ?>
 <div id="page" class="site">
     <?php $post_type = is_single() && isset($post) && isset($post->post_type) ? $post->post_type : ''; ?>
-    <header id="masthead" class="site-header no-print <?php if ($post_type == 'foody_recipe' && wp_is_mobile() && in_category('עוגות', get_the_ID()) ) {
-        echo 'hidden-recipe-header';
-    } ?>">
+
+    <?php if ( in_category( 'עוגות', get_the_ID() ) ) { ?>
+    <header id="masthead" class="site-header no-print hidden-recipe-header">
+        <?php } else { ?>
+        <header id="masthead" class="site-header old no-print">
+            <?php }?>
+
         <?php if (is_multisite() && !is_main_site()): ?>
             <?php $header->the_foody_collaboration(false); ?>
         <?php endif; ?>

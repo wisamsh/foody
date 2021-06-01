@@ -2799,7 +2799,7 @@ $content-width: 95%;
 
             label {
               font-size: 17px;
-              padding-left: 12px;
+              padding-left: 9px;
               line-height: $input-height;
               vertical-align: middle;
               margin: auto 0;
@@ -3751,6 +3751,7 @@ $content-width: 95%;
           }
 
           .description-print{
+            margin-top: 15px;
             text-align: right;
             width: 50%;
             display: block;
@@ -3776,6 +3777,8 @@ $content-width: 95%;
               ul.content-details-bullets{
                  li{
                    font-size: 12px;
+                   position: absolute;
+                   right: 0px;
                  }
               }
             }

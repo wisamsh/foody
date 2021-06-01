@@ -1535,6 +1535,10 @@ $content-width: 95%;
   $content-padding: 20px;
   .single-foody_recipe, .post-template-content-with-sidebar, .single-foody_playlist, .single-post {
 
+    header.old{
+      right:-4px;
+      width:102%;
+    }
     header.header-pin{
       left: 5px;
       nav.navbar.navbar-light{
@@ -1895,10 +1899,12 @@ $content-width: 95%;
 
             .choose-pan-title{
               margin-top: 7px;
+              padding-left: 3px;
             }
 
             .foody-pan-select {
               button {
+                margin-right: 5px;
                 padding-right: 0;
                 font-size: 18px;
                 white-space: nowrap;
