@@ -16,14 +16,12 @@ class Foody_Comments {
 	}
 
 
-	public function list_comments( $args = null ) {
+	public function list_comments( $args = null) {
 		if ( $args == null ) {
 			$args = $this->get_list_comments_args();
 		}
 
-//        $comments = get_comments(array('type' => 'comment', 'post_id' => get_the_ID()));
-
-		wp_list_comments( $args );
+        wp_list_comments($args);
 	}
 
 
@@ -65,7 +63,7 @@ class Foody_Comments {
 
 		$title = sprintf(
 		/* translators: 1: comment count number, 2: title. */
-			esc_html( _nx( 'תגובה אחת', 'תגובות (%s)', $foody_comment_count, 'comments title', 'foody' ) ),
+			esc_html( _nx( 'תגובה (1)', 'תגובות (%s)', $foody_comment_count, 'comments title', 'foody' ) ),
 			number_format_i18n( $foody_comment_count )
 		);
 

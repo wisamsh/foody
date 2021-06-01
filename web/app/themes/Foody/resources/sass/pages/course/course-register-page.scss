@@ -130,12 +130,12 @@
 
           .coupon-input-container {
             #redeem-coupon {
-              border: 1px solid #ED3D48;
+              border: 1px solid var(--color__primary);;
               border-radius: 5px;
               width: 51%;
               text-align: center;
               display: inline-block;
-              background: #ED3D48;
+              background: var(--color__primary);;
               color: white;
               font-weight: bold;
               margin: 2%;
@@ -180,7 +180,7 @@
         text-align: right;
         display: block;
         color: $color__primary;
-        font-family: Assistant;
+        font-family: Afek;
         font-weight: bold;
         font-size: 12px;
       }
@@ -438,12 +438,12 @@
               }
 
               #redeem-coupon {
-                border: 1px solid #ED3D48;
+                border: 1px solid var(--color__primary);;
                 border-radius: 5px;
                 width: 51%;
                 text-align: center;
                 display: inline-block;
-                background: #ED3D48;
+                background: var(--color__primary);;
                 color: white;
                 font-weight: bold;
                 margin: 0 2%;
@@ -479,7 +479,7 @@
             background: white;
             color: red;
             font-size: 17px;
-            border: 1px solid #ED3D48;
+            border: 1px solid var(--color__primary);;
             border-radius: 5px;
             width: 115%;
 
@@ -499,7 +499,7 @@
           text-align: right;
           display: block;
           color: $color__primary;
-          font-family: Assistant;
+          font-family: Afek;
           font-weight: bold;
         }
 

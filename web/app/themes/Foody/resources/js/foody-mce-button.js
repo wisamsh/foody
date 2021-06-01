@@ -5,7 +5,6 @@
             icon: false,
             onclick: function () {
                 var selectedElement = tinymce.activeEditor.selection.getNode();
-                debugger
 
                 if (selectedElement) {
                     var spacingClass = 'foody-list-item-spacing';

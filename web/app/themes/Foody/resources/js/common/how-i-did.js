@@ -20,6 +20,43 @@ $(document).ready(() => {
 
     let loader = new FoodyLoader({container: $formContainer});
 
+    let madeDishBtn = $('.comments-area-header .btn-container');
+
+    if(madeDishBtn.length && !canMarkedPrepared(foodyGlobals.ID)){
+        let newElem = '<a href="#how-i-did" class="preparations-share"><div class="preparations-share-title">כבר הכינו</div><div class="num-of-preps">'
+            + parseInt($('.comments-rating-prep-container .preparations-share').attr('data-numofpreps')) + '</div></a>';
+
+        $('.comments-rating-prep-container .preparations-share').replaceWith(newElem);
+        replaceElemWithCheckMark(madeDishBtn);
+    }
+
+    madeDishBtn.on('click', function () {
+        if (canMarkedPrepared(foodyGlobals.ID) && $('.comments-rating-prep-container .preparations-share .num-of-preps').length == 0) {
+            // loader.attach();
+            replaceElemWithCheckMark(madeDishBtn);
+            setAsPrepared(foodyGlobals.ID);
+            foodyAjax({
+                action: 'foody_increment_made_recipe',
+                data: {
+                    ID: foodyGlobals['ID']
+                }
+            }, function (err, data) {
+                if (err) {
+                    console.log(err)
+                    loader.detach();
+                } else {
+                    if ($('.comments-rating-prep-container .preparations-share').length &&
+                        typeof $('.comments-rating-prep-container .preparations-share').attr('data-numofpreps') !== 'undefined'
+                    ) {
+                        let currentNumOfPreps = parseInt($('.comments-rating-prep-container .preparations-share').attr('data-numofpreps')) + 1;
+                        let newElem = '<a href="#how-i-did" class="preparations-share"><div class="preparations-share-title">כבר הכינו</div><div class="num-of-preps">' + currentNumOfPreps + '</div></a>';
+
+                        $('.comments-rating-prep-container .preparations-share').replaceWith(newElem);
+                    }
+                }
+            });
+        }
+    });
 
     let successCallback = function (addedCommentHTML) {
 
@@ -36,6 +73,19 @@ $(document).ready(() => {
 
 
         incrementCommentsCount('#how-i-did .comments-title');
+
+        if ($('.comments-rating-prep-container .preparations-share .num-of-preps').length) {
+            let currentNumOfPreps = parseInt($('.comments-rating-prep-container .preparations-share .num-of-preps')[0].innerText) + 1;
+            $('.comments-rating-prep-container .preparations-share .num-of-preps')[0].innerText = currentNumOfPreps;
+        } else {
+            if ($('.comments-rating-prep-container .preparations-share').length && typeof $('.comments-rating-prep-container .preparations-share').attr('data-numofpreps') !== 'undefined') {
+                let currentNumOfPreps = parseInt($('.comments-rating-prep-container .preparations-share').attr('data-numofpreps')) + 1;
+                let newElem = '<a href="#how-i-did" class="preparations-share"><div class="preparations-share-title">כבר הכינו</div><div class="num-of-preps">' + currentNumOfPreps + '</div></a>';
+
+                $('.comments-rating-prep-container .preparations-share').replaceWith(newElem);
+                replaceElemWithCheckMark(madeDishBtn);
+            }
+        }
     };
 
     // TODO remove duplication
@@ -201,3 +251,32 @@ $(document).ready(() => {
 
 });
 
+function canMarkedPrepared(recipeId) {
+    let hasPrepared = JSON.parse(sessionStorage.getItem('has_prepared'));
+
+    if (hasPrepared == null) {
+        return true;
+    }
+
+    return jQuery.inArray(recipeId, hasPrepared) == -1;
+}
+
+function setAsPrepared(recipeId) {
+    let hasPrepared = JSON.parse(sessionStorage.getItem('has_prepared'));
+
+    if (!hasPrepared) {
+        hasPrepared = [];
+    }
+
+    if (!hasPrepared.includes(recipeId)) {
+        hasPrepared.push(recipeId);
+    }
+
+    sessionStorage.setItem('has_prepared', JSON.stringify(hasPrepared));
+}
+
+
+function replaceElemWithCheckMark(elemToReplace) {
+    let checkIcon = '<span class="check-icon">&#10003;</span>';
+    elemToReplace.replaceWith(checkIcon);
+}

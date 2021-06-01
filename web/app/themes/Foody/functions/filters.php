@@ -222,7 +222,7 @@ function foody_add_filters_by_condition( $filters, $callback, $callback_args = [
 }
 
 
-function foody_custom_logo_link() {
+function foody_custom_logo_link($is_print = false) {
 
 	$custom_logo_id  = get_theme_mod( 'custom_logo' );
 	$site_url        = get_home_url();
@@ -243,7 +243,8 @@ function foody_custom_logo_link() {
 			$custom_logo_attr['alt'] = get_bloginfo( 'name', 'display' );
 		}
 
-		$html = sprintf( '<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url">%2$s</a>',
+		$format = $is_print ? '<a href="%1$s" class="custom-logo-link print-header-image" rel="home" itemprop="url">%2$s</a>' : '<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url">%2$s</a>';
+		$html = sprintf( $format,
 			esc_url( $site_url ),
 			wp_get_attachment_image( $custom_logo_id, 'full', false, $custom_logo_attr )
 		);

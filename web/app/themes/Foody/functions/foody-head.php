@@ -195,6 +195,18 @@ function page_template_name($vars){
 
 add_filter('foody_js_globals', 'page_template_name');
 
+function can_user_rate($vars){
+    global $post;
+    if(isset($post->ID)) {
+        $rating_obj = new Foody_Rating();
+        $can_user_rate = !$rating_obj->user_rated($post->ID, get_current_user_id());
+        $vars['can_user_rate'] = $can_user_rate;
+    }
+    return $vars;
+}
+
+add_filter('foody_js_globals', 'can_user_rate');
+
 function foody_set_og_image()
 {
     if (is_author()) {

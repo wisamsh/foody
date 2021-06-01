@@ -50,6 +50,7 @@ if ( $cols % $comments_per_page == 0 ) {
             </div>
 		<?php endif; ?>
     </div>
+    <?php if ( $comment['comment_approved'] ) : ?>
     <div class="author row gutter-0">
         <div>
 			<?php echo get_avatar( $comment['user_id'], 54 ); ?>
@@ -64,4 +65,5 @@ if ( $cols % $comments_per_page == 0 ) {
 			<?php comment_text( $comment['comment_ID'] ); ?>
         </div>
     </div>
+    <?php endif; ?>
 </div>

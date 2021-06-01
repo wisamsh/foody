@@ -45,6 +45,7 @@ require_once get_template_directory() . "/inc/classes/sitemap/wpgo-foody-sitemap
  * */
 require_once get_template_directory() . "/inc/classes/common/class-foody-term.php";
 require_once get_template_directory() . "/inc/classes/common/class-foody-user.php";
+require_once get_template_directory() . "/inc/classes/common/class-foody-rating.php";
 require_once get_template_directory() . "/inc/classes/class-header.php";
 require_once get_template_directory() . "/inc/classes/class-foody-footer.php";
 require_once get_template_directory() . "/inc/classes/class-foody-blocks.php";
@@ -64,6 +65,7 @@ require_once get_template_directory() . "/inc/classes/class-foody-accessory.php"
 require_once get_template_directory() . "/inc/classes/class-foody-technique.php";
 require_once get_template_directory() . "/inc/classes/class-foody-ingredient.php";
 require_once get_template_directory() . "/inc/classes/class-foody-recipe.php";
+require_once get_template_directory() . "/inc/classes/class-foody-recipe-old.php";
 require_once get_template_directory() . "/inc/classes/class-foody-course.php";
 require_once get_template_directory() . "/inc/classes/class-foody-course-new.php";
 require_once get_template_directory() . "/inc/classes/class-foody-courses-homepage.php";

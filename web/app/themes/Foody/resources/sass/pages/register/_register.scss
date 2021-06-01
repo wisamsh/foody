@@ -75,6 +75,7 @@
       &.btn-facebook {
         background-color: #3a539f;
         margin-right: 20px;
+        padding: 0 10px;
         .facebook-icon:after {
           background: url("../images/icons/facebook.svg") no-repeat;
           content: '';
@@ -91,6 +92,7 @@
         color: #5c5a5a;
         font-family: Roboto;
         font-weight: 500;
+        padding: 0 10px;
         .google-icon:before {
           content: '';
           background: url("../images/icons/Google-icon.svg") no-repeat;

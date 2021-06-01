@@ -300,9 +300,19 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return $primary;
     }
 
-    public function the_featured_content()
+    public function the_featured_content( $shortcode = false)
     {
-        $this->the_video_box();
+        if($this instanceof Foody_Recipe && !$shortcode){
+            if ( in_category( 'עוגות', get_the_ID() ) ){
+                $this->the_video_box_new();
+            } else {
+                $this->the_video_box();
+            }
+
+        }
+        else {
+            $this->the_video_box();
+        }
     }
 
     public function show_google_adx()
@@ -443,7 +453,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         }
 
         $posts = array_filter($posts, function ($post) {
-            return $post instanceof WP_Post && $post->ping_status === 'publish';
+            return $post instanceof WP_Post && $post->post_status === 'publish';
         });
 
         $items_to_fetch = self::$MAX__RELATED_ITEMS - count($posts);
@@ -499,7 +509,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             if (wp_is_mobile()) {
                 $template = '/comments-mobile.php';
             }
-            comments_template($template);
+            comments_template($template, true);
         }
     }
 
@@ -539,8 +549,16 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         );
     }
 
-    public function the_purchase_buttons($classes = '', $echo = true)
-    {
+    public function has_purchase_buttons(){
+        $buttons = $this->fetch_purchase_buttons();
+
+        if(is_array($buttons)){
+            return count($buttons);
+        }
+        return 0;
+    }
+
+    private function fetch_purchase_buttons(){
         $buttons = '';
         if (!$this->purchase_buttons_fetched) {
             $foody_purchase_buttons = Foody_PurchaseButtons::get_instance();
@@ -550,6 +568,14 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         } else {
             $buttons = $this->purchase_buttons;
         }
+
+        return $buttons;
+    }
+
+    public function the_purchase_buttons($classes = '', $echo = true)
+    {
+        $buttons = $this->fetch_purchase_buttons();
+
         $content = '';
         if (!empty($buttons)) {
             $content = foody_get_template_part(
@@ -755,6 +781,135 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
         return $robots_str;
     }
 
+    public function the_video_box_new()
+    {
+        $isRecipe = $this instanceof Foody_Recipe;
+        $show_slider = false;
+        if ($isRecipe) {
+            $video_element = '';
+            $video_image = '';
+            if (have_rows('video', $this->post->ID)) {
+                while (have_rows('video', $this->post->ID)): the_row();
+                    $video_url = get_sub_field('url');
+
+                    if ($video_url && count($parts = explode('v=', $video_url)) > 1) {
+
+                        $query = explode('&', $parts[1]);
+                        $video_id = $query[0];
+                        $args = array(
+                            'id' => $video_id,
+                            'post_id' => $this->id
+                        );
+
+                        $video_element = '<div class="item"><span id="video" style="display: none;" data-video-id="' . $video_id . '"></span><div class="video-overlay"></div><div class="video-container no-print"></div></div>';
+                        $video_image = get_sub_field('image');
+                    }
+
+                endwhile;
+            }
+
+            $main_image_obj = $this->get_main_image_meta();
+            $main_image_alt = isset($main_image_obj['alt']) && !empty($main_image_obj['alt']) ? $main_image_obj['alt'] : '';
+            $main_image_element = $main_image_obj ? "<div class='item'><img src='{$main_image_obj['url']}' alt='{$main_image_alt}' /></div>" : false;
+            $video_element = !empty($video_element) ? $video_element : false;
+            $images_for_slider = get_field('images_gallery_repeater', $this->id);
+            $counter = 0;
+
+            if ($main_image_element ) {
+                $show_slider = false;
+                $counter = 2;
+            }
+            else{
+                $counter += $main_image_element ? 1 : 0;
+                $counter += $video_element ? 1 : 0;
+            }
+            if ($images_for_slider || $show_slider) {
+                $show_slider = true;
+                $slider = $slider_nav = '';
+                $images_for_slider = is_array($images_for_slider) ? $images_for_slider : [];
+
+                foreach ($images_for_slider as $image) {
+                    $counter++;
+
+                    $item = '<div class="item">';
+                    $item_alt = isset($image['image']['alt']) && !empty($image['image']['alt']) ? $image['image']['alt'] : '';
+                    $image_content = "<img src='{$image['image']['url']}' alt='{$item_alt}' />";
+
+                    $item .= $image_content;
+
+                    $item .= '</div>';
+
+                    $slider .= $item;
+                }
+
+                if ($main_image_element) {
+                    $slider = $slider_nav = $main_image_element . $slider;
+                }
+
+                if ($video_element) {
+                    if(!$main_image_element){
+                        $slider_nav = $main_image_element . $slider;
+                    }
+                    $slider = $video_element . $slider;
+                    if( isset(get_field('video')['replace_image_youtube']['url']) ) {
+                        $slider_nav = "<div class='item'><img src='" . $GLOBALS['images_dir'] . 'icons/play.svg' . "' alt='play-icon' class='play-btn'><img class='video-image' src='" . get_field('video')['replace_image_youtube']['url'] . "' alt='תמונת וידאו' /></div>" . $slider_nav;
+                    } else {
+                        $slider_nav = "<div class='item'><img src='" . $GLOBALS['images_dir'] . 'icons/play.svg' . "' alt='play-icon' class='play-btn'><img class='video-image' src='' alt='תמונת וידאו' /></div>" . $slider_nav;
+                    }
+                }
+
+                if($counter <= 3) {
+                    $two_images = $counter == 2 ? 'two-images' : '';
+                    if ( empty( $slider_nav ) ){
+                        $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between no-arrows '. $two_images .'">' . $slider . '</div>';
+                    } else {
+                        $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between no-arrows '. $two_images .'">' . $slider_nav . '</div>';
+                    }
+                }
+                else{
+                    if ( empty($slider_nav) ){
+                        $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between">' . $slider . '</div>';
+                    } else {
+                        $slider = '<div class="slider slider-for">' . $slider . '</div><div class="slider slider-nav justify-content-between">' . $slider_nav . '</div>';
+                    }
+
+                }
+
+                if ($show_slider) {
+                    echo $slider;
+                }
+            }
+        }
+        if (!$show_slider) {
+            if ($this->post != null) {
+                if (have_rows('video', $this->post->ID)) {
+                    while (have_rows('video', $this->post->ID)): the_row();
+                        $video_url = get_sub_field('url');
+
+                        if ($video_url && count($parts = explode('v=', $video_url)) > 1) {
+
+                            $query = explode('&', $parts[1]);
+                            $video_id = $query[0];
+                            $args = array(
+                                'id' => $video_id,
+                                'post_id' => $this->id
+                            );
+                            foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
+                        } else {
+                            echo get_the_post_thumbnail($this->id, 'foody-main');
+                            if (isset($_GET['referer']) && $_GET['referer'] && !empty($logo = $this->get_feed_logo($_GET['referer']))) {
+                                echo '<img class="feed-logo-sticker" src="' . $logo . '">';
+                            }
+                        }
+
+                    endwhile;
+                } else {
+                    echo get_the_post_thumbnail($this->id, 'foody-main');
+                }
+            }
+        }
+    }
+
     public function the_video_box()
     {
         if ($this->post != null) {
@@ -789,6 +944,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
             }
         }
     }
+
 
     protected function init_video()
     {
@@ -882,4 +1038,49 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
         return $escape_AuthorName;
     }
+
+    function get_main_image_meta()
+    {
+        $image_id = get_post_thumbnail_id($this->post);
+
+        $image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', TRUE);
+
+        $image_title = get_the_title($image_id);
+
+        $image_url = get_the_post_thumbnail_url($this->post);
+
+        if ($image_alt && $image_url) {
+            return ['id' => $image_id, 'alt' => $image_alt, 'title' => $image_title, 'url' => $image_url];
+        }
+
+        return false;
+    }
+
+    function the_print_main_image(){
+        $image_id = get_post_thumbnail_id($this->post);
+        $image_url = get_the_post_thumbnail_url($this->post);
+        $image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', TRUE);
+
+        if($image_url && !empty($image_url)){
+            $image_alt = !empty($image_alt) ? $image_alt : 'main-image';
+            $image_elem = '<img src="'. $image_url .'" class="primary-image print" alt="'. $image_alt .'">';
+            echo $image_elem;
+        } else {
+            $has_video = false;
+            if (have_rows('video', $this->post->ID)) {
+                while (have_rows('video', $this->post->ID)): the_row();
+                    $video_url = get_sub_field('url');
+                    if($video_url){
+                        $has_video = true;
+                    }
+                endwhile;
+            }
+
+            if($has_video) {
+                $image_elem = '<img src="" class="primary-image print" alt="video-image" data-is-video="1">';
+                echo $image_elem;
+            }
+        }
+    }
+
 }

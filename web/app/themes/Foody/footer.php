@@ -176,7 +176,9 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
                 'mobile_img' => get_theme_mod('image_without_text_mobile'),
                 'banner_link' => $button_link,
                 'button_text' => get_theme_mod('text_for_button'),
-                'is_iframe' => $is_iframe
+                'is_iframe' => $is_iframe,
+                'name' => get_theme_mod('name_for_banner'),
+                'publisher' => get_theme_mod('banner_publisher')
             ];
             foody_get_template_part(get_template_directory() . '/template-parts/common/popup-banner.php', $banner_args);
         } elseif (get_theme_mod('show_image_with_text')) {
@@ -188,7 +190,9 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
                 'banner_text' => get_theme_mod('text_for_image'),
                 'banner_link' => $button_link,
                 'button_text' => get_theme_mod('text_for_button'),
-                'is_iframe' => $is_iframe
+                'is_iframe' => $is_iframe,
+                'name' => get_theme_mod('name_for_banner'),
+                'publisher' => get_theme_mod('banner_publisher')
             ];
             foody_get_template_part(get_template_directory() . '/template-parts/common/popup-banner.php', $banner_args);
         }

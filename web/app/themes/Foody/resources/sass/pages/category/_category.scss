@@ -65,10 +65,11 @@ body[class~="category"] {
           }
 
           .category-title {
-            font-size: 21px;
+            font-size: 20px;
             text-align: center;
             font-weight: normal;
             color: var(--color__text-primary-dark);
+            font-family: Afek;
           }
 
         }
@@ -165,7 +166,7 @@ body[class~="category"] {
             }
 
             .category-title {
-              font-size: 18px;
+              font-size: 14px;
               text-align: center;
               font-weight: normal;
               color: var(--color__text-primary-dark);

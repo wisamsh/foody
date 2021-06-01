@@ -9,10 +9,11 @@
 /** @noinspection PhpUndefinedVariableInspection */
 $notes = $template_args['notes'];
 $title = $template_args['title'];
+$is_print = $template_args['print'];
 
 ?>
 
-<section class="recipe-notes box">
+<section class="recipe-notes box <?php echo $is_print ? 'print' : 'no-print'?>">
 
     <h2 class="title">
 		<?php echo $title ?>

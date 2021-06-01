@@ -47,7 +47,7 @@ class Foody_Accessory extends Foody_Post {
 		echo '</div>';
 	}
 
-	public function the_featured_content() {
+	public function the_featured_content($shortcode = false) {
 
 	}
 

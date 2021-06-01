@@ -59,9 +59,12 @@ if (method_exists($foody_page, $css_fn)) {
                                 the_post();
                                 foody_set_post_views($foody_page->getId());
 
-                                ?>
-                                <section class="details-container">
-                                    <div class="<?php foody_el_classes($featured_content_classes) ?>">
+                                if ( in_category( 'עוגות', get_the_ID() ) ) { ?>
+                                    <section class="details-container">
+                               <?php } else { ?>
+                                    <section class="details-container-old">
+                                <?php  }?>
+                                    <div class="<?php foody_el_classes($featured_content_classes) ?> no-print">
                                         <?php $foody_page->the_featured_content() ?>
                                     </div>
                                     <?php if (!empty($foody_page->get_featured_content_credit())) : ?>

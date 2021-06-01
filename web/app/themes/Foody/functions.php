@@ -995,6 +995,57 @@ function foody_disable_gutenberg_editor() {
     return false;
 }
 
+
+function print_version_content($content)
+{
+    $dom = new DOMDocument();
+    $dom->loadHTML($content);
+    $figures = $dom->getElementsByTagName('figure');
+    $new_content = '';
+    $num_of_figures = $figures->length;
+    for ($index = 0; $index < $num_of_figures; $index++) {
+        $current = $figures->item(0);
+        if(isset( $current->parentNode)) {
+            $current->parentNode->removeChild($current);
+        }
+    }
+
+    $classname = 'wp-caption';
+    $finder = new DomXPath($dom);
+    $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
+
+    for ($index = 0; $index < $nodes->length; $index++){
+        $current = $nodes->item(0);
+        if(isset( $current->parentNode)) {
+            $current->parentNode->removeChild($current);
+        }
+    }
+
+    $content_elem = $dom->saveHTML();
+    return ['content' => $content_elem, 'figures' => $new_content];
+}
+
+add_filter('foody_print_version_for_content','print_version_content', 10, 1);
+
+function build_figure_html($figureDomElem)
+{
+    $children_elem = $figureDomElem->childNodes;
+    $result_elem = '';
+    for ($index = 0; $index < $children_elem->length; $index++) {
+        $current = $children_elem->item($index);
+        switch ($current->tagName) {
+            case 'img':
+                $result_elem .= '<img class="' . $current->getAttribute('class') . '" src="' . $current->getAttribute('src') . '" alt="' . $current->getAttribute('alt') . '" >';
+                break;
+            case 'figcaption':
+                $result_elem .= '<figcaption class="' . $current->getAttribute('class') . '" >' . $current->textContent . '</figcaption>';
+                break;
+        }
+    }
+}
+
+
+
 function console_log($output, $with_script_tags = true) {
     $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
         ');';

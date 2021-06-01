@@ -3,12 +3,27 @@ $header-height: 76px;
 $run-height: 30px;
 
 body {
+
+  .comment-form-cookies-consent{
+    display: none;
+  }
+
   &.has-background {
     header {
       .socials {
         background-color: var(--color__background-screen);
       }
     }
+  }
+
+  #quadmenu {
+    .ripple-container {
+      display: none !important;
+    }
+  }
+
+  #quadmenu.quadmenu-default_theme .quadmenu-navbar-nav > li:not(.quadmenu-item-type-button).quadmenu-has-link:hover > a > .quadmenu-item-content, #quadmenu.quadmenu-default_theme .quadmenu-navbar-nav > li:not(.quadmenu-item-type-button).quadmenu-has-link.open > a > .quadmenu-item-content {
+    color: #383838;
   }
 
   .quadmenu-item {
@@ -282,6 +297,54 @@ header {
   }
 
   #quadmenu {
+    .ripple-container{
+      display: none !important;
+    }
+
+    .quadmenu-container{
+      .quadmenu-navbar-collapse{
+        .quadmenu-navbar-nav {
+          .quadmenu-dropdown {
+            > a {
+              > .quadmenu-item-content {
+                .quadmenu-caret {
+                  .quadmenu-text {
+
+                    font-family: AfekBold !important;
+                    direction: rtl !important;
+                  }
+                }
+              }
+
+              .ripple-container{
+                .ripple-decorator{
+                  background-color: transparent !important;
+                }
+              }
+            }
+
+            a{
+              .ripple-container{
+                .ripple-decorator{
+                  background-color: transparent !important;
+                }
+              }
+            }
+
+            > .quadmenu-dropdown-menu {
+              > .quadmenu-item-content {
+                .quadmenu-text {
+                  font-family: Afek !important;
+                  direction: rtl !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+
     &.quadmenu-is-horizontal {
       .quadmenu-navbar-nav {
 
@@ -355,7 +418,35 @@ header {
 
   #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
     padding-right: 0;
+    font-family: Afek !important;
+    font-weight: 600;
+    direction: rtl;
+    font-size: 15.5px;
   }
+
+  #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item .quadmenu-has-link a > .quadmenu-item-content > .quadmenu-text {
+    padding-right: 0;
+    font-family: Afek !important;
+    font-weight: 600;
+    direction: rtl;
+    font-size: 15.5px;
+  }
+    #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text{
+      padding-right: 0;
+      font-family: Afek !important;
+      font-weight: 600;
+      direction: rtl;
+      font-size: 15.5px;
+    }
+    #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.bold.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
+      padding-right: 0;
+      font-family: Afek !important;
+      font-weight: 700;
+      direction: rtl;
+      font-size: 15.5px;
+    }
+
+
 
   .foody-dropdown-menu {
     width: 100%;
@@ -368,6 +459,7 @@ header {
 
     .foody-search-suggestions {
       width: 100%;
+      overflow: scroll;
 
       .foody-search-suggestion {
         font-size: 18px;
@@ -464,9 +556,10 @@ header {
         .foody-search-suggestions {
           width: 100%;
           padding: 0;
+          overflow: scroll;
 
           .suggestion-head-title {
-            font-weight: bold;
+           font-family: $font__bold;
           }
 
           .foody-search-suggestion {
@@ -517,6 +610,10 @@ header {
       .foody-navbar-container {
         @include site-width();
         position: relative;
+
+        .menu-recipe-mobile{
+          display: none !important;
+        }
       }
 
       &.navbar-light {
@@ -683,7 +780,7 @@ header {
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
-          color: #ED3D48;
+          color: var(--color__primary);;
         }
       }
 
@@ -810,11 +907,54 @@ header {
     }
   }
 
+  body {
+    #page {
+      .search-overlay {
+        &.floating-mobile-header {
+
+          .input-container {
+
+            .foody-dropdown-menu {
+
+              .foody-search-suggestions {
+                overflow: scroll;
+                height: 85vh;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   header {
     position: fixed;
     width: 100%;
     transition: transform 0.25s ease-in-out;
     z-index: 1;
+
+    #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
+      font-family: Afek !important;
+      font-weight: 600;
+      direction: rtl;
+      font-size: 17px;
+    }
+
+    #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item .quadmenu-has-link a > .quadmenu-item-content > .quadmenu-text {
+      font-family: Afek !important;
+      direction: rtl;
+      font-size: 17px;
+    }
+    #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
+      padding-right: 0;
+      font-family: AfekBold !important;
+      direction: rtl;
+      font-size: 17px;
+    }
+
+    &.hidden-recipe-header {
+      display: none !important;
+    }
 
     &.header-unpin {
       transform: translateY(-90px);
@@ -867,12 +1007,36 @@ header {
 
       .quadmenu-navbar-nav {
 
+        .quadmenu-dropdown{
+          > a {
+            > .quadmenu-item-content {
+              .quadmenu-caret {
+                .quadmenu-text {
+                  font-family: Afek !important;
+                  direction: rtl !important;
+                  font-weight: 600;
+                }
+              }
+            }
+          }
+
+          > .quadmenu-dropdown-menu{
+            > .quadmenu-item-content {
+                .quadmenu-text {
+                  font-family: Afek !important;
+                  direction: rtl !important;
+                }
+            }
+          }
+        }
+
         .quadmenu-dropdown-menu {
           li {
             a {
               .quadmenu-item-content {
                 .quadmenu-text {
-
+                  font-family: Afek !important;
+                  direction: rtl !important;
                 }
 
                 .quadmenu-description {
@@ -1615,6 +1779,7 @@ header {
 
     .foody-dropdown-menu {
       .foody-search-suggestions {
+        overflow: scroll;
 
         .foody-search-suggestion {
 
@@ -1651,6 +1816,7 @@ header {
         .foody-dropdown-menu {
 
           .foody-search-suggestions {
+            overflow: scroll;
 
             .foody-search-suggestion {
               &.foody-cursor {
