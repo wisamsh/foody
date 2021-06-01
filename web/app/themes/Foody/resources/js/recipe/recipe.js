@@ -4,11 +4,18 @@
 
 // noinspection ES6ModulesDependencies
 //TODO:: Change category from מתכון to כתבה if necessary !
+// import * as player from "youtube-player";
+let player;
+let videoThumbnail;
 if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGlobals.post.type == 'post')) {
+
+    // sliders data
+    var sliderMainData  = false, sliderNavData = false;
 
     window.scroller();
 
-    let $video = $('.featured-content-container #video');
+    // let $video = $('.featured-content-container #video');
+    let $video =  $('.featured-content-container #video') ;
     let videoStopped = false;
 
     if ($video && $video.length) {
@@ -20,9 +27,11 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                 let videoId = jQuery(videoElem).data('video-id');
                 let ytPlayer = require('../common/youtubePlayer');
 
+                videoThumbnail = '//img.youtube.com/vi/'+videoId+'/0.jpg';
+
                 let playerContainer = jQuery(videoElem).siblings('.video-container');
 
-                let player = ytPlayer(playerContainer, videoId);
+                player = ytPlayer(playerContainer, videoId);
 
 
                 /*
@@ -65,7 +74,7 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                                         let addToRoundUp = 10 - reminder;
                                         passPercentage = passPercentage + addToRoundUp;
                                     }
-                                    if(videoStopped){
+                                    if (videoStopped) {
                                         eventCallback(event, 'מתכון', 'צפייה בווידאו', 'הפעלה מחדש לאחר הפסקה', 'מיקום', passPercentage + '%');
                                         videoStopped = false;
                                     }
@@ -76,6 +85,11 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
                             break;
                         // video paused
                         case 2:
+                            //remove overlay
+                            if($('.video-overlay').length) {
+                                $('.video-overlay').toggleClass('closed');
+                            }
+
                             clearInterval(timeUpdater);
                             let pausedDurationPromise = player.getDuration();
                             let pausedCurrPromise = player.getCurrentTime();
@@ -131,21 +145,200 @@ if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGloba
     }
 
 
+
+
     $('.must-log-in a, .comment-reply-login').on('click', function (e) {
         e.preventDefault();
         showLoginModal();
     });
 
-    if($('.content > .details-container .post-ratings > img').length){
+    $("#main > div > article > section.comments-rating-prep-container.no-print > div.comments-link-container > a").on('click',function (){
+        //$("#commentform > div > span").addClass('is-focused')
+        $("#commentform > div > span > input").focus()
+        $("#comment").trigger("focus")
+        $("#comment").click()
+    })
+
+    if ($('.content > .details-container .post-ratings > img').length) {
         $.each($('.content > .details-container .post-ratings > img'), function (indexArr) {
-            $(this).before('<span class="ratings-index">' + (indexArr+1) + '</span>');
+            $(this).before('<span class="ratings-index">' + (indexArr + 1) + '</span>');
         });
     }
 
+    if ($('.slider-nav').length) {
+        let slideToShow = $('.slider-for .item').length > 3 ? 3 : $('.slider-for .item').length;
+        sliderMainData = {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: '.slider-nav',
+            rtl: true,
+            ifinite: false
+        };
+
+        sliderNavData = {
+            slidesToShow: slideToShow,
+            slidesToScroll: 1,
+            asNavFor: '.slider-for',
+            dots: false,
+            variableWidth: true,
+            focusOnSelect: true,
+            centerPadding: '60px',
+            rtl: true,
+            ifinite: false
+        };
+        if ($('.slider-for .item').length > 3) {
+            sliderNavData.prevArrow = '<div class="arrow arrow-next"></div>';
+            sliderNavData.nextArrow = '<div class="arrow arrow-prev"></div>';
+        } else {
+            sliderNavData.arrows = false;
+        }
+
+        $(' .slider.slider-nav').on('swipe', function () {
+            if (typeof player !== 'undefined') {
+                player.pauseVideo();
+            }
+        });
+
+        $('.slider .arrow').on('click', function () {
+            if (typeof player !== 'undefined') {
+                player.pauseVideo();
+            }
+        });
+
+        $('.slider.slider-nav .slick-slide').on('click', function () {
+          let currentNavItem = $('.slider.slider-nav .slick-current').find('.play-btn');
+          if(!currentNavItem.length){
+              player.pauseVideo();
+          }
+        })
+    }
+
+    if ($('.slider.recipe-content-steps')) {
+        $('.slider.recipe-content-steps').slick({
+            rtl: true,
+            infinite: false,
+            nextArrow: '<div class="arrow arrow-prev"></div>',
+            prevArrow: '<div class="arrow arrow-next"></div>',
+        });
+
+        $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:grey');
+    }
+    // if ($('.slider.recipe-content-steps')) {
+    //     $('.slider.recipe-content-steps').slick({
+    //         rtl: true,
+    //         infinite: false,
+    //         prevArrow: '<div class="arrow arrow-prev">&#x27F6; לשלב הקודם</div>',
+    //         nextArrow: '<div class="arrow arrow-next"> לשלב הבא &#x27F5; </div>',
+    //     });
+    //
+    //     $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:grey');
+    // }
 }
 
 jQuery(document).ready(($) => {
-    if($('.rating-digits').length) {
+
+    if ( $('.foody-pan-select').length > 0 ) {
+
+
+        let foody_pan_count = true;
+        $('.foody-pan-select .foody-select').on('click', function(){
+
+            $('.foody-pan-select .dropdown-menu .dropdown-item .text').each(function (){
+                if ( $(this).text().length > 30 ) {
+                    $(this).css('white-space','normal')
+                }
+            })
+
+           if ( foody_pan_count ) {
+                $('.foody-pan-select .filter-option').after('<div class="foody-up-arrow"></div>')
+                foody_pan_count = !foody_pan_count
+            }
+           if ( !foody_pan_count ){
+                $('.foody-pan-select .foody-up-arrow').remove()
+                foody_pan_count = !foody_pan_count
+            }
+
+            if ( $(window).width() < 768 ) {
+                if (  $('.foody-pan-select .dropdown-menu .dropdown-item').text().length > 25 ) {
+                    $('.foody-pan-select .filter-option .filter-option-inner-inner').css('white-space','inherit')
+                    $('.foody-pan-select .dropdown-toggle').addClass('foody-dropdown-ellipsis')
+                }
+                if ( $('.foody-pan-select .dropdown-menu .dropdown-item').text().length < 25 ) {
+                    $('.foody-pan-select .filter-option .filter-option-inner-inner').css('white-space','normal')
+                    $('.foody-pan-select .dropdown-toggle').removeClass('foody-dropdown-ellipsis')
+                }
+            }
+
+        })
+
+
+    }
+
+
+    if($('.slider-nav .video-image').length){
+        if ( $('.slider-nav .video-image').attr('src') === '' ){
+            $('.slider-nav .video-image').attr('src', videoThumbnail);
+        }
+        if($('.primary-image.print').length && $('.primary-image.print').data('is-video') == '1'){
+            $('.primary-image.print').attr('src', videoThumbnail);
+        }
+    }
+
+    if(sliderMainData){
+        $('.slider-for').slick(sliderMainData);
+    }
+
+    if(sliderNavData){
+        $('.slider-nav').slick(sliderNavData);
+    }
+
+    let isSwiping = false;
+
+    $('.video-overlay').on('mousedown', function() {
+        isSwiping = false;
+    });
+
+    $('.video-overlay').on('mousemove', function() {
+        isSwiping = true;
+    });
+
+
+    $('.video-overlay').on('mouseup', function(e) {
+        if (isSwiping && e.button === 0) {
+            // swiping
+        } else {
+            // clicked
+            $(this).toggleClass('closed');
+            player.playVideo();
+        }
+    });
+
+    $(' .slider.slider-nav').on('swipe', function () {
+        if (typeof player !== 'undefined') {
+            player.pauseVideo();
+        }
+    });
+
+    $('.slider .arrow').on('click', function () {
+        if (typeof player !== 'undefined') {
+            player.pauseVideo();
+        }
+    });
+
+    $('.slider.slider-nav .slick-slide').on('click', function () {
+        let currentNavItem = $('.slider.slider-nav .slick-current').find('.play-btn');
+        if(!currentNavItem.length){
+            player.pauseVideo();
+        }
+    });
+
+    if($('.featured-content-container')){
+        $('.featured-content-container').attr('style', 'visibility: visible');
+    }
+
+    if ($('.rating-digits').length) {
         if ($('.post-ratings')[0].innerText != "") {
             $('.rating-digits').remove();
         }
@@ -162,7 +355,170 @@ jQuery(document).ready(($) => {
             }
         });
     }
+
+    $(".show-read-more").each(function () {
+        let str = $.trim($(this).text());
+        let maxLength;
+        if ($(this).hasClass('description')) {
+            maxLength = foodyGlobals.isMobile ? 85 : 170;
+        } else {
+            maxLength = foodyGlobals.isMobile ? 125 : 310;
+        }
+        if (str.length > maxLength) {
+            let newStr = str.substring(0, maxLength);
+            let indexToStartSubstring = Math.min(newStr.length, newStr.lastIndexOf(" "));
+            newStr = newStr.substr(0, indexToStartSubstring);
+            let removedStr = str.substring(indexToStartSubstring, str.length);
+            $(this).empty().html(newStr);
+            $(this).append(' <a href="javascript:void(0);" class="read-more">עוד...</a>');
+            $(this).append('<span class="more-text">' + removedStr + '</span>');
+        }
+    });
+    $(".read-more").click(function () {
+        $(this).siblings(".more-text").contents().unwrap();
+        $(this).remove();
+    });
+
+    if ($('.overview-nutrients .overview-item > .value').length && $('.overview-nutrients .recipe-nutrition').length) {
+        $('.overview-nutrients .overview-item > .value').on('click', function () {
+            $('.overview-nutrients .value').toggleClass('open');
+            $('.overview-nutrients .recipe-nutrition').toggleClass('open');
+        });
+
+
+        $('.overview-lists-container .overview-nutrients .title').on('click',function (){
+            if ( $('.overview-nutrients .recipe-nutrition').hasClass('open') ){
+                $('.overview-nutrients .recipe-nutrition').toggleClass('open');
+                $('.overview-nutrients .value').toggleClass('open');
+            }
+        })
+
+        $('.overview-nutrients .close-btn').on('click', function () {
+            $('.overview-nutrients .recipe-nutrition').toggleClass('open');
+            $('.overview-nutrients .value').toggleClass('open');
+        });
+
+            $(window).scroll(function () {
+                $('.single-foody_recipe .tooltip').css('display','none')
+            })
+
+            $('.overview-lists-container .overview-nutrients .title svg').on('click',function (){
+                $('.single-foody_recipe .tooltip').css('display','block')
+            })
+
+    }
+
+    if ($('.amount-container > .plus-icon').length && $('.amount-container > .minus-icon').length && $('.amount-container #number-of-dishes').length) {
+        $('.amount-container > .plus-icon').on('click', function () {
+            let currentAmount = parseInt($('.amount-container #number-of-dishes').val());
+            $('.amount-container #number-of-dishes').val(++currentAmount);
+            if($('.recipe-overview-print .overview-table  .cell-value.dishes_amount').length){
+                $('.recipe-overview-print .overview-table  .cell-value.dishes_amount')[0].innerText = currentAmount;
+            }
+            $('.amount-container #number-of-dishes').trigger('input');
+        });
+
+        $('.amount-container > .minus-icon').on('click', function () {
+            let currentAmount = parseInt($('.amount-container #number-of-dishes').val());
+            if (currentAmount > 1) {
+                $('.amount-container #number-of-dishes').val(--currentAmount);
+                if($('.recipe-overview-print .overview-table  .cell-value.dishes_amount').length){
+                    $('.recipe-overview-print .overview-table  .cell-value.dishes_amount')[0].innerText = currentAmount;
+                }
+            }
+            $('.amount-container #number-of-dishes').trigger('input');
+        });
+    }
+
+    if ($('.recipe-content-steps .slick-current').length) {
+        $('.slider.recipe-content-steps').on('swipe', changeStyleOfArrows);
+        $('.slider.recipe-content-steps .arrow-prev, .slider.recipe-content-steps .arrow-next').on('click', changeStyleOfArrows);
+    }
+
+    $('.amount-container #number-of-dishes').on("keypress", function(event){
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            event.target.blur()
+        }
+    })
+
+
+    let selectorsArr = {'.recipe-categories':'cat-read-more', '.recipe-accessories':'acc-read-more', '.recipe-techniques':'teq-read-more', '.recipe-tags': 'tag-read-more'};
+    for(let key in selectorsArr){
+        if ($(key + ' ul li').length) {
+            let twoRowsHeight = (parseInt($(key + ' ul li').outerHeight(true)) * 2);
+            let originalSize = parseInt($(key + ' ul').outerHeight(true));
+            if (originalSize > twoRowsHeight) {
+                $(key + ' ul').attr('style', 'height:' + twoRowsHeight + 'px; overflow: hidden');
+                $(key).append(' <a data-original-size ="' + originalSize + '" class="' + selectorsArr[key] + '" href="javascript:void(0);">עוד...</a>');
+            }
+        }
+    }
+
+
+    // read more categories
+    if ($('.recipe-categories .post-categories li').length && $('.cat-read-more').length) {
+        $('.cat-read-more').on('click', function () {
+            $('.recipe-categories .post-categories').attr('style', 'height:' + parseInt($(this).attr('data-original-size')) + 'px');
+            $(this).remove();
+        });
+    }
+
+    // read more accessories
+    if ($('.recipe-accessories ul li').length && $('.acc-read-more').length) {
+        $('.acc-read-more').on('click', function () {
+            $('.recipe-accessories ul').attr('style', 'height:' + parseInt($(this).attr('data-original-size')) + 'px');
+            $(this).remove();
+        });
+    }
+
+    // read more accessories
+    if ($('.recipe-techniques ul li').length &&  $('.teq-read-more').length) {
+        $('.teq-read-more').on('click', function () {
+            $('.recipe-techniques ul').attr('style', 'height:' + parseInt($(this).attr('data-original-size')) + 'px');
+            $(this).remove();
+        });
+    }
+
+    // read more accessories
+    if ($('.recipe-tags ul li').length &&  $('.tag-read-more').length) {
+        $('.tag-read-more').on('click', function () {
+            $('.recipe-tags ul').attr('style', 'height:' + parseInt($(this).attr('data-original-size')) + 'px');
+            $(this).remove();
+        });
+    }
+
+    if ( $("#main > div > div.cover-image.no-print").length )  {
+       $("#main > div > aside").css('padding-top','15px')
+    }
+
+    // Change Position of difficalty
+    if ($("#main .difficulty_level").html().trim() === "קשה מאוד" && $(window).width > 760 ) {
+        $("#main .difficulty-container").css('flex-direction','column')
+        $("#main .difficulty-container").css('top','7%')
+    }
+    if ($("#main .difficulty_level").html().trim() !== "קשה מאוד" ) {
+        $("#main .difficulty-container").css('top','8%')
+        $("#main  .overview-lists-container-desktop  .overview.row  li:nth-child(1)  .key").css('padding-top','2px')
+    }
+
 });
+
+function changeStyleOfArrows() {
+    let stepElem = $('.recipe-content-steps .slick-current').find('.step');
+    if (stepElem.length) {
+        if ($(stepElem).hasClass('first-step')) {
+            $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:grey');
+            $('.slider.recipe-content-steps .arrow-next').attr('style', 'color:rgb(64, 64, 64)');
+        } else if ($(stepElem).hasClass('last-step')) {
+            $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:rgb(64, 64, 64)');
+            $('.slider.recipe-content-steps .arrow-next').attr('style', 'color:grey');
+        } else {
+            $('.slider.recipe-content-steps .arrow-prev').attr('style', 'color:rgb(64, 64, 64)');
+            $('.slider.recipe-content-steps .arrow-next').attr('style', 'color:rgb(64, 64, 64)');
+        }
+    }
+}
 
 /**
  * Handle events and fire analytics dataLayer.push

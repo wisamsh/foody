@@ -71,7 +71,7 @@ else{
 						?>
 
                         <section class="rating-container d-block d-lg-block">
-							<?php Foody_Recipe::ratings() ?>
+							<?php //Foody_Recipe::ratings() ?>
                         </section>
 
                     </section>

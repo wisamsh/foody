@@ -5,7 +5,7 @@
  * Date: 5/14/18
  * Time: 6:20 PM
  */
-
+global $post;
 $cover_name = '';
 $is_register_page = false;
 
@@ -37,7 +37,6 @@ if ( empty( $image ) ) {
 }
 
 if ( empty( $link ) ) {
-    global $post;
 	$link = get_field( 'cover_link' );
     $feed_area_id = !empty($post->id) ? get_field('recipe_channel', $post->id) : get_field('recipe_channel');
     $feed_area_id = is_category() ? get_field('recipe_channel', get_queried_object()) : $feed_area_id;
@@ -64,8 +63,10 @@ if ( isset( $template_args['mobile_image'] ) ) {
 }
 
 ?>
-
-<div class="cover-image <?php echo $is_register_page ? 'register-page' : ''?>">
+<?php
+$is_recipe = isset($post->post_type) && $post->post_type == 'foody_recipe';
+?>
+<div class="cover-image <?php echo $is_register_page ? 'register-page' : ''?> <?php echo $is_recipe ? 'no-print' : ''?>">
 	<?php if ( isset( $a ) ) {
 		echo $a;
 	} ?>

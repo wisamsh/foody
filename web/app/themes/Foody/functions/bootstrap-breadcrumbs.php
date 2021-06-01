@@ -13,7 +13,7 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
 
     if ($path != null && !empty($path)) {
 
-        echo '<ol class="breadcrumb">';
+        echo '<ol class="breadcrumb no-print">';
         //display home link
         home_item();
 
@@ -32,7 +32,7 @@ function bootstrap_breadcrumb($parent_id = null, $path = null)
 
     } elseif (!is_front_page() && !is_home()) {
         //open up breadcrumbs list
-        echo '<ol class="breadcrumb">';
+        echo '<ol class="breadcrumb no-print">';
 
         //display home link
         home_item();

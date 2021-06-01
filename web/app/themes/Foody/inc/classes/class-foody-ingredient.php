@@ -133,7 +133,7 @@ class Foody_Ingredient extends Foody_Post
     }
 
 
-    public function the_featured_content()
+    public function the_featured_content($shortcode = false)
     {
 
     }
@@ -869,11 +869,13 @@ class Foody_Ingredient extends Foody_Post
 
     private function string_fraction_to_decimal($string)
     {
-        if (strpos($string, '/')) {
-            $numbers = explode("/", $string);
-            return round($numbers[0] / $numbers[1], 6);
-        }
-        return $string;
+//        if (strpos($string, '/')) {
+//            $numbers = explode("/", $string);
+//            return round($numbers[0] / $numbers[1], 6);
+//        } else {
+            return 1;
+//        }
+
     }
 
 }

@@ -179,6 +179,76 @@ window.calculator = function (selector) {
         }
     });
 
+    $('#pan-conversions').on('changed.bs.select', function () {
+        let val = $(this).val();
+
+
+        let $option = $(this).find(':selected');
+
+        let original = $option.data('original');
+
+        let originalSlices = $(this).find('option[data-original=1]').data('slices');
+        if (!originalSlices) {
+            originalSlices = 1;
+        }
+        let slices = $option.data('slices');
+        if (!slices) {
+            slices = 1;
+        }
+
+
+        /** handle substitute ingredients **/
+        let originalNumberOfDishes = parseInt($option.attr('value'))
+        let hasSubstitute = updateIngredients($elements, originalNumberOfDishes, val, undefined, false);
+        $('.ingredients .amount').each(function () {
+            let $this = $(this);
+            let amount = $this.data('amount');
+            let original = $this.data('original');
+            let nutrientBaseValue = $this.data('amount');
+
+            let totalValueForNutrient = 0;
+
+            if (!nutrientBaseValue) {
+                nutrientBaseValue = 0;
+            }
+
+            nutrientBaseValue = parseFloat(nutrientBaseValue);
+
+            // Divide by original num of dishes to retrieve one dish
+            nutrientBaseValue = nutrientBaseValue / originalNumberOfDishes;
+
+            let sumBaseValue =  nutrientBaseValue / originalNumberOfDishes
+
+            if ( originalNumberOfDishes === 1 ) {
+                // console.log('original')
+                $(this).text(original)
+            }
+
+            if ( sumBaseValue % 1 === 0) {
+                let fixedBaseValue = Math.floor(sumBaseValue)
+                $(this).text(fixedBaseValue)
+            } else {
+                if ( originalNumberOfDishes === 1 ) {
+                    // console.log('original')
+                    $(this).text(original)
+                } else {
+                    let fixedBaseValue = sumBaseValue.toFixed(2);
+                    $(this).text(fixedBaseValue)
+                }
+            }
+
+        });
+        if (hasSubstitute) {
+            if (textForOriginal!= '' && !isMultiSubIng) {
+                let newCaloriesNutrient = $('[data-name=calories]').find('.chosen-dishes-nutrition > .value').length ? parseFloat($('[data-name=calories]').find('.chosen-dishes-nutrition > .value')[0].innerText) : 0;
+                handleSubsTextBackAndForth(textToShow, textForOriginal, caloriesNutrientOriginalVal, sugarNutrientOriginalVal, textColor, caloriesNutrientOriginalVal != newCaloriesNutrient);
+            } else {
+                handleSubsText(textToShow, caloriesNutrientOriginalVal, sugarNutrientOriginalVal, textColor);
+            }
+        }
+    });
+
+
 
     $('#pan-conversions').on('changed.bs.select', function () {
         let val = $(this).val();

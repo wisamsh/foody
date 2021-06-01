@@ -6,7 +6,8 @@
  * Date: 5/16/18
  * Time: 6:23 PM
  */
-class Foody_Recipe extends Foody_Post
+require_once 'class-foody-recipe-old.php';
+class Foody_Recipe extends Foody_Recipe_Old
 {
 
     public $ingredients_title;
@@ -24,6 +25,10 @@ class Foody_Recipe extends Foody_Post
     public $number_of_dishes;
 
     public $substitute_all_button;
+
+    private $calories_per_dish;
+
+    public $rating;
 
 
     /**
@@ -47,6 +52,8 @@ class Foody_Recipe extends Foody_Post
                 'restore' => $restore_text
             ];
         }
+
+        $this->rating = new Foody_Rating();
     }
 
 
@@ -104,11 +111,19 @@ class Foody_Recipe extends Foody_Post
     public function the_overview()
     {
         if ($this->post != null) {
+            if ( in_category( 'עוגות', get_the_ID() ) ){
+                foody_get_template_part(
+                    get_template_directory() . '/template-parts/content-recipe-overview.php',
+                    ['overview' => $this->overview,
+                        'recipe' => $this]
+                );
+            } else {
+                foody_get_template_part(
+                    get_template_directory() . '/template-parts/old-recipe/content-recipe-overview.php',
+                    $this->overview
+                );
+            }
 
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/content-recipe-overview.php',
-                $this->overview
-            );
         }
     }
 
@@ -117,11 +132,11 @@ class Foody_Recipe extends Foody_Post
         $recipe_id = $this->getId();
         $categories = wp_get_post_categories($recipe_id);
         $techniques = $this->the_techniques(false);
-        if($techniques != false) {
+        if ($techniques != false) {
             $techniques = array_map(function ($technique_post) {
                 return $technique_post->ID;
             }, $this->the_techniques(false));
-        } else{
+        } else {
             $techniques = [];
         }
 
@@ -159,7 +174,7 @@ class Foody_Recipe extends Foody_Post
         }, $this->ingredients_groups);
     }
 
-    public function the_notes()
+    public function the_notes($print = false)
     {
         $notes = null;
         $title = null;
@@ -171,11 +186,16 @@ class Foody_Recipe extends Foody_Post
 
         $template_args = [
             'notes' => $notes,
-            'title' => $title
+            'title' => $title,
+            'print' => $print
         ];
 
         if (array_not_empty($notes)) {
-            foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-notes.php', $template_args);
+            if ( in_category( 'עוגות', get_the_ID() ) ) {
+                foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-notes.php', $template_args);
+            } else {
+                foody_get_template_part(get_template_directory() . '/template-parts/old-recipe/content-recipe-notes.php', $template_args);
+            }
         }
 
     }
@@ -185,11 +205,18 @@ class Foody_Recipe extends Foody_Post
         $args = [
             'value' => get_rating_by_user_and_post($this->id)
         ];
+        if ( in_category( 'עוגות', get_the_ID() ) ) {
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/content-rating.php',
+                $args
+            );
+        } else {
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/old-recipe/content-rating.php',
+                $args
+            );
+        }
 
-        foody_get_template_part(
-            get_template_directory() . '/template-parts/content-rating.php',
-            $args
-        );
     }
 
     public function the_nutrition()
@@ -198,16 +225,17 @@ class Foody_Recipe extends Foody_Post
         $title = get_field('nutritions_title', $this->post->ID);
 
         if (empty($title)) {
-            $title = __('ערכים תזונתיים');
+            $title = __('ערכים תזונתיים לפי מנה אחת');
         }
 
         if (!empty($this->nutrients)) {
-            $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
+
+//            $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
 
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-nutritions.php',
                 [
-                    'nutritions' => $nutrients,
+                    'nutritions' => $this->nutrients,
                     'title' => $title,
                     'dishes_amount' => $this->getNumberOfDishes(),
                     'dishes_title' => $this->the_amount_title()
@@ -229,7 +257,7 @@ class Foody_Recipe extends Foody_Post
             $sponsor_name = isset($sponsor->name) ? $sponsor->name : '';
             $sponsor_taxonomy = isset($sponsor->taxonomy) ? $sponsor->taxonomy : '';
             $sponsor_term_id = isset($sponsor->term_id) ? $sponsor->term_id : '';
-            $sponsor_link = get_field('link', $sponsor_taxonomy  . '_' . $sponsor_term_id);
+            $sponsor_link = get_field('link', $sponsor_taxonomy . '_' . $sponsor_term_id);
 
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-recipe-sponsor.php',
@@ -251,7 +279,13 @@ class Foody_Recipe extends Foody_Post
             $target = get_option('foody_conversion_table_link_target', false) ? '_blank' : '_self';
             $link_text = get_option('foody_conversion_table_link_text', false);
 
-            echo '<a href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
+            if ( in_category( 'עוגות', get_the_ID() ) ) {
+                echo '<a class="sizes-and-weights" href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
+
+            } else {
+                echo '<a href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
+
+            }
         } else {
             echo '';
         }
@@ -312,15 +346,27 @@ class Foody_Recipe extends Foody_Post
 
     public function how_i_did()
     {
-        $template = '/comments-how-i-did.php';
+        if ( in_category( 'עוגות', get_the_ID() ) ) {
+            $template = '/comments-how-i-did.php';
 
-        if (wp_is_mobile()) {
-            $template = '/comments-how-i-did-mobile.php';
+            if (wp_is_mobile()) {
+                $template = '/comments-how-i-did-mobile.php';
+            }
+
+            comments_template(
+                $template,
+                true
+            );
+        } else {
+            $template = '/template-parts/old-recipe/comments-how-i-did.php';
+
+
+            comments_template(
+                $template,
+                true
+            );
         }
 
-        comments_template(
-            $template
-        );
     }
 
 
@@ -361,11 +407,12 @@ class Foody_Recipe extends Foody_Post
 
     public function preview()
     {
-        $content = get_field('preview', $this->post->ID, false);
+        $content = get_field('preview', $this->post->ID, true);
 
-        if (!empty($content)) {
-            $content = foody_normalize_content($content);
-        }
+//        if (!empty($content)) {
+//            $content = foody_normalize_content($content, true);
+//        }
+        $content = '<div class="foody-content show-read-more">' . $content . '</div>';
 
         echo $content;
     }
@@ -383,8 +430,8 @@ class Foody_Recipe extends Foody_Post
     public function init()
     {
         $this->init_ingredients();
-        $this->init_overview();
         $this->init_nutrients();
+        $this->init_overview();
     }
 
     private function ingredients_to_string()
@@ -407,12 +454,28 @@ class Foody_Recipe extends Foody_Post
 
         $difficulty_level = $overview['difficulty_level'];
 
-        $this->overview = array(
-            'preparation_time' => $this->get_recipe_time($overview['preparation_time']),
-            'total_time' => $this->get_recipe_time($overview['total_time']),
-            'difficulty_level' => $difficulty_level,
-            'ingredients_count' => $this->ingredients_count
-        );
+        if ($this->has_nutrients()) {
+            $this->calories_per_dish = round($this->get_calories());
+        }
+
+        if ( in_category( 'עוגות', get_the_ID() ) ){
+            $this->overview = array(
+                'ingredients_count' => ['text' => $this->ingredients_count, 'icon' => 'ingedients@3x.png', 'icon-desktop' => 'ingedients@2x.png'],
+                'time' => [
+                    'preparation_time' => ['text' => $this->get_recipe_time($overview['preparation_time'], true, true), 'icon' => 'clock@3x.png', 'icon-desktop' => 'clock@2x.png'],
+                    'total_time' => ['text' => $this->get_recipe_time($overview['total_time'], true, true), 'icon' => null]
+                ],
+                'calories_per_dish' => ['text' => $this->calories_per_dish, 'icon' => 'kcal@3x.png', 'icon-desktop' => 'kcal@2x.png'],
+                'difficulty_level' => ['text' => $difficulty_level, 'icon' => null],
+            );
+        } else {
+            $this->overview = array(
+                'preparation_time' => $this->get_recipe_time($overview['preparation_time']),
+                'total_time' => $this->get_recipe_time($overview['total_time']),
+                'difficulty_level' => $difficulty_level,
+                'ingredients_count' => $this->ingredients_count
+            );
+        }
 
     }
 
@@ -453,7 +516,7 @@ class Foody_Recipe extends Foody_Post
         return $str;
     }
 
-    private function get_recipe_time($time_field, $local = true)
+    private function get_recipe_time($time_field, $local = true, $shortText = false)
     {
         if (!$local) {
             global $locale;
@@ -497,7 +560,11 @@ class Foody_Recipe extends Foody_Post
         }
 
         if (!empty($times['minutes'])) {
-            $unit = 'דקות';
+            if (!$shortText) {
+                $unit = 'דקות';
+            } else {
+                $unit = "דק׳";
+            }
             $singular = 'דקה';
             if (!$local) {
                 $unit = 'Minutes';
@@ -709,12 +776,22 @@ class Foody_Recipe extends Foody_Post
 
     public function the_details()
     {
-        foody_get_template_part(
-            get_template_directory() . '/template-parts/_content-recipe-details.php',
-            [
-                'page' => $this
-            ]
-        );
+        if ( in_category( 'עוגות', get_the_ID() ) ) {
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/_content-recipe-details.php',
+                [
+                    'page' => $this
+                ]
+            );
+        } else {
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/old-recipe/_content-recipe-details.php',
+                [
+                    'page' => $this
+                ]
+            );
+        }
+
     }
 
     public function has_rating()
@@ -774,10 +851,20 @@ class Foody_Recipe extends Foody_Post
             }
 
         } else {
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/content-recipe-calculator-dishes.php',
-                ['recipe' => $this]
-            );
+
+            if ( in_category( 'עוגות', get_the_ID() ) ) {
+                foody_get_template_part(
+                    get_template_directory() . '/template-parts/content-recipe-calculator-dishes.php',
+                    ['recipe' => $this]
+                );
+            } else {
+                foody_get_template_part(
+                    get_template_directory() . '/template-parts/old-recipe/content-recipe-calculator-dishes.php',
+                    ['recipe' => $this]
+                );
+            }
+
+
         }
     }
 
@@ -798,14 +885,28 @@ class Foody_Recipe extends Foody_Post
     {
         global $post;
         if (function_exists('the_ratings') && !empty($post)) {
+
             ?>
             <section class="ratings-wrapper">
-                <!--                <span class="rating-digits" id="lowest-rating">1</span>-->
-                <?php echo do_shortcode('[ratings]') ?>
-                <!--                <span class="rating-digits" id="highest-rating">5</span>-->
+                <!-- <span class="rating-digits" id="lowest-rating">1</span>-->
+                <?php echo do_shortcode('[ratings]')
+                ?>
+                <!-- <span class="rating-digits" id="highest-rating">5</span>-->
             </section>
             <?php
         }
+    }
+
+    public function ratings_new()
+    {
+        global $post;
+        ?>
+        <section class="ratings-wrapper <?php echo $this->rating->foody_has_rating($post->ID) ? '' : 'empty'?>">
+            <?php
+            echo $this->rating->foody_get_the_rating($post->ID);
+            ?>
+        </section>
+        <?php
     }
 
 
@@ -912,22 +1013,61 @@ class Foody_Recipe extends Foody_Post
         return json_encode($text, JSON_UNESCAPED_UNICODE);
     }
 
-    public function get_jsonld_aggregateRating()
+    function get_all_ratings_by_post_id($post_id, $column)
     {
-        $rating_val = get_post_meta($this->get_id(), 'ratings_average', true);
-        $rating_count = get_post_meta($this->get_id(), 'ratings_users', true);
+        global $wpdb;
+        $table = $wpdb->prefix . 'foody_ratings';
 
-        if ($rating_val === "" || $rating_count === "") {
+        $query = "SELECT {$column} FROM {$table} where postid = " . $post_id;
+
+        return $wpdb->get_results($query);
+    }
+
+    public function get_jsonld_aggregateRating($id)
+    {
+        $ratings = $this->get_all_ratings_by_post_id($id, '*');
+        $num_of_rates = count($ratings);
+        $ratings_sum = 0;
+
+        foreach ($ratings as $rating) {
+            $ratings_sum += floatval($rating->rating);
+        }
+        if( $num_of_rates == 0 ) {
+            $average_rating = 0;
+        } else {
+            $average_rating = $ratings_sum / $num_of_rates;
+        }
+
+        // round to full int or half
+        $average_rating = round($average_rating*2)/2;
+
+
+        if ($average_rating === "" || $num_of_rates === "") {
             return false;
         }
 
         $json = [
             "@type" => "AggregateRating",
-            "ratingValue" => $rating_val,
-            "reviewCount" => $rating_count
+            "ratingValue" => $average_rating,
+            "reviewCount" => $num_of_rates
         ];
 
         return json_encode($json);
+    }
+
+    public function get_images_gallery_repeater(){
+        $images_for_slider = get_field('images_gallery_repeater', $this->id);
+        if ( $images_for_slider ) {
+            $item=[];
+            foreach ($images_for_slider as $image) {
+                $item[]=$image['image']['url'];
+            }
+
+            return stripslashes(json_encode($item));
+        } else {
+            return '"'.$this->getImage().'"';
+        }
+
     }
 
     public function get_tags_names()
@@ -954,17 +1094,37 @@ class Foody_Recipe extends Foody_Post
         return "";
     }
 
-    public function get_similar_content()
+    public function get_system_tip()
     {
-        $similar_contents = get_field('similar_content', $this->get_id());
+        $tip_group = get_field('system_tip_group', $this->get_id());
+        $content_type = $tip_group['content_type'];
+        $content_class = $content_type == 'טקסט' ? 'text-content' : 'image-content';
+        $tip_title_element = '<div class="title-container"><img src="' . $GLOBALS['images_dir'] . 'icons/tip.svg' . '" alt="tip"><h2 class="title">' . $tip_group['title'] . '</h2></div>';
+
+        if ($content_type == 'טקסט') {
+            $tip_content = '<p class="tip-text">' . $tip_group['text'] . '</p>';
+        } else {
+            $tip_content = '<img class="tip-image" src="' . $tip_group['image']['url'] . '">';
+        }
+
+        if (is_array($tip_group['link']) && !empty($tip_group['link']['url'])) {
+            echo '<a class="tip-link" href="' . $tip_group['link']['url'] . '" target="' . $tip_group['link']['target'] . '"><div class="system-tip '. $content_class  .'">' . $tip_title_element . $tip_content . '</div></a>';
+        } else {
+            echo '<div class="system-tip ' . $content_class .'">' . $tip_title_element . $tip_content . '</div>';
+        }
+
+    }
+
+    public function get_similar_content($similar_contents)
+    {
         $not_in_random = [];
         array_push($not_in_random, $this->get_id());
         $counter = 0;
-        $title_of_section = (get_option('foody_title_for_extra_content')) ? get_option('foody_title_for_extra_content') : __('תוכן נוסף');
+        $title_of_section = isset($similar_contents['title']) && !empty($similar_contents['title']) ? $similar_contents['title'] : __('מתכונים נוספים שכדאי להכיר');
         $args = ['title' => $title_of_section, 'items' => []];
 
-        if ($similar_contents) {
-            foreach ($similar_contents as $content) {
+        if ($similar_contents['similar_content']) {
+            foreach ($similar_contents['similar_content'] as $content) {
                 if ($content['post'] != false) {
                     array_push($not_in_random, $content['post']->ID);
                     $current_post = Foody_Post::create($content['post']);
@@ -1000,8 +1160,7 @@ class Foody_Recipe extends Foody_Post
             $query_args = array(
                 'post_type' => 'foody_recipe',
                 'posts_per_page' => (4 - $counter),
-                'order' => 'ASC',
-                'orderby' => 'rand',
+                'order' => 'DESC',
                 'post__not_in' => $not_in_random,
                 'meta_query' => [
                     [
@@ -1049,5 +1208,193 @@ class Foody_Recipe extends Foody_Post
             }
         }
         foody_get_template_part(get_template_directory() . '/template-parts/content-similar-content-listing.php', $args);
+    }
+
+    function the_promotion_area($promotion_area_group)
+    {
+        $enable_background = isset($promotion_area_group['enable_background']) ? $promotion_area_group['enable_background'] : false;
+        $background_color = isset($promotion_area_group['background_color']) && $enable_background != false ? $promotion_area_group['background_color'] : false;
+        $promotion_text = $promotion_area_group['text'];
+        $has_link = isset($promotion_area_group['link']) && is_array($promotion_area_group['link']);
+        $promotion_link = $has_link && isset($promotion_area_group['link']['url']) ? $promotion_area_group['link']['url'] : false;
+
+        if($enable_background != false && $background_color != false){
+            $promotion_area_element = '<p class="promotion-text" style="background-color: '. $background_color .'">' . $promotion_text . '</p>';
+        } else {
+            $promotion_area_element = '<p class="promotion-text">' . $promotion_text . '</p>';
+        }
+        if ($promotion_link) {
+            $link_target = $has_link && isset($promotion_area_group['link']['target']) ? $promotion_area_group['link']['target'] : '';
+            $promotion_area_element = '<a class="promotion-link" href="' . $promotion_area_group['link']['url'] . '" target="' . $link_target . '" >' . $promotion_area_element . '</a>';
+        }
+
+        echo $promotion_area_element;
+    }
+
+    function get_calories()
+    {
+        $calories_per_dish = 0;
+        foreach ($this->nutrients as $nutrient) {
+            if (is_array($nutrient) && isset($nutrient['name']) && isset($nutrient['valuePerDish'])) {
+                if ($nutrient['name'] === __('קלוריות')) {
+                    $calories_per_dish = $nutrient['valuePerDish'];
+                }
+            }
+        }
+
+        return $calories_per_dish;
+    }
+
+    function get_comments_rating_preps_component($number_of_preps)
+    {
+        $num_of_comments = count(get_comments(array('type' => 'comment', 'post_id' => $this->id)));
+        $rating = '<div class="rating">' . $this->rating->foody_get_the_rating($this->id, true) . '</div>';
+
+        $number_of_preps = $this->get_number_of_approved_preps() + intval($number_of_preps);
+
+        $preps_element_title = '<div class="preparations-share-title">' . __('כבר הכנתם?') . '</div>';
+        $preps_element_link = '<a href="#how-i-did" class="preparation-share-link">' . __('שתפו אותנו') . '</a>';
+        $preps_elements = '<div class="preparations-share" data-numOfPreps="' . $number_of_preps . '">' . $preps_element_title . $preps_element_link . '</div>';
+
+        $comments_element_title = '<div class="comments-title">' . __('רוצים להגיב?') . '</div>';
+        $comments_element_link = '<a href="#comments" class="comments-link">' . __('לחצו כאן') . '</a>';
+        $comments_elements = '<div class="comments-link-container" data-numOfComments="' . $num_of_comments . '">' . $comments_element_title . $comments_element_link . '</div>';
+
+        echo $preps_elements . $rating . $comments_elements;
+    }
+
+    function get_number_of_approved_preps()
+    {
+        $preps_comments = get_comments(array('type' => 'how_i_did', 'post_id' => $this->id));
+
+        $approved_comments = array_filter($preps_comments, function ($preps_comments) {
+            return $this->filter_comments($preps_comments);
+        });
+
+        $preps_made = get_post_meta($this->id, 'num_of_preps');
+        $preps_made = is_array($preps_made) && !empty($preps_made) ? intval($preps_made[0]) : 0;
+
+        return count($approved_comments) + $preps_made;
+    }
+
+    function filter_comments($comment)
+    {
+        $author = get_user_by('email', $comment->comment_author_email);
+
+        return $comment->comment_approved || (!$comment->comment_approved && $author->ID == get_current_user_id());
+    }
+
+    function get_relevant_content()
+    {
+        $content_in_steps = get_field('recipe_steps', $this->id);
+        if (is_array($content_in_steps)) {
+            if (isset($content_in_steps['enable_recipe_by_steps']) && $content_in_steps['enable_recipe_by_steps'] && isset($content_in_steps['steps'])) {
+                echo '<div class="content-steps-container"><h2 class="steps-title">'. __('אופן ההכנה') .'</h2> ' . $this->get_content_as_steps($content_in_steps['steps']) . '</div>';
+                return;
+            }
+        }
+        $content_body = $this->body;
+        echo '<div class="content-container no-print">' . $content_body . '</div>';
+//        echo '<div class="content-container print-mobile">' . $content_body . '</div>';
+        $print_body = apply_filters('foody_print_version_for_content', $content_body);
+        echo '<div class="content-container print-desktop print"><div class="content-and-notes print">' . $print_body['content'] . $this->get_notes() . '</div><div class="content-images">' . $print_body['figures'].'</div></div>';
+    }
+
+    function get_notes(){
+        $notes = null;
+        $title = null;
+        $notes_element ='';
+
+        while (have_rows('notes', $this->post->ID)): the_row();
+            $notes = get_sub_field('notes');
+            $title = get_sub_field('title');
+        endwhile;
+
+        if(is_array($notes)) {
+            $notes_element = '<section class="recipe-notes box print"><div class="title-with-line"><h2 class="title">'. $title .'</h2><hr class="title-line"></div><ul class="notes" title="הערות">';
+            foreach ($notes as $note):
+                $notes_element .= '<li class="note">' . $note["note"] . '</li>';
+            endforeach;
+            $notes_element .= '</ul></section>';
+        }
+
+        return $notes_element;
+    }
+
+    function get_content_as_steps($steps)
+    {
+        $slider = '<div class="slider recipe-content-steps justify-content-between">';
+        $counter = 1;
+        foreach ($steps as $step) {
+            $image_content = '';
+            $image_text = '';
+            $image_credit = '';
+
+            if ($counter === 1) {
+                $item = '<div class="step first-step">';
+            } elseif (count($steps) === $counter) {
+                $item = '<div class="step last-step">';
+            } else {
+                $item = '<div class="step">';
+            }
+            $title = '<div class="step-text">' . $counter++ . '. ' . $step['text'] . '</div>';
+
+            if (is_array($step['image'])) {
+                $image_content = "<img class='desktop-image' src='{$step['image']['url']}' alt='{$step['image']['alt']}' />";
+            }
+
+            if(is_array($step['image_mobile'])) {
+                $image_content .= "<img class='mobile-image' src='{$step['image_mobile']['url']}' alt='{$step['image_mobile']['alt']}' />";
+            }
+
+            if (!empty($step['image_text'])) {
+                $image_text = '<span class="image-text">' . $step['image_text'] . '.' . '</span>';
+            }
+
+            if (!empty($step['image_text'])) {
+                $image_credit = '<span class="image-credit"><span class="image-credit-prefix">' . __(' צילום: ') . '</span>' . $step['image_credit'] . '</span>';
+            }
+
+            $item .= $title . $image_content . '<div class="image-description">' . $image_text . $image_credit . '</div>';
+
+            $item .= '</div>';
+
+            $slider .= $item;
+        }
+        $slider .= '</div>';
+        return $slider;
+    }
+
+    function is_content_by_steps(){
+        return get_field('recipe_steps_enable_recipe_by_steps', $this->id);
+    }
+
+    function get_take_me_to_recipe_btn(){
+        $btn_image_url = get_field('take_to_recipe_btn')['url'];
+        $btn_image_alt = get_field('take_to_recipe_btn')['alt'];
+
+        echo "<a class='take_to_recipe_link' href='#recipe-ingredients'><img class='take-me-to-recipe' src='". $btn_image_url ."' alt='". $btn_image_alt ."'></a>";
+    }
+
+    function the_print_overview(){
+        $overview_data=[
+            'ingredients_count' => ['title' => __('מרכיבים'), 'data' => isset($this->overview) && isset($this->overview['ingredients_count']) ? $this->overview['ingredients_count']['text'] : 0],
+            'preparation_time' => ['title' => __('זמן הכנה'), 'data' => isset($this->overview) && isset($this->overview['time']['preparation_time']['text']) ? $this->overview['time']['preparation_time']['text'] : 0],
+            'total_time' => ['title' => __('זמן כולל'), 'data' => isset($this->overview) && isset($this->overview['time']['total_time']['text']) ? $this->overview['time']['total_time']['text'] : 0],
+            'calories_per_dish' =>  ['title' => __('קלוריות'), 'data' => isset($this->overview) && isset($this->overview['calories_per_dish']) ? $this->overview['calories_per_dish']['text'] : 0],
+            'dishes_amount' => ['title' => __('כמות מנות'), 'data' => $this->getNumberOfDishes()]
+        ];
+
+        $table_element = '<table class="overview-table print"><tr>';
+        foreach ($overview_data as $key => $value) {
+            $table_element .= '<th><div class="cell-title '. $key .'">' . $value['title'] . '</div><div class="cell-value '. $key .'">' . $value['data'] . '</div> </th>';
+        }
+        $table_element .= '</tr></table>';
+
+        return $table_element;
+    }
+
+    function the_print_rating(){
+        return $this->rating->foody_get_the_rating($this->id, true, true);
     }
 }

@@ -995,19 +995,55 @@ function foody_disable_gutenberg_editor() {
     return false;
 }
 
-function redirect_social_login($user_id, $provider, $hybridauth_user_profile, $redirect_to){
-    $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
-}
-add_action('wsl_hook_process_login_before_wp_safe_redirect', 'redirect_social_login');
 
-
-function redirect_social_login2( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile  )
+function print_version_content($content)
 {
+    $dom = new DOMDocument();
+    $dom->loadHTML($content);
+    $figures = $dom->getElementsByTagName('figure');
+    $new_content = '';
+    $num_of_figures = $figures->length;
+    for ($index = 0; $index < $num_of_figures; $index++) {
+        $current = $figures->item(0);
+        if(isset( $current->parentNode)) {
+            $current->parentNode->removeChild($current);
+        }
+    }
 
-    $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
+    $classname = 'wp-caption';
+    $finder = new DomXPath($dom);
+    $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
 
+    for ($index = 0; $index < $nodes->length; $index++){
+        $current = $nodes->item(0);
+        if(isset( $current->parentNode)) {
+            $current->parentNode->removeChild($current);
+        }
+    }
+
+    $content_elem = $dom->saveHTML();
+    return ['content' => $content_elem, 'figures' => $new_content];
 }
-add_action( 'wsl_process_login_authenticate_wp_user_start', 'redirect_social_login2', 10, 5 );
+
+add_filter('foody_print_version_for_content','print_version_content', 10, 1);
+
+function build_figure_html($figureDomElem)
+{
+    $children_elem = $figureDomElem->childNodes;
+    $result_elem = '';
+    for ($index = 0; $index < $children_elem->length; $index++) {
+        $current = $children_elem->item($index);
+        switch ($current->tagName) {
+            case 'img':
+                $result_elem .= '<img class="' . $current->getAttribute('class') . '" src="' . $current->getAttribute('src') . '" alt="' . $current->getAttribute('alt') . '" >';
+                break;
+            case 'figcaption':
+                $result_elem .= '<figcaption class="' . $current->getAttribute('class') . '" >' . $current->textContent . '</figcaption>';
+                break;
+        }
+    }
+}
+
 
 
 function console_log($output, $with_script_tags = true) {

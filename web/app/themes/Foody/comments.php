@@ -18,7 +18,7 @@
 if ( post_password_required() ) {
 	return;
 }
-
+global $post;
 $foody_comments = new Foody_Comments();
 
 ?>
@@ -34,7 +34,7 @@ $foody_comments = new Foody_Comments();
 	// You can start editing here -- including this comment!
 	//
 	?>
-    <h3 class="comments-title">
+    <h3 class="title">
 		<?php
 
 		$foody_comments->the_title();
@@ -43,7 +43,7 @@ $foody_comments = new Foody_Comments();
     </h3><!-- .comments-title -->
 
 	<?php
-
+    global $wp_query;
 	$foody_comments->the_comments_form();
 
 	?>
@@ -51,14 +51,29 @@ $foody_comments = new Foody_Comments();
 	<?php if ( $have_comments ) : ?>
         <ol id="comments-list" class="comment-list">
 			<?php
-			$foody_comments->list_comments();
+            $per_page = 4;
+//			$foody_comments->list_comments(null, true);
+            $cpage = ( ceil( get_comments( array(
+                            'post_id' => $post->ID,
+                            'type'  => 'comment',
+                            'count' => true
+                        ) ) / $per_page ) );
+            if(isset($wp_query->query_vars)){
+                $wp_query->query_vars['cpage'] = $cpage;
+            }
+			$foody_comments->list_comments(null);
 			?>
         </ol><!-- .comment-list -->
 
 
 		<?php
 		$cpage = get_query_var( 'cpage', 1 );
-
+//        $per_page = 4;
+//        $cpage = ( ceil( get_comments( array(
+//                        'post_id' => $post->ID,
+//                        'type'  => 'comment',
+//                        'count' => true
+//                    ) ) / $per_page ) - 1 );
 
 		if ( $cpage > 1 ) {
 
