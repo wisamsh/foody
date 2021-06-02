@@ -239,6 +239,9 @@ $content-width: 95%;
         .social {
           display: flex;
           padding: 0;
+          margin-top: 10px;
+          flex-flow: row wrap;
+          justify-content: space-between;
 
           .essb_links {
             float: left;
@@ -276,6 +279,10 @@ $content-width: 95%;
               }
             }
 
+          }
+
+          .description{
+            width:70%;
           }
 
         }
@@ -1823,6 +1830,8 @@ $content-width: 95%;
         }
       }
 
+
+
       .recipe-shortcode-container {
 
         .shortcode-recipe-link {
@@ -1867,6 +1876,10 @@ $content-width: 95%;
           font-size: 14pt;
           padding-top: 0;
         }
+      }
+
+      .recipe-purchase-buttons{
+        margin-bottom:0 !important;
       }
 
       .recipe-ingredients.old {
@@ -2065,8 +2078,8 @@ $content-width: 95%;
         margin: 0;
 
         li {
-          margin: 5px 0;
-
+          margin-top: 5px !important;
+          margin-bottom: 0px !important;
           &:before {
             content: counter(counter) '.';
             counter-increment: counter;

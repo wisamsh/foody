@@ -488,7 +488,7 @@ $content-width: 95%;
                 font-family: 'Afek';
                 font-weight: bolder;
                 font-size:17px;
-                margin-left: 0.7rem;
+                margin-left: 6%;
               }
 
               .essb_links {
@@ -576,7 +576,8 @@ $content-width: 95%;
               }
 
               .rating-header {
-                padding-left: 6%;
+                padding-left: 2%;
+                margin-top:1px;
                 font-family: 'Afek';
                 font-weight: bolder;
                 font-size: 17px;
@@ -879,6 +880,10 @@ $content-width: 95%;
         text-align: right;
         padding: 0 2.5%;
         font-size: 17px;
+
+        .show-read-more {
+          font-size: 17.5px;
+        }
         .foody-content{
           > p{
             font-size: 17.5px;
@@ -938,7 +943,7 @@ $content-width: 95%;
         }
         .rating-stars-container {
           .empty-star{
-            width:20px;
+            width:25px;
           }
         }
 
@@ -1578,7 +1583,7 @@ $content-width: 95%;
         }
 
         .tip-image{
-          width: 50%;
+          width: 100%;
         }
 
         .tip-text{
@@ -2597,6 +2602,10 @@ $content-width: 95%;
               font-size: 17.5px;
             }
           }
+
+          .show-read-more {
+            font-size:17.5px;
+          }
         }
       }
 
@@ -2733,10 +2742,15 @@ $content-width: 95%;
             align-self: self-end;
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
             margin: -10px 0 3% 0;
 
 
             > label {
+              font-size: 17px;
+              text-align: right;
+              padding-top: 5px;
+              padding-bottom: 5px;
               margin: auto;
             }
 
