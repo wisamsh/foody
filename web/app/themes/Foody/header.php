@@ -292,6 +292,19 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                     <div class="site-branding">
                         <div class="logo-container-mobile <?php $header->the_logo_mode() ?> d-block d-lg-none">
                             <?php
+                            if ( get_current_blog_id() === 5 ) { ?>
+                                <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
+                                        data-target="#foody-navbar-collapse"
+                                        aria-controls="foody-navbar-collapse" aria-expanded="false"
+                                        aria-label="Toggle navigation">
+                                    <!--                                <img class="foody-logo-text" src="-->
+                                    <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
+                                    <div class="foody-logo-text-custom" style="background-size: 139px 73px;"></div>
+                                    <div class="foody-logo-hamburger hidden"></div>
+                                    <div class="foody-logo-close hidden"></div>
+                                </button>
+                           <?php }
+
                             if (is_main_site()) { ?>
                                 <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
                                         data-target="#foody-navbar-collapse"
@@ -319,7 +332,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                     <div class="foody-logo-hamburger hidden"></div>
                                     <div class="foody-logo-close hidden"></div>
                                 </button>
-                         <?php    } ?>
+                         <?php   } ?>
                         </div>
 
 
