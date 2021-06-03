@@ -50,7 +50,7 @@ class Foody_Feed_Channel extends Foody_Post implements Foody_Topic {
                         $count_dynamic ++;
                     }
                 }
-                if ( $count_manual === 1 ) {
+                if ( $count_manual === 1 && get_current_blog_id() === 1 ) {
                     if ( $count_dynamic === 0){
                         // mobile filter
                         foody_get_template_part( get_template_directory() . '/template-parts/common/mobile-feed-filter.php', [
