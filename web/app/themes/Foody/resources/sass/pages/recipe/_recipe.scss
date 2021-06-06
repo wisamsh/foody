@@ -150,6 +150,7 @@ $content-width: 95%;
     }
 
     .details-container-old {
+      padding: 10px 0;
       background-color: white;
 
       .featured-content-container {
@@ -248,7 +249,7 @@ $content-width: 95%;
             .essb_links_list {
               li {
                 box-shadow: none;
-                margin-left: 5px !important;
+                margin-left: 2px !important;
                 a {
                   margin-right: 0;
                   background-color: var(--color__social)!important;
@@ -377,7 +378,7 @@ $content-width: 95%;
           display: flex;
           align-self: center;
           img {
-            width: 52px;
+            width: 84%;
             border-radius: 50%;
             max-width: unset;
           }
@@ -1556,7 +1557,7 @@ $content-width: 95%;
     }
     .cover-image{
       margin-bottom: 10px;
-      margin-top: 70px;
+      margin-top: 60px;
     }
     article.content {
       width: $content-width;
@@ -1647,7 +1648,7 @@ $content-width: 95%;
             }
           }
 
-          margin-top: -10px;
+          margin-top: 70px;
           margin-left: 0;
           margin-right: 0;
           clip-path: none;

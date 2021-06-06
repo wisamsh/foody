@@ -1383,7 +1383,7 @@ $content-width: 95%;
 
     section.purchase-buttons {
       margin-bottom: 3%;
-
+      width:100%;
       .purchase-buttons {
         width: 100%;
       }
@@ -2059,7 +2059,7 @@ $content-width: 95%;
           font-size: 17px;
 
           img{
-            width:30px;
+            width:8vw;
           }
 
           &:not(.empty){
@@ -2839,7 +2839,7 @@ $content-width: 95%;
 
       section.purchase-buttons {
         margin-bottom: 3%;
-
+        width: 100%;
         .purchase-buttons {
           width: 100%;
         }
@@ -3707,6 +3707,10 @@ $content-width: 95%;
 }
 
 @media print {
+
+  .acsb-widget{
+    display:none;
+  }
   .single-foody_recipe {
     .print{
       display: block;

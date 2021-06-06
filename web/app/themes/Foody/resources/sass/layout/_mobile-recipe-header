@@ -495,6 +495,23 @@ $run-height: 30px;
                   //transition: transform 1s, background-image 1s;
              }
 
+             .foody-logo-text-custom-amit {
+               &.hidden {
+                 display: none;
+                 //transform: rotateZ(360deg);
+              }
+               position: absolute;
+               width: 121px;
+               left: 52%;
+               -webkit-transform: translateX(-50%);
+               transform: translateX(-50%);
+               top: 5%;
+               height: 73px;
+               background-repeat: no-repeat;
+               background-size: cover;
+               //transition: transform 1s, background-image 1s;
+              }
+
               .foody-logo-hamburger {
                 &.hidden {
                   display: none;
