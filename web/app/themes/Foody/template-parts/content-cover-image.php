@@ -65,8 +65,15 @@ if ( isset( $template_args['mobile_image'] ) ) {
 ?>
 <?php
 $is_recipe = isset($post->post_type) && $post->post_type == 'foody_recipe';
-?>
-<div class="cover-image <?php echo $is_register_page ? 'register-page' : ''?> <?php echo $is_recipe ? 'no-print' : ''?>">
+
+if ( in_category( 'עוגות', get_the_ID() ) ){  ?>
+    <div class="cover-image old <?php echo $is_register_page ? 'register-page' : ''?> <?php echo $is_recipe ? 'no-print' : ''?>">
+<?php } else { ?>
+    <div class="cover-image  <?php echo $is_register_page ? 'register-page' : ''?> <?php echo $is_recipe ? 'no-print' : ''?>">
+<?php } ?>
+
+
+
 	<?php if ( isset( $a ) ) {
 		echo $a;
 	} ?>
