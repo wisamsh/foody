@@ -1101,7 +1101,6 @@ $content-width: 95%;
            }
 
            .dropdown-menu {
-             left: -9px !important;
              border-radius: 26px;
              width: max-content;
              padding-top: 0px;
@@ -2664,8 +2663,7 @@ $content-width: 95%;
           .rating-stars-container {
             margin-top: 2%;
             .empty-star {
-              width:auto !important;
-              height: 33px;
+              width:18% !important;
               margin: 0 0.4%;
             }
           }
