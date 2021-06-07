@@ -3708,9 +3708,17 @@ $content-width: 95%;
 
 @media print {
 
+  #octAccess{
+    display: none;
+  }
   .acsb-widget{
     display:none;
   }
+
+  .google-adx-container{
+    display: none;
+  }
+
   .single-foody_recipe {
     .print{
       display: block;
