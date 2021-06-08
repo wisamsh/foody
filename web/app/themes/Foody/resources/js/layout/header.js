@@ -359,6 +359,7 @@ jQuery(document).ready(function ($) {
                         $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-hamburger').toggleClass('hidden');
                         $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').toggleClass('hidden');
                         $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text-custom').toggleClass('hidden');
+                        $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text-custom-amit').toggleClass('hidden');
                         switchedToHamburgerLogo = false;
                     }
                 }
@@ -370,6 +371,7 @@ jQuery(document).ready(function ($) {
                     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').toggleClass('hidden');
                     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text-custom').toggleClass('hidden');
                     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-hamburger').toggleClass('hidden');
+                    $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text-custom-amit').toggleClass('hidden');
                     switchedToHamburgerLogo = true;
                     foodyTextLogoIsShow = false;
                 }

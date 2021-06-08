@@ -70,10 +70,18 @@ if (method_exists($foody_page, $css_fn)) {
                                             <div class="<?php foody_el_classes($featured_content_classes) ?> not-main-site no-print">
                                                 <?php $foody_page->the_featured_content() ?>
                                             </div>
-                                        <?php } else { ?>
-                                            <div class="<?php foody_el_classes($featured_content_classes) ?> no-print">
-                                                <?php $foody_page->the_featured_content() ?>
-                                            </div>
+                                        <?php } else {
+                                              if (get_field('recipe_channel', get_the_ID())){ ?>
+                                                  <div class="<?php foody_el_classes($featured_content_classes) ?> no-print">
+                                                      <?php $foody_page->the_featured_content() ?>
+                                                  </div>
+                                             <?php } else { ?>
+                                                  <div class="<?php foody_el_classes($featured_content_classes) ?> not-recipe-channel no-print">
+                                                      <?php $foody_page->the_featured_content() ?>
+                                                  </div>
+                                            <?php  } ?>
+
+
                                        <?php }?>
                                 <?php  }?>
 
