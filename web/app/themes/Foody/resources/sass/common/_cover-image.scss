@@ -25,11 +25,3 @@
 
 }
 
-@include breakpoint(mobileonly) {
-  .page,#page {
-
-    .cover-image {
-      height: 73px;
-    }
-  }
-}

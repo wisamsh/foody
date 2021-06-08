@@ -1644,6 +1644,7 @@ $content-width: 95%;
             position: relative;
             padding-bottom: 44.25%;
             margin-bottom: 90px;
+            margin-top:-20px;
             top: 0px;
             height: 0;
 
@@ -1652,8 +1653,7 @@ $content-width: 95%;
               height: 250px;
             }
           }
-
-          margin-top: 50px ;
+          margin-top:-18px;
           margin-left: 0;
           margin-right: 0;
           clip-path: none;
@@ -1669,6 +1669,9 @@ $content-width: 95%;
 
         .featured-content-container.not-main-site {
             margin-top:100px !important;
+        }
+        .featured-content-container.not-recipe-channel {
+          margin-top: 50px !important;
         }
 
         .details-old {
