@@ -61,12 +61,22 @@ if (method_exists($foody_page, $css_fn)) {
 
                                 if ( in_category( 'עוגות', get_the_ID() ) ) { ?>
                                     <section class="details-container">
+                                        <div class="<?php foody_el_classes($featured_content_classes) ?> no-print">
+                                            <?php $foody_page->the_featured_content() ?>
+                                        </div>
                                <?php } else { ?>
                                     <section class="details-container-old">
+                                        <?php if (!is_main_site()){ ?>
+                                            <div class="<?php foody_el_classes($featured_content_classes) ?> not-main-site no-print">
+                                                <?php $foody_page->the_featured_content() ?>
+                                            </div>
+                                        <?php } else { ?>
+                                            <div class="<?php foody_el_classes($featured_content_classes) ?> no-print">
+                                                <?php $foody_page->the_featured_content() ?>
+                                            </div>
+                                       <?php }?>
                                 <?php  }?>
-                                    <div class="<?php foody_el_classes($featured_content_classes) ?> no-print">
-                                        <?php $foody_page->the_featured_content() ?>
-                                    </div>
+
                                     <?php if (!empty($foody_page->get_featured_content_credit())) : ?>
                                         <div class="feature-content-credit">
                                             <?php echo $foody_page->get_featured_content_credit(); ?>

@@ -93,7 +93,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 <div id="page" class="site">
     <?php $post_type = is_single() && isset($post) && isset($post->post_type) ? $post->post_type : ''; ?>
 
-    <?php if ( in_category( 'עוגות', get_the_ID() ) ) { ?>
+    <?php if ( in_category( 'עוגות', get_the_ID() ) && !is_search() ) { ?>
     <header id="masthead" class="site-header no-print hidden-recipe-header">
         <?php } else { ?>
         <header id="masthead" class="site-header old no-print">

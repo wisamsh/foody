@@ -1643,7 +1643,7 @@ $content-width: 95%;
           &.video-featured-content {
             position: relative;
             padding-bottom: 44.25%;
-            margin-bottom: 75px;
+            margin-bottom: 90px;
             top: 0px;
             height: 0;
 
@@ -1653,7 +1653,7 @@ $content-width: 95%;
             }
           }
 
-          margin-top: -10px;
+          margin-top: 50px ;
           margin-left: 0;
           margin-right: 0;
           clip-path: none;
@@ -1665,6 +1665,10 @@ $content-width: 95%;
           .wp-post-image {
           }
 
+        }
+
+        .featured-content-container.not-main-site {
+            margin-top:100px !important;
         }
 
         .details-old {
