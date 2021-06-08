@@ -93,7 +93,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 <div id="page" class="site">
     <?php $post_type = is_single() && isset($post) && isset($post->post_type) ? $post->post_type : ''; ?>
 
-    <?php if ( in_category( 'עוגות', get_the_ID() ) ) { ?>
+    <?php if ( in_category( 'עוגות', get_the_ID() ) && !is_search() ) { ?>
     <header id="masthead" class="site-header no-print hidden-recipe-header">
         <?php } else { ?>
         <header id="masthead" class="site-header old no-print">
@@ -252,8 +252,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                     <div class="related-recipes-container">
                         <div class="close-btn">&#10005;</div>
                         <?php $recipe->get_similar_content($similar_content);
-                        $cat = wp_get_post_categories( the_ID() );
-                        $x = 1;
+
                         ?>
                     </div>
                 <?php //}
@@ -292,14 +291,19 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                     <div class="site-branding">
                         <div class="logo-container-mobile <?php $header->the_logo_mode() ?> d-block d-lg-none">
                             <?php
-                            if ( get_current_blog_id() === 5 ) { ?>
+
+                            if ( get_current_blog_id() === 5 ) {
+                                $logo = get_theme_mod( 'custom_logo' );
+                                $image = wp_get_attachment_image_src( $logo , 'full' );
+                                $image_url = $image[0];
+                                ?>
                                 <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
                                         data-target="#foody-navbar-collapse"
                                         aria-controls="foody-navbar-collapse" aria-expanded="false"
                                         aria-label="Toggle navigation">
                                     <!--                                <img class="foody-logo-text" src="-->
                                     <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
-                                    <div class="foody-logo-text-custom" style="background-size: 139px 73px;"></div>
+                                    <div class="foody-logo-text-custom-amit" style="background-size: 124px 57px;background-image: url( <?php echo  $image_url  ?>)"></div>
                                     <div class="foody-logo-hamburger hidden"></div>
                                     <div class="foody-logo-close hidden"></div>
                                 </button>
@@ -316,7 +320,9 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                     <div class="foody-logo-hamburger hidden"></div>
                                     <div class="foody-logo-close hidden"></div>
                                 </button>
-                           <?php } else {
+                           <?php }
+
+                            if (get_current_blog_id() === 2) {
                                 $logo = get_theme_mod( 'custom_logo' );
                                 $image = wp_get_attachment_image_src( $logo , 'full' );
                                 $image_url = $image[0];
