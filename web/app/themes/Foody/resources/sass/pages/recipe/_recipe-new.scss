@@ -1576,7 +1576,7 @@ $content-width: 95%;
         }
 
         .tip-image{
-          width: 50%;
+          width: 100%;
         }
 
         .tip-text{
@@ -2731,6 +2731,7 @@ $content-width: 95%;
             align-self: self-end;
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
             margin: -10px 0 3% 0;
 
 
@@ -2797,7 +2798,6 @@ $content-width: 95%;
 
             label {
               font-size: 17px;
-              padding-left: 12px;
               line-height: $input-height;
               vertical-align: middle;
               margin: auto 0;
@@ -2849,6 +2849,10 @@ $content-width: 95%;
               select {
                 left: unset;
               }
+            }
+
+            .choose-pan-title {
+
             }
 
             .foody-pan-select {
@@ -3691,6 +3695,18 @@ $content-width: 95%;
 }
 
 @media print {
+
+    #octAccess{
+      display: none;
+    }
+    .acsb-widget{
+      display:none;
+    }
+
+    .google-adx-container{
+      display: none;
+    }
+
   .single-foody_recipe {
     .print{
       display: block;

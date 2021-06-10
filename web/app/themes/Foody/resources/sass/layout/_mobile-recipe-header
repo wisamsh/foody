@@ -187,7 +187,7 @@ $run-height: 30px;
 
 .sticky_bottom_header {
   position: fixed;
-  right: 0;
+  right: 0px;
   left: 0;
   z-index: 9999999999999;
   bottom: 0;
@@ -449,7 +449,7 @@ $run-height: 30px;
               outline: none;
               border: none;
               position: relative;
-              background-image: url("../images/clean-foody.svg");
+              //background-image: url("../images/clean-foody.svg");
               z-index: 100000000;
               width: 62px;
               height: 60px;
@@ -467,14 +467,14 @@ $run-height: 30px;
                 }
 
                 position: absolute;
-                width: 70%;
-                left: 50%;
+                width: 100%;
                 transform: translateX(-50%);
-                top: 37%;
-                height: 30px;
+                left: 50%;
+                top: 1%;
+                height: 60px;
                 background-repeat: no-repeat;
                 background-size: contain;
-                background-image: url("../images/foody_logo-with-white.svg");
+                background-image: url("../images/foody-logo.svg");
                 //transition: transform 1s, background-image 1s;
               }
 
@@ -495,6 +495,23 @@ $run-height: 30px;
                   //transition: transform 1s, background-image 1s;
              }
 
+             .foody-logo-text-custom-amit {
+               &.hidden {
+                 display: none;
+                 //transform: rotateZ(360deg);
+              }
+               position: absolute;
+               width: 121px;
+               left: 52%;
+               -webkit-transform: translateX(-50%);
+               transform: translateX(-50%);
+               top: 5%;
+               height: 73px;
+               background-repeat: no-repeat;
+               background-size: cover;
+               //transition: transform 1s, background-image 1s;
+              }
+
               .foody-logo-hamburger {
                 &.hidden {
                   display: none;
@@ -502,13 +519,13 @@ $run-height: 30px;
                 }
 
                 position: absolute;
-                left: 31%;
-                top: 36%;
-                height: 19px;
+                left: 0%;
+                top: 1%;
+                height: 60px;
                 background-repeat: no-repeat;
                 background-size: contain;
                 right: 0;
-                background-image: url("../images/hamburger.svg");
+                background-image: url("../images/foody-hamburger.svg");
                 //transition: transform 1s, background-image 1s;
               }
 
@@ -519,13 +536,13 @@ $run-height: 30px;
                 }
 
                 position: absolute;
-                left: 33%;
-                top: 36%;
-                height: 19px;
+                left: 0%;
+                top: 1%;
+                height: 60px;
                 background-repeat: no-repeat;
                 background-size: contain;
                 right: 0;
-                background-image: url("../images/close-menu-logo.svg");
+                background-image: url("../images/foody-close-hamburger.svg");
                 //transition: transform 1s, background-image 1s;
               }
 

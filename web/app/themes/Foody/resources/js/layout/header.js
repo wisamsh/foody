@@ -35,7 +35,7 @@ jQuery(document).ready(function ($) {
         }
 
     });
-    
+
 
     window.addEventListener("orientationchange", function () {
         if (foodyGlobals.isTablet && navbarShown) {
@@ -146,7 +146,7 @@ jQuery(document).ready(function ($) {
             $('.related-content-overlay .related-recipes-container').css("bottom", "65px");
         } else {
             $('.show-recipes-container button').css('top','-10px')
-             $('.filter-mobile .filter-btn').css('bottom','22px');
+            $('.filter-mobile .filter-btn').css('bottom','22px');
         }
         sessionStorage.setItem('banner-popup-closed', 'true');
 
@@ -359,6 +359,7 @@ jQuery(document).ready(function ($) {
                         $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-hamburger').toggleClass('hidden');
                         $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').toggleClass('hidden');
                         $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text-custom').toggleClass('hidden');
+                        $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text-custom-amit').toggleClass('hidden');
                         switchedToHamburgerLogo = false;
                     }
                 }
@@ -370,6 +371,7 @@ jQuery(document).ready(function ($) {
                     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text').toggleClass('hidden');
                     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text-custom').toggleClass('hidden');
                     $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-hamburger').toggleClass('hidden');
+                    $('.sticky_bottom_header .site-branding .custom-logo-link .foody-logo-text-custom-amit').toggleClass('hidden');
                     switchedToHamburgerLogo = true;
                     foodyTextLogoIsShow = false;
                 }

@@ -285,6 +285,24 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                     <div class="site-branding">
                         <div class="logo-container-mobile <?php $header->the_logo_mode() ?> d-block d-lg-none">
                             <?php
+
+                            if ( get_current_blog_id() === 5 ) {
+                                $logo = get_theme_mod( 'custom_logo' );
+                                $image = wp_get_attachment_image_src( $logo , 'full' );
+                                $image_url = $image[0];
+                                ?>
+                                <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
+                                        data-target="#foody-navbar-collapse"
+                                        aria-controls="foody-navbar-collapse" aria-expanded="false"
+                                        aria-label="Toggle navigation">
+                                    <!--                                <img class="foody-logo-text" src="-->
+                                    <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
+                                    <div class="foody-logo-text-custom-amit" style="background-size: 124px 57px;background-image: url( <?php echo  $image_url  ?>)"></div>
+                                    <div class="foody-logo-hamburger hidden"></div>
+                                    <div class="foody-logo-close hidden"></div>
+                                </button>
+                            <?php }
+
                             if (is_main_site()) { ?>
                                 <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
                                         data-target="#foody-navbar-collapse"
@@ -296,7 +314,9 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                     <div class="foody-logo-hamburger hidden"></div>
                                     <div class="foody-logo-close hidden"></div>
                                 </button>
-                           <?php } else {
+                            <?php }
+
+                            if (get_current_blog_id() === 2) {
                                 $logo = get_theme_mod( 'custom_logo' );
                                 $image = wp_get_attachment_image_src( $logo , 'full' );
                                 $image_url = $image[0];
@@ -312,7 +332,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                     <div class="foody-logo-hamburger hidden"></div>
                                     <div class="foody-logo-close hidden"></div>
                                 </button>
-                         <?php    } ?>
+                            <?php   } ?>
                         </div>
 
 
@@ -427,17 +447,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
     if(get_page_template_slug() === 'page-templates/homepage.php') {
         $brands_avenue_group = get_field('brands_avenue', 'foody_brands_avenue');
         if (isset($brands_avenue_group['brands']) && !empty($brands_avenue_group['brands'])) { ?>
-            <div class="brands-container">
-                <?php
-                foody_get_template_part(
-                    get_template_directory() . '/template-parts/common/foody-brands.php',
-                    array(
-                        'brands' => $brands_avenue_group['brands'],
-                        'title' => $brands_avenue_group['title']
-                    )
-                );
-                ?>
-            </div>
+
             <?php
         }
     }
