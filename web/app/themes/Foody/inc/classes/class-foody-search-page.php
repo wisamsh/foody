@@ -62,10 +62,15 @@ class Foody_SearchPage implements Foody_ContentWithSidebar
         foody_get_template_part(get_template_directory() . '/template-parts/search-results.php', ['search' => $this]);
 
         // mobile filter
-        foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
-            'sidebar' => array($this, 'sidebar'),
-            'wrap' => true
-        ]);
+        if ( get_current_blog_id() == 1 ){
+            foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
+                'sidebar' => array($this, 'sidebar'),
+                'wrap' => true
+            ]);
+        } else {
+            return '';
+        }
+
     }
 
     public function has_results()

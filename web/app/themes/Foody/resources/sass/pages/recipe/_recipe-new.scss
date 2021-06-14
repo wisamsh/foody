@@ -934,7 +934,7 @@ $content-width: 95%;
         }
         .rating-stars-container {
           .empty-star{
-            width:20px;
+            width:24px;
           }
         }
 
@@ -2052,7 +2052,7 @@ $content-width: 95%;
           font-size: 17px;
 
           img{
-            width:30px;
+            width:8.5vw;
           }
 
           &:not(.empty){
@@ -2125,6 +2125,10 @@ $content-width: 95%;
             height: 276.25px;
           }
 
+          .feed-logo-sticker {
+            display: none;
+          }
+
         }
 
         .details {
@@ -2157,7 +2161,7 @@ $content-width: 95%;
             .image-container {
 
               img {
-
+                width:13.5vw;
               }
             }
 
@@ -2654,18 +2658,18 @@ $content-width: 95%;
             margin-top: 2%;
             .empty-star {
               width:auto !important;
-              height: 33px;
+              height: 8vw;
               margin: 0 0.4%;
             }
           }
 
           .full-star {
-            height: 33px;
+            height: 8vw;
             margin: 0 0.5%;
           }
 
           .star {
-            height: 33px !important;
+            height: 8vw !important;
             margin: 0 0.5%;
           }
         }

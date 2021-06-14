@@ -47,24 +47,31 @@ class SidebarFilter {
 	}
 
 	public function the_filter( $echo = true ) {
-		$this->load_filters_id();
-		$title        = get_field( 'title', $this->filters_post_id );
-		$accordion_id = 'foody-filter';
+        if ( get_current_blog_id() == 1 ){
+            $this->load_filters_id();
+            $title        = get_field( 'title', $this->filters_post_id );
+            $accordion_id = 'foody-filter';
 
-		$main_accordion_args = array(
-			'title'         => $title,
-			'id'            => $accordion_id,
-			'content'       => $this->get_accordion_content(),
-			'return'        => ! $echo,
-			'title_classes' => 'main-title filter-title',
-			'title_icon'    => 'icon-filter'
-		);
+            $main_accordion_args = array(
+                'title'         => $title,
+                'id'            => $accordion_id,
+                'content'       => $this->get_accordion_content(),
+                'return'        => ! $echo,
+                'title_classes' => 'main-title filter-title',
+                'title_icon'    => 'icon-filter'
+            );
 
-		return foody_get_template_part(
-			get_template_directory() . '/template-parts/common/accordion.php',
-			$main_accordion_args
-		);
-	}
+            return foody_get_template_part(
+                get_template_directory() . '/template-parts/common/accordion.php',
+                $main_accordion_args
+            );
+        }
+
+        else {
+            return ;
+        }
+
+    }
 
 
 	/**

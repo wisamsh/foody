@@ -455,15 +455,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
     <div id="content" class="site-content">
         <?php
-        if(get_page_template_slug() === 'page-templates/homepage.php') {
-            if (isset($brands_avenue_group['brands']) && !empty($brands_avenue_group['brands'])) {
-                foody_get_template_part(get_template_directory() . '/template-parts/common/foody-brands-mobile.php', [
-                    'brands' => $brands_avenue_group['brands'],
-                    'title' => $brands_avenue_group['title'],
-                    'mobile_btn' => $brands_avenue_group['mobile_text']
-                ]);
-            }
-        }
+        
 
         if (wp_is_mobile()) {
             Foody_Header::whatsapp(['d-lg-block', 'floating', 'whatsapp-mobile']);

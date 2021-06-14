@@ -81,11 +81,13 @@ abstract class Foody_Term
 
         <?php
 
+        if ( get_current_blog_id() == 1 ) {
+            foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
+                'sidebar' => array($this, 'sidebar'),
+                'wrap' => true
+            ]);
+        }
 
-        foody_get_template_part(get_template_directory() . '/template-parts/common/mobile-filter.php', [
-            'sidebar' => array($this, 'sidebar'),
-            'wrap' => true
-        ]);
 
 
     }
