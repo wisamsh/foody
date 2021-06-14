@@ -392,9 +392,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
                                         echo "<div class='hello-user' >" . __('שלום') . " " . $user->user->first_name . "</div>";
                                     }
-                                    if (is_single() && method_exists($recipe, 'the_purchase_buttons')) {
-                                        $recipe->the_purchase_buttons();
-                                    }
+                                    
                                     ?>
 
                               <?php } else { ?>
