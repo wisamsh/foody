@@ -450,10 +450,6 @@ $content-width: 95%;
                   font-size: 17px;
                   font-family:'Afek';
                 }
-
-                i {
-                  cursor: pointer;
-                }
               }
 
               .kosher-sign {
@@ -488,7 +484,7 @@ $content-width: 95%;
                 font-family: 'Afek';
                 font-weight: bolder;
                 font-size:17px;
-                margin-left: 6%;
+                margin-left: 0.7rem;
               }
 
               .essb_links {
@@ -550,7 +546,7 @@ $content-width: 95%;
             width: 43%;
 
             .ratings-wrapper {
-              padding-top: 0%;
+              padding-top: 3%;
               width: 100%;
               display: flex;
               justify-content: flex-end;
@@ -576,8 +572,7 @@ $content-width: 95%;
               }
 
               .rating-header {
-                padding-left: 2%;
-                margin-top:1px;
+                padding-left: 6%;
                 font-family: 'Afek';
                 font-weight: bolder;
                 font-size: 17px;
@@ -880,10 +875,6 @@ $content-width: 95%;
         text-align: right;
         padding: 0 2.5%;
         font-size: 17px;
-
-        .show-read-more {
-          font-size: 17.5px;
-        }
         .foody-content{
           > p{
             font-size: 17.5px;
@@ -943,7 +934,7 @@ $content-width: 95%;
         }
         .rating-stars-container {
           .empty-star{
-            width:25px;
+            width:24px;
           }
         }
 
@@ -1077,6 +1068,8 @@ $content-width: 95%;
 
          }
          .foody-pan-select {
+
+
            button {
              padding-right: 0;
              font-size: 18px;
@@ -1382,7 +1375,7 @@ $content-width: 95%;
 
     section.purchase-buttons {
       margin-bottom: 3%;
-      width:100%;
+
       .purchase-buttons {
         width: 100%;
       }
@@ -2058,7 +2051,7 @@ $content-width: 95%;
           font-size: 17px;
 
           img{
-            width:8vw;
+            width:8.5vw;
           }
 
           &:not(.empty){
@@ -2116,7 +2109,7 @@ $content-width: 95%;
             }
           }
 
-          margin-top: -20px;
+          margin-top: -10px;
           margin-left: 0;
           margin-right: 0;
           clip-path: none;
@@ -2129,6 +2122,10 @@ $content-width: 95%;
 
           iframe.video-container {
             height: 276.25px;
+          }
+
+          .feed-logo-sticker {
+            display: none;
           }
 
         }
@@ -2163,7 +2160,7 @@ $content-width: 95%;
             .image-container {
 
               img {
-
+                width:13.5vw;
               }
             }
 
@@ -2295,7 +2292,6 @@ $content-width: 95%;
             display: flex;
             justify-content: space-between;
             padding: 0;
-            padding-right:10px !important;
             align-items: center;
           }
 
@@ -2602,10 +2598,6 @@ $content-width: 95%;
               font-size: 17.5px;
             }
           }
-
-          .show-read-more {
-            font-size:17.5px;
-          }
         }
       }
 
@@ -2664,18 +2656,19 @@ $content-width: 95%;
           .rating-stars-container {
             margin-top: 2%;
             .empty-star {
-              width:18% !important;
+              width:auto !important;
+              height: 8vw;
               margin: 0 0.4%;
             }
           }
 
           .full-star {
-            height: 33px;
+            height: 8vw;
             margin: 0 0.5%;
           }
 
           .star {
-            height: 33px !important;
+            height: 8vw !important;
             margin: 0 0.5%;
           }
         }
@@ -2746,10 +2739,6 @@ $content-width: 95%;
 
 
             > label {
-              font-size: 17px;
-              text-align: right;
-              padding-top: 5px;
-              padding-bottom: 5px;
               margin: auto;
             }
 
@@ -2812,7 +2801,6 @@ $content-width: 95%;
 
             label {
               font-size: 17px;
-              padding-left: 9px;
               line-height: $input-height;
               vertical-align: middle;
               margin: auto 0;
@@ -2838,7 +2826,7 @@ $content-width: 95%;
 
       section.purchase-buttons {
         margin-bottom: 3%;
-        width: 100%;
+
         .purchase-buttons {
           width: 100%;
         }
@@ -2864,6 +2852,10 @@ $content-width: 95%;
               select {
                 left: unset;
               }
+            }
+
+            .choose-pan-title {
+
             }
 
             .foody-pan-select {
@@ -3707,16 +3699,16 @@ $content-width: 95%;
 
 @media print {
 
-  #octAccess{
-    display: none;
-  }
-  .acsb-widget{
-    display:none;
-  }
+    #octAccess{
+      display: none;
+    }
+    .acsb-widget{
+      display:none;
+    }
 
-  .google-adx-container{
-    display: none;
-  }
+    .google-adx-container{
+      display: none;
+    }
 
   .single-foody_recipe {
     .print{
@@ -3776,7 +3768,6 @@ $content-width: 95%;
           }
 
           .description-print{
-            margin-top: 15px;
             text-align: right;
             width: 50%;
             display: block;
@@ -3802,8 +3793,6 @@ $content-width: 95%;
               ul.content-details-bullets{
                  li{
                    font-size: 12px;
-                   position: absolute;
-                   right: 0px;
                  }
               }
             }

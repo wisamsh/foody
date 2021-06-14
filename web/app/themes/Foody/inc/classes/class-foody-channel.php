@@ -122,10 +122,13 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
 		foody_get_template_part( get_template_directory() . '/template-parts/common/foody-tabs.php', $tabs );
 
 		// mobile filter
-		foody_get_template_part( get_template_directory() . '/template-parts/common/mobile-filter.php', [
-			'sidebar' => array( $this, 'sidebar' ),
-			'wrap'    => true
-		] );
+        if ( get_current_blog_id() == 1 ) {
+            foody_get_template_part( get_template_directory() . '/template-parts/common/mobile-filter.php', [
+                'sidebar' => array( $this, 'sidebar' ),
+                'wrap'    => true
+            ] );
+        }
+
 
 	}
 

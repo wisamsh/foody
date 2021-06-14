@@ -21,7 +21,7 @@ class Foody_Comments {
 			$args = $this->get_list_comments_args();
 		}
 
-        wp_list_comments($args);
+       wp_list_comments($args);
 	}
 
 
@@ -31,8 +31,9 @@ class Foody_Comments {
 			'format'     => 'html5',
 			'short_ping' => true,
 			'type'       => 'comment',
+			'reverse_top_level' => true,
 			'walker'     => new Foody_CommentWalker(),
-			'per_page'   => get_option( 'comments_per_page' ),
+			'per_page'   => 3,
 			'max_depth'  => 2,
 			'reply_text' => __( 'הוסף תגובה', 'Foody' )
 		);

@@ -36,39 +36,12 @@
 
   .recipe-shortcode-container {
     .details-container {
-
-      .details{
-        .description{
-          text-align: right;
-          line-height: normal;
-          font-family: Afek;
-          font-size: 17px;
-          margin-top: 5px;
-          margin-bottom: 19px;
-        }
-      }
-      .recipe-title{
-        text-align: center;
-        padding-left: 18px !important;
-        margin-top: 9px;
-      }
-
       div:not(.details) {
-
+        .empty-star, .full-star, .half-star, .star {
+          width:24px;
+        }
         img {
           width: 100%;
-        }
-
-      }
-
-      .content-details-bullets-container{
-        display: flex;
-        justify-content: space-between;
-        .wrapper{
-          text-align: right;
-          .empty-star{
-            width:22px;
-          }
         }
       }
     }
