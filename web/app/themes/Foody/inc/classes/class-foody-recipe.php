@@ -6,8 +6,7 @@
  * Date: 5/16/18
  * Time: 6:23 PM
  */
-require_once 'class-foody-recipe-old.php';
-class Foody_Recipe extends Foody_Recipe_Old
+class Foody_Recipe extends Foody_Post
 {
 
     public $ingredients_title;
@@ -111,19 +110,12 @@ class Foody_Recipe extends Foody_Recipe_Old
     public function the_overview()
     {
         if ($this->post != null) {
-            if ( in_category( 'עוגות', get_the_ID() ) ){
-                foody_get_template_part(
-                    get_template_directory() . '/template-parts/content-recipe-overview.php',
-                    ['overview' => $this->overview,
-                        'recipe' => $this]
-                );
-            } else {
-                foody_get_template_part(
-                    get_template_directory() . '/template-parts/old-recipe/content-recipe-overview.php',
-                    $this->overview
-                );
-            }
 
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/content-recipe-overview.php',
+                ['overview' => $this->overview,
+                    'recipe' => $this]
+            );
         }
     }
 
@@ -191,11 +183,7 @@ class Foody_Recipe extends Foody_Recipe_Old
         ];
 
         if (array_not_empty($notes)) {
-            if ( in_category( 'עוגות', get_the_ID() ) ) {
-                foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-notes.php', $template_args);
-            } else {
-                foody_get_template_part(get_template_directory() . '/template-parts/old-recipe/content-recipe-notes.php', $template_args);
-            }
+            foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-notes.php', $template_args);
         }
 
     }
@@ -205,18 +193,11 @@ class Foody_Recipe extends Foody_Recipe_Old
         $args = [
             'value' => get_rating_by_user_and_post($this->id)
         ];
-        if ( in_category( 'עוגות', get_the_ID() ) ) {
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/content-rating.php',
-                $args
-            );
-        } else {
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/old-recipe/content-rating.php',
-                $args
-            );
-        }
 
+        foody_get_template_part(
+            get_template_directory() . '/template-parts/content-rating.php',
+            $args
+        );
     }
 
     public function the_nutrition()
@@ -279,13 +260,7 @@ class Foody_Recipe extends Foody_Recipe_Old
             $target = get_option('foody_conversion_table_link_target', false) ? '_blank' : '_self';
             $link_text = get_option('foody_conversion_table_link_text', false);
 
-            if ( in_category( 'עוגות', get_the_ID() ) ) {
-                echo '<a class="sizes-and-weights" href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
-
-            } else {
-                echo '<a href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
-
-            }
+            echo '<a class="sizes-and-weights" href="' . $link . '" target="' . $target . '">' . $link_text . '</a>';
         } else {
             echo '';
         }
@@ -346,27 +321,16 @@ class Foody_Recipe extends Foody_Recipe_Old
 
     public function how_i_did()
     {
-        if ( in_category( 'עוגות', get_the_ID() ) ) {
-            $template = '/comments-how-i-did.php';
+        $template = '/comments-how-i-did.php';
 
-            if (wp_is_mobile()) {
-                $template = '/comments-how-i-did-mobile.php';
-            }
-
-            comments_template(
-                $template,
-                true
-            );
-        } else {
-            $template = '/template-parts/old-recipe/comments-how-i-did.php';
-
-
-            comments_template(
-                $template,
-                true
-            );
+        if (wp_is_mobile()) {
+            $template = '/comments-how-i-did-mobile.php';
         }
 
+        comments_template(
+            $template,
+            true
+        );
     }
 
 
@@ -458,24 +422,16 @@ class Foody_Recipe extends Foody_Recipe_Old
             $this->calories_per_dish = round($this->get_calories());
         }
 
-        if ( in_category( 'עוגות', get_the_ID() ) ){
-            $this->overview = array(
-                'ingredients_count' => ['text' => $this->ingredients_count, 'icon' => 'ingedients@3x.png', 'icon-desktop' => 'ingedients@2x.png'],
-                'time' => [
-                    'preparation_time' => ['text' => $this->get_recipe_time($overview['preparation_time'], true, true), 'icon' => 'clock@3x.png', 'icon-desktop' => 'clock@2x.png'],
-                    'total_time' => ['text' => $this->get_recipe_time($overview['total_time'], true, true), 'icon' => null]
-                ],
-                'calories_per_dish' => ['text' => $this->calories_per_dish, 'icon' => 'kcal@3x.png', 'icon-desktop' => 'kcal@2x.png'],
-                'difficulty_level' => ['text' => $difficulty_level, 'icon' => null],
-            );
-        } else {
-            $this->overview = array(
-                'preparation_time' => $this->get_recipe_time($overview['preparation_time']),
-                'total_time' => $this->get_recipe_time($overview['total_time']),
-                'difficulty_level' => $difficulty_level,
-                'ingredients_count' => $this->ingredients_count
-            );
-        }
+
+        $this->overview = array(
+            'ingredients_count' => ['text' => $this->ingredients_count, 'icon' => 'ingedients@3x.png', 'icon-desktop' => 'ingedients@2x.png'],
+            'time' => [
+                'preparation_time' => ['text' => $this->get_recipe_time($overview['preparation_time'], true, true), 'icon' => 'clock@3x.png', 'icon-desktop' => 'clock@2x.png'],
+                'total_time' => ['text' => $this->get_recipe_time($overview['total_time'], true, true), 'icon' => null]
+            ],
+            'calories_per_dish' => ['text' => $this->calories_per_dish, 'icon' => 'kcal@3x.png', 'icon-desktop' => 'kcal@2x.png'],
+            'difficulty_level' => ['text' => $difficulty_level, 'icon' => null],
+        );
 
     }
 
@@ -776,22 +732,12 @@ class Foody_Recipe extends Foody_Recipe_Old
 
     public function the_details()
     {
-        if ( in_category( 'עוגות', get_the_ID() ) ) {
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/_content-recipe-details.php',
-                [
-                    'page' => $this
-                ]
-            );
-        } else {
-            foody_get_template_part(
-                get_template_directory() . '/template-parts/old-recipe/_content-recipe-details.php',
-                [
-                    'page' => $this
-                ]
-            );
-        }
-
+        foody_get_template_part(
+            get_template_directory() . '/template-parts/_content-recipe-details.php',
+            [
+                'page' => $this
+            ]
+        );
     }
 
     public function has_rating()
@@ -851,20 +797,10 @@ class Foody_Recipe extends Foody_Recipe_Old
             }
 
         } else {
-
-            if ( in_category( 'עוגות', get_the_ID() ) ) {
-                foody_get_template_part(
-                    get_template_directory() . '/template-parts/content-recipe-calculator-dishes.php',
-                    ['recipe' => $this]
-                );
-            } else {
-                foody_get_template_part(
-                    get_template_directory() . '/template-parts/old-recipe/content-recipe-calculator-dishes.php',
-                    ['recipe' => $this]
-                );
-            }
-
-
+            foody_get_template_part(
+                get_template_directory() . '/template-parts/content-recipe-calculator-dishes.php',
+                ['recipe' => $this]
+            );
         }
     }
 

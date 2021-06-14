@@ -11,18 +11,9 @@
 /** @noinspection PhpUndefinedVariableInspection */
 $recipe = $template_args['page'];
 
-if ( in_category( 'עוגות', get_the_ID() ) ){
-    foody_get_template_part(
-        get_template_directory() . '/template-parts/content-recipe-display.php',
-        [
-            'recipe' => $recipe
-        ]
-    );
-} else {
-    foody_get_template_part(
-        get_template_directory() . '/template-parts/content-recipe-display-old.php',
-        [
-            'recipe' => $recipe
-        ]
-    );
-}
+foody_get_template_part(
+    get_template_directory() . '/template-parts/content-recipe-display.php',
+    [
+        'recipe' => $recipe
+    ]
+);
