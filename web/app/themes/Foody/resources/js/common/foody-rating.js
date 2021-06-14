@@ -17,18 +17,24 @@ jQuery(document).ready(($) => {
                         let foodyLoader;
                         if ( $(window).width() < 768){
                             foodyLoader = new FoodyLoader({
-                                container: $(container) ,
+                                container: $('.comments-rating-prep-container .rating') ,
                                 id: 'rating-loader'
                             });
+                            if ($(this).closest('.ratings-wrapper .rating-stars-container') ){
+                                foodyLoader.attach({topPercentage: 50});
+                            } else{
+                                foodyLoader.attach({topPercentage: topPracent});
+                            }
                         } else {
                              foodyLoader = new FoodyLoader({
                                 container: parentContainerIsWrapper ? $(container)[1] : $(container),
                                 id: 'rating-loader'
                             });
+                            foodyLoader.attach({topPercentage: topPracent});
                         }
 
 
-                        foodyLoader.attach({topPercentage: topPracent});
+
                         foodyAjax({
                             action: 'foody_add_rating',
                             data: {

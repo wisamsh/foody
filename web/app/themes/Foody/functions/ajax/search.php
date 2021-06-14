@@ -186,6 +186,7 @@ function foody_feed_ajax_filter()
         wp_die(foody_ajax_error('no data provided for filter'));
     }
 
+    $action = $_POST['action'];
     $filter = $_POST['data'];
     $options = $_POST['options'];
 
@@ -213,7 +214,11 @@ function foody_feed_ajax_filter()
         }
         if ( !empty( $all_recipes ) ) {
             $foody_query = Foody_Query::get_instance();
+
             $query_args = $foody_query->get_query($context, $context_args);
+            if ($action === 'foody_feed_filter') {
+                $query_args['posts_per_page'] = '-1';
+            }
             $wp_args = array_merge($wp_args, $query_args);
 
             $foody_search = new Foody_Search($context, $context_args);

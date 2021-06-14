@@ -50,16 +50,16 @@ $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rat
             }
             ?>
         </div>
-    <?php if(wp_is_mobile() && get_post_type() == 'foody_recipe' && get_option( 'foody_show_kosher')) { ?>
+    <?php  if(wp_is_mobile() && get_post_type() == 'foody_recipe' && get_option( 'foody_show_kosher')) { ?>
         <div class="kosher-sign">
             <?php echo __('כשר'); ?>
         </div>
-    <?php } ?>
+    <?php  } ?>
     <?php endif; ?>
     <?php echo $social_icons ?>
     <?php if (wp_is_mobile() && is_single() && in_array(get_post_type(), ['foody_recipe', 'post'])): ?>
         <section class="d-block d-lg-none">
-            <?php // Foody_Recipe::ratings() ?>
+            <?php  Foody_Recipe::ratings() ?>
         </section>
     <?php endif; ?>
 

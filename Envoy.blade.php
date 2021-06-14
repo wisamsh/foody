@@ -41,6 +41,10 @@ $servers = [
     'prod6' => 'ubuntu@54.154.60.105',
     'prod7' => 'ubuntu@34.245.234.96',
     'prod8' => 'ubuntu@34.241.6.70',
+    'prod9' => 'ubuntu@54.171.187.30',
+    'prod10' => 'ubuntu@52.213.209.39',
+    'prod11' => 'ubuntu@54.78.50.237',
+
     'prod-clone1' => 'ubuntu@34.254.198.248',
     'prod-clone2' => 'ubuntu@34.242.201.112'
 ];
