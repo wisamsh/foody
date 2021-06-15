@@ -47,7 +47,7 @@ class SidebarFilter {
 	}
 
 	public function the_filter( $echo = true ) {
-	    if ( get_current_blog_id() == 1 ){
+        if ( get_current_blog_id() == 1 ){
             $this->load_filters_id();
             $title        = get_field( 'title', $this->filters_post_id );
             $accordion_id = 'foody-filter';
@@ -65,11 +65,13 @@ class SidebarFilter {
                 get_template_directory() . '/template-parts/common/accordion.php',
                 $main_accordion_args
             );
-        } else {
-	        return ;
         }
 
-	}
+        else {
+            return ;
+        }
+
+    }
 
 
 	/**
@@ -135,7 +137,7 @@ class SidebarFilter {
 	 */
 	public function get_accordion_content() {
 		$content = '';
-		if ( have_rows( 'filters_list', $this->filters_post_id )  ) {
+		if ( have_rows( 'filters_list', $this->filters_post_id ) ) {
 
 			// a list of filtering sections
 			// as configured in Foody Search Options page

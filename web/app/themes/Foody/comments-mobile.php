@@ -48,7 +48,7 @@ $foody_comments = new Foody_Comments();
             <ol id="comments-list" class="comment-list">
                 <?php
                 global $wp_query, $post;
-                $per_page = 4;
+                $per_page = 3;
                 $cpage = ( ceil( get_comments( array(
                         'post_id' => $post->ID,
                         'type'  => 'comment',

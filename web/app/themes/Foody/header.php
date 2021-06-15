@@ -92,13 +92,9 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 <?php endif; ?>
 <div id="page" class="site">
     <?php $post_type = is_single() && isset($post) && isset($post->post_type) ? $post->post_type : ''; ?>
-
-    <?php if ( in_category( 'עוגות', get_the_ID() ) && !is_search() ) { ?>
-    <header id="masthead" class="site-header no-print hidden-recipe-header">
-        <?php } else { ?>
-        <header id="masthead" class="site-header old no-print">
-            <?php }?>
-
+    <header id="masthead" class="site-header no-print <?php if ($post_type == 'foody_recipe' && wp_is_mobile()) {
+        echo 'hidden-recipe-header';
+    } ?>">
         <?php if (is_multisite() && !is_main_site()): ?>
             <?php $header->the_foody_collaboration(false); ?>
         <?php endif; ?>
@@ -226,7 +222,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
         <!-- #site-navigation -->
     </header><!-- #masthead -->
-    <?php if (is_single() && $post_type == 'foody_recipe' && wp_is_mobile() && in_category('עוגות', get_the_ID())) { ?>
+    <?php if (is_single() && $post_type == 'foody_recipe' && wp_is_mobile()) { ?>
         <div class="search-overlay floating-mobile-header d-lg-none">
 
             <div class="input-container">
@@ -251,9 +247,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                 //if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
                     <div class="related-recipes-container">
                         <div class="close-btn">&#10005;</div>
-                        <?php $recipe->get_similar_content($similar_content);
-
-                        ?>
+                        <?php $recipe->get_similar_content($similar_content); ?>
                     </div>
                 <?php //}
             } ?>
@@ -307,7 +301,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                     <div class="foody-logo-hamburger hidden"></div>
                                     <div class="foody-logo-close hidden"></div>
                                 </button>
-                           <?php }
+                            <?php }
 
                             if (is_main_site()) { ?>
                                 <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
@@ -320,7 +314,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                     <div class="foody-logo-hamburger hidden"></div>
                                     <div class="foody-logo-close hidden"></div>
                                 </button>
-                           <?php }
+                            <?php }
 
                             if (get_current_blog_id() === 2) {
                                 $logo = get_theme_mod( 'custom_logo' );
@@ -338,7 +332,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                     <div class="foody-logo-hamburger hidden"></div>
                                     <div class="foody-logo-close hidden"></div>
                                 </button>
-                         <?php   } ?>
+                            <?php   } ?>
                         </div>
 
 
@@ -398,7 +392,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
                                         echo "<div class='hello-user' >" . __('שלום') . " " . $user->user->first_name . "</div>";
                                     }
-                                   
+                                    
                                     ?>
 
                               <?php } else { ?>
@@ -451,17 +445,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
     if(get_page_template_slug() === 'page-templates/homepage.php') {
         $brands_avenue_group = get_field('brands_avenue', 'foody_brands_avenue');
         if (isset($brands_avenue_group['brands']) && !empty($brands_avenue_group['brands'])) { ?>
-            <div class="brands-container">
-                <?php
-                foody_get_template_part(
-                    get_template_directory() . '/template-parts/common/foody-brands.php',
-                    array(
-                        'brands' => $brands_avenue_group['brands'],
-                        'title' => $brands_avenue_group['title']
-                    )
-                );
-                ?>
-            </div>
+
             <?php
         }
     }
@@ -469,15 +453,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
     <div id="content" class="site-content">
         <?php
-        if(get_page_template_slug() === 'page-templates/homepage.php') {
-            if (isset($brands_avenue_group['brands']) && !empty($brands_avenue_group['brands'])) {
-                foody_get_template_part(get_template_directory() . '/template-parts/common/foody-brands-mobile.php', [
-                    'brands' => $brands_avenue_group['brands'],
-                    'title' => $brands_avenue_group['title'],
-                    'mobile_btn' => $brands_avenue_group['mobile_text']
-                ]);
-            }
-        }
+        
 
         if (wp_is_mobile()) {
             Foody_Header::whatsapp(['d-lg-block', 'floating', 'whatsapp-mobile']);

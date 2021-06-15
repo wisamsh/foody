@@ -35,7 +35,7 @@ jQuery(document).ready(function ($) {
         }
 
     });
-    
+
 
     window.addEventListener("orientationchange", function () {
         if (foodyGlobals.isTablet && navbarShown) {
@@ -146,7 +146,7 @@ jQuery(document).ready(function ($) {
             $('.related-content-overlay .related-recipes-container').css("bottom", "65px");
         } else {
             $('.show-recipes-container button').css('top','-10px')
-             $('.filter-mobile .filter-btn').css('bottom','22px');
+            $('.filter-mobile .filter-btn').css('bottom','22px');
         }
         sessionStorage.setItem('banner-popup-closed', 'true');
 
