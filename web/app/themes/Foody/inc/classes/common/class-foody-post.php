@@ -303,12 +303,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
     public function the_featured_content( $shortcode = false)
     {
         if($this instanceof Foody_Recipe && !$shortcode){
-            if ( in_category( 'עוגות', get_the_ID() ) ){
-                $this->the_video_box_new();
-            } else {
-                $this->the_video_box();
-            }
-
+            $this->the_video_box_new();
         }
         else {
             $this->the_video_box();

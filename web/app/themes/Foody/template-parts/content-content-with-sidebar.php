@@ -59,32 +59,11 @@ if (method_exists($foody_page, $css_fn)) {
                                 the_post();
                                 foody_set_post_views($foody_page->getId());
 
-                                if ( in_category( 'עוגות', get_the_ID() ) ) { ?>
-                                    <section class="details-container">
-                                        <div class="<?php foody_el_classes($featured_content_classes) ?> no-print">
-                                            <?php $foody_page->the_featured_content() ?>
-                                        </div>
-                               <?php } else { ?>
-                                    <section class="details-container-old">
-                                        <?php if (!is_main_site()){ ?>
-                                            <div class="<?php foody_el_classes($featured_content_classes) ?> not-main-site no-print">
-                                                <?php $foody_page->the_featured_content() ?>
-                                            </div>
-                                        <?php } else {
-                                              if (get_field('recipe_channel', get_the_ID())){ ?>
-                                                  <div class="<?php foody_el_classes($featured_content_classes) ?> no-print">
-                                                      <?php $foody_page->the_featured_content() ?>
-                                                  </div>
-                                             <?php } else { ?>
-                                                  <div class="<?php foody_el_classes($featured_content_classes) ?> not-recipe-channel no-print">
-                                                      <?php $foody_page->the_featured_content() ?>
-                                                  </div>
-                                            <?php  } ?>
-
-
-                                       <?php }?>
-                                <?php  }?>
-
+                                ?>
+                                <section class="details-container">
+                                    <div class="<?php foody_el_classes($featured_content_classes) ?> no-print">
+                                        <?php $foody_page->the_featured_content() ?>
+                                    </div>
                                     <?php if (!empty($foody_page->get_featured_content_credit())) : ?>
                                         <div class="feature-content-credit">
                                             <?php echo $foody_page->get_featured_content_credit(); ?>
