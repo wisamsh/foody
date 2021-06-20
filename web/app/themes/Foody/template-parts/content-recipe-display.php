@@ -161,16 +161,13 @@ $similar_content = get_field('similar_content_group', $recipe->get_id());
             $recipe->get_similar_content($similar_content);
         ?>
     </section>
-<?php //} ?>
+<?php //}
 
-
-
-
-    <section class="recipe-how-i-did no-print">
-        <?php $recipe->how_i_did(); ?>
-
-    </section>
-
+  if ( get_current_blog_id() === 1 ) { ?>
+      <section class="recipe-how-i-did no-print">
+          <?php $recipe->how_i_did(); ?>
+      </section>
+ <?php } ?>
 
     <section class="recipe-comments no-print">
         <?php $recipe->comments(); ?>
