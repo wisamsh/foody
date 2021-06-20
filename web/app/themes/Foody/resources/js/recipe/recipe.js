@@ -8,7 +8,9 @@
 let player;
 let videoThumbnail;
 if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGlobals.post.type == 'post')) {
-
+    if ( foodyGlobals['current_blog_site'] === 2  ) {
+        $(".single-foody_recipe .recipe-overview  ul > li:nth-child(3) ").css('display', 'none')
+    }
     // sliders data
     var sliderMainData  = false, sliderNavData = false;
 
