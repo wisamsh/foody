@@ -618,7 +618,7 @@ $content-width: 95%;
 
         .overview.row{
           margin: 0;
-          padding:1% 0 0 0;
+          padding:1% 0 1% 0;
           display: flex;
           flex-direction: row;
           justify-content: space-evenly;
@@ -709,7 +709,7 @@ $content-width: 95%;
           width: 100%;
           flex-wrap: unset;
           margin: 0;
-          padding: 1%;
+          padding: 0% 0 1% 0;
           display: flex;
           flex-direction: row;
           justify-content: space-evenly;
