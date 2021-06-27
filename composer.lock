@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b41903bb2e72ee2693a0168e6477f463",
+    "content-hash": "64d576106f21d641378310e59835f067",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -1003,6 +1003,15 @@
                 "simple-cache"
             ],
             "time": "2017-10-23T01:57:42+00:00"
+        },
+        {
+            "name": "pushengage/push-engage-web-push-notifications",
+            "version": "3.2.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/pushengage.3.2.0.zip"
+            },
+            "type": "wordpress-plugin"
         },
         {
             "name": "roots/multisite-url-fixer",
