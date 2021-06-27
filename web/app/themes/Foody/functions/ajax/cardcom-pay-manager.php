@@ -165,7 +165,12 @@ function generate_dynamic_cardcom_form($added_id, $member_data, $thank_you_page)
         $vars['IndicatorUrl'] = get_home_url() . '/app/themes/Foody/functions/ajax/cardcom-response-listener.php'; // Indicator Url \ Notify URL . after use -  http://kb.cardcom.co.il/article/AA-00240/0
 
         $vars["ReturnValue"] = $added_id; // Optional , ,recommended , value that will be return and save in CardCom system
-        $vars["MaxNumOfPayments"] = "1"; // max num of payments to show  to the user
+        $vars["MinNumOfPayments"] = "1"; // max num of payments to show  to the user
+        if($member_data['price'] >= 199) {
+            $vars["MaxNumOfPayments"] = "3";
+        } else {
+            $vars["MaxNumOfPayments"] = "1"; // max num of payments to show  to the user
+        }
 
         $vars["ShowInvoiceHead"] = "false"; //  if show & edit Invoice Details on the page.
         $vars["InvoiceHeadOperation"] = "0"; //  0 = no create & show Invoice.  1 =(default)create Invoice.  2 = show Details Invoice but not create Invoice !
