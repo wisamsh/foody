@@ -142,7 +142,7 @@ window.calculator = function (selector) {
                 caloriesNutrientValForCompare = caloriesNutrientOriginalVal;
                 sugarNutrientValForCompare = sugarNutrientOriginalVal;
             }
-            if (textForOriginal!= '' && !isMultiSubIng) {
+            if (textForOriginal != '' && !isMultiSubIng) {
                 let newCaloriesNutrient = $('[data-name=calories]').find('.chosen-dishes-nutrition > .value').length ? parseFloat($('[data-name=calories]').find('.chosen-dishes-nutrition > .value')[0].innerText) : 0;
                 handleSubsTextBackAndForth(textToShow, textForOriginal, caloriesNutrientValForCompare, sugarNutrientValForCompare, textColor, caloriesNutrientValForCompare != newCaloriesNutrient);
             } else {
@@ -170,7 +170,7 @@ window.calculator = function (selector) {
         if (hasSubstitute) {
             let caloriesNutrientValForCompare = typeof caloriesNutrientOriginalVal != 'undefined' ? (caloriesNutrientOriginalVal / $numberOfDishes[0].defaultValue) * $numberOfDishes[0].value : undefined;
             let sugarNutrientValForCompare = typeof sugarNutrientOriginalVal != 'undefined' ? (sugarNutrientOriginalVal / $numberOfDishes[0].defaultValue) * $numberOfDishes[0].value : undefined;
-            if (textForOriginal!= '' && !isMultiSubIng) {
+            if (textForOriginal != '' && !isMultiSubIng) {
                 let newCaloriesNutrient = $('[data-name=calories]').find('.chosen-dishes-nutrition > .value').length ? parseFloat($('[data-name=calories]').find('.chosen-dishes-nutrition > .value')[0].innerText) : 0;
                 handleSubsTextBackAndForth(textToShow, textForOriginal, caloriesNutrientValForCompare, sugarNutrientValForCompare, textColor, caloriesNutrientValForCompare != newCaloriesNutrient);
             } else {
@@ -198,48 +198,49 @@ window.calculator = function (selector) {
 
 
         /** handle substitute ingredients **/
-        let originalNumberOfDishes = parseInt($option.attr('value'))
+        let originalNumberOfDishes = parseFloat($option.attr('value'))
         let hasSubstitute = updateIngredients($elements, originalNumberOfDishes, val, undefined, false);
         $('.ingredients .amount').each(function () {
             let $this = $(this);
             let amount = $this.data('amount');
-            let original = $this.data('original');
-            let nutrientBaseValue = $this.data('amount');
+            if ((typeof amount === 'string' && amount.length) || (typeof amount === 'number' && amount)) {
+                let original = $this.data('original');
+                let nutrientBaseValue = $this.data('amount');
 
-            let totalValueForNutrient = 0;
+                let totalValueForNutrient = 0;
 
-            if (!nutrientBaseValue) {
-                nutrientBaseValue = 0;
-            }
+                if (!nutrientBaseValue) {
+                    nutrientBaseValue = 0;
+                }
 
-            nutrientBaseValue = parseFloat(nutrientBaseValue);
+                nutrientBaseValue = parseFloat(nutrientBaseValue);
 
-            // Divide by original num of dishes to retrieve one dish
-            nutrientBaseValue = nutrientBaseValue / originalNumberOfDishes;
+                // Divide by original num of dishes to retrieve one dish
+                nutrientBaseValue = originalNumberOfDishes >= 1 ? nutrientBaseValue / originalNumberOfDishes : nutrientBaseValue * originalNumberOfDishes;
 
-            let sumBaseValue =  nutrientBaseValue / originalNumberOfDishes
+                let sumBaseValue = originalNumberOfDishes >= 1 ? nutrientBaseValue / originalNumberOfDishes : nutrientBaseValue * originalNumberOfDishes;
 
-            if ( originalNumberOfDishes === 1 ) {
-                // console.log('original')
-                $(this).text(original)
-            }
-
-            if ( sumBaseValue % 1 === 0) {
-                let fixedBaseValue = Math.floor(sumBaseValue)
-                $(this).text(fixedBaseValue)
-            } else {
-                if ( originalNumberOfDishes === 1 ) {
+                if (originalNumberOfDishes === 1) {
                     // console.log('original')
                     $(this).text(original)
-                } else {
-                    let fixedBaseValue = sumBaseValue.toFixed(2);
+                }
+
+                if (sumBaseValue % 1 === 0) {
+                    let fixedBaseValue = Math.floor(sumBaseValue)
                     $(this).text(fixedBaseValue)
+                } else {
+                    if (originalNumberOfDishes === 1) {
+                        // console.log('original')
+                        $(this).text(original)
+                    } else {
+                        let fixedBaseValue = sumBaseValue.toFixed(2);
+                        $(this).text(fixedBaseValue)
+                    }
                 }
             }
-
         });
         if (hasSubstitute) {
-            if (textForOriginal!= '' && !isMultiSubIng) {
+            if (textForOriginal != '' && !isMultiSubIng) {
                 let newCaloriesNutrient = $('[data-name=calories]').find('.chosen-dishes-nutrition > .value').length ? parseFloat($('[data-name=calories]').find('.chosen-dishes-nutrition > .value')[0].innerText) : 0;
                 handleSubsTextBackAndForth(textToShow, textForOriginal, caloriesNutrientOriginalVal, sugarNutrientOriginalVal, textColor, caloriesNutrientOriginalVal != newCaloriesNutrient);
             } else {
@@ -249,38 +250,37 @@ window.calculator = function (selector) {
     });
 
 
-
-    $('#pan-conversions').on('changed.bs.select', function () {
-        let val = $(this).val();
-
-
-        let $option = $(this).find(':selected');
-
-        let original = $option.data('original');
-
-        let originalSlices = $(this).find('option[data-original=1]').data('slices');
-        if (!originalSlices) {
-            originalSlices = 1;
-        }
-        let slices = $option.data('slices');
-        if (!slices) {
-            slices = 1;
-        }
-
-
-        /** handle substitute ingredients **/
-
-        let hasSubstitute = updateIngredients($elements, originalNumberOfDishes, val, undefined, false);
-
-        if (hasSubstitute) {
-            if (textForOriginal!= '' && !isMultiSubIng) {
-                let newCaloriesNutrient = $('[data-name=calories]').find('.chosen-dishes-nutrition > .value').length ? parseFloat($('[data-name=calories]').find('.chosen-dishes-nutrition > .value')[0].innerText) : 0;
-                handleSubsTextBackAndForth(textToShow, textForOriginal, caloriesNutrientOriginalVal, sugarNutrientOriginalVal, textColor, caloriesNutrientOriginalVal != newCaloriesNutrient);
-            } else {
-                handleSubsText(textToShow, caloriesNutrientOriginalVal, sugarNutrientOriginalVal, textColor);
-            }
-        }
-    });
+    // $('#pan-conversions').on('changed.bs.select', function () {
+    //     let val = $(this).val();
+    //
+    //
+    //     let $option = $(this).find(':selected');
+    //
+    //     let original = $option.data('original');
+    //
+    //     let originalSlices = $(this).find('option[data-original=1]').data('slices');
+    //     if (!originalSlices) {
+    //         originalSlices = 1;
+    //     }
+    //     let slices = $option.data('slices');
+    //     if (!slices) {
+    //         slices = 1;
+    //     }
+    //
+    //
+    //     /** handle substitute ingredients **/
+    //
+    //     let hasSubstitute = updateIngredients($elements, originalNumberOfDishes, val, undefined, false);
+    //
+    //     if (hasSubstitute) {
+    //         if (textForOriginal!= '' && !isMultiSubIng) {
+    //             let newCaloriesNutrient = $('[data-name=calories]').find('.chosen-dishes-nutrition > .value').length ? parseFloat($('[data-name=calories]').find('.chosen-dishes-nutrition > .value')[0].innerText) : 0;
+    //             handleSubsTextBackAndForth(textToShow, textForOriginal, caloriesNutrientOriginalVal, sugarNutrientOriginalVal, textColor, caloriesNutrientOriginalVal != newCaloriesNutrient);
+    //         } else {
+    //             handleSubsText(textToShow, caloriesNutrientOriginalVal, sugarNutrientOriginalVal, textColor);
+    //         }
+    //     }
+    // });
 
     $('.substitute-all-btn').on('click', function () {
         switch ($(this).attr('data-current')) {
@@ -500,7 +500,7 @@ function handleSubsTextBackAndForth(textToShow, textForOriginal, caloriesNutrien
 
     if (switchToSub) {
         calCalc = Math.abs(Math.round(caloriesNutrientOriginalVal - newCaloriesNutrient));
-        sugCalc =  Math.abs(Math.round(sugarNutrientOriginalVal - newSugarNutrient));
+        sugCalc = Math.abs(Math.round(sugarNutrientOriginalVal - newSugarNutrient));
     } else {
         if ($('.cal-calc').length) {
             let toCalcCals = $('.cal-calc')[0].innerText;
