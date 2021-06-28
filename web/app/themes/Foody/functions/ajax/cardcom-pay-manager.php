@@ -167,7 +167,7 @@ function generate_dynamic_cardcom_form($added_id, $member_data, $thank_you_page)
         $vars["ReturnValue"] = $added_id; // Optional , ,recommended , value that will be return and save in CardCom system
         $vars["MinNumOfPayments"] = "1"; // max num of payments to show  to the user
         if($member_data['price'] >= 199) {
-            $vars["MaxNumOfPayments"] = "3";
+            $vars["MaxNumOfPayments"] = "10";
         } else {
             $vars["MaxNumOfPayments"] = "1"; // max num of payments to show  to the user
         }
