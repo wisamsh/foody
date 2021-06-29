@@ -16,9 +16,9 @@ get_header();
         <div id="primary" class="content-area">
             <div class="site-content" role="main">
 
-				<?php $items_page->cover() ?>
+				<?php $has_cover = $items_page->cover() ?>
 
-                <div class="container container-max-960 ">
+                <div class="container container-max-960 <?php echo $has_cover ? 'with-cover' : 'without-cover' ?>">
 					<?php if ( function_exists( 'bootstrap_breadcrumb' ) ): ?>
 
 						<?php bootstrap_breadcrumb(); ?>
