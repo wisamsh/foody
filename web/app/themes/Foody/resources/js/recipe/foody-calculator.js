@@ -249,39 +249,6 @@ window.calculator = function (selector) {
         }
     });
 
-
-    // $('#pan-conversions').on('changed.bs.select', function () {
-    //     let val = $(this).val();
-    //
-    //
-    //     let $option = $(this).find(':selected');
-    //
-    //     let original = $option.data('original');
-    //
-    //     let originalSlices = $(this).find('option[data-original=1]').data('slices');
-    //     if (!originalSlices) {
-    //         originalSlices = 1;
-    //     }
-    //     let slices = $option.data('slices');
-    //     if (!slices) {
-    //         slices = 1;
-    //     }
-    //
-    //
-    //     /** handle substitute ingredients **/
-    //
-    //     let hasSubstitute = updateIngredients($elements, originalNumberOfDishes, val, undefined, false);
-    //
-    //     if (hasSubstitute) {
-    //         if (textForOriginal!= '' && !isMultiSubIng) {
-    //             let newCaloriesNutrient = $('[data-name=calories]').find('.chosen-dishes-nutrition > .value').length ? parseFloat($('[data-name=calories]').find('.chosen-dishes-nutrition > .value')[0].innerText) : 0;
-    //             handleSubsTextBackAndForth(textToShow, textForOriginal, caloriesNutrientOriginalVal, sugarNutrientOriginalVal, textColor, caloriesNutrientOriginalVal != newCaloriesNutrient);
-    //         } else {
-    //             handleSubsText(textToShow, caloriesNutrientOriginalVal, sugarNutrientOriginalVal, textColor);
-    //         }
-    //     }
-    // });
-
     $('.substitute-all-btn').on('click', function () {
         switch ($(this).attr('data-current')) {
             case 'substitute':
@@ -536,28 +503,6 @@ function handleSubsTextBackAndForth(textToShow, textForOriginal, caloriesNutrien
             textForOriginal += ' וגם ' + sugCalc + ' גרם סוכר ';
         }
     }
-    // else if(Math.round(sugarNutrientOriginalVal) < Math.round(newSugarNutrient)) {
-    //     let sugCalc = Math.round(newSugarNutrient - sugarNutrientOriginalVal);
-    //     if (sugCalc > 0) {
-    //         textToShow += ' וגם ' + sugCalc + ' גרם סוכר ';
-    //     }
-    // }
-
-    //
-    // if (Math.round(newCaloriesNutrient) < Math.round(caloriesNutrientOriginalVal)) {
-    //     let calCalc = Math.round(caloriesNutrientOriginalVal - newCaloriesNutrient);
-    //     if (calCalc > 0) {
-    //         textToShow += ' ' + calCalc + ' קלוריות ';
-    //         showText = true;
-    //     }
-    // }
-    //
-    // if (Math.round(newSugarNutrient) < Math.round(sugarNutrientOriginalVal)) {
-    //     let sugCalc = Math.round(sugarNutrientOriginalVal - newSugarNutrient);
-    //     if (sugCalc > 0) {
-    //         textToShow += ' וגם ' + sugCalc + ' גרם סוכר ';
-    //     }
-    // }
 
     if (showText) {
         let text = '';
@@ -573,10 +518,6 @@ function handleSubsTextBackAndForth(textToShow, textForOriginal, caloriesNutrien
             $('.difference-nutrient').remove();
             $('.recipe-ingredients-top').after('<span class="difference-nutrient" style="color:' + textColor + '">' + text + '</span>');
             $('.recipe-ingredients').after('<span class="difference-nutrient" style="color:' + textColor + '">' + text + '</span>');
-            // $.each($('.difference-nutrient'), function (index) {
-            //     //$('.difference-nutrient')[index].innerText = text;
-            //     $('.difference-nutrient').remove();
-            // });
         }
     } else {
         if ($('.difference-nutrient').length) {

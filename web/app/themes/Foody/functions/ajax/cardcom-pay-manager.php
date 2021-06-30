@@ -138,6 +138,10 @@ function generate_dynamic_cardcom_form($added_id, $member_data, $thank_you_page)
     $cancellation_page = $coupon_code ? get_home_url() . '/' . _('ביטול-תהליך-רכישה') . '?course_id=' . $member_data['course_id'] . '&coupon=' . $coupon_code :
         get_home_url() . '/' . _('ביטול-תהליך-רכישה') . '?course_id=' . $member_data['course_id'];
 
+    $min_num_of_payments = "1";
+    $max_num_of_payments = "10";
+    $min_price_for_payments = 199;
+
     if ($cardcom_credentials !== false) {
         $IsIframe = true;   # Iframe or Redirect
         $Operation = 1;  # = 1 - Bill Only , 2- Bill And Create Token , 3 - Token Only , 4 - Suspended Deal (Order).
@@ -165,11 +169,11 @@ function generate_dynamic_cardcom_form($added_id, $member_data, $thank_you_page)
         $vars['IndicatorUrl'] = get_home_url() . '/app/themes/Foody/functions/ajax/cardcom-response-listener.php'; // Indicator Url \ Notify URL . after use -  http://kb.cardcom.co.il/article/AA-00240/0
 
         $vars["ReturnValue"] = $added_id; // Optional , ,recommended , value that will be return and save in CardCom system
-        $vars["MinNumOfPayments"] = "1"; // max num of payments to show  to the user
+        $vars["MinNumOfPayments"] = $min_num_of_payments; // max num of payments to show  to the user
         if($member_data['price'] >= 199) {
-            $vars["MaxNumOfPayments"] = "10";
+            $vars["MaxNumOfPayments"] = $max_num_of_payments;
         } else {
-            $vars["MaxNumOfPayments"] = "1"; // max num of payments to show  to the user
+            $vars["MaxNumOfPayments"] = $min_num_of_payments; // max num of payments to show  to the user
         }
 
         $vars["ShowInvoiceHead"] = "false"; //  if show & edit Invoice Details on the page.
