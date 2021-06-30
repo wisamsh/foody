@@ -1047,7 +1047,7 @@ function build_figure_html($figureDomElem)
 
 add_action( 'wsl_process_login_create_wp_user_start', 'wsl_login_create_wp_user', 10, 4 );
 function wsl_login_create_wp_user( $provider, $hybridauth_user_profile, $request_user_login, $request_user_email ) {
-    console_log('provider: '.$provider.', hybridauth_user_profile: '.$hybridauth_user_profile.', request_user_login: '.$request_user_login.' request_user_email: '.$request_user_email);
+    console_log('provider: '.$provider.', hybridauth_user_profile: '.strval($hybridauth_user_profile).', request_user_login: '.strval($request_user_login).' request_user_email: '.strval($request_user_email));
 ?>
     <script>
         const registerAnalytics = require('./resources/js/register/register-analytics');
