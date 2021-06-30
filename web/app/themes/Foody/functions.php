@@ -1045,6 +1045,19 @@ function build_figure_html($figureDomElem)
 }
 
 
+add_action( 'wsl_process_login_create_wp_user_start', 'wsl_login_create_wp_user', 10, 4 );
+function wsl_login_create_wp_user( $provider, $hybridauth_user_profile, $request_user_login, $request_user_email ) {
+    console_log('provider: '.$provider.', hybridauth_user_profile: '.$hybridauth_user_profile.', request_user_login: '.$request_user_login.' request_user_email: '.$request_user_email);
+?>
+    <script>
+        const registerAnalytics = require('./resources/js/register/register-analytics');
+        registerAnalytics.socialRegisterAnalytics(<?php echo $provider ?>);
+    </script>
+<?php
+}
+
+
+
 
 function console_log($output, $with_script_tags = true) {
     $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .

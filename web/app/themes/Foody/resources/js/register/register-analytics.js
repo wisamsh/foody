@@ -3,6 +3,10 @@
  */
 let FoodyLocationUtils = require('../common/foody-location-utils');
 
+export function socialRegisterAnalytics(provider) {
+    eventCallback(event, 'סיום הרשמה', 'סיום הרשמה', provider, 'האם חדש', 'כן');
+}
+
 jQuery(document).ready(($) => {
 
     if (foodyGlobals['title'] == 'הרשמה') {
