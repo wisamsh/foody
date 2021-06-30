@@ -3,6 +3,16 @@
   .site {
     .site-content {
 
+      .container{
+        &.with-cover{
+          padding-top: 0;
+        }
+
+        &.without-cover{
+          padding-top: 20px;
+        }
+      }
+
       .grid {
         .grid-header{
           .foody-sort{
