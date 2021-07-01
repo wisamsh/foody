@@ -7,6 +7,8 @@
  * @package Foody
  */
 
+//use AntonioTajuelo\Gtm\Gtm;
+
 
 if (!function_exists('foody_setup')) :
     /**
@@ -568,7 +570,7 @@ function ingredients_recipes_list_adjustments()
     $myListTable->prepare_items();
     ?>
     <form method="post">
-        <input type="hidden" name="page" value="test_list_table">
+    <input type="hidden" name="page" value="test_list_table">
     <?php
     //$myListTable->search_box( 'search', 'search_id' );
     $myListTable->display();
@@ -896,7 +898,7 @@ function foody_body_add_bit_or_free_class($classes)
 
     if (isset($_GET) && (isset($_GET['payment_method']) && $_GET['payment_method'] == __('ביט')) || (isset($_GET['course_id']) && strpos($_GET['course_id'], ',') != false)) {
         $classes[] = $bit_class_to_add;
-    } elseif (isset($_GET) &&  (isset($_GET['paid']) && $_GET['paid'] == 1)){
+    } elseif (isset($_GET) && (isset($_GET['paid']) && $_GET['paid'] == 1)) {
         $classes[] = $free_class_to_add;
     }
 
@@ -905,19 +907,20 @@ function foody_body_add_bit_or_free_class($classes)
 }
 
 add_filter('the_content', 'addClassToLinks');
-function addClassToLinks($content){
-    return str_replace( '<a ', "<a class='post-content-link'", $content);
+function addClassToLinks($content)
+{
+    return str_replace('<a ', "<a class='post-content-link'", $content);
 }
 
-add_action( 'transition_post_status', 'foody_on_creation_not_update', 10, 3 );
-function foody_on_creation_not_update( $new_status, $old_status, $post )
+add_action('transition_post_status', 'foody_on_creation_not_update', 10, 3);
+function foody_on_creation_not_update($new_status, $old_status, $post)
 {
-    if ( 'publish' !== $new_status || 'publish' === $old_status )
+    if ('publish' !== $new_status || 'publish' === $old_status)
         return;
 
-    if ( 'foody_recipe' == $post->post_type  ||  'post' == $post->post_type){
-        $mail_to_notify = get_option( 'foody_mail_to_notify_posts', false );
-        if($mail_to_notify) {
+    if ('foody_recipe' == $post->post_type || 'post' == $post->post_type) {
+        $mail_to_notify = get_option('foody_mail_to_notify_posts', false);
+        if ($mail_to_notify) {
             $site = '';
             $blog_number = get_current_blog_id();
 
@@ -945,19 +948,20 @@ function foody_on_creation_not_update( $new_status, $old_status, $post )
     }
 }
 
-function foody_send_email_notification($to, $site_name, $post){
-        $subject = __('פרסום מתכון חדש');
-        $body = foody_create_email_notification_body($site_name, $post);
-        $headers = array('Content-Type: text/html; charset=UTF-8');
+function foody_send_email_notification($to, $site_name, $post)
+{
+    $subject = __('פרסום מתכון חדש');
+    $body = foody_create_email_notification_body($site_name, $post);
+    $headers = array('Content-Type: text/html; charset=UTF-8');
 
-        return wp_mail($to, $subject, $body, $headers);
+    return wp_mail($to, $subject, $body, $headers);
 }
 
 function foody_create_email_notification_body($site_name, $post)
 {
 
     $mail_body = '<p style="text-decoration: underline; font-weight: bold">';
-    $mail_body .=  __(' :שם המתכון/כתבה') ;
+    $mail_body .= __(' :שם המתכון/כתבה');
     $mail_body .= '</p>';
     $mail_body .= '<p>';
     $mail_body .= $post->post_title;
@@ -969,20 +973,21 @@ function foody_create_email_notification_body($site_name, $post)
     $mail_body .= get_permalink($post->ID);
     $mail_body .= '</p>';
     $mail_body .= '<p style="text-decoration: underline; font-weight: bold">';
-    $mail_body .=  __(' :הגיע מהאתר');
+    $mail_body .= __(' :הגיע מהאתר');
     $mail_body .= '</p>';
     $mail_body .= '<p>';
-    $mail_body .=  $site_name;
+    $mail_body .= $site_name;
     $mail_body .= '</p>';
 
     return $mail_body;
 }
 
-add_filter('wp_get_nav_menu_items','foody_remove_nav_items_description', 10, 2);
-function foody_remove_nav_items_description( $nav, $args ) {
-    if( $args->name == 'Navbar' ){
-        foreach ($nav as $item){
-            if(isset($item->description) && !empty($item->description)){
+add_filter('wp_get_nav_menu_items', 'foody_remove_nav_items_description', 10, 2);
+function foody_remove_nav_items_description($nav, $args)
+{
+    if ($args->name == 'Navbar') {
+        foreach ($nav as $item) {
+            if (isset($item->description) && !empty($item->description)) {
                 $item->description = '';
             }
         }
@@ -990,8 +995,9 @@ function foody_remove_nav_items_description( $nav, $args ) {
     return $nav;
 }
 
-add_filter( "use_block_editor_for_post_type", "foody_disable_gutenberg_editor" );
-function foody_disable_gutenberg_editor() {
+add_filter("use_block_editor_for_post_type", "foody_disable_gutenberg_editor");
+function foody_disable_gutenberg_editor()
+{
     return false;
 }
 
@@ -1005,7 +1011,7 @@ function print_version_content($content)
     $num_of_figures = $figures->length;
     for ($index = 0; $index < $num_of_figures; $index++) {
         $current = $figures->item(0);
-        if(isset( $current->parentNode)) {
+        if (isset($current->parentNode)) {
             $current->parentNode->removeChild($current);
         }
     }
@@ -1014,9 +1020,9 @@ function print_version_content($content)
     $finder = new DomXPath($dom);
     $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
 
-    for ($index = 0; $index < $nodes->length; $index++){
+    for ($index = 0; $index < $nodes->length; $index++) {
         $current = $nodes->item(0);
-        if(isset( $current->parentNode)) {
+        if (isset($current->parentNode)) {
             $current->parentNode->removeChild($current);
         }
     }
@@ -1025,7 +1031,7 @@ function print_version_content($content)
     return ['content' => $content_elem, 'figures' => $new_content];
 }
 
-add_filter('foody_print_version_for_content','print_version_content', 10, 1);
+add_filter('foody_print_version_for_content', 'print_version_content', 10, 1);
 
 function build_figure_html($figureDomElem)
 {
@@ -1045,22 +1051,88 @@ function build_figure_html($figureDomElem)
 }
 
 
-add_action( 'wsl_process_login_create_wp_user_start', 'wsl_login_create_wp_user', 10, 4 );
-function wsl_login_create_wp_user( $provider, $hybridauth_user_profile, $request_user_login, $request_user_email ) {
-//    console_log('provider: '.$provider.', hybridauth_user_profile: '.strval($hybridauth_user_profile).', request_user_login: '.strval($request_user_login).' request_user_email: '.strval($request_user_email));
-?>
-    <script>
+add_action('wsl_process_login_create_wp_user_start', 'wsl_login_create_wp_user', 10, 4);
+function wsl_login_create_wp_user($provider, $hybridauth_user_profile, $request_user_login, $request_user_email)
+{
+    server_push_to_data_layer(_('בדיקה'), 'test', 'בדיקות '.$provider, '1', 'מחובר');
+
+    ?>
+    <!--    <script>
         const registerAnalytics = require('./resources/js/register/register-analytics');
         console.log((<?php echo $provider ?>));
         registerAnalytics.socialRegisterAnalytics(<?php echo $provider ?>);
-    </script>
-<?php
+    </script> -->
+    <?php
 }
 
 
 
+function server_push_to_data_layer($category = '', $action = '', $label = '', $customerID = '', $recipe_name = '', $item_category = '', $chef = '',
+                                   $difficulty_level = '', $preparation_time='', $ingredients_amount = '',
+                                   $order_location = '', $amount = '', $has_rich_content = '',
+                                   $cd_description1 = '', $cd_value1 = '', $filters_amount = '', $_object = '',
+                                   $ingredients_promotion = '', $ingredient = '', $non_interaction = false)
+{
+    /*
 
-function console_log($output, $with_script_tags = true) {
+
+    action: "טעינה"
+    amount: "2689"
+    category: "מתכון"
+    cd_description1: "מפרסם"
+    cd_value1: "אין"
+    chef: "משה שגב"
+    customerID: 1
+    date: "56:51"
+    difficulty_level: "בינונית"
+    event: "foody"
+    filters_amount: ""
+    has_rich_content: true
+    ingredient: ""
+    ingredients_amount: "11"
+    ingredients_promotion: "אין קידום"
+    item-category: "אוכל שילדים אוהבים"
+    label: "קטגוריה ראשית"
+    non-interaction: false
+    object: "עם כפתור רכישה"
+    order_location: 0
+    preparation_time: "הכנה 15 דק׳"
+    recipe_name: "מלבי עם רוטב תותים"
+
+     */
+    $date = date('H:i');
+
+    $data_layar_obj = [
+        'event' => 'foody',
+        'non-interaction' => $non_interaction,
+        'category' => $category,
+        'action' => $action,
+        'cd_description1' => $cd_description1,
+        'cd_value1' => $cd_value1,
+        'chef' => $chef,
+        'customerID' => $customerID,
+        'date' => $date,
+        'difficulty_level' => $difficulty_level,
+        'filters_amount' => $filters_amount,
+        'has_rich_content' => $has_rich_content,
+        'ingredient' => $ingredient,
+        'ingredients_amount' => $ingredients_amount,
+        'ingredients_promotion' => $ingredients_promotion,
+        'item-category' => $item_category,
+        'label' => $label,
+        'object' => $_object,
+        'order_location' => $order_location,
+        'amount' => $amount,
+        'preparation_time' => $preparation_time,
+        'recipe_name' => $recipe_name,
+    ];
+
+    echo '<script> window.dataLayer.push(' . json_encode($data_layar_obj,JSON_UNESCAPED_SLASHES) . ');</script>' . "\n";
+}
+
+
+function console_log($output, $with_script_tags = true)
+{
     $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
         ');';
     if ($with_script_tags) {
