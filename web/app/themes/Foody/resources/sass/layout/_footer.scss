@@ -35,6 +35,7 @@ body {
     max-width: 85%;
     display: inline-block;
     font-size: 16px;
+    font-family: Ploni;
   }
 
 }
@@ -104,7 +105,7 @@ body {
                 background-color: #ffffff;
                 border: none;
                 padding: 0 5px;
-                font-family: $font__assistant;
+                font-family: Ploni;
 
                 &[type="email"] {
                   width: 85%;
@@ -124,9 +125,9 @@ body {
                   background-color: #ffffff;
                   border: none;
                   color: var(--color__primary);
-                  font-size: 1em;
+                  font-size: 18px;
                   cursor: pointer;
-                  font-weight: 700;
+                  font-weight: 600;
                   float: left;
                 }
               }
@@ -164,12 +165,12 @@ footer.site-footer {
 
   ul {
     &.menu {
-      font-family: $font__assistant;
+      font-family: Ploni;
       //display: inline-block;
       //float: right;
       list-style-type: none;
       padding: 0 10px;
-      font-size: 15px;
+      font-size: 16px;
       margin: 0;
 
       &:not(:last-child) {
@@ -188,6 +189,7 @@ footer.site-footer {
       }
 
       .newsletter-title {
+        font-font: Ploni;
         font-weight: 600;
         font-size: 18px;
         margin-bottom: 0.5rem;
@@ -207,7 +209,7 @@ footer.site-footer {
             background-color: #ffffff;
             border: none;
             padding: 0 5px;
-            font-family: $font__assistant;
+            font-family: Ploni;
 
             &[type="email"] {
               width: 60%;
@@ -227,9 +229,9 @@ footer.site-footer {
               background-color: #ffffff;
               border: none;
               color: var(--color__primary);
-              font-size: 1em;
+              font-size: 18px;
               cursor: pointer;
-              font-weight: 900;
+              font-weight: 600;
             }
           }
         }
@@ -703,7 +705,7 @@ footer.site-footer {
                   background-color: #ffffff;
                   border: none;
                   padding: 0 5px;
-                  font-family: $font__assistant;
+                  font-family: Ploni;
 
                   &[type="email"] {
                     width: 75%;
@@ -712,7 +714,7 @@ footer.site-footer {
 
                   //noinspection CssInvalidPseudoSelector
                   &::placeholder {
-                    font-family: $font__main;
+                    font-family: Ploni;
                     font-size: 16px;
                     font-weight: normal;
                   }
@@ -723,9 +725,9 @@ footer.site-footer {
                     background-color: #ffffff;
                     border: none;
                     color: var(--color__primary);
-                    font-size: 1em;
+                    font-size: 18px;
                     cursor: pointer;
-                    font-weight: 900;
+                    font-weight: 600;
                     float: left;
                   }
                 }
@@ -847,7 +849,10 @@ footer.site-footer {
           input[type="submit"] {
             @extend .newsletter-input;
             color: var(--color__primary);
-            font-weight: 900;
+            font-weight: 600;
+            font-family: Ploni !important;
+            font-size: 18px;
+
           }
         }
 
@@ -871,7 +876,7 @@ footer.site-footer {
 
       .follow-us {
         opacity: 0.7;
-        font-family: $font__assistant;
+        font-family: Ploni;
         font-size: 18px;
         color: var(--black);
         margin-bottom: 10px;
