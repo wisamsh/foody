@@ -312,7 +312,8 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                     <!--                                <img class="foody-logo-text" src="-->
                                     <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
                                     <?php if(get_current_blog_id() === 5) { ?>
-                                        <div class="foody-logo-text-custom" style="background-size: 124px 57px; background-image: url( <?php echo  $image_url  ?>)"></div>
+
+                                        <div class="foody-logo-text-custom" style="width: 62px; left: 52%; top: 0; height: 62px; background-image: url( <?php echo  $image_url  ?>)"></div>
                                     <?php } else { ?>
                                         <div class="foody-logo-text-custom" style="background-image: url( <?php echo  $image_url  ?>)"></div>
                                     <?php } ?>
