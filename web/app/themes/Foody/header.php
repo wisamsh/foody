@@ -286,23 +286,6 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                         <div class="logo-container-mobile <?php $header->the_logo_mode() ?> d-block d-lg-none">
                             <?php
 
-                            if ( get_current_blog_id() === 5 ) {
-                                $logo = get_theme_mod( 'custom_logo' );
-                                $image = wp_get_attachment_image_src( $logo , 'full' );
-                                $image_url = $image[0];
-                                ?>
-                                <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
-                                        data-target="#foody-navbar-collapse"
-                                        aria-controls="foody-navbar-collapse" aria-expanded="false"
-                                        aria-label="Toggle navigation">
-                                    <!--                                <img class="foody-logo-text" src="-->
-                                    <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
-                                    <div class="foody-logo-text-custom-amit" style="background-size: 124px 57px;background-image: url( <?php echo  $image_url  ?>)"></div>
-                                    <div class="foody-logo-hamburger hidden"></div>
-                                    <div class="foody-logo-close hidden"></div>
-                                </button>
-                            <?php }
-
                             if (is_main_site()) { ?>
                                 <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
                                         data-target="#foody-navbar-collapse"
@@ -316,7 +299,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                 </button>
                             <?php }
 
-                            if (get_current_blog_id() === 2) {
+                            else {
                                 $logo = get_theme_mod( 'custom_logo' );
                                 $image = wp_get_attachment_image_src( $logo , 'full' );
                                 $image_url = $image[0];
@@ -328,7 +311,12 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                         aria-label="Toggle navigation">
                                     <!--                                <img class="foody-logo-text" src="-->
                                     <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
-                                    <div class="foody-logo-text-custom" style="background-image: url( <?php echo  $image_url  ?>)"></div>
+                                    <?php if(get_current_blog_id() === 5) { ?>
+
+                                        <div class="foody-logo-text-custom" style="width: 62px; left: 52%; top: 0; height: 62px; background-image: url( <?php echo  $image_url  ?>)"></div>
+                                    <?php } else { ?>
+                                        <div class="foody-logo-text-custom" style="background-image: url( <?php echo  $image_url  ?>)"></div>
+                                    <?php } ?>
                                     <div class="foody-logo-hamburger hidden"></div>
                                     <div class="foody-logo-close hidden"></div>
                                 </button>

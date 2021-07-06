@@ -136,7 +136,7 @@ $labels = array(
         </li>
     </ul>
     <?php
-    if ( get_current_blog_id() === 1 ) { ?>
+    if ( get_current_blog_id() !== 2 ) { ?>
         <ul class="overview-nutrients row">
             <li class="overview-item col-sm-1 col-6">
                 <div class="value open">
