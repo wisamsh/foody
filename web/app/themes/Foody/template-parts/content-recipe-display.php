@@ -74,14 +74,16 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
 <?php
 $comments_rating_preps_group = get_field('comments_rating_component', $recipe->id);
  if ( isset($comments_rating_preps_group['number_of_preps']) ){
-     $comments_rating_preps_group['number_of_preps'] = 7;
      ?>
      <section class="comments-rating-prep-container no-print">
          <?php $recipe->get_comments_rating_preps_component($comments_rating_preps_group['number_of_preps']) ?>
      </section>
  <?php } else { ?>
      <section class="comments-rating-prep-container no-print">
-         <?php $recipe->get_comments_rating_preps_component($comments_rating_preps_group['number_of_preps']) ?>
+         <?php
+            $number_of_preps = 7;
+            $recipe->get_comments_rating_preps_component($number_of_preps)
+         ?>
      </section>
  <?php } ?>
 

@@ -21,8 +21,9 @@ jQuery(document).ready(($) => {
                             id: 'rating-loader'
                         });
                     } else {
+                        let indexForContainer = $(container).length > 1 ? 1 : 0;
                         foodyLoader = new FoodyLoader({
-                            container: parentContainerIsWrapper ? $(container)[1] : $(container),
+                            container: parentContainerIsWrapper ? $(container)[indexForContainer] : $(container),
                             id: 'rating-loader'
                         });
                     }
