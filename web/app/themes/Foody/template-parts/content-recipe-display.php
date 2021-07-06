@@ -72,20 +72,22 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
       </div>
   </section>
 <?php
-$comments_rating_preps_group = get_field('comments_rating_component', $recipe->id);
- if ( isset($comments_rating_preps_group['number_of_preps']) ){
-     ?>
-     <section class="comments-rating-prep-container no-print">
-         <?php $recipe->get_comments_rating_preps_component($comments_rating_preps_group['number_of_preps']) ?>
-     </section>
- <?php } else { ?>
-     <section class="comments-rating-prep-container no-print">
-         <?php
+if(get_current_blog_id() == 1) {
+    $comments_rating_preps_group = get_field('comments_rating_component', $recipe->id);
+    if (isset($comments_rating_preps_group['number_of_preps'])) {
+        ?>
+        <section class="comments-rating-prep-container no-print">
+            <?php $recipe->get_comments_rating_preps_component($comments_rating_preps_group['number_of_preps']) ?>
+        </section>
+    <?php } else { ?>
+        <section class="comments-rating-prep-container no-print">
+            <?php
             $number_of_preps = 7;
             $recipe->get_comments_rating_preps_component($number_of_preps)
-         ?>
-     </section>
- <?php } ?>
+            ?>
+        </section>
+    <?php }
+} ?>
 
 
 <?php if ($recipe->substitute_all_button != null) { ?>
