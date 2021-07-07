@@ -993,7 +993,7 @@ class Foody_Recipe extends Foody_Post
 
     public function get_images_gallery_repeater(){
         $images_for_slider = get_field('images_gallery_repeater', $this->id);
-        if ( $images_for_slider ) {
+        if (is_array($images_for_slider) && $images_for_slider ) {
             $item=[];
             foreach ($images_for_slider as $image) {
                 $item[]=$image['image']['url'];
@@ -1033,22 +1033,26 @@ class Foody_Recipe extends Foody_Post
     public function get_system_tip()
     {
         $tip_group = get_field('system_tip_group', $this->get_id());
-        $content_type = $tip_group['content_type'];
-        $content_class = $content_type == 'טקסט' ? 'text-content' : 'image-content';
-        $tip_title_element = '<div class="title-container"><img src="' . $GLOBALS['images_dir'] . 'icons/tip.svg' . '" alt="tip"><h2 class="title">' . $tip_group['title'] . '</h2></div>';
+        $content_type = isset($tip_group['content_type']) ? $tip_group['content_type'] : false;
+        if($content_type) {
+            $content_class = $content_type == 'טקסט' ? 'text-content' : 'image-content';
+            $tip_title = isset($tip_group['title']) ? $tip_group['title'] : _('טיפ מערכת');
+            $tip_title_element = '<div class="title-container"><img src="' . $GLOBALS['images_dir'] . 'icons/tip.svg' . '" alt="tip"><h2 class="title">' . $tip_group['title'] . '</h2></div>';
 
-        if ($content_type == 'טקסט') {
-            $tip_content = '<p class="tip-text">' . $tip_group['text'] . '</p>';
-        } else {
-            $tip_content = '<img class="tip-image" src="' . $tip_group['image']['url'] . '">';
+            if ($content_type == 'טקסט') {
+                $tip_text = isset($tip_group['text']) ? $tip_group['text'] : '';
+                $tip_content = '<p class="tip-text">' . $tip_text . '</p>';
+            } else {
+                $tip_image = isset($tip_group['image']) && isset($tip_group['image']['url']) ? $tip_group['image']['url'] : '';
+                $tip_content = '<img class="tip-image" src="' . $tip_image . '">';
+            }
+
+            if (isset($tip_group['link']) && is_array($tip_group['link']) && isset($tip_group['link']['url']) && !empty($tip_group['link']['url'])) {
+                echo '<a class="tip-link" href="' . $tip_group['link']['url'] . '" target="' . $tip_group['link']['target'] . '"><div class="system-tip ' . $content_class . '">' . $tip_title_element . $tip_content . '</div></a>';
+            } else {
+                echo '<div class="system-tip ' . $content_class . '">' . $tip_title_element . $tip_content . '</div>';
+            }
         }
-
-        if (is_array($tip_group['link']) && !empty($tip_group['link']['url'])) {
-            echo '<a class="tip-link" href="' . $tip_group['link']['url'] . '" target="' . $tip_group['link']['target'] . '"><div class="system-tip '. $content_class  .'">' . $tip_title_element . $tip_content . '</div></a>';
-        } else {
-            echo '<div class="system-tip ' . $content_class .'">' . $tip_title_element . $tip_content . '</div>';
-        }
-
     }
 
     public function get_similar_content($similar_contents)
@@ -1059,7 +1063,7 @@ class Foody_Recipe extends Foody_Post
         $title_of_section = isset($similar_contents['title']) && !empty($similar_contents['title']) ? $similar_contents['title'] : __('מתכונים נוספים שכדאי להכיר');
         $args = ['title' => $title_of_section, 'items' => []];
 
-        if ($similar_contents['similar_content']) {
+        if (isset($similar_contents['similar_content']) && $similar_contents['similar_content']) {
             foreach ($similar_contents['similar_content'] as $content) {
                 if ($content['post'] != false) {
                     array_push($not_in_random, $content['post']->ID);
@@ -1306,10 +1310,14 @@ class Foody_Recipe extends Foody_Post
     }
 
     function get_take_me_to_recipe_btn(){
-        $btn_image_url = get_field('take_to_recipe_btn')['url'];
-        $btn_image_alt = get_field('take_to_recipe_btn')['alt'];
+        $btn_image = get_field('take_to_recipe_btn');
 
-        echo "<a class='take_to_recipe_link' href='#recipe-ingredients'><img class='take-me-to-recipe' src='". $btn_image_url ."' alt='". $btn_image_alt ."'></a>";
+        $btn_image_url = isset($btn_image['url']) ? $btn_image['url'] : false;
+        $btn_image_alt =  isset($btn_image['alt']) ? $btn_image['alt'] : '';
+
+        if($btn_image_url) {
+            echo "<a class='take_to_recipe_link' href='#recipe-ingredients'><img class='take-me-to-recipe' src='" . $btn_image_url . "' alt='" . $btn_image_alt . "'></a>";
+        }
     }
 
     function the_print_overview(){

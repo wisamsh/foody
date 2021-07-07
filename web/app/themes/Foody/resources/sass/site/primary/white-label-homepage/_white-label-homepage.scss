@@ -334,12 +334,13 @@ $sidebar-top-offset: 60px;
   .non-main-site {
     header {
       .logo-container-mobile {
-        top: 10px;
-        right: calc(50vw - 50px);
-        width: 100px;
+        transition: opacity .6s;
+        top: 12px;
+        right: calc(50vw - 30px);
 
         img {
           border-radius: 0;
+          width: 60px;
         }
         &.round-logo {
           .logo-container-desktop {
