@@ -102,19 +102,26 @@ $raanan-unicode-range: 'U+0021-0039';
   src: url('../fonts/Ploni/ploni-bold-aaa.woff2') format('woff2'), url('../fonts/Ploni/ploni-bold-aaa.woff') format('woff');
 }
 
+@font-face{
+  font-family: 'PloniBold';
+  font-weight: 700; /*(bold)*/
+  font-style: normal;
+  src: url('../fonts/Ploni/ploni-bold-aaa.woff2') format('woff2'), url('../fonts/Ploni/ploni-bold-aaa.woff') format('woff');
+}
+
 
 $font__ariel-rounded: RaananSuper;
 $font__raanan: RaananSuper;
 //$font__bold: RaananSuper;
 
 // 	U+0000, U+007F, U+0590..U+05FF
-$font__main: Afek;
-$font__bold: AfekBold;
+$font__main: Ploni;
+$font__bold: PloniBold;
 $font__h1: AlmoniTzar;
 
-$font__assistant: Afek;
-$font__assistant-bold: Afek;
-$font__assistant-extra-bold: Afek;
+$font__assistant: Ploni;
+$font__assistant-bold: Ploni;
+$font__assistant-extra-bold: Ploni;
 //$font__code: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
 $font__pre: "Courier 10 Pitch", Courier, monospace;
 $font__line-height-body: 1.5;

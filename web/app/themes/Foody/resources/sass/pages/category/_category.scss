@@ -69,7 +69,7 @@ body[class~="category"] {
             text-align: center;
             font-weight: normal;
             color: var(--color__text-primary-dark);
-            font-family: Afek;
+            font-family: Ploni;
           }
 
         }
@@ -103,6 +103,13 @@ body[class~="category"] {
 
       .foody-grid {
         margin-top: 20px;
+
+        .grid-header{
+          .title{
+            font-family: AlmoniTzar !important;
+            font-size: 32px;
+          }
+        }
         .feed-item {
           .feed-item-image {
             width: 100%;

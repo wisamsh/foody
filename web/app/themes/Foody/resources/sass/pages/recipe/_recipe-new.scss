@@ -461,7 +461,7 @@ $content-width: 95%;
                 span {
                   color: #404040;
                   font-size: 17px;
-                  font-family:'Afek';
+                  font-family: Ploni;
                 }
               }
 
@@ -494,7 +494,7 @@ $content-width: 95%;
               .social-title {
                 margin-top: 1px;
                 margin-bottom: 0;
-                font-family: 'Afek';
+                font-family: Ploni;
                 font-weight: bolder;
                 font-size:17px;
                 margin-left: 0.7rem;
@@ -586,7 +586,7 @@ $content-width: 95%;
 
               .rating-header {
                 padding-left: 6%;
-                font-family: 'Afek';
+                font-family: Ploni;
                 font-weight: bolder;
                 font-size: 17px;
                 left: 2%;
@@ -953,7 +953,7 @@ $content-width: 95%;
 
         .rating-header{
           font-size: 14px;
-          font-family: 'AfekBold';
+          font-family: PloniBold;
         }
       }
     }
@@ -1005,7 +1005,7 @@ $content-width: 95%;
          label.choose-pan-title{
            padding-top: 26px;
            font-size: 17px;
-           font-family: 'Afek';
+           font-family: Ploni;
          }
 
           > .amount-container {
@@ -1301,7 +1301,7 @@ $content-width: 95%;
           .ingredients-group-title {
             max-width: 100%;
             font-size: 17px;
-            font-family: 'AfekBold';
+            font-family: Ploni;
           }
 
           ul {
@@ -1537,7 +1537,7 @@ $content-width: 95%;
               margin-top: 5px;
               line-height: 1;
               text-align: center;
-              font-family: Afek;
+              font-family: Ploni;
               font-size: 15px;
             }
 
@@ -1724,7 +1724,7 @@ $content-width: 95%;
           }
 
           .author{
-            font-family: Assistant;
+            font-family: Ploni;
             padding: 10px;
             font-size: 15px;
             text-align: right;
@@ -1755,7 +1755,7 @@ $content-width: 95%;
           padding: 0;
 
           .modal-title {
-            font-family: Assistant;
+            font-family: Ploni;
             font-size: 28px;
             font-weight: 900;
             place-self: center;
@@ -1789,7 +1789,7 @@ $content-width: 95%;
       margin-bottom: 13px !important;
       .title{
         font-size:18px;
-        font-family: 'AfekBold';
+        font-family: PloniBold;
       }
     }
 
@@ -1825,7 +1825,7 @@ $content-width: 95%;
       .title{
         font-size: 18px;
         line-height: 35px;
-        font-family: 'AfekBold';
+        font-family: PloniBold;
       }
 
       > ul{
@@ -2071,12 +2071,12 @@ $content-width: 95%;
             flex-direction: row;
 
             .rating-stars-container{
-              font-family: 'AfekBold';
+              font-family: PloniBold;
               margin: auto;
             }
             .rating-header{
               margin-top:1%;
-              font-family: 'AfekBold';
+              font-family: PloniBold;
               margin: auto;
             }
 
@@ -2085,7 +2085,7 @@ $content-width: 95%;
           .rating-header{
             margin-left: 4%;
             margin-top: 1%;
-            font-family: 'AfekBold';
+            font-family: PloniBold;
           }
 
           .rating-digits {
@@ -2226,7 +2226,7 @@ $content-width: 95%;
 
             .kosher-sign {
               width: 30%;
-              font-family: Assistant;
+              font-family: Ploni;
               font-size: 22px;
               font-weight: 800;
               font-style: normal;
@@ -2476,7 +2476,7 @@ $content-width: 95%;
               .value {
                 text-decoration: underline;
                 font-size: 17px;
-                font-family: 'AfekBold';
+                font-family: PloniBold;
                 &:not(.open) {
                   display: none;
                 }
@@ -2660,7 +2660,7 @@ $content-width: 95%;
           width: 50%;
           text-align: center;
           font-weight: bold;
-          font-family: 'AfekBold';
+          font-family: PloniBold;
 
           #rating-loader {
             right:0;
@@ -2914,7 +2914,7 @@ $content-width: 95%;
             .ingredients-group-title {
               max-width: 100%;
               font-size: 17px;
-              font-family: 'AfekBold';
+              font-family: PloniBold;
             }
 
             ul {
@@ -3198,7 +3198,7 @@ $content-width: 95%;
               margin: auto;
               width: 34px;
               height: 34px;
-              font-family: AfekBold;
+              font-family: PloniBold;
               font-size: 19px;
               position: absolute;
               top: 4px;
@@ -3489,7 +3489,7 @@ $content-width: 95%;
             padding: 0;
 
             .modal-title {
-              font-family: Assistant;
+              font-family: Ploni;
               font-size: 28px;
               font-weight: 900;
               place-self: center;
@@ -3632,7 +3632,7 @@ $content-width: 95%;
                 margin-top: 5px;
                 line-height: 1;
                 text-align: center;
-                font-family: Afek;
+                font-family: Ploni;
                 font-size: 14px;
               }
             }
