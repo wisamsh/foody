@@ -1060,7 +1060,7 @@ class Foody_Recipe extends Foody_Post
         $not_in_random = [];
         array_push($not_in_random, $this->get_id());
         $counter = 0;
-        $title_of_section = isset($similar_contents['title']) && !empty($similar_contents['title']) ? $similar_contents['title'] : __('מתכונים נוספים שכדאי להכיר');
+        $title_of_section = isset($similar_contents['title']) && !empty($similar_contents['title']) ? $similar_contents['title'] : __('מתכונים נוספים שכדאי לכם לנסות');
         $args = ['title' => $title_of_section, 'items' => []];
 
         if (isset($similar_contents['similar_content']) && $similar_contents['similar_content']) {
