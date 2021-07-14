@@ -45,5 +45,99 @@ jQuery(document).ready(($) => {
             filter: filter,
             sort: '#sort-homepage-feed'
         });
-    })
+    });
+
+    if($('#foody-filter').length){
+        $('#foody-filter .md-checkbox input[type="checkbox"]').on('change', function () {
+            let isChecked = $(this).is(':checked');
+            let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
+            if(isChecked){
+                eventCallback('', 'עמוד הבית','הוספת סינון', filterString, 'סינון', filterString);
+            } else {
+                eventCallback('', 'עמוד הבית','הסרת סינון', filterString, 'סינון', filterString);
+            }
+        })
+    }
 });
+
+/**
+ * Handle events and fire analytics dataLayer.push
+ * @param event
+ * @param category
+ * @param action
+ * @param label
+ * @param cdDesc
+ * @param cdValue
+ * @param recipe_order_location
+ */
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', recipe_order_location, itemCategory = '', recipeDetails = '', _amount = '') {
+
+    /**
+     * Recipe name
+     */
+    let recipe_name = recipeDetails != '' ? recipeDetails['title'] : '';
+
+    /**
+     * Item category
+     */
+    let item_category = itemCategory;
+
+    /**
+     * Chef Name
+     */
+    let chef = recipeDetails != '' ? recipeDetails['author'] : '';
+
+    /**
+     * Logged in user ID
+     */
+    let customerID = foodyGlobals['loggedInUser'] ? foodyGlobals['loggedInUser'] : '';
+
+    /**
+     * Difficulty Level
+     */
+    let difficulty_level = '';
+
+    /**
+     * Preparation Time
+     */
+    let preparation_time = 0;
+
+    /**
+     * Ingredients Count
+     */
+    let ingredients_amount = 0;
+
+    /**
+     * Index of recipe in current Session
+     */
+    let order_location = recipe_order_location;
+
+    /**
+     * Recipe view count
+     */
+    let amount = _amount;
+
+    /**
+     * Has rich content - does contains video or product buy option
+     */
+    let hasRichContent = '';
+
+    tagManager.pushDataLayer(
+        category,
+        action,
+        label,
+        customerID,
+        recipe_name,
+        item_category,
+        chef,
+        difficulty_level,
+        preparation_time,
+        ingredients_amount,
+        order_location,
+        amount,
+        hasRichContent,
+        cdDesc,
+        cdValue,
+        ''
+    );
+}
