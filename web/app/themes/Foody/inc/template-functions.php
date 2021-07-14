@@ -24,7 +24,11 @@ function foody_body_classes( $classes ) {
 	}
 
 	if ( is_multisite() && ! is_main_site() ) {
-		$classes[] = 'non-main-site';
+	    if(get_current_blog_id() === 2) {
+            $classes[] = 'non-main-site carine-site';
+        } else{
+            $classes[] = 'non-main-site';
+        }
 	}
 
 	return $classes;

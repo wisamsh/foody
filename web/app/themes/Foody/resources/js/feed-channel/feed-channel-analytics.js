@@ -90,6 +90,18 @@ jQuery(document).ready(($) => {
                 }
             });
         }
+
+        if($('#foody-filter').length){
+            $('#foody-filter .md-checkbox input[type="checkbox"]').on('change', function () {
+                let isChecked = $(this).is(':checked');
+                let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
+                if(isChecked){
+                    eventCallback('', 'מתחם פידים','הוספת סינון', channelName, 'סינון', filterString);
+                } else {
+                    eventCallback('', 'מתחם פידים','הסרת סינון', channelName, 'סינון', filterString);
+                }
+            })
+        }
     }
 });
 
