@@ -49,16 +49,52 @@ jQuery(document).ready(($) => {
 
     if($('#foody-filter').length){
         $('#foody-filter .md-checkbox input[type="checkbox"]').on('change', function () {
-            let isChecked = $(this).is(':checked');
-            let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
-            if(isChecked){
-                eventCallback('', 'עמוד הבית','הוספת סינון', filterString, 'סינון', filterString);
-            } else {
-                eventCallback('', 'עמוד הבית','הסרת סינון', filterString, 'סינון', filterString);
+            if(!this.closest('.mobile-filter')) {
+                let isChecked = $(this).is(':checked');
+                let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
+                if (isChecked) {
+                    eventCallback('', 'עמוד הבית', 'הוספת סינון', filterString, 'סינון', filterString);
+                } else {
+                    eventCallback('', 'עמוד הבית', 'הסרת סינון', filterString, 'סינון', filterString);
+                }
             }
         })
     }
+
+    $('.show-recipes').on('click', function () {
+        debugger
+        let currentFilteredElements = getCurrentFilteredElements();
+        $('.mobile-filter input[type=checkbox]').each((index,filter)=>{
+            let filterName = filter.nextElementSibling.innerText;
+            if($(filter).is(':checked') && !currentFilteredElements.includes(filterName)){
+                eventCallback('', 'עמוד הבית','לחיצה על הצג מתכונים במסך סינון', 'הוספת סינון', 'סינון', filterName);
+            }
+
+            if(currentFilteredElements.includes(filterName) && !$(filter).is(':checked')){
+                eventCallback('', 'עמוד הבית','לחיצה על הצג מתכונים במסך סינון', 'הסרת סינון', 'סינון', filterName);
+            }
+        });
+
+    })
 });
+
+function getCurrentFilteredElements() {
+    let currentFilteredElements = [];
+    let vars ={};
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+        vars[key] = decodeURI(value).replace(' ', '+');
+    });
+
+    if (vars && Object.keys(vars).length && vars['filter']){
+        let filtersStrings = vars['filter'].replaceAll('C',' ').replaceAll('%2',' ').split(' ');
+        filtersStrings = filtersStrings.filter(Boolean);
+        for(let index in filtersStrings ) {
+            currentFilteredElements.push(filtersStrings[index].replace('+', ' '))
+        }
+    }
+
+    return currentFilteredElements;
+}
 
 /**
  * Handle events and fire analytics dataLayer.push
