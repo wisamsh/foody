@@ -103,7 +103,7 @@ jQuery(document).ready(($) => {
         });
 
         /** add/remove filters **/
-        $('.sidebar-section').on('click', '.md-checkbox', function () {
+        $('.sidebar-section').on('change', '.md-checkbox', function () {
             let checkedAmount = $('.card-body input:checked').length;
             if (this.children[0].checked) {
                 eventCallback('', 'עמוד קטגוריה', 'הסרת סינון', foodyGlobals['title'], ' סינון', this.innerText, '', foodyGlobals['title'], '', --checkedAmount);
@@ -112,20 +112,20 @@ jQuery(document).ready(($) => {
             }
         });
 
-        // /** add/remove filters mobile **/
-        // $('.show-recipes').on('click', function () {
-        //     let currentFilteredElements = getCurrentFilteredElements();
-        //     $('.mobile-filter input[type=checkbox]').each((index, filter) => {
-        //         let filterName = filter.nextElementSibling.innerText;
-        //         if ($(filter).is(':checked') && !currentFilteredElements.includes(filterName)) {
-        //             eventCallback('', 'עמוד קטגוריה', 'לחיצה על הצג מתכונים במסך סינון (הוספת סינון)', foodyGlobals['title'], 'סינון', filterName);
-        //         }
-        //
-        //         if (currentFilteredElements.includes(filterName) && !$(filter).is(':checked')) {
-        //             eventCallback('', 'עמוד קטגוריה', 'לחיצה על הצג מתכונים במסך סינון (הסרת סינון)', foodyGlobals['title'], 'סינון', filterName);
-        //         }
-        //     });
-        // })
+        /** add/remove filters mobile **/
+        $('.show-recipes').on('click', function () {
+            let currentFilteredElements = getCurrentFilteredElements();
+            $('.mobile-filter input[type=checkbox]').each((index, filter) => {
+                let filterName = filter.nextElementSibling.innerText;
+                if ($(filter).is(':checked') && !currentFilteredElements.includes(filterName)) {
+                    eventCallback('', 'עמוד קטגוריה', 'לחיצה על הצג מתכונים במסך סינון (הוספת סינון)', foodyGlobals['title'], 'סינון', filterName);
+                }
+
+                if (currentFilteredElements.includes(filterName) && !$(filter).is(':checked')) {
+                    eventCallback('', 'עמוד קטגוריה', 'לחיצה על הצג מתכונים במסך סינון (הסרת סינון)', foodyGlobals['title'], 'סינון', filterName);
+                }
+            });
+        })
 
         /** click load more recipes **/
         $('.foody-grid').on('click', '.show-more', function () {
