@@ -112,6 +112,21 @@ jQuery(document).ready(($) => {
             }
         });
 
+        // /** add/remove filters mobile **/
+        // $('.show-recipes').on('click', function () {
+        //     let currentFilteredElements = getCurrentFilteredElements();
+        //     $('.mobile-filter input[type=checkbox]').each((index, filter) => {
+        //         let filterName = filter.nextElementSibling.innerText;
+        //         if ($(filter).is(':checked') && !currentFilteredElements.includes(filterName)) {
+        //             eventCallback('', 'עמוד קטגוריה', 'לחיצה על הצג מתכונים במסך סינון (הוספת סינון)', foodyGlobals['title'], 'סינון', filterName);
+        //         }
+        //
+        //         if (currentFilteredElements.includes(filterName) && !$(filter).is(':checked')) {
+        //             eventCallback('', 'עמוד קטגוריה', 'לחיצה על הצג מתכונים במסך סינון (הסרת סינון)', foodyGlobals['title'], 'סינון', filterName);
+        //         }
+        //     });
+        // })
+
         /** click load more recipes **/
         $('.foody-grid').on('click', '.show-more', function () {
             pageCounter++;
@@ -130,6 +145,24 @@ jQuery(document).ready(($) => {
         });
     }
 });
+
+function getCurrentFilteredElements() {
+    let currentFilteredElements = [];
+    let vars ={};
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+        vars[key] = decodeURI(value).replace(' ', '+');
+    });
+
+    if (vars && Object.keys(vars).length && vars['filter']){
+        let filtersStrings = vars['filter'].replaceAll('C',' ').replaceAll('%2',' ').split(' ');
+        filtersStrings = filtersStrings.filter(Boolean);
+        for(let index in filtersStrings ) {
+            currentFilteredElements.push(filtersStrings[index].replace('+', ' '))
+        }
+    }
+
+    return currentFilteredElements;
+}
 
 function getRecipeLocationFromParent(parent) {
     let dataset = parent;

@@ -896,8 +896,10 @@ header {
   }
 
   .non-main-site {
-    #content {
-      padding-top: 110px;
+    &.carine-site {
+      #content {
+        padding-top: 110px;
+      }
     }
 
     header {

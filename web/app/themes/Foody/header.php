@@ -311,7 +311,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                         aria-label="Toggle navigation">
                                     <!--                                <img class="foody-logo-text" src="-->
                                     <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
-                                    <?php if(get_current_blog_id() === 5) { ?>
+                                    <?php if(get_current_blog_id() !== 1) { ?>
 
                                         <div class="foody-logo-text-custom" style="width: 62px; left: 52%; top: 0; height: 62px; background-image: url( <?php echo  $image_url  ?>)"></div>
                                     <?php } else { ?>
