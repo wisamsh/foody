@@ -63,20 +63,20 @@ jQuery(document).ready(($) => {
             })
         }
 
-        /** add/remove filters mobile **/
-        $('.show-recipes').on('click', function () {
-            let currentFilteredElements = getCurrentFilteredElements();
-            $('.mobile-filter input[type=checkbox]').each((index, filter) => {
-                let filterName = filter.nextElementSibling.innerText;
-                if ($(filter).is(':checked') && !currentFilteredElements.includes(filterName)) {
-                    eventCallback('', 'עמוד הבית', 'לחיצה על הצג מתכונים במסך סינון', 'הוספת סינון', 'סינון', filterName);
-                }
-
-                if (currentFilteredElements.includes(filterName) && !$(filter).is(':checked')) {
-                    eventCallback('', 'עמוד הבית', 'לחיצה על הצג מתכונים במסך סינון', 'הסרת סינון', 'סינון', filterName);
-                }
-            });
-        })
+        // /** add/remove filters mobile **/
+        // $('.show-recipes').on('click', function () {
+        //     let currentFilteredElements = getCurrentFilteredElements();
+        //     $('.mobile-filter input[type=checkbox]').each((index, filter) => {
+        //         let filterName = filter.nextElementSibling.innerText;
+        //         if ($(filter).is(':checked') && !currentFilteredElements.includes(filterName)) {
+        //             eventCallback('', 'עמוד הבית', 'לחיצה על הצג מתכונים במסך סינון', 'הוספת סינון', 'סינון', filterName);
+        //         }
+        //
+        //         if (currentFilteredElements.includes(filterName) && !$(filter).is(':checked')) {
+        //             eventCallback('', 'עמוד הבית', 'לחיצה על הצג מתכונים במסך סינון', 'הסרת סינון', 'סינון', filterName);
+        //         }
+        //     });
+        // })
     }
 });
 
