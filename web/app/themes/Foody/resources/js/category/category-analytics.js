@@ -112,6 +112,30 @@ jQuery(document).ready(($) => {
             }
         });
 
+        if($('.filter-mobile .filter-btn').length){
+            let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
+            $('.filter-mobile .filter-btn').on('click', function () {
+                eventCallback('', 'מתחם פידים', 'לחיצה על כפתור סינון מובייל', filterString, 'סינון', filterString);
+            })
+        }
+
+        if ($('#foody-filter').length) {
+            $('#foody-filter .md-checkbox input[type="checkbox"]').on('change', function () {
+                let action = this.closest('.mobile-filter') ? 'לחיצה על הצג מתכונים במסך סינון' : false;
+                let isChecked = $(this).is(':checked');
+                if(!action){
+                    if(isChecked){
+                        action = 'הוספת סינון'
+                    } else {
+                        action = 'הסרת סינון'
+                    }
+                }
+                let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
+                eventCallback('', 'עמוד קטגוריה', action, filterString, 'סינון', filterString);
+            })
+        }
+
+
         /** add/remove filters mobile **/
         $('.show-recipes').on('click', function () {
             let currentFilteredElements = getCurrentFilteredElements();
