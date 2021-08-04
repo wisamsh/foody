@@ -79,6 +79,15 @@ jQuery(document).ready(($) => {
                 }
             });
         })
+
+        /** Add new user from wsl plugin **/
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if ( urlParams.get('newuser') === 1 ) {
+            eventCallback('', 'עמוד הבית', 'משתמש חדש רשם', 'filterName', 'סינון', 'filterName');
+        }
+
+
     }
 });
 
