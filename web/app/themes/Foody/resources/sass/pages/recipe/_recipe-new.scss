@@ -2317,6 +2317,7 @@ $content-width: 95%;
           .description {
             margin: 0 0 10px;
             font-size: 18px;
+            text-align: justify;
           }
         }
 
@@ -2603,11 +2604,13 @@ $content-width: 95%;
         .preview {
           text-align: right;
           padding: 0 0.7rem;
-
+          text-align: justify;
           .foody-content{
+            text-align: justify;
             font-size: 17px;
             line-height: 21px;
             > p{
+              text-align: justify;
               font-size: 17.5px;
             }
           }
@@ -3771,6 +3774,7 @@ $content-width: 95%;
             position: absolute;
             top: 0;
             font-size: 25px;
+            font-size: 900;
           }
 
           .description-print{
