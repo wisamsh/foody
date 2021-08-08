@@ -462,6 +462,7 @@ jQuery(document).ready(($) => {
     if ($('.recipe-categories .post-categories li').length && $('.cat-read-more').length) {
         $('.cat-read-more').on('click', function () {
             $('.recipe-categories .post-categories').attr('style', 'height:' + parseInt($(this).attr('data-original-size')) + 'px');
+            $('.recipe-categories .post-categories').attr('style', 'margin-bottom:60px');
             $(this).remove();
         });
     }
