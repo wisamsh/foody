@@ -128,18 +128,6 @@ if(get_current_blog_id() == 1) {
             <?php } ?>
         </div>
     </section>
-    <?php if (get_current_blog_id() == 2) { ?>
-        <div id="taboola-mid-article-thumbnails-new1"></div>
-        <script type="text/javascript">
-            window._taboola = window._taboola || [];
-            _taboola.push({
-                mode: 'alternating-thumbnails-b',
-                container: 'taboola-mid-article-thumbnails-new1',
-                placement: 'Mid Article Thumbnails New1',
-                target_type: 'mix'
-            });
-        </script>
-    <?php }?>
     <section class="purchase-buttons">
         <?php $recipe->the_purchase_buttons(); ?>
     </section>
@@ -147,9 +135,6 @@ if(get_current_blog_id() == 1) {
     <section class="recipe-content <?php echo $recipe->is_content_by_steps() ? 'with-steps' : ''?>">
         <?php $recipe->get_relevant_content(); ?>
     </section>
-    <?php if (get_current_blog_id() == 2) { ?>
-        <script src="https://cnt.trvdp.com/js/1236/5441.js"></script>
-    <?php } ?>
 <?php $recipe->the_notes() ?>
         <section class="recipe-sponsor-container box no-print">
         	<?php $recipe->the_sponsor() ?>
