@@ -376,10 +376,10 @@ class Foody_Recipe extends Foody_Post
 //        if (!empty($content)) {
 //            $content = foody_normalize_content($content, true);
 //        }
-        if ( get_field( 'add_more_preview', $this->post->ID) === false ) {
-            $content = '<div class="foody-content show-read-more">' . $content . '</div>';
-        } else {
+        if ( get_field( 'add_more_preview', $this->post->ID) === true ) {
             $content = '<div class="foody-content">' . $content . '</div>';
+        } else {
+            $content = '<div class="foody-content show-read-more">' . $content . '</div>';
         }
 
         echo $content;
