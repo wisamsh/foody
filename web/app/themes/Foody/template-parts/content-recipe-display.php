@@ -147,6 +147,9 @@ if(get_current_blog_id() == 1) {
     <section class="recipe-content <?php echo $recipe->is_content_by_steps() ? 'with-steps' : ''?>">
         <?php $recipe->get_relevant_content(); ?>
     </section>
+    <?php if (get_current_blog_id() == 2) { ?>
+        <script src="https://cnt.trvdp.com/js/1236/5441.js"></script>
+    <?php } ?>
 <?php $recipe->the_notes() ?>
         <section class="recipe-sponsor-container box no-print">
         	<?php $recipe->the_sponsor() ?>
