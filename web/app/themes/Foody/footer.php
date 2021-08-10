@@ -241,10 +241,10 @@ $footer->add_nagish_li_script();
 
 ?>
 <?php if (get_current_blog_id() == 2) { ?>
-<!--    <script type="text/javascript">-->
-<!--        window._taboola = window._taboola || [];-->
-<!--        _taboola.push({flush: true});-->
-<!--    </script>-->
+    <script type="text/javascript">
+        window._taboola = window._taboola || [];
+        _taboola.push({flush: true});
+    </script>
 <?php } ?>
 </body>
 <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
