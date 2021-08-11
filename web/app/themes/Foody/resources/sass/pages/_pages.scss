@@ -46,14 +46,14 @@
 
     .md-checkbox {
       input[type="checkbox"]:checked + label:not(.error):before {
-        background: linear-gradient(34deg, #ec3849, #f35644);
+        background: linear-gradient(34deg, #ec3849, #e63a2b);
       }
 
       label:not(.error) {
         display: table-cell;
 
         &:before {
-          border: 2px solid #ec3849;
+          border: 2px solid #e63a2b;
         }
       }
     }
@@ -61,7 +61,7 @@
     input[type='submit'] {
       margin: 10px 0 0;
       border-radius: 6px;
-      background-image: linear-gradient(71deg, #ec3849, #f35644);
+      background-image: linear-gradient(71deg, #ec3849, #e63a2b);
       font-family: $font__assistant;
       font-size: 23px;
       font-weight: bold;
@@ -199,7 +199,7 @@
     input[type='submit'] {
       margin: 10px auto 0;
       border-radius: 6px;
-      background-image: linear-gradient(71deg, #ec3849, #f35644);
+      background-image: linear-gradient(71deg, #ec3849, #e63a2b);
       font-family: $font__assistant;
       font-size: 23px;
       font-weight: bold;
