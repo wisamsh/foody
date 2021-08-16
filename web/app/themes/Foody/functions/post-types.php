@@ -127,6 +127,11 @@ function register_post_types()
             'taxonomies' => array('category', 'post_tag'),
             'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
             'show_ui' => true,
+            'rewrite' => array(
+                'slug' => 'foody_answer',
+                'with_front' => true
+            ),
+
         ),
     );
 
@@ -473,7 +478,7 @@ function my_pre_get_posts(WP_Query $query)
     }
 
     if (is_search() && $query->is_main_query()) {
-        $query->set('post_type', ['foody_recipe', 'post', 'foody_feed_channel', 'foody_answer']);
+        $query->set('post_type', ['foody_recipe', 'post', 'foody_feed_channel']);
     }
 
 }
