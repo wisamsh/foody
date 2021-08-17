@@ -111,7 +111,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 <?php endif; ?>
 <div id="page" class="site">
     <?php $post_type = is_single() && isset($post) && isset($post->post_type) ? $post->post_type : ''; ?>
-    <header id="masthead" class="site-header no-print <?php if ($post_type == 'foody_recipe' && wp_is_mobile()) {
+    <header id="masthead" class="site-header no-print <?php if ( ($post_type == 'foody_answer' || $post_type == 'foody_answer') && wp_is_mobile()) {
         echo 'hidden-recipe-header';
     } ?>">
         <?php if (is_multisite() && !is_main_site()): ?>
@@ -241,7 +241,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
         <!-- #site-navigation -->
     </header><!-- #masthead -->
-    <?php if (is_single() && $post_type == 'foody_recipe' && wp_is_mobile()) { ?>
+    <?php if (is_single() && ($post_type == 'foody_recipe' || $post_type == 'foody_answer') && wp_is_mobile()) { ?>
         <div class="search-overlay floating-mobile-header d-lg-none">
 
             <div class="input-container">
@@ -257,19 +257,33 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
             <div class="black-overlay">
             </div>
             <?php
-            if(is_single()) {
-                /** @var Foody_Recipe $recipe */
-                $recipe = Foody_PageContentFactory::get_instance()->get_page();
-                $id = method_exists($recipe, 'get_id') ? $recipe->get_id() : false;
+            if(is_single() && $post_type == 'foody_recipe') {
+                /** @var Foody_Recipe $post_class */
+                $post_class = Foody_PageContentFactory::get_instance()->get_page();
+                $id = method_exists($post_class, 'get_id') ? $post_class->get_id() : false;
                 $similar_content = get_field('similar_content_group', $id);
 
                 //if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
                     <div class="related-recipes-container">
                         <div class="close-btn">&#10005;</div>
-                        <?php $recipe->get_similar_content($similar_content); ?>
+                        <?php $post_class->get_similar_content($similar_content); ?>
                     </div>
                 <?php //}
-            } ?>
+            }
+            if ( $post_type == 'foody_answer') {
+                /** @var Foody_Answer $post_class */
+                $post_class = Foody_PageContentFactory::get_instance()->get_page();
+                $id = method_exists($post_class, 'get_id') ? $post_class->get_id() : false;
+                $similar_content = get_field('similar_content_group', $id);
+
+                //if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
+                <div class="related-recipes-container">
+                    <div class="close-btn">&#10005;</div>
+                    <?php $post_class->get_similar_content('foody_recipe', 'similar_content_group' ); ?>
+                </div>
+                <?php //}
+            }
+            ?>
         </div>
         <div class="sticky_bottom_header no-print">
             <div class="socials d-none d-lg-block">
@@ -354,7 +368,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                     <?php endif; ?>
 
                     <?php
-                        $similar_content = get_field('similar_content_group', $recipe->get_id());
+                        $similar_content = get_field('similar_content_group', $post_class->get_id());
                         $has_similar_content = !empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג');
                         $class_has_similar_content = $has_similar_content ? '' : 'empty-related-content';
                     ?>
@@ -376,7 +390,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                         </div>
                         <?php
                             $navbar_purchase_class = '';
-                            $num_of_purchase_buttons = $recipe->has_purchase_buttons();
+                            $num_of_purchase_buttons = $post_class->has_purchase_buttons();
                             if($num_of_purchase_buttons > 0){
                                 $navbar_purchase_class = $num_of_purchase_buttons < 2 ? 'one-purchase-button' : 'two-purchase-button';
                             }
@@ -409,8 +423,8 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                         <span class="foody-name"><?php echo get_bloginfo('name'); ?></span>
                                     </a>
                                <?php }
-                                if (is_single() && method_exists($recipe, 'the_purchase_buttons')) {
-                                    $recipe->the_purchase_buttons();
+                                if (is_single() && method_exists($post_class, 'the_purchase_buttons')) {
+                                    $post_class->the_purchase_buttons();
                                 }
                                 ?>
 
