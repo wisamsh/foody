@@ -31,7 +31,7 @@ class Foody_Answer extends Foody_Post
         return $post;
     }
 
-    function our_id(){
+    function get_id(){
         return $this->our_post()->ID;
     }
 
@@ -45,24 +45,40 @@ class Foody_Answer extends Foody_Post
         return $description;
     }
 
+    function has_banner(){
+
+    }
+
+    function our_banner() {
+
+        return get_field('answer_banner', $this->get_id())['url'];
+    }
+
     function image_or_video(){
-        if (have_rows('video', $this->our_id())) {
 
-                $video_url = get_sub_field('url',$this->our_id());
+        if ($this->our_post() != null) {
+            if (have_rows('video', $this->get_id())) {
+                while (have_rows('video', $this->get_id())): the_row();
+                    $video_url = get_sub_field('url');
 
-                if ($video_url && count($parts = explode('v=', $video_url)) > 1) {
+                    if ($video_url && count($parts = explode('v=', $video_url)) > 1) {
 
-                    $query = explode('&', $parts[1]);
-                    $video_id = $query[0];
+                        $query = explode('&', $parts[1]);
+                        $video_id = $query[0];
+                        $args = array(
+                            'id' => $video_id,
+                            'post_id' => $this->id
+                        );
+                        foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
+                    } else {
+                        echo get_the_post_thumbnail($this->id, 'foody-main');
+                        $feed_area_id = !empty($this->id) ? get_field('recipe_channel', $this->id) : get_field('recipe_channel');
+                    }
 
-                    $video_element = '<div class="item"><span id="video" style="display: none;" data-video-id="' . $video_id . '"></span><div class="video-overlay"></div><div class="video-container no-print"></div></div>';
-                    $video_image = get_sub_field('image');
-
-                    return 'wow';
-                }
-
-        } else {
-           return 'image';
+                endwhile;
+            } else {
+                echo get_the_post_thumbnail($this->get_id(), 'foody-main');
+            }
         }
 
     }
@@ -70,7 +86,7 @@ class Foody_Answer extends Foody_Post
     private function get_related_content_by_categories_and_custom($post_type, $selector, $args = array())
     {
         $posts = [];
-        $related = get_field($selector, $this->our_id());
+        $related = get_field($selector, $this->get_id());
         if (!empty($related) && is_array($related)) {
             $posts = $related;
         }
@@ -91,7 +107,7 @@ class Foody_Answer extends Foody_Post
                 return $post->ID;
             }, $posts);
 
-            $posts_to_exclude[] = $this->our_id();
+            $posts_to_exclude[] = $this->get_id();
 
             if (isset($args['exclude']) && is_array($args['exclude'])) {
                 $posts_to_exclude = array_merge($posts_to_exclude, $args['exclude']);
@@ -133,7 +149,7 @@ class Foody_Answer extends Foody_Post
             $post_id = $this->id;
         }
 
-        $primary = get_post_meta($this->our_id(), '_yoast_wpseo_primary_category', true);
+        $primary = get_post_meta($this->get_id(), '_yoast_wpseo_primary_category', true);
 
         if (!$primary || !is_numeric($primary) || intval($primary) <= 0) {
             /** @var WP_Term[] $categories */
@@ -161,7 +177,7 @@ class Foody_Answer extends Foody_Post
 
     public function get_similar_content($post_type, $content_group )
     {
-        $similar_contents = get_field($content_group, $this->our_id());
+        $similar_contents = get_field($content_group, $this->get_id());
         $not_in_random = [];
         array_push($not_in_random, $this->get_id());
         $counter = 0;
@@ -252,7 +268,97 @@ class Foody_Answer extends Foody_Post
                 }
             }
         }
-        foody_get_template_part(get_template_directory() . '/template-parts/content-similar-content-listing.php', $args);
+        if ( $post_type === 'foody_recipe' ) {
+            foody_get_template_part(get_template_directory() . '/template-parts/content-similar-content-listing.php', $args);
+        }
+        if ( $post_type === 'foody_answer' ) {
+            foody_get_template_part(get_template_directory() . '/template-parts/content-similar-content-faq.php', $args);
+        }
     }
+
+
+    public function the_categories_answer()
+    {
+        echo '<h2 class="title">' . __('קטגוריות') . '</h2>';
+        echo get_the_category_list('', '', $this->get_id());
+    }
+
+    public function the_accessories_answer()
+    {
+        $posts = [];
+        $title = '';
+
+        while (have_rows('accessories', $this->get_id())): the_row();
+            $posts = get_sub_field('accessories');
+            $title = get_sub_field('title');
+        endwhile;
+
+
+        $this->posts_bullets_answer($posts, $title);
+    }
+
+    public function the_techniques_answer($print = true)
+    {
+        $posts = [];
+        $title = '';
+
+        while (have_rows('techniques', $this->get_id())): the_row();
+            $posts = get_sub_field('techniques');
+            $title = get_sub_field('title');
+        endwhile;
+
+//		if ( empty( $posts ) ) {
+//			$posts = foody_get_serialized_field_by_meta( 'techniques_techniques', $this->id );
+//		}
+
+        if ($print) {
+            $this->posts_bullets_answer($posts, $title);
+        } else {
+            return $posts;
+        }
+    }
+
+    public function the_tags_answer()
+    {
+        if ($this->has_tags_answer()) {
+            $tags = wp_get_post_tags($this->get_id());
+            foody_get_template_part(get_template_directory() . '/template-parts/content-tags.php', $tags);
+        }
+    }
+
+    public function has_tags_answer()
+    {
+        $has_tags = false;
+        $tags = wp_get_post_tags($this->get_id());
+        if (!is_wp_error($tags) && count($tags) > 0) {
+            $has_tags = true;
+        }
+
+        return $has_tags;
+    }
+
+    private function posts_bullets_answer($array, $title)
+    {
+        $list = '<h2 class="title">' . $title . '</h2><ul>%s</ul>';
+
+        $items = array();
+
+        if (array_not_empty($array)) {
+            foreach ($array as $item) {
+                if (!is_numeric($item)) {
+                    $post_id = $item->ID;
+                } else {
+                    $post_id = $item;
+                }
+
+
+                $items[] = '<li><a href="' . get_permalink($post_id) . '">' . get_the_title($post_id) . '</a>' . '</li>';
+            }
+
+            echo sprintf($list, implode('', $items));
+        }
+    }
+
+
 
 }
