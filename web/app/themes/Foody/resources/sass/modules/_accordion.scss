@@ -12,11 +12,11 @@
     h5 , div.filter-title-h5{
       display: flex;
       a[data-toggle="collapse"] {
-
+        font-family: Ploni;
         width: 100%;
         color: var(--color__text-main);
-        font-size: 20px;
-        font-weight: 900;
+        font-size: 21px;
+        font-weight: 600;
         letter-spacing: -0.06px;
         //line-height: 23px;
         display: inline-flex;
@@ -32,8 +32,10 @@
         }
 
         &.main-title {
+          font-size: 30px;
+          font-family: AlmoniTzar;
+          font-weight: 600 !important;
           color: var(--color__primary);
-          font-size: 22px;
           padding-right: 10px;
         }
 
