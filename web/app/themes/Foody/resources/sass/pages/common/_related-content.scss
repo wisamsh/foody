@@ -33,8 +33,8 @@
 
       .details {
         .post-title {
-          font-family: PloniBold;
-          font-size: 15px;
+          font-family: PloniMedium;
+          font-size: 16px;
           font-weight: normal;
           margin-bottom: 0;
           margin-top: 7px;
@@ -43,6 +43,7 @@
         .author-name {
           unicode-bidi: isolate;
           margin-left: 16px;
+          font-size: 18px;
         }
 
         .view-count, .author-name {
@@ -58,7 +59,7 @@
         }
       }
       .excerpt{
-        font-size: 14px;
+        font-size: 16px;
         font-family: Ploni;
         margin-top: 5px;
       }

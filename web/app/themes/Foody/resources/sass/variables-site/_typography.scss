@@ -89,17 +89,10 @@ $raanan-unicode-range: 'U+0021-0039';
 }
 
 @font-face{
-  font-family: 'Ploni';
+  font-family: 'PloniMedium';
   font-weight: 500; /*(medium)*/
   font-style: normal;
-  src: url('../fonts/Ploni/ploni-regular-aaa.woff2') format('woff2'), url('../fonts/Ploni/ploni-regular-aaa.woff') format('woff');
-}
-
-@font-face{
-  font-family: 'Ploni';
-  font-weight: 700; /*(bold)*/
-  font-style: normal;
-  src: url('../fonts/Ploni/ploni-bold-aaa.woff2') format('woff2'), url('../fonts/Ploni/ploni-bold-aaa.woff') format('woff');
+  src: url('../fonts/Ploni/ploni-medium-aaa.woff2') format('woff2'), url('../fonts/Ploni/ploni-medium-aaa.woff') format('woff');
 }
 
 @font-face{

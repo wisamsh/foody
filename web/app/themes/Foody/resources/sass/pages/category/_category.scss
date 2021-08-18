@@ -4,6 +4,8 @@ body[class~="category"] {
 
     .breadcrumb, h1.title {
       margin-right: 20px;
+      font-size: 35px;
+      font-family: AlmoniTzar;
     }
 
     > .container-fluid {
@@ -65,11 +67,11 @@ body[class~="category"] {
           }
 
           .category-title {
-            font-size: 20px;
+            font-size: 21px;
             text-align: center;
             font-weight: normal;
             color: var(--color__text-primary-dark);
-            font-family: Ploni;
+            font-family: PloniMedium;
           }
 
         }
@@ -107,7 +109,7 @@ body[class~="category"] {
         .grid-header{
           .title{
             font-family: AlmoniTzar !important;
-            font-size: 32px;
+            font-size: 35px;
           }
         }
         .feed-item {
