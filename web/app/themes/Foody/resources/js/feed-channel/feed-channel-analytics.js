@@ -115,7 +115,7 @@ jQuery(document).ready(($) => {
         // }
 
 
-        /** add/remove filters mobile **/
+        /** add/remove filters mobile  **/
         // $('.show-recipes').on('click', function () {
         //     let currentFilteredElements = getCurrentFilteredElements();
         //     $('.mobile-filter input[type=checkbox]').each((index, filter) => {
