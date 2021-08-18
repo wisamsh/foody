@@ -102,15 +102,54 @@ jQuery(document).ready(($) => {
             eventCallback('', 'עמוד קטגוריה', 'בחירה בשף', foodyGlobals['title'], ' מיקום', order_in_Grid, 'תמונה', foodyGlobals['title'], recipeDetails);
         });
 
-        /** add/remove filters **/
-        $('.sidebar-section').on('click', '.md-checkbox', function () {
-            let checkedAmount = $('.card-body input:checked').length;
-            if (this.children[0].checked) {
-                eventCallback('', 'עמוד קטגוריה', 'הסרת סינון', foodyGlobals['title'], ' סינון', this.innerText, '', foodyGlobals['title'], '', --checkedAmount);
-            } else {
-                eventCallback('', 'עמוד קטגוריה', 'הוספת סינון', foodyGlobals['title'], ' סינון', this.innerText, '', '', '', ++checkedAmount);
-            }
-        });
+        // /** add/remove filters **/
+        // $('.sidebar-section').on('change', '.md-checkbox', function () {
+        //     let checkedAmount = $('.card-body input:checked').length;
+        //     if (this.children[0].checked) {
+        //         eventCallback('', 'עמוד קטגוריה', 'הסרת סינון', foodyGlobals['title'], ' סינון', this.innerText, '', foodyGlobals['title'], '', --checkedAmount);
+        //     } else {
+        //         eventCallback('', 'עמוד קטגוריה', 'הוספת סינון', foodyGlobals['title'], ' סינון', this.innerText, '', '', '', ++checkedAmount);
+        //     }
+        // });
+        //
+        // if($('.filter-mobile .filter-btn').length){
+        //     let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
+        //     $('.filter-mobile .filter-btn').on('click', function () {
+        //         eventCallback('', 'מתחם פידים', 'לחיצה על כפתור סינון מובייל', filterString, 'סינון', filterString);
+        //     })
+        // }
+
+        // if ($('#foody-filter').length) {
+        //     $('#foody-filter .md-checkbox input[type="checkbox"]').on('change', function () {
+        //         let action = this.closest('.mobile-filter') ? 'לחיצה על הצג מתכונים במסך סינון' : false;
+        //         let isChecked = $(this).is(':checked');
+        //         if(!action){
+        //             if(isChecked){
+        //                 action = 'הוספת סינון'
+        //             } else {
+        //                 action = 'הסרת סינון'
+        //             }
+        //         }
+        //         let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
+        //         eventCallback('', 'עמוד קטגוריה', action, filterString, 'סינון', filterString);
+        //     })
+        // }
+
+
+        // /** add/remove filters mobile **/
+        // $('.show-recipes').on('click', function () {
+        //     let currentFilteredElements = getCurrentFilteredElements();
+        //     $('.mobile-filter input[type=checkbox]').each((index, filter) => {
+        //         let filterName = filter.nextElementSibling.innerText;
+        //         if ($(filter).is(':checked') && !currentFilteredElements.includes(filterName)) {
+        //             eventCallback('', 'עמוד קטגוריה', 'לחיצה על הצג מתכונים במסך סינון (הוספת סינון)', foodyGlobals['title'], 'סינון', filterName);
+        //         }
+        //
+        //         if (currentFilteredElements.includes(filterName) && !$(filter).is(':checked')) {
+        //             eventCallback('', 'עמוד קטגוריה', 'לחיצה על הצג מתכונים במסך סינון (הסרת סינון)', foodyGlobals['title'], 'סינון', filterName);
+        //         }
+        //     });
+        // })
 
         /** click load more recipes **/
         $('.foody-grid').on('click', '.show-more', function () {
@@ -130,6 +169,24 @@ jQuery(document).ready(($) => {
         });
     }
 });
+
+function getCurrentFilteredElements() {
+    let currentFilteredElements = [];
+    let vars ={};
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+        vars[key] = decodeURI(value).replace(' ', '+');
+    });
+
+    if (vars && Object.keys(vars).length && vars['filter']){
+        let filtersStrings = vars['filter'].replaceAll('C',' ').replaceAll('%2',' ').split(' ');
+        filtersStrings = filtersStrings.filter(Boolean);
+        for(let index in filtersStrings ) {
+            currentFilteredElements.push(filtersStrings[index].replace('+', ' '))
+        }
+    }
+
+    return currentFilteredElements;
+}
 
 function getRecipeLocationFromParent(parent) {
     let dataset = parent;
