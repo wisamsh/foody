@@ -111,7 +111,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 <?php endif; ?>
 <div id="page" class="site">
     <?php $post_type = is_single() && isset($post) && isset($post->post_type) ? $post->post_type : ''; ?>
-    <header id="masthead" class="site-header no-print <?php if ( ($post_type == 'foody_answer' || $post_type == 'foody_answer') && wp_is_mobile()) {
+    <header id="masthead" class="site-header no-print <?php if ( ($post_type == 'foody_recipe' || $post_type == 'foody_answer') && wp_is_mobile()) {
         echo 'hidden-recipe-header';
     } ?>">
         <?php if (is_multisite() && !is_main_site()): ?>
