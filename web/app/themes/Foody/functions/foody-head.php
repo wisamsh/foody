@@ -221,7 +221,7 @@ function foody_set_og_image()
         echo $image;
     }
     if ( is_category() ){
-        $main_image = $GLOBALS['images_dir'] . 'foody-logo.svg';
+        $main_image = $GLOBALS['images_dir'] . 'foody-logo.png';
         $image = "<meta property=\"og:image\"  itemprop=\"image\" content=\"" . $main_image . "\">";
 
         $image .= '<meta property="og:image:width" content="300">';
