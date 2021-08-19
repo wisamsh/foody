@@ -1499,7 +1499,9 @@ $content-width: 95%;
 
     section.recipe-notes{
       .title{
-        font-size: 17px;
+        font-size: 30px;
+        font-weight: 700;
+        font-family: AlmoniTzar;
         line-height: 35px;
         padding-right: 0;
         color: var(--color__primary);
@@ -1594,7 +1596,10 @@ $content-width: 95%;
           }
 
           .title{
-            font-size: 17.5px;
+            font-size: 30px;
+            position: relative;
+            top: 4px;
+            font-family: 'AlmoniTzar';
             margin: auto 0;
           }
         }
@@ -1607,6 +1612,7 @@ $content-width: 95%;
           text-align: right;
           margin: 0;
           font-size: 17px;
+          font-family:Ploni;
         }
       }
     }
