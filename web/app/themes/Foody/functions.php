@@ -221,6 +221,11 @@ function foody_scripts()
             wp_enqueue_script('foody-script-course', $course_asset, false, false, true);
         }
 
+        if (is_page_template('page-templates/foody-answer.php')) {
+            $answer_asset = foody_get_versioned_asset('answer');
+            wp_enqueue_script('foody-script-answer', $answer_asset, false, false, true);
+        }
+
         if (is_page_template('page-templates/foody-course-new.php')) {
             $course_v2_asset = foody_get_versioned_asset('coursev2');
             wp_enqueue_script('foody-script-course-v2', $course_v2_asset, false, false, true);
@@ -437,6 +442,7 @@ function add_async_attribute($tag, $handle)
         'foody-script-feed-channel',
         'foody-script-plalist',
         'foody-white-label',
+        'foody-script-answer',
         'sb_instagram_scripts',
         'ui-a11y.js',
         'wsl-widget'

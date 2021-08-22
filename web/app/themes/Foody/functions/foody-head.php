@@ -47,9 +47,10 @@ function get_page_type()
         $type = 'campaign';
 
     } elseif (is_page_template('page-templates/foody-course.php')) {
-
         $type = 'course';
-
+    }
+    elseif (is_page_template('page-templates/foody-answer.php')) {
+        $type = 'foody_answer';
     }
 
     return $type;
