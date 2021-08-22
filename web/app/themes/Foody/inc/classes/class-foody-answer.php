@@ -10,6 +10,7 @@ class Foody_Answer extends Foody_Post
 {
 
     public static $MAX__RELATED_ITEMS = 3;
+    public $answer_has_video;
 
     public function __construct(WP_Post $post = null, $load_content = true)
     {
@@ -50,14 +51,19 @@ class Foody_Answer extends Foody_Post
     }
 
     function our_banner() {
+        if ( wp_is_mobile() ) {
+            return get_field('answer_banner_mobile', $this->get_id())['url'];
+        } else {
+            return get_field('answer_banner', $this->get_id())['url'];
+        }
 
-        return get_field('answer_banner', $this->get_id())['url'];
     }
 
     function image_or_video(){
 
         if ($this->our_post() != null) {
             if (have_rows('video', $this->get_id())) {
+                $answer_has_video = true;
                 while (have_rows('video', $this->get_id())): the_row();
                     $video_url = get_sub_field('url');
 
@@ -67,16 +73,14 @@ class Foody_Answer extends Foody_Post
                         $video_id = $query[0];
                         $args = array(
                             'id' => $video_id,
-                            'post_id' => $this->id
+                            'post_id' => $this->get_id()
                         );
                         foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
-                    } else {
-                        echo get_the_post_thumbnail($this->id, 'foody-main');
-                        $feed_area_id = !empty($this->id) ? get_field('recipe_channel', $this->id) : get_field('recipe_channel');
                     }
 
                 endwhile;
             } else {
+                $answer_has_video = false;
                 echo get_the_post_thumbnail($this->get_id(), 'foody-main');
             }
         }

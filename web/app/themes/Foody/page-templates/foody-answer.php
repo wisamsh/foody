@@ -68,11 +68,10 @@ $answer = new Foody_Answer();
                 </div>
 
                 <!-- Image or video -->
-                <section class="image-or-video">
-                    <div class="<?php echo $answer->has_video ? ' video-featured-content featured-content-container' : '' ?>">
+                <div class="<?php echo $answer->answer_has_video ? ' video-featured-content featured-content-container' : 'featured-content-container' ?>">
                         <?php $answer->image_or_video() ?>
-                    </div>
-                </section>
+                </div>
+
 
                 <!-- Related Questions -->
                 <section class="related-questions">

@@ -7,19 +7,44 @@
 
       .top-banner {
         img {
-          height: 150px;
+          height: 250px;
           width: 100%;
+          object-fit: cover;
+        }
+      }
+
+
+      .featured-content-container {
+        text-align: center;
+
+        img {
+          width: 95%;
+        }
+
+        iframe {
+          position: relative;
+          top: 25px;
+          left: 120px;
+          width: 700px;
+          height: 394px;
+          margin-bottom: 30px;
         }
       }
 
       .recipe-details {
+        margin-right: 25px;
         .row-details {
           display: inline-block;
           float: right;
         }
+
+        .contain-title {
+          padding-right: 0px;
+        }
+
         h1 {
-          font-size: 30px;
-          font-family: Ploni;
+          font-size: 27px;
+          font-family: PloniBold;
           font-weight: 700;
         }
 
@@ -45,7 +70,7 @@
           .author-name {
             list-style-type: none;
             display: inline-block;
-            font-size: 19px;
+            font-size: 38px;
             font-family: AlmoniTzar;
             margin: auto 0;
             margin-right: 10px;
@@ -60,32 +85,48 @@
         margin-top: 18px;
         font-family: Ploni;
         font-weight: 400;
+        font-size: 27px;
       }
 
 
       .related-questions {
         text-align: right;
+        margin: 10px auto;
+        max-width: 98%;
+        text-align: right;
+        height: auto;
+        background: #F0EFED;
+
         .title {
-          font-size: 30px;
+          font-size: 70px;
           color: black;
-          font-family: Almoni;
+          font-family: AlmoniTzar;
+          font-weight: 100;
+          padding: 10px 25px;
         }
+
         .similar-content-items {
           list-style: none;
           padding-right: 0;
+          margin-left: 0;
 
           .similar-content-item {
             display: inline-block;
             float: right;
             padding-right: 0;
+            background: #F0EFED;
 
             .similar-content-listing-title {
               width: fit-content;
               border-bottom: 1px solid;
-              margin: 10px 0px;
-              font-family: Ploni;
-              font-weight: 700;
+              margin: 16px 25px;
+              font-size: 27px;
+              font-family: PloniBold;
             }
+          }
+
+          .similar-content-item:last-child {
+            padding-bottom: 45px;
           }
 
         }
@@ -95,14 +136,17 @@
         margin: 10px auto;
         max-width: 100%;
         padding: 0;
+        position: relative;
+        top: 18px;
 
         .similar-content-listing-block-title {
           text-align: right;
           margin-bottom: 10px;
-          font-size: 17px;
-          color: var(--color__text-title);
-          font-family: Almoni;
-          font-weight: 400;
+          font-family: 'AlmoniTzar';
+          font-weight: 100;
+          font-size: 70px;
+          color: black;
+          margin-right: 25px;
         }
 
         ul {
@@ -136,9 +180,9 @@
         margin: 15px 11px;
         margin-bottom: 13px!important;
           .title {
-            font-size: 18px;
-            font-family: AfekBold;
-            margin-bottom: 10px;
+            font-size: 30px;
+            font-family: AlmoniTzar;
+            font-weight: 700;
           }
 
           ul {
@@ -147,8 +191,8 @@
               display: inline-block;
               border-radius: 2rem;
               border: 1px solid #3a3a3a;
-              font-family: Afek;
-              font-size: 17px;
+              font-family: Ploni;
+              font-size: 14px;
               text-align: center;
               padding: 2px 12px;
               margin-left: 10px;
@@ -164,10 +208,10 @@
         margin-bottom: 10px;
 
         .newsletter-title {
-          font-size: 16px;
-          font-weight: 500;
+          font-size: 30px;
+          font-family: AlmoniTzar;
+          font-weight: 700;
           text-align: right;
-         // color: #e6392b;
           color: var(--color__primary);
         }
 
@@ -191,12 +235,17 @@
 
            input:not([type=checkbox])[type=submit] {
             box-shadow: 0 2px 4px 0 #0000001f;
-            background-color: #fff;
-            color: #e6392b;
-            color: var(--color__primary);
-            font-weight: 900;
-            cursor: pointer;
-            width: 9%;
+             background-color: #fff;
+             color: #e6392b;
+             color: var(--color__primary);
+             font-weight: 900;
+             font-size: 30px;
+             font-family: AlmoniTzar;
+             cursor: pointer;
+             padding-top: 7px;
+             position: relative;
+             top: 6px;
+             width: 16%;
           }
 
         }
@@ -210,6 +259,10 @@
 @include breakpoint(mobileonly) {
   .foody_answer-template {
 
+    #content {
+      padding-top: 0px;
+    }
+
     #main-content {
       background-color: white;
     }
@@ -222,18 +275,36 @@
         }
       }
 
+      .featured-content-container {
+        text-align: center;
+        iframe {
+          position: relative;
+          top: 25px;
+          left: 0;
+          width: 100%;
+          height: 200px;
+          margin-bottom: 30px;
+        }
+      }
+
       .contain-title {
         max-width:100% !important;
         flex:100%;
       }
 
       .recipe-details {
+        margin-right: 16px;
         .row-details {
           display: inline-block;
           float: right;
         }
+
+        .contain-title {
+          padding-right: 0px;
+        }
+
         h1 {
-          font-size: 19px;
+          font-size: 21px;
         }
 
         h1:after {
@@ -259,8 +330,9 @@
           .author-name {
             list-style-type: none;
             display: inline-block;
-            font-size: 19px;
-            font-family: Afek;
+            font-size: 30px;
+            font-family: AlmoniTzar;
+            font-weight: 100;
             margin: auto 0;
             margin-right: 10px;
           }
@@ -272,18 +344,22 @@
         text-align: right;
         margin-right: -9px;
         margin-top: 10px;
+        font-size: 21px;
       }
 
 
       .related-questions {
         margin: 10px auto;
-        max-width: 95%;
+        max-width: 100%;
         padding: 0;
         text-align: right;
+
         .title {
-          font-size: 30px;
+          font-size: 47px;
           color: black;
+          padding: 10px 10px;
         }
+
         .similar-content-items {
           list-style: none;
           padding-right: 0;
@@ -292,12 +368,13 @@
           .similar-content-item {
             display: inline-block;
             float: right;
-            padding-right: 0;
+            padding: 10px 10px;
 
             .similar-content-listing-title {
               width: fit-content;
-              border-bottom: 1px solid;
-              margin: 10px 0px;
+              border-bottom: 2px solid;
+              margin: 6px 0px;
+              font-size: 21px;
             }
           }
 
@@ -305,15 +382,15 @@
       }
 
       .recipe_similar_content {
-        margin: 10px auto;
+        margin: 45px auto;
         max-width: 100%;
         padding: 0;
 
         .similar-content-listing-block-title {
           text-align: right;
-          font-size: 30px ;
+          font-size: 47px ;
           color: black;
-          font-family: 'Almoni';
+          font-family: AlmoniTzar;
           font-weight: 900;
           margin: 10px auto;
           max-width: 95%;
@@ -336,8 +413,8 @@
                 margin-top: 5px;
                 line-height: 1;
                 text-align: center;
-                font-family: Afek;
-                font-size: 15px;
+                font-family: Ploni;
+                font-size: 18px;
               }
             }
           }
@@ -350,8 +427,9 @@
         margin: 15px 11px;
         margin-bottom: 13px!important;
         .title {
-          font-size: 18px;
-          font-family: AfekBold;
+          font-size: 30px;
+          font-family: AlmoniTzar;
+          font-weight: 700;
           margin-bottom: 10px;
         }
 
@@ -361,7 +439,7 @@
             display: inline-block;
             border-radius: 2rem;
             border: 1px solid #3a3a3a;
-            font-family: Afek;
+            font-family: Ploni;
             font-size: 14px;
             text-align: center;
             padding: 2px 12px;
