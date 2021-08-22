@@ -917,6 +917,7 @@ abstract class Foody_Post implements Foody_ContentWithSidebar
 
                     if ($video_url && count($parts = explode('v=', $video_url)) > 1) {
 
+                        
                         $query = explode('&', $parts[1]);
                         $video_id = $query[0];
                         $args = array(

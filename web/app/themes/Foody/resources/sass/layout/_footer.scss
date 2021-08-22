@@ -189,8 +189,7 @@ footer.site-footer {
       }
 
       .newsletter-title {
-        font-font: Ploni;
-        font-weight: 600;
+        font-family: PloniMedium;
         font-size: 18px;
         margin-bottom: 0.5rem;
         text-align: right;
@@ -232,6 +231,9 @@ footer.site-footer {
               font-size: 18px;
               cursor: pointer;
               font-weight: 600;
+              font-family: Ploni;
+              top: 0px;
+              position: relative;
             }
           }
         }
@@ -309,8 +311,8 @@ footer.site-footer {
                   width: fit-content;
                   align-self: flex-end;
                   border-radius: 4px;
-                  background-image: linear-gradient(71deg, #ec3849, #e63a2b);
-                  font-family: Afek;
+                  background-image: linear-gradient(71deg, #e63a2b, #e63a2b);
+                  font-family: Ploni;
                   font-size: 21px;
                   font-weight: bold;
                   font-style: normal;
@@ -328,7 +330,7 @@ footer.site-footer {
                   z-index: 1;
                   align-self: flex-end;
                   color: #ffffff;
-                  font-family: Afek;
+                  font-family: Ploni;
                   font-weight: normal;
                   text-decoration: none;
                   opacity: .75;
@@ -368,7 +370,7 @@ footer.site-footer {
 
                   .banner-text {
                     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                    font-family: Afek;
+                    font-family: Ploni;
                     font-size: 22px;
                     font-weight: 700;
                     font-style: normal;
@@ -388,7 +390,7 @@ footer.site-footer {
                     width: 30%;
                     border-radius: 6px;
                     border: solid 1.5px #ffffff;
-                    font-family: Afek;
+                    font-family: Ploni;
                     font-size: 22px;
                     font-weight: 600;
                     font-style: normal;
@@ -417,7 +419,7 @@ footer.site-footer {
                     z-index: 1;
                     align-self: flex-end;
                     color: #ffffff;
-                    font-family: Afek;
+                    font-family: Ploni;
                     font-weight: normal;
                     text-decoration: none;
                     opacity: .75;
@@ -487,7 +489,7 @@ footer.site-footer {
                 align-self: flex-end;
                 border-radius: 4px;
                 background-image: linear-gradient(71deg, #ec3849, #e63a2b);
-                font-family: Afek;
+                font-family: Ploni;
                 font-size: 21px;
                 font-weight: bold;
                 font-style: normal;
@@ -505,7 +507,7 @@ footer.site-footer {
                 z-index: 1;
                 align-self: flex-end;
                 color: #ffffff;
-                font-family: Afek;
+                font-family: Ploni;
                 font-weight: normal;
                 text-decoration: none;
                 opacity: .75;
@@ -545,7 +547,7 @@ footer.site-footer {
 
                 .banner-text {
                   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                  font-family: Afek;
+                  font-family: Ploni;
                   font-size: 22px;
                   font-weight: 800;
                   font-style: normal;
@@ -571,7 +573,7 @@ footer.site-footer {
                   width: 30%;
                   border-radius: 6px;
                   border: solid 1.5px #ffffff;
-                  font-family: Afek;
+                  font-family: Ploni;
                   font-size: 22px;
                   font-weight: 600;
                   font-style: normal;
@@ -600,7 +602,7 @@ footer.site-footer {
                   z-index: 1;
                   align-self: flex-end;
                   color: #ffffff;
-                  font-family: Afek;
+                  font-family: Ploni;
                   font-weight: normal;
                   text-decoration: none;
                   opacity: .75;
@@ -995,8 +997,8 @@ footer.site-footer {
                   min-width: 78px;
                   align-self: flex-end;
                   border-radius: 4px;
-                  background-image: linear-gradient(71deg, #e63a2b, #e63a2b);
-                  font-family: Afek;
+                  background-image: linear-gradient(71deg, #ec3849, #e63a2b);
+                  font-family: Ploni;
                   font-size: 14px;
                   font-weight: bold;
                   font-style: normal;
@@ -1013,7 +1015,7 @@ footer.site-footer {
                 .close {
                   align-self: flex-end;
                   color: #ffffff;
-                  font-family: Afek;
+                  font-family: Ploni;
                   font-weight: normal;
                   text-decoration: none;
                   opacity: .75;
@@ -1054,7 +1056,7 @@ footer.site-footer {
 
                   .banner-text {
                     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                    font-family: Afek;
+                    font-family: Ploni;
                     font-size: 13px;
                     font-weight: 800;
                     font-style: normal;
@@ -1075,7 +1077,7 @@ footer.site-footer {
                     width: fit-content;
                     border-radius: 8px;
                     border: solid 1.5px #ffffff;
-                    font-family: Afek;
+                    font-family: Ploni;
                     font-size: 12px;
                     font-weight: bold;
                     font-style: normal;
@@ -1107,7 +1109,7 @@ footer.site-footer {
                     z-index: 1;
                     align-self: flex-end;
                     color: #ffffff;
-                    font-family: Afek;
+                    font-family: Ploni;
                     font-weight: normal;
                     text-decoration: none;
                     opacity: 0.75;
