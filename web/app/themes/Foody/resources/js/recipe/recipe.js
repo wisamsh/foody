@@ -290,6 +290,10 @@ jQuery(document).ready(($) => {
 
     if(sliderMainData){
         $('.slider-for').slick(sliderMainData);
+        setTimeout(() => {
+            $('.slider-for').slick('refresh');
+            console.log('wad')
+        }, 500);
     }
 
     if(sliderNavData){
