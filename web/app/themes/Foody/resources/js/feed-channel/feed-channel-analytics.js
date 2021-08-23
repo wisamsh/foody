@@ -93,14 +93,18 @@ jQuery(document).ready(($) => {
         if($('.filter-mobile .filter-btn').length){
             let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
             $('.filter-mobile .filter-btn').on('click', function () {
-                eventCallback('', 'מתחם פידים', 'לחיצה על כפתור סינון מובייל', filterString, 'סינון', filterString);
+                eventCallback('', 'מתחם פידים', 'פתיחת מסך סינון', filterString, 'סינון', filterString);
             })
         }
+
+        $('.show-recipes').on('click', function () {
+            eventCallback('', 'מתחם פידים', 'לחיצה על הצג מתכונים בחלון סינון', '', 'סינון', 'שם הסינון' );
+        })
 
         /** add/remove filters **/
         if($('#foody-filter').length){
             $('#foody-filter .md-checkbox input[type="checkbox"]').on('change', function () {
-                let action = this.closest('.mobile-filter') ? 'לחיצה על הצג מתכונים במסך סינון' : false;
+                let action;
                 let isChecked = $(this).is(':checked');
                 if(!action){
                     if(isChecked){
