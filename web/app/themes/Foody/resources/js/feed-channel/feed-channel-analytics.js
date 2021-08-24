@@ -93,7 +93,7 @@ jQuery(document).ready(($) => {
         if($('.filter-mobile .filter-btn').length){
             let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
             $('.filter-mobile .filter-btn').on('click', function () {
-                eventCallback('', 'מתחם פידים', 'פתיחת מסך סינון', foodyGlobals['title'], 'סינון', filterString);
+                eventCallback('', 'מתחם פידים', 'פתיחת מסך סינון', foodyGlobals['title'], '', '');
             })
         }
 
@@ -114,7 +114,7 @@ jQuery(document).ready(($) => {
                     }
                 }
                 let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
-                eventCallback('', 'מתחם פידים', action, foodyGlobals['title'], 'סינון', filterString);
+                eventCallback('', 'מתחם פידים', action, foodyGlobals['title'], '', '');
             })
         }
 

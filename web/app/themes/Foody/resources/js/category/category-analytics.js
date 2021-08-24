@@ -115,7 +115,7 @@ jQuery(document).ready(($) => {
         if($('.filter-mobile .filter-btn').length){
             let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
             $('.filter-mobile .filter-btn').on('click', function () {
-                eventCallback('', 'עמוד קטגוריה', 'פתיחת מסך סינון', foodyGlobals['title'], 'סינון', filterString);
+                eventCallback('', 'עמוד קטגוריה', 'פתיחת מסך סינון', foodyGlobals['title'], '', '');
             })
         }
 
@@ -131,14 +131,14 @@ jQuery(document).ready(($) => {
                     }
                 }
                 let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
-                eventCallback('', 'עמוד קטגוריה', action, foodyGlobals['title'], 'סינון', filterString);
+                eventCallback('', 'עמוד קטגוריה', action, foodyGlobals['title'], '', '');
             })
         }
 
 
         /** add/remove filters mobile **/
         $('.show-recipes').on('click', function () {
-            eventCallback('', 'מתחם פידים', 'לחיצה על הצג מתכונים בחלון סינון', foodyGlobals['title'], 'סינון', 'שם הסינון' );
+            eventCallback('', 'מתחם פידים', 'לחיצה על הצג מתכונים בחלון סינון', foodyGlobals['title'], '', '' );
         })
 
         /** click load more recipes **/

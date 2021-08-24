@@ -61,7 +61,7 @@ jQuery(document).ready(($) => {
                         }
                     }
                     let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
-                    eventCallback('', 'עמוד הבית', action, filterString, 'סינון', filterString);
+                    eventCallback('', 'עמוד הבית', action, filterString, '', '');
             })
         }
 
