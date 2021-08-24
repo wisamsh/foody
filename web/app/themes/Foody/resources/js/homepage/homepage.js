@@ -67,14 +67,14 @@ jQuery(document).ready(($) => {
 
         /** add/remove filters mobile **/
         $('.show-recipes').on('click', function () {
-            eventCallback('', 'עמוד הבית', 'לחיצה על הצג מתכונים בחלון סינון', '', 'סינון', 'שם הסינון' );
+            eventCallback('', 'עמוד הבית', 'לחיצה על הצג מתכונים בחלון סינון', '', '', '' );
         })
 
         /** Press on mobile filter-btn **/
         if ($('.filter-btn').length) {
             $('.filter-btn').on('click', function () {
 
-                eventCallback('', 'עמוד הבית', 'פתיחת מסך סינון', '', 'סינון', 'שם הסינון');
+                eventCallback('', 'עמוד הבית', 'פתיחת מסך סינון', '', '', '');
             })
         }
 
