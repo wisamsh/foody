@@ -219,7 +219,16 @@ function foody_set_og_image()
         $image .= '<meta property="og:image:width" content="300">';
         $image .= '<meta property="og:image:height" content="200">';
         echo $image;
-    } else if (get_post_type() == 'foody_feed_channel') {
+    }
+    if ( is_category() ){
+        $main_image = $GLOBALS['images_dir'] . 'foody-logo.png';
+        $image = "<meta property=\"og:image\"  itemprop=\"image\" content=\"" . $main_image . "\">";
+
+        $image .= '<meta property="og:image:width" content="300">';
+        $image .= '<meta property="og:image:height" content="200">';
+        echo $image;
+    }
+    else if (get_post_type() == 'foody_feed_channel') {
 
         $cover_image = get_field('cover_image');
         if (!empty($cover_image) && isset($cover_image['url'])) {

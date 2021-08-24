@@ -130,7 +130,17 @@ $sidebar-top-offset: 60px;
       .author {
         .author-name {
           margin-top: 0;
+          font-family: PloniMedium !important;
+          font-size: 18px !important;
         }
+      }
+    }
+
+    .team-title{
+      &.title{
+        font-size: 30px;
+        font-family: AlmoniTzar;
+        font-weight: 600 !important;
       }
     }
 
@@ -153,7 +163,12 @@ $sidebar-top-offset: 60px;
       }
 
       .grid-header {
-        align-items: center;
+        .title {
+          align-items: center;
+          font-size: 30px;
+          font-family: AlmoniTzar;
+          font-weight: 600 !important;
+        }
       }
 
       .sidebar-container {
@@ -232,6 +247,33 @@ $sidebar-top-offset: 60px;
         max-width: $content-width;
         flex: 0 0 $content-width;
         margin-top: 20px;
+
+        .foody-grid{
+          .grid-header{
+            .filter-option-inner-inner{
+              font-size: 18px;
+              font-family: 'Ploni' !important;
+              font-weight: 500;
+            }
+
+            .dropdown-menu{
+              .dropdown-item{
+                font-size: 18px;
+                font-family: 'Ploni';
+                font-weight: 500;
+              }
+            }
+          }
+
+          .show-more{
+            .show-more-text{
+              font-size: 30px;
+              font-family: AlmoniTzar;
+              font-weight: 500;
+            }
+          }
+        }
+
         article {
 
           &.feed {
@@ -397,6 +439,14 @@ $sidebar-top-offset: 60px;
             .grid-header {
               .title {
                 line-height: normal;
+              }
+            }
+
+            .show-more{
+              .show-more-text{
+                font-size: 30px;
+                font-family: AlmoniTzar;
+                font-weight: 500;
               }
             }
           }
