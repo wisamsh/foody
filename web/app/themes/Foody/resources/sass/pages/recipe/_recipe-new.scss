@@ -205,6 +205,7 @@ $content-width: 95%;
       margin: 30px 0;
       padding: 10px;
       font-size: 20px;
+      font-family: Ploni;
     }
 
     .difference-nutrient {
@@ -428,7 +429,7 @@ $content-width: 95%;
         }
 
         .description{
-          font-size: 17px;
+          font-size: 18px;
         }
 
         .description{
@@ -460,8 +461,8 @@ $content-width: 95%;
               .favorite {
                 span {
                   color: #404040;
-                  font-size: 17px;
-                  font-family:'Afek';
+                  font-size: 18px;
+                  font-family: Ploni;
                 }
               }
 
@@ -494,9 +495,9 @@ $content-width: 95%;
               .social-title {
                 margin-top: 1px;
                 margin-bottom: 0;
-                font-family: 'Afek';
+                font-family: Ploni;
                 font-weight: bolder;
-                font-size:17px;
+                font-size:18px;
                 margin-left: 0.7rem;
               }
 
@@ -586,9 +587,9 @@ $content-width: 95%;
 
               .rating-header {
                 padding-left: 6%;
-                font-family: 'Afek';
+                font-family: Ploni;
                 font-weight: bolder;
-                font-size: 17px;
+                font-size: 18px;
                 left: 2%;
                 position: relative !important;
               }
@@ -662,7 +663,7 @@ $content-width: 95%;
               flex-direction: row;
               margin: 35% 0;
               text-align: center;
-              font-size: 15px;
+              font-size: 16px;
             }
 
             .difficulty-container{
@@ -671,7 +672,7 @@ $content-width: 95%;
               margin: 26% 0;
               position:relative;
               text-align: center;
-              font-size: 15px;
+              font-size: 16px;
             }
 
             .difficulty-container{
@@ -697,7 +698,7 @@ $content-width: 95%;
 
             .item-container{
               margin-top: 8px;
-              font-size: 15px;
+              font-size: 16px;
               line-height: 1.2;
 
               .key{
@@ -746,8 +747,9 @@ $content-width: 95%;
               }
 
               text-decoration: underline;
-              font-size: 17px;
-              font-family: 'AfekBold';
+              font-size: 30px;
+              font-family: AlmoniTzar;
+              font-weight: 900;
               display: block;
              }
 
@@ -762,7 +764,9 @@ $content-width: 95%;
               .nutrition-container{
                 .title{
                   display: block;
-                  font-size: 17px;
+                  font-size: 30px;
+                  font-family: AlmoniTzar;
+                  font-weight: 900;
                   text-align: center;
 
                   span {
@@ -914,7 +918,7 @@ $content-width: 95%;
 
         .preparations-share-title,
         .comments-title {
-          font-family: 'AfekBold';
+          font-family: Ploni;
           color: #404040;
           font-size: 14px;
         }
@@ -953,7 +957,8 @@ $content-width: 95%;
 
         .rating-header{
           font-size: 14px;
-          font-family: 'AfekBold';
+          font-family: Ploni;
+          font-weight: 100;
         }
       }
     }
@@ -973,8 +978,8 @@ $content-width: 95%;
         margin-top: 5%;
         text-decoration: underline;
         color: var(--color__primary);
-        font-size: 20px;
-        font-weight: bold;
+        font-size: 24px;
+        font-family: PloniMedium;
       }
 
       .recipe-ingredients-top{
@@ -983,7 +988,10 @@ $content-width: 95%;
         flex-direction: column;
 
         .title{
-          font-size: 17px;
+          font-size: 30px;
+          margin-bottom: 0;
+          font-weight: 700;
+          font-family: 'AlmoniTzar';
           margin-bottom: 0;
           line-height: 35px;
           padding-right: 0;
@@ -998,6 +1006,7 @@ $content-width: 95%;
           width: 100%;
           margin-top: -20px;
           padding-bottom: 15px;
+
           label{
             margin: auto 0 auto 2%;
           }
@@ -1005,7 +1014,7 @@ $content-width: 95%;
          label.choose-pan-title{
            padding-top: 26px;
            font-size: 17px;
-           font-family: 'Afek';
+           font-family: Ploni;
          }
 
           > .amount-container {
@@ -1180,7 +1189,8 @@ $content-width: 95%;
          }
 
          label {
-           font-size: 17px;
+           font-size: 20px;
+           font-family: Ploni;
            padding-left: 12px;
            line-height: $input-height;
            vertical-align: middle;
@@ -1253,7 +1263,7 @@ $content-width: 95%;
               }
 
               .ingredient {
-                font-size: 17px;
+                font-size: 18px;
                 display: inline-flex;
               }
 
@@ -1300,8 +1310,8 @@ $content-width: 95%;
 
           .ingredients-group-title {
             max-width: 100%;
-            font-size: 17px;
-            font-family: 'AfekBold';
+            font-size: 30px;
+            font-family: 'AlmoniTzar';
           }
 
           ul {
@@ -1489,7 +1499,9 @@ $content-width: 95%;
 
     section.recipe-notes{
       .title{
-        font-size: 17px;
+        font-size: 30px;
+        font-weight: 700;
+        font-family: AlmoniTzar;
         line-height: 35px;
         padding-right: 0;
         color: var(--color__primary);
@@ -1511,7 +1523,9 @@ $content-width: 95%;
       .similar-content-listing-block-title {
         text-align: right;
         margin-bottom: 10px;
-        font-size:17px !important;
+        font-size: 30px !important;
+        font-family: 'AlmoniTzar';
+        font-weight: 700;
       }
 
       ul {
@@ -1537,8 +1551,8 @@ $content-width: 95%;
               margin-top: 5px;
               line-height: 1;
               text-align: center;
-              font-family: Afek;
-              font-size: 15px;
+              font-family: Ploni;
+              font-size: 18px;
             }
 
           }
@@ -1582,7 +1596,10 @@ $content-width: 95%;
           }
 
           .title{
-            font-size: 17.5px;
+            font-size: 30px;
+            position: relative;
+            top: 4px;
+            font-family: 'AlmoniTzar';
             margin: auto 0;
           }
         }
@@ -1595,6 +1612,7 @@ $content-width: 95%;
           text-align: right;
           margin: 0;
           font-size: 17px;
+          font-family:Ploni;
         }
       }
     }
@@ -1619,6 +1637,7 @@ $content-width: 95%;
           text-align: center;
           margin-left: 0%;
           font-size: 24px;
+          font-family: Ploni;
           margin-bottom: 0;
         }
 
@@ -1724,7 +1743,7 @@ $content-width: 95%;
           }
 
           .author{
-            font-family: Assistant;
+            font-family: Ploni;
             padding: 10px;
             font-size: 15px;
             text-align: right;
@@ -1755,7 +1774,7 @@ $content-width: 95%;
           padding: 0;
 
           .modal-title {
-            font-family: Assistant;
+            font-family: Ploni;
             font-size: 28px;
             font-weight: 900;
             place-self: center;
@@ -1788,8 +1807,9 @@ $content-width: 95%;
       margin:15px 11px;
       margin-bottom: 13px !important;
       .title{
-        font-size:18px;
-        font-family: 'AfekBold';
+        font-size:30px;
+        font-family: AlmoniTzar;
+        font-weight: 700;
       }
     }
 
@@ -1800,7 +1820,9 @@ $content-width: 95%;
       #comments{
         .title{
           padding-right: 2px;
-          font-size: 20px;
+          font-size: 30px;
+          font-family: AlmoniTzar;
+
         }
         .comments-title{
           font-size: 17px;
@@ -1825,7 +1847,7 @@ $content-width: 95%;
       .title{
         font-size: 18px;
         line-height: 35px;
-        font-family: 'AfekBold';
+        font-family: PloniBold;
       }
 
       > ul{
@@ -2071,12 +2093,12 @@ $content-width: 95%;
             flex-direction: row;
 
             .rating-stars-container{
-              font-family: 'AfekBold';
+              font-family: PloniBold;
               margin: auto;
             }
             .rating-header{
               margin-top:1%;
-              font-family: 'AfekBold';
+              font-family: PloniBold;
               margin: auto;
             }
 
@@ -2085,7 +2107,7 @@ $content-width: 95%;
           .rating-header{
             margin-left: 4%;
             margin-top: 1%;
-            font-family: 'AfekBold';
+            font-family: PloniBold;
           }
 
           .rating-digits {
@@ -2226,7 +2248,7 @@ $content-width: 95%;
 
             .kosher-sign {
               width: 30%;
-              font-family: Assistant;
+              font-family: Ploni;
               font-size: 22px;
               font-weight: 800;
               font-style: normal;
@@ -2382,7 +2404,7 @@ $content-width: 95%;
               .item-container {
                 line-height: 1.2;
                 padding-top: 16%;
-                font-size: 16px;
+                font-size: 16px !important;
 
                 .key {
                   font-weight: bold;
@@ -2423,7 +2445,7 @@ $content-width: 95%;
 
               .kosher,
               .difficulty-container{
-                font-size: 15px;
+                font-size: 16px;
               }
 
               .difficulty-container {
@@ -2476,8 +2498,9 @@ $content-width: 95%;
 
               .value {
                 text-decoration: underline;
-                font-size: 17px;
-                font-family: 'AfekBold';
+                font-size: 30px;
+                font-weight: 700 ;
+                font-family: AlmoniTzar !important;
                 &:not(.open) {
                   display: none;
                 }
@@ -2494,7 +2517,9 @@ $content-width: 95%;
 
                 .nutrition-container {
                   .title {
-                    font-size: 17px;
+                    font-size: 30px;
+                    font-family: AlmoniTzar;
+                    font-weight: 700;
                     text-align: center;
 
                     span {
@@ -2663,7 +2688,7 @@ $content-width: 95%;
           width: 50%;
           text-align: center;
           font-weight: bold;
-          font-family: 'AfekBold';
+          font-family: PloniBold;
 
           #rating-loader {
             right:0;
@@ -2723,7 +2748,8 @@ $content-width: 95%;
         $input-height: 35px;
 
         .ingredients-area-links {
-          font-size: 20px;
+          font-size: 24px;
+          font-family: PloniMedium;
         }
 
         > .difference-nutrient {
@@ -2916,8 +2942,9 @@ $content-width: 95%;
 
             .ingredients-group-title {
               max-width: 100%;
-              font-size: 17px;
-              font-family: 'AfekBold';
+              font-size: 30px;
+              font-family: AlmoniTzar;
+              font-weight: 700;
             }
 
             ul {
@@ -3201,7 +3228,7 @@ $content-width: 95%;
               margin: auto;
               width: 34px;
               height: 34px;
-              font-family: AfekBold;
+              font-family: PloniBold;
               font-size: 19px;
               position: absolute;
               top: 4px;
@@ -3492,7 +3519,7 @@ $content-width: 95%;
             padding: 0;
 
             .modal-title {
-              font-family: Assistant;
+              font-family: Ploni;
               font-size: 28px;
               font-weight: 900;
               place-self: center;
@@ -3607,7 +3634,9 @@ $content-width: 95%;
         .similar-content-listing-block-title {
           text-align: right;
           margin-bottom: 10px;
-          font-size: 17px;
+          font-size: 30px;
+          font-family: AlmoniTzar;
+          font-weight: 700;
         }
 
         ul {
@@ -3635,7 +3664,7 @@ $content-width: 95%;
                 margin-top: 5px;
                 line-height: 1;
                 text-align: center;
-                font-family: Afek;
+                font-family: Ploni;
                 font-size: 14px;
               }
             }
@@ -3662,7 +3691,7 @@ $content-width: 95%;
             }
 
             .title {
-              font-size: 17px;
+              font-size: 30px;
               margin: auto 0;
             }
           }

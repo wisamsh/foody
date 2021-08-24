@@ -50,8 +50,9 @@ $content-width: 95%;
       margin-bottom: 10px;
 
       .newsletter-title {
-        font-size: 16px;
-        font-weight: 500;
+        font-size: 30px;
+        font-family: AlmoniTzar;
+        font-weight: 700;
         text-align: right;
         color: var(--color__primary);
       }
@@ -61,8 +62,9 @@ $content-width: 95%;
         margin-bottom: 0;
       }
       .newsletter-title {
-        font-size: 16px;
-        font-weight: 500;
+        font-size: 30px;
+        font-family: AlmoniTzar;
+        font-weight: 700;
         text-align: right;
         color: var(--color__primary);
       }
@@ -85,7 +87,12 @@ $content-width: 95%;
             background-color: #ffffff;
             color: var(--color__primary);
             font-weight: 900;
+            font-size: 30px;
+            font-family: AlmoniTzar;
             cursor: pointer;
+            padding-top: 7px;
+            position: relative;
+            top:6px;
           }
 
           &::placeholder {

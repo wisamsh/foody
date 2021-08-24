@@ -21,7 +21,7 @@ $campaign_link = get_field( 'campaign_link', $page );
 
 <section class="welcome">
     <div>
-        <img src="<?php echo $GLOBALS['images_dir'] . 'avatar.svg' ?>" alt="">
+        <img src="<?php echo $GLOBALS['images_dir'] . 'avatar.png' ?>" alt="">
 
     </div>
 
