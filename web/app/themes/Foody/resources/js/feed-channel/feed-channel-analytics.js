@@ -114,7 +114,7 @@ jQuery(document).ready(($) => {
                     }
                 }
                 let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
-                eventCallback('', 'מתחם פידים', action, foodyGlobals['title'], '', '');
+                eventCallback('', 'מתחם פידים', action, foodyGlobals['title'], 'סינון', filterString);
             })
         }
 

@@ -131,7 +131,7 @@ jQuery(document).ready(($) => {
                     }
                 }
                 let filterString = $(this).siblings('label').length ? $(this).siblings('label')[0].innerText : '';
-                eventCallback('', 'עמוד קטגוריה', action, foodyGlobals['title'], '', '');
+                eventCallback('', 'עמוד קטגוריה', action, foodyGlobals['title'], 'סינון', filterString);
             })
         }
 
