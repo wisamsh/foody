@@ -221,7 +221,7 @@ function foody_set_og_image()
         echo $image;
     }
     if ( is_category() ){
-        $image = get_field('image');
+        $image = get_field('cover_image');
         if (!empty($cover_image) && isset($image['url'])) {
             $image = "<meta property=\"og:image\" content=\"" . $image['url'] . "\">";
 
