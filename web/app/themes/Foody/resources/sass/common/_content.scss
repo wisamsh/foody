@@ -9,6 +9,12 @@
 .foody-content {
   font-family: $font__assistant;
 
+  h1 {
+    font-family: $font__h1;
+    font-weight: 900;
+    font-size: 35px;
+  }
+
   * {
     font-family: $font__assistant;
   }

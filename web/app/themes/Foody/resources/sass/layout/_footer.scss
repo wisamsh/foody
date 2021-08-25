@@ -228,11 +228,11 @@ footer.site-footer {
               background-color: #ffffff;
               border: none;
               color: var(--color__primary);
-              font-size: 30px;
+              font-size: 16px;
               cursor: pointer;
               font-weight: 900;
-              font-family: AlmoniTzar;
-              top: 2px;
+              font-family: Ploni;
+              top: 0px;
               position: relative;
             }
           }
@@ -852,11 +852,12 @@ footer.site-footer {
             @extend .newsletter-input;
             color: var(--color__primary);
             font-weight: 600;
-            font-family: AlmoniTzar !important;
+            font-family: Ploni !important;
             font-size: 30px;
             padding-top: 5px;
+            padding-bottom: 5px;
             position: relative;
-            top: 10px;
+            top: 0px;
           }
         }
 
