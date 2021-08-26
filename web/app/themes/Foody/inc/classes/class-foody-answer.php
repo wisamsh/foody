@@ -185,7 +185,13 @@ class Foody_Answer extends Foody_Post
         $not_in_random = [];
         array_push($not_in_random, $this->get_id());
         $counter = 0;
-        $title_of_section = isset($similar_contents['title']) && !empty($similar_contents['title']) ? $similar_contents['title'] : __('מתכונים נוספים שכדאי לכם לנסות');
+        if ( $post_type === 'foody_answer') {
+            $title_of_section = isset($similar_contents['title']) && !empty($similar_contents['title']) ? $similar_contents['title'] : __('שאלות קשורות');
+        }
+        if ( $post_type === 'foody_recipe' ) {
+            $title_of_section = isset($similar_contents['title']) && !empty($similar_contents['title']) ? $similar_contents['title'] : __('מתכונים נוספים שכדאי לכם לנסות');
+        }
+
         $args = ['title' => $title_of_section, 'items' => []];
 
         if (isset($similar_contents['similar_content']) && $similar_contents['similar_content']) {
