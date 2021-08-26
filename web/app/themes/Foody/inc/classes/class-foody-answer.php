@@ -62,13 +62,13 @@ class Foody_Answer extends Foody_Post
     function image_or_video(){
 
         if ($this->our_post() != null) {
-            if (have_rows('video', $this->get_id())) {
-                $answer_has_video = true;
+
+
                 while (have_rows('video', $this->get_id())): the_row();
                     $video_url = get_sub_field('url');
 
                     if ($video_url && count($parts = explode('v=', $video_url)) > 1) {
-
+                        $answer_has_video = true;
                         $query = explode('&', $parts[1]);
                         $video_id = $query[0];
                         $args = array(
@@ -76,13 +76,13 @@ class Foody_Answer extends Foody_Post
                             'post_id' => $this->get_id()
                         );
                         foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-video.php', $args);
+                    } else {
+                        $answer_has_video = false;
+                        echo get_the_post_thumbnail($this->get_id(), 'foody-main');
                     }
 
                 endwhile;
-            } else {
-                $answer_has_video = false;
-                echo get_the_post_thumbnail($this->get_id(), 'foody-main');
-            }
+             
         }
 
     }
