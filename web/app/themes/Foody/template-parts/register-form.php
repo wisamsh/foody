@@ -18,7 +18,7 @@ $title = get_field('page_title');
 $title = isset($title) && !empty($title) ? $title : __('הגיע הזמן שנכיר');
 ?>
 
-<h1 style="font-family: Assistant; color: var(--color__primary); font-weight: 900; font-size: 24px;"><?php echo $title;?></h1>
+<h1 style="font-family: AlmoniTzar; color: var(--color__primary); font-weight: 900; font-size: 30px;"><?php echo $title;?></h1>
 <p>
     <?php echo $text ?>
 </p>

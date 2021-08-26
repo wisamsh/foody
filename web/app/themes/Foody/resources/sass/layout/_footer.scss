@@ -228,9 +228,9 @@ footer.site-footer {
               background-color: #ffffff;
               border: none;
               color: var(--color__primary);
-              font-size: 18px;
+              font-size: 16px;
               cursor: pointer;
-              font-weight: 600;
+              font-weight: 900;
               font-family: Ploni;
               top: 0px;
               position: relative;
@@ -853,8 +853,11 @@ footer.site-footer {
             color: var(--color__primary);
             font-weight: 600;
             font-family: Ploni !important;
-            font-size: 18px;
-
+            font-size: 14px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            position: relative;
+            top: 0px;
           }
         }
 

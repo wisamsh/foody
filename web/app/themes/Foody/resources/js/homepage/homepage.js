@@ -51,7 +51,7 @@ jQuery(document).ready(($) => {
         /** add/remove filters **/
         if ($('#foody-filter').length) {
             $('#foody-filter .md-checkbox input[type="checkbox"]').on('change', function () {
-                    let action = this.closest('.mobile-filter') ? 'לחיצה על הצג מתכונים במסך סינון' : false;
+                    let action;
                     let isChecked = $(this).is(':checked');
                     if(!action){
                         if(isChecked){
@@ -67,18 +67,17 @@ jQuery(document).ready(($) => {
 
         /** add/remove filters mobile **/
         $('.show-recipes').on('click', function () {
-            let currentFilteredElements = getCurrentFilteredElements();
-            $('.mobile-filter input[type=checkbox]').each((index, filter) => {
-                let filterName = filter.nextElementSibling.innerText;
-                if ($(filter).is(':checked') && !currentFilteredElements.includes(filterName)) {
-                    eventCallback('', 'עמוד הבית', 'לחיצה על הצג מתכונים במסך סינון (הוספת סינון)', filterName, 'סינון', filterName);
-                }
-
-                if (currentFilteredElements.includes(filterName) && !$(filter).is(':checked')) {
-                    eventCallback('', 'עמוד הבית', 'לחיצה על הצג מתכונים במסך סינון (הסרת סינון)', filterName, 'סינון', filterName);
-                }
-            });
+            eventCallback('', 'עמוד הבית', 'לחיצה על הצג מתכונים בחלון סינון', '', '', '' );
         })
+
+        /** Press on mobile filter-btn **/
+        if ($('.filter-btn').length) {
+            $('.filter-btn').on('click', function () {
+
+                eventCallback('', 'עמוד הבית', 'פתיחת מסך סינון', '', '', '');
+            })
+        }
+
 
         /** Add new user from wsl plugin **/
         const queryString = window.location.search;
