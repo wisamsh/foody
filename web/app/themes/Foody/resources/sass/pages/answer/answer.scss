@@ -118,7 +118,7 @@
 
             .similar-content-listing-title {
               width: fit-content;
-              border-bottom: 1px solid;
+             // border-bottom: 1px solid;
               margin: 16px 25px;
               font-size: 27px;
               font-family: PloniBold;
@@ -353,7 +353,7 @@
         max-width: 100%;
         padding: 0;
         text-align: right;
-
+        height: 500px;
         .title {
           font-size: 47px;
           color: black;
@@ -372,7 +372,7 @@
 
             .similar-content-listing-title {
               width: fit-content;
-              border-bottom: 2px solid;
+              //border-bottom: 2px solid;
               margin: 6px 0px;
               font-size: 21px;
             }
