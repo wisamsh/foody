@@ -254,8 +254,10 @@
 
             .categories-block-content {
 
-              .categort-listing-title {
-                font-size: 12px;
+              .category-listing {
+                .categort-listing-title {
+                  font-size: 12px !important;
+                }
               }
             }
 
