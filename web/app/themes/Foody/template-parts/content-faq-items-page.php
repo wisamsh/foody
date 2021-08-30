@@ -31,19 +31,29 @@ $select_args = array(
 <section class="grid">
 
     <div class="grid-header">
-        <?php foody_get_template_part( get_template_directory() . '/template-parts/common/foody-select.php', $select_args ); ?>
+        <?php //foody_get_template_part( get_template_directory() . '/template-parts/common/foody-select.php', $select_args ); ?>
     </div>
 
     <section class="grid-body row gutter-10">
 
         <?php
         $i = 0;
-        foreach ( $items as $item ) {
-            $item['order'] = $i;
-            foody_get_template_part( get_template_directory() . '/template-parts/content-faq-items-page-item.php', $item );
-            $i ++;
-        }
-        ?>
+        $args = array(
+        'post_type' => 'foody_answer',
+        'post_status' => 'publish',
+        'order' => 'ASC'
+        );
+
+        $faq_loop = new WP_Query( $args );
+        while ( $faq_loop->have_posts() ): $faq_loop->the_post(); ?>
+            <div class="col-4 col-lg-3 item">
+                <a href="<?php echo get_permalink() ?>"  >
+                    <h4 class="title faq-title">
+                        <?php echo the_title() ?>
+                    </h4>
+                </a>
+            </div>
+      <?php  endwhile; ?>
 
 
     </section>
