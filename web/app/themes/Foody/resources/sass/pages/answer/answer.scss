@@ -1,3 +1,11 @@
+.page-template-faq-items{
+  .faq-title {
+    font-size: 25px;
+    font-family: PloniMedium;
+    font-width: 300;
+  }
+}
+
 .foody_answer-template {
 
   #main-content {
@@ -13,6 +21,19 @@
         }
       }
 
+      .answer-sidebar {
+        width: 65%;
+        min-height: 100%;
+        border: solid 1px rgba(151, 151, 151, 0.3);
+        border-bottom: none;
+        border-top: none;
+        background-color: white;
+        padding-top: 30px;
+        position: relative;
+        padding-right: 0;
+        padding-left: 0;
+      }
+
 
       .featured-content-container {
         text-align: center;
@@ -24,15 +45,17 @@
         iframe {
           position: relative;
           top: 25px;
-          left: 120px;
-          width: 700px;
-          height: 394px;
+         // left: 120px;
+          width: 100%;
+          height: 500px;
           margin-bottom: 30px;
         }
       }
 
       .recipe-details {
         margin-right: 25px;
+        padding-top: 0px;
+        margin-top: -10px;
         .row-details {
           display: inline-block;
           float: right;
@@ -43,21 +66,11 @@
         }
 
         h1 {
-          font-size: 27px;
-          font-family: PloniBold;
-          font-weight: 700;
+          font-size: 35px;
+          font-family: AlmoniTzar;
+          font-weight: 900;
         }
 
-        h1:after {
-          content: '';
-
-          width: 100%;
-          position: absolute;
-          left: 0;
-          bottom: -4px;
-          border-width: 0 0 1px;
-          border-style: solid;
-        }
 
         .image-container {
           width: 100%;
@@ -70,8 +83,8 @@
           .author-name {
             list-style-type: none;
             display: inline-block;
-            font-size: 38px;
-            font-family: AlmoniTzar;
+            font-size: 18px;
+            font-family: Ploni;
             margin: auto 0;
             margin-right: 10px;
           }
@@ -85,7 +98,7 @@
         margin-top: 18px;
         font-family: Ploni;
         font-weight: 400;
-        font-size: 27px;
+        font-size: 18px;
       }
 
 
@@ -93,15 +106,16 @@
         text-align: right;
         margin: 10px auto;
         max-width: 98%;
+        min-height: 15%;
         text-align: right;
         height: auto;
         background: #F0EFED;
 
         .title {
-          font-size: 70px;
-          color: black;
+          font-size: 30px;
+          color: var(--color__text-title);
           font-family: AlmoniTzar;
-          font-weight: 100;
+          font-weight: 900;
           padding: 10px 25px;
         }
 
@@ -120,8 +134,8 @@
               width: fit-content;
              // border-bottom: 1px solid;
               margin: 16px 25px;
-              font-size: 27px;
-              font-family: PloniBold;
+              font-size: 21px;
+              font-family: PloniMedium;
             }
           }
 
@@ -137,14 +151,15 @@
         max-width: 100%;
         padding: 0;
         position: relative;
+        margin-bottom: 50px;
         top: 18px;
 
         .similar-content-listing-block-title {
           text-align: right;
           margin-bottom: 10px;
           font-family: 'AlmoniTzar';
-          font-weight: 100;
-          font-size: 70px;
+          font-weight: 900;
+          font-size: 30px;
           color: black;
           margin-right: 25px;
         }
@@ -163,7 +178,7 @@
               padding: 0 3px;
 
               .similar-content-listing-title {
-                margin-top: 5px;
+                margin-top: 10px;
                 line-height: 1;
                 text-align: center;
                 font-family: Afek;
@@ -208,9 +223,8 @@
         margin-bottom: 10px;
 
         .newsletter-title {
-          font-size: 30px;
-          font-family: AlmoniTzar;
-          font-weight: 700;
+          font-size: 18px;
+          font-family: PloniMedium;
           text-align: right;
           color: var(--color__primary);
         }
@@ -275,6 +289,10 @@
         }
       }
 
+      .answer-sidebar {
+        display: none;
+      }
+
       .featured-content-container {
         text-align: center;
         iframe {
@@ -304,25 +322,17 @@
         }
 
         h1 {
-          font-size: 21px;
+          font-size: 35px;
+          font-family: AlmoniTzar;
+          font-weight: 900;
         }
 
-        h1:after {
-          content: '';
 
-          width: 100%;
-          position: absolute;
-          left: 0;
-          bottom: 1px;
-
-          border-width: 0 0 1px;
-          border-style: solid;
-        }
 
         .image-container {
           width: 100%;
           img {
-            width: 52px;
+            width: 45px;
             border-radius: 50%;
             max-width: unset;
           }
@@ -330,9 +340,6 @@
           .author-name {
             list-style-type: none;
             display: inline-block;
-            font-size: 30px;
-            font-family: AlmoniTzar;
-            font-weight: 100;
             margin: auto 0;
             margin-right: 10px;
           }
@@ -344,7 +351,6 @@
         text-align: right;
         margin-right: 16px;
         margin-top: 10px;
-        font-size: 21px;
       }
 
 
@@ -354,9 +360,11 @@
         padding: 0;
         text-align: right;
         height: 500px;
+
         .title {
-          font-size: 47px;
-          color: black;
+          color: var(--color__text-title);
+          font-family: AlmoniTzar;
+          font-weight: 900;
           padding: 10px 10px;
         }
 
@@ -374,7 +382,7 @@
               width: fit-content;
               //border-bottom: 2px solid;
               margin: 6px 0px;
-              font-size: 21px;
+             // font-size: 21px;
             }
           }
 
@@ -382,13 +390,13 @@
       }
 
       .recipe_similar_content {
-        margin: 45px auto;
+        margin: 10px auto;
+        margin-bottom: 40px;
         max-width: 100%;
         padding: 0;
 
         .similar-content-listing-block-title {
           text-align: right;
-          font-size: 47px ;
           color: black;
           font-family: AlmoniTzar;
           font-weight: 900;
@@ -414,7 +422,7 @@
                 line-height: 1;
                 text-align: center;
                 font-family: Ploni;
-                font-size: 18px;
+                font-size: 21px;
               }
             }
           }
@@ -496,4 +504,71 @@
 
     }
   }
+}
+
+
+
+@media print {
+
+  .no-print, .no-print * {
+    display:none !important;
+  }
+
+  .foody_answer-template {
+    .details-container {
+
+      .top-banner {
+        img {
+          height: 150px;
+          width: 100%;
+        }
+      }
+
+      .answer-sidebar {
+        display: none !important;
+      }
+
+      .recipe-details {
+        display: flex !important;
+        .row-details {
+          display: inline-block !important;
+        }
+
+        .image-container {
+          display: flex !important;
+          margin-bottom: 20px;
+        }
+      }
+
+      .featured-content-container {
+        display: none !important;
+      }
+
+      .related-questions {
+        display: none !important;
+      }
+
+      .recipe_similar_content {
+        display: none !important;
+      }
+
+      .answer-taxonomy {
+        .title {
+          margin-right: 15px;
+          font-size: 21px;
+        }
+
+        ul {
+          float: right;
+          margin-right: 15px;
+        }
+      }
+
+      .newsletter {
+        display: none !important;
+      }
+
+    }
+  }
+
 }
