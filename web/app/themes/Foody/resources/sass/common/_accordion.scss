@@ -3,7 +3,7 @@
   &.accordion-mobile {
     .foody-accordion-content {
       .foody-accordion-title {
-        background-image: linear-gradient(80deg, #ec3849, #f35644);
+        background-image: linear-gradient(80deg, #ec3849, #ec3849);
         padding: 0 20px;
         height: 50px;
 
@@ -46,6 +46,13 @@
       i {
         &:before {
           cursor: pointer;
+        }
+      }
+
+      .icon-filter {
+        &:before {
+          cursor:pointer;
+          font-size: 25px;
         }
       }
 
