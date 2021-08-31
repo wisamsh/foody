@@ -33,7 +33,9 @@ $answer = new Foody_Answer();
                     </div>
 
                     <div class="answer-details">
-                        <?php  bootstrap_breadcrumb(); ?>
+                        <div class="answer-breadcrumb">
+                            <?php  bootstrap_breadcrumb(); ?>
+                        </div>
                         <section class="recipe-details  d-flex">
                             <!-- Title -->
                             <section class="col-sm-11 col-10 contain-title">
