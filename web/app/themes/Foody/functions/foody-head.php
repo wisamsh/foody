@@ -226,14 +226,13 @@ function foody_set_og_image()
         if (!empty($cover_image) && isset($image['url'])) {
             $image = "<meta property=\"og:image:secure_url\" content=\"" . $image['url'] . "\">";
 
-
             $image .= '<meta property="og:image:width" content="1024">';
             $image .= '<meta property="og:image:height" content="683">';
             echo $image;
         }
         else {
             $main_image = $GLOBALS['images_dir'] . 'foody-logo.png';
-            $image = "<meta property=\"og:image\"  itemprop=\"image\" content=\"" . $main_image . "\">";
+            $image = "<meta property=\"og:image:secure_url\"  itemprop=\"image\" content=\"" . $main_image . "\">";
 
             $image .= '<meta property="og:image:width" content="300">';
             $image .= '<meta property="og:image:height" content="200">';

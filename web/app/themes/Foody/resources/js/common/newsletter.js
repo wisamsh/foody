@@ -4,10 +4,10 @@
 
 jQuery(document).ready(($) => {
 
-    $('.wpcf7').on('wpcf7invalid', function (event) {
+    $('.newsletter .wpcf7').on('wpcf7invalid', function (event) {
 
-        let messageSelector = $('.invalid .wpcf7-not-valid-tip');
-        let responseOutput = $('.invalid .wpcf7-response-output');
+        let messageSelector = $('.newsletter .invalid .wpcf7-not-valid-tip');
+        let responseOutput = $('.newsletter .invalid .wpcf7-response-output');
         let newLine = $('<br class="newsletter-new-line">');
         if($(".newsletter-new-line").length){
             $(".newsletter-new-line").remove();
