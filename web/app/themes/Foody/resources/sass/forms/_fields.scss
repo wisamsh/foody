@@ -304,8 +304,12 @@ label.error {
   font-weight: bold;
 }
 
-.wpcf7-response-output {
-  //display: none !important;
+.foody-content .wpcf7-response-output {
+  display: inline-block;
+  float: right;
+  font-size: 20px;
+  margin-top: 12px;
+  text-align: right;
 }
 
 .wpcf7 {
@@ -316,4 +320,8 @@ label.error {
 
 .wpcf7-not-valid-tip {
   font-weight: bold;
+}
+
+.newsletter .wpcf7-response-output {
+  text-align: right;
 }
