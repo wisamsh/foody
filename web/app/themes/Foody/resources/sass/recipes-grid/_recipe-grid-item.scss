@@ -1,7 +1,7 @@
 .recipe-item, .playlist-item, .article-item {
 
   .recipe-item-image, .playlist-item-image, .article-item-image {
-    clip-path: inset(0 round .2em);
+    clip-path: inset(0 round 0em);
     object-fit: cover;
     width: 100%;
   }
