@@ -128,18 +128,7 @@ if(get_current_blog_id() == 1) {
             <?php } ?>
         </div>
     </section>
-    <?php if (get_current_blog_id() == 2) { ?>
-        <div id="taboola-mid-article-thumbnails-new1"></div>
-        <script type="text/javascript">
-            window._taboola = window._taboola || [];
-            _taboola.push({
-                mode: 'alternating-thumbnails-b',
-                container: 'taboola-mid-article-thumbnails-new1',
-                placement: 'Mid Article Thumbnails New1',
-                target_type: 'mix'
-            });
-        </script>
-    <?php }?>
+
     <section class="purchase-buttons">
         <?php $recipe->the_purchase_buttons(); ?>
     </section>
@@ -186,7 +175,18 @@ $similar_content = get_field('similar_content_group', $recipe->get_id());
           <?php $recipe->how_i_did(); ?>
       </section>
  <?php } ?>
-
+<?php if (get_current_blog_id() == 2) { ?>
+    <div id="taboola-mid-article-thumbnails-new1"></div>
+    <script type="text/javascript">
+        window._taboola = window._taboola || [];
+        _taboola.push({
+            mode: 'alternating-thumbnails-b',
+            container: 'taboola-mid-article-thumbnails-new1',
+            placement: 'Mid Article Thumbnails New1',
+            target_type: 'mix'
+        });
+    </script>
+<?php }?>
     <section class="recipe-comments no-print">
         <?php $recipe->comments(); ?>
     </section>
