@@ -20,12 +20,11 @@ class Foody_FAQItemsPage {
 
     public function items() {
 
-        $items = get_field( 'faq_items' );
-
-        if ( ! empty( $items ) ) {
+//        $items = get_field( 'faq_items' );
+//
+//        if ( ! empty( $items ) ) {
 
             foody_get_template_part( get_template_directory() . '/template-parts/content-faq-items-page.php', [ 'items' => $items ] );
-
-        }
+// }
     }
 }
