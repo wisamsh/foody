@@ -7,7 +7,7 @@
  */
 
 /** @noinspection PhpUndefinedVariableInspection */
-//$items = $template_args['items'];
+
 
 $select_args = array(
     'id'          => 'items-sort',

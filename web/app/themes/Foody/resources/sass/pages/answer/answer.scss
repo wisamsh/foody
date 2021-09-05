@@ -173,7 +173,7 @@
           font-family: 'AlmoniTzar';
           font-weight: 900;
           font-size: 30px;
-          color: black;
+          color: var(--color__text-title);
           margin-right: 25px;
         }
 
@@ -376,7 +376,7 @@
         max-width: 100%;
         padding: 0;
         text-align: right;
-        height: 500px;
+        height: 75vh;
 
         .title {
           color: var(--color__text-title);
@@ -414,7 +414,7 @@
 
         .similar-content-listing-block-title {
           text-align: right;
-          color: black;
+          color: var(--color__text-title);
           font-family: AlmoniTzar;
           font-weight: 900;
           margin: 10px auto;

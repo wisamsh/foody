@@ -24,7 +24,7 @@ class Foody_FAQItemsPage {
 //
 //        if ( ! empty( $items ) ) {
 
-            foody_get_template_part( get_template_directory() . '/template-parts/content-faq-items-page.php', [ 'items' => $items ] );
+            foody_get_template_part( get_template_directory() . '/template-parts/content-faq-items-page.php' );
 // }
     }
 }
