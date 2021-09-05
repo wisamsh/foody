@@ -668,7 +668,7 @@ $run-height: 30px;
           }
 
           .icon-share:before {
-            background-image: url("../images/icons/share@3x.png");
+            background-image: url("../images/icons/share-gray.png");
             background-size: contain;
             background-repeat: no-repeat;
             content: '';
