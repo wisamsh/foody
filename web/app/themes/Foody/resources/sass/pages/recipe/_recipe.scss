@@ -154,7 +154,7 @@ $content-width: 95%;
       background-color: white;
 
       .featured-content-container {
-        clip-path: inset(0 round 3px);
+        //clip-path: inset(0 round 3px);
         margin: 0 10px 10px;
         position: relative;
 
@@ -1193,7 +1193,7 @@ $content-width: 95%;
 
           img {
             width: 33%;
-            clip-path: inset(0 round 3px);
+           // clip-path: inset(0 round 3px);
             margin-bottom: 15px;
           }
         }
@@ -1316,7 +1316,7 @@ $content-width: 95%;
             padding: 0 3px;
 
             img {
-              clip-path: inset(0 round .3rem);
+              //clip-path: inset(0 round .3rem);
             }
 
             .similar-content-listing-title {
