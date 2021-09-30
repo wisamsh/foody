@@ -20,6 +20,7 @@ if (!is_multisite() || is_main_site()) {
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?> dir="rtl">
+
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
@@ -98,6 +99,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
     unset($_SESSION['background_image']);
 }
 ?>
+<!-- wisam -->
 
 <div id="fb-root"></div>
 <?php Foody_Header::google_tag_manager_iframe(); ?>
