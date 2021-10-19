@@ -925,7 +925,8 @@ $content-width: 95%;
 
         .preparation-share-link,
         .comments-link {
-          color: $color__primary;
+          //color: $color__primary;
+          color:#579fba;
           text-decoration: underline !important;
           font-size: 14.5px;
           font-weight: normal;
@@ -1286,14 +1287,14 @@ $content-width: 95%;
                 .comment {
                   font-size: 15px;
                   line-height: 15px;
-                  color: $color__primary;
+                  color: #579fba;
                 }
               }
 
               .comment {
                 font-size: 13px;
                 line-height: 15px;
-                color: $color__primary;
+                color: #579fba;
               }
             }
           }
@@ -1570,7 +1571,7 @@ $content-width: 95%;
       }
 
       .system-tip{
-        background: #fef5f6;
+        background: #e2eff2;
         padding: 5%;
         border-radius: 15px;
         width: 100%;
@@ -1628,7 +1629,7 @@ $content-width: 95%;
       .comments-area-header {
         display: flex;
         flex-direction: row;
-        background: $color__primary;
+        background:#579fba;
         padding: 20px 20px;
         position: relative;
 
@@ -2669,7 +2670,8 @@ $content-width: 95%;
 
           .preparation-share-link,
           .comments-link {
-            color: $color__primary;
+            //color: $color__primary;
+            color:#579fba;
             text-decoration: underline !important;
             font-size: 14.5px;
           }
@@ -3174,7 +3176,7 @@ $content-width: 95%;
         .comments-area-header {
           display: flex;
           flex-direction: column;
-          background: $color__primary;
+          background: #579fba;
           padding: 2%;
           position: relative;
 
@@ -3676,7 +3678,7 @@ $content-width: 95%;
         padding: 4%;
 
         .system-tip {
-          background: #fef5f6;
+          background: #e2eff2;
           padding: 5%;
           border-radius: 15px;
 
