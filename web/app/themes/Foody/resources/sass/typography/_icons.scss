@@ -1,3 +1,7 @@
+:root{
+  --newfoodycolor:#579fba;
+}
+
 @font-face {
   font-family: 'icomoon';
   src: url('../fonts/icons/icomoon.eot?149mti');
@@ -5,7 +9,6 @@
   font-weight: normal;
   font-style: normal;
 }
-
 
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
@@ -80,7 +83,7 @@
 }
 .icon-instagram .path1:before {
   content: "\e900";
-  color: rgb(230, 57, 43);
+  color:var(--newfoodycolor);
 }
 .icon-instagram .path2:before {
   content: "\e901";
@@ -90,26 +93,32 @@
 .icon-instagram .path3:before {
   content: "\e902";
   margin-left: -1em;
-  color: rgb(230, 57, 43);
+  color:var(--newfoodycolor);
 }
 .icon-instagram .path4:before {
   content: "\e903";
   margin-left: -1em;
-  color: rgb(230, 57, 43);
+  color:var(--newfoodycolor);
 }
 .icon-youtube .path1:before {
   content: "\e904";
-  color: rgb(230, 57, 43);
+  //color:var(--newfoodycolor);
+  color:var(--newfoodycolor);
+
 }
 .icon-youtube .path2:before {
   content: "\e905";
   margin-left: -1em;
-  color: rgb(230, 57, 43);
+  //color:var(--newfoodycolor);
+  color:var(--newfoodycolor);
+
 }
 .icon-youtube .path3:before {
   content: "\e906";
   margin-left: -1em;
-  color: rgb(230, 57, 43);
+  //color:var(--newfoodycolor);
+  color:var(--newfoodycolor);
+
 }
 .icon-youtube .path4:before {
   content: "\e907";
@@ -118,7 +127,7 @@
 }
 .icon-facebook .path1:before {
   content: "\e908";
-  color: rgb(230, 57, 43);
+  color:var(--newfoodycolor);
 }
 .icon-facebook .path2:before {
   content: "\e909";
@@ -136,7 +145,7 @@
 }
 .icon-email .path1:before {
   content: "\e90d";
-  color: rgb(230, 57, 43);
+  color:var(--newfoodycolor);
 }
 .icon-email .path2:before {
   content: "\e90e";
@@ -168,7 +177,7 @@
 }
 .icon-pinterest .path1:before {
   content: "\e916";
-  color: rgb(230, 57, 43);
+  color:var(--newfoodycolor);
 }
 .icon-pinterest .path2:before {
   content: "\e917";
