@@ -4,6 +4,7 @@
 
 jQuery(document).ready(($) => {
     if (foodyGlobals.type && foodyGlobals.type == 'feed_channel') {
+       
 
         let channelName = foodyGlobals.title ? foodyGlobals.title : '';
         let recipesLocationList = getRecipesLocationsInFeedChannel();
