@@ -236,7 +236,7 @@
 }
 .icon-favorite-pressed:before {
   content: "\e925";
-  color: #e6392b;
+  color: var(--newfoodycolor);
 }
 .icon-acces:before {
   content: "\e926";
