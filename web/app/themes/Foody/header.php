@@ -21,9 +21,7 @@ if (!is_multisite() || is_main_site()) {
 <!doctype html>
 <html <?php language_attributes(); ?> dir="rtl">
 <head>
-        <metahttp-equiv = "cache-control" content = "no-cache">
-        <metahttp-equiv = "expires" content = "0">
-        <metahttp-equiv = "pragma" content = "no-cache">
+        
         <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
