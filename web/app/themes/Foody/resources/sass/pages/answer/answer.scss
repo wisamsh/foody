@@ -1,0 +1,591 @@
+.page-template-faq-items{
+  .faq-title {
+    font-size: 25px;
+    font-family: PloniMedium;
+    font-width: 300;
+  }
+}
+
+.foody_answer-template {
+
+  #main-content {
+    background-color: white;
+  }
+    .details-container {
+
+      .top-banner {
+        img {
+          height: 250px;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .answer-breadcrumb {
+        margin-top: 13px;
+        margin-right: 10px;
+      }
+
+      .answer-container {
+        width: 100%;
+      }
+
+      .answer-details {
+        width: 75%;
+      }
+
+      .answer-sidebar {
+        width: 25%;
+        min-height: 100%;
+        border: solid 1px rgba(151, 151, 151, 0.3);
+        border-bottom: none;
+        border-top: none;
+        background-color: white;
+        padding-top: 30px;
+        position: relative;
+        padding-right: 0;
+        padding-left: 0;
+      }
+
+
+      .featured-content-container {
+        text-align: center;
+
+        img {
+          width: 95%;
+        }
+
+        iframe {
+          position: relative;
+          top: 25px;
+         // left: 120px;
+          width: 100%;
+          height: 500px;
+          margin-bottom: 30px;
+        }
+      }
+
+      .recipe-details {
+        margin-right: 25px;
+        padding-top: 0px;
+        margin-top: -10px;
+        .row-details {
+          display: inline-block;
+          float: right;
+        }
+
+        .contain-title {
+          padding-right: 0px;
+        }
+
+        h1 {
+          font-size: 35px;
+          font-family: AlmoniTzar;
+          font-weight: 900;
+        }
+
+
+        .image-container {
+          width: 100%;
+          img {
+            width: 52px;
+            border-radius: 50%;
+            max-width: unset;
+          }
+
+          .author-name {
+            list-style-type: none;
+            display: inline-block;
+            font-size: 18px;
+            font-family: Ploni;
+            margin: auto 0;
+            margin-right: 10px;
+          }
+        }
+      }
+
+
+      .description {
+        text-align: right;
+        margin-right: 12px;
+        margin-top: 18px;
+        font-family: Ploni;
+        font-weight: 400;
+        font-size: 18px;
+      }
+
+
+      .related-questions {
+        text-align: right;
+        margin: 10px auto;
+        max-width: 98%;
+        min-height: 15%;
+        text-align: right;
+        height: auto;
+        background: #F0EFED;
+
+        .title {
+          font-size: 30px;
+          color: var(--color__text-title);
+          font-family: AlmoniTzar;
+          font-weight: 900;
+          padding: 10px 25px;
+        }
+
+        .similar-content-items {
+          list-style: none;
+          padding-right: 0;
+          margin-left: 0;
+
+          .similar-content-item {
+            display: inline-block;
+            float: right;
+            padding-right: 0;
+            background: #F0EFED;
+
+            .similar-content-listing-title {
+              width: fit-content;
+             // border-bottom: 1px solid;
+              margin: 16px 25px;
+              font-size: 21px;
+              font-family: PloniMedium;
+            }
+          }
+
+          .similar-content-item:last-child {
+            padding-bottom: 45px;
+          }
+
+        }
+      }
+
+      .recipe_similar_content {
+        margin: 10px auto;
+        max-width: 100%;
+        padding: 0;
+        position: relative;
+        margin-bottom: 50px;
+        top: 18px;
+
+        .similar-content-listing-block-title {
+          text-align: right;
+          margin-bottom: 10px;
+          font-family: 'AlmoniTzar';
+          font-weight: 900;
+          font-size: 30px;
+          color: var(--color__text-title);
+          margin-right: 25px;
+        }
+
+        ul {
+          list-style: none;
+          margin: 0 0 3%;
+          padding: 0;
+
+          .similar-content-item {
+            margin: 0 5px;
+            padding-right: 0px;
+            padding-left: 0px;
+
+            .similar-content-item-listing{
+              padding: 0 3px;
+
+              .similar-content-listing-title {
+                margin-top: 10px;
+                line-height: 1;
+                text-align: center;
+                font-family: Afek;
+                font-size: 15px;
+              }
+            }
+          }
+        }
+
+      }
+
+
+      .answer-taxonomy {
+        margin: 15px 11px;
+        margin-bottom: 13px!important;
+          .title {
+            font-size: 30px;
+            font-family: AlmoniTzar;
+            font-weight: 700;
+          }
+
+          ul {
+            padding-right: 0px;
+            li {
+              display: inline-block;
+              border-radius: 2rem;
+              border: 1px solid #3a3a3a;
+              font-family: Ploni;
+              font-size: 14px;
+              text-align: center;
+              padding: 2px 12px;
+              margin-left: 10px;
+              margin-bottom: 10px;
+              margin-top: 5px;
+            }
+          }
+      }
+
+      .newsletter {
+        background-color: #d8d8d8;
+        padding: 10px 20px;
+        margin-bottom: 10px;
+
+        .newsletter-title {
+          font-size: 18px;
+          font-family: PloniMedium;
+          text-align: right;
+          color: var(--color__primary);
+        }
+
+        .newsletter {
+          padding: 0;
+          margin-bottom: 0;
+        }
+
+        p {
+          margin: 0;
+          text-align: right;
+
+         input:not([type=checkbox]) {
+            border: none;
+            height: 40px;
+            width: 70%;
+            margin-left: 10px;
+            box-shadow: 0 2px 4px 0 #0000002b;
+            background-color: #fff;
+          }
+
+           input:not([type=checkbox])[type=submit] {
+            box-shadow: 0 2px 4px 0 #0000001f;
+             background-color: #fff;
+             color: #e6392b;
+             color: var(--color__primary);
+             font-weight: 900;
+             font-size: 30px;
+             font-family: AlmoniTzar;
+             cursor: pointer;
+             padding-top: 7px;
+             position: relative;
+             top: 6px;
+             width: 16%;
+          }
+
+        }
+      }
+
+    }
+}
+
+
+
+@include breakpoint(mobileonly) {
+  .foody_answer-template {
+
+    #content {
+      padding-top: 0px;
+    }
+
+    #main-content {
+      background-color: white;
+    }
+    .details-container {
+
+      .top-banner {
+        img {
+          height: 150px;
+          width: 100%;
+        }
+      }
+
+      .answer-sidebar {
+        display: none;
+      }
+
+      .answer-details {
+        width: 100%;
+      }
+
+      .featured-content-container {
+        text-align: center;
+        iframe {
+          position: relative;
+          top: 25px;
+          left: 0;
+          width: 100%;
+          height: 200px;
+          margin-bottom: 30px;
+        }
+      }
+
+      .contain-title {
+        max-width:100% !important;
+        flex:100%;
+      }
+
+      .recipe-details {
+        margin-right: 16px;
+        .row-details {
+          display: inline-block;
+          float: right;
+        }
+
+        .contain-title {
+          padding-right: 0px;
+        }
+
+        h1 {
+          font-size: 35px;
+          font-family: AlmoniTzar;
+          font-weight: 900;
+        }
+
+
+
+        .image-container {
+          width: 100%;
+          img {
+            width: 45px;
+            border-radius: 50%;
+            max-width: unset;
+          }
+
+          .author-name {
+            list-style-type: none;
+            display: inline-block;
+            margin: auto 0;
+            margin-right: 10px;
+          }
+        }
+      }
+
+
+      .description {
+        text-align: right;
+        margin-right: 16px;
+        margin-top: 10px;
+      }
+
+
+      .related-questions {
+        margin: 10px auto;
+        max-width: 100%;
+        padding: 0;
+        text-align: right;
+        height: 75vh;
+
+        .title {
+          color: var(--color__text-title);
+          font-family: AlmoniTzar;
+          font-weight: 900;
+          padding: 10px 10px;
+        }
+
+        .similar-content-items {
+          list-style: none;
+          padding-right: 0;
+          margin-left: 0px;
+
+          .similar-content-item {
+            display: inline-block;
+            float: right;
+            padding: 10px 10px;
+
+            .similar-content-listing-title {
+              width: fit-content;
+              //border-bottom: 2px solid;
+              margin: 6px 0px;
+             // font-size: 21px;
+            }
+          }
+
+        }
+      }
+
+      .recipe_similar_content {
+        margin: 10px auto;
+        margin-bottom: 40px;
+        max-width: 100%;
+        padding: 0;
+
+        .similar-content-listing-block-title {
+          text-align: right;
+          color: var(--color__text-title);
+          font-family: AlmoniTzar;
+          font-weight: 900;
+          margin: 10px auto;
+          max-width: 95%;
+        }
+
+        ul {
+          list-style: none;
+          margin: 0 0 3%;
+          padding: 0;
+
+          .similar-content-item {
+            margin: 0 5px;
+            padding-right: 0px;
+            padding-left: 0px;
+
+            .similar-content-item-listing{
+              padding: 0 3px;
+
+              .similar-content-listing-title {
+                margin-top: 5px;
+                line-height: 1;
+                text-align: center;
+                font-family: Ploni;
+                font-size: 21px;
+              }
+            }
+          }
+        }
+
+      }
+
+
+      .answer-taxonomy {
+        margin: 15px 11px;
+        margin-bottom: 13px!important;
+        .title {
+          font-size: 30px;
+          font-family: AlmoniTzar;
+          font-weight: 700;
+          margin-bottom: 10px;
+        }
+
+        ul {
+          padding-right: 0px;
+          li {
+            display: inline-block;
+            border-radius: 2rem;
+            border: 1px solid #3a3a3a;
+            font-family: Ploni;
+            font-size: 14px;
+            text-align: center;
+            padding: 2px 12px;
+            margin-left: 10px;
+            margin-bottom: 10px;
+            margin-top: 5px;
+          }
+        }
+      }
+
+      .newsletter {
+        background-color: #d8d8d8;
+        padding: 10px 20px;
+        margin-bottom: 10px;
+
+        .newsletter-title {
+          font-size: 16px;
+          font-weight: 500;
+          text-align: right;
+          // color: #e6392b;
+          color: var(--color__primary);
+        }
+
+        .newsletter {
+          padding: 0;
+          margin-bottom: 0;
+        }
+
+        p {
+          margin: 0;
+          text-align: right;
+
+          input:not([type=checkbox]) {
+            border: none;
+            height: 40px;
+            width: 70%;
+            margin-left: 10px;
+            box-shadow: 0 2px 4px 0 #0000002b;
+            background-color: #fff;
+          }
+
+          input:not([type=checkbox])[type=submit] {
+            box-shadow: 0 2px 4px 0 #0000001f;
+            background-color: #fff;
+            color: #e6392b;
+            color: var(--color__primary);
+            font-weight: 900;
+            cursor: pointer;
+            width: 9%;
+          }
+
+        }
+      }
+
+    }
+  }
+}
+
+
+
+@media print {
+
+  .no-print, .no-print * {
+    display:none !important;
+  }
+
+  .foody_answer-template {
+    .details-container {
+
+      .top-banner {
+        img {
+          height: 150px;
+          width: 100%;
+        }
+      }
+
+      .answer-sidebar {
+        display: none !important;
+      }
+
+      .recipe-details {
+        display: flex !important;
+        .row-details {
+          display: inline-block !important;
+        }
+
+        .image-container {
+          display: flex !important;
+          margin-bottom: 20px;
+        }
+      }
+
+      .featured-content-container {
+        display: none !important;
+      }
+
+      .related-questions {
+        display: none !important;
+      }
+
+      .recipe_similar_content {
+        display: none !important;
+      }
+
+      .answer-taxonomy {
+        .title {
+          margin-right: 15px;
+          font-size: 21px;
+        }
+
+        ul {
+          float: right;
+          margin-right: 15px;
+        }
+      }
+
+      .newsletter {
+        display: none !important;
+      }
+
+    }
+  }
+
+}

@@ -120,6 +120,19 @@ function register_post_types()
             'singular_name' => 'ארגון לקורסים',
             'show_in_menu' => is_main_site()
         ),
+        'answer' => array(
+            'id' => 'answer',
+            'name' => 'שאלות תשובות',
+            'singular_name' => 'שאלה תשובה',
+            'taxonomies' => array('category', 'post_tag'),
+            'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
+            'show_ui' => true,
+            'rewrite' => array(
+                'slug' => 'foody_answer',
+                'with_front' => true
+            ),
+
+        ),
     );
 
     foreach ($post_types as $type) {
@@ -196,7 +209,8 @@ function foody_remove_page_template()
         'foody_technique',
         'foody_feed_channel',
         'foody_comm_rule',
-        'post'
+        'post',
+
     );
 
     $default_template = 'page-templates/content-with-sidebar.php';
@@ -442,6 +456,9 @@ function post_to_foody_post($post)
         case 'foody_recipe':
             $foody_post = new Foody_Recipe($post);
             break;
+        case 'foody_answer':
+            $foody_post = new Foody_Answer($post);
+            break;
         case 'foody_playlist':
             $foody_post = new Foody_Playlist($post);
             break;
@@ -532,6 +549,7 @@ function foody_posts_page_script()
     $post_type = get_post_type();
     if ($post_type == 'post' ||
         $post_type == 'foody_recipe' ||
+        $post_type == 'foody_answer' ||
         $post_type == 'foody_feed_channel' ||
         ($post_type == 'page' && is_page_template('page-templates/centered-content.php')) ||
         ($post_type == 'foody_course' && is_page_template('page-templates/foody-course-efrat.php')) ||
