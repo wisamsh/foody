@@ -221,6 +221,11 @@ function foody_scripts()
             wp_enqueue_script('foody-script-course', $course_asset, false, false, true);
         }
 
+        if (is_page_template('page-templates/foody-answer.php')) {
+            $answer_asset = foody_get_versioned_asset('answer');
+            wp_enqueue_script('foody-script-answer', $answer_asset, false, false, true);
+        }
+
         if (is_page_template('page-templates/foody-course-new.php')) {
             $course_v2_asset = foody_get_versioned_asset('coursev2');
             wp_enqueue_script('foody-script-course-v2', $course_v2_asset, false, false, true);
@@ -437,6 +442,7 @@ function add_async_attribute($tag, $handle)
         'foody-script-feed-channel',
         'foody-script-plalist',
         'foody-white-label',
+        'foody-script-answer',
         'sb_instagram_scripts',
         'ui-a11y.js',
         'wsl-widget'
@@ -995,6 +1001,7 @@ function foody_disable_gutenberg_editor() {
     return false;
 }
 
+
 function print_version_content($content)
 {
     $dom = new DOMDocument();
@@ -1043,19 +1050,6 @@ function build_figure_html($figureDomElem)
     }
 }
 
-function redirect_social_login($user_id, $provider, $hybridauth_user_profile, $redirect_to){
-    $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
-}
-add_action('wsl_hook_process_login_before_wp_safe_redirect', 'redirect_social_login');
-
-
-function redirect_social_login2( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile  )
-{
-
-    $redirect_to = get_permalink(get_page_by_path('השלמת-רישום'));
-
-}
-add_action( 'wsl_process_login_authenticate_wp_user_start', 'redirect_social_login2', 10, 5 );
 
 
 function console_log($output, $with_script_tags = true) {

@@ -10,7 +10,7 @@ $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
 
 
-$repo = 'git@github.com:MoveoTech/Foody.git';
+$repo = 'git@github.com:wisamsh/foody.git';
 
 $theme_dir = 'web/app/themes/Foody';
 $release_dir = '/home/ubuntu/releases';
@@ -32,8 +32,8 @@ $servers = [
     'local' => '127.0.0.1',
     'dev' => 'ubuntu@foody-dev.moveodevelop.com',
     'mu-dev' => 'ubuntu@mu.foody-dev.moveodevelop.com',
-    'medio-dev' => 'ubuntu@foody.moveodevelop.com',
-    'prod1' => 'ubuntu@34.253.214.81',
+    'medio-dev' => 'ubuntu@3.250.170.62',
+    'prod1' => 'ubuntu@34.254.255.103',
     'prod2' => 'ubuntu@54.72.141.143',
     'prod3' => 'ubuntu@34.242.248.233',
     'prod4' => 'ubuntu@52.49.88.182',

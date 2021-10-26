@@ -36,6 +36,25 @@ if (!is_multisite() || is_main_site()) {
     <?php if (get_current_blog_id() == 2) { ?>
         <script data-ad-client="ca-pub-3607762765478350" async
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script type="text/javascript">
+            window._taboola = window._taboola || [];
+            _taboola.push({article:'auto'});
+            !function (e, f, u, i) {
+                if (!document.getElementById(i)){
+                    e.async = 1;
+                    e.src = u;
+                    e.id = i;
+                    f.parentNode.insertBefore(e, f);
+                }
+            }(document.createElement('script'),
+                document.getElementsByTagName('script')[0],
+                '//cdn.taboola.com/libtrc/karingoren/loader.js',
+                'tb_loader_script');
+            if(window.performance && typeof window.performance.mark == 'function')
+            {window.performance.mark('tbl_ic');}
+
+        </script>
+
     <?php } ?>
     <script>
         var walkMeUser = <?php echo $user_param; ?>;
@@ -92,7 +111,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 <?php endif; ?>
 <div id="page" class="site">
     <?php $post_type = is_single() && isset($post) && isset($post->post_type) ? $post->post_type : ''; ?>
-    <header id="masthead" class="site-header no-print <?php if ($post_type == 'foody_recipe' && wp_is_mobile()) {
+    <header id="masthead" class="site-header no-print <?php if ( ($post_type == 'foody_recipe' || $post_type == 'foody_answer') && wp_is_mobile()) {
         echo 'hidden-recipe-header';
     } ?>">
         <?php if (is_multisite() && !is_main_site()): ?>
@@ -222,7 +241,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
         <!-- #site-navigation -->
     </header><!-- #masthead -->
-    <?php if (is_single() && $post_type == 'foody_recipe' && wp_is_mobile()) { ?>
+    <?php if (is_single() && ($post_type == 'foody_recipe' || $post_type == 'foody_answer') && wp_is_mobile()) { ?>
         <div class="search-overlay floating-mobile-header d-lg-none">
 
             <div class="input-container">
@@ -238,19 +257,33 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
             <div class="black-overlay">
             </div>
             <?php
-            if(is_single()) {
-                /** @var Foody_Recipe $recipe */
-                $recipe = Foody_PageContentFactory::get_instance()->get_page();
-                $id = method_exists($recipe, 'get_id') ? $recipe->get_id() : false;
+            if(is_single() && $post_type == 'foody_recipe') {
+                /** @var Foody_Recipe $post_class */
+                $post_class = Foody_PageContentFactory::get_instance()->get_page();
+                $id = method_exists($post_class, 'get_id') ? $post_class->get_id() : false;
                 $similar_content = get_field('similar_content_group', $id);
 
                 //if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
                     <div class="related-recipes-container">
                         <div class="close-btn">&#10005;</div>
-                        <?php $recipe->get_similar_content($similar_content); ?>
+                        <?php $post_class->get_similar_content($similar_content); ?>
                     </div>
                 <?php //}
-            } ?>
+            }
+            if ( $post_type == 'foody_answer') {
+                /** @var Foody_Answer $post_class */
+                $post_class = Foody_PageContentFactory::get_instance()->get_page();
+                $id = method_exists($post_class, 'get_id') ? $post_class->get_id() : false;
+                $similar_content = get_field('similar_content_group', $id);
+
+                //if (!empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג')) { ?>
+                <div class="related-recipes-container">
+                    <div class="close-btn">&#10005;</div>
+                    <?php $post_class->get_similar_content('foody_recipe', 'similar_content_group' ); ?>
+                </div>
+                <?php //}
+            }
+            ?>
         </div>
         <div class="sticky_bottom_header no-print">
             <div class="socials d-none d-lg-block">
@@ -286,23 +319,6 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                         <div class="logo-container-mobile <?php $header->the_logo_mode() ?> d-block d-lg-none">
                             <?php
 
-                            if ( get_current_blog_id() === 5 ) {
-                                $logo = get_theme_mod( 'custom_logo' );
-                                $image = wp_get_attachment_image_src( $logo , 'full' );
-                                $image_url = $image[0];
-                                ?>
-                                <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
-                                        data-target="#foody-navbar-collapse"
-                                        aria-controls="foody-navbar-collapse" aria-expanded="false"
-                                        aria-label="Toggle navigation">
-                                    <!--                                <img class="foody-logo-text" src="-->
-                                    <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
-                                    <div class="foody-logo-text-custom-amit" style="background-size: 124px 57px;background-image: url( <?php echo  $image_url  ?>)"></div>
-                                    <div class="foody-logo-hamburger hidden"></div>
-                                    <div class="foody-logo-close hidden"></div>
-                                </button>
-                            <?php }
-
                             if (is_main_site()) { ?>
                                 <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse"
                                         data-target="#foody-navbar-collapse"
@@ -316,7 +332,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                 </button>
                             <?php }
 
-                            if (get_current_blog_id() === 2) {
+                            else {
                                 $logo = get_theme_mod( 'custom_logo' );
                                 $image = wp_get_attachment_image_src( $logo , 'full' );
                                 $image_url = $image[0];
@@ -328,7 +344,12 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                         aria-label="Toggle navigation">
                                     <!--                                <img class="foody-logo-text" src="-->
                                     <?php //echo $GLOBALS['images_dir'];?><!--/foody_logo-with-white.svg">-->
-                                    <div class="foody-logo-text-custom" style="background-image: url( <?php echo  $image_url  ?>)"></div>
+                                    <?php if(get_current_blog_id() !== 1) { ?>
+
+                                        <div class="foody-logo-text-custom" style="width: 62px; left: 52%; top: 0; height: 62px; background-image: url( <?php echo  $image_url  ?>)"></div>
+                                    <?php } else { ?>
+                                        <div class="foody-logo-text-custom" style="background-image: url( <?php echo  $image_url  ?>)"></div>
+                                    <?php } ?>
                                     <div class="foody-logo-hamburger hidden"></div>
                                     <div class="foody-logo-close hidden"></div>
                                 </button>
@@ -347,7 +368,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                     <?php endif; ?>
 
                     <?php
-                        $similar_content = get_field('similar_content_group', $recipe->get_id());
+                        $similar_content = get_field('similar_content_group', $post_class->get_id());
                         $has_similar_content = !empty($similar_content) && !empty($similar_content['active_similar_content']) && $similar_content['active_similar_content'][0] == __('הצג');
                         $class_has_similar_content = $has_similar_content ? '' : 'empty-related-content';
                     ?>
@@ -369,7 +390,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                         </div>
                         <?php
                             $navbar_purchase_class = '';
-                            $num_of_purchase_buttons = $recipe->has_purchase_buttons();
+                            $num_of_purchase_buttons = $post_class->has_purchase_buttons();
                             if($num_of_purchase_buttons > 0){
                                 $navbar_purchase_class = $num_of_purchase_buttons < 2 ? 'one-purchase-button' : 'two-purchase-button';
                             }
@@ -402,8 +423,8 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                                         <span class="foody-name"><?php echo get_bloginfo('name'); ?></span>
                                     </a>
                                <?php }
-                                if (is_single() && method_exists($recipe, 'the_purchase_buttons')) {
-                                    $recipe->the_purchase_buttons();
+                                if (is_single() && method_exists($post_class, 'the_purchase_buttons')) {
+                                    $post_class->the_purchase_buttons();
                                 }
                                 ?>
 
@@ -423,7 +444,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                             aria-label="חיפוש">
 
                         <img src="
-                    <?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="search-bar">
+                    <?php echo $GLOBALS['images_dir'] . 'icons/search-gray-2.png' ?>" alt="search-bar">
 
                     </button>
                     <button type="button" class="btn btn-default navbar-btn btn-search-close hidden d-block d-lg-none"
