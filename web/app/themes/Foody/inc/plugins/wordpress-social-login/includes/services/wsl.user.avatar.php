@@ -74,9 +74,14 @@ if ( ! function_exists( 'wsl_get_wp_user_custom_avatar' ) ) {
 			$is404 = curl_getinfo($ch, CURLINFO_HTTP_CODE) == 400;
 			curl_close($ch);
 
-echo '<div id="wisamos" style="display:none;">' . $is404 . '</div>';
+
+//Attemting change to default image if get code 400 from google (code 400 = no image found)
+if($is404 == 1){
+	$wsl_avatar = 'https://foody.co.il/app/themes/Foody/resources/images/avatar.png';
+}
 
 			if ( $wsl_avatar ) {
+				
 				$wsl_html = '<img alt="' . $alt . '" src="' . $wsl_avatar . '" class="avatar avatar-wordpress-social-login avatar-' . $size . ' photo" height="' . $size . '" width="' . $size . '" />';
 
 				// HOOKABLE:
