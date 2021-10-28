@@ -74,7 +74,6 @@ if ( ! function_exists( 'wsl_get_wp_user_custom_avatar' ) ) {
 			$is404 = curl_getinfo($ch, CURLINFO_HTTP_CODE) == 400;
 			curl_close($ch);
 
-
 //Attemting change to default image if get code 400 from google (code 400 = no image found)
 if($is404 == 1){
 	$wsl_avatar = 'https://foody.co.il/app/themes/Foody/resources/images/avatar.png';
