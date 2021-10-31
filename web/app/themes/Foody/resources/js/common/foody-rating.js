@@ -79,7 +79,8 @@ jQuery(document).ready(($) => {
 
 function toggleRatingIcons(currentStar, mouseOver) {
     let currentStarIndex = $(currentStar).attr('data-index');
-    const starIcon = mouseOver ? 'icons/rating/rating-full-' : 'icons/rating/rating-empty-', iconSuffix = '.png';
+    let version = '?ver=1.2';
+    const starIcon = mouseOver ? 'icons/rating/rating-full-' : 'icons/rating/rating-empty-', iconSuffix = '.png'+version;
     let otherStars = mouseOver ? $(currentStar).siblings() : $($(currentStar).siblings().get().reverse());
 
     if(!mouseOver) {

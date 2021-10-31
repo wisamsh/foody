@@ -22,10 +22,11 @@ if (!is_multisite() || is_main_site()) {
 <html <?php language_attributes(); ?> dir="rtl">
 <head>
         
-        <meta charset="<?php bloginfo('charset'); ?>">
+    <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <?php require( __DIR__ . '/cache-tags.php' );?>
     <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <?php } ?>
     <?php if($google_site_verification_id){ ?>
         <meta name="google-site-verification" content="<?php echo $google_site_verification_id; ?>"/>

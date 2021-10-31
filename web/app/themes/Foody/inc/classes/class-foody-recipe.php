@@ -428,12 +428,12 @@ class Foody_Recipe extends Foody_Post
 
 
         $this->overview = array(
-            'ingredients_count' => ['text' => $this->ingredients_count, 'icon' => 'ingedients@3x.png', 'icon-desktop' => 'ingedients@2x.png'],
+            'ingredients_count' => ['text' => $this->ingredients_count, 'icon' => 'ingedients@3x.png', 'icon-desktop' => 'ingedients@2x.png?ver=1.2'],
             'time' => [
-                'preparation_time' => ['text' => $this->get_recipe_time($overview['preparation_time'], true, true), 'icon' => 'clock@3x.png', 'icon-desktop' => 'clock@2x.png'],
+                'preparation_time' => ['text' => $this->get_recipe_time($overview['preparation_time'], true, true), 'icon' => 'clock@3x.png', 'icon-desktop' => 'clock@2x.png?ver=1.2'],
                 'total_time' => ['text' => $this->get_recipe_time($overview['total_time'], true, true), 'icon' => null]
             ],
-            'calories_per_dish' => ['text' => $this->calories_per_dish, 'icon' => 'kcal@3x.png', 'icon-desktop' => 'kcal@2x.png'],
+            'calories_per_dish' => ['text' => $this->calories_per_dish, 'icon' => 'kcal@3x.png?ver=1.2', 'icon-desktop' => 'kcal@2x.png?ver=1.2'],
             'difficulty_level' => ['text' => $difficulty_level, 'icon' => null],
         );
 
