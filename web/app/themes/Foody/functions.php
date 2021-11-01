@@ -1061,3 +1061,25 @@ if (defined('WP_ENV') && WP_ENV !== 'local') {
         return false;
     }, 10, 0);
 }
+
+
+add_action( 'wsl_hook_process_login_after_wp_insert_user', 'jvo_wsl_after_registration', 10, 3 );
+
+function jvo_wsl_after_registration( $user_id, $provider, $hybridauth_user_profile ) {
+	
+	// Only fired if user registered using the WSL Plugin
+	// Add filter for redirect hook
+	add_filter( 'wsl_hook_process_login_alter_redirect_to', 'jvo_wsl_redirect_to', 10, 1 );
+}
+
+function jvo_wsl_redirect_to( $redirect_to ) {
+if(isset($_REQUEST['wcamp']))
+{
+    $redirect_to = get_page_by_path('השלמת-רישום');
+}
+else{
+    $redirect_to = home_url();
+}
+	// Change redirect url here
+	return $redirect_to;
+}
