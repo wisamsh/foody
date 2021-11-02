@@ -1063,23 +1063,23 @@ if (defined('WP_ENV') && WP_ENV !== 'local') {
 }
 
 
-add_action( 'wsl_hook_process_login_after_wp_insert_user', 'jvo_wsl_after_registration', 10, 3 );
 
-function jvo_wsl_after_registration( $user_id, $provider, $hybridauth_user_profile ) {
-	
-	// Only fired if user registered using the WSL Plugin
-	// Add filter for redirect hook
-	add_filter( 'wsl_hook_process_login_alter_redirect_to', 'jvo_wsl_redirect_to', 10, 1 );
+add_action( 'init', 'campaign_action' );
+function campaign_action(){
+if(isset($_REQUEST['wcamp']) && !is_user_logged_in()){
+setcookie('wcamp', '1', time() + (86400 * 30), "/");
+}
 }
 
-function jvo_wsl_redirect_to( $redirect_to ) {
-if(isset($_REQUEST['wcamp']))
-{
-    $redirect_to = get_page_by_path('השלמת-רישום');
-}
-else{
-    $redirect_to = home_url();
-}
-	// Change redirect url here
-	return $redirect_to;
+add_action('init', 'campaign_redirect');
+function campaign_redirect() {
+if (isset($_COOKIE['wcamp']) && is_user_logged_in()){
+
+$location = "https://foody.moveodevelop.com/השלמת-רישום" ;
+header('Location: ' .  $location);
+setcookie("wcamp", "", time() - 3600);
+exit;
+ 
+   
+   }
 }

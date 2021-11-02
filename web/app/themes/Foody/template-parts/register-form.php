@@ -69,7 +69,6 @@ echo do_shortcode('[wordpress_social_login]');
             </div>
 
             <form id="register-form" action="<?php echo wp_registration_url(); ?>" class="row" method="post">
-            <input type="hidden" name="redirect_url" value="<?php echo $_REQUEST['redirect_url'];?>"   /> 
             <?php if (isset($_GET['register-errors']) && $_GET['register-errors'] == 'email_exists') : ?>
                     <div role="alert" class="alert foody-alert alert-dismissible alert-danger login-failed-alert">
                         <span><?php echo __('כתובת המייל כבר קיימת במערכת.', 'foody'); ?></span>
