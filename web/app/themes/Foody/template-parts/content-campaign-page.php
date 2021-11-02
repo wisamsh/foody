@@ -61,7 +61,7 @@ $registered_user_link = $e_book->registered_user_link;
 					<?php echo $content_link['title'] ?>
                 </a>
 			<?php else: ?>
-                <a class="btn btn-primary cta" href="<?php echo $content_link['url'] ?>"
+                <a class="btn btn-primary cta" href="<?php echo $content_link['url'] ?>?redirect_url=/השלמת-רישום"
                    target="<?php echo $content_link['target'] ?>">
 					<?php echo $content_link['title'] ?>
                 </a>
@@ -103,7 +103,7 @@ $registered_user_link = $e_book->registered_user_link;
 			<?php echo $register_lower_link['title'] ?>
         </a>
 	<?php elseif ( ! empty( $register_lower_link ) ): ?>
-        <a class="btn btn-primary cta" href="<?php echo $register_lower_link['url'] ?>?rishom=true"
+        <a class="btn btn-primary cta" href="<?php echo $register_lower_link['url'] ?>?redirect_url=/השלמת-רישום"
            target="<?php echo $register_lower_link['target'] ?>">
 			<?php echo $register_lower_link['title'] ?>
         </a>
