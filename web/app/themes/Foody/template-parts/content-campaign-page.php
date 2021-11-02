@@ -103,7 +103,7 @@ $registered_user_link = $e_book->registered_user_link;
 			<?php echo $register_lower_link['title'] ?>
         </a>
 	<?php elseif ( ! empty( $register_lower_link ) ): ?>
-        <a class="btn btn-primary cta" href="<?php echo $register_lower_link['url'] .'?redirect_to='.  home_url() . "/" . get_page_by_path('השלמת-רישום');?>"
+        <a class="btn btn-primary cta" href="<?php echo $register_lower_link['url'] .'?redirect_to='.  home_url() . '/' . get_page_by_path('השלמת-רישום');?>"
            target="<?php echo $register_lower_link['target'] ?>">
 			<?php echo $register_lower_link['title'] ?>
         </a>
