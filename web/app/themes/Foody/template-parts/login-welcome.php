@@ -62,4 +62,8 @@ $campaign_link = get_field( 'campaign_link', $page );
     </div>
 
 </section>
+<?php if(isset($_REQUEST['redirect_url'])){
+  wp_redirect($_REQUEST['redirect_url']);
+  die();
+}?>
 
