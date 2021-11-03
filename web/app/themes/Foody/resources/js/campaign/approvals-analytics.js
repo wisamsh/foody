@@ -23,6 +23,13 @@ jQuery(document).ready(($) => {
                     }
                     let withMarketing = form.find('#check-marketing').prop('checked');
                     let withEBook = form.find('#check-e-book').prop('checked');
+                    let withEmailing = jQuery(event.target).find('#ebook_sec').prop('checked');
+                if (withEmailing){
+                    wemail = 'מאשר קבלת דואר' ;
+                }
+                else{
+                    wemail = 'לא מאשר קבלת דואר' ;
+                }
                     let marketingAnalyticsText = 'לא נרשם';
                     if (withMarketing) {
                         marketingAnalyticsText = 'נרשם';
@@ -32,6 +39,8 @@ jQuery(document).ready(($) => {
                     } else if (withEBook) {
                         marketingAnalyticsText = 'לא נרשם פלוס ספר';
                     }
+                    marketingAnalyticsText = marketingAnalyticsText +  wemail;
+
                     eventCallback(event, 'רישום לאתר', 'לחיצה לסיום רישום', social_type, 'רישום לדיוור', marketingAnalyticsText);
                 });
             }
