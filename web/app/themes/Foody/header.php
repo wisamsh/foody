@@ -21,7 +21,9 @@ if (!is_multisite() || is_main_site()) {
 <!doctype html>
 <html <?php language_attributes(); ?> dir="rtl">
 <head>
-        
+  <?php // for facebook metatags 
+  require (__DIR__ . '/w_helpers/facebook_meta_tags.php');
+  ?>      
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <?php require( __DIR__ . '/cache-tags.php' );?>
