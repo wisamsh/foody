@@ -1075,7 +1075,7 @@ add_action('init', 'campaign_redirect');
 function campaign_redirect() {
 if (isset($_COOKIE['wcamp']) && is_user_logged_in()){
 
-$location = "https://foody.moveodevelop.com/השלמת-רישום" ;
+$location = "https://foody.co.il/השלמת-רישום" ;
 header('Location: ' .  $location);
 setcookie("wcamp", "", time() - 3600);
 exit;
