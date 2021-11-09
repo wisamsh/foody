@@ -30,14 +30,14 @@ if ( empty( $welcome_text ) ) {
     </div>
 	
     <form id="approvals" method="post">
-		<?php //if ( ! Foody_User::user_has_meta( 'marketing' ) ): ?>
-            <!-- <div class="md-checkbox col-12">
+		<?php if ( ! Foody_User::user_has_meta( 'marketing' ) ): ?>
+            <div class="md-checkbox col-12">
                 <input id="check-marketing" type="checkbox" checked name="marketing">
                 <label for="check-marketing">
-					<?php //echo __( 'הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר' ) ?>
+					<?php echo __( 'הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר' ) ?>
                 </label>
-            </div> -->
-		<?php //endif; ?>
+            </div>
+		<?php endif; ?>
 		<?php
 
 		if ( $show ):
@@ -59,7 +59,7 @@ if ( empty( $welcome_text ) ) {
 			if(is_user_logged_in()){
 			if(get_field('second_check_text', $registration_page)){?>
 				<div class="md-checkbox col-12">		
-				<input id="ebook_sec" type="checkbox" checked name="ebook_sec" id="ebook_sec"/>
+				<input id="ebook_sec" type="checkbox" checked name="ebook_sec"/>
 						<label for="ebook_sec">
 						<?php
 						$text2 = get_field( 'second_check_text', $registration_page );
@@ -83,7 +83,7 @@ if ( empty( $welcome_text ) ) {
 		<?php if ( $redirect ): ?>
             <input type="hidden" name="redirect" value="1">
 		<?php endif; ?>
-        <input class="btn btn-primary" type="submit" id="register_btn_ebook" value="<?php echo __( 'סיום הרשמה' ) ?>">
+        <input class="btn btn-primary" type="submit" value="<?php echo __( 'סיום הרשמה' ) ?>">
 
     </form>
 </section>

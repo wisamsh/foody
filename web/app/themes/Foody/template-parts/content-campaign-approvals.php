@@ -77,14 +77,14 @@ $today = date( 'Y-m-d' );
                 <span class="custom-radio"></span>
             </label>
         </div>
-		<?php// if ( ! Foody_User::user_has_meta( 'marketing' ) ): ?>
-            <!-- <div class="md-checkbox col-12">
+		<?php if ( ! Foody_User::user_has_meta( 'marketing' ) ): ?>
+            <div class="md-checkbox col-12">
                 <input id="check-marketing" type="checkbox" checked name="marketing">
                 <label for="check-marketing">
-					<?php //echo __( 'הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר' ) ?>
+					<?php echo __( 'הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר' ) ?>
                 </label>
-            </div> -->
-		<?php //endif; ?>
+            </div>
+		<?php endif; ?>
         <div class="md-checkbox col-12">
             <input id="extended-campaign-terms" type="checkbox" checked name="extended-campaign-terms">
             <label for="extended-campaign-terms">
@@ -96,7 +96,7 @@ $today = date( 'Y-m-d' );
 		<?php if ( $redirect ): ?>
             <input type="hidden" name="redirect" value="1">
 		<?php endif; ?>
-        <input class="btn btn-primary" type="submit"  value="<?php echo $button_text ?>">
+        <input class="btn btn-primary" type="submit" value="<?php echo $button_text ?>">
 
     </form>
 </section>
