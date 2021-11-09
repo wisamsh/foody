@@ -1053,6 +1053,7 @@ function console_log($output, $with_script_tags = true) {
         $js_code = '<script>' . $js_code . '</script>';
     }
     echo $js_code;
+   
 }
 
 if (defined('WP_ENV') && WP_ENV !== 'local') {
@@ -1075,7 +1076,7 @@ add_action('init', 'campaign_redirect');
 function campaign_redirect() {
 if (isset($_COOKIE['wcamp']) && is_user_logged_in()){
 
-$location = "https://foody.co.il/השלמת-רישום" ;
+$location = "https://" . $_SERVER['HTTP_HOST'] . "/השלמת-רישום" ;
 header('Location: ' .  $location);
 setcookie("wcamp", "", time() - 3600);
 exit;
