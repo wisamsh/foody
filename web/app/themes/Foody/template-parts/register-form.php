@@ -142,16 +142,16 @@ echo do_shortcode('[wordpress_social_login]');
                 <!--                    <label for="check-terms">-->
                 <!--                    </label>-->
                 <!--                </div>-->
-                <div class="md-checkbox col-12">
+                <!-- <div class="md-checkbox col-12">
                     <input id="check-marketing" type="checkbox" checked name="marketing">
                     <label for="check-marketing">
                         <?php
-                        $newsletter_text = get_field('newsletter_text');
-                        $newsletter_text = isset($newsletter_text) && !empty($newsletter_text)? $newsletter_text :__('הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר');
-                        echo $newsletter_text;
+                        //$newsletter_text = get_field('newsletter_text');
+                       // $newsletter_text = isset($newsletter_text) && !empty($newsletter_text)? $newsletter_text :__('הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר');
+                       // echo $newsletter_text;
                         ?>
                     </label>
-                </div>
+                </div> -->
                 <?php if (get_field('show')): ?>
                     <div class="md-checkbox col-12">
                         <input id="check-e-book" type="checkbox" checked name="e-book">
@@ -179,7 +179,7 @@ echo do_shortcode('[wordpress_social_login]');
                          data-callback="captchaCallback"
                     >
                     </div>
-                    <button type="submit" class="btn btn-primary" aria-label="הירשם">
+                    <button type="submit" class="btn btn-primary" id="registerbtn" aria-label="הירשם">
                         <?php
                         $btn_text = get_field('btn_text');
                         $btn_text = isset($btn_text) && !empty($btn_text)? $btn_text : __('הירשם');

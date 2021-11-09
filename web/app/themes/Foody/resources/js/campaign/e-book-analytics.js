@@ -3,6 +3,19 @@
  */
 
 jQuery(document).ready(($) => {
+    //jQuery("#register_btn_ebook").prop("disabled",true);
+
+    jQuery("#ebook_sec").change(function() {
+        if(!this.checked) {
+            jQuery("#register_btn_ebook").prop("disabled",true);
+        }
+        else{
+            jQuery("#register_btn_ebook").prop("disabled",false);
+        }
+    });
+
+
+
 
     if (jQuery('.page-template-foody-campaign').length || jQuery('.page-template-foody-campaign-extended').length) {
 
