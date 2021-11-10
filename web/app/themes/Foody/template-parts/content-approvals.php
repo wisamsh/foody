@@ -10,7 +10,7 @@ $approved_marketing = get_user_meta( get_current_user_id(), 'marketing', true );
 $registration_page  = get_page_by_title( 'הרשמה' ); //gets a post object 
 $show               = get_field( 'show', $registration_page );
 $GetHarshamaID = (get_page_by_title('הרשמה'));
-
+$thispageID = get_the_ID();
 $welcome_text = get_field( 'welcome_text', $registration_page );
 
 $redirect = isset( $template_args['redirect'] );
@@ -57,7 +57,7 @@ if ( empty( $welcome_text ) ) {
 
 			<?php 
 			
-			if(is_user_logged_in()){
+			if(is_user_logged_in() && ($thispageID != $GetHarshamaID->ID)){
 				
 			if(get_field('second_check_text', $GetHarshamaID->ID)){?>
 				<div class="md-checkbox col-12">		

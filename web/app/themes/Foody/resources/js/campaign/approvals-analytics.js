@@ -14,7 +14,7 @@ jQuery(document).ready(($) => {
         let form = $("form#approvals", $approvalsContainer);
         if (form) {
             if (form.find('#check-marketing').length == 0 && form.find('#check-e-book').length == 0) {
-                window.location.href = '/';
+                //window.location.href = '/';
             } else {
                 form.on('submit', null, (event) => {
                     let social_type = '';

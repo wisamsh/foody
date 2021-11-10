@@ -142,7 +142,7 @@ echo do_shortcode('[wordpress_social_login]');
                 <!--                    <label for="check-terms">-->
                 <!--                    </label>-->
                 <!--                </div>-->
-                <div class="md-checkbox col-12">
+                <div class="md-checkbox col-12" style="display:none">
                     <input id="check-marketing" type="checkbox" data-clone="s4" checked name="marketing">
                     <label for="check-marketing">
                         <?php
