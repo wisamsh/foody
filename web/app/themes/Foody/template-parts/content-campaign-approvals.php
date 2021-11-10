@@ -96,7 +96,7 @@ $today = date( 'Y-m-d' );
 		<?php if ( $redirect ): ?>
             <input type="hidden" name="redirect" value="1">
 		<?php endif; ?>
-        <input class="btn btn-primary" id="register_btn_ebook" type="submit" value="<?php echo $button_text ?>">
+        <input class="btn btn-primary" type="submit" value="<?php echo $button_text ?>">
 
     </form>
 </section>

@@ -3,9 +3,9 @@
  */
 
 jQuery(document).ready(($) => {
-    //jQuery("#register_btn_ebook").prop("disabled",true);
+    
 
-    jQuery("#ebook_sec").change(function() {
+jQuery("#ebook_sec").change(function() {
         if(!this.checked) {
             jQuery("#register_btn_ebook").prop("disabled",true);
         }
