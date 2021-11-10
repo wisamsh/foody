@@ -32,7 +32,7 @@ if ( empty( $welcome_text ) ) {
     <form id="approvals" method="post">
 		<?php if ( ! Foody_User::user_has_meta( 'marketing' ) ): ?>
             <div class="md-checkbox col-12">
-                <input id="check-marketing" data-clone="s2" type="checkbox" checked name="marketing">
+                <input id="check-marketing" type="checkbox" checked name="marketing">
                 <label for="check-marketing">
 					<?php echo __( 'הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר' ) ?>
                 </label>
@@ -83,7 +83,7 @@ if ( empty( $welcome_text ) ) {
 		<?php if ( $redirect ): ?>
             <input type="hidden" name="redirect" value="1">
 		<?php endif; ?>
-        <input class="btn btn-primary" id="register_btn_ebook" type="submit" value="<?php echo __( 'סיום הרשמה' ) ?>">
+        <input class="btn btn-primary" type="submit" value="<?php echo __( 'סיום הרשמה' ) ?>">
 
     </form>
 </section>
