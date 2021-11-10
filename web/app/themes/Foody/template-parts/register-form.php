@@ -143,7 +143,7 @@ echo do_shortcode('[wordpress_social_login]');
                 <!--                    </label>-->
                 <!--                </div>-->
                 <div class="md-checkbox col-12">
-                    <input id="check-marketing" type="checkbox" checked name="marketing">
+                    <input id="check-marketing" type="checkbox" data-clone="s4" checked name="marketing">
                     <label for="check-marketing">
                         <?php
                         $newsletter_text = get_field('newsletter_text');
