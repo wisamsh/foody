@@ -38,6 +38,27 @@ if ( empty( $welcome_text ) ) {
                 </label>
             </div> -->
 		<?php //endif; ?>
+		
+
+
+		<?php
+
+		if ( $show ):
+			?>
+            <div class="md-checkbox col-12">
+                <input id="check-e-book" type="checkbox" checked name="e-book">
+                <label for="check-e-book">
+					<?php
+					$text = get_field( 'text', $GetHarshamaID->ID );
+					if ( empty( $text ) ) {
+						$text = __( 'ברצוני לקבל את ספר המתכונים לשבועות' );
+					}
+					echo $text;
+					?>
+                </label>
+            </div>
+
+		<?php endif; ?>
 		<?php 
 			
 			if(is_user_logged_in() && ($thispageID != $GetHarshamaID->ID)){
@@ -60,30 +81,8 @@ if ( empty( $welcome_text ) ) {
 			}?>	
 
 
-		<?php
-
-		if ( $show ):
-			?>
-            <div class="md-checkbox col-12">
-                <input id="check-e-book" type="checkbox" checked name="e-book">
-                <label for="check-e-book">
-					<?php
-					$text = get_field( 'text', $GetHarshamaID->ID );
-					if ( empty( $text ) ) {
-						$text = __( 'ברצוני לקבל את ספר המתכונים לשבועות' );
-					}
-					echo $text;
-					?>
-                </label>
-            </div>
-
-			
 
 
-
-
-
-		<?php endif; ?>
 		<?php if ( $redirect ): ?>
             <input type="hidden" name="redirect" value="1">
 		<?php endif; ?>
