@@ -8,6 +8,7 @@
 
 $registration_page = get_page_by_title( 'הרשמה' );
 
+
 $welcome_text = get_field( 'extra_details_campaign_subtitle', $registration_page );
 $terms_text   = get_field( 'extra_details_campaign_terms', $registration_page );
 $button_text  = get_field( 'extra_details_campaign_button_text', $registration_page );
