@@ -30,14 +30,14 @@ if ( empty( $welcome_text ) ) {
     </div>
 	
     <form id="approvals" method="post">
-		<?php //if ( ! Foody_User::user_has_meta( 'marketing' ) ): ?>
-            <!-- <div class="md-checkbox col-12">
+		<?php if ( ! Foody_User::user_has_meta( 'marketing' ) ): ?>
+             <div class="md-checkbox col-12" style="display:none;">
                 <input id="check-marketing" type="checkbox" checked name="marketing">
                 <label for="check-marketing">
 					<?php //echo __( 'הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר' ) ?>
                 </label>
-            </div> -->
-		<?php //endif; ?>
+            </div> 
+		<?php endif; ?>
 		
 
 
