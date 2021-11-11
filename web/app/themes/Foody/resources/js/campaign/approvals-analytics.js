@@ -23,7 +23,7 @@ jQuery(document).ready(($) => {
                     }
                     let withMarketing = form.find('#check-marketing').prop('checked');
                     let withEBook = form.find('#check-e-book').prop('checked');
-                    let withEmailing = jQuery(event.target).find('#ebook_sec').prop('checked');
+                    let withEmailing_ebook = jQuery(event.target).find('#ebook_sec').prop('checked');
                 if (withEmailing){
                     wemail = 'מאשר קבלת דואר' ;
                 }
