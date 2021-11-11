@@ -1,10 +1,9 @@
 /**
  * Created by omerfishman on 4/3/19.
  */
+ require('../page-load.entry');
 
 jQuery(document).ready(($) => {
-    
-
 jQuery("#ebook_sec").change(function() {
         if(!this.checked) {
             jQuery("#register_btn_ebook").prop("disabled",true);
@@ -34,7 +33,7 @@ jQuery("#ebook_sec").change(function() {
             '.page-template-foody-campaign-extended .site-content .foody-content a');
 
         registerButtons.on('click', null, function () {
-            eventCallback(event, 'ebook', 'מעבר לרישום לאתר', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'עמוד נחיתה ללא שם');
+            eventCallback(Event, 'ebook', 'מעבר לרישום לאתר', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'עמוד נחיתה ללא שם');
         });
     }
 
@@ -59,7 +58,7 @@ jQuery("#ebook_sec").change(function() {
     }
 });
 
-
+console.log(tagManager);
 /**
  * Handle events and fire analytics dataLayer.push
  * @param event
@@ -73,7 +72,7 @@ function eventCallback(event, category, action, label) {
      * Logged in user ID
      */
     let customerID = foodyGlobals['loggedInUser'] ? foodyGlobals['loggedInUser'] : '';
-
+    
     tagManager.pushDataLayer(
         category,
         action,
@@ -90,6 +89,7 @@ function eventCallback(event, category, action, label) {
         '',
         '',
         '',
-        ''
+        '',
     );
+    
 }
