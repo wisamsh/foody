@@ -28,7 +28,7 @@ $registered_user_link = $e_book->registered_user_link;
 			<?php $e_book->the_hero_video() ?>
 		<?php else: ?>
 			<?php if ( is_user_logged_in() && ! empty( $registered_user_link ) ) {
-				echo '<a href="' . $registered_user_link['url'] . '?wcamp=1" href="' . $registered_user_link['target'] . '">';
+				echo '<a href="' . $registered_user_link['url'] . '" href="' . $registered_user_link['target'] . '">';
 			} else {
 				echo '<a href="' . $register_link['url'] . '?wcamp=1" href="' . $register_link['target'] . '">';
 			} ?>
