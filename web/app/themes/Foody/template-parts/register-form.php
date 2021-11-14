@@ -142,19 +142,19 @@ echo do_shortcode('[wordpress_social_login]');
                 <!--                    <label for="check-terms">-->
                 <!--                    </label>-->
                 <!--                </div>-->
-                <div class="md-checkbox col-12" style="display:none">
+                <div class="md-checkbox col-12" >
                     <input id="check-marketing" type="checkbox" data-clone="s4" checked name="marketing">
                     <label for="check-marketing">
                         <?php
                         $newsletter_text = get_field('newsletter_text');
-                        $newsletter_text = isset($newsletter_text) && !empty($newsletter_text)? $newsletter_text :__('');
+                        $newsletter_text = isset($newsletter_text) && !empty($newsletter_text)? $newsletter_text :__('הריני לאשר בזה קבלת דואר מאתר Foody  הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר');
                         echo $newsletter_text;
                         ?>
                     </label>
                 </div>
                 <?php if (get_field('show')): ?>
                     <div class="md-checkbox col-12">
-                        <input id="check-e-book" type="checkbox" checked name="e-book">
+                        <input id="check-e-book" type="checkbox" checked name="e-book" id="mz5">
                         <label for="check-e-book">
                             <?php
                             $text = get_field('text');
