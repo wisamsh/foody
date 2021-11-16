@@ -41,6 +41,7 @@ module.exports = (function () {
 })();
 
 jQuery(document).ready(($) => {
+    
     // const config = { attributes: true, childList: true, subtree: true };
     // const callbackObserver = function(mutationsList, observer) {
     //     // Use traditional 'for loops' for IE 11
@@ -158,6 +159,19 @@ function get_search_order(action, key) {
 
     return jQuery.inArray(key, searches_comitted) + 1;
 }
+
+let registerButtonNewAct = jQuery('#register_btn_ebook');
+if(registerButtonNewAct.length){
+    //console.log(foodyGlobals);
+    //console.log("lenth ok");
+registerButtonNewAct.on('click', null , function(){
+    
+    eventCallback('רישום דרך האתר', 'רישום לאתר', 'רישום הצליח', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'רישום לדיוור', 'נרשם פלוס ספר');
+
+});
+
+}
+
 
 /**
  * Handle events and fire analytics dataLayer.push
