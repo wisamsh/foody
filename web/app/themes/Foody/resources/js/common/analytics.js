@@ -40,26 +40,36 @@ module.exports = (function () {
 
 })();
 
+//wisam
+
+if(foodyGlobals.loggedInUser){
+    let ebook_str = localStorage.getItem('ebook');
+    console.log(ebook_str);
+    //console.log("user" , foodyGlobals.loggedInUser);
+    if(ebook_str == 'regular_regist'){
+        let rishum = 'רישום באמצעות האתר הצליח - טעינת עמוד השלמת רישום';
+        let cat_rish = 'רישם לאתר';
+        let action_resh='רישום הצליח';
+        let label_resh='אתר';
+        let descr_rish='רישום דיוור';
+        let cdval_rish='נרשם';
+        let uid_rish = foodyGlobals.loggedInUser ;
+        eventCallback(rishum, cat_rish, action_resh,label_resh,descr_rish,cdval_rish,uid_rish);
+        //localStorage.setItem('ebook','');
+        localStorage.removeItem('ebook')
+        localStorage.clear();
+   }
+}
+
+
+
+
+
+
+
+
 jQuery(document).ready(($) => {
-    
-    // const config = { attributes: true, childList: true, subtree: true };
-    // const callbackObserver = function(mutationsList, observer) {
-    //     // Use traditional 'for loops' for IE 11
-    //     for(let mutation of mutationsList) {
-    //         if (mutation.type === 'childList') {
-    //             if($('.foody-search-suggestions').length) {
-    //                 let searchValue = $('.foody-input')[0].value;
-    //                 let choiceSuggestion = this.innerText;
-    //                 set_search_order('searches_strings', searchValue);
-    //                 eventCallback('', 'רישום לאתר', 'בחירה בתוצאה מוצעת', choiceSuggestion, 'מספר חיפוש', get_search_order('searches_strings', searchValue));
-    //             }
-    //         }
-    //     }
-    // };
-    //
-    // const observer = new MutationObserver(callbackObserver);
-    //
-    // observer.observe($('.foody-dataset-1')[0], config);
+   
 
     let lastInputSearch = undefined;
 
@@ -87,37 +97,6 @@ jQuery(document).ready(($) => {
         set_search_order('searches_strings', searchValue);
         eventCallback('', 'חיפוש', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue), 'חיפוש חופשי');
     });
-
-    // $('.foody-input').on('keyup', function (event) {
-    //    if(event.which == 13){
-    //        let searchValue = $('.foody-input')[0].value;
-    //        set_search_order('searches_strings', searchValue);
-    //        eventCallback('', 'רישום לאתר', 'חיפוש טקסט חופשי', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue));
-    //    }
-    // });
-
-    // $('.search.search-autocomplete.foody-input').on('keyup', function (e) {
-    //     if(e.which != 13) {
-    //         if ($('.foody-dropdown-menu.foody-with-1').css('display') == 'block') {
-    //             let searchValue = $('.foody-input')[0].value;
-    //             let amount = $('.foody-search-suggestions')[0].childNodes.length;
-    //             set_search_order('searches_strings', searchValue);
-    //             eventCallback('', 'חיפוש', 'בחירה בתוצאה מוצעת', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue), 'מנגנון תוצאות', amount);
-    //         }
-    //     }
-    // });
-
-    // $('.foody-dropdown-menu').on('DOMSubtreeModified', function (e) {
-    //     const dropdownOpen = $('.foody-dropdown-menu.foody-with-1').css('display') == 'block';
-    //     let searchValue = ($('.foody-input').length ) ? $('.foody-input')[0].value : '' ;
-    //
-    //     if (dropdownOpen && lastInputSearch != searchValue) {
-    //             let amount = $('.foody-search-suggestions')[0].childNodes.length;
-    //             set_search_order('searches_strings', searchValue);
-    //             lastInputSearch = searchValue;
-    //             eventCallback('', 'חיפוש', 'בחירה בתוצאה מוצעת', searchValue, 'מספר חיפוש', get_search_order('searches_strings', searchValue), 'מנגנון תוצאות', amount);
-    //         }
-    // });
 
 
     /**
@@ -165,8 +144,15 @@ if(registerButtonNewAct.length){
     //console.log(foodyGlobals);
     //console.log("lenth ok");
 registerButtonNewAct.on('click', null , function(){
-    
-    eventCallback('רישום דרך האתר', 'רישום לאתר', 'רישום הצליח', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'רישום לדיוור', 'נרשם פלוס ספר');
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const campaign_for_ebook = urlParams.get('wcamp');
+    //console.log(campaign_for_ebook);
+    //eventCallback('רישום דרך האתר', 'רישום לאתר', 'רישום הצליח', foodyGlobals['campaign_name'] ? foodyGlobals['campaign_name'] : 'רישום לדיוור', 'נרשם פלוס ספר');
+if(campaign_for_ebook){
+    //console.log(campaign_for_ebook)
+    localStorage.setItem('ebook', 'regular_regist');
+}
 
 });
 
