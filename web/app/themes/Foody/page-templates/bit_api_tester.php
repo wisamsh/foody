@@ -22,8 +22,8 @@ $subscription_key =get_option('foody_subscription_key_for_bit');
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          //  CURLOPT_URL => "https://api.bankhapoalim.co.il/bank/auth/clients/token",
-            CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/bank/auth/clients/token",
+            CURLOPT_URL => "https://api.bankhapoalim.co.il/bank/auth/clients/token",
+           // CURLOPT_URL => "https://api.pre.bankhapoalim.co.il/bank/auth/clients/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
        

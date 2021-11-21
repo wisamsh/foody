@@ -46,7 +46,7 @@ if(foodyGlobals.loggedInUser){
     let ebook_str = localStorage.getItem('ebook');
     console.log(ebook_str);
     //console.log("user" , foodyGlobals.loggedInUser);
-    if(ebook_str == 'regular_regist'){
+    if(ebook_str && ebook_str == 'regular_regist'){
         let rishum = 'רישום באמצעות האתר הצליח - טעינת עמוד השלמת רישום';
         let cat_rish = 'רישם לאתר';
         let action_resh='רישום הצליח';
