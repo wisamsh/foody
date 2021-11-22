@@ -168,8 +168,8 @@ class SidebarFilter {
 
             } else {
                if ( is_category() ) {
-                   if ( ! empty($_REQUEST['referer']) ) {
-                       $referer= $_REQUEST['referer'];
+                   if ( ! empty($_GET['referer']) ) {
+                       $referer= $_GET['referer'];
                        $blocks = get_field( 'blocks', $referer );
                        $count_manual=0;
                        $count_dynamic=0;
