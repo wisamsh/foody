@@ -217,7 +217,7 @@ function foody_feed_ajax_filter()
 
             $query_args = $foody_query->get_query($context, $context_args);
             if ($action === 'foody_feed_filter') {
-                $query_args['posts_per_page'] = '-1';
+                //$query_args['posts_per_page'] = '-1';
                 $query_args['post_type'] = array("foody_feed_channel");
 
             }
@@ -225,11 +225,11 @@ function foody_feed_ajax_filter()
 
             $foody_search = new Foody_Search($context, $context_args);
 
-            if($wp_args && $wp_args['post__in']){
+            //if($wp_args && $wp_args['post__in']){
                 $wp_args['post__in'] = array_map(function ($recipe){
                     return $recipe['post']->ID;
                 }, $all_recipes);
-            }
+            //}
 
             $query = $foody_search->query($filter, $wp_args);
 
