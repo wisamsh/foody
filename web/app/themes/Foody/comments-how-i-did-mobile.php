@@ -32,7 +32,7 @@ if (empty($popup_title)) {
     $popup_title = 'הכנתם את המתכון?';
 }
 
-$cover_image = $component_data['image_desktop'];
+$cover_image = $component_data['image'];
 if (!is_array($cover_image) && (!isset($cover_image['url']) || empty($cover_image['url']))) {
     $FetureImageChecker = false;
 }
