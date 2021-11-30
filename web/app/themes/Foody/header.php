@@ -33,7 +33,7 @@ if (!is_multisite() || is_main_site()) {
     <?php if($google_site_verification_id){ ?>
         <meta name="google-site-verification" content="<?php echo $google_site_verification_id; ?>"/>
     <?php } ?>
-    <meta name="theme-color" content="#E6392B">
+    <meta name="theme-color" content="#ffffff">
     <link rel="profile" href="http://gmpg.org/xfn/11">
 
     <?php Foody_Header::google_tag_manager(); ?>
