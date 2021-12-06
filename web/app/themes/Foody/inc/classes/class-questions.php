@@ -1,12 +1,7 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: moveosoftware
- * Date: 6/28/18
- * Time: 7:32 PM
- */
-class Foody_Questions extends Foody_Post {
+class Foody_Questions extends Foody_Post
+{
 
 	private $foody_search;
 
@@ -15,56 +10,98 @@ class Foody_Questions extends Foody_Post {
 	 *
 	 * @param $technique_post_id
 	 */
-	public function __construct( $post ) {
-		parent::__construct( $post );
+	public function __construct(WP_Post $post = null, $load_content = true)
+    {
+        parent::__construct($post,  $load_content);
 
-		$this->foody_search = new Foody_Search( 'questions' );
+		$this->foody_search = new Foody_Search('feed_channel');
 	}
 
-	public function feed() {
-		$foody_query = Foody_Query::get_instance();
 
-		$args = $foody_query->get_query( 'questions', [ $this->id ], true );
+	private function ImageVideoBanner($type, $src, $link = null)
+	{
+		switch ($type) {
+			case 'image':
+				$rtn = isset($link) && $link != null ? '<a href=' . $link . ' target="_blank">' : '';
+				$rtn .= '<img src="' . $src . '" class="comm_banner"/>';
+				$rtn .= isset($link) && $link != null ? '</a>' : '';
+				break;
 
-		$query = new WP_Query( $args );
+			case 'video':
+				$rtn = '<iframe width="100%" height="200" src="' . $src . '"controls=0">
+			</iframe>';
+				break;
 
-		$posts = $query->get_posts();
-
-		$posts = array_map( 'Foody_Post::create', $posts );
-
-		$grid_args = [
-			'id'     => 'questions-feed',
-			'posts'  => $posts,
-			'more'   => $foody_query->has_more_posts( $query ),
-			'cols'   => 2,
-			'header' => [
-				'sort' => true
-			]
-		];
-
-		echo '<div class="container-fluid feed-container technique-feed-container">';
-		foody_get_template_part( get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args );
-		echo '</div>';
+			default:
+				$rtn = '<img src="' . $src . '" class="comm_banner"/>';
+				break;
+		}
+		return $rtn;
 	}
 
-	public function the_featured_content($shortcode = false) {
 
+	public function doCommercialBanner($PostId = null)
+	{
+		$pid = isset($PostId) && $PostId != null ? $PostId : get_the_ID();
+		$fq_banner_enabled = get_field('fq_banner_enabled', $pid);
+		if ($fq_banner_enabled) {
+
+			$fq_banner_type = get_field('fq_banner_type', $pid);
+			if ($fq_banner_type == 'image') {
+
+				$src = get_field('fq_commercial_banner_image', $pid);
+
+				if(get_field('fq_commercial_banner_image_url')){
+					$imagelink = get_field('fq_commercial_banner_image_url' ,$pid);
+				}
+	 
+				$rtn = $this->ImageVideoBanner('image', $src, $imagelink);
+			
+			}
+		}
+	
+		return $rtn ;
 	}
 
-	public function the_sidebar_content( $args = array() ) {
-		dynamic_sidebar( 'foody-sidebar' );
-		dynamic_sidebar( 'foody-social' );
+public function Docommorcial(){
+	return $this->doCommercialBanner();
+}
+
+
+	public function feed()
+	{
+		
+
+		echo '<article class="content">';
+		echo "article";
+		echo '</article>';
 	}
 
-	public function the_details() {
+	public function the_featured_content($shortcode = false)
+	{
+	}
+
+	public function the_sidebar_content($args = array())
+	{
+		echo '<section class="sidebar-section foody-search-filter">sidebar';
+
+		//$foody_query = SidebarFilter::get_instance();
+		//$foody_query->the_filter();
+
+		echo '</section>';
+		//dynamic_sidebar('questions');
+		//dynamic_sidebar( 'foody-social' );
+	}
+
+	public function the_details()
+	{
 		echo '<section class="technique-details-container">';
 		bootstrap_breadcrumb();
-		the_title( '<h1 class="title">', '</h1>' );
+		the_title('<h1 class="title">', '</h1>');
 		echo '</section>';
 	}
 
-	function __clone() {
-
+	function __clone()
+	{
 	}
-
 }

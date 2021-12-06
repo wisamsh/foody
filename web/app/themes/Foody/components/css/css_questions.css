@@ -1,0 +1,20 @@
+
+    .aside{
+        border:1px solid hsla(0,0%,59%,.3);
+        border-top:none;
+        border-bottom:none;
+        padding:0px;
+        margin:0px;
+        min-height: 100%;
+        padding-top: 30px;
+        position: relative;
+
+    }
+.article-content{
+    min-width:75%;
+   
+}
+.demicont{
+   
+   
+}

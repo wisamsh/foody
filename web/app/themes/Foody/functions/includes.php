@@ -86,7 +86,6 @@ require_once get_template_directory() . "/inc/classes/class-foody-search-page.ph
 require_once get_template_directory() . "/inc/classes/class-foody-registration.php";
 require_once get_template_directory() . "/inc/classes/class-foody-categories-accordion-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-query.php";
-require_once get_template_directory() . "/inc/classes/class-questions.php";
 require_once get_template_directory() . "/inc/classes/common/class-foody-analytics.php";
 require_once get_template_directory() . "/inc/classes/class-foody-sidebar.php";
 require_once get_template_directory() . "/inc/classes/class-foody-tag.php";
@@ -105,6 +104,7 @@ require_once get_template_directory() . '/inc/classes/class-foody-filters-rule-m
 require_once get_template_directory() . '/inc/foody-ingredients-wp-list-table.php';
 require_once get_template_directory() . '/inc/foody-green-invoice-generator.php';
 require_once get_template_directory() . '/inc/foody-rav-messer-api.php';
+require_once get_template_directory() . "/inc/classes/class-questions.php";
 
 /*
  * Widgets
