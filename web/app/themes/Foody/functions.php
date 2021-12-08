@@ -905,6 +905,13 @@ function foody_body_add_bit_or_free_class($classes)
         $classes[] = $free_class_to_add;
     }
 
+if(get_post_type()=='questions'){
+    
+$classes[] = 'rtl foody_feed_channel-template foody_feed_channel-template-page-templates foody_feed_channel-template-content-with-sidebar foody_feed_channel-template-page-templatescontent-with-sidebar-php single single-foody_feed_channel single-format-standard wp-custom-logo has-background';
+
+}
+
+
     return $classes;
 
 }
