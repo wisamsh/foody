@@ -62,6 +62,7 @@ add_action('get_footer', 'FAQ_Scripts');
 
             </section>
 
+            
     </article>
 
 </div>
