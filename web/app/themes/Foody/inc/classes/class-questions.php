@@ -134,7 +134,12 @@ class Foody_Questions extends Foody_Post
 		}
 	}
 
+public function getQuestionMainCategory(){
+	$category = get_the_category();
+	return $category[0]->term_id;
 
+
+}
 	public function the_details()
 	{
 		echo '<section class="technique-details-container">';
@@ -142,7 +147,25 @@ class Foody_Questions extends Foody_Post
 		echo '</section>';
 	}
 
-	function __clone()
-	{
-	}
+
+
+
+	
+	public function the_accessories()
+    {
+//         $posts = [];
+//         $title = '';
+// $pid = $this->pid();
+//         while (have_rows('accessories',$pid)): the_row();
+//             //$posts = get_sub_field('accessories');
+//            // $title = get_sub_field('title');
+//         endwhile;
+
+      
+    }
+
+
+
+
+
 }

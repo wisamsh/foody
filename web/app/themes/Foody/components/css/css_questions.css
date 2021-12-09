@@ -44,3 +44,55 @@ list-style: none;
     color:var( --color__text-main);
     font-size: 35px;
 }
+.mainImage{
+    width:100%;
+    text-align: center;
+    padding: 0px;
+    margin: 0 auto;
+}
+.mainImage img{
+    width:100%;
+}
+.related_recepies_conduct{
+    direction: rtl;
+    text-align: center;
+    
+}
+
+.row{
+    margin-left:-5px !important;
+    margin-right:-5px !important;
+}
+
+.related_recepies_conduct img{
+    
+}
+.excerpt{
+    margin-top: 10px !important;
+}
+.siderelated{
+    
+    margin: 0 auto;
+    direction: rtl;
+    text-align: right;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dddddd;
+   
+}
+
+@media only screen and (min-width: 800px) {
+    .related_recepies_conduct{
+       
+        max-width: 23%;
+        display: inline-block;
+        padding-right: 1.5%;
+    }
+  }
+
+  @media only screen and (max-width: 799px) {
+    .related_recepies_conduct{
+        max-width: 46%;
+        display: inline-block;
+        padding-right: 3%;
+    }
+  }

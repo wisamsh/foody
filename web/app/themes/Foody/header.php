@@ -245,7 +245,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
 
         <!-- #site-navigation -->
     </header><!-- #masthead -->
-    <?php if (is_single() && $post_type == 'foody_recipe' && wp_is_mobile()) { ?>
+    <?php if (is_single() && ($post_type == 'foody_recipe' ) && wp_is_mobile()) { ?>
         <div class="search-overlay floating-mobile-header d-lg-none">
 
             <div class="input-container">
