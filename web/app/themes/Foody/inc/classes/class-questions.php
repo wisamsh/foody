@@ -13,7 +13,7 @@ class Foody_Questions extends Foody_Post
 	{
 		return $Title = get_the_title();
 	}
-	
+
 	public function __construct(WP_Post $post = null, $load_content = true)
 	{
 		parent::__construct($post,  $load_content);
@@ -39,7 +39,7 @@ class Foody_Questions extends Foody_Post
 
 
 
-				
+
 			case 'video':
 				$src = 'https://www.youtube.com/embed/' . get_field('fq_type_video_embed', $this->pid());
 				$VideoHeight = wp_is_mobile() ? '200' : '380';
@@ -75,9 +75,8 @@ class Foody_Questions extends Foody_Post
 
 				$rtn = $this->ImageVideoBanner('image', $src, $imagelink, $src_mobile);
 			}
+			return $rtn;
 		}
-
-		return $rtn;
 	}
 
 	public function MainQuestionImage()
@@ -92,19 +91,19 @@ class Foody_Questions extends Foody_Post
 			case 'image':
 				$rtn = $this->ImageVideoBanner('image', $MainPhoto, $MainPhotoUrl, $MainPhotoMobile);
 				break;
-				case 'video':
-					$rtn = $this->ImageVideoBanner('video', $MainVideo, '', '');
-					break;
+			case 'video':
+				$rtn = $this->ImageVideoBanner('video', $MainVideo, '', '');
+				break;
 		}
-		return $rtn ;
+		return $rtn;
 	}
 
 	public function the_categories()
-    {
-        echo '<h2 class="title">' . __('קטגוריות') . '</h2>';
-        echo get_the_category_list('', '', $this->pid());
-    }
-	
+	{
+		echo '<h2 class="title">' . __('קטגוריות') . '</h2>';
+		echo get_the_category_list('', '', $this->pid());
+	}
+
 
 	public function the_featured_content($shortcode = false)
 	{
@@ -125,7 +124,7 @@ class Foody_Questions extends Foody_Post
 	public function Mobileattr()
 	{
 		if (wp_is_mobile()) {
-				echo '<style> 
+			echo '<style> 
 				#masthead{display:none;}
 				#content {
 				padding-top: 0px; 
@@ -134,12 +133,11 @@ class Foody_Questions extends Foody_Post
 		}
 	}
 
-public function getQuestionMainCategory(){
-	$category = get_the_category();
-	return $category[0]->term_id;
-
-
-}
+	public function getQuestionMainCategory()
+	{
+		$category = get_the_category();
+		return $category[0]->term_id;
+	}
 	public function the_details()
 	{
 		echo '<section class="technique-details-container">';
@@ -150,22 +148,66 @@ public function getQuestionMainCategory(){
 
 
 
-	
+
 	public function the_accessories()
-    {
-//         $posts = [];
-//         $title = '';
-// $pid = $this->pid();
-//         while (have_rows('accessories',$pid)): the_row();
-//             //$posts = get_sub_field('accessories');
-//            // $title = get_sub_field('title');
-//         endwhile;
+	{
 
-      
-    }
+		$accessoriesARR = get_field('accessories', $this->pid());
 
-
-
-
-
+		$accessories = $accessoriesARR['accessories'];
+		if(!empty($accessories)){
+		$rtn = '<h2 class="title">אביזרים</h2>';
+		$rtn .= '<ul class="post-categories">';
+		foreach ($accessories as $accessory) {
+		$rtn .= '<li>';
+		$rtn .='<a href="'.$accessory->guid . '"/>' . $accessory->post_title .'</a>';
+		$rtn .= '</li>';
+		}
+		$rtn .='</ul>';
+	}
+return $rtn;
 }
+
+
+public function the_techniques(){
+	$techniques = get_field('techniques', $this->pid());
+	
+
+	$accessories = $techniques['techniques'];
+	if(!empty($accessories)){
+	$rtn = '<h2 class="title">טכניקות</h2>';
+	$rtn .= '<ul class="post-categories">';
+	foreach ($accessories as $accessory) {
+	$rtn .= '<li>';
+	$rtn .='<a href="'.$accessory->guid . '"/>' . $accessory->post_title .'</a>';
+	$rtn .= '</li>';
+	}
+	$rtn .='</ul>';
+}
+return $rtn;
+}
+
+
+public function the_tags(){
+	$tags = get_the_tags( $this->pid());
+	
+	if(!empty($tags)){
+	$rtn = '<h2 class="title">תגיות</h2>';
+	$rtn .= '<ul class="post-categories">';
+	foreach ($tags as $tag) {
+	$rtn .= '<li>';
+	$rtn .='<a href="/tag/'.$tag->slug . '"/>' . $tag->name .'</a>';
+	$rtn .= '</li>';
+	}
+	$rtn .='</ul>';
+}
+return $rtn;
+}
+
+
+
+
+
+
+
+}//class ends here
