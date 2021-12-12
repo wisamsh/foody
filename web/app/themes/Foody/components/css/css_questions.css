@@ -77,9 +77,23 @@ list-style: none;
    
 }
 
+
+
+
 .details-container{
     padding-top:1px !important;
 }
+.related_questions_queue{
+    margin-bottom: 20px;
+}
+.related_questions_queue li{
+border-radius: 0px !important;    
+border:  none !important;
+text-decoration: underline !important;
+text-align: right !important;
+display: block !important;
+}
+
 @media only screen and (min-width: 800px) {
     .related_recepies_conduct{
        

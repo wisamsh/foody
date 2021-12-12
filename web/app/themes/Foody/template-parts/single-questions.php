@@ -40,10 +40,7 @@ add_action('get_footer', 'FAQ_Scripts');
         <section class="details-container">
             <div class="mainImage">
                 <?php echo $Foody_Questions->MainQuestionImage(); ?>
-
             </div>
-
-
             <?php $Foody_Questions->Do_FoodyBeadcrumbs(); ?>
             <h1 class="title question_Title"><?php echo $Foody_Questions->Title(); ?></h1>
         </section>
@@ -55,6 +52,10 @@ add_action('get_footer', 'FAQ_Scripts');
 
         <section class="feed-channel-details row">
             <?php require(get_template_directory() . '/components/qusetion_related_recipy.php'); ?>
+
+        </section>
+        <section class="recipe-categories categories no-print">
+            <?php require(get_template_directory() . '/components/questions_related_questions.php'); ?>
 
         </section>
         <section class="recipe-categories categories no-print">
@@ -77,18 +78,18 @@ add_action('get_footer', 'FAQ_Scripts');
         </section>
         <section class="newsletter no-print">
 
-        <?php if(!wp_is_mobile()){?>   
-        <section class="newsletter no-print">
-                <div class="newsletter-title">
-                    אל תפספסו את המתכונים החמים!</div>
+            <?php if (!wp_is_mobile()) { ?>
+                <section class="newsletter no-print">
+                    <div class="newsletter-title">
+                        אל תפספסו את המתכונים החמים!</div>
 
-                <section class="newsletter">
-                    <?php echo do_shortcode('[contact-form-7 id="10340" title="ניוזלטר"]'); ?>
+                    <section class="newsletter">
+                        <?php echo do_shortcode('[contact-form-7 id="10340" title="ניוזלטר"]'); ?>
+
+                    </section>
 
                 </section>
-
-            </section>
-<?php }?>
+            <?php } ?>
     </article>
 
 </div>

@@ -27,13 +27,13 @@ class Foody_Questions extends Foody_Post
 		switch ($type) {
 			case 'image':
 
-				$rtn = isset($link) ? '<a href=' . $link . ' target="_blank">' : '';
+				$rtn = isset($link)&& $link !=null ? '<a href=' . $link . ' target="_blank">' : '';
 				$rtn .= '<picture>';
 				$rtn .= '<source media="(min-width: 800px)" srcset="' . $src . '"> ';
 				$rtn .= '<source media=" (max-width: 799px)" srcset="' . $src_mob . '"> ';
 				$rtn .= '<img src="' . $src . '"/>';
 				$rtn .= '</picture>';
-				$rtn .= '</a>';
+				$rtn .= isset($link)&& $link !=null ? '</a>' : '';
 
 				break;
 
@@ -59,7 +59,7 @@ class Foody_Questions extends Foody_Post
 
 	public function doCommercialBanner($PostId = null)
 	{
-
+$imagelink = '';
 		$fq_banner_enabled = get_field('fq_banner_enabled', $this->pid());
 		if ($fq_banner_enabled) {
 
@@ -171,8 +171,6 @@ return $rtn;
 
 public function the_techniques(){
 	$techniques = get_field('techniques', $this->pid());
-	
-
 	$accessories = $techniques['techniques'];
 	if(!empty($accessories)){
 	$rtn = '<h2 class="title">טכניקות</h2>';
