@@ -387,7 +387,7 @@ register_nav_menus(array(
 require_once get_template_directory() . '/functions/includes.php';
 
 /**
- * Load Jetpack compatibility file.
+ * Load Jetpack compatibility file
  */
 if (defined('JETPACK__VERSION')) {
     require get_template_directory() . '/inc/jetpack.php';
