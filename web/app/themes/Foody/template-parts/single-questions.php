@@ -42,12 +42,19 @@ add_action('get_footer', 'FAQ_Scripts');
                 <?php echo $Foody_Questions->MainQuestionImage(); ?>
             </div>
             <?php $Foody_Questions->Do_FoodyBeadcrumbs(); ?>
-            <h1 class="title question_Title"><?php echo $Foody_Questions->Title(); ?></h1>
+            <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+            <h1 itemprop="name" class="title question_Title">
+                <?php echo $Foody_Questions->Title(); ?>
+            </h1>
+            </div>
         </section>
 
         <section class="feed-channel-details row">
-            <?php echo the_content() ?>
-
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">  
+        <div itemprop="text"> 
+        <?php echo the_content(); ?>
+        </div>
+        </div>
         </section>
 
         <section class="feed-channel-details row">

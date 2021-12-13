@@ -36,7 +36,7 @@ foreach($related as $related){
 
 }
 ?>
-<h2 class="title">מתכונים נוספים שכדי לכם לנסות</h2>
+<h2 class="title">מתכונים נוספים שכדאי לכם לנסות</h2>
 <div class="container fluid">
     <div class="row">
         <div class="related_recepies_conduct">

@@ -23,6 +23,7 @@ if (!is_multisite() || is_main_site()) {
 <head>
   <?php // for facebook metatags 
   require (__DIR__ . '/w_helpers/facebook_meta_tags.php');
+  
   ?>      
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
@@ -81,15 +82,19 @@ if (!is_multisite() || is_main_site()) {
            echo $walkme_script;
         }
     }
-    ?>
-    <?php wp_head(); ?>
 
+   
+    ?>
+    
+    <?php wp_head(); 
+    
+    ?>
 </head>
 <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
     <script src="https://public.bankhapoalim.co.il/bitcom/sdk"></script>
 <?php } ?>
 
-<body <?php body_class(); ?> dir="rtl">
+<body <?php body_class(); ?><?php if(get_post_type() == 'questions'){echo 'itemscope itemtype="https://schema.org/QAPage"';}?> dir="rtl">
 <?php //do_action('foody_after_body') ?>
 
 <?php
