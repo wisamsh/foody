@@ -395,7 +395,7 @@ if (defined('JETPACK__VERSION')) {
 
 
 /**
- * Load Foody background processes
+ * Load Foody background processe
  */
 require get_template_directory() . '/foody-background-processes/foody-bp-content-sync.php';
 
