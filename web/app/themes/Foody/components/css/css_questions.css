@@ -114,7 +114,9 @@ display: block !important;
     margin-bottom: 25px;
     
 }
-
+.mainentity{
+    padding-right: 15px;
+}
 .answerCount{
     direction: rtl;
     text-align: right;

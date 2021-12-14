@@ -2,7 +2,7 @@
 $Foody_Questions = new Foody_Questions();
 $Foody_Questions->Mobileattr();
 $category = $Foody_Questions->getQuestionMainCategory();
-$QuestionLink = "https://".$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ;
+$QuestionLink = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 /**
  * Implement the Custom Header feature.
  */
@@ -42,27 +42,29 @@ add_action('get_footer', 'FAQ_Scripts');
                 <?php echo $Foody_Questions->MainQuestionImage(); ?>
             </div>
             <?php $Foody_Questions->Do_FoodyBeadcrumbs(); ?>
-            <div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+            <div class="mainentity" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
                 <div style="display:none;" itemprop="upvoteCount">1</div>
-                <h1 itemprop="name" class="title question_Title">
+                <h2 itemprop="name" class="title question_Title">
                     <?php echo $Foody_Questions->Title(); ?>
-                </h1>
-            </div>
-            <div style="display:none;"><span itemprop="answerCount">1</span> תשובות</div>
-            <div style="display:none;"><span itemprop="upvoteCount">0</span> הצבעות</div>
-        </section>
+                </h2>
+                <div style="display:none;" itemprop="text">FOODY עונים על שאלות</div>
+                <div style="display:none;"><span itemprop="answerCount">1</span> תשובות</div>
+                <div style="display:none;"><span itemprop="upvoteCount">0</span> הצבעות</div>
 
-        <section class="feed-channel-details row">
-            <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-            <div style="display:none;" itemprop="upvoteCount">1</div>
-                <div itemprop="text" class="answer">
-                    <?php
-                    $answersArr = $Foody_Questions->get_answers(get_the_ID());
-                    echo $answersArr[0]['answer_ind'];
-                    ?>
+                <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                    <div style="display:none;" itemprop="upvoteCount">1</div>
+                    <div itemprop="text" class="answer">
+                        <?php
+                        $answersArr = $Foody_Questions->get_answers(get_the_ID());
+                        echo $answersArr[0]['answer_ind'];
+                        ?>
+                    </div>
+                    <a itemprop="url" href="<?php echo $QuestionLink; ?>#acceptedAnswer" style="display:none;">לינק לתשובה</a>
                 </div>
-                <a itemprop="url" href="<?php echo $QuestionLink ;?>#acceptedAnswer" style="display:none;">לינק לתשובה</a>
+
             </div>
+
+
         </section>
 
         <section class="feed-channel-details row">
