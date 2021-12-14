@@ -106,6 +106,21 @@ display: block !important;
 .question_Title{
     font-size: 35px !important;
 }
+.answer{
+    text-align: right;
+    padding: 5px;
+    font-size: 18px;
+    direction: rtl;
+    margin-bottom: 25px;
+    
+}
+
+.answerCount{
+    direction: rtl;
+    text-align: right;
+    margin-right: 10px;
+font-weight: bold;
+}
 @media only screen and (min-width: 800px) {
     .related_recepies_conduct{
        

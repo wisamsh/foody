@@ -202,7 +202,10 @@ public function the_tags(){
 return $rtn;
 }
 
-
+public function get_answers($pid){
+$answers_array = get_field("answers", $pid);
+return $answers_array;
+}
 
 
 
