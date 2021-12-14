@@ -17,11 +17,6 @@ $args = array(
     'numberposts'      => 4,
     'category'         => $category,
     'orderby'          => 'rand',
-    //'order'            => 'DESC',
-    //'include'          => array(),
-   // 'exclude'          => array(),
-   // 'meta_key'         => '',
-   // 'meta_value'       => '',
     'post_type'        => 'foody_recipe',
     'suppress_filters' => false,
 

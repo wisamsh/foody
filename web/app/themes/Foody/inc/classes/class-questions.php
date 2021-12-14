@@ -164,8 +164,9 @@ $imagelink = '';
 		$rtn .= '</li>';
 		}
 		$rtn .='</ul>';
+		return $rtn;
 	}
-return $rtn;
+
 }
 
 
@@ -181,8 +182,9 @@ public function the_techniques(){
 	$rtn .= '</li>';
 	}
 	$rtn .='</ul>';
+	return $rtn;
 }
-return $rtn;
+
 }
 
 
@@ -198,8 +200,9 @@ public function the_tags(){
 	$rtn .= '</li>';
 	}
 	$rtn .='</ul>';
+	return $rtn;
 }
-return $rtn;
+
 }
 
 public function get_answers($pid){

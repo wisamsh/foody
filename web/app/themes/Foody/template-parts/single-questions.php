@@ -110,5 +110,5 @@ add_action('get_footer', 'FAQ_Scripts');
     </article>
 
 </div>
-<?php //require(get_template_directory() . '/components/mobile_bottom_menu.php');
+<?php if(wp_is_mobile()){ require(get_template_directory() . '/components/mobile_bottom_menu.php');}
 ?>
