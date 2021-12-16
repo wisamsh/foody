@@ -1,4 +1,24 @@
 <?php if (wp_is_mobile()) { ?>
+
+    <div class="data_res hidden"></div>
+    <div class="search-overlay floating-mobile-header d-lg-none">
+
+        <div class="input-container">
+            <span class="algolia-autocomplete" style="position: relative; display: inline-block; direction: ltr;">
+                <span class="algolia-autocomplete" style="position: relative; display: inline-block; direction: ltr;">
+                    <span class="bmd-form-group">
+                        <input type="search" id="moile_search" class="search-autocomplete foody-input" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="both" aria-expanded="false" aria-owns="algolia-autocomplete-listbox-10" dir="auto" style="position: relative; vertical-align: top;"></span>
+
+                    <span class="close">×</span>
+        </div>
+        <div class="overlay-white"> </div>
+    </div>
+
+    </div>
+
+
+
+
     <div class="sticky_bottom_header no-print">
         <div class="socials d-none d-lg-block">
 
@@ -52,7 +72,9 @@
                         <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse" data-target="#foody-navbar-collapse" aria-controls="foody-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                             <!--                                <img class="foody-logo-text" src="-->
                             <!--/foody_logo-with-white.svg">-->
-                            <div class="foody-logo-text hidden"></div>
+                            <a href="https://foody.co.il">
+                                <div class="foody-logo-text hidden"></div>
+                            </a>
                             <div class="foody-logo-hamburger hidden"></div>
                             <div class="foody-logo-close"></div>
                         </button>
@@ -108,7 +130,7 @@
 
                         </div>
                     </div>
-                   
+
                     <nav id="quadmenu" class="quadmenu-default_theme quadmenu-v2.1.8 quadmenu-align-right quadmenu-divider-hide quadmenu-carets-show quadmenu-background-color quadmenu-mobile-shadow-show quadmenu-dropdown-shadow-show quadmenu-hover-ripple test test quadmenu-touch js" data-template="collapse" data-theme="default_theme" data-unwrap="0" data-width="0" data-selector="" data-breakpoint="768" data-sticky="0" data-sticky-offset="0" style="height: 45%;">
                         <div class="quadmenu-container">
                             <div class="quadmenu-navbar-header">
@@ -120,14 +142,15 @@
                                     </span>
                                 </button>
                             </div>
-                            <?php if(wp_is_mobile()){ require(get_template_directory() . '/components/mobile_bottom_menu_items.php');}
-?>
+                            <?php if (wp_is_mobile()) {
+                                require(get_template_directory() . '/components/mobile_bottom_menu_items.php');
+                            }
+                            ?>
                         </div>
                     </nav>
                 </div>
-                <!--                    -->
-                <!---->
-                <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none" aria-label="חיפוש">
+
+                <button type="button" id="magnifier_search" class="btn btn-default navbar-btn btn-search d-block d-lg-none" aria-label="חיפוש">
 
                     <img src="
                     https://foody.co.il/app/themes/Foody/resources/images/icons/search-bar.png" alt="search-bar">
@@ -144,40 +167,137 @@
     </div>
 <?php } ?>
 <style>
-    .hidden{
+    .hidden {
         display: none;
         transition: all 0.9s ease;
     }
-    .navbar-container , .foody-logo-hamburger, .foody-logo-close{
+
+    .navbar-container,
+    .foody-logo-hamburger,
+    .foody-logo-close {
         transition: all 0.9s ease;
     }
+
+    .data_res {
+        width: 100%;
+        position: fixed;
+        top: 50px;
+        height: 80%;
+        overflow: scroll;
+        z-index: 9999999;
+        color: red;
+        text-align: right;
+        color: #000;
+        opacity: 1 !important;
+        background: #fff;
+        padding-top: 10px;
+        padding-right: 15px;
+
+        pointer-events: none;
+    }
 </style>
+
+
+
+
 <script>
-    jQuery( document ).ready(function() {
-    
+    jQuery(document).ready(function() {
 
-let mobile_menu = jQuery(".navbar-container");
-let hum = jQuery(".foody-logo-hamburger")
-let logo = jQuery(".foody-logo-close");
+        let mobile_menu = jQuery(".navbar-container");
+        let hum = jQuery(".foody-logo-hamburger");
+        let logo = jQuery(".foody-logo-close");
+        let logo_text = jQuery(".foody-logo-text");
+        let search_overlay = jQuery(".search-overlay");
+        let close = jQuery(".close");
 
-mobile_menu.addClass("hidden");
-hum.removeClass("hidden");
-logo.addClass("hidden")
 
-    jQuery(".foody-logo-close , .foody-logo-hamburger").click(function() {
-        
-        if (mobile_menu.hasClass("hidden")) {
-            mobile_menu.removeClass("hidden");
-            hum.addClass("hidden");
-            logo.removeClass("hidden");
-            
-        } else {
-            mobile_menu.addClass("hidden");
-            logo.addClass("hidden");
-            hum.removeClass("hidden");
-        }
 
-    });
+        logo_text.removeClass("hidden");
+        mobile_menu.addClass("hidden");
+        hum.addClass("hidden");
+        logo.addClass("hidden")
 
-});
+        jQuery(".foody-logo-close , .foody-logo-hamburger").click(function() {
+
+            if (mobile_menu.hasClass("hidden")) {
+                mobile_menu.removeClass("hidden");
+                hum.addClass("hidden");
+                logo.removeClass("hidden");
+
+            } else {
+                mobile_menu.addClass("hidden");
+                logo.addClass("hidden");
+                hum.removeClass("hidden");
+            }
+
+        });
+
+
+        jQuery(window).scroll(function(event) {
+
+
+
+            let scroll = jQuery(window).scrollTop();
+            //console.log("CROLLING---",scroll)
+            if (scroll > 144 && mobile_menu.hasClass("hidden")) {
+                //mobile_menu.removeClass("hidden");
+                jQuery(".foody-logo-close").addClass("hidden");
+                jQuery(".foody-logo-hamburger").removeClass("hidden");
+            }
+            if (scroll < 144 && mobile_menu.hasClass("hidden")) {
+                jQuery(".foody-logo-close").addClass("hidden");
+                jQuery(".foody-logo-hamburger").addClass("hidden");
+                jQuery(".foody-logo-text").removeClass("hidden");
+            }
+        });
+
+        jQuery(".close").click(function() {
+            search_overlay.removeClass("open");
+            jQuery(".data_res").addClass("hidden");
+        });
+
+        jQuery("#magnifier_search").click(function() {
+
+            if (search_overlay.hasClass("open")) {
+                search_overlay.removeClass("open");
+            } else {
+                search_overlay.addClass("open");
+            }
+        });
+
+
+
+        jQuery('#moile_search').on('input', jQuery.debounce(100, function() {
+            jQuery(".data_res").html("");
+            let len = jQuery(this).val().length;
+            //console.log("lenght = ", len);
+            let the_search = "search=" + jQuery(this).val() + "&action=search_site";
+            if (len > 2) {
+                jQuery.ajax({
+                    type: "POST",
+                    url: "/wp/wp-admin/admin-ajax.php",
+                    data: the_search,
+
+                    complete: function(data) {
+                        jQuery(".data_res").removeClass("hidden");
+                        //jQuery(".data_res").append(res.responseJSON.data[0].name);
+                        jQuery.each(data.responseJSON.data, function(i, item) {
+                            let url = data.responseJSON.data[i].link ;
+                            let subject = data.responseJSON.data[i].name ;
+                            let thelink = '<div class="sr_res>"<a href="' + url + '">' + subject + '</a></div>';
+                            jQuery(".data_res").append(thelink);
+                            
+                            console.log(data.responseJSON.data[i].name);
+                        });
+                        
+                    },
+
+
+                });
+            }
+        }));
+
+       
+
+    }); //end ready
 </script>

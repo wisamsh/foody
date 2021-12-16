@@ -43,16 +43,17 @@ list-style: none;
 .question_Title{
     color:var( --color__text-main);
     font-size: 35px;
+    padding-right: 1px !important;
+
 }
 .mainImage{
     width:100%;
     text-align: center;
     padding: 0px;
     margin: 0 auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
     
 }
+
 .mainImage img{
     width:100%;
 }
@@ -62,11 +63,6 @@ list-style: none;
     
 }
 
-
-
-.related_recepies_conduct img{
-    
-}
 .excerpt{
     margin-top: 10px !important;
 }
@@ -81,13 +77,18 @@ list-style: none;
 }
 
 
-
+.foody-search-filter{
+    margin-top: 24px !important;
+}
 
 .details-container{
     padding-top:1px !important;
 }
 .related_questions_queue{
     margin-bottom: 20px;
+}
+.related_questions_queue li b a{
+font-size: 20px;
 }
 .related_questions_queue li{
 border-radius: 0px !important;    

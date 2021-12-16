@@ -1,19 +1,40 @@
 <?php
 //  Foody_Header::getPrintHeader();
+// class AWP_Menu_Walker extends Walker_Nav_Menu {
+// 	function start_el(&$output, $item, $depth=0, $args=[], $id=0) {
+// 		$output .= "<li class='" .  implode(" ", $item->classes) . "'>";
+ 
+// 		if ($item->url && $item->url != '#') {
+// 			$output .= '<a href="' . $item->url . '">';
+// 		} else {
+// 			$output .= '<span>';
+// 		}
+ 
+// 		$output .= $item->title;
+ 
+// 		if ($item->url && $item->url != '#') {
+// 			$output .= '</a>';
+// 		} else {
+// 			$output .= '</span>';
+// 		}
+// 	}
+// }
 // $new_menu_args = array(
 // 'menu'=>'Navbar',
 // 'menu_class'=>'uadmenu-navbar-nav',
-// 'menu_id'=>'new_Quad',
+// 'menu_id'=>'quadmenu',
 // 'container'=> 'div',
 // 'container_class'=>'quadmenu-navbar-collapse collapse in',
 // 'container_id'=>'quadmenu_1',
 // 'depth'=>'2',
 // 'items_wrap'=>'<ul class="quadmenu-navbar-nav">%3$s</ul>',
+// 'walker'=> new AWP_Menu_Walker()
 
 // );
 //  $BottomMenu = wp_nav_menu($new_menu_args);
 //  echo $BottomMenu;
 ?>
+
 
 <div id="quadmenu_1" class="quadmenu-navbar-collapse collapse in">
     <ul class="quadmenu-navbar-nav">

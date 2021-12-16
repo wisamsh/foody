@@ -44,9 +44,9 @@ add_action('get_footer', 'FAQ_Scripts');
             <?php $Foody_Questions->Do_FoodyBeadcrumbs(); ?>
             <div class="mainentity" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
                 <div style="display:none;" itemprop="upvoteCount">1</div>
-                <h2 itemprop="name" class="title question_Title">
+                <h1 itemprop="name" class="title question_Title">
                     <?php echo $Foody_Questions->Title(); ?>
-                </h2>
+                </h1>
                 <div style="display:none;" itemprop="text">FOODY עונים על שאלות</div>
                 <div style="display:none;"><span itemprop="answerCount">1</span> תשובות</div>
                 <div style="display:none;"><span itemprop="upvoteCount">0</span> הצבעות</div>
