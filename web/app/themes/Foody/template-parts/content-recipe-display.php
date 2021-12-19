@@ -150,6 +150,12 @@ if(get_current_blog_id() == 1) {
     <?php if (get_current_blog_id() == 2) { ?>
         <script src="https://cnt.trvdp.com/js/1236/5441.js"></script>
     <?php } ?>
+    <?php if (get_current_blog_id() == 5){ // daniel amit { ?>
+        <script src="https://cnt.trvdp.com/js/1236/5842.js"></script>
+    <?php } ?>
+    <?php if (get_current_blog_id() == 6){ // miri cohen { ?>
+        <script src="https://cnt.trvdp.com/js/1236/5843.js"></script>
+    <?php } ?>
 <?php $recipe->the_notes() ?>
         <section class="recipe-sponsor-container box no-print">
         	<?php $recipe->the_sponsor() ?>

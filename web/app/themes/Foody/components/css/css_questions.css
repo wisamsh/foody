@@ -1,0 +1,184 @@
+:root{
+    --color__text-main: #404040;
+}
+    .aside{
+        border:1px solid hsla(0,0%,59%,.3);
+        border-top:none;
+        border-bottom:none;
+        padding:0px;
+        margin:0px;
+        min-height: 100%;
+        padding-top: 30px;
+        position: relative;
+
+    }
+.article-content{
+    min-width:75%;
+   
+}
+footer {
+    background-color: rgba(58, 58, 58, 0.05) !important;
+    
+}
+.post-categories{
+list-style: none; 
+
+}
+.post-categories li{
+    display: inline-block;
+    border-radius: 2rem;
+    border: 1px solid #3a3a3a;
+    font-family: Ploni;
+    font-size: 17px;
+    text-align: center;
+    padding: 2px 12px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+#questionvideo{
+    border: none;
+}
+.question_Title{
+    color:var( --color__text-main);
+    font-size: 35px;
+    padding-right: 1px !important;
+
+}
+.mainImage{
+    width:100%;
+    text-align: center;
+    padding: 0px;
+    margin: 0 auto;
+    
+}
+
+.mainImage img{
+    width:100%;
+}
+.related_recepies_conduct{
+    direction: rtl;
+    text-align: center;
+    
+}
+
+.excerpt{
+    margin-top: 10px !important;
+}
+.siderelated{
+    
+    margin: 0 auto;
+    direction: rtl;
+    text-align: right;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dddddd;
+   
+}
+
+
+.foody-search-filter{
+    margin-top: 24px !important;
+}
+
+.details-container{
+    padding-top:1px !important;
+}
+.related_questions_queue{
+    margin-bottom: 20px;
+}
+.related_questions_queue li b a{
+font-size: 20px;
+}
+.related_questions_queue li{
+border-radius: 0px !important;    
+border:  none !important;
+text-decoration: underline !important;
+text-align: right !important;
+display: block !important;
+}
+
+.h1{
+    font-size: 35px;
+}
+.title {
+    font-size: 30px !important;
+}
+.question_Title{
+    font-size: 35px !important;
+}
+.answer{
+    text-align: right;
+    padding: 5px;
+    font-size: 18px;
+    direction: rtl;
+    margin-bottom: 25px;
+    
+}
+.mainentity{
+    padding-right: 15px;
+    padding-left: 5px;
+}
+.answerCount{
+    direction: rtl;
+    text-align: right;
+    margin-right: 10px;
+font-weight: bold;
+}
+
+.sr_res{
+    width: 100%;
+    border-bottom: #ddd;
+    text-align: right;
+    background: #ffffff;
+    padding-right: 20px;
+    padding-bottom: 14px;
+    padding-top: 8px;
+    padding-left: 10px;
+    border-bottom: 1px solid #dddddd45;
+}
+.sr_res:last-child{
+    height: 100%;
+}
+.sr_res a{
+    font-size: 22px;
+    font-weight: 400;
+}
+.overlay-white{
+    opacity: 1 !important;
+    background: #ffffffab !important;
+    height: calc(100vh - 60px);
+    background-attachment: fixed;
+    overflow: scroll;
+}
+.related-recipes-container{
+    position: fixed;
+    bottom: 65px;
+    background: #fdebec;
+    display: flex;
+    flex-direction: column;
+    padding: 13px;
+    -webkit-box-shadow: 3px -50px 44px 48px rgb(255 250 250 / 54%);
+    box-shadow: 3px -110px 44px 48px rgb(255 250 250 / 82%);
+    z-index: 2;
+}
+
+@media only screen and (min-width: 800px) {
+    .related_recepies_conduct{
+       
+        max-width: 23%;
+        display: inline-block;
+        padding-right: 3%;
+    }
+    .mainImage{
+        padding-right: 10px;
+    }
+  }
+
+  @media only screen and (max-width: 799px) {
+    .related_recepies_conduct{
+        max-width: 46%;
+        display: inline-block;
+        padding-right: 3%;
+    }
+  }

@@ -110,6 +110,11 @@ add_action('after_setup_theme', 'foody_content_width', 0);
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
+
+
+
+
+
 function foody_widgets_init()
 {
     register_sidebar(array(
@@ -900,6 +905,13 @@ function foody_body_add_bit_or_free_class($classes)
         $classes[] = $free_class_to_add;
     }
 
+if(get_post_type()=='questions'){
+    
+$classes[] = 'rtl foody_feed_channel-template foody_feed_channel-template-page-templates foody_feed_channel-template-content-with-sidebar foody_feed_channel-template-page-templatescontent-with-sidebar-php single single-foody_feed_channel single-format-standard wp-custom-logo has-background';
+
+}
+
+
     return $classes;
 
 }
@@ -1084,3 +1096,42 @@ exit;
    
    }
 }
+
+
+
+
+function my_custom_post_faq()
+{
+    $labels = array(
+        'name'               => _x('שאלות תשובות', 'post type general name'),
+        'singular_name'      => _x('שאלות תשובות', 'post type singular name'),
+        'add_new'            => _x('הוסף שאלה', 'book'),
+        'add_new_item'       => __('הוסף שאלה חדשה'),
+        'edit_item'          => __('ערוך שאלה'),
+        'new_item'           => __('שאלה חדשה'),
+        'all_items'          => __('כל השאלות'),
+        'view_item'          => __('View'),
+        'search_items'       => __('Search'),
+        'not_found'          => __('לא נמצאו שאלות'),
+        'not_found_in_trash' => __('לא נמצאו שאלות בפח אשפה'),
+        'parent_item_colon'  => '',
+        'menu_name'          => 'שאלות תשובות'
+    );
+
+    $args = array(
+        'labels'        => $labels,
+        'taxonomies' => array('category', 'post_tag'),
+        'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
+        'public'        => true,
+        'menu_position' => 2,
+        'rewrite'       => array('slug' => 'questions'), //or some other slug :)
+        'hierarchical' => true,
+        'can_export' => true,
+        'has_archive'   => true,
+        'capability_type' => 'post',
+        'menu_icon'     => 'dashicons-editor-help',
+
+    );
+    register_post_type('questions', $args);
+}
+add_action('init', 'my_custom_post_faq');
