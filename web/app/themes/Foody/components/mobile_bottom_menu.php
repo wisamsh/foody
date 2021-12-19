@@ -1,6 +1,6 @@
 <?php if (wp_is_mobile()) { ?>
 
-    <div class="data_res hidden"></div>
+   
     <div class="search-overlay floating-mobile-header d-lg-none">
 
         <div class="input-container">
@@ -11,7 +11,7 @@
 
                     <span class="close">×</span>
         </div>
-        <div class="overlay-white"> </div>
+        <div class="overlay-white"> </div> 
     </div>
 
     </div>
@@ -21,7 +21,7 @@
 
     <div class="sticky_bottom_header no-print">
         <div class="socials d-none d-lg-block">
-
+        
             <section class="header-top-container  d-none d-lg-flex">
 
                 <section class="social-icons">
@@ -166,10 +166,15 @@
         </nav>
     </div>
 <?php } ?>
+<div class="data_res hidden"></div>
+<div class="related-recipes-container hidden">
+    <div class="close_related_btn">X</div>
+</div>
 <style>
     .hidden {
         display: none;
-        transition: all 0.9s ease;
+        visibility: hidden;
+        transition: all 0.2s ease;
     }
 
     .navbar-container,
@@ -180,20 +185,22 @@
 
     .data_res {
         width: 100%;
-        position: fixed;
+        position:fixed;
         top: 50px;
-        height: 80%;
         overflow: scroll;
-        z-index: 9999999;
-        color: red;
+        z-index: 9999;
         text-align: right;
         color: #000;
         opacity: 1 !important;
         background: #fff;
         padding-top: 10px;
         padding-right: 15px;
-
         pointer-events: none;
+        background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  
     }
 </style>
 
@@ -210,8 +217,18 @@
         let search_overlay = jQuery(".search-overlay");
         let close = jQuery(".close");
 
+let related_content = jQuery('.feed-channel-details').html();
 
-
+jQuery('.related-recipes-container').append(related_content);
+jQuery('.close_related_btn , .related-content-btn ').click(function(){
+   if(jQuery('.related-recipes-container').hasClass('hidden')){
+    jQuery('.related-recipes-container').removeClass('hidden');
+   }
+   else{
+    jQuery('.related-recipes-container').addClass('hidden');
+   }
+    
+});
         logo_text.removeClass("hidden");
         mobile_menu.addClass("hidden");
         hum.addClass("hidden");
@@ -264,32 +281,48 @@
                 search_overlay.addClass("open");
             }
         });
+//social-buttons-container
+jQuery(".social-btn-container").click(function(){
+    let social_bar = jQuery(".social-buttons-container");
+    if(social_bar.hasClass("hidden")){
+        social_bar.removeClass("hidden");
+    }
+    else{
+        social_bar.addClass("hidden")
+    }
+});
 
-
-
-        jQuery('#moile_search').on('input', jQuery.debounce(100, function() {
-            jQuery(".data_res").html("");
+        jQuery('#moile_search').on('input', jQuery.debounce(200, function() {
+            jQuery(".overlay-white").html("");
             let len = jQuery(this).val().length;
-            //console.log("lenght = ", len);
             let the_search = "search=" + jQuery(this).val() + "&action=search_site";
             if (len > 2) {
+                
                 jQuery.ajax({
                     type: "POST",
                     url: "/wp/wp-admin/admin-ajax.php",
                     data: the_search,
 
                     complete: function(data) {
-                        jQuery(".data_res").removeClass("hidden");
-                        //jQuery(".data_res").append(res.responseJSON.data[0].name);
+                        jQuery(".overlay-white").removeClass("hidden");
+                        //check if there is actual results
+                       if(data.responseJSON.data.length > 0){
                         jQuery.each(data.responseJSON.data, function(i, item) {
                             let url = data.responseJSON.data[i].link ;
                             let subject = data.responseJSON.data[i].name ;
-                            let thelink = '<div class="sr_res>"<a href="' + url + '">' + subject + '</a></div>';
-                            jQuery(".data_res").append(thelink);
+                            let thelink = '<div class="sr_res"><a href="'+url+'">' + subject + '</a></div>';
+                            jQuery(".overlay-white").append(thelink);
                             
-                            console.log(data.responseJSON.data[i].name);
+                            //console.log(data.responseJSON.data[i].name);
                         });
-                        
+                    }
+else{
+    let thelink = '<div class="sr_res">לא נמצאו תוצאות</div>';
+                            jQuery(".overlay-white").append(thelink);
+}
+
+
+
                     },
 
 
