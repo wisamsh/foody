@@ -1076,7 +1076,7 @@ if (defined('WP_ENV') && WP_ENV !== 'local') {
 }
 
 
-
+//for campaigns wisam say
 add_action( 'init', 'campaign_action' );
 function campaign_action(){
 if(isset($_REQUEST['wcamp']) && !is_user_logged_in()){

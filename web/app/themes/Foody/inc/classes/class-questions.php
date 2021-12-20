@@ -27,13 +27,13 @@ class Foody_Questions extends Foody_Post
 		switch ($type) {
 			case 'image':
 
-				$rtn = isset($link)&& $link !=null ? '<a href=' . $link . ' target="_blank">' : '';
+				$rtn = isset($link) && $link != null ? '<a href=' . $link . ' target="_blank">' : '';
 				$rtn .= '<picture>';
 				$rtn .= '<source media="(min-width: 800px)" srcset="' . $src . '"> ';
 				$rtn .= '<source media=" (max-width: 799px)" srcset="' . $src_mob . '"> ';
 				$rtn .= '<img src="' . $src . '"/>';
 				$rtn .= '</picture>';
-				$rtn .= isset($link)&& $link !=null ? '</a>' : '';
+				$rtn .= isset($link) && $link != null ? '</a>' : '';
 
 				break;
 
@@ -59,7 +59,7 @@ class Foody_Questions extends Foody_Post
 
 	public function doCommercialBanner($PostId = null)
 	{
-$imagelink = '';
+		$imagelink = '';
 		$fq_banner_enabled = get_field('fq_banner_enabled', $this->pid());
 		if ($fq_banner_enabled) {
 
@@ -155,63 +155,105 @@ $imagelink = '';
 		$accessoriesARR = get_field('accessories', $this->pid());
 
 		$accessories = $accessoriesARR['accessories'];
-		if(!empty($accessories)){
-		$rtn = '<h2 class="title">אביזרים</h2>';
-		$rtn .= '<ul class="post-categories">';
-		foreach ($accessories as $accessory) {
-		$rtn .= '<li>';
-		$rtn .='<a href="'.$accessory->guid . '"/>' . $accessory->post_title .'</a>';
-		$rtn .= '</li>';
+		if (!empty($accessories)) {
+			$rtn = '<h2 class="title">אביזרים</h2>';
+			$rtn .= '<ul class="post-categories">';
+			foreach ($accessories as $accessory) {
+				$rtn .= '<li>';
+				$rtn .= '<a href="' . $accessory->guid . '"/>' . $accessory->post_title . '</a>';
+				$rtn .= '</li>';
+			}
+			$rtn .= '</ul>';
+			return $rtn;
 		}
-		$rtn .='</ul>';
-		return $rtn;
 	}
 
-}
 
-
-public function the_techniques(){
-	$techniques = get_field('techniques', $this->pid());
-	$accessories = $techniques['techniques'];
-	if(!empty($accessories)){
-	$rtn = '<h2 class="title">טכניקות</h2>';
-	$rtn .= '<ul class="post-categories">';
-	foreach ($accessories as $accessory) {
-	$rtn .= '<li>';
-	$rtn .='<a href="'.$accessory->guid . '"/>' . $accessory->post_title .'</a>';
-	$rtn .= '</li>';
+	public function the_techniques()
+	{
+		$techniques = get_field('techniques', $this->pid());
+		$accessories = $techniques['techniques'];
+		if (!empty($accessories)) {
+			$rtn = '<h2 class="title">טכניקות</h2>';
+			$rtn .= '<ul class="post-categories">';
+			foreach ($accessories as $accessory) {
+				$rtn .= '<li>';
+				$rtn .= '<a href="' . $accessory->guid . '"/>' . $accessory->post_title . '</a>';
+				$rtn .= '</li>';
+			}
+			$rtn .= '</ul>';
+			return $rtn;
+		}
 	}
-	$rtn .='</ul>';
-	return $rtn;
-}
-
-}
 
 
-public function the_tags(){
-	$tags = get_the_tags( $this->pid());
-	
-	if(!empty($tags)){
-	$rtn = '<h2 class="title">תגיות</h2>';
-	$rtn .= '<ul class="post-categories">';
-	foreach ($tags as $tag) {
-	$rtn .= '<li>';
-	$rtn .='<a href="/tag/'.$tag->slug . '"/>' . $tag->name .'</a>';
-	$rtn .= '</li>';
+	public function the_tags()
+	{
+		$tags = get_the_tags($this->pid());
+
+		if (!empty($tags)) {
+			$rtn = '<h2 class="title">תגיות</h2>';
+			$rtn .= '<ul class="post-categories">';
+			foreach ($tags as $tag) {
+				$rtn .= '<li>';
+				$rtn .= '<a href="/tag/' . $tag->slug . '"/>' . $tag->name . '</a>';
+				$rtn .= '</li>';
+			}
+			$rtn .= '</ul>';
+			return $rtn;
+		}
 	}
-	$rtn .='</ul>';
-	return $rtn;
-}
 
-}
+	public function get_answers($pid)
+	{
+		$answers_array = get_field("answers", $pid);
+		return $answers_array;
+	}
 
-public function get_answers($pid){
-$answers_array = get_field("answers", $pid);
-return $answers_array;
-}
+	private function questions_args()
+	{
+		$defaults = array(
+			'numberposts'      => 50,
+			'category'         => 0,
+			'orderby'          => 'date',
+			'order'            => 'DESC',
+			'include'          => array(),
+			'exclude'          => array(),
+			'meta_key'         => '',
+			'meta_value'       => '',
+			'post_type'        => 'questions',
+			'post_status'      => array('publish'),
+			'suppress_filters' => true,
+
+		);
+
+		return $defaults;
+	}
+
+
+	public function get_all_Questions($args = null)
+	{
+		$items = array();
+		if (!$args) {
+			$defaults = $this->questions_args();
+		} else {
+			$defaults = $args;
+		}
+
+		$All_Questions = get_posts($defaults);
+		foreach ($All_Questions as $k => $question) {
+			$answerarra = get_field('answers', $question->ID);
+			$items[$k]['ID'] = $question->ID;
+			$items[$k]['post_title'] =  str_replace('?', '', $question->post_title);
+			$items[$k]['post_name'] = $question->post_name;
+			
+			$items[$k]['thumbnail'] = get_the_post_thumbnail_url($question->ID);
+			$items[$k]['answer'] =$answerarra[0]['answer_ind'];
+
+		}
 
 
 
-
-
+		return $items;
+	}
 }//class ends here

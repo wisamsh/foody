@@ -1,6 +1,6 @@
 <?php if (wp_is_mobile()) { ?>
 
-   
+
     <div class="search-overlay floating-mobile-header d-lg-none">
 
         <div class="input-container">
@@ -11,7 +11,7 @@
 
                     <span class="close">×</span>
         </div>
-        <div class="overlay-white"> </div> 
+        <div class="overlay-white"> </div>
     </div>
 
     </div>
@@ -21,7 +21,7 @@
 
     <div class="sticky_bottom_header no-print">
         <div class="socials d-none d-lg-block">
-        
+
             <section class="header-top-container  d-none d-lg-flex">
 
                 <section class="social-icons">
@@ -185,7 +185,7 @@
 
     .data_res {
         width: 100%;
-        position:fixed;
+        position: fixed;
         top: 50px;
         overflow: scroll;
         z-index: 9999;
@@ -197,10 +197,10 @@
         padding-right: 15px;
         pointer-events: none;
         background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+
     }
 </style>
 
@@ -217,18 +217,17 @@
         let search_overlay = jQuery(".search-overlay");
         let close = jQuery(".close");
 
-let related_content = jQuery('.feed-channel-details').html();
+        let related_content = jQuery('.feed-channel-details').html();
 
-jQuery('.related-recipes-container').append(related_content);
-jQuery('.close_related_btn , .related-content-btn ').click(function(){
-   if(jQuery('.related-recipes-container').hasClass('hidden')){
-    jQuery('.related-recipes-container').removeClass('hidden');
-   }
-   else{
-    jQuery('.related-recipes-container').addClass('hidden');
-   }
-    
-});
+        jQuery('.related-recipes-container').append(related_content);
+        jQuery('.close_related_btn , .related-content-btn ').click(function() {
+            if (jQuery('.related-recipes-container').hasClass('hidden')) {
+                jQuery('.related-recipes-container').removeClass('hidden');
+            } else {
+                jQuery('.related-recipes-container').addClass('hidden');
+            }
+
+        });
         logo_text.removeClass("hidden");
         mobile_menu.addClass("hidden");
         hum.addClass("hidden");
@@ -281,23 +280,22 @@ jQuery('.close_related_btn , .related-content-btn ').click(function(){
                 search_overlay.addClass("open");
             }
         });
-//social-buttons-container
-jQuery(".social-btn-container").click(function(){
-    let social_bar = jQuery(".social-buttons-container");
-    if(social_bar.hasClass("hidden")){
-        social_bar.removeClass("hidden");
-    }
-    else{
-        social_bar.addClass("hidden")
-    }
-});
+        //social-buttons-container
+        jQuery(".social-btn-container").click(function() {
+            let social_bar = jQuery(".social-buttons-container");
+            if (social_bar.hasClass("hidden")) {
+                social_bar.removeClass("hidden");
+            } else {
+                social_bar.addClass("hidden")
+            }
+        });
 
         jQuery('#moile_search').on('input', jQuery.debounce(200, function() {
             jQuery(".overlay-white").html("");
             let len = jQuery(this).val().length;
             let the_search = "search=" + jQuery(this).val() + "&action=search_site";
             if (len > 2) {
-                
+
                 jQuery.ajax({
                     type: "POST",
                     url: "/wp/wp-admin/admin-ajax.php",
@@ -306,22 +304,19 @@ jQuery(".social-btn-container").click(function(){
                     complete: function(data) {
                         jQuery(".overlay-white").removeClass("hidden");
                         //check if there is actual results
-                       if(data.responseJSON.data.length > 0){
-                        jQuery.each(data.responseJSON.data, function(i, item) {
-                            let url = data.responseJSON.data[i].link ;
-                            let subject = data.responseJSON.data[i].name ;
-                            let thelink = '<div class="sr_res"><a href="'+url+'">' + subject + '</a></div>';
-                            jQuery(".overlay-white").append(thelink);
-                            
-                            //console.log(data.responseJSON.data[i].name);
-                        });
-                    }
-else{
-    let thelink = '<div class="sr_res">לא נמצאו תוצאות</div>';
-                            jQuery(".overlay-white").append(thelink);
-}
+                        if (data.responseJSON.data.length > 0) {
+                            jQuery.each(data.responseJSON.data, function(i, item) {
+                                let url = data.responseJSON.data[i].link;
+                                let subject = data.responseJSON.data[i].name;
+                                let thelink = '<div class="sr_res"><a href="' + url + '">' + subject + '</a></div>';
+                                jQuery(".overlay-white").append(thelink);
 
-
+                                //console.log(data.responseJSON.data[i].name);
+                            });
+                        } else {
+                            let thelink = '<div class="sr_res">לא נמצאו תוצאות</div>';
+                            jQuery(".overlay-white").append(thelink);
+                        }
 
                     },
 
@@ -330,7 +325,7 @@ else{
             }
         }));
 
-       
+
 
     }); //end ready
 </script>
