@@ -1,4 +1,5 @@
 <?php
+
 $related_side =  get_field('fq_automatic_recepies_sidebar', get_the_ID());
 $post_thumbs_side = array();
 if ($related_side == 'ידני') {
@@ -24,7 +25,7 @@ if ($related_side != 'ידני') {
     foreach ($related_side as $k => $related_side) {
         $post_ID_side = ($related_side->ID);
         $post_thumbs_side[$k]['thumb'] =  get_the_post_thumbnail_url($post_ID_side);
-        $post_thumbs_side[$k]['ID']= $post_ID_side;
+        $post_thumbs_side[$k]['ID'] = $post_ID_side;
         $post_thumbs_side[$k]['title'] =  get_the_title($post_ID_side);
         $post_thumbs_side[$k]['url'] = get_permalink($post_ID_side);
         $post_thumbs_side[$k]['post_author'] = $related_side->post_author;
@@ -36,21 +37,21 @@ if ($related_side != 'ידני') {
 <h2 class="title">מתכונים נוספים</h2>
 
 <div class="row">
-<?php foreach($post_thumbs_side as $post_thumbs_side) {?>
-    <div class="col-12 siderelated">
-        <a href="<?php echo $post_thumbs_side['url'] ?>">
-        <img src="<?php echo $post_thumbs_side['thumb'] ?>" />
-            <div class="details">
-                <div class="post-title"><?php echo $post_thumbs_side['title'] ?></div>
-            </div>
-        </a>
-        <a href="/author/<?php echo $post_thumbs_side['user_email']; ?>" class="author-name">
-            <b><?php echo (get_the_author_meta('display_name', $post_thumbs_side['post_author'])); ?></b>
-        </a>
-        <div class="excerpt"><?php echo get_field('mobile_caption', $post_thumbs_side['ID']);?></div> 
-    </div>
+    <?php foreach ($post_thumbs_side as $post_thumbs_side) { ?>
+        <div class="col-12 siderelated">
+            <a href="<?php echo $post_thumbs_side['url'] ?>">
+                <img src="<?php echo $post_thumbs_side['thumb'] ?>" />
+                <div class="details">
+                    <div class="post-title"><?php echo $post_thumbs_side['title'] ?></div>
+                </div>
+            </a>
+            <a href="/author/<?php echo $post_thumbs_side['user_email']; ?>" class="author-name">
+                <b><?php echo (get_the_author_meta('display_name', $post_thumbs_side['post_author'])); ?></b>
+            </a>
+            <div class="excerpt"><?php echo get_field('mobile_caption', $post_thumbs_side['ID']); ?></div>
+        </div>
 
-    <?php }?>
-   
-    
+    <?php } ?>
+
+
 </div>

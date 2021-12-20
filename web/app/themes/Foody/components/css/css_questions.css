@@ -154,7 +154,7 @@ font-weight: bold;
 .related-recipes-container{
     position: fixed;
     bottom: 65px;
-   
+    background: #fdebec;
     display: flex;
     flex-direction: column;
     padding: 13px;
@@ -234,6 +234,13 @@ font-weight: bold;
     padding:0px;
 }
 
+.faq-breadcrumbs{
+  
+    text-align: right;
+    direction: rtl;
+}
+
+
 @media only screen and (min-width: 800px) {
     .related_recepies_conduct{
        
@@ -244,6 +251,15 @@ font-weight: bold;
     .mainImage{
         padding-right: 10px;
     }
+
+.faq-breadcrumbs{
+margin-top: 30px;
+padding:20px;
+background-color:none;
+
+}
+
+
   }
 
   @media only screen and (max-width: 799px) {
@@ -252,4 +268,10 @@ font-weight: bold;
         display: inline-block;
         padding-right: 3%;
     }
+    .faq-breadcrumbs{
+        margin-top: 0px;
+        background-color: #fff;
+        padding: 20px;
+        
+        }
   }

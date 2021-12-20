@@ -246,10 +246,9 @@ class Foody_Questions extends Foody_Post
 			$items[$k]['ID'] = $question->ID;
 			$items[$k]['post_title'] =  str_replace('?', '', $question->post_title);
 			$items[$k]['post_name'] = $question->post_name;
-			
-			$items[$k]['thumbnail'] = get_the_post_thumbnail_url($question->ID);
-			$items[$k]['answer'] =$answerarra[0]['answer_ind'];
 
+			$items[$k]['thumbnail'] = get_the_post_thumbnail_url($question->ID);
+			$items[$k]['answer'] = $answerarra[0]['answer_ind'];
 		}
 
 

@@ -87,9 +87,12 @@
                     <i class="icon-acces"></i>
                     <div id="accessibility-container"></div>
                 </button>
-
                 <div class="related-content-btn-container">
-                    <span class="related-content-btn ">מתכונים נוספים</span>
+                    <?php if (get_post_type() == "questions") { ?>
+
+                        <span class="related-content-btn ">מתכונים נוספים</span>
+
+                    <?php } ?>
                 </div>
 
                 <div class="social-btn-container">
