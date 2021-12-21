@@ -205,6 +205,13 @@
         height: 100vh;
 
     }
+
+    .in_type{
+    font-size: 10px;
+    color: red;
+    display: block;
+    margin-left: 0px;
+}
 </style>
 
 
@@ -213,122 +220,135 @@
 <script>
     jQuery(document).ready(function() {
 
-        let mobile_menu = jQuery(".navbar-container");
-        let hum = jQuery(".foody-logo-hamburger");
-        let logo = jQuery(".foody-logo-close");
-        let logo_text = jQuery(".foody-logo-text");
-        let search_overlay = jQuery(".search-overlay");
-        let close = jQuery(".close");
+                let mobile_menu = jQuery(".navbar-container");
+                let hum = jQuery(".foody-logo-hamburger");
+                let logo = jQuery(".foody-logo-close");
+                let logo_text = jQuery(".foody-logo-text");
+                let search_overlay = jQuery(".search-overlay");
+                let close = jQuery(".close");
 
-        let related_content = jQuery('.feed-channel-details').html();
+                let related_content = jQuery('.feed-channel-details').html();
 
-        jQuery('.related-recipes-container').append(related_content);
-        jQuery('.close_related_btn , .related-content-btn ').click(function() {
-            if (jQuery('.related-recipes-container').hasClass('hidden')) {
-                jQuery('.related-recipes-container').removeClass('hidden');
-            } else {
-                jQuery('.related-recipes-container').addClass('hidden');
-            }
-
-        });
-        logo_text.removeClass("hidden");
-        mobile_menu.addClass("hidden");
-        hum.addClass("hidden");
-        logo.addClass("hidden")
-
-        jQuery(".foody-logo-close , .foody-logo-hamburger").click(function() {
-
-            if (mobile_menu.hasClass("hidden")) {
-                mobile_menu.removeClass("hidden");
-                hum.addClass("hidden");
-                logo.removeClass("hidden");
-
-            } else {
-                mobile_menu.addClass("hidden");
-                logo.addClass("hidden");
-                hum.removeClass("hidden");
-            }
-
-        });
-
-
-        jQuery(window).scroll(function(event) {
-
-
-
-            let scroll = jQuery(window).scrollTop();
-            //console.log("CROLLING---",scroll)
-            if (scroll > 144 && mobile_menu.hasClass("hidden")) {
-                //mobile_menu.removeClass("hidden");
-                jQuery(".foody-logo-close").addClass("hidden");
-                jQuery(".foody-logo-hamburger").removeClass("hidden");
-            }
-            if (scroll < 144 && mobile_menu.hasClass("hidden")) {
-                jQuery(".foody-logo-close").addClass("hidden");
-                jQuery(".foody-logo-hamburger").addClass("hidden");
-                jQuery(".foody-logo-text").removeClass("hidden");
-            }
-        });
-
-        jQuery(".close").click(function() {
-            search_overlay.removeClass("open");
-            jQuery(".data_res").addClass("hidden");
-        });
-
-        jQuery("#magnifier_search").click(function() {
-
-            if (search_overlay.hasClass("open")) {
-                search_overlay.removeClass("open");
-            } else {
-                search_overlay.addClass("open");
-            }
-        });
-        //social-buttons-container
-        jQuery(".social-btn-container").click(function() {
-            let social_bar = jQuery(".social-buttons-container");
-            if (social_bar.hasClass("hidden")) {
-                social_bar.removeClass("hidden");
-            } else {
-                social_bar.addClass("hidden")
-            }
-        });
-
-        jQuery('#moile_search').on('input', jQuery.debounce(200, function() {
-            jQuery(".overlay-white").html("");
-            let len = jQuery(this).val().length;
-            let the_search = "search=" + jQuery(this).val() + "&action=search_site";
-            if (len > 2) {
-
-                jQuery.ajax({
-                    type: "POST",
-                    url: "/wp/wp-admin/admin-ajax.php",
-                    data: the_search,
-
-                    complete: function(data) {
-                        jQuery(".overlay-white").removeClass("hidden");
-                        //check if there is actual results
-                        if (data.responseJSON.data.length > 0) {
-                            jQuery.each(data.responseJSON.data, function(i, item) {
-                                let url = data.responseJSON.data[i].link;
-                                let subject = data.responseJSON.data[i].name;
-                                let thelink = '<div class="sr_res"><a href="' + url + '">' + subject + '</a></div>';
-                                jQuery(".overlay-white").append(thelink);
-
-                                //console.log(data.responseJSON.data[i].name);
-                            });
-                        } else {
-                            let thelink = '<div class="sr_res">לא נמצאו תוצאות</div>';
-                            jQuery(".overlay-white").append(thelink);
-                        }
-
-                    },
-
+                jQuery('.related-recipes-container').append(related_content);
+                jQuery('.close_related_btn , .related-content-btn ').click(function() {
+                    if (jQuery('.related-recipes-container').hasClass('hidden')) {
+                        jQuery('.related-recipes-container').removeClass('hidden');
+                    } else {
+                        jQuery('.related-recipes-container').addClass('hidden');
+                    }
 
                 });
-            }
-        }));
+                logo_text.removeClass("hidden");
+                mobile_menu.addClass("hidden");
+                hum.addClass("hidden");
+                logo.addClass("hidden")
+
+                jQuery(".foody-logo-close , .foody-logo-hamburger").click(function() {
+
+                    if (mobile_menu.hasClass("hidden")) {
+                        mobile_menu.removeClass("hidden");
+                        hum.addClass("hidden");
+                        logo.removeClass("hidden");
+
+                    } else {
+                        mobile_menu.addClass("hidden");
+                        logo.addClass("hidden");
+                        hum.removeClass("hidden");
+                    }
+
+                });
+
+
+                jQuery(window).scroll(function(event) {
 
 
 
-    }); //end ready
+                    let scroll = jQuery(window).scrollTop();
+                    //console.log("CROLLING---",scroll)
+                    if (scroll > 144 && mobile_menu.hasClass("hidden")) {
+                        //mobile_menu.removeClass("hidden");
+                        jQuery(".foody-logo-close").addClass("hidden");
+                        jQuery(".foody-logo-hamburger").removeClass("hidden");
+                    }
+                    if (scroll < 144 && mobile_menu.hasClass("hidden")) {
+                        jQuery(".foody-logo-close").addClass("hidden");
+                        jQuery(".foody-logo-hamburger").addClass("hidden");
+                        jQuery(".foody-logo-text").removeClass("hidden");
+                    }
+                });
+
+                jQuery(".close").click(function() {
+                    search_overlay.removeClass("open");
+                    jQuery(".data_res").addClass("hidden");
+                });
+
+                jQuery("#magnifier_search").click(function() {
+
+                    if (search_overlay.hasClass("open")) {
+                        search_overlay.removeClass("open");
+                    } else {
+                        search_overlay.addClass("open");
+                    }
+                });
+                //social-buttons-container
+                jQuery(".social-btn-container").click(function() {
+                    let social_bar = jQuery(".social-buttons-container");
+                    if (social_bar.hasClass("hidden")) {
+                        social_bar.removeClass("hidden");
+                    } else {
+                        social_bar.addClass("hidden")
+                    }
+                });
+
+                jQuery('#moile_search').on('input', jQuery.debounce(200, function() {
+                        jQuery(".overlay-white").html("");
+                        let len = jQuery(this).val().length;
+                        let the_search = "search=" + jQuery(this).val() + "&action=search_site";
+                        if (len > 2) {
+
+                            jQuery.ajax({
+                                    type: "POST",
+                                    url: "/wp/wp-admin/admin-ajax.php",
+                                    data: the_search,
+
+                                    complete: function(data) {
+                                        jQuery(".overlay-white").removeClass("hidden");
+                                        //console.log(data);
+                                        //check if there is actual results
+                                        if (data.responseJSON.data.length > 0) {
+                                            jQuery.each(data.responseJSON.data, function(i, item) {
+                                                    let url = data.responseJSON.data[i].link;
+                                                    let subject = data.responseJSON.data[i].name;
+                                                    let type_arr = data.responseJSON.data[i].type;
+                                                    let type = '';
+                                                    switch (type_arr) {
+                                                        case 'ingredient':
+                                                            type = 'מצרך למתכון' ;
+                                                            break;
+                                                        case 'post':
+                                                            type = 'מתכון' ;
+                                                            break;
+                                                        }
+
+                                                            let thelink = '<div data-type="'+ type_arr +'" class="sr_res"><a href="' + url + '">' + subject + '</a></div>';
+                                                            jQuery(".overlay-white").append(thelink);
+
+                                                            //console.log(data.responseJSON.data[i].name);
+                                                    });
+                                            }
+                                            else {
+                                                let thelink = '<div class="sr_res">לא נמצאו תוצאות</div>';
+                                                jQuery(".overlay-white").append(thelink);
+                                            }
+
+                                        },
+
+
+                                    });
+                            }
+                        }));
+
+
+
+                }); //end ready
 </script>

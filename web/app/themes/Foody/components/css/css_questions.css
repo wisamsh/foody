@@ -71,8 +71,8 @@ list-style: none;
     margin: 0 auto;
     direction: rtl;
     text-align: right;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #dddddd;
+    margin-bottom: 20px;
+    
    
 }
 
@@ -273,5 +273,8 @@ background-color:none;
         background-color: #fff;
         padding: 20px;
         
+        }
+        .content .newsletter{
+            display: none;
         }
   }
