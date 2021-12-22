@@ -75,7 +75,9 @@ list-style: none;
     
    
 }
-
+.all_q{
+text-decoration: underline !important; 
+}
 
 .foody-search-filter{
     margin-top: 24px !important;

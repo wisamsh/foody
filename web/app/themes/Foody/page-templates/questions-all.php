@@ -35,43 +35,24 @@ add_action('get_footer', 'FAQ_Scripts');
 
                 foreach ($allQuestions as $allQuestions) {
                 ?>
-                    <div class="accordion" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                        <h1>
-                            <a href="/questions/<?php echo $allQuestions['post_name']; ?>" target="_blank">
+                    
+                        <h1 >
+                            <a class="all_q" href="/questions/<?php echo trim($allQuestions['post_name']); ?>" target="_blank">
                                 <?php echo $allQuestions['post_title']; ?></a>
                             <i class="fas fa-question fa-xs"></i>
                         </h1>
-                    </div>
-                    <div class="panel" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-
-                        <div itemprop="text">
-                            <?php echo $allQuestions['answer']; ?>
-                        </div>
-
-                    </div>
+                    
+                    
+                    
                 <?php }
+                
                 ?>
-
+</div>
               
             </div><!-- #CONTAINER -->
         </div><!-- primary -->
     </article>
-    <script>
-        var acc = document.getElementsByClassName("accordion");
-        var i;
-
-        for (i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function() {
-                this.classList.toggle("activeacc");
-                var panel = this.nextElementSibling;
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null;
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                }
-            });
-        }
-    </script>
+    
     <?php
 
     get_footer();

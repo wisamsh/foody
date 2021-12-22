@@ -23,7 +23,7 @@ add_action('get_footer', 'FAQ_Scripts');
         <progress dir="ltr"></progress>
     </div>
 
-    <section class="cover-image">
+    <section class="cover-image no-print">
         <div class="cover-image">
             <?php echo $Foody_Questions->doCommercialBanner(); ?>
         </div>
@@ -38,7 +38,7 @@ add_action('get_footer', 'FAQ_Scripts');
 
     <article class="content">
         <section class="details-container">
-            <div class="mainImage">
+            <div class="mainImage no-print">
                 <?php echo $Foody_Questions->MainQuestionImage(); ?>
             </div>
             <?php $Foody_Questions->Do_FoodyBeadcrumbs(); ?>
@@ -67,7 +67,7 @@ add_action('get_footer', 'FAQ_Scripts');
 
         </section>
 
-        <section class="feed-channel-details row">
+        <section class="feed-channel-details row no-print">
             <?php require(get_template_directory() . '/components/qusetion_related_recipy.php'); ?>
 
         </section>
