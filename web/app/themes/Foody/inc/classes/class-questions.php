@@ -213,7 +213,7 @@ class Foody_Questions extends Foody_Post
 	private function questions_args()
 	{
 		$defaults = array(
-			'numberposts'      => 50,
+			'numberposts'      => 500,
 			'category'         => 0,
 			'orderby'          => 'date',
 			'order'            => 'DESC',

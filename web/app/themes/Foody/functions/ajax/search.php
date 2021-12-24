@@ -217,7 +217,7 @@ function foody_feed_ajax_filter()
 
             $query_args = $foody_query->get_query($context, $context_args);
             if ($action === 'foody_feed_filter') {
-                //$query_args['posts_per_page'] = '-1';
+                $query_args['posts_per_page'] = '-1';
                 $query_args['post_type'] = array("foody_feed_channel");
 
             }

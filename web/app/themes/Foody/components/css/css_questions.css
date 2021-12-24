@@ -37,6 +37,10 @@ list-style: none;
     margin-top: 5px;
 }
 
+.post-categories li a{
+    font-size: 14px;
+    
+}
 #questionvideo{
     border: none;
 }
@@ -77,6 +81,7 @@ list-style: none;
 }
 .all_q{
 text-decoration: underline !important; 
+font-size: 30px;
 }
 
 .foody-search-filter{
@@ -260,9 +265,32 @@ padding:20px;
 background-color:none;
 
 }
-
+.mainImage{
+    padding-top: 10px;
+}
 
   }
+
+.related_recepies_conduct img{
+    width:155px !important;
+    height: 103px !important;
+}
+  
+.sq{
+    width: 100%;
+    text-align: right;
+    padding: 0px;
+    margin: 0px;
+}
+.search_question{
+    text-align: right;
+    width: 100%;
+    background-image: url('https://foody.co.il/app/themes/Foody/resources/images/icons/search-gray.png');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-position-x: 7px;
+}
+
 
   @media only screen and (max-width: 799px) {
     .related_recepies_conduct{
