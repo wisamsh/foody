@@ -18,9 +18,10 @@
 if ( post_password_required() ) {
 	return;
 }
+$foody_how_i_did = new Foody_HowIDid();
 $FetureImageChecker = true;
 $component_data = get_field('share_execute_group');
-$foody_how_i_did = new Foody_HowIDid();
+
 $btn_text = $component_data['btn_text'];
 if (empty($btn_text)) {
     $btn_text = 'כן';
@@ -36,6 +37,13 @@ if (!is_array($cover_image) && (!isset($cover_image['url']) || empty($cover_imag
     $FetureImageChecker = false;
 }
 
+
+
+
+
+
+
+
 $show_upload = get_field('how_i_did_hide_upload');
 if (is_null($show_upload)) {
     $show_upload = true;
@@ -46,8 +54,8 @@ $upload_text = __('תעלו תמונה להשוויץ');
 ?>
 
 <div id="how-i-did" class="comments-area">
-    <?php if ($FetureImageChecker != false) {
-        $alt = !empty($cover_image['alt']) ? $cover_image['alt'] : ''; ?>
+    <?php if ($FetureImageChecker != false && get_field('enable_share_execute',get_the_ID() == false)) {
+       // $alt = !empty($cover_image['alt']) ? $cover_image['alt'] : ''; ?>
         <img src="<?php echo $cover_image['url']; ?>" alt="<?php echo $cover_image['alt']; ?>" class="how-i-did-cover">
     <?php } else { ?>
         <img src="<?php echo get_the_post_thumbnail_url() ?>" alt="<?php echo esc_html ( get_the_title() ) ?>" class="how-i-did-cover" style="height: 450px;">

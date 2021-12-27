@@ -46,8 +46,8 @@ add_action('get_footer', 'FAQ_Scripts');
 
                     <h1 class="title_snich" data-name="<?php echo $allQuestions['post_title']; ?>">
                         <a class="all_q" href="/questions/<?php echo trim($allQuestions['post_name']); ?>" target="_blank">
-                            <?php echo $allQuestions['post_title']; ?></a>
-                        <i class="fas fa-question" style="font-size:21px;"></i>
+                            <?php echo trim($allQuestions['post_title']);?>?
+                        </a>
                     </h1>
 
 
