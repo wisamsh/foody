@@ -12,6 +12,10 @@ function FAQ_Scripts()
     $VersionHashCss = date('Y.m.d h.m');
     wp_register_style('QuestionsCSS', get_template_directory_uri() . '/components/css/css_questions.css', array(), $VersionHashCss);
     wp_enqueue_style('QuestionsCSS');
+
+    wp_register_script('QuestionsEvents', get_template_directory_uri() . '/components/JS/questions_events.js', array(), $VersionHashCss);
+    wp_enqueue_script('QuestionsEvents');
+
 }
 add_action('get_footer', 'FAQ_Scripts');
 ?>
@@ -38,7 +42,7 @@ add_action('get_footer', 'FAQ_Scripts');
 
     <article class="content">
         <section class="details-container">
-            <div class="mainImage no-print">
+            <div class="mainImage no-printtext">
                 <?php echo $Foody_Questions->MainQuestionImage(); ?>
             </div>
             <?php $Foody_Questions->Do_FoodyBeadcrumbs(); ?>

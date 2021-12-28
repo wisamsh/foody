@@ -73,6 +73,7 @@ jQuery(".title_snich:contains("+ str +")" ).attr( "style", "block" );
 }));
 
     });
+    
 </script>
 
 
