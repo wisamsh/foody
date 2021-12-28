@@ -13,7 +13,7 @@ function FAQ_Scripts()
     wp_register_style('QuestionsCSS', get_template_directory_uri() . '/components/css/css_questions.css', array(), $VersionHashCss);
     wp_enqueue_style('QuestionsCSS');
 
-    wp_register_script('QuestionsEvents', get_template_directory_uri() . '/components/JS/questions_events.js', array(), $VersionHashCss);
+    wp_register_script('QuestionsEvents', get_template_directory_uri() . '/components/js/questions_events.js', array(), $VersionHashCss);
     wp_enqueue_script('QuestionsEvents');
 
 }
