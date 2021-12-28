@@ -36,8 +36,6 @@ add_action('get_footer', 'FAQ_Scripts');
                     </div>
 
                 <?php } ?>
-
-
                 <?php
                 $allQuestions = $faqClass->get_all_Questions();
 
