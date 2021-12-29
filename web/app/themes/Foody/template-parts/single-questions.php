@@ -20,8 +20,6 @@ function FAQ_Scripts()
 add_action('get_footer', 'FAQ_Scripts');
 ?>
 
-
-
 <div class="row m-0">
     <div class="progress-wrapper no-print">
         <progress dir="ltr"></progress>

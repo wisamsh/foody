@@ -255,4 +255,17 @@ class Foody_Questions extends Foody_Post
 
 		return $items;
 	}
+
+
+//Google Analitics Tagmanager Functions : 
+
+private function get_the_globals_for_TagManager(){
+	$GlobalsInjections = array();
+	$MainCategoryRAW =  (wp_get_post_categories(get_the_ID()));
+	$MainCategory =  (get_the_category_by_ID($MainCategoryRAW[0]));
+
+}
+
+
+
 }//class ends here

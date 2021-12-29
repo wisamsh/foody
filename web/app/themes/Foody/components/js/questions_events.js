@@ -1,10 +1,8 @@
 //eventCallback('', 'מתחם פידים', 'טעינה', channelName);
 
-
+console.log(foodyGlobals.title);
 //jQuery( document ).ready(function() {
     const tagers = {
-    event:'foody',    
-   
      page:"תשובות", 
      action:"טעינת עמוד",
      category:'תשובה',
@@ -13,5 +11,5 @@
      cd_description1:'foody',
      cd_value1:'foody'
     };
-    dataLayer.push({event:'foody',page:"תשובות", action:"טעינת עמוד",category:'תשובה',});
+    dataLayer.push({event:'foody', tagers});
 //});
