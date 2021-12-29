@@ -4,7 +4,7 @@
 //jQuery( document ).ready(function() {
     const tagers = {
     event:'foody',    
-    page:"Fiat",
+   
      page:"תשובות", 
      action:"טעינת עמוד",
      category:'ללא',
