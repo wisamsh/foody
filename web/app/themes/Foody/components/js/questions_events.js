@@ -2,7 +2,9 @@
 
 
 //jQuery( document ).ready(function() {
-    const tagers = {page:"Fiat",
+    const tagers = {
+    event:'foody',    
+    page:"Fiat",
      page:"תשובות", 
      action:"טעינת עמוד",
      category:'ללא',
