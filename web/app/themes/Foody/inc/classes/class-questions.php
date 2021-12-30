@@ -19,6 +19,8 @@ class Foody_Questions extends Foody_Post
 		parent::__construct($post,  $load_content);
 
 		$this->foody_search = new Foody_Search('questions');
+		
+		
 	}
 
 
@@ -101,7 +103,7 @@ class Foody_Questions extends Foody_Post
 	public function the_categories()
 	{
 		echo '<h2 class="title">' . __('קטגוריות') . '</h2>';
-		echo get_the_category_list('', '', $this->pid());
+		echo '<div class="categories">'.get_the_category_list('', '', $this->pid()) . '</div>' ; 
 	}
 
 
@@ -157,13 +159,13 @@ class Foody_Questions extends Foody_Post
 		$accessories = $accessoriesARR['accessories'];
 		if (!empty($accessories)) {
 			$rtn = '<h2 class="title">אביזרים</h2>';
-			$rtn .= '<ul class="post-categories">';
+			$rtn .= '<div class="accessories"><ul class="post-categories">';
 			foreach ($accessories as $accessory) {
 				$rtn .= '<li>';
 				$rtn .= '<a href="' . $accessory->guid . '"/>' . $accessory->post_title . '</a>';
 				$rtn .= '</li>';
 			}
-			$rtn .= '</ul>';
+			$rtn .= '</ul></div>';
 			return $rtn;
 		}
 	}
@@ -175,13 +177,13 @@ class Foody_Questions extends Foody_Post
 		$accessories = $techniques['techniques'];
 		if (!empty($accessories)) {
 			$rtn = '<h2 class="title">טכניקות</h2>';
-			$rtn .= '<ul class="post-categories">';
+			$rtn .= '<div class="technics"><ul class="post-categories">';
 			foreach ($accessories as $accessory) {
 				$rtn .= '<li>';
 				$rtn .= '<a href="' . $accessory->guid . '"/>' . $accessory->post_title . '</a>';
 				$rtn .= '</li>';
 			}
-			$rtn .= '</ul>';
+			$rtn .= '</ul></div>';
 			return $rtn;
 		}
 	}
@@ -193,13 +195,13 @@ class Foody_Questions extends Foody_Post
 
 		if (!empty($tags)) {
 			$rtn = '<h2 class="title">תגיות</h2>';
-			$rtn .= '<ul class="post-categories">';
+			$rtn .= '<div class="tags"><ul class="post-categories">';
 			foreach ($tags as $tag) {
 				$rtn .= '<li>';
 				$rtn .= '<a href="/tag/' . $tag->slug . '"/>' . $tag->name . '</a>';
 				$rtn .= '</li>';
 			}
-			$rtn .= '</ul>';
+			$rtn .= '</ul></div>';
 			return $rtn;
 		}
 	}
@@ -256,15 +258,6 @@ class Foody_Questions extends Foody_Post
 		return $items;
 	}
 
-
-//Google Analitics Tagmanager Functions : 
-
-private function get_the_globals_for_TagManager(){
-	$GlobalsInjections = array();
-	$MainCategoryRAW =  (wp_get_post_categories(get_the_ID()));
-	$MainCategory =  (get_the_category_by_ID($MainCategoryRAW[0]));
-
-}
 
 
 
