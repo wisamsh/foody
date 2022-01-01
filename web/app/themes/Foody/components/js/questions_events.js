@@ -1,55 +1,16 @@
 //eventCallback('', 'מתחם פידים', 'טעינה', channelName);
 
 //console.log(foodyGlobals);
+console.log(FAQ_Details);
 
-let MainCategory = '';
-let AllCategories = [];
-let technicsARR = [];
+
 let author = foodyGlobals.author_name;
 let title = foodyGlobals.title;
-let accessoriesARR = [];
 
-let cats = jQuery('div.categories');
-let technics = jQuery('div.technics');
-let accessories = jQuery('div.accessories');
-let tags = jQuery('div.tags');
-
-//console.log('LENGHT:', cats.length);
-if (cats.length == 1) {
-    jQuery("div.categories >  .post-categories > li:first-child a").each(function (index) {
-        MainCategory = jQuery(this).text();
-
-    });
-    jQuery("div.categories >  .post-categories > li a").each(function (index) {
-        let res = jQuery(this).text()
-        AllCategories.push(res);
-    });
-}
-
-if (technics.length == 1) {
-    
-    jQuery("div.technics >  .post-categories > li a").each(function (index) {
-        let tech = jQuery(this).text()
-        technics.push(tech);
-    });
-}
-
-
-if (accessories.length == 1) {
-    
-    jQuery("div.accessories >  .post-categories > li a").each(function (index) {
-        let items = jQuery(this).text()
-        accessoriesARR.push(items);
-    });
-}
-
-
-
-let allaccessories = Object.assign({}, accessoriesARR);
-
-let alltechnics = Object.assign({}, technics);
-
-let AllCatOBJ = Object.assign({}, AllCategories);
+        const MainCategory = FAQ_Details.mainCategories ;
+       const  AllCategories= FAQ_Details.subcategories;
+       const  technics = FAQ_Details.technics;
+       const accessories = FAQ_Details.accessories;
 
 //console.log(AllCategories);
 let PageLoad_MainCategory = {
@@ -67,7 +28,7 @@ let PageLoad_MainCategory = {
     recipe_name: title,
     has_rich_content: 1,
 };
-dataLayer.push({ event: 'foody', ...PageLoad_MainCategory }); //the ...PageLoad_MainCategory means the object itema only not the object
+dataLayer.push({ event: 'foody', PageLoad_MainCategory }); //the ...PageLoad_MainCategory means the object itema only not the object
 
 let PageLoad_AllCategory = {
     category: 'תשובה',
@@ -78,48 +39,48 @@ let PageLoad_AllCategory = {
     object: '',
     amount: '',
     order_location: '',
-    item_category: AllCatOBJ,
+    item_category: AllCategories,
     chef: author,
     ingredient: '',
     recipe_name: title,
     has_rich_content: 1,
 };
-dataLayer.push({ event: 'foody', ...PageLoad_AllCategory });
+dataLayer.push({ event: 'foody', PageLoad_AllCategory });
 
 
 let PageLoad_Technics = {
     category: 'תשובה',
     action: 'טעינה',
-    label: 'קטגוריות משניות  אביזרים  טכניקות',
+    label: 'קטגוריות משניות   טכניקות',
     cd_description1: 'מפרסם',
     cd_value1: author,
     object: '',
     amount: '',
     order_location: '',
-    item_category: AllCatOBJ,
-    object:alltechnics,
+    item_category: AllCategories,
+    object:technics,
     chef: author,
     ingredient: '',
     recipe_name: title,
     has_rich_content: 1,
 };
-dataLayer.push({ event: 'foody', ...PageLoad_Technics });
+dataLayer.push({ event: 'foody', PageLoad_Technics });
 
 
 let PageLoad_Accessorries = {
     category: 'תשובה',
     action: 'טעינה',
-    label: 'קטגוריות משניות  אביזרים  טכניקות',
+    label: 'קטגוריות משניות  אביזרים  ',
     cd_description1: 'מפרסם',
     cd_value1: author,
     object: '',
     amount: '',
     order_location: '',
-    item_category: AllCatOBJ,
-    object:allaccessories,
+    item_category: AllCategories,
+    object:accessories,
     chef: author,
     ingredient: '',
     recipe_name: title,
     has_rich_content: 1,
 };
-dataLayer.push({ event: 'foody', ...PageLoad_Accessorries });
+dataLayer.push({ event: 'foody', PageLoad_Accessorries });

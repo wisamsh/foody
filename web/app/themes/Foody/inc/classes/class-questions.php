@@ -19,8 +19,6 @@ class Foody_Questions extends Foody_Post
 		parent::__construct($post,  $load_content);
 
 		$this->foody_search = new Foody_Search('questions');
-		
-		
 	}
 
 
@@ -103,7 +101,7 @@ class Foody_Questions extends Foody_Post
 	public function the_categories()
 	{
 		echo '<h2 class="title">' . __('קטגוריות') . '</h2>';
-		echo '<div class="categories">'.get_the_category_list('', '', $this->pid()) . '</div>' ; 
+		echo '<div class="categories">' . get_the_category_list('', '', $this->pid()) . '</div>';
 	}
 
 
@@ -140,6 +138,22 @@ class Foody_Questions extends Foody_Post
 		$category = get_the_category();
 		return $category[0]->term_id;
 	}
+
+	public function getQuestionAllCats()
+	{
+		$catsarr = array();
+		$category = get_the_category();
+
+		foreach ($category as $k => $cat) {
+			$catsarr[$k]['term_id'] = $cat->term_id;
+			$catsarr[$k]['name'] = $cat->name;
+		}
+
+		return $catsarr;
+	}
+
+
+
 	public function the_details()
 	{
 		echo '<section class="technique-details-container">';
@@ -155,7 +169,6 @@ class Foody_Questions extends Foody_Post
 	{
 
 		$accessoriesARR = get_field('accessories', $this->pid());
-
 		$accessories = $accessoriesARR['accessories'];
 		if (!empty($accessories)) {
 			$rtn = '<h2 class="title">אביזרים</h2>';
@@ -170,6 +183,59 @@ class Foody_Questions extends Foody_Post
 		}
 	}
 
+
+
+public function the_categories_RAW(){
+	$rtn = array();
+	$categories = wp_get_post_categories(get_the_ID());
+    foreach($categories as $k=>$category) {
+		$rtn[] = get_the_category_by_ID($category);
+	}
+	return $rtn;
+}
+
+
+
+	public function the_accessories_RAW($with_theID = null)
+	{
+		$rtn = array();
+		$rr= array();
+		$accessoriesARR = get_field('accessories', $this->pid());
+		$raw = $accessoriesARR['accessories'];
+		foreach ($raw as $k => $acc) {
+			if($with_theID != null){
+			$rtn[$k]['ID'] = $acc->ID;
+			}
+			$rtn[$k] = $acc->post_title;
+		}
+		return array_merge($rr, $rtn);
+	}
+
+
+	public function the_Technics_RAW($with_theID = null)
+	{
+		$rtn = array();
+		$rr= array();
+		$accessoriesARR = get_field('techniques', $this->pid());
+		$raw = $accessoriesARR['techniques'];
+		foreach ($raw as $k => $acc) {
+			if($with_theID != null){
+			$rtn[$k]['ID'] = $acc->ID;
+			}
+			$rtn[$k] = $acc->post_title;
+		}
+		return array_merge($rr, $rtn);
+	}
+
+	public function the_Tags_RAW($with_theID = null)
+	{
+	$rtn=array();	
+		$tags = get_the_tags($this->pid());
+		foreach($tags as $tag){
+			$rtn[] = $tag->name;
+		}
+		return $rtn ;
+	}
 
 	public function the_techniques()
 	{
@@ -257,8 +323,4 @@ class Foody_Questions extends Foody_Post
 
 		return $items;
 	}
-
-
-
-
 }//class ends here
