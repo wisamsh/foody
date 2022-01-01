@@ -18,8 +18,11 @@ function FAQ_Scripts()
 
 }
 add_action('get_footer', 'FAQ_Scripts');
-?>
 
+
+wp_enqueue_script( 'GlobalsW', get_template_directory_uri() . '/components/js/questions_events.js' , array( 'wp-api' ) );
+?>
+<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 <div class="row m-0">
     <div class="progress-wrapper no-print">
         <progress dir="ltr"></progress>
