@@ -18,7 +18,7 @@ switch ($get_questions_auto) {
             echo '<h2 class="title">שאלות קשורות</h2>';
             echo '<ul class="related_questions_queue">';
             foreach ($related_Questions as $related_Questions) {
-                echo '<li><b><a href="/questions/' . $related_Questions->post_name . '">' . $related_Questions->post_title . '</a></b></li>';
+                echo '<li><b><a class="related_question" href="/questions/' . $related_Questions->post_name . '">' . $related_Questions->post_title . '</a></b></li>';
             }
             echo '</ul';
         }
@@ -30,7 +30,7 @@ if (!empty($picked_questions)) {
     echo '<h2 class="title">שאלות קשורות</h2>';
     echo '<ul class="related_questions_queue">';
     foreach ($picked_questions as $picked_questions) {
-        echo '<li><b><a href="/questions/' . $picked_questions['related_questions_rep']->post_name . '">' . $picked_questions['related_questions_rep']->post_title . '</a></b></li>';
+        echo '<li><b><a class="related_question" href="/questions/' . $picked_questions['related_questions_rep']->post_name . '">' . $picked_questions['related_questions_rep']->post_title . '</a></b></li>';
     }
     echo '</ul';
 }

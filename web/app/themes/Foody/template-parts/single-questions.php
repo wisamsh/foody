@@ -3,7 +3,7 @@ $Foody_Questions = new Foody_Questions();
 $Foody_Questions->Mobileattr();
 $category = $Foody_Questions->getQuestionMainCategory();
 $QuestionLink = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
+require_once(get_template_directory(). '/w_helpers/faq-analitics.php');
 /**
  * Implement the Custom Header feature.
  */
@@ -23,33 +23,7 @@ add_action('get_footer', 'FAQ_Scripts');
 wp_enqueue_script('GlobalsW', get_template_directory_uri() . '/components/js/questions_events.js', array('wp-api'));
 
 ?>
-<script>
-    //FObject with data for Questions questions_events.js=======================================================
-    //==========================================================================================================
-    const FAQ_Details = new Object();
-    FAQ_Details.title = '<?php echo get_the_title(); ?>';
-    FAQ_Details.mainCategories = '<?php $maincat = $Foody_Questions->getQuestionAllCats();
-                                    echo $maincat[0]['name']; ?>';
-    FAQ_Details.accessories = '<?php
-                                $acc = $Foody_Questions->the_accessories_RAW();
-                                echo (implode(" , ", $acc)); ?> ';
-    //the_Technics_RAW
-    FAQ_Details.technics = '<?php
-                            $Tech = $Foody_Questions->the_Technics_RAW();
-                            echo (implode(" , ", $Tech));
-                            ?>';
 
-    FAQ_Details.tags = '<?php 
-    $tags = $Foody_Questions->the_Tags_RAW();
-    echo(implode(' , ', $tags));
-    ?>'; 
-    FAQ_Details.subcategories = '<?php 
-    $Sub_Categories = $Foody_Questions->the_categories_RAW();
-    echo (implode(" , " , $Sub_Categories));
-    ?>';
-    
-
-</script>
 
 
 <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>

@@ -100,7 +100,7 @@ function foody_cardcom_refund_process()
             $result = cardcom_do_curl($var, $request_url, 'GET');
             parse_str($result, $responseArray);
 
-            if ($responseArray['ResponseCode'] == "0") {
+            if ($responseArray['ResponseCode'] == 0) {
                 // update member in table with transaction id
                 update_course_member_by_id_and_cloumns($member_id, ['status' => 'refunded', 'transaction_id' => $responseArray['InternalDealNumber']]);
                 // remove member user from course at Rav Messer

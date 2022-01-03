@@ -202,6 +202,7 @@ public function the_categories_RAW(){
 		$rr= array();
 		$accessoriesARR = get_field('accessories', $this->pid());
 		$raw = $accessoriesARR['accessories'];
+		if(!empty($raw)){
 		foreach ($raw as $k => $acc) {
 			if($with_theID != null){
 			$rtn[$k]['ID'] = $acc->ID;
@@ -209,6 +210,10 @@ public function the_categories_RAW(){
 			$rtn[$k] = $acc->post_title;
 		}
 		return array_merge($rr, $rtn);
+	}
+	else{
+		return $rtn;
+	}
 	}
 
 
@@ -216,24 +221,38 @@ public function the_categories_RAW(){
 	{
 		$rtn = array();
 		$rr= array();
+
 		$accessoriesARR = get_field('techniques', $this->pid());
+		
 		$raw = $accessoriesARR['techniques'];
+		if(!empty($raw)){
 		foreach ($raw as $k => $acc) {
 			if($with_theID != null){
 			$rtn[$k]['ID'] = $acc->ID;
 			}
+		
 			$rtn[$k] = $acc->post_title;
 		}
 		return array_merge($rr, $rtn);
-	}
+		}
+		else{
+			return $rtn;
+		}
+		
+		}
+		
+	
 
 	public function the_Tags_RAW($with_theID = null)
 	{
 	$rtn=array();	
-		$tags = get_the_tags($this->pid());
+		
+	$tags = get_the_tags($this->pid());
+	if( !empty($tags) ){
 		foreach($tags as $tag){
 			$rtn[] = $tag->name;
 		}
+	}
 		return $rtn ;
 	}
 
@@ -323,4 +342,9 @@ public function the_categories_RAW(){
 
 		return $items;
 	}
+
+
+
+
+
 }//class ends here

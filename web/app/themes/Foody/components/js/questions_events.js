@@ -7,10 +7,10 @@ console.log(FAQ_Details);
 let author = foodyGlobals.author_name;
 let title = foodyGlobals.title;
 
-        const MainCategory = FAQ_Details.mainCategories ;
-       const  AllCategories= FAQ_Details.subcategories;
-       const  technics = FAQ_Details.technics;
-       const accessories = FAQ_Details.accessories;
+const MainCategory = FAQ_Details.mainCategories;
+const AllCategories = FAQ_Details.subcategories;
+const technics = FAQ_Details.technics;
+const accessories = FAQ_Details.accessories;
 
 //console.log(AllCategories);
 let PageLoad_MainCategory = {
@@ -58,7 +58,7 @@ let PageLoad_Technics = {
     amount: '',
     order_location: '',
     item_category: AllCategories,
-    object:technics,
+    object: technics,
     chef: author,
     ingredient: '',
     recipe_name: title,
@@ -77,10 +77,37 @@ let PageLoad_Accessorries = {
     amount: '',
     order_location: '',
     item_category: AllCategories,
-    object:accessories,
+    object: accessories,
     chef: author,
     ingredient: '',
     recipe_name: title,
     has_rich_content: 1,
 };
 dataLayer.push({ event: 'foody', PageLoad_Accessorries });
+
+//Clicking on related questions event : 
+//===========================================================
+
+jQuery( ".related_question" ).click(function() {
+    let RelatedTitle = ( jQuery(this).text() );
+
+
+let RelatedQuestionClick = {
+    category: 'תשובה',
+    action: 'מעבר לשאלה קשורה',
+    label: RelatedTitle,
+    cd_description1: 'מפרסם',
+    cd_value1: author,
+    object: '',
+    amount: '',
+    order_location: '',
+    item_category: AllCategories,
+    object: accessories,
+    chef: author,
+    ingredient: '',
+    recipe_name: title,
+    has_rich_content: 1,
+};
+dataLayer.push({ event: 'foody', RelatedQuestionClick });
+});
+
