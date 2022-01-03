@@ -1,8 +1,8 @@
 //eventCallback('', 'מתחם פידים', 'טעינה', channelName);
 
 //console.log(foodyGlobals);
-console.log(FAQ_Details);
-
+//console.log(FAQ_Details);
+console.log(dataLayer);
 
 let author = foodyGlobals.author_name;
 let title = foodyGlobals.title;
@@ -29,6 +29,7 @@ let PageLoad_MainCategory = {
     has_rich_content: 1,
 };
 dataLayer.push({ event: 'foody', PageLoad_MainCategory }); //the ...PageLoad_MainCategory means the object itema only not the object
+PageLoad_MainCategory={};
 
 let PageLoad_AllCategory = {
     category: 'תשובה',
@@ -46,7 +47,7 @@ let PageLoad_AllCategory = {
     has_rich_content: 1,
 };
 dataLayer.push({ event: 'foody', PageLoad_AllCategory });
-
+PageLoad_AllCategory={};
 
 let PageLoad_Technics = {
     category: 'תשובה',
@@ -65,7 +66,7 @@ let PageLoad_Technics = {
     has_rich_content: 1,
 };
 dataLayer.push({ event: 'foody', PageLoad_Technics });
-
+PageLoad_Technics={}
 
 let PageLoad_Accessorries = {
     category: 'תשובה',
@@ -84,7 +85,7 @@ let PageLoad_Accessorries = {
     has_rich_content: 1,
 };
 dataLayer.push({ event: 'foody', PageLoad_Accessorries });
-
+PageLoad_Accessorries={};
 //Clicking on related questions event : 
 //===========================================================
 
@@ -109,5 +110,6 @@ let RelatedQuestionClick = {
     has_rich_content: 1,
 };
 dataLayer.push({ event: 'foody', RelatedQuestionClick });
+
 });
 
