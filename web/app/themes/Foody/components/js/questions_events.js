@@ -110,7 +110,7 @@ let RelatedQuestionClick = {
     recipe_name: title,
     has_rich_content: 1,
 };
-dataLayer.push({ event: 'foody', RelatedQuestionClick });
+dataLayer.push({ event: 'foody', ...RelatedQuestionClick });
 
 });
 
