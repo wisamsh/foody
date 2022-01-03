@@ -12,6 +12,7 @@ const AllCategories = FAQ_Details.subcategories;
 const technics = FAQ_Details.technics;
 const accessories = FAQ_Details.accessories;
 
+
 //console.log(AllCategories);
 let PageLoad_MainCategory = {
     category: 'תשובה',
@@ -28,7 +29,7 @@ let PageLoad_MainCategory = {
     recipe_name: title,
     has_rich_content: 1,
 };
-dataLayer.push({ event: 'foody', PageLoad_MainCategory }); //the ...PageLoad_MainCategory means the object itema only not the object
+dataLayer.push({event: 'foody', ...PageLoad_MainCategory }); //the ...PageLoad_MainCategory means the object itema only not the object
 PageLoad_MainCategory={};
 
 let PageLoad_AllCategory = {
@@ -46,7 +47,7 @@ let PageLoad_AllCategory = {
     recipe_name: title,
     has_rich_content: 1,
 };
-dataLayer.push({ event: 'foody', PageLoad_AllCategory });
+dataLayer.push({ event: 'foody', ...PageLoad_AllCategory });
 PageLoad_AllCategory={};
 
 let PageLoad_Technics = {
@@ -65,7 +66,7 @@ let PageLoad_Technics = {
     recipe_name: title,
     has_rich_content: 1,
 };
-dataLayer.push({ event: 'foody', PageLoad_Technics });
+dataLayer.push({ event: 'foody', ...PageLoad_Technics });
 PageLoad_Technics={}
 
 let PageLoad_Accessorries = {
@@ -84,7 +85,7 @@ let PageLoad_Accessorries = {
     recipe_name: title,
     has_rich_content: 1,
 };
-dataLayer.push({ event: 'foody', PageLoad_Accessorries });
+dataLayer.push({ event: 'foody', ...PageLoad_Accessorries });
 PageLoad_Accessorries={};
 //Clicking on related questions event : 
 //===========================================================
