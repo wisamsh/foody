@@ -117,7 +117,7 @@ wp_enqueue_script('GlobalsW', get_template_directory_uri() . '/components/js/que
                 </section>
             <?php } ?>
     </article>
-
+<input style="display:none;" type="text" id="user_holdon" class="user_holdon" value="0"/>
 </div>
 <?php
 
