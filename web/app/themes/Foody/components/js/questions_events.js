@@ -96,6 +96,8 @@ let PageLoad_Accessorries = {
 };
 dataLayer.push({ event: 'foody', ...PageLoad_Accessorries });
 PageLoad_Accessorries = {};
+
+
 //Clicking on related questions event : 
 //===========================================================
 
@@ -175,7 +177,7 @@ jQuery(".related_recepies_conduct a").click(function () {
 });
 
 
-//categories Click ==============================================
+//categories Click ============================================================================
 
 jQuery(".recipe-categories .categories  > .categories .post-categories li a").click(function () {
     let SelectedCategory = (jQuery(this).text());
@@ -199,29 +201,110 @@ jQuery(".recipe-categories .categories  > .categories .post-categories li a").cl
     dataLayer.push({ event: 'foody', ...SelectedCategoryClick });
 
 });
-function BeforeUserLeave(){
+
+//Before Leaving the page=================================================
+function BeforeUserLeave() {
     // Write your business logic here
-   let tim = (jQuery('#user_holdon').val()) + ' M';
-   let BeforeUserLeaving = {
-    category: 'תשובה',
-    action: 'טיימר',
-    label: tim,
-    cd_description1: 'מיקום',
-    cd_value1: 'פוטר',
-    object: 'פוטר',
-    amount: '',
-    order_location: '',
-    item_category: AllCategories,
-    object: accessories,
-    chef: author,
-    ingredient: '',
-    recipe_name: title,
-    has_rich_content: 1,
-};
-dataLayer.push({ event: 'foody', ...BeforeUserLeaving });
+    let tim = (jQuery('#user_holdon').val()) + ' M';
+    let BeforeUserLeaving = {
+        category: 'תשובה',
+        action: 'טיימר',
+        label: tim,
+        cd_description1: 'מיקום',
+        cd_value1: 'פוטר',
+        object: 'פוטר',
+        amount: '',
+        order_location: '',
+        item_category: AllCategories,
+        object: accessories,
+        chef: author,
+        ingredient: '',
+        recipe_name: title,
+        has_rich_content: 1,
+    };
+    dataLayer.push({ event: 'foody', ...BeforeUserLeaving });
 }
-jQuery(window).bind('beforeunload', function(){
+
+jQuery(window).bind('beforeunload', function () {
     BeforeUserLeave();
+});
+
+
+//ON windowscroll (when user is scrolling up or down send precentage position ex: 47% scroll)
+//============================================================================================
+jQuery(window).on('scroll', function () {
+    var s = $(window).scrollTop(),
+        d = $(document).height(),
+        c = $(window).height();
+
+    var scrollPercent = (s / (d - c)) * 100;
+    let OnWindowScroll = {
+        category: 'תשובה',
+        action: 'גלילה',
+        label: scrollPercent + '%',
+        cd_description1: '',
+        cd_value1: '',
+        object: '',
+        amount: '',
+        order_location: '',
+        item_category: AllCategories,
+        object: accessories,
+        chef: author,
+        ingredient: '',
+        recipe_name: title,
+        has_rich_content: 1,
+    };
+    dataLayer.push({ event: 'foody', ...OnWindowScroll });
+})
+
+//Search===================================================
+jQuery(".search-bar .icon img").click(function () {
+    let SearchFraz = (jQuery(".search").val());
+
+    let SearchDrazDoc = {
+        category: 'תשובה',
+        action: 'הפעלת חיפוש',
+        label: SearchFraz,
+        cd_description1: 'מפרסם',
+        cd_value1: author,
+        object: 'פוטר',
+        amount: '',
+        order_location: '',
+        item_category: AllCategories,
+        object: accessories,
+        chef: author,
+        ingredient: '',
+        recipe_name: title,
+        has_rich_content: 1,
+    };
+    dataLayer.push({ event: 'foody', ...SearchDrazDoc });
+    location.href = "/?s=" + SearchFraz;
+
+});
+
+
+
+//ON SOCIAL SHARE Click ===================================================
+jQuery(".social-btn-container").click(function () {
     
 
-  });
+    let SocialShareClick = {
+        category: 'תשובה',
+        action: 'לחיצה לשיתוף',
+        label: SearchFraz,
+        cd_description1: 'מפרסם',
+        cd_value1: author,
+        object: 'פוטר',
+        amount: '',
+        order_location: '',
+        item_category: AllCategories,
+        object: accessories,
+        chef: author,
+        ingredient: '',
+        recipe_name: title,
+        has_rich_content: 1,
+    };
+    dataLayer.push({ event: 'foody', ...SocialShareClick });
+    
+
+});
