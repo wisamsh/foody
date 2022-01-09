@@ -8,6 +8,7 @@ require_once(get_template_directory(). '/w_helpers/faq-analitics.php');
  * Implement the Custom Header feature.
  */
 
+ 
 function FAQ_Scripts()
 {
     $VersionHashCss = date('Y.m.d h.m');
