@@ -116,6 +116,19 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
         <a href="<?php echo $edit_link ?>">
             <?php echo __('ערוך') ?>
         </a>
+        <?php 
+        //if there is google photo:
+            if(get_field('google_photo_link', get_the_ID()))
+            {
+                $googlephoto = get_field('google_photo_link', get_the_ID());
+                echo(' |
+                <a href="'.$googlephoto.'" target="_blank"> 
+                <img src="'.$googlephoto.'" style="width:50px;height:50px;border-radius:50%;"/>  
+                לתמונה חיצונית
+                </a>
+                ');
+            }
+        ?>
     </div>
 <?php endif; ?>
 <div id="page" class="site">
