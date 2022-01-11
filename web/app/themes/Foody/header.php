@@ -124,7 +124,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
                 echo(' |
                 <a href="'.$googlephoto.'" target="_blank"> 
                 <img src="'.$googlephoto.'" style="width:50px;height:50px;border-radius:50%;"/>  
-                לתמונה חיצונית
+                לתמונת המתכון בגוגל פוטו
                 </a>
                 ');
             }
