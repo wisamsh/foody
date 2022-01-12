@@ -122,8 +122,7 @@ if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION
             {
                 $googlephoto = get_field('google_photo_link', get_the_ID());
                 echo(' |
-                <a href="'.$googlephoto.'" target="_blank"> 
-                <img src="'.$googlephoto.'" style="width:50px;height:50px;border-radius:50%;"/>  
+                <a href="'.$googlephoto.'" target="_blank">  
                 לתמונת המתכון בגוגל פוטו
                 </a>
                 ');
