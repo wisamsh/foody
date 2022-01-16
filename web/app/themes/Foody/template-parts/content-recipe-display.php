@@ -193,10 +193,12 @@ if ( get_current_blog_id() === 1 ) { ?>
 </section>
 <?php } ?>
 
+<?php if(function_exists("footabc_add_code_to_content") && get_current_blog_id() == 2) {echo footabc_add_code_to_content();} ?>
+
+
 <section class="recipe-comments no-print">
 <?php $recipe->comments(); ?>
 </section>
-<?php if(function_exists("footabc_add_code_to_content") && get_current_blog_id() == 2) {echo footabc_add_code_to_content();} ?>
 
 <?php if(has_category('',$recipe->id)): ?>
 <section class="recipe-categories categories no-print">
