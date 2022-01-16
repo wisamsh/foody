@@ -196,7 +196,12 @@ $similar_content = get_field('similar_content_group', $recipe->get_id());
     <section class="recipe-comments no-print">
         <?php $recipe->comments(); ?>
     </section>
-
+    <?php if (get_current_blog_id() == 2) { ?>
+    <script type="text/javascript">
+        window._taboola = window._taboola || [];
+        _taboola.push({flush: true});
+    </script>
+<?php } ?>
 <?php if(has_category('',$recipe->id)): ?>
     <section class="recipe-categories categories no-print">
     	<?php $recipe->the_categories() ?>

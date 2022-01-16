@@ -240,12 +240,7 @@ if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || f
 $footer->add_nagish_li_script();
 
 ?>
-<?php if (get_current_blog_id() == 2) { ?>
-    <script type="text/javascript">
-        window._taboola = window._taboola || [];
-        _taboola.push({flush: true});
-    </script>
-<?php } ?>
+
 </body>
 <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

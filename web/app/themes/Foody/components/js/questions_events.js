@@ -2,7 +2,13 @@
 
 //console.log(foodyGlobals);
 //console.log(FAQ_Details);
-console.log(dataLayer);
+//console.log(dataLayer);
+
+
+
+
+
+
 
 setInterval(myUserTiming, 1);
 function myUserTiming() {
@@ -21,6 +27,19 @@ const MainCategory = FAQ_Details.mainCategories;
 const AllCategories = FAQ_Details.subcategories;
 const technics = FAQ_Details.technics;
 const accessories = FAQ_Details.accessories;
+
+//FOR THE SEARCH FUCKUPS:================
+jQuery(".icon img").click(function () {
+let search = jQuery(".search").val();
+
+    location.href = "/?s=" + search;
+
+});
+
+
+
+//location.href = "/?s=" + SearchFraz;
+//=======================================
 
 //console.log(AllCategories);
 let PageLoad_MainCategory = {
@@ -258,9 +277,12 @@ jQuery(window).on('scroll', function () {
 })
 
 //Search===================================================
-jQuery(".search-bar .icon img").click(function () {
+jQuery("#magnifier_search img").click(function () {
     let SearchFraz = (jQuery(".search").val());
 
+   console.log("ok");
+
+    
     let SearchDrazDoc = {
         category: 'תשובה',
         action: 'הפעלת חיפוש',
@@ -278,10 +300,9 @@ jQuery(".search-bar .icon img").click(function () {
         has_rich_content: 1,
     };
     dataLayer.push({ event: 'foody', ...SearchDrazDoc });
-    location.href = "/?s=" + SearchFraz;
+    //location.href = "/?s=" + SearchFraz;
 
 });
-
 
 
 //ON SOCIAL SHARE Click ===================================================
@@ -291,7 +312,7 @@ jQuery(".social-btn-container").click(function () {
     let SocialShareClick = {
         category: 'תשובה',
         action: 'לחיצה לשיתוף',
-        label: SearchFraz,
+        label: '',
         cd_description1: 'מפרסם',
         cd_value1: author,
         object: 'פוטר',
