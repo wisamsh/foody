@@ -201,8 +201,10 @@
 
 <script>
     jQuery(document).ready(function() {
-
-                let mobile_menu = jQuery(".navbar-container");
+    
+             
+        
+        let mobile_menu = jQuery(".navbar-container");
                 let hum = jQuery(".foody-logo-hamburger");
                 let logo = jQuery(".foody-logo-close");
                 let logo_text = jQuery(".foody-logo-text");
@@ -215,6 +217,8 @@
                 jQuery('.close_related_btn , .related-content-btn ').click(function() {
                     if (jQuery('.related-recipes-container').hasClass('hidden')) {
                         jQuery('.related-recipes-container').removeClass('hidden');
+                        jQuery('.related-recipes-container').addClass("MobileConductor")
+                       
                     } else {
                         jQuery('.related-recipes-container').addClass('hidden');
                     }

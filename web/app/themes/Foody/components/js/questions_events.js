@@ -9,12 +9,11 @@
 
 
 
-
 setInterval(myUserTiming, 1);
 function myUserTiming() {
     let timing = 1;
     let timer = jQuery('#user_holdon').val();
-    let fogo = (Number(timer) + Number(timing) / 100 / 60);
+    let fogo = ((Number(timer) + Number(timing) / 100 / 60 ));
 
     jQuery('#user_holdon').val(fogo);
 }
@@ -31,6 +30,7 @@ const accessories = FAQ_Details.accessories;
 //FOR THE SEARCH FUCKUPS:================
 jQuery(".icon img").click(function () {
 let search = jQuery(".search").val();
+
 
     location.href = "/?s=" + search;
 
@@ -151,7 +151,7 @@ jQuery(".siderelated a").click(function () {
 
     let RelatedRecipeClick = {
         category: 'תשובה',
-        action: 'לחיצה על מתכונים במתכונים נוספים דסקטופ',
+        action: 'בחירת מתכון נוסף',
         label: RelatedRecipe,
         cd_description1: 'מפרסם',
         cd_value1: author,
@@ -159,7 +159,6 @@ jQuery(".siderelated a").click(function () {
         amount: '',
         order_location: '',
         item_category: AllCategories,
-        object: accessories,
         chef: author,
         ingredient: '',
         recipe_name: title,
@@ -172,7 +171,7 @@ jQuery(".siderelated a").click(function () {
 
 //related_recepies_conduct========================================
 
-jQuery(".related_recepies_conduct a").click(function () {
+jQuery(".feed-channel-details  .container .row .related_recepies_conduct a").click(function () {
     let RelatedRecipeCon = (jQuery(this).text());
 
     let RelatedRecipeConClick = {
@@ -192,6 +191,30 @@ jQuery(".related_recepies_conduct a").click(function () {
         has_rich_content: 1,
     };
     dataLayer.push({ event: 'foody', ...RelatedRecipeConClick });
+
+});
+jQuery("body").on("click", ".MobileConductor  .container .row .related_recepies_conduct a",function () {
+//(".MobileConduct > .container .row .related_recepies_conduct a").click(function () {
+  
+    let RelatedRecipeConmMobile = (jQuery(this).text());
+
+    let RelatedRecipeConMobileClick = {
+        category: 'תשובה',
+        action: 'לחיצה על מתכונים שכדאי לנסות',
+        label: RelatedRecipeConmMobile,
+        cd_description1: 'מפרסם',
+        cd_value1: author,
+        object: 'פוטר',
+        amount: '',
+        order_location: '',
+        item_category: AllCategories,
+        object: accessories,
+        chef: author,
+        ingredient: '',
+        recipe_name: title,
+        has_rich_content: 1,
+    };
+    dataLayer.push({ event: 'foody', ...RelatedRecipeConMobileClick });
 
 });
 
@@ -224,7 +247,8 @@ jQuery(".recipe-categories .categories  > .categories .post-categories li a").cl
 //Before Leaving the page=================================================
 function BeforeUserLeave() {
     // Write your business logic here
-    let tim = (jQuery('#user_holdon').val()) + ' M';
+    let timering = (jQuery('#user_holdon').val()) + ' M';
+    const tim = Math.round(timering);
     let BeforeUserLeaving = {
         category: 'תשובה',
         action: 'טיימר',
@@ -244,30 +268,52 @@ function BeforeUserLeave() {
     dataLayer.push({ event: 'foody', ...BeforeUserLeaving });
 }
 
-jQuery(window).bind('beforeunload', function () {
+
+
+
+jQuery(window).bind('beforeunload', function (e) {
+    console.log('Leaving you.....')
+    e.preventDefault(); 
     BeforeUserLeave();
+    
+    
 });
 
 
 //ON windowscroll (when user is scrolling up or down send precentage position ex: 47% scroll)
 //============================================================================================
 jQuery(window).on('scroll', function () {
-    var s = $(window).scrollTop(),
+    let s = $(window).scrollTop(),
         d = $(document).height(),
         c = $(window).height();
 
-    var scrollPercent = (s / (d - c)) * 100;
+    let scrollPercent = (s / (d - c)) * 100;
+    let prestenge = 0;
+if(scrollPercent > 0 && scrollPercent < 26){
+    prestenge = 25;
+}
+if(scrollPercent > 25 && scrollPercent < 51){
+    prestenge = 50;
+}
+
+if(scrollPercent > 52 && scrollPercent < 76){
+    prestenge = 75;
+}
+
+if(scrollPercent > 76){
+    prestenge = 100;
+}
+
     let OnWindowScroll = {
         category: 'תשובה',
         action: 'גלילה',
-        label: scrollPercent + '%',
+        label: prestenge + '%',
         cd_description1: '',
         cd_value1: '',
         object: '',
         amount: '',
         order_location: '',
         item_category: AllCategories,
-        object: accessories,
         chef: author,
         ingredient: '',
         recipe_name: title,
@@ -277,12 +323,8 @@ jQuery(window).on('scroll', function () {
 })
 
 //Search===================================================
-jQuery("#magnifier_search img").click(function () {
-    let SearchFraz = (jQuery(".search").val());
-
-   console.log("ok");
-
-    
+jQuery("body").on("click", "#magnifier_search",function () {
+    let SearchFraz = (jQuery(".search").val()); 
     let SearchDrazDoc = {
         category: 'תשובה',
         action: 'הפעלת חיפוש',
@@ -292,8 +334,8 @@ jQuery("#magnifier_search img").click(function () {
         object: 'פוטר',
         amount: '',
         order_location: '',
-        item_category: AllCategories,
-        object: accessories,
+        item_category: '',
+        object: '',
         chef: author,
         ingredient: '',
         recipe_name: title,
@@ -306,8 +348,8 @@ jQuery("#magnifier_search img").click(function () {
 
 
 //ON SOCIAL SHARE Click ===================================================
-jQuery(".social-btn-container").click(function () {
-    
+jQuery(".social-btn-container .icon-share").click(function () {
+   
 
     let SocialShareClick = {
         category: 'תשובה',
