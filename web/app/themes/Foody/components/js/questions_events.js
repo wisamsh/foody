@@ -272,8 +272,8 @@ function BeforeUserLeave() {
 
 
 jQuery(window).bind('beforeunload', function (e) {
-    console.log('Leaving you.....')
-    e.preventDefault(); 
+   //console.log('Leaving you.....')
+   // e.preventDefault(); 
     BeforeUserLeave();
     
     
@@ -289,7 +289,7 @@ jQuery(window).on('scroll', function () {
 
     let scrollPercent = (s / (d - c)) * 100;
     let prestenge = 0;
-if(scrollPercent > 0 && scrollPercent < 26){
+if(scrollPercent > 1 && scrollPercent < 26){
     prestenge = 25;
 }
 if(scrollPercent > 25 && scrollPercent < 51){
