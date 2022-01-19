@@ -282,7 +282,7 @@ jQuery(window).bind('beforeunload', function (e) {
 
 //ON windowscroll (when user is scrolling up or down send precentage position ex: 47% scroll)
 //============================================================================================
-jQuery(window).on('scroll', function () {
+jQuery(window).on('scroll', jQuery.debounce(250,function () {
     let s = $(window).scrollTop(),
         d = $(document).height(),
         c = $(window).height();
@@ -320,7 +320,7 @@ if(scrollPercent > 76){
         has_rich_content: 1,
     };
     dataLayer.push({ event: 'foody', ...OnWindowScroll });
-})
+}));
 
 //Search===================================================
 jQuery("body").on("click", "#magnifier_search",function () {
