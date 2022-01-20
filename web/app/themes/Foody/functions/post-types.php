@@ -196,7 +196,6 @@ function foody_remove_page_template()
         'foody_technique',
         'foody_feed_channel',
         'foody_comm_rule',
-        'questions',
         'post'
     );
 

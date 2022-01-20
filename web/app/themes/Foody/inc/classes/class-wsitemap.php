@@ -6,25 +6,7 @@ private function get_posts_map_private($type){
     
   
         global $wpdb;
-$uri = '';
-$uri_flet = '' ;
-switch($type){
-case 'posts':
-    $uri='';
-    break;
-    case 'page':
-        $uri='';
-        break;
 
-    default:
-    $uri='/'.$type;
-}
-if($uri !=''){
-    $uri_flet ='';  
-}
-else{
-    $uri_flet = '/'; 
-}
 
     
         $custom_post_type = $type; 
@@ -59,5 +41,47 @@ public function get_posts_map($type){
     return $this->get_posts_map_private($type);
 }
 
+
+
+public function get_the_tags(){
+    $AllTags = get_tags();
+    echo '<ul>';
+foreach($AllTags as $k=>$t){
+echo '<li><a href="/tag/'.$t->slug.'">' .$t->name . '</a></li>';
 }
-?>
+echo '</ul>';
+}
+
+public function MobileattrMap()
+	{
+		if (wp_is_mobile()) {
+			echo '<style> 
+				#masthead{display:none;}
+				#content {
+				padding-top: 0px; 
+				}
+                .uniq{
+                    width: 100%;
+    text-align: center;
+    font-size: 45px;
+    font-weight: bold;
+    margin-top: -10px;
+                }
+				</style>';
+		}
+	}
+
+public function get_the_sitemap_categories(){
+    $allcats = get_categories();
+    echo '<ul>';
+foreach($allcats as $k=>$t){
+echo '<li><a href="/category/'.$t->slug.'">' .$t->name . '</a></li>';
+}
+echo '</ul>';
+}
+
+
+
+
+
+} //END CLASS
