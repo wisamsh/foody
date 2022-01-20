@@ -26,57 +26,73 @@ $foody_sitemap->MobileattrMap();
 //$foody_filter = $foody_sitemap->get_posts_map('foody_filter');
 
 ?>
+
+<div class="row m-0">
+    
+<section class="cover-image no-print">
+        <div class="cover-image">
+            <?php //echo $Foody_Questions->doCommercialBanner(); ?>
+        </div>
+    </section>
+    
+
+    <article class="content">
+        <section class="details-container">
+        <br>
+        <?php $foody_sitemap->Do_FoodyBeadcrumbs(); ?>
+  
 <br>
-<h1 class="uniq">מפת האתר</h1>
+<h1 class="uniq title" >מפת האתר</h1>
 
 
 
-<h2>מתכונים</h2>
+<h1 class="title" >מתכונים</h2>
 <?php echo $FoodyRecipes;?>
 
-<h2>מתחמי פידים</h2>
+<h1 class="title">מתחמי פידים</h2>
 <?php 
 echo($foody_feed_channel );
 ?>
 
 
-<h2>שאלות תשובות</h2>
+<h1 class="title">שאלות תשובות</h2>
 <?php echo $questions;?>
 
-<h2>אביזרים</h2>
+<h1 class="title">אביזרים</h2>
 <?php 
 echo($foody_accessory );
 ?>
 
-<h2>טכניקות</h2>
+<h1 class="title">טכניקות</h2>
 <?php 
 echo($foody_technique );
 ?>
 
-<h2>מצרכים</h2>
+<h1 class="title">מצרכים</h2>
 <?php 
 echo($foody_ingredient );
 ?>
 
 
-<h2>פוסטים</h2>
+<h1 class="title">פוסטים</h2>
 <?php 
 echo($FoodyPosts );
 ?>
 
-<h2>תגיות</h2>
+<h1 class="title">תגיות</h2>
 <?php 
 echo($foody_sitemap->get_the_tags() );
 ?>
 
-<h2>קטגוריות</h2>
+<h1 class="title">קטגוריות</h2>
 <?php 
 echo($foody_sitemap->get_the_sitemap_categories());
 ?>
 
 
 
-
+        </section>
+    </article></div>
 
 
 <?php

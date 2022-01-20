@@ -41,7 +41,12 @@ public function get_posts_map($type){
     return $this->get_posts_map_private($type);
 }
 
-
+public function Do_FoodyBeadcrumbs()
+	{
+		echo '<section class="accessory-details-container">';
+		bootstrap_breadcrumb();
+		echo '</section>';
+	}
 
 public function get_the_tags(){
     $AllTags = get_tags();
