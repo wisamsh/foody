@@ -1237,6 +1237,13 @@ class Foody_Recipe extends Foody_Post
                 return;
             }
         }
+
+         //WISAM : Tiktok video 
+if(get_field("tiktok_video", get_the_ID())){
+    echo get_field("tiktok_video", get_the_ID());
+}
+
+
         $content_body = $this->body;
         echo '<div class="content-container no-print">' . $content_body . '</div>';
 //        echo '<div class="content-container print-mobile">' . $content_body . '</div>';

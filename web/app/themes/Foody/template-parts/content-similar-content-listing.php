@@ -13,12 +13,7 @@ $items = $template_args['items'];
 $max_mobile_items = 4;
 
 ?>
-<?php //WISAM : Tiktok video 
-if(get_field("tiktok_video", get_the_ID())){
-    echo get_field("tiktok_video", get_the_ID());
-}
 
-?>
 <?php if (!empty($items)) { ?>
     <div class="title similar-content-listing-block-title">
         <?php echo $title; ?>
