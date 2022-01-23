@@ -145,7 +145,9 @@ target_type: 'mix'
 </section>
 <hr class="title-line">
 <section class="recipe-content <?php echo $recipe->is_content_by_steps() ? 'with-steps' : ''?>">
-<?php $recipe->get_relevant_content(); ?>
+<?php $recipe->get_relevant_content();
+$recipe->tiktok_video();
+?>
 </section>
 <?php if (get_current_blog_id() == 2) { ?>
 <script src="https://cnt.trvdp.com/js/1236/5441.js"></script>
