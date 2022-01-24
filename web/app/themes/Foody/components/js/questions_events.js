@@ -78,43 +78,44 @@ let PageLoad_AllCategory = {
 dataLayer.push({ event: 'foody', ...PageLoad_AllCategory });
 PageLoad_AllCategory = {};
 
-let PageLoad_Technics = {
-    category: 'תשובה',
-    action: 'טעינה',
-    label: 'קטגוריות משניות   טכניקות',
-    cd_description1: 'מפרסם',
-    cd_value1: author,
-    object: '',
-    amount: '',
-    order_location: '',
-    item_category: AllCategories,
-    object: technics,
-    chef: author,
-    ingredient: '',
-    recipe_name: title,
-    has_rich_content: 1,
-};
-dataLayer.push({ event: 'foody', ...PageLoad_Technics });
+// let PageLoad_Technics = {
+//     category: 'תשובה',
+//     action: 'טעינה',
+//     label: 'קטגוריות משניות   טכניקות',
+//     cd_description1: 'מפרסם',
+//     cd_value1: author,
+//     object: '',
+//     amount: '',
+//     order_location: '',
+//     item_category: AllCategories,
+//     object: technics,
+//     chef: author,
+//     ingredient: '',
+//     recipe_name: title,
+//     has_rich_content: 1,
+// };
+// dataLayer.push({ event: 'foody', ...PageLoad_Technics });
+
 PageLoad_Technics = {}
 
-let PageLoad_Accessorries = {
-    category: 'תשובה',
-    action: 'טעינה',
-    label: 'קטגוריות משניות  אביזרים  ',
-    cd_description1: 'מפרסם',
-    cd_value1: author,
-    object: '',
-    amount: '',
-    order_location: '',
-    item_category: AllCategories,
-    object: accessories,
-    chef: author,
-    ingredient: '',
-    recipe_name: title,
-    has_rich_content: 1,
-};
-dataLayer.push({ event: 'foody', ...PageLoad_Accessorries });
-PageLoad_Accessorries = {};
+// let PageLoad_Accessorries = {
+//     category: 'תשובה',
+//     action: 'טעינה',
+//     label: 'קטגוריות משניות  אביזרים  ',
+//     cd_description1: 'מפרסם',
+//     cd_value1: author,
+//     object: '',
+//     amount: '',
+//     order_location: '',
+//     item_category: AllCategories,
+//     object: accessories,
+//     chef: author,
+//     ingredient: '',
+//     recipe_name: title,
+//     has_rich_content: 1,
+// };
+// dataLayer.push({ event: 'foody', ...PageLoad_Accessorries });
+// PageLoad_Accessorries = {};
 
 
 //Clicking on related questions event : 
@@ -127,7 +128,7 @@ jQuery(".related_question").click(function () {
     let RelatedQuestionClick = {
         category: 'תשובה',
         action: 'מעבר לשאלה קשורה',
-        label: RelatedTitle,
+        label: (RelatedTitle),
         cd_description1: 'מפרסם',
         cd_value1: author,
         object: '',
@@ -152,7 +153,7 @@ jQuery(".siderelated a").click(function () {
     let RelatedRecipeClick = {
         category: 'תשובה',
         action: 'בחירת מתכון נוסף',
-        label: RelatedRecipe,
+        label: (RelatedRecipe),
         cd_description1: 'מפרסם',
         cd_value1: author,
         object: 'מתכונים נוספים',
@@ -176,7 +177,7 @@ jQuery(".feed-channel-details  .container .row .related_recepies_conduct a").cli
 
     let RelatedRecipeConClick = {
         category: 'תשובה',
-        action: 'לחיצה על מתכונים בפוטר',
+        action: 'בחירת מתכון נוסף',
         label: RelatedRecipeCon,
         cd_description1: 'מפרסם',
         cd_value1: author,
@@ -184,7 +185,6 @@ jQuery(".feed-channel-details  .container .row .related_recepies_conduct a").cli
         amount: '',
         order_location: '',
         item_category: AllCategories,
-        object: accessories,
         chef: author,
         ingredient: '',
         recipe_name: title,
@@ -200,7 +200,7 @@ jQuery("body").on("click", ".MobileConductor  .container .row .related_recepies_
 
     let RelatedRecipeConMobileClick = {
         category: 'תשובה',
-        action: 'לחיצה על מתכונים שכדאי לנסות',
+        action: 'בחירת מתכון נוסף',
         label: RelatedRecipeConmMobile,
         cd_description1: 'מפרסם',
         cd_value1: author,
@@ -234,7 +234,6 @@ jQuery(".recipe-categories .categories  > .categories .post-categories li a").cl
         amount: '',
         order_location: '',
         item_category: AllCategories,
-        object: accessories,
         chef: author,
         ingredient: '',
         recipe_name: title,
@@ -245,28 +244,28 @@ jQuery(".recipe-categories .categories  > .categories .post-categories li a").cl
 });
 
 //Before Leaving the page=================================================
-function BeforeUserLeave() {
-    // Write your business logic here
-    let timering = (jQuery('#user_holdon').val()) + ' M';
-    const tim = Math.round(timering);
-    let BeforeUserLeaving = {
-        category: 'תשובה',
-        action: 'טיימר',
-        label: tim,
-        cd_description1: 'מיקום',
-        cd_value1: 'פוטר',
-        object: 'פוטר',
-        amount: '',
-        order_location: '',
-        item_category: AllCategories,
-        object: accessories,
-        chef: author,
-        ingredient: '',
-        recipe_name: title,
-        has_rich_content: 1,
-    };
-    dataLayer.push({ event: 'foody', ...BeforeUserLeaving });
-}
+// function BeforeUserLeave() {
+//     // Write your business logic here
+//     let timering = (jQuery('#user_holdon').val()) + ' M';
+//     const tim = Math.round(timering);
+//     let BeforeUserLeaving = {
+//         category: 'תשובה',
+//         action: 'טיימר',
+//         label: tim,
+//         cd_description1: 'מיקום',
+//         cd_value1: 'פוטר',
+//         object: 'פוטר',
+//         amount: '',
+//         order_location: '',
+//         item_category: AllCategories,
+//         object: accessories,
+//         chef: author,
+//         ingredient: '',
+//         recipe_name: title,
+//         has_rich_content: 1,
+//     };
+//     dataLayer.push({ event: 'foody', ...BeforeUserLeaving });
+// }
 
 
 
@@ -282,7 +281,7 @@ jQuery(window).bind('beforeunload', function (e) {
 
 //ON windowscroll (when user is scrolling up or down send precentage position ex: 47% scroll)
 //============================================================================================
-jQuery(window).on('scroll', jQuery.debounce(250,function () {
+jQuery(window).on('scroll', jQuery.debounce(500,function () {
     let s = $(window).scrollTop(),
         d = $(document).height(),
         c = $(window).height();
@@ -335,7 +334,6 @@ jQuery("body").on("click", "#magnifier_search",function () {
         amount: '',
         order_location: '',
         item_category: '',
-        object: '',
         chef: author,
         ingredient: '',
         recipe_name: title,

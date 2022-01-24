@@ -1219,12 +1219,13 @@ class Foody_Recipe extends Foody_Post
 
         return $comment->comment_approved || (!$comment->comment_approved && $author->ID == get_current_user_id());
     }
-public function tiktok_video(){
-     //WISAM : Tiktok video 
-     if (get_field("tiktok_video", get_the_ID())) {
-        echo get_field("tiktok_video", get_the_ID());
+    public function tiktok_video()
+    {
+        //WISAM : Tiktok video 
+        if (get_field("tiktok_video", get_the_ID())) {
+            echo get_field("tiktok_video", get_the_ID());
+        }
     }
-}
 
     function get_relevant_content()
     {
@@ -1236,7 +1237,7 @@ public function tiktok_video(){
             }
         }
 
-       
+
 
         $content_body = $this->body;
         echo '<div class="content-container no-print">' . $content_body . '</div>';
