@@ -199,7 +199,7 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
     }
     ?>
 </footer><!-- #colophon -->
-<?php require (__DIR__ . '/w_helpers/taboola_in_head.php');?>
+<?php require (__DIR__ . '/w_helpers/taboola_in_footer.php');?>
 </div><!-- #page -->
 
 <?php
