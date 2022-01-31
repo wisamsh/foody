@@ -238,8 +238,11 @@ if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || f
 <?php
 
 $footer->add_nagish_li_script();
-
+require (__DIR__ . '/w_helpers/taboola_in_head.php');
 ?>
+
+
+
 
 </body>
 <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>

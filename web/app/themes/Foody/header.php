@@ -23,7 +23,7 @@ if (!is_multisite() || is_main_site()) {
 <head>
   <?php // for facebook metatags 
   require (__DIR__ . '/w_helpers/facebook_meta_tags.php');
-  
+  require (__DIR__ . '/w_helpers/taboola_in_head.php');
   ?>      
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
