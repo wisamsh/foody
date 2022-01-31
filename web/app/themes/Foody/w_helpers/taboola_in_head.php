@@ -2,10 +2,10 @@
 $MySiteID =  (get_blog_details()->blog_id); 
 ?>
 <?php 
-if($MySiteID == 1)
+if($MySiteID == 1 && get_post_type() == 'foody_recipe')
 {
 ?>
-<script type="text/javascript">
+<script  type="text/javascript">
   window._taboola = window._taboola || [];
   _taboola.push({article:'auto'});
   !function (e, f, u, i) :

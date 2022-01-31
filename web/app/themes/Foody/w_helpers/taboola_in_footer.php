@@ -2,7 +2,7 @@
 $MySiteID =  (get_blog_details()->blog_id); 
 ?>
 <?php 
-if($MySiteID == 1)
+if($MySiteID == 1 && get_post_type() == 'foody_recipe')
 {
 ?>
 <div id="taboola-below-article-thumbnails-1"></div>
