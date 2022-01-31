@@ -199,6 +199,7 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
     }
     ?>
 </footer><!-- #colophon -->
+<?php require (__DIR__ . '/w_helpers/taboola_in_head.php');?>
 </div><!-- #page -->
 
 <?php
@@ -230,15 +231,16 @@ if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || f
 //
 //    foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', $newsletter_popup_args);
 //}
-?>
 
+
+?>
 <?php wp_footer(); ?>
 
 
 <?php
 
 $footer->add_nagish_li_script();
-require (__DIR__ . '/w_helpers/taboola_in_head.php');
+
 ?>
 
 
