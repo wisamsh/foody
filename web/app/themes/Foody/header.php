@@ -82,13 +82,8 @@ if (!is_multisite() || is_main_site()) {
            echo $walkme_script;
         }
     }
-
-   
     ?>
-    
-    <?php wp_head(); 
-    
-    ?>
+    <?php wp_head(); ?>
 </head>
 <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
     <script src="https://public.bankhapoalim.co.il/bitcom/sdk"></script>
