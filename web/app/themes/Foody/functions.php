@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Foody functions and definitions
  *
@@ -24,7 +25,7 @@ if (!function_exists('foody_setup')) :
          * If you're building a theme based on Foody, use a find and replace
          * to change 'foody' to the name of your theme in all the template files.
          */
-//        load_theme_textdomain('foody', get_template_directory() . '/languages');
+        //        load_theme_textdomain('foody', get_template_directory() . '/languages');
 
         // Add default posts and comments RSS feed links to head.
         add_theme_support('automatic-feed-links');
@@ -208,15 +209,18 @@ function foody_scripts()
             wp_enqueue_script('foody-script-search-results', $search_results_asset, false, false, true);
         }
 
-        if (is_page_template('page-templates/content-with-sidebar.php') && is_single()
-            && !in_array(get_post_type(), ['foody_ingredient', 'foody_accessory', 'foody_technique', 'foody_feed_channel'])) {
+        if (
+            is_page_template('page-templates/content-with-sidebar.php') && is_single()
+            && !in_array(get_post_type(), ['foody_ingredient', 'foody_accessory', 'foody_technique', 'foody_feed_channel'])
+        ) {
             $post_asset = foody_get_versioned_asset('post');
             wp_enqueue_script('foody-script-recipe', $post_asset, false, false, true);
-
         }
 
-        if (is_page_template('page-templates/content-with-sidebar.php') && is_single()
-            && in_array(get_post_type(), ['foody_feed_channel'])) {
+        if (
+            is_page_template('page-templates/content-with-sidebar.php') && is_single()
+            && in_array(get_post_type(), ['foody_feed_channel'])
+        ) {
             $feed_channel_asset = foody_get_versioned_asset('feedChannel');
             wp_enqueue_script('foody-script-feed-channel', $feed_channel_asset, false, false, true);
         }
@@ -261,10 +265,10 @@ function foody_scripts()
             wp_enqueue_script('foody-script-login', $login_asset, false, false, true);
         }
 
-//        if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || foody_is_registration_open()) && !$added_login) {
-//            $login_asset = foody_get_versioned_asset('login');
-//            wp_enqueue_script('foody-script-login', $login_asset, false, false, true);
-//        }
+        //        if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || foody_is_registration_open()) && !$added_login) {
+        //            $login_asset = foody_get_versioned_asset('login');
+        //            wp_enqueue_script('foody-script-login', $login_asset, false, false, true);
+        //        }
 
         if (has_shortcode($post_content, 'foody-register')) {
             $register_asset = foody_get_versioned_asset('register');
@@ -292,8 +296,6 @@ function foody_scripts()
             wp_enqueue_script('foody-script-plalist', $playlist_asset, false, false, true);
         }
     }
-
-
 }
 
 add_action('wp_enqueue_scripts', 'foody_scripts');
@@ -357,7 +359,6 @@ function foody_custom_dequeue()
             }
         }
     }
-
 }
 
 add_action('wp_print_styles', 'foody_custom_dequeue', 9999);
@@ -421,7 +422,6 @@ function foody_get_versioned_asset($name)
     $assets_version = file_get_contents(get_template_directory() . '/build/version-hash.txt');
 
     return get_template_directory_uri() . "/dist/$name.$assets_version.js#asyncload";
-
 }
 
 function add_async_attribute($tag, $handle)
@@ -459,7 +459,6 @@ function add_async_attribute($tag, $handle)
 
 function essb_stylebuilder_css_filess()
 {
-
 }
 
 remove_action('wp_head', 'print_emoji_detection_script', 7);
@@ -480,7 +479,7 @@ function any_script_in_footer()
         // Call the list with all the registered scripts
         global $wp_scripts;
 
-        if (isset ($wp_scripts->registered) && !empty ($wp_scripts->registered) && is_array($wp_scripts->registered)) {
+        if (isset($wp_scripts->registered) && !empty($wp_scripts->registered) && is_array($wp_scripts->registered)) {
             foreach ($wp_scripts->registered as $idx => $script) {
                 if (isset($wp_scripts->registered[$idx]->extra) && is_array($wp_scripts->registered[$idx]->extra)) {
 
@@ -523,7 +522,6 @@ function foody_remove_from_admin_bar($wp_admin_bar)
             $wp_admin_bar->remove_node('w3tc_settings_general');
         }
     }
-
 }
 
 add_filter('manage_foody_ingredient_posts_columns', 'set_custom_edit_foody_ingredient_columns');
@@ -539,11 +537,10 @@ add_action('manage_foody_ingredient_posts_custom_column', 'custom_foody_ingredie
 function custom_foody_ingredient_column($column, $post_id)
 {
     switch ($column) {
-        case 'recipes' :
+        case 'recipes':
             $current_site_url = get_site(get_current_blog_id())->domain;
             echo '<a href=http://' . $current_site_url . '/wp/wp-admin/edit.php?post_type=foody_ingredient&page=ingredients_recipes_list&ingredient_id=' . $post_id . '>' . __('למתכונים') . '</a>';
             break;
-
     }
 }
 
@@ -571,7 +568,7 @@ function ingredients_recipes_list_adjustments()
     $myListTable = new Ingredient_List_Table($ingredient_id);
     //echo '</pre><div class="wrap"><h2>Taxis Table</h2>';
     $myListTable->prepare_items();
-    ?>
+?>
     <form method="post">
         <input type="hidden" name="page" value="test_list_table">
     <?php
@@ -656,9 +653,7 @@ function rss_campaign_tracking($post_permalink)
     } else {
         return $post_permalink;
     }
-}
-
-;
+};
 add_filter('the_permalink_rss', 'rss_campaign_tracking');
 
 
@@ -668,9 +663,11 @@ function order_search_by_posttype($orderby, $wp_query)
     if ((isset($wp_query->query['post_type']) && $wp_query->query['post_type'] == 'acf-field') || (isset($_REQUEST['sort']) && $_REQUEST['sort'] != '')) {
         return $orderby;
     }
-    if ($wp_query->is_search ||
+    if (
+        $wp_query->is_search ||
         (!empty($_POST) && ((isset($_POST['action']) && $_POST['action'] == 'load_more' && (isset($_POST['context']) && $_POST['context'] != 'category')) ||
-                (isset($_POST['action']) && $_POST['action'] == 'foody_filter' && (isset($_POST['data']) && (isset($_POST['data']['context']) && $_POST['data']['context'] != "category")))))) :
+            (isset($_POST['action']) && $_POST['action'] == 'foody_filter' && (isset($_POST['data']) && (isset($_POST['data']['context']) && $_POST['data']['context'] != "category")))))
+    ) :
         global $wpdb;
         $orderby =
             "
@@ -699,7 +696,8 @@ function my_wp_is_mobile()
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Silk/') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Kindle') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry') !== false
-        || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false) {
+        || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false
+    ) {
         $is_mobile = true;
     } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false && strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') == false && strpos($_SERVER['HTTP_USER_AGENT'], 'Tablet') == false) {
         $is_mobile = true;
@@ -744,7 +742,8 @@ function foody_add_cron_interval($schedules)
     if (!isset($schedules['one_minute'])) {
         $schedules['one_minute'] = array(
             'interval' => 60,
-            'display' => esc_html__('Every Minute'),);
+            'display' => esc_html__('Every Minute'),
+        );
     }
     return $schedules;
 }
@@ -861,8 +860,6 @@ function foody_remove_meta_boxes_post_type_foody_organizations()
     remove_meta_box('commentstatusdiv', 'foody_organizations', 'normal');
     remove_meta_box('authordiv', 'foody_organizations', 'normal');
     remove_meta_box('postimagediv', 'foody_organizations', 'normal');
-
-
 }
 
 add_action('add_meta_boxes', 'foody_remove_meta_boxes_post_type_foody_organizations', 100);
@@ -901,35 +898,34 @@ function foody_body_add_bit_or_free_class($classes)
 
     if (isset($_GET) && (isset($_GET['payment_method']) && $_GET['payment_method'] == __('ביט')) || (isset($_GET['course_id']) && strpos($_GET['course_id'], ',') != false)) {
         $classes[] = $bit_class_to_add;
-    } elseif (isset($_GET) &&  (isset($_GET['paid']) && $_GET['paid'] == 1)){
+    } elseif (isset($_GET) &&  (isset($_GET['paid']) && $_GET['paid'] == 1)) {
         $classes[] = $free_class_to_add;
     }
 
-if(get_post_type()=='questions'){
-    
-$classes[] = 'rtl foody_feed_channel-template foody_feed_channel-template-page-templates foody_feed_channel-template-content-with-sidebar foody_feed_channel-template-page-templatescontent-with-sidebar-php single single-foody_feed_channel single-format-standard wp-custom-logo has-background';
+    if (get_post_type() == 'questions') {
 
-}
+        $classes[] = 'rtl foody_feed_channel-template foody_feed_channel-template-page-templates foody_feed_channel-template-content-with-sidebar foody_feed_channel-template-page-templatescontent-with-sidebar-php single single-foody_feed_channel single-format-standard wp-custom-logo has-background';
+    }
 
 
     return $classes;
-
 }
 
 add_filter('the_content', 'addClassToLinks');
-function addClassToLinks($content){
-    return str_replace( '<a ', "<a class='post-content-link'", $content);
+function addClassToLinks($content)
+{
+    return str_replace('<a ', "<a class='post-content-link'", $content);
 }
 
-add_action( 'transition_post_status', 'foody_on_creation_not_update', 10, 3 );
-function foody_on_creation_not_update( $new_status, $old_status, $post )
+add_action('transition_post_status', 'foody_on_creation_not_update', 10, 3);
+function foody_on_creation_not_update($new_status, $old_status, $post)
 {
-    if ( 'publish' !== $new_status || 'publish' === $old_status )
+    if ('publish' !== $new_status || 'publish' === $old_status)
         return;
 
-    if ( 'foody_recipe' == $post->post_type  ||  'post' == $post->post_type){
-        $mail_to_notify = get_option( 'foody_mail_to_notify_posts', false );
-        if($mail_to_notify) {
+    if ('foody_recipe' == $post->post_type  ||  'post' == $post->post_type) {
+        $mail_to_notify = get_option('foody_mail_to_notify_posts', false);
+        if ($mail_to_notify) {
             $site = '';
             $blog_number = get_current_blog_id();
 
@@ -957,19 +953,20 @@ function foody_on_creation_not_update( $new_status, $old_status, $post )
     }
 }
 
-function foody_send_email_notification($to, $site_name, $post){
-        $subject = __('פרסום מתכון חדש');
-        $body = foody_create_email_notification_body($site_name, $post);
-        $headers = array('Content-Type: text/html; charset=UTF-8');
+function foody_send_email_notification($to, $site_name, $post)
+{
+    $subject = __('פרסום מתכון חדש');
+    $body = foody_create_email_notification_body($site_name, $post);
+    $headers = array('Content-Type: text/html; charset=UTF-8');
 
-        return wp_mail($to, $subject, $body, $headers);
+    return wp_mail($to, $subject, $body, $headers);
 }
 
 function foody_create_email_notification_body($site_name, $post)
 {
 
     $mail_body = '<p style="text-decoration: underline; font-weight: bold">';
-    $mail_body .=  __(' :שם המתכון/כתבה') ;
+    $mail_body .=  __(' :שם המתכון/כתבה');
     $mail_body .= '</p>';
     $mail_body .= '<p>';
     $mail_body .= $post->post_title;
@@ -990,11 +987,12 @@ function foody_create_email_notification_body($site_name, $post)
     return $mail_body;
 }
 
-add_filter('wp_get_nav_menu_items','foody_remove_nav_items_description', 10, 2);
-function foody_remove_nav_items_description( $nav, $args ) {
-    if( $args->name == 'Navbar' ){
-        foreach ($nav as $item){
-            if(isset($item->description) && !empty($item->description)){
+add_filter('wp_get_nav_menu_items', 'foody_remove_nav_items_description', 10, 2);
+function foody_remove_nav_items_description($nav, $args)
+{
+    if ($args->name == 'Navbar') {
+        foreach ($nav as $item) {
+            if (isset($item->description) && !empty($item->description)) {
                 $item->description = '';
             }
         }
@@ -1002,8 +1000,9 @@ function foody_remove_nav_items_description( $nav, $args ) {
     return $nav;
 }
 
-add_filter( "use_block_editor_for_post_type", "foody_disable_gutenberg_editor" );
-function foody_disable_gutenberg_editor() {
+add_filter("use_block_editor_for_post_type", "foody_disable_gutenberg_editor");
+function foody_disable_gutenberg_editor()
+{
     return false;
 }
 
@@ -1017,7 +1016,7 @@ function print_version_content($content)
     $num_of_figures = $figures->length;
     for ($index = 0; $index < $num_of_figures; $index++) {
         $current = $figures->item(0);
-        if(isset( $current->parentNode)) {
+        if (isset($current->parentNode)) {
             $current->parentNode->removeChild($current);
         }
     }
@@ -1026,9 +1025,9 @@ function print_version_content($content)
     $finder = new DomXPath($dom);
     $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
 
-    for ($index = 0; $index < $nodes->length; $index++){
+    for ($index = 0; $index < $nodes->length; $index++) {
         $current = $nodes->item(0);
-        if(isset( $current->parentNode)) {
+        if (isset($current->parentNode)) {
             $current->parentNode->removeChild($current);
         }
     }
@@ -1037,7 +1036,7 @@ function print_version_content($content)
     return ['content' => $content_elem, 'figures' => $new_content];
 }
 
-add_filter('foody_print_version_for_content','print_version_content', 10, 1);
+add_filter('foody_print_version_for_content', 'print_version_content', 10, 1);
 
 function build_figure_html($figureDomElem)
 {
@@ -1058,14 +1057,14 @@ function build_figure_html($figureDomElem)
 
 
 
-function console_log($output, $with_script_tags = true) {
+function console_log($output, $with_script_tags = true)
+{
     $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
         ');';
     if ($with_script_tags) {
         $js_code = '<script>' . $js_code . '</script>';
     }
     echo $js_code;
-   
 }
 
 if (defined('WP_ENV') && WP_ENV !== 'local') {
@@ -1077,24 +1076,24 @@ if (defined('WP_ENV') && WP_ENV !== 'local') {
 
 
 //====for campaigns wisam say=====================================
-add_action( 'init', 'campaign_action' );
-function campaign_action(){
-if(isset($_REQUEST['wcamp']) && !is_user_logged_in()){
-setcookie('wcamp', '1', time() + (86400 * 30), "/");
-}
+add_action('init', 'campaign_action');
+function campaign_action()
+{
+    if (isset($_REQUEST['wcamp']) && !is_user_logged_in()) {
+        setcookie('wcamp', '1', time() + (86400 * 30), "/");
+    }
 }
 
 add_action('init', 'campaign_redirect');
-function campaign_redirect() {
-if (isset($_COOKIE['wcamp']) && is_user_logged_in()){
+function campaign_redirect()
+{
+    if (isset($_COOKIE['wcamp']) && is_user_logged_in()) {
 
-$location = "https://" . $_SERVER['HTTP_HOST'] . "/השלמת-רישום" ;
-header('Location: ' .  $location);
-setcookie("wcamp", "", time() - 3600);
-exit;
- 
-   
-   }
+        $location = "https://" . $_SERVER['HTTP_HOST'] . "/השלמת-רישום";
+        header('Location: ' .  $location);
+        setcookie("wcamp", "", time() - 3600);
+        exit;
+    }
 }
 
 //==========end campaings=============================================
