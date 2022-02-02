@@ -61,30 +61,8 @@ if (!is_multisite() || is_main_site()) {
         </script>
 
     <?php } ?>
-    <script>
-        var walkMeUser = <?php echo $user_param; ?>;
-        if (!walkMeUser){
-            function getCookie(name) {
-                const value = `; ${document.cookie}`;
-                const parts = value.split(`; ${name}=`);
-                if (parts.length === 2) return parts.pop().split(';').shift();
-            }
-
-            var walkMeUnknownUser = getCookie ('_ga')
-        }
-        
-    </script>
-    <?php
-    // show walkMe feature
-    if(get_current_blog_id() == 1 && get_option( 'foody_show_walkme', false )){
-        $walkme_script = get_option( 'foody_google_walkme_script', '' );
-        if(!empty($walkme_script)){
-           echo $walkme_script;
-        }
-    }
-
    
-    ?>
+    
     
     <?php wp_head(); 
     
