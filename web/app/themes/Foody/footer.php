@@ -41,7 +41,7 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
 }
 
 ?>
-
+<?php require (__DIR__ . '/w_helpers/taboola_in_footer.php');?>
 </div><!-- #content -->
 
 <?php if (!empty($edit_link = get_edit_post_link())): ?>
@@ -199,7 +199,7 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
     }
     ?>
 </footer><!-- #colophon -->
-<?php require (__DIR__ . '/w_helpers/taboola_in_footer.php');?>
+
 </div><!-- #page -->
 
 <?php
