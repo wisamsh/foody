@@ -19,7 +19,7 @@ function myUserTiming() {
 }
 
 
-let author = foodyGlobals.author_name;
+let author = '';//foodyGlobals.author_name;
 let title = foodyGlobals.title;
 
 const MainCategory = FAQ_Details.mainCategories;
@@ -146,9 +146,15 @@ jQuery(".related_question").click(function () {
 });
 
 
+
+
 //siderelated=================================================
 jQuery(".siderelated a").click(function () {
-    let RelatedRecipe = (jQuery(this).text());
+    let cont = jQuery(this).find('post-title');
+   
+
+   // console.log(cont.context.innerText);
+    let RelatedRecipe =  cont.context.innerText;
 
     let RelatedRecipeClick = {
         category: 'תשובה',
