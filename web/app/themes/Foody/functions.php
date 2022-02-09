@@ -1134,3 +1134,21 @@ function my_custom_post_faq()
     register_post_type('questions', $args);
 }
 add_action('init', 'my_custom_post_faq');
+
+
+function create_meta_desc()
+    {
+if (get_field('meta_tag_seo', get_the_ID())) {
+$seo_meta = get_field('meta_tag_seo', get_the_ID());
+$seo_title = get_field('site_title_seo', get_the_ID());
+$seo_pageTitle = get_field('page_title_seo', get_the_ID());
+$saparator = ' | ';
+
+echo ('
+<meta name="description" content="' .
+$seo_meta
+. '">
+');
+        }
+    }
+add_action('wp_head', 'create_meta_desc');
