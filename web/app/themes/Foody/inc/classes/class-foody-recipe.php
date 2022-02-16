@@ -1222,8 +1222,17 @@ class Foody_Recipe extends Foody_Post
     public function tiktok_video()
     {
         //WISAM : Tiktok video 
+        //<script async src="https://www.tiktok.com/embed.js"></script>
+        $tiktokscript = '<script async src="https://www.tiktok.com/embed.js"></script>';
+
         if (get_field("tiktok_video", get_the_ID())) {
-            echo get_field("tiktok_video", get_the_ID());
+            // echo get_field("tiktok_video", get_the_ID());
+            $tiktok = get_field("tiktok_video", get_the_ID());
+            if (strpos($tiktokscript, $tiktok) == false) {
+                return $tiktok . $tiktokscript;
+            } else {
+                return $tiktok;
+            }
         }
     }
 
