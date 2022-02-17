@@ -232,6 +232,11 @@ if ( get_current_blog_id() === 1 ) { ?>
 
 <section class="newsletter no-print">
 <?php $recipe->newsletter(); ?>
+
+</section>
+
+
+<section class="recipe-techniques techniques no-print">
 <?php require (get_template_directory() . '/w_helpers/taboola_in_footer.php');?>
 </section>
 
