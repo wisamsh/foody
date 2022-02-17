@@ -9,7 +9,7 @@ if ($MySiteID == 1 && get_post_type() == 'foody_recipe') {
     _taboola.push({
       article: 'auto'
     });
-    ! function(e, f, u, i):
+    ! function(e, f, u, i){
     if (!document.getElementById(i)) {
       e.async = 1;
       e.src = u;
