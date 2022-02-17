@@ -1,19 +1,9 @@
-//eventCallback('', 'מתחם פידים', 'טעינה', channelName);
-
-//console.log(foodyGlobals);
-//console.log(FAQ_Details);
-//console.log(dataLayer);
-
-
-
-
-
 
 setInterval(myUserTiming, 1);
 function myUserTiming() {
     let timing = 1;
     let timer = jQuery('#user_holdon').val();
-    let fogo = ((Number(timer) + Number(timing) / 100 / 60 ));
+    let fogo = ((Number(timer) + Number(timing) / 100 / 60));
 
     jQuery('#user_holdon').val(fogo);
 }
@@ -29,7 +19,7 @@ const accessories = FAQ_Details.accessories;
 
 //FOR THE SEARCH FUCKUPS:================
 jQuery(".icon img").click(function () {
-let search = jQuery(".search").val();
+    let search = jQuery(".search").val();
 
 
     location.href = "/?s=" + search;
@@ -151,10 +141,10 @@ jQuery(".related_question").click(function () {
 //siderelated=================================================
 jQuery(".siderelated a").click(function () {
     let cont = jQuery(this).find('post-title');
-   
 
-   // console.log(cont.context.innerText);
-    let RelatedRecipe =  cont.context.innerText;
+
+    // console.log(cont.context.innerText);
+    let RelatedRecipe = cont.context.innerText;
 
     let RelatedRecipeClick = {
         category: 'תשובה',
@@ -199,9 +189,8 @@ jQuery(".feed-channel-details  .container .row .related_recepies_conduct a").cli
     dataLayer.push({ event: 'foody', ...RelatedRecipeConClick });
 
 });
-jQuery("body").on("click", ".MobileConductor  .container .row .related_recepies_conduct a",function () {
-//(".MobileConduct > .container .row .related_recepies_conduct a").click(function () {
-  
+jQuery("body").on("click", ".MobileConductor  .container .row .related_recepies_conduct a", function () {
+
     let RelatedRecipeConmMobile = (jQuery(this).text());
 
     let RelatedRecipeConMobileClick = {
@@ -277,37 +266,33 @@ jQuery(".recipe-categories .categories  > .categories .post-categories li a").cl
 
 
 jQuery(window).bind('beforeunload', function (e) {
-   //console.log('Leaving you.....')
-   // e.preventDefault(); 
     BeforeUserLeave();
-    
-    
 });
 
 
 //ON windowscroll (when user is scrolling up or down send precentage position ex: 47% scroll)
 //============================================================================================
-jQuery(window).on('scroll', jQuery.debounce(500,function () {
+jQuery(window).on('scroll', jQuery.debounce(500, function () {
     let s = $(window).scrollTop(),
         d = $(document).height(),
         c = $(window).height();
 
     let scrollPercent = (s / (d - c)) * 100;
     let prestenge = 0;
-if(scrollPercent > 1 && scrollPercent < 26){
-    prestenge = 25;
-}
-if(scrollPercent > 25 && scrollPercent < 51){
-    prestenge = 50;
-}
+    if (scrollPercent > 1 && scrollPercent < 26) {
+        prestenge = 25;
+    }
+    if (scrollPercent > 25 && scrollPercent < 51) {
+        prestenge = 50;
+    }
 
-if(scrollPercent > 52 && scrollPercent < 76){
-    prestenge = 75;
-}
+    if (scrollPercent > 52 && scrollPercent < 76) {
+        prestenge = 75;
+    }
 
-if(scrollPercent > 76){
-    prestenge = 100;
-}
+    if (scrollPercent > 76) {
+        prestenge = 100;
+    }
 
     let OnWindowScroll = {
         category: 'תשובה',
@@ -328,8 +313,8 @@ if(scrollPercent > 76){
 }));
 
 //Search===================================================
-jQuery("body").on("click", "#magnifier_search",function () {
-    let SearchFraz = (jQuery(".search").val()); 
+jQuery("body").on("click", "#magnifier_search", function () {
+    let SearchFraz = (jQuery(".search").val());
     let SearchDrazDoc = {
         category: 'תשובה',
         action: 'הפעלת חיפוש',
@@ -353,7 +338,7 @@ jQuery("body").on("click", "#magnifier_search",function () {
 
 //ON SOCIAL SHARE Click ===================================================
 jQuery(".social-btn-container .icon-share").click(function () {
-   
+
 
     let SocialShareClick = {
         category: 'תשובה',
@@ -372,6 +357,6 @@ jQuery(".social-btn-container .icon-share").click(function () {
         has_rich_content: 1,
     };
     dataLayer.push({ event: 'foody', ...SocialShareClick });
-    
+
 
 });
