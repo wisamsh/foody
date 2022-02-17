@@ -139,7 +139,7 @@ placement: 'Mid Article Thumbnails New1',
 target_type: 'mix'
 });
 </script>
-
+<?php }?>
 <section class="purchase-buttons">
 <?php $recipe->the_purchase_buttons(); ?>
 </section>
@@ -233,12 +233,11 @@ if ( get_current_blog_id() === 1 ) { ?>
 <section class="newsletter no-print">
 <?php $recipe->newsletter(); ?>
 
-<?php }
-if(get_current_blog_id() == 1){
-      require (get_template_directory() . '/w_helpers/taboola_in_footer.php');
-}
+</section>
 
-?>
+
+<section class="recipe-techniques techniques no-print">
+<?php require (get_template_directory() . '/w_helpers/taboola_in_footer.php');?>
 </section>
 
 
