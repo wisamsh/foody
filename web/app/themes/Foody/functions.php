@@ -1137,18 +1137,24 @@ add_action('init', 'my_custom_post_faq');
 
 
 function create_meta_desc()
-    {
-if (get_field('meta_tag_seo', get_the_ID())) {
-$seo_meta = get_field('meta_tag_seo', get_the_ID());
-$seo_title = get_field('site_title_seo', get_the_ID());
-$seo_pageTitle = get_field('page_title_seo', get_the_ID());
-$saparator = ' | ';
-
-echo ('
+{
+    if (get_field('meta_tag_seo', get_the_ID())) {
+        $seo_meta = get_field('meta_tag_seo', get_the_ID());
+        echo ('
 <meta name="description" content="' .
-$seo_meta
-. '">
+            $seo_meta
+            . '">
 ');
-        }
     }
+
+
+    if (get_field('meta_keywords_seo', get_the_ID())) {
+        $meta_title = get_field('meta_keywords_seo', get_the_ID());
+        echo ('
+    <meta name="keywords" content="' .
+            $meta_title
+            . '">
+    ');
+    }
+}
 add_action('wp_head', 'create_meta_desc');
