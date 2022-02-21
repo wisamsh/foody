@@ -1,10 +1,11 @@
+
+
+
 <?php
-$MySiteID =  (get_blog_details()->blog_id);
+//$MySiteID =  (get_blog_details()->blog_id);
+//if ($MySiteID == 1 && get_post_type() == 'foody_recipe') {
 ?>
-<?php
-if ($MySiteID == 1 && get_post_type() == 'foody_recipe') {
-?>
-  <script id="taboola_head" type="text/javascript">
+  <!--<script id="taboola_head" type="text/javascript">
     window._taboola = window._taboola || [];
     _taboola.push({
       article: 'auto'
@@ -25,5 +26,5 @@ if ($MySiteID == 1 && get_post_type() == 'foody_recipe') {
     }
   </script>
 <?php
-}
+//}
 ?>
