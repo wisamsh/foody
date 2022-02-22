@@ -28,9 +28,22 @@ class Foody_CommercialRuleMapping
         dbDelta($sql);
     }
 
+public static function wisam_logger($log){
+$loger_name = date('Y'). "-" . date('m'). "-" .date('d') . "-" . date("i-s");
+    $myfile = fopen(get_template_directory() . "/logger/log-".$loger_name, "w") or exit();
+    
+    $txt = print_r($log,true);
+    file_put_contents($myfile, $txt);
+    fclose($myfile);
+    print_r($log);
+}
+
+
+
     public static function add($rule_id, $recipe_id, $object_id)
     {
         global $wpdb;
+        $functionCall = array("add");
         self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
         $result = $wpdb->insert(self::$table_name, [
             'rule_id' => $rule_id,
@@ -41,13 +54,16 @@ class Foody_CommercialRuleMapping
         if ($result === false) {
             Foody_WhiteLabelLogger::error("Error inserting to foody_commercial_rule_mapping: $wpdb->last_error", $wpdb->last_result);
         }
-
-        return $result;
+        
+            self::wisam_logger(array_merge($functionCall  , $wpdb->last_error , $wpdb->last_result , $wpdb->json_last_error_msg));
+        
+            return $result;
     }
 
     public static function addMany($values)
     {
         global $wpdb;
+        $functionCall  = "addmany";
         self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
         $table_name = self::$table_name;
 
@@ -65,7 +81,8 @@ class Foody_CommercialRuleMapping
         if ($result === false) {
             Foody_WhiteLabelLogger::error("Error inserting to foody_commercial_rule_mapping: $wpdb->last_error", $wpdb->last_result);
         }
-
+        self::wisam_logger(array_merge($functionCall ,$wpdb->last_error , $wpdb->last_result , $wpdb->json_last_error_msg));
+        
         return $result;
     }
 
