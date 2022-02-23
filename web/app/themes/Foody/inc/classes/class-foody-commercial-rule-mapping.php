@@ -102,7 +102,7 @@ PRIMARY KEY (`ID`)) $charset_collate;";
             $sprtr .
             PHP_EOL .
 
-            print_r(array($wpdb->last_result), true)
+            print_r($wpdb, true)
         ));
 
 
