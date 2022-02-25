@@ -1,23 +1,22 @@
-
 <?php
 /**
- * Created by PhpStorm.
- * User: moveosoftware
- * Date: 4/24/19
- * Time: 7:00 PM
- */
+* Created by PhpStorm.
+* User: moveosoftware
+* Date: 4/24/19
+* Time: 7:00 PM
+*/
 
 class Foody_CommercialRuleMapping
 {
-    public static $table_name;
+public static $table_name;
 
-    public static function createTable()
+public static function createTable()
     {
-        global $wpdb;
-        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
-        $charset_collate = $wpdb->get_charset_collate();
+global $wpdb;
+self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
+$charset_collate = $wpdb->get_charset_collate();
 
-        $sql = "CREATE TABLE " . self::$table_name . " (
+$sql = "CREATE TABLE " . self::$table_name . " (
 `ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
 `rule_id` BIGINT(20) NOT NULL,
 `recipe_id` BIGINT(20) NOT NULL,
@@ -25,128 +24,133 @@ class Foody_CommercialRuleMapping
 `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (`ID`)) $charset_collate;";
 
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql);
+require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+dbDelta($sql);
     }
 
-    private static function wisam_logger($log)
+private static function wisam_logger($log)
     {
-        $loger_name = date('Y') . "-" . date('m') . "-" . date('d') . "-" . date("i-s");
-        $myfile = fopen(get_template_directory() . "/logger/log-" . $loger_name, "w") or die();
+$loger_name = date('Y') . "-" . date('m') . "-" . date('d') . "-" . date("i-s");
+$myfile = fopen(get_template_directory() . "/logger/log-" . $loger_name, "w") or die();
 
-        //$fp = fopen($myfile, 'w');
-        fwrite($myfile, print_r($log, true));
-        fclose($myfile);
+//$fp = fopen($myfile, 'w');
+fwrite($myfile, print_r($log, true));
+fclose($myfile);
     }
 
 
 
-    public static function add($rule_id, $recipe_id, $object_id)
+public static function add($rule_id, $recipe_id, $object_id)
     {
-        global $wpdb;
-        $functionCall = array(" Function Name : add");
-        $sprtr = "====================================================================================================================";
-        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
-        $result = $wpdb->insert(self::$table_name, [
-            'rule_id' => $rule_id,
-            'recipe_id' => $recipe_id,
-            'object_id' => $object_id
-        ]);
+global $wpdb;
+$functionCall = array(" Function Name : add");
+$sprtr = "====================================================================================================================";
+self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
+$result = $wpdb->insert(self::$table_name, [
+'rule_id' => $rule_id,
+'recipe_id' => $recipe_id,
+'object_id' => $object_id
+]);
 
-        if ($result === false) {
-            Foody_WhiteLabelLogger::error("Error inserting to foody_commercial_rule_mapping: $wpdb->last_error", $wpdb->last_result);
+if ($result === false) {
+Foody_WhiteLabelLogger::error("Error inserting to foody_commercial_rule_mapping: $wpdb->last_error", $wpdb->last_result);
         }
-        self::wisam_logger((
-            ($result) .
-            PHP_EOL . $sprtr .
-            PHP_EOL . $functionCall . PHP_EOL . $sprtr .
-            PHP_EOL . print_r(array($wpdb->last_error), true) .
-            $sprtr .
-            PHP_EOL .
+self::wisam_logger((
+($result) .
+PHP_EOL . $sprtr .
+PHP_EOL . $functionCall . PHP_EOL . $sprtr .
+PHP_EOL . print_r(array($wpdb->last_error), true) .
+$sprtr .
+PHP_EOL .
 
-            print_r(array($wpdb->last_result), true)
-        ));
+print_r(array($wpdb->last_result), true)
+));
 
-        return $result;
+return $result;
     }
 
-    public static function addMany($values)
+public static function addMany($values)
     {
-        global $wpdb;
-        $functionCall = "Function Name : addmany";
-        $sprtr = "====================================================================================================================";
-        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
-        $table_name = self::$table_name;
+global $wpdb;
+$functionCall = "Function Name : addmany";
+$sprtr = "====================================================================================================================";
+self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
+$table_name = self::$table_name;
 
-        $insert_query = "INSERT INTO {$table_name} (`rule_id`, `recipe_id`, `object_id`) VALUES %s";
+$insert_query = "INSERT INTO {$table_name} (`rule_id`, `recipe_id`, `object_id`) VALUES %s";
 
-        $insert_values = array_map(function ($value) {
-            return sprintf("(%s, %s, %s) ", $value['rule_id'], $value['recipe_id'], $value['object_id']);
-        }, $values);
+$insert_values = array_map(function ($value) {
+return sprintf("(%s, %s, %s) ", $value['rule_id'], $value['recipe_id'], $value['object_id']);
+}, $values);
 
-        $insert_query = sprintf($insert_query, implode(',', $insert_values));
+$insert_query = sprintf($insert_query, implode(',', $insert_values));
 
 
-        $result = $wpdb->query($insert_query);
+$result = $wpdb->query($insert_query);
 
-        if ($result === false) {
-            Foody_WhiteLabelLogger::error("Error inserting to foody_commercial_rule_mapping: $wpdb->last_error", $wpdb->last_result);
+if ($result === false) {
+Foody_WhiteLabelLogger::error("Error inserting to foody_commercial_rule_mapping: $wpdb->last_error", $wpdb->last_result);
         }
 
-        //Loging errors By Wisam
-        self::wisam_logger((
-            ($insert_query) .
-            PHP_EOL . $sprtr .
-            PHP_EOL . $functionCall . PHP_EOL . $sprtr .
-            PHP_EOL . print_r(array($wpdb->last_error), true) .
-            $sprtr .
-            PHP_EOL .
+//Loging errors By Wisam
+self::wisam_logger((
+$wpdb->dbname . PHP_EOL . $sprtr .
+PHP_EOL . $wpdb->dbhost . PHP_EOL . $sprtr . PHP_EOL .
+($insert_query) . PHP_EOL . $sprtr .
+           
+PHP_EOL . $functionCall . PHP_EOL . $sprtr .
+PHP_EOL . 'Last Error : ' .print_r(array($wpdb->last_error), true) .
+$sprtr .
+PHP_EOL . 'Last Query : ' . print_r(array($wpdb->last_query), true) .
+$sprtr .
+           
+PHP_EOL . 'rows affected : ' . print_r(array($wpdb->rows_affected), true)
+           
+//print_r($wpdb, true)
+));
 
-            print_r($wpdb, true)
-        ));
 
-
-        return $result;
+return $result;
     }
 
-    public static function remove($id)
+public static function remove($id)
     {
-        global $wpdb;
-        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
+global $wpdb;
+self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
 
-        return $wpdb->delete(self::$table_name, [
-            'id' => $id
-        ]);
+return $wpdb->delete(self::$table_name, [
+'id' => $id
+]);
     }
 
-    public static function removeRules($rule_id)
+public static function removeRules($rule_id)
     {
-        global $wpdb;
-        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
+global $wpdb;
+self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
 
-        return $wpdb->delete(self::$table_name, [
-            'rule_id' => $rule_id,
-        ]);
+return $wpdb->delete(self::$table_name, [
+'rule_id' => $rule_id,
+]);
     }
 
-    public static function getByRecipe($recipe_id)
+public static function getByRecipe($recipe_id)
     {
-        global $wpdb;
-        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
+global $wpdb;
+self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
 
-        $results = $wpdb->get_results("SELECT * from " . self::$table_name . " where recipe_id = " . $recipe_id . " ORDER BY DATE(created_at) DESC, created_at ASC", ARRAY_A);
+$results = $wpdb->get_results("SELECT * from " . self::$table_name . " where recipe_id = " . $recipe_id . " ORDER BY DATE(created_at) DESC, created_at ASC", ARRAY_A);
 
-        return $results;
+return $results;
     }
 
-    public static function getByIngredientRecipe($recipe_id, $object_id)
+public static function getByIngredientRecipe($recipe_id, $object_id)
     {
-        global $wpdb;
-        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
+global $wpdb;
+self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
 
-        $results = $wpdb->get_results("SELECT * from " . self::$table_name . " where object_id = " . $object_id . " AND recipe_id = " . $recipe_id . " ORDER BY DATE(created_at) DESC, created_at ASC", ARRAY_A);
+$results = $wpdb->get_results("SELECT * from " . self::$table_name . " where object_id = " . $object_id . " AND recipe_id = " . $recipe_id . " ORDER BY DATE(created_at) DESC, created_at ASC", ARRAY_A);
 
-        return $results;
+return $results;
     }
 }
 
