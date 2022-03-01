@@ -37,11 +37,11 @@ PRIMARY KEY (`ID`)) $charset_collate;";
         self::$table_name = $wpdb->prefix . 'wisamlog';
         $charset_collate = $wpdb->get_charset_collate();
 
-        $sql = "CREATE TABLE " . self::$table_name . " (
-`ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
-`log` text NOT NULL,
+            $sql = "CREATE TABLE " . self::$table_name . " (
+    `ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
+    `log` text NOT NULL,
 
-PRIMARY KEY (`ID`)) $charset_collate;";
+    PRIMARY KEY (`ID`)) $charset_collate;";
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
@@ -55,7 +55,7 @@ PRIMARY KEY (`ID`)) $charset_collate;";
         $loger_name = 'wisam_logger'; //date('Y') . "-" . date('m') . "-" . date('d') . "-" . date("i-s");
         $myfile = fopen(get_template_directory() . "/logger/log-" . $loger_name . '.log', "w") or die();
         try {
-            $wpdb->insert(self::$table_name, array(
+            $wpdb->insert('wp_wisamlog', array(
                 'log' => $log,
                 
             ));
