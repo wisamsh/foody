@@ -70,9 +70,24 @@ PRIMARY KEY (`ID`)) $charset_collate;";
         fclose($myfile);
     }
 
-
-
     public static function add($rule_id, $recipe_id, $object_id)
+    {
+        global $wpdb;
+        $functionCall = array(" Function Name : add");
+        $sprtr = "====================================================================================================================";
+        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
+        $result = $wpdb->insert(self::$table_name, [
+            'rule_id' => $rule_id,
+            'recipe_id' => $recipe_id,
+            'object_id' => $object_id
+        ]);
+
+        if ($result === false) {
+            Foody_WhiteLabelLogger::error("Error inserting to foody_commercial_rule_mapping: $wpdb->last_error", $wpdb->last_result);
+        }
+    }
+
+    public static function addMany($rule_id, $recipe_id, $object_id)
     {
         global $wpdb;
         $functionCall = array(" Function Name : add");
@@ -101,7 +116,7 @@ PRIMARY KEY (`ID`)) $charset_collate;";
         return $result;
     }
 
-    public static function addMany($values)
+    public static function addMany__($values)
     {
         global $wpdb;
         $functionCall = "Function Name : addmany";
