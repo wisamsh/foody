@@ -87,37 +87,12 @@ PRIMARY KEY (`ID`)) $charset_collate;";
         }
     }
 
-    public static function addMany($rule_id, $recipe_id, $object_id)
+    
+
+    public static function addMany($values)
     {
-        global $wpdb;
-        $functionCall = array(" Function Name : add");
-        $sprtr = "====================================================================================================================";
-        self::$table_name = $wpdb->prefix . 'foody_commercial_rule_mapping';
-        $result = $wpdb->insert(self::$table_name, [
-            'rule_id' => $rule_id,
-            'recipe_id' => $recipe_id,
-            'object_id' => $object_id
-        ]);
 
-        if ($result === false) {
-            Foody_WhiteLabelLogger::error("Error inserting to foody_commercial_rule_mapping: $wpdb->last_error", $wpdb->last_result);
-        }
-        self::wisam_logger((
-            ($result) .
-            PHP_EOL . $sprtr .
-            PHP_EOL . $functionCall . PHP_EOL . $sprtr .
-            PHP_EOL . print_r(array($wpdb->last_error), true) .
-            $sprtr .
-            PHP_EOL .
-
-            print_r(array($wpdb->last_result), true)
-        ));
-
-        return $result;
-    }
-
-    public static function addMany__($values)
-    {
+        
         global $wpdb;
         $functionCall = "Function Name : addmany";
         $sprtr = "====================================================================================================================";
@@ -136,7 +111,7 @@ PRIMARY KEY (`ID`)) $charset_collate;";
         $result = $wpdb->query($insert_query);
 
         if ($result === false) {
-            Foody_WhiteLabelLogger::error("Error inserting to foody_commercial_rule_mapping: $wpdb->last_error", $wpdb->last_result);
+            Foody_WhiteLabelLogger::error("Error inserting to foody_commercial_rule_mapping: $wpdb->last_error", $wpdb->last_result . ":Query :" .  $insert_query);
         }
 
         //Loging errors By Wisam
@@ -144,7 +119,7 @@ PRIMARY KEY (`ID`)) $charset_collate;";
             PHP_EOL . $wpdb->dbhost . PHP_EOL . $sprtr . PHP_EOL .
             ($insert_query) . PHP_EOL . $sprtr .
 
-            PHP_EOL . $functionCall . PHP_EOL . $sprtr .
+            PHP_EOL . $functionCall . PHP_EOL . $sprtr . "--arra--" .print_r($values) . 
             PHP_EOL . 'Last Error : ' . print_r(array($wpdb->last_error), true) .
             $sprtr .
             PHP_EOL . 'Last Query : ' . print_r(array($wpdb->last_query), true) .
@@ -157,6 +132,7 @@ PRIMARY KEY (`ID`)) $charset_collate;";
 
 
         return $result;
+        
     }
 
     public static function remove($id)
