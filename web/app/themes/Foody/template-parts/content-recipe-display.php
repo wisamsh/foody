@@ -234,6 +234,15 @@ if ( get_current_blog_id() === 1 ) { ?>
 <?php $recipe->newsletter(); ?>
 
 </section>
+<?php 
+ $actual_link = $_SERVER['HTTP_HOST'];
+if($actual_link == 'foody.moveodevelop.com') {
+echo ('<section class="recipe-tags tags no-print">');
+     require (get_template_directory() . '/w_helpers/taboola_in_footer.php');
+echo ('</section>');
+}
+?>
+
 
 <section class="recipe-sidebar-mobile d-block d-lg-none no-print">
 <?php $recipe->the_mobile_sidebar_content(); ?>
@@ -246,14 +255,5 @@ if ( get_current_blog_id() === 1 ) { ?>
 <?php endif; ?>
 <div class="print-footer print">
 <span class="footer-text"><?php echo __('לעוד מתכונים חפשו פודי בגוגל או היכנסו ל- foody.co.il') ?></span>
-
-<?php 
- $actual_link = $_SERVER['HTTP_HOST'];
-if($actual_link == 'foody.moveodevelop.com') {
-require (get_template_directory() . '/w_helpers/taboola_in_footer.php');
-}
-?>
-
-
 
 </div>
