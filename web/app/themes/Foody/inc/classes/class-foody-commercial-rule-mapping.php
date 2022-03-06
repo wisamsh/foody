@@ -330,6 +330,7 @@ PRIMARY KEY (`ID`)) $charset_collate;";
 // Foody_CommercialRuleMapping::addMany($values);
 //}
 //
+
 add_action('save_post_foody_comm_rule', 'foody_save_commercial_rule_mapping', 10, 3);
 add_action('save_post_foody_recipe', 'foody_save_post_for_commercial_rule_mapping', 10, 3);
 add_action('save_post_foody_feed_channel', 'foody_save_post_for_commercial_rule_mapping', 10, 3);
