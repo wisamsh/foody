@@ -1158,3 +1158,35 @@ function create_meta_desc()
     }
 }
 add_action('wp_head', 'create_meta_desc');
+
+//Wisam fix for metzrahim meshariem
+
+function save_meshari()
+{
+
+    if (get_current_blog_id() == 1) {
+        if (isset($_POST['acf']['field_5d14b0c25d5a4']) && isset($_POST['acf']['field_5d15d746d6e98'])) {
+            
+            global $wpdb;
+            $table_prefix = $wpdb->prefix . "foody_commercial_rule_mapping";
+            $table_items = "(rule_id, recipe_id , object_id)";
+            //$rule_id_arr = $_POST['acf']['field_5d14b0c25d5a4'];
+            $rule_id = $_POST['post_ID'];//$rule_id_arr[0];
+            
+            $object_id = $_POST['acf']['field_5d15d746d6e98'];
+            $recipe_id = '0';
+            $FixQuery = "insert into {$table_prefix} {$table_items} values(%s, %s , %s)";
+            $fixquery_res = sprintf($FixQuery, $rule_id , $recipe_id , $object_id);
+           
+
+                $wpdb->query( $fixquery_res );
+               // $wpdb->print_error();
+               //echo  $fixquery_res ;
+                //die();
+
+            
+        }
+    }
+}
+
+add_action('save_post_foody_comm_rule', 'save_meshari');
