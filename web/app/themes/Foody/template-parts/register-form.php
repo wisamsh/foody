@@ -153,7 +153,7 @@ echo do_shortcode('[wordpress_social_login]');
                     </label>
                 </div>
                 <?php if (get_field('show')): ?>
-                    <div class="md-checkbox col-12">
+                    <div class="md-checkbox col-12" id="reg-frm">
                         <input id="check-e-book" type="checkbox" checked name="e-book" id="mz5">
                         <label for="check-e-book">
                             <?php

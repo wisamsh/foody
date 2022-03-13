@@ -86,7 +86,7 @@ if ( empty( $welcome_text ) ) {
 		<?php if ( $redirect ): ?>
             <input type="hidden" name="redirect" value="1">
 		<?php endif; ?>
-        <input class="btn btn-primary" id="register_btn_ebook" type="submit" value="<?php echo __( 'סיום הרשמה' ) ?>">
+        <input class="btn btn-primary" id="register_btn_ebook" type="submit" value="<?php echo __( 'לקבלת החוברת לחץ כאן' ) ?>">
 
     </form>
 </section>

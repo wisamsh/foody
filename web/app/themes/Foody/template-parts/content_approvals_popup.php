@@ -24,7 +24,7 @@ $show               = get_field( 'show', $registration_page );
 
 	if ( $show ):
 		?>
-        <div class="md-checkbox col-12">
+        <div class="md-checkbox col-12" id="content_popup">
             <input id="check-e-book" type="checkbox" checked name="e-book">
             <label for="check-e-book">
 				<?php
