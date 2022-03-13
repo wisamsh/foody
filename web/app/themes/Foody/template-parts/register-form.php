@@ -152,20 +152,20 @@ echo do_shortcode('[wordpress_social_login]');
                         ?>
                     </label>
                 </div>
-                <?php if (get_field('show')): ?>
-                    <div class="md-checkbox col-12" id="reg-frm">
+                <?php //if (get_field('show')): ?>
+                    <!-- <div class="md-checkbox col-12" id="reg-frm">
                         <input id="check-e-book" type="checkbox" checked name="e-book" id="mz5">
                         <label for="check-e-book">
                             <?php
-                            $text = get_field('text');
-                            if (empty($text)) {
-                                $text = __('ברצוני לקבל את ספר המתכונים לפסח');
-                            }
-                            echo $text;
+                            // $text = get_field('text');
+                            // if (empty($text)) {
+                            //     $text = __('ברצוני לקבל את ספר המתכונים לפסח');
+                            // }
+                            // echo $text;
                             ?>
                         </label>
-                    </div>
-                <?php endif; ?>
+                    </div> -->
+                <?php //endif; ?>
                 <!--suppress JSUnusedLocalSymbols -->
                 <script async defer>
                     function captchaCallback(token) {
