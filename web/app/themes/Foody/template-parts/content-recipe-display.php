@@ -144,11 +144,18 @@ target_type: 'mix'
 <?php $recipe->the_purchase_buttons(); ?>
 </section>
 <hr class="title-line">
-<section class="recipe-content <?php echo $recipe->is_content_by_steps() ? 'with-steps' : ''?>">
+<div class="Swaploader dn">מבצע שינויים באופן הכנה למצרכים המתאימים...</div >
+<section class="recipe-content <?php echo $recipe->is_content_by_steps() ? 'with-steps' : ''?> original_content">
 <?php $recipe->get_relevant_content();
-echo $recipe->tiktok_video();
+
 ?>
 </section>
+
+<section class="recipe-content <?php echo $recipe->is_content_by_steps() ? 'with-steps' : ''?>  alter_content dn">
+
+</section>
+<?php echo $recipe->tiktok_video();?>
+
 <?php if (get_current_blog_id() == 2) { ?>
 <script src="https://cnt.trvdp.com/js/1236/5441.js"></script>
 <?php } ?>

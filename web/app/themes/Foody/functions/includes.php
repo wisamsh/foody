@@ -64,6 +64,9 @@ require_once get_template_directory() . "/inc/classes/common/class-foody-post.ph
 require_once get_template_directory() . "/inc/classes/class-foody-accessory.php";
 require_once get_template_directory() . "/inc/classes/class-foody-technique.php";
 require_once get_template_directory() . "/inc/classes/class-foody-ingredient.php";
+//wisam add :
+require_once get_template_directory() . "/inc/classes/class-foody-substitute_ingreidents_new.php";
+
 require_once get_template_directory() . "/inc/classes/class-foody-recipe.php";
 require_once get_template_directory() . "/inc/classes/class-foody-course.php";
 require_once get_template_directory() . "/inc/classes/class-foody-course-new.php";

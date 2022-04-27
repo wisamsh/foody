@@ -28,6 +28,7 @@ class Foody_Recipe extends Foody_Post
     private $calories_per_dish;
 
     public $rating;
+	public $alternative_ing ;
 
 
     /**
@@ -376,7 +377,7 @@ class Foody_Recipe extends Foody_Post
         if (get_field('add_more_preview', $this->post->ID) === true) {
             $content = '<div class="foody-content">' . $content . '</div>';
         } else {
-            $content = '<div class="foody-content show-read-more">' . $content . '</div>';
+            $content = '<div class="foody-content  show-read-more">' . $content . '</div>';
         }
 
         echo $content;
@@ -595,6 +596,7 @@ class Foody_Recipe extends Foody_Post
         ];
     }
 
+//wisam
     private function init_ingredients()
     {
         $this->ingredients_groups = array();
@@ -614,6 +616,7 @@ class Foody_Recipe extends Foody_Post
                     $this->number_of_dishes = 1;
                 }
                 $this->amount_for = get_sub_field('amount_for');
+				
                 $this->ingredients_title = get_sub_field('title');
                 $current_group = 0;
                 while (have_rows('ingredients_groups', $this->post->ID)) : the_row();
@@ -629,7 +632,7 @@ class Foody_Recipe extends Foody_Post
 
                         $ingredient_post = get_sub_field('ingredient');
                         $this->ingredients_count++;
-
+					
 
                         $amounts = [];
 
@@ -638,6 +641,7 @@ class Foody_Recipe extends Foody_Post
                             $unit_field = get_sub_field('unit');
                             $unit = get_term($unit_field, 'units');
                             $amount = get_sub_field('amount');
+							
                             if (!is_wp_error($unit) && $unit instanceof WP_Term) {
 
                                 $unit_name = $unit->name;
@@ -656,18 +660,22 @@ class Foody_Recipe extends Foody_Post
                             $amounts[] = [
                                 'amount' => $amount,
                                 'unit' => $unit_name,
-                                'unit_tax' => $unit
+                                'unit_tax' => $unit,
+								
                             ];
 
                         endwhile;
 
+//wisam
+						
                         $substitute_ingredient_field = get_sub_field('recipe_substitute_ingredient');
-
+						
                         if ($ingredient_post && $ingredient_post instanceof WP_Post) {
                             $ingredient = new Foody_Ingredient($ingredient_post);
 
                             $ingredient->recipe_id = $this->post->ID;
                             $ingredient->comment = get_sub_field('comment');
+							$ingredient->alternative_ing = get_sub_field('alternative_ing');
                             $alter_link = get_sub_field('alter_link');
                             if (!empty($alter_link)) {
                                 $ingredient->has_alter_link = true;
