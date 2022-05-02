@@ -8,7 +8,7 @@
 
 /** @noinspection PhpUndefinedVariableInspection */
 //error_reporting(E_ERROR | E_PARSE);
-error_reporting(0);
+//error_reporting(0);
 
 
 $ingredients_groups = $template_args['groups'];
@@ -16,7 +16,7 @@ $ingredients_groups = $template_args['groups'];
 
 
 //Wisam===========================================================================================
-$Foody_Substitutes_Ingredients = new Foody_Substitutes_Ingredients();
+$Foody_Substitutes_Ingredients = new Foody_Substitutes_Ingredients(null);
 echo $Foody_Substitutes_Ingredients->SwapStyle();
 
 //JS Scripts : 
