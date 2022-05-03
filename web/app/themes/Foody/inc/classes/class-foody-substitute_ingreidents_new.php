@@ -126,7 +126,8 @@ class Foody_Substitutes_Ingredients extends Foody_Ingredient{
 			color: #579fba;
 		}
 		.ing_wrapp{
-			border:dashed 1px #fafafa;
+			border:solid 1px #ffffff40;
+			padding-bottom:0px !important;
 		}
 		
 		
@@ -262,7 +263,7 @@ return $rtn;
 					
 					<div class="extra-ingredients  swapper_'.$sub_pid.' dn" style="width:100%;background:none;">
 						<ul>
-							<li style="display:block; background:none; margin-bottom:1px;border-bottom:dashed 1px #fff;">
+							<li style="display:block; background:none; margin-bottom:1px;border-bottom:solid 1px #ffffff40;">
 								<span class="ingredient-container"> <b>
 									<span dir="ltr" class="amount" data-amount="'.$Swap_Amount.'" data-original="'.$Swap_Amount.'"
 									data-plural="" data-singular="'.$Swap_Title.'" data-unit="'.$Swap_Masurin_Unit.'" 
