@@ -184,9 +184,15 @@ return $rtn;
 			if($Swap_Commorcial_Logo_Approve && trim($Swap_Commorcial_Logo) != ''){
 				$Go_Com_Logo = "<span class='cmlogo'><img  src='$Swap_Commorcial_Logo' class='commorcial_logo'/></span>";
 			}
+			else{
+				$Go_Com_Logo ='';
+			}
 			
 			if($Swap_Commorcial_Text_Approve && trim($Swap_Commorcial_Text) != ''){
 				$Go_Com_Text = "<span class='cmtext'>$Swap_Commorcial_Text</span>";
+			}
+			else{
+				$Go_Com_Text ='';
 			}
 			
 			
@@ -240,11 +246,16 @@ return $rtn;
 			if($Swap_Commorcial_Logo_Approve && trim($Swap_Commorcial_Logo) != ''){
 				$Go_Com_Logo = "<span class='cmlogo'><img  src='$Swap_Commorcial_Logo' class='commorcial_logo'/></span>";
 			}
+			else{
+				$Go_Com_Logo ='';
+			}
 			
 			if($Swap_Commorcial_Text_Approve && trim($Swap_Commorcial_Text) != ''){
 				$Go_Com_Text = "<span class='cmtext'>$Swap_Commorcial_Text</span>";
 			}
-			
+			else{
+				$Go_Com_Text ='';
+			}
 			
 			
 			$rtn .= '
