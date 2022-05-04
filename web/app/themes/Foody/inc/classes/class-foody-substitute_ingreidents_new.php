@@ -129,7 +129,11 @@ class Foody_Substitutes_Ingredients extends Foody_Ingredient{
 			border:solid 1px #ffffff40;
 			padding-bottom:0px !important;
 		}
-		
+		.swap_img{
+			max-width:26px;
+			max-height:26px;
+			cursor:pointer;
+		}
 		
 		.ing_wrapp Swap_Color{
 			overflow: initial !important;
@@ -316,8 +320,8 @@ return $rtn;
 		}
 		
 		if($Swap_prop == 'Image'){
-			$rtn = '<div class="swap_text_in" id="sw_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');"><img src="'. get_field('img_before_swap' , $sub_pid) . '"/></div>' .
-					'<div class="swap_text_out dn" id="prev_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');"><img src="' . get_field('img_after_swap', $sub_pid) . '"/></div>';
+			$rtn = '<div class="swap_text_in" id="sw_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');"><img class="swap_img" src="'. get_field('img_before_swap' , $sub_pid) . '"/></div>' .
+					'<div class="swap_text_out dn" id="prev_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');"><img class="swap_img" src="' . get_field('img_after_swap', $sub_pid) . '"/></div>';
 	
 		}
 		 return $rtn ;
