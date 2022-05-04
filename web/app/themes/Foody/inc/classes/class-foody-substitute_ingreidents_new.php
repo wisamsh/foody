@@ -316,7 +316,9 @@ return $rtn;
 		}
 		
 		if($Swap_prop == 'Image'){
-			
+			$rtn = '<div class="swap_text_in" id="sw_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');"><img src="'. get_field('img_before_swap' , $sub_pid) . '"/></div>' .
+					'<div class="swap_text_out dn" id="prev_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');"><img src="' . get_field('img_after_swap', $sub_pid) . '"/></div>';
+	
 		}
 		 return $rtn ;
 		
