@@ -59,6 +59,24 @@ class Foody_Substitutes_Ingredients extends Foody_Ingredient{
 	
 	public function SwapStyle(){
 		$rtn = '<style>
+		@media only screen and (max-width: 600px) {
+			.Swaploader img{
+			margin-top: 60%;
+			width:170px;
+			
+		}
+		}
+		
+		@media only screen and (min-width: 600px) {
+			.Swaploader img{
+			margin-top: 18%;
+			width:170px;
+			
+		}
+		}
+		
+		
+		
 		.dn{display:none !important;}
 		.Swap_Color {background:#c8d7de !important;}
 		.alter_content h2 {
@@ -74,14 +92,23 @@ class Foody_Substitutes_Ingredients extends Foody_Ingredient{
 			padding:15px;
 		}
 		
-		.Swaploader{
+			.Swaploader{
 			width: 100%;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    color: #ffffff;
-    background: red;
-		}
+			text-align: center;
+			position: fixed;
+			top: 0;
+			right: 0;
+			left: 0;
+			background: none;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+			text-align: center;
+background:#ffffffa6;
+			}
+		
+		
+		
 		
 		
 		.swap_text_in {

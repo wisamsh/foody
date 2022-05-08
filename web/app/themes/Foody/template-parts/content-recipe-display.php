@@ -144,7 +144,7 @@ target_type: 'mix'
 <?php $recipe->the_purchase_buttons(); ?>
 </section>
 <hr class="title-line">
-<div class="Swaploader dn">מבצע שינויים באופן הכנה למצרכים המתאימים...</div >
+<div class="Swaploader dn"><img src="https://foody-media.s3.eu-west-1.amazonaws.com/w_images/loader.gif"/></div >
 <section class="recipe-content <?php echo $recipe->is_content_by_steps() ? 'with-steps' : ''?> original_content">
 <?php $recipe->get_relevant_content();
 
