@@ -62,7 +62,8 @@ class Foody_Substitutes_Ingredients extends Foody_Ingredient{
 		@media only screen and (max-width: 600px) {
 			.Swaploader img{
 			margin-top: 60%;
-			width:170px;
+			width:100px;
+			height: 100px;
 			
 		}
 		}
@@ -70,7 +71,8 @@ class Foody_Substitutes_Ingredients extends Foody_Ingredient{
 		@media only screen and (min-width: 600px) {
 			.Swaploader img{
 			margin-top: 18%;
-			width:170px;
+			width:150px;
+			height:150px;
 			
 		}
 		}
