@@ -3,8 +3,17 @@
  */
 //.sponsored-by.company div
 
-jQuery(document).ready(($) => {
+jQuery(document).ready(($) => 
+{
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe')) {
+       
+        let commercial_look =  foodyGlobals['commercial_look'] ? foodyGlobals['commercial_look']  : "אינו משוייך למתחם";
+     
+       
+       
+       
+        
+        
         let recipePrimaryCategory = $('.breadcrumb > li').last()[0].innerText;
         // let redTitlesAppeared = [];
         let timeInPageDelta = 60;
@@ -115,6 +124,9 @@ jQuery(document).ready(($) => {
             eventCallback(event, 'מתכון', 'מעבר לקטגוריה', breadcrumb, 'מיקום', 'פירורי לחם', get_recipe_order_location());
         });
 
+       
+
+        
         /**
          * Add/Remove favorite recipe
          */
@@ -636,11 +648,16 @@ jQuery(document).ready(($) => {
         });
 
 
+        
+
+
+
+        
 
     }
 });
 
-
+//end LOAD
 /**
  * Handle events and fire analytics dataLayer.push
  * @param event
@@ -712,7 +729,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
      * Has rich content - does contains video or product buy option
      */
     let hasRichContent = foodyGlobals['has_video'] ? foodyGlobals['has_video'] : false;
-
+    
     tagManager.pushDataLayer(
         category,
         action,
@@ -734,6 +751,9 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
         ingredientsPromotion,
         ingredient,
         non_interaction
+        
+        
+        
     );
 }
 
@@ -771,18 +791,28 @@ function categoriesHits(publishers, feedPublisher, categoriesList) {
     let purchaseButtonsStatus = $('.purchase-buttons .purchase-buttons .purchase-button-container').length > 0 ? 'עם כפתור רכישה' : 'ללא כפתור רכישה';
 
     let ingredientsPromotion = $('.sponsors-container').length > 0 ? getRelevantIngredientsPromotion(publishers, feedPublisher) : 'אין קידומים';
+    let commercial_look =  foodyGlobals['commercial_look'] ? foodyGlobals['commercial_look']  : "אינו משוייך למתחם";
+    eventCallback(null, 'מתכון', 'טעינה', '', commercial_look , feedPublisher, get_recipe_order_location(), '', '', '');
+   
     if (feedPublisher == "") {
         eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), get_recipe_order_location(), primaryCategory, purchaseButtonsStatus, ingredientsPromotion);
     } else {
         eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', feedPublisher, get_recipe_order_location(), primaryCategory, purchaseButtonsStatus, ingredientsPromotion);
+       //wisam
+       
+   
     }
     foodyGlobals['post']['categories'].forEach((category, index, array) => {
         if (category.name != primaryCategory) {
              if (typeof (category) != 'undefined') {
                 if (feedPublisher == "") {
                     eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', publishers.join(', '), get_recipe_order_location(), category.name, purchaseButtonsStatus, ingredientsPromotion);
+                    
                 } else {
                     eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', feedPublisher, get_recipe_order_location(), category.name, purchaseButtonsStatus, ingredientsPromotion);
+                    
+              
+                    //commercial_look
                 }
             } else {
                 if (index === (array.length - 1)) {
@@ -912,3 +942,4 @@ $.fn.isInViewport = function() {
     let viewportBottom = viewportTop + $(window).height();
     return elementBottom > viewportTop && elementTop < viewportBottom;
 };
+console.log(foodyGlobals);
