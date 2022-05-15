@@ -155,7 +155,7 @@ target_type: 'mix'
 
 </section>
 <?php echo $recipe->tiktok_video();?>
-
+<?php echo $recipe->YouTubeShort();?>
 <?php if (get_current_blog_id() == 2) { ?>
 <script src="https://cnt.trvdp.com/js/1236/5441.js"></script>
 <?php } ?>

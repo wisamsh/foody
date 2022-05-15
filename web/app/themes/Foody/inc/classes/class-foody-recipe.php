@@ -28,7 +28,7 @@ class Foody_Recipe extends Foody_Post
     private $calories_per_dish;
 
     public $rating;
-	public $alternative_ing ;
+    public $alternative_ing;
 
 
     /**
@@ -596,7 +596,7 @@ class Foody_Recipe extends Foody_Post
         ];
     }
 
-//wisam
+    //wisam
     private function init_ingredients()
     {
         $this->ingredients_groups = array();
@@ -616,7 +616,7 @@ class Foody_Recipe extends Foody_Post
                     $this->number_of_dishes = 1;
                 }
                 $this->amount_for = get_sub_field('amount_for');
-				
+
                 $this->ingredients_title = get_sub_field('title');
                 $current_group = 0;
                 while (have_rows('ingredients_groups', $this->post->ID)) : the_row();
@@ -632,7 +632,7 @@ class Foody_Recipe extends Foody_Post
 
                         $ingredient_post = get_sub_field('ingredient');
                         $this->ingredients_count++;
-					
+
 
                         $amounts = [];
 
@@ -641,7 +641,7 @@ class Foody_Recipe extends Foody_Post
                             $unit_field = get_sub_field('unit');
                             $unit = get_term($unit_field, 'units');
                             $amount = get_sub_field('amount');
-							
+
                             if (!is_wp_error($unit) && $unit instanceof WP_Term) {
 
                                 $unit_name = $unit->name;
@@ -661,21 +661,21 @@ class Foody_Recipe extends Foody_Post
                                 'amount' => $amount,
                                 'unit' => $unit_name,
                                 'unit_tax' => $unit,
-								
+
                             ];
 
                         endwhile;
 
-//wisam
-						
+                        //wisam
+
                         $substitute_ingredient_field = get_sub_field('recipe_substitute_ingredient');
-						
+
                         if ($ingredient_post && $ingredient_post instanceof WP_Post) {
                             $ingredient = new Foody_Ingredient($ingredient_post);
 
                             $ingredient->recipe_id = $this->post->ID;
                             $ingredient->comment = get_sub_field('comment');
-							$ingredient->alternative_ing = get_sub_field('alternative_ing');
+                            $ingredient->alternative_ing = get_sub_field('alternative_ing');
                             $alter_link = get_sub_field('alter_link');
                             if (!empty($alter_link)) {
                                 $ingredient->has_alter_link = true;
@@ -1243,6 +1243,39 @@ class Foody_Recipe extends Foody_Post
             }
         }
     }
+
+
+
+    public function YouTubeShort()
+    {
+        //youtube_shorts
+        $rtn = '';
+
+
+        if (get_field("youtube_short", get_the_ID())) {
+            $VideoUrl = trim(get_field("youtube_short", get_the_ID()));
+            if (wp_is_mobile()) {
+                $Short_yt_width = 'width="400"';
+                $Short_yt_height = 'height="801"';
+            } else {
+                $Short_yt_width = 'width="451"';
+                $Short_yt_height = 'height="801"';
+            }
+
+            $rtn = '<div style="overflow: auto;text-align: center;width:100%;margin: 0 auto;">
+        
+        <iframe ' . $Short_yt_width . $Short_yt_height . ' src="https://www.youtube.com/embed/' . $VideoUrl . '"
+        title="פודי" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write;
+        encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+        </div>';
+        }
+
+        return $rtn;
+    }
+
+
 
     function get_relevant_content()
     {
