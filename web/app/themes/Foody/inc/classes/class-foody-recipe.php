@@ -1255,7 +1255,7 @@ class Foody_Recipe extends Foody_Post
         if (get_field("youtube_short", get_the_ID())) {
             $VideoUrl = trim(get_field("youtube_short", get_the_ID()));
             if (wp_is_mobile()) {
-                $Short_yt_width = 'width="400"';
+                $Short_yt_width = 'width="100%"';
                 $Short_yt_height = 'height="801"';
             } else {
                 $Short_yt_width = 'width="451"';
