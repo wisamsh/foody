@@ -197,147 +197,185 @@ return $rtn;
 	
 	
 	
-	
-	public function get_Swap_Type($sub_pid,  $pid){
+	public function get_Swap_Type($sub_pid, $pid){
 		$rtn = '';
 		$Swap_Type = get_field('swap_type', $sub_pid);
 		
+		$PractionUnit = array(
+		'1/2' => '0.5',
+		'1/4' => '0.25',
+		'1/3' => '0.3',
+		'1/8' => '0.125',
+		'3/4' => '0.75'
+		
+		);
+		
+		
 		switch ($Swap_Type){
-			case 'המרה מלאה':
-			 $Full_Swap = get_field('full_swap',$sub_pid);
-			
-			$rtn = '' ;
-			$Swap_Title = $Full_Swap['swaped_ing']->post_title;
-			$Swap_url = $Full_Swap['swaped_ing']->guid ;
-			$Swap_Masurin_Unit = $Full_Swap['swaped_ing_masure']->name ;
-			$Swap_Amount =  $Full_Swap['swaped_ing_amount'];
-			$Swap_Commorcial_Logo_Approve = $Full_Swap['abs_logo'];
-			$Swap_Commorcial_Text_Approve = $Full_Swap['abs_text'];
-			$Swap_Commorcial_Logo = get_field('client_com_logo',$sub_pid) ;
-			$Swap_Commorcial_Text = get_field('client_com_text',$sub_pid) ;
-			if($Swap_Commorcial_Logo_Approve && trim($Swap_Commorcial_Logo) != ''){
-				$Go_Com_Logo = "<span class='cmlogo'><img  src='$Swap_Commorcial_Logo' class='commorcial_logo'/></span>";
-			}
-			else{
-				$Go_Com_Logo ='';
-			}
-			
-			if($Swap_Commorcial_Text_Approve && trim($Swap_Commorcial_Text) != ''){
-				$Go_Com_Text = "<span class='cmtext'>$Swap_Commorcial_Text</span>";
-			}
-			else{
-				$Go_Com_Text ='';
-			}
-			
-			
-			$rtn = '
-					
-					<div class="extra-ingredients swapper_'.$sub_pid.' dn">
-						<span class="ingredient-container"><b>
-							<span dir="ltr" class="amount" data-amount="'.$Swap_Amount.'" data-original="'.$Swap_Amount.'"
-							data-plural="" data-singular="'.$Swap_Title.'" data-unit="'.$Swap_Masurin_Unit.'" 
-							data-calories="0" 
-							data-carbohydrates="0" data-sugar="0" data-fats="0" data-sodium="0" data-protein="0" 
-							data-fibers="0" data-saturated_fat="0" data-cholesterol="0" data-calcium="0" 
-							data-iron="0" data-potassium="0" data-zinc="0">'.$Swap_Amount .'</span>
-							<span class="ingredient-data"> <span class="unit">'.$Swap_Masurin_Unit.'</span>
-							<span class="name"><a target="_self" title="'.$Swap_Title.'" class="foody-u-link" 
-							href="'.$Swap_url.'">
-							'.$Swap_Title .'
-							</a>
-							</span>
-							</span>
-						</span></b>
-						'. $Go_Com_Logo . $Go_Com_Text .'
-					</div>
-';
-
-			
-			return $rtn;
-			
-			break;
-			
-			
-			case 'המרה חלקית':
-			$Part_Swap = get_field('part_swap',$sub_pid);
-		//print_r($Part_Swap);
-		$ingrediant_involved = $Part_Swap['ingrediant_involved'];
-		//print_r($ingrediant_involved);
-			 foreach($ingrediant_involved as $ings){
-				
-			
-			$Swap_Title = $ings['ing_inv']->post_title;
-			$Swap_url = $ings['ing_inv']->guid;
-			$Swap_Masurin_Unit =$ings['ing_inv_unit']->name ;
-			$Swap_Amount = $ings['ing_inv_amount'];
-			
-			
-			$Swap_Commorcial_Logo_Approve = $ings['trt_logo'];
-			$Swap_Commorcial_Text_Approve = $ings['trt_text'];
-			$Swap_Commorcial_Logo = get_field('client_com_logo',$sub_pid) ;
-			$Swap_Commorcial_Text = get_field('client_com_text',$sub_pid) ;
-			
-			if($Swap_Commorcial_Logo_Approve && trim($Swap_Commorcial_Logo) != ''){
-				$Go_Com_Logo = "<span class='cmlogo'><img  src='$Swap_Commorcial_Logo' class='commorcial_logo'/></span>";
-			}
-			else{
-				$Go_Com_Logo ='';
-			}
-			
-			if($Swap_Commorcial_Text_Approve && trim($Swap_Commorcial_Text) != ''){
-				$Go_Com_Text = "<span class='cmtext'>$Swap_Commorcial_Text</span>";
-			}
-			else{
-				$Go_Com_Text ='';
-			}
-			
-			
-			$rtn .= '
-					
-					<div class="extra-ingredients  swapper_'.$sub_pid.' dn" style="width:100%;background:none;">
-						<ul>
-							<li style="display:block; background:none; margin-bottom:1px;border-bottom:solid 1px #ffffff40;">
-								<span class="ingredient-container"> <b>
-									<span dir="ltr" class="amount" data-amount="'.$Swap_Amount.'" data-original="'.$Swap_Amount.'"
-									data-plural="" data-singular="'.$Swap_Title.'" data-unit="'.$Swap_Masurin_Unit.'" 
-									data-calories="0" 
-									data-carbohydrates="0" data-sugar="0" data-fats="0" data-sodium="0" data-protein="0" 
-									data-fibers="0" data-saturated_fat="0" data-cholesterol="0" data-calcium="0" 
-									data-iron="0" data-potassium="0" data-zinc="0">'.$Swap_Amount .'</span>
-									<span class="ingredient-data"> <span class="unit">'.$Swap_Masurin_Unit.'</span>
-									<span class="name"><a target="_self" title="'.$Swap_Title.'" class="foody-u-link" 
-									href="'.$Swap_url.'">
-									'.$Swap_Title .'
-									</a>
-									</span>
-									</span>
-								</span></b>
-								'. $Go_Com_Logo . $Go_Com_Text .'
-							</li>
-						</ul>
-						
-					</div>
-';
-				
-				
-				
-				$Go_Com_Text = '';
-			$Go_Com_Logo = '' ;
-				
-				
-			} 
-			
-			return $rtn;
-			break;
-			
+		case 'המרה מלאה':
+		$Full_Swap = get_field('full_swap',$sub_pid);
+		
+		
+		$rtn = '' ;
+		$Swap_Title = $Full_Swap['swaped_ing']->post_title;
+		$Swap_url = $Full_Swap['swaped_ing']->guid ;
+		$Swap_Masurin_Unit = $Full_Swap['swaped_ing_masure']->name ;
+		$Swap_Masurin_Unit_Many_ID = $Full_Swap['swaped_ing_masure']->term_id ;
+		$term_tax = $Full_Swap['swaped_ing_masure']->taxonomy;
+		$Swap_plural_name = get_field('plural_name', 'units_' . $Swap_Masurin_Unit_Many_ID);
+		
+		$Swap_Amount = $Full_Swap['swaped_ing_amount'];
+		$orignal_Amount = $Full_Swap['swaped_ing_amount'];
+		
+		if($Swap_Amount > 1){
+		$Swap_Masurin_Unit = $Swap_plural_name ;
+		}
+		
+		//if(in_array($Swap_Amount, $PractionUnit)){
+		// $Swap_Amount = array_search($Swap_Amount, $PractionUnit);
+		//}
+		
+		$Swap_Commorcial_Logo_Approve = $Full_Swap['abs_logo'];
+		$Swap_Commorcial_Text_Approve = $Full_Swap['abs_text'];
+		$Swap_Commorcial_Logo = get_field('client_com_logo',$sub_pid) ;
+		$Swap_Commorcial_Text = get_field('client_com_text',$sub_pid) ;
+		if($Swap_Commorcial_Logo_Approve && trim($Swap_Commorcial_Logo) != ''){
+		$Go_Com_Logo = "<span class='cmlogo'><img src='$Swap_Commorcial_Logo' class='commorcial_logo'/></span>";
+		}
+		else{
+		$Go_Com_Logo ='';
+		}
+		
+		if($Swap_Commorcial_Text_Approve && trim($Swap_Commorcial_Text) != ''){
+		$Go_Com_Text = "<span class='cmtext'>$Swap_Commorcial_Text</span>";
+		}
+		else{
+		$Go_Com_Text ='';
 		}
 		
 		
-	
+		$rtn = '
+		
+		<div class="extra-ingredients swapper_'.$sub_pid.' dn">
+		<span class="ingredient-container"><b>
+		<span dir="ltr" class="amount" data-amount="'.$orignal_Amount.'" data-original="'.$Swap_Amount.'"
+		data-plural="" data-singular="'.$Swap_Title.'" data-unit="'.$Swap_Masurin_Unit.'"
+		data-calories="0"
+		data-carbohydrates="0" data-sugar="0" data-fats="0" data-sodium="0" data-protein="0"
+		data-fibers="0" data-saturated_fat="0" data-cholesterol="0" data-calcium="0"
+		data-iron="0" data-potassium="0" data-zinc="0">'.$Swap_Amount .'</span>
+		<span class="ingredient-data"> <span class="unit">'.$Swap_Masurin_Unit.'</span>
+		<span class="name"><a target="_self" title="'.$Swap_Title.'" class="foody-u-link"
+		href="'.$Swap_url.'">
+		'.$Swap_Title .'
+		</a>
+		</span>
+		</span>
+		</span></b>
+		'. $Go_Com_Logo . $Go_Com_Text .'
+		</div>
+		';
+		
+		
+		return $rtn;
+		
+		break;
+		
+		
+		case 'המרה חלקית':
+		$Part_Swap = get_field('part_swap',$sub_pid);
+		//print_r($Part_Swap);
+		$ingrediant_involved = $Part_Swap['ingrediant_involved'];
+		//print_r($ingrediant_involved);
+		foreach($ingrediant_involved as $ings){
+		
+		
+		$Swap_Title = $ings['ing_inv']->post_title;
+		$Swap_url = $ings['ing_inv']->guid;
+		$Swap_Masurin_Unit =$ings['ing_inv_unit']->name ;
+		$Swap_Amount = $ings['ing_inv_amount'];
+		$orignal_Amount = $ings['ing_inv_amount'];
+		
+		$Swap_Masurin_Unit_Many_ID = $ings['ing_inv_unit']->term_id ;
+		
+		$Swap_plural_name = get_field('plural_name', 'units_' . $Swap_Masurin_Unit_Many_ID);
+		
+		if($Swap_Amount > 1){
+		$Swap_Masurin_Unit = $Swap_plural_name ;
+		}
+		
+		//if(in_array($Swap_Amount, $PractionUnit)){
+		//$Swap_Amount = array_search($Swap_Amount, $PractionUnit);
+		//}
+		
+		$Swap_Commorcial_Logo_Approve = $ings['trt_logo'];
+		$Swap_Commorcial_Text_Approve = $ings['trt_text'];
+		$Swap_Commorcial_Logo = get_field('client_com_logo',$sub_pid) ;
+		$Swap_Commorcial_Text = get_field('client_com_text',$sub_pid) ;
+		
+		if($Swap_Commorcial_Logo_Approve && trim($Swap_Commorcial_Logo) != ''){
+		$Go_Com_Logo = "<span class='cmlogo'><img src='$Swap_Commorcial_Logo' class='commorcial_logo'/></span>";
+		}
+		else{
+		$Go_Com_Logo ='';
+		}
+		
+		if($Swap_Commorcial_Text_Approve && trim($Swap_Commorcial_Text) != ''){
+		$Go_Com_Text = "<span class='cmtext'>$Swap_Commorcial_Text</span>";
+		}
+		else{
+		$Go_Com_Text ='';
+		}
+		
+		
+		$rtn .= '
+		
+		<div class="extra-ingredients swapper_'.$sub_pid.' dn" style="width:100%;background:none;">
+		<ul>
+		<li style="display:block; background:none; margin-bottom:1px;border-bottom:solid 1px #ffffff40;">
+		<span class="ingredient-container"> <b>
+		<span dir="ltr" class="amount" data-amount="'.$orignal_Amount.'" data-original="'.$Swap_Amount.'"
+		data-plural="" data-singular="'.$Swap_Title.'" data-unit="'.$Swap_Masurin_Unit.'"
+		data-calories="0"
+		data-carbohydrates="0" data-sugar="0" data-fats="0" data-sodium="0" data-protein="0"
+		data-fibers="0" data-saturated_fat="0" data-cholesterol="0" data-calcium="0"
+		data-iron="0" data-potassium="0" data-zinc="0">'.$Swap_Amount .'</span>
+		<span class="ingredient-data"> <span class="unit">'.$Swap_Masurin_Unit.'</span>
+		<span class="name"><a target="_self" title="'.$Swap_Title.'" class="foody-u-link"
+		href="'.$Swap_url.'">
+		'.$Swap_Title .'
+		</a>
+		</span>
+		</span>
+		</span></b>
+		'. $Go_Com_Logo . $Go_Com_Text .'
+		</li>
+		</ul>
+		
+		</div>
+		';
+		
+		
+		
+		$Go_Com_Text = '';
+		$Go_Com_Logo = '' ;
+		
+		
+		}
+		
+		return $rtn;
+		break;
+		
+		}
+		
+		
+		
 	}
 	
-	
-	
+
+
+
+
 	
 	
 	public function get_text_image_Swap($sub_pid){
