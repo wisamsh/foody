@@ -231,9 +231,9 @@ return $rtn;
 		$Swap_Masurin_Unit = $Swap_plural_name ;
 		}
 		
-		//if(in_array($Swap_Amount, $PractionUnit)){
-		// $Swap_Amount = array_search($Swap_Amount, $PractionUnit);
-		//}
+		if(in_array($Swap_Amount, $PractionUnit)){
+		$Swap_Amount = array_search($Swap_Amount, $PractionUnit);
+		}
 		
 		$Swap_Commorcial_Logo_Approve = $Full_Swap['abs_logo'];
 		$Swap_Commorcial_Text_Approve = $Full_Swap['abs_text'];
@@ -304,9 +304,9 @@ return $rtn;
 		$Swap_Masurin_Unit = $Swap_plural_name ;
 		}
 		
-		//if(in_array($Swap_Amount, $PractionUnit)){
-		//$Swap_Amount = array_search($Swap_Amount, $PractionUnit);
-		//}
+		if(in_array($Swap_Amount, $PractionUnit)){
+		$Swap_Amount = array_search($Swap_Amount, $PractionUnit);
+		}
 		
 		$Swap_Commorcial_Logo_Approve = $ings['trt_logo'];
 		$Swap_Commorcial_Text_Approve = $ings['trt_text'];
