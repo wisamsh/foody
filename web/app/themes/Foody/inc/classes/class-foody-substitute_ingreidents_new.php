@@ -227,7 +227,7 @@ return $rtn;
 		$Swap_Amount = $Full_Swap['swaped_ing_amount'];
 		$orignal_Amount = $Full_Swap['swaped_ing_amount'];
 		
-		if($Swap_Amount > 1){
+		if($Swap_Amount > 1 && trim($Swap_plural_name) !=''){
 		$Swap_Masurin_Unit = $Swap_plural_name ;
 		}
 		
@@ -300,7 +300,7 @@ return $rtn;
 		
 		$Swap_plural_name = get_field('plural_name', 'units_' . $Swap_Masurin_Unit_Many_ID);
 		
-		if($Swap_Amount > 1){
+		if($Swap_Amount > 1 && trim($Swap_plural_name) !=''){
 		$Swap_Masurin_Unit = $Swap_plural_name ;
 		}
 		
