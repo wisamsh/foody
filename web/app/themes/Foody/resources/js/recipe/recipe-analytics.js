@@ -11,18 +11,18 @@ jQuery(document).ready(($) => {
         $(".swap_text_in").on("click", function () {
            
             
-            let action_p = 'לחיצה על קישור להחלפת מצרך מקורי במצרך חליפי';
+           
             let amud = 'מתכונים';
             let category = 'מתכון';
             let action = 'החלפת מצרך מקורי';
             let label = $(this).attr("data-orginal");
             let cd_value1= foodyGlobals.author_name; 
             let cd_description1 = foodyGlobals.channel_name;
-            let swap_ing = $(this).attr("data-orginal");
+            let swap_ing = $(this).attr("data-swap");
 
 
 
-            eventCallback(action_p, amud, category, action, label, cd_value1, cd_description1, swap_ing);
+            eventCallback(amud, category, action, label, cd_value1, cd_description1, '', '', '', '', '', swap_ing);
            // console.log( $( this ).attr("data-orginal") );
 //console.log(foodyGlobals);
 
