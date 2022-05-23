@@ -3,25 +3,40 @@
  */
 //.sponsored-by.company div
 
-jQuery(document).ready(($) => 
-{
+jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe')) {
-       
-        let commercial_look =  foodyGlobals['commercial_look'] ? foodyGlobals['commercial_look']  : "אינו משוייך למתחם";
-     
-        $( ".swap_text_in" ).on( "click", function() {
-            console.log( $( this ).attr("data-orginal") );
-          });
-       
-       
-        
-        
+
+        let commercial_look = foodyGlobals['commercial_look'] ? foodyGlobals['commercial_look'] : "אינו משוייך למתחם";
+
+        $(".swap_text_in").on("click", function () {
+           
+            
+            let action_p = 'לחיצה על קישור להחלפת מצרך מקורי במצרך חליפי';
+            let amud = 'מתכונים';
+            let category = 'מתכון';
+            let action = 'החלפת מצרך מקורי';
+            let label = $(this).attr("data-orginal");
+            let cd_value1= foodyGlobals.author_name; 
+            let cd_description1 = foodyGlobals.channel_name;
+            let swap_ing = $(this).attr("data-orginal");
+
+
+
+            eventCallback(action_p, amud, category, action, label, cd_value1, cd_description1, swap_ing);
+           // console.log( $( this ).attr("data-orginal") );
+//console.log(foodyGlobals);
+
+        });
+
+
+
+
         let recipePrimaryCategory = $('.breadcrumb > li').last()[0].innerText;
         // let redTitlesAppeared = [];
         let timeInPageDelta = 60;
         let secondsInPage = 0;
         let feedPublisher = "אין";
-        let scrollsArr = {'0': false, '25': false, '50': false, '75': false, '100': false};
+        let scrollsArr = { '0': false, '25': false, '50': false, '75': false, '100': false };
         let redTitlesList = [];
         let titlesList = [
             '.recipe-categories .title',
@@ -64,21 +79,21 @@ jQuery(document).ready(($) =>
         // Add to recipes visited in session count
         set_recipe_order_location(foodyGlobals.ID);
 
-        for (let titleSelector in titlesList){
+        for (let titleSelector in titlesList) {
             if ($(titlesList[titleSelector]).length) {
-                if(titlesList[titleSelector] === '.recipe-content .content-container .foody-content'){
+                if (titlesList[titleSelector] === '.recipe-content .content-container .foody-content') {
                     redTitlesList['אופן הכנה'] = titlesList[titleSelector];
                 }
-                else if(titlesList[titleSelector] === '.footab-container .footab_wrapper .top_text'){
+                else if (titlesList[titleSelector] === '.footab-container .footab_wrapper .top_text') {
                     redTitlesList['כתבות טאבולה'] = titlesList[titleSelector];
                 }
-                else if(titlesList[titleSelector] === '.recipe_similar_content .title'){
+                else if (titlesList[titleSelector] === '.recipe_similar_content .title') {
                     redTitlesList['מתכונים נוספים'] = titlesList[titleSelector];
                 }
-                else if(titlesList[titleSelector] ===
+                else if (titlesList[titleSelector] ===
                     '.recipe-overview .overview-lists-container-desktop .overview-nutrients .overview-item > .value' ||
                     titlesList[titleSelector] ===
-                    '.recipe-overview .overview-lists-container .overview-nutrients .overview-item > .value'){
+                    '.recipe-overview .overview-lists-container .overview-nutrients .overview-item > .value') {
                     redTitlesList['ערכים תזונתיים'] = titlesList[titleSelector];
                 }
                 else {
@@ -95,7 +110,7 @@ jQuery(document).ready(($) =>
         if (foodyGlobals['post']['publisher']) {
             feedPublisher = foodyGlobals['post']['publisher'];
             //publishers.push(publisher);
-        } else if(foodyGlobals['channel_publisher_name']){
+        } else if (foodyGlobals['channel_publisher_name']) {
             feedPublisher = foodyGlobals['channel_publisher_name'];
         }
 
@@ -124,11 +139,12 @@ jQuery(document).ready(($) =>
         breadcrumbs.delegate('li', 'click', function (event) {
             let breadcrumb = jQuery(this).find('a').text().trim();
             eventCallback(event, 'מתכון', 'מעבר לקטגוריה', breadcrumb, 'מיקום', 'פירורי לחם', get_recipe_order_location());
+
         });
 
-       
 
-        
+
+
         /**
          * Add/Remove favorite recipe
          */
@@ -291,7 +307,7 @@ jQuery(document).ready(($) =>
             if (!analyticsLabel) {
                 analyticsLabel = this.innerText;
             }
-            eventCallback(event, 'מתכון', 'לחיצה לרכישה', analyticsLabel, 'מפרסם', feedPublisher, get_recipe_order_location(),'');
+            eventCallback(event, 'מתכון', 'לחיצה לרכישה', analyticsLabel, 'מפרסם', feedPublisher, get_recipe_order_location(), '');
             nonInteraction = false;
         });
 
@@ -305,9 +321,9 @@ jQuery(document).ready(($) =>
             const scrollPercent = (scrollTop) / (docHeight - winHeight);
             const scrollPercentRounded = Math.round(scrollPercent * 100);
 
-            for(let title in redTitlesList){
-                if ($(redTitlesList[title]).isInViewport()){
-                    eventCallback(e, 'מתכון', 'חשיפת רכיב',  title);
+            for (let title in redTitlesList) {
+                if ($(redTitlesList[title]).isInViewport()) {
+                    eventCallback(e, 'מתכון', 'חשיפת רכיב', title);
                     delete redTitlesList[title];
                 }
             }
@@ -319,7 +335,7 @@ jQuery(document).ready(($) =>
             }
             if (toLog) {
                 if (!scrollsArr[scrollPercentRounded]) {
-                    eventCallback(e, 'מתכון', 'גלילה', scrollPercentRounded + '%', '', '', get_recipe_order_location(), '', '', '', '', isNonInteraction(scrollsArr,isTwoMinuets,nonInteraction));
+                    eventCallback(e, 'מתכון', 'גלילה', scrollPercentRounded + '%', '', '', get_recipe_order_location(), '', '', '', '', isNonInteraction(scrollsArr, isTwoMinuets, nonInteraction));
                     scrollsArr[scrollPercentRounded] = true;
                 }
             }
@@ -418,8 +434,8 @@ jQuery(document).ready(($) =>
         let interval = setInterval(function () {
             secondsInPage += timeInPageDelta;
             let timerString = toMinutes(secondsInPage);
-            eventCallback('', 'מתכון', 'טיימר',timerString , '', '', '','','','','', isNonInteraction(scrollsArr,isTwoMinuets,nonInteraction));
-            if(timerString == '2m'){
+            eventCallback('', 'מתכון', 'טיימר', timerString, '', '', '', '', '', '', '', isNonInteraction(scrollsArr, isTwoMinuets, nonInteraction));
+            if (timerString == '2m') {
                 isTwoMinuets = true;
             }
             if (timerString == '20m') {
@@ -451,10 +467,10 @@ jQuery(document).ready(($) =>
 
         /** clicked on logo **/
         $('.sticky_bottom_header .foody-navbar-container .site-branding .logo-container-mobile .custom-logo-link').on('click', function () {
-            if(!$('.sticky_bottom_header .foody-navbar-container .site-branding .logo-container-mobile .custom-logo-link .foody-logo-close').hasClass('hidden')) {
+            if (!$('.sticky_bottom_header .foody-navbar-container .site-branding .logo-container-mobile .custom-logo-link .foody-logo-close').hasClass('hidden')) {
                 /** opened menu **/
                 eventCallback('', 'מתכון', 'פתיחת תפריט פוטר', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'פוטר');
-            } else if(!$('.sticky_bottom_header .foody-navbar-container .site-branding .logo-container-mobile .custom-logo-link .foody-logo-text').hasClass('hidden')){
+            } else if (!$('.sticky_bottom_header .foody-navbar-container .site-branding .logo-container-mobile .custom-logo-link .foody-logo-text').hasClass('hidden')) {
                 /** go to homepage **/
                 eventCallback('', 'מתכון', 'מעבר לעמוד הבית', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'פוטר');
             }
@@ -462,7 +478,7 @@ jQuery(document).ready(($) =>
 
         /** related content button clicked **/
         $('.sticky_bottom_header .foody-navbar-container .related-content-btn').on('click', function () {
-            if(!$(this).hasClass('empty-related-content')) {
+            if (!$(this).hasClass('empty-related-content')) {
                 eventCallback('', 'מתכון', 'מתכונים נוספים', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'פוטר');
             }
         });
@@ -470,7 +486,7 @@ jQuery(document).ready(($) =>
         /** menu item clicked **/
         $('.sticky_bottom_header .foody-navbar-container #quadmenu .quadmenu-container .quadmenu-item-content').on('click', function () {
             let label = $(this).find('> .quadmenu-text');
-            if(label.length){
+            if (label.length) {
                 label = label.text().trim();
             } else {
                 label = '';
@@ -480,15 +496,15 @@ jQuery(document).ready(($) =>
 
         /** accessibility button clicked **/
         $('.sticky_bottom_header .foody-navbar-container .social-btn-container').on('click', function () {
-            if($(this).hasClass('active')) {
+            if ($(this).hasClass('active')) {
                 eventCallback('', 'מתכון', 'לחיצה לשיתוף בפוטר', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'פוטר');
             }
         });
 
         /** search button clicked **/
-        if($('.search-overlay.floating-mobile-header').length){
+        if ($('.search-overlay.floating-mobile-header').length) {
             $('.sticky_bottom_header .foody-navbar-container .btn-search').on('click', function () {
-                if($('.search-overlay.floating-mobile-header').hasClass('open')) {
+                if ($('.search-overlay.floating-mobile-header').hasClass('open')) {
                     eventCallback('', 'מתכון', 'הפעלת חיפוש', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'פוטר');
                 }
             });
@@ -497,7 +513,7 @@ jQuery(document).ready(($) =>
         /** recipe form related content button clicked **/
         $('.related-content-overlay.floating-mobile-header .related-recipes-container .similar-content-item .similar-content-item-listing').on('click', function () {
             let clickedRecipeName = $(this).find('> .similar-content-listing-title');
-            if(clickedRecipeName.length){
+            if (clickedRecipeName.length) {
                 clickedRecipeName = clickedRecipeName.text().trim();
             } else {
                 clickedRecipeName = '';
@@ -537,14 +553,14 @@ jQuery(document).ready(($) =>
         });
 
         $('.slider.slider-for .video-overlay').on('click', function () {
-             eventCallback('', 'מתכון', 'צפיה בסרטון ראשי', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'גלריה ראשית');
+            eventCallback('', 'מתכון', 'צפיה בסרטון ראשי', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'גלריה ראשית');
         });
 
         /******************* ********************/
 
         /**************** Promotion Area ****************/
-        if ( $('.promotion-area').length > 0  ) {
-            $('.promotion-area').on('click',function() {
+        if ($('.promotion-area').length > 0) {
+            $('.promotion-area').on('click', function () {
                 let txt = $('.promotion-area').text().trim()
                 eventCallback('', 'מתכון', 'לחיצה על אזור קידום', txt);
             })
@@ -554,38 +570,38 @@ jQuery(document).ready(($) =>
         /**************** show more ****************/
 
         /** categories **/
-        $('.cat-read-more').on('click', function() {
+        $('.cat-read-more').on('click', function () {
             eventCallback('', 'מתכון', 'לחיצה על עוד בקטגוריות', 'קטגוריות');
         });
 
         /** preview **/
-        $('.foody-content.show-read-more .read-more').on('click', function(){
+        $('.foody-content.show-read-more .read-more').on('click', function () {
             eventCallback('', 'מתכון', 'לחיצה על עוד בטקסט פותח', 'טקסט פותח');
         });
 
         /** accessories **/
-        $('.acc-read-more').on('click', function() {
+        $('.acc-read-more').on('click', function () {
             eventCallback('', 'מתכון', 'לחיצה על עוד באביזרים', 'אביזרים');
         });
 
         /** techniques **/
-        $('.teq-read-more').on('click', function() {
+        $('.teq-read-more').on('click', function () {
             eventCallback('', 'מתכון', 'לחיצה על עוד בטכניקות', 'טכניקות');
         });
 
         /** tags **/
-        $('.tag-read-more').on('click', function() {
+        $('.tag-read-more').on('click', function () {
             eventCallback('', 'מתכון', 'לחיצה על עוד בתגיות', 'תגיות');
         });
 
         /** tags **/
-        $('.recipe-overview .overview-nutrients .overview-item > .value').on('click', function() {
+        $('.recipe-overview .overview-nutrients .overview-item > .value').on('click', function () {
             eventCallback('', 'מתכון', 'לחיצה על עוד ערכים תזונתיים', 'ערכים תזונתיים');
         });
         /******************* ********************/
 
         /** rating **/
-        $('.details .rating-stars-container > .empty-star').on('click', function() {
+        $('.details .rating-stars-container > .empty-star').on('click', function () {
             eventCallback('', 'מתכון', 'דרוג מתכון', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
         });
 
@@ -598,10 +614,10 @@ jQuery(document).ready(($) =>
         });
 
         /** Pans type change - buttons **/
-        if ( $('.foody-pan-select').length > 0 ) {
-            $('.foody-pan-select').on('click',function(){
-                $('.foody-pan-select .dropdown-item').each( function(index){
-                    $(this).unbind().click( function () {
+        if ($('.foody-pan-select').length > 0) {
+            $('.foody-pan-select').on('click', function () {
+                $('.foody-pan-select .dropdown-item').each(function (index) {
+                    $(this).unbind().click(function () {
                         eventCallback(event, 'מתכון', 'שינוי סוג תבנית', $(this).text().trim(), 'סוג תבנית', get_recipe_order_location());
                     })
                 })
@@ -611,7 +627,7 @@ jQuery(document).ready(($) =>
         /** select similar recipe from middle of page **/
         $('section.recipe_similar_content .similar-content-items .similar-content-item-listing').on('click', function () {
             let clickedRecipeName = $(this).find('> .similar-content-listing-title');
-            if(clickedRecipeName.length){
+            if (clickedRecipeName.length) {
                 clickedRecipeName = clickedRecipeName.text().trim();
             } else {
                 clickedRecipeName = '';
@@ -630,31 +646,31 @@ jQuery(document).ready(($) =>
         });
 
         /** rating from the middle of the page **/
-        $('.comments-rating-prep-container .rating-stars-container > .empty-star').on('click', function() {
+        $('.comments-rating-prep-container .rating-stars-container > .empty-star').on('click', function () {
             eventCallback('', 'מתכון', 'דרוג מתכון', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory, 'תפריט קישורים אמצעי');
         });
 
         /** clicked on made the recipe - הכנת את המתכון **/
-        $('.recipe-how-i-did .btn-container .btn-text').on('click', function() {
+        $('.recipe-how-i-did .btn-container .btn-text').on('click', function () {
             eventCallback('', 'מתכון', 'הכנתם את המתכון', $('.recipe-how-i-did .btn-container .btn-text').text(), ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
         });
 
         /** clicked on link to - ומשקולות מידות **/
-        $('.recipe-ingredients .ingredients-area-links .sizes-and-weights').on('click', function() {
+        $('.recipe-ingredients .ingredients-area-links .sizes-and-weights').on('click', function () {
             eventCallback('', 'מתכון', 'המרת מידות ומשקולות', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
         });
 
         /** clicked on transform-to-vegetarian **/
-        $('.recipe-ingredients .ingredients-area-links .transform-to-vegetarian').on('click', function() {
+        $('.recipe-ingredients .ingredients-area-links .transform-to-vegetarian').on('click', function () {
             eventCallback('', 'מתכון', 'המרת מתכון לטבעוני', '', ' מפרסם', feedPublisher, get_recipe_order_location(), recipePrimaryCategory);
         });
 
 
-        
 
 
 
-        
+
+
 
     }
 });
@@ -731,7 +747,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
      * Has rich content - does contains video or product buy option
      */
     let hasRichContent = foodyGlobals['has_video'] ? foodyGlobals['has_video'] : false;
-    
+
     tagManager.pushDataLayer(
         category,
         action,
@@ -753,9 +769,9 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
         ingredientsPromotion,
         ingredient,
         non_interaction
-        
-        
-        
+
+
+
     );
 }
 
@@ -793,27 +809,27 @@ function categoriesHits(publishers, feedPublisher, categoriesList) {
     let purchaseButtonsStatus = $('.purchase-buttons .purchase-buttons .purchase-button-container').length > 0 ? 'עם כפתור רכישה' : 'ללא כפתור רכישה';
 
     let ingredientsPromotion = $('.sponsors-container').length > 0 ? getRelevantIngredientsPromotion(publishers, feedPublisher) : 'אין קידומים';
-    let commercial_look =  foodyGlobals['commercial_look'] ? foodyGlobals['commercial_look']  : "אינו משוייך למתחם";
-    eventCallback(null, 'מתכון', 'טעינה', '', commercial_look , feedPublisher, get_recipe_order_location(), '', '', '');
-   
+    let commercial_look = foodyGlobals['commercial_look'] ? foodyGlobals['commercial_look'] : "אינו משוייך למתחם";
+    eventCallback(null, 'מתכון', 'טעינה', '', commercial_look, feedPublisher, get_recipe_order_location(), '', '', '');
+
     if (feedPublisher == "") {
         eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), get_recipe_order_location(), primaryCategory, purchaseButtonsStatus, ingredientsPromotion);
     } else {
         eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', 'מפרסם', feedPublisher, get_recipe_order_location(), primaryCategory, purchaseButtonsStatus, ingredientsPromotion);
-       //wisam
-       
-   
+        //wisam
+
+
     }
     foodyGlobals['post']['categories'].forEach((category, index, array) => {
         if (category.name != primaryCategory) {
-             if (typeof (category) != 'undefined') {
+            if (typeof (category) != 'undefined') {
                 if (feedPublisher == "") {
                     eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', publishers.join(', '), get_recipe_order_location(), category.name, purchaseButtonsStatus, ingredientsPromotion);
-                    
+
                 } else {
                     eventCallback(null, 'מתכון', 'טעינה', 'קטגוריות נוספות', 'מפרסם', feedPublisher, get_recipe_order_location(), category.name, purchaseButtonsStatus, ingredientsPromotion);
-                    
-              
+
+
                     //commercial_look
                 }
             } else {
@@ -841,7 +857,7 @@ function categoriesHits(publishers, feedPublisher, categoriesList) {
 
 }
 
-function isNonInteraction (scrollsArr, isTwoMinuets, _nonInteraction){
+function isNonInteraction(scrollsArr, isTwoMinuets, _nonInteraction) {
     if (_nonInteraction) {
         let scrollInteraction = false;
 
@@ -856,7 +872,7 @@ function isNonInteraction (scrollsArr, isTwoMinuets, _nonInteraction){
             return false;
         }
     }
-    else{
+    else {
         return false;
     }
     return true;
@@ -937,7 +953,7 @@ function toMinutes(secondsInPage) {
     }
 }
 
-$.fn.isInViewport = function() {
+$.fn.isInViewport = function () {
     let elementTop = $(this).offset().top;
     let elementBottom = elementTop + $(this).outerHeight();
     let viewportTop = $(window).scrollTop();

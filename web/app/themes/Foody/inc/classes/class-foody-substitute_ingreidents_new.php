@@ -441,7 +441,7 @@ return $rtn;
 		$orginal_ing = get_field('orginal_ing', $sub_pid);
 		if($orginal_ing)
 		{
-			$orginal_substence = $orginal_ing->post_title;
+			$orginal_substence = get_the_title($orginal_ing);
 		}
 		$Swap_Type = get_field('swap_type', $sub_pid);
 	switch ($Swap_Type){
