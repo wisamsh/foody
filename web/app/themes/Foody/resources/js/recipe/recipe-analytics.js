@@ -9,7 +9,9 @@ jQuery(document).ready(($) =>
        
         let commercial_look =  foodyGlobals['commercial_look'] ? foodyGlobals['commercial_look']  : "אינו משוייך למתחם";
      
-       
+        $( ".swap_text_in" ).on( "click", function() {
+            console.log( $( this ).attr("data-orginal") );
+          });
        
        
         

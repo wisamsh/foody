@@ -1,8 +1,10 @@
 <?php 
-class Foody_Substitutes_Ingredients extends Foody_Ingredient{
+class Foody_Substitutes_Ingredients extends Foody_Ingredient {
 	
+	public  $swap_bandle = array("0"=>"")  ;
 	
-	
+
+
 	//WISAM========================Substitue Ingredients=========================================
 	public function GetAlternativeIngredients(){
 		$RecipeID =  get_the_ID();
@@ -200,7 +202,7 @@ return $rtn;
 	public function get_Swap_Type($sub_pid, $pid){
 		$rtn = '';
 		$Swap_Type = get_field('swap_type', $sub_pid);
-		
+		$original_ing = get_field('original_ing', $sub_pid);
 		$PractionUnit = array(
 			'1/2' => '0.5',
 			'1/4' => '0.25',
@@ -270,6 +272,7 @@ return $rtn;
 		
 		
 		$rtn = '' ;
+		
 		$Swap_Title = $Full_Swap['swaped_ing']->post_title;
 		$Swap_url = $Full_Swap['swaped_ing']->guid ;
 		$Swap_Masurin_Unit = $Full_Swap['swaped_ing_masure']->name ;
@@ -340,6 +343,7 @@ return $rtn;
 		//print_r($Part_Swap);
 		$ingrediant_involved = $Part_Swap['ingrediant_involved'];
 		//print_r($ingrediant_involved);
+		$i=0;
 		foreach($ingrediant_involved as $ings){
 		
 		
@@ -412,7 +416,7 @@ return $rtn;
 		
 		$Go_Com_Text = '';
 		$Go_Com_Logo = '' ;
-		
+		$i++;
 		
 		}
 		
@@ -434,16 +438,42 @@ return $rtn;
 	public function get_text_image_Swap($sub_pid){
 		$rtn = '' ;
 		$Swap_prop = get_field('swap_link_type', $sub_pid);
+		$orginal_ing = get_field('orginal_ing', $sub_pid);
+		if($orginal_ing)
+		{
+			$orginal_substence = $orginal_ing->post_title;
+		}
+		$Swap_Type = get_field('swap_type', $sub_pid);
+	switch ($Swap_Type){
+		case 'המרה מלאה':
+			$Full_Swap = get_field('full_swap',$sub_pid);
+			$Swap_Title[0] = $Full_Swap['swaped_ing']->post_title;
+			break;
+			case 'המרה חלקית':
+				$Part_Swap = get_field('part_swap',$sub_pid);
+				//print_r($Part_Swap);
+				$ingrediant_involved = $Part_Swap['ingrediant_involved'];
+				//print_r($ingrediant_involved);
+				$i=0;
+				foreach($ingrediant_involved as $ings){
+					$Swap_Title[$i] = $ings['ing_inv']->post_title;
+					$i++;
+				}
+		
+		break;
+		}
+		
 		if($Swap_prop == 'Text'){
-			$rtn = '<div class="swap_text_in" id="sw_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');">'. get_field('text_link_swap_from' , $sub_pid) . '</div>' .
-					'<div class="swap_text_out dn" id="prev_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');">' . get_field('text_link_swap_two', $sub_pid) . '</div>';
+			$rtn = '<div data-swap="'.implode(",", $Swap_Title).'" data-orginal="'.$orginal_substence.'" class="swap_text_in" id="sw_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');">'. get_field('text_link_swap_from' , $sub_pid) . '</div>' .
+					'<div data-swap="'.implode(",", $Swap_Title).'"  data-orginal="'.$orginal_substence.'" class="swap_text_out dn" id="prev_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');">' . get_field('text_link_swap_two', $sub_pid) . '</div>';
 		}
 		
 		if($Swap_prop == 'Image'){
-			$rtn = '<div class="swap_text_in" id="sw_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');"><img class="swap_img" src="'. get_field('img_before_swap' , $sub_pid) . '"/></div>' .
-					'<div class="swap_text_out dn" id="prev_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');"><img class="swap_img" src="' . get_field('img_after_swap', $sub_pid) . '"/></div>';
+			$rtn = '<div data-swap="'.implode(",", $Swap_Title).'"  data-orginal="'.$orginal_substence.'" class="swap_text_in" id="sw_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');"><img class="swap_img" src="'. get_field('img_before_swap' , $sub_pid) . '"/></div>' .
+					'<div data-swap="'.implode(",", $Swap_Title).'"  data-orginal="'.$orginal_substence.'" class="swap_text_out dn" id="prev_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');"><img class="swap_img" src="' . get_field('img_after_swap', $sub_pid) . '"/></div>';
 	
 		}
+		
 		 return $rtn ;
 		
 		
