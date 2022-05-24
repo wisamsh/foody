@@ -8,7 +8,7 @@ jQuery(document).ready(($) => {
 
         let commercial_look = foodyGlobals['commercial_look'] ? foodyGlobals['commercial_look'] : "אינו משוייך למתחם";
 
-        $(".swap_text_in").on("click", function () {
+        $(".swap_text_in").on("click", function (event) {
            
             
            
@@ -22,7 +22,7 @@ jQuery(document).ready(($) => {
 
 
 
-            eventCallback(amud, category, action, label, cd_value1, cd_description1, '', '', '', '', '', swap_ing);
+            eventCallback(event, 1 ,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22);
            // console.log( $( this ).attr("data-orginal") );
 //console.log(foodyGlobals);
 
