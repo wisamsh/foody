@@ -9,9 +9,6 @@ jQuery(document).ready(($) => {
         let commercial_look = foodyGlobals['commercial_look'] ? foodyGlobals['commercial_look'] : "אינו משוייך למתחם";
 
         $(".swap_text_in").on("click", function (event) {
-           
-            
-           
             let amud = 'מתכונים';
             let category = 'מתכון';
             let action = 'החלפת מצרך מקורי';
@@ -19,13 +16,18 @@ jQuery(document).ready(($) => {
             let cd_value1= foodyGlobals.author_name; 
             let cd_description1 = foodyGlobals.channel_name;
             let swap_ing = $(this).attr("data-swap");
-
-
-
             eventCallback(event, category , action, label, '', cd_value1, '', '', '', 9, swap_ing, '');
-           // console.log( $( this ).attr("data-orginal") );
-//console.log(foodyGlobals);
+        });
 
+        $(".swap_text_out").on("click", function (event) {
+            let amud = 'מתכונים';
+            let category = 'מתכון';
+            let action = 'החזרת מצרך מקורי';
+            let label = $(this).attr("data-swap"); 
+            let cd_value1= foodyGlobals.author_name; 
+            let cd_description1 = foodyGlobals.channel_name;
+            let swap_ing = $(this).attr("data-orginal");
+            eventCallback(event, category , action, label, '', cd_value1, '', '', '', 9, swap_ing, '');
         });
 
 
