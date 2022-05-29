@@ -74,7 +74,7 @@ class Foody_courses_members_exporter
 //save into php output
         ob_end_clean();
         $writer->save('php://output');
-
+die();
     }
 
 
