@@ -86,13 +86,11 @@ if($updated == 1){
 wp_send_json_success(['msg' => __('משתמש הקורס נמחק בהצלחה!')]);
         }
 else{
-wp_send_json_error(['error' => __('המשתמש לא נמחק , נא לפנות למנהל האתר לתקלות כאלה!')]);
+wp_send_json_error(['error' => __('המשתמש לא נמחק , נא לפנות למנהל האתר!')]);
         }
 } else {
 wp_send_json_error(['error' => 'missing member id']);
     }
-
-
 
 
 }
