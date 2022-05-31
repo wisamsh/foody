@@ -25,7 +25,7 @@ class Foody_Substitutes_Ingredients extends Foody_Ingredient {
 	public function The_Sub_ingredients($id){
 		
 		$PostIds = $id;
-		print_r($PostIds );
+		//print_r($PostIds );
 		$rtn = array();
 		$i = 0 ;
 		foreach($PostIds as $PostIds){	
