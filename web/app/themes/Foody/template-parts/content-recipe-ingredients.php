@@ -8,8 +8,8 @@
  */
 
 /** @noinspection PhpUndefinedVariableInspection */
-//error_reporting(E_ERROR | E_PARSE);
-//error_reporting(0);
+
+error_reporting(0);
 
 
 $ingredients_groups = $template_args['groups'];
