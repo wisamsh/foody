@@ -105,7 +105,7 @@ $recipe_id = isset($template_args['recipe_id']) ? $template_args['recipe_id'] : 
                                     } else {
                                         $ingr_URL = $sponser_Text;
                                     }
-                                    //echo "<span class='sponser_Text'>".$ingr_URL."</span>";
+                                    echo "<span class='sponser_Text'>".$ingr_URL."</span>";
                                 }
 
                                 if (trim($show_sponsor_logo == 1) && $logo_url != "") {
@@ -115,7 +115,7 @@ $recipe_id = isset($template_args['recipe_id']) ? $template_args['recipe_id'] : 
                                     } else {
                                         $Photo_comm_Url = '<img src="' . $logo_url . '"/>';
                                     }
-                                    //echo "<span class='commorcial_logo milr'>".$Photo_comm_Url."</span>";
+                                    echo "<span class='commorcial_logo milr'>".$Photo_comm_Url."</span>";
                                 }
                             }
                         }
