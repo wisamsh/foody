@@ -1,124 +1,122 @@
 <?php
-class Foody_Substitutes_Ingredients extends Foody_Ingredient {
-
-public $swap_bandle = array("0"=>"") ;
-
-
-
-//WISAM========================Substitue Ingredients=========================================
-public function Get_Common_Rule_For_Merchandise()
+class Foody_Substitutes_Ingredients extends Foody_Ingredient
 {
-//WISAM SAY : this function goes for foody_comm_rule :31-05-2022=========================
-$ThisPostID = get_the_ID();
-$Comm_Rule = get_field("recipe_channel", $ThisPostID);
-$iNkubator = '';
-if(isset($_REQUEST['referer']) || $Comm_Rule !=trim('')){
 
-//IF THERE IS NO MISTAKE FROM THE MAGNIFICENT CONTENT PROVIDERS :)
-if(isset($_REQUEST['referer']) && $_REQUEST['referer'] == $Comm_Rule){
-$iNkubator = $Comm_Rule ;
-}
-else{
-//TODO ====================================================
-//ASK IF THERE IS NO RULE IN RECIPE BUT RECIPE IN RULE LIST
-//WHAT @VAR TO TAKE THE referer OR THE RECIPE Comm_Rule?
-//=========================================================
-$iNkubator = $Comm_Rule ;
-}
+	public $swap_bandle = array("0" => "");
 
 
-}
+
+	//WISAM========================Substitue Ingredients=========================================
+	public function Get_Common_Rule_For_Merchandise()
+	{
+		//WISAM SAY : this function goes for foody_comm_rule :31-05-2022=========================
+		$ThisPostID = get_the_ID();
+		$Comm_Rule = get_field("recipe_channel", $ThisPostID);
+		$iNkubator = '';
+		if (isset($_REQUEST['referer']) || $Comm_Rule != trim('')) {
+
+			//IF THERE IS NO MISTAKE FROM THE MAGNIFICENT CONTENT PROVIDERS :)
+			if (isset($_REQUEST['referer']) && $_REQUEST['referer'] == $Comm_Rule) {
+				$iNkubator = $Comm_Rule;
+			} else {
+				//TODO ====================================================
+				//ASK IF THERE IS NO RULE IN RECIPE BUT RECIPE IN RULE LIST
+				//WHAT @VAR TO TAKE THE referer OR THE RECIPE Comm_Rule?
+				//=========================================================
+				$iNkubator = $Comm_Rule;
+			}
+		}
 
 
-$RecipeID = get_the_ID();
-global $wpdb;
-$rtn = array();
+		$RecipeID = get_the_ID();
+		global $wpdb;
+		$rtn = array();
 
 
-$Glob = array();
-$args = array(
-'numberposts' => -1,
-'post_type' => 'foody_comm_rule',
-'post_status' => 'publish',
-'meta_query' => array(
-'relation' => 'AND',
-array(
-'key' => 'comm_rule_area',
-'value' => array($iNkubator),
-'compare' => 'IN',
-)
-),
-);
+		$Glob = array();
+		$args = array(
+			'numberposts' => -1,
+			'post_type' => 'foody_comm_rule',
+			'post_status' => 'publish',
+			'meta_query' => array(
+				'relation' => 'AND',
+				array(
+					'key' => 'comm_rule_area',
+					'value' => array($iNkubator),
+					'compare' => 'IN',
+				)
+			),
+		);
 
-$posts = get_posts($args);
+		$posts = get_posts($args);
 
-foreach($posts as $post_ing){
+		foreach ($posts as $post_ing) {
 
-$postID= $post_ing->ID;
+			$postID = $post_ing->ID;
 
-$ing_id = get_field("object", $post_ing->ID);
-$Glob["id"][] = $post_ing->ID ;
-$Glob["ing"][] = $ing_id ;
-$Sponser = get_field("sponsor", $post_ing->ID);
+			$ing_id = get_field("object", $post_ing->ID);
+			$Glob["id"][] = $post_ing->ID;
+			$Glob["ing"][] = $ing_id;
+			$Sponser = get_field("sponsor", $post_ing->ID);
 
-$Glob["sponsor"][] = get_field("sponsor", $post_ing->ID);
-$Glob["show_sponsor_text"][] = get_field("show_sponsor", $post_ing->ID) == true ? "1" : "0";
-$Glob["show_sponsor_logo"][] = get_field("show_sponsor_logo", $post_ing->ID) == true ? "1" : "0" ;
-$Glob["ing_link"][] = get_field("link", $post_ing->ID);
+			$Glob["sponsor"][] = get_field("sponsor", $post_ing->ID);
+			$Glob["show_sponsor_text"][] = get_field("show_sponsor", $post_ing->ID) == true ? "1" : "0";
+			$Glob["show_sponsor_logo"][] = get_field("show_sponsor_logo", $post_ing->ID) == true ? "1" : "0";
+			$Glob["ing_link"][] = get_field("link", $post_ing->ID);
 
-$Logo = get_field("logo", "sponsors_" . $Sponser );
-$LogoUrl = $Logo['url'];
-$sponser_Text = get_term( $Sponser )->name;
-$Glob["logo_url"][] = $LogoUrl;
-$Glob["sponser_Text"][] = $sponser_Text;
-
-}
-return $Glob;
-
-
-//END FUNCTION
-}
+			$Logo = get_field("logo", "sponsors_" . $Sponser);
+			$LogoUrl = $Logo['url'];
+			$sponser_Text = get_term($Sponser)->name;
+			$Glob["logo_url"][] = $LogoUrl;
+			$Glob["sponser_Text"][] = $sponser_Text;
+		}
+		return $Glob;
 
 
-public function The_Sub_ingredients($id){
-
-$PostIds = $id;
-print_r($PostIds );
-$rtn = array();
-$i = 0 ;
-foreach($PostIds as $PostIds){
-$rtn[$i]['ing_id'] = get_field('orginal_ing', $PostIds);
-$rtn[$i]['ing_post_id'] = $PostIds;
-$i ++;
-}
-
-return ($rtn);
+		//END FUNCTION
+	}
 
 
-}
+	public function The_Sub_ingredients($id)
+	{
+
+		$PostIds = $id;
+		print_r($PostIds);
+		$rtn = array();
+		$i = 0;
+		foreach ($PostIds as $PostIds) {
+			$rtn[$i]['ing_id'] = get_field('orginal_ing', $PostIds);
+			$rtn[$i]['ing_post_id'] = $PostIds;
+			$i++;
+		}
+
+		return ($rtn);
+	}
 
 
-public function Get_Substitutes_Details($sub_pid){
+	public function Get_Substitutes_Details($sub_pid)
+	{
 
-$swap_type = get_field('swap_type', $sub_pid);
-$swap =array();
+		$swap_type = get_field('swap_type', $sub_pid);
+		$swap = array();
 
-switch($swap_type){
-case 'המרה מלאה' :
-$swap['full'] = get_field('full_swap', $sub_pid);
+		switch ($swap_type) {
+			case 'המרה מלאה':
+				$swap['full'] = get_field('full_swap', $sub_pid);
 
-break;
-case 'המרה חלקית' :
-$swap['part'] = get_field('part_swap', $sub_pid);
-break;
-}
+				break;
+			case 'המרה חלקית':
+				$swap['part'] = get_field('part_swap', $sub_pid);
+				break;
+		}
 
-return $swap;
-}
+		return $swap;
+	}
 
 
-public function SwapStyle(){
-$rtn = '<style>
+	public function SwapStyle()
+	{
+		$rtn = '<style>
 @media only screen and (max-width: 600px) {
 .Swaploader img{
 margin-top: 60%;
@@ -263,219 +261,216 @@ margin-left: 5px;
 }
 </style>';
 
-return $rtn;
-}
+		return $rtn;
+	}
 
 
 
 
-public function get_Swap_Type($sub_pid, $pid){
-$rtn = '';
-$Swap_Type = get_field('swap_type', $sub_pid);
-$original_ing = get_field('original_ing', $sub_pid);
-$PractionUnit = array(
-'1/2' => '0.5',
-'1/4' => '0.25',
-'1/3' => '0.3',
-'1/8' => '0.125',
-'3/4' => '0.75',
+	public function get_Swap_Type($sub_pid, $pid)
+	{
+		$rtn = '';
+		$Swap_Type = get_field('swap_type', $sub_pid);
+		$original_ing = get_field('original_ing', $sub_pid);
+		$PractionUnit = array(
+			'1/2' => '0.5',
+			'1/4' => '0.25',
+			'1/3' => '0.3',
+			'1/8' => '0.125',
+			'3/4' => '0.75',
 
-'1 1/2' => '1.5',
-'1 1/4' => '1.25',
-'1 1/3' => '1.3',
-'1 1/8' => '1.125',
-'1 3/4' => '1.75',
+			'1 1/2' => '1.5',
+			'1 1/4' => '1.25',
+			'1 1/3' => '1.3',
+			'1 1/8' => '1.125',
+			'1 3/4' => '1.75',
 
-'2 1/2' => '2.5',
-'2 1/4' => '2.25',
-'2 1/3' => '2.3',
-'2 1/8' => '2.125',
-'2 3/4' => '2.75',
+			'2 1/2' => '2.5',
+			'2 1/4' => '2.25',
+			'2 1/3' => '2.3',
+			'2 1/8' => '2.125',
+			'2 3/4' => '2.75',
 
-'3 1/2' => '3.5',
-'3 1/4' => '3.25',
-'3 1/3' => '3.3',
-'3 1/8' => '3.125',
-'3 3/4' => '3.75',
+			'3 1/2' => '3.5',
+			'3 1/4' => '3.25',
+			'3 1/3' => '3.3',
+			'3 1/8' => '3.125',
+			'3 3/4' => '3.75',
 
-'4 1/2' => '4.5',
-'4 1/4' => '4.25',
-'4 1/3' => '4.3',
-'4 1/8' => '4.125',
-'4 3/4' => '4.75',
+			'4 1/2' => '4.5',
+			'4 1/4' => '4.25',
+			'4 1/3' => '4.3',
+			'4 1/8' => '4.125',
+			'4 3/4' => '4.75',
 
-'5 1/2' => '5.5',
-'5 1/4' => '5.25',
-'5 1/3' => '5.3',
-'5 1/8' => '5.125',
-'5 3/4' => '5.75',
+			'5 1/2' => '5.5',
+			'5 1/4' => '5.25',
+			'5 1/3' => '5.3',
+			'5 1/8' => '5.125',
+			'5 3/4' => '5.75',
 
-'6 1/2' => '6.5',
-'6 1/4' => '6.25',
-'6 1/3' => '6.3',
-'6 1/8' => '6.125',
-'6 3/4' => '6.75',
+			'6 1/2' => '6.5',
+			'6 1/4' => '6.25',
+			'6 1/3' => '6.3',
+			'6 1/8' => '6.125',
+			'6 3/4' => '6.75',
 
-'7 1/2' => '7.5',
-'7 1/4' => '7.25',
-'7 1/3' => '7.3',
-'7 1/8' => '7.125',
-'7 3/4' => '7.75',
+			'7 1/2' => '7.5',
+			'7 1/4' => '7.25',
+			'7 1/3' => '7.3',
+			'7 1/8' => '7.125',
+			'7 3/4' => '7.75',
 
-'8 1/2' => '8.5',
-'8 1/4' => '8.25',
-'8 1/3' => '8.3',
-'8 1/8' => '8.125',
-'8 3/4' => '8.75',
+			'8 1/2' => '8.5',
+			'8 1/4' => '8.25',
+			'8 1/3' => '8.3',
+			'8 1/8' => '8.125',
+			'8 3/4' => '8.75',
 
-'9 1/2' => '9.5',
-'9 1/4' => '9.25',
-'9 1/3' => '9.3',
-'9 1/8' => '9.125',
-'9 3/4' => '9.75'
-);
-
-
-switch ($Swap_Type){
-case 'המרה מלאה':
-$Full_Swap = get_field('full_swap',$sub_pid);
+			'9 1/2' => '9.5',
+			'9 1/4' => '9.25',
+			'9 1/3' => '9.3',
+			'9 1/8' => '9.125',
+			'9 3/4' => '9.75'
+		);
 
 
-$rtn = '' ;
-
-$Swap_Title = $Full_Swap['swaped_ing']->post_title;
-$Swap_url = $Full_Swap['swaped_ing']->guid ;
-$Swap_Masurin_Unit = $Full_Swap['swaped_ing_masure']->name ;
-$Swap_Masurin_Unit_Many_ID = $Full_Swap['swaped_ing_masure']->term_id ;
-$term_tax = $Full_Swap['swaped_ing_masure']->taxonomy;
-$Swap_plural_name = get_field('plural_name', 'units_' . $Swap_Masurin_Unit_Many_ID);
-
-$Swap_Amount = $Full_Swap['swaped_ing_amount'];
-$orignal_Amount = $Full_Swap['swaped_ing_amount'];
-
-if($Swap_Amount > 1 && trim($Swap_plural_name) !=''){
-$Swap_Masurin_Unit = $Swap_plural_name ;
-}
-
-if(in_array($Swap_Amount, $PractionUnit)){
-$Swap_Amount = array_search($Swap_Amount, $PractionUnit);
-}
-
-$Swap_Commorcial_Logo_Approve = $Full_Swap['abs_logo'];
-$Swap_Commorcial_Text_Approve = $Full_Swap['abs_text'];
-$Swap_Commorcial_Logo = get_field('client_com_logo',$sub_pid) ;
-$Swap_Commorcial_Text = get_field('client_com_text',$sub_pid) ;
-if($Swap_Commorcial_Logo_Approve && trim($Swap_Commorcial_Logo) != ''){
-$Go_Com_Logo = "<span class='cmlogo'><img src='$Swap_Commorcial_Logo' class='commorcial_logo'/></span>";
-}
-else{
-$Go_Com_Logo ='';
-}
-
-if($Swap_Commorcial_Text_Approve && trim($Swap_Commorcial_Text) != ''){
-$Go_Com_Text = "<span class='cmtext'>$Swap_Commorcial_Text</span>";
-}
-else{
-$Go_Com_Text ='';
-}
+		switch ($Swap_Type) {
+			case 'המרה מלאה':
+				$Full_Swap = get_field('full_swap', $sub_pid);
 
 
-$rtn = '
+				$rtn = '';
 
-<div class="extra-ingredients swapper_'.$sub_pid.' dn">
+				$Swap_Title = $Full_Swap['swaped_ing']->post_title;
+				$Swap_url = $Full_Swap['swaped_ing']->guid;
+				$Swap_Masurin_Unit = $Full_Swap['swaped_ing_masure']->name;
+				$Swap_Masurin_Unit_Many_ID = $Full_Swap['swaped_ing_masure']->term_id;
+				$term_tax = $Full_Swap['swaped_ing_masure']->taxonomy;
+				$Swap_plural_name = get_field('plural_name', 'units_' . $Swap_Masurin_Unit_Many_ID);
+
+				$Swap_Amount = $Full_Swap['swaped_ing_amount'];
+				$orignal_Amount = $Full_Swap['swaped_ing_amount'];
+
+				if ($Swap_Amount > 1 && trim($Swap_plural_name) != '') {
+					$Swap_Masurin_Unit = $Swap_plural_name;
+				}
+
+				if (in_array($Swap_Amount, $PractionUnit)) {
+					$Swap_Amount = array_search($Swap_Amount, $PractionUnit);
+				}
+
+				$Swap_Commorcial_Logo_Approve = $Full_Swap['abs_logo'];
+				$Swap_Commorcial_Text_Approve = $Full_Swap['abs_text'];
+				$Swap_Commorcial_Logo = get_field('client_com_logo', $sub_pid);
+				$Swap_Commorcial_Text = get_field('client_com_text', $sub_pid);
+				if ($Swap_Commorcial_Logo_Approve && trim($Swap_Commorcial_Logo) != '') {
+					$Go_Com_Logo = "<span class='cmlogo'><img src='$Swap_Commorcial_Logo' class='commorcial_logo'/></span>";
+				} else {
+					$Go_Com_Logo = '';
+				}
+
+				if ($Swap_Commorcial_Text_Approve && trim($Swap_Commorcial_Text) != '') {
+					$Go_Com_Text = "<span class='cmtext'>$Swap_Commorcial_Text</span>";
+				} else {
+					$Go_Com_Text = '';
+				}
+
+
+				$rtn = '
+
+<div class="extra-ingredients swapper_' . $sub_pid . ' dn">
 <span class="ingredient-container"><b>
-<span dir="ltr" class="amount" data-amount="'.$orignal_Amount.'" data-original="'.$Swap_Amount.'"
-data-plural="" data-singular="'.$Swap_Title.'" data-unit="'.$Swap_Masurin_Unit.'"
+<span dir="ltr" class="amount" data-amount="' . $orignal_Amount . '" data-original="' . $Swap_Amount . '"
+data-plural="" data-singular="' . $Swap_Title . '" data-unit="' . $Swap_Masurin_Unit . '"
 data-calories="0"
 data-carbohydrates="0" data-sugar="0" data-fats="0" data-sodium="0" data-protein="0"
 data-fibers="0" data-saturated_fat="0" data-cholesterol="0" data-calcium="0"
-data-iron="0" data-potassium="0" data-zinc="0">'.$Swap_Amount .'</span>
-<span class="ingredient-data"> <span class="unit">'.$Swap_Masurin_Unit.'</span>
-<span class="name"><a target="_self" title="'.$Swap_Title.'" class="foody-u-link"
-href="'.$Swap_url.'">
-'.$Swap_Title .'
+data-iron="0" data-potassium="0" data-zinc="0">' . $Swap_Amount . '</span>
+<span class="ingredient-data"> <span class="unit">' . $Swap_Masurin_Unit . '</span>
+<span class="name"><a target="_self" title="' . $Swap_Title . '" class="foody-u-link"
+href="' . $Swap_url . '">
+' . $Swap_Title . '
 </a>
 </span>
 </span>
 </span></b>
-'. $Go_Com_Logo . $Go_Com_Text .'
+' . $Go_Com_Logo . $Go_Com_Text . '
 </div>
 ';
 
 
-return $rtn;
+				return $rtn;
 
-break;
-
-
-case 'המרה חלקית':
-$Part_Swap = get_field('part_swap',$sub_pid);
-//print_r($Part_Swap);
-$ingrediant_involved = $Part_Swap['ingrediant_involved'];
-//print_r($ingrediant_involved);
-$i=0;
-foreach($ingrediant_involved as $ings){
+				break;
 
 
-$Swap_Title = $ings['ing_inv']->post_title;
-$Swap_url = $ings['ing_inv']->guid;
-$Swap_Masurin_Unit =$ings['ing_inv_unit']->name ;
-$Swap_Amount = $ings['ing_inv_amount'];
-$orignal_Amount = $ings['ing_inv_amount'];
-
-$Swap_Masurin_Unit_Many_ID = $ings['ing_inv_unit']->term_id ;
-
-$Swap_plural_name = get_field('plural_name', 'units_' . $Swap_Masurin_Unit_Many_ID);
-
-if($Swap_Amount > 1 && trim($Swap_plural_name) !=''){
-$Swap_Masurin_Unit = $Swap_plural_name ;
-}
-
-if(in_array($Swap_Amount, $PractionUnit)){
-$Swap_Amount = array_search($Swap_Amount, $PractionUnit);
-}
-
-$Swap_Commorcial_Logo_Approve = $ings['trt_logo'];
-$Swap_Commorcial_Text_Approve = $ings['trt_text'];
-$Swap_Commorcial_Logo = get_field('client_com_logo',$sub_pid) ;
-$Swap_Commorcial_Text = get_field('client_com_text',$sub_pid) ;
-
-if($Swap_Commorcial_Logo_Approve && trim($Swap_Commorcial_Logo) != ''){
-$Go_Com_Logo = "<span class='cmlogo'><img src='$Swap_Commorcial_Logo' class='commorcial_logo'/></span>";
-}
-else{
-$Go_Com_Logo ='';
-}
-
-if($Swap_Commorcial_Text_Approve && trim($Swap_Commorcial_Text) != ''){
-$Go_Com_Text = "<span class='cmtext'>$Swap_Commorcial_Text</span>";
-}
-else{
-$Go_Com_Text ='';
-}
+			case 'המרה חלקית':
+				$Part_Swap = get_field('part_swap', $sub_pid);
+				//print_r($Part_Swap);
+				$ingrediant_involved = $Part_Swap['ingrediant_involved'];
+				//print_r($ingrediant_involved);
+				$i = 0;
+				foreach ($ingrediant_involved as $ings) {
 
 
-$rtn .= '
+					$Swap_Title = $ings['ing_inv']->post_title;
+					$Swap_url = $ings['ing_inv']->guid;
+					$Swap_Masurin_Unit = $ings['ing_inv_unit']->name;
+					$Swap_Amount = $ings['ing_inv_amount'];
+					$orignal_Amount = $ings['ing_inv_amount'];
 
-<div class="extra-ingredients swapper_'.$sub_pid.' dn" style="width:100%;background:none;">
+					$Swap_Masurin_Unit_Many_ID = $ings['ing_inv_unit']->term_id;
+
+					$Swap_plural_name = get_field('plural_name', 'units_' . $Swap_Masurin_Unit_Many_ID);
+
+					if ($Swap_Amount > 1 && trim($Swap_plural_name) != '') {
+						$Swap_Masurin_Unit = $Swap_plural_name;
+					}
+
+					if (in_array($Swap_Amount, $PractionUnit)) {
+						$Swap_Amount = array_search($Swap_Amount, $PractionUnit);
+					}
+
+					$Swap_Commorcial_Logo_Approve = $ings['trt_logo'];
+					$Swap_Commorcial_Text_Approve = $ings['trt_text'];
+					$Swap_Commorcial_Logo = get_field('client_com_logo', $sub_pid);
+					$Swap_Commorcial_Text = get_field('client_com_text', $sub_pid);
+
+					if ($Swap_Commorcial_Logo_Approve && trim($Swap_Commorcial_Logo) != '') {
+						$Go_Com_Logo = "<span class='cmlogo'><img src='$Swap_Commorcial_Logo' class='commorcial_logo'/></span>";
+					} else {
+						$Go_Com_Logo = '';
+					}
+
+					if ($Swap_Commorcial_Text_Approve && trim($Swap_Commorcial_Text) != '') {
+						$Go_Com_Text = "<span class='cmtext'>$Swap_Commorcial_Text</span>";
+					} else {
+						$Go_Com_Text = '';
+					}
+
+
+					$rtn .= '
+
+<div class="extra-ingredients swapper_' . $sub_pid . ' dn" style="width:100%;background:none;">
 <ul>
 <li style="display:block; background:none; margin-bottom:1px;border-bottom:solid 1px #ffffff40;">
 <span class="ingredient-container"> <b>
-<span dir="ltr" class="amount" data-amount="'.$orignal_Amount.'" data-original="'.$Swap_Amount.'"
-data-plural="" data-singular="'.$Swap_Title.'" data-unit="'.$Swap_Masurin_Unit.'"
+<span dir="ltr" class="amount" data-amount="' . $orignal_Amount . '" data-original="' . $Swap_Amount . '"
+data-plural="" data-singular="' . $Swap_Title . '" data-unit="' . $Swap_Masurin_Unit . '"
 data-calories="0"
 data-carbohydrates="0" data-sugar="0" data-fats="0" data-sodium="0" data-protein="0"
 data-fibers="0" data-saturated_fat="0" data-cholesterol="0" data-calcium="0"
-data-iron="0" data-potassium="0" data-zinc="0">'.$Swap_Amount .'</span>
-<span class="ingredient-data"> <span class="unit">'.$Swap_Masurin_Unit.'</span>
-<span class="name"><a target="_self" title="'.$Swap_Title.'" class="foody-u-link"
-href="'.$Swap_url.'">
-'.$Swap_Title .'
+data-iron="0" data-potassium="0" data-zinc="0">' . $Swap_Amount . '</span>
+<span class="ingredient-data"> <span class="unit">' . $Swap_Masurin_Unit . '</span>
+<span class="name"><a target="_self" title="' . $Swap_Title . '" class="foody-u-link"
+href="' . $Swap_url . '">
+' . $Swap_Title . '
 </a>
 </span>
 </span>
 </span></b>
-'. $Go_Com_Logo . $Go_Com_Text .'
+' . $Go_Com_Logo . $Go_Com_Text . '
 </li>
 </ul>
 
@@ -484,71 +479,64 @@ href="'.$Swap_url.'">
 
 
 
-$Go_Com_Text = '';
-$Go_Com_Logo = '' ;
-$i++;
+					$Go_Com_Text = '';
+					$Go_Com_Logo = '';
+					$i++;
+				}
 
-}
-
-return $rtn;
-break;
-
-}
-
+				return $rtn;
+				break;
+		}
+	}
 
 
-}
+	public function get_text_image_Swap($sub_pid)
+	{
+		$rtn = '';
+		$Swap_prop = get_field('swap_link_type', $sub_pid);
+		$orginal_ing = get_field('orginal_ing', $sub_pid);
+		if ($orginal_ing) {
+			$orginal_substence = get_the_title($orginal_ing);
+		}
+		$Swap_Type = get_field('swap_type', $sub_pid);
+		switch ($Swap_Type) {
+			case 'המרה מלאה':
+				$Full_Swap = get_field('full_swap', $sub_pid);
+				$Swap_Title[0] = $Full_Swap['swaped_ing']->post_title;
+				break;
+			case 'המרה חלקית':
+				$Part_Swap = get_field('part_swap', $sub_pid);
+				//print_r($Part_Swap);
+				$ingrediant_involved = $Part_Swap['ingrediant_involved'];
+				//print_r($ingrediant_involved);
+				$i = 0;
+				foreach ($ingrediant_involved as $ings) {
+					$Swap_Title[$i] = $ings['ing_inv']->post_title;
+					$i++;
+				}
 
+				break;
+		}
 
-public function get_text_image_Swap($sub_pid){
-$rtn = '' ;
-$Swap_prop = get_field('swap_link_type', $sub_pid);
-$orginal_ing = get_field('orginal_ing', $sub_pid);
-if($orginal_ing)
-{
-$orginal_substence = get_the_title($orginal_ing);
-}
-$Swap_Type = get_field('swap_type', $sub_pid);
-switch ($Swap_Type){
-case 'המרה מלאה':
-$Full_Swap = get_field('full_swap',$sub_pid);
-$Swap_Title[0] = $Full_Swap['swaped_ing']->post_title;
-break;
-case 'המרה חלקית':
-$Part_Swap = get_field('part_swap',$sub_pid);
-//print_r($Part_Swap);
-$ingrediant_involved = $Part_Swap['ingrediant_involved'];
-//print_r($ingrediant_involved);
-$i=0;
-foreach($ingrediant_involved as $ings){
-$Swap_Title[$i] = $ings['ing_inv']->post_title;
-$i++;
-}
+		if ($Swap_prop == 'Text') {
+			$rtn = '<div data-swap="' . implode(",", $Swap_Title) . '" data-orginal="' . $orginal_substence . '" class="swap_text_in" id="sw_' . $sub_pid . '" onclick="swapthis(' . $sub_pid . ');">' . get_field('text_link_swap_from', $sub_pid) . '</div>' .
+				'<div data-swap="' . implode(",", $Swap_Title) . '" data-orginal="' . $orginal_substence . '" class="swap_text_out dn" id="prev_' . $sub_pid . '" onclick="swapthis(' . $sub_pid . ');">' . get_field('text_link_swap_two', $sub_pid) . '</div>';
+		}
 
-break;
-}
+		if ($Swap_prop == 'Image') {
+			$rtn = '<div data-swap="' . implode(",", $Swap_Title) . '" data-orginal="' . $orginal_substence . '" class="swap_text_in" id="sw_' . $sub_pid . '" onclick="swapthis(' . $sub_pid . ');"><img class="swap_img" src="' . get_field('img_before_swap', $sub_pid) . '"/></div>' .
+				'<div data-swap="' . implode(",", $Swap_Title) . '" data-orginal="' . $orginal_substence . '" class="swap_text_out dn" id="prev_' . $sub_pid . '" onclick="swapthis(' . $sub_pid . ');"><img class="swap_img" src="' . get_field('img_after_swap', $sub_pid) . '"/></div>';
+		}
 
-if($Swap_prop == 'Text'){
-$rtn = '<div data-swap="'.implode(",", $Swap_Title).'" data-orginal="'.$orginal_substence.'" class="swap_text_in" id="sw_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');">'. get_field('text_link_swap_from' , $sub_pid) . '</div>' .
-'<div data-swap="'.implode(",", $Swap_Title).'" data-orginal="'.$orginal_substence.'" class="swap_text_out dn" id="prev_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');">' . get_field('text_link_swap_two', $sub_pid) . '</div>';
-}
-
-if($Swap_prop == 'Image'){
-$rtn = '<div data-swap="'.implode(",", $Swap_Title).'" data-orginal="'.$orginal_substence.'" class="swap_text_in" id="sw_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');"><img class="swap_img" src="'. get_field('img_before_swap' , $sub_pid) . '"/></div>' .
-'<div data-swap="'.implode(",", $Swap_Title).'" data-orginal="'.$orginal_substence.'" class="swap_text_out dn" id="prev_'.$sub_pid.'" onclick="swapthis('.$sub_pid.');"><img class="swap_img" src="' . get_field('img_after_swap', $sub_pid) . '"/></div>';
-
-}
-
-return $rtn ;
-
-
-}
+		return $rtn;
+	}
 
 
 
 
-public function swap_Script(){
-echo '
+	public function swap_Script()
+	{
+		echo '
 
 <script>
 jQuery( document ).ready(function() {
@@ -607,7 +595,7 @@ url :"/wp/wp-admin/admin-ajax.php",
 
 data : {
 "action": "Substitute_Ajax_Call",
-"recipeID": '.get_the_ID().' ,
+"recipeID": ' . get_the_ID() . ' ,
 "objects" : [localStorage.getItem("CallerRecipe")]
 }
 ,
@@ -644,6 +632,5 @@ jQuery(".Swaploader").addClass("dn");
 
 
 ';
-
-}
+	}
 }

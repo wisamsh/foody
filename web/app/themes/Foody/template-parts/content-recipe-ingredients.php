@@ -72,9 +72,9 @@ $recipe_id = isset($template_args['recipe_id']) ? $template_args['recipe_id'] : 
                 $classIngSub = $data_ing ? "ing_wrapp" : "";
                 ?>
                 <li class="ingredients<?php echo " " . $classIngSub; ?>" id="<?php echo $id; ?>" <?php echo $data_ing; ?> <?php if ($classIngSub) {
-                                                                                                                            echo " style='overflow: initial !important;max-height: 500px !important;'";
-                                                                                                                        }
-                                                                                                                        ?> data-orginal="<?php echo $ing_orginal_ID; ?>">
+                                                                                                                                echo " style='overflow: initial !important;max-height: 500px !important;'";
+                                                                                                                            }
+                                                                                                                            ?> data-orginal="<?php echo $ing_orginal_ID; ?>">
 
 
 
@@ -105,7 +105,7 @@ $recipe_id = isset($template_args['recipe_id']) ? $template_args['recipe_id'] : 
                                     } else {
                                         $ingr_URL = $sponser_Text;
                                     }
-                                    echo "<span class='sponser_Text'>".$ingr_URL."</span>";
+                                    echo "<span class='sponser_Text'>" . $ingr_URL . "</span>";
                                 }
 
                                 if (trim($show_sponsor_logo == 1) && $logo_url != "") {
@@ -115,7 +115,7 @@ $recipe_id = isset($template_args['recipe_id']) ? $template_args['recipe_id'] : 
                                     } else {
                                         $Photo_comm_Url = '<img src="' . $logo_url . '"/>';
                                     }
-                                    echo "<span class='commorcial_logo milr'>".$Photo_comm_Url."</span>";
+                                    echo "<span class='commorcial_logo milr'>" . $Photo_comm_Url . "</span>";
                                 }
                             }
                         }
