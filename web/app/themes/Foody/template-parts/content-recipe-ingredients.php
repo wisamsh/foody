@@ -20,17 +20,8 @@ $ingredients_groups = $template_args['groups'];
 $Foody_Substitutes_Ingredients = new Foody_Substitutes_Ingredients(null);
 
 $Get_Common_Rule_Array = $Foody_Substitutes_Ingredients->Get_Common_Rule_For_Merchandise();
-//print_r($Get_Common_Rule_Array);
-
-//$term_id = get_term( 1151 )->term_id;
-
-
-//$tt = get_field("logo", "sponsors_" . $term_id);
-//echo ($tt['url']);
 
 echo $Foody_Substitutes_Ingredients->SwapStyle();
-
-
 
 //JS Scripts :
 echo $Foody_Substitutes_Ingredients->swap_Script();
@@ -39,13 +30,12 @@ echo $Foody_Substitutes_Ingredients->swap_Script();
 $substitute_ingredients_filters = isset($template_args['substitute_ingredients_filters']) ? $template_args['substitute_ingredients_filters'] : null;
 $counter = 0;
 $recipe_id = isset($template_args['recipe_id']) ? $template_args['recipe_id'] : false;
-//$rr = get_field("ingredients", get_the_id());
-//print_r($rr);
 ?>
 
 
 
-<?php foreach ($ingredients_groups as $ingredients_group) { ?>
+<?php foreach ($ingredients_groups as $ingredients_group) 
+{ ?>
 
     <div class="col-12 ingredients-group p-0">
         <h2 class="ingredients-group-title">
