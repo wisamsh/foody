@@ -72,7 +72,7 @@ if (!is_multisite() || is_main_site()) {
     <script src="https://public.bankhapoalim.co.il/bitcom/sdk"></script>
 <?php } ?>
 
-<body <?php body_class(); ?><?php if(get_post_type() == 'questions'){echo 'itemscope itemtype="https://schema.org/QAPage"';}?> dir="rtl">
+<body <?php body_class(); ?><?php if(get_post_type() == 'questions' || get_post_type() == 'poll'){echo 'itemscope itemtype="https://schema.org/QAPage"';}?> dir="rtl">
 <?php //do_action('foody_after_body') ?>
 
 <?php

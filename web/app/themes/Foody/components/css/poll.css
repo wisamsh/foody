@@ -1,0 +1,56 @@
+.poll_content{
+    padding-right: 3px;
+    padding-left:5px;
+}
+.the_question_div{
+    width: 100%;
+    direction: rtl;
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.pol_q{
+    text-align: right;
+    direction: rtl;
+    
+}
+.label_box{
+    margin-left: 10px;
+}
+.pollcont{
+    direction:rtl;
+    text-align:right;
+    padding-top:15px;
+    padding-top:20px;
+    margin-bottom: 20px;
+    border-bottom: solid 1px #579fba;
+}
+.poll_calc_btn{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+.poll_calc_btn input[type='submit']{
+    text-align: center;
+    color: #fff;
+    background: #569fba;
+    padding: 10px;
+    width: 230px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.poll_row{
+    padding-bottom: 20px;
+}
+.poll_second_title{
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+    width: 253px;
+}
+.pol_hr{
+    
+}
+

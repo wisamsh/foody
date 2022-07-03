@@ -110,6 +110,7 @@ require_once get_template_directory() . '/inc/foody-rav-messer-api.php';
 //WISAM
 require_once get_template_directory() . "/inc/classes/class-questions.php";
 require_once get_template_directory() . "/inc/classes/class-wsitemap.php";
+require_once get_template_directory() . "/inc/classes/class-foody-poll.php";
 
 /*
  * Widgets
