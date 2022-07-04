@@ -1,4 +1,4 @@
-<?php 
+<?php
 $Foody_Poll = new Foody_poll();
 $Foody_Poll->Mobileattr();
 function FAQ_Scripts()
@@ -20,57 +20,61 @@ wp_enqueue_script('GlobalsW', get_template_directory_uri() . '/components/js/que
 ?>
 
 <div class="row m-0">
-    
+
 
     <section class="cover-image no-print">
         <div class="cover-image">
-        <?php echo $Foody_Poll->doCommercialBanner(); ?>
+            <?php echo $Foody_Poll->doCommercialBanner(); ?>
         </div>
     </section>
     <aside class="col d-none d-lg-block no-print" style="padding-top:0px;">
 
         <section class="sidebar-section foody-search-filter">
-           content side bar
+            <?php echo $Foody_Poll->pol_side_the_recipe(); ?>
         </section>
 
     </aside>
 
     <article class="content">
         <section class="details-container">
-            
+
             <?php $Foody_Poll->Do_FoodyBeadcrumbs(); ?>
-           
+
             <div class="mainentity" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                
+
                 <h1 itemprop="name" class="title question_Title">
                     <?php echo $Foody_Poll->Title(); ?>
                 </h1>
-                
-                <div class="poll_content"> <?php echo $Foody_Poll->get_poll_text_content();?></p>
+
+                <div class="poll_content"> <?php echo $Foody_Poll->get_poll_text_content(); ?></p>
                 </div>
-                
-               
-             
-         
-           
-           
-        </section>
 
-        <section class="feed-channel-details row no-print">
-            
-        <?php  $Foody_Poll->get_poll_questions(); ?>
-        
-    </section>
-        <section class="recipe-categories categories no-print">
-            <?php //require(get_template_directory() . '/components/questions_related_questions.php'); ?>
 
-        </section>
-        <section class="recipe-categories categories no-print">
-            <?php //$Foody_Questions->the_categories(); ?>
+                <?php $Foody_Poll->get_poll_questions(); ?>
+
+
 
         </section>
 
         
+        <section class="recipe-categories categories no-print">
+            תפריטים עבורך--TODO
+        </section>
+        <section class="recipe-categories categories no-print">
+
+            <?php echo $Foody_Poll->Get_Poll_Posts_IntrestYou(); ?>
+        </section>
+
+
+        <section class="feed-channel-details row no-print dn">
+            <?php if (wp_is_mobile()) {
+                echo $Foody_Poll->Mobile_Recepies();
+            } ?>
+
+
+        </section>
+
+
         <section class="newsletter no-print">
 
             <?php if (!wp_is_mobile()) { ?>
@@ -86,7 +90,7 @@ wp_enqueue_script('GlobalsW', get_template_directory_uri() . '/components/js/que
                 </section>
             <?php } ?>
     </article>
-<input style="display:none;" type="text" id="user_holdon" class="user_holdon" value="0"/>
+    <input style="display:none;" type="text" id="user_holdon" class="user_holdon" value="0" />
 </div>
 <?php
 

@@ -10,6 +10,16 @@
     font-weight: bold;
     margin-bottom: 10px;
 }
+
+.the_Special_div{
+    width: 100%;
+    direction: rtl;
+    text-align: right;
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
 .pol_q{
     text-align: right;
     direction: rtl;
@@ -50,7 +60,25 @@
     font-weight: bold;
     width: 253px;
 }
-.pol_hr{
-    
+.titles_div{
+text-align: center;
+width:100%;
+font-size: 16px;
+font-weight: bold;
+margin-bottom: 10px;
 }
-
+.dn{
+    display: none;
+}
+.db{
+    display: block;
+}
+.fr{
+float: right;
+}
+.fl{
+    float: left;
+    }
+.cb{
+    clear: both;
+}

@@ -88,7 +88,7 @@
                     <div id="accessibility-container"></div>
                 </button>
                 <div class="related-content-btn-container">
-                    <?php if (get_post_type() == "questions") { ?>
+                    <?php if (get_post_type() == "questions" || get_post_type() == "poll") { ?>
 
                         <span class="related-content-btn ">מתכונים נוספים</span>
 

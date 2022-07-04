@@ -72,9 +72,9 @@ class Foody_poll
     {
         $require = isset($requierd) ? "requierd" : "";
         $thecheckbox = '<div class="col-sm-12 col-md-6 col-lg-6 pol_q">';
-       
+
         $thecheckbox .= '<span class="label_box"><input type="checkbox" id="check_' . $id . '" name="' . $id . '" value="' . $id . '" ' . $require . ' /></span>';
-        $thecheckbox .= '<span class="label_box">' . $text . '</span>' ;
+        $thecheckbox .= '<span class="label_box">' . $text . '</span>';
         $thecheckbox .= '</div>';
         return $thecheckbox;
     }
@@ -84,9 +84,9 @@ class Foody_poll
     {
         $require = isset($requierd) ? "requierd" : "";
         $theRadio = '<div class="col-sm-12 col-md-6 col-lg-6 pol_q">';
-       
+
         $theRadio .= '<span class="label_box"><input type="radio" id="radio_' . $id . '" name="' . $name . '" value="' . $id . '" ' . $require . ' /></span>';
-        $theRadio .= '<span class="label_box">' . $text . '</span>' ;
+        $theRadio .= '<span class="label_box">' . $text . '</span>';
         $theRadio .= '</div>';
         return $theRadio;
     }
@@ -97,17 +97,17 @@ class Foody_poll
     {
         $poll_q = $this->get_the_poll();
         $poll_second_title = get_field("poll_second_title", $this->pid());
-        
+
         $first_question_check = get_field('first_question_check', $this->pid());
-       echo '<form id="poll" method="POST">';
-       echo '<div class="poll_second_title">' . $poll_second_title . '</div>';
+        echo '<form id="poll" method="POST">';
+        echo '<div class="poll_second_title">' . $poll_second_title . '</div>';
         foreach ($poll_q as $key => $poll_questions) {
             $text =  $poll_questions["question_added"];
             $poll_question_answer = $poll_questions['poll_question_answer'];
-           
-            echo '<div class="container pollcont"><div class="row poll_row">';
+
 
             if ($poll_questions["poll_question_active"] == 1) {
+                echo '<div class="container pollcont"><div class="row poll_row">';
 
                 echo '<div class="the_question_div">' . $text . '</div>';
                 if ($first_question_check == 1 && $key == 0) {
@@ -120,7 +120,7 @@ class Foody_poll
                     }
                 } else {
                     foreach ($poll_question_answer as $poll_question_answer) {
-                       
+
                         $id = $poll_question_answer->ID;
                         $text = $poll_question_answer->post_title;
                         $name = "nm_" . $key;
@@ -128,8 +128,8 @@ class Foody_poll
                         echo $this->do_radioButton($id, $text, '', $name);
                     }
                 }
+                echo '</div></div>';
             }
-            echo '</div></div>';
         }
         echo ' <div class="poll_calc_btn"><input type="submit" value="תראו לי תפריטים!"/></div> </form>';
     }
@@ -142,18 +142,115 @@ class Foody_poll
     }
 
 
-
-    public function the_sidebar_content($args = array())
+    public function Get_Poll_Posts_IntrestYou()
     {
-        echo '<section class="sidebar-section foody-search-filter">sidebar';
+        $content = get_field("menus_can_interes_you", $this->pid());
+        $Title = get_field("menu_title", $this->pid());
+        $rtn = '';
+        $img = '';
+        if (!empty($content)) {
+            $rtn .= '<div class="the_Special_div">' . $Title . '</div>';
+            $rtn .= '<div class="container">';
+            $rtn .= '<div class="row">';
+            foreach ($content as $link) {
+                $rtn .= '<div class="col-sm-12 col-md-6 col-lg-3">';
 
-        //$foody_query = SidebarFilter::get_instance();
-        //$foody_query->the_filter();
 
-        echo '</section>';
-        //dynamic_sidebar('questions');
-        //dynamic_sidebar( 'foody-social' );
+
+                $img = !wp_is_mobile() ? $link["mciy_image_desktop"] : $link["mciy_image_mobile"];
+                $rtn .= '<a href="/?p=' . $link["mciy_post_url"] . '"><img src="' . $img . '"/>';
+                //if(wp_is_mobile()){
+                // $rtn .= '<span class="fr">'.$link["mciy_link_text"].'</span>';
+                //  $rtn .='<span class="fl">»»</span>';
+                // $rtn .='<div class="cb"></div>';
+                //}
+                //else{
+                $rtn .= '<div class="titles_div">' . $link["mciy_link_text"] . '</div>';
+
+                //}
+
+                $rtn .= '</a></div>'; //col
+            }
+            $rtn .= '</div>'; //row
+            $rtn .= '</div>'; //container
+        }
+        return $rtn;
     }
+
+
+
+
+    public function pol_side_the_recipe()
+    {
+        $pol_side_the_recipe = get_field("pol_side_the_recipe", $this->pid());
+        $poll_right_side_title = get_field("poll_right_side_title", $this->pid());
+        $rtn = '';
+        if (!empty($pol_side_the_recipe)) {
+            $rtn .= '<div class="title related-content-title">' . $poll_right_side_title . '</div><br>';
+            $rtn .= '<ul class="related-content nolist related-recipes">';
+
+            foreach ($pol_side_the_recipe as $p) {
+
+                $title = get_the_title($p);
+                $thumb = get_the_post_thumbnail_url($p);
+                $author_id = get_post_field('post_author', $p);
+                $recent_author = get_user_by('ID', $author_id);
+                $author_display_name = $recent_author->display_name;
+
+                $rtn .= '<li class="related-item playlist">
+                <div class="image-container">
+                <a href="/?p=' . $p . '">
+                <img class="recipe-item-image" src="' . $thumb . '" alt="' . $title . '">
+                </div>
+                </a>
+                <div class="details">
+                <div class="post-title">
+                <a href="/?p=' . $p . '">' . $title . ' </a>
+                </div>
+                <a class="author-name" href="/?p=' . $p . '">' . $author_display_name . '</a>
+                </div>
+                <div class="excerpt">              
+                </li>';
+                            }
+            $rtn .= '</ul>';
+        }
+        return $rtn;
+    }
+
+
+
+    public function Mobile_Recepies()
+    {
+        $rtn = "";
+        $poll_mobile_recipe_title = get_field("poll_mobile_recipe_title", $this->pid());
+        $poll_mobile_recipe_list = get_field("poll_mobile_recipe_list", $this->pid());
+        if (!empty($poll_mobile_recipe_list)) {
+            
+            $rtn .= '<h2 class="title">' . $poll_mobile_recipe_title . '</h2>';
+            $rtn .= '<div class="container fluid"><div class="row">';
+            //$rtn .= '<div class="related_recepies_conduct">';
+                 
+            foreach ($poll_mobile_recipe_list as $p) {
+
+                $title = get_the_title($p);
+                $thumb = get_the_post_thumbnail_url($p);
+                
+                $rtn .= '
+                    <div class="related_recepies_conduct" data-title="'.$title.'">
+                    <a href="/?p='.$p.'" >
+                    <img src="'.$thumb.'">
+                    <p>'.$title.'</p></a>
+                    </div>';
+
+               
+            }
+            $rtn .= '</div></div>';
+
+            return $rtn;
+        }
+    }
+
+
 
     public function Mobileattr()
     {
