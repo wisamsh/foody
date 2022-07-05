@@ -8,6 +8,7 @@
  *
  * @package Foody
  */
+
 $header = new Foody_Header();
 $user = new Foody_User();
 $user_param = is_user_logged_in() ? $user->user->ID : 'false';
@@ -77,7 +78,7 @@ if (!is_multisite() || is_main_site()) {
 
 <?php
 
-if (!wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']))) {
+if (get_post_type() != 'poll' && !wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']))) {
     ?>
     <img class="body-background no-print" src="<?php echo $_SESSION['background_image']['url'] ?>"
          alt="<?php echo $_SESSION['background_image']['alt'] ?>">

@@ -1,4 +1,5 @@
 <?php
+
 $Foody_Poll = new Foody_poll();
 $Foody_Poll->Mobileattr();
 function FAQ_Scripts()
@@ -9,8 +10,8 @@ function FAQ_Scripts()
     wp_register_style('poll_css', get_template_directory_uri() . '/components/css/poll.css', array(), $VersionHashCss);
     wp_enqueue_style('poll_css');
 
-    //wp_register_script('QuestionsEvents', get_template_directory_uri() . '/components/js/questions_events.js', array(), $VersionHashCss);
-    //wp_enqueue_script('QuestionsEvents');
+    wp_register_script('poll', get_template_directory_uri() . '/components/js/poll.js', array(), $VersionHashCss);
+    wp_enqueue_script('poll');
 }
 add_action('get_footer', 'FAQ_Scripts');
 
@@ -18,7 +19,11 @@ add_action('get_footer', 'FAQ_Scripts');
 wp_enqueue_script('GlobalsW', get_template_directory_uri() . '/components/js/questions_events.js', array('wp-api'));
 
 ?>
+<?php 
 
+echo $Foody_Poll->DoBackgroundImage();
+
+?>
 <div class="row m-0">
 
 

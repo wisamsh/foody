@@ -68,12 +68,12 @@ class Foody_poll
         return $poll_questions;
     }
 
-    private function do_checkboxses($id, $text, $requierd)
+    private function do_checkboxses($id, $text, $requierd, $name)
     {
         $require = isset($requierd) ? "requierd" : "";
         $thecheckbox = '<div class="col-sm-12 col-md-6 col-lg-6 pol_q">';
 
-        $thecheckbox .= '<span class="label_box"><input type="checkbox" id="check_' . $id . '" name="' . $id . '" value="' . $id . '" ' . $require . ' /></span>';
+        $thecheckbox .= '<span class="label_box"><input type="checkbox" id="check_' . $id . '" name="' . $name . '" value="' . $id . '" ' . $require . ' /></span>';
         $thecheckbox .= '<span class="label_box">' . $text . '</span>';
         $thecheckbox .= '</div>';
         return $thecheckbox;
@@ -114,9 +114,9 @@ class Foody_poll
 
                     foreach ($poll_question_answer as $poll_question_answer) {
                         $id = $poll_question_answer->ID;
-                        $text = $poll_question_answer->post_title;
-
-                        echo $this->do_checkboxses($id, $text, '');
+                        $text = get_field("poll_client_answer", $id);//$poll_question_answer->post_title;
+                        $name = "nm_" . $key;
+                        echo $this->do_checkboxses($id, $text, '',$name);
                     }
                 } else {
                     foreach ($poll_question_answer as $poll_question_answer) {
@@ -141,7 +141,23 @@ class Foody_poll
         return $content;
     }
 
-
+public function DoBackgroundImage(){
+    $bk_image =  get_field("background_poll_image", $this->pid());
+   echo '<style>
+   body{
+       background : url("'.$bk_image.'");
+       background-attachment: fixed; 
+       background-position: center;
+       background-repeat: no-repeat;
+       background-size: cover;
+   }
+   .site-footer{
+       background : #fafafaf0 !important;
+       z-index:9999;
+       
+   }
+   </style>' ;
+}
     public function Get_Poll_Posts_IntrestYou()
     {
         $content = get_field("menus_can_interes_you", $this->pid());
@@ -153,12 +169,12 @@ class Foody_poll
             $rtn .= '<div class="container">';
             $rtn .= '<div class="row">';
             foreach ($content as $link) {
-                $rtn .= '<div class="col-sm-12 col-md-6 col-lg-3">';
+                $rtn .= '<div class="col-6 col-md-3 col-lg-3 col-xl-3">';
 
 
 
                 $img = !wp_is_mobile() ? $link["mciy_image_desktop"] : $link["mciy_image_mobile"];
-                $rtn .= '<a href="/?p=' . $link["mciy_post_url"] . '"><img src="' . $img . '"/>';
+                $rtn .= '<a href="/?p=' . $link["mciy_post_url"] . '"><img src="' . $img . '" style="width:100%"/>';
                 //if(wp_is_mobile()){
                 // $rtn .= '<span class="fr">'.$link["mciy_link_text"].'</span>';
                 //  $rtn .='<span class="fl">»»</span>';

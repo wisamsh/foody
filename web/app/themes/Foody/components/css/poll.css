@@ -82,3 +82,11 @@ float: right;
 .cb{
     clear: both;
 }
+
+.poll_background_image{
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
