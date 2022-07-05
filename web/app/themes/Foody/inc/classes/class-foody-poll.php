@@ -147,7 +147,6 @@ public function DoBackgroundImage(){
    body{
        background : url("'.$bk_image.'");
        background-attachment: fixed; 
-       background-position: center;
        background-repeat: no-repeat;
        background-size: cover;
    }
