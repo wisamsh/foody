@@ -18,12 +18,13 @@
     font-size: 21px;
     font-weight: bold;
     margin-bottom: 20px;
+margin-top: 50px;
 }
 
 .pol_q{
     text-align: right;
     direction: rtl;
-    
+   
 }
 .label_box{
     margin-left: 10px;
@@ -42,6 +43,9 @@
     margin-bottom: 20px;
     margin-top: 30px;
 }
+
+
+
 .poll_calc_btn input[type='submit']{
     text-align: center;
     color: #fff;
@@ -51,6 +55,30 @@
     font-size: 20px;
     font-weight: bold;
 }
+
+
+.poll_calc_btn_click{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.poll_calc_btn_click input[type='submit'] {
+    text-align: right;
+    color: #fff;
+    background: #569fba;
+    padding: 10px;
+    width: 230px;
+    font-size: 20px;
+    font-weight: bold;
+    background-image: url('https://foody-media.s3.eu-west-1.amazonaws.com/w_images/loading.gif');
+    background-repeat: no-repeat;
+    background-position-y: 4px;
+    background-position-x: 20px
+
+}
+
 .poll_row{
     padding-bottom: 20px;
 }
@@ -90,3 +118,83 @@ float: right;
     min-width: 100%;
     min-height: 100%;
 }
+.back_to_poll{
+width:100%;
+border-bottom:solid 1px #569fba ;
+margin-bottom:5px ;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+text-align: left;
+color:#569fba;
+}
+
+
+.pol_res_desktop_image{
+width:350px ;
+height:250px;
+object-fit: cover;
+
+}
+.poll_res_mobile_image{
+    width:350px ;
+    height:250px;
+    object-fit: cover;
+    
+    }
+
+.pol_res_title{
+float:right;
+width:50%;
+white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow: hidden;
+  text-align:right;
+  font-size:17px;
+  font-weight:bold;
+  margin-top:3px;
+  margin-bottom:20px;
+}
+
+.pol_res_arrow{
+text-align:left;
+  font-size:15px;
+  font-weight:bold;
+  margin-top:3px;
+  margin-bottom:20px;
+      float: left;
+}
+.pol_res_Main_title p{
+width:100%;
+text-align:right;
+direction:rtl;
+font-size:20px;
+font-weight:bold;
+}
+.no_res{
+width:100%;
+text-align:center;
+  font-size:22px;
+  font-weight:bold;
+  margin-top:3px;
+  margin-bottom:20px;
+  color:red;
+}
+
+/*media query*/
+@media only screen and (max-width: 600px) {
+    .int_imge{
+    width:140px;
+    height:105px;
+    object-fit: cover;
+    }
+    }
+    
+    @media only screen and (min-width: 600px) {
+    .int_imge{
+    width:140px;
+    height:105px;
+    object-fit: cover;
+    }
+    }
+

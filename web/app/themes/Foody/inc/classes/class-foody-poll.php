@@ -70,11 +70,11 @@ class Foody_poll
 
     private function do_checkboxses($id, $text, $requierd, $name)
     {
-        $require = isset($requierd) ? "requierd" : "";
+       // $require = isset($requierd) ? "requierd" : "";
         $thecheckbox = '<div class="col-sm-12 col-md-6 col-lg-6 pol_q">';
-
-        $thecheckbox .= '<span class="label_box"><input type="checkbox" id="check_' . $id . '" name="' . $name . '" value="' . $id . '" ' . $require . ' /></span>';
-        $thecheckbox .= '<span class="label_box">' . $text . '</span>';
+$for = "check_" . $id ;
+        $thecheckbox .= '<span class="label_box"><input type="checkbox" id="check_' . $id . '" name="' . $name . '" value="' . $id . '"  /></span>';
+        $thecheckbox .= '<label  for="'.$for.'"><span class="label_box">' . $text . '</span></lable>';
         $thecheckbox .= '</div>';
         return $thecheckbox;
     }
@@ -82,11 +82,11 @@ class Foody_poll
 
     private function do_radioButton($id, $text, $requierd, $name)
     {
-        $require = isset($requierd) ? "requierd" : "";
+        //$require = isset($requierd) ? "requierd" : "";
         $theRadio = '<div class="col-sm-12 col-md-6 col-lg-6 pol_q">';
-
-        $theRadio .= '<span class="label_box"><input type="radio" id="radio_' . $id . '" name="' . $name . '" value="' . $id . '" ' . $require . ' /></span>';
-        $theRadio .= '<span class="label_box">' . $text . '</span>';
+$for = 'radio_' . $id  ;
+        $theRadio .= '<span class="label_box"><input type="radio" id="radio_' . $id . '" name="' . $name . '" value="' . $id . '"  /></span>';
+        $theRadio .= '<label  for="'.$for.'"><span class="label_box">' . $text . '</span></lable>';
         $theRadio .= '</div>';
         return $theRadio;
     }
@@ -99,41 +99,44 @@ class Foody_poll
         $poll_second_title = get_field("poll_second_title", $this->pid());
 
         $first_question_check = get_field('first_question_check', $this->pid());
-        echo '<form id="poll" method="POST">';
+		echo '<div class="form_wrapper">';       
+		echo '<form id="poll" method="POST">';
         echo '<div class="poll_second_title">' . $poll_second_title . '</div>';
         foreach ($poll_q as $key => $poll_questions) {
             $text =  $poll_questions["question_added"];
             $poll_question_answer = $poll_questions['poll_question_answer'];
-
+			$requierd =  $poll_questions["required_field"] == true ? "required" : ""  ;
 
             if ($poll_questions["poll_question_active"] == 1) {
                 echo '<div class="container pollcont"><div class="row poll_row">';
 
                 echo '<div class="the_question_div">' . $text . '</div>';
                 if ($first_question_check == 1 && $key == 0) {
-
+					
                     foreach ($poll_question_answer as $poll_question_answer) {
                         $id = $poll_question_answer->ID;
                         $text = get_field("poll_client_answer", $id);//$poll_question_answer->post_title;
                         $name = "nm_" . $key;
-                        echo $this->do_checkboxses($id, $text, '',$name);
+						
+                        echo $this->do_checkboxses($id, $text, $requierd ,$name);
                     }
                 } else {
                     foreach ($poll_question_answer as $poll_question_answer) {
 
                         $id = $poll_question_answer->ID;
-                        $text = $poll_question_answer->post_title;
+                        $text =  $text = get_field("poll_client_answer", $id);//$poll_question_answer->post_title;
                         $name = "nm_" . $key;
 
-                        echo $this->do_radioButton($id, $text, '', $name);
+                        echo $this->do_radioButton($id, $text, $requierd, $name);
                     }
                 }
                 echo '</div></div>';
             }
         }
-        echo ' <div class="poll_calc_btn"><input type="submit" value="תראו לי תפריטים!"/></div> </form>';
+        echo ' <div class="poll_calc_btn" id="poll_calc_btn">'; 
+		echo ' <input type="hidden" id="cluster" name="cluster" value="'.$this->pid().'"> ';
+		echo '<input type="submit" id="submit_btn" value="תראו לי תפריטים!"/></div> </form></div>'; //closer for form_wrapper
     }
-
 
     public function get_poll_text_content()
     {
@@ -164,16 +167,16 @@ public function DoBackgroundImage(){
         $rtn = '';
         $img = '';
         if (!empty($content)) {
-            $rtn .= '<div class="the_Special_div">' . $Title . '</div>';
+            $rtn .= '<div class="the_Special_div" id="interesting_menus">' . $Title . '</div>';
             $rtn .= '<div class="container">';
-            $rtn .= '<div class="row">';
+            $rtn .= '<div class="row text-center">';
             foreach ($content as $link) {
                 $rtn .= '<div class="col-6 col-md-3 col-lg-3 col-xl-3">';
 
 
 
                 $img = !wp_is_mobile() ? $link["mciy_image_desktop"] : $link["mciy_image_mobile"];
-                $rtn .= '<a href="/?p=' . $link["mciy_post_url"] . '"><img src="' . $img . '" style="width:100%"/>';
+                $rtn .= '<a href="/?p=' . $link["mciy_post_url"] . '"><img src="' . $img . '" class="int_imge"/>';
                 //if(wp_is_mobile()){
                 // $rtn .= '<span class="fr">'.$link["mciy_link_text"].'</span>';
                 //  $rtn .='<span class="fl">»»</span>';

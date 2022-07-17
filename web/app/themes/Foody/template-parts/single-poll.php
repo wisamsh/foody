@@ -19,11 +19,7 @@ add_action('get_footer', 'FAQ_Scripts');
 wp_enqueue_script('GlobalsW', get_template_directory_uri() . '/components/js/questions_events.js', array('wp-api'));
 
 ?>
-<?php 
 
-echo $Foody_Poll->DoBackgroundImage();
-
-?>
 <div class="row m-0">
 
 
@@ -45,15 +41,15 @@ echo $Foody_Poll->DoBackgroundImage();
 
             <?php $Foody_Poll->Do_FoodyBeadcrumbs(); ?>
 
-            <div class="mainentity" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+            <div class="mainentity">
 
-                <h1 itemprop="name" class="title question_Title">
+                <h1 class="title question_Title">
                     <?php echo $Foody_Poll->Title(); ?>
                 </h1>
 
                 <div class="poll_content"> <?php echo $Foody_Poll->get_poll_text_content(); ?></p>
                 </div>
-
+                <div class="back_to_poll dn" id="back_to_poll">חזרה לשאלון ←</div>
 
                 <?php $Foody_Poll->get_poll_questions(); ?>
 
@@ -61,9 +57,8 @@ echo $Foody_Poll->DoBackgroundImage();
 
         </section>
 
-        
         <section class="recipe-categories categories no-print">
-            תפריטים עבורך--TODO
+            <div class="menus_for_you" id="menus_for_you"></div>
         </section>
         <section class="recipe-categories categories no-print">
 
@@ -97,6 +92,11 @@ echo $Foody_Poll->DoBackgroundImage();
     </article>
     <input style="display:none;" type="text" id="user_holdon" class="user_holdon" value="0" />
 </div>
+<?php
+if (!wp_is_mobile()) {
+    echo $Foody_Poll->DoBackgroundImage();
+}
+?>
 <?php
 
 if (wp_is_mobile()) {
