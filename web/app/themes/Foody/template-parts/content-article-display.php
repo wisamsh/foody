@@ -6,9 +6,31 @@
  * Time: 1:27 PM
  */
 
-the_content();
+
 /** @var Foody_Article $foody_page */
-$foody_page = Foody_PageContentFactory::get_instance()->get_page();;
+$foody_page = Foody_PageContentFactory::get_instance()->get_page();
+?>
+
+
+
+<section class="categories section no-print">
+    <h1 class="recipe_title">
+		<b><?php echo( $foody_page->Get_Recipes_Title() ); ?></b>
+    </h2>
+	<?php 
+
+	$ttt = $foody_page->encodeURIComponent('http://d3o5sihylz93ps.cloudfront.net/app/uploads/2018/10/14183704/IMG_9667.jpg')
+	
+	?>
+	<a href="whatsapp://send?photo=<?php echo $ttt;?>"/>whats</a>
+	<?php 
+	$foody_page->Go_Recipes_For_Posts();
+	?>
+
+</section>
+
+<?php
+the_content();
 ?>
 
 
