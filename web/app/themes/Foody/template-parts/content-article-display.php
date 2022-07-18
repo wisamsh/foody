@@ -12,7 +12,7 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
 ?>
 
 
-
+<?php if ($foody_page->Get_Recipes_Title() !=""){?>
 <section class="categories section no-print">
     <h1 class="recipe_title">
 		<b><?php echo( $foody_page->Get_Recipes_Title() ); ?></b>
@@ -22,13 +22,14 @@ $foody_page = Foody_PageContentFactory::get_instance()->get_page();
 	$ttt = $foody_page->encodeURIComponent('http://d3o5sihylz93ps.cloudfront.net/app/uploads/2018/10/14183704/IMG_9667.jpg')
 	
 	?>
-	<a href="whatsapp://send?photo=<?php echo $ttt;?>"/>whats</a>
+	<a href="https://wa.me/?photo=<?php echo $ttt;?>"/>whats</a>
 	<?php 
-	$foody_page->Go_Recipes_For_Posts();
+	echo $foody_page->Go_Recipes_For_Posts();
 	?>
 
 </section>
 
+<?php }?>
 <?php
 the_content();
 ?>
