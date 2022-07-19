@@ -174,11 +174,11 @@ font-weight:bold;
 .no_res{
 width:100%;
 text-align:center;
-  font-size:22px;
+  font-size:17px;
   font-weight:bold;
   margin-top:3px;
   margin-bottom:20px;
-  color:red;
+  
 }
 
 /*media query*/

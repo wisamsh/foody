@@ -7,7 +7,10 @@ function Poll_Ajax_Call(){
            $data = explode("=", $_POST["data"]);
 
 if (count($data) < 3){
-echo ('<p class="no_res">יש לענות על השאלון!</p>');
+echo ('<p class="no_res">לא מצאנו תרפיטים עבורך 
+<img src="https://foody-media.s3.eu-west-1.amazonaws.com/w_images/sceptic.png" style="width:20px;"/>
+יכול להיות שלא ענית על כל השאלות?
+</p><br><br>');
 die();
 }
           $mydata = array();
@@ -46,7 +49,10 @@ $combain = $res_val['question_poll_posts'] ;
  
  
  if(count($combain) == 0){
-echo ('<p class="no_res">אין תוצאות !</p>');
+echo ('<p class="no_res">לא מצאנו תרפיטים עבורך 
+<img src="https://foody-media.s3.eu-west-1.amazonaws.com/w_images/sceptic.png" style="width:20px;"/>
+יכול להיות שלא ענית על כל השאלות?
+</p><br><br>');
  }
  else{
  
