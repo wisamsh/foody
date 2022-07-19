@@ -23,6 +23,14 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
     }
 
 
+    public function Get_Content_Before_Items()
+    {
+        $before_items_content = get_field("before_items_content", $this->pid());
+        if (trim($before_items_content) != "") {
+            $rtn = '<div style="width:100%; text-align:right;direction:rtl;margin-top:10px;">' . $before_items_content . '</div>';
+        }
+        return $rtn;
+    }
     public function Get_Recipes_Title()
     {
         $tmagic_title = get_field("items_title", $this->pid());
@@ -33,6 +41,7 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
         $rtn = '';
         if (!empty(get_field("items_recipe", $this->pid()))) {
             $recipies_array = get_field("items_recipe", $this->pid());
+
             $rtn .= '<div class="container"><div  class="row text-center">';
             foreach ($recipies_array as $p) {
                 $post_title = get_the_title($p);
@@ -46,6 +55,36 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
         }
         return $rtn;
     }
+
+    public function Get_Schedual_Photos()
+    {
+        $rtn = '';
+        $schedual_title = get_field("schedual_title", $this->pid());
+        $whatsup_photos = get_field("whatsup_photos", $this->pid());
+        if (trim($schedual_title) != "") {
+            $rtn .= '<section class="categories section no-print"><h1 class="recipe_title"><b>' . $schedual_title . '</b></h2>';
+        }
+
+        if (!empty($whatsup_photos)) {
+            $rtn .= '<div class="container m-0 p-0"><div class="row" style="text-align:center;">';
+            foreach ($whatsup_photos as $p) {
+                $whatsup_linkeg = $p['whatsup_linkeg'];
+                $email_linkeg = $p['email_linkeg'];
+                $photo = !wp_is_mobile() ? $p['what_desktop_photo'] : $p['what_mobile_photo'];
+                $items_content_for_recipe = $p['items_content_for_recipe'];
+                $rtn .= '<div class="col-12" style="text-align:center;"><img src="' . $photo  . '" />';
+                if (trim($items_content_for_recipe) != '') {
+                    $rtn .= '<div class="col-12" style="text-align:right;direction:rtl;">' . $items_content_for_recipe . '</div>';
+                }
+                $rtn .= '</div>';
+            }
+            $rtn .= '</div></div></section>';
+        }
+        return $rtn;
+    }
+
+
+
 
 
     public function the_featured_content($shortcode = false)
