@@ -25,7 +25,7 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
 
     public function Get_Content_Before_Items()
     {
-        $before_items_content = get_field("before_items_content", $this->pid());
+        $before_items_content = !empty(get_field("before_items_content", $this->pid())) ? get_field("before_items_content", $this->pid()) : '' ;
         if (trim($before_items_content) != "") {
             $rtn = '<div style="width:100%; text-align:right;direction:rtl;margin-top:10px;">' . $before_items_content . '</div>';
         }
@@ -33,7 +33,8 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
     }
     public function Get_Recipes_Title()
     {
-        $tmagic_title = get_field("items_title", $this->pid());
+        
+        $tmagic_title = !empty(get_field("items_title", $this->pid())) ? get_field("items_title", $this->pid()) : '';
         return $tmagic_title;
     }
     public function Go_Recipes_For_Posts()
