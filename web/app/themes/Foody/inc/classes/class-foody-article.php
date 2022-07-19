@@ -25,9 +25,10 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
 
     public function Get_Content_Before_Items()
     {
-        $before_items_content = !empty(get_field("before_items_content", $this->pid())) ? get_field("before_items_content", $this->pid()) : '' ;
+        $rtn='';
+        $before_items_content = trim(get_field("before_items_content", $this->pid())) !=''? get_field("before_items_content", $this->pid()) : '' ;
         if (trim($before_items_content) != "") {
-            $rtn = '<div style="width:100%; text-align:right;direction:rtl;margin-top:10px;">' . $before_items_content . '</div>';
+            $rtn .= '<div style="width:100%; text-align:right;direction:rtl;margin-top:10px;">' . $before_items_content . '</div>';
         }
         return $rtn;
     }
