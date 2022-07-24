@@ -7,9 +7,8 @@ function Poll_Ajax_Call(){
            $data = explode("=", $_POST["data"]);
 
 if (count($data) < 3){
-echo ('<p class="no_res">לא מצאנו תרפיטים עבורך 
-<img src="https://foody-media.s3.eu-west-1.amazonaws.com/w_images/sceptic.png" style="width:20px;"/>
-יכול להיות שלא ענית על כל השאלות?
+echo ('<p class="no_res">לא ענית על השאלות לכן לא מצאנו תפריט מדויק עבורך.<br>
+תוכל לראות מטה את כל התפריטים שלנו
 </p><br><br>');
 die();
 }
@@ -49,13 +48,12 @@ $combain = $res_val['question_poll_posts'] ;
  
  
  if(count($combain) == 0){
-echo ('<p class="no_res">לא מצאנו תרפיטים עבורך 
-<img src="https://foody-media.s3.eu-west-1.amazonaws.com/w_images/sceptic.png" style="width:20px;"/>
-יכול להיות שלא ענית על כל השאלות?
+echo ('<p class="no_res">לא ענית על כל השאלות, לכן לא מצאנו תפריט מדויק עבורך.<br>
+תוכל לראות מטה את כל התפריטים שלנו.
 </p><br><br>');
  }
  else{
- 
+    $rtn =''; 
 $class= !wp_is_mobile() ? 'pol_res_desktop_image' : 'poll_res_mobile_image' ;
 $rtn .= '<div class="container">';
             $rtn .= '<div class="row">';

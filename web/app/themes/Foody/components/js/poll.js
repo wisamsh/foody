@@ -42,7 +42,7 @@ jQuery("#poll").on("submit", (function (e) {
 
         success: function (response, status, jqXHR) {
             jQuery(".form_wrapper").slideToggle(500);
-            jQuery(".menus_for_you").html(response);
+           
             jQuery("#poll_calc_btn").removeClass("poll_calc_btn_click");
             jQuery("#poll_calc_btn").addClass("poll_calc_btn");
             jQuery("#submit_btn").val("תראו לי תפריטים!");
@@ -50,7 +50,7 @@ jQuery("#poll").on("submit", (function (e) {
             jQuery([document.documentElement, document.body]).animate({
                 scrollTop: jQuery("#back_to_poll").offset().top
             }, 500);
-
+            jQuery(".menus_for_you").html(response);
         }
     });
 
