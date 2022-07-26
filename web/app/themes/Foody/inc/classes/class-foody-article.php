@@ -12,7 +12,7 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
 
     private function pid($request_pid = null)
     {
-        return $pid =  get_the_ID();
+        return $pid = get_the_ID();
     }
 
 
@@ -25,8 +25,8 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
 
     public function Get_Content_Before_Items()
     {
-        $rtn='';
-        $before_items_content = trim(get_field("before_items_content", $this->pid())) !='' ? get_field("before_items_content", $this->pid()) : '' ;
+        $rtn = '';
+        $before_items_content = trim(get_field("before_items_content", $this->pid())) != '' ? get_field("before_items_content", $this->pid()) : '';
         if (trim($before_items_content) != "") {
             $rtn .= '<div style="width:100%; text-align:right;direction:rtl;margin-top:10px;">' . $before_items_content . '</div>';
         }
@@ -34,7 +34,7 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
     }
     public function Get_Recipes_Title()
     {
-        
+
         $tmagic_title = !empty(get_field("items_title", $this->pid())) ? get_field("items_title", $this->pid()) : '';
         return $tmagic_title;
     }
@@ -44,11 +44,11 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
         if (!empty(get_field("items_recipe", $this->pid()))) {
             $recipies_array = get_field("items_recipe", $this->pid());
 
-            $rtn .= '<div class="container"><div  class="row text-center">';
+            $rtn .= '<div class="container"><div class="row text-center">';
             foreach ($recipies_array as $p) {
                 $post_title = get_the_title($p);
                 $thumb = get_the_post_thumbnail_url($p);
-                $rtn .= '<div style="margin-bottom:15px;" class="col-6  col-md-4 col-lg-4 text-center">';
+                $rtn .= '<div style="margin-bottom:15px;" class="col-6 col-md-4 col-lg-4 text-center">';
                 $rtn .= '<a href="/?p=' . $p . '" target="_blank"><img src="' . $thumb . '"/>';
                 $rtn .= '<b><span style="font-size:18px;color:#000 !important;">' . $post_title . '</span></b></a>';
                 $rtn .= '</div>';
@@ -69,16 +69,36 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
 
         if (!empty($whatsup_photos)) {
             $rtn .= '<div class="container m-0 p-0"><div class="row" style="text-align:center;">';
+            $i = 1;
             foreach ($whatsup_photos as $p) {
+
                 $whatsup_linkeg = $p['whatsup_linkeg'];
                 $email_linkeg = $p['email_linkeg'];
                 $photo = !wp_is_mobile() ? $p['what_desktop_photo'] : $p['what_mobile_photo'];
                 $items_content_for_recipe = $p['items_content_for_recipe'];
-                $rtn .= '<div class="col-12" style="text-align:center;"><img src="' . $photo  . '" />';
+                $rtn .= '<div class="col-12" style="text-align:center;"><img id="schedimage_' . $i . '" src="' . $photo . '" data-imgsrc="' . $photo . '" />';
+                $whatsup_linkeg = $p['whatsup_linkeg'];
+                $email_linkeg = $p['email_linkeg'];
+
+
+                if ($whatsup_linkeg != trim('')) {
+                    $rtn .= '<span ><a href="/foody-share/?u=' . $photo . '" >' . $whatsup_linkeg . '</a> </span>';
+                }
+
+
+                if ($email_linkeg != trim('')) {
+                    $rtn .= '<span><a href="mailto:?&body=<img src=' . $photo . ' />" >' . $email_linkeg . '</a> </span>';
+                }
+
+
                 if (trim($items_content_for_recipe) != '') {
                     $rtn .= '<div class="col-12" style="text-align:right;direction:rtl;">' . $items_content_for_recipe . '</div>';
                 }
+
+
+
                 $rtn .= '</div>';
+                $i++;
             }
             $rtn .= '</div></div></section>';
         }
@@ -104,7 +124,7 @@ class Foody_Article extends Foody_Post implements Foody_ContentWithSidebar
         foody_get_template_part(
             get_template_directory() . '/template-parts/_content-recipe-details-old.php',
             [
-                'page'          => $this,
+                'page' => $this,
                 'show_favorite' => false
             ]
         );
