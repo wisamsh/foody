@@ -28,6 +28,7 @@ margin-top: 50px;
 }
 .label_box{
     margin-left: 10px;
+    cursor: pointer;
 }
 .pollcont{
     direction:rtl;
