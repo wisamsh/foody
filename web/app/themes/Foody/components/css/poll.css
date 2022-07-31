@@ -147,8 +147,8 @@ object-fit: cover;
 float:right;
 width:50%;
 white-space:nowrap;
-  text-overflow:ellipsis;
-  overflow: hidden;
+  /*text-overflow:ellipsis;*/
+ /* overflow: hidden;*/
   text-align:right;
   font-size:17px;
   font-weight:bold;
