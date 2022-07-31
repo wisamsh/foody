@@ -24,6 +24,7 @@ margin-top: 50px;
 .pol_q{
     text-align: right;
     direction: rtl;
+    cursor: pointer;
    
 }
 .label_box{
