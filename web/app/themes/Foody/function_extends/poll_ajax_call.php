@@ -60,7 +60,9 @@ $rtn .= '<div class="container">';
 $rtn .='<div class="col-12 pol_res_Main_title"><p>תפריטים במיוחד עבורך:</p></div>' ;
 foreach($combain as $post){
 $title = get_the_title($post);
-$tumb =  '<img class="'.$class.'" src="'.get_the_post_thumbnail_url($post).'" />';
+$ExtendedThumb = get_field("poll_post_featured_image",$post) != "" ? get_field("poll_post_featured_image",$post) : get_the_post_thumbnail_url($post) ;
+
+$tumb = '<img class="'.$class.'" src="'.$ExtendedThumb.'" />';
 
 
 $rtn .= '<div class="col-12 col-lg-6 col-xl-6 text-center"><a target="_blank" href="/?p='.$post.'">'.$tumb;
