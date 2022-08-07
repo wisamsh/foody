@@ -39,7 +39,7 @@ $rtn .= '.img_holder{
 width: 160px;
 height: 100px;
 display: inline-block;
-margin-left: 66px;
+margin-left: 58px;
 background-position: center;
 background-repeat: no-repeat;
 background-size: cover;
