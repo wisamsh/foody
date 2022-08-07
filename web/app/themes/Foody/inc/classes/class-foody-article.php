@@ -50,8 +50,8 @@ cursor: pointer;
 if(wp_is_mobile()){
 
 $rtn .= '.img_holder{
-width: 85px;
-height: 78px;
+width: 100px;
+height: 64px;
 display: inline-block;
 margin-left: 15px;
 background-position: center;
