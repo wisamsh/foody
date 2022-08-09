@@ -239,4 +239,56 @@ foody_get_template_part(get_template_directory() . '/template-parts/content-cove
 ]);
         }
     }
-}
+
+
+    public function tiktok_video()
+    {
+        //WISAM : Tiktok video 
+        //<script async src="https://www.tiktok.com/embed.js"></script>
+        $tiktokscript = '<script async src="https://www.tiktok.com/embed.js"></script>';
+
+        if (get_field("tiktok_video", get_the_ID())) {
+            // echo get_field("tiktok_video", get_the_ID());
+            $tiktok = get_field("tiktok_video", get_the_ID());
+            if (strpos($tiktokscript, $tiktok) == false) {
+                return $tiktok . $tiktokscript;
+            } else {
+                return $tiktok;
+            }
+        }
+    }
+
+
+
+    public function YouTubeShort()
+    {
+        //youtube_shorts
+        $rtn = '';
+
+
+        if (get_field("youtube_short", get_the_ID())) {
+            $VideoUrl = trim(get_field("youtube_short", get_the_ID()));
+            if (wp_is_mobile()) {
+                $Short_yt_width = 'width="100%"';
+                $Short_yt_height = 'height="650"';
+            } else {
+                $Short_yt_width = 'width="451"';
+                $Short_yt_height = 'height="700"';
+            }
+
+            $rtn = '<div style="overflow: auto;text-align: center;width:100%;margin: 0 auto;">
+        
+        <iframe ' . $Short_yt_width . $Short_yt_height . ' src="https://www.youtube.com/embed/' . $VideoUrl . '"
+        title="פודי" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write;
+        encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+        </div>';
+        }
+
+        return $rtn;
+    }
+
+
+
+} //end class
