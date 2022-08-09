@@ -62,7 +62,7 @@ $rtn .= '.img_holder{
     border-radius: 15px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     }
-    .content_areas{text-align:center;}';
+    .content_areas{text-align:center;margin-top:25px;}';
 }
 
 
