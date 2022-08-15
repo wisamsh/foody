@@ -121,7 +121,7 @@ jQuery( document ).ready(function() {
 
 jQuery( "input[id^='area_photo_']" ).each(function( index ) {
 //console.log( index + ": " + jQuery( this ).val() );
-let html = '<div onclick="ScrollTo(`area_' + index + '`)" class="img_holder" style="background-image:url('+ jQuery( this ).val() +')"></div>';
+let html = '<div onclick="ScrollTo(`area_' + index + '`)" class="img_holder"><img src="'+jQuery( this ).val()+'" /></div>';
  
 jQuery(".content_areas").append(html);
 });
@@ -129,6 +129,7 @@ jQuery(".content_areas").append(html);
 
 });
 </script>
+
 
 
 
