@@ -25,7 +25,7 @@ echo $foody_page->Get_Area_Photo_Link();
 
 <div class="content_areas"></div>
 
-<h1 id="area_0" class="recipe_title">
+<h1 id="area_0" class="recipe_title" style="font-size: 1.8em;">
 <b><?php echo ($foody_page->Get_Recipes_Title()); ?></b>
 </h2>
 
@@ -129,8 +129,3 @@ jQuery(".content_areas").append(html);
 
 });
 </script>
-
-
-
-
-
