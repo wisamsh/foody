@@ -42,7 +42,7 @@ $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rat
             if (get_post_type() == 'foody_recipe') {
                 echo __('שתפו');
             } else if (get_post_type() == 'post') {
-                echo __('שתפו את הכתבה');
+                echo __('שתפו');
             } else if (get_post_type() == 'foody_feed_channel') {
                 echo __('שתפו את הערוץ');
             } else if (get_post_type() == 'foody_course') {

@@ -18,6 +18,16 @@ return $pid = get_the_ID();
 
 public function Article_Style_Emplementor(){
 $rtn = '<style>
+
+@media (max-width: 768px){
+.social-title{
+width: 50px !important;
+font-weight: bold !important;
+margin-top: 6px !important;
+}
+}
+
+
 .area_img{
 cursor: pointer;
 
@@ -37,7 +47,7 @@ if(!wp_is_mobile()){
 $rtn .='.area_img{width:200px !important;height:170px!important;}';
 $rtn .= '.img_holder{
 width: 170px;
-height: 90px;
+height: 66px;
 display: inline-block;
 margin-left: 40px;
 background-position: center;
@@ -47,17 +57,21 @@ object-fit: fill;
 cursor: pointer;
 border-radius: 15px;
 }
-.content_areas{text-align:center;justify-content: center;}
+
+
+
+.content_areas{text-align:center;justify-content: center;margin-top:5px;}
 
 ';
 }
 if(wp_is_mobile()){
 
+
 $rtn .= '.img_holder{
 width: 90px;
 height: 40px;
 display: inline-grid;
-margin-left: 14px;
+margin-left: 10px;
 background-position: center;
 background-repeat: no-repeat;
 background-size: cover;
@@ -65,7 +79,10 @@ object-fit: fill;
 border-radius: 15px;
    
     }
-.content_areas{text-align:center;justify-content: center;}';
+.content_areas{text-align:center;justify-content: center; margin-top:5px;}
+
+
+';
 }
 
 
