@@ -22,11 +22,11 @@ $rtn = '<style>
 @media (max-width: 768px){
 .social-title{
 width: 50px !important;
-font-weight: bold !important;
+
 margin-top: 6px !important;
 }
 }
-
+.social-title{font-weight: bold !important;}
 
 .area_img{
 cursor: pointer;
@@ -140,7 +140,14 @@ $recipies_array = get_field("items_recipe", $this->pid());
 
 $rtn .= '<div class="container"><div class="row text-center">';
 foreach ($recipies_array as $p) {
-$post_title = get_the_title($p);
+    if(!get_field("title_for_posts", $p)){
+        $post_title = get_the_title($p);
+        }
+        else{
+        $post_title = get_field("title_for_posts", $p);
+        }
+    
+
 $thumb = get_the_post_thumbnail_url($p);
 $rtn .= '<div style="margin-bottom:15px;" class="col-6 col-md-4 col-lg-4 text-center">';
 $rtn .= '<a class="post_link" href="/?p=' . $p . '" target="_blank"><img class="post_image" src="' . $thumb . '"/>';
