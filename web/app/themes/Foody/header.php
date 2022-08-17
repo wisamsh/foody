@@ -75,13 +75,6 @@ if (!is_multisite() || is_main_site()) {
 
 <body <?php body_class(); ?>
 <?php if(get_post_type() == 'questions'){echo 'itemscope itemtype="https://schema.org/QAPage"';}?> dir="rtl">
-
-    
-
-    
-
-    <?php //do_action('foody_after_body') ?>
-
 <?php
 
 if (get_post_type() != 'poll' && !wp_is_mobile() && (isset($_SESSION['background_image']) && !empty($_SESSION['background_image']))) {
