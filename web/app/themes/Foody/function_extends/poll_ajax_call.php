@@ -85,7 +85,7 @@ echo $rtn;
 // echo $pid;
 
 
-
+die();
         }
-        die();
+
 ?>
