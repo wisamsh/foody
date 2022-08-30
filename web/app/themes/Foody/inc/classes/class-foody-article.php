@@ -146,11 +146,19 @@ $post_title = get_the_title($p);
 else{
 $post_title = get_field("title_for_posts", $p);
         }
-   
+    
+    if(get_field("referer_publish", $this->pid()) !=""){
+     $r = "/?referer=" . get_field("referer_publish", $this->pid()) ;
+    }
+    else{
+     $r = '';
+    }
+
+        
 $permalink = get_permalink($p);
 $thumb = get_the_post_thumbnail_url($p);
 $rtn .= '<div style="margin-bottom:15px;" class="col-6 col-md-4 col-lg-4 text-center">';
-$rtn .= '<a class="post_link" href="' . $permalink . '" target="_blank"><img class="post_image" src="' . $thumb . '"/>';
+$rtn .= '<a class="post_link" href="' . $permalink . $r . '" target="_blank"><img class="post_image" src="' . $thumb . '"/>';
 $rtn .= '<b><span style="font-size:15px;color:#000 !important;">' . $post_title . '</span></b></a>';
 $rtn .= '</div>';
             }
