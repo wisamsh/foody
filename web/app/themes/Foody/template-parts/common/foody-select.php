@@ -30,7 +30,7 @@
         <select <?php echo $data_attrs ?> class="foody-pan-select foody-select foody-sort col-" title="<?php echo $name ?>"
                                           name="<?php echo $name ?>"
                                           id="<?php echo $id ?>">
-            <option disabled selected>בחר/י תבנית</option>
+          
 
             <?php if ( ! empty( $placeholder ) ) : ?>
                 <option value="">
