@@ -159,7 +159,7 @@ $permalink = get_permalink($p);
 $thumb = get_the_post_thumbnail_url($p);
 $rtn .= '<div style="margin-bottom:15px;" class="col-6 col-md-4 col-lg-4 text-center">';
 $rtn .= '<a class="post_link" href="' . $permalink . $r . '" target="_blank"><img class="post_image" src="' . $thumb . '"/>';
-$rtn .= '<b><span style="font-size:15px;color:#000 !important;">' . $post_title . '</span></b></a>';
+$rtn .= '<b style="display:inline-block;"><span style="font-size:15px;color:#000 !important;">' . $post_title . '</span></b></a>';
 $rtn .= '</div>';
             }
 $rtn .= '</div></div>';
