@@ -1402,4 +1402,63 @@ class Foody_Recipe extends Foody_Post
     {
         return $this->rating->foody_get_the_rating($this->id, true, true);
     }
-}
+
+
+//wisam
+public function Holiday_Links(){
+
+    if( function_exists('acf_add_options_page') )
+    {
+    $holidays =get_field('header_title', 'option');
+    $exclude_url = get_field("exclude_url", 'option');
+    
+    if(!in_array($this->id, $exclude_url))
+    {
+    
+    $holiday_links_rep = get_field("holiday_links_rep",'option');
+    
+    echo '<ul class="sp_ul">';
+    foreach($holiday_links_rep as $lnk)
+    {
+    $link_Title = $lnk['holiday_text_url'] ? $lnk['holiday_text_url'] : $lnk['holiday_url']['title'];
+    $link_url = $lnk['holiday_url']['url'];
+    $target = $lnk['holiday_url']['target'] ? "target='".$lnk['holiday_url']['target']."'": "" ;
+    
+     echo '<li><a class="sponserd_links_recipe" href="'. $link_url . '" ' . $target . '>'. $link_Title.'</a></li>';
+    
+    }
+    
+    echo '</ul>';
+    
+    
+    }
+    
+    
+    }
+    
+    echo '<style>
+    .sponserd_links_recipe{
+    width: 100%;
+    text-align: center;
+    color: #579fba !important;
+    font-size: 23px;
+    display: block;
+    text-decoration: underline !important;
+    margin-top: 20px;
+    }
+    .sp_ul li{
+    list-style: none;
+    }
+    .sp_ul li:last-child{
+    margin-bottom:30px !important;
+    }
+    
+    </style>
+    ';
+    
+    }
+
+
+
+
+} // end class

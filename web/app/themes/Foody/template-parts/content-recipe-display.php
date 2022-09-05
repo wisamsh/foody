@@ -147,11 +147,15 @@ target_type: 'mix'
 <div class="Swaploader dn"><img src="https://foody-media.s3.eu-west-1.amazonaws.com/w_images/loader.gif"/></div >
 <section class="recipe-content <?php echo $recipe->is_content_by_steps() ? 'with-steps' : ''?> original_content">
 <?php $recipe->get_relevant_content();
-
+echo $recipe->Holiday_Links();
 ?>
+
+
+
+
 </section>
 
-<section class="recipe-content <?php echo $recipe->is_content_by_steps() ? 'with-steps' : ''?>  alter_content dn">
+<section class="recipe-content <?php echo $recipe->is_content_by_steps() ? 'with-steps' : ''?> alter_content dn">
 
 </section>
 <?php echo $recipe->tiktok_video();?>
@@ -241,11 +245,11 @@ if ( get_current_blog_id() === 1 ) { ?>
 <?php $recipe->newsletter(); ?>
 
 </section>
-<?php 
- $actual_link = $_SERVER['HTTP_HOST'];
+<?php
+$actual_link = $_SERVER['HTTP_HOST'];
 if($actual_link == 'foody.moveodevelop.com') {
 echo ('<section class="recipe-tags tags no-print">');
-     require (get_template_directory() . '/w_helpers/taboola_in_footer.php');
+require (get_template_directory() . '/w_helpers/taboola_in_footer.php');
 echo ('</section>');
 }
 ?>

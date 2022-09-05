@@ -1134,3 +1134,4 @@ function remove_core_updates(){
 
     require_once get_template_directory() . '/function_extends/substitue_ajax_call.php';
     require_once get_template_directory() . '/function_extends/poll_ajax_call.php';
+    require_once get_template_directory() . '/function_extends/option-settings.php';
