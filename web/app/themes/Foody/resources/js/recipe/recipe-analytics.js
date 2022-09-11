@@ -7,7 +7,7 @@ jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe')) {
 
         let commercial_look = foodyGlobals['commercial_look'] ? foodyGlobals['commercial_look'] : "אינו משוייך למתחם";
-let channel_publisher_name = foodyGlobals['channel_publisher_name']  ? foodyGlobals['channel_publisher_name'] : "מפרסם";
+        let channel_publisher_name = foodyGlobals['channel_publisher_name']  ? foodyGlobals['channel_publisher_name'] : "מפרסם";
 
         $(".swap_text_in").on("click", function (event) {
             let amud = 'מתכונים';
@@ -695,6 +695,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
      * Recipe name
      */
     let recipe_name = foodyGlobals['title'];
+    let channel_publisher_name = foodyGlobals['channel_publisher_name']  ? foodyGlobals['channel_publisher_name'] : "מפרסם";
 
     /**
      * Item category
@@ -790,6 +791,7 @@ function get_recipe_order_location() {
 
 function set_recipe_order_location(recipe_id) {
     let recipes_visited = JSON.parse(sessionStorage.getItem('recipes_visited'));
+    let channel_publisher_name = foodyGlobals['channel_publisher_name']  ? foodyGlobals['channel_publisher_name'] : "מפרסם";
 
     if (!recipes_visited) {
         recipes_visited = [];
@@ -803,6 +805,8 @@ function set_recipe_order_location(recipe_id) {
 }
 
 function categoriesHits(publishers, feedPublisher, categoriesList) {
+    let channel_publisher_name = foodyGlobals['channel_publisher_name']  ? foodyGlobals['channel_publisher_name'] : "מפרסם";
+
     let primaryCategory = $('.breadcrumb > li').last()[0].innerText;
     let secondaryCategoriesString = "";
     let hasSecondaryCategories = false;
@@ -861,6 +865,8 @@ function categoriesHits(publishers, feedPublisher, categoriesList) {
 }
 
 function isNonInteraction(scrollsArr, isTwoMinuets, _nonInteraction) {
+    let channel_publisher_name = foodyGlobals['channel_publisher_name']  ? foodyGlobals['channel_publisher_name'] : "מפרסם";
+
     if (_nonInteraction) {
         let scrollInteraction = false;
 
@@ -882,6 +888,8 @@ function isNonInteraction(scrollsArr, isTwoMinuets, _nonInteraction) {
 }
 
 function getRelevantIngredientsPromotion(publishers, feedPublisher) {
+    let channel_publisher_name = foodyGlobals['channel_publisher_name']  ? foodyGlobals['channel_publisher_name'] : "מפרסם";
+
     let hasLinks = $('.sponsored-by a').length > 0;
     let somePromotionsRelatedToPublisher = $.inArray(feedPublisher, publishers) >= 0;
     const promotionWithLink = 'יש קידום עם קישור';
@@ -900,6 +908,8 @@ function getRelevantIngredientsPromotion(publishers, feedPublisher) {
 }
 
 function getTechniquesAndAccessories() {
+    let channel_publisher_name = foodyGlobals['channel_publisher_name']  ? foodyGlobals['channel_publisher_name'] : "מפרסם";
+
     let accessoriesList = '';
     let techniquesList = '';
     let hasAccessories = false;
@@ -929,6 +939,8 @@ function getTechniquesAndAccessories() {
 }
 
 function get_hostname(url) {
+    let channel_publisher_name = foodyGlobals['channel_publisher_name']  ? foodyGlobals['channel_publisher_name'] : "מפרסם";
+
     var domain = "", page = "";
 
     //remove "http://"
