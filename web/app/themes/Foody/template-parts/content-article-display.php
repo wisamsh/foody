@@ -40,13 +40,14 @@ echo $foody_page->Get_Area_Photo_Link();
 echo $foody_page->Get_Schedual_Photos();
 ?>
 
-<?php echo $foody_page->tiktok_video();?>
-<?php echo $foody_page->YouTubeShort();?>
 
 <?php
 the_content();
 ?>
 
+
+<?php echo $foody_page->tiktok_video();?>
+<?php echo $foody_page->YouTubeShort();?>
 
 <section class="categories section no-print">
 <h2 class="title">
