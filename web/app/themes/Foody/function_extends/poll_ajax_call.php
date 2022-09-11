@@ -57,7 +57,7 @@ $rtn ='';
 $class= !wp_is_mobile() ? 'pol_res_desktop_image' : 'poll_res_mobile_image' ;
 $rtn .= '<div class="container">';
 $rtn .= '<div class="row">';
-$rtn .='<div class="col-12 pol_res_Main_title"><p>תפריטים במיוחד עבורך:</p></div>' ;
+$rtn .='<div class="col-12 pol_res_Main_title"><p>התפריטים שבחרנו עבורך:</p></div>' ;
 foreach($combain as $post){
 $permalink = get_permalink($post);
 $title = get_the_title($post);
