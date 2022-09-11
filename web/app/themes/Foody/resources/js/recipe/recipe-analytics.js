@@ -817,7 +817,7 @@ function categoriesHits(publishers, feedPublisher, categoriesList) {
 
     let ingredientsPromotion = $('.sponsors-container').length > 0 ? getRelevantIngredientsPromotion(publishers, feedPublisher) : 'אין קידומים';
     let commercial_look = foodyGlobals['commercial_look'] ? foodyGlobals['commercial_look'] : "אינו משוייך למתחם";
-    eventCallback(null, 'מתכון', 'טעינה', '', commercial_look, feedPublisher, get_recipe_order_location(), '', '', '');
+    //eventCallback(null, 'מתכון', 'טעינה', '', commercial_look, feedPublisher, get_recipe_order_location(), '', '', '');
 
     if (feedPublisher == "") {
         eventCallback(null, 'מתכון', 'טעינה', 'קטגוריה ראשית', channel_publisher_name, publishers.join(', '), get_recipe_order_location(), primaryCategory, purchaseButtonsStatus, ingredientsPromotion);
