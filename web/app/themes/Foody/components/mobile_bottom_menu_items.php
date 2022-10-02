@@ -52,6 +52,12 @@
                             </span>
                         </a>
                     </li>
+                    <li id="menu-item-123898" class="quadmenu-item-123898 quadmenu-item quadmenu-item-object-custom quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/areas/%D7%9E%D7%AA%D7%9B%D7%95%D7%A0%D7%99%D7%9D-%D7%9C%D7%A8%D7%90%D7%A9-%D7%94%D7%A9%D7%A0%D7%94/">
+                            <span class="quadmenu-item-content">
+                                <span class="quadmenu-text  hover t_1000">מתכונים לראש השנה</span>
+                            </span>
+                        </a>
+                    </li>
                     <li id="menu-item-6969" class="quadmenu-item-6969 quadmenu-item quadmenu-item-type-taxonomy quadmenu-item-object-category quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/category/%d7%9e%d7%aa%d7%9b%d7%95%d7%a0%d7%99%d7%9d-%d7%91-10-%d7%93%d7%a7%d7%95%d7%aa/">
                             <span class="quadmenu-item-content">
                                 <span class="quadmenu-text  hover t_1000">מתכונים ב-10 דקות</span>
@@ -100,13 +106,13 @@
                             </span>
                         </a>
                     </li>
-                    <li id="menu-item-6975" class="quadmenu-item-6975 quadmenu-item quadmenu-item-type-taxonomy quadmenu-item-object-category current-foody_recipe-ancestor current-menu-parent current-foody_recipe-parent quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/category/%d7%a2%d7%95%d7%a3/">
+                    <li id="menu-item-6975" class="quadmenu-item-6975 quadmenu-item quadmenu-item-type-taxonomy quadmenu-item-object-category quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/category/%d7%a2%d7%95%d7%a3/">
                             <span class="quadmenu-item-content">
                                 <span class="quadmenu-text  hover t_1000">מתכוני עוף</span>
                             </span>
                         </a>
                     </li>
-                    <li id="menu-item-6989" class="quadmenu-item-6989 quadmenu-item quadmenu-item-type-taxonomy quadmenu-item-object-category current-foody_recipe-ancestor current-menu-parent current-foody_recipe-parent quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/category/%d7%90%d7%a8%d7%95%d7%97%d7%95%d7%aa/%d7%90%d7%a8%d7%95%d7%97%d7%95%d7%aa-%d7%a6%d7%94%d7%a8%d7%99%d7%99%d7%9d/">
+                    <li id="menu-item-6989" class="quadmenu-item-6989 quadmenu-item quadmenu-item-type-taxonomy quadmenu-item-object-category quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/category/%d7%90%d7%a8%d7%95%d7%97%d7%95%d7%aa/%d7%90%d7%a8%d7%95%d7%97%d7%95%d7%aa-%d7%a6%d7%94%d7%a8%d7%99%d7%99%d7%9d/">
                             <span class="quadmenu-item-content">
                                 <span class="quadmenu-text  hover t_1000">ארוחות צהריים</span>
                             </span>
@@ -147,6 +153,12 @@
                             </span>
                         </a>
                     </li>
+                    <li id="menu-item-124349" class="quadmenu-item-124349 quadmenu-item quadmenu-item-object-custom quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/tag/%D7%91%D7%95%D7%A9/">
+                            <span class="quadmenu-item-content">
+                                <span class="quadmenu-text  hover t_1000">בוש -אוכל נהדר</span>
+                            </span>
+                        </a>
+                    </li>
                     <li id="menu-item-68239" class="quadmenu-item-68239 quadmenu-item quadmenu-item-type-taxonomy quadmenu-item-object-category quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/category/%d7%9e%d7%a8%d7%a7%d7%99%d7%9d/">
                             <span class="quadmenu-item-content">
                                 <span class="quadmenu-text  hover t_1000">מרקים</span>
@@ -159,7 +171,7 @@
                             </span>
                         </a>
                     </li>
-                    <li id="menu-item-6982" class="quadmenu-item-6982 quadmenu-item quadmenu-item-type-taxonomy quadmenu-item-object-category quadmenu-item-has-children quadmenu-item-type-default quadmenu-item-level-1 quadmenu-dropdown quadmenu-dropdown-submenu quadmenu-has-caret quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/category/%d7%a7%d7%99%d7%a0%d7%95%d7%97%d7%99%d7%9d/" class="quadmenu-dropdown-toggle hoverintent">
+                    <li id="menu-item-6982" class="quadmenu-item-6982 quadmenu-item quadmenu-item-type-taxonomy quadmenu-item-object-category current-foody_recipe-ancestor current-menu-parent current-foody_recipe-parent quadmenu-item-has-children quadmenu-item-type-default quadmenu-item-level-1 quadmenu-dropdown quadmenu-dropdown-submenu quadmenu-has-caret quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/category/%d7%a7%d7%99%d7%a0%d7%95%d7%97%d7%99%d7%9d/" class="quadmenu-dropdown-toggle hoverintent">
                             <span class="quadmenu-item-content">
                                 <span class="quadmenu-caret"></span>
                                 <span class="quadmenu-text  hover t_1000">קינוחים</span>
@@ -212,13 +224,13 @@
                             </ul>
                         </div>
                     </li>
-                    <li id="menu-item-10993" class="quadmenu-item-10993 quadmenu-item quadmenu-item-type-taxonomy quadmenu-item-object-category current-foody_recipe-ancestor current-menu-parent current-foody_recipe-parent quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/category/%d7%90%d7%95%d7%9b%d7%9c-%d7%a9%d7%99%d7%9c%d7%93%d7%99%d7%9d-%d7%90%d7%95%d7%94%d7%91%d7%99%d7%9d/">
+                    <li id="menu-item-10993" class="quadmenu-item-10993 quadmenu-item quadmenu-item-type-taxonomy quadmenu-item-object-category quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/category/%d7%90%d7%95%d7%9b%d7%9c-%d7%a9%d7%99%d7%9c%d7%93%d7%99%d7%9d-%d7%90%d7%95%d7%94%d7%91%d7%99%d7%9d/">
                             <span class="quadmenu-item-content">
                                 <span class="quadmenu-text  hover t_1000">אוכל שילדים אוהבים</span>
                             </span>
                         </a>
                     </li>
-                    <li id="menu-item-6990" class="quadmenu-item-6990 quadmenu-item quadmenu-item-type-taxonomy quadmenu-item-object-category quadmenu-item-has-children quadmenu-item-type-default quadmenu-item-level-1 quadmenu-dropdown quadmenu-dropdown-submenu quadmenu-has-caret quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/category/%d7%a7%d7%99%d7%a0%d7%95%d7%97%d7%99%d7%9d/%d7%a2%d7%95%d7%92%d7%95%d7%aa/" class="quadmenu-dropdown-toggle hoverintent">
+                    <li id="menu-item-6990" class="quadmenu-item-6990 quadmenu-item quadmenu-item-type-taxonomy quadmenu-item-object-category current-foody_recipe-ancestor current-menu-parent current-foody_recipe-parent quadmenu-item-has-children quadmenu-item-type-default quadmenu-item-level-1 quadmenu-dropdown quadmenu-dropdown-submenu quadmenu-has-caret quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/category/%d7%a7%d7%99%d7%a0%d7%95%d7%97%d7%99%d7%9d/%d7%a2%d7%95%d7%92%d7%95%d7%aa/" class="quadmenu-dropdown-toggle hoverintent">
                             <span class="quadmenu-item-content">
                                 <span class="quadmenu-caret"></span>
                                 <span class="quadmenu-text  hover t_1000">עוגות</span>
@@ -347,6 +359,12 @@
                             </span>
                         </a>
                     </li>
+                    <li id="menu-item-123899" class="quadmenu-item-123899 quadmenu-item quadmenu-item-object-custom quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/areas/%D7%9E%D7%AA%D7%9B%D7%95%D7%A0%D7%99%D7%9D-%D7%9C%D7%A8%D7%90%D7%A9-%D7%94%D7%A9%D7%A0%D7%94/">
+                            <span class="quadmenu-item-content">
+                                <span class="quadmenu-text  hover t_1000">מתכונים לראש השנה</span>
+                            </span>
+                        </a>
+                    </li>
                     <li id="menu-item-22198" class="quadmenu-item-22198 quadmenu-item quadmenu-item-object-foody_feed_channel quadmenu-item-type-post_type quadmenu-item-type-post_type quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/areas/ninja-foodi/">
                             <span class="quadmenu-item-content">
                                 <span class="quadmenu-text  hover t_1000">NINJA – עולם ה</span>
@@ -356,6 +374,12 @@
                     <li id="menu-item-100299" class="quadmenu-item-100299 quadmenu-item quadmenu-item-object-custom quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/areas/%d7%a9%d7%9e%d7%a0%d7%aa-%d7%99%d7%98%d7%91%d7%aa%d7%94-%d7%96%d7%94-%d7%94%d7%98%d7%a8%d7%99%d7%a7/">
                             <span class="quadmenu-item-content">
                                 <span class="quadmenu-text  hover t_1000">שמנת יטבתה – זה הטריק!</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li id="menu-item-64467" class="quadmenu-item-64467 quadmenu-item quadmenu-item-object-foody_feed_channel quadmenu-item-type-post_type quadmenu-item-type-post_type quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/areas/sano-sushi/">
+                            <span class="quadmenu-item-content">
+                                <span class="quadmenu-text  hover t_1000">סנו סושי – יש על מי לסמוך בבית</span>
                             </span>
                         </a>
                     </li>
@@ -374,12 +398,6 @@
                     <li id="menu-item-107842" class="quadmenu-item-107842 quadmenu-item quadmenu-item-object-custom quadmenu-item-type-default quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/areas/%d7%a2%d7%95%d7%9c%d7%9d-%d7%94%d7%99%d7%9c%d7%93%d7%99%d7%9d-hisense-kids/">
                             <span class="quadmenu-item-content">
                                 <span class="quadmenu-text  hover t_1000">מתכונים לילדים - Hisense Kids</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li id="menu-item-64467" class="quadmenu-item-64467 quadmenu-item quadmenu-item-object-foody_feed_channel quadmenu-item-type-post_type quadmenu-item-type-post_type quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/areas/sano-sushi/">
-                            <span class="quadmenu-item-content">
-                                <span class="quadmenu-text  hover t_1000">יש על מי לסמוך בבית</span>
                             </span>
                         </a>
                     </li>
@@ -413,9 +431,9 @@
                             </span>
                         </a>
                     </li>
-                    <li id="menu-item-21626" class="quadmenu-item-21626 quadmenu-item quadmenu-item-object-foody_feed_channel quadmenu-item-type-post_type quadmenu-item-type-post_type quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/areas/%d7%91%d7%a8%d7%99%d7%9e%d7%90%d7%92/">
+                    <li id="menu-item-21626" class="quadmenu-item-21626 quadmenu-item quadmenu-item-object-foody_feed_channel quadmenu-item-type-post_type quadmenu-item-type-post_type quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/areas/kenwood/">
                             <span class="quadmenu-item-content">
-                                <span class="quadmenu-text  hover t_1000">Kitchen ברימאג</span>
+                                <span class="quadmenu-text  hover t_1000">KENWOOD</span>
                             </span>
                         </a>
                     </li>
@@ -437,7 +455,7 @@
         <li id="menu-item-65737" class="quadmenu-item-65737 quadmenu-item quadmenu-item-object-custom quadmenu-item-has-children quadmenu-item-type-default quadmenu-item-level-0 quadmenu-dropdown quadmenu-has-caret quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/%D7%9E%D7%93%D7%A8%D7%99%D7%9B%D7%99%D7%9D/" class="quadmenu-dropdown-toggle hoverintent">
                 <span class="quadmenu-item-content">
                     <span class="quadmenu-caret"></span>
-                    <span class="quadmenu-text  hover t_1000">מדריכים</span>
+                    <span class="quadmenu-text  hover t_1000">כתבות</span>
                 </span>
             </a>
             <div id="dropdown-65737" class="quadmenu_ltr t_300 quadmenu-dropdown-menu">
@@ -559,29 +577,6 @@
                 </ul>
             </div>
         </li>
-        <li id="menu-item-94032" class="quadmenu-item-94032 quadmenu-item quadmenu-item-object-page quadmenu-item-has-children quadmenu-item-type-post_type quadmenu-item-type-post_type quadmenu-item-level-0 quadmenu-dropdown quadmenu-has-caret quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/%d7%94%d7%aa%d7%95%d7%9b%d7%a0%d7%99%d7%95%d7%aa/" class="quadmenu-dropdown-toggle hoverintent">
-                <span class="quadmenu-item-content">
-                    <span class="quadmenu-caret"></span>
-                    <span class="quadmenu-text  hover t_1000">תוכניות בישול</span>
-                </span>
-            </a>
-            <div id="dropdown-94032" class="quadmenu_ltr t_300 quadmenu-dropdown-menu">
-                <ul>
-                    <li id="menu-item-94034" class="quadmenu-item-94034 quadmenu-item quadmenu-item-object-page quadmenu-item-type-post_type quadmenu-item-type-post_type quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/%d7%94%d7%aa%d7%95%d7%9b%d7%a0%d7%99%d7%95%d7%aa/">
-                            <span class="quadmenu-item-content">
-                                <span class="quadmenu-text  hover t_1000">כל תוכניות הבישול והאפייה</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li id="menu-item-94033" class="quadmenu-item-94033 quadmenu-item quadmenu-item-object-page quadmenu-item-type-post_type quadmenu-item-type-post_type quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/%d7%9c%d7%95%d7%97-%d7%a9%d7%99%d7%93%d7%95%d7%a8%d7%99%d7%9d/">
-                            <span class="quadmenu-item-content">
-                                <span class="quadmenu-text  hover t_1000">לוח שידורים</span>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
         <li id="menu-item-6962" class="quadmenu-item-6962 quadmenu-item quadmenu-item-object-page quadmenu-item-type-post_type quadmenu-item-type-post_type quadmenu-item-level-0 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/%d7%94%d7%a0%d7%91%d7%97%d7%a8%d7%aa/">
                 <span class="quadmenu-item-content">
                     <span class="quadmenu-text  hover t_1000">הנבחרת</span>
@@ -591,7 +586,7 @@
         <li id="menu-item-47715" class="quadmenu-item-47715 quadmenu-item quadmenu-item-object-custom quadmenu-item-has-children quadmenu-item-type-default quadmenu-item-level-0 quadmenu-dropdown quadmenu-has-caret quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/%d7%a1%d7%93%d7%a0%d7%aa-%d7%91%d7%99%d7%a9%d7%95%d7%9c-%d7%a7%d7%95%d7%a8%d7%a1-%d7%91%d7%99%d7%a9%d7%95%d7%9c-%d7%95%d7%a2%d7%95%d7%93-%d7%9e%d7%91%d7%99%d7%aa-%d7%a4%d7%95%d7%93%d7%99/" class="quadmenu-dropdown-toggle hoverintent">
                 <span class="quadmenu-item-content">
                     <span class="quadmenu-caret"></span>
-                    <span class="quadmenu-text  hover t_1000">חנות</span>
+                    <span class="quadmenu-text  hover t_1000">קורסים</span>
                 </span>
             </a>
             <div id="dropdown-47715" class="quadmenu_ltr t_300 quadmenu-dropdown-menu">
@@ -704,14 +699,14 @@
                             </span>
                         </a>
                     </li>
-                    <li id="menu-item-50078" class="quadmenu-item-50078 quadmenu-item quadmenu-item-object-foody_course quadmenu-item-type-post_type quadmenu-item-type-post_type quadmenu-item-level-1 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left iso-navmenu-item"> <a href="https://foody.co.il/courses/%d7%a7%d7%a8%d7%99%d7%9f-%d7%92%d7%95%d7%a8%d7%9f-%d7%a1%d7%93%d7%a0%d7%94-%d7%91%d7%a9%d7%a4%d7%94-%d7%94%d7%a8%d7%95%d7%a1%d7%99%d7%aa/">
-                            <span class="quadmenu-item-content">
-                                <span class="quadmenu-text  hover t_1000">סדנת עוגות גבינה (רוסית) - קרין גורן</span>
-                            </span>
-                        </a>
-                    </li>
                 </ul>
             </div>
+        </li>
+        <li id="menu-item-123852" class="quadmenu-item-123852 quadmenu-item quadmenu-item-object-custom quadmenu-item-type-default quadmenu-item-level-0 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://shop.foody.co.il/">
+                <span class="quadmenu-item-content">
+                    <span class="quadmenu-text  hover t_1000">חנות</span>
+                </span>
+            </a>
         </li>
         <li id="menu-item-8932" class="quadmenu-item-8932 bold quadmenu-item quadmenu-item-object-page quadmenu-item-type-post_type quadmenu-item-type-post_type quadmenu-item-level-0 quadmenu-has-title quadmenu-has-link quadmenu-has-background quadmenu-dropdown-left "> <a href="https://foody.co.il/%d7%a4%d7%a8%d7%95%d7%a4%d7%99%d7%9c-%d7%90%d7%99%d7%a9%d7%99/">
                 <span class="quadmenu-item-content">
