@@ -114,12 +114,6 @@ Foody_Seo::seo();
 </main><!-- #main -->
 
 </div><!-- #primary -->
-<?php
-
-if (wp_is_mobile() && "foody_recipe" != get_post_type()) {
-require(get_template_directory() . '/components/mobile_nav/mobile_bottom_menu_new.php');
-}
-?>
 
 <?php
 get_footer();
