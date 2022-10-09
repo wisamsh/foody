@@ -45,7 +45,13 @@ if ($aggregateRating != false) { ?>
 "recipeInstructions": "<?php echo str_replace(['/', "\\"], ' ', str_replace('"', '״', str_replace(array("\r", "\n", "\t"), "", wp_strip_all_tags(get_the_content($recipe))))) ?>"
 }
 </script>
+
+
+
 <?php
+
+
+
 $promotion_area_group = get_field('promotion_area', $recipe->id);
 if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text'])) { ?>
 <section class="promotion-area no-print">
@@ -243,7 +249,13 @@ if ( get_current_blog_id() === 1 ) { ?>
 
 <section class="newsletter no-print">
 <?php $recipe->newsletter(); ?>
+<?php
 
+
+if (wp_is_mobile()) {
+// require(get_template_directory() . '/components/mobile_bottom_menu_new.php');
+}
+?>
 </section>
 <?php
 $actual_link = $_SERVER['HTTP_HOST'];
@@ -257,6 +269,9 @@ echo ('</section>');
 
 <section class="recipe-sidebar-mobile d-block d-lg-none no-print">
 <?php $recipe->the_mobile_sidebar_content(); ?>
+
+
+
 </section>
 
 <?php if ( function_exists( 'footabc_add_code_to_content' ) ): ?>
@@ -266,5 +281,5 @@ echo ('</section>');
 <?php endif; ?>
 <div class="print-footer print">
 <span class="footer-text"><?php echo __('לעוד מתכונים חפשו פודי בגוגל או היכנסו ל- foody.co.il') ?></span>
-
 </div>
+
