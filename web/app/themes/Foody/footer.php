@@ -243,9 +243,9 @@ $footer->add_nagish_li_script();
 
 
 
-//if (wp_is_mobile() && "foody_recipe" != get_post_type()) {
+if (wp_is_mobile()){// && "foody_recipe" != get_post_type()) {
     require(get_template_directory() . '/components/mobile_nav/mobile_bottom_menu_new.php');
-   // }
+    }
 
 ?>
 
