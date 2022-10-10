@@ -341,16 +341,20 @@
 }
 .related_img {
     object-fit: cover !important;
-    width: 156px !important;
-    height: 104px !important;
+    width: 100% !important;
+    min-height: 115px !important;
     object-fit: cover !important;
+    
 }
 .colish {
     width: 49%;
     display: flex;
     text-align: center;
+    padding: 5px;
 }
-#
+#masthead{
+    display: none;
+}
 </style>
 
 
