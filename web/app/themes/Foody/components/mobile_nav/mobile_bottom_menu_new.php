@@ -166,6 +166,9 @@
         -o-transition: all 0.8s ease;
         transition: all 0.8s ease;
     }
+    #masthead{
+        display: none;
+    }
 
     .regist a {
 
@@ -287,7 +290,7 @@
 
     .open {
         opacity: 1;
-        height: 100vh;
+        
         width: 100vw;
         z-index: 100000000;
     }
@@ -347,7 +350,7 @@
     display: flex;
     text-align: center;
 }
-
+#
 </style>
 
 

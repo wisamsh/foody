@@ -7,14 +7,39 @@
 	<div class="close_related_btn">X</div>
 	
 	<?php 
+$cat_id = 0;
+$list = array();
+$ids = array();
+
+
 	if(is_category()){
 		$cat_id = get_query_var('cat');
 		$list = array();
-		
+		$ids = array();
+	}
+if(is_front_page()){
+	$cat_id = 0;
+	$ids = get_field("mobile_more_recipe_main_page", 'option');
+}
+if('post'== get_post_type()){
+	$cat_id = 0;
+	$ids = get_field("mobile_more_recipe_articles", 'option');
+}
+
+if('foody_recipe'== get_post_type()){
+	$cat_cat = get_the_category();
+	$cat_id = $cat_cat[0]->term_id;
+	$ids=array();
+
+
+}
+
+
 		  
 $args = array(
 
-			'post_status' => 'publish',
+	'post__in' => $ids ,		
+	'post_status' => 'publish',
 			'orderby' => 'post_date',
 			'order' => 'DESC',
 			'numberposts'      => 4,
@@ -49,12 +74,7 @@ $args = array(
 		?>
 				</div>
 				</div>
-		<?php
 		
-	}
-	
-	
-	?>
 	
 	
 	

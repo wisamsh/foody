@@ -115,5 +115,6 @@ Foody_Seo::seo();
 
 </div><!-- #primary -->
 
+
 <?php
 get_footer();

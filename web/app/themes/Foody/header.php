@@ -288,4 +288,3 @@ Foody_Header::whatsapp(['d-lg-block', 'floating', 'whatsapp-mobile']);
 Foody_Header::whatsapp(['d-none', 'd-lg-block', 'floating']);
         }
 ?>
-
