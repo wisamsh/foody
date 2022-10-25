@@ -1,30 +1,33 @@
 <?php
- Foody_Header::getPrintHeader();
+Foody_Header::getPrintHeader();
 class AWP_Menu_Walker extends Walker_Nav_Menu {
-	function start_el(&$output, $item, $depth=0, $args=[], $id=0) {
-		$output .= "<li class='menu_item_top'> <span id='".$item->ID."' onclick='swapme(`".$item->ID."`);' class='plus_btn'>+</span>";
+function start_el(&$output, $item, $depth=0, $args=[], $id=0) {
 
-		if ($item->url && $item->url != '#') {
-			$output .= '<a href="' . $item->url . '">';
-		} else {
-			$output .= '<span>';
-		}
+$output .= "<li class='menu_item_top'> <span id='".$item->ID."' onclick='swapme(`".$item->ID."`);' class='plus_btn'>";
+$output .= $args->walker->has_children ? "+" : "";
+$output .="</span>";
 
-		$output .= $item->title;
+if ($item->url && $item->url != '#') {
+$output .= '<a href="' . $item->url . '">';
+} else {
+$output .= '<span>';
+}
 
-		if ($item->url && $item->url != '#') {
-			$output .= '</a>';
-		} else {
-			$output .= '</span>';
-		}
-	
-	
-	
-	
-	}
-	
-	
-	
+$output .= $item->title;
+
+if ($item->url && $item->url != '#') {
+$output .= '</a>';
+} else {
+$output .= '</span>';
+}
+
+
+
+
+}
+
+
+
 }
 $new_menu_args = array(
 'menu'=>'Navbar',
@@ -38,6 +41,6 @@ $new_menu_args = array(
 'walker'=> new AWP_Menu_Walker()
 
 );
- $BottomMenu = wp_nav_menu($new_menu_args);
- echo $BottomMenu;
+$BottomMenu = wp_nav_menu($new_menu_args);
+echo $BottomMenu;
 ?>
