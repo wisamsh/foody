@@ -617,11 +617,11 @@
     jQuery("#magnifier_search , .btn-search-close").click(function() {
 
         jQuery(".filter-btn").addClass('hidden')
-
         mobile_menu.addClass("hidden");
         logo.addClass("hidden");
         hum.removeClass("hidden");
         search_overlay.show();
+        jQuery(".Conductor_overlay , .related-recipes-container").addClass("hidden");
 
     });
 
