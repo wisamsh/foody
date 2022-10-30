@@ -203,7 +203,7 @@ wp_nav_menu($nav_args);
 <button type="button" class="btn btn-default navbar-btn btn-search d-block d-lg-none"
 aria-label="חיפוש">
 
-<img src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="search-bar">
+<img class="mobile_footer_search_icon" src="<?php echo $GLOBALS['images_dir'] . 'icons/search-bar.png' ?>" alt="search-bar">
 
 </button>
 
