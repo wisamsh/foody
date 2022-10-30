@@ -150,10 +150,10 @@ data-acsb="trigger" aria-label="פתיחת תפריט נגישות">
 
 
 
-<nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg <?php $header->the_logo_nav_mode() ?>"
+<nav class="navbar navbar-expand-lg navbar-light navbar-toggleable-lg <?php $header->the_logo_nav_mode() ?> mobile_footer_nav"
 role="navigation">
 
-<div class="container-fluid foody-navbar-container">
+<div class="container-fluid foody-navbar-container mobile_footer_container">
 
 <div class="site-branding">
 <div class="logo-container d-none d-lg-block <?php $header->the_logo_mode() ?> ">

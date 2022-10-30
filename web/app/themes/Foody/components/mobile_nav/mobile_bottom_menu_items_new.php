@@ -3,12 +3,12 @@ Foody_Header::getPrintHeader();
 class AWP_Menu_Walker extends Walker_Nav_Menu {
 function start_el(&$output, $item, $depth=0, $args=[], $id=0) {
 
-$output .= "<li class='menu_item_top'> <span id='".$item->ID."' onclick='swapme(`".$item->ID."`);' class='plus_btn'>";
+$output .= "<li class='menu_item_top'> <span id='".$item->ID."' onclick='swapme(`".$item->ID."`);' class='plus_btn mobile_footer_plusBTN'>";
 $output .= $args->walker->has_children ? "+" : "";
 $output .="</span>";
 
 if ($item->url && $item->url != '#') {
-$output .= '<a href="' . $item->url . '">';
+$output .= '<a href="' . $item->url . '" class="mobile_footer_nav_link">';
 } else {
 $output .= '<span>';
 }
