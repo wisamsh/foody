@@ -137,7 +137,7 @@
 
                     </div>
 
-                    <nav id="Foody_Mobile_nav">
+                    <nav id="Foody_Mobile_nav" class="mobile_footer_main_navigation">
                         <div class="Foody_Mobile_nav-container">
 
                             <?php if (wp_is_mobile()) {
