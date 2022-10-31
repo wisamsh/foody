@@ -33,7 +33,7 @@
 	}
 
 
-/*
+
 	if ('foody_feed_channel' == get_post_type()) {
 
 		$items = array();
@@ -56,7 +56,7 @@
 		$ids = $items;
 	}
 
-*/
+
 
 	$args = array(
 
