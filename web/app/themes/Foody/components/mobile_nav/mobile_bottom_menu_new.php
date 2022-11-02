@@ -1,3 +1,6 @@
+<?php 
+$domain_name = $_SERVER['HTTP_HOST'];
+?>
 <?php if (wp_is_mobile()) { ?>
 
     <div id="search_overlay" class="search-overlay floating-mobile-header d-lg-none">
@@ -106,7 +109,7 @@
 
                         </div>
                         
-                        <?php require(get_template_directory() . '/components/register_login.php'); ?>
+                        <?php require(get_template_directory() . '/components/mobile_nav/register_login.php'); ?>
 
                     </div>
 

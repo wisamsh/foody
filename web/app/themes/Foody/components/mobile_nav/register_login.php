@@ -1,3 +1,6 @@
+<?php 
+if ($domain_name == "foody.co.il" || $domain_name == "foody-local.co.il" || $domain_name == "foody.moveodevelop.com"){
+    ?>
 <div class="regist">
     <?php if (!is_user_logged_in()) {
 
@@ -21,3 +24,4 @@
     }
     ?>
 </div>
+<?php }?>
