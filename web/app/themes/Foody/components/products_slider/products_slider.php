@@ -11,7 +11,7 @@
 
 	
 
- 
+ $queryAPI = "?chunk=3&page=12";
  
  if($shutdown_shop_api == 0){
 	 
@@ -21,17 +21,18 @@
  
  $post_query = '';
  if("" != $shop_include_ids){
-	 $post_query = "?product=".$shop_include_ids;
+	 $post_query = "&product=".$shop_include_ids;
+
  }
  
  
  if($inDomain  == 'foody.moveodevelop.com'){
 	  //$ApiDomain = 'https://shop-staging.foody.co.il/foodyapi?pages=9&chunk=3'.$post_query;
-	  $ApiDomain = 'https://shop.foody.co.il/foodyapi'.$post_query;
+	  $ApiDomain = 'https://shop.foody.co.il/foodyapi'.$queryAPI.$post_query;
 	  
  }
  else{
-	  $ApiDomain = 'https://shop.foody.co.il/foodyapi'.$post_query;
+	  $ApiDomain = 'https://shop.foody.co.il/foodyapi'.$queryAPI.$post_query;
 	 
  }
 if(!wp_is_mobile()){
