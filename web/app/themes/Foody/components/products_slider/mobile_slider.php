@@ -9,9 +9,13 @@ $rightArrow = "https://foody-media.s3.eu-west-1.amazonaws.com/w_images/r-arrow.p
   <div class="carousel-inner"></div>
   <a class="carousel-control-prev" href="#FoodyShopCarousel" role="button" data-slide="prev">
     <img class="car_arrow" src="<?php echo $leftArrow ;?>"/>
+    <button id="prevbtn" role="button" data-slide="prev" style="display:none;"></button>
+
+
   </a>
   <a class="carousel-control-next" href="#FoodyShopCarousel" role="button" data-slide="next">
    <img class="car_arrow" src="<?php echo $rightArrow ;?>"/>
+   <button id="nextbtn" role="button" data-slide="prev" style="display:none;"></button>
   </a>
 </div>
 
@@ -267,9 +271,9 @@ function handleTouchMove(evt) {
                                                                          
     if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
         if ( xDiff > 0 ) {
-            //jQuery('#FoodyShopCarousel').carousel('next');
+            jQuery('#nextbtn').trigger('click');
         } else {
-           //jQuery('#FoodyShopCarousel').carousel('prev');
+            jQuery('#prevbtn').trigger('click');
         }                       
     } else {
         if ( yDiff > 0 ) {
