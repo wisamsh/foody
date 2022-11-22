@@ -180,6 +180,9 @@ echo $recipe->Holiday_Links();
 <?php $recipe->the_sponsor() ?>
 </section>
 
+<?php require(get_template_directory() . '/components/products_slider/products_slider.php') ;?>
+
+
 <?php if ($recipe->show_google_adx()): ?>
 <section class="google-adx-container col-lg-9 col-12">
 <?php $recipe->the_google_adx(); ?>
@@ -193,6 +196,9 @@ if (!empty($enable_tip) && $enable_tip) { ?>
 <?php $recipe->get_system_tip(); ?>
 </section>
 <?php } ?>
+
+
+
 
 <?php
 $similar_content = get_field('similar_content_group', $recipe->get_id());
