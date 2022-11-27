@@ -143,7 +143,7 @@ $rightArrow = "https://foody-media.s3.eu-west-1.amazonaws.com/w_images/r-arrow.p
     border: solid 1px #4444442e;
     position: relative;
     /* float: right; */
-    margin-left: 3px;
+    margin-left: 1px;
     display: inline-table;
     -webkit-box-shadow: 0px 0px 5px 0px rgb(196 192 196);
     -moz-box-shadow: 0px 0px 5px 0px rgba(196,192,196,1);
