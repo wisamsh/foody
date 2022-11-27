@@ -163,11 +163,13 @@
     }
 
     .navbar-container,
-    .foody-logo-hamburger,
     .foody-logo-close {
-        transition: all 0.9s ease;
+        
     }
 
+    .foody-logo-hamburger{
+        display: block !important;
+    }
     .data_res {
         width: 100%;
         position: fixed;

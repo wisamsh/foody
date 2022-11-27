@@ -351,7 +351,7 @@ jQuery(document).ready(function ($) {
 
     if ($('.sticky_bottom_header').length) {
         $(window).on('scroll', function () {
-            if($(window).scrollTop() < 110){
+            if($(window).scrollTop() < 0){
                 if(switchedToHamburgerLogo && !foodyTextLogoIsShow) {
                     if(!closedLogoIsShown) {
                         //         let foodyTextImage = '<img class="foody-logo-text" src="' + foodyGlobals.imagesUri + "foody_logo-with-white.svg" + '">';

@@ -12,19 +12,19 @@
 	$ids = array();
 
 
-	//if (is_category()) {
-	//	$cat_id = get_query_var('cat');
-	//	$list = array();
-	//	$ids = array();
-	//}
-	//if (is_front_page()) {
+	if (is_category()) {
+		$cat_id = get_query_var('cat');
+		$list = array();
+		$ids = array();
+	}
+	if (is_front_page()) {
 		//$cat_id = 0;
 		$ids = get_field("mobile_more_recipe_main_page", 'option') ? get_field("mobile_more_recipe_main_page", 'option') : array();
-	//}
-	//if ('post' == get_post_type()) {
-	//	$cat_id = 0;
-	//	$ids = get_field("mobile_more_recipe_articles", 'option');
-	//}
+	}
+	if ('post' == get_post_type()) {
+		$cat_id = 0;
+		$ids = get_field("mobile_more_recipe_articles", 'option');
+	}
 
 	if ('foody_recipe' == get_post_type()) {
 		$cat_cat = get_the_category();
