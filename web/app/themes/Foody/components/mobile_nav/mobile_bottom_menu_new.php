@@ -515,6 +515,7 @@ $domain_name = $_SERVER['HTTP_HOST'];
 
 <script>
     jQuery(document).ready(function() {
+        //this is very important
     jQuery(document).scrollTop("1");
     
     });
