@@ -514,7 +514,12 @@ $domain_name = $_SERVER['HTTP_HOST'];
 
 
 <script>
-    //jQuery(document).ready(function() {
+    jQuery(document).ready(function() {
+    jQuery(document).scrollTop("1");
+    
+    });
+
+
     function swapme(id) {
 
         if (jQuery("#" + id).text() == "+") {
