@@ -239,9 +239,9 @@ jQuery(document).ready(function ($) {
     let onLoadScroll = false;
     let oldPageYOffset = 0;
 
-    if($(window).scrollTop() < 110){
-        foodyTextLogoIsShow = true;
-    }
+    //if($(window).scrollTop() < 110){
+        //foodyTextLogoIsShow = true;
+   //}
 
 
 
