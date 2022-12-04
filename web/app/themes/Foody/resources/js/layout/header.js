@@ -1,5 +1,5 @@
 let toggleScreenLock = require('../common/screenLock');
-require('./mobile-header-scroll');
+//require('./mobile-header-scroll');
 jQuery(document).ready(function ($) {
 
     let initialScrollEvent = true;
