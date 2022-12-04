@@ -7,6 +7,12 @@
 	<div class="close_related_btn">X</div>
 
 	<?php
+
+
+
+
+
+
 	$cat_id = 0;
 	$list = array();
 	$ids = array();
@@ -29,7 +35,44 @@
 	if ('foody_recipe' == get_post_type()) {
 		$cat_cat = get_the_category();
 		$cat_id = $cat_cat[0]->term_id;
+		//$cat_name = $cat_cat[0]->term_id;
+		//print_r($cat_cat);
 		$ids = array();
+
+		$term_list = wp_get_post_terms(get_the_ID(), 'category', ['fields' => 'all']);
+		foreach ($term_list as $term) {
+			if (get_post_meta(get_the_ID(), '_yoast_wpseo_primary_category', true) == $term->term_id) {
+				// this is a primary category
+				$cat_Name = $term->name;
+				$cat_id = $term->term_id;
+			}
+		}
+
+
+		$args_rec = array(
+
+			//'post__in' => $ids,
+			'post_status' => 'publish',
+			//'orderby' => 'post_date',
+			//'order' => 'DESC',
+			'numberposts' => 4,
+			//'category_name' => $cat_Name,
+			//'cat_' => $cat_id,
+			'orderby' => 'rand',
+			'post_type' => 'foody_recipe',
+
+
+			'meta_query' => [
+				[
+					'key' => '_yoast_wpseo_primary_category',
+					'compare' => 'IN',
+					'value' => $cat_id,
+					'type' => 'NUMERIC'
+				]
+			]
+
+
+		);
 	}
 
 
@@ -58,6 +101,7 @@
 
 
 
+
 	$args = array(
 
 		'post__in' => $ids,
@@ -71,7 +115,14 @@
 		'suppress_filters' => true,
 
 	);
-	$recipes = get_posts($args);
+
+	if ('foody_recipe' == get_post_type()) {
+
+		$recipes = get_posts($args_rec);
+	} else {
+
+		$recipes = get_posts($args);
+	}
 	?>
 	<div class="container">
 		<div class="row">
