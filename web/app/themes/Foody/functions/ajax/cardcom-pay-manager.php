@@ -160,7 +160,7 @@ function generate_dynamic_cardcom_form($added_id, $member_data, $thank_you_page)
 
 
         $vars['SuccessRedirectUrl'] = $thank_you_page; // Success Page
-        $vars['ErrorRedirectUrl'] = $thank_you_page; // Error Page
+        $vars['ErrorRedirectUrl'] = '';//$thank_you_page; // Error Page
 
         // Other Optional vars :
 
