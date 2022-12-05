@@ -1,5 +1,5 @@
 let toggleScreenLock = require('../common/screenLock');
-//require('./mobile-header-scroll');
+require('./mobile-header-scroll');
 jQuery(document).ready(function ($) {
 
     let initialScrollEvent = true;
@@ -350,6 +350,11 @@ jQuery(document).ready(function ($) {
     }
 
     if ($('.sticky_bottom_header').length) {
+        $(".foody-logo-hamburger").removeClass("hidden");
+    }
+  
+    /*
+    if ($('.sticky_bottom_header').length) {
         $(window).on('scroll', function () {
             if($(window).scrollTop() < -1){
                 if(switchedToHamburgerLogo && !foodyTextLogoIsShow) {
@@ -378,7 +383,7 @@ jQuery(document).ready(function ($) {
             }
         });
     }
-
+*/
     if($('.brands-toggle-mobile .navbar-toggler').length){
         $('.brands-toggle-mobile .navbar-toggler').on('click', function () {
             $('.brands-toggle-mobile .brands-avenue-mobile .close').removeClass('hide');
