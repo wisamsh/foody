@@ -51,7 +51,7 @@
 
 		$args_rec = array(
 
-			//'post__in' => $ids,
+			'post__not_in' => array(get_the_ID()),
 			'post_status' => 'publish',
 			//'orderby' => 'post_date',
 			//'order' => 'DESC',
