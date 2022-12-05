@@ -148,7 +148,14 @@ function generate_dynamic_cardcom_form($added_id, $member_data, $thank_you_page)
 
         $vars = array();
         $vars['TerminalNumber'] = $cardcom_credentials['terminal_number'];
+        if($_SERVER['HTTP_HOST'] == 'foody.moveodevelop.com'){
+            $vars['UserName'] = 'test9611';//;$cardcom_credentials['user_name'];
+        }
+        else{
+            $vars['UserName'] = $cardcom_credentials['user_name'];
+        }
         $vars['UserName'] = $cardcom_credentials['user_name'];
+        
         $vars["APILevel"] = "10"; // req
         $vars['codepage'] = '65001'; // unicode
         $vars["Operation"] = $Operation;
