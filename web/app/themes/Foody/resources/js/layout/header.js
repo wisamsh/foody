@@ -270,7 +270,7 @@ jQuery(document).ready(function ($) {
 
         $('.sticky_bottom_header .navbar-toggler.custom-logo-link').on('click', function (e) {
             if (!switchedToHamburgerLogo || foodyTextLogoIsShow) {
-                window.location.href = window.location.origin;
+                //window.location.href = window.location.origin;
                 return;
             }
             if ($('.sticky_bottom_header .quadmenu-navbar-collapse').length) {

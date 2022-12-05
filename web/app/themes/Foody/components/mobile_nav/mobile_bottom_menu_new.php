@@ -72,15 +72,7 @@ $domain_name = $_SERVER['HTTP_HOST'];
                 <div class="site-branding">
                     <div class="logo-container-mobile d-block d-lg-none">
                         <button class="navbar-toggler custom-logo-link" type="button" data-toggle="collapse" data-target="#foody-navbar-collapse" aria-controls="foody-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-                            <!-- <img class="foody-logo-text" src="-->
-                            <!--/foody_logo-with-white.svg">-->
-
-                            <!--
-                            <div class="foody-logo-text hidden">
-                                <a href="/" class="togo"> </a>
-
-                            </div>
-                    -->
+                            
                             <div class="foody-logo-hamburger"></div>
                             <div class="foody-logo-close"></div>
                         </button>
@@ -516,7 +508,7 @@ $domain_name = $_SERVER['HTTP_HOST'];
 <script>
     jQuery(document).ready(function() {
         //this is very important
-    jQuery(document).scrollTop("1");
+   // jQuery(document).scrollTop("1");
     
     });
 
