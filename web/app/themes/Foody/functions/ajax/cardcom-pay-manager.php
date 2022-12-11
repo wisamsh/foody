@@ -172,7 +172,7 @@ $vars['ProductName'] = $member_data['course_name']; // Product Name , will how i
 
 
 $vars['SuccessRedirectUrl'] = $thank_you_page; // Success Page
-$vars['ErrorRedirectUrl'] = '';//$thank_you_page; // Error Page
+$vars['ErrorRedirectUrl'] = 'https://foody.co.il/%d7%94%d7%a2%d7%a1%d7%a7%d7%94-%d7%a0%d7%9b%d7%a9%d7%9c%d7%94/';//$thank_you_page; // Error Page
 
 // Other Optional vars :
 
