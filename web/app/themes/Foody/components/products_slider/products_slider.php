@@ -25,9 +25,9 @@ if ($shutdown_shop_api == 0) {
 		}
 
 
-		if ($inDomain  == 'foody.moveodevelop.com') {
-			//$ApiDomain = 'https://shop-staging.foody.co.il/foodyapi?pages=9&chunk=3'.$post_query;
-			$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
+		if ($inDomain  == 'foody.moveodevelop.com' || $inDomain =='foody-local.co.il') {
+			$ApiDomain = 'https://shop-staging.foody.co.il/foodyapi'. $queryAPI . $post_query;
+			//$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
 		} else {
 			$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
 		}
