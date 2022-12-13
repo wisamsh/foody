@@ -1,4 +1,8 @@
 <?php
+$api_accessories_array = $recipe->row_accessories();
+	
+$api_accessories = implode(',' ,$api_accessories_array);
+
 $ShoppingCart = "https://foody-media.s3.eu-west-1.amazonaws.com/w_images/shopping-cart.png";
 $inDomain = $_SERVER['HTTP_HOST'];
 
@@ -11,7 +15,7 @@ $recipes_discluded_from_shop = get_field("recipes_discluded_from_shop", "option"
 
 
 
-$queryAPI = "?chunk=3&page=12";
+$queryAPI = "?chunk=3&page=12&accessories=".$api_accessories;
 
 if ($shutdown_shop_api == 0) {
 
@@ -45,7 +49,7 @@ if ($shutdown_shop_api == 0) {
 
 
 				jQuery.ajax({
-					type: "GET",
+					type: "POST",
 					url: "<?php echo $ApiDomain; ?>",
 					dataType: "json",
 

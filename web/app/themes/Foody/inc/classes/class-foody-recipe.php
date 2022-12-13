@@ -296,6 +296,25 @@ class Foody_Recipe extends Foody_Post
         $this->posts_bullets($posts, $title);
     }
 
+//wisam======================for Shop Api Slider=========================================
+
+public function row_accessories(){
+   $accessories = array();
+    while (have_rows('accessories', $this->post->ID)) : the_row();
+            $posts = get_sub_field('accessories');
+        endwhile;
+
+foreach($posts as $k=>$p){
+$accessories[$k] = $p->post_title;
+}
+return $accessories;
+
+}
+
+
+
+
+
     public function the_techniques($print = true)
     {
         $posts = [];
