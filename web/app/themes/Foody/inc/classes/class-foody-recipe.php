@@ -305,12 +305,13 @@ public function row_accessories(){
         endwhile;
 
 foreach($posts as $k=>$p){
-$accessories[$k] = $p->post_title;
+$accessories[$k] = preg_replace('/"/i', '', $p->post_title);
 }
 return $accessories;
 
 }
 
+//wisam======================for Shop Api Slider=========================================
 
 
 
