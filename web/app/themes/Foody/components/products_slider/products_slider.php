@@ -12,10 +12,15 @@ $shop_include_ids = get_field("shop_include_ids", "option");
 $shop_block_title = get_field("shop_block_title", "option");
 $shutdown_shop_api = get_field("shutdown_shop_api", "option");
 $recipes_discluded_from_shop = get_field("recipes_discluded_from_shop", "option");
+$pages_to_display = get_field("carousle_page_number", "option");
+
+if(trim($pages_to_display ) == ""){
+	$pages_to_display = 9;
+}
 
 
 
-$queryAPI = "?chunk=3&page=12&accessories=".$api_accessories;
+$queryAPI = "?chunk=3&page='. $pages_to_display .'&accessories=".$api_accessories;
 
 if ($shutdown_shop_api == 0) {
 
