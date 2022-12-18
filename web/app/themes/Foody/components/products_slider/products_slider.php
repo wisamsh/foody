@@ -20,7 +20,7 @@ if(trim($pages_to_display ) == ""){
 
 
 
-$queryAPI = "?chunk=3&page='. $pages_to_display .'&accessories=".$api_accessories;
+$queryAPI = "?chunk=3&page=". $pages_to_display ."&accessories=".$api_accessories;
 
 if ($shutdown_shop_api == 0) {
 
