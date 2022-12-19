@@ -1,26 +1,45 @@
 <?php
 $api_accessories_array = $recipe->row_accessories();
-	
-$api_accessories = implode(',' ,$api_accessories_array);
+
+$api_accessories = implode(',', $api_accessories_array);
 
 $ShoppingCart = "https://foody-media.s3.eu-west-1.amazonaws.com/w_images/shopping-cart.png";
 $inDomain = $_SERVER['HTTP_HOST'];
 
 $BuyProdText = "לחץ לרכישה";
 $OnsaleTEXT = "במבצע";
+
+
+
 $shop_include_ids = get_field("shop_include_ids", "option");
+$recipes_discluded_from_shop = get_field("recipes_discluded_from_shop", "option");
+
+
+//rules for feed channel comes first on hirarchi
+$recipe_channel = get_field("recipe_channel", get_the_ID());
+if (!trim($recipe_channel) == "") {
+	$api_rules_feed_channel_repeater = get_field("api_rules_feed_channel_repeater", "option");
+
+	foreach ($api_rules_feed_channel_repeater as $api_r_f_c_r) {
+if ($api_r_f_c_r['api_rules_feed_channel']  == $recipe_channel);
+$shop_include_ids =  $api_r_f_c_r['api_rules_feed_channel_product_ids'] ;
+			break;
+		}
+	}
+
+
 $shop_block_title = get_field("shop_block_title", "option");
 $shutdown_shop_api = get_field("shutdown_shop_api", "option");
-$recipes_discluded_from_shop = get_field("recipes_discluded_from_shop", "option");
+
 $pages_to_display = get_field("carousle_page_number", "option");
 
-if(trim($pages_to_display ) == ""){
+if (trim($pages_to_display) == "") {
 	$pages_to_display = 9;
 }
 
 
 
-$queryAPI = "?chunk=3&page=". $pages_to_display ."&accessories=".$api_accessories;
+$queryAPI = "?chunk=3&page=" . $pages_to_display . "&accessories=" . $api_accessories;
 
 if ($shutdown_shop_api == 0) {
 
@@ -29,13 +48,13 @@ if ($shutdown_shop_api == 0) {
 
 
 		$post_query = '';
-		if ("" != $shop_include_ids) {
+		//if (!$shop_include_ids == "") {
 			$post_query = "&product=" . $shop_include_ids;
-		}
+		//}
 
 
-		if ($inDomain  == 'foody.moveodevelop.com' || $inDomain =='foody-local.co.il') {
-			$ApiDomain = 'https://shop-staging.foody.co.il/foodyapi'. $queryAPI . $post_query;
+		if ($inDomain  == 'foody.moveodevelop.com' || $inDomain == 'foody-local.co.il') {
+			$ApiDomain = 'https://shop-staging.foody.co.il/foodyapi' . $queryAPI . $post_query;
 			//$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
 		} else {
 			$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
