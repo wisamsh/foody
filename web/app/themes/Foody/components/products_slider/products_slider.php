@@ -21,11 +21,13 @@ if (!trim($recipe_channel) == "") {
 	$api_rules_feed_channel_repeater = get_field("api_rules_feed_channel_repeater", "option");
 
 	foreach ($api_rules_feed_channel_repeater as $api_r_f_c_r) {
-if ($api_r_f_c_r['api_rules_feed_channel']  == $recipe_channel);
-$shop_include_ids =  $api_r_f_c_r['api_rules_feed_channel_product_ids'] ;
+		if ($api_r_f_c_r['api_rules_feed_channel'] == $recipe_channel) {
+			$shop_include_ids = $api_r_f_c_r['api_rules_feed_channel_product_ids'];
+
 			break;
 		}
 	}
+}
 
 
 $shop_block_title = get_field("shop_block_title", "option");
@@ -49,11 +51,11 @@ if ($shutdown_shop_api == 0) {
 
 		$post_query = '';
 		//if (!$shop_include_ids == "") {
-			$post_query = "&product=" . $shop_include_ids;
+		$post_query = "&product=" . $shop_include_ids;
 		//}
 
 
-		if ($inDomain  == 'foody.moveodevelop.com' || $inDomain == 'foody-local.co.il') {
+		if ($inDomain == 'foody.moveodevelop.com' || $inDomain == 'foody-local.co.il') {
 			$ApiDomain = 'https://shop-staging.foody.co.il/foodyapi' . $queryAPI . $post_query;
 			//$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
 		} else {
@@ -105,7 +107,7 @@ if ($shutdown_shop_api == 0) {
 							wrapper = '<div class="carousel-item ' + firstactive + '" id="doc_' + n + '"></div>';
 
 							jQuery(".carousel-inner").append(wrapper);
-							//LOOPING ITEMS : 
+							//LOOPING ITEMS :
 
 							jQuery.each(rec, function(i, item) {
 
@@ -128,7 +130,7 @@ if ($shutdown_shop_api == 0) {
 
 
 								if (sale_price) {
-									onsale = '<div class="onsale"><?php echo  $OnsaleTEXT; ?></div>';
+									onsale = '<div class="onsale"><?php echo $OnsaleTEXT; ?></div>';
 
 									onsale_div = '<div class="prod_price"><span class="price onsaleprice">' + regular_price + ' </span> <span class="sale">' + currency + sale_price + ' </span></div>';
 								} else {
@@ -141,7 +143,7 @@ if ($shutdown_shop_api == 0) {
 
 
 								inner = '<a class="product_picker" target="_blank" href="' + product_url + '">' +
-									'<div class="product_wrapper"><div class="dingo"><img class="shopping_cart" src="<?php echo  $ShoppingCart; ?>"/>' + onsale + "</div>" +
+									'<div class="product_wrapper"><div class="dingo"><img class="shopping_cart" src="<?php echo $ShoppingCart; ?>"/>' + onsale + "</div>" +
 									' <div class="product_holder">' +
 									'<img src="' + Fetured_Image + '"/></div>' +
 									'<div class="prod_title">' + title + '</div>' +
@@ -180,5 +182,5 @@ if ($shutdown_shop_api == 0) {
 
 <?php
 	} // close inarray recipe
-}	//close api closer from admin
+} //close api closer from admin
 ?>
