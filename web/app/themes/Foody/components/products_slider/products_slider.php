@@ -9,20 +9,47 @@ $inDomain = $_SERVER['HTTP_HOST'];
 $BuyProdText = "לחץ לרכישה";
 $OnsaleTEXT = "במבצע";
 
+$Author = get_the_author();
+$FeedChannel = "";
+$product_cats = array();
+if (get_field("shop_include_ids", "option") == "") {
+	$shop_include_ids = get_field("shop_include_ids", "option");
+} else {
+	$shop_include_ids = get_field("shop_include_ids", "option") . ",";
+}
+
+foreach (get_the_category(get_the_ID()) as $cats_in_recipe) {
+	$product_cats[] = $cats_in_recipe->name;
+}
 
 
-$shop_include_ids = get_field("shop_include_ids", "option");
+
 $recipes_discluded_from_shop = get_field("recipes_discluded_from_shop", "option");
+
+
 
 
 //rules for feed channel comes first on hirarchi
 $recipe_channel = get_field("recipe_channel", get_the_ID());
 if (!trim($recipe_channel) == "") {
+
 	$api_rules_feed_channel_repeater = get_field("api_rules_feed_channel_repeater", "option");
+
+
+
+
 
 	foreach ($api_rules_feed_channel_repeater as $api_r_f_c_r) {
 		if ($api_r_f_c_r['api_rules_feed_channel'] == $recipe_channel) {
-			$shop_include_ids = $api_r_f_c_r['api_rules_feed_channel_product_ids'];
+
+
+
+			$FeedChannel = "feed";
+			$shop_include_ids .= $api_r_f_c_r['api_rules_feed_channel_product_ids'];
+			$api_rules_feed_channel_disclude_mark = $api_r_f_c_r["api_rules_feed_channel_disclude_mark"];
+			$recipes_discluded_TRADEMARK_from_shop = implode(",", $api_rules_feed_channel_disclude_mark);
+			$disclude_supplier = implode(",", $api_r_f_c_r["api_rules_feed_channel_disclude_supplier"]);
+			$tarde_mark = $api_r_f_c_r['api_rules_feed_trade_mark_import'];
 
 			break;
 		}
@@ -32,7 +59,6 @@ if (!trim($recipe_channel) == "") {
 
 $shop_block_title = get_field("shop_block_title", "option");
 $shutdown_shop_api = get_field("shutdown_shop_api", "option");
-
 $pages_to_display = get_field("carousle_page_number", "option");
 
 if (trim($pages_to_display) == "") {
@@ -41,7 +67,31 @@ if (trim($pages_to_display) == "") {
 
 
 
-$queryAPI = "?chunk=3&page=" . $pages_to_display . "&accessories=" . $api_accessories;
+$queryAPI = "?chunk=3&page=" . $pages_to_display . "&accessories=" . $api_accessories . "&feed=" . $FeedChannel;
+
+if ($recipes_discluded_TRADEMARK_from_shop != "") {
+
+	$queryAPI .= "&disclude_trademark=" . $recipes_discluded_TRADEMARK_from_shop;
+}
+
+if ($disclude_supplier != "") {
+
+	$queryAPI .= "&disclude_supplier=" . $disclude_supplier;
+}
+
+if ($Author != "") {
+	$queryAPI .= "&author=" . trim($Author);
+}
+
+if ($tarde_mark != "") {
+	$queryAPI .= "&trademark=" . $tarde_mark;
+}
+//if(!empty($product_cats)){
+// $queryAPI .="&categories=". implode(",",$product_cats);
+//}
+
+
+
 
 if ($shutdown_shop_api == 0) {
 
@@ -75,7 +125,7 @@ if ($shutdown_shop_api == 0) {
 
 
 				jQuery.ajax({
-					type: "POST",
+					type: "GET",
 					url: "<?php echo $ApiDomain; ?>",
 					dataType: "json",
 
