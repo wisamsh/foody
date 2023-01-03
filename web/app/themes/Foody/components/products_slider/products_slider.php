@@ -105,12 +105,30 @@ if ($shutdown_shop_api == 0) {
 		//}
 
 
-		if ($inDomain == 'foody.moveodevelop.com' || $inDomain == 'foody-local.co.il') {
-			$ApiDomain = 'https://shop-staging.foody.co.il/foodyapi' . $queryAPI . $post_query;
-			//$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
-		} else {
-			$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
+		/*
+if ($inDomain == 'foody.moveodevelop.com' || $inDomain == 'foody-local.co.il') {
+$ApiDomain = 'https://shop-staging.foody.co.il/foodyapi' . $queryAPI . $post_query;
+//$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
+
+} else {
+$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
+}
+
+*/
+
+
+		$Store_Work_Frame = get_field("Store_Work_Frame", "option");
+
+		switch ($Store_Work_Frame) {
+			case "stage":
+				$ApiDomain = 'https://shop-staging.foody.co.il/foodyapi' . $queryAPI . $post_query;
+				break;
+			case "production":
+				$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
+				break;
 		}
+
+
 		if (!wp_is_mobile()) {
 			include(get_template_directory() . '/components/products_slider/desktop_slider.php');
 		} else {
@@ -208,28 +226,13 @@ if ($shutdown_shop_api == 0) {
 
 							});
 
-
-
-
-
-
 						});
-
-
-
-
 					},
-
 
 				});
 
-
-
-
 			});
 		</script>
-
-
 <?php
 	} // close inarray recipe
 } //close api closer from admin
