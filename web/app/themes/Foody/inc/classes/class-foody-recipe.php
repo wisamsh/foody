@@ -39,7 +39,7 @@ class Foody_Recipe extends Foody_Post
      */
     public function __construct(WP_Post $post = null, $load_content = true)
     {
-        parent::__construct($post,  $load_content);
+        parent::__construct($post, $load_content);
         $this->init_video();
         $this->duration = $this->video['duration'];
 
@@ -211,7 +211,7 @@ class Foody_Recipe extends Foody_Post
 
         if (!empty($this->nutrients)) {
 
-            //            $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
+            // $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
 
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-nutritions.php',
@@ -289,29 +289,55 @@ class Foody_Recipe extends Foody_Post
             $title = get_sub_field('title');
         endwhile;
 
-        //		if ( empty( $posts ) ) {
-        //			$posts = foody_get_serialized_field_by_meta( 'accessories_accessories', $this->id );
-        //		}
+        // if ( empty( $posts ) ) {
+        // $posts = foody_get_serialized_field_by_meta( 'accessories_accessories', $this->id );
+        // }
 
         $this->posts_bullets($posts, $title);
     }
 
-//wisam======================for Shop Api Slider=========================================
+    //wisam======================for Shop Api Slider=========================================
 
-public function row_accessories(){
-   $accessories = array();
-    while (have_rows('accessories', $this->post->ID)) : the_row();
+    public function row_accessories()
+    {
+        $accessories = array();
+        while (have_rows('accessories', $this->post->ID)) : the_row();
             $posts = get_sub_field('accessories');
         endwhile;
 
-foreach($posts as $k=>$p){
-$accessories[$k] = preg_replace('/"/i', '', $p->post_title);
-}
-return $accessories;
+        foreach ($posts as $k => $p) {
+            $accessories[$k] = preg_replace('/"/i', '', $p->post_title);
+        }
+        return $accessories;
+    }
 
-}
+    public function is_Channel_Api_Have_Rows()
+    {
+        $score = 0;
+        $recipe_channel = get_field("recipe_channel", $this->post->ID);
+        if (trim($recipe_channel) != "" && !empty(trim($recipe_channel))) {
+            $api_rules_feed_channel_repeater = get_field("api_rules_feed_channel_repeater", "option");
 
-//wisam======================for Shop Api Slider=========================================
+            if (!empty($api_rules_feed_channel_repeater)) {
+                foreach ($api_rules_feed_channel_repeater as $k => $channel) {
+                    if ($channel['api_rules_feed_channel'] == $recipe_channel) {
+                        $score = 1;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $score;
+    }
+
+
+
+
+
+
+
+    //wisam======================for Shop Api Slider=========================================
 
 
 
@@ -326,9 +352,9 @@ return $accessories;
             $title = get_sub_field('title');
         endwhile;
 
-        //		if ( empty( $posts ) ) {
-        //			$posts = foody_get_serialized_field_by_meta( 'techniques_techniques', $this->id );
-        //		}
+        // if ( empty( $posts ) ) {
+        // $posts = foody_get_serialized_field_by_meta( 'techniques_techniques', $this->id );
+        // }
 
         if ($print) {
             $this->posts_bullets($posts, $title);
@@ -377,10 +403,10 @@ return $accessories;
         );
     }
 
-    //    public function the_featured_content()
-    //    {
-    //        $this->the_video_box();
-    //    }
+    // public function the_featured_content()
+    // {
+    // $this->the_video_box();
+    // }
 
     public function the_sidebar_content($args = array())
     {
@@ -391,13 +417,13 @@ return $accessories;
     {
         $content = get_field('preview', $this->post->ID, true);
 
-        //        if (!empty($content)) {
-        //            $content = foody_normalize_content($content, true);
-        //        }
+        // if (!empty($content)) {
+        // $content = foody_normalize_content($content, true);
+        // }
         if (get_field('add_more_preview', $this->post->ID) === true) {
             $content = '<div class="foody-content">' . $content . '</div>';
         } else {
-            $content = '<div class="foody-content  show-read-more">' . $content . '</div>';
+            $content = '<div class="foody-content show-read-more">' . $content . '</div>';
         }
 
         echo $content;
@@ -409,8 +435,8 @@ return $accessories;
     }
 
     /*
-     * Private
-     * */
+* Private
+* */
 
 
     public function init()
@@ -892,13 +918,13 @@ return $accessories;
         $nutrients = array();
 
         $excluded_nutrients = [
-            //			'fibers',
-            //			'saturated_fat',
-            //			'cholesterol',
-            //			'calcium',
-            //			'iron',
-            //			'potassium',
-            //			'zinc',
+            // 'fibers',
+            // 'saturated_fat',
+            // 'cholesterol',
+            // 'calcium',
+            // 'iron',
+            // 'potassium',
+            // 'zinc',
             'sugar'
         ];
         $feed_area_id = get_field('recipe_channel');
@@ -907,14 +933,14 @@ return $accessories;
             $show_sugar = get_field('enable_sugar', $recipe_referer);
             if ($show_sugar) {
                 $excluded_nutrients = [
-                    //			'fibers',
-                    //			'saturated_fat',
-                    //			'cholesterol',
-                    //			'calcium',
-                    //			'iron',
-                    //			'potassium',
-                    //			'zinc',
-                    //          'sugar'
+                    // 'fibers',
+                    // 'saturated_fat',
+                    // 'cholesterol',
+                    // 'calcium',
+                    // 'iron',
+                    // 'potassium',
+                    // 'zinc',
+                    // 'sugar'
                 ];
             }
         }
@@ -1249,7 +1275,7 @@ return $accessories;
     }
     public function tiktok_video()
     {
-        //WISAM : Tiktok video 
+        //WISAM : Tiktok video
         //<script async src="https://www.tiktok.com/embed.js"></script>
         $tiktokscript = '<script async src="https://www.tiktok.com/embed.js"></script>';
 
@@ -1283,13 +1309,13 @@ return $accessories;
             }
 
             $rtn = '<div style="overflow: auto;text-align: center;width:100%;margin: 0 auto;">
-        
-        <iframe ' . $Short_yt_width . $Short_yt_height . ' src="https://www.youtube.com/embed/' . $VideoUrl . '"
-        title="פודי" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write;
-        encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
-        </div>';
+       
+<iframe ' . $Short_yt_width . $Short_yt_height . ' src="https://www.youtube.com/embed/' . $VideoUrl . '"
+title="פודי" frameborder="0"
+allow="accelerometer; autoplay; clipboard-write;
+encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen></iframe>
+</div>';
         }
 
         return $rtn;
@@ -1311,7 +1337,7 @@ return $accessories;
 
         $content_body = $this->body;
         echo '<div class="content-container no-print">' . $content_body . '</div>';
-        //        echo '<div class="content-container print-mobile">' . $content_body . '</div>';
+        // echo '<div class="content-container print-mobile">' . $content_body . '</div>';
         $print_body = apply_filters('foody_print_version_for_content', $content_body);
         echo '<div class="content-container print-desktop print"><div class="content-and-notes print">' . $print_body['content'] . $this->get_notes() . '</div><div class="content-images">' . $print_body['figures'] . '</div></div>';
     }
@@ -1392,7 +1418,7 @@ return $accessories;
         $btn_image = get_field('take_to_recipe_btn');
 
         $btn_image_url = isset($btn_image['url']) ? $btn_image['url'] : false;
-        $btn_image_alt =  isset($btn_image['alt']) ? $btn_image['alt'] : '';
+        $btn_image_alt = isset($btn_image['alt']) ? $btn_image['alt'] : '';
 
         if ($btn_image_url) {
             echo "<a class='take_to_recipe_link' href='#recipe-ingredients'><img class='take-me-to-recipe' src='" . $btn_image_url . "' alt='" . $btn_image_alt . "'></a>";
@@ -1405,7 +1431,7 @@ return $accessories;
             'ingredients_count' => ['title' => __('מרכיבים'), 'data' => isset($this->overview) && isset($this->overview['ingredients_count']) ? $this->overview['ingredients_count']['text'] : 0],
             'preparation_time' => ['title' => __('זמן הכנה'), 'data' => isset($this->overview) && isset($this->overview['time']['preparation_time']['text']) ? $this->overview['time']['preparation_time']['text'] : 0],
             'total_time' => ['title' => __('זמן כולל'), 'data' => isset($this->overview) && isset($this->overview['time']['total_time']['text']) ? $this->overview['time']['total_time']['text'] : 0],
-            'calories_per_dish' =>  ['title' => __('קלוריות'), 'data' => isset($this->overview) && isset($this->overview['calories_per_dish']) ? $this->overview['calories_per_dish']['text'] : 0],
+            'calories_per_dish' => ['title' => __('קלוריות'), 'data' => isset($this->overview) && isset($this->overview['calories_per_dish']) ? $this->overview['calories_per_dish']['text'] : 0],
             'dishes_amount' => ['title' => __('כמות מנות'), 'data' => $this->getNumberOfDishes()]
         ];
 
@@ -1424,61 +1450,49 @@ return $accessories;
     }
 
 
-//wisam
-public function Holiday_Links(){
-
-    if( function_exists('acf_add_options_page') )
+    //wisam
+    public function Holiday_Links()
     {
-    $holidays =get_field('header_title', 'option');
-    $exclude_url = get_field("exclude_url", 'option');
-    
-    if(!in_array($this->id, $exclude_url))
-    {
-    
-    $holiday_links_rep = get_field("holiday_links_rep",'option');
-    
-    echo '<ul class="sp_ul">';
-    foreach($holiday_links_rep as $lnk)
-    {
-    $link_Title = $lnk['holiday_text_url'] ? $lnk['holiday_text_url'] : $lnk['holiday_url']['title'];
-    $link_url = $lnk['holiday_url']['url'];
-    $target = $lnk['holiday_url']['target'] ? "target='".$lnk['holiday_url']['target']."'": "" ;
-    
-     echo '<li><a class="sponserd_links_recipe" href="'. $link_url . '" ' . $target . '>'. $link_Title.'</a></li>';
-    
-    }
-    
-    echo '</ul>';
-    
-    
-    }
-    
-    
-    }
-    
-    echo '<style>
-    .sponserd_links_recipe{
-    width: 100%;
-    text-align: center;
-    color: #579fba !important;
-    font-size: 23px;
-    display: block;
-    text-decoration: underline !important;
-    margin-top: 20px;
-    }
-    .sp_ul li{
-    list-style: none;
-    }
-    .sp_ul li:last-child{
-    margin-bottom:30px !important;
-    }
-    
-    </style>
-    ';
-    
-    }
 
+        if (function_exists('acf_add_options_page')) {
+            $holidays = get_field('header_title', 'option');
+            $exclude_url = get_field("exclude_url", 'option');
 
+            if (!in_array($this->id, $exclude_url)) {
 
+                $holiday_links_rep = get_field("holiday_links_rep", 'option');
 
+                echo '<ul class="sp_ul">';
+                foreach ($holiday_links_rep as $lnk) {
+                    $link_Title = $lnk['holiday_text_url'] ? $lnk['holiday_text_url'] : $lnk['holiday_url']['title'];
+                    $link_url = $lnk['holiday_url']['url'];
+                    $target = $lnk['holiday_url']['target'] ? "target='" . $lnk['holiday_url']['target'] . "'" : "";
+
+                    echo '<li><a class="sponserd_links_recipe" href="' . $link_url . '" ' . $target . '>' . $link_Title . '</a></li>';
+                }
+
+                echo '</ul>';
+            }
+        }
+
+        echo '<style>
+.sponserd_links_recipe{
+width: 100%;
+text-align: center;
+color: #579fba !important;
+font-size: 23px;
+display: block;
+text-decoration: underline !important;
+margin-top: 20px;
+    }
+.sp_ul li{
+list-style: none;
+    }
+.sp_ul li:last-child{
+margin-bottom:30px !important;
+    }
+   
+</style>
+';
+    }
 } // end class

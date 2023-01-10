@@ -1,5 +1,6 @@
 <?php
 $api_accessories_array = $recipe->row_accessories();
+$is_Channel_Api_Have_Rows = $recipe->is_Channel_Api_Have_Rows();
 
 $api_accessories = implode(',', $api_accessories_array);
 
@@ -56,7 +57,6 @@ if (!trim($recipe_channel) == "") {
 	}
 }
 
-
 $shop_block_title = get_field("shop_block_title", "option");
 $shutdown_shop_api = get_field("shutdown_shop_api", "option");
 $pages_to_display = get_field("carousle_page_number", "option");
@@ -79,16 +79,46 @@ if ($disclude_supplier != "") {
 	$queryAPI .= "&disclude_supplier=" . $disclude_supplier;
 }
 
-if ($Author != "") {
+
+
+//WISAM IM HERE NOW======================================================================================================================================
+
+if ($Author != "" && trim($recipe_channel) == "" && $is_Channel_Api_Have_Rows == 0) {
+
+
+	$Author_Reqpeater = $api_rules_feed_channel_repeater = get_field("api_rules_auhtor_repeater", "option");
+
+
+	foreach ($Author_Reqpeater as $aut) {
+		$api_rules_author = $aut['api_rules_author']['display_name'];
+		if ($api_rules_author == trim($Author)) {
+
+			$shop_include_ids .= $aut['api_rules_author_product_ids'];
+			$dstm = implode(",", $aut['api_rules_author_trade_mark_import']);
+			$disclude_trademark = !empty($aut['api_rules_author_discludes_mark']) ? "&disclude_trademark=" . implode(",", $aut['api_rules_author_discludes_mark']) : "";
+
+
+			$queryAPI .= "&trademark=" . $dstm;
+
+			break;
+		}
+	}
+
+
+
 	$queryAPI .= "&author=" . trim($Author);
 }
+
+
+
+//WISAM IM HERE NOW======================================================================================================================================
+
+
+
 
 if ($tarde_mark != "") {
 	$queryAPI .= "&trademark=" . $tarde_mark;
 }
-//if(!empty($product_cats)){
-// $queryAPI .="&categories=". implode(",",$product_cats);
-//}
 
 
 
@@ -105,16 +135,7 @@ if ($shutdown_shop_api == 0) {
 		//}
 
 
-		/*
-if ($inDomain == 'foody.moveodevelop.com' || $inDomain == 'foody-local.co.il') {
-$ApiDomain = 'https://shop-staging.foody.co.il/foodyapi' . $queryAPI . $post_query;
-//$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
 
-} else {
-$ApiDomain = 'https://shop.foody.co.il/foodyapi' . $queryAPI . $post_query;
-}
-
-*/
 
 
 		$Store_Work_Frame = get_field("Store_Work_Frame", "option");
