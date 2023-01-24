@@ -32,12 +32,9 @@ $recipes_discluded_from_shop = get_field("recipes_discluded_from_shop", "option"
 
 //rules for feed channel comes first on hirarchi
 $recipe_channel = get_field("recipe_channel", get_the_ID());
-if (!trim($recipe_channel) == "") {
+if (!trim($recipe_channel) == "" && $is_Channel_Api_Have_Rows == 1) {
 
 	$api_rules_feed_channel_repeater = get_field("api_rules_feed_channel_repeater", "option");
-
-
-
 
 
 	foreach ($api_rules_feed_channel_repeater as $api_r_f_c_r) {
@@ -83,7 +80,7 @@ if ($disclude_supplier != "") {
 
 //WISAM IM HERE NOW======================================================================================================================================
 
-if ($Author != "" && trim($recipe_channel) == "" && $is_Channel_Api_Have_Rows == 0) {
+if ($Author != "" && $is_Channel_Api_Have_Rows == 0) {
 
 
 	$Author_Reqpeater = $api_rules_feed_channel_repeater = get_field("api_rules_auhtor_repeater", "option");
@@ -94,7 +91,7 @@ if ($Author != "" && trim($recipe_channel) == "" && $is_Channel_Api_Have_Rows ==
 		if ($api_rules_author == trim($Author)) {
 
 			$shop_include_ids .= $aut['api_rules_author_product_ids'];
-			$dstm = implode(",", $aut['api_rules_author_trade_mark_import']);
+			$dstm = $aut['api_rules_author_trade_mark_import'];
 			$disclude_trademark = !empty($aut['api_rules_author_discludes_mark']) ? "&disclude_trademark=" . implode(",", $aut['api_rules_author_discludes_mark']) : "";
 
 
@@ -116,7 +113,7 @@ if ($Author != "" && trim($recipe_channel) == "" && $is_Channel_Api_Have_Rows ==
 
 
 
-if ($tarde_mark != "") {
+if ($tarde_mark != trim("")) {
 	$queryAPI .= "&trademark=" . $tarde_mark;
 }
 

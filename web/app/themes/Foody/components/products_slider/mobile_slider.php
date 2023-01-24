@@ -203,7 +203,7 @@ $rightArrow = "https://foody-media.s3.eu-west-1.amazonaws.com/w_images/r-arrow.p
 	
 }
 
-.carousel-indicators{margin-top:20px;}
+.carousel-indicators{margin-top:20px;flex-direction: row-reverse;}
 .carousel-indicators .active {
     width: 12px;
     height: 12px;
