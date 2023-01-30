@@ -183,7 +183,7 @@ if ($shutdown_shop_api == 0) {
 								firstactive = 'active';
 							}
 
-							let indicators = '<li data-target="#FoodyShopCarousel" data-slide-to="' + n + '" ' + firstactive + ' ></li>';
+							let indicators = '<li data-target="#FoodyShopCarousel" data-slide-to="' + n + '" class="' + firstactive + '" ></li>';
 							//console.log("item---",res);
 
 							jQuery(".carousel-indicators").append(indicators);
@@ -248,6 +248,10 @@ if ($shutdown_shop_api == 0) {
 					},
 
 				});
+
+
+
+
 
 			});
 		</script>
