@@ -5,13 +5,19 @@
 "foody-local.co.il" => "123456"
 );
 $actual_link = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+$get_the_post_thumbnail_url = get_the_post_thumbnail_url(get_the_ID());
+if($get_the_post_thumbnail_url == ""){
+$get_the_post_thumbnail_url = "https://foody-media.s3.eu-west-1.amazonaws.com/w_images/m_logofoody_2.jpg";
+}
+
 ?>
 
-<meta property="fb:app_id"             content="<?php echo $domain[$_SERVER['HTTP_HOST']];?>" />
-<meta property="og:url"                content="<?php echo $actual_link ;?>" />
-<meta property="og:type"               content="article" />
-<meta property="og:title"              content="<?php echo get_the_title();?>" />
-<meta property="og:description"        content="פודי - המתכונים הכי טעימים של השפים והבלוגרים המובילים והכתבות הכי מעניינות. FOODY אתר האוכל הגדול בישראל - היכנסו לאתר לפרטים נוספים ובתאבון!" />
-<meta property="og:image"      itemprop="image"        content="https://foody-media.s3.eu-west-1.amazonaws.com/w_images/m_logofoody_2.jpg" />
+<meta property="fb:app_id" content="<?php echo $domain[$_SERVER['HTTP_HOST']];?>" />
+<meta property="og:url" content="<?php echo $actual_link ;?>" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="<?php echo get_the_title();?>" />
+<meta property="og:description" content="פודי - המתכונים הכי טעימים של השפים והבלוגרים המובילים והכתבות הכי מעניינות. FOODY אתר האוכל הגדול בישראל - היכנסו לאתר לפרטים נוספים ובתאבון!" />
+<meta property="og:image" itemprop="image" content="<?php echo $get_the_post_thumbnail_url;?>" />
 
 <meta name="facebook-domain-verification" content="2g8c6oi7iii72tdemqqyr55bp9yey9" />
