@@ -209,7 +209,7 @@ function channel_publisher_name($vars){
     $vars['channel_name'] = htmlspecialchars($vars['channel_name']);
     }
     return $vars;
-    
+//wisam    
 }
 
 add_filter('foody_js_globals', 'channel_publisher_name');
