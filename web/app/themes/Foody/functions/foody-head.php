@@ -165,24 +165,51 @@ function channel_name($vars){
 add_filter('foody_js_globals', 'channel_name');
 
 function channel_publisher_name($vars){
+   
     global $post;
     $page = get_queried_object();
-
+    
+    
     if(isset($_GET) && isset($_GET['referer']) && $_GET['referer']){
-        $vars['channel_publisher_name'] = get_field('publisher_name' ,$_GET['referer']);
-    }
+    // $vars['channel_publisher_name'] = get_field('publisher_name' ,$_GET['referer']);
+    $vars['channel_publisher_name'] = htmlspecialchars($vars['commercial_look']);
+    //$vars['channel_publisher_name'] =get_the_title(get_field('recipe_channel', get_the_ID()));
+    //recipe_channel
+    
+    $vars['channel_name'] = htmlspecialchars($vars['channel_name']);
+        }
     elseif (isset($post->ID) && isset($post->post_type) && ($post->post_type == 'foody_recipe' || $post->post_type === 'post') && get_field('recipe_channel', $post->ID)){
-        $recipe_referer = get_field('recipe_channel', $post->ID);
-        $vars['channel_publisher_name'] = get_field('publisher_name' ,$recipe_referer);
-    }
+    // $recipe_referer = get_field('recipe_channel', $post->ID);
+    //$vars['channel_publisher_name'] = get_field('publisher_name' ,$recipe_referer);
+    
+    $vars['channel_publisher_name'] = htmlspecialchars($vars['commercial_look']);
+    //$vars['channel_publisher_name'] =get_the_title(get_field('recipe_channel', get_the_ID()));
+    //recipe_channel
+    
+    $vars['channel_name'] = htmlspecialchars($vars['channel_name']);
+    
+        }
     elseif(isset($page->taxonomy) && $page->taxonomy === 'category' && get_field('recipe_channel', $page)) {
-        $recipe_referer = get_field('recipe_channel', $page);
-        $vars['channel_publisher_name'] = get_field('publisher_name' ,$recipe_referer);
+    //$recipe_referer = get_field('recipe_channel', $page);
+    //$vars['channel_publisher_name'] = get_field('publisher_name' ,$recipe_referer);
+    $vars['channel_publisher_name'] = htmlspecialchars($vars['commercial_look']);
+    //$vars['channel_publisher_name'] =get_the_title(get_field('recipe_channel', get_the_ID()));
+    //recipe_channel
+    
+    $vars['channel_name'] = htmlspecialchars($vars['channel_name']);
+    
     }
     if (get_post_type() == 'foody_feed_channel') {
-        $vars['channel_publisher_name'] = get_field('publisher_name');
+    //$vars['channel_publisher_name'] = get_field('publisher_name');
+       
+    $vars['channel_publisher_name'] = htmlspecialchars($vars['commercial_look']);
+    //$vars['channel_publisher_name'] =get_the_title(get_field('recipe_channel', get_the_ID()));
+    //recipe_channel
+    
+    $vars['channel_name'] = htmlspecialchars($vars['channel_name']);
     }
     return $vars;
+    
 }
 
 add_filter('foody_js_globals', 'channel_publisher_name');
