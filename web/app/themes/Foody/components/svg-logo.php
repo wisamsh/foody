@@ -43,7 +43,19 @@ else{
         case  'www.carine.co.il' :
             echo ("<img src='https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/sites/2/2019/06/25063844/unnamed.png'/> ");
         break;
-        }    
+     
+        case  'mehadrin.foody.co.il':
+            echo (".foody-logo-text{background-image: url('https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/sites/9/2023/02/17100902/foody_mehadrin_final100x100.png') !important;} ");
+            break;
+        case  'www.mehadrin.foody.co.il':
+            echo (".foody-logo-text{background-image: url('https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/sites/9/2023/02/17100902/foody_mehadrin_final100x100.png') !important;} ");
+            break;
+
+    
+    
+    
+    
+    }    
 
 
     ?> 
