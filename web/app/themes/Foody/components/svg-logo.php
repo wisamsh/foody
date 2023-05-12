@@ -27,7 +27,6 @@ else{
         case  'www.miricohen.foody.co.il' :
             echo ("<img src='https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/sites/6/2021/07/06164126/cropped-logo-gold.png'/>");
         break;
-    
        
         case  'danielamit.foody.co.il' :
             echo ("<img src='https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/sites/5/2021/07/05123510/cropped-Asset-4.png'/> ");
