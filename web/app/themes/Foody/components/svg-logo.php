@@ -44,10 +44,10 @@ else{
         break;
      
         case  'mehadrin.foody.co.il':
-            echo (".foody-logo-text{background-image: url('https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/sites/9/2023/02/17100902/foody_mehadrin_final100x100.png') !important;} ");
+            echo ("<img src='https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/sites/9/2023/02/17100902/foody_mehadrin_final100x100.png'/> ");
             break;
         case  'www.mehadrin.foody.co.il':
-            echo (".foody-logo-text{background-image: url('https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/sites/9/2023/02/17100902/foody_mehadrin_final100x100.png') !important;} ");
+            echo ("<img src='https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/sites/9/2023/02/17100902/foody_mehadrin_final100x100.png'/> ");
             break;
 
     
