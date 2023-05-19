@@ -239,9 +239,9 @@ jQuery(document).ready(function ($) {
     let onLoadScroll = false;
     let oldPageYOffset = 0;
 
-    if($(window).scrollTop() < 110){
-        foodyTextLogoIsShow = true;
-    }
+    //if($(window).scrollTop() < 110){
+        //foodyTextLogoIsShow = true;
+   //}
 
 
 
@@ -270,7 +270,7 @@ jQuery(document).ready(function ($) {
 
         $('.sticky_bottom_header .navbar-toggler.custom-logo-link').on('click', function (e) {
             if (!switchedToHamburgerLogo || foodyTextLogoIsShow) {
-                window.location.href = window.location.origin;
+                //window.location.href = window.location.origin;
                 return;
             }
             if ($('.sticky_bottom_header .quadmenu-navbar-collapse').length) {
@@ -350,8 +350,13 @@ jQuery(document).ready(function ($) {
     }
 
     if ($('.sticky_bottom_header').length) {
+        $(".foody-logo-hamburger").removeClass("hidden");
+    }
+  
+    /*
+    if ($('.sticky_bottom_header').length) {
         $(window).on('scroll', function () {
-            if($(window).scrollTop() < 110){
+            if($(window).scrollTop() < -1){
                 if(switchedToHamburgerLogo && !foodyTextLogoIsShow) {
                     if(!closedLogoIsShown) {
                         //         let foodyTextImage = '<img class="foody-logo-text" src="' + foodyGlobals.imagesUri + "foody_logo-with-white.svg" + '">';
@@ -378,7 +383,7 @@ jQuery(document).ready(function ($) {
             }
         });
     }
-
+*/
     if($('.brands-toggle-mobile .navbar-toggler').length){
         $('.brands-toggle-mobile .navbar-toggler').on('click', function () {
             $('.brands-toggle-mobile .brands-avenue-mobile .close').removeClass('hide');

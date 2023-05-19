@@ -88,13 +88,14 @@ $(document).ready(() => {
             $text.text(text);
 
             let scale = 1.4;
-            let size = parseInt($icon.css('font-size'));
+            let size = 16;
 
             $icon.animate({
                 fontSize: size * scale
-            }, 350, () => {
+            }, 150, () => {
                 $icon.animate({
-                    fontSize: size
+                    fontSize: size,
+
                 })
             });
         });

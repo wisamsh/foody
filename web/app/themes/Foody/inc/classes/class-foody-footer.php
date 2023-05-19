@@ -125,10 +125,11 @@ class Foody_Footer
 
     public function the_moveo($echo = true)
     {
-        $moveo = file_get_contents(get_template_directory() . '/resources/images/moveo.svg');
-        if ($echo) {
-            echo '<a href="https://www.moveo.group/" target="_blank">' . $moveo . '</a>';
-        }
+        $moveo= ""; 
+        //$moveo = file_get_contents(get_template_directory() . '/resources/images/moveo.svg');
+       // if ($echo) {
+          //  echo '<a href="https://www.moveo.group/" target="_blank">' . $moveo . '</a>';
+       // }
 
         return $moveo;
     }
