@@ -1132,6 +1132,8 @@ function remove_core_updates(){
 
 //Wisam =======for substitute ingredients on recipe page : 
 
+    //multi sites : 
+    require_once get_template_directory() . '/multi-sites-functions/multi-sites.php';
     require_once get_template_directory() . '/function_extends/substitue_ajax_call.php';
     require_once get_template_directory() . '/function_extends/poll_ajax_call.php';
     require_once get_template_directory() . '/function_extends/option-settings.php';
