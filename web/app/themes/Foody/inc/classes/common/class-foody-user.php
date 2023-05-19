@@ -324,6 +324,7 @@ class Foody_User {
 
 		if ( $this->user->ID > 0 ) {
 			$user_images = get_user_meta( $this->user_id, 'wp_user_avatars', true );
+			
 			if ( ! empty( $user_images ) && is_array( $user_images ) ) {
 				if ( ! isset( $user_images[ $size ] ) ) {
 
@@ -348,12 +349,14 @@ class Foody_User {
 					}
 				}
 			} else {
+				if(function_exists('wsl_get_wp_user_custom_avatar')){
 				$image = wsl_get_wp_user_custom_avatar( 'gravatar.com', $this->user->ID, $size, '', '' );
-			}
+			}	
+		}
 		}
 
 		if ( empty( $image ) || 'gravatar.com' == $image ) {
-			$image = $GLOBALS['images_dir'] . 'avatar.svg';
+			$image = $GLOBALS['images_dir'] . 'avatar.png';
 			$image = "<img class='avatar default-avatar' src='$image' alt=''>";
 		}
 

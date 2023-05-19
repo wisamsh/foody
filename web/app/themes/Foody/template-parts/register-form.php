@@ -18,7 +18,7 @@ $title = get_field('page_title');
 $title = isset($title) && !empty($title) ? $title : __('הגיע הזמן שנכיר');
 ?>
 
-<h1 style="font-family: Assistant; color: var(--color__primary); font-weight: 900; font-size: 24px;"><?php echo $title;?></h1>
+<h1 style="font-family: AlmoniTzar; color: var(--color__primary); font-weight: 900; font-size: 30px;"><?php echo $title;?></h1>
 <p>
     <?php echo $text ?>
 </p>
@@ -69,7 +69,7 @@ echo do_shortcode('[wordpress_social_login]');
             </div>
 
             <form id="register-form" action="<?php echo wp_registration_url(); ?>" class="row" method="post">
-                <?php if (isset($_GET['register-errors']) && $_GET['register-errors'] == 'email_exists') : ?>
+            <?php if (isset($_GET['register-errors']) && $_GET['register-errors'] == 'email_exists') : ?>
                     <div role="alert" class="alert foody-alert alert-dismissible alert-danger login-failed-alert">
                         <span><?php echo __('כתובת המייל כבר קיימת במערכת.', 'foody'); ?></span>
                         <a href="<?php echo wp_login_url() ?>">
@@ -142,30 +142,30 @@ echo do_shortcode('[wordpress_social_login]');
                 <!--                    <label for="check-terms">-->
                 <!--                    </label>-->
                 <!--                </div>-->
-                <div class="md-checkbox col-12">
-                    <input id="check-marketing" type="checkbox" checked name="marketing">
+                <div class="md-checkbox col-12" >
+                    <input id="check-marketing" type="checkbox" data-clone="s4" checked name="marketing">
                     <label for="check-marketing">
                         <?php
                         $newsletter_text = get_field('newsletter_text');
-                        $newsletter_text = isset($newsletter_text) && !empty($newsletter_text)? $newsletter_text :__('הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר');
+                        $newsletter_text = isset($newsletter_text) && !empty($newsletter_text)? $newsletter_text :__('הריני לאשר בזה קבלת דואר מאתר Foody  הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר');
                         echo $newsletter_text;
                         ?>
                     </label>
                 </div>
-                <?php if (get_field('show')): ?>
-                    <div class="md-checkbox col-12">
-                        <input id="check-e-book" type="checkbox" checked name="e-book">
+                <?php //if (get_field('show')): ?>
+                    <!-- <div class="md-checkbox col-12" id="reg-frm">
+                        <input id="check-e-book" type="checkbox" checked name="e-book" id="mz5">
                         <label for="check-e-book">
                             <?php
-                            $text = get_field('text');
-                            if (empty($text)) {
-                                $text = __('ברצוני לקבל את ספר המתכונים לפסח');
-                            }
-                            echo $text;
+                            // $text = get_field('text');
+                            // if (empty($text)) {
+                            //     $text = __('ברצוני לקבל את ספר המתכונים לפסח');
+                            // }
+                            // echo $text;
                             ?>
                         </label>
-                    </div>
-                <?php endif; ?>
+                    </div> -->
+                <?php //endif; ?>
                 <!--suppress JSUnusedLocalSymbols -->
                 <script async defer>
                     function captchaCallback(token) {
@@ -179,7 +179,7 @@ echo do_shortcode('[wordpress_social_login]');
                          data-callback="captchaCallback"
                     >
                     </div>
-                    <button type="submit" class="btn btn-primary" aria-label="הירשם">
+                    <button type="submit" id="register_btn_ebook" class="btn btn-primary" aria-label="הירשם">
                         <?php
                         $btn_text = get_field('btn_text');
                         $btn_text = isset($btn_text) && !empty($btn_text)? $btn_text : __('הירשם');

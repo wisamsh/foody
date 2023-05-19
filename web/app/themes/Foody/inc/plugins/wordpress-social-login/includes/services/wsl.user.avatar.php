@@ -65,13 +65,28 @@ if ( ! function_exists( 'wsl_get_wp_user_custom_avatar' ) ) {
 		if ( $user_id ) {
 			$wsl_avatar = wsl_get_user_custom_avatar( $user_id );
 
+			//Checking if no 404 error on the user image Wisam
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $wsl_avatar );
+			curl_setopt($ch, CURLOPT_NOBODY, 1);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_exec($ch);
+			$is400 = curl_getinfo($ch, CURLINFO_HTTP_CODE) == 400;
+			curl_close($ch);
+
+//Attemting change to default image if get code 400 from google (code 400 = no image found)
+if($is400 == 1){
+	$wsl_avatar = 'https://foody.co.il/app/themes/Foody/resources/images/avatar.png';
+}
+
 			if ( $wsl_avatar ) {
+				
 				$wsl_html = '<img alt="' . $alt . '" src="' . $wsl_avatar . '" class="avatar avatar-wordpress-social-login avatar-' . $size . ' photo" height="' . $size . '" width="' . $size . '" />';
 
 				// HOOKABLE:
 				return apply_filters( 'wsl_hook_alter_wp_user_custom_avatar', $wsl_html, $user_id, $wsl_avatar, $html, $mixed, $size, $default, $alt );
 
-//                return $wsl_avatar;
+//return $wsl_avatar;
 			}
 		}
 

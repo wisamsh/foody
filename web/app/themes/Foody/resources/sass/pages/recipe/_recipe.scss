@@ -102,7 +102,8 @@ $content-width: 95%;
   article.content {
 
     .title, h2 {
-      font-size: 20px;
+      font-size: 30px;
+      font-family:AlmoniTzar;
       margin-bottom: 0;
     }
 
@@ -153,7 +154,7 @@ $content-width: 95%;
       background-color: white;
 
       .featured-content-container {
-        clip-path: inset(0 round 3px);
+        //clip-path: inset(0 round 3px);
         margin: 0 10px 10px;
         position: relative;
 
@@ -316,7 +317,7 @@ $content-width: 95%;
 
       .description {
         margin: 0 0 10px;
-        font-size: 16px;
+        font-size: 18px;
       }
     }
 
@@ -1110,7 +1111,7 @@ $content-width: 95%;
         .modal-content {
 
           .modal-header {
-            background-image: linear-gradient(83deg, #ec3849, #f35644);
+            background-image: linear-gradient(83deg, #ec3849, #e63a2b);
             color: #ffffff;
             padding: 0;
 
@@ -1165,7 +1166,7 @@ $content-width: 95%;
     #upload-image-modal {
 
       .modal-header {
-        background-image: linear-gradient(78deg, #ec3849, #f35644);
+        background-image: linear-gradient(78deg, #ec3849, #e63a2b);
         color: white;
         padding: 10px;
         place-items: center;
@@ -1192,7 +1193,7 @@ $content-width: 95%;
 
           img {
             width: 33%;
-            clip-path: inset(0 round 3px);
+           // clip-path: inset(0 round 3px);
             margin-bottom: 15px;
           }
         }
@@ -1315,14 +1316,14 @@ $content-width: 95%;
             padding: 0 3px;
 
             img {
-              clip-path: inset(0 round .3rem);
+              //clip-path: inset(0 round .3rem);
             }
 
             .similar-content-listing-title {
               margin-top: 5px;
               line-height: 1;
               text-align: center;
-              font-family: Afek;
+              font-family: Ploni;
               font-size: 16px;
             }
 
@@ -1513,7 +1514,7 @@ $content-width: 95%;
 
             .kosher-sign {
               width: 30%;
-              font-family: AfekBold;
+              font-family: PloniBold;
               font-size: 22px;
               font-weight: 800;
               font-style: normal;
@@ -2215,7 +2216,7 @@ $content-width: 95%;
     .cover-image{
       margin-bottom: 10px;
     }
-    
+
     article.content {
 
       .details-container {

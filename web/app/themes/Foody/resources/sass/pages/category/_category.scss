@@ -4,6 +4,8 @@ body[class~="category"] {
 
     .breadcrumb, h1.title {
       margin-right: 20px;
+      font-size: 35px;
+      font-family: AlmoniTzar;
     }
 
     > .container-fluid {
@@ -60,16 +62,16 @@ body[class~="category"] {
             padding-left: 5px;
             img {
               width: 100%;
-              clip-path: inset(0 round 4px);
+              //clip-path: inset(0 round 4px);
             }
           }
 
           .category-title {
-            font-size: 20px;
+            font-size: 21px;
             text-align: center;
             font-weight: normal;
             color: var(--color__text-primary-dark);
-            font-family: Afek;
+            font-family: PloniMedium;
           }
 
         }
@@ -103,6 +105,13 @@ body[class~="category"] {
 
       .foody-grid {
         margin-top: 20px;
+
+        .grid-header{
+          .title{
+            font-family: AlmoniTzar !important;
+            font-size: 35px;
+          }
+        }
         .feed-item {
           .feed-item-image {
             width: 100%;

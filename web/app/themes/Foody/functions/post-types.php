@@ -533,6 +533,8 @@ function foody_posts_page_script()
     if ($post_type == 'post' ||
         $post_type == 'foody_recipe' ||
         $post_type == 'foody_feed_channel' ||
+        $post_type == 'questions' ||
+
         ($post_type == 'page' && is_page_template('page-templates/centered-content.php')) ||
         ($post_type == 'foody_course' && is_page_template('page-templates/foody-course-efrat.php')) ||
         is_page_template('page-templates/items.php') ||
