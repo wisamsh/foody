@@ -1,7 +1,10 @@
 <?php
 /** Enable W3 Total Cache */
 define('WP_CACHE', true); // Added by W3 Total Cache
-
+ini_set('display_errors','Off');
+ini_set('error_reporting', E_ALL );
+define('WP_DEBUG', false);
+define('WP_DEBUG_DISPLAY', false);
 
 
 
