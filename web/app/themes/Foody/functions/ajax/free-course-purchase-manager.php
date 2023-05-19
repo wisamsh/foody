@@ -47,5 +47,5 @@ function foody_start_free_pay_process()
     }
 }
 
-add_action('wp_ajax_nopriv_foody_start_free_pay_processs', 'foody_start_free_pay_process');
+add_action('wp_ajax_nopriv_foody_start_free_pay_process', 'foody_start_free_pay_process');
 add_action('wp_ajax_foody_start_free_pay_process', 'foody_start_free_pay_process');

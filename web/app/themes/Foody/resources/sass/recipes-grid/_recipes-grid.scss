@@ -21,15 +21,18 @@
     .show-more-text {
       color: var(--color__primary);
       text-align: center;
-      font-weight: 500;
-      font-size: 24px;
+      font-weight: 700;
+      font-family: AlmoniTzar;
+      font-size: 30px;
     }
   }
 
   .grid-header {
 
     .title {
-      font-size: 22px;
+      font-size: 35px;
+      font-family: AlmoniTzar;
+      font-weight: 700;
     }
 
     .grid-sort {

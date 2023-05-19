@@ -52,7 +52,8 @@
 
       &::placeholder {
         font-weight: 900;
-        font-size: 19px;
+        font-size: 18px;
+        font-family: PloniMedium;
       }
     }
 
@@ -130,7 +131,7 @@
 
     input[type="submit"], input[type="button"] {
       font-family: $font__assistant;
-      font-size: 22px;
+      font-size: 20px;
       background-color: transparent;
       border: none;
       border-radius: 0;
@@ -187,7 +188,7 @@
       .author {
         unicode-bidi: embed;
         font-size: 18px;
-        font-family: 'AfekBold';
+        font-family: PloniBold;
         margin-left: 5px;
       }
 

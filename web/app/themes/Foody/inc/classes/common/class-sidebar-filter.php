@@ -110,6 +110,52 @@ class SidebarFilter {
                 </div>";
 
 		foreach ( $list['checkboxes'] as $checkbox ) {
+
+
+//Wisam Fix : ==================================================================================================
+
+if(trim($checkbox['value'])==""){
+	global $wpdb;
+	
+	switch($checkbox['type']){
+	
+	case "authors" :
+	$query_auth ="SELECT ID from ". $wpdb->prefix . "users WHERE display_name = '" .$checkbox['title']. "'" ;
+	$res_auth = $wpdb->get_results($query_auth);
+	$checkbox['value'] = $res_auth[0]->ID;
+	break;
+	
+	case "limitations" :
+	$title_lim = trim($checkbox['title']);
+	$query_lim ="SELECT term_id from ". $wpdb->prefix . "terms WHERE LOCATE(name, '".$title_lim."')";
+	$res_lim = $wpdb->get_results($query_lim);
+	
+	if(!empty($res_lim)){
+	$checkbox['value'] =$res_lim[0]->term_id;
+	}
+	break;
+	
+	case "accessories" :
+	$title_acc = trim($checkbox['title']);
+	$query_acc ="SELECT ID from ". $wpdb->prefix . "posts WHERE post_type = 'foody_accessory' AND LOCATE(post_title, '".$title_acc."')";
+	$res_acc = $wpdb->get_results($query_acc);
+	
+	$checkbox['value'] =$res_acc[0]->ID;
+	
+	break;
+	
+	
+	
+	default :
+	$checkbox['value'] = $checkbox['type'];
+	break;
+	
+	}
+	
+	}
+	
+	//END Wisam Fix===================================================================================================
+	
 			$item = $this->engine->render( $template, array(
 				'id'      => $accordion_args['id'] . '_' . $checkbox['value'] . '_' . $checkbox['exclude'],
 				'exclude' => $checkbox['exclude'],

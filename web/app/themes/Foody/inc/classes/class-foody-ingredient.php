@@ -30,7 +30,7 @@ class Foody_Ingredient extends Foody_Post
     ];
 
     public $plural_name;
-
+	
     public $singular_name;
     public $nutrients;
     public $nutrients_conversion;
@@ -83,7 +83,8 @@ class Foody_Ingredient extends Foody_Post
                     'text_color' => $substitute_ingredient['text_color'],
                     'show_everywhere' => $substitute_ingredient['show_everywhere'],
                     'post' => $substitute_ingredient['substitute_ingredient'],
-                    'filter' => $substitute_ingredient['filter']
+                    'filter' => $substitute_ingredient['filter'],
+					
                 ];
             }
         }
@@ -180,10 +181,6 @@ class Foody_Ingredient extends Foody_Post
                         $data .= ' ' . call_user_func($get_substitute_ingredient_data_attr, $amount['amount'] * $convertion_value, $this->string_fraction_to_decimal($display) * $convertion_value);
                         $substitute_amount = $this->change_amount_by_convertion($amount, $convertion_value);
                         $data .= ' ' . foody_array_to_substitute_data_attr(['unit' => $substitute_amount['unit']]);
-//                        if (isset($this->recipe_substitute_ingredient->part_of_bundle)) {
-//                            $is_part_of_the_bandle = $this->recipe_substitute_ingredient->part_of_bundle ? 1 : 0;
-//                            $data .= ' ' . ' data-substitute-bundle=' . '"' . $is_part_of_the_bandle . '"';
-//                        }
                         $this->recipe_substitute_ingredient->amounts = [];
                         array_push($this->recipe_substitute_ingredient->amounts, $substitute_amount);
                     }
@@ -193,7 +190,7 @@ class Foody_Ingredient extends Foody_Post
                     '<span dir="ltr" class="amount"' . $data . '>
                         ' . $display . '
                     </span>
-                    <div class="extra-ingredients">
+                    <div class="extra-ingredients db">
                     <span class="unit">
                          ' . $amount['unit'] . '
                     </span>';
@@ -217,7 +214,7 @@ class Foody_Ingredient extends Foody_Post
             if ($length > 1) {
                 $content .= $this->amounts_delimiter;
             } else {
-                $content .= '<div class="extra-ingredients">';
+                $content .= '<div class="extra-ingredients db">';
             }
 
             if (!empty($content)) {
@@ -325,7 +322,7 @@ class Foody_Ingredient extends Foody_Post
 
         $commercial_link = $this->get_sponsored_ingredient_link($recipe_id);
         $ingredient_link = get_field('ingredient_link', $this->get_id());
-
+	
         if ($this->has_alter_link) {
             $link = $this->link['url'];
             $link_title = $this->link['title'];
@@ -360,10 +357,7 @@ class Foody_Ingredient extends Foody_Post
             $amount_el .= '</span></span>';
         }
 
-        // Add ingredient comment
-//        if (!empty($this->comment)) {
-//            $amount_el .= '<div class="comment">' . $this->comment . '</div>';
-//        }
+        
 
         if ($length <= 1) {
             $amount_el .= '</span></span>';
@@ -857,25 +851,26 @@ class Foody_Ingredient extends Foody_Post
 
         $amount_object['amount'] = strval($amount_object['amount'] * $convertion_value);
         return $amount_object;
-//
-//        if ($convertion_value) {
-//            if ($convertion_value < 1) {
-//                return strval($amount_string * $convertion_value);
-//            } else {
-//                return strval($amount_string / $convertion_value);
-//            }
-//        }
+
     }
 
     private function string_fraction_to_decimal($string)
     {
-//        if (strpos($string, '/')) {
-//            $numbers = explode("/", $string);
-//            return round($numbers[0] / $numbers[1], 6);
-//        } else {
+
             return 1;
-//        }
+
 
     }
+	
+	
+	
+		
+	
+	
+	
+	
+	
+	
+	
 
 }

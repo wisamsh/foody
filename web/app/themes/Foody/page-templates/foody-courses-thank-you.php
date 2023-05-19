@@ -17,6 +17,7 @@ $coupon_name = '';
 
 if (isset($_GET)) {
     $payment_initiation_id = false;
+    $credit_low_profile_code = false;
     if (isset($_GET['course_id'])) {
         $course_id = $_GET['course_id'];
         $payment_method = isset($_GET['payment_method']) ? $_GET['payment_method'] : false;

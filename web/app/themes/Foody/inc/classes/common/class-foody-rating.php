@@ -59,7 +59,7 @@ class Foody_Rating
         $rating_elements ='<div class="rating-stars-container">';
 
         for($index = 1; $index<=$num_of_start; $index++){
-            $rating_elements .= '<img class="empty-star" data-index="'. $index .'" src="'.  $GLOBALS['images_dir'] . 'icons/'.$empty_stars_prefix . $index .'.png">';
+            $rating_elements .= '<img class="empty-star" data-index="'. $index .'" src="'.  $GLOBALS['images_dir'] . 'icons/'.$empty_stars_prefix . $index .'.png?ver=1.2">';
         }
 
         $rating_elements .= '</div>';
@@ -111,11 +111,11 @@ class Foody_Rating
             $class = $index <= $average_rating ? 'full-star' : 'star';
             if($is_average_decimal && !$added_half && $index  > $average_rating){
                 $image_path = 'icons/rating/half-star' ;
-                $rating_elements .= '<img class="' . $class .'" data-index="'. $index .'" src="'.  $GLOBALS['images_dir'] . $image_path .'.png">';
+                $rating_elements .= '<img class="' . $class .'" data-index="'. $index .'" src="'.  $GLOBALS['images_dir'] . $image_path .'.png?ver=1.2">';
                 $added_half = true;
             } else {
                 $image_path = $index <= $average_rating ? 'icons/rating/rating-full-' : 'icons/rating/rating-empty-';
-                $rating_elements .= '<img class="' . $class .'" data-index="'. $index .'" src="'.  $GLOBALS['images_dir'] . $image_path . $index .'.png">';
+                $rating_elements .= '<img class="' . $class .'" data-index="'. $index .'" src="'.  $GLOBALS['images_dir'] . $image_path . $index .'.png?ver=1.2">';
             }
         }
 

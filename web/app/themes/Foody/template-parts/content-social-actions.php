@@ -42,7 +42,7 @@ $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rat
             if (get_post_type() == 'foody_recipe') {
                 echo __('שתפו');
             } else if (get_post_type() == 'post') {
-                echo __('שתפו את הכתבה');
+                echo __('שתפו');
             } else if (get_post_type() == 'foody_feed_channel') {
                 echo __('שתפו את הערוץ');
             } else if (get_post_type() == 'foody_course') {
@@ -50,11 +50,11 @@ $show_rating = !isset($template_args['hide_rating']) || $template_args['hide_rat
             }
             ?>
         </div>
-    <?php if(wp_is_mobile() && get_post_type() == 'foody_recipe' && get_option( 'foody_show_kosher')) { ?>
-        <div class="kosher-sign">
-            <?php echo __('כשר'); ?>
-        </div>
-    <?php } ?>
+        <?php if(wp_is_mobile() && get_post_type() == 'foody_recipe' && get_option( 'foody_show_kosher')) { ?>
+            <div class="kosher-sign">
+                <?php echo __('כשר'); ?>
+            </div>
+        <?php } ?>
     <?php endif; ?>
     <?php echo $social_icons ?>
     <?php if (wp_is_mobile() && is_single() && in_array(get_post_type(), ['foody_recipe', 'post'])): ?>

@@ -47,14 +47,14 @@ class Foody_courses_coupons_exporter
 //set the header first, so the result will be treated as an xlsx file.
         header('Content-Type: application/vnd.ms-excel');
 //make it an attachment so we can define filename
-        header('Content-Disposition: attachment;filename="'. $coupons_prefix .'-unique-coupons-list.xls"');
+        header('Content-Disposition: attachment;filename="'. $coupons_prefix .'-unique-coupons-list.csv"');
 
 //create IOFactory object
-        $writer = IOFactory::createWriter($spreadsheet, 'Xls');
+        $writer = IOFactory::createWriter($spreadsheet, 'Csv');
 //save into php output
         ob_end_clean();
         $writer->save('php://output');
-
+die();
     }
 
 
@@ -65,7 +65,7 @@ class Foody_courses_coupons_exporter
 
         $query = "SELECT * FROM {$table_name} where coupon_id = " . $id;
 
-        return $wpdb->get_results($query);;
+        return $wpdb->get_results($query);
     }
 }
 ?>

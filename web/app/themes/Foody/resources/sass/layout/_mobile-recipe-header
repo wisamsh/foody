@@ -415,6 +415,8 @@ $run-height: 30px;
                   .quadmenu-text {
                     color: $color__primary;
                     font-weight: bold;
+                    font-family: Afek;
+                    font-size: 15px;
                   }
 
                   .quadmenu-caret {

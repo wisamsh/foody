@@ -199,6 +199,7 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
     }
     ?>
 </footer><!-- #colophon -->
+
 </div><!-- #page -->
 
 <?php
@@ -230,8 +231,9 @@ if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || f
 //
 //    foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', $newsletter_popup_args);
 //}
-?>
 
+
+?>
 <?php wp_footer(); ?>
 
 
@@ -239,7 +241,17 @@ if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || f
 
 $footer->add_nagish_li_script();
 
+
+
+if (wp_is_mobile()){// && "foody_recipe" != get_post_type()) {
+    require(get_template_directory() . '/components/mobile_nav/mobile_bottom_menu_new.php');
+    }
+
 ?>
+
+
+
+
 </body>
 <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

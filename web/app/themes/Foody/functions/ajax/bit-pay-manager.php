@@ -277,7 +277,8 @@ function do_single_payment_bit($id, $member_data, $isMobile, $thank_you_page = n
 {
     $amount = isset($_POST['price']) ? doubleval($_POST['price']) : false;
     $item_name = isset($_POST['item_name']) ? $_POST['item_name'] : false;
-    $franchisingId = 32;
+    //$franchisingId = 32;
+    $franchisingId = 136;
     $prefix_for_trans = get_option('foody_identifier_trans_bit', false);
     $bit_trans_id = 'bit_trans_' . $prefix_for_trans . '_' . $id;
 

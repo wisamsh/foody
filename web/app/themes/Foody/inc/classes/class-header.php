@@ -177,7 +177,7 @@ class Foody_Header {
 	    $title_text = __('עוד מתכון מ-');
 //	    $classes = $mobile ? 'print-header print-mobile' : 'print-header print-desktop';
         $classes = 'print-header print-desktop';
-	    $title_element = '<h1 class="print-header-text print">'.$title_text.'</h1>';
+	    $title_element = '<div class="print-header-text print">'.$title_text.'</div>';
 	    $image_element = foody_custom_logo_link(true);
 
 	    echo '<div class="'. $classes .'">'.$title_element.$image_element.'</div>';

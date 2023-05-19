@@ -56,7 +56,8 @@ $foody_comments = new Foody_Comments();
             $cpage = ( ceil( get_comments( array(
                             'post_id' => $post->ID,
                             'type'  => 'comment',
-                            'count' => true
+                            'count' => true,
+                            'parent' => 0
                         ) ) / $per_page ) );
             if(isset($wp_query->query_vars)){
                 $wp_query->query_vars['cpage'] = $cpage;

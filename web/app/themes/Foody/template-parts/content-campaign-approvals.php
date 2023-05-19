@@ -8,6 +8,7 @@
 
 $registration_page = get_page_by_title( 'הרשמה' );
 
+
 $welcome_text = get_field( 'extra_details_campaign_subtitle', $registration_page );
 $terms_text   = get_field( 'extra_details_campaign_terms', $registration_page );
 $button_text  = get_field( 'extra_details_campaign_button_text', $registration_page );
@@ -78,10 +79,10 @@ $today = date( 'Y-m-d' );
             </label>
         </div>
 		<?php if ( ! Foody_User::user_has_meta( 'marketing' ) ): ?>
-            <div class="md-checkbox col-12">
-                <input id="check-marketing" type="checkbox" checked name="marketing">
+            <div class="md-checkbox col-12" >
+                <input id="check-marketing" type="checkbox" checked name="marketing" id="mz2">
                 <label for="check-marketing">
-					<?php echo __( 'הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר' ) ?>
+					<?php echo __( 'הריני לאשר בזה קבלת דואר מאתר Foody ומאתר סנו הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר');?>
                 </label>
             </div>
 		<?php endif; ?>

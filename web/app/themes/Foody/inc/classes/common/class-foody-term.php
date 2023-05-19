@@ -133,6 +133,7 @@ abstract class Foody_Term
                 }, $pinned_posts);
 
                 $args['post__not_in'] = $recipes_ids;
+            
 //                $args['post_per_page'] = 12 - count($recipes_ids);
             }
         }

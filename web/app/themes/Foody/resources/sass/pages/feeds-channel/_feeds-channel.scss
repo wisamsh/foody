@@ -4,9 +4,10 @@
     text-align: right;
 
     h1 {
-      font-size: 24px;
+      font-size: 32px;
       padding-right: 15px;
       margin: 0 0 10px;
+      font-family: AlmoniTzar !important;
     }
 
     .breadcrumb {
@@ -35,7 +36,7 @@
 
         .social-title {
           margin-left: 10px;
-          font-size: 15px;
+          font-size: 18px;
         }
 
         .essb_links {
@@ -160,7 +161,7 @@
 
             .category-listing {
               .categort-listing-title {
-                font-size: 16px;
+                font-size: 21px;
               }
 
             }
@@ -253,7 +254,10 @@
 
             .categories-block-content {
 
-              .categort-listing-title {
+              .category-listing {
+                .categort-listing-title {
+                  font-size: 12px !important;
+                }
               }
             }
 

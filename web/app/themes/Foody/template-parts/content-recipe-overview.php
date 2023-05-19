@@ -68,22 +68,26 @@ $labels = array(
             </div>
         </li>
     </ul>
-    <ul class="overview-nutrients row">
-        <li class="overview-item col-sm-1 col-6">
-            <div class="value open">
-                <?php echo __('עוד ערכים תזונתיים'); ?>
-            </div>
-            <section class="recipe-nutrition box no-print">
+    <?php
+     if ( get_current_blog_id() !== 2 ) { ?>
+         <ul class="overview-nutrients row">
+             <li class="overview-item col-sm-1 col-6">
+                 <div class="value open">
+                     <?php echo __('עוד ערכים תזונתיים'); ?>
+                 </div>
+                 <section class="recipe-nutrition box no-print">
 
-                <?php $recipe->the_nutrition() ?>
+                     <?php $recipe->the_nutrition() ?>
 
-            </section>
-        </li>
-    </ul>
+                 </section>
+             </li>
+         </ul>
+    <?php } ?>
 </div>
 <div class="overview-lists-container-desktop">
     <ul class="overview row">
         <?php foreach ($overview as $key => $value) : ?>
+
             <?php if ($key !== 'difficulty_level') { ?>
                 <li class="overview-item col-1">
                     <?php if ($key === 'time') { ?>
@@ -131,16 +135,19 @@ $labels = array(
             </div>
         </li>
     </ul>
-    <ul class="overview-nutrients row">
-        <li class="overview-item col-sm-1 col-6">
-            <div class="value open">
-                <?php echo __('עוד ערכים תזונתיים'); ?>
-            </div>
-            <section class="recipe-nutrition box no-print">
+    <?php
+    if ( get_current_blog_id() !== 2 ) { ?>
+        <ul class="overview-nutrients row">
+            <li class="overview-item col-sm-1 col-6">
+                <div class="value open">
+                    <?php echo __('עוד ערכים תזונתיים'); ?>
+                </div>
+                <section class="recipe-nutrition box no-print">
 
-                <?php $recipe->the_nutrition() ?>
+                    <?php $recipe->the_nutrition() ?>
 
-            </section>
-        </li>
-    </ul>
+                </section>
+            </li>
+        </ul>
+    <?php } ?>
 </div>

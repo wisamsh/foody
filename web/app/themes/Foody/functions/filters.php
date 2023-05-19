@@ -95,7 +95,7 @@ function foody_js_globals() {
 		$vars['loggedIn']  = is_user_logged_in();
 		$vars['imagesUri'] = $GLOBALS['images_dir'];
 		$vars['messages']  = foody_js_messages();
-
+        $vars['current_blog_site'] = get_current_blog_id();
 		$vars['userRecipesCount'] = 0;
 		if ( is_user_logged_in() ) {
 			$vars['userRecipesCount'] = empty( $wp_session['favorites'] ) ? 0 : count( $wp_session['favorites'] );
@@ -112,6 +112,7 @@ function foody_js_globals() {
 		<?php
 	}
 	else{
+        $vars['current_blog_site'] = get_current_blog_id();
         $vars['ajax']      = admin_url( 'admin-ajax.php' );
         $js = wp_json_encode( $vars );
 
