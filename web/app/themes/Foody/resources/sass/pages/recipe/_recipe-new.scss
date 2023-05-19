@@ -107,7 +107,7 @@ $content-width: 95%;
   #upload-image-modal {
 
     .modal-header {
-      background-image: linear-gradient(78deg, #ec3849, #f35644);
+      background-image: linear-gradient(78deg, #ec3849, #e63a2b);
       color: white;
       padding: 10px;
       place-items: center;
@@ -198,6 +198,16 @@ $content-width: 95%;
     //width: $content-width;
     background: #ffffff;
 
+    .recipe-sponsor {
+      border-top: solid 1px black;
+      border-bottom: solid 1px black;
+      text-align: center;
+      margin: 30px 0;
+      padding: 10px;
+      font-size: 20px;
+      font-family: Ploni;
+    }
+
     .difference-nutrient {
       display: flex;
       justify-content: center;
@@ -237,7 +247,11 @@ $content-width: 95%;
         height: auto;
 
         iframe.video-container {
-          height: 475px;
+          height: 383px;
+        }
+
+        .feed-logo-sticker {
+          display: none;
         }
       }
 
@@ -415,7 +429,7 @@ $content-width: 95%;
         }
 
         .description{
-          font-size: 17px;
+          font-size: 18px;
         }
 
         .description{
@@ -447,8 +461,8 @@ $content-width: 95%;
               .favorite {
                 span {
                   color: #404040;
-                  font-size: 17px;
-                  font-family:'Afek';
+                  font-size: 18px;
+                  font-family: Ploni;
                 }
               }
 
@@ -481,9 +495,9 @@ $content-width: 95%;
               .social-title {
                 margin-top: 1px;
                 margin-bottom: 0;
-                font-family: 'Afek';
+                font-family: Ploni;
                 font-weight: bolder;
-                font-size:17px;
+                font-size:18px;
                 margin-left: 0.7rem;
               }
 
@@ -573,9 +587,9 @@ $content-width: 95%;
 
               .rating-header {
                 padding-left: 6%;
-                font-family: 'Afek';
+                font-family: Ploni;
                 font-weight: bolder;
-                font-size: 17px;
+                font-size: 18px;
                 left: 2%;
                 position: relative !important;
               }
@@ -614,7 +628,7 @@ $content-width: 95%;
 
         .overview.row{
           margin: 0;
-          padding:1% 0 0 0;
+          padding:1% 0 1% 0;
           display: flex;
           flex-direction: row;
           justify-content: space-evenly;
@@ -649,7 +663,7 @@ $content-width: 95%;
               flex-direction: row;
               margin: 35% 0;
               text-align: center;
-              font-size: 15px;
+              font-size: 16px;
             }
 
             .difficulty-container{
@@ -658,7 +672,7 @@ $content-width: 95%;
               margin: 26% 0;
               position:relative;
               text-align: center;
-              font-size: 15px;
+              font-size: 16px;
             }
 
             .difficulty-container{
@@ -684,7 +698,7 @@ $content-width: 95%;
 
             .item-container{
               margin-top: 8px;
-              font-size: 15px;
+              font-size: 16px;
               line-height: 1.2;
 
               .key{
@@ -705,7 +719,7 @@ $content-width: 95%;
           width: 100%;
           flex-wrap: unset;
           margin: 0;
-          padding: 1%;
+          padding: 0% 0 1% 0;
           display: flex;
           flex-direction: row;
           justify-content: space-evenly;
@@ -733,8 +747,9 @@ $content-width: 95%;
               }
 
               text-decoration: underline;
-              font-size: 17px;
-              font-family: 'AfekBold';
+              font-size: 30px;
+              font-family: AlmoniTzar;
+              font-weight: 900;
               display: block;
              }
 
@@ -749,7 +764,9 @@ $content-width: 95%;
               .nutrition-container{
                 .title{
                   display: block;
-                  font-size: 17px;
+                  font-size: 30px;
+                  font-family: AlmoniTzar;
+                  font-weight: 900;
                   text-align: center;
 
                   span {
@@ -901,14 +918,15 @@ $content-width: 95%;
 
         .preparations-share-title,
         .comments-title {
-          font-family: 'AfekBold';
+          font-family: Ploni;
           color: #404040;
-          font-size: 14px;
+          font-size: 15px;
         }
 
         .preparation-share-link,
         .comments-link {
-          color: $color__primary;
+          //color: $color__primary;
+          color:#579fba;
           text-decoration: underline !important;
           font-size: 14.5px;
           font-weight: normal;
@@ -939,8 +957,9 @@ $content-width: 95%;
         }
 
         .rating-header{
-          font-size: 14px;
-          font-family: 'AfekBold';
+          font-size: 15px;
+          font-family: Ploni;
+          font-weight: 100;
         }
       }
     }
@@ -960,8 +979,8 @@ $content-width: 95%;
         margin-top: 5%;
         text-decoration: underline;
         color: var(--color__primary);
-        font-size: 20px;
-        font-weight: bold;
+        font-size: 24px;
+        font-family: PloniMedium;
       }
 
       .recipe-ingredients-top{
@@ -970,7 +989,10 @@ $content-width: 95%;
         flex-direction: column;
 
         .title{
-          font-size: 17px;
+          font-size: 30px;
+          margin-bottom: 0;
+          font-weight: 700;
+          font-family: 'AlmoniTzar';
           margin-bottom: 0;
           line-height: 35px;
           padding-right: 0;
@@ -985,6 +1007,7 @@ $content-width: 95%;
           width: 100%;
           margin-top: -20px;
           padding-bottom: 15px;
+
           label{
             margin: auto 0 auto 2%;
           }
@@ -992,7 +1015,7 @@ $content-width: 95%;
          label.choose-pan-title{
            padding-top: 26px;
            font-size: 17px;
-           font-family: 'Afek';
+           font-family: Ploni;
          }
 
           > .amount-container {
@@ -1167,7 +1190,8 @@ $content-width: 95%;
          }
 
          label {
-           font-size: 17px;
+           font-size: 20px;
+           font-family: Ploni;
            padding-left: 12px;
            line-height: $input-height;
            vertical-align: middle;
@@ -1240,7 +1264,7 @@ $content-width: 95%;
               }
 
               .ingredient {
-                font-size: 17px;
+                font-size: 18px;
                 display: inline-flex;
               }
 
@@ -1263,14 +1287,14 @@ $content-width: 95%;
                 .comment {
                   font-size: 15px;
                   line-height: 15px;
-                  color: $color__primary;
+                  color: #579fba;
                 }
               }
 
               .comment {
                 font-size: 13px;
                 line-height: 15px;
-                color: $color__primary;
+                color: #579fba;
               }
             }
           }
@@ -1287,8 +1311,8 @@ $content-width: 95%;
 
           .ingredients-group-title {
             max-width: 100%;
-            font-size: 17px;
-            font-family: 'AfekBold';
+            font-size: 30px;
+            font-family: 'AlmoniTzar';
           }
 
           ul {
@@ -1476,7 +1500,9 @@ $content-width: 95%;
 
     section.recipe-notes{
       .title{
-        font-size: 17px;
+        font-size: 30px;
+        font-weight: 700;
+        font-family: AlmoniTzar;
         line-height: 35px;
         padding-right: 0;
         color: var(--color__primary);
@@ -1498,7 +1524,9 @@ $content-width: 95%;
       .similar-content-listing-block-title {
         text-align: right;
         margin-bottom: 10px;
-        font-size:17px !important;
+        font-size: 30px !important;
+        font-family: 'AlmoniTzar';
+        font-weight: 700;
       }
 
       ul {
@@ -1524,8 +1552,8 @@ $content-width: 95%;
               margin-top: 5px;
               line-height: 1;
               text-align: center;
-              font-family: Afek;
-              font-size: 15px;
+              font-family: Ploni;
+              font-size: 18px;
             }
 
           }
@@ -1543,7 +1571,7 @@ $content-width: 95%;
       }
 
       .system-tip{
-        background: #fef5f6;
+        background: #e2eff2;
         padding: 5%;
         border-radius: 15px;
         width: 100%;
@@ -1551,7 +1579,7 @@ $content-width: 95%;
 
 
         &.text-content{
-          border: #FEF2F3 2px solid;
+          //border: #FEF2F3 2px solid;
           padding: 1% 3%;
 
           .title-container{
@@ -1569,7 +1597,10 @@ $content-width: 95%;
           }
 
           .title{
-            font-size: 17.5px;
+            font-size: 30px;
+            position: relative;
+            top: 4px;
+            font-family: 'AlmoniTzar';
             margin: auto 0;
           }
         }
@@ -1582,6 +1613,7 @@ $content-width: 95%;
           text-align: right;
           margin: 0;
           font-size: 17px;
+          font-family:Ploni;
         }
       }
     }
@@ -1597,7 +1629,7 @@ $content-width: 95%;
       .comments-area-header {
         display: flex;
         flex-direction: row;
-        background: $color__primary;
+        background:#579fba;
         padding: 20px 20px;
         position: relative;
 
@@ -1606,6 +1638,7 @@ $content-width: 95%;
           text-align: center;
           margin-left: 0%;
           font-size: 24px;
+          font-family: Ploni;
           margin-bottom: 0;
         }
 
@@ -1711,7 +1744,7 @@ $content-width: 95%;
           }
 
           .author{
-            font-family: Assistant;
+            font-family: Ploni;
             padding: 10px;
             font-size: 15px;
             text-align: right;
@@ -1742,7 +1775,7 @@ $content-width: 95%;
           padding: 0;
 
           .modal-title {
-            font-family: Assistant;
+            font-family: Ploni;
             font-size: 28px;
             font-weight: 900;
             place-self: center;
@@ -1775,8 +1808,9 @@ $content-width: 95%;
       margin:15px 11px;
       margin-bottom: 13px !important;
       .title{
-        font-size:18px;
-        font-family: 'AfekBold';
+        font-size:30px;
+        font-family: AlmoniTzar;
+        font-weight: 700;
       }
     }
 
@@ -1787,7 +1821,9 @@ $content-width: 95%;
       #comments{
         .title{
           padding-right: 2px;
-          font-size: 20px;
+          font-size: 30px;
+          font-family: AlmoniTzar;
+
         }
         .comments-title{
           font-size: 17px;
@@ -1812,7 +1848,7 @@ $content-width: 95%;
       .title{
         font-size: 18px;
         line-height: 35px;
-        font-family: 'AfekBold';
+        font-family: PloniBold;
       }
 
       > ul{
@@ -2045,7 +2081,7 @@ $content-width: 95%;
         .ratings-wrapper {
           margin: 0;
           display: flex;
-          width: 85%;
+          width: 95%;
           justify-content: center;
           margin: 11px auto;
           font-size: 17px;
@@ -2058,12 +2094,12 @@ $content-width: 95%;
             flex-direction: row;
 
             .rating-stars-container{
-              font-family: 'AfekBold';
+              font-family: PloniBold;
               margin: auto;
             }
             .rating-header{
               margin-top:1%;
-              font-family: 'AfekBold';
+              font-family: PloniBold;
               margin: auto;
             }
 
@@ -2072,7 +2108,7 @@ $content-width: 95%;
           .rating-header{
             margin-left: 4%;
             margin-top: 1%;
-            font-family: 'AfekBold';
+            font-family: PloniBold;
           }
 
           .rating-digits {
@@ -2121,7 +2157,7 @@ $content-width: 95%;
           }
 
           iframe.video-container {
-            height: 276.25px;
+            height: 200px;
           }
 
           .feed-logo-sticker {
@@ -2213,7 +2249,7 @@ $content-width: 95%;
 
             .kosher-sign {
               width: 30%;
-              font-family: Assistant;
+              font-family: Ploni;
               font-size: 22px;
               font-weight: 800;
               font-style: normal;
@@ -2304,6 +2340,7 @@ $content-width: 95%;
           .description {
             margin: 0 0 10px;
             font-size: 18px;
+            text-align: justify;
           }
         }
 
@@ -2368,7 +2405,7 @@ $content-width: 95%;
               .item-container {
                 line-height: 1.2;
                 padding-top: 16%;
-                font-size: 16px;
+                font-size: 16px !important;
 
                 .key {
                   font-weight: bold;
@@ -2409,7 +2446,7 @@ $content-width: 95%;
 
               .kosher,
               .difficulty-container{
-                font-size: 15px;
+                font-size: 16px;
               }
 
               .difficulty-container {
@@ -2462,8 +2499,9 @@ $content-width: 95%;
 
               .value {
                 text-decoration: underline;
-                font-size: 17px;
-                font-family: 'AfekBold';
+                font-size: 30px;
+                font-weight: 700 ;
+                font-family: AlmoniTzar !important;
                 &:not(.open) {
                   display: none;
                 }
@@ -2480,7 +2518,9 @@ $content-width: 95%;
 
                 .nutrition-container {
                   .title {
-                    font-size: 17px;
+                    font-size: 30px;
+                    font-family: AlmoniTzar;
+                    font-weight: 700;
                     text-align: center;
 
                     span {
@@ -2590,11 +2630,13 @@ $content-width: 95%;
         .preview {
           text-align: right;
           padding: 0 0.7rem;
-
+          text-align: justify;
           .foody-content{
+            text-align: justify;
             font-size: 17px;
             line-height: 21px;
             > p{
+              text-align: justify;
               font-size: 17.5px;
             }
           }
@@ -2628,7 +2670,8 @@ $content-width: 95%;
 
           .preparation-share-link,
           .comments-link {
-            color: $color__primary;
+            //color: $color__primary;
+            color:#579fba;
             text-decoration: underline !important;
             font-size: 14.5px;
           }
@@ -2647,7 +2690,7 @@ $content-width: 95%;
           width: 50%;
           text-align: center;
           font-weight: bold;
-          font-family: 'AfekBold';
+          font-family: PloniBold;
 
           #rating-loader {
             right:0;
@@ -2707,7 +2750,8 @@ $content-width: 95%;
         $input-height: 35px;
 
         .ingredients-area-links {
-          font-size: 20px;
+          font-size: 24px;
+          font-family: PloniMedium;
         }
 
         > .difference-nutrient {
@@ -2900,8 +2944,9 @@ $content-width: 95%;
 
             .ingredients-group-title {
               max-width: 100%;
-              font-size: 17px;
-              font-family: 'AfekBold';
+              font-size: 30px;
+              font-family: AlmoniTzar;
+              font-weight: 700;
             }
 
             ul {
@@ -3088,7 +3133,7 @@ $content-width: 95%;
 
             li {
               margin: 5px 0;
-
+              word-wrap: break-word;
               &:before {
                 content: counter(counter) '.';
                 counter-increment: counter;
@@ -3131,7 +3176,7 @@ $content-width: 95%;
         .comments-area-header {
           display: flex;
           flex-direction: column;
-          background: $color__primary;
+          background: #579fba;
           padding: 2%;
           position: relative;
 
@@ -3180,12 +3225,12 @@ $content-width: 95%;
             .btn-text {
               text-align: center;
               border-radius: 60%;
-              border: 1px solid #e6392b;
-              color: #e6392b;
+              border: 1px solid #579fba;
+              color: #579fba;
               margin: auto;
               width: 34px;
               height: 34px;
-              font-family: AfekBold;
+              font-family: PloniBold;
               font-size: 19px;
               position: absolute;
               top: 4px;
@@ -3476,7 +3521,7 @@ $content-width: 95%;
             padding: 0;
 
             .modal-title {
-              font-family: Assistant;
+              font-family: Ploni;
               font-size: 28px;
               font-weight: 900;
               place-self: center;
@@ -3591,7 +3636,9 @@ $content-width: 95%;
         .similar-content-listing-block-title {
           text-align: right;
           margin-bottom: 10px;
-          font-size: 17px;
+          font-size: 30px;
+          font-family: AlmoniTzar;
+          font-weight: 700;
         }
 
         ul {
@@ -3619,7 +3666,7 @@ $content-width: 95%;
                 margin-top: 5px;
                 line-height: 1;
                 text-align: center;
-                font-family: Afek;
+                font-family: Ploni;
                 font-size: 14px;
               }
             }
@@ -3631,7 +3678,7 @@ $content-width: 95%;
         padding: 4%;
 
         .system-tip {
-          background: #fef5f6;
+          background: #e2eff2;
           padding: 5%;
           border-radius: 15px;
 
@@ -3646,7 +3693,7 @@ $content-width: 95%;
             }
 
             .title {
-              font-size: 17px;
+              font-size: 30px;
               margin: auto 0;
             }
           }
@@ -3699,14 +3746,7 @@ $content-width: 95%;
 
 @media print {
 
-    #octAccess{
-      display: none;
-    }
-    .acsb-widget{
-      display:none;
-    }
-
-    .google-adx-container{
+    #mys-wrapper, #mys-content, #octAccess, .acsb-widget, .google-adx-container, #tbl-next-up, .adsbygoogle{
       display: none;
     }
 
@@ -3756,6 +3796,7 @@ $content-width: 95%;
       border: solid 1px #d5d5d5;
 
       .details-container{
+        
         .details.container{
           display: flex;
           flex-direction: column-reverse;
@@ -3765,6 +3806,7 @@ $content-width: 95%;
             position: absolute;
             top: 0;
             font-size: 25px;
+            font-size: 900;
           }
 
           .description-print{

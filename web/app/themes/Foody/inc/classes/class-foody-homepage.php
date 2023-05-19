@@ -34,6 +34,7 @@ class Foody_HomePage
         $this->id = get_option('page_on_front');
     }
 
+
     public function init()
     {
         $this->team = new FoodyTeam();
@@ -51,6 +52,43 @@ class Foody_HomePage
         $title_el = wp_is_mobile() ? 'h2' : 'div';
         $this->grid->loop($posts, 2, 12, null, [], null, ['image_size' => '', 'title_el' => $title_el]);
     }
+
+
+//wisam :
+private function pid($request_pid = null)
+{
+return $pid = isset($request_pid) ? $request_pid : get_the_ID();
+}
+
+public function cover_image_new(){
+
+//cover-image
+$rtn = '';
+$rtn .= '<div class="cover-image">';
+
+$CoverLink = get_field("link_cover_image", $this->pid());
+$rtn .='<a href="'.$CoverLink.'">';
+
+
+
+if(!wp_is_mobile()){
+if(get_field("cover_image_desktop", $this->pid())){
+$cover_Image_Ret = get_field("cover_image_desktop", $this->pid());
+$rtn .='<img src="'.$cover_Image_Ret .'"/>';
+}
+}
+else{
+if(get_field("cover_image_mobile", $this->pid())){
+$cover_Image_Ret = get_field("cover_image_mobile", $this->pid());
+$rtn .='<img src="'.$cover_Image_Ret .'"/>';
+}
+}
+
+$rtn .='</a></div>';
+return $rtn;
+}
+
+
 
     public function cover_photo()
     {

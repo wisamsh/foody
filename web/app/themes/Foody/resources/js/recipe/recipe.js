@@ -8,7 +8,9 @@
 let player;
 let videoThumbnail;
 if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGlobals.post.type == 'post')) {
-
+    if ( foodyGlobals['current_blog_site'] === 2  ) {
+        $(".single-foody_recipe .recipe-overview  ul > li:nth-child(3) ").css('display', 'none')
+    }
     // sliders data
     var sliderMainData  = false, sliderNavData = false;
 
@@ -288,6 +290,11 @@ jQuery(document).ready(($) => {
 
     if(sliderMainData){
         $('.slider-for').slick(sliderMainData);
+        setTimeout(() => {
+            $('.slider-for').slick('refresh');
+            console.log('wad')
+        }, 500);
+
     }
 
     if(sliderNavData){
@@ -460,6 +467,7 @@ jQuery(document).ready(($) => {
     if ($('.recipe-categories .post-categories li').length && $('.cat-read-more').length) {
         $('.cat-read-more').on('click', function () {
             $('.recipe-categories .post-categories').attr('style', 'height:' + parseInt($(this).attr('data-original-size')) + 'px');
+            $('.recipe-categories .post-categories').attr('style', 'margin-bottom:60px');
             $(this).remove();
         });
     }

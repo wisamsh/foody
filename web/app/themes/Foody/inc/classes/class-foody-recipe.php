@@ -28,6 +28,7 @@ class Foody_Recipe extends Foody_Post
     private $calories_per_dish;
 
     public $rating;
+    public $alternative_ing;
 
 
     /**
@@ -38,7 +39,7 @@ class Foody_Recipe extends Foody_Post
      */
     public function __construct(WP_Post $post = null, $load_content = true)
     {
-        parent::__construct($post,  $load_content);
+        parent::__construct($post, $load_content);
         $this->init_video();
         $this->duration = $this->video['duration'];
 
@@ -113,8 +114,10 @@ class Foody_Recipe extends Foody_Post
 
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-recipe-overview.php',
-                ['overview' => $this->overview,
-                    'recipe' => $this]
+                [
+                    'overview' => $this->overview,
+                    'recipe' => $this
+                ]
             );
         }
     }
@@ -144,7 +147,6 @@ class Foody_Recipe extends Foody_Post
                 'recipe_id' => $recipe_id
             ]
         );
-
     }
 
     /**
@@ -162,7 +164,6 @@ class Foody_Recipe extends Foody_Post
                     return clone $ingredient;
                 }, $group['ingredients'])
             ];
-
         }, $this->ingredients_groups);
     }
 
@@ -171,7 +172,7 @@ class Foody_Recipe extends Foody_Post
         $notes = null;
         $title = null;
 
-        while (have_rows('notes', $this->post->ID)): the_row();
+        while (have_rows('notes', $this->post->ID)) : the_row();
             $notes = get_sub_field('notes');
             $title = get_sub_field('title');
         endwhile;
@@ -185,7 +186,6 @@ class Foody_Recipe extends Foody_Post
         if (array_not_empty($notes)) {
             foody_get_template_part(get_template_directory() . '/template-parts/content-recipe-notes.php', $template_args);
         }
-
     }
 
     public function the_rating()
@@ -211,7 +211,7 @@ class Foody_Recipe extends Foody_Post
 
         if (!empty($this->nutrients)) {
 
-//            $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
+            // $nutrients = array_chunk($this->nutrients, ceil(count($this->nutrients) / 3));
 
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-nutritions.php',
@@ -222,7 +222,6 @@ class Foody_Recipe extends Foody_Post
                     'dishes_title' => $this->the_amount_title()
                 ]
             );
-
         }
     }
 
@@ -248,7 +247,6 @@ class Foody_Recipe extends Foody_Post
                     'sponsor_text' => $sponsor_text,
                 ]
             );
-
         }
     }
 
@@ -286,31 +284,77 @@ class Foody_Recipe extends Foody_Post
         $posts = [];
         $title = '';
 
-        while (have_rows('accessories', $this->post->ID)): the_row();
+        while (have_rows('accessories', $this->post->ID)) : the_row();
             $posts = get_sub_field('accessories');
             $title = get_sub_field('title');
         endwhile;
 
-//		if ( empty( $posts ) ) {
-//			$posts = foody_get_serialized_field_by_meta( 'accessories_accessories', $this->id );
-//		}
+        // if ( empty( $posts ) ) {
+        // $posts = foody_get_serialized_field_by_meta( 'accessories_accessories', $this->id );
+        // }
 
         $this->posts_bullets($posts, $title);
     }
+
+    //wisam======================for Shop Api Slider=========================================
+
+    public function row_accessories()
+    {
+        $accessories = array();
+        while (have_rows('accessories', $this->post->ID)) : the_row();
+            $posts = get_sub_field('accessories');
+        endwhile;
+
+        foreach ($posts as $k => $p) {
+            $accessories[$k] = preg_replace('/"/i', '', $p->post_title);
+        }
+        return $accessories;
+    }
+
+    public function is_Channel_Api_Have_Rows()
+    {
+        $score = 0;
+        $recipe_channel = get_field("recipe_channel", $this->post->ID);
+        if (trim($recipe_channel) != "" && !empty(trim($recipe_channel))) {
+            $api_rules_feed_channel_repeater = get_field("api_rules_feed_channel_repeater", "option");
+
+            if (!empty($api_rules_feed_channel_repeater)) {
+                foreach ($api_rules_feed_channel_repeater as $k => $channel) {
+                    if ($channel['api_rules_feed_channel'] == $recipe_channel) {
+                        $score = 1;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $score;
+    }
+
+
+
+
+
+
+
+    //wisam======================for Shop Api Slider=========================================
+
+
+
 
     public function the_techniques($print = true)
     {
         $posts = [];
         $title = '';
 
-        while (have_rows('techniques', $this->post->ID)): the_row();
+        while (have_rows('techniques', $this->post->ID)) : the_row();
             $posts = get_sub_field('techniques');
             $title = get_sub_field('title');
         endwhile;
 
-//		if ( empty( $posts ) ) {
-//			$posts = foody_get_serialized_field_by_meta( 'techniques_techniques', $this->id );
-//		}
+        // if ( empty( $posts ) ) {
+        // $posts = foody_get_serialized_field_by_meta( 'techniques_techniques', $this->id );
+        // }
 
         if ($print) {
             $this->posts_bullets($posts, $title);
@@ -359,10 +403,10 @@ class Foody_Recipe extends Foody_Post
         );
     }
 
-//    public function the_featured_content()
-//    {
-//        $this->the_video_box();
-//    }
+    // public function the_featured_content()
+    // {
+    // $this->the_video_box();
+    // }
 
     public function the_sidebar_content($args = array())
     {
@@ -373,10 +417,14 @@ class Foody_Recipe extends Foody_Post
     {
         $content = get_field('preview', $this->post->ID, true);
 
-//        if (!empty($content)) {
-//            $content = foody_normalize_content($content, true);
-//        }
-        $content = '<div class="foody-content show-read-more">' . $content . '</div>';
+        // if (!empty($content)) {
+        // $content = foody_normalize_content($content, true);
+        // }
+        if (get_field('add_more_preview', $this->post->ID) === true) {
+            $content = '<div class="foody-content">' . $content . '</div>';
+        } else {
+            $content = '<div class="foody-content show-read-more">' . $content . '</div>';
+        }
 
         echo $content;
     }
@@ -387,8 +435,8 @@ class Foody_Recipe extends Foody_Post
     }
 
     /*
-     * Private
-     * */
+* Private
+* */
 
 
     public function init()
@@ -424,15 +472,14 @@ class Foody_Recipe extends Foody_Post
 
 
         $this->overview = array(
-            'ingredients_count' => ['text' => $this->ingredients_count, 'icon' => 'ingedients@3x.png', 'icon-desktop' => 'ingedients@2x.png'],
+            'ingredients_count' => ['text' => $this->ingredients_count, 'icon' => 'ingedients@3x.png', 'icon-desktop' => 'ingedients@2x.png?ver=1.2'],
             'time' => [
-                'preparation_time' => ['text' => $this->get_recipe_time($overview['preparation_time'], true, true), 'icon' => 'clock@3x.png', 'icon-desktop' => 'clock@2x.png'],
+                'preparation_time' => ['text' => $this->get_recipe_time($overview['preparation_time'], true, true), 'icon' => 'clock@3x.png', 'icon-desktop' => 'clock@2x.png?ver=1.2'],
                 'total_time' => ['text' => $this->get_recipe_time($overview['total_time'], true, true), 'icon' => null]
             ],
-            'calories_per_dish' => ['text' => $this->calories_per_dish, 'icon' => 'kcal@3x.png', 'icon-desktop' => 'kcal@2x.png'],
+            'calories_per_dish' => ['text' => $this->calories_per_dish, 'icon' => 'kcal@3x.png?ver=1.2', 'icon-desktop' => 'kcal@2x.png?ver=1.2'],
             'difficulty_level' => ['text' => $difficulty_level, 'icon' => null],
         );
-
     }
 
     public function duration8601($second)
@@ -595,13 +642,14 @@ class Foody_Recipe extends Foody_Post
         ];
     }
 
+    //wisam
     private function init_ingredients()
     {
         $this->ingredients_groups = array();
         $this->ingredients_count = 0;
 
         if (have_rows('ingredients', $this->post->ID)) {
-            while (have_rows('ingredients', $this->post->ID)): the_row();
+            while (have_rows('ingredients', $this->post->ID)) : the_row();
 
                 $this->number_of_dishes = get_sub_field('number_of_dishes');
                 if (empty($this->number_of_dishes)) {
@@ -614,9 +662,10 @@ class Foody_Recipe extends Foody_Post
                     $this->number_of_dishes = 1;
                 }
                 $this->amount_for = get_sub_field('amount_for');
+
                 $this->ingredients_title = get_sub_field('title');
                 $current_group = 0;
-                while (have_rows('ingredients_groups', $this->post->ID)): the_row();
+                while (have_rows('ingredients_groups', $this->post->ID)) : the_row();
 
                     $this->ingredients_groups[] = array(
                         'title' => get_sub_field('title'),
@@ -625,7 +674,7 @@ class Foody_Recipe extends Foody_Post
                     );
 
 
-                    while (have_rows('ingredients', $this->post->ID)): the_row();
+                    while (have_rows('ingredients', $this->post->ID)) : the_row();
 
                         $ingredient_post = get_sub_field('ingredient');
                         $this->ingredients_count++;
@@ -633,11 +682,12 @@ class Foody_Recipe extends Foody_Post
 
                         $amounts = [];
 
-                        while (have_rows('amounts', $this->post->ID)): the_row();
+                        while (have_rows('amounts', $this->post->ID)) : the_row();
 
                             $unit_field = get_sub_field('unit');
                             $unit = get_term($unit_field, 'units');
                             $amount = get_sub_field('amount');
+
                             if (!is_wp_error($unit) && $unit instanceof WP_Term) {
 
                                 $unit_name = $unit->name;
@@ -656,10 +706,13 @@ class Foody_Recipe extends Foody_Post
                             $amounts[] = [
                                 'amount' => $amount,
                                 'unit' => $unit_name,
-                                'unit_tax' => $unit
+                                'unit_tax' => $unit,
+
                             ];
 
                         endwhile;
+
+                        //wisam
 
                         $substitute_ingredient_field = get_sub_field('recipe_substitute_ingredient');
 
@@ -668,6 +721,7 @@ class Foody_Recipe extends Foody_Post
 
                             $ingredient->recipe_id = $this->post->ID;
                             $ingredient->comment = get_sub_field('comment');
+                            $ingredient->alternative_ing = get_sub_field('alternative_ing');
                             $alter_link = get_sub_field('alter_link');
                             if (!empty($alter_link)) {
                                 $ingredient->has_alter_link = true;
@@ -795,7 +849,6 @@ class Foody_Recipe extends Foody_Post
                     ]
                 );
             }
-
         } else {
             foody_get_template_part(
                 get_template_directory() . '/template-parts/content-recipe-calculator-dishes.php',
@@ -822,14 +875,14 @@ class Foody_Recipe extends Foody_Post
         global $post;
         if (function_exists('the_ratings') && !empty($post)) {
 
-            ?>
+?>
             <section class="ratings-wrapper">
                 <!-- <span class="rating-digits" id="lowest-rating">1</span>-->
                 <?php echo do_shortcode('[ratings]')
                 ?>
                 <!-- <span class="rating-digits" id="highest-rating">5</span>-->
             </section>
-            <?php
+        <?php
         }
     }
 
@@ -837,12 +890,12 @@ class Foody_Recipe extends Foody_Post
     {
         global $post;
         ?>
-        <section class="ratings-wrapper <?php echo $this->rating->foody_has_rating($post->ID) ? '' : 'empty'?>">
+        <section class="ratings-wrapper <?php echo $this->rating->foody_has_rating($post->ID) ? '' : 'empty' ?>">
             <?php
             echo $this->rating->foody_get_the_rating($post->ID);
             ?>
         </section>
-        <?php
+<?php
     }
 
 
@@ -865,13 +918,13 @@ class Foody_Recipe extends Foody_Post
         $nutrients = array();
 
         $excluded_nutrients = [
-//			'fibers',
-//			'saturated_fat',
-//			'cholesterol',
-//			'calcium',
-//			'iron',
-//			'potassium',
-//			'zinc',
+            // 'fibers',
+            // 'saturated_fat',
+            // 'cholesterol',
+            // 'calcium',
+            // 'iron',
+            // 'potassium',
+            // 'zinc',
             'sugar'
         ];
         $feed_area_id = get_field('recipe_channel');
@@ -880,14 +933,14 @@ class Foody_Recipe extends Foody_Post
             $show_sugar = get_field('enable_sugar', $recipe_referer);
             if ($show_sugar) {
                 $excluded_nutrients = [
-//			'fibers',
-//			'saturated_fat',
-//			'cholesterol',
-//			'calcium',
-//			'iron',
-//			'potassium',
-//			'zinc',
-//          'sugar'
+                    // 'fibers',
+                    // 'saturated_fat',
+                    // 'cholesterol',
+                    // 'calcium',
+                    // 'iron',
+                    // 'potassium',
+                    // 'zinc',
+                    // 'sugar'
                 ];
             }
         }
@@ -904,7 +957,6 @@ class Foody_Recipe extends Foody_Post
                         $value = $ingredient->get_nutrient_data_by_unit_and_amount($nutrients_name);
                         $item['value'] = $item['value'] + $value;
                     }
-
                 }
                 $item['data_name'] = $nutrients_name;
                 $item['unit'] = Foody_Ingredient::get_nutrient_unit($nutrients_name);
@@ -917,11 +969,9 @@ class Foody_Recipe extends Foody_Post
                 $item['value'] = number_format($item['value'], $decimals, '.', '');
                 $nutrients[] = $item;
             }
-
         }
 
         $this->nutrients = $nutrients;
-
     }
 
     public function get_ingredients_jsonld()
@@ -968,14 +1018,14 @@ class Foody_Recipe extends Foody_Post
         foreach ($ratings as $rating) {
             $ratings_sum += floatval($rating->rating);
         }
-        if( $num_of_rates == 0 ) {
+        if ($num_of_rates == 0) {
             $average_rating = 0;
         } else {
             $average_rating = $ratings_sum / $num_of_rates;
         }
 
         // round to full int or half
-        $average_rating = round($average_rating*2)/2;
+        $average_rating = round($average_rating * 2) / 2;
 
 
         if ($average_rating === "" || $num_of_rates === "") {
@@ -991,19 +1041,19 @@ class Foody_Recipe extends Foody_Post
         return json_encode($json);
     }
 
-    public function get_images_gallery_repeater(){
+    public function get_images_gallery_repeater()
+    {
         $images_for_slider = get_field('images_gallery_repeater', $this->id);
-        if ( $images_for_slider ) {
-            $item=[];
+        if (is_array($images_for_slider) && $images_for_slider) {
+            $item = [];
             foreach ($images_for_slider as $image) {
-                $item[]=$image['image']['url'];
+                $item[] = $image['image']['url'];
             }
 
             return stripslashes(json_encode($item));
         } else {
-            return '"'.$this->getImage().'"';
+            return '"' . $this->getImage() . '"';
         }
-
     }
 
     public function get_tags_names()
@@ -1033,22 +1083,26 @@ class Foody_Recipe extends Foody_Post
     public function get_system_tip()
     {
         $tip_group = get_field('system_tip_group', $this->get_id());
-        $content_type = $tip_group['content_type'];
-        $content_class = $content_type == 'טקסט' ? 'text-content' : 'image-content';
-        $tip_title_element = '<div class="title-container"><img src="' . $GLOBALS['images_dir'] . 'icons/tip.svg' . '" alt="tip"><h2 class="title">' . $tip_group['title'] . '</h2></div>';
+        $content_type = isset($tip_group['content_type']) ? $tip_group['content_type'] : false;
+        if ($content_type) {
+            $content_class = $content_type == 'טקסט' ? 'text-content' : 'image-content';
+            $tip_title = isset($tip_group['title']) ? $tip_group['title'] : _('טיפ מערכת');
+            $tip_title_element = '<div class="title-container"><img src="' . $GLOBALS['images_dir'] . 'icons/tip.svg' . '" alt="tip"><h2 class="title">' . $tip_group['title'] . '</h2></div>';
 
-        if ($content_type == 'טקסט') {
-            $tip_content = '<p class="tip-text">' . $tip_group['text'] . '</p>';
-        } else {
-            $tip_content = '<img class="tip-image" src="' . $tip_group['image']['url'] . '">';
+            if ($content_type == 'טקסט') {
+                $tip_text = isset($tip_group['text']) ? $tip_group['text'] : '';
+                $tip_content = '<p class="tip-text">' . $tip_text . '</p>';
+            } else {
+                $tip_image = isset($tip_group['image']) && isset($tip_group['image']['url']) ? $tip_group['image']['url'] : '';
+                $tip_content = '<img class="tip-image" src="' . $tip_image . '">';
+            }
+
+            if (isset($tip_group['link']) && is_array($tip_group['link']) && isset($tip_group['link']['url']) && !empty($tip_group['link']['url'])) {
+                echo '<a class="tip-link" href="' . $tip_group['link']['url'] . '" target="' . $tip_group['link']['target'] . '"><div class="system-tip ' . $content_class . '">' . $tip_title_element . $tip_content . '</div></a>';
+            } else {
+                echo '<div class="system-tip ' . $content_class . '">' . $tip_title_element . $tip_content . '</div>';
+            }
         }
-
-        if (is_array($tip_group['link']) && !empty($tip_group['link']['url'])) {
-            echo '<a class="tip-link" href="' . $tip_group['link']['url'] . '" target="' . $tip_group['link']['target'] . '"><div class="system-tip '. $content_class  .'">' . $tip_title_element . $tip_content . '</div></a>';
-        } else {
-            echo '<div class="system-tip ' . $content_class .'">' . $tip_title_element . $tip_content . '</div>';
-        }
-
     }
 
     public function get_similar_content($similar_contents)
@@ -1056,10 +1110,10 @@ class Foody_Recipe extends Foody_Post
         $not_in_random = [];
         array_push($not_in_random, $this->get_id());
         $counter = 0;
-        $title_of_section = isset($similar_contents['title']) && !empty($similar_contents['title']) ? $similar_contents['title'] : __('מתכונים נוספים שכדאי להכיר');
+        $title_of_section = isset($similar_contents['title']) && !empty($similar_contents['title']) ? $similar_contents['title'] : __('מתכונים נוספים שכדאי לכם לנסות');
         $args = ['title' => $title_of_section, 'items' => []];
 
-        if ($similar_contents['similar_content']) {
+        if (isset($similar_contents['similar_content']) && $similar_contents['similar_content']) {
             foreach ($similar_contents['similar_content'] as $content) {
                 if ($content['post'] != false) {
                     array_push($not_in_random, $content['post']->ID);
@@ -1154,8 +1208,8 @@ class Foody_Recipe extends Foody_Post
         $has_link = isset($promotion_area_group['link']) && is_array($promotion_area_group['link']);
         $promotion_link = $has_link && isset($promotion_area_group['link']['url']) ? $promotion_area_group['link']['url'] : false;
 
-        if($enable_background != false && $background_color != false){
-            $promotion_area_element = '<p class="promotion-text" style="background-color: '. $background_color .'">' . $promotion_text . '</p>';
+        if ($enable_background != false && $background_color != false) {
+            $promotion_area_element = '<p class="promotion-text" style="background-color: ' . $background_color . '">' . $promotion_text . '</p>';
         } else {
             $promotion_area_element = '<p class="promotion-text">' . $promotion_text . '</p>';
         }
@@ -1219,36 +1273,89 @@ class Foody_Recipe extends Foody_Post
 
         return $comment->comment_approved || (!$comment->comment_approved && $author->ID == get_current_user_id());
     }
+    public function tiktok_video()
+    {
+        //WISAM : Tiktok video
+        //<script async src="https://www.tiktok.com/embed.js"></script>
+        $tiktokscript = '<script async src="https://www.tiktok.com/embed.js"></script>';
+
+        if (get_field("tiktok_video", get_the_ID())) {
+            // echo get_field("tiktok_video", get_the_ID());
+            $tiktok = get_field("tiktok_video", get_the_ID());
+            if (strpos($tiktokscript, $tiktok) == false) {
+                return $tiktok . $tiktokscript;
+            } else {
+                return $tiktok;
+            }
+        }
+    }
+
+
+
+    public function YouTubeShort()
+    {
+        //youtube_shorts
+        $rtn = '';
+
+
+        if (get_field("youtube_short", get_the_ID())) {
+            $VideoUrl = trim(get_field("youtube_short", get_the_ID()));
+            if (wp_is_mobile()) {
+                $Short_yt_width = 'width="100%"';
+                $Short_yt_height = 'height="650"';
+            } else {
+                $Short_yt_width = 'width="451"';
+                $Short_yt_height = 'height="700"';
+            }
+
+            $rtn = '<div style="overflow: auto;text-align: center;width:100%;margin: 0 auto;">
+       
+<iframe ' . $Short_yt_width . $Short_yt_height . ' src="https://www.youtube.com/embed/' . $VideoUrl . '"
+title="פודי" frameborder="0"
+allow="accelerometer; autoplay; clipboard-write;
+encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen></iframe>
+</div>';
+        }
+
+        return $rtn;
+    }
+
+
 
     function get_relevant_content()
     {
         $content_in_steps = get_field('recipe_steps', $this->id);
         if (is_array($content_in_steps)) {
             if (isset($content_in_steps['enable_recipe_by_steps']) && $content_in_steps['enable_recipe_by_steps'] && isset($content_in_steps['steps'])) {
-                echo '<div class="content-steps-container"><h2 class="steps-title">'. __('אופן ההכנה') .'</h2> ' . $this->get_content_as_steps($content_in_steps['steps']) . '</div>';
+                echo '<div class="content-steps-container"><h2 class="steps-title">' . __('אופן ההכנה') . '</h2> ' . $this->get_content_as_steps($content_in_steps['steps']) . '</div>';
                 return;
             }
         }
+
+
+
         $content_body = $this->body;
         echo '<div class="content-container no-print">' . $content_body . '</div>';
-//        echo '<div class="content-container print-mobile">' . $content_body . '</div>';
+        // echo '<div class="content-container print-mobile">' . $content_body . '</div>';
         $print_body = apply_filters('foody_print_version_for_content', $content_body);
-        echo '<div class="content-container print-desktop print"><div class="content-and-notes print">' . $print_body['content'] . $this->get_notes() . '</div><div class="content-images">' . $print_body['figures'].'</div></div>';
+        echo '<div class="content-container print-desktop print"><div class="content-and-notes print">' . $print_body['content'] . $this->get_notes() . '</div><div class="content-images">' . $print_body['figures'] . '</div></div>';
     }
 
-    function get_notes(){
+    function get_notes()
+    {
         $notes = null;
         $title = null;
-        $notes_element ='';
+        $notes_element = '';
 
-        while (have_rows('notes', $this->post->ID)): the_row();
+        while (have_rows('notes', $this->post->ID)) : the_row();
             $notes = get_sub_field('notes');
             $title = get_sub_field('title');
         endwhile;
 
-        if(is_array($notes)) {
-            $notes_element = '<section class="recipe-notes box print"><div class="title-with-line"><h2 class="title">'. $title .'</h2><hr class="title-line"></div><ul class="notes" title="הערות">';
-            foreach ($notes as $note):
+        if (is_array($notes)) {
+            $notes_element = '<section class="recipe-notes box print"><div class="title-with-line"><h2 class="title">' . $title . '</h2><hr class="title-line"></div><ul class="notes" title="הערות">';
+            foreach ($notes as $note) :
                 $notes_element .= '<li class="note">' . $note["note"] . '</li>';
             endforeach;
             $notes_element .= '</ul></section>';
@@ -1279,7 +1386,7 @@ class Foody_Recipe extends Foody_Post
                 $image_content = "<img class='desktop-image' src='{$step['image']['url']}' alt='{$step['image']['alt']}' />";
             }
 
-            if(is_array($step['image_mobile'])) {
+            if (is_array($step['image_mobile'])) {
                 $image_content .= "<img class='mobile-image' src='{$step['image_mobile']['url']}' alt='{$step['image_mobile']['alt']}' />";
             }
 
@@ -1301,36 +1408,91 @@ class Foody_Recipe extends Foody_Post
         return $slider;
     }
 
-    function is_content_by_steps(){
+    function is_content_by_steps()
+    {
         return get_field('recipe_steps_enable_recipe_by_steps', $this->id);
     }
 
-    function get_take_me_to_recipe_btn(){
-        $btn_image_url = get_field('take_to_recipe_btn')['url'];
-        $btn_image_alt = get_field('take_to_recipe_btn')['alt'];
+    function get_take_me_to_recipe_btn()
+    {
+        $btn_image = get_field('take_to_recipe_btn');
 
-        echo "<a class='take_to_recipe_link' href='#recipe-ingredients'><img class='take-me-to-recipe' src='". $btn_image_url ."' alt='". $btn_image_alt ."'></a>";
+        $btn_image_url = isset($btn_image['url']) ? $btn_image['url'] : false;
+        $btn_image_alt = isset($btn_image['alt']) ? $btn_image['alt'] : '';
+
+        if ($btn_image_url) {
+            echo "<a class='take_to_recipe_link' href='#recipe-ingredients'><img class='take-me-to-recipe' src='" . $btn_image_url . "' alt='" . $btn_image_alt . "'></a>";
+        }
     }
 
-    function the_print_overview(){
-        $overview_data=[
+    function the_print_overview()
+    {
+        $overview_data = [
             'ingredients_count' => ['title' => __('מרכיבים'), 'data' => isset($this->overview) && isset($this->overview['ingredients_count']) ? $this->overview['ingredients_count']['text'] : 0],
             'preparation_time' => ['title' => __('זמן הכנה'), 'data' => isset($this->overview) && isset($this->overview['time']['preparation_time']['text']) ? $this->overview['time']['preparation_time']['text'] : 0],
             'total_time' => ['title' => __('זמן כולל'), 'data' => isset($this->overview) && isset($this->overview['time']['total_time']['text']) ? $this->overview['time']['total_time']['text'] : 0],
-            'calories_per_dish' =>  ['title' => __('קלוריות'), 'data' => isset($this->overview) && isset($this->overview['calories_per_dish']) ? $this->overview['calories_per_dish']['text'] : 0],
+            'calories_per_dish' => ['title' => __('קלוריות'), 'data' => isset($this->overview) && isset($this->overview['calories_per_dish']) ? $this->overview['calories_per_dish']['text'] : 0],
             'dishes_amount' => ['title' => __('כמות מנות'), 'data' => $this->getNumberOfDishes()]
         ];
 
         $table_element = '<table class="overview-table print"><tr>';
         foreach ($overview_data as $key => $value) {
-            $table_element .= '<th><div class="cell-title '. $key .'">' . $value['title'] . '</div><div class="cell-value '. $key .'">' . $value['data'] . '</div> </th>';
+            $table_element .= '<th><div class="cell-title ' . $key . '">' . $value['title'] . '</div><div class="cell-value ' . $key . '">' . $value['data'] . '</div> </th>';
         }
         $table_element .= '</tr></table>';
 
         return $table_element;
     }
 
-    function the_print_rating(){
+    function the_print_rating()
+    {
         return $this->rating->foody_get_the_rating($this->id, true, true);
     }
-}
+
+
+    //wisam
+    public function Holiday_Links()
+    {
+
+        if (function_exists('acf_add_options_page')) {
+            $holidays = get_field('header_title', 'option');
+            $exclude_url = get_field("exclude_url", 'option');
+
+            if (!in_array($this->id, $exclude_url)) {
+
+                $holiday_links_rep = get_field("holiday_links_rep", 'option');
+
+                echo '<ul class="sp_ul">';
+                foreach ($holiday_links_rep as $lnk) {
+                    $link_Title = $lnk['holiday_text_url'] ? $lnk['holiday_text_url'] : $lnk['holiday_url']['title'];
+                    $link_url = $lnk['holiday_url']['url'];
+                    $target = $lnk['holiday_url']['target'] ? "target='" . $lnk['holiday_url']['target'] . "'" : "";
+
+                    echo '<li><a class="sponserd_links_recipe" href="' . $link_url . '" ' . $target . '>' . $link_Title . '</a></li>';
+                }
+
+                echo '</ul>';
+            }
+        }
+
+        echo '<style>
+.sponserd_links_recipe{
+width: 100%;
+text-align: center;
+color: #579fba !important;
+font-size: 23px;
+display: block;
+text-decoration: underline !important;
+margin-top: 20px;
+    }
+.sp_ul li{
+list-style: none;
+    }
+.sp_ul li:last-child{
+margin-bottom:30px !important;
+    }
+   
+</style>
+';
+    }
+} // end class
