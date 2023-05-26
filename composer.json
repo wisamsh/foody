@@ -174,11 +174,11 @@
       "type": "package",
       "package": {
         "name": "delicious-brains/amazon-s3-and-cloudfront",
-        "version": "2.0.1",
+        "version": "3.2.2",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.2.0.1.zip"
+          "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.3.2.2.zip"
         }
       }
     },
@@ -360,7 +360,7 @@
     "lester-chan/wp-postratings": "1.86.1",
     "mega-menu/quadmenu": "^1.7",
     "miljar/php-exif": "0.6.4",
-    "delicious-brains/amazon-s3-and-cloudfront": "^2.0",
+    "delicious-brains/amazon-s3-and-cloudfront": "^3.2.2",
     "zaus-atlanticbt-spkane/forms-3rdparty-integration": "^1.7",
     "ext-json": "*",
     "delicious-brains-inc/wp-ses": "^0.8.2",

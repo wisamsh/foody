@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23a13ed87a156b9c57e5a83611875a86",
+    "content-hash": "3bf97042a014ddea7018646dcfabd8f7",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -164,10 +164,10 @@
         },
         {
             "name": "delicious-brains/amazon-s3-and-cloudfront",
-            "version": "2.0.1",
+            "version": "3.2.2",
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.2.0.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.3.2.2.zip"
             },
             "type": "wordpress-plugin"
         },
