@@ -1,7 +1,7 @@
 <?php 
 // get_site_url();
 
-if(get_site_url() == "https://foody.moveodevelop.com/"){
+if(get_site_url() == "http://staging.foody.co.il/"){
 
     function Do_disabilityCode(){
 
