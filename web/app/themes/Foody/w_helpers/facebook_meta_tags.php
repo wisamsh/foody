@@ -1,6 +1,6 @@
 <?php // need to change app_id to 242005383411645 on production?>
 <?php $domain = array(
-"foody.moveodevelop.com" => "300250737432710",
+"staging.foody.co.il" => "300250737432710",
 "foody.co.il" => "242005383411645",
 "foody-local.co.il" => "123456"
 );

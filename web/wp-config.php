@@ -13,7 +13,7 @@ define('WP_CACHE', true); // Added by W3 Total Cache
  * WP is hardcoded to look in its own directory or one directory up for wp-config.php.
  */
 /* Multisite */
-if($_SERVER['SERVER_NAME'] == 'foody.moveodevelop.com'){
+if($_SERVER['SERVER_NAME'] == 'staging.foody.co.il'){
     define('DB_HOST', '127.0.0.1:3306');
 } 
 

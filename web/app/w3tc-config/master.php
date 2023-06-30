@@ -224,7 +224,7 @@
     "pgcache.prime.enabled": "1",
     "pgcache.prime.interval": "900",
     "pgcache.prime.limit": "10",
-    "pgcache.prime.sitemap": "http:\/\/foody.moveodevelop.com\/sitemap_index.xml",
+    "pgcache.prime.sitemap": "http:\/\/staging.foody.co.il\/sitemap_index.xml",
     "pgcache.prime.post.enabled": "1",
     "pgcache.rest": "",
     "pgcache.cookiegroups.enabled": false,

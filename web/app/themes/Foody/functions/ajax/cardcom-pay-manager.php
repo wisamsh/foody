@@ -151,7 +151,7 @@ $Operation = 1; # = 1 - Bill Only , 2- Bill And Create Token , 3 - Token Only , 
 $vars = array();
 $vars['TerminalNumber'] = $cardcom_credentials['terminal_number'];
        
-if($_SERVER['HTTP_HOST'] == 'foody.moveodevelop.com'){
+if($_SERVER['HTTP_HOST'] == 'staging.foody.co.il'){
 $vars['UserName'] = 'test9611';
 $vars['TerminalNumber'] = 1000;
 }

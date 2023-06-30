@@ -1515,7 +1515,7 @@ class FoodyMigrate extends Command
             foreach ($recipes as $recipe) {
                 if (!empty($recipe)) {
 
-                    $recipe = preg_replace('/http:\/\/foody.moveodevelop.com\/wp\/wp-admin\/post.php\?post=([0-9]+)&action=edit/', '$1', $recipe);
+                    $recipe = preg_replace('/http:\/\/staging.foody.co.il\/wp\/wp-admin\/post.php\?post=([0-9]+)&action=edit/', '$1', $recipe);
 
                     $id = $recipe;
                     if(is_numeric($recipe)){
@@ -1531,7 +1531,7 @@ class FoodyMigrate extends Command
                         }
                     }
 
-                    $new_recipes[] = "http://foody.moveodevelop.com/wp/wp-admin/post.php?post=$id&action=edit";
+                    $new_recipes[] = "http://staging.foody.co.il/wp/wp-admin/post.php?post=$id&action=edit";
 
                 } else {
                     throw new Exception('asgasf');
