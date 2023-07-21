@@ -265,7 +265,7 @@ if (wp_is_mobile()) {
 </section>
 <?php
 $actual_link = $_SERVER['HTTP_HOST'];
-if($actual_link == 'foody.moveodevelop.com') {
+if($actual_link == 'staging.foody.co.il') {
 echo ('<section class="recipe-tags tags no-print">');
 require (get_template_directory() . '/w_helpers/taboola_in_footer.php');
 echo ('</section>');

@@ -302,7 +302,7 @@ add_filter('foody_js_globals', 'foody_hide_mobile_filter');
 function foody_env_scripts()
 {
     $scripts = [
-        'http://foody.moveodevelop.com' => [
+        'http://staging.foody.co.il' => [
         ],
         'https://foody.co.il' => []
     ];

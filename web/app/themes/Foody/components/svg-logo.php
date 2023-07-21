@@ -1,5 +1,5 @@
 <?php 
-if ($domain_name == "foody.co.il" || $domain_name == "foody-local.co.il" || $domain_name == "foody.moveodevelop.com"){
+if ($domain_name == "foody.co.il" || $domain_name == "foody-local.co.il" || $domain_name == "staging.foody.co.il"){
 ?>
 <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 150 150">
     <script xmlns="" id="tinyhippos-injected" />
