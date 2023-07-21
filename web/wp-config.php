@@ -3,7 +3,10 @@
 define('WP_CACHE', true); // Added by W3 Total Cache
 
 
-
+if( $_SERVER['HTTP_HOST'] == 'staging.foody.co.il'  ){
+    define('WP_SITEURL', 'https://staging.foody.co.il');
+    define('WP_HOME', 'https://staging.foody.co.il');
+}
 
 
 
