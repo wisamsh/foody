@@ -32,7 +32,7 @@ $servers = [
     'local' => '127.0.0.1',
     'dev' => 'ubuntu@foody-dev.moveodevelop.com',
     'mu-dev' => 'ubuntu@mu.foody-dev.moveodevelop.com',
-    'medio-dev' => 'ubuntu@foody.moveodevelop.com',
+    'medio-dev' => 'ubuntu@staging.foody.co.il',
     'production' => 'ubuntu@34.253.214.81'
 ];
 
