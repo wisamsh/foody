@@ -250,7 +250,7 @@ if (wp_is_mobile()){// && "foody_recipe" != get_post_type()) {
 ?>
 
 
-
+<?php require (__DIR__ . '/w_helpers/mehadrin.php');?>
 
 </body>
 <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>

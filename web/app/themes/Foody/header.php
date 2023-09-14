@@ -24,7 +24,7 @@ $show_accessibility = true;
 <head>
 <?php // for facebook metatags
 require (__DIR__ . '/w_helpers/facebook_meta_tags.php');
-require (__DIR__ . '/w_helpers/mehadrin.php');
+
 //require (__DIR__ . '/w_helpers/taboola_in_head.php');
 ?>
 <meta charset="<?php bloginfo('charset'); ?>">
