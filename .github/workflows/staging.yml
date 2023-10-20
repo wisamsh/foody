@@ -25,13 +25,13 @@ jobs:
 
     - name: .env Setup
       env:
-        DB_HOST: dummy
-        DB_DATABASE: dummy
-        DB_USERNAME: dummy
+        DB_HOST: host
+        DB_DATABASE: db
+        DB_USER: user
         DB_PASSWORD: dummy
         # DB_HOST: ${{ secrets.DB_HOST }}
         # DB_DATABASE: ${{ secrets.DB_DATABASE }}
-        # DB_USERNAME: ${{ secrets.DB_USER }}
+        # DB_USER: ${{ secrets.DB_USER }}
         # DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: chmod +x .github/script/env_setup.sh && .github/script/env_setup.sh
 
