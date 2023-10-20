@@ -1,0 +1,39 @@
+name: Foody Staging Pipeline
+
+on:
+  push:
+    branches:
+      # - staging
+      - cicd-pipeline
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up PHP 7
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 7.4
+
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - name: .env Setup
+      run: .github/script/env_setup.sh
+
+    - name: Install Composer
+      run: |
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+        php -r "unlink('composer-setup.php');"
+
+    - name: Install project dependencies
+      run: composer install && npm install
+
+    - name: Envoy deploy
+      run: envoy run deploy --target=staging --branch=staging
