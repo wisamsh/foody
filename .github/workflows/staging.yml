@@ -24,6 +24,15 @@ jobs:
         node-version: 12.x
 
     - name: .env Setup
+      env:
+        DB_HOST: dummy
+        DB_DATABASE: dummy
+        DB_USERNAME: dummy
+        DB_PASSWORD: dummy
+        # DB_HOST: ${{ secrets.DB_HOST }}
+        # DB_DATABASE: ${{ secrets.DB_DATABASE }}
+        # DB_USERNAME: ${{ secrets.DB_USER }}
+        # DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: chmod +x .github/script/env_setup.sh && .github/script/env_setup.sh
 
     - name: Install Composer
