@@ -252,6 +252,8 @@ if (wp_is_mobile()){// && "foody_recipe" != get_post_type()) {
 
 <?php require (__DIR__ . '/w_helpers/mehadrin.php');?>
 
+<?php require (__DIR__ . '/w_helpers/happyfood.php');?>
+
 </body>
 <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
