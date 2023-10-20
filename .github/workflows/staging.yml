@@ -24,7 +24,7 @@ jobs:
         node-version: 12.x
 
     - name: .env Setup
-      run: .github/script/env_setup.sh
+      run: chmod +x .github/script/env_setup.sh && .github/script/env_setup.sh
 
     - name: Install Composer
       run: |
