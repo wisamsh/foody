@@ -23,6 +23,11 @@ jobs:
       with:
         node-version: 12.x
 
+    - name: Install Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 2.7
+
     - name: .env Setup
       env:
         DB_HOST: host
@@ -49,7 +54,11 @@ jobs:
 
     - name: Install npm dependencies
       working-directory: web/app/themes/Foody
-      run: npm install
+      run: |
+        rm -rf node_modules
+        rm package-lock.json
+        npm cache clean
+        npm install
 
     - name: Envoy deploy
       run: envoy run deploy --target=medio-dev --branch=pipeline
