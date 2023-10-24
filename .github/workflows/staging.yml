@@ -74,18 +74,6 @@ jobs:
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v1
 
-      - name: Terraform TF Vars
-        env:
-          BUCKET_NAME: ${{ vars.BUCKET_NAME }}
-          AWS_REGION: ${{ vars.AWS_REGION }}
-          DYNAMODB_TABLE_NAME: ${{ vars.DYNAMODB_TABLE_NAME }}
-          AWS_INSTANCE_ID: "i-01bd0f1c63f3152b0"
-          INSTANCE_TYPE: "t3.xlarge"
-          KEY_NAME: "foody-dev-medio"
-          SECURITY_GROUP_ID: "sg-03f4f895b2b9c9f2f"
-          ASG_NAME: "foody-staging-autoscale-group"
-          TF_STATE_KEY: ${{ vars.TF_STATE_KEY_STAGING }}
-          
       - name: Terraform Provider
         working-directory: .github/script/terraform
         env:
