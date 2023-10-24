@@ -10,55 +10,56 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up PHP 7
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: 7.4
+      - name: Set up PHP 7
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
 
-    - name: Install Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
 
-    - name: Install Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 2.7
+      - name: Install Python
+        run: |
+          sudo apt update
+          sudo apt install python2
+          python2 --version
 
-    - name: .env Setup
-      env:
-        DB_HOST: host
-        DB_NAME: db
-        DB_USER: user
-        DB_PASSWORD: dummy
-        # DB_HOST: ${{ secrets.DB_HOST }}
-        # DB_NAME: ${{ secrets.DB_NAME }}
-        # DB_USER: ${{ secrets.DB_USER }}
-        # DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      run: chmod +x .github/script/env_setup.sh && .github/script/env_setup.sh
+      - name: .env Setup
+        env:
+          DB_HOST: host
+          DB_NAME: db
+          DB_USER: user
+          DB_PASSWORD: dummy
+          # DB_HOST: ${{ secrets.DB_HOST }}
+          # DB_NAME: ${{ secrets.DB_NAME }}
+          # DB_USER: ${{ secrets.DB_USER }}
+          # DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: chmod +x .github/script/env_setup.sh && .github/script/env_setup.sh
 
-    - name: Envoy Setup
-      run: composer global require laravel/envoy
+      - name: Envoy Setup
+        run: composer global require laravel/envoy
 
-    - name: Install Composer
-      run: |
-        php -r "copy('https://getcomposer.org/download/1.10.20/composer.phar', 'composer.phar');"
-        chmod +x composer.phar
-        sudo mv composer.phar /usr/local/bin/composer
+      - name: Install Composer
+        run: |
+          php -r "copy('https://getcomposer.org/download/1.10.20/composer.phar', 'composer.phar');"
+          chmod +x composer.phar
+          sudo mv composer.phar /usr/local/bin/composer
 
-    - name: Install project dependencies
-      run: composer install
+      - name: Install project dependencies
+        run: composer install
 
-    - name: Install npm dependencies
-      working-directory: web/app/themes/Foody
-      run: |
-        rm -rf node_modules
-        rm package-lock.json
-        npm cache clean
-        npm install
+      - name: Install npm dependencies
+        working-directory: web/app/themes/Foody
+        run: |
+          rm -rf node_modules
+          rm package-lock.json
+          npm cache clean
+          npm install
 
-    - name: Envoy deploy
-      run: envoy run deploy --target=medio-dev --branch=pipeline
+      - name: Envoy deploy
+        run: envoy run deploy --target=medio-dev --branch=pipeline
