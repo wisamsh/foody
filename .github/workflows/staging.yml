@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      TFVARSFILE: "terraform.tfvars"
+      ENVOY_SERVER: "medio-dev"
+      ENVOY_BRANCH: "pipeline"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -31,15 +35,16 @@ jobs:
 
       - name: .env Setup
         env:
-          DB_HOST: host
-          DB_NAME: db
-          DB_USER: user
-          DB_PASSWORD: dummy
-          # DB_HOST: ${{ secrets.DB_HOST }}
-          # DB_NAME: ${{ secrets.DB_NAME }}
-          # DB_USER: ${{ secrets.DB_USER }}
-          # DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOST: ${{ vars.DB_HOST_STAGING }}
+          DB_NAME: ${{ vars.DB_NAME }}
+          DB_USER: ${{ vars.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD_STAGING }}
         run: chmod +x .github/script/env_setup.sh && .github/script/env_setup.sh
+
+      - name: SSH Keys
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY_STAGING }}
+        run: chmod +x .github/script/create_ssh_config.sh && .github/script/create_ssh_config.sh
 
       - name: Envoy Setup
         run: composer global require laravel/envoy
@@ -62,4 +67,50 @@ jobs:
           npm install
 
       - name: Envoy deploy
-        run: envoy run deploy --target=medio-dev --branch=pipeline
+        run: envoy run deploy --target=${{ env.ENVOY_SERVER }} --branch=${{ env.ENVOY_BRANCH }}
+
+      - name: Terraform Setup
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Provider
+        working-directory: .github/script/terraform
+        env:
+          BUCKET_NAME: ${{ vars.BUCKET_NAME }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          DYNAMODB_TABLE_NAME: ${{ vars.DYNAMODB_TABLE_NAME }}
+          AWS_INSTANCE_ID: "i-01bd0f1c63f3152b0"
+          INSTANCE_TYPE: "t3.xlarge"
+          KEY_NAME: "foody-dev-medio"
+          SECURITY_GROUP_ID: "sg-03f4f895b2b9c9f2f"
+          ASG_NAME: "foody-staging-autoscale-group"
+          TF_STATE_KEY: ${{ vars.TF_STATE_KEY_STAGING }}
+        run: |
+          chmod +x .github/script/create_tfvars.sh && .github/script/create_tfvars.sh
+          chmod +x .github/script/terraform_provider.sh && .github/script/terraform_provider.sh
+
+      - name: Terraform Init
+        working-directory: .github/script/terraform
+        env:
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: .github/script/terraform
+        env:
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+        run: terraform plan -out=tfplan -var-file=${{ env.TFVARSFILE }}
+
+      - name: Terraform Apply
+        working-directory: .github/script/terraform
+        env:
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+        run: terraform apply -auto-approve tfplan -var-file=${{ env.TFVARSFILE }}
