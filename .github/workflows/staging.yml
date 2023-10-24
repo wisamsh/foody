@@ -85,7 +85,6 @@ jobs:
           SECURITY_GROUP_ID: "sg-03f4f895b2b9c9f2f"
           ASG_NAME: "foody-staging-autoscale-group"
           TF_STATE_KEY: ${{ vars.TF_STATE_KEY_STAGING }}
-        run: chmod +x .github/script/create_tfvars.sh && .github/script/create_tfvars.sh
           
       - name: Terraform Provider
         working-directory: .github/script/terraform
@@ -99,7 +98,9 @@ jobs:
           SECURITY_GROUP_ID: "sg-03f4f895b2b9c9f2f"
           ASG_NAME: "foody-staging-autoscale-group"
           TF_STATE_KEY: ${{ vars.TF_STATE_KEY_STAGING }}
-        run: chmod +x .github/script/terraform_provider.sh && .github/script/terraform_provider.sh
+        run: |
+          chmod +x ../terraform_provider.sh && ../terraform_provider.sh
+          chmod +x ../create_tfvars.sh && ../create_tfvars.sh
 
       - name: Terraform Init
         working-directory: .github/script/terraform
