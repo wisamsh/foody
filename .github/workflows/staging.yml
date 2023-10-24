@@ -58,7 +58,7 @@ jobs:
         run: |
           rm -rf node_modules
           rm package-lock.json
-          npm cache clean
+          npm cache clean --force
           npm install
 
       - name: Envoy deploy
