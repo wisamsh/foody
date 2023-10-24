@@ -46,28 +46,30 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY_STAGING }}
         run: chmod +x .github/script/create_ssh_config.sh && .github/script/create_ssh_config.sh
 
-      - name: Envoy Setup
-        run: composer global require laravel/envoy
+      # - name: Envoy Setup
+      #   run: composer global require laravel/envoy
 
-      - name: Install Composer
-        run: |
-          php -r "copy('https://getcomposer.org/download/1.10.20/composer.phar', 'composer.phar');"
-          chmod +x composer.phar
-          sudo mv composer.phar /usr/local/bin/composer
+      # - name: Install Composer
+      #   run: |
+      #     php -r "copy('https://getcomposer.org/download/1.10.20/composer.phar', 'composer.phar');"
+      #     chmod +x composer.phar
+      #     sudo mv composer.phar /usr/local/bin/composer
 
-      - name: Install project dependencies
-        run: composer install
+      # - name: Install project dependencies
+      #   run: composer install
 
-      - name: Install npm dependencies
-        working-directory: web/app/themes/Foody
-        run: |
-          rm -rf node_modules
-          rm package-lock.json
-          npm cache clean --force
-          npm install
+      # - name: Install npm dependencies
+      #   working-directory: web/app/themes/Foody
+      #   run: |
+      #     rm -rf node_modules
+      #     rm package-lock.json
+      #     npm cache clean --force
+      #     npm install
 
-      - name: Envoy deploy
-        run: envoy run deploy --target=${{ env.ENVOY_SERVER }} --branch=${{ env.ENVOY_BRANCH }}
+
+      #! TODO uncomment and fix
+      # - name: Envoy deploy 
+      #   run: envoy run deploy --target=${{ env.ENVOY_SERVER }} --branch=${{ env.ENVOY_BRANCH }}
 
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v1
