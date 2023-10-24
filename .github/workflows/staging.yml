@@ -47,5 +47,9 @@ jobs:
     - name: Install project dependencies
       run: composer install
 
+    - name: Install npm dependencies
+      working-directory: web/app/themes/Foody
+      run: npm install
+
     - name: Envoy deploy
       run: envoy run deploy --target=medio-dev --branch=pipeline
