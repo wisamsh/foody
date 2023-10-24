@@ -45,7 +45,7 @@ jobs:
         sudo mv composer.phar /usr/local/bin/composer
 
     - name: Install project dependencies
-      run: composer install && npm install
+      run: composer install
 
     - name: Envoy deploy
-      run: envoy run deploy --target=staging --branch=staging
+      run: envoy run deploy --target=medio-dev --branch=pipeline
