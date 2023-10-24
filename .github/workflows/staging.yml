@@ -36,13 +36,13 @@ jobs:
       run: chmod +x .github/script/env_setup.sh && .github/script/env_setup.sh
 
     - name: Envoy Setup
-      run: chmod +x .github/script/envoy_setup.sh && .github/script/envoy_setup.sh
+      run: composer global require laravel/envoy
 
     - name: Install Composer
       run: |
         php -r "copy('https://getcomposer.org/download/1.10.20/composer.phar', 'composer.phar');"
-        php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-        php -r "unlink('composer-setup.php');"
+        chmod +x composer.phar
+        sudo mv composer.phar /usr/local/bin/composer
 
     - name: Install project dependencies
       run: composer install && npm install
