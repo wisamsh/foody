@@ -14,6 +14,11 @@ jobs:
       TFVARSFILE: "terraform.tfvars"
       ENVOY_SERVER: "medio-dev"
       ENVOY_BRANCH: "pipeline"
+      ASG_NAME: "foody-staging-autoscale-group"
+      AWS_INSTANCE_ID: "i-01bd0f1c63f3152b0"
+      INSTANCE_TYPE: "t3.xlarge"
+      KEY_NAME: "foody-dev-medio"
+      SECURITY_GROUP_ID: "sg-03f4f895b2b9c9f2f"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -67,9 +72,8 @@ jobs:
       #     npm cache clean --force
       #     npm install
 
-
       #! TODO uncomment and fix
-      # - name: Envoy deploy 
+      # - name: Envoy deploy
       #   run: envoy run deploy --target=${{ env.ENVOY_SERVER }} --branch=${{ env.ENVOY_BRANCH }}
 
       - name: Terraform Setup
@@ -81,11 +85,11 @@ jobs:
           BUCKET_NAME: ${{ vars.BUCKET_NAME }}
           AWS_REGION: ${{ vars.AWS_REGION }}
           DYNAMODB_TABLE_NAME: ${{ vars.DYNAMODB_TABLE_NAME }}
-          AWS_INSTANCE_ID: "i-01bd0f1c63f3152b0"
-          INSTANCE_TYPE: "t3.xlarge"
-          KEY_NAME: "foody-dev-medio"
-          SECURITY_GROUP_ID: "sg-03f4f895b2b9c9f2f"
-          ASG_NAME: "foody-staging-autoscale-group"
+          AWS_INSTANCE_ID: ${{ env.AWS_INSTANCE_ID }}
+          INSTANCE_TYPE: ${{ env.INSTANCE_TYPE }}
+          KEY_NAME: ${{ env.KEY_NAME }}
+          SECURITY_GROUP_ID: ${{ env.SECURITY_GROUP_ID }}
+          ASG_NAME: ${{ env.ASG_NAME }}
           TF_STATE_KEY: ${{ vars.TF_STATE_KEY_STAGING }}
         run: |
           chmod +x ../terraform_provider.sh && ../terraform_provider.sh
@@ -99,6 +103,15 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         run: terraform init
+
+      - name: Terraform Import
+        working-directory: .github/script/terraform
+        env:
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+        run: terraform import aws_autoscaling_group.main ${{ env.ASG_NAME }}
 
       - name: Terraform Plan
         working-directory: .github/script/terraform
