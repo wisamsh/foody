@@ -85,7 +85,7 @@ jobs:
           INSTANCE_TYPE: "t3.xlarge"
           KEY_NAME: "foody-dev-medio"
           SECURITY_GROUP_ID: "sg-03f4f895b2b9c9f2f"
-          ASG_NAME: "foody-staging-autoscale-group"
+          ASG_NAME: "foody-staging-autoscale-group-2"
           TF_STATE_KEY: ${{ vars.TF_STATE_KEY_STAGING }}
         run: |
           chmod +x ../terraform_provider.sh && ../terraform_provider.sh
