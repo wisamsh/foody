@@ -8,8 +8,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    # runs-on: self-hosted
+    # runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       TFVARSFILE: "terraform.tfvars"
       ENVOY_SERVER: "medio-dev"
@@ -31,8 +31,8 @@ jobs:
         with:
           php-version: 7.4
       
-      - name: Setup PHP Extensions
-        run: sudo apt-get install -y php-fpm php-mysql php-curl php-gd php-mbstring php-xml php-zip
+      # - name: Setup PHP Extensions
+      #   run: sudo apt-get install -y php-fpm php-mysql php-curl php-gd php-mbstring php-xml php-zip
 
       - name: Install Node.js
         uses: actions/setup-node@v1
