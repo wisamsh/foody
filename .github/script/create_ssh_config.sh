@@ -9,5 +9,4 @@ chmod 600 ~/.ssh/foody.pem
 cat <<EOL > ~/.ssh/config
 Host *
   AddKeysToAgent yes
-  UseKeychain yes
   IdentityFile ~/.ssh/foody.pem
