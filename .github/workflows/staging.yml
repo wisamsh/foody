@@ -19,7 +19,7 @@ jobs:
       ASG_MIN_SIZE: "1"
       ASG_MAX_SIZE: "2"
       AWS_INSTANCE_ID: "i-01bd0f1c63f3152b0"
-      INSTANCE_TYPE: "t3.xlarge"
+      INSTANCE_TYPE: "t3.large"
       KEY_NAME: "foody-dev-medio"
       SECURITY_GROUP_ID: "sg-03f4f895b2b9c9f2f"
     steps:
