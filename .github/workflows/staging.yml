@@ -85,7 +85,7 @@ jobs:
           INSTANCE_TYPE: "t3.xlarge"
           KEY_NAME: "foody-dev-medio"
           SECURITY_GROUP_ID: "sg-03f4f895b2b9c9f2f"
-          ASG_NAME: "foody-staging-autoscale-group-2"
+          ASG_NAME: "foody-staging-autoscale-group"
           TF_STATE_KEY: ${{ vars.TF_STATE_KEY_STAGING }}
         run: |
           chmod +x ../terraform_provider.sh && ../terraform_provider.sh
@@ -116,4 +116,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve tfplan -var-file=${{ env.TFVARSFILE }}
