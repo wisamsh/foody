@@ -109,31 +109,16 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         run: terraform init
-
-      - name: Check if Import is Needed
-        id: check_import
-        run: |
-          # Run terraform show and check if the resource is already in the state
-          if terraform show | grep "aws_autoscaling_group.main" > /dev/null; then
-            echo "::set-output name=import_needed::false"
-          else
-            echo "::set-output name=import_needed::true"
-          fi
-
+          
       - name: Terraform Import
-        if: steps.check_import.outputs.import_needed == 'true'
         working-directory: .github/script/terraform
         env:
           AWS_REGION: ${{ vars.AWS_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-        run: terraform import aws_autoscaling_group.main ${{ env.ASG_NAME }}
+        run: terraform import aws_autoscaling_group.main ${{ env.ASG_NAME }} || true
 
-      - name: Skip Terraform Import
-        if: steps.check_import.outputs.import_needed == 'false'
-        run: echo "Import already completed. Skipping."
-        
       - name: Terraform Plan
         working-directory: .github/script/terraform
         env:
