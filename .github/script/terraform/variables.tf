@@ -21,3 +21,15 @@ variable security_group_id {
 variable asg_name {
   type = string
 }
+
+variable asg_desired_capacity {
+  type = string
+}
+
+variable asg_min_size {
+  type = string
+}
+
+variable asg_max_size {
+  type = string
+}

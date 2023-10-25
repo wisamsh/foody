@@ -15,6 +15,9 @@ jobs:
       ENVOY_SERVER: "medio-dev"
       ENVOY_BRANCH: "pipeline"
       ASG_NAME: "foody-staging-autoscale-group"
+      ASG_DESIRED_CAPACITY: "1"
+      ASG_MIN_SIZE: "1"
+      ASG_MAX_SIZE: "2"
       AWS_INSTANCE_ID: "i-01bd0f1c63f3152b0"
       INSTANCE_TYPE: "t3.xlarge"
       KEY_NAME: "foody-dev-medio"
@@ -91,6 +94,9 @@ jobs:
           SECURITY_GROUP_ID: ${{ env.SECURITY_GROUP_ID }}
           ASG_NAME: ${{ env.ASG_NAME }}
           TF_STATE_KEY: ${{ vars.TF_STATE_KEY_STAGING }}
+          ASG_DESIRED_CAPACITY: ${{ env.ASG_DESIRED_CAPACITY }}
+          ASG_MIN_SIZE: ${{ env.ASG_MIN_SIZE }}
+          ASG_MAX_SIZE: ${{ env.ASG_MAX_SIZE }}
         run: |
           chmod +x ../terraform_provider.sh && ../terraform_provider.sh
           chmod +x ../create_tfvars.sh && ../create_tfvars.sh

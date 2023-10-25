@@ -1,10 +1,34 @@
 resource "aws_autoscaling_group" "main" {
   name = var.asg_name
-  desired_capacity = 5
-  min_size = 5
-  max_size = 30
+  desired_capacity = var.asg_desired_capacity
+  min_size = var.asg_min_size
+  max_size = var.asg_max_size
   force_delete = true
 
+  enabled_metrics = [
+    "GroupAndWarmPoolDesiredCapacity",
+    "GroupAndWarmPoolTotalCapacity",
+    "GroupDesiredCapacity",
+    "GroupInServiceCapacity",
+    "GroupInServiceInstances",
+    "GroupMaxSize",
+    "GroupMinSize",
+    "GroupPendingCapacity",
+    "GroupPendingInstances",
+    "GroupStandbyCapacity",
+    "GroupStandbyInstances",
+    "GroupTerminatingCapacity",
+    "GroupTerminatingInstances",
+    "GroupTotalCapacity",
+    "GroupTotalInstances",
+    "WarmPoolDesiredCapacity",
+    "WarmPoolMinSize",
+    "WarmPoolPendingCapacity",
+    "WarmPoolTerminatingCapacity",
+    "WarmPoolTotalCapacity",
+    "WarmPoolWarmedCapacity",
+  ]
+  
   launch_template {
     id = aws_launch_template.main.id
     version = aws_launch_template.main.latest_version
