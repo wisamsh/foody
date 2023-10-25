@@ -30,9 +30,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 7.4
-      
-      # - name: Setup PHP Extensions
-      #   run: sudo apt-get install -y php-fpm php-mysql php-curl php-gd php-mbstring php-xml php-zip
+          extensions: mysql, curl, gd, mbstring, xml, zip, intl, bcmath, iconv, exif, pcntl, pdo, pdo_mysql, mysqli, tokenizer, json, sockets, imagick
 
       - name: Install Node.js
         uses: actions/setup-node@v1
