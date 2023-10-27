@@ -387,12 +387,14 @@ data-calories="0"
 data-carbohydrates="0" data-sugar="0" data-fats="0" data-sodium="0" data-protein="0"
 data-fibers="0" data-saturated_fat="0" data-cholesterol="0" data-calcium="0"
 data-iron="0" data-potassium="0" data-zinc="0">' . $Swap_Amount . '</span>
-<span class="ingredient-data"> <span class="unit">' . $Swap_Masurin_Unit . '</span>
+<span class="ingredient-data"> 
+
 <span class="name"><a target="_self" title="' . $Swap_Title . '" class="foody-u-link"
 href="' . $Swap_url . '">
 ' . $Swap_Title . '
 </a>
 </span>
+<span class="unit">' . $Swap_Masurin_Unit . '</span>
 </span>
 </span></b>
 ' . $Go_Com_Logo . $Go_Com_Text . '
@@ -462,12 +464,13 @@ data-calories="0"
 data-carbohydrates="0" data-sugar="0" data-fats="0" data-sodium="0" data-protein="0"
 data-fibers="0" data-saturated_fat="0" data-cholesterol="0" data-calcium="0"
 data-iron="0" data-potassium="0" data-zinc="0">' . $Swap_Amount . '</span>
-<span class="ingredient-data"> <span class="unit">' . $Swap_Masurin_Unit . '</span>
+<span class="ingredient-data"> 
 <span class="name"><a target="_self" title="' . $Swap_Title . '" class="foody-u-link"
 href="' . $Swap_url . '">
 ' . $Swap_Title . '
 </a>
 </span>
+<span class="unit">' . $Swap_Masurin_Unit . '</span>
 </span>
 </span></b>
 ' . $Go_Com_Logo . $Go_Com_Text . '
