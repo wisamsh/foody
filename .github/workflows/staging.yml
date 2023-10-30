@@ -33,9 +33,13 @@ jobs:
           extensions: mysql, curl, gd, mbstring, xml, zip, intl, bcmath, iconv, exif, pcntl, pdo, pdo_mysql, mysqli, tokenizer, json, sockets, imagick
 
       - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 8.17.0
+        run: |
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+      - name: Setup Node.js Version
+        run: |
+          nvm install v8.17.0
+          nvm use v8.17.0
 
       - name: Install Python
         run: |
@@ -82,8 +86,10 @@ jobs:
       - name: Envoy deploy
         run: envoy run deploy --target=${{ env.ENVOY_SERVER }} --branch=${{ env.ENVOY_BRANCH }}
 
-      - name: Install Node.js
-        uses: actions/setup-node@v1
+      - name: Install Node.js Version
+        run: |
+          nvm install stable
+          nvm use stable
 
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v1
