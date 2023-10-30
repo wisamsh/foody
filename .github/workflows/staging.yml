@@ -35,9 +35,26 @@ jobs:
       - name: Install Node.js
         run: |
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+          BASH_PROFILE="$HOME/.bash_profile"
+          NVM_DIR_LINE='export NVM_DIR="$HOME/.nvm"'
+          NVM_SH_LINE='[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
+          BASH_COMPLETION_LINE='[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"'
+
+          # Check if the lines already exist in the ~/.bash_profile
+          if ! grep -q "$NVM_DIR_LINE" "$BASH_PROFILE" || \
+            ! grep -q "$NVM_SH_LINE" "$BASH_PROFILE" || \
+            ! grep -q "$BASH_COMPLETION_LINE" "$BASH_PROFILE"; then
+
+            # If any of the lines don't exist, append them to the ~/.bash_profile
+            echo "$NVM_DIR_LINE" >> "$BASH_PROFILE"
+            echo "$NVM_SH_LINE" >> "$BASH_PROFILE"
+            echo "$BASH_COMPLETION_LINE" >> "$BASH_PROFILE"
+            
+            echo "Lines appended to ~/.bash_profile."
+          else
+            echo "Lines already exist in ~/.bash_profile."
+          fi
+
 
       - name: Setup Node.js Version
         run: |
