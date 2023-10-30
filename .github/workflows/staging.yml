@@ -61,31 +61,31 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY_STAGING }}
         run: chmod +x .github/script/create_ssh_config.sh && .github/script/create_ssh_config.sh
 
-      - name: Envoy Setup
-        run: composer global require laravel/envoy
+      # - name: Envoy Setup
+      #   run: composer global require laravel/envoy
 
-      - name: Install Composer
-        run: |
-          php -r "copy('https://getcomposer.org/download/1.10.20/composer.phar', 'composer.phar');"
-          chmod +x composer.phar
-          sudo mv composer.phar /usr/local/bin/composer
+      # - name: Install Composer
+      #   run: |
+      #     php -r "copy('https://getcomposer.org/download/1.10.20/composer.phar', 'composer.phar');"
+      #     chmod +x composer.phar
+      #     sudo mv composer.phar /usr/local/bin/composer
 
-      - name: Install project dependencies
-        run: composer install
+      # - name: Install project dependencies
+      #   run: composer install
 
-      - name: Install npm dependencies
-        working-directory: web/app/themes/Foody
-        run: |
-          npm -v
-          rm -rf node_modules
-          rm package-lock.json
-          npm install
-          npm uninstall node-sass
-          npm install node-sass@4.9.1
-          npm rebuild node-sass 
+      # - name: Install npm dependencies
+      #   working-directory: web/app/themes/Foody
+      #   run: |
+      #     npm -v
+      #     rm -rf node_modules
+      #     rm package-lock.json
+      #     npm install
+      #     npm uninstall node-sass
+      #     npm install node-sass@4.9.1
+      #     npm rebuild node-sass 
 
-      - name: Envoy deploy
-        run: envoy run deploy --target=${{ env.ENVOY_SERVER }} --branch=${{ env.ENVOY_BRANCH }}
+      # - name: Envoy deploy
+      #   run: envoy run deploy --target=${{ env.ENVOY_SERVER }} --branch=${{ env.ENVOY_BRANCH }}
 
       - name: Reset Node.js
         run: rm -rf ~/mynvm
@@ -144,11 +144,11 @@ jobs:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         run: terraform plan -out=tfplan -var-file=${{ env.TFVARSFILE }}
 
-      - name: Terraform Apply
-        working-directory: .github/script/terraform
-        env:
-          AWS_REGION: ${{ vars.AWS_REGION }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-        run: terraform apply -auto-approve tfplan
+      # - name: Terraform Apply
+      #   working-directory: .github/script/terraform
+      #   env:
+      #     AWS_REGION: ${{ vars.AWS_REGION }}
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      #   run: terraform apply -auto-approve tfplan
