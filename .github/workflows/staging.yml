@@ -82,6 +82,9 @@ jobs:
       - name: Envoy deploy
         run: envoy run deploy --target=${{ env.ENVOY_SERVER }} --branch=${{ env.ENVOY_BRANCH }}
 
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v1
 
