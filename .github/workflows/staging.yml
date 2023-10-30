@@ -71,9 +71,13 @@ jobs:
       - name: Install npm dependencies
         working-directory: web/app/themes/Foody
         run: |
+          npm -v
           rm -rf node_modules
           rm package-lock.json
           npm install
+          npm uninstall node-sass
+          npm install node-sass@4.9.1
+          npm rebuild node-sass 
 
       - name: Envoy deploy
         run: envoy run deploy --target=${{ env.ENVOY_SERVER }} --branch=${{ env.ENVOY_BRANCH }}
