@@ -32,6 +32,9 @@ jobs:
           php-version: 7.4
           extensions: mysql, curl, gd, mbstring, xml, zip, intl, bcmath, iconv, exif, pcntl, pdo, pdo_mysql, mysqli, tokenizer, json, sockets, imagick
 
+      - name: Reset Node.js
+        run: rm -rf ~/mynvm
+
       - name: Install Node.js
         uses: dcodeIO/setup-node-nvm@master
         with:
