@@ -33,33 +33,14 @@ jobs:
           extensions: mysql, curl, gd, mbstring, xml, zip, intl, bcmath, iconv, exif, pcntl, pdo, pdo_mysql, mysqli, tokenizer, json, sockets, imagick
 
       - name: Install Node.js
-        run: |
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-          BASH_PROFILE="$HOME/.bash_profile"
-          NVM_DIR_LINE='export NVM_DIR="$HOME/.nvm"'
-          NVM_SH_LINE='[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
-          BASH_COMPLETION_LINE='[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"'
+        uses: dcodeIO/setup-node-nvm@master
+        with:
+          node-version: v8.17.0
 
-          # Check if the lines already exist in the ~/.bash_profile
-          if ! grep -q "$NVM_DIR_LINE" "$BASH_PROFILE" || \
-            ! grep -q "$NVM_SH_LINE" "$BASH_PROFILE" || \
-            ! grep -q "$BASH_COMPLETION_LINE" "$BASH_PROFILE"; then
-
-            # If any of the lines don't exist, append them to the ~/.bash_profile
-            echo "$NVM_DIR_LINE" >> "$BASH_PROFILE"
-            echo "$NVM_SH_LINE" >> "$BASH_PROFILE"
-            echo "$BASH_COMPLETION_LINE" >> "$BASH_PROFILE"
-            
-            echo "Lines appended to ~/.bash_profile."
-          else
-            echo "Lines already exist in ~/.bash_profile."
-          fi
-
-
-      - name: Setup Node.js Version
-        run: |
-          nvm install v8.17.0
-          nvm use v8.17.0
+      # - name: Setup Node.js Version
+      #   run: |
+      #     nvm install v8.17.0
+      #     nvm use v8.17.0
 
       - name: Install Python
         run: |
@@ -106,10 +87,10 @@ jobs:
       - name: Envoy deploy
         run: envoy run deploy --target=${{ env.ENVOY_SERVER }} --branch=${{ env.ENVOY_BRANCH }}
 
-      - name: Install Node.js Version
-        run: |
-          nvm install stable
-          nvm use stable
+      - name: Install Node.js
+        uses: dcodeIO/setup-node-nvm@master
+        with:
+          node-version: stable
 
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v1
