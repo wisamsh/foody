@@ -8,8 +8,8 @@ on:
 
 jobs:
   build:
-    # runs-on: ubuntu-latest
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    # runs-on: self-hosted
     env:
       TFVARSFILE: "terraform.tfvars"
       ENVOY_SERVER: "medio-dev"
@@ -35,7 +35,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 8.x
 
       - name: Install Python
         run: |
@@ -73,7 +73,6 @@ jobs:
         run: |
           rm -rf node_modules
           rm package-lock.json
-          npm cache clean --force
           npm install
 
       - name: Envoy deploy
