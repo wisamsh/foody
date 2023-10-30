@@ -87,6 +87,9 @@ jobs:
       - name: Envoy deploy
         run: envoy run deploy --target=${{ env.ENVOY_SERVER }} --branch=${{ env.ENVOY_BRANCH }}
 
+      - name: Reset Node.js
+        run: rm -rf ~/mynvm
+
       - name: Install Node.js
         uses: dcodeIO/setup-node-nvm@master
         with:
