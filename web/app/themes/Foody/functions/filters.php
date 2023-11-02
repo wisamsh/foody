@@ -95,7 +95,7 @@ function foody_js_globals() {
 		$vars['loggedIn']  = is_user_logged_in();
 		$vars['imagesUri'] = $GLOBALS['images_dir'];
 		$vars['messages']  = foody_js_messages();
-
+        $vars['current_blog_site'] = get_current_blog_id();
 		$vars['userRecipesCount'] = 0;
 		if ( is_user_logged_in() ) {
 			$vars['userRecipesCount'] = empty( $wp_session['favorites'] ) ? 0 : count( $wp_session['favorites'] );
@@ -111,6 +111,18 @@ function foody_js_globals() {
 
 		<?php
 	}
+	else{
+        $vars['current_blog_site'] = get_current_blog_id();
+        $vars['ajax']      = admin_url( 'admin-ajax.php' );
+        $js = wp_json_encode( $vars );
+
+        ?>
+        <script async defer>
+            foodyGlobals = <?php echo $js?>;
+        </script>
+
+        <?php
+    }
 }
 
 function foody_js_messages() {
@@ -120,6 +132,7 @@ function foody_js_messages() {
 }
 
 add_action( 'wp_head', 'foody_js_globals', - 10000 );
+add_action( 'admin_head', 'foody_js_globals', - 10000 );
 
 ///**
 // * Include posts from authors in the search results where
@@ -210,7 +223,7 @@ function foody_add_filters_by_condition( $filters, $callback, $callback_args = [
 }
 
 
-function foody_custom_logo_link() {
+function foody_custom_logo_link($is_print = false) {
 
 	$custom_logo_id  = get_theme_mod( 'custom_logo' );
 	$site_url        = get_home_url();
@@ -231,7 +244,8 @@ function foody_custom_logo_link() {
 			$custom_logo_attr['alt'] = get_bloginfo( 'name', 'display' );
 		}
 
-		$html = sprintf( '<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url">%2$s</a>',
+		$format = $is_print ? '<a href="%1$s" class="custom-logo-link print-header-image" rel="home" itemprop="url">%2$s</a>' : '<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url">%2$s</a>';
+		$html = sprintf( $format,
 			esc_url( $site_url ),
 			wp_get_attachment_image( $custom_logo_id, 'full', false, $custom_logo_attr )
 		);

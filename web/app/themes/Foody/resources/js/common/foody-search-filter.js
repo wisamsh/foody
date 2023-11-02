@@ -54,6 +54,7 @@ module.exports = (function () {
         let pageContainer = this.settings.page;
         let $checkboxes = $('aside input[type="checkbox"]', pageContainer);
         let that = this;
+
         $checkboxes.on('change', function (e) {
             if (that.isLoading) {
                 return;

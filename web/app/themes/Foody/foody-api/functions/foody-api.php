@@ -6,6 +6,11 @@
  * Time: 5:04 PM
  */
 
+add_filter('jwt_auth_expire','foody_add_jwt_expiration',10,2);
+
+function foody_add_jwt_expiration($expire,$issued){
+    return time() + (DAY_IN_SECONDS * 365 * 200);
+}
 
 add_filter( 'rest_index', 'foody_filter_rest_index', 101 );
 
@@ -13,7 +18,8 @@ function foody_filter_rest_index( \WP_REST_Response $response ) {
 	$data             = $response->get_data();
 	$valid_namespaces = [
 		'foody-api',
-		'jwt-auth/v1'
+		'jwt-auth/v1',
+        users_api_get_base_route()
 	];
 
 	$data['namespaces'] = array_filter( $data['namespaces'], function ( $namespace ) use ( $valid_namespaces ) {

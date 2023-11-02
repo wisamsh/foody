@@ -175,7 +175,12 @@ class Foody_WhiteLabelDuplicator {
 		// ID to post data so wp_insert_post handle this op
 		// as an update
 		if ( $exists ) {
-			return 0;
+		    if($post_in_blog->post_type == "foody_ingredient"){
+		        $post['ID'] = $post_in_blog->ID;
+            }
+		    else {
+                return 0;
+            }
 		}
 
 		if ( $duplicationArgsWithDefaults['with_media'] ) {
@@ -201,6 +206,16 @@ class Foody_WhiteLabelDuplicator {
 
 			return $category;
 		}, $categories );
+
+        $tags = wp_get_post_tags( $old_post->ID, [ 'hide_empty' => false ] );
+
+        $tags = array_map( function ( $tag ) {
+            if ( is_numeric( $tag ) ) {
+                $tag = get_term( $tag );
+            }
+
+            return $tag;
+        }, $tags );
 
 		switch_to_blog( $blogId );
 
@@ -250,6 +265,13 @@ class Foody_WhiteLabelDuplicator {
 				$destination_categories = self::getDestinationCategories( $categories );
 				wp_set_post_categories( $new_post_id, $destination_categories );
 			}
+
+			$copy_tags = isset($duplicationArgsWithDefaults['copy_tags']) && $duplicationArgsWithDefaults['copy_tags'];
+
+            if ( $copy_tags ) {
+                $destination_tags = self::getDestinationTags( $tags );
+                wp_set_post_tags( $new_post_id, $destination_tags );
+            }
 
 			if ( ! empty( $duplicationArgsWithDefaults['index'] ) ) {
 				update_post_meta( $new_post_id, 'foody_index', 1 );
@@ -473,4 +495,29 @@ class Foody_WhiteLabelDuplicator {
 
 		return $destination_categories;
 	}
+
+    /**
+     * This method is called in the context of a blog (after switch_to_blog() is called)
+     *
+     * @param $tags WP_Term[]
+     *
+     * @return array|int|WP_Error
+     */
+    private static function getDestinationTags( $tags ) {
+
+        $source_tags_names = array_map( function ( $tag ) {
+            return $tag->name;
+        }, $tags );
+
+        $destination_tags_string = implode(',', $source_tags_names);
+
+//        $destination_tags = get_terms( [
+//            'taxonomy' => 'post_tag',
+//            'name'       => $source_tags_names,
+//            'hide_empty' => false,
+//            'fields'     => 'ids'
+//        ] );
+
+        return $destination_tags_string;
+    }
 }

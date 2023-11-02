@@ -41,7 +41,7 @@ $homepage->init();
 							<?php
 							if ( ! is_multisite() || is_main_site() ) {
 								$num = wp_is_mobile() ? 4 : 6;
-								echo do_shortcode( '[foody_team max="' . $num . '" show_title="true"]' );
+								echo do_shortcode( '[foody_team max="' . $num . '" show_title="true" type="team"]' );
 							}
 							?>
 
@@ -78,4 +78,5 @@ $homepage->init();
     </div><!-- #primary -->
 
 <?php
+//comment for test staging
 get_footer();

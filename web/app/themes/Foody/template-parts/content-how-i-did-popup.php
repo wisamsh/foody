@@ -7,7 +7,7 @@
  */
 
 $modal = [
-	'title' => 'תראו מה יצא לי'
+    'title' => 'תראו מה יצא לי'
 ];
 
 ?>
@@ -17,19 +17,18 @@ $modal = [
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-					<?php echo $modal['title'] ?>
+                    <?php echo $modal['title'] ?>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body row">
-                <div class="col-8">
+                <div class="col-7">
                     <img id="image" src="" alt="">
                 </div>
-
-
                 <section class="details col-4">
+
                     <h4 id="user">
 
                     </h4>

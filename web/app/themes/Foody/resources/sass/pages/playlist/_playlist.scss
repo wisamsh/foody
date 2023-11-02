@@ -86,7 +86,7 @@
           left: 0;
           right: 0;
           background: rgba(0, 0, 0, 0.5);
-          clip-path: inset(0 round 3px);
+         // clip-path: inset(0 round 3px);
 
         }
       }
@@ -99,7 +99,7 @@
 
         img {
           width: 100%;
-          clip-path: inset(0 round 3px);
+         // clip-path: inset(0 round 3px);
         }
       }
 
@@ -181,7 +181,7 @@
         background-color: red;
         width: 100%;
         border-radius: 3px;
-        background-image: linear-gradient(76deg, #ec3849, #f35644);
+        background-image: linear-gradient(76deg, #ec3849, #e63a2b);
         color: white;
         text-align: center;
         padding: 0 64px;

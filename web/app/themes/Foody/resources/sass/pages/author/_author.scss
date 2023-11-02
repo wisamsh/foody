@@ -6,7 +6,7 @@
       .details-container {
 
         .featured-content-container {
-
+          visibility: visible;
           img {
             height: 250px;
             width: 100%;
@@ -34,7 +34,8 @@
 
             h1 {
               margin: 0;
-              font-size: 32px;
+              font-size: 35px;
+              font-family: 'AlmoniTzar';
             }
 
             .breadcrumb {

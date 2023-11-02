@@ -55,4 +55,33 @@ class Foody_Tag extends Foody_Term implements Foody_ContentWithSidebar {
 			]
 		];
 	}
+
+    public function the_css()
+    {
+        if (isset($_GET) && isset($_GET['referer']) && $_GET['referer']) {
+            $titles_color = get_field('titles_color', $_GET['referer']);
+            if (!empty($titles_color)) {
+
+                if (preg_match('/^#/', $titles_color) === false) {
+                    $titles_color = "#$titles_color";
+                }
+
+                ?>
+                <style id="feed-style">
+                    .title {
+                        color: <?php echo $titles_color?>;
+                    }
+
+                    a:hover {
+                        color: <?php echo $titles_color ?>;
+                    }
+
+                    .block-see-more a {
+                        color: <?php echo $titles_color ?>;
+                    }
+                </style>
+                <?php
+            }
+        }
+    }
 }

@@ -134,9 +134,15 @@ class Foody_Header {
 			} else {
 				echo '<div class="foody-collaboration d-block d-lg-none">';
 			}
-			echo '<a href="' . $foody_url . '" target="_blank">';
+            $current_blog_id = get_current_blog_id();
+            if($current_blog_id == 2){
+                echo '<a href="' . $foody_url .'?utm_source=Carine%20Site&utm_medium=Logo&utm_campaign=Foody%20Logo'. '" target="_blank">';
+            }
+            else {
+                echo '<a href="' . $foody_url . '" target="_blank">';
+            }
 			echo '<span>' . $collab_text . '</span>';
-			echo '<img src="' . $GLOBALS['images_dir'] . 'foody-logo.svg" alt="Foody">';
+			echo '<img src="' . $GLOBALS['images_dir'] . 'foody-new-logo.svg" alt="Foody">';
 			echo '</a> ';
 			if ( $desktop ) {
 				echo '</span>';
@@ -153,7 +159,7 @@ class Foody_Header {
 			$url = "https://web.whatsapp.com/send?phone=$phone_number";
 		}
 
-		$show = $phone_number = get_option( 'whatsapp_phone_number_toggle', false );
+		$show  = get_option( 'whatsapp_phone_number_toggle', false );
 
 		$classes = $ext_classes;
 		if ( ! $show ) {
@@ -166,4 +172,14 @@ class Foody_Header {
 			'classes' => $classes
 		] );
 	}
+
+	public static function getPrintHeader($mobile = false){
+	    $title_text = __('עוד מתכון מ-');
+//	    $classes = $mobile ? 'print-header print-mobile' : 'print-header print-desktop';
+        $classes = 'print-header print-desktop';
+	    $title_element = '<div class="print-header-text print">'.$title_text.'</div>';
+	    $image_element = foody_custom_logo_link(true);
+
+	    echo '<div class="'. $classes .'">'.$title_element.$image_element.'</div>';
+    }
 }

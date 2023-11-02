@@ -374,14 +374,14 @@ class Foody_BootstrapCollapseNavwalker extends Walker_Nav_Menu {
         <div id=\"accordion-" . $id . "\" role=\"tablist\" class=\"foody-accordion\">
             <div class=\"foody-accordion-content\">
                 <div class=\"foody-accordion-title\" role=\"tab\" id=\"heading-" . $id . "\">
-                    <h5 class=\"mb-0\">
+                    <div class=\"mb-0  filter-title-h5\">
                         <a class=\" " . foody_el_classes( $title_classes ) . "\" data-toggle=\"collapse\" href=\"#" . $id . "\"
                        aria-expanded=\"false\"
                        aria-controls=\"" . $id . "\" role=\"button\">
                         " . $title . "
                         </a>
                         <i class=\"icon-side-arrow arrow\" data-toggle=\"collapse\" aria-controls=\"" . $id . "\"></i>
-                    </h5>
+                    </div>
                 </div>
             <div id=\"" . $id . "\" class=\"collapse " . foody_el_classes( $collapse_classes ) . "\" role=\"tabpanel\"
                  aria-labelledby=\"heading-" . $id . "\">

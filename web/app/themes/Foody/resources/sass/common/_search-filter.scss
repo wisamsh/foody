@@ -5,7 +5,7 @@ aside {
 
   #accordion-foody-filter {
 
-    h5 {
+    h5 ,div.filter-title-h5{
       + a {
         font-family: $font__main;
         font-size: 26px;
@@ -53,19 +53,21 @@ aside {
     left: 0;
     right: 15px;
     width: 140px;
+    z-index: 9999999999999;
 
     .filter-btn {
       height: 55px;
       width: 55px;
       border-radius: 50%;
-      background-image: linear-gradient(34deg, #ec3849, #f35644);
+      background-image: linear-gradient(34deg,  #e6392b,  #e6392b);
       box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.13);
       color: #fff;
       vertical-align: middle;
       display: inline-block;
       font-family: $font__bold;
+      font-size: 1rem;
       position: fixed;
-      bottom: 22px;
+      bottom: 100px;
       right: 15px;
       &:active, &:hover, &:focus {
         border: 0;
@@ -101,11 +103,12 @@ aside {
       right: 0;
       margin-bottom: 20px;
       button {
-        background-image: linear-gradient(71deg, #ec3849, #f35644);
+        background-image: linear-gradient(71deg, #ec3849, #e63a2b);
         height: $show-recipes-button-height;
         width: 100%;
         font-size: 32px;
         color: #ffffff;
+        top:-70px;
       }
     }
 
@@ -158,7 +161,7 @@ aside {
           #foody-filter {
             margin-right: 0;
 
-            h5 {
+            h5, div.filter-title-h5 {
               i.arrow {
                 &:before {
                   left: 4.3em;

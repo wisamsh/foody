@@ -6,6 +6,13 @@
     }
   }
 
+  .promotion-listing-block-title{
+    font-size: 30px;
+    font-family: AlmoniTzar;
+    text-align: right;
+    font-weight: 600 !important;
+  }
+
   .promoted-items {
     list-style-type: none;
     padding: 0;
@@ -23,14 +30,14 @@
     picture {
       width: 100%;
       img {
-        clip-path: inset(0 round .5rem);
+        //clip-path: inset(0 round .5rem);
         width: 100%;
       }
     }
 
     .categort-listing-title, .promotion-listing-title {
       text-align: center;
-      font-family: $font__main;
+      font-family: PloniMedium;
       font-size: 21px;
     }
 

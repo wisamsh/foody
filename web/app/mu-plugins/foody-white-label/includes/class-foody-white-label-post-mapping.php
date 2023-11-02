@@ -29,6 +29,7 @@ class Foody_WhiteLabelPostMapping {
 
 	public static function add( $post_id, $destination_id, $blog_id ) {
 		global $wpdb;
+		self::$table_name = $wpdb->prefix . 'foody_post_mapping';
 		$result = $wpdb->insert( self::$table_name, [
 			'post_id'             => $post_id,
 			'destination_post_id' => $destination_id,
@@ -44,7 +45,7 @@ class Foody_WhiteLabelPostMapping {
 
 	public static function remove( $post_id, $blog_id ) {
 		global $wpdb;
-
+		self::$table_name = $wpdb->prefix . 'foody_post_mapping';
 		return $wpdb->delete( self::$table_name, [
 			'post_id' => $post_id,
 			'blog_id' => $blog_id
@@ -53,7 +54,7 @@ class Foody_WhiteLabelPostMapping {
 
 	public static function getByPost( $post_id ) {
 		global $wpdb;
-
+		self::$table_name = $wpdb->prefix . 'foody_post_mapping';
 		$results = $wpdb->get_results( "SELECT * from " . self::$table_name . " where post_id = $post_id", ARRAY_A );
 
 		return $results;
@@ -61,7 +62,7 @@ class Foody_WhiteLabelPostMapping {
 
 	public static function existsInBlog( $post_id, $blog ) {
 		global $wpdb;
-
+		self::$table_name = $wpdb->prefix . 'foody_post_mapping';
 		$results = $wpdb->get_results( "SELECT * from " . self::$table_name . " where post_id = $post_id and blog_id = $blog", ARRAY_A );
 
 		return ! empty( $results );
@@ -69,6 +70,7 @@ class Foody_WhiteLabelPostMapping {
 
 	public static function insertManyToBlog( $posts, $blog_id ) {
 		global $wpdb;
+		self::$table_name = $wpdb->prefix . 'foody_post_mapping';
 		$values        = array();
 		$place_holders = array();
 

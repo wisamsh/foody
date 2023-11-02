@@ -7,6 +7,7 @@
  */
 $inc_dir = get_template_directory() . '/foody-api/inc/';
 require_once $inc_dir . 'class-foody-api.php';
+require_once $inc_dir . 'class-foody-rest-response.php';
 require_once $inc_dir . 'class-foody-base-api-controller.php';
 require_once $inc_dir . 'class-foody-bot-api-controller.php';
 require_once $inc_dir . 'class-foody-bot-handler.php';

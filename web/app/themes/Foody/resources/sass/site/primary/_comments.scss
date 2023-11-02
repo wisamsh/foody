@@ -52,7 +52,8 @@
 
       &::placeholder {
         font-weight: 900;
-        font-size: 19px;
+        font-size: 18px;
+        font-family: PloniMedium;
       }
     }
 
@@ -130,7 +131,7 @@
 
     input[type="submit"], input[type="button"] {
       font-family: $font__assistant;
-      font-size: 22px;
+      font-size: 20px;
       background-color: transparent;
       border: none;
       border-radius: 0;
@@ -175,17 +176,19 @@
 
     .comment-body {
 
-      padding: 20px;
       border-radius: 8px;
       background-color: #ffffff;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
       display: block;
       margin-right: 60px;
+      border: 1px solid #ced4da99;
+      padding: 1%;
+      width: 90%;
 
       .author {
         unicode-bidi: embed;
         font-size: 18px;
-        font-weight: bold;
+        font-family: PloniBold;
         margin-left: 5px;
       }
 
@@ -241,7 +244,7 @@
     &.content {
       .comments, .recipe-comments {
         .foody-accordion-title {
-          h5 {
+          h5,  div.filter-title-h5 {
             i.icon-side-arrow {
               &:before {
                 left: 0;
@@ -352,7 +355,7 @@
 
   .comment-list {
 
-    padding-left: 0;
+    padding-left: 10px;
 
     .foody-comment {
       padding-bottom: 0;

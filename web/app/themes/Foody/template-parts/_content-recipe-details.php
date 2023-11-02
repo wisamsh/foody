@@ -23,7 +23,11 @@ if ( ! foody_is_registration_open() ) {
     </h1>
 
     <!-- Description -->
-    <div class="description">
+    <div class="description no-print">
+		<?php echo $foody_page->getDescription() ?>
+    </div>
+
+    <div class="description-print print">
 		<?php echo $foody_page->getDescription() ?>
     </div>
 
@@ -45,22 +49,18 @@ if ( ! foody_is_registration_open() ) {
 					'foody_page'    => $foody_page,
 					'show_favorite' => $show_favorite,
 					'hide'          => [
-						'views' => true // wp_is_mobile()
+						'views' => true,
+                        'date' => true// wp_is_mobile()
 					]
 				);
 
 				foody_get_template_part( get_template_directory() . '/template-parts/content-post-bullets.php', $args );
 
 				?>
-				<?php if ( ! wp_is_mobile() ): ?>
-                    <section class="rating-container d-none d-lg-block">
-						<?php Foody_Recipe::ratings() ?>
-                    </section>
-				<?php endif; ?>
             </section>
 
 			<?php if ( $show_favorite ): ?>
-                <section class="favorite-container">
+                <section class="favorite-container" style="visibility: <?php echo get_option( 'foody_show_favorite', true ) ? 'visible' : 'hidden' ?>">
 					<?php
 
 					foody_get_template_part(
@@ -71,22 +71,48 @@ if ( ! foody_is_registration_open() ) {
 						)
 					);
 					?>
+                    <?php if ( ! wp_is_mobile() ): ?>
+                    <section class="rating-container d-lg-block">
+                        <?php $foody_page instanceof Foody_Recipe ? $foody_page->ratings_new() : Foody_Recipe::ratings() ?>
+                    </section>
+                    <?php endif; ?>
                 </section>
 			<?php endif; ?>
-
         </section>
 
     </section>
 
-    <!-- Social buttons -->
-    <section class="">
-		<?php foody_get_template_part(
-			get_template_directory() . '/template-parts/content-social-actions.php',
-			[
-				'extra_content' => $foody_page->the_purchase_buttons( 'd-none d-lg-flex', false )
-			]
-		);
-		?>
+    <?php if ( wp_is_mobile() ): ?>
+
+
+        <section class="rating-container no-print d-lg-block">
+<!--            --><?php //$foody_page->ratings_new() ?>
+            <?php $foody_page instanceof Foody_Recipe ? $foody_page->ratings_new() : Foody_Recipe::ratings() ?>
+        </section>
+    <?php endif; ?>
+
+    <section class="social-and-take-me-container no-print">
+
+<!--     Social buttons-->
+        <section class="social-buttons-container">
+            <?php foody_get_template_part(get_template_directory() . '/template-parts/content-social-actions.php',
+                [//'extra_content' => $foody_page->the_purchase_buttons( 'd-none d-lg-flex', false )
+                ]
+            );
+            ?>
+        </section>
+
+        <?php if ($foody_page instanceof Foody_Recipe) { ?>
+            <section class="take-me-to-recipe-container desktop no-print <?php echo get_field('enable_take_to_recipe') ? '' : 'hidden'?>">
+                <?php $foody_page->get_take_me_to_recipe_btn() ?>
+            </section>
+        <?php } ?>
+
+        <?php if ( ! wp_is_mobile() ): ?>
+            <section class="rating-container d-lg-block">
+                <?php $foody_page instanceof Foody_Recipe ? $foody_page->ratings_new() : Foody_Recipe::ratings() ?>
+            </section>
+        <?php endif; ?>
     </section>
 
 

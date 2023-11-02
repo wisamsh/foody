@@ -8,7 +8,7 @@ $content-width: 95%;
 .single {
 
   .content {
-    .tags, .categories {
+    .tags, .techniques, .accessories, .categories {
       @include max-width-section;
 
       .title {
@@ -30,7 +30,17 @@ $content-width: 95%;
           padding: 2px 12px;
           margin-left: 10px;
           margin-bottom: 10px;
+          margin-top: 5px;
         }
+      }
+
+      .acc-read-more,
+      .teq-read-more,
+      .tag-read-more,
+      .cat-read-more{
+        font-size: 17px;
+        padding-left: 6%;
+        color: #579fba;
       }
     }
 
@@ -40,8 +50,9 @@ $content-width: 95%;
       margin-bottom: 10px;
 
       .newsletter-title {
-        font-size: 16px;
-        font-weight: 500;
+        font-size: 30px;
+        font-family: AlmoniTzar;
+        font-weight: 700;
         text-align: right;
         color: var(--color__primary);
       }
@@ -51,8 +62,9 @@ $content-width: 95%;
         margin-bottom: 0;
       }
       .newsletter-title {
-        font-size: 16px;
-        font-weight: 500;
+        font-size: 30px;
+        font-family: AlmoniTzar;
+        font-weight: 700;
         text-align: right;
         color: var(--color__primary);
       }
@@ -75,11 +87,17 @@ $content-width: 95%;
             background-color: #ffffff;
             color: var(--color__primary);
             font-weight: 900;
+            font-size: 14px;
+            font-family: Ploni;
+            cursor: pointer;
+            padding-top: 6px;
+            position: relative;
+            top:0px;
           }
 
           &::placeholder {
             opacity: 0.5;
-            font-size: 12px;
+            font-size: 16px;
             text-align: right;
             color: #4a4a4a;
           }

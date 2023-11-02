@@ -96,6 +96,8 @@ define('NONCE_SALT', env('NONCE_SALT'));
  */
 define('AUTOMATIC_UPDATER_DISABLED', true);
 define('DISABLE_WP_CRON', env('DISABLE_WP_CRON') ?: false);
+//define('DISABLE_WP_CRON', true);
+
 define('DISALLOW_FILE_EDIT', true);
 
 /**
@@ -112,3 +114,7 @@ define('WP_ALLOW_MULTISITE', true);
 //define('PATH_CURRENT_SITE', '/');
 //define('SITE_ID_CURRENT_SITE', 1);
 //define('BLOG_ID_CURRENT_SITE', 1);
+
+define('FOODY_FILTERS_CACHE', env('FOODY_FILTERS_CACHE'));
+define('FOODY_BIT_FETCH_STATUS_PROCESS', env('FOODY_BIT_FETCH_STATUS_PROCESS'));
+//define('FOODY_INSTANCE_NUM', env('FOODY_INSTANCE_NUM'));

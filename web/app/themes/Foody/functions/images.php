@@ -336,3 +336,23 @@ function image_alt_by_url( $image_url ) {
 
 	return get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 }
+
+
+/**
+ * @param $post Foody_Post
+ *
+ * @return string
+ */
+function foody_get_featured_image_alt( $post ) {
+
+
+	$alt = $post->featured_image_alt;
+
+	if ( empty( $alt ) ) {
+		$thumbnail_id = get_post_thumbnail_id( $post->id );
+		$alt = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true );
+
+	}
+
+	return $alt;
+}

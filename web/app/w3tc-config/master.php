@@ -1,5 +1,5 @@
 <?php exit; ?>{
-    "version": "0.9.7.4",
+    "version": "2.0.1",
     "cluster.messagebus.debug": false,
     "cluster.messagebus.enabled": false,
     "cluster.messagebus.sns.region": "",
@@ -7,9 +7,10 @@
     "cluster.messagebus.sns.api_secret": "",
     "cluster.messagebus.sns.topic_arn": "",
     "dbcache.configuration_overloaded": false,
-    "dbcache.debug": false,
-    "dbcache.enabled": "0",
-    "dbcache.engine": "file",
+    "dbcache.debug": "0",
+    "dbcache.debug_purge": false,
+    "dbcache.enabled": "1",
+    "dbcache.engine": "memcached",
     "dbcache.file.gc": 3600,
     "dbcache.file.locking": false,
     "dbcache.lifetime": 180,
@@ -20,6 +21,7 @@
     ],
     "dbcache.memcached.username": "",
     "dbcache.memcached.password": "",
+    "dbcache.memcached.binary_protocol": true,
     "dbcache.redis.persistent": true,
     "dbcache.redis.servers": [
         "127.0.0.1:6379"
@@ -56,9 +58,20 @@
         "\\bsql_calc_found_rows\\b",
         "\\bfound_rows\\(\\)"
     ],
+    "lazyload.enabled": false,
+    "lazyload.process_img": true,
+    "lazyload.process_background": true,
+    "lazyload.googlemaps.google_maps_easy": false,
+    "lazyload.googlemaps.wp_google_maps": false,
+    "lazyload.googlemaps.wp_google_map_plugin": false,
+    "lazyload.exclude": [
+        "skip_lazy"
+    ],
+    "lazyload.embed_method": "async_head",
     "objectcache.configuration_overloaded": false,
     "objectcache.enabled": "1",
     "objectcache.debug": "0",
+    "objectcache.debug_purge": false,
     "objectcache.enabled_for_wp_admin": true,
     "objectcache.fallback_transients": true,
     "objectcache.engine": "memcached",
@@ -71,6 +84,7 @@
     "objectcache.memcached.aws_autodiscovery": false,
     "objectcache.memcached.username": "",
     "objectcache.memcached.password": "",
+    "objectcache.memcached.binary_protocol": true,
     "objectcache.redis.persistent": true,
     "objectcache.redis.servers": [
         "127.0.0.1:6379"
@@ -101,6 +115,7 @@
     "pgcache.enabled": "1",
     "pgcache.comment_cookie_ttl": "1800",
     "pgcache.debug": "0",
+    "pgcache.debug_purge": false,
     "pgcache.engine": "memcached",
     "pgcache.file.gc": "3600",
     "pgcache.file.nfs": false,
@@ -113,6 +128,7 @@
     "pgcache.memcached.aws_autodiscovery": false,
     "pgcache.memcached.username": "",
     "pgcache.memcached.password": "",
+    "pgcache.memcached.binary_protocol": true,
     "pgcache.redis.persistent": true,
     "pgcache.redis.servers": [
         "127.0.0.1:6379"
@@ -122,7 +138,7 @@
     "pgcache.cache.query": "0",
     "pgcache.cache.home": "1",
     "pgcache.cache.feed": "1",
-    "pgcache.cache.nginx_handle_xml": "1",
+    "pgcache.cache.nginx_handle_xml": true,
     "pgcache.cache.ssl": "0",
     "pgcache.cache.404": "0",
     "pgcache.cache.headers": [
@@ -208,7 +224,7 @@
     "pgcache.prime.enabled": "1",
     "pgcache.prime.interval": "900",
     "pgcache.prime.limit": "10",
-    "pgcache.prime.sitemap": "http:\/\/foody.moveodevelop.com\/sitemap_index.xml",
+    "pgcache.prime.sitemap": "http:\/\/staging.foody.co.il\/sitemap_index.xml",
     "pgcache.prime.post.enabled": "1",
     "pgcache.rest": "",
     "pgcache.cookiegroups.enabled": false,
@@ -238,6 +254,13 @@
         }
     },
     "stats.enabled": "0",
+    "stats.slot_seconds": 60,
+    "stats.slots_count": 60,
+    "stats.cpu.enabled": false,
+    "stats.access_log.enabled": false,
+    "stats.access_log.filename": "",
+    "stats.access_log.format": "%h %l %u %t \\\"%r\\\" %>s %O \\\"%{Referer}i\\\" \\\"%{User-Agent}i\\\"",
+    "stats.access_log.webserver": "apache",
     "minify.configuration_overloaded": false,
     "minify.enabled": "0",
     "minify.auto": "1",
@@ -254,6 +277,7 @@
     "minify.memcached.aws_autodiscovery": false,
     "minify.memcached.username": "",
     "minify.memcached.password": "",
+    "minify.memcached.binary_protocol": true,
     "minify.redis.persistent": true,
     "minify.redis.servers": [
         "127.0.0.1:6379"
@@ -275,9 +299,9 @@
         "google_ad_",
         "RSPEAK_"
     ],
-    "minify.css.combine": false,
     "minify.css.enable": true,
     "minify.css.engine": "css",
+    "minify.css.method": "both",
     "minify.css.http2push": false,
     "minify.css.strip.comments": false,
     "minify.css.strip.crlf": false,
@@ -287,6 +311,7 @@
     "minify.js.http2push": false,
     "minify.js.enable": true,
     "minify.js.engine": "js",
+    "minify.js.method": "both",
     "minify.js.combine.header": false,
     "minify.js.header.embed_type": "blocking",
     "minify.js.combine.body": false,
@@ -341,15 +366,15 @@
     "cdn.configuration_overloaded": false,
     "cdn.enabled": "0",
     "cdn.debug": false,
-    "cdn.flush_manually": false,
+    "cdn.flush_manually": "0",
     "cdn.engine": "stackpath2",
-    "cdn.uploads.enable": true,
-    "cdn.includes.enable": true,
+    "cdn.uploads.enable": "1",
+    "cdn.includes.enable": "1",
     "cdn.includes.files": "*.css;*.js;*.gif;*.png;*.jpg;*.xml",
-    "cdn.theme.enable": true,
+    "cdn.theme.enable": "1",
     "cdn.theme.files": "*.css;*.js;*.gif;*.png;*.jpg;*.ico;*.ttf;*.otf;*.woff;*.woff2;*.less",
     "cdn.minify.enable": true,
-    "cdn.custom.enable": true,
+    "cdn.custom.enable": "1",
     "cdn.custom.files": [
         "favicon.ico",
         "{wp_content_dir}\/gallery\/*",
@@ -362,15 +387,15 @@
         "{plugins_dir}\/*.jpg",
         "{plugins_dir}\/*.png"
     ],
-    "cdn.import.files": false,
+    "cdn.import.files": "",
     "cdn.queue.interval": 900,
     "cdn.queue.limit": 25,
     "cdn.force.rewrite": false,
     "cdn.autoupload.enabled": false,
     "cdn.autoupload.interval": 3600,
-    "cdn.canonical_header": false,
-    "cdn.admin.media_library": false,
-    "cdn.cors_header": true,
+    "cdn.canonical_header": "0",
+    "cdn.admin.media_library": "0",
+    "cdn.cors_header": "1",
     "cdn.ftp.host": "",
     "cdn.ftp.type": "",
     "cdn.ftp.user": "",
@@ -473,16 +498,21 @@
     "cdn.stackpath2.domain": [],
     "cdn.stackpath2.ssl": "auto",
     "cdn.reject.admins": false,
-    "cdn.reject.logged_roles": false,
-    "cdn.reject.roles": [],
-    "cdn.reject.ua": [],
+    "cdn.reject.logged_roles": "0",
+    "cdn.reject.roles": [
+        ""
+    ],
+    "cdn.reject.ua": [
+        ""
+    ],
     "cdn.reject.uri": [],
     "cdn.reject.files": [
         "{uploads_dir}\/wpcf7_captcha\/*",
         "{uploads_dir}\/imagerotator.swf",
-        "{plugins_dir}\/wp-fb-autoconnect\/facebook-platform\/channel.html"
+        "{plugins_dir}\/wp-fb-autoconnect\/facebook-platform\/channel.html",
+        "{plugins_dir}\/onesignal-free-web-push-notifications\/sdk_files\/*"
     ],
-    "cdn.reject.ssl": false,
+    "cdn.reject.ssl": "0",
     "cdnfsd.enabled": "0",
     "cdnfsd.engine": "",
     "cdnfsd.debug": false,
@@ -503,6 +533,9 @@
     "cdnfsd.stackpath2.site_root_domain": 0,
     "cdnfsd.stackpath2.domain": [],
     "cdnfsd.stackpath2.ssl": "auto",
+    "cdnfsd.transparentcdn.client_id": "",
+    "cdnfsd.transparentcdn.client_secret": "",
+    "cdnfsd.transparentcdn.company_id": "",
     "varnish.configuration_overloaded": false,
     "varnish.enabled": "0",
     "varnish.debug": false,
@@ -586,6 +619,8 @@
     "browsercache.security.csp.frame.ancestors": "",
     "browsercache.security.csp.sandbox": "",
     "browsercache.security.csp.default": "",
+    "browsercache.security.fp": false,
+    "browsercache.security.fp.values": [],
     "mobile.configuration_overloaded": false,
     "mobile.enabled": true,
     "mobile.rgroups": {
@@ -840,7 +875,6 @@
             ]
         }
     },
-    "common.support": "",
     "common.track_usage": "0",
     "common.tweeted": false,
     "config.check": "1",
@@ -860,7 +894,6 @@
     "timelimit.cdn_purge": 300,
     "timelimit.cdn_import": 600,
     "timelimit.cdn_test": 300,
-    "timelimit.cdn_container_create": 300,
     "timelimit.domain_rename": 120,
     "timelimit.minify_recommendations": 600,
     "common.instance_id": 379327804,
@@ -870,9 +903,18 @@
         "fragmentcache": "w3-total-cache\/Extension_FragmentCache_Plugin.php"
     },
     "extensions.active_frontend": [],
+    "extensions.active_dropin": [],
     "plugin.license_key": "",
     "plugin.type": "",
+    "jquerymigrate.disabled": false,
+    "minify.css.combine": false,
+    "common.support": "",
+    "timelimit.cdn_container_create": 300,
     "fragmentcache": {
         "engine": "memcached"
+    },
+    "pgcache.bad_behavior_path": "",
+    "newrelic": {
+        "monitoring_type": "apm"
     }
 }

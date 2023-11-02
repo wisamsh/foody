@@ -6,8 +6,7 @@
             onclick: function () {
                 var selectedElement = tinymce.activeEditor.selection.getNode();
 
-
-                if (selectedElement && selectedElement.nodeName.toLowerCase() === 'li') {
+                if (selectedElement) {
                     var spacingClass = 'foody-list-item-spacing';
                     selectedElement.classList.toggle(spacingClass);
                 }

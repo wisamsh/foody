@@ -17,10 +17,10 @@ window.showMoreList = function (selector, moreLink) {
             moreLink = $target.parent().data('more-link');
         }
         let $image = $('img', $target);
-        $('h4', $target).text('הצג הכל');
+        $('h2', $target).text('הצג הכל');
 
         let $imageContainer = $('.image-container', $target);
-        let overlay = `<h4 class='show-more-list-overlay'> ${count}+</h4>`;
+        let overlay = `<span class='show-more-list-overlay'> ${count}+</span>`;
 
         $imageContainer.css("position", "relative");
         $(overlay).appendTo($imageContainer);

@@ -14,7 +14,7 @@ body[class~="single-foody_technique"],
 body[class~="tag"] {
 
   .seo{
-    max-width: 70%;
+    //max-width: 70%;
   }
 
   #page {
@@ -75,7 +75,7 @@ body[class~="tag"] {
 
     background-color: white;
     .featured-content-container {
-      clip-path: inset(0 round 3px);
+      //clip-path: inset(0 round 3px);
       margin: 0 10px 10px;
 
       iframe {
@@ -115,6 +115,7 @@ body[class~="tag"] {
           text-align: right;
           padding: 0;
           display: flex;
+          margin-left: 3px;
           align-self: center;
           img {
             width: 52px;
@@ -167,7 +168,7 @@ body[class~="tag"] {
           .essb_links_list {
 
             li {
-
+              margin-left: 2px !important;
               box-shadow: none;
 
               &.essb_link_whatsapp {

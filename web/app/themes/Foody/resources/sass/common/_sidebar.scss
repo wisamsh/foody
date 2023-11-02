@@ -9,7 +9,7 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
     border-bottom: none;
     border-top: none;
     background-color: white;
-    padding-top: 60px;
+    padding-top: 30px;
     position: relative;
     padding-right: 0;
     padding-left: 0;
@@ -37,6 +37,25 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
         .categories-widget-accordion-menu {
           margin: 0;
           padding: 0;
+
+          .main-title{
+            &.title{
+              > a{
+                font-size: 30px;
+                font-family: AlmoniTzar;
+                font-weight: 600 !important;
+              }
+            }
+          }
+
+          #accordion-categories-widget-accordion-section{
+            li{
+              a{
+                font-family: Ploni;
+                font-size: 18px;
+              }
+            }
+          }
 
           .sidebar-categories {
 
@@ -79,7 +98,7 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
 
     #accordion-foody-filter {
 
-      h5 {
+      h5, div.filter-title-h5{
         + a {
           font-family: $font__main;
           font-size: 21px;
@@ -90,8 +109,8 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
       .md-checkbox {
         label {
 
-          font-family: $font__main;
-          font-size: 1em;
+          font-family: Ploni;
+          font-size: 18px;
           display: table-cell;
           padding-right: 1em;
 
@@ -263,6 +282,17 @@ $sidebar-border: solid 1px rgba(151, 151, 151, 0.3);
         .sidebar-section {
           &:not(:last-child) {
             border: none;
+          }
+        }
+      }
+
+      #accordion-foody-filter {
+        .md-checkbox {
+          label {
+            font-family: Ploni;
+            font-size: 18px;
+            display: table-cell;
+            padding-right: 1em;
           }
         }
       }

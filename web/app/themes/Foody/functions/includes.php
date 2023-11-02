@@ -19,6 +19,7 @@
 
 require_once get_template_directory() . "/inc/globals.php";
 require_once get_template_directory() . "/inc/utils/utils.php";
+require_once get_template_directory() . "/inc/utils/foody-ingredients-export.php";
 
 
 /*
@@ -44,12 +45,15 @@ require_once get_template_directory() . "/inc/classes/sitemap/wpgo-foody-sitemap
  * */
 require_once get_template_directory() . "/inc/classes/common/class-foody-term.php";
 require_once get_template_directory() . "/inc/classes/common/class-foody-user.php";
+require_once get_template_directory() . "/inc/classes/common/class-foody-rating.php";
 require_once get_template_directory() . "/inc/classes/class-header.php";
 require_once get_template_directory() . "/inc/classes/class-foody-footer.php";
 require_once get_template_directory() . "/inc/classes/class-foody-blocks.php";
 require_once get_template_directory() . "/inc/classes/class-foody-comment-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-how-i-did-walker.php";
 require_once get_template_directory() . "/inc/classes/class-foody-homepage.php";
+require_once get_template_directory() . "/inc/classes/class-foody-courses-homepage.php";
+require_once get_template_directory() . "/inc/classes/class-foody-course-register.php";
 require_once get_template_directory() . "/inc/classes/class-foody-white-label-homepage.php";
 require_once get_template_directory() . "/inc/classes/class-foody-campaign.php";
 require_once get_template_directory() . "/inc/classes/class-foody-campaign-extended.php";
@@ -60,8 +64,13 @@ require_once get_template_directory() . "/inc/classes/common/class-foody-post.ph
 require_once get_template_directory() . "/inc/classes/class-foody-accessory.php";
 require_once get_template_directory() . "/inc/classes/class-foody-technique.php";
 require_once get_template_directory() . "/inc/classes/class-foody-ingredient.php";
+//wisam add :
+require_once get_template_directory() . "/inc/classes/class-foody-substitute_ingreidents_new.php";
+
 require_once get_template_directory() . "/inc/classes/class-foody-recipe.php";
 require_once get_template_directory() . "/inc/classes/class-foody-course.php";
+require_once get_template_directory() . "/inc/classes/class-foody-course-new.php";
+require_once get_template_directory() . "/inc/classes/class-foody-courses-homepage.php";
 require_once get_template_directory() . "/inc/classes/class-foody-playlist.php";
 require_once get_template_directory() . "/inc/classes/class-foody-channel.php";
 require_once get_template_directory() . "/inc/classes/class-foody-grid.php";
@@ -94,6 +103,14 @@ require_once get_template_directory() . '/inc/classes/class-foody-feed-channel.p
 require_once get_template_directory() . '/inc/classes/class-foody-feed-filter.php';
 require_once get_template_directory() . '/inc/classes/common/class-foody-mailer.php';
 require_once get_template_directory() . '/inc/classes/class-foody-commercial-rule-mapping.php';
+require_once get_template_directory() . '/inc/classes/class-foody-filters-rule-mapping.php';
+require_once get_template_directory() . '/inc/foody-ingredients-wp-list-table.php';
+require_once get_template_directory() . '/inc/foody-green-invoice-generator.php';
+require_once get_template_directory() . '/inc/foody-rav-messer-api.php';
+//WISAM
+require_once get_template_directory() . "/inc/classes/class-questions.php";
+require_once get_template_directory() . "/inc/classes/class-wsitemap.php";
+require_once get_template_directory() . "/inc/classes/class-foody-poll.php";
 
 /*
  * Widgets
@@ -154,6 +171,8 @@ require_once get_template_directory() . "/inc/shortcodes/shortcode-login.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-foody-sitemap.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-approvals.php";
 require_once get_template_directory() . "/inc/shortcodes/shortcode-recipe.php";
+require_once get_template_directory() . "/inc/shortcodes/shortcode-article.php";
+require_once get_template_directory() . "/inc/shortcodes/shortcode-newsletter.php";
 
 
 /*
@@ -163,3 +182,4 @@ require_once get_template_directory() . "/inc/shortcodes/shortcode-recipe.php";
 // Foody API
 
 require_once get_template_directory() . "/foody-api/foody-api.php";
+require_once get_template_directory() . "/foody-users-api/users-API.php";

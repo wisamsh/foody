@@ -3,10 +3,35 @@ $header-height: 76px;
 $run-height: 30px;
 
 body {
+
+  .comment-form-cookies-consent{
+    display: none;
+  }
+
   &.has-background {
     header {
       .socials {
         background-color: var(--color__background-screen);
+      }
+    }
+  }
+
+  #quadmenu {
+    .ripple-container {
+      display: none !important;
+    }
+  }
+
+  #quadmenu.quadmenu-default_theme .quadmenu-navbar-nav > li:not(.quadmenu-item-type-button).quadmenu-has-link:hover > a > .quadmenu-item-content, #quadmenu.quadmenu-default_theme .quadmenu-navbar-nav > li:not(.quadmenu-item-type-button).quadmenu-has-link.open > a > .quadmenu-item-content {
+    color: #383838;
+  }
+
+  .quadmenu-item {
+    &.iso-navmenu-item {
+      .quadmenu-text {
+        unicode-bidi: bidi-override !important;
+        direction: rtl !important;
+        text-align: right !important;
       }
     }
   }
@@ -46,7 +71,7 @@ header {
     text-align: center;
     font-size: 21px;
     color: white;
-    background-image: linear-gradient(77deg, #ec3849, #f35644);
+    background-image: linear-gradient(77deg, #ec3849, #ec3849);
 
     &.run-desktop {
       width: auto;
@@ -98,6 +123,7 @@ header {
     width: 0;
     transition: width .3s;
     position: relative;
+
     &.open {
       width: auto;
       display: initial;
@@ -111,6 +137,7 @@ header {
       border: 1px solid #fff;
       border-radius: $button-radius;
       position: absolute;
+
       .a11y-toolbar-list-item {
 
         display: inline-block;
@@ -121,6 +148,7 @@ header {
             border-top-right-radius: $button-radius;
           }
         }
+
         &:last-child {
           button {
             border-bottom-left-radius: $button-radius;
@@ -132,6 +160,7 @@ header {
           border-radius: 0;
           border: none;
           background-color: var(--color__primary);
+
           .aticon {
             &:before {
               color: white;
@@ -176,6 +205,7 @@ header {
         }
 
         .follow-us {
+          font-family: Ploni;
           font-size: 18px;
           font-weight: normal;
         }
@@ -190,6 +220,10 @@ header {
 
         .algolia-autocomplete {
           width: 100%;
+
+          input {
+            line-height: 0;
+          }
         }
 
         //input {
@@ -233,13 +267,14 @@ header {
     right: 10px;
   }
 
-   .logo-container {
+  .logo-container {
     &.logo-contain {
       position: static;
       top: 0;
       right: 0;
       margin-left: 10px;
-      img{
+
+      img {
         max-height: 60px;
         //height: 60px;
       }
@@ -263,6 +298,55 @@ header {
   }
 
   #quadmenu {
+    .ripple-container{
+      display: none !important;
+    }
+
+    .quadmenu-container{
+      .quadmenu-navbar-collapse{
+        .quadmenu-navbar-nav {
+          .quadmenu-dropdown {
+            > a {
+              > .quadmenu-item-content {
+                .quadmenu-caret {
+                  .quadmenu-text {
+
+                    font-family: Ploni !important;
+                    direction: rtl !important;
+                  }
+                }
+              }
+
+              .ripple-container{
+                .ripple-decorator{
+                  background-color: transparent !important;
+                }
+              }
+            }
+
+            a{
+              .ripple-container{
+                .ripple-decorator{
+                  background-color: transparent !important;
+                }
+              }
+            }
+
+            > .quadmenu-dropdown-menu {
+              > .quadmenu-item-content {
+                .quadmenu-text {
+                  font-family: Ploni !important;
+                  font-weight: 400 !important;
+                  direction: rtl !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+
     &.quadmenu-is-horizontal {
       .quadmenu-navbar-nav {
 
@@ -272,6 +356,7 @@ header {
               .quadmenu-item-content {
                 padding: 10px;
                 text-align: right;
+
                 .quadmenu-text {
 
                 }
@@ -279,6 +364,7 @@ header {
             }
           }
         }
+
         li {
           &.bold {
             a {
@@ -291,6 +377,7 @@ header {
           &:not(.quadmenu-dropdown-menu) {
             &.quadmenu-item {
               > a {
+
                 &.hoverintent {
                   > .quadmenu-item-content {
                     //padding-right: 0;
@@ -302,13 +389,19 @@ header {
               }
             }
           }
+
           &.quadmenu-dropdown {
 
             .quadmenu-dropdown-menu {
               max-width: 250px;
+
               .quadmenu-item-content {
                 .quadmenu-text {
                   word-break: break-word;
+                }
+
+                .quadmenu-description {
+                  display: none !important;
                 }
               }
             }
@@ -317,11 +410,45 @@ header {
         }
       }
     }
+
+    .quadmenu-item-content {
+      .quadmenu-description {
+        display: none !important;
+      }
+    }
   }
 
   #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
     padding-right: 0;
+    font-family: Ploni !important;
+    font-weight: 400;
+    direction: rtl;
+    font-size: 19px;
   }
+
+  #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item .quadmenu-has-link a > .quadmenu-item-content > .quadmenu-text {
+    padding-right: 0;
+    font-family: Ploni !important;
+    font-weight: 400;
+    direction: rtl;
+    font-size: 15.5px;
+  }
+    #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text{
+      padding-right: 0;
+      font-family: Ploni !important;
+      font-weight: 400;
+      direction: rtl;
+      font-size: 19px;
+    }
+    #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.bold.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
+      padding-right: 0;
+      font-family: PloniMedium !important;
+      font-weight: 600;
+      direction: rtl;
+      font-size: 19px;
+    }
+
+
 
   .foody-dropdown-menu {
     width: 100%;
@@ -331,8 +458,10 @@ header {
     padding: 8px 9px;
     text-align: right;
     margin-top: 5px;
+
     .foody-search-suggestions {
       width: 100%;
+      overflow: scroll;
 
       .foody-search-suggestion {
         font-size: 18px;
@@ -388,6 +517,7 @@ header {
         width: 100%;
         height: 100%;
       }
+
       input {
         box-shadow: none;
         width: 100%;
@@ -424,13 +554,20 @@ header {
         right: 0;
         direction: rtl;
 
+
         .foody-search-suggestions {
           width: 100%;
           padding: 0;
+          overflow: scroll;
+
+          .suggestion-head-title {
+           font-family: $font__bold;
+          }
 
           .foody-search-suggestion {
             font-size: 22px;
             padding: 7px 20px;
+
             &.foody-cursor {
               border-radius: 0;
               background-color: #f5f5f5;
@@ -451,6 +588,7 @@ header {
       height: 100vh;
       width: 100vw;
       z-index: 100000000;
+
       .input-container {
         opacity: 1;
 
@@ -458,6 +596,7 @@ header {
           opacity: 1;
         }
       }
+
       .overlay-white {
         opacity: 0.8;
       }
@@ -473,6 +612,10 @@ header {
       .foody-navbar-container {
         @include site-width();
         position: relative;
+
+        .menu-recipe-mobile{
+          display: none !important;
+        }
       }
 
       &.navbar-light {
@@ -531,12 +674,15 @@ header {
 
               > .dropdown-menu-innner {
                 padding-bottom: 0;
+
                 > .nav-link {
 
                   float: right;
+
                   &:not(:first-child) {
                     padding-bottom: 8px;
                   }
+
                   &:nth-child(2) {
                     padding-top: 8px;
                   }
@@ -545,6 +691,7 @@ header {
 
               > .nav-link {
                 width: 20%;
+
                 &.dropdown-item {
                   @extend .dropdown-menu-item-parent;
                   padding-bottom: 6px;
@@ -555,8 +702,10 @@ header {
             .dropdown-menu-innner {
               display: inline-block;
               margin: 0;
+
               a {
                 padding-bottom: 8px;
+
                 &.nav-link {
                   font-size: 14px;
                 }
@@ -589,6 +738,7 @@ header {
             &:hover {
               color: #3A3A3A;
             }
+
             &.dropdown-toggle {
 
               &:after {
@@ -607,7 +757,11 @@ header {
       }
 
       .profile-picture-container {
-        margin-right: 20px;
+        margin: 0 0 8px 0;
+        width: 15%;
+        //display: flex !important;
+        flex-direction: column;
+        align-items: center;
 
         .avatar {
           clip-path: circle();
@@ -620,6 +774,19 @@ header {
             clip-path: unset;
           }
         }
+
+        .user-name-header {
+          font-family: PloniMedium !important;
+          font-size: 18px !important;
+          font-weight: 600;
+          display: inline-block;
+          max-width: 105px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          color: var(--color__primary);;
+        }
       }
 
       .navbar-collapse {
@@ -627,8 +794,10 @@ header {
         padding-right: 140px;
         justify-content: flex-end;
         height: auto;
+
         ul {
           padding-right: 0;
+
           li {
 
             &:first-child {
@@ -636,12 +805,15 @@ header {
                 padding-right: 0;
               }
             }
+
             i {
               display: none;
             }
+
             &.menu-item-type-yawp_wim {
               display: none;
             }
+
             &.foody-mobile-menu-item {
               display: none;
             }
@@ -697,6 +869,7 @@ header {
 
       width: 100%;
       margin-right: 120px;
+
       .quadmenu-navbar-nav {
         li.quadmenu-item.open {
           > .quadmenu-dropdown-menu {
@@ -708,6 +881,7 @@ header {
         }
       }
     }
+
     &.nav-bar-contain-logo {
       nav#quadmenu {
         margin-right: 10px;
@@ -723,17 +897,39 @@ header {
   }
 
   #content {
-    padding-top: 60px;
+    /*padding-top: 60px;*/
   }
 
   .non-main-site {
-    #content {
-      padding-top: 110px;
+    &.carine-site {
+      #content {
+        padding-top: 110px;
+      }
     }
 
     header {
       &.header-unpin {
         transform: translateY(-110px);
+      }
+    }
+  }
+
+  body {
+    #page {
+      .search-overlay {
+        &.floating-mobile-header {
+
+          .input-container {
+
+            .foody-dropdown-menu {
+
+              .foody-search-suggestions {
+                overflow: scroll;
+                height: 85vh;
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -744,8 +940,32 @@ header {
     transition: transform 0.25s ease-in-out;
     z-index: 1;
 
+    #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
+      font-family: Ploni !important;
+      font-weight: 400;
+      direction: rtl;
+      font-size: 17px;
+    }
+
+    #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item .quadmenu-has-link a > .quadmenu-item-content > .quadmenu-text {
+      font-family: Ploni !important;
+      direction: rtl;
+      font-size: 17px;
+    }
+    #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
+      padding-right: 0;
+      font-family: Ploni !important;
+      direction: rtl;
+      font-size: 17px;
+    }
+
+    &.hidden-recipe-header {
+      display: none !important;
+    }
+
     &.header-unpin {
       transform: translateY(-90px);
+
       .logo-container-mobile {
         transform: translateY(-60px);
       }
@@ -753,6 +973,7 @@ header {
 
     &.header-pin {
       transform: translateY(0);
+
       .logo-container-mobile {
         transform: translateY(0);
       }
@@ -765,11 +986,19 @@ header {
 
       img {
         border-radius: 50%;
+
         &[src$=".svg"] {
           width: 60px;
         }
       }
     }
+
+    //
+    //.foody-navbar-container{
+    //  .profile-picture-container{
+    //    display: none !important;
+    //  }
+    //}
 
     #quadmenu {
       .quadmenu-navbar-collapse {
@@ -785,22 +1014,55 @@ header {
 
       .quadmenu-navbar-nav {
 
+        .quadmenu-dropdown{
+          > a {
+            > .quadmenu-item-content {
+              .quadmenu-caret {
+                .quadmenu-text {
+                  font-family: Ploni !important;
+                  direction: rtl !important;
+                  font-weight: 600;
+                }
+              }
+            }
+          }
+
+          > .quadmenu-dropdown-menu{
+            > .quadmenu-item-content {
+                .quadmenu-text {
+                  font-family: Ploni !important;
+                  direction: rtl !important;
+                }
+            }
+          }
+        }
+
         .quadmenu-dropdown-menu {
           li {
             a {
               .quadmenu-item-content {
                 .quadmenu-text {
+                  font-family: Ploni !important;
+                  direction: rtl !important;
+                }
 
+                .quadmenu-description {
+                  display: none !important;
                 }
               }
             }
           }
         }
+
         li {
           &.bold {
             a {
               .quadmenu-item-content {
                 font-weight: 900;
+
+                .quadmenu-description {
+                  display: none !important;
+                }
               }
             }
           }
@@ -808,16 +1070,21 @@ header {
           &:not(.quadmenu-dropdown-menu) {
             &.quadmenu-item {
               > a {
+                background-color: #ffffff;
+
                 &.hoverintent {
                   > .quadmenu-item-content {
                     > .quadmenu-caret {
-
+                      width: fit-content;
+                      bottom: unset;
+                      margin-top: 5px;
                     }
                   }
                 }
               }
             }
           }
+
           &.quadmenu-dropdown {
 
             .quadmenu-dropdown-menu {
@@ -825,6 +1092,10 @@ header {
               .quadmenu-item-content {
                 .quadmenu-text {
 
+                }
+
+                .quadmenu-description {
+                  display: none !important;
                 }
               }
             }
@@ -877,6 +1148,7 @@ header {
 
               > .toggle-wrap {
                 padding-top: 8px;
+
                 &:last-of-type {
 
                   border-bottom: none;
@@ -934,6 +1206,7 @@ header {
                 font-weight: normal;
                 color: #3A3A3A;
                 font-size: 18px;
+
                 &.dropdown-item {
                   display: inline-block;
                   font-size: 18px;
@@ -973,10 +1246,12 @@ header {
                   display: inline-flex !important;
                   max-height: 18px;
                   place-self: center;
+
                   i {
 
                     &.icon-side-arrow {
                       margin-left: 0 !important;
+
                       &:before {
                         transition: transform .3s;
                         font-size: 8px;
@@ -1013,6 +1288,7 @@ header {
               }
 
               width: 100%;
+
               a {
                 &.nav-link {
                 }
@@ -1064,6 +1340,7 @@ header {
 
           .navbar-toggler-icon {
             background-image: none;
+
             &:before {
               color: var(--color__primary);
               display: inline-block;
@@ -1127,7 +1404,7 @@ header {
             .close-menu {
               width: 100%;
               height: 66px;
-              background-image: linear-gradient(77deg, #ec3849, #f35644);
+              background-image: linear-gradient(77deg, #ec3849, #ec3849);
               color: white;
               font-size: 32px;
               font-weight: 900;
@@ -1136,6 +1413,7 @@ header {
               .nav-link {
                 display: block;
                 padding: 0;
+
                 span {
                   color: white;
                   float: right;
@@ -1161,6 +1439,7 @@ header {
               i {
                 display: initial;
               }
+
               &.menu-item {
                 > i, .icon-categories {
                   &:before {
@@ -1225,6 +1504,7 @@ header {
 
               #categories-widget-accordion {
                 padding-right: 45px;
+
                 > .card-body {
                   > .foody-accordion, .category-accordion-item {
                     //margin-bottom: 10px;
@@ -1276,23 +1556,45 @@ header {
         z-index: 1;
         width: initial;
         margin-right: 0;
+
         .quadmenu-container {
           .quadmenu-navbar-header {
             display: none;
           }
 
           .quadmenu-navbar-nav {
+            a {
+              .quadmenu-item-content {
+                text-align: right !important;
 
-            .quadmenu-item-content {
-              text-align: right !important;
+                .quadmenu-description {
+                  display: none !important;
+                }
 
-              .quadmenu-caret {
-                left: 0 !important;
+                .quadmenu-caret {
+                  left: 0 !important;
+                  width: fit-content;
+                  bottom: unset;
+                  margin-top: 5px;
+                }
               }
             }
 
           }
         }
+      }
+
+      #quadmenu.quadmenu-default_theme {
+        .quadmenu-navbar-nav {
+          > li:not(.quadmenu-item-type-button).quadmenu-has-link.open {
+            > a {
+              > .quadmenu-item-content {
+                color: #8e8e8e;
+              }
+            }
+          }
+        }
+
       }
 
     }
@@ -1313,6 +1615,7 @@ header {
       }
 
     }
+
     &.header-pin {
       .logo-container-mobile {
       }
@@ -1332,6 +1635,7 @@ header {
 
         .foody-navbar-container {
         }
+
         .navbar-toggler {
 
           .navbar-toggler-icon {
@@ -1343,6 +1647,7 @@ header {
 
         button {
         }
+
         .btn {
 
           &.btn-search {
@@ -1370,6 +1675,7 @@ header {
 
               i {
               }
+
               &.menu-item {
                 > i, .icon-categories {
                   &:before {
@@ -1480,6 +1786,7 @@ header {
 
     .foody-dropdown-menu {
       .foody-search-suggestions {
+        overflow: scroll;
 
         .foody-search-suggestion {
 
@@ -1506,6 +1813,7 @@ header {
 
         .algolia-autocomplete {
         }
+
         input {
         }
 
@@ -1515,6 +1823,7 @@ header {
         .foody-dropdown-menu {
 
           .foody-search-suggestions {
+            overflow: scroll;
 
             .foody-search-suggestion {
               &.foody-cursor {
@@ -1536,6 +1845,7 @@ header {
           span.close {
           }
         }
+
         .overlay-white {
         }
       }
@@ -1561,6 +1871,7 @@ header {
 
         .search-bar-container {
           margin-right: 0;
+
           input {
             &.search {
               right: 0;
@@ -1583,9 +1894,11 @@ header {
               i {
                 display: none;
               }
+
               &.menu-item-type-yawp_wim {
                 display: none;
               }
+
               &.foody-mobile-menu-item {
                 display: none;
               }
@@ -1600,5 +1913,3 @@ header {
     }
   }
 }
-
-

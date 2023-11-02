@@ -10,8 +10,31 @@ require('cropperjs/dist/cropper.min.css');
 require('jquery-cropper');
 let FoodyLoader = require('../common/foody-loader');
 let readUrl = require('../common/image-reader');
+let requiredMessage  = 'סיסמא נוכחית הינו שדה חובה';
 jQuery(document).ready(($) => {
 
+    if ($("#password-error").length) {
+        requiredMessage = 'הסיסמא לא נכונה';
+        $('#password-error a').trigger('click', 'error');
+    }
+
+    let textNormalizer = function (value) {
+        return $.trim(value);
+    };
+
+    if ($.validator) {
+        $.validator.addMethod(
+            "password",
+            function (value) {
+
+                let hasNumbers = /[0-9]+/.test(value);
+                let hasEn = /[a-zA-Z]+/.test(value);
+                let nonEn = /[^a-z0-9]/i.test(value);
+
+                return hasEn && hasNumbers && nonEn === false;
+            }
+        );
+    }
 
     // Followed topics list
     $('.managed-list li .close').click(function () {
@@ -74,7 +97,7 @@ jQuery(document).ready(($) => {
         contextArgs: ['favorites']
     });
 
-    new FoodyContentPaging({
+    let pager =new FoodyContentPaging({
         context: 'profile',
         filter: profile_filter,
         contextArgs: ['channels']
@@ -141,6 +164,10 @@ jQuery(document).ready(($) => {
                 $mobileChannels.addClass('d-none').removeClass('d-block');
             }
         }
+
+        if (e.currentTarget.offsetParent.id == 'password-error') {
+            $("#current-password").valid();
+        }
     });
 
 
@@ -157,15 +184,18 @@ jQuery(document).ready(($) => {
                     required: true,
                     minlength: 8,
                     password: true,
+                    normalizer: textNormalizer
                 },
                 password_confirmation: {
                     required: true,
                     equalTo: '#password[name="password"]',
+                    password: true,
+                    normalizer: textNormalizer
                 }
             },
             messages: {
                 current_password: {
-                    required: 'סיסמא נוכחית הינו שדה חובה',
+                    required: requiredMessage,
                     password: 'סיסמא אינה תקינה',
                     minlength: 'יש להזין לפחות 8 תווים'
                 },
@@ -176,6 +206,7 @@ jQuery(document).ready(($) => {
                 },
                 password_confirmation: {
                     required: 'ווידוא סיסמא הינו שדה חובה',
+                    password: 'סיסמא אינה תקינה',
                     equalTo: 'סיסמאות אינן תואמות'
                 }
             }, submitHandler: function (form) {
@@ -282,10 +313,10 @@ jQuery(document).ready(($) => {
         // Get the content type
         let contentType = block[0].split(":")[1];// In this case "image/gif"
 
-        let loader = new FoodyLoader({container:$('.modal-body',$uploadModal)});
+        let loader = new FoodyLoader({container: $('.modal-body', $uploadModal)});
         loader.attach();
 
-        $uploadModal.block({message:''});
+        $uploadModal.block({message: ''});
         srcToFile(
             image,
             'photo.' + contentType.split('/')[1],
@@ -334,5 +365,4 @@ jQuery(document).ready(($) => {
                 })
         );
     }
-
 });

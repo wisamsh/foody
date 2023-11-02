@@ -1,6 +1,7 @@
 @import "common/common";
 @import "categories/categories";
 @import "profile/profile";
+@import "recipe/recipe-new";
 @import "recipe/recipe";
 @import "playlist/playlist";
 @import "author/author";
@@ -21,6 +22,9 @@
 @import "foody-technique/foody-technique";
 @import "e-book/e-book";
 @import "course/course";
+@import "course/new-course";
+@import "course/courses-homepage";
+@import "course/course-register-page";
 
 .campaign-approvals-container {
   text-align: right;
@@ -42,14 +46,14 @@
 
     .md-checkbox {
       input[type="checkbox"]:checked + label:not(.error):before {
-        background: linear-gradient(34deg, #ec3849, #f35644);
+        background: linear-gradient(34deg, #ec3849, #e63a2b);
       }
 
       label:not(.error) {
         display: table-cell;
 
         &:before {
-          border: 2px solid #ec3849;
+          border: 2px solid #e63a2b;
         }
       }
     }
@@ -57,7 +61,7 @@
     input[type='submit'] {
       margin: 10px 0 0;
       border-radius: 6px;
-      background-image: linear-gradient(71deg, #ec3849, #f35644);
+      background-image: linear-gradient(71deg, #ec3849, #e63a2b);
       font-family: $font__assistant;
       font-size: 23px;
       font-weight: bold;
@@ -154,7 +158,7 @@
             border-radius: 50%;
             width: 14px;
             height: 14px;
-            background-image: linear-gradient(34deg, #ec3849, #f35644);
+            background-image: linear-gradient(34deg, #ec3849, #ec3849);
           }
         }
       }
@@ -195,7 +199,7 @@
     input[type='submit'] {
       margin: 10px auto 0;
       border-radius: 6px;
-      background-image: linear-gradient(71deg, #ec3849, #f35644);
+      background-image: linear-gradient(71deg, #ec3849, #e63a2b);
       font-family: $font__assistant;
       font-size: 23px;
       font-weight: bold;

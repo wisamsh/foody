@@ -6,7 +6,7 @@
  * Time: 2:34 PM
  */
 
-
+global $post;
 function foody_ajax_load_more() {
 
 	$foody_query = Foody_Query::get_instance();
@@ -45,6 +45,19 @@ function foody_ajax_load_more() {
 				$error = $page_args->get_error_message();
 			} else {
 
+                if(is_array($_POST) && isset($_POST['context'])  && $_POST['context'] === 'category' && isset($_POST['context_args'])   &&  is_array($_POST['context_args']) && $_POST['context_args'][0] &&  empty($_POST['sort'] )){
+                    $pinned_posts = get_field('pinned_recipes',  get_term_by( 'term_taxonomy_id', $_POST['context_args'][0]));
+                    if($pinned_posts){
+                        //'post__not_in' => $recipes_ids,
+                        $recipes_ids = array_map(function ($item) {
+//                    /** @var Foody_Recipe $recipe */
+                            return $item['recipe']->ID;
+                        }, $pinned_posts);
+
+                        $page_args['post__not_in'] = $recipes_ids;
+                    }
+                }
+
 				unset( $filter['context'] );
 
 				if ( empty( $filter['types'] ) || ! is_array( $filter['types'] ) ) {
@@ -60,8 +73,16 @@ function foody_ajax_load_more() {
 						unset( $page_args['paged'] );
 					}
 				}
+//
+//				if(isset($filter['search']) && !empty($filter['search'])){
+//                    $author_id = foody_search_user_by_name( $filter['search'] );
+//                    if(!empty($author_id)){
+//                        $page_args['author__in'] = [$author_id];
+//                    }
+//                }
 
 				$query = $foody_search->build_query( $filter, $page_args, $sort );
+
 
 				$next = $query->max_num_pages > $page;
 
@@ -77,10 +98,18 @@ function foody_ajax_load_more() {
 
 				$cols  = foody_get_array_default( $_POST, 'cols', 2 );
 				$cols  = intval( $cols );
-				$items = $grid->loop( $foody_posts, $cols, false );
+
+				if(($context == 'category' || $context == 'tag') && isset($_POST['referer']) && $_POST['referer']){
+                    $args['feed_area_id'] = $_POST['referer'];
+                    $items = $grid->loop( $foody_posts, $cols, false , null, [], null, $args);
+
+				}
+				else {
+                    $items = $grid->loop($foody_posts, $cols, false);
+                }
 
 				$response = [
-					'next'  => $next && count( $items ) > 0,
+					'next'  => $next && strlen( $items ) > 0,
 					'items' => $items,
 					'found' => $query->found_posts
 				];

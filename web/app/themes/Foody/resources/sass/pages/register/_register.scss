@@ -1,14 +1,32 @@
 @import "../../layout/content-with-images";
 
+.cover-image{
+  &.register-page {
+    background-color: white;
+
+    > picture {
+      margin: auto;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      img {
+        max-width: 50%;
+      }
+    }
+  }
+}
+
 .register, .login {
 
 
-  .login-title{
-    color: var(--color__primary);
-    font-size: 24px;
-    text-align: right;
-    font-weight: 900;
-  }
+  //.login-title{
+  //  color: var(--color__primary);
+  //  font-size: 24px;
+  //  text-align: right;
+  //  font-weight: 900;
+  //  text-align: right;
+  //}
 
   &.failed {
     .login-failed-alert {
@@ -56,6 +74,8 @@
 
       &.btn-facebook {
         background-color: #3a539f;
+        margin-right: 20px;
+        padding: 0 10px;
         .facebook-icon:after {
           background: url("../images/icons/facebook.svg") no-repeat;
           content: '';
@@ -65,9 +85,19 @@
       }
 
       &.btn-google {
-        background-color: #d35647;
-        .google-icon:after {
-          background: url("../images/icons/google.svg") no-repeat;
+        text-transform: none;
+        border-radius: 2px;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+        background-color: #ffffff;
+        color: #5c5a5a;
+        font-family: Roboto;
+        font-weight: 500;
+        padding: 0 10px;
+        .google-icon:before {
+          content: '';
+          background: url("../images/icons/Google-icon.svg") no-repeat;
+          width: 24px;
+          height: 24px;
         }
       }
     }
@@ -166,7 +196,7 @@
         width: 33%;
         height: 53px;
         border-radius: 3px;
-        background-image: linear-gradient(66deg, #ec3849, #f35644);
+        background-image: linear-gradient(66deg, #ec3849, #e63a2b);
         color: white;
         font-family: $font__assistant;
         font-size: 18px;
@@ -182,11 +212,20 @@
 
       font-family: $font__assistant;
       font-size: 18px;
-      color: #ed3d48;
+      color: var(--color__primary);
 
     }
 
   }
+}
+
+
+.login-title{
+  color: var(--color__primary);
+  font-size: 35px;
+  font-family: 'AlmoniTzar';
+  font-weight: 900;
+  text-align: right;
 }
 
 .welcome {
@@ -208,7 +247,7 @@
     &.btn.btn-primary {
       height: 53px;
       width: 50%;
-      background: linear-gradient(33.82deg, #EC3849 0%, #F35644 100%);
+      background: linear-gradient(33.82deg, #EC3849 0%, #e63a2b 100%);
       padding: 0;
 
     }
@@ -234,7 +273,7 @@
   .campaign-button {
 
     a {
-      border-image-source: linear-gradient(76deg, #ec3849, #f35644);
+      border-image-source: linear-gradient(76deg, #ec3849, #e63a2b);
       margin-top: 10px;
       padding: 12px 30px;
       border: 2px solid #EC3849;
@@ -255,6 +294,16 @@
 }
 
 @include breakpoint(mobileonly) {
+  .cover-image {
+    &.register-page {
+      > picture {
+        img {
+          max-width: unset;
+        }
+      }
+    }
+  }
+
   .register, .login {
     &.failed {
       .login-failed-alert {
@@ -276,6 +325,7 @@
       button {
 
         &.btn-facebook {
+          margin: 0;
         }
 
         &.btn-google {

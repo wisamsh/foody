@@ -26,3 +26,6 @@ global $term_duplicator_process;
 
 /** @var Foody_WhiteLabelAuthorDuplicatorProcess $author_duplicator_process */
 global $author_duplicator_process;
+
+/** @var Foody_WhiteLabelRecipeDuplicatorProcess $recipe_duplicator_process */
+global $recipe_duplicator_process;

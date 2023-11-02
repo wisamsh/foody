@@ -30,13 +30,13 @@ $registered_user_link = $e_book->registered_user_link;
 			<?php if ( is_user_logged_in() && ! empty( $registered_user_link ) ) {
 				echo '<a href="' . $registered_user_link['url'] . '" href="' . $registered_user_link['target'] . '">';
 			} else {
-				echo '<a href="' . $register_link['url'] . '" href="' . $register_link['target'] . '">';
+				echo '<a href="' . $register_link['url'] . '?wcamp=1" href="' . $register_link['target'] . '">';
 			} ?>
             <picture>
                 <source media="(min-width: 415px)" srcset="<?php echo $image ?>">
                 <source media="(max-width: 414px)"
                         srcset="<?php echo $mobile_image ?>">
-                <img src="<?php echo $image ?>">
+                <img src="<?php echo $image ?>" id="camp_photo">
             </picture>
             </a>
 		<?php endif; ?>
@@ -61,7 +61,7 @@ $registered_user_link = $e_book->registered_user_link;
 					<?php echo $content_link['title'] ?>
                 </a>
 			<?php else: ?>
-                <a class="btn btn-primary cta" href="<?php echo $content_link['url'] ?>"
+                <a class="btn btn-primary cta" href="<?php echo $content_link['url'] ?>?wcamp=1"
                    target="<?php echo $content_link['target'] ?>">
 					<?php echo $content_link['title'] ?>
                 </a>
@@ -103,7 +103,7 @@ $registered_user_link = $e_book->registered_user_link;
 			<?php echo $register_lower_link['title'] ?>
         </a>
 	<?php elseif ( ! empty( $register_lower_link ) ): ?>
-        <a class="btn btn-primary cta" href="<?php echo $register_lower_link['url'] ?>"
+        <a class="btn btn-primary cta" href="<?php echo $register_lower_link['url'] ?>?wcamp=1"
            target="<?php echo $register_lower_link['target'] ?>">
 			<?php echo $register_lower_link['title'] ?>
         </a>

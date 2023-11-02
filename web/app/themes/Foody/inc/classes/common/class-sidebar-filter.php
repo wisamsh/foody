@@ -15,6 +15,7 @@ class SidebarFilter {
 
 	const FILTER_SECTIONS_SELECTOR = 'sections';
 
+    private static $instance;
 	private $engine;
 
 	private $filters_post_id = self::FILTER_OPTIONS_ID;
@@ -25,6 +26,15 @@ class SidebarFilter {
 	public function __construct() {
 		$this->engine = new Handlebars;
 	}
+
+    public static function get_instance()
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new SidebarFilter();
+        }
+
+        return self::$instance;
+    }
 
 
 	public function get_filter() {
@@ -37,24 +47,31 @@ class SidebarFilter {
 	}
 
 	public function the_filter( $echo = true ) {
-		$this->load_filters_id();
-		$title        = get_field( 'title', $this->filters_post_id );
-		$accordion_id = 'foody-filter';
+        if ( get_current_blog_id() == 1 ){
+            $this->load_filters_id();
+            $title        = get_field( 'title', $this->filters_post_id );
+            $accordion_id = 'foody-filter';
 
-		$main_accordion_args = array(
-			'title'         => $title,
-			'id'            => $accordion_id,
-			'content'       => $this->get_accordion_content(),
-			'return'        => ! $echo,
-			'title_classes' => 'main-title filter-title',
-			'title_icon'    => 'icon-filter'
-		);
+            $main_accordion_args = array(
+                'title'         => $title,
+                'id'            => $accordion_id,
+                'content'       => $this->get_accordion_content(),
+                'return'        => ! $echo,
+                'title_classes' => 'main-title filter-title',
+                'title_icon'    => 'icon-filter'
+            );
 
-		return foody_get_template_part(
-			get_template_directory() . '/template-parts/common/accordion.php',
-			$main_accordion_args
-		);
-	}
+            return foody_get_template_part(
+                get_template_directory() . '/template-parts/common/accordion.php',
+                $main_accordion_args
+            );
+        }
+
+        else {
+            return ;
+        }
+
+    }
 
 
 	/**
@@ -93,6 +110,52 @@ class SidebarFilter {
                 </div>";
 
 		foreach ( $list['checkboxes'] as $checkbox ) {
+
+
+//Wisam Fix : ==================================================================================================
+
+if(trim($checkbox['value'])==""){
+	global $wpdb;
+	
+	switch($checkbox['type']){
+	
+	case "authors" :
+	$query_auth ="SELECT ID from ". $wpdb->prefix . "users WHERE display_name = '" .$checkbox['title']. "'" ;
+	$res_auth = $wpdb->get_results($query_auth);
+	$checkbox['value'] = $res_auth[0]->ID;
+	break;
+	
+	case "limitations" :
+	$title_lim = trim($checkbox['title']);
+	$query_lim ="SELECT term_id from ". $wpdb->prefix . "terms WHERE LOCATE(name, '".$title_lim."')";
+	$res_lim = $wpdb->get_results($query_lim);
+	
+	if(!empty($res_lim)){
+	$checkbox['value'] =$res_lim[0]->term_id;
+	}
+	break;
+	
+	case "accessories" :
+	$title_acc = trim($checkbox['title']);
+	$query_acc ="SELECT ID from ". $wpdb->prefix . "posts WHERE post_type = 'foody_accessory' AND LOCATE(post_title, '".$title_acc."')";
+	$res_acc = $wpdb->get_results($query_acc);
+	
+	$checkbox['value'] =$res_acc[0]->ID;
+	
+	break;
+	
+	
+	
+	default :
+	$checkbox['value'] = $checkbox['type'];
+	break;
+	
+	}
+	
+	}
+	
+	//END Wisam Fix===================================================================================================
+	
 			$item = $this->engine->render( $template, array(
 				'id'      => $accordion_args['id'] . '_' . $checkbox['value'] . '_' . $checkbox['exclude'],
 				'exclude' => $checkbox['exclude'],
@@ -125,7 +188,81 @@ class SidebarFilter {
 			// a list of filtering sections
 			// as configured in Foody Search Options page
 			// in the admin
-			$filters_list = get_field( 'filters_list', $this->filters_post_id );
+
+           if ('foody_feed_channel' === get_post_type()) {
+               $blocks = get_field( 'blocks', get_the_ID() );
+               $count_manual=0;
+               $count_dynamic=0;
+               foreach ($blocks as $block) {
+                   if ($block['type'] === 'manual' ) {
+                       $count_manual ++;
+                   }
+                   if ($block['type'] === 'dynamic'){
+                       $count_dynamic ++;
+                   }
+               }
+                if ( $count_manual = 1  ) {
+                    if ( $count_dynamic === 0 ) {
+                        if ( get_field('filters_list',get_the_ID()) ) {
+                            $filters_list = get_field( 'filters_list', get_the_ID() );
+                        } else {
+                            $filters_list = get_field( 'filters_list',$this->filters_post_id );
+                        }
+                    }
+
+                }
+
+            } else {
+               if ( is_category() ) {
+                   if ( ! empty($_GET['referer']) ) {
+                       $referer= $_GET['referer'];
+                       $blocks = get_field( 'blocks', $referer );
+                       $count_manual=0;
+                       $count_dynamic=0;
+                       foreach ($blocks as $block) {
+                           if ($block['type'] === 'manual' ) {
+                               $count_manual ++;
+                           }
+                           if ($block['type'] === 'dynamic'){
+                               $count_dynamic ++;
+                           }
+                       }
+                       if ( $count_manual === 1 ) {
+                           if ( $count_dynamic === 0 and !empty(get_field( 'filters_list', $referer )) ){
+                               $filters_list = get_field( 'filters_list', $referer );
+                           } else {
+                               $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                           }
+                       }
+                       else {
+                           $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                       }
+                   } else {
+
+                        global $wp_query;
+                        if ( !empty (get_field('recipe_channel',$wp_query->get_queried_object() )) ){
+                            $recipe_channel= get_field('recipe_channel',$wp_query->get_queried_object() );
+                            if ( !empty (get_field( 'filters_list', $recipe_channel ))){
+                                $filters_list = get_field( 'filters_list', $recipe_channel );
+                            } else {
+                                $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                            }
+
+                        }
+                        else {
+                            $filters_list = get_field( 'filters_list', $this->filters_post_id );
+                        }
+
+                   }
+
+
+               } else {
+                   $filters_list = get_field( 'filters_list', $this->filters_post_id );
+               }
+
+
+            }
+
 
 
 			$lists = array_map( function ( $list ) {
@@ -160,17 +297,18 @@ class SidebarFilter {
 
 
 	public static function parse_search_args_array( $lists ) {
+        if( !empty($lists) ){
+            $lists = array_map( 'SidebarFilter::parse_search_args', $lists );
+            $types = [];
+            foreach ( $lists as $list ) {
+                foreach ( $list as $item ) {
+                    $types[] = $item;
+                }
+            }
 
-		$lists = array_map( 'SidebarFilter::parse_search_args', $lists );
-		$types = [];
+            return $types;
+        }
 
-		foreach ( $lists as $list ) {
-			foreach ( $list as $item ) {
-				$types[] = $item;
-			}
-		}
-
-		return $types;
 	}
 
 	/**
@@ -187,7 +325,7 @@ class SidebarFilter {
 		$type = $list['type'];
 
 		// the items in this section
-		$values = $list['values'];
+		$values = is_array($list['values']) ? $list['values'] : [];
 
 		$exclude_all = $list['exclude_all'];
 
@@ -204,13 +342,16 @@ class SidebarFilter {
 				'title'   => $value_arr['title']
 			];
 
-			$switch_type = $value_arr['switch_type'];
+			if ( isset( $value_arr['switch_type'] ) ) {
+				$switch_type = $value_arr['switch_type'];
 
-			if ( $switch_type ) {
-				$item_type              = $value_arr['value_group'];
-				$checkbox_item['type']  = $item_type['type'];
-				$checkbox_item['value'] = $item_type['value'];
+				if ( $switch_type ) {
+					$item_type              = $value_arr['value_group'];
+					$checkbox_item['type']  = $item_type['type'];
+					$checkbox_item['value'] = $item_type['value'];
+				}
 			}
+
 
 			if ( empty( $checkbox_item['title'] ) ) {
 				$checkbox_item['title'] = self::get_item_title( $checkbox_item['value'], $checkbox_item['type'] );
@@ -275,3 +416,4 @@ class SidebarFilter {
 	}
 
 }
+

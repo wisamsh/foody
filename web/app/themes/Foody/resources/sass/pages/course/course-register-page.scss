@@ -1,0 +1,643 @@
+@import "../../variables-site/colors";
+
+.page-template-foody-course-register {
+
+  #masthead {
+    z-index: 999;
+  }
+
+  #primary {
+    background-color: white;
+
+    .cover-section {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      border-bottom: 1px solid red;
+      padding: 3% 0;
+
+      .host-image {
+        border-radius: 100%;
+        width: 36%;
+        padding-right: 2%;
+
+        img {
+          border-radius: 100%;
+          position: relative;
+          border: 1px solid red;
+        }
+      }
+
+      .course-information {
+        align-self: center;
+        text-align: center;
+        font-size: 17px;
+        font-weight: bold;
+        width: 60%;
+
+        .course-title {
+          font-size: 22px;
+          color: red;
+          text-align: center;
+          margin: 0;
+          font-weight: bold;
+        }
+
+        .course-cover-text {
+          font-size: 20px;
+          line-height: 1rem;
+          white-space: normal;
+          text-align: center;
+          margin: 0;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .form-section:not(:last-child) {
+      padding-bottom: 48%;
+    }
+
+    .form-section {
+      position: relative;
+
+      .form-container {
+        .form-title {
+          text-align: center;
+          margin-top: 3%;
+        }
+
+        .container-fluid {
+          #course-register-form {
+            .form-group {
+              display: flex;
+              flex-direction: column;
+              align-items: baseline;
+              padding: 0;
+
+              label {
+                position: initial;
+                font-size: 16px;
+                color: black;
+              }
+
+              input {
+                width: 100%;
+              }
+            }
+
+            .address{
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
+            }
+          }
+        }
+      }
+
+      .coupon-and-price-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid $color__primary;
+        padding: 0 3%;
+        margin: 5% auto;
+        width: 70%;
+        text-align: center;
+        line-height: 1.5;
+
+        .price-line {
+          font-weight: bold;
+          color: $color__primary;
+        }
+
+        .coupon-line {
+          font-weight: bold;
+        }
+
+        .coupon-and-price {
+          display: flex;
+          flex-direction: column;
+
+          .price-line {
+            font-weight: bold;
+            color: $color__primary;
+          }
+
+          .coupon-line {
+            font-weight: bold;
+          }
+
+          .coupon-input-container {
+            #redeem-coupon {
+              border: 1px solid var(--color__primary);;
+              border-radius: 5px;
+              width: 51%;
+              text-align: center;
+              display: inline-block;
+              background: var(--color__primary);;
+              color: white;
+              font-weight: bold;
+              margin: 2%;
+              padding: 2%;
+              position: relative;
+              font-size: 13px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      .newsletter-and-terms {
+        display: flex;
+        flex-direction: column;
+        text-align: right;
+
+        .checkbox-label {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+
+        input {
+          height: 17px;
+          width: 5%;
+        }
+
+        label {
+          width: 92%;
+          white-space: normal;
+          font-size: 12px;
+          font-weight: 500;
+
+          .terms-link {
+            text-decoration: underline !important;
+          }
+        }
+      }
+
+      .terms-error {
+        text-align: right;
+        display: block;
+        color: $color__primary;
+        font-family: Ploni;
+        font-weight: bold;
+        font-size: 12px;
+      }
+
+      .button-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 8% 0 0 0;
+        width: 100%;
+        height: 59px;
+        z-index: 2;
+
+        .bit-pay {
+          border: 1px solid dodgerblue;
+          border-radius: 5px;
+          text-align: center;
+          display: inline-block;
+          background-image: linear-gradient(62deg, #5EB3B9,#355381);
+          color: white;
+          font-weight: bold;
+          margin: 0 2%;
+          padding: 2% 3% 2% 4%;
+          position: relative;
+          font-size: 13px;
+          cursor: pointer;
+        }
+
+        .credit-card-pay,
+        .free-pay{
+          border: 1px solid $color__primary;
+          border-radius: 5px;
+          width: 45%;
+          text-align: center;
+          display: inline-block;
+          background: $color__primary;
+          color: white;
+          font-weight: bold;
+          margin: 0 2%;
+          padding: 2% 3% 2% 12%;
+          position: relative;
+          font-size: 13px;
+          cursor: pointer;
+
+          img {
+            width: 20%;
+            position: absolute;
+            left: 6%;
+            bottom: 32%;
+          }
+        }
+
+        .free-pay{
+          padding: 2% !important;
+          margin: auto 2%;
+        }
+
+        #bitcom-button-container {
+          width: 45%;
+          display: inline-block;
+          height: inherit;
+
+          #payment-button {
+            background: linear-gradient(darkblue, darkturquoise);
+          }
+        }
+      }
+
+      .bit-button-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 3% 0;
+        flex-direction: column;
+
+        .bit-btn-text {
+          text-align: right;
+          font-size: 14px;
+          font-weight: bold;
+          text-decoration: underline;
+        }
+
+        .bit-notice-text{
+          color: $color__primary;
+          font-weight: bold;
+          text-align: right;
+        }
+
+        #bitcom-button-container-mobile {
+          background: url("../images/bit_button.svg") center no-repeat ;
+          border-radius: 5%;
+          content: ' ';
+          height: 55px;
+          margin-top: 3%;
+          width: 100%;
+        }
+      }
+    }
+
+
+    .bottom-image {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50%;
+    }
+
+    .invoice-notice {
+      float: right;
+      background: white;
+      width: 100%;
+      text-align: right;
+      position: relative;
+      font-weight: bold;
+      font-size: 11px;
+      padding-bottom: 4%;
+
+      a {
+        text-decoration: underline !important;
+        color: blue !important;
+      }
+
+      a:hover {
+        color: red !important;
+      }
+
+      a:active {
+        color: red !important;
+      }
+    }
+
+  }
+
+  @media only screen and (orientation: landscape) {
+    /* css rules */
+    #primary {
+      .form-section {
+        .button-container {
+          .credit-card-pay,
+          .free-pay {
+            width: 40%;
+          }
+        }
+      }
+    }
+  }
+
+  #coupon-dialog-expired,
+  #coupon-dialog-unavailable {
+    text-align: center;
+    .modal-dialog{
+      top: 30%;
+
+      .modal-header{
+        background: $color__primary;
+        color: white;
+        display: flex;
+        flex-direction: row-reverse;
+
+        button{
+          color: white;
+          padding: 0 !important;
+          margin: -1rem -1rem -1rem -1rem !important;
+        }
+
+        .modal-title{
+          margin: 0 auto;
+          padding-bottom: 2%;
+        }
+      }
+
+      .modal-body{
+        color: $color__primary;
+        font-weight: bold;
+      }
+    }
+  }
+
+}
+
+@include breakpoint(desktop) {
+  .page-template-foody-course-register {
+    #primary {
+      background-color: white;
+
+      .cover-section {
+        .host-image {
+          padding-left: 2%;
+
+          img {
+            right: 0;
+            width: 55%;
+          }
+        }
+
+        .course-information {
+          .course-title {
+            font-size: 38px;
+          }
+
+          .course-cover-text {
+            font-size: 26px;
+            line-height: 1.5rem;
+            white-space: pre;
+          }
+        }
+      }
+
+      .form-section:not(:last-child) {
+        padding-bottom: 22%;
+      }
+
+      .form-section {
+        .form-container {
+          .form-title {
+            margin-top: 1%;
+          }
+
+          .container-fluid {
+            #course-register-form {
+              padding: 0 15%;
+              flex-direction: column;
+            }
+          }
+        }
+
+        // no coupon
+        //.coupon-and-price-container {
+        //  padding: 0 1%;
+        //  margin: 3% auto;
+        //}
+
+        // have coupon
+        .coupon-and-price-container {
+          align-self: center;
+          margin: 5% 0;
+          width: 50%;
+
+          .coupon-and-price {
+            margin: 5% 0;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            text-align: center;
+            line-height: 1.5;
+
+            .coupon-input-container {
+              display: flex;
+              flex-direction: row;
+              margin-top: 3%;
+              justify-content: space-evenly;
+
+              span {
+                padding: 0;
+              }
+
+              #redeem-coupon {
+                border: 1px solid var(--color__primary);;
+                border-radius: 5px;
+                width: 51%;
+                text-align: center;
+                display: inline-block;
+                background: var(--color__primary);;
+                color: white;
+                font-weight: bold;
+                margin: 0 2%;
+                padding: 2%;
+                position: relative;
+                font-size: 13px;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+
+        .newsletter-and-terms {
+          padding: 0;
+
+          input {
+            width: unset;
+          }
+
+          label {
+            width: 95%;
+            white-space: pre;
+            font-size: 16px;
+            font-weight: 500;
+          }
+        }
+
+        .select_payment_method_section {
+          width: fit-content;
+          margin: 4% 0;
+
+          #dropdownMenuLink {
+            background: white;
+            color: red;
+            font-size: 17px;
+            border: 1px solid var(--color__primary);;
+            border-radius: 5px;
+            width: 115%;
+
+            .dropdown-menu {
+              left: 0;
+              right: 0;
+            }
+          }
+
+          .dropdown-toggle::after {
+            position: relative;
+            right: 7%;
+          }
+        }
+
+        .terms-error {
+          text-align: right;
+          display: block;
+          color: $color__primary;
+          font-family: Ploni;
+          font-weight: bold;
+        }
+
+        .button-container {
+          height: 52px;
+
+          .credit-card-pay,
+          .free-pay {
+            width: 28%;
+            padding: 2% 1% 2% 6%;
+
+            img {
+              bottom: 30%;
+              left: 3%;
+            }
+          }
+
+          #bitcom-button-container {
+            width: 28%;
+            display: inline-block;
+            height: inherit;
+
+            #payment-button {
+              background: linear-gradient(darkblue, darkturquoise);
+            }
+          }
+        }
+
+        .bit-button-container {
+          width: 50%;
+          margin: 3% 19%;
+
+          .bit-btn-text {
+            font-size: 16px;
+          }
+
+          #bitcom-button-container {
+            background: none;
+            width: 59%;
+          }
+        }
+      }
+
+      .bottom-image {
+        width: 30%;
+      }
+    }
+
+
+    .invoice-notice {
+      font-size: 15px;
+      padding-bottom: 2%;
+    }
+  }
+}
+
+.page-template-foody-courses-thank-you {
+  &:not(.foody-payment-bit):not(.foody-payed){
+    #masthead,
+    footer {
+      display: none;
+    }
+
+    #primary {
+      background: white;
+
+      .site-content {
+        padding-top: 0;
+      }
+
+
+      .foody-content {
+        min-height: 1500px;
+
+        .thank-you-text {
+          white-space: pre-wrap;
+          text-align: center;
+          font-size: 1.4rem;
+          padding: 5%;
+          min-height: 1500px;
+        }
+      }
+    }
+  }
+}
+.page-template-foody-courses-thank-you {
+  &.foody-payment-bit {
+
+    #primary {
+      background: white;
+
+      .site-content {
+        padding-top: 0;
+      }
+
+
+      .foody-content {
+        //min-height: 1500px;
+
+        .thank-you-text {
+          white-space: pre-wrap;
+          text-align: center;
+          font-size: 1.4rem;
+          padding: 5%;
+          //min-height: 1500px;
+        }
+      }
+    }
+  }
+
+  &.foody-payed {
+
+    #primary {
+      background: white;
+
+      .site-content {
+        padding-top: 0;
+      }
+
+
+      .foody-content {
+        //min-height: 1500px;
+
+        .thank-you-text {
+          white-space: pre-wrap;
+          text-align: center;
+          font-size: 1.4rem;
+          padding: 5%;
+          //min-height: 1500px;
+        }
+      }
+    }
+  }
+}
+
+.page-template-foody-courses-cardcom-canceled {
+  #masthead,
+  footer {
+    display: none;
+  }
+}

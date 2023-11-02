@@ -14,7 +14,7 @@
             <stop offset="100%" stop-color="#A92733"/>
         </linearGradient>
         <linearGradient id="c" x1="50%" x2="50%" y1="0%" y2="100%">
-            <stop offset="0%" stop-color="#F35644"/>
+            <stop offset="0%" stop-color="#ec3849"/>
             <stop offset="100%" stop-color="#EC3849"/>
         </linearGradient>
     </defs>

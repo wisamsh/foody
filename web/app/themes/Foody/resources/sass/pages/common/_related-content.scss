@@ -2,6 +2,11 @@
 
   .related-content-title {
     padding: 0 15px;
+    color: var(--color__text-title);
+    font-family: AlmoniTzar;
+    font-weight: 900;
+    font-size: 30px;
+    text-align: right;
   }
 
   .related-content {
@@ -19,7 +24,7 @@
 
       .image-container {
         position: relative;
-        clip-path: inset(0 round 4px);
+        // clip-path: inset(0 round 4px);
 
         img {
           width: 100%;
@@ -28,15 +33,17 @@
 
       .details {
         .post-title {
-          font-family: $font__assistant;
-          font-size: 20px;
-          font-weight: bold;
+          font-family: PloniMedium;
+          font-size: 16px;
+          font-weight: normal;
           margin-bottom: 0;
+          margin-top: 7px;
         }
 
         .author-name {
           unicode-bidi: isolate;
           margin-left: 16px;
+          font-size: 18px;
         }
 
         .view-count, .author-name {
@@ -50,6 +57,11 @@
             margin-right: 5px;
           }
         }
+      }
+      .excerpt{
+        font-size: 16px;
+        font-family: Ploni;
+        margin-top: 5px;
       }
     }
   }

@@ -6,14 +6,15 @@
 
     .wp-caption {
       text-align: center;
+
+      .wp-caption-text {
+        text-align: center;
+      }
+
       &:not(.alignleft) {
         &:not(.alignright) {
           width: 100%;
         }
-      }
-
-      .wp-caption-text {
-        text-align: center;
       }
     }
   }
@@ -32,6 +33,23 @@
   .footab-container {
     padding: 0 15px;
   }
+
+  .recipe-shortcode-container {
+    .details-container {
+      .details{
+        margin-top: 20px;
+      }
+overflow: hidden;
+      div:not(.details) {
+        .empty-star, .full-star, .half-star, .star {
+          width:24px;
+        }
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 
 @include breakpoint(mobileonly) {
@@ -47,15 +65,18 @@
             width: 100%;
           }
         }
+
         &.aligncenter {
           margin-left: auto;
           margin-right: auto;
         }
+
         &.alignnone {
           width: 100vw;
         }
       }
     }
+
     .comments {
       max-width: 95%;
       margin: 0 auto;

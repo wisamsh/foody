@@ -14,7 +14,7 @@ input[type="datetime"],
 input[type="datetime-local"],
 input[type="color"],
 textarea {
-  font-family: $font__assistant;
+  font-family: Ploni;
   color: var(--color__text-input);
   border: 1px solid var(--color__border-input);
   border-radius: 3px;
@@ -58,6 +58,7 @@ div.checkbox {
       text-align: right;
       line-height: $input-height;
       padding-right: 15px;
+      padding-left: 5%;
 
       // Autoprefixer
       //noinspection CssInvalidPseudoSelector
@@ -145,6 +146,11 @@ $mdb-checkbox-size: 15px;
 
         }
       }
+    }
+
+    &.foody-pan-select {
+      width:267px !important;
+
     }
   }
 }
@@ -298,8 +304,12 @@ label.error {
   font-weight: bold;
 }
 
-.wpcf7-response-output {
-  //display: none !important;
+.foody-content .wpcf7-response-output {
+  display: inline-block;
+  float: right;
+  font-size: 20px;
+  margin-top: 12px;
+  text-align: right;
 }
 
 .wpcf7 {
@@ -310,4 +320,8 @@ label.error {
 
 .wpcf7-not-valid-tip {
   font-weight: bold;
+}
+
+.newsletter .wpcf7-response-output {
+  text-align: right;
 }

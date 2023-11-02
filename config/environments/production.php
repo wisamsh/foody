@@ -22,3 +22,6 @@ define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
 define( 'WP_DEFAULT_THEME', 'Foody');
 define('EWWW_IMAGE_OPTIMIZER_TOOL_PATH','/home/ubuntu/foody-shared-efs/plugins/ewww/');
+
+define('JWT_AUTH_SECRET_KEY', env('JWT_SECRET')); // Replace 'your-top-secret-key' with an actual secret key.
+define('JWT_AUTH_CORS_ENABLE', true);

@@ -53,7 +53,7 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
 		);
 	}
 
-	public function the_featured_content() {
+	public function the_featured_content($shortcode = false) {
 		$image = get_field( 'cover_image', $this->getId() );
 
 		?>
@@ -122,16 +122,19 @@ class Foody_Channel extends Foody_Post implements Foody_Topic, Foody_ContentWith
 		foody_get_template_part( get_template_directory() . '/template-parts/common/foody-tabs.php', $tabs );
 
 		// mobile filter
-		foody_get_template_part( get_template_directory() . '/template-parts/common/mobile-filter.php', [
-			'sidebar' => array( $this, 'sidebar' ),
-			'wrap'    => true
-		] );
+        if ( get_current_blog_id() == 1 ) {
+            foody_get_template_part( get_template_directory() . '/template-parts/common/mobile-filter.php', [
+                'sidebar' => array( $this, 'sidebar' ),
+                'wrap'    => true
+            ] );
+        }
+
 
 	}
 
 	// Foody_Topic
 
-	function topic_image() {
+	function topic_image($size = 96) {
 		return $this->getImage();
 	}
 

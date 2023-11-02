@@ -17,7 +17,8 @@ function foody_team_shortcode( $atts ) {
 		'max'           => 1000,
 		'grid_col_span' => 0,
 		'show_title'    => false,
-		'allow_sort'    => false
+		'allow_sort'    => false,
+        'type'          => null
 	), $atts ) );
 
 

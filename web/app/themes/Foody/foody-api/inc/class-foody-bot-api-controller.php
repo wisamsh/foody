@@ -54,6 +54,7 @@ class Foody_BotAPIController extends Foody_BaseAPIController {
 			'authors',
 			'accessories',
 			'tags',
+			'categories',
 			'techniques',
 			'limitations'
 		];
@@ -132,7 +133,13 @@ class Foody_BotAPIController extends Foody_BaseAPIController {
 
 		$results = $this->bot_handler->getResults( $params );
 
-		return new WP_REST_Response( $results );
+		$response = [
+			'items' => $results
+		];
+
+		$response = json_decode( json_encode( $response,JSON_UNESCAPED_UNICODE),JSON_UNESCAPED_UNICODE);
+
+		return new Foody_REST_Response( $response, 200, [ 'Content-Type:application/json','Content-Encoding:utf-8' ] );
 	}
 
 
@@ -158,6 +165,7 @@ class Foody_BotAPIController extends Foody_BaseAPIController {
 		$defaults = [
 			'ingredients' => [],
 			'tags'        => [],
+			'categories'  => [],
 			'accessories' => [],
 			'techniques'  => [],
 			'authors'     => [],

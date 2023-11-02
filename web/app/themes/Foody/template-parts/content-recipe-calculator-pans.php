@@ -21,14 +21,6 @@ $options = array_map( function ( $conversion ) {
 		$pan = get_term( $conversion['pan'], 'pans' );
 
 		if ( ! empty( $pan ) && ! is_wp_error( $pan ) ) {
-			if ( is_multisite() && ! is_main_site() ) {
-				switch_to_blog( 1 );
-				$pan = get_term( $conversion['pan'], 'pans' );
-				restore_current_blog();
-			}
-		}
-
-		if ( ! empty( $pan ) && ! is_wp_error( $pan ) ) {
 			return [
 				'value' => $conversion['conversion_rate'],
 				'label' => $pan->name,
@@ -64,9 +56,14 @@ $select_args = [
 		'original' => true
 	]
 ];
-
-foody_get_template_part( get_template_directory() . '/template-parts/common/foody-select.php', $select_args )
-
+if ( empty( $conversions)){
+	?>
+	<div class="filter-option" > <?php echo $pan->name; ?> </div>
+<?php
+}
+else {
+	foody_get_template_part(get_template_directory() . '/template-parts/common/foody-select.php', $select_args);
+}
 
 ?>
 

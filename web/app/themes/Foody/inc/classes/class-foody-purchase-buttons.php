@@ -37,6 +37,7 @@ class Foody_PurchaseButtons {
 	}
 
 	public static function the_button( $button, $echo = true ) {
+
 		if ( ! empty( $button['image'] ) ) {
 			$images = [
 				'mobile_image' => $button['image']
@@ -47,7 +48,7 @@ class Foody_PurchaseButtons {
 
 			$content = foody_get_template_part(
 				get_template_directory() . '/template-parts/common/picture.php',
-				[ 'return' => true, 'images' => $images ]
+				[ 'return' => true, 'images' => $images]
 			);
 		} else {
 			$color      = $button['color'];
@@ -68,89 +69,42 @@ class Foody_PurchaseButtons {
 	 * @param int $post
 	 *
 	 * @return array purchase buttons relevant to post
+	 * @throws Exception
 	 */
 	public function get_buttons_for_post( $post ) {
 		$buttons = [];
-		if ( ! empty( $this->options ) ) {
-			// only allow button with defined filters
-			$options = array_filter( $this->options, function ( $option ) {
-				return ! empty( $option['filters_list'] );
-			} );
+        $args['types'] = [];
+        $filters_rule_mapping = Foody_FiltersRuleMapping::get_instance();
+        $rules_list = $filters_rule_mapping->getRules();
 
-			foreach ( $options as $option ) {
+        if($rules_list !== false) {
 
+            if (!empty($this->options)) {
+                // only allow button with defined filters
+                $options = array_filter($this->options, function ($option) {
+                    return !empty($option['filter']);
+                });
 
-				$filters = [];
+                foreach ($options as $option) {
 
-				// consider all filters lists
-				foreach ( $option['filters_list'] as $list ) {
-					if ( is_array( $list ) ) {
-						$filters = array_merge( $filters, $list );
-					}
-				}
+                    $filter_id = $option['filter']->ID;
 
-				$args = [
-					'types' => SidebarFilter::parse_search_args( $filters )
-				];
+                    // $post exists in query, add
+                    // button options to buttons
+                    if (isset($rules_list[$filter_id]) && !empty($rules_list[$filter_id]) && in_array( $post, $rules_list[$filter_id])) {
+                        $copy = array_merge_recursive([], $option);
+                        unset($copy['filter']);
+                        $buttons[] = $copy;
+                    }
+                }
 
-				// purchase_buttons will invoke purchase_buttons ffn
-				// in class Foody_Query
-				$foody_search = new Foody_Search( 'purchase_buttons', [ 'id' => $post ] );
-
-				$result = $foody_search->query( $args );
-
-				// $post exists in query, add
-				// button options to buttons
-				if ( ! empty( $result['posts'] ) ) {
-					$copy = array_merge_recursive( [], $option );
-					unset( $copy['filters_list'] );
-					$buttons[] = $copy;
-				}
-			}
-
-		}
-
+            }
+        }
 		return $buttons;
-
 	}
 
-	/*
-	 *
-		[
-		  {
-			"title": "כפתור",
-			"link": {
-			  "title": "",
-			  "url": "http://foody.co.il/%d7%90%d7%99%d7%99%d7%98%d7%9e%d7%99%d7%9d/",
-			  "target": ""
-			},
-			"color": "#26a88e",
-			"image": false,
-			"desktop_image": false,
-			"filters_list": [
-			  {
-				"title": "",
-				"type": "categories",
-				"values": [
-				  {
-					"title": "",
-					"value": 33,
-					"exclude": true,
-					"value_group": {
-					  "type": [],
-					  "value": false
-					},
-					"switch_type": false
-				  }
-				],
-				"exclude_all": false
-			  }
-			]
-		  }
-		]
-	 * */
 	private function load_options() {
-		$options       = get_field( 'buttons', 'foody_purchase_options' );
+		$options       = get_field( 'buttons', 'foody_purchase_options-new' );
 		$this->options = $options;
 	}
 }

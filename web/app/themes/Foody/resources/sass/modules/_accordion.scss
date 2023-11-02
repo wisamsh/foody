@@ -9,14 +9,13 @@
       margin-left: 15px;
     }
 
-    h5 {
+    h5 , div.filter-title-h5{
       display: flex;
       a[data-toggle="collapse"] {
-
+        font-family: PloniMedium;
         width: 100%;
         color: var(--color__text-main);
-        font-size: 20px;
-        font-weight: 900;
+        font-size: 21px;
         letter-spacing: -0.06px;
         //line-height: 23px;
         display: inline-flex;
@@ -32,8 +31,10 @@
         }
 
         &.main-title {
+          font-size: 30px;
+          font-family: AlmoniTzar;
+          font-weight: 600 !important;
           color: var(--color__primary);
-          font-size: 22px;
           padding-right: 10px;
         }
 
@@ -73,7 +74,7 @@
       i + .main-title {
       }
 
-      h5 {
+      h5 div.filter-title-h5{
         a[data-toggle="collapse"] {
 
           &:before {
@@ -119,7 +120,7 @@
 
       }
 
-      h5 {
+      h5 div.filter-title-h5{
 
         a[data-toggle="collapse"] {
 
@@ -159,7 +160,7 @@
         i + .main-title {
         }
 
-        h5 {
+        h5 ,div.filter-title-h5{
           a[data-toggle="collapse"] {
 
             &:before {

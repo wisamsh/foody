@@ -22,8 +22,8 @@
           }
         }
         &.essb_link_facebook {
-           a {
-             background-color: var(--color__social) !important;
+          a {
+            background-color: var(--color__social) !important;
 
             &:hover {
               background-color: var(--color__facebook);
@@ -37,6 +37,15 @@
 
             &:hover {
               background-color: #c8232c;
+            }
+          }
+        }
+        &.essb_link_gmail {
+          a {
+            background-color: var(--color__social) !important;
+
+            &:hover {
+              background-color: #3a3a3a;
             }
           }
         }

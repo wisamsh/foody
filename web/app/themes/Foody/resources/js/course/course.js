@@ -2,6 +2,11 @@
  * Created by omerfishman on 14/7/19.
  */
 
+if($('.content-area > .course-cover .additional-data .post-ratings > img').length){
+    $.each($('.content-area > .course-cover .additional-data .post-ratings > img'), function (indexArr) {
+        $(this).before('<span class="ratings-index">' + (indexArr+1) + '</span>');
+    });
+}
 
 jQuery(document).ready(($) => {
 

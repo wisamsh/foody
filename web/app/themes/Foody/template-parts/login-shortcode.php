@@ -24,9 +24,7 @@ $foody_lost_password = isset( $_REQUEST['checkemail'] ) && $_REQUEST['checkemail
     <span>
     משתמשים חדשים?
 </span>
-
     <a class="go-to-register" href="<?php echo get_permalink( get_page_by_path( 'הרשמה' ) ) ?>">הירשמו</a>
-
 </p>
 <?php
 echo do_shortcode( '[wordpress_social_login]' );
@@ -37,14 +35,15 @@ echo do_shortcode( '[wordpress_social_login]' );
 
         <div class="row">
 
-            <div class="row col-12 justify-content-between gutter-0 buttons">
-
-                <button class="btn btn-google col-12 col-sm-5" aria-label="google">
+            <div class="row col-12 justify-content-center gutter-0 buttons">
+                <?php if (get_option('foody_show_google_login') != "") { ?>
+                    <button class="btn btn-google col-12 col-sm-5" aria-label="google">
                     <span>
-                        <?php echo __( 'התחברו דרך גוגל', 'foody' ) ?>
+                        <?php echo __('להמשיך עם Google', 'foody') ?>
                     </span>
-                    <i class="icon-Shape1"></i>
-                </button>
+                        <i class="google-icon"></i>
+                    </button>
+                <?php } ?>
                 <button class="btn btn-facebook col-12 col-sm-5" aria-label="facebook">
                     <span>
                         <?php echo __( 'התחברו דרך פייסבוק', 'foody' ) ?>
@@ -117,13 +116,38 @@ echo do_shortcode( '[wordpress_social_login]' );
                     </button>
                 </div>
 
-				<?php
-				$redirect_to = get_permalink();
-				if ( strpos( $redirect_to, 'התחברות' ) !== false ) {
-					$redirect_to = home_url();
-				}
-				?>
+                <?php
 
+                $queried_object = get_queried_object();
+                // redirect to category/tag page
+                if(is_category() || is_tag()){
+                    $redirect_to =  get_term_link($queried_object);
+                }
+                // redirect to author page
+                elseif (is_author()){
+                    if(isset($queried_object->ID)) {
+                        $redirect_to = get_author_posts_url($queried_object->ID);
+                    } else{
+                        $redirect_to = home_url();
+                    }
+                }
+                // redirect to post page
+                else {
+                    $redirect_to = get_permalink();
+                }
+                // redirect to home page
+                if ( strpos( $redirect_to, 'התחברות' ) !== false ) {
+                    $redirect_to = home_url();
+                }
+
+                if($redirect_to === home_url() || $redirect_to === home_url().'/' || $redirect_to === rtrim(home_url(), '/')){
+                    if(strpos($redirect_to, '?') === false){
+                        $redirect_to = $redirect_to . '?logister_popup=1';
+                    } else {
+                        $redirect_to = $redirect_to . '&logister_popup=1';
+                    }
+                }
+                ?>
                 <input type="hidden" name="redirect_to" value="<?php echo $redirect_to; ?>">
 
             </form>

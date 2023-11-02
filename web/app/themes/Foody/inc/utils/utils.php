@@ -44,85 +44,88 @@ function view_count_display( $number, $precision = 0, $divisors = null, $label =
 	// Either way, use the last defined value for $divisor.
 	return number_format( $number / $divisor, $precision ) . sprintf( '<span class="view-count">' . $label . '</span>', $shorthand );
 }
+function foody_get_commercial_rules($rules, $recipe_id = false){
+    // Filter rules - feed channel rules must be shown only under the correct feed channel.
+    // Filter rules - date limited rules must be shown only when time is right.
+    $rules = array_filter( $rules, function ( $rule ) use ($recipe_id) {
+        $rule_id   = $rule['rule_id'];
+        $rule_type = get_field( 'type', $rule_id );
+
+        if ( $rule_type == 'area' ) {
+            $feed_area_id = $recipe_id ? get_field('recipe_channel', $recipe_id) : get_field('recipe_channel') ;
+            if ( isset( $_GET['referer']) || $feed_area_id ) {
+
+                $rule_areas = get_field( 'comm_rule_area', $rule_id );
+
+                // Make rule areas an array of IDs
+                $rule_areas = array_map( function ( $area ) {
+                    return $area->ID;
+                }, $rule_areas );
+
+                $referer_post = isset( $_GET['referer']) ? $_GET['referer'] : $feed_area_id;
+
+                if ( ! empty( $referer_post ) ) {
+                    if ( ! in_array( $referer_post, $rule_areas ) ) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        $emptyDate = false;
+
+        $from = get_field( 'from', $rule_id );
+        $to   = get_field( 'to', $rule_id );
+        if ( empty( $from ) && empty( $to ) ) {
+            $emptyDate = true;
+        } else {
+            $from = str_replace( '/', '-', $from );
+            $to   = str_replace( '/', '-', $to );
+        }
+
+        // Should show according to date
+        if ( $emptyDate || ( strtotime( $from ) <= strtotime( 'now' ) && strtotime( $to ) >= strtotime( 'now' ) ) ) {
+            return true;
+        } else {
+            return false;
+        }
+
+        return true;
+    } );
+
+    // Filter rules by order - greatest order is the one to be shown.
+    $orders = [];
+
+    array_map( function ( $rule ) use ( &$orders ) {
+        $order                      = get_post_meta( $rule['rule_id'], 'menu_order', true );
+        $orders[ $rule['rule_id'] ] = $order;
+
+    }, $rules );
+
+    uasort( $orders, function ( $a, $b ) {
+        if ( $a == $b ) {
+            return 0;
+        }
+
+        return ( $a < $b ) ? - 1 : 1;
+    } );
+
+    $rules = array_filter( $rules, function ( $rule ) use ( $orders ) {
+        return $rule['rule_id'] == key( $orders );
+    } );
+
+    return $rules;
+}
 
 function foody_print_commercial_rules( $rules ) {
 
 	$sponsored_ingredient_container = '';
 
 	if ( ! empty( $rules ) ) {
-
-
-		// Filter rules - feed channel rules must be shown only under the correct feed channel.
-		// Filter rules - date limited rules must be shown only when time is right.
-		$rules = array_filter( $rules, function ( $rule ) {
-			$rule_id   = $rule['rule_id'];
-			$rule_type = get_field( 'type', $rule_id );
-
-			if ( $rule_type == 'area' ) {
-				if ( isset( $_GET['referer'] ) ) {
-
-					$rule_areas = get_field( 'comm_rule_area', $rule_id );
-
-					// Make rule areas an array of IDs
-					$rule_areas = array_map( function ( $area ) {
-						return $area->ID;
-					}, $rule_areas );
-
-					$referer_post = $_GET['referer'];
-
-					if ( ! empty( $referer_post ) ) {
-						if ( ! in_array( $referer_post, $rule_areas ) ) {
-							return false;
-						}
-					} else {
-						return false;
-					}
-				} else {
-					return false;
-				}
-			}
-
-			$emptyDate = false;
-
-			$from = get_field( 'from', $rule_id );
-			$to   = get_field( 'to', $rule_id );
-			if ( empty( $from ) && empty( $to ) ) {
-				$emptyDate = true;
-			} else {
-				$from = str_replace( '/', '-', $from );
-				$to   = str_replace( '/', '-', $to );
-			}
-
-			// Should show according to date
-			if ( $emptyDate || ( strtotime( $from ) <= strtotime( 'now' ) && strtotime( $to ) >= strtotime( 'now' ) ) ) {
-				return true;
-			} else {
-				return false;
-			}
-
-			return true;
-		} );
-
-		// Filter rules by order - greatest order is the one to be shown.
-		$orders = [];
-
-		array_map( function ( $rule ) use ( &$orders ) {
-			$order                      = get_post_meta( $rule['rule_id'], 'menu_order', true );
-			$orders[ $rule['rule_id'] ] = $order;
-
-		}, $rules );
-
-		uasort( $orders, function ( $a, $b ) {
-			if ( $a == $b ) {
-				return 0;
-			}
-
-			return ( $a < $b ) ? - 1 : 1;
-		} );
-
-		$rules = array_filter( $rules, function ( $rule ) use ( $orders ) {
-			return $rule['rule_id'] == key( $orders );
-		} );
 
 		$has_image             = false;
 		$sponsored_ingredients = [];
@@ -198,8 +201,11 @@ function foody_print_commercial_rules( $rules ) {
 		}
 
 		$sponsored_ingredient_container_classes = [ 'sponsors-container' ];
-		if ( ! $has_image ) {
-			$sponsored_ingredient_container_classes[] = 'sponsors-without-image';
+		if ( ! $has_image  || !($show_product || $show_sponsor_brand || $show_sponsor) ) {
+		    //check if more the one image
+		    if(!(($show_product_logo && $show_sponsor_brand_logo) || ($show_product_logo && $show_sponsor_logo) || ($show_sponsor_brand_logo && $show_sponsor_logo) )) {
+                $sponsored_ingredient_container_classes[] = 'sponsors-without-image';
+            }
 		}
 
 		$sponsored_ingredient_container = '<div class="' . implode( ' ', $sponsored_ingredient_container_classes ) . '">';

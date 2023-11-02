@@ -47,20 +47,26 @@ class Foody_Blocks {
 
 		/** @var WP_Post $filter_post */
 		$filter_post = isset( $block['filter'] ) ? $block['filter'] : null;
+        $filters_rule_mapping = Foody_FiltersRuleMapping::get_instance();
+        $rules_list = $filters_rule_mapping->getRules();
 
 
 		if ( ! empty( $filter_post ) && $filter_post ) {
-
-			$filter = get_field( 'filters_list', $filter_post->ID );
-
-			$types = SidebarFilter::parse_search_args_array( $filter );
-
-			$args = [
-				'types' => $types,
-				'sort'  => 'popular_desc'
-			];
-
-			$posts = $this->foody_search->query( $args )['posts'];
+		    if(isset($rules_list[$filter_post->ID]) && !empty($rules_list[$filter_post->ID])){
+		        foreach ($rules_list[$filter_post->ID] as $id){
+                    array_push($posts, get_post($id));
+                }
+            }
+//			$filter = get_field( 'filters_list', $filter_post->ID );
+//
+//			$types = SidebarFilter::parse_search_args_array( $filter );
+//
+//			$args = [
+//				'types' => $types,
+//				'sort'  => 'popular_desc'
+//			];
+//
+//			$posts = $this->foody_search->query( $args )['posts'];
 		}
 
 		return $posts;
@@ -96,20 +102,34 @@ class Foody_Blocks {
 
 			if ( ! empty( $posts ) && is_array( $posts ) ) {
 				$posts = array_map( 'Foody_Post::create', $posts );
-				if ( count( $posts ) > 4 ) {
-					$posts = array_slice( $posts, 0, 4 );
+				if ( count( $posts ) > $block['recipes_amount']) {
+					$posts = array_slice( $posts, 0, $block['recipes_amount'] );
 				}
-				$block_content = foody_get_template_part( get_template_directory() . '/template-parts/common/foody-grid.php', [
-					'id'     => uniqid(),
-					'posts'  => $posts,
-					'cols'   => 2,
-					'more'   => false,
-					'header' => [
-						'title' => ''
-					],
-					'return' => true
-				] );
-
+				if(isset($block['feed_area_id']) && $block['feed_area_id']){
+                    $block_content = foody_get_template_part( get_template_directory() . '/template-parts/common/foody-grid.php', [
+                        'id'     => uniqid(),
+                        'posts'  => $posts,
+                        'cols'   => 2,
+                        'more'   => false,
+                        'header' => [
+                            'title' => ''
+                        ],
+                        'return' => true,
+                        'feed_area_id' => $block['feed_area_id']
+                    ] );
+                }
+				else {
+                    $block_content = foody_get_template_part(get_template_directory() . '/template-parts/common/foody-grid.php', [
+                        'id' => uniqid(),
+                        'posts' => $posts,
+                        'cols' => 2,
+                        'more' => false,
+                        'header' => [
+                            'title' => ''
+                        ],
+                        'return' => true
+                    ]);
+                }
 				$see_more_link = $block['see_more_link'];
 				if ( empty( $see_more_link ) ) {
 					$see_more_link = [ 'url' => get_permalink( $filter_post->ID ) ];
@@ -156,6 +176,7 @@ class Foody_Blocks {
 				 */
 				extract( $item );
 
+				$disable_referrer = isset($item['disable_referrer']) ? $item['disable_referrer'] : false;
 
 				if ( empty( $title ) ) {
 					$title = $category->name;
@@ -186,7 +207,8 @@ class Foody_Blocks {
 				}
 				$link      = $link['url'];
 				$return    = true;
-				$item_args = compact( 'title', 'image', 'link', 'target', 'mobile_image', 'return' );
+
+				$item_args = compact( 'title', 'image', 'link', 'target', 'mobile_image', 'return', 'disable_referrer' );
 
 				return $item_args;
 
@@ -243,6 +265,7 @@ class Foody_Blocks {
 				[
 					'image'  => $image,
 					'link'   => $link,
+					'title'  => $block['title'],
 					'return' => true
 				]
 			);
@@ -277,7 +300,7 @@ class Foody_Blocks {
 				extract( $item );
 
 
-				$foody_post = Foody_Post::create( $post );
+				$foody_post = Foody_Post::create( $post, false );
 
 				if ( ! empty( $title ) ) {
 					$foody_post->setTitle( $title );
@@ -303,13 +326,33 @@ class Foody_Blocks {
 
 			}, $items );
 
-			$grid_args = [
-				'id'     => uniqid(),
-				'more'   => false,
-				'cols'   => 2,
-				'posts'  => $items,
-				'return' => true
-			];
+            if(isset($block['feed_area_id']) && $block['feed_area_id']){
+                $grid_args = [
+                    'id'     => uniqid(),
+                    'posts'  => $items,
+                    'cols'   => 2,
+                    'more'   => false,
+                    'return' => true,
+                    'feed_area_id' => $block['feed_area_id']
+                ];
+            }
+            else {
+                $grid_args = [
+                    'id' => uniqid(),
+                    'posts' => $items,
+                    'cols' => 2,
+                    'more' => false,
+                    'return' => true
+                ];
+            }
+
+//			$grid_args = [
+//				'id'     => uniqid(),
+//				'more'   => false,
+//				'cols'   => 2,
+//				'posts'  => $items,
+//				'return' => true
+//			];
 
 			$items_content = foody_get_template_part( get_template_directory() . '/template-parts/common/foody-grid.php', $grid_args );
 

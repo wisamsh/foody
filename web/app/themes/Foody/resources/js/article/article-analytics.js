@@ -5,11 +5,30 @@
 
 jQuery(document).ready(($) => {
     if (foodyGlobals.post && (foodyGlobals.post.type == 'post')) {
+        let scrollsArr = {'0': false, '25': false, '50': false, '75': false, '100': false};
+        let feedPublisher = "אין";
+        let primaryCategory = $('.breadcrumb > li').last()[0].innerText;
+
+        var publishers = ['אין'];
+        if (foodyGlobals['post']['publisher'] || $('.sponsors-container').length) {
+            publishers = [];
+        }
+        if (foodyGlobals['post']['publisher']) {
+            feedPublisher = foodyGlobals['post']['publisher'];
+            //publishers.push(publisher);
+        } else if(foodyGlobals['channel_publisher_name']){
+            feedPublisher = foodyGlobals['channel_publisher_name'];
+        }
 
         /**
          * Page Load
          */
-        eventCallback(null, 'כתבה', 'טעינה', 'קטגוריה ראשית', 'מפרסם', foodyGlobals['author_name']);
+        if (feedPublisher == "") {
+            eventCallback(null, 'כתבה', 'טעינה', 'קטגוריה ראשית', 'מפרסם', publishers.join(', '), '', primaryCategory);
+        }
+        else{
+            eventCallback(null, 'כתבה', 'טעינה', 'קטגוריה ראשית', 'מפרסם',feedPublisher, '', primaryCategory);
+        }
 
 
         /**
@@ -60,10 +79,10 @@ jQuery(document).ready(($) => {
         /**
          * Newsletter registration
          */
-        let newsletterSubmitBtn = jQuery('#wpcf7-f10340-p10877-o1 > form')
+        let newsletterSubmitBtn = jQuery('.content .wpcf7 > form')
         newsletterSubmitBtn.submit((event) => {
             //TODO: Notice the use of foodyGlobals should probably be implemented
-            eventCallback(event, 'כתבה', 'לחיצה על רישום לדיוור', ''/*foodyGlobals['title']*/, 'מיקום', 'פוטר');
+            eventCallback(event, 'כתבה', 'לחיצה על רישום לדיוור', foodyGlobals['title'], 'מיקום', 'פוטר');
         });
 
         /**
@@ -89,8 +108,56 @@ jQuery(document).ready(($) => {
                 toLog = true;
             }
             if (toLog) {
-                eventCallback(event, 'כתבה', 'גלילה', scrollPercentRounded + '%', '', '');
+                if(!scrollsArr[scrollPercentRounded]) {
+                    eventCallback(event, 'כתבה', 'גלילה', scrollPercentRounded + '%', '', '');
+                    scrollsArr[scrollPercentRounded] = true;
+                }
+            }
+        });
 
+        /**
+        * Register to newsletter footer
+         */
+        let newsletterRegisterBtn = $('footer .newsletter .wpcf7');
+        newsletterRegisterBtn.submit((event)=>{
+            eventCallback(event,'כתבה', 'לחיצה על רישום לדיוור', '', 'מיקום', 'פוטר');
+        });
+
+        /**
+         * Purchase button clicked
+         */
+        // let purchaseBtn = $('.purchase-buttons .purchase-button-container a');
+        // purchaseBtn.click((event)=>{
+        //     eventCallback(event,'כתבה', 'לחיצה לרכישה', '', '', '');
+        // });
+
+        /**
+         * Purchase buttons
+         */
+        let purchaseBtn = jQuery(document.getElementsByClassName('purchase-button-container'));
+        purchaseBtn.delegate('a', 'click', function (event) {
+            let analyticsLabel = $(this).parent().attr('data-analytics');
+            if (!analyticsLabel) {
+                analyticsLabel = this.innerText;
+            }
+            eventCallback(event, 'מתכון', 'לחיצה לרכישה', analyticsLabel, 'מפרסם', feedPublisher,'','');
+            // nonInteraction = false;
+        });
+
+        /**
+         * click on link from the content
+         */
+        $('.post-content-link').on('click', function () {
+            let text = '';
+            let linkURL = $(this).attr("href");
+            let domainName = get_hostname(linkURL);
+            let imageContainer = $(this).has('img');
+            if (imageContainer.length) {
+                text = $(imageContainer[0].children[0]).attr('alt');
+                eventCallback(event, 'כתבה', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', 'תמונה');
+            } else {
+                text = $(this)[0].innerHTML;
+                eventCallback(event, 'כתבה', 'לחיצה על לינק בתוכן', domainName, 'טקסט על הקישור', text, '', 'קישור');
             }
         });
 
@@ -107,7 +174,7 @@ jQuery(document).ready(($) => {
  * @param cdDesc
  * @param cdValue
  */
-function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '') {
+function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '', object = '', item_category) {
 
     /**
      * Recipe name
@@ -117,7 +184,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
     /**
      * Item category
      */
-    let item_category = '';
+    let _item_category = item_category;
 
     /**
      * Chef Name
@@ -184,6 +251,28 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
         hasRichContent,
         cdDesc,
         cdValue,
-        ''
+        '',
+        object
     );
+}
+
+
+function get_hostname(url) {
+    var domain = "", page = "";
+
+    //remove "http://"
+    if (url.indexOf("http://") == 0) {
+        url = url.substr(7);
+    }
+    //remove "https://"
+    if (url.indexOf("https://") == 0) {
+        url = url.substr(8);
+    }
+    //remove "www."
+    if (url.indexOf("www.") == 0) {
+        url = url.substr(4);
+    }
+    domain = url.split('/')[0].split('.')[0];
+
+    return domain;
 }

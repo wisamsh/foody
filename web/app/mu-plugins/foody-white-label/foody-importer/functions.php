@@ -227,7 +227,7 @@ function foody_handle_post_meta_category_value( $post_id, $value, $blog_id ) {
 
 	if ( ! empty( $category ) && ! is_wp_error( $category ) ) {
 		$destination_category = get_term_by( 'name', $category->name, $category->taxonomy );
-		if ( ! empty( $category ) && ! is_wp_error( $category ) ) {
+		if ( ! empty( $destination_category ) && ! is_wp_error( $destination_category ) ) {
 			$value = $destination_category->term_id;
 		}
 	}

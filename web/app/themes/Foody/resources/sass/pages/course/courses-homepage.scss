@@ -1,0 +1,621 @@
+@import "../../variables-site/colors";
+
+.page-template-foody-courses-homepage {
+  $margin-boxes: 2rem;
+  $title-size: 28px;
+
+  a:visited,
+  a:hover {
+    color: unset;
+  }
+
+  #masthead {
+    z-index: 9999;
+  }
+
+  #primary {
+    background-color: white;
+    text-align: center;
+
+    .course-cover {
+      .cover-image img{
+        max-height:unset;
+      }
+      .cover-video-container {
+        max-width: 100vw;
+        z-index: 2;
+        position: relative;
+
+        iframe {
+          max-width: 100%;
+          width: 100%;
+          max-height: 65vw;
+        }
+      }
+    }
+
+    .main-title-section {
+      .cover-image {
+        img {
+          padding: 3% 0;
+        }
+      }
+    }
+
+    .courses-section {
+      padding: 5px 0;
+
+      .courses-list {
+        display: flex;
+        flex-direction: column;
+        border-top: 1px $color__primary solid;
+        border-bottom: 1px $color__primary solid;
+        position: relative;
+
+        .title-image-container {
+          margin-top: 3%;
+
+          .main-text {
+            margin: 0;
+            font-weight: 500;
+            padding: 0 5%;
+            z-index: 2;
+            position: relative;
+          }
+
+          .top-image {
+            right: 0;
+            z-index: 1;
+            margin-top: -7%;
+            position: absolute;
+            width: 30%;
+          }
+        }
+
+        .title {
+          padding: 0 8%;
+          font-size: 24px;
+          position: relative;
+          z-index: 2;
+          margin: 8% auto 7%;
+        }
+
+        .courses-list-container {
+          position: relative;
+          z-index: 2;
+          margin-bottom: 15%;
+
+          .courses-list-row {
+            .course-item {
+              margin: 0 auto 5%;
+              border: 1px var(--color__primary) solid;
+              border-radius: 10px;
+              max-width: 456px;
+
+              .course-item-top {
+                position: relative;
+
+                .item-image {
+                  border-radius: 10px 10px 0 0;
+                }
+
+                .course-name-container {
+                  display: flex;
+                  flex-direction: column;
+                  bottom: 5%;
+                  font-size: 16px;
+                  font-weight: bold;
+                  color: white;
+                  line-height: 1.1rem;
+                  position: absolute;
+                  left: 0;
+                  right: 0;
+                  margin: auto;
+                  // text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+                }
+              }
+              @media(max-width: 500px){
+                .course-item{
+                  margin: 0 8% 5%;
+                }
+              }
+
+              .course-item-bottom {
+                display: flex;
+                flex-direction: column;
+
+                .pricing-row {
+                  font-size: 18px;
+                  font-weight: 500;
+
+                  .sale-text {
+                    font-weight: bold;
+                  }
+
+                  .new-price {
+                    font-weight: bold;
+                    color: $color__primary;
+                  }
+                }
+
+                .action-item-text {
+                  margin-top: 0;
+                  margin-bottom: 1%;
+                  font-weight: 500;
+                  font-size: 18px;
+                  color: $color__primary;
+                }
+
+                .action-item-text:first-child{
+                  margin: 3%;
+                }
+                //To be replaced with relevant variable
+                @media(min-width:1120px){
+
+                  .action-item-text{
+                    margin-top: -3%;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .bottom-image {
+          bottom: 0;
+          position: absolute;
+          left: 0;
+          width: 36%;
+        }
+      }
+    }
+
+    .advantages-section {
+      .advantages-container {
+        position: relative;
+
+        .top-image {
+          width: 30%;
+          position: absolute;
+          left: 0;
+          top: -28px;
+        }
+
+        .advantages-cover-container {
+          margin: 6%;
+          box-shadow: 0 0 13px -3px grey;
+          position: relative;
+          border-radius: 5px;
+
+          .cover-image {
+            border-radius: 5px;
+          }
+        }
+
+        .cover-video {
+          max-width: 100vw;
+          z-index: 2;
+          position: relative;
+          margin: 6%;
+          border-radius: 5px;
+
+          iframe {
+            max-width: 100%;
+            width: 100%;
+            max-height: 65vw;
+          }
+        }
+
+        .advantages-main-text {
+          padding: 0px 6%;
+          font-size: 18px;
+          font-weight: bold;
+          line-height: 1.5rem;
+        }
+
+        .advantages-list-container:not(:last-child) {
+          padding-bottom: 21%;
+        }
+
+        .advantages-list-container {
+          position: relative;
+          z-index: 2;
+          padding-bottom: 6%;
+
+          .advantages-list-row {
+            .advantages-item {
+              .item-icon {
+                width: 15%;
+                margin-bottom: 3%;
+              }
+
+              .item-text {
+                white-space: pre-wrap;
+                line-height: 1.1rem;
+                font-weight: bold;
+              }
+            }
+          }
+        }
+
+        .bottom-image {
+          width: 36%;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          z-index: 1;
+        }
+      }
+    }
+
+    .team-section {
+      .team-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+
+        .top-image {
+          width: 35%;
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: 1;
+        }
+
+        .title {
+          position: relative;
+          z-index: 2;
+          font-size: 25px;
+          font-weight: bold;
+          align-self: center;
+          margin: 8% 0 6% 0;
+        }
+
+        .team-list-container:not(:last-child) {
+          padding-bottom: 21%;
+        }
+
+        .team-list-container {
+          padding-bottom: 10%;
+          position: relative;
+          z-index: 2;
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+
+          @media(max-width:1120px){
+            .team-item{
+              max-width: 590px;
+            }
+          }
+
+          .team-item {
+            margin-bottom: 5%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width:unset;
+
+            .item-image {
+              border-radius: 100%;
+              width: 35%;
+            }
+
+            .host-name {
+              margin: 2% 0 0 0;
+              font-size: 18px;
+              font-weight: bold;
+              color: $color__primary;
+            }
+
+            .item-text {
+              white-space: pre-wrap;
+              line-height: 1.1rem;
+              font-weight: bold;
+              margin-bottom: 2%;
+            }
+
+            .course-item-button {
+              display: flex;
+              flex-direction: column;
+              border: 1px var(--color__primary) solid;
+              border-radius: 10px;
+              padding: 0 10%;
+
+              .pricing-row {
+                font-size: 14px;
+                font-weight: 500;
+
+                .sale-text {
+                  font-weight: bold;
+                }
+
+                .new-price {
+                  font-weight: bold;
+                  color: $color__primary;
+                }
+              }
+
+              .action-item-text {
+                margin-top: 0;
+                margin-bottom: 1%;
+                font-weight: 500;
+                font-size: 16px;
+                color: $color__primary;
+              }
+              //To be replaced with relevant variable
+              @media(min-width:1120px){
+                .action-item-text{
+                  margin-top: -3%;
+                }
+              }
+            }
+          }
+        }
+
+        .bottom-image {
+          width: 30%;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          z-index: 1;
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(desktop) {
+  .page-template-foody-courses-homepage {
+    $margin-boxes: 2rem;
+    $title-size: 28px;
+
+    #masthead {
+      position: relative;
+    }
+
+    #primary {
+      .course-cover {
+        .cover-video-container {
+          max-width: 1000px;
+          margin: 0 auto;
+
+          .cover-video {
+            position: relative;
+            padding-bottom: 56.25%;
+            max-width: 940px;
+            margin: 0 auto;
+            z-index: 2;
+
+            iframe {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+
+      .cover-image {
+        img {
+          max-height: fit-content;
+        }
+      }
+
+      .main-title-section {
+        .cover-image {
+          img {
+            max-height: fit-content;
+            padding: 2% 12%;
+          }
+        }
+      }
+
+      .courses-section {
+        .courses-list {
+          .title-image-container {
+            margin: 1%;
+
+            .main-text {
+              padding: 0 27%;
+              font-size: 19px;
+            }
+
+            .top-image {
+              right: 0;
+              z-index: 1;
+              margin-top: -7%;
+              position: absolute;
+              width: 25%;
+            }
+          }
+
+          .title {
+            font-size: 28px;
+            margin: 3% auto 0 auto;
+          }
+
+          .courses-list-container {
+            display: flex;
+            flex-direction: column;
+
+            .courses-list-row {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-evenly;
+              padding: 0px 8%;
+              margin: 2% 0;
+
+              .course-item {
+                border-radius: 10px;
+                width: 30%;
+                box-shadow: 0 0 13px -3px grey;
+                border: unset;
+                margin: 0;
+
+
+                .course-item-top {
+                  .course-name-container {
+                    font-size: 14px !important;
+                  }
+                }
+
+                .course-item-bottom {
+                  .pricing-row {
+                    font-size: 15px !important;
+                  }
+
+                  .action-item-text {
+                    font-size: 15px !important;
+                  }
+                }
+              }
+            }
+
+            .bottom-image {
+              bottom: 0;
+              position: absolute;
+              left: 0;
+              width: 25%;
+            }
+          }
+        }
+      }
+
+      .advantages-section {
+        .advantages-container {
+          border-bottom: 1px solid $color__primary;
+
+          .cover-video {
+            margin: 3% 6%;
+
+            iframe{
+              width: 76%;
+          }
+        }
+
+        .top-image {
+          width: 20%;
+        }
+
+        .advantages-cover-container {
+          margin: 3% 12%;
+        }
+
+        .advantages-main-text {
+          padding: 0px 6%;
+          white-space: pre;
+          font-size: 21px;
+        }
+
+        .advantages-list-container:not(:last-child) {
+          padding-bottom: 0;
+        }
+
+        .advantages-list-container {
+          padding-bottom: 0;
+          display: flex;
+          flex-direction: column;
+          z-index: 2;
+          position: relative;
+
+          .advantages-list-row {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            margin-bottom: 5%;
+            height: 150px;
+            justify-content: center;
+
+            .advantages-item {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              height: inherit;
+              width: 30%;
+              margin: 0 10%;
+
+              .item-icon {
+                width: 30%;
+                margin: auto;
+              }
+
+              .item-text{
+                font-size: 21px;
+                margin-bottom: 0;
+              }
+            }
+          }
+        }
+
+        .bottom-image {
+          width: 25%;
+        }
+      }
+    }
+
+
+    .team-section {
+      .team-container {
+        .title{
+          font-size: 35px;
+          margin: 6% 0 3% 0;
+        }
+
+        .team-list-container:not(:last-child) {
+          padding-bottom: 5%;
+        }
+
+        .team-list-container {
+          padding-bottom: 5%;
+
+          .team-item{
+            flex-direction: row;
+            width: 100%;
+
+            .item-image{
+              width: 19%;
+              margin-left: 3%;
+            }
+
+            .team-item-info{
+              width: 41%;
+
+              .host-name,
+              .item-text{
+                text-align: right;
+              }
+
+              .course-item-button{
+
+                padding: 0 3%;
+                width: fit-content;
+                align-items: center;
+
+                .pricing-row{
+                  font-size: 13px;
+                  width: fit-content;
+                }
+
+                .action-item-text{
+                  font-size: 14px;
+                  width: fit-content;
+                }
+              }
+            }
+          }
+        }
+
+
+      }
+    }
+  }
+}
+
+}

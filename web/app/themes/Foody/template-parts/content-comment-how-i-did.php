@@ -38,7 +38,7 @@ if ( $cols % $comments_per_page == 0 ) {
             <!--suppress HtmlUnknownAnchorTarget -->
             <a class="how-i-did-modal-open" href="#how-i-did-modal" data-toggle="modal"
                data-image="<?php echo $image ?>"
-               data-user="<?php echo $author->display_name ?>"
+               data-user="<?php echo $author->display_name; ?>"
                data-content="<?php echo strip_tags( get_comment_text( $comment['comment_ID'] ) ); ?>">
                 <img src="<?php echo $image ?>"
                      alt="<?php echo strip_tags( get_comment_text( $comment['comment_ID'] ) ); ?>">
@@ -50,13 +50,14 @@ if ( $cols % $comments_per_page == 0 ) {
             </div>
 		<?php endif; ?>
     </div>
+    <?php if ( $comment['comment_approved'] ) : ?>
     <div class="author row gutter-0">
         <div>
 			<?php echo get_avatar( $comment['user_id'], 54 ); ?>
         </div>
         <div class="col">
                <span class="username">
-                    <?php printf( __( '%s' ), sprintf( '<span class="author-name">%s</span>', $username ) ); ?>
+                    <?php printf( __( '%s' ), sprintf( '<span class="author-name">%s</span>', $author->first_name.' '.$author->last_name ) ); ?>
                 </span>
             <time>
 				<?php echo human_time_diff( get_comment_date( 'U', $comment['comment_ID'] ), date( 'U' ) ) ?>
@@ -64,4 +65,5 @@ if ( $cols % $comments_per_page == 0 ) {
 			<?php comment_text( $comment['comment_ID'] ); ?>
         </div>
     </div>
+    <?php endif; ?>
 </div>

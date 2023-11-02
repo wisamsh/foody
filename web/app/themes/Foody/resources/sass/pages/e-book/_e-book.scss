@@ -23,7 +23,7 @@
     .cta {
       width: 160px;
       border-radius: 6px;
-      background-image: linear-gradient(71deg, #ec3849, #f35644);
+      background-image: linear-gradient(71deg, #ec3849, #e63a2b);
       font-family: $font__assistant;
       font-size: 23px;
       font-weight: bold;
@@ -178,7 +178,7 @@
         .modal-content {
 
           .modal-header {
-            background-image: linear-gradient(83deg, #ec3849, #f35644);
+            background-image: linear-gradient(83deg, #ec3849, #e63a2b);
             color: #ffffff;
             padding: 0;
 
@@ -214,6 +214,10 @@
               font-family: $font__assistant;
               font-size: 22px;
 
+              #content{
+                word-break: break-word;
+              }
+
               h4 {
                 font-weight: bold;
                 font-family: $font__assistant;
@@ -227,7 +231,7 @@
     #upload-image-modal {
 
       .modal-header {
-        background-image: linear-gradient(78deg, #ec3849, #f35644);
+        background-image: linear-gradient(78deg, #ec3849, #e63a2b);
         color: white;
         padding: 10px;
         place-items: center;
@@ -387,7 +391,7 @@
       #accordion-how-i-did-accordion {
 
         .foody-accordion-title {
-          h5 {
+          h5, div.filter-title-h5 {
             i.icon-side-arrow {
               &:before {
                 left: 0;
@@ -470,6 +474,7 @@
         #content {
           padding-top: 0;
           min-height: unset;
+          word-break: break-word;
         }
 
         .close {

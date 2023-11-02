@@ -26,6 +26,18 @@ class Foody_Course {
 		return $mobile_cover_image;
 	}
 
+	public function get_html_area() {
+        $html_area = get_field( 'html_area' );
+
+        return $html_area;
+    }
+
+    public function get_html_area_mobile() {
+        $html_area = get_field( 'html_area_mobile' );
+
+        return $html_area;
+    }
+
 	public function get_main_image() {
 		$main_image = get_field( 'main_image' );
 
@@ -84,6 +96,12 @@ class Foody_Course {
 
 		return $course_is_for_image;
 	}
+
+    public function get_course_is_for_registration_link() {
+        $is_for_registration_link = get_field( 'course_is_for_registration_link' );
+
+        return $is_for_registration_link;
+    }
 
 	public function has_how_it_works() {
 		return (
