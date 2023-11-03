@@ -103,8 +103,6 @@ $clrMB = '';
                 if ($key == 'calories_per_dish' && (intval($value['text']) > 46)){
                     $clr=$color_red;
                 }
-        
-            
                 ?>
                 <li class="overview-item col-1" style="background:<?php echo $clr;?>">
                     <?php if ($key === 'time') { ?>
