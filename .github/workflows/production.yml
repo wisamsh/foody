@@ -74,6 +74,14 @@ jobs:
       - name: Install project dependencies
         run: composer install
 
+      - name: Cache Node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            node_modules-${{ runner.os }}-
+
       - name: Install npm dependencies
         working-directory: web/app/themes/Foody
         run: |
