@@ -4,7 +4,7 @@ on:
   push:
     branches:
       # - production
-      - pipeline
+      # - pipeline
       - 4-8-2023-fixes
 
 jobs:
