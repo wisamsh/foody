@@ -9,8 +9,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    # runs-on: self-hosted
+    # runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       TFVARSFILE: "terraform.tfvars"
       ENVOY_SERVER: "prod1"
