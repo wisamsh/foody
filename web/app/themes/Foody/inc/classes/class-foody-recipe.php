@@ -116,6 +116,7 @@ class Foody_Recipe extends Foody_Post
                 get_template_directory() . '/template-parts/content-recipe-overview.php',
                 [
                     'overview' => $this->overview,
+                    'nutrients'=> $this->nutrients,
                     'recipe' => $this
                 ]
             );
@@ -479,6 +480,7 @@ class Foody_Recipe extends Foody_Post
             ],
             'calories_per_dish' => ['text' => $this->calories_per_dish, 'icon' => 'kcal@3x.png?ver=1.2', 'icon-desktop' => 'kcal@2x.png?ver=1.2'],
             'difficulty_level' => ['text' => $difficulty_level, 'icon' => null],
+            
         );
     }
 
@@ -1495,4 +1497,12 @@ margin-bottom:30px !important;
 </style>
 ';
     }
+
+public function Get_nutrients_For_Overview(){
+    return $this->nutrients;
+}
+
+
+
+
 } // end class

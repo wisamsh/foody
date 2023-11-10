@@ -1,30 +1,35 @@
+<?php
+$carbons = round($nutrients[1]['valuePerDish']);
 
-<?php 
 $color_green = "#00800052";
 $color_yellow = "#d1bf0652";
 $color_red = "#fd090973";
 $clr = '';
 $clrMB = '';
-//mobile secssion ========================================================?>
+
+//mobile secssion ========================================================
+?>
 
 <div class="overview-lists-container">
     <ul class="overview-with-icons row">
         <?php foreach ($overview as $key => $value) : ?>
-            <?php if ($key !== 'difficulty_level') { 
-                if ($key == 'calories_per_dish' && (intval($value['text']) <= 30)){
-                    $clrMB=$color_green;
-                }
-                if ($key == 'calories_per_dish' && (intval($value['text']) < 31 && intval($value['text']) <= 45 )){
-                    $clrMB=$color_yellow;
-                }
-                if ($key == 'calories_per_dish' && (intval($value['text']) > 46)){
-                    $clrMB=$color_red;
-                }
-                ?>
 
-              
+            <?php if ($key !== 'difficulty_level') {
 
-                <li class="overview-item col-sm-3 col-3" style="background:<?php echo $clrMB;?>">
+                if ($key == 'calories_per_dish' && ($carbons <= 30)) {
+                    $clrMB = $color_green;
+                }
+                if ($key == 'calories_per_dish' && ($carbons) > 31 && ($carbons) <= 45) {
+                    $clrMB = $color_yellow;
+                }
+                if ($key == 'calories_per_dish' && ($carbons) > 46) {
+                    $clrMB = $color_red;
+                }
+            ?>
+
+
+
+                <li class="overview-item col-sm-3 col-3" style="background:<?php echo $clrMB; ?>">
                     <?php if ($key === 'time') { ?>
                         <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['preparation_time']['icon'] ?>">
                         <div class="item-container">
@@ -35,7 +40,21 @@ $clrMB = '';
                                 <span class="key"><?php echo $labels['total_time'] ?></span><?php echo ' ' . $value['total_time']['text'] ?>
                             </div>
                         </div>
-                    <?php } else { ?>
+                    <?php } elseif ($key == "calories_per_dish") {
+                    ?>
+                        <img style="visibility:hidden;" src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['icon-desktop'] ?>">
+                        <div class="item-container">
+                            <div class="key">
+                                <?php echo $labels[$key] ?>
+                            </div>
+                            <div class="value <?php echo $key ?>">
+                                <?php echo $carbons; ?>
+                            </div>
+                        </div>
+                    <?php
+
+
+                    } else { ?>
                         <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['icon'] ?>">
                         <div class="item-container">
                             <div class="key">
@@ -49,7 +68,7 @@ $clrMB = '';
                 </li>
 
 
-            <?php }
+        <?php }
         endforeach; ?>
 
     </ul>
@@ -71,40 +90,41 @@ $clrMB = '';
         </li>
     </ul>
     <?php
-     if ( get_current_blog_id() !== 2 ) { ?>
-         <ul class="overview-nutrients row">
-             <li class="overview-item col-sm-1 col-6">
-                 <div class="value open">
-                     <?php echo __('עוד ערכים תזונתיים'); ?>
-                 </div>
-                 <section class="recipe-nutrition box no-print">
+    if (get_current_blog_id() !== 2) { ?>
+        <ul class="overview-nutrients row">
+            <li class="overview-item col-sm-1 col-6">
+                <div class="value open">
+                    <?php echo __('עוד ערכים תזונתיים'); ?>
+                </div>
+                <section class="recipe-nutrition box no-print">
 
-                     <?php $recipe->the_nutrition() ?>
+                    <?php $recipe->the_nutrition() ?>
 
-                 </section>
-             </li>
-         </ul>
+                </section>
+            </li>
+        </ul>
     <?php } ?>
 </div>
-<?php // desktop secssion=======================================?>
+<?php // desktop secssion=======================================
+?>
 <div class="overview-lists-container-desktop">
     <ul class="overview row">
         <?php foreach ($overview as $key => $value) : ?>
 
-              
-            <?php if ($key !== 'difficulty_level') { 
-                
-                if ($key == 'calories_per_dish' && (intval($value['text']) <= 30)){
-                    $clr=$color_green;
+
+            <?php if ($key !== 'difficulty_level') {
+
+                if ($key == 'calories_per_dish' && ($carbons <= 30)) {
+                    $clr = $color_green;
                 }
-                if ($key == 'calories_per_dish' && (intval($value['text']) > 31 && intval($value['text']) <= 45 )){
-                    $clr=$color_yellow;
+                if ($key == 'calories_per_dish' && ($carbons) > 31 && ($carbons) <= 45) {
+                    $clr = $color_yellow;
                 }
-                if ($key == 'calories_per_dish' && (intval($value['text']) > 46)){
-                    $clr=$color_red;
+                if ($key == 'calories_per_dish' && ($carbons) > 46) {
+                    $clr = $color_red;
                 }
-                ?>
-                <li class="overview-item col-1" style="background:<?php echo $clr;?>">
+            ?>
+                <li class="overview-item col-1" style="background:<?php echo $clr; ?>">
                     <?php if ($key === 'time') { ?>
                         <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['preparation_time']['icon-desktop'] ?>">
                         <div class="item-container">
@@ -115,7 +135,22 @@ $clrMB = '';
                                 <span class="key"><?php echo $labels['total_time'] ?></span><?php echo ' ' . $value['total_time']['text'] ?>
                             </div>
                         </div>
-                    <?php } else { ?>
+                    <?php } elseif ($key == "calories_per_dish") {
+                    ?>
+                        <img style="visibility:hidden;" src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['icon-desktop'] ?>">
+                        <div class="item-container">
+                            <div class="key">
+                                <?php echo $labels[$key] ?>
+                            </div>
+                            <div class="value <?php echo $key ?>">
+                                <?php echo $carbons; ?>
+                            </div>
+                        </div>
+                    <?php
+
+
+                    } else {
+                    ?>
                         <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['icon-desktop'] ?>">
                         <div class="item-container">
                             <div class="key">
@@ -125,11 +160,13 @@ $clrMB = '';
                                 <?php echo $value['text'] ?>
                             </div>
                         </div>
+
+
                     <?php } ?>
                 </li>
 
 
-            <?php 
+        <?php
             }
         endforeach; ?>
 
@@ -152,7 +189,7 @@ $clrMB = '';
         </li>
     </ul>
     <?php
-    if ( get_current_blog_id() !== 2 ) { ?>
+    if (get_current_blog_id() !== 2) { ?>
         <ul class="overview-nutrients row">
             <li class="overview-item col-sm-1 col-6">
                 <div class="value open">
