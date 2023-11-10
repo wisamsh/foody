@@ -19,10 +19,10 @@ $clrMB = '';
                 if ($key == 'calories_per_dish' && ($carbons <= 30)) {
                     $clrMB = $color_green;
                 }
-                if ($key == 'calories_per_dish' && ($carbons) > 31 && ($carbons) <= 45) {
+                if ($key == 'calories_per_dish' && ($carbons) > 30 && ($carbons) <= 45) {
                     $clrMB = $color_yellow;
                 }
-                if ($key == 'calories_per_dish' && ($carbons) > 46) {
+                if ($key == 'calories_per_dish' && ($carbons) > 45) {
                     $clrMB = $color_red;
                 }
             ?>
@@ -117,10 +117,10 @@ $clrMB = '';
                 if ($key == 'calories_per_dish' && ($carbons <= 30)) {
                     $clr = $color_green;
                 }
-                if ($key == 'calories_per_dish' && ($carbons) > 31 && ($carbons) <= 45) {
+                if ($key == 'calories_per_dish' && ($carbons) > 30 && ($carbons) <= 45) {
                     $clr = $color_yellow;
                 }
-                if ($key == 'calories_per_dish' && ($carbons) > 46) {
+                if ($key == 'calories_per_dish' && ($carbons) > 45) {
                     $clr = $color_red;
                 }
             ?>
