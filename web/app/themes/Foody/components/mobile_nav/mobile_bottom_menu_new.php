@@ -502,7 +502,12 @@ $domain_name = $_SERVER['HTTP_HOST'];
                 echo (".foody-logo-text{background-image: url('https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/sites/9/2023/02/17100902/foody_mehadrin_final100x100.png') !important;} ");
                 break;
 
-               
+                case  'happyfood.foody.co.il':
+                    echo (".foody-logo-hamburger{background-image: url('https://foody-media.s3.eu-west-1.amazonaws.com/happy_food_logo_mobile.png') !important;} ");
+                    break;
+                case  'www.happyfood.foody.co.il':
+                    echo (".foody-logo-hamburger{background-image: url('https://foody-media.s3.eu-west-1.amazonaws.com/happy_food_logo_mobile.png') !important;} ");
+                    break;
     
 
 
