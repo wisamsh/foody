@@ -47,7 +47,7 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
                         <img style="visibility:hidden;" src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['icon-desktop'] ?>">
                         <div class="item-container">
                             <div class="key">
-                                <?php echo $labels[$key] ?>
+                                <?php echo 'פחמימות'; ?>
                             </div>
                             <div class="value <?php echo $key ?>">
                                 <?php echo $carbons; ?>
@@ -128,7 +128,7 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
             ?>
                 <li class="overview-item col-1" style="background:<?php echo $clr; ?>">
                 
-                <?php if ($key === 'calories_per_dish') { ?>
+                <?php if ($key == 'calories_per_dish') { ?>
                     <img class="carbicon" src="<?php echo $carbIcon ;?>"/>
                     <?php }?>
                     <?php if ($key === 'time') { ?>
@@ -146,7 +146,7 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
                         <img style="visibility:hidden;" src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['icon-desktop'] ?>">
                         <div class="item-container">
                             <div class="key">
-                                <?php echo $labels[$key] ?>
+                                <?php echo 'פחמימות'; ?>
                             </div>
                             <div class="value <?php echo $key ?>">
                                 <?php echo $carbons; ?>
