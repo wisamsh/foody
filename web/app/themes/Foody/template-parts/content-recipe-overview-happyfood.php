@@ -6,7 +6,7 @@ $color_yellow = "#d1bf0652";
 $color_red = "#fd090973";
 $clr = '';
 $clrMB = '';
-
+$carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
 //mobile secssion ========================================================
 ?>
 
@@ -25,12 +25,14 @@ $clrMB = '';
                 if ($key == 'calories_per_dish' && ($carbons) > 45) {
                     $clrMB = $color_red;
                 }
+               
             ?>
 
 
 
                 <li class="overview-item col-sm-3 col-3" style="background:<?php echo $clrMB; ?>">
-                    <?php if ($key === 'time') { ?>
+                   
+                <?php if ($key === 'time') { ?>
                         <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['preparation_time']['icon'] ?>">
                         <div class="item-container">
                             <div class="key-value">
@@ -125,6 +127,10 @@ $clrMB = '';
                 }
             ?>
                 <li class="overview-item col-1" style="background:<?php echo $clr; ?>">
+                
+                <?php if ($key === 'calories_per_dish') { ?>
+                    <img class="carbicon" src="<?php echo $carbIcon ;?>"/>
+                    <?php }?>
                     <?php if ($key === 'time') { ?>
                         <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['preparation_time']['icon-desktop'] ?>">
                         <div class="item-container">
