@@ -31,6 +31,9 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
 
 
                 <li class="overview-item col-sm-3 col-3" style="background:<?php echo $clrMB; ?>">
+                <?php if ($key == 'calories_per_dish') { ?>
+                    <img class="carbicon" src="<?php echo $carbIcon ;?>"/>
+                    <?php }?>
                    
                 <?php if ($key === 'time') { ?>
                         <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['preparation_time']['icon'] ?>">

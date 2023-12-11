@@ -283,16 +283,6 @@ if (isset($brands_avenue_group['brands']) && !empty($brands_avenue_group['brands
 <?php
      
 
-if($_SERVER['HTTP_HOST'] == "mehadrin.foody.co.il") {
-   ?>
-
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQK843H"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->`;
-<?php 
-}//end mehdrin tag manager for body  
-
 if (wp_is_mobile()) {
 Foody_Header::whatsapp(['d-lg-block', 'floating', 'whatsapp-mobile']);
 } else {
