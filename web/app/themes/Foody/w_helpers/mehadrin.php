@@ -8,7 +8,7 @@ $mehadrin_scrip_disable = '<script type="text/javascript" src="//acc.magixite.co
  })(window,document,'script','dataLayer','GTM-KQK843H')</script>`;
 
 if($_SERVER['HTTP_HOST'] == "mehadrin.foody.co.il") {
-  // echo $google_mehadrin_tag_manager ; 
+  echo $google_mehadrin_tag_manager ; 
     echo $mehadrin_scrip_disable ;
 
 
