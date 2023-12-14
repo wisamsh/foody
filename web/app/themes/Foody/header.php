@@ -123,9 +123,10 @@ echo 'hidden-recipe-header';
 <section class="header-top-container d-none d-lg-flex">
 <?php $header->the_socials_bar() ?>
 
-<div class="search-bar search-bar-container">
-<?php get_search_form(); ?>
-</div>
+<?php
+//Wisam : for search bar only on foody : 
+include_once('w_helpers/whitelabels-search.php');?>
+
 <?php if (is_multisite() && !is_main_site()): ?>
 <?php $header->the_foody_collaboration(true); ?>
 <?php endif; ?>
