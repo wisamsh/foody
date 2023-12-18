@@ -1,5 +1,4 @@
 <?php
-error_reporting(0);
 $carbons = round($nutrients[1]['valuePerDish']);
 $color_green = "#00800052";
 $color_yellow = "#d1bf0652";

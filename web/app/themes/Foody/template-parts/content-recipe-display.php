@@ -148,6 +148,14 @@ target_type: 'mix'
 <?php }?>
 <section class="purchase-buttons">
 <?php $recipe->the_purchase_buttons(); ?>
+<?php if($_SERVER['HTTP_HOST'] == 'happyfood.foody.co.il' || $_SERVER['HTTP_HOST']  == 'staging.foody.co.il'){ 
+     ?>
+<a href="https://t.me/+YASOGUvKr-8zM2Rk" target="_blank">
+<div style="width:100%;text-align:center;">הצטרפו לקבוצת הטלגרם השקטה שלנו </div>
+<div style="width:100%;text-align:center;"><img src="https://foody-media.s3.eu-west-1.amazonaws.com/m_telegram.jpg"/> </div>
+</a>
+<?php }?>
+
 </section>
 <hr class="title-line">
 <div class="Swaploader dn"><img src="https://foody-media.s3.eu-west-1.amazonaws.com/w_images/loader.gif"/></div >
