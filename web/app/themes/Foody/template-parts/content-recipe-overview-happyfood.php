@@ -1,6 +1,6 @@
 <?php
+error_reporting(0);
 $carbons = round($nutrients[1]['valuePerDish']);
-
 $color_green = "#00800052";
 $color_yellow = "#d1bf0652";
 $color_red = "#fd090973";
@@ -53,7 +53,7 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
                                 <?php echo 'פחמימות'; ?>
                             </div>
                             <div class="value <?php echo $key ?>">
-                                <?php echo $carbons; ?>
+                                <?php echo $carbons . ' גרם '  ; ?>
                             </div>
                         </div>
                     <?php
@@ -152,7 +152,7 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
                                 <?php echo 'פחמימות'; ?>
                             </div>
                             <div class="value <?php echo $key ?>">
-                                <?php echo $carbons; ?>
+                                <?php echo $carbons . ' גרם '; ?>
                             </div>
                         </div>
                     <?php
