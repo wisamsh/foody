@@ -1,5 +1,6 @@
 <?php
 $domain_name = $_SERVER['HTTP_HOST'];
+
 ?>
 <?php if (wp_is_mobile()) { ?>
 
@@ -131,6 +132,23 @@ $domain_name = $_SERVER['HTTP_HOST'];
         </nav>
     </div>
 <?php } ?>
+
+
+<?php if(($domain_name !="foody.co.il" && $domain_name !="foody-local.co.il" && $domain_name !="staging.foody.co.il" ) && get_post_type()=="foody_recipe"){ 
+
+echo '<style>
+#magnifier_search , .related-content-btn-container{
+    display: none !important;
+}
+.foody-navbar-container > .accessibility{
+    display: none !important;
+}
+
+</style>';
+     }?>
+
+
+
 <div class="data_res hidden"></div>
 
 <style>
@@ -468,8 +486,12 @@ $domain_name = $_SERVER['HTTP_HOST'];
         margin-top: 10px;
     }
 
+
+
+
+
     <?php
-    $domain_name = $_SERVER['HTTP_HOST'];
+    
 
     switch ($domain_name) {
         case  'miricohen.foody.co.il':
