@@ -1137,3 +1137,33 @@ function remove_core_updates(){
     require_once get_template_directory() . '/function_extends/substitue_ajax_call.php';
     require_once get_template_directory() . '/function_extends/poll_ajax_call.php';
     require_once get_template_directory() . '/function_extends/option-settings.php';
+
+    //Wisam fixing meta robots in mehadrin======================
+
+    if($_SERVER['HTTP_HOST'] == "mehadrin.foody.co.il") {
+ 
+        function remove_robots_meta_with_js() {
+            echo '<script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    var metaTag = document.querySelector(\'meta[name="robots"]\');
+                    if (metaTag) {
+                        metaTag.parentNode.removeChild(metaTag);
+                    }
+                });
+            </script>';
+        }
+        
+        add_action('wp_footer', 'remove_robots_meta_with_js');
+        
+        function set_noindex_nofollow_meta_tag() {
+            // Check if it's a specific page where you want to set noindex, nofollow
+            if (is_single() || is_page()) {
+                echo '<meta name="robots" content="noindex, nofollow" />';
+            }
+        }
+        
+        
+        // Hook into wp_head
+        add_action('wp_head', 'set_noindex_nofollow_meta_tag');
+        
+        }
