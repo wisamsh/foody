@@ -1,10 +1,9 @@
 # Application
-web/app/plugins/*
 !web/app/plugins/.gitkeep
 !web/app/plugins/gravityforms
 !web/app/plugins/foody-course-members
 !web/app/plugins/Gravity-Forms-ACF-Field-master
-
+web/app/mu-plugins/*/
 !web/app/mu-plugins/wordpress-social-login
 !web/app/mu-plugins/easy-social-share-buttons3
 !web/app/mu-plugins/foody-rating
