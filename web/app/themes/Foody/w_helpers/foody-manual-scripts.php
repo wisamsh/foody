@@ -24,8 +24,8 @@ if (is_array($Site_ManualScripts)) {
                     break;
 
                 case (trim('post')):
-                    if (get_post_type() === 'post') {
-                        '<script>' . $page_script . '</script>';
+                    if ('post' === get_post_type()) {
+                       echo  '<script>' . $page_script . '</script>';
                     }
 
                     break;
