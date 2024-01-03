@@ -1167,3 +1167,5 @@ function remove_core_updates(){
         add_action('wp_head', 'set_noindex_nofollow_meta_tag');
         
         }
+
+       

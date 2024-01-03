@@ -283,10 +283,15 @@ if (isset($brands_avenue_group['brands']) && !empty($brands_avenue_group['brands
 <div id="content" class="site-content">
 <?php
      
-
 if (wp_is_mobile()) {
 Foody_Header::whatsapp(['d-lg-block', 'floating', 'whatsapp-mobile']);
 } else {
 Foody_Header::whatsapp(['d-none', 'd-lg-block', 'floating']);
         }
+   
+        
+//Wisam Manual scripts : 
+require_once(get_template_directory() . "/w_helpers/foody-manual-scripts.php"); 
+
+
 ?>
