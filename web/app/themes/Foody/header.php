@@ -70,6 +70,7 @@ if(window.performance && typeof window.performance.mark == 'function')
    
 ?>
 </head>
+
 <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
 <script src="https://public.bankhapoalim.co.il/bitcom/sdk"></script>
 <?php } ?>
@@ -288,10 +289,10 @@ Foody_Header::whatsapp(['d-lg-block', 'floating', 'whatsapp-mobile']);
 } else {
 Foody_Header::whatsapp(['d-none', 'd-lg-block', 'floating']);
         }
-   
-        
-//Wisam Manual scripts : 
-require_once(get_template_directory() . "/w_helpers/foody-manual-scripts.php"); 
-
-
 ?>
+<?php 
+       
+       //Wisam Manual scripts : 
+       require_once(get_template_directory() . "/w_helpers/foody-manual-scripts.php"); 
+       
+       ?>

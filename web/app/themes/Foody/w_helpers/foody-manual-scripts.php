@@ -17,13 +17,14 @@ if (is_array($Site_ManualScripts)) {
                 case (trim('recipe')):
 
                     if ('foody_recipe' === get_post_type()) {
-                        `<script>` . $page_script . `</script>`;
+                        echo '<script>' . $page_script . '</script>';
+                   
                     }
 
                     break;
 
                 case (trim('post')):
-                    if (get_post_type() == 'post') {
+                    if (get_post_type() === 'post') {
                         '<script>' . $page_script . '</script>';
                     }
 
