@@ -225,7 +225,4 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
     padding:10px;
 }
 
-.ramzor_explain img {
-    width:100%;
-}
 </style>
