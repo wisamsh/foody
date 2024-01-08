@@ -93,9 +93,9 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
             </div>
         </li>
     </ul>
-    <div class="ramzor_explain">
+    <!-- <div class="ramzor_explain">
     <img src="https://foody-media.s3.eu-west-1.amazonaws.com/m_ramzor-fea.jpg"/>
-</div>
+</div> -->
     <?php
     if (get_current_blog_id() !== 2) { ?>
         <ul class="overview-nutrients row">
@@ -199,9 +199,9 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
             </div>
         </li>
     </ul>
-    <div class="ramzor_explain">
+    <!-- <div class="ramzor_explain">
     <img src="https://foody-media.s3.eu-west-1.amazonaws.com/m_ramzor-fea.jpg"/>
-</div>
+</div> -->
     <?php
     if (get_current_blog_id() !== 2) { ?>
         <ul class="overview-nutrients row">
