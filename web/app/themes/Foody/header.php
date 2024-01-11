@@ -8,6 +8,11 @@
  *
 * @package Foody
 */
+//Wisam Code Checking Redirection : 
+$CheckRedirectionPage = new CheckRedirectionPage;
+       print_r($CheckRedirectionPage->GetRedirectionPages());
+
+
 
 $header = new Foody_Header();
 $user = new Foody_User();
@@ -293,6 +298,7 @@ Foody_Header::whatsapp(['d-none', 'd-lg-block', 'floating']);
 <?php 
        
        //Wisam Manual scripts : 
+       
        require_once(get_template_directory() . "/w_helpers/foody-manual-scripts.php"); 
        
        ?>

@@ -108,10 +108,12 @@ require_once get_template_directory() . '/inc/foody-ingredients-wp-list-table.ph
 require_once get_template_directory() . '/inc/foody-green-invoice-generator.php';
 require_once get_template_directory() . '/inc/foody-rav-messer-api.php';
 //WISAM
+require_once get_template_directory() . "/inc/classes/class-foody-redirection.php";
 require_once get_template_directory() . "/inc/classes/class-questions.php";
 require_once get_template_directory() . "/inc/classes/class-wsitemap.php";
 require_once get_template_directory() . "/inc/classes/class-foody-poll.php";
 require_once get_template_directory() . "/inc/classes/class-manual-script-add.php";
+
 
 /*
  * Widgets
