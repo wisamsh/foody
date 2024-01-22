@@ -23,8 +23,8 @@ class ManualScriptAdd
             if ($script["out_source"] == true && $script['out_source_code_Url'] != '') {
                 $area_zone = $script["script_area_type"];
                 $script_content = $script['out_source_code_Url'];
-                
-                $this->print_the_script[$key][$area_zone] = $script_content ;
+                $async = $script['async'] ;
+                $this->print_the_script[$key][$area_zone] =  $async . '|' .  $script_content ;
             }
         }
         return $this->print_the_script;
