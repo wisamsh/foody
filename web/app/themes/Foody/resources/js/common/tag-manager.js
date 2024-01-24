@@ -10,7 +10,8 @@ module.exports = (function () {
         difficulty_level = '', preparation_time, ingredients_amount = '',
         order_location = '', amount = '', has_rich_content,
         cd_description1 = '', cd_value1 = '', filters_amount = '', _object = '',
-        ingredients_promotion='', ingredient='', non_interaction = false
+        ingredients_promotion='', ingredient='', non_interaction = false,
+         recipeID = ''
     ) {
 
         /**
@@ -26,9 +27,11 @@ module.exports = (function () {
         switch (foodyGlobals['type']) {
             case 'recipe':
                 object = _object;
+                recipeID = foodyGlobals['ID']
                 break;
             case 'home':
                 object = _object;
+                
                 break;
             case 'article':
                 object = _object;
@@ -82,7 +85,9 @@ module.exports = (function () {
             cd_value1,
             filters_amount,
             ingredients_promotion,
-            ingredient
+            ingredient,
+            recipeID
+           
         };
 
         window.dataLayer.push(dataLayerObj);

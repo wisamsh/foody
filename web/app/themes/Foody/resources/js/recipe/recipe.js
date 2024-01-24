@@ -6,6 +6,7 @@
 //TODO:: Change category from מתכון to כתבה if necessary !
 // import * as player from "youtube-player";
 let player;
+
 let videoThumbnail;
 if (foodyGlobals.post && (foodyGlobals.post.type == 'foody_recipe' || foodyGlobals.post.type == 'post')) {
     if ( foodyGlobals['current_blog_site'] === 2  ) {
@@ -538,6 +539,12 @@ function changeStyleOfArrows() {
  * @param cdValue
  */
 function eventCallback(event, category, action, label = '', cdDesc = '', cdValue = '') {
+/**
+     * Recipe ID
+     */
+
+
+
 
     /**
      * Recipe name
@@ -597,7 +604,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
      * Has rich content - does contains video or product buy option
      */
     let hasRichContent = foodyGlobals['has_video'] ? foodyGlobals['has_video'] : false;
-
+    let recipeID = foodyGlobals['ID'];
     tagManager.pushDataLayer(
         category,
         action,
@@ -614,7 +621,9 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
         hasRichContent,
         cdDesc,
         cdValue,
-        ''
+        '',
+        recipeID,
+        
     );
 }
 
