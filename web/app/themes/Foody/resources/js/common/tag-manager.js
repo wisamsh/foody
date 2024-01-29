@@ -27,7 +27,7 @@ module.exports = (function () {
         switch (foodyGlobals['type']) {
             case 'recipe':
                 object = _object;
-                recipeID = foodyGlobals['ID']
+                recipeID =  foodyGlobals['ID'].toString()
                 break;
             case 'home':
                 object = _object;

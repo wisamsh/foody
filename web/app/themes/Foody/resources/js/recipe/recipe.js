@@ -604,7 +604,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
      * Has rich content - does contains video or product buy option
      */
     let hasRichContent = foodyGlobals['has_video'] ? foodyGlobals['has_video'] : false;
-    let recipeID = foodyGlobals['ID'];
+    let recipeID = foodyGlobals['ID'].toString();
     tagManager.pushDataLayer(
         category,
         action,
