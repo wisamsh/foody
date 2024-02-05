@@ -19,8 +19,6 @@ $foody_technique = $foody_sitemap->get_posts_map('foody_technique', true);
 $foody_ingredient = $foody_sitemap->get_posts_map('foody_ingredient', true);
 $foody_feed_channel = $foody_sitemap->get_posts_map('foody_feed_channel', true);
 $foody_sitemap->MobileattrMap();
-
-
 //$foody_filter = $foody_sitemap->get_posts_map('foody_filter');
 
 echo $FoodyRecipes;
