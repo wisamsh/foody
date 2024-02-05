@@ -24,5 +24,6 @@ $foody_sitemap->MobileattrMap();
 //$foody_filter = $foody_sitemap->get_posts_map('foody_filter');
 
 echo $FoodyRecipes;
+echo $FoodyPosts;
 echo '</urlset>';
 ?>
