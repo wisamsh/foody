@@ -335,11 +335,11 @@
       "type": "package",
       "package": {
         "name": "pushengage/push-engage-web-push-notifications",
-        "version": "3.2.0",
+        "version": "4.0.7.1",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
-          "url": "https://downloads.wordpress.org/plugin/pushengage.3.2.0.zip"
+          "url": "https://downloads.wordpress.org/plugin/pushengage.4.0.7.1.zip"
         }
       }
     },
