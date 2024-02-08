@@ -1141,6 +1141,7 @@ function remove_core_updates(){
     //Wisam fixing meta robots in mehadrin======================
 
     if($_SERVER['HTTP_HOST'] == "mehadrin.foody.co.il") {
+        if(!is_front_page()){
  
         function remove_robots_meta_with_js() {
             echo '<script>
@@ -1167,5 +1168,5 @@ function remove_core_updates(){
         add_action('wp_head', 'set_noindex_nofollow_meta_tag');
         
         }
-
+    }
        

@@ -6,6 +6,7 @@ $color_red = "#fd090973";
 $clr = '';
 $clrMB = '';
 $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
+$icon_sakert = '';
 //mobile secssion ========================================================
 ?>
 
@@ -17,12 +18,15 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
 
                 if ($key == 'calories_per_dish' && ($carbons <= 30)) {
                     $clrMB = $color_green;
+                    $icon_sakert = 'https://foody-media.s3.eu-west-1.amazonaws.com/happyfood/green.png';
                 }
                 if ($key == 'calories_per_dish' && ($carbons) > 30 && ($carbons) <= 45) {
                     $clrMB = $color_yellow;
+                    $icon_sakert ='https://foody-media.s3.eu-west-1.amazonaws.com/happyfood/yellow.png';
                 }
                 if ($key == 'calories_per_dish' && ($carbons) > 45) {
                     $clrMB = $color_red;
+                    $icon_sakert ='https://foody-media.s3.eu-west-1.amazonaws.com/happyfood/red.png';
                 }
                
             ?>
@@ -31,7 +35,7 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
 
                 <li class="overview-item col-sm-3 col-3" style="background:<?php echo $clrMB; ?>">
                 <?php if ($key == 'calories_per_dish') { ?>
-                    <img class="carbicon" src="<?php echo $carbIcon ;?>"/>
+                    <img class="carbicon" src="<?php echo $icon_sakert ;?>"/>
                     <?php }?>
                    
                 <?php if ($key === 'time') { ?>
@@ -123,18 +127,21 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
 
                 if ($key == 'calories_per_dish' && ($carbons <= 30)) {
                     $clr = $color_green;
+                    $icon_sakert = 'https://foody-media.s3.eu-west-1.amazonaws.com/happyfood/green.png';
                 }
                 if ($key == 'calories_per_dish' && ($carbons) > 30 && ($carbons) <= 45) {
                     $clr = $color_yellow;
+                    $icon_sakert ='https://foody-media.s3.eu-west-1.amazonaws.com/happyfood/yellow.png';
                 }
                 if ($key == 'calories_per_dish' && ($carbons) > 45) {
                     $clr = $color_red;
+                    $icon_sakert ='https://foody-media.s3.eu-west-1.amazonaws.com/happyfood/red.png';
                 }
             ?>
                 <li class="overview-item col-1" style="background:<?php echo $clr; ?>">
                 
                 <?php if ($key == 'calories_per_dish') { ?>
-                    <img class="carbicon" src="<?php echo $carbIcon ;?>"/>
+                    <img class="carbicon" src="<?php echo $icon_sakert  ;?>"/>
                     <?php }?>
                     <?php if ($key === 'time') { ?>
                         <img src="<?php echo $GLOBALS['images_dir'] . 'icons/' . $value['preparation_time']['icon-desktop'] ?>">
@@ -223,6 +230,12 @@ $carbIcon = 'https://foody-media.s3.eu-west-1.amazonaws.com/carb.svg';
     width:100%;
     text-align:center;
     padding:10px;
+}
+.carbicon {
+    width: 90% !important;
+    position: absolute;
+    left: 6px;
+    top: 14px;
 }
 
 </style>
