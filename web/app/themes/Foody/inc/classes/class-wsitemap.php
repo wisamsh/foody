@@ -39,23 +39,21 @@ class Foody_wsitemap
                 $post_date = $post['post_date'];
                 $url = get_permalink($postID);
                 $output .= '<url>';
-                $output .= '<loc>'.htmlspecialchars($url);
+                $output .= '<loc>' . htmlspecialchars($url);
                 $output .= '</loc>';
-                $output .= '<lastmod>'. $post_date ;
+                $output .= '<lastmod>' . $post_date;
                 $output .= '</lastmod>';
                 $output .= '</url>';
-                
             }
 
-           
+
 
             // get the html
             return $output;
-
         }
     }
 
-    public function get_posts_map($type, $xml=false)
+    public function get_posts_map($type, $xml = false)
     {
         return $this->get_posts_map_private($type, $xml);
     }
@@ -104,5 +102,41 @@ class Foody_wsitemap
             echo '<li><a href="/category/' . $t->slug . '">' . $t->name . '</a></li>';
         }
         echo '</ul>';
+    }
+
+    public function get_taxonomies_map()
+    {
+        $output = '';
+        // Get all taxonomies
+        $taxonomies = get_taxonomies();
+
+        // Loop through each taxonomy
+        foreach ($taxonomies as $taxonomy) {
+            // Get the terms for the taxonomy
+            $terms = get_terms(array(
+                'taxonomy' => $taxonomy,
+                'hide_empty' => true, // Set to true if you want to hide empty terms
+            ));
+
+            // Output the taxonomy name
+
+
+            // Loop through each term
+            foreach ($terms as $term) {
+                // Get the URL for the term
+                $term_url = get_term_link($term);
+
+                // Output the term URL and name
+                // echo '<a href="' . $term_url . '">' . $term->name . '</a><br>';
+                $output .= '<url>';
+                $output .= '<loc>' . htmlspecialchars($term_url);
+                $output .= '</loc>';
+                $output .= '</url>';
+            }
+        }
+
+
+
+        return $output;
     }
 } //END CLASS
