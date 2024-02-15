@@ -1168,5 +1168,40 @@ function remove_core_updates(){
         add_action('wp_head', 'set_noindex_nofollow_meta_tag');
         
         }
+
     }
-       
+//END NO INDEX : 
+
+
+//START INDEX ON MEHDRIN ONLY FRON PAGE : 
+
+
+if($_SERVER['HTTP_HOST'] == "mehadrin.foody.co.il" || $_SERVER['HTTP_HOST'] == "foody-local.co.il") {
+    if(is_front_page() || is_home()){
+die("ok");
+    function remove_robots_meta_with_js() {
+        echo '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var metaTag = document.querySelector(\'meta[name="robots"]\');
+                if (metaTag) {
+                    metaTag.parentNode.removeChild(metaTag);
+                }
+            });
+        </script>';
+    }
+    
+    add_action('wp_footer', 'remove_robots_meta_with_js');
+    
+    function set_index_follow_meta_tag() {
+        // Check if it's a specific page where you want to set noindex, nofollow
+        
+            echo '<meta name="robots" content="index, follow" />';
+        
+    }
+    
+    
+    // Hook into wp_head
+    add_action('wp_head', 'set_index_follow_meta_tag');
+}
+
+}
