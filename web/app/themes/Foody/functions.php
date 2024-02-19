@@ -1150,25 +1150,16 @@ if ($front_page->have_posts()) {
 }
 
 
-        // if(!is_page($front_page_id)){
- 
-        
-        // add_action('wp_footer', 'remove_robots_meta_with_js');
-        
-        // function set_noindex_nofollow_meta_tag() {
-        //     // Check if it's a specific page where you want to set noindex, nofollow
-        //     if (is_single() || is_page()) {
-        //         echo '<meta name="robots" content="noindex, nofollow" />';
-        //     }
-        // }
-        
-        
-        // Hook into wp_head
-       // add_action('wp_head', 'set_noindex_nofollow_meta_tag');
-        
-     //   }
+if(is_home() && is_front_page()){
+    
+    if( $front_page_id == $front_page_main_id ){
+        add_filter('wp_robots', function($robots) {
+            unset($robots['noindex']);
+            unset($robots['nofollow']);
+            return $robots;
+        });
 
-     function set_index_follow_meta_tag() {
+    function set_index_follow_meta_tag() {
         // Check if it's a specific page where you want to set noindex, nofollow
         
             echo '<meta name="googlebot" content="index, follow" />';
@@ -1176,12 +1167,7 @@ if ($front_page->have_posts()) {
         }
         
 
-        if( $front_page_id == $front_page_main_id ){
-            add_filter('wp_robots', function($robots) {
-                unset($robots['noindex']);
-                unset($robots['nofollow']);
-                return $robots;
-            });
+        
             
            
             
@@ -1196,6 +1182,6 @@ if ($front_page->have_posts()) {
 
 
 
-
+        }
     }
        
