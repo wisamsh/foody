@@ -1140,33 +1140,62 @@ function remove_core_updates(){
 
     //Wisam fixing meta robots in mehadrin======================
 
-    if($_SERVER['HTTP_HOST'] == "mehadrin.foody.co.il") {
-        if(!is_front_page()){
+    if($_SERVER['HTTP_HOST'] == "mehadrin.foody.co.il" || $_SERVER['HTTP_HOST'] == "foody-local.co.il") {
+        
+         $front_page_id = get_option('page_on_front');
+         $front_page = new WP_Query(array('pagename' => 'home'));
+if ($front_page->have_posts()) {
+    $front_page_main_id = $front_page->posts[0]->ID;
+    wp_reset_postdata(); // Reset the query to avoid conflicts
+}
+
+
+        // if(!is_page($front_page_id)){
  
-        function remove_robots_meta_with_js() {
-            echo '<script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    var metaTag = document.querySelector(\'meta[name="robots"]\');
-                    if (metaTag) {
-                        metaTag.parentNode.removeChild(metaTag);
-                    }
-                });
-            </script>';
-        }
         
-        add_action('wp_footer', 'remove_robots_meta_with_js');
+        // add_action('wp_footer', 'remove_robots_meta_with_js');
         
-        function set_noindex_nofollow_meta_tag() {
-            // Check if it's a specific page where you want to set noindex, nofollow
-            if (is_single() || is_page()) {
-                echo '<meta name="robots" content="noindex, nofollow" />';
-            }
-        }
+        // function set_noindex_nofollow_meta_tag() {
+        //     // Check if it's a specific page where you want to set noindex, nofollow
+        //     if (is_single() || is_page()) {
+        //         echo '<meta name="robots" content="noindex, nofollow" />';
+        //     }
+        // }
         
         
         // Hook into wp_head
-        add_action('wp_head', 'set_noindex_nofollow_meta_tag');
+       // add_action('wp_head', 'set_noindex_nofollow_meta_tag');
         
+     //   }
+
+     function set_index_follow_meta_tag() {
+        // Check if it's a specific page where you want to set noindex, nofollow
+        
+            echo '<meta name="googlebot" content="index, follow" />';
+            echo '<meta name="robots" content="index, follow" />';
         }
+        
+
+        if( $front_page_id == $front_page_main_id ){
+            add_filter('wp_robots', function($robots) {
+                unset($robots['noindex']);
+                unset($robots['nofollow']);
+                return $robots;
+            });
+            
+           
+            
+           
+          
+            
+            // Hook into wp_head
+         add_action('wp_head', 'set_index_follow_meta_tag', 1);
+
+            
+            }
+
+
+
+
     }
        
