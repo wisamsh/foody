@@ -28,7 +28,7 @@ $show_accessibility = true;
 <html <?php language_attributes(); ?> dir="rtl">
 <head>
 <?php // for facebook metatags
-require (__DIR__ . '/w_helpers/facebook_meta_tags.php');
+
 
 //require (__DIR__ . '/w_helpers/taboola_in_head.php');
 ?>
@@ -43,6 +43,16 @@ require (__DIR__ . '/w_helpers/facebook_meta_tags.php');
 <?php } ?>
 <meta name="theme-color" content="#ffffff">
 <link rel="profile" href="http://gmpg.org/xfn/11">
+<?php 
+//Wisam : this fo white labels only - meta description and meta keywords======================
+if($_SERVER['HTTP_HOST'] != "foody.co.il"){
+require (__DIR__ . '/w_helpers/whitelabels_category-seo.php');
+}
+//End meta for whitlabels=====================================================================
+?>
+
+
+
 
 <?php Foody_Header::google_tag_manager(); ?>
 <?php if (get_current_blog_id() == 2) { ?>

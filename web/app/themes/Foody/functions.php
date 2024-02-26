@@ -1159,8 +1159,6 @@ function remove_core_updates(){
             echo '<meta name="robots" content="index, follow" />';
         }
         
-
-            
             // Hook into wp_head
          add_action('wp_head', 'set_index_follow_meta_tag', 1);
 
