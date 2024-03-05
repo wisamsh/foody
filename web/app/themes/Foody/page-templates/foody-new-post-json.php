@@ -11,7 +11,11 @@ header("X-Robots-Tag: noindex, nofollow");
 header('Content-Type: application/json; charset=utf-8');
 
 // Get today's date and timestamp
-$today = date('Y-m-d');
+ $today_year = date('Y');
+ $today_month = date('m');
+ $today_day = date('d');
+ $after =  $today_year ."-". $today_month ."-".  ($today_day-1);
+ $befor =  $today_year ."-". $today_month ."-".  ($today_day+1);
 $rtn = array();
 $freindlyUri = '';
 
@@ -21,8 +25,8 @@ $args = array(
     'post_status' => 'publish',
     'date_query' => array(
         array(
-            'after' => $today  - 1,
-            'before' => $today + 1,
+            'after' =>  $after,
+            'before' =>  $befor ,
             'inclusive' => true,
         ),
     ),
@@ -37,5 +41,6 @@ foreach ($foody_recipes as $k => $v) {
     $rtn[$k]['post_date'] = $v->post_date;
     $rtn[$k]['post_title'] = $v->post_title;
     $rtn[$k]['url'] = $freindlyUri;
+    $rtn[$k]['post_type'] = $v->post_type;
 }
 print_r(json_encode($rtn));
