@@ -10,8 +10,9 @@ module.exports = (function () {
         difficulty_level = '', preparation_time, ingredients_amount = '',
         order_location = '', amount = '', has_rich_content,
         cd_description1 = '', cd_value1 = '', filters_amount = '', _object = '',
-        ingredients_promotion='', ingredient='', non_interaction = false,
-         recipeID = ''
+        ingredients_promotion = '', ingredient = '', non_interaction = false,
+        recipeID = '',
+        recipe_main_category_ID = ''
     ) {
 
         /**
@@ -27,11 +28,25 @@ module.exports = (function () {
         switch (foodyGlobals['type']) {
             case 'recipe':
                 object = _object;
-                recipeID =  foodyGlobals['ID'].toString()
+                recipeID = foodyGlobals['ID'].toString();
+                let recipe_cats = foodyGlobals['post']['categories'];
+                let cat_bread = $('.breadcrumb > li').last()[0].innerText;
+
+
+                recipe_cats.forEach((index) => {
+                    // console.log('Index: ' + index.term_id);
+                    //console.log('Index: ' + index.name);
+                    if (cat_bread == index.name) {
+                        recipe_main_category_ID = index.term_id;
+                    }
+
+
+                });
+
                 break;
             case 'home':
                 object = _object;
-                
+
                 break;
             case 'article':
                 object = _object;
@@ -55,7 +70,7 @@ module.exports = (function () {
                 if (_object == '') {
                     object = decodeURI(window.location.pathname.replace('/courses/', '').replace(/-/g, ' '));
                     object = (object.length < 150) ? object : object.slice(0, 150);
-                    object = object.slice(-1) == '/' ? object.slice(0,-1) : object;
+                    object = object.slice(-1) == '/' ? object.slice(0, -1) : object;
                 } else {
                     object = _object;
                 }
@@ -86,8 +101,9 @@ module.exports = (function () {
             filters_amount,
             ingredients_promotion,
             ingredient,
-            recipeID
-           
+            recipeID,
+            recipe_main_category_ID,
+
         };
 
         window.dataLayer.push(dataLayerObj);

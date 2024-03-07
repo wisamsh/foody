@@ -605,6 +605,7 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
      */
     let hasRichContent = foodyGlobals['has_video'] ? foodyGlobals['has_video'] : false;
     let recipeID = foodyGlobals['ID'].toString();
+    //let recipe_main_category_ID = $('.breadcrumb > li').last()[0].innerText;
     tagManager.pushDataLayer(
         category,
         action,
@@ -623,10 +624,10 @@ function eventCallback(event, category, action, label = '', cdDesc = '', cdValue
         cdValue,
         '',
         recipeID,
+        recipe_main_category_ID,
         
     );
 }
-
 
 
 
