@@ -37,7 +37,7 @@ module.exports = (function () {
                     // console.log('Index: ' + index.term_id);
                     //console.log('Index: ' + index.name);
                     if (cat_bread == index.name) {
-                        recipe_main_category_ID = index.term_id;
+                        recipe_main_category_ID =  index.term_id.toString();
                     }
 
 
