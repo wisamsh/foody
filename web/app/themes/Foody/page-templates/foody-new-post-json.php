@@ -37,10 +37,21 @@ $args = array(
 $foody_recipes = get_posts($args);
 foreach ($foody_recipes as $k => $v) {
     $freindlyUri  = get_permalink($v->ID);
+        
     $rtn[$k]['ID'] = $v->ID;
     $rtn[$k]['post_date'] = $v->post_date;
     $rtn[$k]['post_title'] = $v->post_title;
     $rtn[$k]['url'] = $freindlyUri;
     $rtn[$k]['post_type'] = $v->post_type;
+
+//Getting main category of the post
+$category_detail=get_the_category($v->ID);//$post->ID
+        foreach($category_detail as $cd){
+            $rtn[$k]['post_main_category_name'] = $cd->name;
+            $rtn[$k]['post_main_category_id'] = $cd->term_id;
+            
+        }
+
+
 }
 print_r(json_encode($rtn));
