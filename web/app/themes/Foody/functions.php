@@ -1165,6 +1165,6 @@ function remove_core_updates(){
             
             }
         
-        
+            $foody_google_bigquery = new FoodyGoogleBigQuery();
     
        
