@@ -23,6 +23,7 @@ class FoodyGoogleBigQuery {
         // Handle AJAX request here
         $response = array('response' => 'This is the response from the server.');
         return json_encode($response);
+        wp_die();
        // this is required to terminate immediately and return a proper response
     }
 
