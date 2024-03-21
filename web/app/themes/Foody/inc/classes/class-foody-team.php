@@ -53,9 +53,9 @@ class FoodyTeam {
                     )
                 ),
                 'orderby'  => 'meta_value_num',
-                'meta_key' => 'menu_order',
+                'meta_key' => 'sort_team_number',
                 'order'    => 'ASC',
-                'number'   => $num_of_authors
+                'number'   => $num_of_authors,
             );
         }
 		else{
@@ -70,9 +70,10 @@ class FoodyTeam {
                     )
                 ),
                 'orderby'  => 'meta_value_num',
-                'meta_key' => 'menu_order',
+                'meta_key' => 'sort_team_number',
                 'order'    => 'ASC',
-                'number'   => $num_of_authors
+                'number'   => $num_of_authors,
+				
             );
         }
 
