@@ -37,12 +37,22 @@ $args = array(
 $foody_recipes = get_posts($args);
 foreach ($foody_recipes as $k => $v) {
     $freindlyUri  = get_permalink($v->ID);
-        
+    $author_id = get_post_field( 'post_author', $v->ID );
+    $author_info = get_userdata( $author_id );
+    $feed_channal_ID = get_field("recipe_channel", $v->ID) ? get_field("recipe_channel", $v->ID) : '';
+    $feed_channal_name = $feed_channal_ID ? get_the_title($feed_channal_ID) : '';
+    //get_the_title
+
     $rtn[$k]['ID'] = $v->ID;
     $rtn[$k]['post_date'] = $v->post_date;
     $rtn[$k]['post_title'] = $v->post_title;
     $rtn[$k]['url'] = $freindlyUri;
     $rtn[$k]['post_type'] = $v->post_type;
+    $rtn[$k]['Author_Name'] = $author_info->display_name;
+    $rtn[$k]['Author_ID'] = $author_info->ID;
+    $rtn[$k]['Feed_Channal_ID'] = $feed_channal_ID;
+    $rtn[$k]['Feed_Channal_Name'] = $feed_channal_name;
+
 
 //Getting main category of the post
 $category_detail=get_the_category($v->ID);//$post->ID
