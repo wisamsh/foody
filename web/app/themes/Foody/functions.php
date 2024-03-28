@@ -1166,5 +1166,9 @@ function remove_core_updates(){
             }
         
         
-    
+            function enqueue_bootstrap() {
+                wp_enqueue_style('bootstrap-css', get_template_directory_uri() . '/resources/bootstrap/bootstrap-5-3-3/css/bootstrap.min.css');
+                wp_enqueue_script('bootstrap-js', get_template_directory_uri() . '/resources/bootstrap/bootstrap-5-3-3/js/bootstrap.bundle.min.js', array('jquery'), null, true);
+            }
+            add_action('wp_enqueue_scripts', 'enqueue_bootstrap');
        
