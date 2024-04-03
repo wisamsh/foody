@@ -6,9 +6,7 @@
  * @subpackage Foody_WordPress
  * @since Foody WordPress 1.0
  */
+get_header("2024");
 
 
-get_header();
-?>
-
-<?php get_footer();?>
+ get_footer();
