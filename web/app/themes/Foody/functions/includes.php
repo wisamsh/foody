@@ -186,3 +186,5 @@ require_once get_template_directory() . "/inc/shortcodes/shortcode-newsletter.ph
 
 require_once get_template_directory() . "/foody-api/foody-api.php";
 require_once get_template_directory() . "/foody-users-api/users-API.php";
+require_once get_template_directory() . "/inc/classes/class-notification.php";
+
