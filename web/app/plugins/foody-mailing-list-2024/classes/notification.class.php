@@ -5,10 +5,15 @@ class Foody_notification
     // Constructor
     public function __construct()
     {
-
-        //register_activation_hook(__FILE__, array($this, 'notification_tbl'));
+        
         $this->notification_tbl();
-        add_action('wp_footer', array($this, 'Takerecipe'));
+
+       
+       if(function_exists("regist_foody_notifiction_js")){
+        add_action('wp_enqueue_scripts', 'regist_foody_notifiction_js');
+       }
+
+
     }
 
     // Function to create custom table
@@ -31,28 +36,16 @@ class Foody_notification
                 PRIMARY KEY  (id)
             ) $charset_collate;";
 
-
         $wpdb->query($sql);
     }
 
-
-public function regist_foody_notifiction_js(){
-    wp_register_script('FoodyNotifictionSCRIPT', plugins_url('assets/js/foody-notification.js', __FILE__), array('jquery'), '1.0', true);
-
-    // Enqueue the registered script
-    wp_enqueue_script('FoodyNotifictionSCRIPT');
-}
-
-
-public function Takerecipe(){
-    if (is_singular() && get_post_type() === 'foody_recipe') {
-        add_action('wp_enqueue_scripts', array($this, 'regist_foody_notifiction_js'));
-
-    }
+    // Register the Foody notification JavaScript file
    
+
+    // Enqueue the Foody notification JavaScript file if the current post type is 'foody_recipe'
+    public function Takerecipe()
+    {
+        
+    }
 }
 
-
-
-
-} //END CLASS   
