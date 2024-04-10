@@ -67,17 +67,24 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
      <section class="preview">
           <?php $recipe->preview(); ?>
      </section>
-     <?php // Wisam : here comes notification block :
+
+
+     
+
+</section>
+<?php // Wisam : here comes notification block :
      ?>
 
      <section class="recipe-overview no-print">
          <?php 
          $Foody_Notification = new Foody_Notification;
+         echo $Foody_Notification->DrawCSS_Notification();
+        echo  $Foody_Notification->DrawHTMLbox_notification();
          
          ?>
      </section>
 
-</section>
+
 <section class="recipe-overview-print print-desktop">
      <?php echo $recipe->the_print_overview() ?>
      <div class="image-and-rating-print">

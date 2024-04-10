@@ -4,9 +4,12 @@ class Foody_Notification{
 function __construct()
 {
    $this->Creat_Necessary_Tables();
+   
+   add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_Notification_scripts' ) );
+   
 }
 
-function Creat_Necessary_Tables(){
+private function Creat_Necessary_Tables(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'notification_users'; // Your table name
     $charset_collate = $wpdb->get_charset_collate();
@@ -25,6 +28,60 @@ function Creat_Necessary_Tables(){
         ) $charset_collate;";
 
     $wpdb->query($sql);
+}
+
+
+
+public function get_Primary_Term(){
+    $Termrtn = [];
+    $foody_post = Foody_Post::create(get_post(), false);
+    $cat = $foody_post->get_primary_category();
+    $category = get_category($cat);
+    $term_id = ($category->term_id);
+    $term_Name = ($category->name);
+    $Termrtn['term_id'] =$term_id;
+    $Termrtn['term_Name'] =$term_Name;
+    return $Termrtn;
+
+}
+
+
+public function DrawHTMLbox_notification(){
+   $term = $this->get_Primary_Term();
+   
+   $rtn = '';
+    $rtn .= '<div class="notificationBox">';
+    $rtn .='<h4>שלחו לי התראה</h4>';
+    $rtn .= '<span>כשיש מתכון בקטגוריה : </span> <span><b>' .  $term['term_Name']   . '</b></span>';
+    $rtn .= '<form><div class="formWrapper"><input type="email" name="email" id="email"/>
+    <input type="submit"></div></form>';
+    $rtn .= '</div>';
+    return $rtn;
+
+}
+
+public function enqueue_Notification_scripts() {
+    // Enqueue your script
+    wp_enqueue_script( 'notification-script', get_template_directory_uri() . '/components/js/notification.js', array('jquery'), '1.0', true );
+}
+
+
+public function DrawCSS_Notification(){
+    $rtn = '
+    <style>
+    .notificationBox{
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: right;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: solid 1px #589fba4d;
+    border-radius: 5px;
+    padding: 10px;
+    }
+    </style>
+    ';
+    return $rtn ;
 }
 
 }
