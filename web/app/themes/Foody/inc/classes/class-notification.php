@@ -4,7 +4,7 @@ class Foody_Notification{
 function __construct()
 {
    $this->Creat_Necessary_Tables();
-   
+  
    add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_Notification_scripts' ) );
    
 }
@@ -62,7 +62,7 @@ public function DrawHTMLbox_notification(){
 
 public function enqueue_Notification_scripts() {
     // Enqueue your script
-    wp_enqueue_script( 'notification-script', get_template_directory_uri() . '/components/js/notification.js', array('jquery'), '1.0', true );
+    wp_enqueue_script( 'notification-script', get_template_directory_uri() . '/components/js/notification.js' );
 }
 
 
