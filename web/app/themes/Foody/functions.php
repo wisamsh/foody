@@ -1165,6 +1165,11 @@ function remove_core_updates(){
             
             }
         
-        
-    
-       
+            //this conected to class-notification.php........
+            add_action('wp_ajax_nopriv_notification_action_call', 'notification_action_call');
+            add_action('wp_ajax_notification_action_call', 'notification_action_call');
+            function notification_action_call(){
+                
+               $Foody_Notification = new Foody_Notification;
+               $Foody_Notification->get_Details();
+            }

@@ -13,6 +13,9 @@
 /** @var Foody_Recipe $recipe */
 $recipe = $template_args['recipe'];
 
+
+$Foody_Notification = new Foody_Notification;
+
 // "nutrition": <?php echo $recipe->get_jsonld_nutrients(),
 // "video": <?php echo $recipe->get_jsonld_video()
 ?>
@@ -77,7 +80,7 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
 
      <section class="recipe-overview no-print">
          <?php 
-         $Foody_Notification = new Foody_Notification;
+         
          echo $Foody_Notification->DrawCSS_Notification();
         echo  $Foody_Notification->DrawHTMLbox_notification();
          

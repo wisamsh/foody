@@ -4,10 +4,16 @@ class Foody_Notification{
 function __construct()
 {
    $this->Creat_Necessary_Tables();
-  
-   add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_Notification_scripts' ) );
-   
+  $this->enqueue_Notification_scripts();
+ }
+
+
+function get_Details(){
+    print_r($_POST['email']);
+    exit;
 }
+
+
 
 private function Creat_Necessary_Tables(){
     global $wpdb;
@@ -53,17 +59,41 @@ public function DrawHTMLbox_notification(){
     $rtn .= '<div class="notificationBox">';
     $rtn .='<h4>שלחו לי התראה</h4>';
     $rtn .= '<span>כשיש מתכון בקטגוריה : </span> <span><b>' .  $term['term_Name']   . '</b></span>';
-    $rtn .= '<form><div class="formWrapper"><input type="email" name="email" id="email"/>
-    <input type="submit"></div></form>';
-    $rtn .= '</div>';
+    $rtn .= '<form id="notification_form"><div class="formWrapper"><input type="email" name="email" id="email"/>
+    <input type="submit"></div>
+    <input type="hidden" name="action" id="action" value="notification_action_call"/>
+    </form>';
+    $rtn .= '<p id="notification_ajax_response-response"></p></div>';
     return $rtn;
 
 }
 
 public function enqueue_Notification_scripts() {
     // Enqueue your script
-    wp_enqueue_script( 'notification-script', get_template_directory_uri() . '/components/js/notification.js' );
+    wp_enqueue_script( 'notification-script', get_template_directory_uri() . '/components/js/notification.js', array(), '1.0.0', true );
+    wp_localize_script('notification-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+
+    add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_Notification_scripts' ) );
+   
 }
+
+
+public function handle_ajax() {
+    // Your AJAX handling logic here
+    $data = $_POST['email'];
+
+    // Process your data or perform any other actions
+    
+    // Send a response (example response)
+    $response = 'Data received: ' . $data;
+
+    //wp_send_json_success($response); // Send success response
+   print_r( $response);
+}
+
+
+
+
 
 
 public function DrawCSS_Notification(){
