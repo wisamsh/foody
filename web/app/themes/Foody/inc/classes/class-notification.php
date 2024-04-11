@@ -3,21 +3,80 @@ class Foody_Notification
 {
 
 
-    
+
     function __construct()
     {
         $this->Creat_Necessary_Tables();
         $this->enqueue_Notification_scripts();
     }
 
+    private function ErrorHandle($err = [])
+    {
+        return json_encode($err);
+    }
+
+
     public function not_icon()
     {
         return get_template_directory_uri() . '/resources/images/message_notification.png';
     }
-    
+
     function get_Details()
     {
-        print_r($_POST);
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_users';
+        //print_r($_POST);
+        $email = $_POST['email'];
+        $cat_id = $_POST['cat_id'];
+        $cat_name = $_POST['cat_name'];
+        $recipe_id = $_POST['recipe_id'];
+        $recipe_name = $_POST['recipe_name'];
+
+
+        $email_exists = $wpdb->get_var($wpdb->prepare(
+            "SELECT COUNT(*) FROM $table_name WHERE email = %s and category_id = %s",
+            $email,
+            $cat_id
+        ));
+
+        if ($email_exists > 0) {
+            // Email already exists in the database
+            print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "המייל קיים בקטגוריה זאת")));
+            
+            exit;
+        } else {
+
+
+            $data = array(
+                'first_name' => '',
+                'last_name' => '',
+                'phone' => '',
+                'email' => $email,
+                'category_id' => $cat_id,
+                'recipe_id' => $recipe_id,
+                'category_name' => $cat_name,
+                'recipe_name' => $recipe_name,
+                'valid_user' => '',
+                'user_ip' => $_SERVER['REMOTE_ADDR']
+
+            );
+
+
+            $result = $wpdb->insert($table_name, $data);
+
+            if ($result === false) {
+                // There was an error with the insert operation
+                print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
+            } else {
+                // Insert operation was successful
+                print_r($this->ErrorHandle(array("error" => "0", "reaseon" =>"נקלט בהצלחה!")));
+            }
+        }
+
+
+
+
+
         exit;
     }
 
@@ -76,10 +135,11 @@ class Foody_Notification
     <input type="submit" class="submit" value="שלח"></div>
     <input type="hidden" name="action" id="action" value="notification_action_call"/>
 
-    <input type="hidden" name="cat_id" id="cat_id" value="'.$term['term_id'] .'"/>
-    <input type="hidden" name="cat_name" id="cat_name" value="'.$term['term_Name'] .'"/>
-    <input type="hidden" name="recipe_id" id="recipe_id" value="'.get_the_ID() .'"/>
-    <input type="hidden" name="recipe_name" id="recipe_name" value="'.get_the_title() .'"/>
+    <input type="hidden" name="cat_id" id="cat_id" value="' . $term['term_id'] . '"/>
+    <input type="hidden" name="cat_name" id="cat_name" value="' . $term['term_Name'] . '"/>
+    <input type="hidden" name="recipe_id" id="recipe_id" value="' . get_the_ID() . '"/>
+    <input type="hidden" name="recipe_name" id="recipe_name" value="' . get_the_title() . '"/>
+    <input type="hidden" name="recipe_name" id="recipe_name" value="' . get_the_title() . '"/>
     
     </form>';
         $rtn .= '<p id="notification_ajax_response"></p></div>';
