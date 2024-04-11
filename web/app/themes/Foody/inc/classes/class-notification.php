@@ -21,9 +21,9 @@ private function Creat_Necessary_Tables(){
     $charset_collate = $wpdb->get_charset_collate();
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
             id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-            first_name VARCHAR(255) NOT NULL,
-            last_name VARCHAR(255) NOT NULL,
-            phone VARCHAR(20) NOT NULL,
+            first_name VARCHAR(255) ,
+            last_name VARCHAR(255) ,
+            phone VARCHAR(20),
             email VARCHAR(255) NOT NULL,
             category_id INT(11) NOT NULL,
             recipe_id INT(11) NOT NULL,
@@ -60,11 +60,13 @@ public function DrawHTMLbox_notification(){
     $rtn .= '<div class="notificationBox">';
     $rtn .='<h4>שלחו לי התראה</h4>';
     $rtn .= '<span>כשיש מתכון בקטגוריה : </span> <span><b>' .  $term['term_Name']   . '</b></span>';
-    $rtn .= '<form id="notification_form"><div class="formWrapper"><input type="email" name="email" id="email"/>
-    <input type="submit"></div>
+    $rtn .= '<form id="notification_form">
+    <div class="formWrapper"><input type="email" name="email" id="email" class="not_email"/>
+    <input type="submit" class="submit" value="שלח"></div>
     <input type="hidden" name="action" id="action" value="notification_action_call"/>
     </form>';
     $rtn .= '<p id="notification_ajax_response-response"></p></div>';
+
     return $rtn;
 
 }
@@ -100,6 +102,15 @@ public function handle_ajax() {
 public function DrawCSS_Notification(){
     $rtn = '
     <style>
+.formWrapper{
+    border: solid 1px #ddd;
+    background: #589fba;
+    /* padding-top: 5px; */
+    /* padding-bottom: 5px; */
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
     .notificationBox{
     max-width: 400px;
     margin: 0 auto;
@@ -109,6 +120,21 @@ public function DrawCSS_Notification(){
     border: solid 1px #589fba4d;
     border-radius: 5px;
     padding: 10px;
+    }
+    .not_email{
+        width: 76%;
+    border: solid 0px !important;
+    box-shadow: none !important;
+    }
+    .submit{
+        width: 22%;
+        border: solid 0px !important;
+        background: none !important;
+        border-bottom-left-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+        font-size:14px !important;
+        font-weight:bold;
+        color:#fff !important;
     }
     </style>
     ';
