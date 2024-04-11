@@ -30,6 +30,7 @@ private function Creat_Necessary_Tables(){
             category_name VARCHAR(255),
             recipe_name VARCHAR(255),
             valid_user VARCHAR(255),
+            user_ip VARCHAR(255),
             PRIMARY KEY  (id)
         ) $charset_collate;";
 
