@@ -1,7 +1,11 @@
 jQuery( document ).ready(function() {
     jQuery('#notification_form').submit(function(e) {
         e.preventDefault(); // Prevent form submission
-        var formData = jQuery(this).serialize(); // Serialize form data
+        var formData = jQuery(this).serialize(); // Sericonsole.log ("fffff",formData['email']);
+        if (jQuery("#email").text() == '') {
+            jQuery('#notification_ajax_response').html("אימייל שדה חוב!");
+            return;
+        }
         jQuery('#notification_ajax_response').html('מעדכן...');
 
         // AJAX request
