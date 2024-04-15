@@ -63,7 +63,8 @@ class Foody_Notification
                 'category_name' => $cat_name,
                 'recipe_name' => $recipe_name,
                 'valid_user' => '',
-                'user_ip' => $_SERVER['REMOTE_ADDR']
+                'user_ip' => $_SERVER['REMOTE_ADDR'],
+                'date_of_regist'=>date("d-m-Y")
 
             );
 
@@ -88,28 +89,43 @@ class Foody_Notification
 
 
 
-    private function Creat_Necessary_Tables()
-    {
+    private function Creat_Necessary_Tables() {
         global $wpdb;
         $table_name = $wpdb->prefix . 'notification_users'; // Your table name
-        $charset_collate = $wpdb->get_charset_collate();
-        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
-            id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-            first_name VARCHAR(255) ,
-            last_name VARCHAR(255) ,
-            phone VARCHAR(20),
-            email VARCHAR(255) NOT NULL,
-            category_id INT(11) NOT NULL,
-            recipe_id INT(11) NOT NULL,
-            category_name VARCHAR(255),
-            recipe_name VARCHAR(255),
-            valid_user VARCHAR(255),
-            user_ip VARCHAR(255),
-            PRIMARY KEY  (id)
-        ) $charset_collate;";
-
-        $wpdb->query($sql);
+    
+        // Check if the table exists
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+            // Table doesn't exist, create it
+            $charset_collate = $wpdb->get_charset_collate();
+            $sql = "CREATE TABLE $table_name (
+                id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                first_name VARCHAR(255),
+                last_name VARCHAR(255),
+                phone VARCHAR(20),
+                email VARCHAR(255) NOT NULL,
+                category_id INT(11) NOT NULL,
+                recipe_id INT(11) NOT NULL,
+                category_name VARCHAR(255),
+                recipe_name VARCHAR(255),
+                valid_user VARCHAR(255),
+                user_ip VARCHAR(255),
+                date_of_regist VARCHAR(255),
+                PRIMARY KEY  (id)
+            ) $charset_collate;";
+            require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+            dbDelta( $sql );
+        } else {
+            // Table exists, check if the new field needs to be added
+            $column_name = 'date_of_regist';
+            $column_exists = $wpdb->get_var("SHOW COLUMNS FROM $table_name LIKE '$column_name'");
+            if (!$column_exists) {
+                // Add the new field
+                $sql = "ALTER TABLE $table_name ADD COLUMN $column_name VARCHAR(255) AFTER user_ip";
+                $wpdb->query($sql);
+            }
+        }
     }
+    
 
 
 
@@ -282,6 +298,7 @@ public function draw_notification_users_admin_page() {
                     <th>מתכון</th>
                     <th>אימייל</th>
                     <th>ip לקוח</th>
+                    <th>תאריך רישום </th>
                     <th>Action</th> <!-- New column for delete button -->
                     <!-- Add more table headers as needed -->
                 </tr>
@@ -294,6 +311,7 @@ public function draw_notification_users_admin_page() {
                     <td><?php echo $row->recipe_name; ?></td>
                     <td><?php echo $row->email; ?></td>
                     <td><?php echo $row->user_ip; ?></td>
+                    <td><?php echo $row->date_of_regist; ?></td>
                     <td>
                         <form method="post">
                             <input type="hidden" name="action" value="delete_notification_user">
