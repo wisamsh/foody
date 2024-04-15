@@ -1123,53 +1123,67 @@ function create_meta_desc()
 }
 add_action('wp_head', 'create_meta_desc');
 
-function remove_core_updates(){
-    global $wp_version;return(object) array('last_checked'=> time(),'version_checked'=> $wp_version,);
-    }
-    add_filter('pre_site_transient_update_core','remove_core_updates'); //hide updates for WordPress itself
-    add_filter('pre_site_transient_update_plugins','remove_core_updates'); //hide updates for all plugins
-    add_filter('pre_site_transient_update_themes','remove_core_updates'); 
+function remove_core_updates()
+{
+    global $wp_version;
+    return (object) array('last_checked' => time(), 'version_checked' => $wp_version,);
+}
+add_filter('pre_site_transient_update_core', 'remove_core_updates'); //hide updates for WordPress itself
+add_filter('pre_site_transient_update_plugins', 'remove_core_updates'); //hide updates for all plugins
+add_filter('pre_site_transient_update_themes', 'remove_core_updates');
 
 //Wisam =======for substitute ingredients on recipe page : 
 
-    //multi sites : 
-    require_once get_template_directory() . '/multi-sites-functions/multi-sites.php';
-    require_once get_template_directory() . '/function_extends/substitue_ajax_call.php';
-    require_once get_template_directory() . '/function_extends/poll_ajax_call.php';
-    require_once get_template_directory() . '/function_extends/option-settings.php';
+//multi sites : 
+require_once get_template_directory() . '/multi-sites-functions/multi-sites.php';
+require_once get_template_directory() . '/function_extends/substitue_ajax_call.php';
+require_once get_template_directory() . '/function_extends/poll_ajax_call.php';
+require_once get_template_directory() . '/function_extends/option-settings.php';
 
-    //Wisam fixing meta robots in mehadrin======================
+//Wisam fixing meta robots in mehadrin======================
 
-    if( 
-        ($_SERVER['HTTP_HOST'] == "mehadrin.foody.co.il" || 
-        $_SERVER['HTTP_HOST'] == "foody-local.co.il" || 
+if (
+    ($_SERVER['HTTP_HOST'] == "mehadrin.foody.co.il" ||
+        $_SERVER['HTTP_HOST'] == "foody-local.co.il" ||
         $_SERVER['HTTP_HOST'] == "staging.foody.co.il"
-        ) 
-        && $_SERVER['REQUEST_URI'] == "/"
-        ) 
-        {
-        
-       add_filter('wp_robots', '__return_false');
-    
+    )
+    && $_SERVER['REQUEST_URI'] == "/"
+) {
 
-    function set_index_follow_meta_tag() {
+    add_filter('wp_robots', '__return_false');
+
+
+    function set_index_follow_meta_tag()
+    {
         // Check if it's a specific page where you want to set noindex, nofollow
-        
-            echo '<meta name="googlebot" content="index, follow" />';
-            echo '<meta name="robots" content="index, follow" />';
-        }
-        
-            // Hook into wp_head
-         add_action('wp_head', 'set_index_follow_meta_tag', 1);
 
-            
-            }
-        
-            //this conected to class-notification.php........
-            add_action('wp_ajax_nopriv_notification_action_call', 'notification_action_call');
-            add_action('wp_ajax_notification_action_call', 'notification_action_call');
-            function notification_action_call(){
-                
-               $Foody_Notification = new Foody_Notification;
-               $Foody_Notification->get_Details();
-            }
+        echo '<meta name="googlebot" content="index, follow" />';
+        echo '<meta name="robots" content="index, follow" />';
+    }
+
+    // Hook into wp_head
+    add_action('wp_head', 'set_index_follow_meta_tag', 1);
+}
+
+//this conected to class-notification.php........
+add_action('wp_ajax_nopriv_notification_action_call', 'notification_action_call');
+add_action('wp_ajax_notification_action_call', 'notification_action_call');
+function notification_action_call()
+{
+
+    $Foody_Notification = new Foody_Notification;
+    $Foody_Notification->get_Details();
+}
+add_action('admin_menu', 'MenuAdminNotification');
+function MenuAdminNotification()
+{
+    $Foody_Notification = new Foody_Notification;
+    $Foody_Notification->add_admin_menu();
+}
+
+add_action('admin_init', 'handle_delete_notification_user');
+function handle_delete_notification_user(){
+    $Foody_Notification = new Foody_Notification;
+    $Foody_Notification->Delete_handle_delete_notification_user();
+
+}

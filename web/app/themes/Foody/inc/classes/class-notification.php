@@ -8,8 +8,11 @@ class Foody_Notification
     {
         $this->Creat_Necessary_Tables();
         $this->enqueue_Notification_scripts();
+
+       
     }
 
+    
     private function ErrorHandle($err = [])
     {
         return json_encode($err);
@@ -34,6 +37,7 @@ class Foody_Notification
 
         if ($email == '') {
             print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "חסר אימייל!")));
+            exit;
         }
         $email_exists = $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM $table_name WHERE email = %s and category_id = %s",
@@ -227,4 +231,129 @@ class Foody_Notification
     ';
         return $rtn;
     }
+
+
+// Add a custom admin page
+public function add_admin_menu() {
+    add_menu_page(
+        'Notification Users',   // Page title
+        'Notification Users',   // Menu title
+        'manage_options',       // Capability required
+        'notification_users',   // Menu slug
+        array($this, 'draw_notification_users_admin_page'), // Callback function
+        'dashicons-email',      // Icon URL or CSS class
+       25                    // Menu position
+    );
 }
+
+// Render admin page
+public function draw_notification_users_admin_page() {
+    global $wpdb;
+    
+    // Items per page
+    $per_page = 40;
+    
+    // Current page number
+    $current_page = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
+    
+    // Offset calculation
+    $offset = ($current_page - 1) * $per_page;
+
+    // Fetch total number of notification users
+    $total_items = $wpdb->get_var("SELECT COUNT(id) FROM {$wpdb->prefix}notification_users");
+    
+    // Fetch data from the wp_notification_users table
+    $table_name = $wpdb->prefix . 'notification_users';
+    $data = $wpdb->get_results($wpdb->prepare(
+        "SELECT * FROM $table_name LIMIT %d OFFSET %d",
+        $per_page,
+        $offset
+    ));
+
+    // Output the data in a table format
+    ?>
+    <div class="wrap">
+        <h1>Notification Users</h1>
+        <table class="wp-list-table widefat fixed striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>קטגוריה</th>
+                    <th>מתכון</th>
+                    <th>אימייל</th>
+                    <th>ip לקוח</th>
+                    <th>Action</th> <!-- New column for delete button -->
+                    <!-- Add more table headers as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($data as $row): ?>
+                <tr>
+                    <td><?php echo $row->id; ?></td>
+                    <td><?php echo $row->category_name; ?></td>
+                    <td><?php echo $row->recipe_name; ?></td>
+                    <td><?php echo $row->email; ?></td>
+                    <td><?php echo $row->user_ip; ?></td>
+                    <td>
+                        <form method="post">
+                            <input type="hidden" name="action" value="delete_notification_user">
+                            <input type="hidden" name="user_id" value="<?php echo $row->id; ?>">
+                            <button type="submit" class="button button-primary">מחק</button>
+                        </form>
+                    </td>
+                    <!-- Add more table cells for additional columns -->
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        
+        <!-- Pagination -->
+        <?php
+        $page_links = paginate_links(array(
+            'base' => add_query_arg('paged', '%#%'),
+            'format' => '',
+            'prev_text' => __('&laquo; Previous'),
+            'next_text' => __('Next &raquo;'),
+            'total' => ceil($total_items / $per_page),
+            'current' => $current_page,
+        ));
+        
+        if ($page_links) {
+            echo '<div class="tablenav" style="width:100%;text-align:center;"><div style="width:100%;text-align:center;" class="tablenav-pages">' . $page_links . '</div></div>';
+        }
+        ?>
+    </div>
+    <?php
+}
+
+
+public function Delete_handle_delete_notification_user() {
+    global $wpdb;
+
+    // Check if the request is a POST request and if the action is to delete a notification user
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] == 'delete_notification_user') {
+        // Retrieve the user ID to be deleted
+        $user_id = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
+
+        // Validate the user ID
+        if ($user_id > 0) {
+            // Delete the user from the database
+            $table_name = $wpdb->prefix . 'notification_users';
+            $result = $wpdb->delete($table_name, array('id' => $user_id));
+
+            // Check if the delete operation was successful
+            if ($result !== false) {
+                echo '<div class="notice notice-success"><p>User deleted successfully.</p></div>';
+            } else {
+                echo '<div class="notice notice-error"><p>Error deleting user.</p></div>';
+            }
+        } else {
+            echo '<div class="notice notice-error"><p>Invalid user ID.</p></div>';
+        }
+    }
+}
+
+
+
+
+}//end class
