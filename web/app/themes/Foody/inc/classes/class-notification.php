@@ -32,7 +32,9 @@ class Foody_Notification
         $recipe_id = $_POST['recipe_id'];
         $recipe_name = $_POST['recipe_name'];
 
-
+        if ($email == '') {
+            print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "חסר אימייל!")));
+        }
         $email_exists = $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM $table_name WHERE email = %s and category_id = %s",
             $email,
@@ -42,7 +44,7 @@ class Foody_Notification
         if ($email_exists > 0) {
             // Email already exists in the database
             print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "המייל קיים בקטגוריה זאת")));
-            
+
             exit;
         } else {
 
@@ -69,7 +71,7 @@ class Foody_Notification
                 print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
             } else {
                 // Insert operation was successful
-                print_r($this->ErrorHandle(array("error" => "0", "reaseon" =>"נקלט בהצלחה!")));
+                print_r($this->ErrorHandle(array("error" => "0", "reaseon" => "נקלט בהצלחה!")));
             }
         }
 
