@@ -35,7 +35,8 @@ class Foody_Notification
         $recipe_id = $_POST['recipe_id'];
         $recipe_name = $_POST['recipe_name'];
         $user_subscribe = $_POST['user_subscribe'];
-
+        $author_name = $_POST['author_name'];
+        $author_id = $_POST['author_id'];
         if (!$user_subscribe) {
             print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "יש להסכים לתנאי שימוש!")));
             exit;
@@ -72,6 +73,8 @@ class Foody_Notification
                 'user_ip' => $_SERVER['REMOTE_ADDR'],
                 'date_of_regist'=>date("d-m-Y"),
                 'user_subscribe'=>$user_subscribe,
+                'author_name'=> $author_name ,
+                'author_id'=>$author_id 
 
             );
 
@@ -118,13 +121,16 @@ class Foody_Notification
                 user_ip VARCHAR(255),
                 date_of_regist VARCHAR(255),
                 user_subscribe VARCHAR(255),
+                author_id VARCHAR(255),
+                author_name VARCHAR(255),
+
                 PRIMARY KEY  (id)
             ) $charset_collate;";
             require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
             dbDelta( $sql );
         } else {
             // Table exists, check if the new field needs to be added
-            $column_name = 'user_subscribe';
+            $column_name = 'author_name';
             $column_exists = $wpdb->get_var("SHOW COLUMNS FROM $table_name LIKE '$column_name'");
             if (!$column_exists) {
                 // Add the new field
@@ -147,21 +153,37 @@ class Foody_Notification
         $term_Name = ($category->name);
         $Termrtn['term_id'] = $term_id;
         $Termrtn['term_Name'] = $term_Name;
+        $get_the_author_ID = get_the_author();
         return $Termrtn;
     }
 
 
     public function DrawHTMLbox_notification()
     {
+         $author_id = get_the_author_meta('ID');
+
+        // Get the author name
+         $author_name = get_the_author_meta('display_name');
         $term = $this->get_Primary_Term();
 
         $rtn = '';
         $rtn .= '<div class="notificationBox">';
         $rtn .= '<img class="not_icon" src="' . $this->not_icon() . '"/>';
         $rtn .= '<h4>שלחו לי התראה</h4>';
-        $rtn .= '<span>כשיש מתכון בקטגוריה : </span> <span><b>' .  $term['term_Name']   . '</b></span>';
+        $rtn .= '<span>כשיש מתכון בקטגוריה : ';
         $rtn .= '<form id="notification_form">
+    
+    <div class="term_add" id="term_add">
+    <span  class="add_term" id="add_term" data-id="'.$term['term_id'].'" data-name="'.$term['term_Name'].'">+</span>
+    <span >'.$term['term_Name'].'</span>
+    </div>
+
+    <div class="term_add" id="author_add">
+    <span class="add_author" id="add_author" data-id="'. $author_id .'" data-name="'.$author_name.'">+</span>
+    <span >'. $author_name .'</span>
+    </div>
     <div class="formWrapper">
+    
     <input type="email" name="email" id="email" class="not_email"/>
     
     <input type="submit" class="submit" value="שלח" />
@@ -171,8 +193,10 @@ class Foody_Notification
     
     <input type="hidden" name="action" id="action" value="notification_action_call"/>
 
-    <input type="hidden" name="cat_id" id="cat_id" value="' . $term['term_id'] . '"/>
-    <input type="hidden" name="cat_name" id="cat_name" value="' . $term['term_Name'] . '"/>
+    <input type="hidden" name="cat_id" id="cat_id" value=""/>
+    <input type="hidden" name="cat_name" id="cat_name" value=""/>
+    <input type="hidden" name="author_id" id="author_id" value=""/>
+    <input type="hidden" name="author_name" id="author_name" value=""/>
     <input type="hidden" name="recipe_id" id="recipe_id" value="' . get_the_ID() . '"/>
     <input type="hidden" name="recipe_name" id="recipe_name" value="' . get_the_title() . '"/>
     <input type="hidden" name="recipe_name" id="recipe_name" value="' . get_the_title() . '"/>
@@ -256,6 +280,20 @@ class Foody_Notification
         font-weight:bold;
         color:#fff !important;
     }
+    .term_add{
+        width:30%;
+        padding:3px;
+        border:solid 1px #ddd;
+        border-radius:20px;
+        display: inline-block;
+        margin-top:10px;
+        cursor: pointer;
+
+    }
+    .add_term , .add_author{
+        font-size:18px ;
+        font-weight:bold;
+    }
     </style>
     ';
         return $rtn;
@@ -315,6 +353,7 @@ public function draw_notification_users_admin_page() {
                 <tr>
                     <th>ID</th>
                     <th>קטגוריה</th>
+                    <th>כותב</th>
                     <th>מתכון</th>
                     <th>אימייל</th>
                     <th>ip לקוח</th>
@@ -329,6 +368,7 @@ public function draw_notification_users_admin_page() {
                 <tr>
                     <td><?php echo $row->id; ?></td>
                     <td><?php echo $row->category_name; ?></td>
+                    <td><?php echo $row->author_name; ?></td>
                     <td><?php echo $row->recipe_name; ?></td>
                     <td><?php echo $row->email; ?></td>
                     <td><?php echo $row->user_ip; ?></td>
