@@ -34,6 +34,12 @@ class Foody_Notification
         $cat_name = $_POST['cat_name'];
         $recipe_id = $_POST['recipe_id'];
         $recipe_name = $_POST['recipe_name'];
+        $user_subscribe = $_POST['user_subscribe'];
+
+        if (!$user_subscribe) {
+            print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "יש להסכים לתנאי שימוש!")));
+            exit;
+        }
 
         if ($email == '') {
             print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "חסר אימייל!")));
@@ -64,7 +70,8 @@ class Foody_Notification
                 'recipe_name' => $recipe_name,
                 'valid_user' => '',
                 'user_ip' => $_SERVER['REMOTE_ADDR'],
-                'date_of_regist'=>date("d-m-Y")
+                'date_of_regist'=>date("d-m-Y"),
+                'user_subscribe'=>$user_subscribe,
 
             );
 
@@ -110,13 +117,14 @@ class Foody_Notification
                 valid_user VARCHAR(255),
                 user_ip VARCHAR(255),
                 date_of_regist VARCHAR(255),
+                user_subscribe VARCHAR(255),
                 PRIMARY KEY  (id)
             ) $charset_collate;";
             require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
             dbDelta( $sql );
         } else {
             // Table exists, check if the new field needs to be added
-            $column_name = 'date_of_regist';
+            $column_name = 'user_subscribe';
             $column_exists = $wpdb->get_var("SHOW COLUMNS FROM $table_name LIKE '$column_name'");
             if (!$column_exists) {
                 // Add the new field
@@ -153,8 +161,14 @@ class Foody_Notification
         $rtn .= '<h4>שלחו לי התראה</h4>';
         $rtn .= '<span>כשיש מתכון בקטגוריה : </span> <span><b>' .  $term['term_Name']   . '</b></span>';
         $rtn .= '<form id="notification_form">
-    <div class="formWrapper"><input type="email" name="email" id="email" class="not_email"/>
-    <input type="submit" class="submit" value="שלח"></div>
+    <div class="formWrapper">
+    <input type="email" name="email" id="email" class="not_email"/>
+    
+    <input type="submit" class="submit" value="שלח" />
+    </div>
+    <input type="checkbox" name="user_subscribe" id="user_subscribe" checked />
+    <label for="user_subscribe">מסכים לתנאי השימוש באתר</label>
+    
     <input type="hidden" name="action" id="action" value="notification_action_call"/>
 
     <input type="hidden" name="cat_id" id="cat_id" value="' . $term['term_id'] . '"/>
@@ -205,10 +219,9 @@ class Foody_Notification
 .formWrapper{
     border: solid 1px #ddd;
     background: #589fba;
-    /* padding-top: 5px; */
-    /* padding-bottom: 5px; */
     border-radius: 5px;
     margin-top: 10px;
+    margin-bottom:10px;
 }
 .not_icon{
     width: 30px;
@@ -288,6 +301,13 @@ public function draw_notification_users_admin_page() {
 
     // Output the data in a table format
     ?>
+                <script>
+                function validate(form) {
+                
+                return confirm('בטוח למחוק?');
+               
+                }
+                </script>
     <div class="wrap">
         <h1>Notification Users</h1>
         <table class="wp-list-table widefat fixed striped">
@@ -299,6 +319,7 @@ public function draw_notification_users_admin_page() {
                     <th>אימייל</th>
                     <th>ip לקוח</th>
                     <th>תאריך רישום </th>
+                    <th>הסכים לתנאי שימוש</th>
                     <th>Action</th> <!-- New column for delete button -->
                     <!-- Add more table headers as needed -->
                 </tr>
@@ -312,8 +333,9 @@ public function draw_notification_users_admin_page() {
                     <td><?php echo $row->email; ?></td>
                     <td><?php echo $row->user_ip; ?></td>
                     <td><?php echo $row->date_of_regist; ?></td>
+                    <td><?php echo $row->user_subscribe == 'on' ? 'כן' : '' ?></td>
                     <td>
-                        <form method="post">
+                        <form method="post" onsubmit="return validate(this);">
                             <input type="hidden" name="action" value="delete_notification_user">
                             <input type="hidden" name="user_id" value="<?php echo $row->id; ?>">
                             <button type="submit" class="button button-primary">מחק</button>
