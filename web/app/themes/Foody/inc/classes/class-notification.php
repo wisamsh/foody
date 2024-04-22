@@ -8,11 +8,9 @@ class Foody_Notification
     {
         $this->Creat_Necessary_Tables();
         $this->enqueue_Notification_scripts();
-
-       
     }
 
-    
+
     private function ErrorHandle($err = [])
     {
         return json_encode($err);
@@ -37,8 +35,14 @@ class Foody_Notification
         $user_subscribe = $_POST['user_subscribe'];
         $author_name = $_POST['author_name'];
         $author_id = $_POST['author_id'];
+      
         if (!$user_subscribe) {
             print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "יש להסכים לתנאי שימוש!")));
+            exit;
+        }
+
+        if ($cat_id == '' &&  $author_id == '') {
+            print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "יש לבחור קטגוריה או כותב!")));
             exit;
         }
 
@@ -46,15 +50,18 @@ class Foody_Notification
             print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "חסר אימייל!")));
             exit;
         }
+
         $email_exists = $wpdb->get_var($wpdb->prepare(
-            "SELECT COUNT(*) FROM $table_name WHERE email = %s and category_id = %s",
+            "SELECT COUNT(*) FROM $table_name WHERE email = %s and category_id = %s OR author_id = %s",
             $email,
-            $cat_id
+            $cat_id,
+            $author_id
+
         ));
 
         if ($email_exists > 0) {
             // Email already exists in the database
-            print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "המייל קיים בקטגוריה זאת")));
+            print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "המייל רשום לקטגוריה או לכותב!")));
 
             exit;
         } else {
@@ -71,10 +78,10 @@ class Foody_Notification
                 'recipe_name' => $recipe_name,
                 'valid_user' => '',
                 'user_ip' => $_SERVER['REMOTE_ADDR'],
-                'date_of_regist'=>date("d-m-Y"),
-                'user_subscribe'=>$user_subscribe,
-                'author_name'=> $author_name ,
-                'author_id'=>$author_id 
+                'date_of_regist' => date("d-m-Y"),
+                'user_subscribe' => $user_subscribe,
+                'author_name' => $author_name,
+                'author_id' => $author_id
 
             );
 
@@ -99,10 +106,11 @@ class Foody_Notification
 
 
 
-    private function Creat_Necessary_Tables() {
+    private function Creat_Necessary_Tables()
+    {
         global $wpdb;
         $table_name = $wpdb->prefix . 'notification_users'; // Your table name
-    
+
         // Check if the table exists
         if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
             // Table doesn't exist, create it
@@ -126,8 +134,8 @@ class Foody_Notification
 
                 PRIMARY KEY  (id)
             ) $charset_collate;";
-            require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-            dbDelta( $sql );
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+            dbDelta($sql);
         } else {
             // Table exists, check if the new field needs to be added
             $column_name = 'author_name';
@@ -139,7 +147,7 @@ class Foody_Notification
             }
         }
     }
-    
+
 
 
 
@@ -160,10 +168,10 @@ class Foody_Notification
 
     public function DrawHTMLbox_notification()
     {
-         $author_id = get_the_author_meta('ID');
+        $author_id = get_the_author_meta('ID');
 
         // Get the author name
-         $author_name = get_the_author_meta('display_name');
+        $author_name = get_the_author_meta('display_name');
         $term = $this->get_Primary_Term();
 
         $rtn = '';
@@ -174,13 +182,13 @@ class Foody_Notification
         $rtn .= '<form id="notification_form">
     
     <div class="term_add" id="term_add">
-    <span  class="add_term" id="add_term" data-id="'.$term['term_id'].'" data-name="'.$term['term_Name'].'">+</span>
-    <span >'.$term['term_Name'].'</span>
+    <span  class="add_term_plus" id="add_term" data-id="' . $term['term_id'] . '" data-name="' . $term['term_Name'] . '">+</span>
+    <span >' . $term['term_Name'] . '</span>
     </div>
 
     <div class="term_add" id="author_add">
-    <span class="add_author" id="add_author" data-id="'. $author_id .'" data-name="'.$author_name.'">+</span>
-    <span >'. $author_name .'</span>
+    <span class="add_author" id="add_author" data-id="' . $author_id . '" data-name="' . $author_name . '">+</span>
+    <span >' . $author_name . '</span>
     </div>
     <div class="formWrapper">
     
@@ -280,19 +288,29 @@ class Foody_Notification
         font-weight:bold;
         color:#fff !important;
     }
+    .add_term_plus , .add_author {
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: -1px;
+    right: 4px;
+    }
     .term_add{
-        width:30%;
-        padding:3px;
+        width:48%;
+        position:relative;
+        padding:10px;
         border:solid 1px #ddd;
         border-radius:20px;
         display: inline-block;
         margin-top:10px;
         cursor: pointer;
+        text-align:center;
 
     }
-    .add_term , .add_author{
-        font-size:18px ;
-        font-weight:bold;
+    
+    .term_add_picked{
+        background: #08871b;
+        color:#fff !important;
     }
     </style>
     ';
@@ -300,140 +318,139 @@ class Foody_Notification
     }
 
 
-// Add a custom admin page
-public function add_admin_menu() {
-    add_menu_page(
-        'Notification Users',   // Page title
-        'Notification Users',   // Menu title
-        'manage_options',       // Capability required
-        'notification_users',   // Menu slug
-        array($this, 'draw_notification_users_admin_page'), // Callback function
-        'dashicons-email',      // Icon URL or CSS class
-       25                    // Menu position
-    );
-}
+    // Add a custom admin page
+    public function add_admin_menu()
+    {
+        add_menu_page(
+            'Notification Users',   // Page title
+            'Notification Users',   // Menu title
+            'manage_options',       // Capability required
+            'notification_users',   // Menu slug
+            array($this, 'draw_notification_users_admin_page'), // Callback function
+            'dashicons-email',      // Icon URL or CSS class
+            25                    // Menu position
+        );
+    }
 
-// Render admin page
-public function draw_notification_users_admin_page() {
-    global $wpdb;
-    
-    // Items per page
-    $per_page = 40;
-    
-    // Current page number
-    $current_page = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
-    
-    // Offset calculation
-    $offset = ($current_page - 1) * $per_page;
+    // Render admin page
+    public function draw_notification_users_admin_page()
+    {
+        global $wpdb;
 
-    // Fetch total number of notification users
-    $total_items = $wpdb->get_var("SELECT COUNT(id) FROM {$wpdb->prefix}notification_users");
-    
-    // Fetch data from the wp_notification_users table
-    $table_name = $wpdb->prefix . 'notification_users';
-    $data = $wpdb->get_results($wpdb->prepare(
-        "SELECT * FROM $table_name LIMIT %d OFFSET %d",
-        $per_page,
-        $offset
-    ));
+        // Items per page
+        $per_page = 40;
 
-    // Output the data in a table format
-    ?>
-                <script>
-                function validate(form) {
-                
-                return confirm('בטוח למחוק?');
-               
-                }
-                </script>
-    <div class="wrap">
-        <h1>Notification Users</h1>
-        <table class="wp-list-table widefat fixed striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>קטגוריה</th>
-                    <th>כותב</th>
-                    <th>מתכון</th>
-                    <th>אימייל</th>
-                    <th>ip לקוח</th>
-                    <th>תאריך רישום </th>
-                    <th>הסכים לתנאי שימוש</th>
-                    <th>Action</th> <!-- New column for delete button -->
-                    <!-- Add more table headers as needed -->
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($data as $row): ?>
-                <tr>
-                    <td><?php echo $row->id; ?></td>
-                    <td><?php echo $row->category_name; ?></td>
-                    <td><?php echo $row->author_name; ?></td>
-                    <td><?php echo $row->recipe_name; ?></td>
-                    <td><?php echo $row->email; ?></td>
-                    <td><?php echo $row->user_ip; ?></td>
-                    <td><?php echo $row->date_of_regist; ?></td>
-                    <td><?php echo $row->user_subscribe == 'on' ? 'כן' : '' ?></td>
-                    <td>
-                        <form method="post" onsubmit="return validate(this);">
-                            <input type="hidden" name="action" value="delete_notification_user">
-                            <input type="hidden" name="user_id" value="<?php echo $row->id; ?>">
-                            <button type="submit" class="button button-primary">מחק</button>
-                        </form>
-                    </td>
-                    <!-- Add more table cells for additional columns -->
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        
-        <!-- Pagination -->
-        <?php
-        $page_links = paginate_links(array(
-            'base' => add_query_arg('paged', '%#%'),
-            'format' => '',
-            'prev_text' => __('&laquo; Previous'),
-            'next_text' => __('Next &raquo;'),
-            'total' => ceil($total_items / $per_page),
-            'current' => $current_page,
+        // Current page number
+        $current_page = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
+
+        // Offset calculation
+        $offset = ($current_page - 1) * $per_page;
+
+        // Fetch total number of notification users
+        $total_items = $wpdb->get_var("SELECT COUNT(id) FROM {$wpdb->prefix}notification_users");
+
+        // Fetch data from the wp_notification_users table
+        $table_name = $wpdb->prefix . 'notification_users';
+        $data = $wpdb->get_results($wpdb->prepare(
+            "SELECT * FROM $table_name LIMIT %d OFFSET %d",
+            $per_page,
+            $offset
         ));
-        
-        if ($page_links) {
-            echo '<div class="tablenav" style="width:100%;text-align:center;"><div style="width:100%;text-align:center;" class="tablenav-pages">' . $page_links . '</div></div>';
-        }
-        ?>
-    </div>
-    <?php
-}
 
+        // Output the data in a table format
+?>
+        <script>
+            function validate(form) {
 
-public function Delete_handle_delete_notification_user() {
-    global $wpdb;
+                return confirm('בטוח למחוק?');
 
-    // Check if the request is a POST request and if the action is to delete a notification user
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] == 'delete_notification_user') {
-        // Retrieve the user ID to be deleted
-        $user_id = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
-
-        // Validate the user ID
-        if ($user_id > 0) {
-            // Delete the user from the database
-            $table_name = $wpdb->prefix . 'notification_users';
-            $result = $wpdb->delete($table_name, array('id' => $user_id));
-
-            // Check if the delete operation was successful
-            if ($result !== false) {
-                echo '<div class="notice notice-success"><p>User deleted successfully.</p></div>';
-            } else {
-                echo '<div class="notice notice-error"><p>Error deleting user.</p></div>';
             }
-        } else {
-            echo '<div class="notice notice-error"><p>Invalid user ID.</p></div>';
+        </script>
+        <div class="wrap">
+            <h1>Notification Users</h1>
+            <table class="wp-list-table widefat fixed striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>קטגוריה</th>
+                        <th>כותב</th>
+                        <th>מתכון</th>
+                        <th>אימייל</th>
+                        <th>ip לקוח</th>
+                        <th>תאריך רישום </th>
+                        <th>הסכים לתנאי שימוש</th>
+                        <th>Action</th> <!-- New column for delete button -->
+                        <!-- Add more table headers as needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($data as $row) : ?>
+                        <tr>
+                            <td><?php echo $row->id; ?></td>
+                            <td><?php echo $row->category_name; ?></td>
+                            <td><?php echo $row->author_name; ?></td>
+                            <td><?php echo $row->recipe_name; ?></td>
+                            <td><?php echo $row->email; ?></td>
+                            <td><?php echo $row->user_ip; ?></td>
+                            <td><?php echo $row->date_of_regist; ?></td>
+                            <td><?php echo $row->user_subscribe == 'on' ? 'כן' : '' ?></td>
+                            <td>
+                                <form method="post" onsubmit="return validate(this);">
+                                    <input type="hidden" name="action" value="delete_notification_user">
+                                    <input type="hidden" name="user_id" value="<?php echo $row->id; ?>">
+                                    <button type="submit" class="button button-primary">מחק</button>
+                                </form>
+                            </td>
+                            <!-- Add more table cells for additional columns -->
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <?php
+            $page_links = paginate_links(array(
+                'base' => add_query_arg('paged', '%#%'),
+                'format' => '',
+                'prev_text' => __('&laquo; Previous'),
+                'next_text' => __('Next &raquo;'),
+                'total' => ceil($total_items / $per_page),
+                'current' => $current_page,
+            ));
+
+            if ($page_links) {
+                echo '<div class="tablenav" style="width:100%;text-align:center;"><div style="width:100%;text-align:center;" class="tablenav-pages">' . $page_links . '</div></div>';
+            }
+            ?>
+        </div>
+<?php
+    }
+
+
+    public function Delete_handle_delete_notification_user()
+    {
+        global $wpdb;
+
+        // Check if the request is a POST request and if the action is to delete a notification user
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] == 'delete_notification_user') {
+            // Retrieve the user ID to be deleted
+            $user_id = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
+
+            // Validate the user ID
+            if ($user_id > 0) {
+                // Delete the user from the database
+                $table_name = $wpdb->prefix . 'notification_users';
+                $result = $wpdb->delete($table_name, array('id' => $user_id));
+
+                // Check if the delete operation was successful
+                if ($result !== false) {
+                    echo '<div class="notice notice-success"><p>User deleted successfully.</p></div>';
+                } else {
+                    echo '<div class="notice notice-error"><p>Error deleting user.</p></div>';
+                }
+            } else {
+                echo '<div class="notice notice-error"><p>Invalid user ID.</p></div>';
+            }
         }
     }
-}
-
-
-
-
 }//end class

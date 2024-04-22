@@ -14,12 +14,14 @@ jQuery(document).ready(function () {
                jQuery("#cat_id").val(term_id);
                jQuery("#cat_name").val(term_name);
                jQuery("#add_term").html("-");
+               jQuery("#term_add").addClass("term_add_picked");
 
             }
             else{
                jQuery("#cat_id").val('');
                jQuery("#cat_name").val('');
                jQuery("#add_term").html("+");
+               jQuery("#term_add").removeClass("term_add_picked");
             }
     });
 
@@ -30,12 +32,14 @@ jQuery(document).ready(function () {
            jQuery("#author_id").val(author_id);
            jQuery("#author_name").val(author_name);
            jQuery("#add_author").html("-");
+           jQuery("#author_add").addClass("term_add_picked");
 
         }
         else{
            jQuery("#author_id").val('');
            jQuery("#author_name").val('');
            jQuery("#add_author").html("+");
+           jQuery("#author_add").removeClass("term_add_picked");
         }
 });
 
