@@ -1,11 +1,25 @@
 <?php
 class Foody_Notification
 {
-
-
+    private $use_agreement_url;
+    private $use_agreement_text;
+    private $group_nots;
 
     function __construct()
-    {
+    { 
+        $this->group_nots = array();
+
+        $this->use_agreement_url = get_field('use_agreement_url', 'option');
+        $this->use_agreement_text = get_field('use_agreement_text', 'option');
+        $this->group_nots['main_title'] = get_field('main_title', 'option');
+        $this->group_nots['second_title'] = get_field('second_title', 'option');
+        $this->group_nots['agree_for_use_validation'] = get_field('agree_for_use_validation', 'option');
+        $this->group_nots['missing_email'] = get_field('missing_email', 'option');
+        $this->group_nots['email_exisit'] = get_field('email_exisit', 'option');
+        $this->group_nots['success_regist'] = get_field('success_regist', 'option');
+       
+
+
         $this->Creat_Necessary_Tables();
         $this->enqueue_Notification_scripts();
     }
@@ -52,7 +66,7 @@ class Foody_Notification
         }
 
         $email_exists = $wpdb->get_var($wpdb->prepare(
-            "SELECT COUNT(*) FROM $table_name WHERE email = %s and category_id = %s OR author_id = %s",
+            "SELECT COUNT(*) FROM $table_name WHERE email = %s and (category_id = %s and author_id = %s)",
             $email,
             $cat_id,
             $author_id
@@ -61,7 +75,7 @@ class Foody_Notification
 
         if ($email_exists > 0) {
             // Email already exists in the database
-            print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "המייל רשום לקטגוריה או לכותב!")));
+            print_r($this->ErrorHandle(array("error" => "1", "reaseon" =>  $this->group_nots['email_exisit'])));
 
             exit;
         } else {
@@ -93,7 +107,7 @@ class Foody_Notification
                 print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
             } else {
                 // Insert operation was successful
-                print_r($this->ErrorHandle(array("error" => "0", "reaseon" => "נקלט בהצלחה!")));
+                print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'])));
             }
         }
 
@@ -177,8 +191,8 @@ class Foody_Notification
         $rtn = '';
         $rtn .= '<div class="notificationBox">';
         $rtn .= '<img class="not_icon" src="' . $this->not_icon() . '"/>';
-        $rtn .= '<h4>שלחו לי התראה</h4>';
-        $rtn .= '<span>כשיש מתכון בקטגוריה : ';
+        $rtn .= '<h4>'.$this->group_nots['main_title'].'</h4>';
+        $rtn .= '<span>'.$this->group_nots['second_title']. '</span>';
         $rtn .= '<form id="notification_form">
     
     <div class="term_add" id="term_add">
@@ -197,7 +211,9 @@ class Foody_Notification
     <input type="submit" class="submit" value="שלח" />
     </div>
     <input type="checkbox" name="user_subscribe" id="user_subscribe" checked />
-    <label for="user_subscribe">מסכים לתנאי השימוש באתר</label>
+    <label for="user_subscribe">
+    <a href="' . $this->use_agreement_url .'">'.$this->use_agreement_text.'<a/>
+    </label>
     
     <input type="hidden" name="action" id="action" value="notification_action_call"/>
 
@@ -211,6 +227,7 @@ class Foody_Notification
     
     </form>';
         $rtn .= '<p id="notification_ajax_response"></p></div>';
+
 
         return $rtn;
     }

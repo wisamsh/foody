@@ -54,6 +54,12 @@ jQuery(document).ready(function () {
         e.preventDefault(); // Prevent form submission
         var formData = jQuery(this).serialize(); // Sericonsole.log ("fffff",formData['email']);
 
+        if (!jQuery('#user_subscribe').is(':checked')) {
+            alert("יש להסכים לתנאי שימוש!");
+            return;
+        }
+
+
         jQuery('#notification_ajax_response').html('מעדכן...');
 
         // AJAX request
