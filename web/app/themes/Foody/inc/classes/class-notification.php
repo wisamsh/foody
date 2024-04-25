@@ -6,7 +6,7 @@ class Foody_Notification
     private $group_nots;
 
     function __construct()
-    { 
+    {
         $this->group_nots = array();
 
         $this->use_agreement_url = get_field('use_agreement_url', 'option');
@@ -17,7 +17,7 @@ class Foody_Notification
         $this->group_nots['missing_email'] = get_field('missing_email', 'option');
         $this->group_nots['email_exisit'] = get_field('email_exisit', 'option');
         $this->group_nots['success_regist'] = get_field('success_regist', 'option');
-       
+
 
 
         $this->Creat_Necessary_Tables();
@@ -49,7 +49,7 @@ class Foody_Notification
         $user_subscribe = $_POST['user_subscribe'];
         $author_name = $_POST['author_name'];
         $author_id = $_POST['author_id'];
-      
+
         if (!$user_subscribe) {
             print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "יש להסכים לתנאי שימוש!")));
             exit;
@@ -106,8 +106,11 @@ class Foody_Notification
                 // There was an error with the insert operation
                 print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
             } else {
+
+                $smoov = $this->UpdateSmoov($email , '918510');
+
                 // Insert operation was successful
-                print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'])));
+                print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'], 'smoov'=>$smoov)));
             }
         }
 
@@ -191,8 +194,8 @@ class Foody_Notification
         $rtn = '';
         $rtn .= '<div class="notificationBox">';
         $rtn .= '<img class="not_icon" src="' . $this->not_icon() . '"/>';
-        $rtn .= '<h4>'.$this->group_nots['main_title'].'</h4>';
-        $rtn .= '<span>'.$this->group_nots['second_title']. '</span>';
+        $rtn .= '<h4>' . $this->group_nots['main_title'] . '</h4>';
+        $rtn .= '<span>' . $this->group_nots['second_title'] . '</span>';
         $rtn .= '<form id="notification_form">
     
     <div class="term_add" id="term_add">
@@ -212,7 +215,7 @@ class Foody_Notification
     </div>
     <input type="checkbox" name="user_subscribe" id="user_subscribe" checked />
     <label for="user_subscribe">
-    <a href="' . $this->use_agreement_url .'">'.$this->use_agreement_text.'<a/>
+    <a href="' . $this->use_agreement_url . '">' . $this->use_agreement_text . '<a/>
     </label>
     
     <input type="hidden" name="action" id="action" value="notification_action_call"/>
@@ -469,5 +472,42 @@ class Foody_Notification
                 echo '<div class="notice notice-error"><p>Invalid user ID.</p></div>';
             }
         }
+    }
+
+    private function UpdateSmoov($email, $listID)
+    {
+        $api_key = 'eaa83919-7ccc-4808-bd74-0b4e7c014dba';
+
+        // URL for the Smoove API endpoint to add an email to a list
+        //$url = 'https://api.smoove.io/Contacts';
+       // $url = 'https://rest.smoove.io/v1/Contacts?updateIfExists=false&restoreIfDeleted=false&restoreIfUnsubscribed=false&overrideNullableValue=false';
+        $url = 'https://rest.smoove.io/v1/Contacts?api_key='.$api_key;
+        
+        // Parameters for the API request
+        $params = array(
+            
+            'lists_ToSubscribe' => array($listID),  // Replace 'LIST_ID_HERE' with the ID of your list
+            'email' => $email  // Email address to add to the list
+        );
+
+        // Initialize cURL session
+        $ch = curl_init($url);
+
+        // Set the POST data
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+
+
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Execute cURL request
+        $response = curl_exec($ch);
+
+        // Get the HTTP response code
+        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        // Close cURL session
+        curl_close($ch);
+        return $http_status;
     }
 }//end class
