@@ -4,6 +4,8 @@ class Foody_Notification
     private $use_agreement_url;
     private $use_agreement_text;
     private $group_nots;
+    private  $api_key;
+    private $SmoovListName;
 
     function __construct()
     {
@@ -17,10 +19,11 @@ class Foody_Notification
         $this->group_nots['missing_email'] = get_field('missing_email', 'option');
         $this->group_nots['email_exisit'] = get_field('email_exisit', 'option');
         $this->group_nots['success_regist'] = get_field('success_regist', 'option');
-
-
+        $this->api_key = 'eaa83919-7ccc-4808-bd74-0b4e7c014dba';
+        $this->SmoovListName = 'Notification-' . date('d-m-Y');
 
         $this->Creat_Necessary_Tables();
+        $this->Creat_Necessary_Tables_smoov();
         $this->enqueue_Notification_scripts();
     }
 
@@ -107,10 +110,10 @@ class Foody_Notification
                 print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
             } else {
 
-                $smoov = $this->UpdateSmoov($email , '918510');
+                $smoov = $this->UpdateSmoov($email, '918510');
 
                 // Insert operation was successful
-                print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'], 'smoov'=>$smoov)));
+                print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'], 'smoov' => $smoov)));
             }
         }
 
@@ -153,16 +156,50 @@ class Foody_Notification
             ) $charset_collate;";
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
             dbDelta($sql);
-        } else {
-            // Table exists, check if the new field needs to be added
-            $column_name = 'author_name';
-            $column_exists = $wpdb->get_var("SHOW COLUMNS FROM $table_name LIKE '$column_name'");
-            if (!$column_exists) {
-                // Add the new field
-                $sql = "ALTER TABLE $table_name ADD COLUMN $column_name VARCHAR(255) AFTER user_ip";
-                $wpdb->query($sql);
-            }
         }
+        // else {
+        //     // Table exists, check if the new field needs to be added
+        //     $column_name = 'author_name';
+        //     $column_exists = $wpdb->get_var("SHOW COLUMNS FROM $table_name LIKE '$column_name'");
+        //     if (!$column_exists) {
+        //         // Add the new field
+        //         $sql = "ALTER TABLE $table_name ADD COLUMN $column_name VARCHAR(255) AFTER user_ip";
+        //         $wpdb->query($sql);
+        //     }
+        // }
+    }
+
+
+    private function Creat_Necessary_Tables_smoov()
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_smoov_lists'; // Your table name
+
+        // Check if the table exists
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+            // Table doesn't exist, create it
+            $charset_collate = $wpdb->get_charset_collate();
+            $sql = "CREATE TABLE $table_name (
+                id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                last_smoov_list VARCHAR(255),
+                created_date VARCHAR(20),
+                recipe_id VARCHAR(20),
+
+                PRIMARY KEY  (id)
+            ) $charset_collate;";
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+            dbDelta($sql);
+        }
+        // else {
+        //     // Table exists, check if the new field needs to be added
+        //     $column_name = 'recipe_id';
+        //     $column_exists = $wpdb->get_var("SHOW COLUMNS FROM $table_name LIKE '$column_name'");
+        //     if (!$column_exists) {
+        //         // Add the new field
+        //         $sql = "ALTER TABLE $table_name ADD COLUMN $column_name VARCHAR(255) AFTER created_date";
+        //         $wpdb->query($sql);
+        //     }
+        // }
     }
 
 
@@ -350,7 +387,43 @@ class Foody_Notification
             'dashicons-email',      // Icon URL or CSS class
             25                    // Menu position
         );
+
+        add_submenu_page(
+            'notification_users',          // Parent menu slug
+            'Update Smoov Lists',          // Page title
+            'Smoov Lists Update',               // Menu title
+            'manage_options',              // Capability required
+            'notification_users_submenu', // Submenu slug
+            array($this, 'GetSmoovListsUpdated') // Callback function
+        );
     }
+
+
+
+    public function GetSmoovListsUpdated()
+    {
+        global $wpdb;
+
+        if (!isset($_REQUEST['smoovListUpdate'])) {
+            if (empty($this->check_Last_smoovList())){
+?>
+            <div style="width:100%;padding:20px;margin-top:30px;">
+                <div class="notice notice-success">
+                    <p>The New Smoov List Would Be Called : <?php echo $this->SmoovListName; ?></p>
+                </div>
+
+                <form id="smoovupdateform" method="post" style="padding:20px;margin-top:30px;">
+                    <input type="submit" class="button button-primary" value="Create List - <?php echo $this->SmoovListName ?>" />
+                    <input type="hidden" id="smoovListUpdate" name="smoovListUpdate" />
+                </form>
+            </div>
+        <?php
+            }
+        } else {
+            echo $this->makeSmoovCategoriesList();
+        }
+    } //end GetSmoovListsUpdated function
+
 
     // Render admin page
     public function draw_notification_users_admin_page()
@@ -378,7 +451,7 @@ class Foody_Notification
         ));
 
         // Output the data in a table format
-?>
+        ?>
         <script>
             function validate(form) {
 
@@ -474,20 +547,31 @@ class Foody_Notification
         }
     }
 
+    private function GetSmoovList($list_id)
+    {
+
+
+        //$url = 'https://rest.smoove.io/v1/Lists/id?='..'&api_key=' . $this->api_key;;
+    }
+
+
+
+
+
     private function UpdateSmoov($email, $listID)
     {
-        $api_key = 'eaa83919-7ccc-4808-bd74-0b4e7c014dba';
 
-        // URL for the Smoove API endpoint to add an email to a list
-        //$url = 'https://api.smoove.io/Contacts';
-       // $url = 'https://rest.smoove.io/v1/Contacts?updateIfExists=false&restoreIfDeleted=false&restoreIfUnsubscribed=false&overrideNullableValue=false';
-        $url = 'https://rest.smoove.io/v1/Contacts?api_key='.$api_key;
-        
+
+        $url = 'https://rest.smoove.io/v1/Contacts?updateIfExists=true&api_key=' . $this->api_key;
+
         // Parameters for the API request
         $params = array(
-            
+
             'lists_ToSubscribe' => array($listID),  // Replace 'LIST_ID_HERE' with the ID of your list
-            'email' => $email  // Email address to add to the list
+            'email' => $email,
+            'customFields' => array(
+                'date_of_regitration' => date("d-m-Y"),
+            )  // Email address to add to the list
         );
 
         // Initialize cURL session
@@ -510,4 +594,133 @@ class Foody_Notification
         curl_close($ch);
         return $http_status;
     }
+
+
+
+
+
+
+    private function makeSmoovCategoriesList()
+    {
+        $url = 'https://rest.smoove.io/v1/Lists?api_key=' . $this->api_key;
+
+        // Parameters for the API request
+        $params = array(
+            'name' => $this->SmoovListName,
+            'publicName' => $this->SmoovListName,
+            'description' => 'To be removed after this date ' . date('d-m-Y'),
+            'permissions' => array(
+                'isPublic' => false,
+
+            )
+        );
+
+        // Initialize cURL session
+        $ch = curl_init($url);
+
+        // Set the POST data
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+
+
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Execute cURL request
+        $response = curl_exec($ch);
+
+        // Get the HTTP response code
+        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        // Close cURL session
+        curl_close($ch);
+        if ($http_status == 200) {
+            
+            return  '<div class="notice notice-success"><p>List Created Smoov status:' . $http_status .
+            $this->inserLast_db_smoov_list($this->SmoovListName, $post_id = null) .
+            '</p></div>';
+        } else {
+            return  '<div class="notice notice-success"><p>Smothing went wrong :  ' . $http_status . '</p></div>';
+        }
+    } //end  makeSmoovCategoriesList()
+
+
+    private function getlast_db_smoov_list()
+    {
+        global $wpdb;
+
+        // Replace 'your_table_name' with the actual name of your table
+        $table_name = $wpdb->prefix . 'notification_smoov_lists';
+
+        // Fetch the last record
+        $last_record = $wpdb->get_row("SELECT * FROM $table_name ORDER BY id DESC LIMIT 1");
+        return $last_record;
+    }
+
+    private function inserLast_db_smoov_list($name, $recipe_id)
+    {
+        global $wpdb;
+
+        // Replace 'your_table_name' with the actual name of your table
+        $table_name = $wpdb->prefix . 'notification_smoov_lists';
+
+        $data_to_insert = array(
+            'last_smoov_list' => $name,
+            'created_date' => date('d-m-y'),
+            'recipe_id'=> $recipe_id
+            // Add more columns and values as needed
+        );
+        
+        // Insert data into the table
+        $result = $wpdb->insert($table_name, $data_to_insert);
+        
+        // Check if the insertion was successful
+        if ($result === false) {
+            // Insertion failed
+            return " Error: " . $wpdb->last_error;
+        } else {
+            // Insertion successful
+            return " Record inserted successfully";
+        }
+
+    } // end inserLast_db_smoov_list()
+
+
+
+    private function check_Last_smoovList() {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_smoov_lists';
+        $field = $this->SmoovListName;
+        $Sql = $wpdb->prepare('SELECT * FROM ' . $table_name  . ' WHERE last_smoov_list = %s', $field);
+        $result = $wpdb->get_results($Sql);
+        return $result;
+    }
+    
+    public function on_SavingRecipe($post_id, $post, $update){
+        if (wp_is_post_revision($post_id)) {
+            return;
+        }
+    
+        // Check if this is an autosave
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+    
+        // Check post type to make sure it's "recipe"
+        if ($post->post_type !== 'foody_recipe') {
+            return;
+        }
+    
+        // Your code to handle save/update action for recipe posts goes here
+    
+        
+        $recipe_name = get_post_meta($post_id, 'recipe_name', true);
+      
+        if(empty($this->check_Last_smoovList())){
+        $this->makeSmoovCategoriesList();
+
+       }
+    }
+
+
+
 }//end class

@@ -1187,3 +1187,13 @@ function handle_delete_notification_user(){
     $Foody_Notification->Delete_handle_delete_notification_user();
 
 }
+
+add_action('save_post_foody_recipe', 'Saving_recipe_notificationCall', 10, 3);
+function Saving_recipe_notificationCall($post_id, $post, $update){
+///on_SavingRecipe
+$Foody_Notification = new Foody_Notification;
+  
+$Foody_Notification->on_SavingRecipe();
+
+
+}
