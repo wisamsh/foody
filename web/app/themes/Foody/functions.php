@@ -1193,7 +1193,7 @@ function Saving_recipe_notificationCall($post_id, $post, $update){
 ///on_SavingRecipe
 $Foody_Notification = new Foody_Notification;
   
-$Foody_Notification->on_SavingRecipe();
+$Foody_Notification->on_SavingRecipe($post_id, $post, $update);
 
 
 }
