@@ -74,14 +74,14 @@ jQuery(document).ready(function () {
         var notificationDiv = document.getElementById("notification_ajax_response");
         if (notificationDiv) {
             // Set transition to fade out over 1 second
-            notificationDiv.style.transition = "opacity 1s";
+           
             
             // Change opacity to 0
             
     
             // Wait for the transition to complete and then remove the text
             setTimeout(function() {
-                notificationDiv.style.opacity = 0;
+               
                 notificationDiv.innerText = ""; // Clearing the text inside the div
             }, 10000); // 1000 milliseconds = 1 second
         }

@@ -405,18 +405,18 @@ class Foody_Notification
         global $wpdb;
 
         if (!isset($_REQUEST['smoovListUpdate'])) {
-            if (empty($this->check_Last_smoovList())){
+            if (empty($this->check_Last_smoovList())) {
 ?>
-            <div style="width:100%;padding:20px;margin-top:30px;">
-                <div class="notice notice-success">
-                    <p>The New Smoov List Would Be Called : <?php echo $this->SmoovListName; ?></p>
-                </div>
+                <div style="width:100%;padding:20px;margin-top:30px;">
+                    <div class="notice notice-success">
+                        <p>The New Smoov List Would Be Called : <?php echo $this->SmoovListName; ?></p>
+                    </div>
 
-                <form id="smoovupdateform" method="post" style="padding:20px;margin-top:30px;">
-                    <input type="submit" class="button button-primary" value="Create List - <?php echo $this->SmoovListName ?>" />
-                    <input type="hidden" id="smoovListUpdate" name="smoovListUpdate" />
-                </form>
-            </div>
+                    <form id="smoovupdateform" method="post" style="padding:20px;margin-top:30px;">
+                        <input type="submit" class="button button-primary" value="Create List - <?php echo $this->SmoovListName ?>" />
+                        <input type="hidden" id="smoovListUpdate" name="smoovListUpdate" />
+                    </form>
+                </div>
         <?php
             }
         } else {
@@ -634,10 +634,10 @@ class Foody_Notification
         // Close cURL session
         curl_close($ch);
         if ($http_status == 200) {
-            
+
             return  '<div class="notice notice-success"><p>List Created Smoov status:' . $http_status .
-            $this->inserLast_db_smoov_list($this->SmoovListName, $post_id = null) .
-            '</p></div>';
+                $this->inserLast_db_smoov_list($this->SmoovListName, $post_id = null) .
+                '</p></div>';
         } else {
             return  '<div class="notice notice-success"><p>Smothing went wrong :  ' . $http_status . '</p></div>';
         }
@@ -666,13 +666,13 @@ class Foody_Notification
         $data_to_insert = array(
             'last_smoov_list' => $name,
             'created_date' => date('d-m-y'),
-            'recipe_id'=> $recipe_id
+            'recipe_id' => $recipe_id
             // Add more columns and values as needed
         );
-        
+
         // Insert data into the table
         $result = $wpdb->insert($table_name, $data_to_insert);
-        
+
         // Check if the insertion was successful
         if ($result === false) {
             // Insertion failed
@@ -681,12 +681,12 @@ class Foody_Notification
             // Insertion successful
             return " Record inserted successfully";
         }
-
     } // end inserLast_db_smoov_list()
 
 
 
-    private function check_Last_smoovList() {
+    private function check_Last_smoovList()
+    {
         global $wpdb;
         $table_name = $wpdb->prefix . 'notification_smoov_lists';
         $field = $this->SmoovListName;
@@ -694,33 +694,105 @@ class Foody_Notification
         $result = $wpdb->get_results($Sql);
         return $result;
     }
+
+
+    private function GetEmailsFrom_NotificationList($category_id = null, $author_id = null)
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_users'; // Replace 'your_table_name' with the name of your table
+        $results = '';
+        $emailList = array();
+
+        // Fetch data from the table with a WHERE clause
+        if ($category_id != '' && $author_id == null) {
+            $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE category_id = %s", $category_id), ARRAY_A);
+        }
+        if ($category_id == '' && $author_id != null) {
+            $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE author_id = %s", $author_id), ARRAY_A);
+        }
+        if (($results)) {
+            foreach ($results as $key=>$res) {
+                $emailList[$key] = $res['email'] ;
+            }
+        }
+        return $emailList;
+    } // END GetEmailsFrom_NotificationList();
+
+
+private function SendEmails($maillingList = array()){
+    $personalizations = [];
+
+    foreach ($maillingList as $email) {
+        $personalizations[] = [
+            "to" => [
+                ["email" => $email, "name" => "Foody"]
+            ]
+        ];
+    }
     
-    public function on_SavingRecipe($post_id, $post, $update){
+    // Constructing the payload array
+    $data = [
+        "personalizations" => $personalizations,
+        "from" => ["email" => "orders@example.com", "name" => "Example Order Confirmation"],
+        "reply_to" => ["email" => "customer_service@example.com", "name" => "Example Customer Service Team"],
+        "subject" => "Your Example Order Confirmation",
+        "content" => [
+            ["type" => "text/html", "value" => "<p>Hello from Twilio SendGrid!</p><p>Sending with the email service trusted by developers and marketers for <strong>time-savings</strong>, <strong>scalability</strong>, and <strong>delivery expertise</strong>.</p><p>%open-track%</p>"]
+        ],
+        // Other fields...
+    ];
+    
+    // Convert the array to JSON
+    $jsonData = json_encode($data);
+    
+  
+    $ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+
+$headers = array();
+$headers[] = 'Authorization: _ENV["Bearer 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"]';
+$headers[] = 'Content-Type: application/json';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$result = curl_exec($ch);
+if (curl_errno($ch)) {
+    echo 'Error:' . curl_error($ch);
+}
+curl_close($ch);
+return $result ; 
+}// END SendEmails();
+
+
+
+
+    public function on_SavingRecipe($post_id, $post, $update)
+    {
+
+
         if (wp_is_post_revision($post_id)) {
             return;
         }
-    
+
         // Check if this is an autosave
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
         }
-    
+
         // Check post type to make sure it's "recipe"
-        if ($post->post_type !== 'foody_recipe') {
+        if ($post->post_type != 'foody_recipe') {
             return;
         }
-    
         // Your code to handle save/update action for recipe posts goes here
-    
-        
+
         $recipe_name = get_post_meta($post_id, 'recipe_name', true);
-      
-        if(empty($this->check_Last_smoovList())){
-        $this->makeSmoovCategoriesList();
 
-       }
+        $term = ($this->get_Primary_Term());
+        $mailin_List = ($this->GetEmailsFrom_NotificationList($term['term_id']));
+print_r($this->SendEmails($mailin_List));
+        die();
     }
-
-
-
 }//end class
