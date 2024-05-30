@@ -102,7 +102,7 @@ class GoogleBigQuery
     } else {
       //return $dataArray;
    foreach ($dataArray as $k=>$v){
-    update_field('recipe_poppularity', $dataArray[$k]['recipe_score'], $v);
+    update_field('recipe_poppularity', $dataArray[$k]['recipe_score'], $dataArray[$k]['item_id']);
     echo '<div style="widht:100%;display:block;"><span>Updated :</span> '  .$dataArray[$k]['receipe_name'] . '</div>';
   }
    
