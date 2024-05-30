@@ -9,8 +9,11 @@
 $grid = new FoodyGrid();
 
 /** @noinspection PhpUndefinedVariableInspection */
+
 $settings = $template_args;
+
 $id = $settings['id'];
+
 $posts = $settings['posts'];
 $cols = $settings['cols'];
 $more = $settings['more'];
@@ -36,7 +39,8 @@ $default_sort_options = [
     [
         'value' => 'title_desc',
         'label' => 'ת-א'
-    ]
+    ],
+    
 ];
 $item_args = foody_get_array_default($settings, 'item_args', []);
 $title_el = foody_get_array_default($template_args, 'title_el', 'h3');

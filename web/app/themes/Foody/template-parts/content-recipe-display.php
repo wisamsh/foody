@@ -81,8 +81,8 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
      <section class="recipe-overview no-print">
          <?php 
          
-         echo $Foody_Notification->DrawCSS_Notification();
-        echo  $Foody_Notification->DrawHTMLbox_notification();
+        // echo $Foody_Notification->DrawCSS_Notification();
+        //echo  $Foody_Notification->DrawHTMLbox_notification();
          
          ?>
      </section>

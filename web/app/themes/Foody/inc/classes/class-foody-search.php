@@ -718,7 +718,8 @@ class Foody_QueryBuilder
             switch ($key) {
                 case 'popular':
                     $this->order_by = 'meta_value_num';
-                    $this->meta_key = 'post_views_count';
+                    //$this->meta_key = 'post_views_count';
+                   $this->meta_key = 'recipe_poppularity';
                     $this->meta_type = 'NUMERIC';
                     break;
                 case 'title':
