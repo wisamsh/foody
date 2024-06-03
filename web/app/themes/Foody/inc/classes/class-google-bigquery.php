@@ -25,7 +25,7 @@ class GoogleBigQuery
   {
     $args = array(
       'post_type'      => 'foody_recipe', // Custom post type name
-      'posts_per_page' => 100,            // Number of posts to fetch
+      'posts_per_page' => 100000,            // Number of posts to fetch
       'fields'         => 'ids',          // Fetch only post IDs
       'orderby'        => 'date',         // Order by date
       'order'          => 'DESC'          // Order by descending (latest posts first)
@@ -63,9 +63,10 @@ class GoogleBigQuery
       foreach ($recipes as $k => $v) {
         $dataArray[$k]['item_id'] = $v;
         update_field('recipe_poppularity', $dataArray[$k]['recipe_score'], $v);
-        echo '<div style="widht:100%;display:block;"><span>Updated :</span> '  .$dataArray[$k]['receipe_name'] . ' Score : '.$dataArray[$k]['recipe_score'].'</div>';
+       //update_field('recipe_poppularity', '', $v);
+       echo '<div class=bgdiv><span>עודכן המתכון :</span><b> '  .$dataArray[$k]['receipe_name'] . '</b> פופולריות : '.$dataArray[$k]['recipe_score'].'</div>';
       }
-      
+      echo '<style>.bgdiv{width:80%;display:block;direction:rtl;text-align:right;border-radius:10px;padding:10px;margin:5px;border:1px solid #ddd;background:#fff;}</style>';
       die();
     }
   }
@@ -96,16 +97,19 @@ class GoogleBigQuery
     curl_close($ch);
 
     $dataArray = json_decode($jsonContent, true);
-    
+
     if (json_last_error() !== JSON_ERROR_NONE) {
       return array('Error decoding JSON: ' . json_last_error_msg());
     } else {
       //return $dataArray;
    foreach ($dataArray as $k=>$v){
     update_field('recipe_poppularity', $dataArray[$k]['recipe_score'], $dataArray[$k]['item_id']);
-    echo '<div style="widht:100%;display:block;"><span>Updated :</span> '  .$dataArray[$k]['receipe_name'] . '</div>';
-  }
-   
+    echo '<div class=bgdiv><span>עודכן המתכון :</span><b> '  .$dataArray[$k]['receipe_name'] . '</b> פופולריות : '.$dataArray[$k]['recipe_score'].'</div>';
+   }
+   echo '<style>.bgdiv{width:80%;display:block;direction:rtl;text-align:right;border-radius:10px;padding:10px;margin:5px;border:1px solid #ddd;background:#fff;}</style>';
+   die();
+
+
     }
   }
 
@@ -157,7 +161,9 @@ class GoogleBigQuery
 
     if ($this->Get_Envoierment() != 'foody.co.il') 
     {
-      $data = $this->Staging_Develop_Fetch_BigQuery() ;
+     // $data = $this->Staging_Develop_Fetch_BigQuery() ;
+     $data = $this->Fetching_BigQuery_Popolarity();
+      
     }
       else {
       $data = $this->Fetching_BigQuery_Popolarity();
