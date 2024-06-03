@@ -178,7 +178,6 @@ class Foody_Query
             if (!empty($bad_value)) {
                 throw new Exception('bad filter value' . strval($bad_value));
             }
-
         }
 
         return $filter_types;
@@ -216,10 +215,24 @@ class Foody_Query
 
         return self::$instance;
     }
-
+    //this is the old function for home page chenged by wisam on 3-6-2023
     public function homepage()
     {
         $args = self::get_args();
+
+       //this seccssion was added by Wisam for popularity on homepage
+       //===============================================================
+        if (!$_REQUEST['sort'] || $_REQUEST['sort'] == '') {
+            $args['meta_query'] = [
+                [
+                    'key' => 'recipe_poppularity',
+                    'compare' => 'EXISTS',
+                ]
+            ];
+            $args['orderby'] = 'meta_value_num';
+            $args['order'] = 'DESC';
+        }
+        //===============================================================
 
         $featured = get_field('featured_items', get_option('page_on_front'));
         $featured = Foody_HomePage::get_relevant_posts($featured);
@@ -231,6 +244,11 @@ class Foody_Query
 
         return $args;
     }
+
+    
+
+
+
 
     public function white_label_homepage()
     {
@@ -437,10 +455,8 @@ class Foody_Query
         if (empty($search_term)) {
             if (isset($_POST['filter']['search'])) {
                 $search_term = $_POST['filter']['search'];
-
             } elseif (isset($_POST['data']['search'])) {
                 $search_term = $_POST['data']['search'];
-
             }
         }
         $args = self::get_args([
@@ -463,7 +479,7 @@ class Foody_Query
 
     public function purchase_buttons($post_id)
     {
-        if(empty($post_id)){
+        if (empty($post_id)) {
             return self::get_args();
         }
         return self::get_args([
@@ -509,7 +525,7 @@ class Foody_Query
 
         $args = array_merge([
             'post__in' => $posts,
-//            'post_type' => ['foody_recipe', 'foody_playlist'],
+            //            'post_type' => ['foody_recipe', 'foody_playlist'],
             'orderby' => 'date',
             'order' => 'DESC'
         ], $args);
@@ -577,7 +593,7 @@ class Foody_Query
 
     private function get_args($args = [])
     {
-        if(is_array($args)) {
+        if (is_array($args)) {
             return array_merge(
                 self::$default_args,
                 $args
@@ -611,12 +627,12 @@ class Foody_Query
 
         $base = home_url();
 
-        $base .= '?s='.$search_term;
+        $base .= '?s=' . $search_term;
         //$base = add_query_arg('s', $wpdb->prepare($search_term, [null]), $base);
 
-//        foreach ($post_types as $post_type) {
-//            $base = add_query_arg('post_type', $post_type, $base);
-//        }
+        //        foreach ($post_types as $post_type) {
+        //            $base = add_query_arg('post_type', $post_type, $base);
+        //        }
 
         return $base;
     }
@@ -666,8 +682,6 @@ class Foody_Query
                     $foody_args['paged'] = 0;
                 }
             }
-
-
         } else {
             $foody_args = new WP_Error("invalid context: $context");
         }
@@ -697,11 +711,9 @@ class Foody_Query
             $_SESSION['search_words_array'] = $search_words_array;
             $_SESSION["LAST_ACTIVITY"] = time();
             return $search_words_array;
-        }
-        elseif (!isset($_SESSION["LAST_ACTIVITY"])){
+        } elseif (!isset($_SESSION["LAST_ACTIVITY"])) {
             $_SESSION["LAST_ACTIVITY"] = time();
         }
         return $_SESSION['search_words_array'];
     }
-
 }

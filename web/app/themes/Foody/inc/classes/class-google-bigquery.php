@@ -96,7 +96,7 @@ class GoogleBigQuery
     curl_close($ch);
 
     $dataArray = json_decode($jsonContent, true);
-
+    
     if (json_last_error() !== JSON_ERROR_NONE) {
       return array('Error decoding JSON: ' . json_last_error_msg());
     } else {
