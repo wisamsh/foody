@@ -1,6 +1,7 @@
 jQuery(document).ready(function(jQuery) {
     jQuery('#showbigquery').on('click', function() {
-        jQuery('.result_bigquery').html('מעדכן מתכונים מגוגל...');
+        let loader = 'https://foody-media.s3.eu-west-1.amazonaws.com/w_images/loader22.gif';
+        jQuery('.result_bigquery').html('<img src="'+loader+'" /><br/>....מעדכן נתונים מגוגל סובלנות בבקשה זה יקח טיפה זמן');
         jQuery.ajax({
             type: 'POST',
             url: BigQueryObject.ajax_url,
