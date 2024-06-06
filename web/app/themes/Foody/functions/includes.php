@@ -188,3 +188,4 @@ require_once get_template_directory() . "/foody-api/foody-api.php";
 require_once get_template_directory() . "/foody-users-api/users-API.php";
 require_once get_template_directory() . "/inc/classes/class-notification.php";
 require_once get_template_directory() . "/inc/classes/class-google-bigquery.php";
+require_once get_template_directory() . "/inc/classes/class-google-bigquery-cron.php";

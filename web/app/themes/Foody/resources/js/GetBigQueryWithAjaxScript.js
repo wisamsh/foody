@@ -11,6 +11,7 @@ jQuery(document).ready(function(jQuery) {
             },
             success: function(response) {
                 if (response) {
+                    jQuery('#showbigquery').hide();
                     jQuery('.result_bigquery').html(JSON.stringify(response));
                 } else {
                     jQuery('.result_bigquery').html('No data received.');

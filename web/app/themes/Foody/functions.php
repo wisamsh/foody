@@ -1205,6 +1205,7 @@ if (
 // }
 if (is_admin()) {
 new GoogleBigQuery; 
+new My_Monthly_Cron_Job_GoogleBigQueryPopularity;
 
 }
 
