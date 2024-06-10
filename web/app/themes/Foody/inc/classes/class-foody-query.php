@@ -262,6 +262,21 @@ class Foody_Query
         $args = self::get_args([
             'cat' => $id
         ]);
+       //this seccssion was added by Wisam for popularity on homepage
+       //===============================================================
+       if (!$_REQUEST['sort'] || $_REQUEST['sort'] == '') {
+        $args['meta_query'] = [
+            [
+                'key' => 'recipe_poppularity',
+                'compare' => 'EXISTS',
+            ]
+        ];
+        $args['orderby'] = 'meta_value_num';
+        $args['order'] = 'DESC';
+    }
+    //===============================================================
+       
+       
 
         return $args;
     }
