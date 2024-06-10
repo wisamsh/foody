@@ -1,6 +1,6 @@
 <?php
 // Your existing code in functions.php
-
+error_reporting(0);
 // Class to handle monthly cron job
 class My_Monthly_Cron_Job_GoogleBigQueryPopularity
 {

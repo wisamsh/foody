@@ -34,6 +34,19 @@ class Foody_Query
         'au' => 'authors'
     ];
 
+//wisam : 
+
+private function Get_Envoierment()
+{
+  if ($_SERVER['SERVER_NAME'] =='foody.co.il' || $_SERVER['SERVER_NAME'] =='staging.foody.co.il' || $_SERVER['SERVER_NAME'] =='0.0.0'){
+    return "nwl";
+  }
+  else{
+    return "wl";
+  }
+}
+
+
     public static $filter_query_arg = 'filter';
 
     /**
@@ -222,7 +235,8 @@ class Foody_Query
 
        //this seccssion was added by Wisam for popularity on homepage
        //===============================================================
-        if (!$_REQUEST['sort'] || $_REQUEST['sort'] == '') {
+       if($this->Get_Envoierment() == "nwl"){//checking if not white label
+       if (!$_REQUEST['sort'] || $_REQUEST['sort'] == '' ) {
             $args['meta_query'] = [
                 [
                     'key' => 'recipe_poppularity',
@@ -232,6 +246,7 @@ class Foody_Query
             $args['orderby'] = 'meta_value_num';
             $args['order'] = 'DESC';
         }
+    }
         //===============================================================
 
         $featured = get_field('featured_items', get_option('page_on_front'));
@@ -264,6 +279,7 @@ class Foody_Query
         ]);
        //this seccssion was added by Wisam for popularity on homepage
        //===============================================================
+       if($this->Get_Envoierment() == "nwl"){ //checking if not white label
        if (!$_REQUEST['sort'] || $_REQUEST['sort'] == '') {
         $args['meta_query'] = [
             [
@@ -274,6 +290,7 @@ class Foody_Query
         $args['orderby'] = 'meta_value_num';
         $args['order'] = 'DESC';
     }
+}
     //===============================================================
        
        

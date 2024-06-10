@@ -8,7 +8,7 @@
  */
 class Foody_Search
 {
-
+    
     const type_ingredient = 'ingredient';
     const type_category = 'category';
     const type_technique = 'technique';
@@ -53,6 +53,7 @@ class Foody_Search
         $this->context_args = $context_args;
     }
 
+    
 
     /**
      * Queries the database for the relevant page and filter.
@@ -100,6 +101,11 @@ class Foody_Search
      * @return WP_Query|array
      * @throws Exception
      */
+
+     
+
+
+
     public function build_query($args, $wp_args = [], $sort = '', $raw = false)
     {
         if (!isset($args['types'])) {
@@ -704,6 +710,17 @@ class Foody_QueryBuilder
         ];
 
     }
+    public function Get_Envoierment()
+    {
+      if ($_SERVER['SERVER_NAME'] =='foody.co.il' || $_SERVER['SERVER_NAME'] =='staging.foody.co.il' || $_SERVER['SERVER_NAME'] =='0.0.0'){
+        return "nwl";
+      }
+      else{
+        return "wl";
+      }
+    }
+
+
 
     public function sort($sort)
     {
@@ -718,9 +735,16 @@ class Foody_QueryBuilder
             switch ($key) {
                 case 'popular':
                     $this->order_by = 'meta_value_num';
-                    //$this->meta_key = 'post_views_count';
-                   $this->meta_key = 'recipe_poppularity';
-                    $this->meta_type = 'NUMERIC';
+                  
+                    if($this->Get_Envoierment() == "nwl"){
+                        $this->meta_key = 'recipe_poppularity';
+                    }else{
+                        $this->meta_key = 'post_views_count';  
+                    }
+                   
+                  
+                  
+                   $this->meta_type = 'NUMERIC';
                     break;
                 case 'title':
                     $this->order_by = 'title';

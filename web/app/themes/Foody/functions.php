@@ -1192,20 +1192,21 @@ if (
 // function Saving_recipe_notificationCall($post_id, $post, $update){
 // ///on_SavingRecipe
 // $Foody_Notification = new Foody_Notification;
-  
+
 // $Foody_Notification->on_SavingRecipe($post_id, $post, $update);
 
 
 
 // add_action('admin_init', 'update_popular_recipies');
 // function update_popular_recipies(){
-    
+
 // $upd = new GoogleBigQuery; 
 // //$upd->updating_BigQuery_Popolarity();
 // }
+
+if($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "staging.foody.co.il" || $_SERVER['SERVER_NAME']=="0.0.0"){
 if (is_admin()) {
-new GoogleBigQuery; 
-new My_Monthly_Cron_Job_GoogleBigQueryPopularity;
-
+    new GoogleBigQuery;
+    new My_Monthly_Cron_Job_GoogleBigQueryPopularity;
 }
-
+}

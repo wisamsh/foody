@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 class GoogleBigQuery
 {
   function __construct()
@@ -121,7 +122,7 @@ class GoogleBigQuery
       return array('Error decoding JSON: ' . json_last_error_msg());
     } else {
       //return $dataArray;
-        $this->insert_data_into_custom_table($this->GetUserAdmin() , $jsonContent);
+        $this->insert_data_into_custom_table($this->GetUserAdmin());
        
       foreach ($dataArray as $k => $v) {
         update_field('recipe_poppularity', $dataArray[$k]['recipe_score'], $dataArray[$k]['item_id']);
@@ -279,7 +280,7 @@ $CronGoogleBigQueryPopularity = new My_Monthly_Cron_Job_GoogleBigQueryPopularity
   }
 
 
-  private function insert_data_into_custom_table($username, $json)
+  private function insert_data_into_custom_table($username)
   {
     global $wpdb;
 
@@ -293,7 +294,7 @@ $CronGoogleBigQueryPopularity = new My_Monthly_Cron_Job_GoogleBigQueryPopularity
     $data = array(
       'date_quering' => $formatted_date, // Formatted date
       'username' => $username,
-      'fetched_json'=>$json
+      
     );
 
     // Insert data into the table
