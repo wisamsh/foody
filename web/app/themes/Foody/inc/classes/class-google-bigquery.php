@@ -76,27 +76,26 @@ class GoogleBigQuery
 
     // Table name
     $table_name = $wpdb->prefix . 'cron_job_for_googlebigquery';
-    
+
     // SQL query to get the last inserted row
-    $sql = 'select * from '.$table_name.' ORDER BY id DESC LIMIT 1';
-    
+    $sql = 'select * from ' . $table_name . ' ORDER BY id DESC LIMIT 1';
+
     // Fetch the row
     $last_row = $wpdb->get_results($sql);
-    
+
     // Check if a row was returned and return it
     if ($last_row) {
-        return $last_row;
+      return $last_row;
     } else {
-        return null;
+      return null;
     }
-    
   }
 
 
 
   private function Fetching_BigQuery_Popolarity()
   {
- 
+
     $jsonUrl = get_field('bigquery_url', 'option');
 
     $ch = curl_init();
@@ -122,14 +121,14 @@ class GoogleBigQuery
       return array('Error decoding JSON: ' . json_last_error_msg());
     } else {
       //return $dataArray;
-        $this->insert_data_into_custom_table($this->GetUserAdmin());
-       
+      $this->insert_data_into_custom_table($this->GetUserAdmin());
+
       foreach ($dataArray as $k => $v) {
         update_field('recipe_poppularity', $dataArray[$k]['recipe_score'], $dataArray[$k]['item_id']);
         echo '<div class=bgdiv><span>Item_ID : ' . $dataArray[$k]['item_id'] . '</span> <span>עודכן המתכון :</span><b> '  . $dataArray[$k]['receipe_name'] . '</b> פופולריות : ' . $dataArray[$k]['recipe_score'] . '</div>';
       }
-     
-//GetUserAdmin
+
+      //GetUserAdmin
       echo '<style>.bgdiv{width:80%;display:block;direction:rtl;text-align:right;border-radius:10px;padding:10px;margin:5px;border:1px solid #ddd;background:#fff;}</style>';
       die();
     }
@@ -141,7 +140,7 @@ class GoogleBigQuery
     $current_user = wp_get_current_user();
     if ($current_user->exists()) {
       $username = $current_user->user_login; // Get the username
-     return $username;
+      return $username;
     } else {
       return 'Error in getting user';
     }
@@ -176,9 +175,8 @@ class GoogleBigQuery
       //return $dataArray;
       foreach ($dataArray as $k => $v) {
         update_field('recipe_poppularity', $dataArray[$k]['recipe_score'], $dataArray[$k]['item_id']);
-        }
-       $this->insert_data_into_custom_table($this->GetUserAdmin());
-     
+      }
+      $this->insert_data_into_custom_table($this->GetUserAdmin());
     }
   }
 
@@ -207,23 +205,22 @@ class GoogleBigQuery
 
   public function render_menu()
   {
-$CronGoogleBigQueryPopularity = new My_Monthly_Cron_Job_GoogleBigQueryPopularity;
+    $CronGoogleBigQueryPopularity = new My_Monthly_Cron_Job_GoogleBigQueryPopularity;
 
     $currentDate = date('d-m-Y');
     $user_fetched = $this->get_Last_GBQ_Fetch();
-    if($user_fetched){
-    $lastdate = trim($user_fetched[0]->date_quering);
-    $last_fetchingUpdate = $CronGoogleBigQueryPopularity->daysDifference($currentDate, $lastdate) ;
-    $lu = $last_fetchingUpdate == 0 ? ' Today ' : $last_fetchingUpdate  ; 
-  }
+    if ($user_fetched) {
+      $lastdate = trim($user_fetched[0]->date_quering);
+      $last_fetchingUpdate = $CronGoogleBigQueryPopularity->daysDifference($currentDate, $lastdate);
+      $lu = $last_fetchingUpdate == 0 ? ' Today ' : $last_fetchingUpdate;
+    }
     echo ('<div class="wrap"><h1>Google Big Query</h1><p>Fetching Google BigQuery:</p>');
-    if($user_fetched){
-    echo ('Last Modified User : <b>' .  $user_fetched[0]->username . '</b><hr>');
-    echo ('Last Modified Date : <b>' .  $user_fetched[0]->date_quering . '</b><hr>');
-    echo  ('Last Modified Update Was <b>' . $lu  . '</b> days Ago!<hr>');
+    if ($user_fetched) {
+      echo ('Last Modified User : <b>' .  $user_fetched[0]->username . '</b><hr>');
+      echo ('Last Modified Date : <b>' .  $user_fetched[0]->date_quering . '</b><hr>');
+      echo ('Last Modified Update Was <b>' . $lu  . '</b> days Ago!<hr>');
     }
     echo ('<input class="button button-primary" type="button" id="showbigquery" value="Update Big Query Popular Recipe"/><div class="result_bigquery"></div></div>');
-  
   }
 
   public function enqueue_admin_scripts($hook)
@@ -294,7 +291,7 @@ $CronGoogleBigQueryPopularity = new My_Monthly_Cron_Job_GoogleBigQueryPopularity
     $data = array(
       'date_quering' => $formatted_date, // Formatted date
       'username' => $username,
-      
+
     );
 
     // Insert data into the table

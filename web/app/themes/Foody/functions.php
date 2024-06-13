@@ -1213,29 +1213,5 @@ if (is_admin()) {
 
 
 
-// // Hook into the 'admin_notices' action to display a custom notice
-// add_action('admin_notices', 'custom_admin_notice');
-
-// function custom_admin_notice() {
-//     // Check if the current user is an administrator
-//     $McRon =  new My_Monthly_Cron_Job_GoogleBigQueryPopularity;
-//     if (current_user_can('administrator') && $McRon->DayOfMonth() >= 3 && $McRon->DayOfMonth() <= 14) {
-//         echo '<div class="notice notice-success ">
-//                 <p>Google Big Query Is Updating...</p>
-//               </div>';
-//      }
-// }
-
-// // Optionally, add a function to execute any custom code when an admin enters the wp-admin
-// add_action('admin_init', 'custom_admin_function');
-
-// function custom_admin_function() {
-//     // Your custom code here
-//     $McRon =  new My_Monthly_Cron_Job_GoogleBigQueryPopularity;
-//     if (current_user_can('administrator') && $McRon->DayOfMonth() >= 3 && $McRon->DayOfMonth() <= 14) {
-//         $cron_GoogleBigQuery = new GoogleBigQuery;
-//         $cron_GoogleBigQuery->Update_BigQuery_Popolarity_ForCronJob();
-//     }
-// }
  }
 }
