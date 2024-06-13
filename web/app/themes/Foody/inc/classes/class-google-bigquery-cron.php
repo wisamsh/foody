@@ -46,4 +46,10 @@ class My_Monthly_Cron_Job_GoogleBigQueryPopularity
         $sql  = 'select * from ' . $table_name . ' ORDER BY id DESC LIMIT 1';
         return $wpdb->query($sql);
     }
+
+public function DayOfMonth(){
+    return $current_day = date('j');
+}
+
+
 }//end class
