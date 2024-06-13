@@ -38,7 +38,7 @@ class Foody_Query
 
 private function Get_Envoierment()
 {
-  if ($_SERVER['SERVER_NAME'] =='foody.co.il' || $_SERVER['SERVER_NAME'] =='staging.foody.co.il' || $_SERVER['SERVER_NAME'] =='0.0.0'){
+  if ($_SERVER['HTTP_HOST'] =='foody.co.il' || $_SERVER['SERVER_NAME'] =='staging.foody.co.il' || $_SERVER['SERVER_NAME'] =='0.0.0'){
     return "nwl";
   }
   else{
