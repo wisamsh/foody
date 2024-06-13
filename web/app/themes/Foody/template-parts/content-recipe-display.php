@@ -14,7 +14,7 @@
 $recipe = $template_args['recipe'];
 
 
-$Foody_Notification = new Foody_Notification;
+//$Foody_Notification = new Foody_Notification;
 
 // "nutrition": <?php echo $recipe->get_jsonld_nutrients(),
 // "video": <?php echo $recipe->get_jsonld_video()
