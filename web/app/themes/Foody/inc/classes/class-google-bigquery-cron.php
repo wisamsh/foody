@@ -32,7 +32,7 @@ class My_Monthly_Cron_Job_GoogleBigQueryPopularity
             </div>';
         }
     }
-//TODO MAKE THIS FUNCTION CHECK IF WENT MORE THAN MONTH SINCE THE LAST BIGQUERY UPDATE
+
     public function run_background_check() {
         if (!current_user_can('manage_options')) {
             wp_send_json_error('Unauthorized');
@@ -41,8 +41,21 @@ class My_Monthly_Cron_Job_GoogleBigQueryPopularity
         
         //wp_send_json_success(['progress' => "90%"]);
         $last_update = $this->get_Last_GBQ_Fetch();
-       
-        wp_send_json_success(['last_update' =>  $last_update ]);
+        $FetchDate = $last_update->date_quering;
+        $currentDay = date('j');
+        $currentDate = date('d-m-Y');
+        $DateDiffCheck = $this->daysDifference($FetchDate , $currentDate );
+        if ($DateDiffCheck > 20 && ($currentDay >= 3 || $currentDay <= 18)) {
+                $GoogleBigQuery = new GoogleBigQuery;
+               $updt =  $GoogleBigQuery->Update_BigQuery_Popolarity_ForCronJob();
+            // Your code here
+            wp_send_json_success(['last_update' =>  $last_update  , 'updating' =>  $updt]);
+        }
+        else{
+            wp_send_json_success(['last_update' =>  $last_update  , 'updating' => '']);
+        }
+
+        
     }
 
 
