@@ -27,7 +27,7 @@ class My_Monthly_Cron_Job_GoogleBigQueryPopularity
 
     public function display_admin_notice() {
         if (current_user_can('manage_options')) {
-            echo '<div id="background-check-notice" class="notice notice-info is-dismissible">
+            echo '<div id="background-check-notice" class="notice notice-info ">
             <p class="cron_notice"></p>
             </div>';
         }
@@ -39,7 +39,10 @@ class My_Monthly_Cron_Job_GoogleBigQueryPopularity
             return;
         }
         
-        wp_send_json_success(['progress' => "90%"]);
+        //wp_send_json_success(['progress' => "90%"]);
+        $last_update = $this->get_Last_GBQ_Fetch();
+       
+        wp_send_json_success(['last_update' =>  $last_update ]);
     }
 
 
@@ -77,7 +80,7 @@ class My_Monthly_Cron_Job_GoogleBigQueryPopularity
         // Table name
         $table_name = $wpdb->prefix . 'cron_job_for_googlebigquery';
         $sql  = 'select * from ' . $table_name . ' ORDER BY id DESC LIMIT 1';
-        return $wpdb->query($sql);
+        return $wpdb->get_row($sql);
     }
 
    
