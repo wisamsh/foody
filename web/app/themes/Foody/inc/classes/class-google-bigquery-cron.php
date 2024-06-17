@@ -52,7 +52,7 @@ class My_Monthly_Cron_Job_GoogleBigQueryPopularity
         $currentDay = date('j');
         $currentDate = date('d-m-Y');
         $DateDiffCheck = $this->daysDifference($FetchDate , $currentDate );
-        if ($DateDiffCheck > 10 && ($currentDay >= 3 || $currentDay <= 18)) {
+        if ($DateDiffCheck > 28 && ($currentDay >= 3 || $currentDay <= 18)) {
                $GoogleBigQuery = new GoogleBigQuery;
                $updt =  $GoogleBigQuery->Update_BigQuery_Popolarity_ForCronJob();
          
