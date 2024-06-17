@@ -18,7 +18,56 @@ class GoogleBigQuery
 
 
 
-  
+  private function Staging_Develop_Fetch_BigQuery()
+  {
+    $args = array(
+      'post_type'      => 'foody_recipe', // Custom post type name
+      'posts_per_page' => 100000,            // Number of posts to fetch
+      'fields'         => 'ids',          // Fetch only post IDs
+      'orderby'        => 'date',         // Order by date
+      'order'          => 'DESC'          // Order by descending (latest posts first)
+    );
+
+    $recipes = get_posts($args);
+
+    // Fetch JSON content using cURL
+    //$jsonUrl = 'https://storage.googleapis.com/store_recipe_bq/recipe_stats_idbased.json';
+    $jsonUrl = get_field('bigquery_url', 'option');
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $jsonUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30); // Timeout after 30 seconds
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10); // Timeout for connection phase
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Skip SSL verification for testing purposes
+
+    $jsonContent = curl_exec($ch);
+
+    if (curl_errno($ch)) {
+      $error_message = 'Error fetching data: ' . curl_error($ch);
+      curl_close($ch);
+      echo json_encode(array('error' => $error_message));
+      die();
+    }
+
+    curl_close($ch);
+
+    $dataArray = json_decode($jsonContent, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+      echo json_encode(array('error' => 'Error decoding JSON: ' . json_last_error_msg()));
+      die();
+    } else {
+      foreach ($recipes as $k => $v) {
+        $dataArray[$k]['item_id'] = $v;
+        update_field('recipe_poppularity', $dataArray[$k]['recipe_score'], $v);
+        //update_field('recipe_poppularity', '', $v);
+        echo '<div class=bgdiv><span>ItemID : ' . $dataArray[$k]['item_id'] . '</span><span>עודכן המתכון :</span><b> '  . $dataArray[$k]['receipe_name'] . '</b> פופולריות : ' . $dataArray[$k]['recipe_score'] . '</div>';
+      }
+      echo '<style>.bgdiv{width:80%;display:block;direction:rtl;text-align:right;border-radius:10px;padding:10px;margin:5px;border:1px solid #ddd;background:#fff;}</style>';
+      die();
+    }
+  }
+
 
   public function get_Last_GBQ_Fetch()
   {
@@ -128,9 +177,7 @@ class GoogleBigQuery
         update_field('recipe_poppularity', $dataArray[$k]['recipe_score'], $dataArray[$k]['item_id']);
       }
       $this->insert_data_into_custom_table($this->GetUserAdmin());
-      return array('updating'=>'Done Updating');
     }
-   
   }
 
 
@@ -230,7 +277,7 @@ class GoogleBigQuery
   }
 
 
-  private function insert_data_into_custom_table($username)
+  public function insert_data_into_custom_table($username)
   {
     global $wpdb;
 

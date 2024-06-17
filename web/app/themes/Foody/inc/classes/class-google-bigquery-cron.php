@@ -41,19 +41,26 @@ class My_Monthly_Cron_Job_GoogleBigQueryPopularity
         
         //wp_send_json_success(['progress' => "90%"]);
         $last_update = $this->get_Last_GBQ_Fetch();
-        $FetchDate = $last_update->date_quering;
+        if(!$last_update || empty($last_update)){
+            $last_update = '01-06-2024';
+            $FetchDate = $last_update;
+        }
+        else{
+            $FetchDate = $last_update->date_quering;
+        }
+        
         $currentDay = date('j');
         $currentDate = date('d-m-Y');
         $DateDiffCheck = $this->daysDifference($FetchDate , $currentDate );
-        if ($DateDiffCheck > 20 && ($currentDay >= 3 || $currentDay <= 18)) {
-                $GoogleBigQuery = new GoogleBigQuery;
+        if ($DateDiffCheck > 10 && ($currentDay >= 3 || $currentDay <= 18)) {
+               $GoogleBigQuery = new GoogleBigQuery;
                $updt =  $GoogleBigQuery->Update_BigQuery_Popolarity_ForCronJob();
-            // Your code here
-            wp_send_json_success(['last_update' =>  $last_update  , 'updating' =>  $updt]);
+         
+            wp_send_json_success(['last_update' =>  $last_update  , 'updating' =>  $updt ]);
         }
-        else{
-            wp_send_json_success(['last_update' =>  $last_update  , 'updating' => '']);
-        }
+       else{
+           wp_send_json_success(['last_update' =>  $last_update  , 'updating' => '']);
+       }
 
         
     }

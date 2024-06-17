@@ -9,8 +9,9 @@ jQuery(document).ready(function(jQuery) {
                 action: 'run_background_check'
             },
             success: function(response) {
+               
                console.log(response);
-               let updt = response.data.updating ? 'Update Successfully'  : '';
+               let updt = response.data.updating ;
                let title = '<h3><b>Google Big Query</b></h3>';
                
                let date_quering = '<p><span>last Update : ' + response.data.last_update.date_quering  + '</span></p>';
@@ -18,6 +19,7 @@ jQuery(document).ready(function(jQuery) {
                //let updating = response.data.updating;
                
                jQuery('.cron_notice').html(title + date_quering + username + updt);
+               
                //jQuery('.cron_notice').html(response);
             }
         });
