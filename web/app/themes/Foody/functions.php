@@ -1164,8 +1164,9 @@ if (
     // Hook into wp_head
     add_action('wp_head', 'set_index_follow_meta_tag', 1);
 }
+// if($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "staging.foody.co.il" || $_SERVER['SERVER_NAME']=="0.0.0"){
 
-//this conected to class-notification.php........
+// //this conected to class-notification.php........
 // add_action('wp_ajax_nopriv_notification_action_call', 'notification_action_call');
 // add_action('wp_ajax_notification_action_call', 'notification_action_call');
 // function notification_action_call()
@@ -1195,23 +1196,14 @@ if (
 
 // $Foody_Notification->on_SavingRecipe($post_id, $post, $update);
 
-
-
-// add_action('admin_init', 'update_popular_recipies');
-// function update_popular_recipies(){
-
-// $upd = new GoogleBigQuery; 
-// //$upd->updating_BigQuery_Popolarity();
 // }
 
+// }
 if($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "staging.foody.co.il" || $_SERVER['SERVER_NAME']=="0.0.0"){
-if (is_admin()) {
+
+    if (is_admin()) {
     new GoogleBigQuery;
     new My_Monthly_Cron_Job_GoogleBigQueryPopularity;
-
-
-
-
 
  }
 }

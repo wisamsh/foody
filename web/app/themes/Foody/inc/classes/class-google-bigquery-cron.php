@@ -67,13 +67,10 @@ class My_Monthly_Cron_Job_GoogleBigQueryPopularity
 
 
 
-
-
     public function runCron()
     {
 
-
-        $expiration_time = time() + (30 * 24 * 60 * 60);
+       $expiration_time = time() + (30 * 24 * 60 * 60);
        // $GoogleBigQuery = new GoogleBigQuery;
        // $GoogleBigQuery->Update_BigQuery_Popolarity_ForCronJob();
     }
