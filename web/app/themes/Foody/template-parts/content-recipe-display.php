@@ -13,10 +13,10 @@
 /** @var Foody_Recipe $recipe */
 $recipe = $template_args['recipe'];
 
-// if ($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "staging.foody.co.il" || $_SERVER['SERVER_NAME'] == "0.0.0") {
+if ($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "staging.foody.co.il" || $_SERVER['SERVER_NAME'] == "0.0.0") {
 
-//      $Foody_Notification = new Foody_Notification;
-// }
+     $Foody_Notification = new Foody_Notification;
+}
 // "nutrition": <?php echo $recipe->get_jsonld_nutrients(),
 // "video": <?php echo $recipe->get_jsonld_video()
 ?>
@@ -77,20 +77,20 @@ if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text']
 
 </section>
 <?php // Wisam : here comes notification block :
-//if ($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "staging.foody.co.il" || $_SERVER['SERVER_NAME'] == "0.0.0") {
+if ($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "staging.foody.co.il" || $_SERVER['SERVER_NAME'] == "0.0.0") {
 
 ?>
 
 
-     <!--<section class="recipe-overview no-print">
+     <section class="recipe-overview no-print">
           <?php
 
-          //echo $Foody_Notification->DrawCSS_Notification();
-         // echo  $Foody_Notification->DrawHTMLbox_notification();
+          echo $Foody_Notification->DrawCSS_Notification();
+          echo  $Foody_Notification->DrawHTMLbox_notification();
 
           ?>
-     </section>-->
-<?php // } ?>
+     </section>
+<?php } ?>
 
 <section class="recipe-overview-print print-desktop">
      <?php echo $recipe->the_print_overview() ?>

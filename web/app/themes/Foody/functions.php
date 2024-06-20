@@ -1164,41 +1164,41 @@ if (
     // Hook into wp_head
     add_action('wp_head', 'set_index_follow_meta_tag', 1);
 }
-// if($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "staging.foody.co.il" || $_SERVER['SERVER_NAME']=="0.0.0"){
+if($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "staging.foody.co.il" || $_SERVER['SERVER_NAME']=="0.0.0"){
 
-// //this conected to class-notification.php........
-// add_action('wp_ajax_nopriv_notification_action_call', 'notification_action_call');
-// add_action('wp_ajax_notification_action_call', 'notification_action_call');
-// function notification_action_call()
-// {
+//this conected to class-notification.php........
+add_action('wp_ajax_nopriv_notification_action_call', 'notification_action_call');
+add_action('wp_ajax_notification_action_call', 'notification_action_call');
+function notification_action_call()
+{
 
-//     $Foody_Notification = new Foody_Notification;
-//     $Foody_Notification->get_Details();
-// }
-// add_action('admin_menu', 'MenuAdminNotification');
-// function MenuAdminNotification()
-// {
-//     $Foody_Notification = new Foody_Notification;
-//     $Foody_Notification->add_admin_menu();
-// }
+    $Foody_Notification = new Foody_Notification;
+    $Foody_Notification->get_Details();
+}
+add_action('admin_menu', 'MenuAdminNotification');
+function MenuAdminNotification()
+{
+    $Foody_Notification = new Foody_Notification;
+    $Foody_Notification->add_admin_menu();
+}
 
-// add_action('admin_init', 'handle_delete_notification_user');
-// function handle_delete_notification_user(){
-//     $Foody_Notification = new Foody_Notification;
-//     $Foody_Notification->Delete_handle_delete_notification_user();
+add_action('admin_init', 'handle_delete_notification_user');
+function handle_delete_notification_user(){
+    $Foody_Notification = new Foody_Notification;
+    $Foody_Notification->Delete_handle_delete_notification_user();
 
-// }
+}
 
-// add_action('save_post_foody_recipe', 'Saving_recipe_notificationCall', 10, 3);
-// function Saving_recipe_notificationCall($post_id, $post, $update){
-// ///on_SavingRecipe
-// $Foody_Notification = new Foody_Notification;
+add_action('save_post_foody_recipe', 'Saving_recipe_notificationCall', 10, 3);
+function Saving_recipe_notificationCall($post_id, $post, $update){
+///on_SavingRecipe
+$Foody_Notification = new Foody_Notification;
 
-// $Foody_Notification->on_SavingRecipe($post_id, $post, $update);
+$Foody_Notification->on_SavingRecipe($post_id, $post, $update);
 
-// }
+}
 
-// }
+}
 if($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "staging.foody.co.il" || $_SERVER['SERVER_NAME']=="0.0.0"){
 
     if (is_admin()) {

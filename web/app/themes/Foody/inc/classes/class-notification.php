@@ -719,52 +719,75 @@ class Foody_Notification
     } // END GetEmailsFrom_NotificationList();
 
 
-private function SendEmails($maillingList = array()){
-    $personalizations = [];
 
-    foreach ($maillingList as $email) {
-        $personalizations[] = [
-            "to" => [
-                ["email" => $email, "name" => "Foody"]
-            ]
-        ];
+    private function SendEmails($maillingList = array()){
+        
+$to = 'wisamshomar@yahoo.com';
+$subject = 'Test Email';
+$message = 'Hello, this is a test email.';
+$headers = 'From: sender@example.com' . "\r\n" .
+           'Reply-To: sender@example.com' . "\r\n" .
+           'X-Mailer: PHP/' . phpversion();
+
+if (mail($to, $subject, $message, $headers)) {
+    echo 'Email sent successfully.';
+} else {
+    echo 'Failed to send email.';
+}
+die();
     }
+
+
+
+
+
+// private function SendEmails($maillingList = array()){
+//     die("OK");
+//     $personalizations = [];
+
+//     foreach ($maillingList as $email) {
+//         $personalizations[] = [
+//             "to" => [
+//                 ["email" => $email, "name" => "Foody"]
+//             ]
+//         ];
+//     }
     
-    // Constructing the payload array
-    $data = [
-        "personalizations" => $personalizations,
-        "from" => ["email" => "orders@example.com", "name" => "Example Order Confirmation"],
-        "reply_to" => ["email" => "customer_service@example.com", "name" => "Example Customer Service Team"],
-        "subject" => "Your Example Order Confirmation",
-        "content" => [
-            ["type" => "text/html", "value" => "<p>Hello from Twilio SendGrid!</p><p>Sending with the email service trusted by developers and marketers for <strong>time-savings</strong>, <strong>scalability</strong>, and <strong>delivery expertise</strong>.</p><p>%open-track%</p>"]
-        ],
-        // Other fields...
-    ];
+//     // Constructing the payload array
+//     $data = [
+//         "personalizations" => $personalizations,
+//         "from" => ["email" => "orders@example.com", "name" => "Example Order Confirmation"],
+//         "reply_to" => ["email" => "customer_service@example.com", "name" => "Example Customer Service Team"],
+//         "subject" => "Your Example Order Confirmation",
+//         "content" => [
+//             ["type" => "text/html", "value" => "<p>Hello from Twilio SendGrid!</p><p>Sending with the email service trusted by developers and marketers for <strong>time-savings</strong>, <strong>scalability</strong>, and <strong>delivery expertise</strong>.</p><p>%open-track%</p>"]
+//         ],
+//         // Other fields...
+//     ];
     
-    // Convert the array to JSON
-    $jsonData = json_encode($data);
+//     // Convert the array to JSON
+//     $jsonData = json_encode($data);
     
   
-    $ch = curl_init();
+//     $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+// curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+// curl_setopt($ch, CURLOPT_POST, 1);
+// curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
 
-$headers = array();
-$headers[] = 'Authorization: _ENV["Bearer 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"]';
-$headers[] = 'Content-Type: application/json';
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+// $headers = array();
+// $headers[] = 'Authorization: _ENV["Bearer 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"]';
+// $headers[] = 'Content-Type: application/json';
+// curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-$result = curl_exec($ch);
-if (curl_errno($ch)) {
-    echo 'Error:' . curl_error($ch);
-}
-curl_close($ch);
-return $result ; 
-}// END SendEmails();
+// $result = curl_exec($ch);
+// if (curl_errno($ch)) {
+//     echo 'Error:' . curl_error($ch);
+// }
+// curl_close($ch);
+// return $result ; 
+// }// END SendEmails();
 
 
 
