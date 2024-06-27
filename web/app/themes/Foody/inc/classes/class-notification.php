@@ -782,8 +782,8 @@ return $post ;
 
     
         
-        $html = '<div style="width:500px;'; //DIV STARTS
-        $html .= 'height:500px;';
+        $html = '<div style="max-width:600px;'; //DIV STARTS
+        $html .= 'height:auto;';
         $html .= 'border: solid 1px #ddd;';
         $html .= 'border-radius:10px;';
         $html .= 'text-align:center;';
