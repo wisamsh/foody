@@ -5,6 +5,7 @@ class Foody_Notification
     private $use_agreement_text;
     private $group_nots;
     private  $api_key;
+
     private $SmoovListName;
 
     function __construct()
@@ -19,12 +20,29 @@ class Foody_Notification
         $this->group_nots['missing_email'] = get_field('missing_email', 'option');
         $this->group_nots['email_exisit'] = get_field('email_exisit', 'option');
         $this->group_nots['success_regist'] = get_field('success_regist', 'option');
-        $this->api_key = 'eaa83919-7ccc-4808-bd74-0b4e7c014dba';
+        $this->api_key = get_field("mailgun_api_key", "option");
+        // $this->api_key = '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';
         $this->SmoovListName = 'Notification-' . date('d-m-Y');
 
         $this->Creat_Necessary_Tables();
         $this->Creat_Necessary_Tables_smoov();
         $this->enqueue_Notification_scripts();
+        add_action('admin_notices', array($this, 'show_notice'));
+    }
+
+
+    public function show_notice()
+    {
+        // Check if the transient is set
+        if (get_transient('foody_recipe_new_recipe_notice')) {
+            ?>
+            <div class="notice notice-success is-dismissible">
+                <p><?php _e('נשלחו', 'foody-recipe'); ?></p>
+            </div>
+            <?php
+            // Delete the transient to prevent notice from showing again
+            delete_transient('foody_recipe_new_recipe_notice');
+        }
     }
 
 
@@ -234,7 +252,7 @@ class Foody_Notification
         $rtn .= '<h4>' . $this->group_nots['main_title'] . '</h4>';
         $rtn .= '<span>' . $this->group_nots['second_title'] . '</span>';
         $rtn .= '<form id="notification_form">
-    
+   
     <div class="term_add" id="term_add">
     <span  class="add_term_plus" id="add_term" data-id="' . $term['term_id'] . '" data-name="' . $term['term_Name'] . '">+</span>
     <span >' . $term['term_Name'] . '</span>
@@ -245,16 +263,16 @@ class Foody_Notification
     <span >' . $author_name . '</span>
     </div>
     <div class="formWrapper">
-    
+   
     <input type="email" name="email" id="email" class="not_email"/>
-    
+   
     <input type="submit" class="submit" value="שלח" />
     </div>
     <input type="checkbox" name="user_subscribe" id="user_subscribe" checked />
     <label for="user_subscribe">
     <a href="' . $this->use_agreement_url . '">' . $this->use_agreement_text . '<a/>
     </label>
-    
+   
     <input type="hidden" name="action" id="action" value="notification_action_call"/>
 
     <input type="hidden" name="cat_id" id="cat_id" value=""/>
@@ -264,7 +282,7 @@ class Foody_Notification
     <input type="hidden" name="recipe_id" id="recipe_id" value="' . get_the_ID() . '"/>
     <input type="hidden" name="recipe_name" id="recipe_name" value="' . get_the_title() . '"/>
     <input type="hidden" name="recipe_name" id="recipe_name" value="' . get_the_title() . '"/>
-    
+   
     </form>';
         $rtn .= '<p id="notification_ajax_response"></p></div>';
 
@@ -297,7 +315,11 @@ class Foody_Notification
     }
 
 
+private function GetCurrentRecipe(){
 
+$post = get_post(get_the_ID());
+return $post ;
+}
 
 
 
@@ -364,7 +386,7 @@ class Foody_Notification
         text-align:center;
 
     }
-    
+   
     .term_add_picked{
         background: #08871b;
         color:#fff !important;
@@ -547,13 +569,6 @@ class Foody_Notification
         }
     }
 
-    private function GetSmoovList($list_id)
-    {
-
-
-        //$url = 'https://rest.smoove.io/v1/Lists/id?='..'&api_key=' . $this->api_key;;
-    }
-
 
 
 
@@ -699,95 +714,91 @@ class Foody_Notification
     private function GetEmailsFrom_NotificationList($category_id = null, $author_id = null)
     {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'notification_users'; // Replace 'your_table_name' with the name of your table
-        $results = '';
+        $table_name = $wpdb->prefix . 'notification_users'; 
+        $results = array(); // Initialize $results as an array
         $emailList = array();
-
-        // Fetch data from the table with a WHERE clause
-        if ($category_id != '' && $author_id == null) {
-            $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE category_id = %s", $category_id), ARRAY_A);
-        }
-        if ($category_id == '' && $author_id != null) {
-            $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE author_id = %s", $author_id), ARRAY_A);
-        }
-        if (($results)) {
-            foreach ($results as $key=>$res) {
-                $emailList[$key] = $res['email'] ;
-            }
-        }
-        return $emailList;
-    } // END GetEmailsFrom_NotificationList();
+        $DesipleOf = '';
+        $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE category_id = %s or author_id =%s" , $category_id,$author_id ), ARRAY_A);
+        return $results;
+    }
+    
 
 
-
-    private function SendEmails($maillingList = array()){
+    private function SendEmails($email , $category = null, $recipe = null , $author=null)
+    {
+   
+        $subject = 'מתכון חדש בפודי מאת ' .$author->display_name . ' בקטגוריה ' . $category["term_Name"] ;
         
-$to = 'wisamshomar@yahoo.com';
-$subject = 'Test Email';
-$message = 'Hello, this is a test email.';
-$headers = 'From: sender@example.com' . "\r\n" .
-           'Reply-To: sender@example.com' . "\r\n" .
-           'X-Mailer: PHP/' . phpversion();
 
-if (mail($to, $subject, $message, $headers)) {
-    echo 'Email sent successfully.';
-} else {
-    echo 'Failed to send email.';
-}
-die();
+        $emailData = [
+            "personalizations" => [
+                [
+                    "to" => [
+                        ["email" => $email] // Correct format: array of arrays with 'email' key
+                    ],
+                    // You can add more personalizations for additional recipients here if needed
+                ]
+            ],
+            "from" => [
+                "email" => "Foody@foody.co.il"
+            ],
+            "subject" => $subject ,
+            "content" => [
+                [
+                    "type" => "text/html",
+                    "value" => $this->Email_Template($category, $recipe, $author),
+                ]
+            ]
+        ];
+      
+
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($emailData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $this->api_key,
+            'Content-Type: application/json'
+        ]);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+
+        return $response;
+    } // END SendEmails();
+
+
+
+    private function Email_Template($category, $recipe, $author)
+    {
+        //Sending Goodies :
+        $post = get_post($recipe);
+        $recipeTitle = $post->post_title;
+        $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
+
+
+    
+        
+        $html = '<div style="width:500px;'; //DIV STARTS
+        $html .= 'height:500px;';
+        $html .= 'border: solid 1px #ddd;';
+        $html .= 'border-radius:10px;';
+        $html .= 'text-align:center;';
+        $html .= 'margin: 0 auto;';
+        $html .= '">'; //DIV ENDS
+        $html .= '<img style="width:100%;" src="' .  $featured_image_url  . '"/>';
+        $html .= '<h1>' .$recipeTitle . '</h1>';
+        $html .= '<h3>מתכון חדש בקטגוריה : '.$category["term_Name"].'</h3>';
+        $html .= '<h4>'.$author->display_name.'</h4>' ;
+        $html .= '<a href="https://foody.co.il/?p='.$recipe->ID . '" > למתכון לחץ כאן </a>';
+        $html .= '</div>'; //div closer
+        return $html;
     }
 
 
 
-
-
-// private function SendEmails($maillingList = array()){
-//     die("OK");
-//     $personalizations = [];
-
-//     foreach ($maillingList as $email) {
-//         $personalizations[] = [
-//             "to" => [
-//                 ["email" => $email, "name" => "Foody"]
-//             ]
-//         ];
-//     }
-    
-//     // Constructing the payload array
-//     $data = [
-//         "personalizations" => $personalizations,
-//         "from" => ["email" => "orders@example.com", "name" => "Example Order Confirmation"],
-//         "reply_to" => ["email" => "customer_service@example.com", "name" => "Example Customer Service Team"],
-//         "subject" => "Your Example Order Confirmation",
-//         "content" => [
-//             ["type" => "text/html", "value" => "<p>Hello from Twilio SendGrid!</p><p>Sending with the email service trusted by developers and marketers for <strong>time-savings</strong>, <strong>scalability</strong>, and <strong>delivery expertise</strong>.</p><p>%open-track%</p>"]
-//         ],
-//         // Other fields...
-//     ];
-    
-//     // Convert the array to JSON
-//     $jsonData = json_encode($data);
-    
-  
-//     $ch = curl_init();
-
-// curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
-// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-// curl_setopt($ch, CURLOPT_POST, 1);
-// curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
-
-// $headers = array();
-// $headers[] = 'Authorization: _ENV["Bearer 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"]';
-// $headers[] = 'Content-Type: application/json';
-// curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-// $result = curl_exec($ch);
-// if (curl_errno($ch)) {
-//     echo 'Error:' . curl_error($ch);
-// }
-// curl_close($ch);
-// return $result ; 
-// }// END SendEmails();
 
 
 
@@ -809,13 +820,31 @@ die();
         if ($post->post_type != 'foody_recipe') {
             return;
         }
-        // Your code to handle save/update action for recipe posts goes here
+        
+
+    // Get the author ID
+    $author_id = $post->post_author;
+    $author_info = get_userdata($author_id);
 
         $recipe_name = get_post_meta($post_id, 'recipe_name', true);
 
         $term = ($this->get_Primary_Term());
-        $mailin_List = ($this->GetEmailsFrom_NotificationList($term['term_id']));
-print_r($this->SendEmails($mailin_List));
-        die();
+        $mailin_List = ($this->GetEmailsFrom_NotificationList($term['term_id'],  $author_id ));
+
+            // Set a transient to indicate a new post was created
+           
+           
+            //TODO REMOVE THE REMARKS FROM UNDER==============================
+        foreach($mailin_List  as $email){
+         
+            print_r($this->SendEmails($email['email'] , $term , $post_id,$author_info) );
+          
+        }
+         
+        //================================================================
+            set_transient('foody_recipe_new_recipe_notice', true, 30);
+
+        
     }
-}//end class
+} //end class
+?>
