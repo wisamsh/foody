@@ -775,6 +775,7 @@ return $post ;
     {
         //Sending Goodies :
         $post = get_post($recipe);
+        
         $recipeTitle = $post->post_title;
         $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
 
@@ -792,7 +793,7 @@ return $post ;
         $html .= '<h1>' .$recipeTitle . '</h1>';
         $html .= '<h3>מתכון חדש בקטגוריה : '.$category["term_Name"].'</h3>';
         $html .= '<h4>'.$author->display_name.'</h4>' ;
-        $html .= '<a href="https://foody.co.il/?p='.$recipe->ID . '" > למתכון לחץ כאן </a>';
+        $html .= '<a href="https://foody.co.il/?p='.$post->ID . '" > למתכון לחץ כאן </a>';
         $html .= '</div>'; //div closer
         return $html;
     }
