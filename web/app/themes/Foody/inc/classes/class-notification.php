@@ -37,7 +37,7 @@ class Foody_Notification
         if (get_transient('foody_recipe_new_recipe_notice')) {
             ?>
             <div class="notice notice-success is-dismissible">
-                <p><?php _e('נשלחו', 'foody-recipe'); ?></p>
+                <p><?php _e('התראות למתכון חדש נשלחו למיילים במאגר!', 'foody-recipe'); ?></p>
             </div>
             <?php
             // Delete the transient to prevent notice from showing again
