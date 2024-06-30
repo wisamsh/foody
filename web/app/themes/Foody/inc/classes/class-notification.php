@@ -26,6 +26,7 @@ class Foody_Notification
 
         $this->Creat_Necessary_Tables();
         $this->Creat_Necessary_Tables_smoov();
+        $this->Creat_Necessary_Tables_Recepies_ToSend();
         $this->enqueue_Notification_scripts();
         add_action('admin_notices', array($this, 'show_notice'));
     }
@@ -34,14 +35,20 @@ class Foody_Notification
     public function show_notice()
     {
         // Check if the transient is set
-        if (get_transient('foody_recipe_new_recipe_notice')) {
-            ?>
+        if (get_transient('SendGridReaction')) {
+?>
             <div class="notice notice-success is-dismissible">
-                <p><?php _e('התראות למתכון חדש נשלחו למיילים במאגר!', 'foody-recipe'); ?></p>
+                <p><?php
+                    if (get_transient('SendGridReaction') == 1) {
+                        echo 'התראות נשלחו למיילים הרשומים לקטגוריה או ו יוצר זה !';
+                    } else {
+                        print_r(get_transient('SendGridReaction'));
+                    }
+                    ?></p>
             </div>
             <?php
             // Delete the transient to prevent notice from showing again
-            delete_transient('foody_recipe_new_recipe_notice');
+            delete_transient('SendGridReaction');
         }
     }
 
@@ -186,6 +193,37 @@ class Foody_Notification
         //     }
         // }
     }
+    private function Creat_Necessary_Tables_Recepies_ToSend()
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_recipes_to_send'; // Your table name
+
+        // Check if the table exists
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+            // Table doesn't exist, create it
+            $charset_collate = $wpdb->get_charset_collate();
+            $sql = "CREATE TABLE $table_name (
+                id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                recipe_id BIGINT(50),
+                recipe_name VARCHAR(255),
+                main_category_id BIGINT(50),
+                main_category_name VARCHAR(50),
+                author_id BIGINT(20),
+                author_name VARCHAR(50),
+                date_of_update VARCHAR(50),
+                number_of_emails_dilliverd VARCHAR(255),
+                emails_dilliverd LONGTEXT,
+               
+
+                PRIMARY KEY  (id)
+            ) $charset_collate;";
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+            dbDelta($sql);
+        }
+    }
+
+
+
 
 
     private function Creat_Necessary_Tables_smoov()
@@ -315,11 +353,12 @@ class Foody_Notification
     }
 
 
-private function GetCurrentRecipe(){
+    private function GetCurrentRecipe()
+    {
 
-$post = get_post(get_the_ID());
-return $post ;
-}
+        $post = get_post(get_the_ID());
+        return $post;
+    }
 
 
 
@@ -428,7 +467,7 @@ return $post ;
 
         if (!isset($_REQUEST['smoovListUpdate'])) {
             if (empty($this->check_Last_smoovList())) {
-?>
+            ?>
                 <div style="width:100%;padding:20px;margin-top:30px;">
                     <div class="notice notice-success">
                         <p>The New Smoov List Would Be Called : <?php echo $this->SmoovListName; ?></p>
@@ -714,21 +753,21 @@ return $post ;
     private function GetEmailsFrom_NotificationList($category_id = null, $author_id = null)
     {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'notification_users'; 
+        $table_name = $wpdb->prefix . 'notification_users';
         $results = array(); // Initialize $results as an array
         $emailList = array();
         $DesipleOf = '';
-        $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE category_id = %s or author_id =%s" , $category_id,$author_id ), ARRAY_A);
+        $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE category_id = %s or author_id =%s", $category_id, $author_id), ARRAY_A);
         return $results;
     }
-    
 
 
-    private function SendEmails($email , $category = null, $recipe = null , $author=null)
+
+    private function SendEmails($email, $category = null, $recipe = null, $author = null)
     {
-   
-        $subject = 'מתכון חדש בפודי מאת ' .$author->display_name . ' בקטגוריה ' . $category["term_Name"] ;
-        
+
+        $subject = 'מתכון חדש עלה ב Foody ' . $author->display_name . ' בקטגוריה ' . $category["term_Name"];
+
 
         $emailData = [
             "personalizations" => [
@@ -742,7 +781,7 @@ return $post ;
             "from" => [
                 "email" => "Foody@foody.co.il"
             ],
-            "subject" => $subject ,
+            "subject" => $subject,
             "content" => [
                 [
                     "type" => "text/html",
@@ -750,7 +789,7 @@ return $post ;
                 ]
             ]
         ];
-      
+
 
 
         $ch = curl_init();
@@ -764,9 +803,10 @@ return $post ;
 
         $response = curl_exec($ch);
         curl_close($ch);
+        $response = rtrim($response, '1');
 
 
-        return $response;
+        return ($response);
     } // END SendEmails();
 
 
@@ -775,34 +815,55 @@ return $post ;
     {
         //Sending Goodies :
         $post = get_post($recipe);
-        
+
         $recipeTitle = $post->post_title;
         $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
 
 
-    
-        
-        $html = '<div style="max-width:600px;'; //DIV STARTS
+
+
+        $html = '<div style="direction:rtl;max-width:600px;'; //DIV STARTS
         $html .= 'height:auto;';
         $html .= 'border: solid 1px #ddd;';
         $html .= 'border-radius:10px;';
         $html .= 'text-align:center;';
         $html .= 'margin: 0 auto;';
         $html .= '">'; //DIV ENDS
+        $html .= '<div id="firstdv" style="width:100%;position:absolute;margin-top:0px;background:#ffffffb3">';
+        $html .= '<h3>מתכון חדש עלה</h3>';
+        $html .= '</div>'; //firstdv closer
         $html .= '<img style="width:100%;" src="' .  $featured_image_url  . '"/>';
-        $html .= '<h1>' .$recipeTitle . '</h1>';
-        $html .= '<h3>מתכון חדש בקטגוריה : '.$category["term_Name"].'</h3>';
-        $html .= '<h4>'.$author->display_name.'</h4>' ;
-        $html .= '<a href="https://foody.co.il/?p='.$post->ID . '" > למתכון לחץ כאן </a>';
+        $html .= '<h1 style="font-size:35px">' . $recipeTitle . '</h1>';
+        $html .= '<h3>מתכון חדש בקטגוריה : ' . $category["term_Name"] . '</h3>';
+        $html .= '<h4>' . $author->display_name . '</h4>';
+        $html .= '<a href="https://foody.co.il/?p=' . $post->ID . '" > למתכון לחץ כאן </a>';
         $html .= '</div>'; //div closer
         return $html;
     }
 
 
 
+    private function notification_recipes_to_send_fnc($fields = [])
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_recipes_to_send';
+        $result = $wpdb->insert($table_name, $fields);
+        return $result;
+    }
+    private function CheckRecipeInSendigTable($id)
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_recipes_to_send';
 
+        $query  = "SELECT * FROM " . $table_name . "  WHERE recipe_id = " . $id . " and recipe_name <>'Auto Draft'";
 
-
+        $result = $wpdb->get_results($query);
+        if (!empty($result)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function on_SavingRecipe($post_id, $post, $update)
     {
@@ -816,36 +877,62 @@ return $post ;
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
         }
-
+        if ( $post->post_status === 'auto-draft' ) {
+            return;
+        }
         // Check post type to make sure it's "recipe"
         if ($post->post_type != 'foody_recipe') {
             return;
         }
-        
+        if ($this->CheckRecipeInSendigTable($post_id) != 1) {
+            $author_id = $post->post_author;
+            $author_info = get_userdata($author_id);
+            $recipe_name = get_post($post_id);
+            $term = ($this->get_Primary_Term());
+            $fields = array(
+                'recipe_id' => $post_id,
+                'recipe_name' => $recipe_name->post_title,
+                'main_category_id' => $term['term_id'],
+                'main_category_name' =>  $term['term_Name'],
+                'author_id' => $author_id,
+                'author_name' =>  $author_info->user_nicename,
+                'date_of_update' => date('d-m-Y')
 
-    // Get the author ID
-    $author_id = $post->post_author;
-    $author_info = get_userdata($author_id);
-
-        $recipe_name = get_post_meta($post_id, 'recipe_name', true);
-
-        $term = ($this->get_Primary_Term());
-        $mailin_List = ($this->GetEmailsFrom_NotificationList($term['term_id'],  $author_id ));
-
-            // Set a transient to indicate a new post was created
-           
-           
-            //TODO REMOVE THE REMARKS FROM UNDER==============================
-        foreach($mailin_List  as $email){
-         
-            print_r($this->SendEmails($email['email'] , $term , $post_id,$author_info) );
-          
+            );
+            $this->notification_recipes_to_send_fnc($fields);
         }
-         
-        //================================================================
-            set_transient('foody_recipe_new_recipe_notice', true, 30);
 
-        
+        //notification_recipes_to_send
+
+
+
+        // $mailin_List = ($this->GetEmailsFrom_NotificationList($term['term_id'],  $author_id ));
+
+        // Set a transient to indicate a new post was created
+
+
+        //TODO for later on
+        // foreach($mailin_List  as $k => $email){
+
+        //     $sendGridResult[$k] =  ($this->SendEmails($email['email'] , $term , $post_id,$author_info) );
+
+        // }
+
+        //================================================================
+        // set_transient('foody_recipe_new_recipe_notice', true, 30);
+        // The name of the transient.
+        //$transient_name = 'SendGridReaction';
+
+        // The value you want to store in the transient.
+        //$transient_value = $sendGridResult ; 
+
+        // The expiration time in seconds (e.g., 1 hour).
+        //$expiration_time = 3600;
+
+        // Set the transient.
+        //set_transient($transient_name, $transient_value, $expiration_time);
+
+
     }
 } //end class
 ?>
