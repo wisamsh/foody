@@ -29,7 +29,29 @@ class Foody_Notification
         $this->Creat_Necessary_Tables_Recepies_ToSend();
         $this->enqueue_Notification_scripts();
         add_action('admin_notices', array($this, 'show_notice'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_ajax_script'));
+        add_action('wp_ajax_admin_enter', array($this, 'handle_admin_enter'));
+
+        //cron jobs==============================================================
+        add_action('init', array($this, 'schedule_weekly_thursday_event'));
+        add_action('my_weekly_thursday_event', array($this, 'my_weekly_thursday_event_function'));
+        $this->Get_Cats_Auths_IDS();
     }
+
+
+    public function daysDifference($startDate, $endDate)
+    {
+        // Create DateTime objects for the start date and end date with the format d-m-Y
+        $startDateObj = DateTime::createFromFormat('d-m-Y', $startDate);
+        $endDateObj = DateTime::createFromFormat('d-m-Y', $endDate);
+
+        // Calculate the difference between the end date and the start date
+        $interval = $endDateObj->diff($startDateObj);
+
+        // Return the difference in days
+        return $interval->days;
+    }
+
 
 
     public function show_notice()
@@ -818,10 +840,6 @@ class Foody_Notification
 
         $recipeTitle = $post->post_title;
         $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
-
-
-
-
         $html = '<div style="direction:rtl;max-width:600px;'; //DIV STARTS
         $html .= 'height:auto;';
         $html .= 'border: solid 1px #ddd;';
@@ -850,6 +868,8 @@ class Foody_Notification
         $result = $wpdb->insert($table_name, $fields);
         return $result;
     }
+
+
     private function CheckRecipeInSendigTable($id)
     {
         global $wpdb;
@@ -867,8 +887,15 @@ class Foody_Notification
 
     public function on_SavingRecipe($post_id, $post, $update)
     {
+        $post_date = get_the_date('d-m-Y', $post_id);
 
-
+        //NEED TO REMOVE COMMENTS BELLOW SO THAT WORK WITH NEW RECIPIES ONLY 
+        // AND NOT UPDATED RECIPIES
+        //======================================================================
+        //    if ($this->daysDifference($post_date , date("d-m-Y")) > 7){
+        //     return;
+        //    }  
+        //=======================================================================
         if (wp_is_post_revision($post_id)) {
             return;
         }
@@ -877,7 +904,7 @@ class Foody_Notification
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
         }
-        if ( $post->post_status === 'auto-draft' ) {
+        if ($post->post_status === 'auto-draft') {
             return;
         }
         // Check post type to make sure it's "recipe"
@@ -933,6 +960,89 @@ class Foody_Notification
         //set_transient($transient_name, $transient_value, $expiration_time);
 
 
+    }
+
+
+    //ajax CRON : ================================================
+
+    private function GetNewRecipies()
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . "notification_recipes_to_send";
+        $SqlQuery = "select * from {$table_name}  WHERE TRIM(number_of_emails_dilliverd) is NULL
+    and TRIM(emails_dilliverd) is NULL and STR_TO_DATE(date_of_update, '%d-%m-%Y') >= DATE_SUB(CURDATE(), INTERVAL 8 DAY);";
+        $Results = $wpdb->get_results($SqlQuery);
+        return $Results;
+    }
+
+    public function Get_Cats_Auths_IDS()
+    {
+        $Results = [];
+        
+        $GetNewRecipies = $this->GetNewRecipies();
+        foreach ($GetNewRecipies  as $key => $Details) {
+            $Results['cats'] .= ',' . $Details->main_category_id;
+            $Results['auth'] .= ',' . $Details->author_id;
+        }
+       $Res['cats'] = ltrim($Results['cats'], ',');
+       $Res['auth'] = ltrim($Results['auth'], ',');
+       //output should look like : 
+       // === Array([cats] => 206,230,324 [auth] => 6,7,31) ==== 
+       
+        return $$Res ;
+    }
+
+
+    private function get_EmailsBy_Cat_Auth($cat = null, $auth = null)
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . "notification_users";
+        $sqlQuery = "SELECT email from {$table_name} 
+    WHERE category_id = '{$cat}' 
+    OR
+    author_id = '{$auth}'";
+        $Results = $wpdb->get_results($sqlQuery);
+        return $Results;
+    }
+
+    private function MergeNewRecipiesWithSubscribers($recipeis)
+    {
+        $res = [];
+        if (is_array($recipeis) && !empty($recipeis)) {
+            foreach ($recipeis as $key => $recipe) {
+                //TODO CONTINUE
+
+            }
+        }
+    }
+
+
+
+
+
+    public function enqueue_admin_ajax_script()
+    {
+        // Register and enqueue your custom JavaScript file
+        wp_register_script('admin-ajax-script', get_template_directory_uri() . '/resources/js/notification.js', array('jquery'), null, true);
+
+        // Localize the script with the AJAX URL
+        wp_localize_script('admin-ajax-script', 'adminAjax', array(
+            'ajax_url' => admin_url('admin-ajax.php')
+        ));
+
+        wp_enqueue_script('admin-ajax-script');
+    }
+
+    public function handle_admin_enter()
+    {
+
+        if (is_user_logged_in() && current_user_can('administrator')) {
+            $current_user = wp_get_current_user();
+            $user_name = $current_user->user_login;
+            error_log('Admin area accessed by: ' . $user_name);
+            wp_send_json_success($this->GetNewRecipies());
+        }
+        wp_die(); // Always include this to terminate execution
     }
 } //end class
 ?>
