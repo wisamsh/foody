@@ -35,7 +35,7 @@ class Foody_Notification
         //cron jobs==============================================================
         add_action('init', array($this, 'schedule_weekly_thursday_event'));
         add_action('my_weekly_thursday_event', array($this, 'my_weekly_thursday_event_function'));
-        $this->Get_Cats_Auths_IDS();
+        $this->get_Emails_By_Cat_Auth_ToSend();
     }
 
 
@@ -833,33 +833,6 @@ class Foody_Notification
 
 
 
-    private function Email_Template($category, $recipe, $author)
-    {
-        //Sending Goodies :
-        $post = get_post($recipe);
-
-        $recipeTitle = $post->post_title;
-        $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
-        $html = '<div style="direction:rtl;max-width:600px;'; //DIV STARTS
-        $html .= 'height:auto;';
-        $html .= 'border: solid 1px #ddd;';
-        $html .= 'border-radius:10px;';
-        $html .= 'text-align:center;';
-        $html .= 'margin: 0 auto;';
-        $html .= '">'; //DIV ENDS
-        $html .= '<div id="firstdv" style="width:100%;position:absolute;margin-top:0px;background:#ffffffb3">';
-        $html .= '<h3>מתכון חדש עלה</h3>';
-        $html .= '</div>'; //firstdv closer
-        $html .= '<img style="width:100%;" src="' .  $featured_image_url  . '"/>';
-        $html .= '<h1 style="font-size:35px">' . $recipeTitle . '</h1>';
-        $html .= '<h3>מתכון חדש בקטגוריה : ' . $category["term_Name"] . '</h3>';
-        $html .= '<h4>' . $author->display_name . '</h4>';
-        $html .= '<a href="https://foody.co.il/?p=' . $post->ID . '" > למתכון לחץ כאן </a>';
-        $html .= '</div>'; //div closer
-        return $html;
-    }
-
-
 
     private function notification_recipes_to_send_fnc($fields = [])
     {
@@ -965,59 +938,154 @@ class Foody_Notification
 
     //ajax CRON : ================================================
 
+    //Getting recipies that updated last 7 days =======================
     private function GetNewRecipies()
     {
         global $wpdb;
         $table_name = $wpdb->prefix . "notification_recipes_to_send";
         $SqlQuery = "select * from {$table_name}  WHERE TRIM(number_of_emails_dilliverd) is NULL
-    and TRIM(emails_dilliverd) is NULL and STR_TO_DATE(date_of_update, '%d-%m-%Y') >= DATE_SUB(CURDATE(), INTERVAL 8 DAY);";
+        and TRIM(emails_dilliverd) is NULL and STR_TO_DATE(date_of_update, '%d-%m-%Y') >= DATE_SUB(CURDATE(), INTERVAL 8 DAY);";
         $Results = $wpdb->get_results($SqlQuery);
         return $Results;
     }
 
+    //Getting category or and author ids in the results of GetNewRecipies() function ==============
+
     public function Get_Cats_Auths_IDS()
     {
-        $Results = [];
-        
+        $Results = [
+            'cats' => [],
+            'auth' => [],
+            'rid' => [],
+        ];
+        //prevent duplication=================================================
         $GetNewRecipies = $this->GetNewRecipies();
-        foreach ($GetNewRecipies  as $key => $Details) {
-            $Results['cats'] .= ',' . $Details->main_category_id;
-            $Results['auth'] .= ',' . $Details->author_id;
-        }
-       $Res['cats'] = ltrim($Results['cats'], ',');
-       $Res['auth'] = ltrim($Results['auth'], ',');
-       //output should look like : 
-       // === Array([cats] => 206,230,324 [auth] => 6,7,31) ==== 
-       
-        return $$Res ;
-    }
-
-
-    private function get_EmailsBy_Cat_Auth($cat = null, $auth = null)
-    {
-        global $wpdb;
-        $table_name = $wpdb->prefix . "notification_users";
-        $sqlQuery = "SELECT email from {$table_name} 
-    WHERE category_id = '{$cat}' 
-    OR
-    author_id = '{$auth}'";
-        $Results = $wpdb->get_results($sqlQuery);
-        return $Results;
-    }
-
-    private function MergeNewRecipiesWithSubscribers($recipeis)
-    {
-        $res = [];
-        if (is_array($recipeis) && !empty($recipeis)) {
-            foreach ($recipeis as $key => $recipe) {
-                //TODO CONTINUE
-
+        foreach ($GetNewRecipies as $key => $Details) {
+            if (!in_array($Details->main_category_id, $Results['cats'])) {
+                $Results['cats'][] = $Details->main_category_id;
+            }
+            if (!in_array($Details->author_id, $Results['auth'])) {
+                $Results['auth'][] = $Details->author_id;
+            }
+            if (!in_array($Details->recipe_id, $Results['rid'])) {
+                $Results['rid'][] = $Details->recipe_id;
             }
         }
+
+        // Convert arrays to comma-separated strings
+        $Res['cats'] = implode(',', $Results['cats']);
+        $Res['auth'] = implode(',', $Results['auth']);
+        $Res['rid'] = implode(',', $Results['rid']);
+
+        //output should look like : 
+        // === Array([cats] => 206,230,324 [auth] => 6,7,31) ==== 
+
+        return $Res;
+    }
+
+ 
+
+    private function get_author_by_post_id($post_id) {
+        // Get the author ID for the post
+        $author_id = get_post_field('post_author', $post_id);
+        
+        if (!$author_id) {
+            return null; // Return null if no author is found
+        }
+    
+        // Get the author's details
+        $display_name = get_the_author_meta('display_name', $author_id);
+        $author_email = get_the_author_meta('user_email', $author_id);
+        $author_url = get_the_author_meta('user_url', $author_id);
+    
+        // Create an array of the author's details
+        $author_details = [
+            'id' => $author_id,
+            'display_name' => $display_name,
+            'email' => $author_email,
+            'url' => $author_url
+        ];
+    
+        return $author_details;
+    }
+    
+
+
+
+    private function Email_Template($category, $recipe, $email ) // email to unsubscribe
+    {
+        //Sending Goodies :
+        $post = get_post($recipe);
+        $author = $this->get_author_by_post_id($post->ID);
+        $recipeTitle = $post->post_title;
+        $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
+        $html = '<div style="direction:rtl;max-width:600px;'; //DIV STARTS
+        $html .= 'height:auto;';
+        $html .= 'border: solid 1px #ddd;';
+        $html .= 'border-radius:10px;';
+        $html .= 'text-align:center;';
+        $html .= 'margin: 0 auto;';
+        $html .= '">'; //DIV ENDS
+        $html .= '<div id="firstdv" style="width:100%;position:absolute;margin-top:0px;background:#ffffffb3">';
+        $html .= '<h3>מתכון חדש עלה</h3>';
+        $html .= '</div>'; //firstdv closer
+        $html .= '<img style="width:100%;" src="' .  $featured_image_url  . '"/>';
+        $html .= '<h1 style="font-size:35px">' . $recipeTitle . '</h1>';
+        $html .= '<h3>מתכון חדש בקטגוריה : ' . $category["term_Name"] . '</h3>';
+        $html .= '<h4>' . $author['display_name'] . '</h4>';
+        $html .= '<a href="https://foody.co.il/?p=' . $post->ID . '" > למתכון לחץ כאן </a>';
+        $html .= '</div>'; //div closer
+        return $html;
     }
 
 
 
+
+
+
+
+
+    //Gets useres (emails) that is registed to the ids of Get_Cats_Auths_IDS() function ============
+    private function get_Emails_By_Cat_Auth_ToSend()
+    {
+        $emailsContainer = [];
+    
+        $Get_Cats_Auths_IDS = $this->Get_Cats_Auths_IDS();
+        global $wpdb;
+        $table_name = $wpdb->prefix . "notification_users";
+        $sqlQuery = "SELECT 
+        email, category_id, recipe_id, category_name, recipe_name, author_id, author_name
+        FROM {$table_name} 
+        WHERE category_id IN ({$Get_Cats_Auths_IDS['cats']}) 
+        OR author_id IN ({$Get_Cats_Auths_IDS['auth']})";
+        $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
+    
+        foreach ($Results as $result) {
+            $email = $result['email'];
+            unset($result['email']); // Remove the redundant email entry in the nested array
+    
+            if (!isset($emailsContainer[$email])) {
+                $emailsContainer[$email] = [$email];
+            }
+    
+            // Check if the recipe already exists for this email
+            $recipeExists = false;
+            foreach ($emailsContainer[$email] as $existingResult) {
+                if (is_array($existingResult) && $existingResult['recipe_id'] == $result['recipe_id']) {
+                    $recipeExists = true;
+                    break;
+                }
+            }
+    
+            if (!$recipeExists) {
+                
+                $emailsContainer[$email][] = $result;
+            }
+        }
+   
+        return $emailsContainer;
+    }
+    
 
 
     public function enqueue_admin_ajax_script()
@@ -1045,4 +1113,9 @@ class Foody_Notification
         wp_die(); // Always include this to terminate execution
     }
 } //end class
+
+//TODO :
+//BUILD T
+
+
 ?>
