@@ -35,7 +35,7 @@ class Foody_Notification
         //cron jobs==============================================================
         add_action('init', array($this, 'schedule_weekly_monday_event'));
         add_action('my_weekly_monday_event', array($this, 'my_weekly_monday_event_function'));
-        $this->FilterEmailsContainer();
+        //$this->FilterEmailsContainer();
     }
 
 
