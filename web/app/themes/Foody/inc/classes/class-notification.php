@@ -33,9 +33,19 @@ class Foody_Notification
         add_action('wp_ajax_admin_enter', array($this, 'handle_admin_enter'));
 
         //cron jobs==============================================================
-        add_action('init', array($this, 'schedule_weekly_thursday_event'));
-        add_action('my_weekly_thursday_event', array($this, 'my_weekly_thursday_event_function'));
-        $this->get_Emails_By_Cat_Auth_ToSend();
+        add_action('init', array($this, 'schedule_weekly_monday_event'));
+        add_action('my_weekly_monday_event', array($this, 'my_weekly_monday_event_function'));
+        $this->FilterEmailsContainer();
+    }
+
+
+    function schedule_my_weekly_monday_event()
+    {
+        if (!wp_next_scheduled('my_weekly_monday_event')) {
+            // Schedule the event for next Monday at 8 AM
+            $timestamp = strtotime('next monday 8:00');
+            wp_schedule_event($timestamp, 'weekly', 'my_weekly_monday_event');
+        }
     }
 
 
@@ -785,52 +795,6 @@ class Foody_Notification
 
 
 
-    private function SendEmails($email, $category = null, $recipe = null, $author = null)
-    {
-
-        $subject = 'מתכון חדש עלה ב Foody ' . $author->display_name . ' בקטגוריה ' . $category["term_Name"];
-
-
-        $emailData = [
-            "personalizations" => [
-                [
-                    "to" => [
-                        ["email" => $email] // Correct format: array of arrays with 'email' key
-                    ],
-                    // You can add more personalizations for additional recipients here if needed
-                ]
-            ],
-            "from" => [
-                "email" => "Foody@foody.co.il"
-            ],
-            "subject" => $subject,
-            "content" => [
-                [
-                    "type" => "text/html",
-                    "value" => $this->Email_Template($category, $recipe, $author),
-                ]
-            ]
-        ];
-
-
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($emailData));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Bearer ' . $this->api_key,
-            'Content-Type: application/json'
-        ]);
-
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $response = rtrim($response, '1');
-
-
-        return ($response);
-    } // END SendEmails();
-
 
 
 
@@ -983,21 +947,22 @@ class Foody_Notification
         return $Res;
     }
 
- 
 
-    private function get_author_by_post_id($post_id) {
+
+    private function get_author_by_post_id($post_id)
+    {
         // Get the author ID for the post
         $author_id = get_post_field('post_author', $post_id);
-        
+
         if (!$author_id) {
             return null; // Return null if no author is found
         }
-    
+
         // Get the author's details
         $display_name = get_the_author_meta('display_name', $author_id);
         $author_email = get_the_author_meta('user_email', $author_id);
         $author_url = get_the_author_meta('user_url', $author_id);
-    
+
         // Create an array of the author's details
         $author_details = [
             'id' => $author_id,
@@ -1005,17 +970,20 @@ class Foody_Notification
             'email' => $author_email,
             'url' => $author_url
         ];
-    
+
         return $author_details;
     }
-    
 
 
 
-    private function Email_Template($category, $recipe, $email ) // email to unsubscribe
+
+    private function Email_Template($category, $recipe) // email to unsubscribe
     {
         //Sending Goodies :
+        //$category = category name========================
+
         $post = get_post($recipe);
+        // print_r($recipe);die();
         $author = $this->get_author_by_post_id($post->ID);
         $recipeTitle = $post->post_title;
         $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
@@ -1024,14 +992,14 @@ class Foody_Notification
         $html .= 'border: solid 1px #ddd;';
         $html .= 'border-radius:10px;';
         $html .= 'text-align:center;';
-        $html .= 'margin: 0 auto;';
+        $html .= 'margin: 0 auto;margin-bottom:20px;';
         $html .= '">'; //DIV ENDS
         $html .= '<div id="firstdv" style="width:100%;position:absolute;margin-top:0px;background:#ffffffb3">';
         $html .= '<h3>מתכון חדש עלה</h3>';
         $html .= '</div>'; //firstdv closer
         $html .= '<img style="width:100%;" src="' .  $featured_image_url  . '"/>';
         $html .= '<h1 style="font-size:35px">' . $recipeTitle . '</h1>';
-        $html .= '<h3>מתכון חדש בקטגוריה : ' . $category["term_Name"] . '</h3>';
+        $html .= '<h3>מתכון חדש בקטגוריה : ' . $category . '</h3>';
         $html .= '<h4>' . $author['display_name'] . '</h4>';
         $html .= '<a href="https://foody.co.il/?p=' . $post->ID . '" > למתכון לחץ כאן </a>';
         $html .= '</div>'; //div closer
@@ -1049,7 +1017,7 @@ class Foody_Notification
     private function get_Emails_By_Cat_Auth_ToSend()
     {
         $emailsContainer = [];
-    
+
         $Get_Cats_Auths_IDS = $this->Get_Cats_Auths_IDS();
         global $wpdb;
         $table_name = $wpdb->prefix . "notification_users";
@@ -1059,15 +1027,15 @@ class Foody_Notification
         WHERE category_id IN ({$Get_Cats_Auths_IDS['cats']}) 
         OR author_id IN ({$Get_Cats_Auths_IDS['auth']})";
         $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
-    
+
         foreach ($Results as $result) {
             $email = $result['email'];
             unset($result['email']); // Remove the redundant email entry in the nested array
-    
+
             if (!isset($emailsContainer[$email])) {
                 $emailsContainer[$email] = [$email];
             }
-    
+
             // Check if the recipe already exists for this email
             $recipeExists = false;
             foreach ($emailsContainer[$email] as $existingResult) {
@@ -1076,16 +1044,97 @@ class Foody_Notification
                     break;
                 }
             }
-    
+
             if (!$recipeExists) {
-                
+
                 $emailsContainer[$email][] = $result;
             }
         }
-   
+
+
         return $emailsContainer;
     }
-    
+
+
+
+    private function SendEmails($email, $category = null, $recipe = null, $author = null, $htmlContent = [])
+    {
+
+        $author_id = get_post_field('post_author', $recipe);
+        $author_name = get_the_author_meta('display_name', $author_id);
+        $subject = ' מתכון חדש עלה ב FOODY מאת  ' . $author_name . ' בקטגוריה ' . $category;
+        $htmlObject = '';
+        foreach ($htmlContent as $html) {
+            $htmlObject .= $html;
+        }
+
+        $emailData = [
+            "personalizations" => [
+                [
+                    "to" => [
+                        ["email" => $email] // Correct format: array of arrays with 'email' key
+                    ],
+                    // You can add more personalizations for additional recipients here if needed
+                ]
+            ],
+            "from" => [
+                "email" => "Foody@foody.co.il"
+            ],
+            "subject" => $subject,
+            "content" => [
+                [
+                    "type" => "text/html",
+                    "value" => $htmlObject,
+                ]
+            ]
+        ];
+
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($emailData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $this->api_key,
+            'Content-Type: application/json'
+        ]);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $response = rtrim($response, '1');
+
+
+        return ($response);
+    } // END SendEmails();
+
+
+
+
+
+
+    //THIS FUNCTION ACTUALLY RAPPIT ALL TOGETHER AND SEND EMAIL THRU SENDGRID
+    public function FilterEmailsContainer()
+    {
+        $get_Emails_By_Cat_Auth_ToSend = $this->get_Emails_By_Cat_Auth_ToSend();
+        $htmlObject = [];
+        foreach ($get_Emails_By_Cat_Auth_ToSend as $email => $recipes) {
+            if (!is_array($recipes)) {
+                $email = $recipes;
+            } else {
+                foreach ($recipes as $v) {
+
+                    $category_id = $v['category_id'];
+                    $recipe_id = $v['recipe_id'];
+                    $category_name = $v['category_name'];
+                    $recipe_name = $v['recipe_name'];
+                }
+            }
+            $htmlObject[] = $this->Email_Template($category_name, $recipe_id);
+         $res =  $this->SendEmails($email, $category_name, $recipe_id, '', $htmlObject);
+        }
+        print_r($res);
+        die();
+    }
 
 
     public function enqueue_admin_ajax_script()
@@ -1100,7 +1149,7 @@ class Foody_Notification
 
         wp_enqueue_script('admin-ajax-script');
     }
-
+    //$this->FilterEmailsContainer(); thats what sends the emails
     public function handle_admin_enter()
     {
 
@@ -1115,7 +1164,7 @@ class Foody_Notification
 } //end class
 
 //TODO :
-//BUILD T
+//BUILD THE HTML SENDING WITH DATAGRID + UNSUBSCRIBE 
 
 
 ?>
