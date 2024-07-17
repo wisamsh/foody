@@ -35,7 +35,13 @@ class Foody_Notification
         //cron jobs==============================================================
         add_action('init', array($this, 'schedule_weekly_monday_event'));
         add_action('my_weekly_monday_event', array($this, 'my_weekly_monday_event_function'));
-        //$this->FilterEmailsContainer();
+       
+        if ( is_user_logged_in() && current_user_can( 'administrator' ) ) {
+            // The user is logged in and is an administrator
+           // $this->FilterEmailsContainer();
+        }
+       
+        
     }
 
 
@@ -912,6 +918,20 @@ class Foody_Notification
         $Results = $wpdb->get_results($SqlQuery);
         return $Results;
     }
+    
+    //Updating wp_notification_recipes_to_send table when sending email 
+
+    public function Update_notification_recipes_to_send_After_Sending($num, $recipe_id){
+        global $wpdb;
+        $table_name = $wpdb->prefix . "notification_recipes_to_send";
+        $SQL_update = "update {$table_name} 
+        set number_of_emails_dilliverd = {$num} 
+        where recipe_id = {$recipe_id} limit 1";
+        $Results = $wpdb->query($SQL_update);
+        return $Results ; 
+    }
+
+
 
     //Getting category or and author ids in the results of GetNewRecipies() function ==============
 
@@ -1086,7 +1106,7 @@ class Foody_Notification
                     "type" => "text/html",
                     "value" => $htmlObject,
                 ]
-            ]
+                ]
         ];
 
 
@@ -1101,7 +1121,7 @@ class Foody_Notification
 
         $response = curl_exec($ch);
         curl_close($ch);
-        $response = rtrim($response, '1');
+       // $response = rtrim($response, '1');
 
 
         return ($response);
@@ -1109,32 +1129,95 @@ class Foody_Notification
 
 
 
-
+public function GetRecipiesByCatID($cat_id){
+    global $wpdb;
+    $table_name = $wpdb->prefix . "notification_recipes_to_send";
+    $SqlQuery = "select * from {$table_name}  WHERE TRIM(number_of_emails_dilliverd) is NULL
+    and TRIM(emails_dilliverd) is NULL and STR_TO_DATE(date_of_update, '%d-%m-%Y') >= DATE_SUB(CURDATE(), INTERVAL 8 DAY)
+    and main_category_id = '{$cat_id}' 
+    ";
+    $Results = $wpdb->get_results($SqlQuery);
+ 
+    return $Results;
+}
 
 
     //THIS FUNCTION ACTUALLY RAPPIT ALL TOGETHER AND SEND EMAIL THRU SENDGRID
+    // public function FilterEmailsContainer()
+    // {
+    //     $get_Emails_By_Cat_Auth_ToSend = $this->get_Emails_By_Cat_Auth_ToSend();
+        
+    //     $htmlObject = [];
+    //     $recipe_id_Array = [];
+    //     foreach ($get_Emails_By_Cat_Auth_ToSend as $key=> $recipes) {
+           
+             
+           
+    //             foreach($recipes as $k=>$data){
+    //                 $email = $recipes[0]; //email field alone
+    //                 if($k > 0){
+    //                     //getting the updated recipe data : 
+
+    //                     $recipe_data = $this->GetRecipiesByCatID( $data['category_id'] );
+
+    //                     $recipe_id_Array_ = $recipe_data[0]->recipe_id ; 
+                       
+    //                     $category_name = $recipe_data[0]->category_name ; 
+                        
+    //                     $recipe_name =  $recipe_data[0]->recipe_name ; 
+    //                     $htmlObject__ = $this->Email_Template($category_name, $recipe_data[0]->recipe_id );
+                       
+    //                 }
+    //                 $recipe_id_Array[] = $recipe_id_Array_ ;
+    //                   $htmlObject[] =  $htmlObject__  ;
+                     
+    //             }
+               
+    //             print_r( $htmlObject);
+    //            // $res =  $this->SendEmails($email, $category_name, $recipe_id_Array, '', $htmlObject);
+    //            unset($recipes[$key] );
+    //            unset($htmlObject);
+    //            unset($recipe_id_Array);
+    //     }
+      
+       
+    //     die();
+       
+    // }
+
+
     public function FilterEmailsContainer()
     {
         $get_Emails_By_Cat_Auth_ToSend = $this->get_Emails_By_Cat_Auth_ToSend();
         $htmlObject = [];
         foreach ($get_Emails_By_Cat_Auth_ToSend as $email => $recipes) {
-            if (!is_array($recipes)) {
-                $email = $recipes;
-            } else {
-                foreach ($recipes as $v) {
+       
+         
+          
+           foreach ($recipes as $key=>$val) {
+               if($key > 0 ){
 
-                    $category_id = $v['category_id'];
-                    $recipe_id = $v['recipe_id'];
-                    $category_name = $v['category_name'];
-                    $recipe_name = $v['recipe_name'];
+            
+                    $recipe_id_obj = $this->GetRecipiesByCatID( $val['category_id'] );
+                    $recipe_id =  $recipe_id_obj[0]->recipe_id;
+                   // $category_id = $v['category_id'];
+                   // $recipe_id = $v['recipe_id'];
+                    $category_name = $val['category_name'];
+                    $recipe_name = $val['recipe_name'];
+                    $htmlObject[] = $this->Email_Template($category_name, $recipe_id);
                 }
+                
             }
-            $htmlObject[] = $this->Email_Template($category_name, $recipe_id);
-         $res =  $this->SendEmails($email, $category_name, $recipe_id, '', $htmlObject);
+            
+       $res =  $this->SendEmails($email, $category_name, $recipe_id, '', $htmlObject);
+       unset($htmlObject);
         }
-        print_r($res);
+        //print_r($res);
         die();
     }
+
+
+
 
 
     public function enqueue_admin_ajax_script()
