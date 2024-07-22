@@ -1,4 +1,5 @@
 <?php
+ if (!defined('ABSPATH')) exit;
 class Foody_Notification
 {
     private $use_agreement_url;
@@ -10,6 +11,8 @@ class Foody_Notification
 
     function __construct()
     {
+      
+      
         $this->group_nots = array();
 
         $this->use_agreement_url = get_field('use_agreement_url', 'option');
@@ -33,16 +36,41 @@ class Foody_Notification
         add_action('wp_ajax_admin_enter', array($this, 'handle_admin_enter'));
 
         //cron jobs==============================================================
-        add_action('init', array($this, 'schedule_weekly_monday_event'));
-        add_action('my_weekly_monday_event', array($this, 'my_weekly_monday_event_function'));
-       
-        if ( is_user_logged_in() && current_user_can( 'administrator' ) ) {
+        add_action('admin_init', array($this, 'SendingNotificationEmailsThruAdmin'));
+
+        //if (is_user_logged_in() && current_user_can('administrator')) {
             // The user is logged in and is an administrator
-           // $this->FilterEmailsContainer();
-        }
-       
-        
+            // $this->SendNotificationsNow();
+            // $this->FilterEmailsContainer();
+            // die();
+            //$this->FilterEmailsContainer();
+            //die();
+
+        //}
     }
+
+
+    public function SendingNotificationEmailsThruAdmin() {
+        // Your code here
+      $this->SendNotificationsNow();
+    }
+
+
+    public function SendNotificationsNow()
+    {
+
+        $name = "notification";
+        $value = "sent";
+        $expire = time() + (86400 * 30) * 6; // 86400 = 1 day, so this will set the cookie to expire in 30 days
+        $path = "/"; // The path on the server where the cookie is available. Use "/" to make it available across the entire domain.
+
+        if (!isset($_COOKIE[$name])) {
+            $this->FilterEmailsContainer();
+            setcookie($name, $value, $expire, $path);
+           // header("Refresh:1");
+        }
+    }
+
 
 
     function schedule_my_weekly_monday_event()
@@ -918,17 +946,18 @@ class Foody_Notification
         $Results = $wpdb->get_results($SqlQuery);
         return $Results;
     }
-    
+
     //Updating wp_notification_recipes_to_send table when sending email 
 
-    public function Update_notification_recipes_to_send_After_Sending($num, $recipe_id){
+    public function Update_notification_recipes_to_send_After_Sending($num, $recipe_id)
+    {
         global $wpdb;
         $table_name = $wpdb->prefix . "notification_recipes_to_send";
         $SQL_update = "update {$table_name} 
         set number_of_emails_dilliverd = {$num} 
         where recipe_id = {$recipe_id} limit 1";
         $Results = $wpdb->query($SQL_update);
-        return $Results ; 
+        return $Results;
     }
 
 
@@ -997,7 +1026,7 @@ class Foody_Notification
 
 
 
-    private function Email_Template($category, $recipe) // email to unsubscribe
+    private function Email_Template($category, $recipe, $uniqID = null) // email to unsubscribe
     {
         //Sending Goodies :
         //$category = category name========================
@@ -1021,7 +1050,9 @@ class Foody_Notification
         $html .= '<h1 style="font-size:35px">' . $recipeTitle . '</h1>';
         $html .= '<h3>מתכון חדש בקטגוריה : ' . $category . '</h3>';
         $html .= '<h4>' . $author['display_name'] . '</h4>';
-        $html .= '<a href="https://foody.co.il/?p=' . $post->ID . '" > למתכון לחץ כאן </a>';
+        $html .= '<span><a href="https://foody.co.il/?p=' . $post->ID . '" > למתכון לחץ כאן </a></span>  | ';
+        $html .= '<span><a href="https://foody.co.il/unsubscribe?unid=' . $uniqID . '" >לביטול התראות במייל לחץ כאן</a></span> ';
+
         $html .= '</div>'; //div closer
         return $html;
     }
@@ -1106,7 +1137,7 @@ class Foody_Notification
                     "type" => "text/html",
                     "value" => $htmlObject,
                 ]
-                ]
+            ]
         ];
 
 
@@ -1121,7 +1152,7 @@ class Foody_Notification
 
         $response = curl_exec($ch);
         curl_close($ch);
-       // $response = rtrim($response, '1');
+        // $response = rtrim($response, '1');
 
 
         return ($response);
@@ -1129,30 +1160,31 @@ class Foody_Notification
 
 
 
-public function GetRecipiesByCatID($cat_id){
-    global $wpdb;
-    $table_name = $wpdb->prefix . "notification_recipes_to_send";
-    $SqlQuery = "select * from {$table_name}  WHERE TRIM(number_of_emails_dilliverd) is NULL
+    public function GetRecipiesByCatID($cat_id)
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . "notification_recipes_to_send";
+        $SqlQuery = "select * from {$table_name}  WHERE TRIM(number_of_emails_dilliverd) is NULL
     and TRIM(emails_dilliverd) is NULL and STR_TO_DATE(date_of_update, '%d-%m-%Y') >= DATE_SUB(CURDATE(), INTERVAL 8 DAY)
     and main_category_id = '{$cat_id}' 
     ";
-    $Results = $wpdb->get_results($SqlQuery);
- 
-    return $Results;
-}
+        $Results = $wpdb->get_results($SqlQuery);
+
+        return $Results;
+    }
 
 
     //THIS FUNCTION ACTUALLY RAPPIT ALL TOGETHER AND SEND EMAIL THRU SENDGRID
     // public function FilterEmailsContainer()
     // {
     //     $get_Emails_By_Cat_Auth_ToSend = $this->get_Emails_By_Cat_Auth_ToSend();
-        
+
     //     $htmlObject = [];
     //     $recipe_id_Array = [];
     //     foreach ($get_Emails_By_Cat_Auth_ToSend as $key=> $recipes) {
-           
-             
-           
+
+
+
     //             foreach($recipes as $k=>$data){
     //                 $email = $recipes[0]; //email field alone
     //                 if($k > 0){
@@ -1161,59 +1193,58 @@ public function GetRecipiesByCatID($cat_id){
     //                     $recipe_data = $this->GetRecipiesByCatID( $data['category_id'] );
 
     //                     $recipe_id_Array_ = $recipe_data[0]->recipe_id ; 
-                       
+
     //                     $category_name = $recipe_data[0]->category_name ; 
-                        
+
     //                     $recipe_name =  $recipe_data[0]->recipe_name ; 
     //                     $htmlObject__ = $this->Email_Template($category_name, $recipe_data[0]->recipe_id );
-                       
+
     //                 }
     //                 $recipe_id_Array[] = $recipe_id_Array_ ;
     //                   $htmlObject[] =  $htmlObject__  ;
-                     
+
     //             }
-               
+
     //             print_r( $htmlObject);
     //            // $res =  $this->SendEmails($email, $category_name, $recipe_id_Array, '', $htmlObject);
     //            unset($recipes[$key] );
     //            unset($htmlObject);
     //            unset($recipe_id_Array);
     //     }
-      
-       
+
+
     //     die();
-       
+
     // }
 
 
     public function FilterEmailsContainer()
     {
         $get_Emails_By_Cat_Auth_ToSend = $this->get_Emails_By_Cat_Auth_ToSend();
-        $htmlObject = [];
-        foreach ($get_Emails_By_Cat_Auth_ToSend as $email => $recipes) {
-       
-         
-          
-           foreach ($recipes as $key=>$val) {
-               if($key > 0 ){
+        if (!empty($get_Emails_By_Cat_Auth_ToSend)) {
+            foreach ($get_Emails_By_Cat_Auth_ToSend as $email => $recipes) {
+                $htmlObject = []; // Initialize the $htmlObject array here to ensure it is reset for each email
 
-            
-                    $recipe_id_obj = $this->GetRecipiesByCatID( $val['category_id'] );
-                    $recipe_id =  $recipe_id_obj[0]->recipe_id;
-                   // $category_id = $v['category_id'];
-                   // $recipe_id = $v['recipe_id'];
-                    $category_name = $val['category_name'];
-                    $recipe_name = $val['recipe_name'];
-                    $htmlObject[] = $this->Email_Template($category_name, $recipe_id);
+                foreach ($recipes as $key => $val) {
+                    if ($key > 0) {
+                        $recipe_id_obj = $this->GetRecipiesByCatID($val['category_id']);
+                        $recipe_id = $recipe_id_obj[0]->recipe_id;
+                        $category_name = $val['category_name'];
+                        $recipe_name = $val['recipe_name'];
+                        $htmlObject[] = $this->Email_Template($category_name, $recipe_id, '33test');
+                    }
                 }
-                
+
+                // Send the email after building the $htmlObject array
+                 $res = $this->SendEmails($email, $category_name, $recipe_id, '', $htmlObject);
+                 if($res == 1){
+                    echo ("SENT TO :{$email}");
+                 }
+
+                // Reset the $htmlObject array for the next email (already done by reinitializing in the outer loop)
             }
-            
-       $res =  $this->SendEmails($email, $category_name, $recipe_id, '', $htmlObject);
-       unset($htmlObject);
         }
-        //print_r($res);
-        die();
+        //die();
     }
 
 
