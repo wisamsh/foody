@@ -35,18 +35,22 @@ class Foody_Notification
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_ajax_script'));
         add_action('wp_ajax_admin_enter', array($this, 'handle_admin_enter'));
 
-        //cron jobs==============================================================
-        add_action('admin_init', array($this, 'SendingNotificationEmailsThruAdmin'));
 
-        //if (is_user_logged_in() && current_user_can('administrator')) {
+
+
+
+        //cron jobs==============================================================
+        //add_action('admin_init', array($this, 'SendingNotificationEmailsThruAdmin'));
+//$this->SendNotificationsNow();
+    if (is_user_logged_in() && current_user_can('administrator')) {
             // The user is logged in and is an administrator
             // $this->SendNotificationsNow();
-            // $this->FilterEmailsContainer();
+           //  $this->SendingNotificationEmailsThruAdmin();
             // die();
-            //$this->FilterEmailsContainer();
+          // $this->FilterEmailsContainer();
             //die();
 
-        //}
+        }
     }
 
 
@@ -67,6 +71,7 @@ class Foody_Notification
         if (!isset($_COOKIE[$name])) {
             $this->FilterEmailsContainer();
             setcookie($name, $value, $expire, $path);
+            
            // header("Refresh:1");
         }
     }
@@ -1030,13 +1035,29 @@ class Foody_Notification
     {
         //Sending Goodies :
         //$category = category name========================
-
-        $post = get_post($recipe);
+        //print_r($category);die('-drr44001-');
+        foreach($recipe as $recipe){
+   
+        $post = get_post($recipe->recipe_id);
         // print_r($recipe);die();
         $author = $this->get_author_by_post_id($post->ID);
         $recipeTitle = $post->post_title;
         $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
-        $html = '<div style="direction:rtl;max-width:600px;'; //DIV STARTS
+       $html  = '<!DOCTYPE html><html lang="he"><head><meta charset="UTF-8">';
+       $html .= "<title>מתכון חדש מ FOODY | {$recipeTitle}</title>";
+       $html .='<link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&display=swap" rel="stylesheet">';
+       $html .='<style>
+        body {
+        font-family: "Heebo", sans-serif;
+        font-optical-sizing: auto;
+        }
+        </style>';
+       
+       $html .='<body  style="font-family: "Heebo", sans-serif;">';
+       
+        $html .= '<div style="direction:rtl;max-width:600px;'; //DIV STARTS
         $html .= 'height:auto;';
         $html .= 'border: solid 1px #ddd;';
         $html .= 'border-radius:10px;';
@@ -1046,14 +1067,15 @@ class Foody_Notification
         $html .= '<div id="firstdv" style="width:100%;position:absolute;margin-top:0px;background:#ffffffb3">';
         $html .= '<h3>מתכון חדש עלה</h3>';
         $html .= '</div>'; //firstdv closer
-        $html .= '<img style="width:100%;" src="' .  $featured_image_url  . '"/>';
+        $html .= '<img style="width:98%;" src="' .  $featured_image_url  . '"/>';
         $html .= '<h1 style="font-size:35px">' . $recipeTitle . '</h1>';
         $html .= '<h3>מתכון חדש בקטגוריה : ' . $category . '</h3>';
         $html .= '<h4>' . $author['display_name'] . '</h4>';
         $html .= '<span><a href="https://foody.co.il/?p=' . $post->ID . '" > למתכון לחץ כאן </a></span>  | ';
         $html .= '<span><a href="https://foody.co.il/unsubscribe?unid=' . $uniqID . '" >לביטול התראות במייל לחץ כאן</a></span> ';
-
         $html .= '</div>'; //div closer
+        $html .= '</body></html>';
+        }
         return $html;
     }
 
@@ -1073,7 +1095,7 @@ class Foody_Notification
         global $wpdb;
         $table_name = $wpdb->prefix . "notification_users";
         $sqlQuery = "SELECT 
-        email, category_id, recipe_id, category_name, recipe_name, author_id, author_name
+        email, category_id, author_id, author_name
         FROM {$table_name} 
         WHERE category_id IN ({$Get_Cats_Auths_IDS['cats']}) 
         OR author_id IN ({$Get_Cats_Auths_IDS['auth']})";
@@ -1089,17 +1111,17 @@ class Foody_Notification
 
             // Check if the recipe already exists for this email
             $recipeExists = false;
-            foreach ($emailsContainer[$email] as $existingResult) {
-                if (is_array($existingResult) && $existingResult['recipe_id'] == $result['recipe_id']) {
-                    $recipeExists = true;
-                    break;
-                }
-            }
+            // foreach ($emailsContainer[$email] as $existingResult) {
+            //     if (is_array($existingResult) && $existingResult['recipe_id'] == $result['recipe_id']) {
+            //         $recipeExists = true;
+            //         break;
+            //     }
+            // }
 
-            if (!$recipeExists) {
+           // if (!$recipeExists) {
 
                 $emailsContainer[$email][] = $result;
-            }
+            //}
         }
 
 
@@ -1171,80 +1193,84 @@ class Foody_Notification
         $Results = $wpdb->get_results($SqlQuery);
 
         return $Results;
-    }
+    
+
+}
 
 
-    //THIS FUNCTION ACTUALLY RAPPIT ALL TOGETHER AND SEND EMAIL THRU SENDGRID
-    // public function FilterEmailsContainer()
-    // {
-    //     $get_Emails_By_Cat_Auth_ToSend = $this->get_Emails_By_Cat_Auth_ToSend();
-
-    //     $htmlObject = [];
-    //     $recipe_id_Array = [];
-    //     foreach ($get_Emails_By_Cat_Auth_ToSend as $key=> $recipes) {
+//DELETING RECIPIES AFTER SENDIG NOTIFICTIONS TO USERS:
 
 
-
-    //             foreach($recipes as $k=>$data){
-    //                 $email = $recipes[0]; //email field alone
-    //                 if($k > 0){
-    //                     //getting the updated recipe data : 
-
-    //                     $recipe_data = $this->GetRecipiesByCatID( $data['category_id'] );
-
-    //                     $recipe_id_Array_ = $recipe_data[0]->recipe_id ; 
-
-    //                     $category_name = $recipe_data[0]->category_name ; 
-
-    //                     $recipe_name =  $recipe_data[0]->recipe_name ; 
-    //                     $htmlObject__ = $this->Email_Template($category_name, $recipe_data[0]->recipe_id );
-
-    //                 }
-    //                 $recipe_id_Array[] = $recipe_id_Array_ ;
-    //                   $htmlObject[] =  $htmlObject__  ;
-
-    //             }
-
-    //             print_r( $htmlObject);
-    //            // $res =  $this->SendEmails($email, $category_name, $recipe_id_Array, '', $htmlObject);
-    //            unset($recipes[$key] );
-    //            unset($htmlObject);
-    //            unset($recipe_id_Array);
-    //     }
+public function DELETE_Recipe_After_Notificion($rid)
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix . "notification_recipes_to_send";
+    $SqlQuery = " delete from {$table_name} where recipe_id IN ({$rid}) limit 15 ";
+    
+    $Results = $wpdb->get_results($SqlQuery);
+    return $Results;
 
 
-    //     die();
+}
 
-    // }
+
+
+
 
 
     public function FilterEmailsContainer()
     {
         $get_Emails_By_Cat_Auth_ToSend = $this->get_Emails_By_Cat_Auth_ToSend();
+      
+
         if (!empty($get_Emails_By_Cat_Auth_ToSend)) {
+           
+           
             foreach ($get_Emails_By_Cat_Auth_ToSend as $email => $recipes) {
+               
+
+
                 $htmlObject = []; // Initialize the $htmlObject array here to ensure it is reset for each email
 
                 foreach ($recipes as $key => $val) {
                     if ($key > 0) {
+                       
                         $recipe_id_obj = $this->GetRecipiesByCatID($val['category_id']);
-                        $recipe_id = $recipe_id_obj[0]->recipe_id;
-                        $category_name = $val['category_name'];
-                        $recipe_name = $val['recipe_name'];
+                       
+                        $recipe_id = $recipe_id_obj;
+                        $recipiesToDelete[] =  $recipe_id;
+                        $category_name = $recipe_id_obj[0]->main_category_name;
+                       
+                       // $recipe_name = $val['recipe_name'];
                         $htmlObject[] = $this->Email_Template($category_name, $recipe_id, '33test');
+                       
                     }
+                  
                 }
+               // print_r($recipe_id_obj);
+                //Send the email after building the $htmlObject array
+              $res = $this->SendEmails($email, $category_name, $recipe_id, '', $htmlObject);
+             
+                
 
-                // Send the email after building the $htmlObject array
-                 $res = $this->SendEmails($email, $category_name, $recipe_id, '', $htmlObject);
-                 if($res == 1){
-                    echo ("SENT TO :{$email}");
-                 }
 
                 // Reset the $htmlObject array for the next email (already done by reinitializing in the outer loop)
             }
+           
+           
+
+           
         }
-        //die();
+       $idsToDelete = [];
+       foreach($recipiesToDelete as $v){
+       foreach($v as $r){
+        $idsToDelete[$r->recipe_id]  = $r->recipe_id ;
+
+       }
+       }
+       $DeleteTheseFuckers = implode(',', $idsToDelete);
+       $this->DELETE_Recipe_After_Notificion($DeleteTheseFuckers);
+       
     }
 
 
