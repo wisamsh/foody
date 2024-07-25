@@ -47,7 +47,10 @@ class Foody_Notification
             // $this->SendNotificationsNow();
            //  $this->SendingNotificationEmailsThruAdmin();
             // die();
-          // $this->FilterEmailsContainer();
+          if(date('N') == 4){ //if its Thursday
+            $this->FilterEmailsContainer();
+           
+          }
             //die();
 
         }
@@ -1045,19 +1048,23 @@ class Foody_Notification
         $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
        $html  = '<!DOCTYPE html><html lang="he"><head><meta charset="UTF-8">';
        $html .= "<title>מתכון חדש מ FOODY | {$recipeTitle}</title>";
-       $html .='<link rel="preconnect" href="https://fonts.googleapis.com">
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&display=swap" rel="stylesheet">';
-       $html .='<style>
-        body {
-        font-family: "Heebo", sans-serif;
-        font-optical-sizing: auto;
+      
+
+        $html .=" <style>
+        @font-face {
+        font-family: 'Heebo';
+       src: url('data:font/woff2;charset=utf-8;base64,d09GMgABAAAAAAKgABQAAAAAFSgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAACgAAAAxAAAACAAAAFgAAGcCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUyAAEAAAAAABD/wABAAAAAAAnTEXAAAABAAAAAAAAAAAAAAAABAAAABm5jbWFwAAEAAAAEAAAAAP9XwX4AAAAHZmVhdHAAACwAAAAwAAUAAAAMAAAGAQIAAAAgY2hhcgwAfwAAAAQAAAAAAAAAAgABAAAAAAAAAAEAAAAAAAgABAAAAHlhc3BjAAEAAAAUAAAAD2kXcA4AAAMAbG9jYQAOAAAAFAAAABAV25uRAAABBm1heHAAAAEgAAAAMAAAAYAAwAAwAEAAABQGN2dWQAAAA')
+        font-weight: normal;
+        font-style: normal;
         }
-        </style>';
+        body {
+        font-family: 'Heebo', Arial, sans-serif;
+        }
+        </style>";
        
        $html .='<body  style="font-family: "Heebo", sans-serif;">';
        
-        $html .= '<div style="direction:rtl;max-width:600px;'; //DIV STARTS
+        $html .= '<div style="direction:rtl;max-width:600px;font-family: Heebo, sans-serif !important;'; //DIV STARTS
         $html .= 'height:auto;';
         $html .= 'border: solid 1px #ddd;';
         $html .= 'border-radius:10px;';
