@@ -1047,7 +1047,7 @@ class Foody_Notification
         $recipeTitle = $post->post_title;
         $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
        $html  = '<!DOCTYPE html><html lang="he"><head><meta charset="UTF-8">';
-       $html .= "<title>מתכון חדש מ FOODY | {$recipeTitle}</title>";
+       $html .= "<title>מתכון חדש מ FOODY</title>";
       
 
         $html .=" <style>
@@ -1142,7 +1142,7 @@ class Foody_Notification
 
         $author_id = get_post_field('post_author', $recipe);
         $author_name = get_the_author_meta('display_name', $author_id);
-        $subject = ' מתכון חדש עלה ב FOODY מאת  ' . $author_name . ' בקטגוריה ' . $category;
+        $subject = ' מתכון חדש עלה ב FOODY ';
         $htmlObject = '';
         foreach ($htmlContent as $html) {
             $htmlObject .= $html;
