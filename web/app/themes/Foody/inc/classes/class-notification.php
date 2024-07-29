@@ -1075,9 +1075,11 @@ class Foody_Notification
         $sqlQuery = "SELECT 
         email, category_id, author_id, author_name
         FROM {$table_name} 
-        WHERE category_id IN ({$Get_Cats_Auths_IDS['cats']}) 
-        OR author_id IN ({$Get_Cats_Auths_IDS['auth']})";
-        $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
+        WHERE (category_id IN ({$Get_Cats_Auths_IDS['cats']}) 
+        OR author_id IN ({$Get_Cats_Auths_IDS['auth']}) ) AND (valid_user <> trim('') OR valid_user <> NULL)
+        
+        ";
+         $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
 
         foreach ($Results as $result) {
             $email = $result['email'];
@@ -1199,10 +1201,10 @@ public function DELETE_Recipe_After_Notificion($rid)
     public function FilterEmailsContainer()
     {
         $get_Emails_By_Cat_Auth_ToSend = $this->get_Emails_By_Cat_Auth_ToSend();
-      
+    
 
         if (!empty($get_Emails_By_Cat_Auth_ToSend)) {
-           
+            //print_r($get_Emails_By_Cat_Auth_ToSend);die('dfc44');
            
             foreach ($get_Emails_By_Cat_Auth_ToSend as $email => $recipes) {
                
