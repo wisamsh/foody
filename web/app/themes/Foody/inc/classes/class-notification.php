@@ -1044,9 +1044,9 @@ class Foody_Notification
         $html .= '<div  style="width:98%; margin:0 auto; text-align:center; border:solid 3px #57A0BB;padding-bottom: 20px;"> '; //new recipe wrapp
         $html .= '<h3 style="color:#333333;">מתכון חדש בקטגוריה : </h3>';
         $html .= "<div>
-        <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle;margin-left:10px;'> 
+        <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'> 
         {$author['display_name']}</span>
-         <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle;'>{$category}</span> </div>";
+         <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'>{$category}</span> </div>";
        $html .= "</div>";
         $html .= '<div style="justify-content: center;align-items: center; align-items: center;padding:10px;margin:0 auto;margin-top:30px;width:192px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;">
         <a style="color:#fff !important;text-decoration: none;" href="https://foody.co.il/?p=' . $post->ID . '" > לעמוד מתכון >></a></div>  ';
@@ -1118,7 +1118,7 @@ class Foody_Notification
         foreach ($htmlContent as $html) {
             $htmlObject .= $html;
         }
-                   // print_r($htmlObject);die('jhd44');
+                    //print_r($htmlObject);die('jhd44');
         $emailData = [
             "personalizations" => [
                 [
