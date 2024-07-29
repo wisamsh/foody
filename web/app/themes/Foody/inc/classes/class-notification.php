@@ -913,33 +913,6 @@ class Foody_Notification
 
 
 
-        // $mailin_List = ($this->GetEmailsFrom_NotificationList($term['term_id'],  $author_id ));
-
-        // Set a transient to indicate a new post was created
-
-
-        //TODO for later on
-        // foreach($mailin_List  as $k => $email){
-
-        //     $sendGridResult[$k] =  ($this->SendEmails($email['email'] , $term , $post_id,$author_info) );
-
-        // }
-
-        //================================================================
-        // set_transient('foody_recipe_new_recipe_notice', true, 30);
-        // The name of the transient.
-        //$transient_name = 'SendGridReaction';
-
-        // The value you want to store in the transient.
-        //$transient_value = $sendGridResult ; 
-
-        // The expiration time in seconds (e.g., 1 hour).
-        //$expiration_time = 3600;
-
-        // Set the transient.
-        //set_transient($transient_name, $transient_value, $expiration_time);
-
-
     }
 
 
@@ -1039,7 +1012,7 @@ class Foody_Notification
     {
         //Sending Goodies :
         //$category = category name========================
-        //print_r($category);die('-drr44001-');
+       
         foreach($recipe as $recipe){
    
         $post = get_post($recipe->recipe_id);
@@ -1075,11 +1048,8 @@ class Foody_Notification
         {$author['display_name']}</span>
          <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle;'>{$category}</span> </div>";
        $html .= "</div>";
-        $html .= '<div style="justify-content: center;align-items: center;display: flex; align-items: center;margin:0 auto;margin-top:30px;width:192px;height:48px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;flex-wrap: nowrap;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;">
-        <a style="color:#fff !important;text-decoration: none;" href="https://foody.co.il/?p=' . $post->ID . '" >   לעמוד מתכון  >> </a></div>  ';
+        $html .= '<div style="justify-content: center;align-items: center; align-items: center;padding:10px;margin:0 auto;margin-top:30px;width:192px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;">
+        <a style="color:#fff !important;text-decoration: none;" href="https://foody.co.il/?p=' . $post->ID . '" > לעמוד מתכון >></a></div>  ';
         $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="https://foody.co.il/unsubscribe?unid=' . $uniqID . '" >לביטול התראות במייל לחץ כאן</a></div> ';
         $html .= '</div>'; //div closer
         $html .= '</body></html>';
@@ -1148,7 +1118,7 @@ class Foody_Notification
         foreach ($htmlContent as $html) {
             $htmlObject .= $html;
         }
-print_r($htmlObject);die('jhd44');
+                   // print_r($htmlObject);die('jhd44');
         $emailData = [
             "personalizations" => [
                 [
