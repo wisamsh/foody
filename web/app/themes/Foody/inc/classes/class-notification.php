@@ -1026,14 +1026,14 @@ class Foody_Notification
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">';
        $html .="</head";
-       $html .='<body  style="font-family: "Open Sans", sans-serif;">';
+       $html .='<body  style="font-family: Open Sans, sans-serif;">';
        
         $html .= '<div style="position:relative;direction:rtl;max-width:650px;font-family: Open Sans, sans-serif;'; //DIV STARTS
         $html .= 'height:auto;';
         $html .= 'border: solid 0px #ddd;';
         $html .= 'border-radius:0px;';
         $html .= 'text-align:center;';
-        $html .= 'margin: 0 auto;margin-bottom:20px;background-color:#e6e6e6';
+        $html .= 'margin: 0 auto;margin-bottom:20px;background-color:#f5f5f5';
         $html .= '">'; //DIV ENDS
         $html .="<img src='{$this->email_Image_Header}' style='width:100%;'/>";
         $html .= '<div id="firstdv" style="width:100%;margin-top:0px;">';
