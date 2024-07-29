@@ -6,6 +6,7 @@ class Foody_Notification
     private $use_agreement_text;
     private $group_nots;
     private  $api_key;
+    private $email_Image_Header ;
 
     private $SmoovListName;
 
@@ -26,7 +27,7 @@ class Foody_Notification
         $this->api_key = get_field("mailgun_api_key", "option");
         // $this->api_key = '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';
         $this->SmoovListName = 'Notification-' . date('d-m-Y');
-
+        $this->email_Image_Header = 'https://foody-media.s3.eu-west-1.amazonaws.com/w_images/email/mail-header.png';
         $this->Creat_Necessary_Tables();
         $this->Creat_Necessary_Tables_smoov();
         $this->Creat_Necessary_Tables_Recepies_ToSend();
@@ -47,7 +48,7 @@ class Foody_Notification
             // $this->SendNotificationsNow();
            //  $this->SendingNotificationEmailsThruAdmin();
             // die();
-          if(date('N') == 4){ //if its Thursday
+          if(date('N') == 1){ //if its Thursday
             $this->FilterEmailsContainer();
            
           }
@@ -1048,38 +1049,38 @@ class Foody_Notification
         $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
        $html  = '<!DOCTYPE html><html lang="he"><head><meta charset="UTF-8">';
        $html .= "<title>מתכון חדש מ FOODY</title>";
-      
-
-        $html .=" <style>
-        @font-face {
-        font-family: 'Heebo';
-       src: url('data:font/woff2;charset=utf-8;base64,d09GMgABAAAAAAKgABQAAAAAFSgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAACgAAAAxAAAACAAAAFgAAGcCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUyAAEAAAAAABD/wABAAAAAAAnTEXAAAABAAAAAAAAAAAAAAAABAAAABm5jbWFwAAEAAAAEAAAAAP9XwX4AAAAHZmVhdHAAACwAAAAwAAUAAAAMAAAGAQIAAAAgY2hhcgwAfwAAAAQAAAAAAAAAAgABAAAAAAAAAAEAAAAAAAgABAAAAHlhc3BjAAEAAAAUAAAAD2kXcA4AAAMAbG9jYQAOAAAAFAAAABAV25uRAAABBm1heHAAAAEgAAAAMAAAAYAAwAAwAEAAABQGN2dWQAAAA')
-        font-weight: normal;
-        font-style: normal;
-        }
-        body {
-        font-family: 'Heebo', Arial, sans-serif;
-        }
-        </style>";
+        $html .='<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">';
+       $html .="</head";
+       $html .='<body  style="font-family: "Open Sans", sans-serif;">';
        
-       $html .='<body  style="font-family: "Heebo", sans-serif;">';
-       
-        $html .= '<div style="direction:rtl;max-width:600px;font-family: Heebo, sans-serif !important;'; //DIV STARTS
+        $html .= '<div style="position:relative;direction:rtl;max-width:650px;font-family: Open Sans, sans-serif;'; //DIV STARTS
         $html .= 'height:auto;';
-        $html .= 'border: solid 1px #ddd;';
-        $html .= 'border-radius:10px;';
+        $html .= 'border: solid 0px #ddd;';
+        $html .= 'border-radius:0px;';
         $html .= 'text-align:center;';
-        $html .= 'margin: 0 auto;margin-bottom:20px;';
+        $html .= 'margin: 0 auto;margin-bottom:20px;background-color:#e6e6e6';
         $html .= '">'; //DIV ENDS
-        $html .= '<div id="firstdv" style="width:100%;position:absolute;margin-top:0px;background:#ffffffb3">';
-        $html .= '<h3>מתכון חדש עלה</h3>';
+        $html .="<img src='{$this->email_Image_Header}' style='width:100%;'/>";
+        $html .= '<div id="firstdv" style="width:100%;margin-top:0px;">';
+        $html .= '<h3 style="font-size:45px;font-weight:700;color:#E63A2C">מתכון חדש עלה</h3>';
         $html .= '</div>'; //firstdv closer
         $html .= '<img style="width:98%;" src="' .  $featured_image_url  . '"/>';
-        $html .= '<h1 style="font-size:35px">' . $recipeTitle . '</h1>';
-        $html .= '<h3>מתכון חדש בקטגוריה : ' . $category . '</h3>';
-        $html .= '<h4>' . $author['display_name'] . '</h4>';
-        $html .= '<span><a href="https://foody.co.il/?p=' . $post->ID . '" > למתכון לחץ כאן </a></span>  | ';
-        $html .= '<span><a href="https://foody.co.il/unsubscribe?unid=' . $uniqID . '" >לביטול התראות במייל לחץ כאן</a></span> ';
+        $html .= '<h1 style="width:90%;text-align:center;margin:0 auto;margin-top:20px;font-size:35px; color:#57A0BB;margin-bottom:30px;">' . $recipeTitle . '</h1>';
+        $html .= '<div  style="width:98%; margin:0 auto; text-align:center; border:solid 3px #57A0BB;padding-bottom: 20px;"> '; //new recipe wrapp
+        $html .= '<h3 style="color:#333333;">מתכון חדש בקטגוריה : </h3>';
+        $html .= "<div>
+        <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle;margin-left:10px;'> 
+        {$author['display_name']}</span>
+         <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle;'>{$category}</span> </div>";
+       $html .= "</div>";
+        $html .= '<div style="justify-content: center;align-items: center;display: flex; align-items: center;margin:0 auto;margin-top:30px;width:192px;height:48px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;flex-wrap: nowrap;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;">
+        <a style="color:#fff !important;text-decoration: none;" href="https://foody.co.il/?p=' . $post->ID . '" >   לעמוד מתכון  >> </a></div>  ';
+        $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="https://foody.co.il/unsubscribe?unid=' . $uniqID . '" >לביטול התראות במייל לחץ כאן</a></div> ';
         $html .= '</div>'; //div closer
         $html .= '</body></html>';
         }
@@ -1147,7 +1148,7 @@ class Foody_Notification
         foreach ($htmlContent as $html) {
             $htmlObject .= $html;
         }
-
+print_r($htmlObject);die('jhd44');
         $emailData = [
             "personalizations" => [
                 [
