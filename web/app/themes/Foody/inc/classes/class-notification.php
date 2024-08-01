@@ -1120,7 +1120,7 @@ class Foody_Notification
         foreach ($htmlContent as $html) {
             $htmlObject .= $html;
         }
-                    //print_r($htmlObject);die('jhd44');
+                    
         $emailData = [
             "personalizations" => [
                 [
@@ -1167,9 +1167,8 @@ class Foody_Notification
         global $wpdb;
         $table_name = $wpdb->prefix . "notification_recipes_to_send";
         $SqlQuery = "select * from {$table_name}  WHERE TRIM(number_of_emails_dilliverd) is NULL
-    and TRIM(emails_dilliverd) is NULL and STR_TO_DATE(date_of_update, '%d-%m-%Y') >= DATE_SUB(CURDATE(), INTERVAL 8 DAY)
-    and main_category_id = '{$cat_id}' 
-    ";
+        and TRIM(emails_dilliverd) is NULL and STR_TO_DATE(date_of_update, '%d-%m-%Y') >= DATE_SUB(CURDATE(), INTERVAL 8 DAY)
+        and main_category_id = '{$cat_id}' ";
         $Results = $wpdb->get_results($SqlQuery);
 
         return $Results;
