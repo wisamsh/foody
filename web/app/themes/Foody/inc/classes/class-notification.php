@@ -31,6 +31,7 @@ class Foody_Notification
         $this->Creat_Necessary_Tables();
         $this->Creat_Necessary_Tables_smoov();
         $this->Creat_Necessary_Tables_Recepies_ToSend();
+       
         $this->enqueue_Notification_scripts();
         add_action('admin_notices', array($this, 'show_notice'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_ajax_script'));
@@ -41,18 +42,14 @@ class Foody_Notification
 
 
         //cron jobs==============================================================
-        //add_action('admin_init', array($this, 'SendingNotificationEmailsThruAdmin'));
-//$this->SendNotificationsNow();
+        
     if (is_user_logged_in() && current_user_can('administrator')) {
-            // The user is logged in and is an administrator
-            // $this->SendNotificationsNow();
-           //  $this->SendingNotificationEmailsThruAdmin();
-            // die();
+            
           if(date('N') == 1){ //if its Thursday
             $this->FilterEmailsContainer();
            
           }
-            //die();
+           
 
         }
     }
@@ -139,8 +136,33 @@ class Foody_Notification
         return get_template_directory_uri() . '/resources/images/message_notification.png';
     }
 
-    function get_Details()
+
+    public function generateVerificationCode() {
+        // Get the current date and time including seconds
+       
+ 
+        $str = 'abcdefghijklmnoAGHIJKLMNOPQRSTUVWXYZ';
+        // Generate a random string
+        $randomString = str_shuffle($str); // Generates a random 18-character string
+
+        // Combine the formatted date/time and the random string
+        $verificationCode =  $randomString;
+    
+        return $verificationCode;
+    }
+
+
+
+
+public function Email_Varefiction_Proccess($email){
+//     
+    
+    
+}
+
+    public function get_Details()
     {
+     
         global $wpdb;
         $table_name = $wpdb->prefix . 'notification_users';
         //print_r($_POST);
@@ -152,6 +174,8 @@ class Foody_Notification
         $user_subscribe = $_POST['user_subscribe'];
         $author_name = $_POST['author_name'];
         $author_id = $_POST['author_id'];
+        
+
 
         if (!$user_subscribe) {
             print_r($this->ErrorHandle(array("error" => "1", "reaseon" => "יש להסכים לתנאי שימוש!")));
@@ -168,6 +192,8 @@ class Foody_Notification
             exit;
         }
 
+
+        
         $email_exists = $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM $table_name WHERE email = %s and (category_id = %s and author_id = %s)",
             $email,
@@ -183,7 +209,7 @@ class Foody_Notification
             exit;
         } else {
 
-
+           $vareficationCodeToSend = $this->generateVerificationCode() ; 
             $data = array(
                 'first_name' => '',
                 'last_name' => '',
@@ -193,7 +219,7 @@ class Foody_Notification
                 'recipe_id' => $recipe_id,
                 'category_name' => $cat_name,
                 'recipe_name' => $recipe_name,
-                'valid_user' => '',
+                'valid_user' => $vareficationCodeToSend,
                 'user_ip' => $_SERVER['REMOTE_ADDR'],
                 'date_of_regist' => date("d-m-Y"),
                 'user_subscribe' => $user_subscribe,
@@ -209,11 +235,10 @@ class Foody_Notification
                 // There was an error with the insert operation
                 print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
             } else {
-
-                $smoov = $this->UpdateSmoov($email, '918510');
-
-                // Insert operation was successful
-                print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'], 'smoov' => $smoov)));
+                //TODO : SEND EMAIL VERIFICATION 
+               $HtmlToSend = $this->SendEmailVerificationToUser($vareficationCodeToSend, $email);
+                $this->SendEmailValidation($email,  $HtmlToSend);
+                print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'], 'smoov' => $vareficationCodeToSend )));
             }
         }
 
@@ -268,6 +293,8 @@ class Foody_Notification
         //     }
         // }
     }
+
+
     private function Creat_Necessary_Tables_Recepies_ToSend()
     {
         global $wpdb;
@@ -296,8 +323,6 @@ class Foody_Notification
             dbDelta($sql);
         }
     }
-
-
 
 
 
@@ -687,44 +712,6 @@ class Foody_Notification
 
 
 
-    private function UpdateSmoov($email, $listID)
-    {
-
-
-        $url = 'https://rest.smoove.io/v1/Contacts?updateIfExists=true&api_key=' . $this->api_key;
-
-        // Parameters for the API request
-        $params = array(
-
-            'lists_ToSubscribe' => array($listID),  // Replace 'LIST_ID_HERE' with the ID of your list
-            'email' => $email,
-            'customFields' => array(
-                'date_of_regitration' => date("d-m-Y"),
-            )  // Email address to add to the list
-        );
-
-        // Initialize cURL session
-        $ch = curl_init($url);
-
-        // Set the POST data
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-
-
-        // Set cURL options
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // Execute cURL request
-        $response = curl_exec($ch);
-
-        // Get the HTTP response code
-        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-        // Close cURL session
-        curl_close($ch);
-        return $http_status;
-    }
-
-
 
 
 
@@ -773,18 +760,7 @@ class Foody_Notification
     } //end  makeSmoovCategoriesList()
 
 
-    private function getlast_db_smoov_list()
-    {
-        global $wpdb;
-
-        // Replace 'your_table_name' with the actual name of your table
-        $table_name = $wpdb->prefix . 'notification_smoov_lists';
-
-        // Fetch the last record
-        $last_record = $wpdb->get_row("SELECT * FROM $table_name ORDER BY id DESC LIMIT 1");
-        return $last_record;
-    }
-
+   
     private function inserLast_db_smoov_list($name, $recipe_id)
     {
         global $wpdb;
@@ -823,20 +799,6 @@ class Foody_Notification
         $result = $wpdb->get_results($Sql);
         return $result;
     }
-
-
-    private function GetEmailsFrom_NotificationList($category_id = null, $author_id = null)
-    {
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'notification_users';
-        $results = array(); // Initialize $results as an array
-        $emailList = array();
-        $DesipleOf = '';
-        $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE category_id = %s or author_id =%s", $category_id, $author_id), ARRAY_A);
-        return $results;
-    }
-
-
 
 
 
@@ -1059,7 +1021,33 @@ class Foody_Notification
 
 
 
+    private function SendEmailVerificationToUser($vereficationCode, $email){
 
+        $EnvyormentType =  $_SERVER['SERVER_NAME'] == '0.0.0' ? 'http://foody-local.co.il' : $_SERVER['SERVER_NAME'] ; 
+
+        $html  = '<!DOCTYPE html><html lang="he"><head><meta charset="UTF-8">';
+            $html .= "<title>מייל אימות - FOODY</title>";
+            $html .='<link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">';
+            $html .="</head";
+            $html .='<body  style="font-family: Open Sans, sans-serif;">';
+            $html .= '<div style="position:relative;direction:rtl;max-width:650px;font-family: Open Sans, sans-serif;'; //DIV STARTS
+            $html .= 'height:auto;';
+            $html .= 'border: solid 0px #ddd;';
+            $html .= 'border-radius:0px;';
+            $html .= 'text-align:center;';
+            $html .= 'margin: 0 auto;margin-bottom:20px;background-color:#f5f5f5';
+            $html .= '">'; //DIV ENDS
+            $html .="<img src='{$this->email_Image_Header}' style='width:100%;'/>";
+            $html .= '<div id="firstdv" style="width:100%;margin-top:0px;">';
+            $html .= '<h3 style="font-size:45px;font-weight:700;color:#E63A2C">מייל אימות - FOODY</h3>';
+            $html .= '<p>ביקשתם להירשם לקבלת התראות</p>';
+            $html .= "<a href='{$EnvyormentType}/verification/?v={$vereficationCode}&e={$email}'>יש ללחוץ כאן כדי לאשר את המייל</a>";
+            $html .= '<p>FOODY</p>';
+            $html .= '</div>'; //firstdv closer
+            return $html;
+    }
 
 
 
@@ -1076,7 +1064,7 @@ class Foody_Notification
         email, category_id, author_id, author_name
         FROM {$table_name} 
         WHERE (category_id IN ({$Get_Cats_Auths_IDS['cats']}) 
-        OR author_id IN ({$Get_Cats_Auths_IDS['auth']}) ) AND (valid_user <> trim('') OR valid_user <> NULL)
+        OR author_id IN ({$Get_Cats_Auths_IDS['auth']}) ) AND (valid_user = 'valid')
         
         ";
          $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
@@ -1091,17 +1079,8 @@ class Foody_Notification
 
             // Check if the recipe already exists for this email
             $recipeExists = false;
-            // foreach ($emailsContainer[$email] as $existingResult) {
-            //     if (is_array($existingResult) && $existingResult['recipe_id'] == $result['recipe_id']) {
-            //         $recipeExists = true;
-            //         break;
-            //     }
-            // }
-
-           // if (!$recipeExists) {
 
                 $emailsContainer[$email][] = $result;
-            //}
         }
 
 
@@ -1159,6 +1138,57 @@ class Foody_Notification
 
         return ($response);
     } // END SendEmails();
+
+
+
+
+    private function SendEmailValidation($email,  $htmlContent)
+    {
+//SendEmailVerificationToUser($email, $vereficationCode)
+        
+        $subject = 'מייל אימות - FOODY';
+        
+             
+        $emailData = [
+            "personalizations" => [
+                [
+                    "to" => [
+                        ["email" => $email] // Correct format: array of arrays with 'email' key
+                    ],
+                    // You can add more personalizations for additional recipients here if needed
+                ]
+            ],
+            "from" => [
+                "email" => "Foody@foody.co.il"
+            ],
+            "subject" => $subject,
+            "content" => [
+                [
+                    "type" => "text/html",
+                    "value" => $htmlContent,
+                ]
+            ]
+        ];
+
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($emailData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $this->api_key,
+            'Content-Type: application/json'
+        ]);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+        // $response = rtrim($response, '1');
+
+
+        return ($response);
+    } // END SendEmails();
+
+
 
 
 
