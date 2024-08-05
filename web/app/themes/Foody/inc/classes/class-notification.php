@@ -1,19 +1,19 @@
 <?php
- if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) exit;
 class Foody_Notification
 {
     private $use_agreement_url;
     private $use_agreement_text;
     private $group_nots;
     private  $api_key;
-    private $email_Image_Header ;
+    private $email_Image_Header;
 
     private $SmoovListName;
 
     function __construct()
     {
-      
-      
+
+
         $this->group_nots = array();
 
         $this->use_agreement_url = get_field('use_agreement_url', 'option');
@@ -31,7 +31,7 @@ class Foody_Notification
         $this->Creat_Necessary_Tables();
         $this->Creat_Necessary_Tables_smoov();
         $this->Creat_Necessary_Tables_Recepies_ToSend();
-       
+
         $this->enqueue_Notification_scripts();
         add_action('admin_notices', array($this, 'show_notice'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_ajax_script'));
@@ -41,23 +41,22 @@ class Foody_Notification
 
 
 
-        //cron jobs==============================================================
-        
-    if (is_user_logged_in() && current_user_can('administrator')) {
-            
-          if(date('N') == 1){ //if its Thursday
-            $this->FilterEmailsContainer();
-           
-          }
-           
 
+        //cron jobs==============================================================
+
+        if (is_user_logged_in() && current_user_can('administrator')) {
+
+            if (date('N') == 4) { //if its Thursday
+                $this->FilterEmailsContainer();
+            }
         }
     }
 
 
-    public function SendingNotificationEmailsThruAdmin() {
+    public function SendingNotificationEmailsThruAdmin()
+    {
         // Your code here
-      $this->SendNotificationsNow();
+        $this->SendNotificationsNow();
     }
 
 
@@ -72,8 +71,8 @@ class Foody_Notification
         if (!isset($_COOKIE[$name])) {
             $this->FilterEmailsContainer();
             setcookie($name, $value, $expire, $path);
-            
-           // header("Refresh:1");
+
+            // header("Refresh:1");
         }
     }
 
@@ -137,32 +136,34 @@ class Foody_Notification
     }
 
 
-    public function generateVerificationCode() {
+    public function generateVerificationCode()
+    {
         // Get the current date and time including seconds
-       
- 
+
+
         $str = 'abcdefghijklmnoAGHIJKLMNOPQRSTUVWXYZ';
         // Generate a random string
         $randomString = str_shuffle($str); // Generates a random 18-character string
 
         // Combine the formatted date/time and the random string
         $verificationCode =  $randomString;
-    
+
         return $verificationCode;
     }
 
 
 
 
-public function Email_Varefiction_Proccess($email){
-//     
-    
-    
-}
+    public function Email_Varefiction_Proccess($email)
+    {
+        //     
+
+
+    }
 
     public function get_Details()
     {
-     
+
         global $wpdb;
         $table_name = $wpdb->prefix . 'notification_users';
         //print_r($_POST);
@@ -174,7 +175,7 @@ public function Email_Varefiction_Proccess($email){
         $user_subscribe = $_POST['user_subscribe'];
         $author_name = $_POST['author_name'];
         $author_id = $_POST['author_id'];
-        
+
 
 
         if (!$user_subscribe) {
@@ -193,7 +194,7 @@ public function Email_Varefiction_Proccess($email){
         }
 
 
-        
+
         $email_exists = $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM $table_name WHERE email = %s and (category_id = %s and author_id = %s)",
             $email,
@@ -209,7 +210,7 @@ public function Email_Varefiction_Proccess($email){
             exit;
         } else {
 
-           $vareficationCodeToSend = $this->generateVerificationCode() ; 
+            $vareficationCodeToSend = $this->generateVerificationCode();
             $data = array(
                 'first_name' => '',
                 'last_name' => '',
@@ -219,7 +220,7 @@ public function Email_Varefiction_Proccess($email){
                 'recipe_id' => $recipe_id,
                 'category_name' => $cat_name,
                 'recipe_name' => $recipe_name,
-                'valid_user' => $vareficationCodeToSend,
+                'valid_user' => !$this->VerefiedEmail($email) ? $vareficationCodeToSend : 'yes',
                 'user_ip' => $_SERVER['REMOTE_ADDR'],
                 'date_of_regist' => date("d-m-Y"),
                 'user_subscribe' => $user_subscribe,
@@ -228,19 +229,25 @@ public function Email_Varefiction_Proccess($email){
 
             );
 
+           
+                $result = $wpdb->insert($table_name, $data);
 
-            $result = $wpdb->insert($table_name, $data);
+                if ($result === false) {
+                    // There was an error with the insert operation
+                    print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
+                }
 
-            if ($result === false) {
-                // There was an error with the insert operation
-                print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
-            } else {
+                if (!$this->VerefiedEmail($email)) {
                 //TODO : SEND EMAIL VERIFICATION 
-               $HtmlToSend = $this->SendEmailVerificationToUser($vareficationCodeToSend, $email);
+                $HtmlToSend = $this->SendEmailVerificationToUser($vareficationCodeToSend, $email);
+
                 $this->SendEmailValidation($email,  $HtmlToSend);
-                print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'], 'smoov' => $vareficationCodeToSend )));
-            }
-        }
+                }
+                print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'], 'smoov' => $vareficationCodeToSend)));
+            } 
+           
+            
+        
 
 
 
@@ -248,6 +255,27 @@ public function Email_Varefiction_Proccess($email){
 
         exit;
     }
+
+
+    public function VerefiedEmail($email)
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_users';
+
+        $email_verefied = $wpdb->prepare(
+            "SELECT * FROM {$table_name} WHERE email = %s and valid_user = %s",
+            $email,
+            'yes'
+        );
+        $res = $wpdb->get_results($email_verefied);
+
+        if (!empty($res)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 
 
@@ -760,7 +788,7 @@ public function Email_Varefiction_Proccess($email){
     } //end  makeSmoovCategoriesList()
 
 
-   
+
     private function inserLast_db_smoov_list($name, $recipe_id)
     {
         global $wpdb;
@@ -974,64 +1002,22 @@ public function Email_Varefiction_Proccess($email){
     {
         //Sending Goodies :
         //$category = category name========================
-       
-        foreach($recipe as $recipe){
-   
-        $post = get_post($recipe->recipe_id);
-        // print_r($recipe);die();
-        $author = $this->get_author_by_post_id($post->ID);
-        $recipeTitle = $post->post_title;
-        $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
-       $html  = '<!DOCTYPE html><html lang="he"><head><meta charset="UTF-8">';
-       $html .= "<title>מתכון חדש מ FOODY</title>";
-        $html .='<link rel="preconnect" href="https://fonts.googleapis.com">
+
+        foreach ($recipe as $recipe) {
+
+            $post = get_post($recipe->recipe_id);
+            // print_r($recipe);die();
+            $author = $this->get_author_by_post_id($post->ID);
+            $recipeTitle = $post->post_title;
+            $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
+            $html  = '<!DOCTYPE html><html lang="he"><head><meta charset="UTF-8">';
+            $html .= "<title>מתכון חדש מ FOODY</title>";
+            $html .= '<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">';
-       $html .="</head";
-       $html .='<body  style="font-family: Open Sans, sans-serif;">';
-       
-        $html .= '<div style="position:relative;direction:rtl;max-width:650px;font-family: Open Sans, sans-serif;'; //DIV STARTS
-        $html .= 'height:auto;';
-        $html .= 'border: solid 0px #ddd;';
-        $html .= 'border-radius:0px;';
-        $html .= 'text-align:center;';
-        $html .= 'margin: 0 auto;margin-bottom:20px;background-color:#f5f5f5';
-        $html .= '">'; //DIV ENDS
-        $html .="<img src='{$this->email_Image_Header}' style='width:100%;'/>";
-        $html .= '<div id="firstdv" style="width:100%;margin-top:0px;">';
-        $html .= '<h3 style="font-size:45px;font-weight:700;color:#E63A2C">מתכון חדש עלה</h3>';
-        $html .= '</div>'; //firstdv closer
-        $html .= '<img style="width:98%;" src="' .  $featured_image_url  . '"/>';
-        $html .= '<h1 style="width:90%;text-align:center;margin:0 auto;margin-top:20px;font-size:35px; color:#57A0BB;margin-bottom:30px;">' . $recipeTitle . '</h1>';
-        $html .= '<div  style="width:98%; margin:0 auto; text-align:center; border:solid 3px #57A0BB;padding-bottom: 20px;"> '; //new recipe wrapp
-        $html .= '<h3 style="color:#333333;">מתכון חדש בקטגוריה : </h3>';
-        $html .= "<div>
-        <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'> 
-        {$author['display_name']}</span>
-         <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'>{$category}</span> </div>";
-       $html .= "</div>";
-        $html .= '<div style="justify-content: center;align-items: center; align-items: center;padding:10px;margin:0 auto;margin-top:30px;width:192px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;">
-        <a style="color:#fff !important;text-decoration: none;" href="https://foody.co.il/?p=' . $post->ID . '" > לעמוד מתכון >></a></div>  ';
-        $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="https://foody.co.il/unsubscribe?unid=' . $uniqID . '" >לביטול התראות במייל לחץ כאן</a></div> ';
-        $html .= '</div>'; //div closer
-        $html .= '</body></html>';
-        }
-        return $html;
-    }
+            $html .= "</head";
+            $html .= '<body  style="font-family: Open Sans, sans-serif;">';
 
-
-
-    private function SendEmailVerificationToUser($vereficationCode, $email){
-
-        $EnvyormentType =  $_SERVER['SERVER_NAME'] == '0.0.0' ? 'http://foody-local.co.il' : $_SERVER['SERVER_NAME'] ; 
-
-        $html  = '<!DOCTYPE html><html lang="he"><head><meta charset="UTF-8">';
-            $html .= "<title>מייל אימות - FOODY</title>";
-            $html .='<link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">';
-            $html .="</head";
-            $html .='<body  style="font-family: Open Sans, sans-serif;">';
             $html .= '<div style="position:relative;direction:rtl;max-width:650px;font-family: Open Sans, sans-serif;'; //DIV STARTS
             $html .= 'height:auto;';
             $html .= 'border: solid 0px #ddd;';
@@ -1039,14 +1025,57 @@ public function Email_Varefiction_Proccess($email){
             $html .= 'text-align:center;';
             $html .= 'margin: 0 auto;margin-bottom:20px;background-color:#f5f5f5';
             $html .= '">'; //DIV ENDS
-            $html .="<img src='{$this->email_Image_Header}' style='width:100%;'/>";
+            $html .= "<img src='{$this->email_Image_Header}' style='width:100%;'/>";
             $html .= '<div id="firstdv" style="width:100%;margin-top:0px;">';
-            $html .= '<h3 style="font-size:45px;font-weight:700;color:#E63A2C">מייל אימות - FOODY</h3>';
-            $html .= '<p>ביקשתם להירשם לקבלת התראות</p>';
-            $html .= "<a href='{$EnvyormentType}/verification/?v={$vereficationCode}&e={$email}'>יש ללחוץ כאן כדי לאשר את המייל</a>";
-            $html .= '<p>FOODY</p>';
+            $html .= '<h3 style="font-size:45px;font-weight:700;color:#E63A2C">מתכון חדש עלה</h3>';
             $html .= '</div>'; //firstdv closer
-            return $html;
+            $html .= '<img style="width:98%;" src="' .  $featured_image_url  . '"/>';
+            $html .= '<h1 style="width:90%;text-align:center;margin:0 auto;margin-top:20px;font-size:35px; color:#57A0BB;margin-bottom:30px;">' . $recipeTitle . '</h1>';
+            $html .= '<div  style="width:98%; margin:0 auto; text-align:center; border:solid 3px #57A0BB;padding-bottom: 20px;"> '; //new recipe wrapp
+            $html .= '<h3 style="color:#333333;">מתכון חדש בקטגוריה : </h3>';
+            $html .= "<div>
+        <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'> 
+        {$author['display_name']}</span>
+         <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'>{$category}</span> </div>";
+            $html .= "</div>";
+            $html .= '<div style="justify-content: center;align-items: center; align-items: center;padding:10px;margin:0 auto;margin-top:30px;width:192px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;">
+        <a style="color:#fff !important;text-decoration: none;" href="https://foody.co.il/?p=' . $post->ID . '" > לעמוד מתכון >></a></div>  ';
+            $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="https://foody.co.il/unsubscribe?unid=' . $uniqID . '" >לביטול התראות במייל לחץ כאן</a></div> ';
+            $html .= '</div>'; //div closer
+            $html .= '</body></html>';
+        }
+        return $html;
+    }
+
+
+
+    private function SendEmailVerificationToUser($vereficationCode, $email)
+    {
+
+        $EnvyormentType =  $_SERVER['SERVER_NAME'] == '0.0.0' ? 'http://foody-local.co.il' : $_SERVER['SERVER_NAME'];
+
+        $html  = '<!DOCTYPE html><html lang="he"><head><meta charset="UTF-8">';
+        $html .= "<title>מייל אימות - FOODY</title>";
+        $html .= '<link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">';
+        $html .= "</head";
+        $html .= '<body  style="font-family: Open Sans, sans-serif;">';
+        $html .= '<div style="position:relative;direction:rtl;max-width:650px;font-family: Open Sans, sans-serif;'; //DIV STARTS
+        $html .= 'height:auto;';
+        $html .= 'border: solid 0px #ddd;';
+        $html .= 'border-radius:0px;';
+        $html .= 'text-align:center;';
+        $html .= 'margin: 0 auto;margin-bottom:20px;background-color:#f5f5f5';
+        $html .= '">'; //DIV ENDS
+        $html .= "<img src='{$this->email_Image_Header}' style='width:100%;'/>";
+        $html .= '<div id="firstdv" style="width:100%;margin-top:0px;">';
+        //$html .= '<h3 style="font-size:45px;font-weight:700;color:#E63A2C">מייל אימות - FOODY</h3>';
+        $html .= '<p>ביקשתם להירשם לקבלת התראות</p>';
+        $html .= "<a href='{$EnvyormentType}/email-verification/?v={$vereficationCode}&e={$email}'>יש ללחוץ כאן כדי לאשר את המייל</a>";
+        $html .= '<p>FOODY</p>';
+        $html .= '</div>'; //firstdv closer
+        return $html;
     }
 
 
@@ -1067,7 +1096,7 @@ public function Email_Varefiction_Proccess($email){
         OR author_id IN ({$Get_Cats_Auths_IDS['auth']}) ) AND (valid_user = 'valid')
         
         ";
-         $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
+        $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
 
         foreach ($Results as $result) {
             $email = $result['email'];
@@ -1080,7 +1109,7 @@ public function Email_Varefiction_Proccess($email){
             // Check if the recipe already exists for this email
             $recipeExists = false;
 
-                $emailsContainer[$email][] = $result;
+            $emailsContainer[$email][] = $result;
         }
 
 
@@ -1099,7 +1128,7 @@ public function Email_Varefiction_Proccess($email){
         foreach ($htmlContent as $html) {
             $htmlObject .= $html;
         }
-                    
+
         $emailData = [
             "personalizations" => [
                 [
@@ -1144,11 +1173,11 @@ public function Email_Varefiction_Proccess($email){
 
     private function SendEmailValidation($email,  $htmlContent)
     {
-//SendEmailVerificationToUser($email, $vereficationCode)
-        
+        //SendEmailVerificationToUser($email, $vereficationCode)
+
         $subject = 'מייל אימות - FOODY';
-        
-             
+
+
         $emailData = [
             "personalizations" => [
                 [
@@ -1202,25 +1231,21 @@ public function Email_Varefiction_Proccess($email){
         $Results = $wpdb->get_results($SqlQuery);
 
         return $Results;
-    
-
-}
+    }
 
 
-//DELETING RECIPIES AFTER SENDIG NOTIFICTIONS TO USERS:
+    //DELETING RECIPIES AFTER SENDIG NOTIFICTIONS TO USERS:
 
 
-public function DELETE_Recipe_After_Notificion($rid)
-{
-    global $wpdb;
-    $table_name = $wpdb->prefix . "notification_recipes_to_send";
-    $SqlQuery = " delete from {$table_name} where recipe_id IN ({$rid}) limit 15 ";
-    
-    $Results = $wpdb->get_results($SqlQuery);
-    return $Results;
+    public function DELETE_Recipe_After_Notificion($rid)
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . "notification_recipes_to_send";
+        $SqlQuery = " delete from {$table_name} where recipe_id IN ({$rid}) limit 15 ";
 
-
-}
+        $Results = $wpdb->get_results($SqlQuery);
+        return $Results;
+    }
 
 
 
@@ -1230,56 +1255,48 @@ public function DELETE_Recipe_After_Notificion($rid)
     public function FilterEmailsContainer()
     {
         $get_Emails_By_Cat_Auth_ToSend = $this->get_Emails_By_Cat_Auth_ToSend();
-    
+
 
         if (!empty($get_Emails_By_Cat_Auth_ToSend)) {
             //print_r($get_Emails_By_Cat_Auth_ToSend);die('dfc44');
-           
+
             foreach ($get_Emails_By_Cat_Auth_ToSend as $email => $recipes) {
-               
+
 
 
                 $htmlObject = []; // Initialize the $htmlObject array here to ensure it is reset for each email
 
                 foreach ($recipes as $key => $val) {
                     if ($key > 0) {
-                       
+
                         $recipe_id_obj = $this->GetRecipiesByCatID($val['category_id']);
-                       
+
                         $recipe_id = $recipe_id_obj;
                         $recipiesToDelete[] =  $recipe_id;
                         $category_name = $recipe_id_obj[0]->main_category_name;
-                       
-                       // $recipe_name = $val['recipe_name'];
+
+                        // $recipe_name = $val['recipe_name'];
                         $htmlObject[] = $this->Email_Template($category_name, $recipe_id, '33test');
-                       
                     }
-                  
                 }
-               // print_r($recipe_id_obj);
+                // print_r($recipe_id_obj);
                 //Send the email after building the $htmlObject array
-              $res = $this->SendEmails($email, $category_name, $recipe_id, '', $htmlObject);
-             
-                
+                $res = $this->SendEmails($email, $category_name, $recipe_id, '', $htmlObject);
+
+
 
 
                 // Reset the $htmlObject array for the next email (already done by reinitializing in the outer loop)
             }
-           
-           
-
-           
         }
-       $idsToDelete = [];
-       foreach($recipiesToDelete as $v){
-       foreach($v as $r){
-        $idsToDelete[$r->recipe_id]  = $r->recipe_id ;
-
-       }
-       }
-       $DeleteTheseFuckers = implode(',', $idsToDelete);
-       $this->DELETE_Recipe_After_Notificion($DeleteTheseFuckers);
-       
+        $idsToDelete = [];
+        foreach ($recipiesToDelete as $v) {
+            foreach ($v as $r) {
+                $idsToDelete[$r->recipe_id]  = $r->recipe_id;
+            }
+        }
+        $DeleteTheseFuckers = implode(',', $idsToDelete);
+        $this->DELETE_Recipe_After_Notificion($DeleteTheseFuckers);
     }
 
 
