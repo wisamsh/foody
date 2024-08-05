@@ -152,6 +152,22 @@ class Foody_Notification
     }
 
 
+    public function generatePassword()
+    {
+        // Get the current date and time including seconds
+
+
+        $str = 'abcdezx123456789';
+        // Generate a random string
+        $randomString = str_shuffle($str); // Generates a random 18-character string
+
+        // Combine the formatted date/time and the random string
+        $verificationCode =  $randomString;
+
+        return $verificationCode;
+    }
+
+
 
 
     public function Email_Varefiction_Proccess($email)
@@ -211,6 +227,7 @@ class Foody_Notification
         } else {
 
             $vareficationCodeToSend = $this->generateVerificationCode();
+            $password = $this->generatePassword();
             $data = array(
                 'first_name' => '',
                 'last_name' => '',
@@ -225,7 +242,8 @@ class Foody_Notification
                 'date_of_regist' => date("d-m-Y"),
                 'user_subscribe' => $user_subscribe,
                 'author_name' => $author_name,
-                'author_id' => $author_id
+                'author_id' => $author_id,
+                'pass_word'=> $password
 
             );
 
@@ -238,9 +256,7 @@ class Foody_Notification
                 }
 
                 if (!$this->VerefiedEmail($email)) {
-                //TODO : SEND EMAIL VERIFICATION 
                 $HtmlToSend = $this->SendEmailVerificationToUser($vareficationCodeToSend, $email);
-
                 $this->SendEmailValidation($email,  $HtmlToSend);
                 }
                 print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'], 'smoov' => $vareficationCodeToSend)));
@@ -304,6 +320,10 @@ class Foody_Notification
                 user_subscribe VARCHAR(255),
                 author_id VARCHAR(255),
                 author_name VARCHAR(255),
+                pass_word VARCHAR(255),
+                l1 VARCHAR(255),
+                l2 VARCHAR(255),
+                l3 VARCHAR(255),
 
                 PRIMARY KEY  (id)
             ) $charset_collate;";
@@ -661,6 +681,7 @@ class Foody_Notification
                         <th>ip לקוח</th>
                         <th>תאריך רישום </th>
                         <th>הסכים לתנאי שימוש</th>
+                        <th>סיסמה</th>
                         <th>Action</th> <!-- New column for delete button -->
                         <!-- Add more table headers as needed -->
                     </tr>
@@ -676,6 +697,7 @@ class Foody_Notification
                             <td><?php echo $row->user_ip; ?></td>
                             <td><?php echo $row->date_of_regist; ?></td>
                             <td><?php echo $row->user_subscribe == 'on' ? 'כן' : '' ?></td>
+                            <td><?php echo $row->pass_word; ?></td>
                             <td>
                                 <form method="post" onsubmit="return validate(this);">
                                     <input type="hidden" name="action" value="delete_notification_user">
