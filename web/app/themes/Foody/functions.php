@@ -1254,3 +1254,4 @@ function EmailVerificationCostumePage() {
 }
 
 add_action('init','EmailVerificationCostumePage');
+//jhk
