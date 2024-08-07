@@ -436,29 +436,30 @@ class Foody_Notification
         $rtn .= '<div class="notificationBox">';
         $rtn .= '<img class="not_icon" src="' . $this->not_icon() . '"/>';
         $rtn .= '<h4>' . $this->group_nots['main_title'] . '</h4>';
-        $rtn .= '<span>' . $this->group_nots['second_title'] . '</span>';
+        $rtn .= '<div class="secondtitle">' . $this->group_nots['second_title'] . '</div>';
         $rtn .= '<form id="notification_form">
    
+    <div class="cat_wrapper">
     <div class="term_add" id="term_add">
-    <span  class="add_term_plus" id="add_term" data-id="' . $term['term_id'] . '" data-name="' . $term['term_Name'] . '">+</span>
+    <span  class="add_term_plus" id="add_term" data-id="' . $term['term_id'] . '" data-name="' . $term['term_Name'] . '"></span>
     <span >' . $term['term_Name'] . '</span>
     </div>
-
     <div class="term_add" id="author_add">
-    <span class="add_author" id="add_author" data-id="' . $author_id . '" data-name="' . $author_name . '">+</span>
+    <span class="add_author" id="add_author" data-id="' . $author_id . '" data-name="' . $author_name . '"></span>
     <span >' . $author_name . '</span>
     </div>
-    <div class="formWrapper">
-   
-    <input type="email" name="email" id="email" class="not_email"/>
-   
-    <input type="submit" class="submit" value="שלח" />
     </div>
-    <input type="checkbox" name="user_subscribe" id="user_subscribe" checked />
-    <label for="user_subscribe">
+
+    <div class="formWrapper dn">
+    <div class="close_frm">X</div>
+    <input type="email" name="email" id="email" class="not_email" placeholder="הכניסו מייל..."/>
+    <input type="submit" class="submit" value="שלח >>" />
+    
+    <input type="radio" name="user_subscribe" id="user_subscribe" checked />
+    <label for="user_subscribe" id="user_subscribe_label">
     <a href="' . $this->use_agreement_url . '">' . $this->use_agreement_text . '<a/>
     </label>
-   
+   </div>
     <input type="hidden" name="action" id="action" value="notification_action_call"/>
 
     <input type="hidden" name="cat_id" id="cat_id" value=""/>
@@ -514,45 +515,82 @@ class Foody_Notification
     {
         $rtn = '
     <style>
+
+    #user_subscribe , #user_subscribe_label{
+    display:inline;
+    }
+    #user_subscribe{
+    background : #57A0BB;
+    }
+
+.close_frm{
+position: absolute;
+    top: -106px;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 9999;
+    cursor: pointer;
+    transition: all 1s ease-out;
+}
+.dn{
+display:none;
+transition: all 1s ease-out;
+}
 .formWrapper{
-    border: solid 1px #ddd;
-    background: #589fba;
-    border-radius: 5px;
-    margin-top: 10px;
-    margin-bottom:10px;
+position:relative;   
+transition: all 1s ease-in;
+  
 }
 .not_icon{
-    width: 30px;
-    position: absolute;
-    left: 9px;
-    top: 3px;
+   position: absolute;
+    left: 137px;
+    top: -31px;
+}
+.notificationBox h4{
+width:100%;
+text-align:center;
+margin-top:30px;
+color:#333333;
+font-size:23px !important;
+}
+.secondtitle{
+width:100%;
+text-align:center;
+color:#333333;
+font-size:23px;
 }
 
     .notificationBox{
     position:relative;
-    max-width: 400px;
+    max-width: 340px;
     margin: 0 auto;
     text-align: right;
     margin-top: 20px;
     margin-bottom: 20px;
-    border: solid 1px #589fba4d;
-    border-radius: 5px;
+    border: solid 3px #57A0BB;
+    border-radius: 0px;
     padding: 10px;
+    background:#F5F5F5;
     }
     .not_email{
-        width: 76%;
-    border: solid 0px !important;
-    box-shadow: none !important;
+        width: 100%;
+        height:46px;
+        text-align:center;
+        color: #333333;
+        border:solid 0px #fff !important; 
+         box-shadow: none !important;
+
+   
     }
     .submit{
-        width: 22%;
-        border: solid 0px !important;
-        background: none !important;
-        border-bottom-left-radius: 0px !important;
-        border-bottom-right-radius: 0px !important;
-        font-size:14px !important;
-        font-weight:bold;
+    margin-top:10px;
+        width: 100%;
+        height:46px;
+        background:#E6392B !important;
         color:#fff !important;
+        font-size:21px !important;
+        margin-bottom:20px;
+        
     }
     .add_term_plus , .add_author {
     font-size: 30px;
@@ -562,21 +600,26 @@ class Foody_Notification
     right: 4px;
     }
     .term_add{
-        width:48%;
+        width:100%;
         position:relative;
         padding:10px;
-        border:solid 1px #ddd;
-        border-radius:20px;
+        border:solid 1px #fff;
+        font: size 18px;
+        font-weight:800;
         display: inline-block;
         margin-top:10px;
         cursor: pointer;
         text-align:center;
+        background:#fff;
+        color:#57A0BB;
 
     }
    
     .term_add_picked{
-        background: #08871b;
+        background: #57A0BB;
         color:#fff !important;
+        font: size 18px;
+        font-weight:800;
     }
     </style>
     ';

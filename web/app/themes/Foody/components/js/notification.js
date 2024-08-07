@@ -7,20 +7,34 @@ jQuery(document).ready(function () {
     let author_id = jQuery("#add_author").attr("data-id");
     let author_name = jQuery("#add_author").attr("data-name");
 
+jQuery(".close_frm").on("click", function () {
+    jQuery(".formWrapper").addClass("dn");
+    jQuery(".cat_wrapper").removeClass("dn"); 
+    jQuery("#cat_id").val('');
+    jQuery("#cat_name").val('');
+    jQuery("#term_add").removeClass("term_add_picked");
+    jQuery("#author_id").val('');
+    jQuery("#author_name").val('');
+    jQuery("#author_add").removeClass("term_add_picked");
+});
+
+
+
 
     jQuery("#term_add").on("click", function () {
       
-            if(jQuery("#cat_id").val() === ""){
+            if(jQuery("#cat_id").val() == ""){
                jQuery("#cat_id").val(term_id);
                jQuery("#cat_name").val(term_name);
-               jQuery("#add_term").html("-");
+               //jQuery("#add_term").html("-");
                jQuery("#term_add").addClass("term_add_picked");
-
+                jQuery(".formWrapper").removeClass("dn");
+                jQuery(".cat_wrapper").addClass("dn"); 
             }
             else{
                jQuery("#cat_id").val('');
                jQuery("#cat_name").val('');
-               jQuery("#add_term").html("+");
+              // jQuery("#add_term").html("+");
                jQuery("#term_add").removeClass("term_add_picked");
             }
     });
@@ -28,17 +42,18 @@ jQuery(document).ready(function () {
 
     jQuery("#author_add").on("click", function () {
       
-        if(jQuery("#author_id").val() === ""){
+        if(jQuery("#author_id").val() == ""){
            jQuery("#author_id").val(author_id);
            jQuery("#author_name").val(author_name);
-           jQuery("#add_author").html("-");
+           jQuery(".formWrapper").removeClass("dn");
+           jQuery(".cat_wrapper").addClass("dn"); 
            jQuery("#author_add").addClass("term_add_picked");
 
         }
         else{
            jQuery("#author_id").val('');
            jQuery("#author_name").val('');
-           jQuery("#add_author").html("+");
+          
            jQuery("#author_add").removeClass("term_add_picked");
         }
 });
