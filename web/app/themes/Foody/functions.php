@@ -1217,8 +1217,8 @@ if($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "stagi
 
 function EmailVerificationCostumePage() {
     // Check if the page already exists
-    $page_title = 'Your Custom Page Title';
-    $page_content = 'This is the content of your custom page.';
+    $page_title = 'דף אימות מייל';
+    
     $page_slug = 'email-verification';
     $page_template = 'page-templates/email_verefiction.php'; // The path to your template
     $page_parent = 0; // ID of the parent page, 0 if it has no parent
@@ -1231,7 +1231,6 @@ function EmailVerificationCostumePage() {
         // Create array of page data
         $page_data = array(
             'post_title'    => $page_title,
-            'post_content'  => $page_content,
             'post_status'   => 'publish',
             'post_type'     => 'page',
             'post_name'     => $page_slug,
