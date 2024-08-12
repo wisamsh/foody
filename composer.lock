@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "328336bc42df0ebf1ae084c301063c29",
+    "content-hash": "af9bc7561e57bdc0571eac941f1c216f",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -168,15 +168,6 @@
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.2.0.1.zip"
-            },
-            "type": "wordpress-plugin"
-        },
-        {
-            "name": "elliotcondon/advanced-custom-fields-pro",
-            "version": "5.6.10",
-            "dist": {
-                "type": "zip",
-                "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9MTMxNzg3fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTIzIDEyOjE1OjI5"
             },
             "type": "wordpress-plugin"
         },
