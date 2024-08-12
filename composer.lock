@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a2b80abb384fa8493fb3c437d7fa912",
+    "content-hash": "328336bc42df0ebf1ae084c301063c29",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",

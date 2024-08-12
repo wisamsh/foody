@@ -27,10 +27,14 @@
       "url": "https://wpackagist.org"
     },
     {
-      "http-basic": {
-        "connect.advancedcustomfields.com": {
-          "username": "NjdjZmYxNjZlZjA0ODEwMDFjMTYyZjMyMGI2MDYxMjdlODRhNmE1MmJjY2U5NzI2NzNjZWQ0",
-          "password": "SITE_URL"
+      "type": "package",
+      "package": {
+        "name": "elliotcondon/advanced-custom-fields-pro",
+        "version": "5.6.10",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=NjdjZmYxNjZlZjA0ODEwMDFjMTYyZjMyMGI2MDYxMjdlODRhNmE1MmJjY2U5NzI2NzNjZWQ0"
         }
       }
     },
