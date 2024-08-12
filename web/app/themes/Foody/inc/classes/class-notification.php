@@ -615,7 +615,7 @@ font-size:23px;
 
     }
    
-    .term_add_picked{
+    .term_add:hover{
         background: #57A0BB;
         color:#fff !important;
         font: size 18px;
