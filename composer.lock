@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "328336bc42df0ebf1ae084c301063c29",
+    "content-hash": "b9dd2211aaa2f08be750e6ccf0f1508f",
     "packages": [
         {
             "name": "andrewozz/tinymce-advanced",
@@ -176,7 +176,7 @@
             "version": "5.6.10",
             "dist": {
                 "type": "zip",
-                "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=b3JkZXJfaWQ9MTMxNzg3fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTIzIDEyOjE1OjI5"
+                "url": "https://foody-media.s3.eu-west-1.amazonaws.com/acf/advanced-custom-fields-pro.5.6.10.zip"
             },
             "type": "wordpress-plugin"
         },

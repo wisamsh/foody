@@ -34,7 +34,7 @@
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
-          "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=NjdjZmYxNjZlZjA0ODEwMDFjMTYyZjMyMGI2MDYxMjdlODRhNmE1MmJjY2U5NzI2NzNjZWQ0"
+          "url": "https://foody-media.s3.eu-west-1.amazonaws.com/acf/advanced-custom-fields-pro.5.6.10.zip"
         }
       }
     },
