@@ -34,7 +34,7 @@
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
-          "url": "https://foody-media.s3.eu-west-1.amazonaws.com/acf/advanced-custom-fields-pro.5.6.10.zip"
+          "url": "https://foody-media.s3.eu-west-1.amazonaws.com/acf/advanced-custom-fields-pro-6.3.5.zip"
         }
       }
     },
