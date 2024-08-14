@@ -424,7 +424,7 @@ class Foody_Notification
     }
 
 
-    public function DrawHTMLbox_notification()
+    public function DrawHTMLbox_notification_Mobile()
     {
         $author_id = get_the_author_meta('ID');
 
@@ -434,9 +434,9 @@ class Foody_Notification
 
         $rtn = '';
         $rtn .= '<div class="notificationBox">';
-        $rtn .= '<img class="not_icon" src="' . $this->not_icon() . '"/>';
-        $rtn .= '<h4>' . $this->group_nots['main_title'] . '</h4>';
-        $rtn .= '<div class="secondtitle">' . $this->group_nots['second_title'] . '</div>';
+        $rtn .= '<div class="h4"><img class="not_icon" src="' . $this->not_icon() . '"/>';
+        $rtn .=  $this->group_nots['main_title'] . '</div>';
+       // $rtn .= '<div class="secondtitle">' . $this->group_nots['second_title'] . '</div>';
         $rtn .= '<form id="notification_form">
    
     <div class="cat_wrapper">
@@ -453,12 +453,14 @@ class Foody_Notification
     <div class="formWrapper dn">
     <div class="close_frm">X</div>
     <input type="email" name="email" id="email" class="not_email" placeholder="הכניסו מייל..."/>
-    <input type="submit" class="submit" value="שלח >>" />
     
+    <div class="agreement_wrap">
     <input type="radio" name="user_subscribe" id="user_subscribe" checked />
     <label for="user_subscribe" id="user_subscribe_label">
     <a href="' . $this->use_agreement_url . '">' . $this->use_agreement_text . '<a/>
     </label>
+    </div>    
+    <input type="submit" class="submit" value="שלח >>" />  
    </div>
     <input type="hidden" name="action" id="action" value="notification_action_call"/>
 
@@ -511,26 +513,47 @@ class Foody_Notification
 
 
 
-    public function DrawCSS_Notification()
+    public function DrawCSS_Notification_Mobile()
     {
         $rtn = '
     <style>
 
     #user_subscribe , #user_subscribe_label{
-    display:inline;
+    display:inline-flex;
+    color:#57A0BB;
     }
     #user_subscribe{
-    background : #57A0BB;
+    
+   
+ appearance: none;
+   -webkit-appearance: none;
+    accent-color: #57A0BB !important;
+    background-color: #57A0BB;
+    border: 4px solid #d1dfe3 !important;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    position: absolute;
+    right: -1px;
+    top: 4px;
+    right: 3px;
+
     }
+ #user_subscribe_label a{
+    padding-right: 20px;
+    color:#57A0BB !important;
+    }
+
 
 .close_frm{
 position: absolute;
-    top: -106px;
+    top: -36px;
     font-size: 20px;
     font-weight: bold;
     z-index: 9999;
     cursor: pointer;
     transition: all 1s ease-out;
+    left: 0px;
 }
 .dn{
 display:none;
@@ -541,17 +564,18 @@ position:relative;
 transition: all 1s ease-in;
   
 }
-.not_icon{
-   position: absolute;
-    left: 137px;
-    top: -31px;
+.not_icon{  
+   width: 27px;
+    position: absolute;
+    right:0;
 }
-.notificationBox h4{
+.notificationBox .h4{
 width:100%;
 text-align:center;
-margin-top:30px;
 color:#333333;
-font-size:23px !important;
+font-size:21px !important;
+font-weight:700;
+position:relative;
 }
 .secondtitle{
 width:100%;
@@ -562,34 +586,26 @@ font-size:23px;
 
     .notificationBox{
     position:relative;
-    max-width: 340px;
     margin: 0 auto;
-    text-align: right;
+    text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
-    border: solid 3px #57A0BB;
+    border-bottom: solid 2px #57A0BB;
+    border-top: solid 2px #57A0BB;
     border-radius: 0px;
     padding: 10px;
     background:#F5F5F5;
     }
-    .not_email{
-        width: 100%;
-        height:46px;
-        text-align:center;
-        color: #333333;
-        border:solid 0px #fff !important; 
-         box-shadow: none !important;
-
    
-    }
     .submit{
-    margin-top:10px;
-        width: 100%;
-        height:46px;
-        background:#E6392B !important;
-        color:#fff !important;
-        font-size:21px !important;
-        margin-bottom:20px;
+  margin-top: 10px;
+    width: 162px;
+    background: #57A0BB !important;
+    color: #fff !important;
+    font-size: 18px !important;
+    font-weight: bold;
+    padding: 0px !important;
+    height: 32px;
         
     }
     .add_term_plus , .add_author {
@@ -600,7 +616,7 @@ font-size:23px;
     right: 4px;
     }
     .term_add{
-        width:100%;
+        width:48%;
         position:relative;
         padding:10px;
         border:solid 1px #fff;
@@ -621,6 +637,37 @@ font-size:23px;
         font: size 18px;
         font-weight:800;
     }
+.agreement_wrap{
+width: 100%;
+    text-align: right;
+    position: relative;
+    color:#57A0BB;
+    margin-top:20px;
+}
+    .agreement_wrap link{
+width: 100%;
+    text-align: right;
+    position: relative;
+    color:#57A0BB;
+}
+ .not_email{
+        width: 100%;
+        height:46px;
+        text-align:center;
+        color: #333333;
+        border:solid 0px #fff !important; 
+         box-shadow: none !important;
+
+   
+    }
+.not_valid{
+
+appearance: none;
+-webkit-appearance: none;
+border:solid 1px red !important;
+background:#EFAAA5 !important;
+color:#fff;
+}
     </style>
     ';
         return $rtn;

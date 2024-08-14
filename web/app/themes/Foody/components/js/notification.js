@@ -58,6 +58,9 @@ jQuery(".close_frm").on("click", function () {
         }
 });
 
+jQuery('#email').focus(function() {
+    jQuery(this).removeClass('not_valid');
+});
 
     jQuery('#notification_form').submit(function (e) {
         e.preventDefault(); // Prevent form submission
@@ -65,6 +68,10 @@ jQuery(".close_frm").on("click", function () {
 
         if (!jQuery('#user_subscribe').is(':checked')) {
             alert("יש להסכים לתנאי שימוש!");
+            return;
+        }
+        if (jQuery('#email').val() == '') {
+            jQuery('#email').addClass('not_valid');
             return;
         }
 
