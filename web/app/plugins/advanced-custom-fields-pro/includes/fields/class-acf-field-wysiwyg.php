@@ -21,15 +21,21 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 		function initialize() {
 
 			// vars
-			$this->name     = 'wysiwyg';
-			$this->label    = __( 'Wysiwyg Editor', 'acf' );
-			$this->category = 'content';
-			$this->defaults = array(
+			$this->name          = 'wysiwyg';
+			$this->label         = __( 'WYSIWYG Editor', 'acf' );
+			$this->category      = 'content';
+			$this->description   = __( 'Displays the WordPress WYSIWYG editor as seen in Posts and Pages allowing for a rich text-editing experience that also allows for multimedia content.', 'acf' ) . ' ' . __( 'We do not recommend using this field in ACF Blocks.', 'acf' );
+			$this->preview_image = acf_get_url() . '/assets/images/field-type-previews/field-preview-wysiwyg.png';
+			$this->doc_url       = acf_add_url_utm_tags( 'https://www.advancedcustomfields.com/resources/wysiwyg-editor/', 'docs', 'field-type-selection' );
+			$this->defaults      = array(
 				'tabs'          => 'all',
 				'toolbar'       => 'full',
 				'media_upload'  => 1,
 				'default_value' => '',
 				'delay'         => 0,
+			);
+			$this->supports      = array(
+				'escaping_html' => true,
 			);
 
 			// add acf_the_content filters
@@ -103,13 +109,6 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 			// mce buttons (Basic)
 			$teeny_mce_buttons = array( 'bold', 'italic', 'underline', 'blockquote', 'strikethrough', 'bullist', 'numlist', 'alignleft', 'aligncenter', 'alignright', 'undo', 'redo', 'link', 'fullscreen' );
 
-			// WP < 4.7
-			if ( acf_version_compare( 'wp', '<', '4.7' ) ) {
-
-				$mce_buttons   = array( 'bold', 'italic', 'strikethrough', 'bullist', 'numlist', 'blockquote', 'hr', 'alignleft', 'aligncenter', 'alignright', 'link', 'unlink', 'wp_more', 'spellchecker', 'fullscreen', 'wp_adv' );
-				$mce_buttons_2 = array( 'formatselect', 'underline', 'alignjustify', 'forecolor', 'pastetext', 'removeformat', 'charmap', 'outdent', 'indent', 'undo', 'redo', 'wp_help' );
-			}
-
 			// Full
 			$toolbars['Full'] = array(
 				1 => apply_filters( 'mce_buttons', $mce_buttons, $editor_id ),
@@ -128,7 +127,6 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 
 			// return
 			return $toolbars;
-
 		}
 
 
@@ -179,18 +177,15 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 			);
 		}
 
-		/*
-		*  render_field()
-		*
-		*  Create the HTML interface for your field
-		*
-		*  @param   $field - an array holding all the field's data
-		*
-		*  @type    action
-		*  @since   3.6
-		*  @date    23/01/13
-		*/
-
+		/**
+		 * Create the HTML interface for your field
+		 *
+		 * @param array $field An array holding all the field's data
+		 *
+		 * @type    action
+		 * @since   3.6
+		 * @date    23/01/13
+		 */
 		function render_field( $field ) {
 
 			// enqueue
@@ -207,32 +202,25 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 
 			// detect mode
 			if ( ! user_can_richedit() ) {
-
 				$show_tabs = false;
-
 			} elseif ( $field['tabs'] == 'visual' ) {
 
 				// case: visual tab only
 				$default_editor = 'tinymce';
 				$show_tabs      = false;
-
 			} elseif ( $field['tabs'] == 'text' ) {
 
 				// case: text tab only
 				$show_tabs = false;
-
 			} elseif ( wp_default_editor() == 'tinymce' ) {
 
 				// case: both tabs
 				$default_editor = 'tinymce';
-
 			}
 
 			// must be logged in to upload
 			if ( ! current_user_can( 'upload_files' ) ) {
-
 				$field['media_upload'] = 0;
-
 			}
 
 			// mode
@@ -240,6 +228,8 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 
 			// filter
 			add_filter( 'acf_the_editor_content', 'format_for_editor', 10, 2 );
+
+			$field['value'] = is_string( $field['value'] ) ? $field['value'] : '';
 			$field['value'] = apply_filters( 'acf_the_editor_content', $field['value'], $default_editor );
 
 			// attr
@@ -266,7 +256,7 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 			);
 
 			?>
-		<div <?php acf_esc_attr_e( $wrap ); ?>>
+		<div <?php echo acf_esc_attrs( $wrap ); ?>>
 			<div id="wp-<?php echo esc_attr( $id ); ?>-editor-tools" class="wp-editor-tools hide-if-no-js">
 				<?php if ( $field['media_upload'] ) : ?>
 				<div id="wp-<?php echo esc_attr( $id ); ?>-media-buttons" class="wp-media-buttons">
@@ -293,7 +283,6 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 			</div>
 		</div>
 			<?php
-
 		}
 
 
@@ -309,26 +298,7 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 		*
 		*  @param   $field  - an array holding all the field's data
 		*/
-
 		function render_field_settings( $field ) {
-
-			// vars
-			$toolbars = $this->get_toolbars();
-			$choices  = array();
-
-			if ( ! empty( $toolbars ) ) {
-
-				foreach ( $toolbars as $k => $v ) {
-
-					$label = $k;
-					$name  = sanitize_title( $label );
-					$name  = str_replace( '-', '_', $name );
-
-					$choices[ $name ] = $label;
-				}
-			}
-
-			// default_value
 			acf_render_field_setting(
 				$field,
 				array(
@@ -338,8 +308,30 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 					'name'         => 'default_value',
 				)
 			);
+		}
 
-			// tabs
+		/**
+		 * Renders the field settings used in the "Presentation" tab.
+		 *
+		 * @since 6.0
+		 *
+		 * @param array $field The field settings array.
+		 * @return void
+		 */
+		function render_field_presentation_settings( $field ) {
+			$toolbars = $this->get_toolbars();
+			$choices  = array();
+
+			if ( ! empty( $toolbars ) ) {
+				foreach ( $toolbars as $k => $v ) {
+					$label = $k;
+					$name  = sanitize_title( $label );
+					$name  = str_replace( '-', '_', $name );
+
+					$choices[ $name ] = $label;
+				}
+			}
+
 			acf_render_field_setting(
 				$field,
 				array(
@@ -355,7 +347,6 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 				)
 			);
 
-			// toolbar
 			acf_render_field_setting(
 				$field,
 				array(
@@ -372,11 +363,10 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 				)
 			);
 
-			// media_upload
 			acf_render_field_setting(
 				$field,
 				array(
-					'label'        => __( 'Show Media Upload Buttons?', 'acf' ),
+					'label'        => __( 'Show Media Upload Buttons', 'acf' ),
 					'instructions' => '',
 					'name'         => 'media_upload',
 					'type'         => 'true_false',
@@ -384,11 +374,10 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 				)
 			);
 
-			// delay
 			acf_render_field_setting(
 				$field,
 				array(
-					'label'        => __( 'Delay initialization?', 'acf' ),
+					'label'        => __( 'Delay Initialization', 'acf' ),
 					'instructions' => __( 'TinyMCE will not be initialized until field is clicked', 'acf' ),
 					'name'         => 'delay',
 					'type'         => 'true_false',
@@ -400,50 +389,44 @@ if ( ! class_exists( 'acf_field_wysiwyg' ) ) :
 					),
 				)
 			);
-
 		}
-
-
-		/*
-		*  format_value()
-		*
-		*  This filter is appied to the $value after it is loaded from the db and before it is returned to the template
-		*
-		*  @type    filter
-		*  @since   3.6
-		*  @date    23/01/13
-		*
-		*  @param   $value (mixed) the value which was loaded from the database
-		*  @param   $post_id (mixed) the $post_id from which the value was loaded
-		*  @param   $field (array) the field array holding all the field options
-		*
-		*  @return  $value (mixed) the modified value
-		*/
-
-		function format_value( $value, $post_id, $field ) {
-
-			// bail early if no value
-			if ( empty( $value ) ) {
-
+		/**
+		 * This filter is applied to the $value after it is loaded from the db, and before it is returned to the template
+		 *
+		 * @type    filter
+		 * @since   3.6
+		 *
+		 * @param mixed   $value       The value which was loaded from the database.
+		 * @param mixed   $post_id     The $post_id from which the value was loaded.
+		 * @param array   $field       The field array holding all the field options.
+		 * @param boolean $escape_html Should the field return a HTML safe formatted value.
+		 *
+		 * @return mixed $value The modified value
+		 */
+		public function format_value( $value, $post_id, $field, $escape_html ) {
+			// Bail early if no value or not a string.
+			if ( empty( $value ) || ! is_string( $value ) ) {
 				return $value;
-
 			}
 
-			// apply filters
+			if ( $escape_html ) {
+				add_filter( 'acf_the_content', 'acf_esc_html', 1 );
+			}
+
 			$value = apply_filters( 'acf_the_content', $value );
 
-			// follow the_content function in /wp-includes/post-template.php
-			$value = str_replace( ']]>', ']]&gt;', $value );
+			if ( $escape_html ) {
+				remove_filter( 'acf_the_content', 'acf_esc_html', 1 );
+			}
 
-			return $value;
+			// Follow the_content function in /wp-includes/post-template.php
+			return str_replace( ']]>', ']]&gt;', $value );
 		}
-
 	}
 
 
 	// initialize
 	acf_register_field_type( 'acf_field_wysiwyg' );
-
 endif; // class_exists check
 
 ?>

@@ -29,7 +29,6 @@ if ( ! class_exists( 'acf_admin_options_page' ) ) :
 
 			// add menu items
 			add_action( 'admin_menu', array( $this, 'admin_menu' ), 99, 0 );
-
 		}
 
 
@@ -61,24 +60,17 @@ if ( ! class_exists( 'acf_admin_options_page' ) ) :
 
 				// vars
 				$slug = '';
-
 				// parent
 				if ( empty( $page['parent_slug'] ) ) {
-
 					$slug = add_menu_page( $page['page_title'], $page['menu_title'], $page['capability'], $page['menu_slug'], array( $this, 'html' ), $page['icon_url'], $page['position'] );
-
 					// child
 				} else {
-
 					$slug = add_submenu_page( $page['parent_slug'], $page['page_title'], $page['menu_title'], $page['capability'], $page['menu_slug'], array( $this, 'html' ), $page['position'] );
-
 				}
 
 				// actions
 				add_action( "load-{$slug}", array( $this, 'admin_load' ) );
-
 			}
-
 		}
 
 
@@ -118,10 +110,19 @@ if ( ! class_exists( 'acf_admin_options_page' ) ) :
 					// save
 					acf_save_post( $this->page['post_id'] );
 
+					/**
+					 * Fires after publishing a save on an options page.
+					 *
+					 * @since 6.1.7
+					 *
+					 * @param string|int  $post_id   The current id.
+					 * @param string      $menu_slug The current options page menu slug.
+					 */
+					do_action( 'acf/options_page/save', $this->page['post_id'], $this->page['menu_slug'] );
+
 					// redirect
 					wp_redirect( add_query_arg( array( 'message' => '1' ) ) );
 					exit;
-
 				}
 			}
 
@@ -140,7 +141,6 @@ if ( ! class_exists( 'acf_admin_options_page' ) ) :
 					'default' => 2,
 				)
 			);
-
 		}
 
 
@@ -160,7 +160,6 @@ if ( ! class_exists( 'acf_admin_options_page' ) ) :
 		function admin_enqueue_scripts() {
 
 			wp_enqueue_script( 'post' );
-
 		}
 
 
@@ -187,7 +186,7 @@ if ( ! class_exists( 'acf_admin_options_page' ) ) :
 			);
 
 			// notices
-			if ( ! empty( $_GET['message'] ) && $_GET['message'] == '1' ) {
+			if ( ! empty( $_GET['message'] ) && $_GET['message'] == '1' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Used to display a notice.
 				acf_add_admin_notice( $this->page['updated_message'], 'success' );
 			}
 
@@ -195,11 +194,8 @@ if ( ! class_exists( 'acf_admin_options_page' ) ) :
 			add_meta_box( 'submitdiv', __( 'Publish', 'acf' ), array( $this, 'postbox_submitdiv' ), 'acf_options_page', 'side', 'high' );
 
 			if ( empty( $field_groups ) ) {
-
 				acf_add_admin_notice( sprintf( __( 'No Custom Field Groups found for this options page. <a href="%s">Create a Custom Field Group</a>', 'acf' ), admin_url( 'post-new.php?post_type=acf-field-group' ) ), 'warning' );
-
 			} else {
-
 				foreach ( $field_groups as $i => $field_group ) {
 
 					// vars
@@ -211,13 +207,9 @@ if ( ! class_exists( 'acf_admin_options_page' ) ) :
 
 					// tweaks to vars
 					if ( $context == 'acf_after_title' ) {
-
 						$context = 'normal';
-
 					} elseif ( $context == 'side' ) {
-
 						$priority = 'core';
-
 					}
 
 					// filter for 3rd party customization
@@ -225,10 +217,8 @@ if ( ! class_exists( 'acf_admin_options_page' ) ) :
 
 					// add meta box
 					add_meta_box( $id, acf_esc_html( $title ), array( $this, 'postbox_acf' ), 'acf_options_page', $context, $priority, $args );
-
 				}
 				// foreach
-
 			}
 			// if
 		}
@@ -284,25 +274,20 @@ if ( ! class_exists( 'acf_admin_options_page' ) ) :
 		}
 
 
-		/*
-		*  render_meta_box
-		*
-		*  description
-		*
-		*  @type    function
-		*  @date    24/02/2014
-		*  @since   5.0.0
-		*
-		*  @param   $post (object)
-		*  @param   $args (array)
-		*  @return  n/a
-		*/
-
+		/**
+		 * Renders a postbox on an ACF options page.
+		 *
+		 * @date    24/02/2014
+		 * @since   5.0.0
+		 *
+		 * @param object $post
+		 * @param array  $args
+		 *
+		 * @return void
+		 */
 		function postbox_acf( $post, $args ) {
-
-			// extract args
-			extract( $args ); // all variables from the add_meta_box function
-			extract( $args ); // all variables from the args argument
+			$id          = $args['id'];
+			$field_group = $args['args']['field_group'];
 
 			// vars
 			$o = array(
@@ -317,9 +302,7 @@ if ( ! class_exists( 'acf_admin_options_page' ) ) :
 
 			// edit_url
 			if ( $field_group['ID'] && acf_current_user_can_admin() ) {
-
 				$o['editLink'] = admin_url( 'post.php?post=' . $field_group['ID'] . '&action=edit' );
-
 			}
 
 			// load fields
@@ -337,7 +320,6 @@ if( typeof acf !== 'undefined' ) {
 }
 </script>
 			<?php
-
 		}
 
 
@@ -352,17 +334,13 @@ if( typeof acf !== 'undefined' ) {
 		function html() {
 
 			// load view
-			acf_get_view( dirname( __FILE__ ) . '/views/html-options-page.php', $this->page );
-
+			acf_get_view( __DIR__ . '/views/html-options-page.php', $this->page );
 		}
-
-
 	}
 
 
 	// initialize
 	new acf_admin_options_page();
-
 endif;
 
 ?>

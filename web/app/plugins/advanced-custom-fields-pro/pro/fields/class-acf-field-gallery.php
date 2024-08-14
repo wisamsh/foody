@@ -21,10 +21,15 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 		function initialize() {
 
 			// vars
-			$this->name     = 'gallery';
-			$this->label    = __( 'Gallery', 'acf' );
-			$this->category = 'content';
-			$this->defaults = array(
+			$this->name          = 'gallery';
+			$this->label         = __( 'Gallery', 'acf' );
+			$this->category      = 'content';
+			$this->description   = __( 'An interactive interface for managing a collection of attachments, such as images.', 'acf' );
+			$this->preview_image = acf_get_url() . '/assets/images/field-type-previews/field-preview-gallery.png';
+			$this->doc_url       = acf_add_url_utm_tags( 'https://www.advancedcustomfields.com/resources/gallery/', 'docs', 'field-type-selection' );
+			$this->tutorial_url  = acf_add_url_utm_tags( 'https://www.advancedcustomfields.com/resources/how-to-use-the-gallery-field/', 'docs', 'field-type-selection' );
+			$this->pro           = true;
+			$this->defaults      = array(
 				'return_format' => 'array',
 				'preview_size'  => 'medium',
 				'insert'        => 'append',
@@ -49,7 +54,6 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 
 			add_action( 'wp_ajax_acf/fields/gallery/get_sort_order', array( $this, 'ajax_get_sort_order' ) );
 			add_action( 'wp_ajax_nopriv_acf/fields/gallery/get_sort_order', array( $this, 'ajax_get_sort_order' ) );
-
 		}
 
 		/*
@@ -141,21 +145,17 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 		function ajax_update_attachment() {
 
 			// validate nonce
-			if ( ! wp_verify_nonce( $_POST['nonce'], 'acf_nonce' ) ) {
-
+			if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'acf_nonce' ) ) {
 				wp_send_json_error();
-
 			}
 
 			// bail early if no attachments
 			if ( empty( $_POST['attachments'] ) ) {
-
 				wp_send_json_error();
-
 			}
 
 			// loop over attachments
-			foreach ( $_POST['attachments'] as $id => $changes ) {
+			foreach ( $_POST['attachments'] as $id => $changes ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized by WP core when saved.
 
 				if ( ! current_user_can( 'edit_post', $id ) ) {
 					wp_send_json_error();
@@ -198,12 +198,10 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 
 				// save meta
 				acf_save_post( $id );
-
 			}
 
 			// return
 			wp_send_json_success();
-
 		}
 
 
@@ -226,7 +224,7 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 			$r     = array();
 			$order = 'DESC';
 			$args  = acf_parse_args(
-				$_POST,
+				$_POST, // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified below.
 				array(
 					'ids'       => 0,
 					'sort'      => 'date',
@@ -237,24 +235,18 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 
 			// validate
 			if ( ! wp_verify_nonce( $args['nonce'], 'acf_nonce' ) ) {
-
 				wp_send_json_error();
-
 			}
 
 			// reverse
 			if ( $args['sort'] == 'reverse' ) {
-
 				$ids = array_reverse( $args['ids'] );
 
 				wp_send_json_success( $ids );
-
 			}
 
 			if ( $args['sort'] == 'title' ) {
-
 				$order = 'ASC';
-
 			}
 
 			// find attachments (DISTINCT POSTS)
@@ -272,14 +264,11 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 
 			// success
 			if ( ! empty( $ids ) ) {
-
 				wp_send_json_success( $ids );
-
 			}
 
 			// failure
 			wp_send_json_error();
-
 		}
 
 		/**
@@ -457,7 +446,7 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 			}
 
 			?>
-<div <?php acf_esc_attr_e( $attrs ); ?>>
+<div <?php echo acf_esc_attrs( $attrs ); ?>>
 	<input type="hidden" name="<?php echo esc_attr( $field['name'] ); ?>" value="" />
 	<div class="acf-gallery-main">
 		<div class="acf-gallery-attachments">
@@ -528,7 +517,6 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 	</div>
 </div>
 			<?php
-
 		}
 
 
@@ -546,27 +534,6 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 		*/
 
 		function render_field_settings( $field ) {
-
-			// clear numeric settings
-			$clear = array(
-				'min',
-				'max',
-				'min_width',
-				'min_height',
-				'min_size',
-				'max_width',
-				'max_height',
-				'max_size',
-			);
-
-			foreach ( $clear as $k ) {
-
-				if ( empty( $field[ $k ] ) ) {
-					$field[ $k ] = '';
-				}
-			}
-
-			// return_format
 			acf_render_field_setting(
 				$field,
 				array(
@@ -583,34 +550,6 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 				)
 			);
 
-			// preview_size
-			acf_render_field_setting(
-				$field,
-				array(
-					'label'        => __( 'Preview Size', 'acf' ),
-					'instructions' => '',
-					'type'         => 'select',
-					'name'         => 'preview_size',
-					'choices'      => acf_get_image_sizes(),
-				)
-			);
-
-			// insert
-			acf_render_field_setting(
-				$field,
-				array(
-					'label'        => __( 'Insert', 'acf' ),
-					'instructions' => __( 'Specify where new attachments are added', 'acf' ),
-					'type'         => 'select',
-					'name'         => 'insert',
-					'choices'      => array(
-						'append'  => __( 'Append to the end', 'acf' ),
-						'prepend' => __( 'Prepend to the beginning', 'acf' ),
-					),
-				)
-			);
-
-			// library
 			acf_render_field_setting(
 				$field,
 				array(
@@ -625,8 +564,35 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 					),
 				)
 			);
+		}
 
-			// min
+		/**
+		 * Renders the field settings used in the "Validation" tab.
+		 *
+		 * @since 6.0
+		 *
+		 * @param array $field The field settings array.
+		 * @return void
+		 */
+		function render_field_validation_settings( $field ) {
+			// Clear numeric settings.
+			$clear = array(
+				'min',
+				'max',
+				'min_width',
+				'min_height',
+				'min_size',
+				'max_width',
+				'max_height',
+				'max_size',
+			);
+
+			foreach ( $clear as $k ) {
+				if ( empty( $field[ $k ] ) ) {
+					$field[ $k ] = '';
+				}
+			}
+
 			acf_render_field_setting(
 				$field,
 				array(
@@ -637,7 +603,6 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 				)
 			);
 
-			// max
 			acf_render_field_setting(
 				$field,
 				array(
@@ -648,16 +613,15 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 				)
 			);
 
-			// min
 			acf_render_field_setting(
 				$field,
 				array(
-					'label'        => __( 'Minimum', 'acf' ),
-					'instructions' => __( 'Restrict which images can be uploaded', 'acf' ),
-					'type'         => 'text',
-					'name'         => 'min_width',
-					'prepend'      => __( 'Width', 'acf' ),
-					'append'       => 'px',
+					'label'   => __( 'Minimum', 'acf' ),
+					'hint'    => __( 'Restrict which images can be uploaded', 'acf' ),
+					'type'    => 'text',
+					'name'    => 'min_width',
+					'prepend' => __( 'Width', 'acf' ),
+					'append'  => 'px',
 				)
 			);
 
@@ -685,16 +649,15 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 				)
 			);
 
-			// max
 			acf_render_field_setting(
 				$field,
 				array(
-					'label'        => __( 'Maximum', 'acf' ),
-					'instructions' => __( 'Restrict which images can be uploaded', 'acf' ),
-					'type'         => 'text',
-					'name'         => 'max_width',
-					'prepend'      => __( 'Width', 'acf' ),
-					'append'       => 'px',
+					'label'   => __( 'Maximum', 'acf' ),
+					'hint'    => __( 'Restrict which images can be uploaded', 'acf' ),
+					'type'    => 'text',
+					'name'    => 'max_width',
+					'prepend' => __( 'Width', 'acf' ),
+					'append'  => 'px',
 				)
 			);
 
@@ -722,18 +685,51 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 				)
 			);
 
-			// allowed type
 			acf_render_field_setting(
 				$field,
 				array(
-					'label'        => __( 'Allowed file types', 'acf' ),
-					'instructions' => __( 'Comma separated list. Leave blank for all types', 'acf' ),
-					'type'         => 'text',
-					'name'         => 'mime_types',
+					'label' => __( 'Allowed File Types', 'acf' ),
+					'hint'  => __( 'Comma separated list. Leave blank for all types', 'acf' ),
+					'type'  => 'text',
+					'name'  => 'mime_types',
 				)
 			);
 		}
 
+		/**
+		 * Renders the field settings used in the "Presentation" tab.
+		 *
+		 * @since 6.0
+		 *
+		 * @param array $field The field settings array.
+		 * @return void
+		 */
+		function render_field_presentation_settings( $field ) {
+			acf_render_field_setting(
+				$field,
+				array(
+					'label'        => __( 'Insert', 'acf' ),
+					'instructions' => __( 'Specify where new attachments are added', 'acf' ),
+					'type'         => 'select',
+					'name'         => 'insert',
+					'choices'      => array(
+						'append'  => __( 'Append to the end', 'acf' ),
+						'prepend' => __( 'Prepend to the beginning', 'acf' ),
+					),
+				)
+			);
+
+			acf_render_field_setting(
+				$field,
+				array(
+					'label'        => __( 'Preview Size', 'acf' ),
+					'instructions' => '',
+					'type'         => 'select',
+					'name'         => 'preview_size',
+					'choices'      => acf_get_image_sizes(),
+				)
+			);
+		}
 
 		/*
 		*  format_value()
@@ -822,20 +818,15 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 		function validate_value( $valid, $value, $field, $input ) {
 
 			if ( empty( $value ) || ! is_array( $value ) ) {
-
 				$value = array();
-
 			}
 
 			if ( count( $value ) < $field['min'] ) {
-
 				$valid = _n( '%1$s requires at least %2$s selection', '%1$s requires at least %2$s selections', $field['min'], 'acf' );
 				$valid = sprintf( $valid, $field['label'], $field['min'] );
-
 			}
 
 			return $valid;
-
 		}
 
 
@@ -873,14 +864,100 @@ if ( ! class_exists( 'acf_field_gallery' ) ) :
 
 			// Return value.
 			return $value;
+		}
 
+		/**
+		 * Validates file fields updated via the REST API.
+		 *
+		 * @param bool  $valid
+		 * @param int   $value
+		 * @param array $field
+		 *
+		 * @return bool|WP_Error
+		 */
+		public function validate_rest_value( $valid, $value, $field ) {
+			if ( ! $valid || ! is_array( $value ) ) {
+				return $valid;
+			}
+
+			foreach ( $value as $attachment_id ) {
+				$file_valid = acf_get_field_type( 'file' )->validate_rest_value( $valid, $attachment_id, $field );
+
+				if ( is_wp_error( $file_valid ) ) {
+					return $file_valid;
+				}
+			}
+
+			return $valid;
+		}
+
+		/**
+		 * Return the schema array for the REST API.
+		 *
+		 * @param array $field
+		 * @return array
+		 */
+		public function get_rest_schema( array $field ) {
+			$schema = array(
+				'type'     => array( 'array', 'null' ),
+				'required' => ! empty( $field['required'] ),
+				'items'    => array(
+					'type' => 'number',
+				),
+			);
+
+			if ( ! empty( $field['min'] ) ) {
+				$schema['minItems'] = (int) $field['min'];
+			}
+
+			if ( ! empty( $field['max'] ) ) {
+				$schema['maxItems'] = (int) $field['max'];
+			}
+
+			return $schema;
+		}
+
+		/**
+		 * @see \acf_field::get_rest_links()
+		 * @param mixed      $value The raw (unformatted) field value.
+		 * @param int|string $post_id
+		 * @param array      $field
+		 * @return array
+		 */
+		public function get_rest_links( $value, $post_id, array $field ) {
+			$links = array();
+
+			if ( empty( $value ) ) {
+				return $links;
+			}
+
+			foreach ( (array) $value as $object_id ) {
+				$links[] = array(
+					'rel'        => 'acf:attachment',
+					'href'       => rest_url( '/wp/v2/media/' . $object_id ),
+					'embeddable' => true,
+				);
+			}
+
+			return $links;
+		}
+
+		/**
+		 * Apply basic formatting to prepare the value for default REST output.
+		 *
+		 * @param mixed      $value
+		 * @param string|int $post_id
+		 * @param array      $field
+		 * @return mixed
+		 */
+		public function format_value_for_rest( $value, $post_id, array $field ) {
+			return acf_format_numerics( $value );
 		}
 	}
 
 
 	// initialize
 	acf_register_field_type( 'acf_field_gallery' );
-
 endif; // class_exists check
 
 ?>
