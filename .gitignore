@@ -29,9 +29,6 @@ web/.htaccess
 .env.*
 !.env.example
 
-### Composer
-vendor/*
-!vendor/.gitkeep
 
 #w3tc
 
