@@ -4,8 +4,17 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8ce55635cb874fc6976004c484df234c",
+    "content-hash": "09cf02fe767833d0d38f9c0b08d039d7",
     "packages": [
+        {
+            "name": "advanced-custom-fields-pro",
+            "version": "6.2.6.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://foody-media.s3.eu-west-1.amazonaws.com/acf/advanced-custom-fields-pro.6.2.6.1.zip"
+            },
+            "type": "wordpress-plugin"
+        },
         {
             "name": "andrewozz/tinymce-advanced",
             "version": "4.7.11",
@@ -168,15 +177,6 @@
             "dist": {
                 "type": "zip",
                 "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.2.0.1.zip"
-            },
-            "type": "wordpress-plugin"
-        },
-        {
-            "name": "elliotcondon/advanced-custom-fields-pro",
-            "version": "5.6.10",
-            "dist": {
-                "type": "zip",
-                "url": "https://foody-media.s3.eu-west-1.amazonaws.com/acf/advanced-custom-fields-pro.5.7.12.zip"
             },
             "type": "wordpress-plugin"
         },
