@@ -1490,9 +1490,9 @@ color:#fff;
         $table_name = $wpdb->prefix . "notification_users";
         $sqlQuery = "SELECT 
         email, category_id, author_id, author_name
-        FROM {$table_name} 
-        OR author_id IN id IN ('{$Get_Cats_Auths_IDS['cats']}') 
-        OR author_id IN ('{$Get_Cats_Auths_IDS['auth']}') ) AND (valid_user = 'yes')
+        FROM {$table_name} where
+         category_id IN  ({$Get_Cats_Auths_IDS['cats']}) 
+        or author_id IN ({$Get_Cats_Auths_IDS['auth']})  AND (valid_user = 'yes')
         
         ";
         $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
