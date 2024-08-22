@@ -84,11 +84,18 @@ if ($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "stag
 
      <section class="recipe-overview no-print">
           <?php
-if ( wp_is_mobile() ) {
-          echo $Foody_Notification->DrawCSS_Notification_Mobile();
-          echo  $Foody_Notification->DrawHTMLbox_notification_Mobile();
-}
+
+          if (wp_is_mobile()) {
+               echo  $Foody_Notification->DrawHTMLbox_notification_Mobile();
+               echo $Foody_Notification->DrawCSS_Notification_Mobile();
+          } else {
+               echo  $Foody_Notification->DrawHTMLbox_notification_Desktop();
+               echo $Foody_Notification->DrawCSS_Notification_Desktop();
+          }
+
+
           ?>
+
      </section>
 <?php } ?>
 

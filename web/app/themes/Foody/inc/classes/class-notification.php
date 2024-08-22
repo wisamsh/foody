@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 if (!defined('ABSPATH')) exit;
 class Foody_Notification
 {
@@ -7,12 +8,13 @@ class Foody_Notification
     private $group_nots;
     private  $api_key;
     private $email_Image_Header;
-
+    private $EnvyormentType ;
     private $SmoovListName;
 
     function __construct()
     {
 
+        $this->EnvyormentType =  $_SERVER['SERVER_NAME'] == '0.0.0' ? 'http://foody-local.co.il' : $_SERVER['SERVER_NAME'];
 
         $this->group_nots = array();
 
@@ -46,9 +48,9 @@ class Foody_Notification
 
         if (is_user_logged_in() && current_user_can('administrator')) {
 
-            if (date('N') == 4) { //if its Thursday
+            if (date('N') == 4) { // 4 for Thursday
                 $this->FilterEmailsContainer();
-            }
+           }
         }
     }
 
@@ -479,6 +481,450 @@ class Foody_Notification
         return $rtn;
     }
 
+//DESKTOP :
+
+public function DrawHTMLbox_notification_Desktop()
+{
+    $author_id = get_the_author_meta('ID');
+
+        // Get the author name
+        $author_name = get_the_author_meta('display_name');
+        $term = $this->get_Primary_Term();
+
+        $rtn = '';
+        $rtn .= '<div class="notificationBox">';
+        $rtn .= '<div class="h4_desktop"><img class="not_icon" src="' . $this->not_icon() . '"/></div>';
+        $rtn .= '<div class="m_title">' . $this->group_nots['main_title'] . '</div>';
+       // $rtn .= '<div class="secondtitle">' . $this->group_nots['second_title'] . '</div>';
+        $rtn .= '<form id="notification_form">
+   
+    <div class="cat_wrapper">
+    <div class="term_add" id="term_add">
+    <span  class="add_term_plus" id="add_term" data-id="' . $term['term_id'] . '" data-name="' . $term['term_Name'] . '"></span>
+    <span >' . $term['term_Name'] . '</span>
+    </div>
+    <div class="term_add" id="author_add">
+    <span class="add_author" id="add_author" data-id="' . $author_id . '" data-name="' . $author_name . '"></span>
+    <span >' . $author_name . '</span>
+    </div>
+    </div>
+
+    <div class="formWrapper dn">
+    <div class="close_frm">X</div>
+    <input type="email" name="email" id="email" class="not_email" placeholder="הכניסו מייל..."/>
+    
+    <input type="submit" class="submit" value="שלח >>" />  
+   </div>
+
+    <input type="hidden" name="action" id="action" value="notification_action_call"/>
+
+    <input type="hidden" name="cat_id" id="cat_id" value=""/>
+    <input type="hidden" name="cat_name" id="cat_name" value=""/>
+    <input type="hidden" name="author_id" id="author_id" value=""/>
+    <input type="hidden" name="author_name" id="author_name" value=""/>
+    <input type="hidden" name="recipe_id" id="recipe_id" value="' . get_the_ID() . '"/>
+    <input type="hidden" name="recipe_name" id="recipe_name" value="' . get_the_title() . '"/>
+    <input type="hidden" name="recipe_name" id="recipe_name" value="' . get_the_title() . '"/>
+   
+   <div class="agreement_wrap dn">
+   <input type="radio" name="user_subscribe" id="user_subscribe" checked />
+   <label for="user_subscribe" id="user_subscribe_label">
+   <a href="' . $this->use_agreement_url . '">' . $this->use_agreement_text . '<a/>
+   </label>
+   </div>
+    </form>';
+        $rtn .= '<p id="notification_ajax_response"></p> ';
+
+
+        return $rtn;
+}
+
+
+
+//DESKTOP CSS
+public function DrawCSS_Notification_Desktop()
+{
+    $rtn = '
+<style>
+
+#notification_ajax_response{
+display: block;
+    position: absolute;
+    width: 69%;
+    right: 55px;
+    background: #fff;
+    color: red;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size:15px;
+   
+}
+
+.po{
+position: absolute;
+    top: 14px;
+}
+
+
+.nbox{
+display:block !important;
+}
+
+.m_title100{
+width: 100% !important;
+}
+
+#notification_form{
+width: 62%;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: center;
+}
+#user_subscribe , #user_subscribe_label{
+    display:inline-flex;
+    color:#57A0BB;
+    }
+    #user_subscribe{
+ appearance: none;
+   -webkit-appearance: none;
+    accent-color: #57A0BB !important;
+    background-color: #57A0BB;
+    border: 4px solid #d1dfe3 !important;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    position: absolute;
+    right: -1px;
+    top: 4px;
+    right: 3px;
+
+    }
+ #user_subscribe_label a{
+    padding-right: 20px;
+    color:#57A0BB !important;
+    }
+
+
+.close_frm{
+   position: absolute;
+    top: 2px;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 9999;
+    cursor: pointer;
+    transition: all 1s ease-out;
+    left: 0px;
+    z-index: 777;
+}
+.dn{
+display:none;
+transition: all 1s ease-out;
+}
+.formWrapper{
+position: relative;
+    transition: all 1s ease-in;
+    width: 100%;
+}
+
+.m_title{
+font-size: 14px;
+    font-weight: bold;
+    margin-right: 7px;
+}
+
+.not_icon{  
+  width: 27px;
+}
+.notificationBox .h4{
+width:100%;
+text-align:center;
+color:#333333;
+font-size:18px !important;
+font-weight:700;
+position:relative;
+}
+.secondtitle{
+width:100%;
+text-align:center;
+color:#333333;
+font-size:23px;
+}
+
+    .notificationBox{
+   position: relative;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: solid 2px #57A0BB;
+    border-top: solid 2px #57A0BB;
+    border-radius: 0px;
+    padding: 10px;
+    background: #fff;
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    align-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: row;
+    }
+   
+    .submit{
+  width: 116px;
+    background: #57A0BB !important;
+    color: #fff !important;
+    font-size: 18px !important;
+    font-weight: bold;
+    padding: 0px !important;
+    height: 35px;
+    margin-right: -6px;
+        
+    }
+    .add_term_plus , .add_author {
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: -1px;
+    right: 4px;
+    }
+    .term_add{
+       min-width: 207px;
+    position: relative;
+    padding-top: 3px;
+    border: solid 1px #fff;
+    font-size: 16px;
+    font-weight: 800;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    background: #f5f5f5;
+    color: #57A0BB;
+    height: 32px;
+
+    }
+   
+    .term_add:hover{
+        background: #57A0BB;
+        color:#fff !important;
+        font: size 18px;
+        font-weight:800;
+    }
+.agreement_wrap{
+width:89%;
+    text-align: right;
+    position: relative;
+    color: #57A0BB;
+    margin-top: 30px;
+   
+   
+}
+    .agreement_wrap link{
+width: 100%;
+    text-align: right;
+    position: relative;
+    color:#57A0BB;
+}
+ .not_email{
+        
+        height:35px;
+        text-align:center;
+        color: #333333;
+        border:solid 0px #fff !important; 
+         box-shadow: none !important;
+         display: inline-flex;
+    width: 71%;
+    background:#f5f5f5 !important;
+
+   
+    }
+.not_valid{
+
+appearance: none;
+-webkit-appearance: none;
+border:solid 1px red !important;
+background:#EFAAA5 !important;
+color:#fff;
+}
+</style>
+';
+    return $rtn;
+}
+
+
+
+
+
+
+
+
+
+    public function DrawCSS_Notification_Mobile()
+    {
+        $rtn = '
+    <style>
+
+    #user_subscribe , #user_subscribe_label{
+    display:inline-flex;
+    color:#57A0BB;
+    }
+    #user_subscribe{
+ appearance: none;
+   -webkit-appearance: none;
+    accent-color: #57A0BB !important;
+    background-color: #57A0BB;
+    border: 4px solid #d1dfe3 !important;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    position: absolute;
+    right: -1px;
+    top: 4px;
+    right: 3px;
+
+    }
+ #user_subscribe_label a{
+    padding-right: 20px;
+    color:#57A0BB !important;
+    }
+
+
+.close_frm{
+    position: absolute;
+    top: -35px;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 9999;
+    cursor: pointer;
+    transition: all 1s ease-out;
+    left: 1px;
+    z-index: 777;
+}
+.dn{
+display:none;
+transition: all 1s ease-out;
+}
+.formWrapper{
+position:relative;   
+transition: all 1s ease-in;
+  
+}
+.not_icon{  
+  width: 27px;
+    position: absolute;
+    right: -8px;
+    top: -6px;
+}
+.notificationBox .h4{
+width:100%;
+text-align:center;
+color:#333333;
+font-size:18px !important;
+font-weight:700;
+position:relative;
+}
+.secondtitle{
+width:100%;
+text-align:center;
+color:#333333;
+font-size:23px;
+}
+
+    .notificationBox{
+    position:relative;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: solid 2px #57A0BB;
+    border-top: solid 2px #57A0BB;
+    border-radius: 0px;
+    padding: 10px;
+    background:#fff;
+    }
+   
+    .submit{
+  margin-top: 10px;
+    width: 162px;
+    background: #57A0BB !important;
+    color: #fff !important;
+    font-size: 18px !important;
+    font-weight: bold;
+    padding: 0px !important;
+    height: 32px;
+        
+    }
+    .add_term_plus , .add_author {
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: -1px;
+    right: 4px;
+    }
+    .term_add{
+        width:48%;
+        position:relative;
+        padding:10px;
+        border:solid 1px #fff;
+        font: size 18px;
+        font-weight:800;
+        display: inline-block;
+        margin-top:10px;
+        cursor: pointer;
+        text-align:center;
+        background:#f5f5f5;
+        color:#57A0BB;
+
+    }
+   
+    .term_add:hover{
+        background: #57A0BB;
+        color:#fff !important;
+        font: size 18px;
+        font-weight:800;
+    }
+.agreement_wrap{
+width: 100%;
+    text-align: right;
+    position: relative;
+    color:#57A0BB;
+    margin-top:20px;
+}
+    .agreement_wrap link{
+width: 100%;
+    text-align: right;
+    position: relative;
+    color:#57A0BB;
+}
+ .not_email{
+        width: 100%;
+        height:46px;
+        text-align:center;
+        color: #333333;
+        border:solid 0px #fff !important; 
+         box-shadow: none !important;
+ background:#f5f5f5 !important;
+   
+    }
+.not_valid{
+
+appearance: none;
+-webkit-appearance: none;
+border:solid 1px red !important;
+background:#EFAAA5 !important;
+color:#fff;
+}
+    </style>
+    ';
+        return $rtn;
+    }
+
+
+
+
+
+
+
     public function enqueue_Notification_scripts()
     {
         // Enqueue your script
@@ -513,165 +959,6 @@ class Foody_Notification
 
 
 
-    public function DrawCSS_Notification_Mobile()
-    {
-        $rtn = '
-    <style>
-
-    #user_subscribe , #user_subscribe_label{
-    display:inline-flex;
-    color:#57A0BB;
-    }
-    #user_subscribe{
-    
-   
- appearance: none;
-   -webkit-appearance: none;
-    accent-color: #57A0BB !important;
-    background-color: #57A0BB;
-    border: 4px solid #d1dfe3 !important;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    position: absolute;
-    right: -1px;
-    top: 4px;
-    right: 3px;
-
-    }
- #user_subscribe_label a{
-    padding-right: 20px;
-    color:#57A0BB !important;
-    }
-
-
-.close_frm{
-position: absolute;
-    top: -36px;
-    font-size: 20px;
-    font-weight: bold;
-    z-index: 9999;
-    cursor: pointer;
-    transition: all 1s ease-out;
-    left: 0px;
-}
-.dn{
-display:none;
-transition: all 1s ease-out;
-}
-.formWrapper{
-position:relative;   
-transition: all 1s ease-in;
-  
-}
-.not_icon{  
-   width: 27px;
-    position: absolute;
-    right:0;
-}
-.notificationBox .h4{
-width:100%;
-text-align:center;
-color:#333333;
-font-size:21px !important;
-font-weight:700;
-position:relative;
-}
-.secondtitle{
-width:100%;
-text-align:center;
-color:#333333;
-font-size:23px;
-}
-
-    .notificationBox{
-    position:relative;
-    margin: 0 auto;
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-bottom: solid 2px #57A0BB;
-    border-top: solid 2px #57A0BB;
-    border-radius: 0px;
-    padding: 10px;
-    background:#F5F5F5;
-    }
-   
-    .submit{
-  margin-top: 10px;
-    width: 162px;
-    background: #57A0BB !important;
-    color: #fff !important;
-    font-size: 18px !important;
-    font-weight: bold;
-    padding: 0px !important;
-    height: 32px;
-        
-    }
-    .add_term_plus , .add_author {
-    font-size: 30px;
-    font-weight: bold;
-    position: absolute;
-    top: -1px;
-    right: 4px;
-    }
-    .term_add{
-        width:48%;
-        position:relative;
-        padding:10px;
-        border:solid 1px #fff;
-        font: size 18px;
-        font-weight:800;
-        display: inline-block;
-        margin-top:10px;
-        cursor: pointer;
-        text-align:center;
-        background:#fff;
-        color:#57A0BB;
-
-    }
-   
-    .term_add:hover{
-        background: #57A0BB;
-        color:#fff !important;
-        font: size 18px;
-        font-weight:800;
-    }
-.agreement_wrap{
-width: 100%;
-    text-align: right;
-    position: relative;
-    color:#57A0BB;
-    margin-top:20px;
-}
-    .agreement_wrap link{
-width: 100%;
-    text-align: right;
-    position: relative;
-    color:#57A0BB;
-}
- .not_email{
-        width: 100%;
-        height:46px;
-        text-align:center;
-        color: #333333;
-        border:solid 0px #fff !important; 
-         box-shadow: none !important;
-
-   
-    }
-.not_valid{
-
-appearance: none;
--webkit-appearance: none;
-border:solid 1px red !important;
-background:#EFAAA5 !important;
-color:#fff;
-}
-    </style>
-    ';
-        return $rtn;
-    }
 
 
     // Add a custom admin page
@@ -1076,7 +1363,7 @@ color:#fff;
 
         //output should look like : 
         // === Array([cats] => 206,230,324 [auth] => 6,7,31) ==== 
-
+       
         return $Res;
     }
 
@@ -1114,7 +1401,7 @@ color:#fff;
     {
         //Sending Goodies :
         //$category = category name========================
-
+       
         foreach ($recipe as $recipe) {
 
             $post = get_post($recipe->recipe_id);
@@ -1151,8 +1438,8 @@ color:#fff;
          <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'>{$category}</span> </div>";
             $html .= "</div>";
             $html .= '<div style="justify-content: center;align-items: center; align-items: center;padding:10px;margin:0 auto;margin-top:30px;width:192px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;">
-        <a style="color:#fff !important;text-decoration: none;" href="https://foody.co.il/?p=' . $post->ID . '" > לעמוד מתכון >></a></div>  ';
-            $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="https://foody.co.il/unsubscribe?unid=' . $uniqID . '" >לביטול התראות במייל לחץ כאן</a></div> ';
+        <a style="color:#fff !important;text-decoration: none;" href="'.$this->EnvyormentType.'/?p=' . $post->ID . '" > לעמוד מתכון >></a></div>  ';
+            $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="'.$this->EnvyormentType .'/unsubscribe?unid=' . $uniqID . '" >לביטול התראות במייל לחץ כאן</a></div> ';
             $html .= '</div>'; //div closer
             $html .= '</body></html>';
         }
@@ -1163,8 +1450,6 @@ color:#fff;
 
     private function SendEmailVerificationToUser($vereficationCode, $email)
     {
-
-        $EnvyormentType =  $_SERVER['SERVER_NAME'] == '0.0.0' ? 'http://foody-local.co.il' : $_SERVER['SERVER_NAME'];
 
         $html  = '<!DOCTYPE html><html lang="he"><head><meta charset="UTF-8">';
         $html .= "<title>מייל אימות - FOODY</title>";
@@ -1184,7 +1469,7 @@ color:#fff;
         $html .= '<div id="firstdv" style="width:100%;margin-top:0px;">';
         //$html .= '<h3 style="font-size:45px;font-weight:700;color:#E63A2C">מייל אימות - FOODY</h3>';
         $html .= '<p>ביקשתם להירשם לקבלת התראות</p>';
-        $html .= "<a href='{$EnvyormentType}/email-verification/?v={$vereficationCode}&e={$email}'>יש ללחוץ כאן כדי לאשר את המייל</a>";
+        $html .= "<a href='{$this->EnvyormentType}/email-verification/?v={$vereficationCode}&e={$email}'>יש ללחוץ כאן כדי לאשר את המייל</a>";
         $html .= '<p>FOODY</p>';
         $html .= '</div>'; //firstdv closer
         return $html;
@@ -1199,13 +1484,15 @@ color:#fff;
         $emailsContainer = [];
 
         $Get_Cats_Auths_IDS = $this->Get_Cats_Auths_IDS();
+       
+        if($Get_Cats_Auths_IDS){
         global $wpdb;
         $table_name = $wpdb->prefix . "notification_users";
         $sqlQuery = "SELECT 
         email, category_id, author_id, author_name
         FROM {$table_name} 
-        WHERE (category_id IN ({$Get_Cats_Auths_IDS['cats']}) 
-        OR author_id IN ({$Get_Cats_Auths_IDS['auth']}) ) AND (valid_user = 'valid')
+        OR author_id IN id IN ('{$Get_Cats_Auths_IDS['cats']}') 
+        OR author_id IN ('{$Get_Cats_Auths_IDS['auth']}') ) AND (valid_user = 'yes')
         
         ";
         $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
@@ -1226,6 +1513,7 @@ color:#fff;
 
 
         return $emailsContainer;
+    }
     }
 
 
@@ -1368,12 +1656,13 @@ color:#fff;
     {
         $get_Emails_By_Cat_Auth_ToSend = $this->get_Emails_By_Cat_Auth_ToSend();
 
-
+       
         if (!empty($get_Emails_By_Cat_Auth_ToSend)) {
             //print_r($get_Emails_By_Cat_Auth_ToSend);die('dfc44');
 
             foreach ($get_Emails_By_Cat_Auth_ToSend as $email => $recipes) {
 
+               
 
 
                 $htmlObject = []; // Initialize the $htmlObject array here to ensure it is reset for each email
@@ -1397,7 +1686,6 @@ color:#fff;
 
 
 
-
                 // Reset the $htmlObject array for the next email (already done by reinitializing in the outer loop)
             }
         }
@@ -1408,7 +1696,9 @@ color:#fff;
             }
         }
         $DeleteTheseFuckers = implode(',', $idsToDelete);
+        if($DeleteTheseFuckers ){
         $this->DELETE_Recipe_After_Notificion($DeleteTheseFuckers);
+        }
     }
 
 

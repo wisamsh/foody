@@ -1214,7 +1214,7 @@ if($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "stagi
  }
 }
 
-
+//=======EMAIL VARIFICATION PAGE WITH TEMPLATE ================================================
 function EmailVerificationCostumePage() {
     // Check if the page already exists
     $page_title = 'דף אימות מייל';
@@ -1254,3 +1254,46 @@ function EmailVerificationCostumePage() {
 }
 
 add_action('init','EmailVerificationCostumePage');
+//======================================================================================
+
+
+
+function Unsubscribe_Request() {
+    // Check if the page already exists
+    $page_title = 'ביטול התראות';
+    
+    $page_slug = 'unsubscribe';
+    $page_template = 'page-templates/unsubscribe_request.php'; // The path to your template
+    $page_parent = 0; // ID of the parent page, 0 if it has no parent
+    $page_order = 0; // Order of the page
+
+    // Check if the page already exists by slug
+    $page_check = get_page_by_path($page_slug);
+
+    if (!$page_check) {
+        // Create array of page data
+        $page_data = array(
+            'post_title'    => $page_title,
+            'post_status'   => 'publish',
+            'post_type'     => 'page',
+            'post_name'     => $page_slug,
+            'post_parent'   => $page_parent, // Set the parent page ID
+            'menu_order'    => $page_order, // Set the page order
+        );
+
+        // Insert the page into the database
+        $page_id = wp_insert_post($page_data);
+
+        if (!is_wp_error($page_id)) {
+            // Assign the custom template to the page
+            update_post_meta($page_id, '_wp_page_template', $page_template);
+           // echo 'Page created successfully!';
+        } else {
+           // echo 'Error creating page: ' . $page_id->get_error_message();
+        }
+        
+    }
+    
+}
+
+add_action('init','Unsubscribe_Request');
