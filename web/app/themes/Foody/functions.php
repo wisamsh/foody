@@ -1297,3 +1297,7 @@ function Unsubscribe_Request() {
 }
 
 add_action('init','Unsubscribe_Request');
+
+$Foody_Verfication = new Foody_Verfication;
+$Foody_Verfication->WPactions();
+

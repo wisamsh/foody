@@ -39,20 +39,42 @@ class Foody_Notification
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_ajax_script'));
         add_action('wp_ajax_admin_enter', array($this, 'handle_admin_enter'));
 
-
-
-
-
-
         //cron jobs==============================================================
 
         if (is_user_logged_in() && current_user_can('administrator')) {
 
-            if (date('N') == 4) { // 4 for Thursday
+            if (date('N') == 2) { // 4 for Thursday
                 $this->FilterEmailsContainer();
            }
         }
     }
+
+    function encrypt_string($string, $key) {
+        $cipher = 'AES-256-CBC';
+        $encryption_key = hash('sha256', $key);
+        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher));
+        $encrypted = openssl_encrypt($string, $cipher, $encryption_key, 0, $iv);
+        
+        // Concatenate encrypted data and IV, then encode with Base64
+        $encrypted_iv = base64_encode($encrypted . '::' . $iv);
+        
+        // Remove padding "=" characters
+        return rtrim($encrypted_iv, '=');
+    }
+    
+    function decrypt_string($encrypted_string, $key) {
+        $cipher = 'AES-256-CBC';
+        $encryption_key = hash('sha256', $key);
+        
+        // Restore "=" padding
+        $encrypted_string_padded = $encrypted_string . str_repeat('=', 3 - (strlen($encrypted_string) + 3) % 4);
+        
+        // Decode the string and split the encrypted data and IV
+        list($encrypted_data, $iv) = explode('::', base64_decode($encrypted_string_padded), 2);
+        
+        return openssl_decrypt($encrypted_data, $cipher, $encryption_key, 0, $iv);
+    }
+    
 
 
     public function SendingNotificationEmailsThruAdmin()
@@ -1397,7 +1419,7 @@ color:#fff;
 
 
 
-    private function Email_Template($category, $recipe, $uniqID = null) // email to unsubscribe
+    private function Email_Template($category, $recipe, $uniqID = null, $cat_ID=null, $email) // email to unsubscribe
     {
         //Sending Goodies :
         //$category = category name========================
@@ -1438,8 +1460,9 @@ color:#fff;
          <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'>{$category}</span> </div>";
             $html .= "</div>";
             $html .= '<div style="justify-content: center;align-items: center; align-items: center;padding:10px;margin:0 auto;margin-top:30px;width:192px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;">
-        <a style="color:#fff !important;text-decoration: none;" href="'.$this->EnvyormentType.'/?p=' . $post->ID . '" > לעמוד מתכון >></a></div>  ';
-            $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="'.$this->EnvyormentType .'/unsubscribe?unid=' . $uniqID . '" >לביטול התראות במייל לחץ כאן</a></div> ';
+        <a target="_blank" style="color:#fff !important;text-decoration: none;" href="'.$this->EnvyormentType.'/?p=' . $post->ID . '" > לעמוד מתכון >></a></div>  ';
+           // $html .= '<span style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="'.$this->EnvyormentType .'/unsubscribe?unid=' . $uniqID . '&email='.$email.'" >לביטול הרשמה</a></span> |  ';
+            $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="'.$this->EnvyormentType .'/unsubscribe?cat='.$cat_ID. '-' .$author['id'] .'&unid=' . $uniqID . '&email='.$this->encrypt_string($email, 'bar').'" >להסרה מרשימת התפוצה</a></div> ';
             $html .= '</div>'; //div closer
             $html .= '</body></html>';
         }
@@ -1485,16 +1508,14 @@ color:#fff;
 
         $Get_Cats_Auths_IDS = $this->Get_Cats_Auths_IDS();
        
-        if($Get_Cats_Auths_IDS){
+        if(!empty($Get_Cats_Auths_IDS)){
         global $wpdb;
         $table_name = $wpdb->prefix . "notification_users";
         $sqlQuery = "SELECT 
         email, category_id, author_id, author_name
         FROM {$table_name} where
          category_id IN  ({$Get_Cats_Auths_IDS['cats']}) 
-        or author_id IN ({$Get_Cats_Auths_IDS['auth']})  AND (valid_user = 'yes')
-        
-        ";
+        or author_id IN ({$Get_Cats_Auths_IDS['auth']})  AND (valid_user = 'yes')";
         $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
 
         foreach ($Results as $result) {
@@ -1677,7 +1698,7 @@ color:#fff;
                         $category_name = $recipe_id_obj[0]->main_category_name;
 
                         // $recipe_name = $val['recipe_name'];
-                        $htmlObject[] = $this->Email_Template($category_name, $recipe_id, '33test');
+                        $htmlObject[] = $this->Email_Template($category_name, $recipe_id, '33test', $val['category_id'], $email);
                     }
                 }
                 // print_r($recipe_id_obj);
