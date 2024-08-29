@@ -28,6 +28,7 @@ jQuery(document).ready(function () {
                 if(!response.error) {
                     //console.log(response.message);
                     jQuery("#response").html(response.data.message)
+                    jQuery("#terminate_all").attr('disabled', 'disabled');
                 } else {
                    // console.log(response.message);
                    jQuery("#response").html(response.data.message)
@@ -58,9 +59,11 @@ jQuery('#category_btn').on('click', function(e) {
             if(!response.error) {
                 //console.log(response.message);
                 jQuery("#response").html(response.data.message)
+                jQuery("#category_btn").attr('disabled', 'disabled');
             } else {
                // console.log(response.message);
                jQuery("#response").html(response.data.message)
+               jQuery("#category_btn").attr('disabled', 'disabled');
             }
         },
         error: function() {

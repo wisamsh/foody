@@ -143,7 +143,7 @@ class Foody_Verfication
         if ($deleted) {
             wp_send_json_success(array('error' => 0, 'message' => 'המחיקה התבצעה בהצלחה', 'del' => $deleted));
         } else {
-            wp_send_json_error(array('error' => 1, 'message' => 'פעולת המחיקה לא התבצע!', 'del' => $deleted));
+            wp_send_json_error(array('error' => 1, 'message' => 'מייל זה אינו רשום במערכת!', 'del' => $deleted));
         }
 
         // Send a successful JSON response
@@ -187,7 +187,7 @@ class Foody_Verfication
         if ($deleted) {
             wp_send_json_success(array('error' => 0, 'message' => 'המחיקה התבצעה בהצלחה', 'del' => $deleted));
         } else {
-            wp_send_json_error(array('error' => 1, 'message' => 'פעולת המחיקה לא התבצע!', 'del' => $deleted));
+            wp_send_json_error(array('error' => 1, 'message' => 'אתם כבר אינכם רשומים ליוצר או קטגוריה!', 'del' => $deleted));
         }
 
         // Send a successful JSON response

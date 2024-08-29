@@ -53,7 +53,13 @@ $Foody_Verfication = new Foody_Verfication;
     <?php } else {
     ?>
         <h1>האימייל אינו קיים במערכת יתכן ונמחק או שלא היה קיים!</h1>
-    <?php } ?>
+        <center> <span> מועברים לדף ראשי תוך </span> : <span id="countdown"></span> <span>שניות</span></center>
+    <script>
+        jQuery(document).ready(function () {
+         redirectWithCountdown('/', 10);
+        });
+    </script>
+        <?php } ?>
     <div id="response"></div>
 </div>
 <style>
@@ -110,5 +116,20 @@ $Foody_Verfication = new Foody_Verfication;
         }
     }
 </style>
+<script>
+     function redirectWithCountdown(url, delayInSeconds) {
+            var countdownElement = document.getElementById('countdown');
+            var secondsRemaining = delayInSeconds;
 
+            var countdownInterval = setInterval(function() {
+                secondsRemaining--;
+                countdownElement.textContent = secondsRemaining;
+
+                if (secondsRemaining <= 0) {
+                    clearInterval(countdownInterval);
+                    window.location.href = url;
+                }
+            }, 1000);
+        }
+</script>
 <?php get_footer(); ?>
