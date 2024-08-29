@@ -137,7 +137,7 @@ class Foody_Notification
                     if (get_transient('SendGridReaction') == 1) {
                        // echo 'התראות נשלחו למיילים הרשומים לקטגוריה או ו יוצר זה !';
                     } else {
-                      // print_r(get_transient('SendGridReaction'));
+                       print_r(get_transient('SendGridReaction'));
                     }
                     ?></p>
             </div>
@@ -1423,7 +1423,7 @@ color:#fff;
     {
         //Sending Goodies :
         //$category = category name========================
-       
+        $myemail = $this->encrypt_string($email, 'bar');
         foreach ($recipe as $recipe) {
 
             $post = get_post($recipe->recipe_id);
@@ -1462,7 +1462,7 @@ color:#fff;
             $html .= '<div style="justify-content: center;align-items: center; align-items: center;padding:10px;margin:0 auto;margin-top:30px;width:192px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;">
         <a target="_blank" style="color:#fff !important;text-decoration: none;" href="'.$this->EnvyormentType.'/?p=' . $post->ID . '" > לעמוד מתכון >></a></div>  ';
            // $html .= '<span style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="'.$this->EnvyormentType .'/unsubscribe?unid=' . $uniqID . '&email='.$email.'" >לביטול הרשמה</a></span> |  ';
-            $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="'.$this->EnvyormentType .'/unsubscribe?cat='.$cat_ID. '-' .$author['id'] .'&unid=' . $uniqID . '&email='.$this->encrypt_string($email, 'bar').'" >להסרה מרשימת התפוצה</a></div> ';
+            $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="'.$this->EnvyormentType .'/unsubscribe?cat='.$cat_ID. '-' .$author['id'] .'&unid=' . $uniqID . '&email='.$myemail.'" >להסרה מרשימת התפוצה</a></div> ';
             $html .= '</div>'; //div closer
             $html .= '</body></html>';
         }
