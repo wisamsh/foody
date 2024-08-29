@@ -23,7 +23,6 @@ $Foody_Verfication = new Foody_Verfication;
         $cat_arr = explode("-", $_GET['cat']);
         $cat_id = $cat_arr[0];
         $author_id = $cat_arr[1];
-        print_r($cat_arr);
         $author = get_user_by('ID', $author_id);
 
         if ($author) {
@@ -35,15 +34,22 @@ $Foody_Verfication = new Foody_Verfication;
         $email_encripted = $Foody_Verfication->getEncryptEmail;
         $email = $Foody_Verfication->decrypt_string($email_encripted, 'bar');
         $emailExist = $Foody_Verfication->CheckingEmailifExist($email);
+        
     }
-    if ($emailExist) {
+    if ($emailExist ) {
         $category = get_category($cat_id);
+        if ($cat_id > 0){
+            $name =  $category->name;
+        }
+        else{
+            $name = $author_name;
+        }
 
     ?>
         <h1>להסרה מרשימת התפוצה לקבלת התראות</h1>
-        <h4><?php echo $email . $author_name; ?></h4>
+        <h4><?php echo $email; ?></h4>
         <input type="button" id="terminate_all" value="הסירו אותי" class="terminate" />
-        <input type="button" id="category_btn" value="להסרה מקטגוריה <?php echo $category->name; ?>" class="terminate" />
+        <input type="button" id="category_btn" value="להסרה מ: <?php echo $name; ?>" class="terminate" />
     <?php } else {
     ?>
         <h1>האימייל אינו קיים במערכת יתכן ונמחק או שלא היה קיים!</h1>

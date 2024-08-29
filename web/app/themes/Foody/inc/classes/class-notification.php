@@ -43,7 +43,7 @@ class Foody_Notification
 
         if (is_user_logged_in() && current_user_can('administrator')) {
 
-            if (date('N') == 2) { // 4 for Thursday
+            if (date('N') == 4) { // 4 for Thursday
                 $this->FilterEmailsContainer();
            }
         }
@@ -1648,7 +1648,7 @@ color:#fff;
         $table_name = $wpdb->prefix . "notification_recipes_to_send";
         $SqlQuery = "select * from {$table_name}  WHERE TRIM(number_of_emails_dilliverd) is NULL
         and TRIM(emails_dilliverd) is NULL and STR_TO_DATE(date_of_update, '%d-%m-%Y') >= DATE_SUB(CURDATE(), INTERVAL 8 DAY)
-        and main_category_id = '{$cat_id}' ";
+        and main_category_id = '{$cat_id}' or author_id={$cat_id} ";
         $Results = $wpdb->get_results($SqlQuery);
 
         return $Results;
@@ -1677,34 +1677,36 @@ color:#fff;
     {
         $get_Emails_By_Cat_Auth_ToSend = $this->get_Emails_By_Cat_Auth_ToSend();
 
-       
+      
         if (!empty($get_Emails_By_Cat_Auth_ToSend)) {
             //print_r($get_Emails_By_Cat_Auth_ToSend);die('dfc44');
 
             foreach ($get_Emails_By_Cat_Auth_ToSend as $email => $recipes) {
 
-               
-
+                
 
                 $htmlObject = []; // Initialize the $htmlObject array here to ensure it is reset for each email
 
                 foreach ($recipes as $key => $val) {
+                    $cat_auth_id = $val['category_id'] ? $val['category_id'] : $val['author_id'] ;
                     if ($key > 0) {
 
-                        $recipe_id_obj = $this->GetRecipiesByCatID($val['category_id']);
-
+                        $recipe_id_obj = $this->GetRecipiesByCatID($cat_auth_id);
+                       
                         $recipe_id = $recipe_id_obj;
                         $recipiesToDelete[] =  $recipe_id;
                         $category_name = $recipe_id_obj[0]->main_category_name;
 
                         // $recipe_name = $val['recipe_name'];
                         $htmlObject[] = $this->Email_Template($category_name, $recipe_id, '33test', $val['category_id'], $email);
+                       
                     }
                 }
-                // print_r($recipe_id_obj);
+
+
+                 
                 //Send the email after building the $htmlObject array
                 $res = $this->SendEmails($email, $category_name, $recipe_id, '', $htmlObject);
-
 
 
                 // Reset the $htmlObject array for the next email (already done by reinitializing in the outer loop)
