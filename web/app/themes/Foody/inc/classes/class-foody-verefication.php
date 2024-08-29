@@ -3,42 +3,46 @@ if (!defined('ABSPATH')) exit;
 
 class Foody_Verfication
 {
-
+    private $EncriptionKey;
+    public $getEncryptEmail;
     public function __construct()
-    { 
+    {
+        $this->EncriptionKey = 'bar';
+        $this->getEncryptEmail = isset($_GET['email']) ? $_GET['email'] : null;
         add_action('init', array($this, 'WPactions'));
         // Hook into the admin and public AJAX actions
         $this->enqueue_my_ajax_script();
     }
 
 
-
-    function encrypt_string($string, $key) {
+    function encrypt_string($string, $key)
+    {
         $cipher = 'AES-256-CBC';
         $encryption_key = hash('sha256', $key);
         $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher));
         $encrypted = openssl_encrypt($string, $cipher, $encryption_key, 0, $iv);
-        
+
         // Concatenate encrypted data and IV, then encode with Base64
         $encrypted_iv = base64_encode($encrypted . '::' . $iv);
-        
+
         // Remove padding "=" characters
         return rtrim($encrypted_iv, '=');
     }
-    
-    function decrypt_string($encrypted_string, $key) {
+
+    function decrypt_string($encrypted_string, $key)
+    {
         $cipher = 'AES-256-CBC';
         $encryption_key = hash('sha256', $key);
-        
+
         // Restore "=" padding
         $encrypted_string_padded = $encrypted_string . str_repeat('=', 3 - (strlen($encrypted_string) + 3) % 4);
-        
+
         // Decode the string and split the encrypted data and IV
         list($encrypted_data, $iv) = explode('::', base64_decode($encrypted_string_padded), 2);
-        
+
         return openssl_decrypt($encrypted_data, $cipher, $encryption_key, 0, $iv);
     }
-    
+
 
 
     public function enqueue_my_ajax_script()
@@ -48,7 +52,8 @@ class Foody_Verfication
         // Localize the script with necessary data
         wp_localize_script('unsubsucriberScript', 'myAjax', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce'   => wp_create_nonce('my_ajax_nonce')
+            'nonce'   => wp_create_nonce('my_ajax_nonce'),
+
         ));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_my_ajax_script'));
     }
@@ -63,30 +68,70 @@ class Foody_Verfication
         add_action('wp_ajax_nopriv_unsubscribecat', array($this, 'unsubscribecat_ajax_request'));
     }
 
+public function CheckingEmailifExist($email){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'notification_users';
 
+    // Prepare and execute the SQL statement to delete the record
+    $search = $wpdb->query(
+        $wpdb->prepare(
+            "SELECT id, email FROM {$table_name} WHERE email = %s ",
+            $email
+        )
+    );
+    return  $search;
+}
 
     public function unsubscribe_ajax_request()
     {
-        $data = array(
-            
-            'res'  => 'unsubscribe all ',
-            'email' => 'All',
+
+        //EncriptionKey
+        $encryptedEmail = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
+        $email = $this->decrypt_string($encryptedEmail, $this->EncriptionKey);
+
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_users';
+
+        // Prepare and execute the SQL statement to delete the record
+        $deleted = $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM {$table_name} WHERE email = %s LIMIT 20",
+                $email
+            )
         );
-    
+
+        if ($deleted) {
+            wp_send_json_success(array('error'=> 0 ,'message' => 'המחיקה התבצעה בהצלחה', 'del'=>$deleted));
+        } else {
+            wp_send_json_error(array('error'=> 1, 'message' => 'פעולת המחיקה לא התבצע!','del'=>$deleted ));
+        }
+
+
+
+
+
+        // Send a successful JSON response
+       
+        wp_die();
+    }
+
+
+
+
+    public function unsubscribecat_ajax_request()
+    {
+        $encryptedEmail = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
+        $email = $this->decrypt_string($encryptedEmail, $this->EncriptionKey);
+        $data = array(
+
+            'res'  => 'unsubscribe all ',
+            'email' => $email,
+        );
+
         // Send a successful JSON response
         wp_send_json_success($data);
-        wp_die(); 
+        wp_die();
     }
-public function unsubscribecat_ajax_request(){
-    $data = array(
-        'res'  => 'unsubscribe Category ',
-        'email' => 'Category',
-    );
-
-    // Send a successful JSON response
-    wp_send_json_success($data);
-    wp_die(); 
-}
 
 
 

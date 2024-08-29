@@ -20,16 +20,35 @@ $Foody_Verfication = new Foody_Verfication;
 
     <?php
     if (isset($_GET['cat']) && $_GET['cat'] != '') {
-        $cat_id = $_GET['cat'];
-        $email = $Foody_Verfication->decrypt_string($_GET['email'], 'bar');
-    }
-    $category = get_category($cat_id);
-    ?>
-    <h1>להסרה מרשימת התפוצה לקבלת התראות</h1>
-    <h4><?php echo $email; ?></h4>
-    <input type="button" id="terminate_all" value="הסירו אותי" class="terminate" />
-    <input type="button" id="category_btn" value="להסרה מקטגוריה <?php echo $category->name; ?>" class="terminate" />
+        $cat_arr = explode("-", $_GET['cat']);
+        $cat_id = $cat_arr[0];
+        $author_id = $cat_arr[1];
+        print_r($cat_arr);
+        $author = get_user_by('ID', $author_id);
 
+        if ($author) {
+            // Access the author's details
+            $author_name = $author->display_name;
+            $author_email = $author->user_email;
+        }
+
+        $email_encripted = $Foody_Verfication->getEncryptEmail;
+        $email = $Foody_Verfication->decrypt_string($email_encripted, 'bar');
+        $emailExist = $Foody_Verfication->CheckingEmailifExist($email);
+    }
+    if ($emailExist) {
+        $category = get_category($cat_id);
+
+    ?>
+        <h1>להסרה מרשימת התפוצה לקבלת התראות</h1>
+        <h4><?php echo $email . $author_name; ?></h4>
+        <input type="button" id="terminate_all" value="הסירו אותי" class="terminate" />
+        <input type="button" id="category_btn" value="להסרה מקטגוריה <?php echo $category->name; ?>" class="terminate" />
+    <?php } else {
+    ?>
+        <h1>האימייל אינו קיים במערכת יתכן ונמחק או שלא היה קיים!</h1>
+    <?php } ?>
+    <div id="response"></div>
 </div>
 <style>
     .terminator_Wrap {
