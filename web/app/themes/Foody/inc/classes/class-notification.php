@@ -135,9 +135,9 @@ class Foody_Notification
             <div class="notice notice-success is-dismissible">
                 <p><?php
                     if (get_transient('SendGridReaction') == 1) {
-                        echo 'התראות נשלחו למיילים הרשומים לקטגוריה או ו יוצר זה !';
+                       // echo 'התראות נשלחו למיילים הרשומים לקטגוריה או ו יוצר זה !';
                     } else {
-                        print_r(get_transient('SendGridReaction'));
+                      // print_r(get_transient('SendGridReaction'));
                     }
                     ?></p>
             </div>

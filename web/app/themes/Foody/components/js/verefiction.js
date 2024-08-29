@@ -8,7 +8,7 @@ jQuery(document).ready(function () {
     // Get the values of 'w' and 'r'
     const email = urlParams.get('email');
     
-
+    const cat = urlParams.get('cat');
 
 
 
@@ -21,15 +21,16 @@ jQuery(document).ready(function () {
             data: {
                 action: 'unsubscribe',
                 nonce: myAjax.nonce,
-                email : email
+                email : email,
+                cat : cat
             },
             success: function(response) {
                 if(!response.error) {
                     //console.log(response.message);
-                    jQuery("#response").html(response)
+                    jQuery("#response").html(response.data.message)
                 } else {
                    // console.log(response.message);
-                   jQuery("#response").html(response)
+                   jQuery("#response").html(response.data.message)
                 }
             },
             error: function() {
@@ -49,15 +50,17 @@ jQuery('#category_btn').on('click', function(e) {
         data: {
             action: 'unsubscribecat',
             nonce: myAjax.nonce,
-            email: email
+            email: email,
+            cat : cat
         },
         success: function(response) {
+            console.log(response)
             if(!response.error) {
                 //console.log(response.message);
-                jQuery("#response").html(response)
+                jQuery("#response").html(response.data.message)
             } else {
                // console.log(response.message);
-               jQuery("#response").html(response)
+               jQuery("#response").html(response.data.message)
             }
         },
         error: function() {
