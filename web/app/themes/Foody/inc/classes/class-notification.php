@@ -41,38 +41,50 @@ class Foody_Notification
 
         //cron jobs==============================================================
 
-        if (is_user_logged_in() && current_user_can('administrator')) {
+        if (is_user_logged_in() && current_user_can('administrator') && ($this->CheckRecepiesToSend())) {
 
-            if (date('N') == 4) { // 4 for Thursday
+            if (date('N') == 7) { // 4 for Thursday
                 $this->FilterEmailsContainer();
            }
         }
+       
     }
+
+function CheckRecepiesToSend(){
+
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'notification_recipes_to_send';
+    $sqlQuery = "SELECT * FROM {$table_name}";
+    $res = $wpdb->query($sqlQuery);
+    return $res;
+}
+
+
 
     function encrypt_string($string, $key) {
         $cipher = 'AES-256-CBC';
         $encryption_key = hash('sha256', $key);
-        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher));
+        $iv = str_repeat('0', openssl_cipher_iv_length($cipher)); // Fixed IV with zeros
         $encrypted = openssl_encrypt($string, $cipher, $encryption_key, 0, $iv);
         
-        // Concatenate encrypted data and IV, then encode with Base64
-        $encrypted_iv = base64_encode($encrypted . '::' . $iv);
+        // Encode encrypted data with Base64
+        $encrypted_iv = base64_encode($encrypted);
         
-        // Remove padding "=" characters
-        return rtrim($encrypted_iv, '=');
+        return $encrypted_iv;
     }
     
     function decrypt_string($encrypted_string, $key) {
         $cipher = 'AES-256-CBC';
         $encryption_key = hash('sha256', $key);
+        $iv = str_repeat('0', openssl_cipher_iv_length($cipher)); // Fixed IV with zeros
         
-        // Restore "=" padding
-        $encrypted_string_padded = $encrypted_string . str_repeat('=', 3 - (strlen($encrypted_string) + 3) % 4);
+        // Decode from Base64
+        $encrypted_data = base64_decode($encrypted_string);
         
-        // Decode the string and split the encrypted data and IV
-        list($encrypted_data, $iv) = explode('::', base64_decode($encrypted_string_padded), 2);
+        // Decrypt the data
+        $decrypted = openssl_decrypt($encrypted_data, $cipher, $encryption_key, 0, $iv);
         
-        return openssl_decrypt($encrypted_data, $cipher, $encryption_key, 0, $iv);
+        return $decrypted;
     }
     
 

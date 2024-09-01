@@ -15,33 +15,32 @@ class Foody_Verfication
     }
 
 
-    function encrypt_string($string, $key)
-    {
+    function encrypt_string($string, $key) {
         $cipher = 'AES-256-CBC';
         $encryption_key = hash('sha256', $key);
-        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher));
+        $iv = str_repeat('0', openssl_cipher_iv_length($cipher)); // Fixed IV with zeros
         $encrypted = openssl_encrypt($string, $cipher, $encryption_key, 0, $iv);
-
-        // Concatenate encrypted data and IV, then encode with Base64
-        $encrypted_iv = base64_encode($encrypted . '::' . $iv);
-
-        // Remove padding "=" characters
-        return rtrim($encrypted_iv, '=');
+        
+        // Encode encrypted data with Base64
+        $encrypted_iv = base64_encode($encrypted);
+        
+        return $encrypted_iv;
     }
-
-    function decrypt_string($encrypted_string, $key)
-    {
+    
+    function decrypt_string($encrypted_string, $key) {
         $cipher = 'AES-256-CBC';
         $encryption_key = hash('sha256', $key);
-
-        // Restore "=" padding
-        $encrypted_string_padded = $encrypted_string . str_repeat('=', 3 - (strlen($encrypted_string) + 3) % 4);
-
-        // Decode the string and split the encrypted data and IV
-        list($encrypted_data, $iv) = explode('::', base64_decode($encrypted_string_padded), 2);
-
-        return openssl_decrypt($encrypted_data, $cipher, $encryption_key, 0, $iv);
+        $iv = str_repeat('0', openssl_cipher_iv_length($cipher)); // Fixed IV with zeros
+        
+        // Decode from Base64
+        $encrypted_data = base64_decode($encrypted_string);
+        
+        // Decrypt the data
+        $decrypted = openssl_decrypt($encrypted_data, $cipher, $encryption_key, 0, $iv);
+        
+        return $decrypted;
     }
+    
 
 
 
