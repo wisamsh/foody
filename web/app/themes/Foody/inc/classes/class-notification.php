@@ -1295,9 +1295,9 @@ color:#fff;
         //NEED TO REMOVE COMMENTS BELLOW SO THAT WORK WITH NEW RECIPIES ONLY 
         // AND NOT UPDATED RECIPIES
         //======================================================================
-        //    if ($this->daysDifference($post_date , date("d-m-Y")) > 7){
-        //     return;
-        //    }  
+           if ($this->daysDifference($post_date , date("d-m-Y")) > 7){
+            return;
+           }  
         //=======================================================================
         if (wp_is_post_revision($post_id)) {
             return;
