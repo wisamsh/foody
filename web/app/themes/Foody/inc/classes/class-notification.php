@@ -43,7 +43,7 @@ class Foody_Notification
 
         if (is_user_logged_in() && current_user_can('administrator') && ($this->CheckRecepiesToSend())) {
 
-            if (date('N') == 7) { // 4 for Thursday
+            if (date('N') == 4) { // 4 for Thursday
                 $this->FilterEmailsContainer();
            }
         }
