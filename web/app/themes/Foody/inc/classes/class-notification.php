@@ -1460,7 +1460,7 @@ color:#fff;
             $html .= '">'; //DIV ENDS
             $html .= "<img src='{$this->email_Image_Header}' style='width:100%;'/>";
             $html .= '<div id="firstdv" style="width:100%;margin-top:0px;">';
-            $html .= '<h3 style="font-size:45px;font-weight:700;color:#E63A2C">מתכון חדש עלה</h3>';
+            $html .= '<h3 style="font-size:45px;font-weight:700;color:#E63A2C">מתכון חדש עבורך</h3>';
             $html .= '</div>'; //firstdv closer
             $html .= '<img style="width:98%;" src="' .  $featured_image_url  . '"/>';
             $html .= '<h1 style="width:90%;text-align:center;margin:0 auto;margin-top:20px;font-size:35px; color:#57A0BB;margin-bottom:30px;">' . $recipeTitle . '</h1>';
