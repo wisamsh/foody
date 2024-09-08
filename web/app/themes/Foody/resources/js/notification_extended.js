@@ -33,4 +33,11 @@ jQuery(document).ready(function($) {
             }
         });
     });
+
+jQuery("#info_on_not").on('click' , function (){
+jQuery("#notification_info").slideToggle();
 });
+
+
+
+});//end ready

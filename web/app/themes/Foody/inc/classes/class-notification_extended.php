@@ -44,6 +44,21 @@ class Foody_Notofication_Extended
                   
             ";
         }
+        echo "<div style='text-align:center;margin-top:10px;cursor: pointer;' id='info_on_not' >
+        <p class='notice notice-info'>מידע על מערכת ההתראות</p>
+        <div id='notification_info' style='display:none'>
+        <p>מתי מתבצע האיחסון בטבלת ההתראות?</p>
+        <ul style='list-style: circle; padding: 10px;text-align: right;direction: rtl;'>
+        <li>מצב : publish :  מאחסן</li>
+        <li>מצב : עד יומיים לאחר פיבלוש :  מאחסן</li>
+        <li>מצב : יותר מיומיים לאחר פיבלוש :  לא מאחסן</li>
+        <li> draft : לא מאחסן</li>
+        <li> pending : לא מאחסן</li>
+        <li> password protected : לא מאחסן</li>
+        <li> private  : לא מאחסן</li>
+        </ul>
+        </div>
+        </div>";
     }
 
 
