@@ -1089,7 +1089,6 @@ color:#fff;
                         <th>קטגוריה</th>
                         <th>כותב</th>
                         <th>מתכון</th>
-                        
                         <th>ip לקוח</th>
                         <th>תאריך רישום </th>
                         <th>הסכים לתנאי שימוש</th>
@@ -1107,7 +1106,6 @@ color:#fff;
                             <td><?php echo $row->category_name; ?></td>
                             <td><?php echo $row->author_name; ?></td>
                             <td><?php echo $row->recipe_name; ?></td>
-                            
                             <td><?php echo $row->user_ip; ?></td>
                             <td><?php echo $row->date_of_regist; ?></td>
                             <td><?php echo $row->user_subscribe == 'on' ? 'כן' : '' ?></td>
