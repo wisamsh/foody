@@ -1539,10 +1539,10 @@ color:#fff;
         global $wpdb;
         $table_name = $wpdb->prefix . "notification_users";
         $sqlQuery = "SELECT 
-        email, category_id, author_id, author_name
-        FROM {$table_name} where
-         category_id IN  ({$Get_Cats_Auths_IDS['cats']}) 
-        or author_id IN ({$Get_Cats_Auths_IDS['auth']})  AND (valid_user = 'yes')";
+        email, category_id, author_id, author_name, valid_user 
+        FROM {$table_name} where TRIM(valid_user = 'yes')
+        AND  (category_id IN  ({$Get_Cats_Auths_IDS['cats']}) 
+        or author_id IN ({$Get_Cats_Auths_IDS['auth']}))   ";
         $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
 
         foreach ($Results as $result) {
