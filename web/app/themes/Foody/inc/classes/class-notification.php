@@ -1085,14 +1085,16 @@ color:#fff;
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>נרשם</th>
                         <th>קטגוריה</th>
                         <th>כותב</th>
                         <th>מתכון</th>
-                        <th>אימייל</th>
+                        
                         <th>ip לקוח</th>
                         <th>תאריך רישום </th>
                         <th>הסכים לתנאי שימוש</th>
                         <th>סיסמה</th>
+                        <th>אימות מייל</th>
                         <th>Action</th> <!-- New column for delete button -->
                         <!-- Add more table headers as needed -->
                     </tr>
@@ -1101,14 +1103,16 @@ color:#fff;
                     <?php foreach ($data as $row) : ?>
                         <tr>
                             <td><?php echo $row->id; ?></td>
+                            <td><?php echo $row->email; ?></td>
                             <td><?php echo $row->category_name; ?></td>
                             <td><?php echo $row->author_name; ?></td>
                             <td><?php echo $row->recipe_name; ?></td>
-                            <td><?php echo $row->email; ?></td>
+                            
                             <td><?php echo $row->user_ip; ?></td>
                             <td><?php echo $row->date_of_regist; ?></td>
                             <td><?php echo $row->user_subscribe == 'on' ? 'כן' : '' ?></td>
                             <td><?php echo $row->pass_word; ?></td>
+                            <td><?php echo $row->valid_user == 'yes' ? 'מאומת' :  $row->valid_user ;?></td>
                             <td>
                                 <form method="post" onsubmit="return validate(this);">
                                     <input type="hidden" name="action" value="delete_notification_user">
@@ -1295,13 +1299,26 @@ color:#fff;
         //NEED TO REMOVE COMMENTS BELLOW SO THAT WORK WITH NEW RECIPIES ONLY 
         // AND NOT UPDATED RECIPIES
         //======================================================================
-           if ($this->daysDifference($post_date , date("d-m-Y")) > 7){
+           if ($this->daysDifference($post_date , date("d-m-Y")) > 2){
             return;
            }  
         //=======================================================================
         if (wp_is_post_revision($post_id)) {
             return;
         }
+        if (get_post_status($post_id) === 'draft') {
+            return;
+        }
+        if (get_post_status($post_id) === 'pending') {
+            return;
+        }
+        if ($post->post_status === 'private') {
+            return;
+        }
+        if (!empty($post->post_password)){
+            return;
+        }
+
 
         // Check if this is an autosave
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
