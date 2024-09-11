@@ -52,9 +52,6 @@ if ($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "stag
 
 
 <?php
-
-
-
 $promotion_area_group = get_field('promotion_area', $recipe->id);
 if (isset($promotion_area_group['text']) && !empty($promotion_area_group['text'])) { ?>
      <section class="promotion-area no-print">

@@ -412,9 +412,9 @@ class Foody_Blocks {
         <div class="container block-container">
 			<?php if ( ! isset( $hide_header ) || $hide_header == false ): ?>
                 <section class="block-header row">
-                    <h2 class="block-title title col">
+                    <h1 class="block-title title col">
 						<?php echo $title ?>
-                    </h2>
+                    </h1>
 					<?php if ( ! empty( $see_more_link ) && ! empty( $see_more_text ) ): ?>
                         <h2 class="block-see-more title col">
                             <a href="<?php echo $see_more_link ?>" <?php echo isset( $see_more_target ) && ! empty ( $see_more_target ) ? "target='" . $see_more_target . "'" : ''; ?>
