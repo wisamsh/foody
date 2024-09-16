@@ -8,7 +8,7 @@ class Foody_Notification
     private $group_nots;
     private  $api_key;
     private $email_Image_Header;
-    private $EnvyormentType ;
+    private $EnvyormentType;
     private $SmoovListName;
 
     function __construct()
@@ -45,48 +45,50 @@ class Foody_Notification
 
             if (date('N') == 4) { // 4 for Thursday
                 $this->FilterEmailsContainer();
-           }
+            }
         }
-       
     }
 
-function CheckRecepiesToSend(){
+    function CheckRecepiesToSend()
+    {
 
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'notification_recipes_to_send';
-    $sqlQuery = "SELECT * FROM {$table_name}";
-    $res = $wpdb->query($sqlQuery);
-    return $res;
-}
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_recipes_to_send';
+        $sqlQuery = "SELECT * FROM {$table_name}";
+        $res = $wpdb->query($sqlQuery);
+        return $res;
+    }
 
 
 
-    function encrypt_string($string, $key) {
+    function encrypt_string($string, $key)
+    {
         $cipher = 'AES-256-CBC';
         $encryption_key = hash('sha256', $key);
         $iv = str_repeat('0', openssl_cipher_iv_length($cipher)); // Fixed IV with zeros
         $encrypted = openssl_encrypt($string, $cipher, $encryption_key, 0, $iv);
-        
+
         // Encode encrypted data with Base64
         $encrypted_iv = base64_encode($encrypted);
-        
+
         return $encrypted_iv;
     }
-    
-    function decrypt_string($encrypted_string, $key) {
+
+    function decrypt_string($encrypted_string, $key)
+    {
         $cipher = 'AES-256-CBC';
         $encryption_key = hash('sha256', $key);
         $iv = str_repeat('0', openssl_cipher_iv_length($cipher)); // Fixed IV with zeros
-        
+
         // Decode from Base64
         $encrypted_data = base64_decode($encrypted_string);
-        
+
         // Decrypt the data
         $decrypted = openssl_decrypt($encrypted_data, $cipher, $encryption_key, 0, $iv);
-        
+
         return $decrypted;
     }
-    
+
 
 
     public function SendingNotificationEmailsThruAdmin()
@@ -147,9 +149,9 @@ function CheckRecepiesToSend(){
             <div class="notice notice-success is-dismissible">
                 <p><?php
                     if (get_transient('SendGridReaction') == 1) {
-                       // echo 'התראות נשלחו למיילים הרשומים לקטגוריה או ו יוצר זה !';
+                        // echo 'התראות נשלחו למיילים הרשומים לקטגוריה או ו יוצר זה !';
                     } else {
-                       print_r(get_transient('SendGridReaction'));
+                        print_r(get_transient('SendGridReaction'));
                     }
                     ?></p>
             </div>
@@ -213,7 +215,7 @@ function CheckRecepiesToSend(){
 
     }
 
-    public function get_Details()
+    public function get_Details() //inserts new email to DB========
     {
 
         global $wpdb;
@@ -246,6 +248,12 @@ function CheckRecepiesToSend(){
         }
 
 
+        //check if its the first time the user regist :======
+
+        $IsUserRegistedBefore = $wpdb->get_var($wpdb->prepare(
+            "SELECT COUNT(*) FROM $table_name WHERE email = %s",
+            $email
+        ));
 
         $email_exists = $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM $table_name WHERE email = %s and (category_id = %s and author_id = %s)",
@@ -279,27 +287,27 @@ function CheckRecepiesToSend(){
                 'user_subscribe' => $user_subscribe,
                 'author_name' => $author_name,
                 'author_id' => $author_id,
-                'pass_word'=> $password
+                'pass_word' => $password
 
             );
 
-           
-                $result = $wpdb->insert($table_name, $data);
 
-                if ($result === false) {
-                    // There was an error with the insert operation
-                    print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
-                }
+            $result = $wpdb->insert($table_name, $data);
 
-                if (!$this->VerefiedEmail($email)) {
+            if ($result === false) {
+                // There was an error with the insert operation
+                print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
+            }
+
+            if (!$this->VerefiedEmail($email)) {
                 $HtmlToSend = $this->SendEmailVerificationToUser($vareficationCodeToSend, $email);
                 $this->SendEmailValidation($email,  $HtmlToSend);
-                }
-                print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'], 'smoov' => $vareficationCodeToSend)));
-            } 
-           
-            
-        
+            }
+            print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'], 'smoov' => $vareficationCodeToSend, 'registed_before' => $IsUserRegistedBefore)));
+        }
+
+
+
 
 
 
@@ -472,7 +480,7 @@ function CheckRecepiesToSend(){
         $rtn .= '<div class="notificationBox">';
         $rtn .= '<div class="h4"><img class="not_icon" src="' . $this->not_icon() . '"/>';
         $rtn .=  $this->group_nots['main_title'] . '</div>';
-       // $rtn .= '<div class="secondtitle">' . $this->group_nots['second_title'] . '</div>';
+        // $rtn .= '<div class="secondtitle">' . $this->group_nots['second_title'] . '</div>';
         $rtn .= '<form id="notification_form">
    
     <div class="cat_wrapper">
@@ -515,11 +523,11 @@ function CheckRecepiesToSend(){
         return $rtn;
     }
 
-//DESKTOP :
+    //DESKTOP :
 
-public function DrawHTMLbox_notification_Desktop()
-{
-    $author_id = get_the_author_meta('ID');
+    public function DrawHTMLbox_notification_Desktop()
+    {
+        $author_id = get_the_author_meta('ID');
 
         // Get the author name
         $author_name = get_the_author_meta('display_name');
@@ -529,7 +537,7 @@ public function DrawHTMLbox_notification_Desktop()
         $rtn .= '<div class="notificationBox">';
         $rtn .= '<div class="h4_desktop"><img class="not_icon" src="' . $this->not_icon() . '"/></div>';
         $rtn .= '<div class="m_title">' . $this->group_nots['main_title'] . '</div>';
-       // $rtn .= '<div class="secondtitle">' . $this->group_nots['second_title'] . '</div>';
+        // $rtn .= '<div class="secondtitle">' . $this->group_nots['second_title'] . '</div>';
         $rtn .= '<form id="notification_form">
    
     <div class="cat_wrapper">
@@ -571,14 +579,14 @@ public function DrawHTMLbox_notification_Desktop()
 
 
         return $rtn;
-}
+    }
 
 
 
-//DESKTOP CSS
-public function DrawCSS_Notification_Desktop()
-{
-    $rtn = '
+    //DESKTOP CSS
+    public function DrawCSS_Notification_Desktop()
+    {
+        $rtn = '
 <style>
 
 #notification_ajax_response{
@@ -782,8 +790,8 @@ color:#fff;
 }
 </style>
 ';
-    return $rtn;
-}
+        return $rtn;
+    }
 
 
 
@@ -1110,7 +1118,7 @@ color:#fff;
                             <td><?php echo $row->date_of_regist; ?></td>
                             <td><?php echo $row->user_subscribe == 'on' ? 'כן' : '' ?></td>
                             <td><?php echo $row->pass_word; ?></td>
-                            <td><?php echo $row->valid_user == 'yes' ? 'מאומת' :  $row->valid_user ;?></td>
+                            <td><?php echo $row->valid_user == 'yes' ? 'מאומת' :  $row->valid_user; ?></td>
                             <td>
                                 <form method="post" onsubmit="return validate(this);">
                                     <input type="hidden" name="action" value="delete_notification_user">
@@ -1297,9 +1305,9 @@ color:#fff;
         //NEED TO REMOVE COMMENTS BELLOW SO THAT WORK WITH NEW RECIPIES ONLY 
         // AND NOT UPDATED RECIPIES
         //======================================================================
-           if ($this->daysDifference($post_date , date("d-m-Y")) > 2){
+        if ($this->daysDifference($post_date, date("d-m-Y")) > 2) {
             return;
-           }  
+        }
         //=======================================================================
         if (wp_is_post_revision($post_id)) {
             return;
@@ -1313,7 +1321,7 @@ color:#fff;
         if ($post->post_status === 'private') {
             return;
         }
-        if (!empty($post->post_password)){
+        if (!empty($post->post_password)) {
             return;
         }
 
@@ -1412,7 +1420,7 @@ color:#fff;
 
         //output should look like : 
         // === Array([cats] => 206,230,324 [auth] => 6,7,31) ==== 
-       
+
         return $Res;
     }
 
@@ -1446,7 +1454,7 @@ color:#fff;
 
 
 
-    private function Email_Template($category, $recipe, $uniqID = null, $cat_ID=null, $email) // email to unsubscribe
+    private function Email_Template($category, $recipe, $uniqID = null, $cat_ID = null, $email) // email to unsubscribe
     {
         //Sending Goodies :
         //$category = category name========================
@@ -1487,9 +1495,9 @@ color:#fff;
          <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'>{$category}</span> </div>";
             $html .= "</div>";
             $html .= '<div style="justify-content: center;align-items: center; align-items: center;padding:10px;margin:0 auto;margin-top:30px;width:192px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;">
-        <a target="_blank" style="color:#fff !important;text-decoration: none;" href="'.$this->EnvyormentType.'/?p=' . $post->ID . '" > לעמוד מתכון >></a></div>  ';
-           // $html .= '<span style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="'.$this->EnvyormentType .'/unsubscribe?unid=' . $uniqID . '&email='.$email.'" >לביטול הרשמה</a></span> |  ';
-            $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="'.$this->EnvyormentType .'/unsubscribe?cat='.$cat_ID. '-' .$author['id'] .'&unid=' . $uniqID . '&email='.$myemail.'" >להסרה מרשימת התפוצה</a></div> ';
+        <a target="_blank" style="color:#fff !important;text-decoration: none;" href="' . $this->EnvyormentType . '/?p=' . $post->ID . '" > לעמוד מתכון >></a></div>  ';
+            // $html .= '<span style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="'.$this->EnvyormentType .'/unsubscribe?unid=' . $uniqID . '&email='.$email.'" >לביטול הרשמה</a></span> |  ';
+            $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="' . $this->EnvyormentType . '/unsubscribe?cat=' . $cat_ID . '-' . $author['id'] . '&unid=' . $uniqID . '&email=' . $myemail . '" >להסרה מרשימת התפוצה</a></div> ';
             $html .= '</div>'; //div closer
             $html .= '</body></html>';
         }
@@ -1534,34 +1542,34 @@ color:#fff;
         $emailsContainer = [];
 
         $Get_Cats_Auths_IDS = $this->Get_Cats_Auths_IDS();
-       
-        if(!empty($Get_Cats_Auths_IDS)){
-        global $wpdb;
-        $table_name = $wpdb->prefix . "notification_users";
-        $sqlQuery = "SELECT 
+
+        if (!empty($Get_Cats_Auths_IDS)) {
+            global $wpdb;
+            $table_name = $wpdb->prefix . "notification_users";
+            $sqlQuery = "SELECT 
         email, category_id, author_id, author_name, valid_user 
         FROM {$table_name} where TRIM(valid_user = 'yes')
         AND  (category_id IN  ({$Get_Cats_Auths_IDS['cats']}) 
         or author_id IN ({$Get_Cats_Auths_IDS['auth']}))   ";
-        $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
+            $Results = $wpdb->get_results($sqlQuery, ARRAY_A);
 
-        foreach ($Results as $result) {
-            $email = $result['email'];
-            unset($result['email']); // Remove the redundant email entry in the nested array
+            foreach ($Results as $result) {
+                $email = $result['email'];
+                unset($result['email']); // Remove the redundant email entry in the nested array
 
-            if (!isset($emailsContainer[$email])) {
-                $emailsContainer[$email] = [$email];
+                if (!isset($emailsContainer[$email])) {
+                    $emailsContainer[$email] = [$email];
+                }
+
+                // Check if the recipe already exists for this email
+                $recipeExists = false;
+
+                $emailsContainer[$email][] = $result;
             }
 
-            // Check if the recipe already exists for this email
-            $recipeExists = false;
 
-            $emailsContainer[$email][] = $result;
+            return $emailsContainer;
         }
-
-
-        return $emailsContainer;
-    }
     }
 
 
@@ -1704,34 +1712,33 @@ color:#fff;
     {
         $get_Emails_By_Cat_Auth_ToSend = $this->get_Emails_By_Cat_Auth_ToSend();
 
-      
+
         if (!empty($get_Emails_By_Cat_Auth_ToSend)) {
             //print_r($get_Emails_By_Cat_Auth_ToSend);die('dfc44');
 
             foreach ($get_Emails_By_Cat_Auth_ToSend as $email => $recipes) {
 
-                
+
 
                 $htmlObject = []; // Initialize the $htmlObject array here to ensure it is reset for each email
 
                 foreach ($recipes as $key => $val) {
-                    $cat_auth_id = $val['category_id'] ? $val['category_id'] : $val['author_id'] ;
+                    $cat_auth_id = $val['category_id'] ? $val['category_id'] : $val['author_id'];
                     if ($key > 0) {
 
                         $recipe_id_obj = $this->GetRecipiesByCatID($cat_auth_id);
-                       
+
                         $recipe_id = $recipe_id_obj;
                         $recipiesToDelete[] =  $recipe_id;
                         $category_name = $recipe_id_obj[0]->main_category_name;
 
                         // $recipe_name = $val['recipe_name'];
                         $htmlObject[] = $this->Email_Template($category_name, $recipe_id, '33test', $val['category_id'], $email);
-                       
                     }
                 }
 
 
-                 
+
                 //Send the email after building the $htmlObject array
                 $res = $this->SendEmails($email, $category_name, $recipe_id, '', $htmlObject);
 
@@ -1746,8 +1753,8 @@ color:#fff;
             }
         }
         $DeleteTheseFuckers = implode(',', $idsToDelete);
-        if($DeleteTheseFuckers ){
-        $this->DELETE_Recipe_After_Notificion($DeleteTheseFuckers);
+        if ($DeleteTheseFuckers) {
+            $this->DELETE_Recipe_After_Notificion($DeleteTheseFuckers);
         }
     }
 
@@ -1779,8 +1786,116 @@ color:#fff;
         }
         wp_die(); // Always include this to terminate execution
     }
-} //end class
 
+    public function PopUpModel()
+    {
+
+        $model = '
+
+<div id="first_time_model" class="modal_ft">
+  <div class="modal-content">
+    <span class="close_ft">&times;</span>
+    <img src="https://foody-media.s3.eu-west-1.amazonaws.com/w_images/verfacation_icon.jpg" class="vfimg"/>
+   <b> <p>תודה שנרשמת :)</p>
+    <p>ברגעים אלו נשלח אלייך אימייל לאימות הרישום</p></b>
+    <p>לקבלת המתכונים הכי חמים לפני כולם ולסיום תהליך הרישום יש ללחוץ על כפתור האימות</p>
+  </div>
+
+</div>
+';
+
+        $modelCSS = '<style>
+.vfimg{
+
+    width: 100px;
+    
+}
+.modal_ft {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 9997; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+position: relative;
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 10px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  text-align:center;
+  
+}
+
+/* The Close Button */
+.close_ft {
+  color: #aaa;
+  float: right !important;
+  font-size: 28px;
+  font-weight: bold;
+  width: 20px;
+  z-index: 9998;
+}
+
+.close_ft:hover,
+.close_ft:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 1000px) {
+.vfimg{
+position: absolute;
+    top: 0px;
+    left: 0;
+}
+}
+
+
+@media only screen and (max-width: 1000px) {
+    .vfimg{
+    margin:0 auto;
+    }
+    }
+
+</style>';
+
+        $ModelJS = '<script>
+var modal_ft = document.getElementById("first_time_model");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close_ft")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal_ft.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal_ft.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal_ft) {
+    modal_ft.style.display = "none";
+  }
+}
+</script>';
+
+        return $model . $modelCSS . $ModelJS;
+    }
+} //end class
 //TODO :
 //BUILD THE HTML SENDING WITH DATAGRID + UNSUBSCRIBE 
 

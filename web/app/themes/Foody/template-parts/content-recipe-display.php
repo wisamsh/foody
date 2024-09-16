@@ -85,10 +85,12 @@ if ($_SERVER['SERVER_NAME'] == 'foody.co.il' || $_SERVER['SERVER_NAME'] == "stag
           if (wp_is_mobile()) {
                echo  $Foody_Notification->DrawHTMLbox_notification_Mobile();
                echo $Foody_Notification->DrawCSS_Notification_Mobile();
+               echo $Foody_Notification->PopUpModel();
           } 
           if (!wp_is_mobile()) {
                echo  $Foody_Notification->DrawHTMLbox_notification_Desktop();
                echo $Foody_Notification->DrawCSS_Notification_Desktop();
+               echo $Foody_Notification->PopUpModel();
           }
 
           ?>
