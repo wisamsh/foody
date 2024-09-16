@@ -1325,3 +1325,9 @@ function ws_add_target_blank_to_auto_links($comment_text) {
    
     return $comment_text;
 }
+
+//for happyfood.foody.co.il
+if($_SERVER['SERVER_NAME'] == 'happyfood.foody.co.il' || $_SERVER['SERVER_NAME'] == "staging.foody.co.il" || $_SERVER['SERVER_NAME']=="0.0.0")
+{
+require get_template_directory() . '/w_helpers/happy.php';
+}
