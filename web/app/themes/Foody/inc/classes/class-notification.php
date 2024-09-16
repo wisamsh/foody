@@ -1055,101 +1055,186 @@ color:#fff;
 
     // Render admin page
     public function draw_notification_users_admin_page()
-    {
-        global $wpdb;
+{
+    global $wpdb;
 
-        // Items per page
-        $per_page = 40;
+    // Items per page
+    $per_page = 40;
 
-        // Current page number
-        $current_page = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
+    // Current page number
+    $current_page = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
 
-        // Offset calculation
-        $offset = ($current_page - 1) * $per_page;
+    // Sorting and Filtering Parameters
+    $order_by = isset($_GET['orderby']) ? sanitize_text_field($_GET['orderby']) : 'date_of_regist';
+    $order = isset($_GET['order']) && in_array($_GET['order'], ['asc', 'desc']) ? $_GET['order'] : 'desc';
 
-        // Fetch total number of notification users
-        $total_items = $wpdb->get_var("SELECT COUNT(id) FROM {$wpdb->prefix}notification_users");
+    $filter_verified = isset($_GET['filter_verified']) ? sanitize_text_field($_GET['filter_verified']) : '';
+    $filter_category = isset($_GET['filter_category']) ? sanitize_text_field($_GET['filter_category']) : '';
+    $filter_author = isset($_GET['filter_author']) ? sanitize_text_field($_GET['filter_author']) : '';
 
-        // Fetch data from the wp_notification_users table
-        $table_name = $wpdb->prefix . 'notification_users';
-        $data = $wpdb->get_results($wpdb->prepare(
-            "SELECT * FROM $table_name LIMIT %d OFFSET %d",
-            $per_page,
-            $offset
+    // Offset calculation
+    $offset = ($current_page - 1) * $per_page;
+
+    // Fetch total number of notification users
+    $total_items = $wpdb->get_var("SELECT COUNT(id) FROM {$wpdb->prefix}notification_users");
+
+    // Fetch total number of verified users
+    $total_verified = $wpdb->get_var("SELECT COUNT(id) FROM {$wpdb->prefix}notification_users WHERE valid_user = 'yes'");
+
+    // SQL query with sorting and filtering
+    $sql = "SELECT * FROM {$wpdb->prefix}notification_users WHERE 1=1";
+    
+    // Apply filters if selected
+    if ($filter_verified !== '' && $filter_verified == 'yes') {
+        $sql .= $wpdb->prepare(" AND valid_user = %s", $filter_verified);
+    }
+    if ($filter_verified !== '' && $filter_verified == 'no') {
+        $sql .= $wpdb->prepare(" AND valid_user <> %s", 'yes');
+    }
+
+    if ($filter_category !== '') {
+        $sql .= $wpdb->prepare(" AND category_name = %s", $filter_category);
+    }
+    if ($filter_author !== '') {
+        $sql .= $wpdb->prepare(" AND author_name = %s", $filter_author);
+    }
+
+    // Add sorting
+    $sql .= " ORDER BY {$order_by} {$order}";
+
+    // Apply pagination
+    $sql .= $wpdb->prepare(" LIMIT %d OFFSET %d", $per_page, $offset);
+
+    // Fetch filtered and sorted data
+    $data = $wpdb->get_results($sql);
+
+    // Fetch categories and authors for filter dropdowns
+    $categories = $wpdb->get_results("SELECT DISTINCT category_name FROM {$wpdb->prefix}notification_users");
+    $authors = $wpdb->get_results("SELECT DISTINCT author_name FROM {$wpdb->prefix}notification_users");
+
+    // Preserve existing query parameters
+    $current_url = add_query_arg(array(
+        'filter_verified' => isset($_GET['filter_verified']) ? sanitize_text_field($_GET['filter_verified']) : '',
+        'filter_category' => isset($_GET['filter_category']) ? sanitize_text_field($_GET['filter_category']) : '',
+        'filter_author' => isset($_GET['filter_author']) ? sanitize_text_field($_GET['filter_author']) : '',
+        'paged' => isset($_GET['paged']) ? absint($_GET['paged']) : 1, // Preserve pagination if set
+    ));
+
+    // Output the data
+    ?>
+    <div class="wrap">
+        <h1>Notification Users</h1>
+
+        <!-- Summary -->
+        <p style="text-align:right;border-bottom:solid 1px #ddd;width:49%;display:inline-block;font-size:20px;font-weight:bold;color:coral"> סיכום כמות הנרשמים: <?php echo $total_items; ?> </p>
+        <p style="text-align:right;border-bottom:solid 1px #ddd;width:49%;display:inline-block;font-size:20px;font-weight:bold;color:coral"> סיכום כמות המאמתים: <?php echo $total_verified; ?> </p>
+
+        <!-- Filtering Form -->
+        <form method="get" style="direction:rtl;text-align:right;padding:10px;">
+            <input type="hidden" name="page" value="<?php echo $_GET['page']; ?>">
+            
+            <label for="filter_verified">סינון לפי אימות:</label>
+            <select name="filter_verified" id="filter_verified">
+                <option value="">הכל</option>
+                <option value="yes" <?php selected($filter_verified, 'yes'); ?>>מאומתים</option>
+                <option value="no" <?php selected($filter_verified, 'no'); ?>>לא מאומתים</option>
+            </select>
+
+            <label for="filter_category">סינון לפי קטגוריה:</label>
+            <select name="filter_category" id="filter_category">
+                <option value="">הכל</option>
+                <?php foreach ($categories as $category): ?>
+                    <?php if($category->category_name != ''){?>
+                    <option value="<?php echo esc_attr($category->category_name); ?>" <?php selected($filter_category, $category->category_name); ?>>
+                        <?php echo esc_html($category->category_name); ?>
+                    </option>
+                    <?php }?>
+                <?php endforeach; ?>
+            </select>
+
+            <label for="filter_author">סינון לפי יוצר:</label>
+            <select name="filter_author" id="filter_author">
+                <option value="">הכל</option>
+                <?php foreach ($authors as $author): ?>
+                    <?php if($author->author_name != ''){?>
+                    <option value="<?php echo esc_attr($author->author_name); ?>" <?php selected($filter_author, $author->author_name); ?>>
+                        <?php echo esc_html($author->author_name); ?>
+                    </option>
+                    <?php }?>
+                <?php endforeach; ?>
+            </select>
+
+            <button type="submit" class="button">סנן</button>
+        </form>
+
+        <!-- Sort Links -->
+        <div style="padding-right:25px;border-bottom:solid 1px #ddd;text-align:right;margin-bottom:15px;margin-top:10px;">
+            <a style="font-size:15px;color:cornflowerblue;padding-left:5px;" href="<?php echo add_query_arg(array('orderby' => 'date_of_regist', 'order' => $order === 'asc' ? 'desc' : 'asc'), $current_url); ?>">מיון לפי תאריך</a> | 
+            <a style="font-size:15px;color:cornflowerblue;padding-left:5px;" href="<?php echo add_query_arg(array('orderby' => 'category_name', 'order' => $order === 'asc' ? 'desc' : 'asc'), $current_url); ?>">מיון לפי קטגוריה</a> | 
+            <a style="font-size:15px;color:cornflowerblue;padding-left:5px;" href="<?php echo add_query_arg(array('orderby' => 'author_name', 'order' => $order === 'asc' ? 'desc' : 'asc'), $current_url); ?>">מיון לפי כותב</a> | 
+            <a style="font-size:15px;color:cornflowerblue;padding-left:5px;" href="<?php echo add_query_arg(array('orderby' => 'valid_user', 'order' => $order === 'asc' ? 'desc' : 'asc'), $current_url); ?>">מיון לפי אימות</a>
+        </div>
+
+        <table class="wp-list-table widefat fixed striped">
+            <thead>
+                <tr>
+                    <th><a href="<?php echo add_query_arg(array('orderby' => 'id', 'order' => $order === 'asc' ? 'desc' : 'asc'), $current_url); ?>">ID</a></th>
+                    <th><a href="<?php echo add_query_arg(array('orderby' => 'email', 'order' => $order === 'asc' ? 'desc' : 'asc'), $current_url); ?>">נרשם</a></th>
+                    <th><a href="<?php echo add_query_arg(array('orderby' => 'category_name', 'order' => $order === 'asc' ? 'desc' : 'asc'), $current_url); ?>">קטגוריה</a></th>
+                    <th><a href="<?php echo add_query_arg(array('orderby' => 'author_name', 'order' => $order === 'asc' ? 'desc' : 'asc'), $current_url); ?>">כותב</a></th>
+                    <th>מתכון</th>
+                    <th>ip לקוח</th>
+                    <th><a href="<?php echo add_query_arg(array('orderby' => 'date_of_regist', 'order' => $order === 'asc' ? 'desc' : 'asc'), $current_url); ?>">תאריך רישום</a></th>
+                    <th>הסכים לתנאי שימוש</th>
+                    <th>סיסמה</th>
+                    <th><a href="<?php echo add_query_arg(array('orderby' => 'valid_user', 'order' => $order === 'asc' ? 'desc' : 'asc'), $current_url); ?>">אימות מייל</a></th>
+                    <th>פעולה</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($data as $row) : ?>
+                    <tr>
+                        <td><?php echo $row->id; ?></td>
+                        <td><?php echo $row->email; ?></td>
+                        <td><?php echo $row->category_name; ?></td>
+                        <td><?php echo $row->author_name; ?></td>
+                        <td><?php echo $row->recipe_name; ?></td>
+                        <td><?php echo $row->user_ip; ?></td>
+                        <td><?php echo $row->date_of_regist; ?></td>
+                        <td><?php echo $row->user_subscribe == 'on' ? 'כן' : ''; ?></td>
+                        <td><?php echo $row->pass_word; ?></td>
+                        <td><?php echo $row->valid_user == 'yes' ? 'מאומת' : $row->valid_user; ?></td>
+                        <td>
+                            <form method="post" onsubmit="return validate(this);">
+                                <input type="hidden" name="action" value="delete_notification_user">
+                                <input type="hidden" name="user_id" value="<?php echo $row->id; ?>">
+                                <button type="submit" class="button button-primary">מחק</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <?php
+        $page_links = paginate_links(array(
+            'base' => add_query_arg('paged', '%#%'),
+            'format' => '',
+            'prev_text' => __('&laquo; Previous'),
+            'next_text' => __('Next &raquo;'),
+            'total' => ceil($total_items / $per_page),
+            'current' => $current_page,
         ));
 
-        // Output the data in a table format
+        if ($page_links) {
+            echo '<div class="tablenav" style="width:100%;text-align:center;"><div style="width:100%;text-align:center;" class="tablenav-pages">' . $page_links . '</div></div>';
+        }
         ?>
-        <script>
-            function validate(form) {
+    </div>
+    <?php
+}
 
-                return confirm('בטוח למחוק?');
-
-            }
-        </script>
-        <div class="wrap">
-            <h1>Notification Users</h1>
-            <table class="wp-list-table widefat fixed striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>נרשם</th>
-                        <th>קטגוריה</th>
-                        <th>כותב</th>
-                        <th>מתכון</th>
-                        <th>ip לקוח</th>
-                        <th>תאריך רישום </th>
-                        <th>הסכים לתנאי שימוש</th>
-                        <th>סיסמה</th>
-                        <th>אימות מייל</th>
-                        <th>Action</th> <!-- New column for delete button -->
-                        <!-- Add more table headers as needed -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($data as $row) : ?>
-                        <tr>
-                            <td><?php echo $row->id; ?></td>
-                            <td><?php echo $row->email; ?></td>
-                            <td><?php echo $row->category_name; ?></td>
-                            <td><?php echo $row->author_name; ?></td>
-                            <td><?php echo $row->recipe_name; ?></td>
-                            <td><?php echo $row->user_ip; ?></td>
-                            <td><?php echo $row->date_of_regist; ?></td>
-                            <td><?php echo $row->user_subscribe == 'on' ? 'כן' : '' ?></td>
-                            <td><?php echo $row->pass_word; ?></td>
-                            <td><?php echo $row->valid_user == 'yes' ? 'מאומת' :  $row->valid_user; ?></td>
-                            <td>
-                                <form method="post" onsubmit="return validate(this);">
-                                    <input type="hidden" name="action" value="delete_notification_user">
-                                    <input type="hidden" name="user_id" value="<?php echo $row->id; ?>">
-                                    <button type="submit" class="button button-primary">מחק</button>
-                                </form>
-                            </td>
-                            <!-- Add more table cells for additional columns -->
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-
-            <!-- Pagination -->
-            <?php
-            $page_links = paginate_links(array(
-                'base' => add_query_arg('paged', '%#%'),
-                'format' => '',
-                'prev_text' => __('&laquo; Previous'),
-                'next_text' => __('Next &raquo;'),
-                'total' => ceil($total_items / $per_page),
-                'current' => $current_page,
-            ));
-
-            if ($page_links) {
-                echo '<div class="tablenav" style="width:100%;text-align:center;"><div style="width:100%;text-align:center;" class="tablenav-pages">' . $page_links . '</div></div>';
-            }
-            ?>
-        </div>
-<?php
-    }
 
 
     public function Delete_handle_delete_notification_user()
