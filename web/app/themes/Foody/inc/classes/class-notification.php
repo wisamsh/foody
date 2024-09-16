@@ -1059,7 +1059,7 @@ color:#fff;
     global $wpdb;
 
     // Items per page
-    $per_page = 40;
+    $per_page = 50;
 
     // Current page number
     $current_page = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
@@ -1122,6 +1122,11 @@ color:#fff;
 
     // Output the data
     ?>
+     <script>
+        function validate(form) {
+            return confirm('בטוח למחוק?'); // Confirm delete
+        }
+    </script>
     <div class="wrap">
         <h1>Notification Users</h1>
 
@@ -1939,9 +1944,7 @@ position: relative;
 
 @media only screen and (min-width: 1000px) {
 .vfimg{
-position: absolute;
-    top: 0px;
-    left: 0;
+margin: 0 auto;
 }
 }
 
