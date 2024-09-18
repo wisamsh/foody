@@ -10,6 +10,7 @@ class Foody_Notification
     private $email_Image_Header;
     private $EnvyormentType;
     private $SmoovListName;
+    private $notification_utm_code;
 
     function __construct()
     {
@@ -26,6 +27,7 @@ class Foody_Notification
         $this->group_nots['missing_email'] = get_field('missing_email', 'option');
         $this->group_nots['email_exisit'] = get_field('email_exisit', 'option');
         $this->group_nots['success_regist'] = get_field('success_regist', 'option');
+        $this->notification_utm_code = get_field('notification_utm_code', 'option') ;
         $this->api_key = get_field("mailgun_api_key", "option");
         // $this->api_key = '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';
         $this->SmoovListName = 'Notification-' . date('d-m-Y');
@@ -1585,7 +1587,7 @@ color:#fff;
          <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'>{$category}</span> </div>";
             $html .= "</div>";
             $html .= '<div style="justify-content: center;align-items: center; align-items: center;padding:10px;margin:0 auto;margin-top:30px;width:192px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;">
-        <a target="_blank" style="color:#fff !important;text-decoration: none;" href="' . $this->EnvyormentType . '/?p=' . $post->ID . '" > לעמוד מתכון >></a></div>  ';
+        <a target="_blank" style="color:#fff !important;text-decoration: none;" href="' . $this->EnvyormentType . '/?p=' . $post->ID . $this->notification_utm_code .'" > לעמוד מתכון >></a></div>  ';
             // $html .= '<span style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="'.$this->EnvyormentType .'/unsubscribe?unid=' . $uniqID . '&email='.$email.'" >לביטול הרשמה</a></span> |  ';
             $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="' . $this->EnvyormentType . '/unsubscribe?cat=' . $cat_ID . '-' . $author['id'] . '&unid=' . $uniqID . '&email=' . $myemail . '" >להסרה מרשימת התפוצה</a></div> ';
             $html .= '</div>'; //div closer
@@ -1788,7 +1790,6 @@ color:#fff;
         global $wpdb;
         $table_name = $wpdb->prefix . "notification_recipes_to_send";
         $SqlQuery = " delete from {$table_name} where recipe_id IN ({$rid}) limit 15 ";
-
         $Results = $wpdb->get_results($SqlQuery);
         return $Results;
     }
