@@ -10,7 +10,7 @@
 */
 //Wisam Code Checking Redirection : 
 $CheckRedirectionPage = new CheckRedirectionPage;
-       print_r($CheckRedirectionPage->GetRedirectionPages());
+ print_r($CheckRedirectionPage->GetRedirectionPages());
 
 
 
