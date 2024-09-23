@@ -17,6 +17,11 @@ class NS_Foody_Hedear
         self::$tag_manager_id = get_option('foody_google_tag_manager_id', GOOGLE_TAG_MANAGER_ID);
     }
 
+
+
+
+
+    
     public function the_socials_bar()
     {
         $show_instagram = get_theme_mod('foody_show_social_instagram');
