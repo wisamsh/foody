@@ -3,8 +3,6 @@
 $CheckRedirectionPage = new CheckRedirectionPage;
  print_r($CheckRedirectionPage->GetRedirectionPages());
 
-require(get_template_directory().'/inc/classes/class-bootstrap.php');
-
 
 $show_accessibility = get_theme_mod('foody_show_accessibility') || get_theme_mod('show_white_label_accessibility');
 $google_site_verification_id = get_option( 'foody_google_site_verification_id', false );
@@ -23,7 +21,7 @@ $show_accessibility = true;
 ?>
 <meta charset="<?php bloginfo('charset'); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-<?php require( __DIR__ . '/cache-tags.php' );?>
+<?php //require( __DIR__ . '/cache-tags.php' );?>
 <?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <?php } ?>
@@ -35,7 +33,7 @@ $show_accessibility = true;
 <?php 
 //Wisam : this fo white labels only - meta description and meta keywords======================
 if($_SERVER['HTTP_HOST'] != "foody.co.il"){
-require (__DIR__ . '/w_helpers/whitelabels_category-seo.php');
+//require (__DIR__ . '/w_helpers/whitelabels_category-seo.php');
 }
 //End meta for whitlabels=====================================================================
 ?>
@@ -63,3 +61,18 @@ if(window.performance && typeof window.performance.mark == 'function')
 </script>
 
 <?php } ?>
+<body>
+<div class="container-xl">
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      Column
+    </div>
+    <div class="col">
+      Column
+    </div>
+    <div class="col">
+      Column
+    </div>
+  </div>
+</div>

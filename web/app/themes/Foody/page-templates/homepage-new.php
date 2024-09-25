@@ -9,8 +9,7 @@
 
 
 get_header('new');
-
 ?>
 
 <?php
-//get_footer();
+get_footer('new');
