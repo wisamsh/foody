@@ -6,7 +6,7 @@ class Foody_Notification
     private $use_agreement_url;
     private $use_agreement_text;
     private $group_nots;
-    private  $api_key;
+    private $api_key;
     private $email_Image_Header;
     private $EnvyormentType;
     private $SmoovListName;
@@ -1785,11 +1785,11 @@ color:#fff;
     //DELETING RECIPIES AFTER SENDIG NOTIFICTIONS TO USERS:
 
 
-    public function DELETE_Recipe_After_Notificion($rid)
+    public function DELETE_Recipe_After_Notificion()
     {
         global $wpdb;
         $table_name = $wpdb->prefix . "notification_recipes_to_send";
-        $SqlQuery = " delete from {$table_name} where recipe_id IN ({$rid}) limit 15 ";
+        $SqlQuery = " delete from {$table_name}  limit 90 ";
         $Results = $wpdb->get_results($SqlQuery);
         return $Results;
     }
@@ -1837,16 +1837,17 @@ color:#fff;
                 // Reset the $htmlObject array for the next email (already done by reinitializing in the outer loop)
             }
         }
-        $idsToDelete = [];
-        foreach ($recipiesToDelete as $v) {
-            foreach ($v as $r) {
-                $idsToDelete[$r->recipe_id]  = $r->recipe_id;
-            }
-        }
-        $DeleteTheseFuckers = implode(',', $idsToDelete);
-        if ($DeleteTheseFuckers) {
-            $this->DELETE_Recipe_After_Notificion($DeleteTheseFuckers);
-        }
+        // $idsToDelete = [];
+        // foreach ($recipiesToDelete as $v) {
+        //     foreach ($v as $r) {
+        //         $idsToDelete[$r->recipe_id]  = $r->recipe_id;
+        //     }
+        // }
+        // $DeleteTheseFuckers = implode(',', $idsToDelete);
+        // if ($DeleteTheseFuckers) {
+        //     $this->DELETE_Recipe_After_Notificion($DeleteTheseFuckers);
+        // }
+        $this->DELETE_Recipe_After_Notificion(); //this delete all (90 recipies)
     }
 
 
