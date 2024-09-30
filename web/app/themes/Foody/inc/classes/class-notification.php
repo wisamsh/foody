@@ -45,7 +45,7 @@ class Foody_Notification
 
         if (is_user_logged_in() && current_user_can('administrator') && ($this->CheckRecepiesToSend())) {
 
-            if (date('N') == 4) { // 4 for Thursday
+            if (date('N') == 4 ) { // 4 for Thursday
                 $this->FilterEmailsContainer();
             }
         }
@@ -1393,11 +1393,12 @@ color:#fff;
     public function on_SavingRecipe($post_id, $post, $update)
     {
         $post_date = get_the_date('d-m-Y', $post_id);
+
         //NEED TO REMOVE COMMENTS BELLOW SO THAT WORK WITH NEW RECIPIES ONLY 
         // AND NOT UPDATED RECIPIES
         //======================================================================
         if ($this->daysDifference($post_date, date("d-m-Y")) > 2) {
-           return;
+            return;
         }
         //=======================================================================
         if (wp_is_post_revision($post_id)) {
@@ -1579,7 +1580,7 @@ color:#fff;
             $html .= '<img style="width:98%;" src="' .  $featured_image_url  . '"/>';
             $html .= '<h1 style="width:90%;text-align:center;margin:0 auto;margin-top:20px;font-size:35px; color:#57A0BB;margin-bottom:30px;">' . $recipeTitle . '</h1>';
             $html .= '<div  style="width:98%; margin:0 auto; text-align:center; border:solid 3px #57A0BB;padding-bottom: 20px;"> '; //new recipe wrapp
-            $html .= '<h3 style="color:#333333;">מתכון חדש בקטגוריה:</h3>';
+            $html .= '<h3 style="color:#333333;">מתכון חדש בקטגוריה: </h3>';
             $html .= "<div>
         <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'> 
         {$author['display_name']}</span>
