@@ -1393,12 +1393,11 @@ color:#fff;
     public function on_SavingRecipe($post_id, $post, $update)
     {
         $post_date = get_the_date('d-m-Y', $post_id);
-
         //NEED TO REMOVE COMMENTS BELLOW SO THAT WORK WITH NEW RECIPIES ONLY 
         // AND NOT UPDATED RECIPIES
         //======================================================================
         if ($this->daysDifference($post_date, date("d-m-Y")) > 2) {
-            return;
+           return;
         }
         //=======================================================================
         if (wp_is_post_revision($post_id)) {
