@@ -23,6 +23,7 @@ $this->share = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share.pn
 }
 public function my_enqueue_styles() {
     // Enqueue new site style
+   
     wp_enqueue_style( 'new-site-style', get_template_directory_uri() . '/resources/sass/newsite/new_site_style.css', array(), '1.0.0' );
     add_action( 'wp_enqueue_scripts', array( $this, 'LazyLoadScript' ) );
 }
@@ -38,9 +39,17 @@ public function LazyLoadScript() {
     );
 }
 
-public function LazyLoadImage($src, $alt, $title , $class){
-return "<img data-src='{$src}' alt='{$alt}' class='lazyload {$class}'>";
+public function LazyLoadImage($src, $alt=null, $title=null , $class=null){
+return "<div class='image-wrapper'><img  data-src='{$src}' alt='{$alt}' class='lazyload {$class}' />
+<div class='spinner'></div>
+</div>";
 }
+
+
+
+
+
+
 
 }//END CLASS
 ?>

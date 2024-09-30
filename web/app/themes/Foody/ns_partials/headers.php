@@ -4,6 +4,9 @@
 $CheckRedirectionPage = new CheckRedirectionPage;
 print_r($CheckRedirectionPage->GetRedirectionPages());
 $google_site_verification_id = get_option('foody_google_site_verification_id', false);
+$FoodyHeader_NewSite = new FoodyHeader_NewSite;
+//LazyLoadImage
+
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?> dir="rtl">
@@ -59,7 +62,10 @@ $google_site_verification_id = get_option('foody_google_site_verification_id', f
   <div class="container-fluid text-center">
     <div class="row">
       <div class="col">
-        הטיפים של קרין גורן לעוגת גבינה שלא נופלת
+        <?php 
+        
+       echo $FoodyHeader_NewSite->LazyLoadImage('https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg');
+        ?>
       </div>
       <div class="col">
         Column

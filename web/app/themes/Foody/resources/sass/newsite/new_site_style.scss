@@ -1,0 +1,36 @@
+img.lazyload {
+    width: 100%; /* or specific dimensions */
+    height: auto;
+    object-fit: cover; /* Ensures the GIF fits nicely */
+    background-color: #f0f0f0; /* Optional background color while loading */
+}
+.image-wrapper {
+    position: relative;
+    width: 100%; /* or set the specific dimensions */
+    height: auto;
+}
+
+.image-wrapper img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    margin-left: -20px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

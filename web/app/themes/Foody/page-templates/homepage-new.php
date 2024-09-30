@@ -7,7 +7,7 @@
  * @since Foody WordPress 1.0
  */
 
-$FoodyHeader_NewSite = new FoodyHeader_NewSite;
+
 get_header('frontpage');
 ?>
 
