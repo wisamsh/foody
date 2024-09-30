@@ -96,6 +96,7 @@ module.exports = env => {
             courseshomepage: ["./resources/js/courses-homepage.entry", "./resources/js/page-load.entry"],
             courseregister: ["./resources/js/course-register.entry", "./resources/js/page-load.entry"],
             style: ["./resources/sass/app.scss"],
+            //new_site_style: ["./resources/sass/newsite/new_site_style.scss"],
             // homepage: ["./resources/sass/homepage_app.scss"],
         },
         output: {

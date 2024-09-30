@@ -1332,4 +1332,3 @@ if($_SERVER['SERVER_NAME'] == 'happyfood.foody.co.il' || $_SERVER['SERVER_NAME']
 require get_template_directory() . '/w_helpers/happy.php';
 }
 
-$Bootstraper = new Bootstrap5 ; 

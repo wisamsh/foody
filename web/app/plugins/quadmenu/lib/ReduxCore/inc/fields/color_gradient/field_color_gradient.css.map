@@ -1,7 +1,1 @@
-{
-"version": 3,
-"mappings": "AACI,8CAAe;EACX,OAAO,EAAE,YAAY;AAEzB,wCAAS;EACL,YAAY,EAAE,IAAI;;AAI1B,oCAAqC;EAE7B,8CAAe;IACX,OAAO,EAAE,KAAK;IACd,UAAU,EAAE,iBAAiB",
-"sources": ["field_color_gradient.scss"],
-"names": [],
-"file": "field_color_gradient.css"
-}
+{"version":3,"sources":["field_color_gradient.scss","field_color_gradient.css"],"names":[],"mappings":"AACI;EACI,qBAAA;ACAR;ADEI;EACI,kBAAA;ACAR;;ADIA;EAEQ;IACI,cAAA;IACA,6BAAA;ECFV;AACF","file":"field_color_gradient.css"}

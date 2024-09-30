@@ -3,18 +3,11 @@
 //Wisam Code Checking Redirection : 
 $CheckRedirectionPage = new CheckRedirectionPage;
 print_r($CheckRedirectionPage->GetRedirectionPages());
-$header = new Foody_Header();
-$user = new Foody_User();
-$user_param = is_user_logged_in() ? $user->user->ID : 'false';
-$show_accessibility = get_theme_mod('foody_show_accessibility') || get_theme_mod('show_white_label_accessibility');
 $google_site_verification_id = get_option('foody_google_site_verification_id', false);
-// always show on main site
-if (!is_multisite() || is_main_site()) {
-  $show_accessibility = true;
-}
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?> dir="rtl">
+
 <head>
   <?php // for facebook metatags
   //require (__DIR__ . '/w_helpers/taboola_in_head.php');
@@ -29,22 +22,9 @@ if (!is_multisite() || is_main_site()) {
   <?php } ?>
   <meta name="theme-color" content="#ffffff">
   <link rel="profile" href="http://gmpg.org/xfn/11">
-  <?php
-  //Wisam : this fo white labels only - meta description and meta keywords======================
-  // if ($_SERVER['HTTP_HOST'] != "foody.co.il") {
-  //   require(__DIR__ . '/w_helpers/whitelabels_category-seo.php');
-  // }
-  //End meta for whitlabels=====================================================================
-  ?>
-  <?php Foody_Header::google_tag_manager(); 
-  require_once(get_template_directory() . '/ns_partials/caringoren.php');
-  ?>
+
   <?php wp_head(); ?>
 </head>
-
-<?php if (strpos(get_page_template(), 'foody-course-register.php')) { ?>
-  <script src="https://public.bankhapoalim.co.il/bitcom/sdk"></script>
-<?php } ?>
 
 <body <?php body_class(); ?>
   <?php if (get_post_type() == 'questions') {
@@ -61,8 +41,6 @@ if (!is_multisite() || is_main_site()) {
   }
   ?>
 
-  <div id="fb-root"></div>
-  <?php Foody_Header::google_tag_manager_iframe(); ?>
 
   <?php if (!empty($edit_link = get_edit_post_link()) && !wp_is_mobile()): ?>
     <div dir="rtl" style="text-align: right; max-width: 960px;margin: 0 auto;position: relative;">
@@ -76,43 +54,23 @@ if (!is_multisite() || is_main_site()) {
       ?>
     </div>
   <?php endif; ?>
-  <div id="page" class="container-fluid site">
-    <?php $post_type = is_single() && isset($post) && isset($post->post_type) ? $post->post_type : ''; ?>
-    <header id="masthead" class="site-header no-print <?php if ($post_type == 'foody_recipe' && wp_is_mobile()) {
-                                                        echo 'hidden-recipe-header';
-                                                      } ?>">
-      <!-- #site-navigation -->
-    </header><!-- #masthead -->
 
 
-    <?php if (is_single() && $post_type == 'foody_recipe') {
-      // add header for print
-      Foody_Header::getPrintHeader();
-    } ?>
-    <?php
-    if (get_page_template_slug() === 'page-templates/homepage.php') {
-      $brands_avenue_group = get_field('brands_avenue', 'foody_brands_avenue');
-      if (isset($brands_avenue_group['brands']) && !empty($brands_avenue_group['brands'])) { ?>
-
-    <?php
-      }
-    }
-    ?>
-<header>
-<div class="container text-center">
-  <div class="row">
-    <div class="col">
-      TODO UPLOAD PHOTOS TO S3BUCKET IN AWS FOR CDN
-    </div>
-    <div class="col">
-      Column
-    </div>
-    <div class="col">
-      Column
+  <div class="container-fluid text-center">
+    <div class="row">
+      <div class="col">
+        הטיפים של קרין גורן לעוגת גבינה שלא נופלת
+      </div>
+      <div class="col">
+        Column
+      </div>
+      <div class="col">
+        Column
+      </div>
     </div>
   </div>
-</div>
-      </header>
+
+  <div id="page" class="container-fluid site">
     <div id="content" class="site-content">
       <?php
 
@@ -121,4 +79,3 @@ if (!is_multisite() || is_main_site()) {
       require_once(get_template_directory() . "/w_helpers/foody-manual-scripts.php");
 
       ?>
-      

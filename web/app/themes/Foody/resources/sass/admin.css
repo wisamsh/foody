@@ -1,0 +1,101 @@
+/* ACF "half-repeater" class, display repeaters in horizontal columns */
+.half-repeater .acf-repeater tr.acf-row:not(.acf-clone) {
+  display: inline-block !important;
+  width: 50% !important;
+}
+
+.half-repeater .acf-repeater tr.acf-row:not(.acf-clone) td.acf-fields {
+  width: 100%;
+}
+
+.acf-field {
+  min-height: 0 !important;
+}
+
+.q-repeater .acf-repeater tr.acf-row:not(.acf-clone) {
+  display: inline-block !important;
+  width: 25% !important;
+}
+
+.q-repeater .acf-repeater tr.acf-row:not(.acf-clone) td.acf-fields {
+  width: 100%;
+}
+
+.acf-row-handle .acf-icon {
+  z-index: 4000;
+}
+
+.acf-actions .acf-button.disabled {
+  display: none;
+}
+
+.acf-field-repeater[data-name=amounts] > .acf-label {
+  display: inline-block;
+  max-width: 10%;
+}
+.acf-field-repeater[data-name=amounts] > .acf-label + .acf-input {
+  display: inline-block;
+  min-width: 90%;
+}
+.acf-field-repeater[data-name=amounts] .acf-field {
+  padding: 5px;
+}
+.acf-field-repeater[data-name=amounts] [data-name=unit] .acf-label, .acf-field-repeater[data-name=amounts] [data-name=amount] .acf-label {
+  display: inline-block;
+  max-width: 25%;
+  vertical-align: sub;
+}
+.acf-field-repeater[data-name=amounts] [data-name=unit] .acf-input, .acf-field-repeater[data-name=amounts] [data-name=amount] .acf-input {
+  display: inline-block;
+  width: 75%;
+}
+
+.acf-field-post-object[data-name=ingredient] > .acf-label {
+  display: inline-block;
+  max-width: 10%;
+}
+.acf-field-post-object[data-name=ingredient] > .acf-label + .acf-input {
+  display: inline-block;
+  min-width: 90%;
+}
+
+#edittag {
+  max-width: 100%;
+}
+
+#edittag .acf-fields.-left > .acf-field {
+  padding-left: 0;
+  padding-right: 220px;
+}
+
+.acf-fields.-left > .acf-field {
+  padding: 15px 0;
+}
+
+.acf-fields > .acf-field:first-child {
+  border-top-width: 0;
+}
+
+.edit-tags-php.taxonomy-category #col-container.wp-clearfix, .edit-tags-php.taxonomy-post_tag #col-container.wp-clearfix {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.edit-tags-php.taxonomy-category #col-container.wp-clearfix #col-left, .edit-tags-php.taxonomy-post_tag #col-container.wp-clearfix #col-left {
+  float: right;
+  width: 90%;
+}
+.edit-tags-php.taxonomy-category #col-container.wp-clearfix #col-right, .edit-tags-php.taxonomy-post_tag #col-container.wp-clearfix #col-right {
+  float: left;
+  width: 100%;
+}
+
+.foody-list-item-spacing {
+  background-color: aliceblue;
+}
+.foody-list-item-spacing:before {
+  content: " ";
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background-color: #0A246A;
+}/*# sourceMappingURL=admin.css.map */
