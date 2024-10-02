@@ -60,7 +60,7 @@ class Custom_Menu_Structure {
 
         if (!empty($menu_tree)) {
             // Check if this is a nested <ul> (add $nested_ul_class for nested lists)
-            $rtn = '<ul class="' . esc_attr($ul_class) . '">';
+            $rtn = '<ul class="' . esc_attr($ul_class) . '"><div class="saparetor"></div>';
 
             foreach ($menu_tree as $menu_item) {
                 $rtn .= '<li>';
