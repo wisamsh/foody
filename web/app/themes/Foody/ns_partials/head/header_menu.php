@@ -1,16 +1,4 @@
-<div class="container-fluid text-center primary_menu_container">
-    <div class="row">
-      <div class="col">
-      Column
-      </div>
-      <div class="col">
-        Column
-      </div>
-      <div class="col">
-        Column
-      </div>
-    </div>
-  </div>
+<?php echo $FoodyHeader_NewSite->GetMainHeader() ; ?>
   <div class="container menu_container">
   
   <?php

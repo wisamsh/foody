@@ -47,13 +47,21 @@ img.lazyload {
 }
 
 .primary_menu_container {
+   
     background: #fff;
-    height: 50px;
+    max-height: 50px;
+    align-content: center;
+    align-items: center;
+.row{
+    align-items: center;
+}
 
 }
 
 .menu_container {
+    display: none;
     background: none;
+    
 }
 
 .newsitenav {
@@ -89,4 +97,11 @@ img.lazyload {
         }
     }
 
+}
+.mainhamburger{
+    height: 18px !important;
+}
+.custom-logo{
+    height: 48px !important;
+   
 }

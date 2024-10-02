@@ -47,10 +47,16 @@ img.lazyload {
 }
 .primary_menu_container {
   background: #fff;
-  height: 50px;
+  max-height: 50px;
+  align-content: center;
+  align-items: center;
+}
+.primary_menu_container .row {
+  align-items: center;
 }
 
 .menu_container {
+  display: none;
   background: none;
 }
 
@@ -81,4 +87,12 @@ img.lazyload {
 }
 .newsitenav ul li a {
   font-size: 14px;
+}
+
+.mainhamburger {
+  height: 18px !important;
+}
+
+.custom-logo {
+  height: 48px !important;
 }/*# sourceMappingURL=new_site_style.css.map */
