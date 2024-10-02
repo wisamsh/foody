@@ -64,7 +64,7 @@ $FoodyHeader_NewSite = new FoodyHeader_NewSite;
       <div class="col">
         <?php 
         
-       echo $FoodyHeader_NewSite->LazyLoadImage('https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg');
+       echo $FoodyHeader_NewSite->LazyLoadImage('https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg', '');
         ?>
       </div>
       <div class="col">

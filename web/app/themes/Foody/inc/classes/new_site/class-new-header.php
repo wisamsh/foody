@@ -8,6 +8,7 @@ public $share_facebook;
 public $share_instragram;
 public $share_youtube;
 public $share ;
+public $foodload ;
 
 function __construct()
 {
@@ -20,6 +21,7 @@ $this->share_facebook ="https://foody-media.s3.eu-west-1.amazonaws.com/new-site/
 $this->share_instragram = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share-instragram.png";
 $this->share_youtube="https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share-youtube.png";
 $this->share = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share.png";
+$this->foodload = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/foodloading.gif";
 }
 public function my_enqueue_styles() {
     // Enqueue new site style
@@ -39,10 +41,11 @@ public function LazyLoadScript() {
     );
 }
 
-public function LazyLoadImage($src, $alt=null, $title=null , $class=null){
-return "<div class='image-wrapper'><img  data-src='{$src}' alt='{$alt}' class='lazyload {$class}' />
-<div class='spinner'></div>
-</div>";
+public function LazyLoadImage($datasrc, $beforsrc  ,  $alt=null, $title=null , $class=null){
+    $beforsrc = '' ?? $this->foodload ;
+    return "
+<img  data-src='{$datasrc}' src='{$beforsrc}'  alt='{$alt}' class='lazyload {$class}' />
+";
 }
 
 
