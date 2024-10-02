@@ -10,6 +10,7 @@ class FoodyHeader_NewSite
     public $share_youtube;
     public $share;
     public $foodload;
+    public $menucloser ;
 
     function __construct()
     {
@@ -23,6 +24,7 @@ class FoodyHeader_NewSite
         $this->share_youtube = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share-youtube.png";
         $this->share = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share.png";
         $this->foodload = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/foodloading.gif";
+        $this->menucloser ="https://foody-media.s3.eu-west-1.amazonaws.com/new-site/closer.png";
     }
     public function my_enqueue_styles()
     {
@@ -30,6 +32,8 @@ class FoodyHeader_NewSite
 
         wp_enqueue_style('new-site-style', get_template_directory_uri() . '/resources/sass/newsite/new_site_style.css', array(), '1.0.0');
         add_action('wp_enqueue_scripts', array($this, 'LazyLoadScript'));
+        add_action('wp_enqueue_scripts', array($this, 'mainpage_New_SiteJSEnqueueScript'));
+        
     }
 
     public function LazyLoadScript()
@@ -43,6 +47,17 @@ class FoodyHeader_NewSite
             true                           // Load in the footer (true) or header (false)
         );
     }
+
+
+public function mainpage_New_SiteJSEnqueueScript(){
+    wp_enqueue_script(
+        'foody_MainPageJS',           // Handle for the script
+        get_template_directory_uri() . '/resources/js/new-site/main_page_sitescript.js',  // Path to the script file
+        array('jquery'),               // Dependencies (optional)
+        '1.0.0',                       // Version number
+        true                           // Load in the footer (true) or header (false)
+    );
+}
 
     public function LazyLoadImage($datasrc, $beforsrc,  $alt = null, $title = null, $class = null)
     {
@@ -71,13 +86,14 @@ public function GetLogo(){
 public function GetMainHeader(){
    $rtn = "<div id='mainmenucontainer' class='container-fluid text-center primary_menu_container'>
     <div class='row'>
-      <div class='col'>
+      <div class='col tar'>
       <img src='{$this->hamburger}' class='mainhamburger'/>
+      <img src='{$this->menucloser}' class='manucloser'/>
       </div>
-      <div class='col'>
+      <div class='col tac'>
       ".$this->GetLogo()."
       </div>
-      <div class='col'>
+      <div class='col tal'>
         Column
       </div>
     </div>

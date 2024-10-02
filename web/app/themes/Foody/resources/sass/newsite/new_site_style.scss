@@ -1,3 +1,21 @@
+:root {
+     
+}
+.tar{
+    text-align: right;
+    
+}
+.tal{
+    text-align: left;
+   
+}
+.tac{
+    text-align: center;
+   
+}
+body{
+    direction: rtl;
+}
 img.lazyload {
     width: 100%;
     /* or specific dimensions */
@@ -65,6 +83,7 @@ img.lazyload {
 }
 
 .newsitenav {
+    position: relative;
     display: flex;
     list-style: none;
     width: 100%;
@@ -98,10 +117,29 @@ img.lazyload {
     }
 
 }
+.manucloser{
+    height: 18px !important;
+    cursor: pointer;
+    display: none;
+}
 .mainhamburger{
     height: 18px !important;
+    cursor: pointer;
 }
 .custom-logo{
     height: 48px !important;
    
 }
+.second-level-item{
+    width:fit-content;
+    display: block;
+}
+.nested_submenu{
+    padding: 0px !important;
+}
+@media (min-width: 1280px) { 
+    .tar{
+        margin-right: 5%;
+    }
+    .tal{margin-left: 5%;}
+ }
