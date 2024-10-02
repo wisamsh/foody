@@ -56,25 +56,13 @@ $FoodyHeader_NewSite = new FoodyHeader_NewSite;
       }
       ?>
     </div>
-  <?php endif; ?>
+  <?php endif;
+  require(get_template_directory() . '/ns_partials/head/header_menu.php');
+  
+  ?>
 
 
-  <div class="container-fluid text-center">
-    <div class="row">
-      <div class="col">
-        <?php 
-        
-       echo $FoodyHeader_NewSite->LazyLoadImage('https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg', '');
-        ?>
-      </div>
-      <div class="col">
-        Column
-      </div>
-      <div class="col">
-        Column
-      </div>
-    </div>
-  </div>
+  
 
   <div id="page" class="container-fluid site">
     <div id="content" class="site-content">

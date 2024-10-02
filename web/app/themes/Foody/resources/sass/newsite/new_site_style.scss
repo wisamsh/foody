@@ -1,8 +1,11 @@
 img.lazyload {
-    width: 100%; /* or specific dimensions */
+    width: 100%;
+    /* or specific dimensions */
     height: auto;
-    object-fit: cover; /* Ensures the GIF fits nicely */
-    background-color: #f0f0f0; /* Optional background color while loading */
+    object-fit: cover;
+    /* Ensures the GIF fits nicely */
+    background-color: #f0f0f0;
+    /* Optional background color while loading */
 }
 
 .image-wrapper {
@@ -37,7 +40,53 @@ img.lazyload {
     0% {
         background-position: 200% 0;
     }
+
     100% {
         background-position: -200% 0;
     }
+}
+
+.primary_menu_container {
+    background: #fff;
+    height: 50px;
+
+}
+
+.menu_container {
+    background: none;
+}
+
+.newsitenav {
+    display: flex;
+    list-style: none;
+    width: 100%;
+    text-align: right;
+    margin-right: 2%;
+
+    li {
+        padding-right: 20px;
+        list-style: none !important;
+        width: 20%;
+        border-bottom: solid 1px #000;
+
+        a {
+            font-size: 18px;
+        }
+    }
+
+    ul {
+        text-align: right;
+        list-style-type: none; // Add a list style for nested ul
+        width: 100%;
+
+        li {
+            border-bottom: solid 0px #000;
+            text-align: right;
+
+            a {
+                font-size: 14px;
+            }
+        }
+    }
+
 }

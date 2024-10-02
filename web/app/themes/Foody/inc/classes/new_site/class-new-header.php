@@ -1,58 +1,54 @@
-<?php 
-class FoodyHeader_NewSite{
-//images : 
-public $hamburger;
-public $pintres ;
-public $print ; 
-public $share_facebook;
-public $share_instragram;
-public $share_youtube;
-public $share ;
-public $foodload ;
-
-function __construct()
+<?php
+class FoodyHeader_NewSite
 {
-    add_action( 'wp_enqueue_scripts', array($this,'my_enqueue_styles'), 1 );
-    
-$this->hamburger = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/hamburger.png";
-$this->pintres = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/pintres.png";
-$this->print = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/print.png";
-$this->share_facebook ="https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share-facebook.png";
-$this->share_instragram = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share-instragram.png";
-$this->share_youtube="https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share-youtube.png";
-$this->share = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share.png";
-$this->foodload = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/foodloading.gif";
-}
-public function my_enqueue_styles() {
-    // Enqueue new site style
-   
-    wp_enqueue_style( 'new-site-style', get_template_directory_uri() . '/resources/sass/newsite/new_site_style.css', array(), '1.0.0' );
-    add_action( 'wp_enqueue_scripts', array( $this, 'LazyLoadScript' ) );
-}
+    //images : 
+    public $hamburger;
+    public $pintres;
+    public $print;
+    public $share_facebook;
+    public $share_instragram;
+    public $share_youtube;
+    public $share;
+    public $foodload;
 
-public function LazyLoadScript() {
-    // Enqueue your JavaScript file
-    wp_enqueue_script(
-        'foody_lazyLoad',           // Handle for the script
-        get_template_directory_uri() . '/resources/js/new-site/lazyload.js',  // Path to the script file
-        array('jquery'),               // Dependencies (optional)
-        '1.0.0',                       // Version number
-        true                           // Load in the footer (true) or header (false)
-    );
-}
+    function __construct()
+    {
+        add_action('wp_enqueue_scripts', array($this, 'my_enqueue_styles'), 1);
 
-public function LazyLoadImage($datasrc, $beforsrc  ,  $alt=null, $title=null , $class=null){
-    $beforsrc = '' ?? $this->foodload ;
-    return "
-<img  data-src='{$datasrc}' src='{$beforsrc}'  alt='{$alt}' class='lazyload {$class}' />
-";
-}
+        $this->hamburger = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/hamburger.png";
+        $this->pintres = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/pintres.png";
+        $this->print = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/print.png";
+        $this->share_facebook = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share-facebook.png";
+        $this->share_instragram = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share-instragram.png";
+        $this->share_youtube = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share-youtube.png";
+        $this->share = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share.png";
+        $this->foodload = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/foodloading.gif";
+    }
+    public function my_enqueue_styles()
+    {
+        // Enqueue new site style
 
+        wp_enqueue_style('new-site-style', get_template_directory_uri() . '/resources/sass/newsite/new_site_style.css', array(), '1.0.0');
+        add_action('wp_enqueue_scripts', array($this, 'LazyLoadScript'));
+    }
 
+    public function LazyLoadScript()
+    {
+        // Enqueue your JavaScript file
+        wp_enqueue_script(
+            'foody_lazyLoad',           // Handle for the script
+            get_template_directory_uri() . '/resources/js/new-site/lazyload.js',  // Path to the script file
+            array('jquery'),               // Dependencies (optional)
+            '1.0.0',                       // Version number
+            true                           // Load in the footer (true) or header (false)
+        );
+    }
 
-
-
-
-
-}//END CLASS
-?>
+    public function LazyLoadImage($datasrc, $beforsrc,  $alt = null, $title = null, $class = null)
+    {
+        $beforsrc = '' ?? $this->foodload;
+        return "
+        <img  data-src='{$datasrc}' src='{$beforsrc}'  alt='{$alt}' class='lazyload {$class}' />
+        ";
+    }
+} //END CLASS

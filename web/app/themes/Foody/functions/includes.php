@@ -194,4 +194,5 @@ require_once get_template_directory() . "/inc/classes/class-foody-verefication.p
 require_once get_template_directory() . "/inc/classes/class-google-bigquery.php";
 require_once get_template_directory() . "/inc/classes/class-google-bigquery-cron.php";
 require_once get_template_directory() . "/inc/classes/new_site/class-new-header.php";
+require_once get_template_directory() . "/inc/classes/new_site/class-newsite-mainmanu.php";
 
