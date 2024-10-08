@@ -1,19 +1,22 @@
-
-.tar{
+.tar {
     text-align: right;
-    
+
 }
-.tal{
+
+.tal {
     text-align: left;
-   
+
 }
-.tac{
+
+.tac {
     text-align: center;
-   
+
 }
-body{
+
+body {
     direction: rtl;
 }
+
 img.lazyload {
     width: 100%;
     /* or specific dimensions */
@@ -63,57 +66,116 @@ img.lazyload {
 }
 
 .primary_menu_container {
-   
+position: relative;
     background: #fff;
     max-height: 50px;
     align-content: center;
     align-items: center;
-.row{
-    align-items: center;
-}
+
+    .row {
+        align-items: center;
+    }
 
 }
 
 .menu_container {
     display: none;
     background: none;
-    
+
 }
 
 .newsitenav {
-    position: relative;
-    display: flex;
-    list-style: none;
-    width: 100%;
-    text-align: right;
-    margin-right: 2%;
 
 
+    @media (min-width: 769px) {
+        position: relative;
+        display: flex;
+        list-style: none;
+        width: 100%;
+        text-align: right;
+        
+        margin-top: 20px;
+    }
 
+    @media (max-width: 768px) {
+        display: inline-grid;
+        list-style: none;
+        width: 100%;
+        text-align: right;
+
+        justify-content: center;
+        align-content: center;
+        margin: 0 auto;
+        position: relative;
+    }
 
 
     li {
         padding-right: 20px;
         list-style: none !important;
         width: 20%;
-       
         padding: 0px !important;
-            margin: 0px !important;
+        margin: 0px !important;
+
+        @media (max-width: 768px) {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+
+            :focus-within .nested_submenu {
+                display: block;
+            }
+
+        }
+
 
         a {
             font-size: 18px;
         }
 
-        &:has(> ul.nested-ul) {
+        &:has(> ul.nested-ul) { 
             // Styles for <li> that contains nested <ul>
             font-weight: bold;
             padding: 0px !important;
-            margin: 0px !important;
+            
+
+            &::before {
+                content: "";
+                position: absolute;
+                
+                width: 0;
+                height: 0;
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 6px solid #e00707;
+                margin-top: 9px;
+                right: 91px;
+                }
+                /* Black arrow */
+                :hover>.ul.nested-ul {
+                    display: block;
+                }
+
+            }
+            
+
+            @media (max-width: 768px) {
+                display: none;
+
+            }
 
             a {
+
+
                 // Specific style for <a> inside <li> with nested <ul>
                 color: #0d0f10;
             }
+
+            
+        }
+
+        :hover > ul.nested-ul {
+            display: block;
         }
     }
 
@@ -122,7 +184,7 @@ img.lazyload {
         list-style-type: none; // Add a list style for nested ul
         width: 100%;
         padding: 0px !important;
-            margin: 0px !important;
+        margin: 0px !important;
 
         li {
             border-bottom: solid 0px #000;
@@ -136,45 +198,86 @@ img.lazyload {
         }
     }
 
+
+
+
+.nested_submenu{
+    
+    li a{
+        font-size: 15px;
+    }
 }
-.manucloser{
+
+.manucloser {
     height: 18px !important;
     cursor: pointer;
     display: none;
 }
-.mainhamburger{
+
+.mainhamburger {
     height: 18px !important;
     cursor: pointer;
 }
-.custom-logo{
+
+.custom-logo {
     height: 48px !important;
-   
+
 }
-.second-level-item{
-    width:fit-content;
+
+.second-level-item {
+    width: fit-content;
     display: block;
 }
-.nested_submenu{
+
+.nested_submenu {
     padding: 0px !important;
-    li{
-        width:100%;
+
+    li {
+        width: 100%;
+    }
+
+    @media (max-width: 769px) {
+        display: none
     }
 }
+
 li:has(> ul.nested-ul) {
     /* Styles for <li> that has a child <ul> with class 'nested-ul' */
     font-weight: bold;
     color: red;
+
+    @media (max-width: 769px) {
+        display: none
+    }
 }
-ul.nested-ul{
+
+ul.nested-ul {
     display: none;
 }
-.saparetor{
-    border-bottom: solid 1px #000;
-    
+
+.saparetor {
+    border-bottom: solid 0px #000;
+
+    @media (max-width: 769px) {
+        display: none
+    }
 }
-@media (min-width: 1280px) { 
-    .tar{
+
+@media (min-width: 1280px) {
+    .tar {
         margin-right: 5%;
     }
-    .tal{margin-left: 5%;}
- }
+
+    .tal {
+        margin-left: 5%;
+    }
+}
+.nested-ul{
+    
+    margin-right: 40px;
+    right: 66px;
+    background: #fff;
+    width: fit-content;
+    padding: 20px !important;
+    z-index: 888;
+}
