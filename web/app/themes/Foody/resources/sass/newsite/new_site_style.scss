@@ -111,6 +111,7 @@ position: relative;
         width: 20%;
         padding: 0px !important;
         margin: 0px !important;
+        position: relative;;
 
         @media (max-width: 768px) {
             width: 100%;
@@ -135,7 +136,7 @@ position: relative;
                 border-right: 6px solid transparent;
                 border-top: 6px solid #e00707;
                 margin-top: 9px;
-                right: 111px;
+                right: 70%;
             }
 
             :hover > .nested-ul {
@@ -158,6 +159,7 @@ position: relative;
 }
 
 .first_ul_li{
+    position: relative;
      a{
         font-weight: bold;
     }
@@ -249,9 +251,11 @@ ul.nested-ul {
     top: 0px;
 }
 .saparetor:first-child{
-    width: 80%;
+    width: 100%;
     border-bottom: solid 1px #444;
     position: absolute;
     top: 113px;
+    left:0px;
+    right:0px;
     z-index: 888;
 }

@@ -18,8 +18,7 @@ img.lazyload {
   width: 100%;
   /* or specific dimensions */
   height: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   /* Ensures the GIF fits nicely */
   background-color: #f0f0f0;
   /* Optional background color while loading */
@@ -171,7 +170,6 @@ img.lazyload {
 }
 
 .second-level-item {
-  width: -moz-fit-content;
   width: fit-content;
   display: block;
 }
@@ -209,6 +207,7 @@ ul.nested-ul li a {
   .tar {
     margin-right: 5%;
   }
+
   .tal {
     margin-left: 5%;
   }
@@ -216,7 +215,7 @@ ul.nested-ul li a {
 .nested-ul {
   margin-right: 0px;
   right: 87px;
-  background: rgba(255, 255, 255, 0.4784313725);
+  background: #ffffff7a;
   /* margin-top: -24px; */
   padding: 10px !important;
   z-index: 888;
@@ -233,4 +232,4 @@ ul.nested-ul li a {
   left: 0px;
   right: 0px;
   z-index: 888;
-}/*# sourceMappingURL=new_site_style.css.map */
+}
