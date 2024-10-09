@@ -53,17 +53,17 @@ class Custom_Menu_Structure {
      * @param string $ul_class Custom class for the <ul> (optional)
      * @param string $nested_ul_class Custom class for nested <ul>
      */
-    public function display_menu_tree($menu_tree = null, $ul_class = '', $nested_ul_class = 'nested-ul') {
+    public function display_menu_tree($menu_tree = null, $ul_class = 'ul_first', $nested_ul_class = 'nested-ul') {
         if (is_null($menu_tree)) {
             $menu_tree = $this->menu_tree; // Use the built tree if none provided
         }
 
         if (!empty($menu_tree)) {
             // Check if this is a nested <ul> (add $nested_ul_class for nested lists)
-            $rtn = '<ul class="' . esc_attr($ul_class) . '"><div class="saparetor"></div>';
+            $rtn = '<ul class="' . esc_attr($ul_class) . '">';
 
             foreach ($menu_tree as $menu_item) {
-                $rtn .= '<li>';
+                $rtn .= '<li class="first_ul_li">';
                 $rtn .= '<a href="' . esc_url($menu_item->url) . '">' . esc_html($menu_item->title) . '</a>';
 
                 // Check if the item has children and display them
