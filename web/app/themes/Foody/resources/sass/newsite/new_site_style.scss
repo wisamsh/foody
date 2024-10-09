@@ -248,3 +248,10 @@ ul.nested-ul {
     height: 100%;
     top: 0px;
 }
+.saparetor:first-child{
+    width: 80%;
+    border-bottom: solid 1px #444;
+    position: absolute;
+    top: 113px;
+    z-index: 888;
+}
