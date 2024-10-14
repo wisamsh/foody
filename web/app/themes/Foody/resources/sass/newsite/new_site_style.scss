@@ -66,7 +66,7 @@ img.lazyload {
 }
 
 .primary_menu_container {
-position: relative;
+    position: relative;
     background: #fff;
     max-height: 50px;
     align-content: center;
@@ -84,7 +84,12 @@ position: relative;
 
 }
 
+.toggle{
+    display: none;
+}
 .newsitenav {
+    cursor: pointer;
+
     @media (min-width: 769px) {
         position: relative;
         display: flex;
@@ -111,24 +116,25 @@ position: relative;
         width: 20%;
         padding: 0px !important;
         margin: 0px !important;
-        position: relative;;
+        position: relative;
+        
 
         @media (max-width: 768px) {
             width: 100%;
             text-align: center;
             justify-content: center;
 
-            :focus-within .nested_submenu {
-                display: block;
-            }
+            
         }
 
         &:has(> ul.nested-ul) {
             // Styles for <li> that contains nested <ul>
             padding: 0px !important;
 
-            &::before {
-                content: "";
+            .toggle{
+                content: ">";
+                transform: rotate(deg);
+                display: block;
                 position: absolute;
                 width: 0;
                 height: 0;
@@ -138,41 +144,65 @@ position: relative;
                 margin-top: 9px;
                 right: 70%;
             }
+            // &::before {
+            //     content: "";
+            //     position: absolute;
+            //     width: 0;
+            //     height: 0;
+            //     border-left: 6px solid transparent;
+            //     border-right: 6px solid transparent;
+            //     border-top: 6px solid #e00707;
+            //     margin-top: 9px;
+            //     right: 70%;
+            // }
 
-            :hover > .nested-ul {
-                opacity: 1;
-            }
+            
 
             a {
                 // Specific style for <a> inside <li> with nested <ul>
                 color: #0d0f10;
-            }
-        }
 
-        :hover > ul.nested-ul {
-            display: block;
+            }
+            a:hover{
+                color:#579fba
+            }
+            &:hover > .nested-ul{
+                
+                display: block;
+                height: auto;
+                opacity: 1;
+                margin-bottom: 10px;
+                
+            }
+        
+           
+
         }
+        
+       
     }
 
     // Make the first child li's link bold
-    
+
 }
 
-.first_ul_li{
+.first_ul_li {
     position: relative;
-     a{
+
+    a {
         font-weight: bold;
     }
 }
 
 
-.nested_submenu{
-    .first_ul_li{
-        a{
-           font-weight: 100 !important;
-       }
-   }
-    li a{
+.nested_submenu {
+    .first_ul_li {
+        a {
+            font-weight: 100 !important;
+        }
+    }
+
+    li a {
         font-size: 15px;
     }
 }
@@ -212,7 +242,7 @@ position: relative;
 
 li:has(> ul.nested-ul) {
     /* Styles for <li> that has a child <ul> with class 'nested-ul' */
-    
+
     color: red;
 
     @media (max-width: 769px) {
@@ -221,10 +251,22 @@ li:has(> ul.nested-ul) {
 }
 
 ul.nested-ul {
-    display: none;
-    li a{
+  height: 0px ;
+    opacity: 0;
+    background-color: #fff;
+    padding: 0px;
+    transition: opacity 0.5s ease, max-height 0.7s ease;
+  padding-right: 10px;
+   
+    li a.toggle{
+    display: none !important;
+   }
+    li a {
         font-size: 15px;
-       
+
+    }
+    li:hover{
+        background-color: #fff;
     }
 }
 
@@ -237,25 +279,14 @@ ul.nested-ul {
         margin-left: 5%;
     }
 }
-.nested-ul{
-    
-    margin-right: 0px;
-    right: 87px;
-    background: #ffffff7a;
-    /* margin-top: -24px; */
-    padding: 10px !important;
-    z-index: 888;
-    
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    height: 100%;
-    top: 0px;
-}
-.saparetor:first-child{
+
+
+.saparetor:first-child {
     width: 100%;
     border-bottom: solid 1px #444;
     position: absolute;
     top: 113px;
-    left:0px;
-    right:0px;
+    left: 0px;
+    right: 0px;
     z-index: 888;
 }
