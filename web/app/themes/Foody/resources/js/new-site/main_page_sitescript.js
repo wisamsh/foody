@@ -1,17 +1,24 @@
 jQuery( document ).ready(function() {
    
     jQuery(".mainhamburger").on('click', function(){
-        jQuery(".menu_container").slideToggle(400, "linear");
-        jQuery(".mainhamburger").css("display", "none");
-        jQuery(".manucloser").css("display", "block");
+        jQuery(".menu_container").slideToggle();
+        jQuery(".mainhamburger").removeClass('db');
+        jQuery(".mainhamburger").addClass('dn');
+        jQuery(".manucloser").removeClass('dn');
+        jQuery(".manucloser").addClass('db');
        
     });
 //manucloser
 jQuery(".manucloser").on('click', function(){
-    jQuery(".manucloser").css("display", "none");
-    jQuery(".mainhamburger").css("display", "block");
+   
     jQuery(".menu_container").slideToggle(50);
+    jQuery(".mainhamburger").removeClass('dn');
+        jQuery(".mainhamburger").addClass('db');
+        jQuery(".manucloser").removeClass('db');
+        jQuery(".manucloser").addClass('dn');
     
+
+
 });
 
 

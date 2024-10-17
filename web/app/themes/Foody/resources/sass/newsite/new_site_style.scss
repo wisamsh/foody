@@ -66,11 +66,11 @@ img.lazyload {
 }
 
 .primary_menu_container {
-    position: relative;
-    background: #fff;
+
     max-height: 50px;
     align-content: center;
     align-items: center;
+    position: relative;
 
     .row {
         align-items: center;
@@ -81,7 +81,7 @@ img.lazyload {
 .menu_container {
     display: none;
     background: none;
-
+    position: relative;
 }
 
 .toggle{
@@ -144,17 +144,7 @@ img.lazyload {
                 margin-top: 9px;
                 right: 70%;
             }
-            // &::before {
-            //     content: "";
-            //     position: absolute;
-            //     width: 0;
-            //     height: 0;
-            //     border-left: 6px solid transparent;
-            //     border-right: 6px solid transparent;
-            //     border-top: 6px solid #e00707;
-            //     margin-top: 9px;
-            //     right: 70%;
-            // }
+            
 
             
 
@@ -210,12 +200,21 @@ img.lazyload {
 .manucloser {
     height: 18px !important;
     cursor: pointer;
-    display: none;
+    
+    
 }
 
+
+.dn{
+    display: none !important;
+}
+.db{
+    display: block !important;
+}
 .mainhamburger {
     height: 18px !important;
     cursor: pointer;
+    position: relative;
 }
 
 .custom-logo {
@@ -289,4 +288,59 @@ ul.nested-ul {
     left: 0px;
     right: 0px;
     z-index: 888;
+}
+
+.iconsize{
+    
+    display: inline-flex;
+
+    @media (min-width: 1050px) {
+        height:23px;
+        margin-left: 10px;
+        margin-top: 5px;
+    }
+
+    @media (max-width: 1049px) {
+        height:19px;
+        margin-left: 5px;
+        margin-top: 5px;
+        .ddsm{
+            display: none !important;
+        }
+    }
+
+}
+.leftsidebar{
+    max-width:294px !important;
+}
+.loginspn{
+    font-size: 100%;
+    display: inline-flex;
+   
+
+}
+
+@media (max-width: 1049px) {
+       
+    .ddsm{
+        display: none !important;
+    }
+}
+
+.container_wrapper{
+    position: relative;
+    position: relative;
+    background: #fff;
+    max-width:100%;
+    .container{
+        max-width: 1050px !important;
+    }
+}
+.ddd{
+   
+    width: 500px;
+    /* float: right; */
+    margin: 0 auto;
+    background: #6894bb;
+    height: 200px;
 }
