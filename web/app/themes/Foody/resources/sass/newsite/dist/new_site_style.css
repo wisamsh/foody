@@ -251,6 +251,7 @@ ul.nested-ul li:hover {
 }
 
 .iconsize {
+  cursor: pointer;
   display: inline-flex;
 }
 @media (min-width: 1050px) {
@@ -280,6 +281,20 @@ ul.nested-ul li:hover {
   display: inline-flex;
 }
 
+.searchloginspn {
+  font-size: 100%;
+  display: inline-flex;
+}
+@media (max-width: 1049px) {
+  .searchloginspn {
+    position: fixed;
+    top: 59px;
+    left: 0;
+    background: red;
+    padding: 20px;
+  }
+}
+
 @media (max-width: 1049px) {
   .ddsm {
     display: none !important;
@@ -295,10 +310,54 @@ ul.nested-ul li:hover {
   max-width: 1050px !important;
 }
 
-.ddd {
-  width: 500px;
-  /* float: right; */
-  margin: 0 auto;
-  background: #6894bb;
-  height: 200px;
+.newsearchBox {
+  width: 0px;
+  background-color: #e00707 !important;
+  color: #fff !important;
+  border-radius: 20px !important;
+  position: absolute !important;
+  left: 79px !important;
+  background-repeat: no-repeat;
+  background-position-x: 11px;
+  background-position-y: center;
+}
+
+.closesearchbox {
+  cursor: pointer;
+  height: 12px;
+  position: absolute;
+  top: 13px;
+  z-index: 886;
+}
+
+@media (max-width: 1049px) {
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+
+  .searchWrapper {
+    position: fixed;
+    background: red;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .searchtextmobile {
+    width: 80%;
+  }
+}
+@media (min-width: 1050px) {
+  .mobile {
+    display: none;
+  }
+
+  .desktop {
+    display: block;
+  }
 }

@@ -15,6 +15,7 @@ class FoodyHeader_NewSite
     public $Whatsup;
     public $user_icon;
     public $accessebility;
+    public $whitezoom ;
 
     function __construct()
     {
@@ -33,6 +34,7 @@ class FoodyHeader_NewSite
         $this->Whatsup = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/zoom.png";
         $this->user_icon = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/user-icon.png";
         $this->accessebility = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/accessibility.png";
+        $this->whitezoom ="https://foody-media.s3.eu-west-1.amazonaws.com/new-site/zoom-white.png";
     }
     public function my_enqueue_styles()
     {
@@ -97,7 +99,7 @@ class FoodyHeader_NewSite
         $rtn = "
     <div class='container_wrapper'>
         <div id='mainmenucontainer' class='container-fluid text-center primary_menu_container'>
-    <div class='row align-items-center' style='max-width:1000px;margin:0 auto'>
+    <div class='row align-items-center' style='max-width:1200px;margin:0 auto'>
       <div class='col' style='text-align:right'>
       <img src='{$this->hamburger}' class='mainhamburger db'/>
       <img src='{$this->menucloser}' class='manucloser dn'/>
@@ -105,8 +107,9 @@ class FoodyHeader_NewSite
       <div class='col' style='text-align:center'>
       " . $this->GetLogo() . "
       </div>
+
       <div class='col' style='text-align:left'>
-{$this->rightMenuSharing()}
+        {$this->rightMenuSharing()}
       </div>
     </div>
     </div>
@@ -120,24 +123,51 @@ class FoodyHeader_NewSite
     public function rightMenuSharing()
     {
         $rtn = "
-<div class='container text-center leftsidebar'>
+<div class='container text-center leftsidebar desktop'>
 <div class='row justify-content-end p-0 '>
 <div class='coljustify-content-center  p-1 m-l-2' style='position:relative;'>
-
-
-
 <div class='loginspn ddsm'><img src='{$this->user_icon}' class='iconsize'/></div>
-
-<div class='loginspn'><img src='{$this->Zoomimg}' class='iconsize'/></div>
+<div class='loginspn'>
+<img src='{$this->Zoomimg}' class='iconsize' id='searchzoom'/>
+<input type='text' class='newsearchBox dn' id='searchtext'/>
+<img src='{$this->menucloser}' class='closesearchbox dn' id='closesearchbox' style='height:12px;' />
+</div>
 <div class='loginspn'> <img src='{$this->share}' class='iconsize'/></div>
-
-
 <div class='loginspn'>
 <img src='{$this->accessebility}' class='iconsize icon-acces'/></div>
 </div>
 </div>
 </div>
     ";
+
+//mobiles and ipads : 
+$rtn .= "
+<div class='container text-center leftsidebar mobile'>
+<div class='row justify-content-end p-0 '>
+<div class='coljustify-content-center  p-1 m-l-2' style='position:relative;'>
+<div class='loginspn ddsm'>
+<img src='{$this->user_icon}' class='iconsize'/></div>
+<div class='loginspn'>
+<img src='{$this->Zoomimg}' class='iconsize' id='searchzoommbl'/>
+</div>
+<div class='loginspn'>
+ <img src='{$this->share}' class='iconsize'/></div>
+<div class='loginspn'>
+<img src='{$this->accessebility}' class='iconsize icon-acces'/></div>
+</div>
+</div>
+<div class='searchWrapper '>
+<input type='text' class='searchtextmobile' id='searchtextmobile' placeholder='חפש מי ינענע אותך'/>
+<div>
+is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+</div>
+</div>
+</div>
+
+
+";
+
+
         return $rtn;
     }
 } //END CLASS

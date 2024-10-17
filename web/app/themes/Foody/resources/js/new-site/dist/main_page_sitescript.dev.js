@@ -16,4 +16,23 @@ jQuery(document).ready(function () {
     jQuery(".manucloser").removeClass('db');
     jQuery(".manucloser").addClass('dn');
   });
+  jQuery("#searchzoom").on("click", function (event) {
+    if (jQuery('#searchtext').hasClass('dn')) {
+      jQuery("#closesearchbox").removeClass('dn');
+      jQuery("#searchtext").removeClass("dn");
+      jQuery('#searchtext').animate({
+        width: '380px' // Adjust the width to your desired value
+
+      }, 500);
+      event.stopPropagation();
+    }
+  });
+  jQuery("#closesearchbox").on("click", function (event) {
+    jQuery('#searchtext').animate({
+      width: '0px' // Adjust the width to your desired value
+
+    }, 1000);
+    jQuery('#searchtext').addClass('dn');
+    jQuery("#closesearchbox").addClass('dn');
+  });
 });
