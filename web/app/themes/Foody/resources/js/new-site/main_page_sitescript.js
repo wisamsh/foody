@@ -30,20 +30,72 @@ jQuery(document).ready(function () {
             jQuery("#searchtext").removeClass("dn");
              jQuery('#searchtext').animate({
                  width: '380px' // Adjust the width to your desired value
-             }, 500);
+             }, 100);
              event.stopPropagation();
         }
+        
     });
 
     jQuery("#closesearchbox").on("click", function (event) {
        
         jQuery('#searchtext').animate({
             width: '0px' // Adjust the width to your desired value
-        }, 1000);
+        }, 100);
         jQuery('#searchtext').addClass('dn');
         jQuery("#closesearchbox").addClass('dn');
+        
     })
     
+jQuery("#searchzoommbl").on("click", function(){
+    if(jQuery(".searchWrapper").hasClass("dn")){
+jQuery(".searchWrapper").removeClass("dn");
+    }
+    else{
+        jQuery(".searchWrapper").addClass("dn"); 
+    }
+
+});
+
+//sharing : 
+//share_open
+jQuery("#share_open").on("click", function(){
+if(jQuery(".shareIconsWrapper").hasClass("dn")){
+
+
+jQuery(".shareIconsWrapper").animate({
+                 width: '194px' // Adjust the width to your desired value
+             }, 100);
+}
+jQuery(".shareIconsWrapper").removeClass("dn");
+});
+
+jQuery("#close_share_dsktp").on("click", function(){
+    
+jQuery(".shareIconsWrapper").animate({
+    width: '0px' // Adjust the width to your desired value
+}, 100);
+    jQuery(".shareIconsWrapper").addClass("dn");
+});
+
+//mobile : 
+
+jQuery("#share_ocm").on("click", function(){
+    
+    jQuery(".shareIconsWrapper").animate({
+        height: 'auto' // Adjust the width to your desired value
+    }, 100);
+        jQuery(".shareIconsWrapper").removeClass("dn");
+    });
+
+
+
+jQuery("#close_share_mbl").on("click", function(){
+   
+    
+        jQuery(".shareIconsWrapper").addClass("dn");
+
+});
 
 
 });
+

@@ -15,7 +15,15 @@ class FoodyHeader_NewSite
     public $Whatsup;
     public $user_icon;
     public $accessebility;
-    public $whitezoom ;
+    public $whitezoom;
+
+    //white share: 
+
+    public $w_facebook;
+    public $w_pintress;
+    public $w_printer;
+    public $w_whatsup;
+    public $w_share_white;
 
     function __construct()
     {
@@ -34,8 +42,47 @@ class FoodyHeader_NewSite
         $this->Whatsup = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/zoom.png";
         $this->user_icon = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/user-icon.png";
         $this->accessebility = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/accessibility.png";
-        $this->whitezoom ="https://foody-media.s3.eu-west-1.amazonaws.com/new-site/zoom-white.png";
+
+        $this->whitezoom = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/zoom-white.png";
+        $this->w_facebook = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/facebook-white.png";
+        $this->w_pintress = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/pintres-white.png";
+        $this->w_printer = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/printpage-white.png";
+        $this->w_share_white = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/share_white.png";
+        $this->w_whatsup = "https://foody-media.s3.eu-west-1.amazonaws.com/new-site/whatsup-white.png";
     }
+
+
+
+        public function ShareBox($media)
+        {
+           
+            $rtn = "<div class='shareIconsWrapper dn'>";
+            if($media == 'mbl'){
+                $rtn .="<span id='w_shr_span_shwt_{$media}'><img src='{$this->w_share_white}' id='close_share_{$media}' class='w_shre_icons'/></span>
+               ";
+            }
+        
+            $rtn .= "<span class='w_shre_icons' id='w_shr_span_fb_{$media}'><img src='{$this->w_facebook}' class='w_shre_icons'/></span>
+            <span class='w_shre_icons' id='w_shr_span_wa_{$media}'><img src='{$this->w_whatsup}' class='w_shre_icons'/></span>
+            <span  class='w_shre_icons' id='w_shr_span_pr_{$media}'><img src='{$this->w_pintress}' class='w_shre_icons'/></span>
+            <span class='w_shre_icons' id='w_shr_span_prnt_{$media}'><img src='{$this->w_printer}' class='w_shre_icons'/></span>
+            ";
+            
+
+            if($media == 'dsktp'){
+                $rtn .="<span class='w_shre_icons' id='w_shr_span_shwt_{$media}'><img src='{$this->w_share_white}' id='close_share_{$media}' class='w_shre_icons'/></span>
+               ";
+            }
+
+            $rtn .= "</span>
+            </div>
+        ";
+        return $rtn;
+        }
+
+
+
+
     public function my_enqueue_styles()
     {
         // Enqueue new site style
@@ -120,6 +167,9 @@ class FoodyHeader_NewSite
     }
 
 
+
+
+
     public function rightMenuSharing()
     {
         $rtn = "
@@ -132,7 +182,10 @@ class FoodyHeader_NewSite
 <input type='text' class='newsearchBox dn' id='searchtext'/>
 <img src='{$this->menucloser}' class='closesearchbox dn' id='closesearchbox' style='height:12px;' />
 </div>
-<div class='loginspn'> <img src='{$this->share}' class='iconsize'/></div>
+<div class='loginspn'> 
+<img src='{$this->share}' class='iconsize' id='share_open'/>
+{$this->ShareBox('dsktp')}
+</div>
 <div class='loginspn'>
 <img src='{$this->accessebility}' class='iconsize icon-acces'/></div>
 </div>
@@ -140,8 +193,8 @@ class FoodyHeader_NewSite
 </div>
     ";
 
-//mobiles and ipads : 
-$rtn .= "
+        //mobiles and ipads : 
+        $rtn .= "
 <div class='container text-center leftsidebar mobile'>
 <div class='row justify-content-end p-0 '>
 <div class='coljustify-content-center  p-1 m-l-2' style='position:relative;'>
@@ -151,12 +204,14 @@ $rtn .= "
 <img src='{$this->Zoomimg}' class='iconsize' id='searchzoommbl'/>
 </div>
 <div class='loginspn'>
- <img src='{$this->share}' class='iconsize'/></div>
+ <img src='{$this->share}' class='iconsize' id='share_ocm'/>
+    {$this->ShareBox('mbl')}
+ </div>
 <div class='loginspn'>
 <img src='{$this->accessebility}' class='iconsize icon-acces'/></div>
 </div>
 </div>
-<div class='searchWrapper '>
+<div class='searchWrapper dn'>
 <input type='text' class='searchtextmobile' id='searchtextmobile' placeholder='חפש...  '/>
 
 </div>
