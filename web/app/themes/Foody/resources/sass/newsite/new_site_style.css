@@ -363,6 +363,7 @@ ul.nested-ul li:hover {
     text-align: center;
     padding: 10px;
     top: 50px;
+    z-index: 886;
   }
   .searchtextmobile {
     width: 80%;

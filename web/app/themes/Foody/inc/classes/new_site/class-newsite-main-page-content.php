@@ -8,7 +8,12 @@ public function __construct()
 
 
 public function get_MainBanner(){
-return get_field("ns_hp_fetured_image_desktop", $this->pageID);
+ if(!wp_is_mobile()){
+    return get_field("ns_hp_fetured_image_desktop");
+ }
+ else{
+    return get_field("ns_hp_fetured_image_mobile");
+ }
 }
 
 
