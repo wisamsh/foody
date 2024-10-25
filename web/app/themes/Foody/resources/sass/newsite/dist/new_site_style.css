@@ -428,3 +428,8 @@ ul.nested-ul li:hover {
     margin-right: 1px;
   }
 }
+
+.TopBannerMP {
+  max-width: 1050px;
+  margin: 0 auto;
+}

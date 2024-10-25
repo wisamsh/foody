@@ -423,4 +423,9 @@ ul.nested-ul li:hover {
     margin-top: 5px;
     margin-right: 1px;
   }
+}
+
+.TopBannerMP {
+  max-width: 1050px;
+  margin: 0 auto;
 }/*# sourceMappingURL=new_site_style.css.map */
