@@ -9,7 +9,10 @@
 
 
 get_header('frontpage');
-?>
 
+?>
+<?php 
+get_template_part( 'template-parts/content', 'ns_mp_b1' );
+?>
 <?php
 get_footer('new');
