@@ -2,7 +2,14 @@
 $MainPageContent = new MainPageContent ;
 $get_MainBanner = $MainPageContent->get_MainBanner();
 ?>
-<section>
+<div class="mp_main_container container">
+<section id="topbanner">
     <div class="TopBannerMP"><img src="<?php echo $get_MainBanner ;?>" loading="lazy" class=""/></div>
-<?php print_r($MainPageContent->Get_Promoted_Recipies());?>
 </section>
+
+<section id="front_recipies_desktop">
+<?php  $args = $MainPageContent->Get_Promoted_Recipies();
+echo $MainPageContent->fp_main_recipies($args);
+?>
+</section>
+</div>

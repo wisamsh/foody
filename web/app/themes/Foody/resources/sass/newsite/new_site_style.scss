@@ -514,4 +514,75 @@ cursor: pointer;
 .TopBannerMP{
     max-width: 1050px;
     margin: 0 auto;
+    @media (min-width: 1050px) {
+    margin-top: 10px;
+    }
+}
+
+.recipe_front_images{
+    @media (min-width: 1050px) {
+      width:510px;
+       height: 339px;
+        }
+        @media (max-width: 1049px) {
+            width:343px;
+            height: 248px;
+             }
+border-radius: 10px;
+
+
+}
+
+.mp_recipe_cont{
+    background: #fafafa;
+    direction: rtl !important;
+    text-align: center;
+    position: relative;
+}
+
+
+
+.mp_main_container{
+    display: flex;
+      flex-direction: column;
+      @media (min-width: 1050px) {
+        .container {
+          flex-direction: row;
+        }
+        /* Custom order for each section */
+        .topbanner { order: 2; }
+        .front_recipies_desktop { order: 1; }
+        
+      }
+}
+.mp_rec_author{
+    width:60px;
+    height: 60px;
+    float: right;
+    display: inline;
+    img{
+        width:60px;
+        border-radius: 50%;
+    }
+}
+.expert_text{
+    width: 300px;
+    float: right;
+    display: inline;
+    direction: rtl;
+    text-align: right;
+    margin-right: 12px;
+    p{
+        text-align: right;
+    padding-top: 11px;
+    font-size: 16px;
+    font-weight: 300;
+    color: #959191;
+    }
+}
+.inner_card{
+    position: relative;
+    text-align: center;
+    
+    margin: 0 auto;
 }
