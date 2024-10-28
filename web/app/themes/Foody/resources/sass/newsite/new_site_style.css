@@ -1,5 +1,6 @@
 :root {
   --redObjects:#E53B2D;
+  --siteblue:#57A0BB;
 }
 
 @media (max-width: 1049px) {
@@ -89,8 +90,15 @@ img.lazyload {
 
 .menu_container {
   display: none;
-  background: none;
-  position: relative;
+  position: fixed;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  left: 0px;
+  right: 0px;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.9803921569);
+  top: 50px;
 }
 
 .toggle {
@@ -491,21 +499,55 @@ ul.nested-ul li:hover {
 .expert_text {
   width: 300px;
   float: right;
-  display: inline;
   direction: rtl;
   text-align: right;
   margin-right: 12px;
-}
-.expert_text p {
-  text-align: right;
-  padding-top: 11px;
-  font-size: 16px;
-  font-weight: 300;
-  color: #959191;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limits text to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .inner_card {
   position: relative;
   text-align: center;
   margin: 0 auto;
+}
+
+.authname {
+  text-align: right;
+  padding-top: 11px;
+  font-size: 16px;
+  font-weight: 300;
+  color: #959191;
+  display: inline-block;
+  width: 100%;
+  padding-right: 70px;
+}
+
+.ht_ttl {
+  text-align: right;
+  padding-right: 3px;
+  padding-top: 5px;
+  font-size: 15px;
+  color: #333;
+}
+
+.ht_h1 {
+  color: var(--siteblue);
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.ht_img {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.ht_img:hover {
+  transform: scale(1.05); /* Slightly zoom in on hover */
+}
+
+.zoomcont {
+  overflow: hidden;
 }/*# sourceMappingURL=new_site_style.css.map */

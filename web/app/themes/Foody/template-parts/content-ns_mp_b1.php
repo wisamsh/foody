@@ -12,4 +12,9 @@ $get_MainBanner = $MainPageContent->get_MainBanner();
 echo $MainPageContent->fp_main_recipies($args);
 ?>
 </section>
+
+<section id="hotspots">
+    <?php echo ($MainPageContent->mp_Hotspots());?>
+</section>
+
 </div>

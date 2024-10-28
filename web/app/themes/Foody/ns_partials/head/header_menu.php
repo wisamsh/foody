@@ -1,5 +1,5 @@
 <?php echo $FoodyHeader_NewSite->GetMainHeader() ; ?>
-  <div class="container menu_container">
+  <div class="container-fluid menu_container">
  
   <?php
 $menu = new Custom_Menu_Structure( 'primary' );
