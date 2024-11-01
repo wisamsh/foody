@@ -88,6 +88,8 @@ class FoodyHeader_NewSite
         // Enqueue new site style
 
         wp_enqueue_style('new-site-style', get_template_directory_uri() . '/resources/sass/newsite/new_site_style.css', array(), '1.0.0');
+        wp_enqueue_style('menu-style', get_template_directory_uri() . '/resources/sass/newsite/menu.css', array(), '1.0.0');
+       
         add_action('wp_enqueue_scripts', array($this, 'LazyLoadScript'));
         add_action('wp_enqueue_scripts', array($this, 'mainpage_New_SiteJSEnqueueScript'));
     }

@@ -20,17 +20,17 @@ jQuery(document).ready(function () {
 
 
     });
-    window.addEventListener('scroll', function() {
+    // window.addEventListener('scroll', function() {
+    //     if(window.scrollY > 90){
+    //     jQuery(".menu_container").slideUp(0);
+    //     jQuery(".mainhamburger").removeClass('dn');
+    //     jQuery(".mainhamburger").addClass('db');
+    //     jQuery(".manucloser").removeClass('db');
+    //     jQuery(".manucloser").addClass('dn');
+    // }
         
-        jQuery(".menu_container").slideUp(0);
-        jQuery(".mainhamburger").removeClass('dn');
-        jQuery(".mainhamburger").addClass('db');
-        jQuery(".manucloser").removeClass('db');
-        jQuery(".manucloser").addClass('dn');
-        
-        
-        // You can add additional actions based on scroll position here
-      });
+    //     // You can add additional actions based on scroll position here
+    //   });
 
     //when scrolling body:
     

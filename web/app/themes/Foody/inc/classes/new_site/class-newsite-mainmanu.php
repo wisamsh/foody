@@ -2,7 +2,7 @@
 class Custom_Menu_Structure {
     public $menu_location;
     public $menu_tree;
-    public  $saparetor ;
+
     // Constructor to initialize the menu display
     public function __construct($menu_location) {
         $this->menu_location = $menu_location;
@@ -52,27 +52,35 @@ class Custom_Menu_Structure {
      * @param array $menu_tree Nested menu structure
      * @param string $ul_class Custom class for the <ul> (optional)
      * @param string $nested_ul_class Custom class for nested <ul>
+     * @param int $level Current level in the menu tree (default is 1)
      */
-    public function display_menu_tree($menu_tree = null, $ul_class = 'ul_first', $nested_ul_class = 'nested-ul') {
-        
+    public function display_menu_tree($menu_tree = null, $ul_class = 'ul_first', $nested_ul_class = 'nested-ul', $level = 1) {
         if (is_null($menu_tree)) {
             $menu_tree = $this->menu_tree; // Use the built tree if none provided
         }
 
         if (!empty($menu_tree)) {
-            // Check if this is a nested <ul> (add $nested_ul_class for nested lists)
-            $rtn = '<ul class="' . esc_attr($ul_class) . '">';
+            // Set a unique class for each level of nesting
+            $current_ul_class = $ul_class;
+            if ($level === 3) {
+                $current_ul_class = 'third-level-ul';
+            } elseif ($level === 4) {
+                $current_ul_class = 'fourth-level-ul';
+            }
 
-            foreach ($menu_tree as $menu_item) {
-                $rtn .= '<li class="first_ul_li"><a  class="toggle"></a>';
+            $rtn = '<ul class="' . esc_attr($current_ul_class) . '">';
+
+            foreach ($menu_tree as $index => $menu_item) {
+                // Add a unique class for the first child of each <li>
+                $li_class = 'regular-li';
+
+                $rtn .= '<li class="' . esc_attr($li_class) . '">';
                 $rtn .= '<a href="' . esc_url($menu_item->url) . '">' . esc_html($menu_item->title) . '</a>';
 
                 // Check if the item has children and display them
                 if (isset($menu_item->children) && !empty($menu_item->children)) {
-                    // Add custom class to the nested <ul>
-                   // $rtn .= '<ul class="' . esc_attr($nested_ul_class) . '">';
-                    $rtn .= $this->display_menu_tree($menu_item->children,  $nested_ul_class); // Recursive call
-                   // $rtn .= '</ul>';
+                    // Recursive call for children with increased level
+                    $rtn .= $this->display_menu_tree($menu_item->children, $nested_ul_class, $nested_ul_class, $level + 1);
                 }
 
                 $rtn .= '</li>';
@@ -80,6 +88,7 @@ class Custom_Menu_Structure {
 
             $rtn .= '</ul>';
         }
+
         return $rtn;
     }
 }//END CLASS
