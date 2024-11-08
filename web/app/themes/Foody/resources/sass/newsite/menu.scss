@@ -55,7 +55,10 @@
 
             .third-level-ul {
 
-                display: none;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.8s ease, visibility 0.8s ease;
+                height: 0px;
 
                 a {
                     color: #333;
@@ -68,7 +71,12 @@
                     font-weight: 100;
                 }
 
+                .regular-li a {
+                    font-weight: 100;
+                }
+
                 .regular-li {
+
                     &:has(>.fourth-level-ul) {
                         a::after {
                             content: url('https://foody-media.s3.eu-west-1.amazonaws.com/new-site/vector4red.png');
@@ -97,7 +105,10 @@
             }
 
             :hover>.third-level-ul {
-                display: block;
+                opacity: 1;
+                visibility: visible;
+
+                height: auto;
             }
 
         }
@@ -146,22 +157,23 @@
             justify-content: space-evenly;
             align-items: center;
             padding: 10px;
-            
+
 
             .nested_menu {
                 display: none;
             }
-            
 
-&:has(> .nested_menu){
-    font-weight: bold;
-    a::after{
-        content: url('https://foody-media.s3.eu-west-1.amazonaws.com/new-site/vector4red.png');
-       
-        position: absolute;
-        left: 85px;
-    }
-}
+
+            &:has(> .nested_menu) {
+                font-weight: bold;
+
+                a::after {
+                    content: url('https://foody-media.s3.eu-west-1.amazonaws.com/new-site/vector4red.png');
+
+                    position: absolute;
+                    left: 85px;
+                }
+            }
 
 
         }

@@ -47,7 +47,10 @@
     right: 127px;
   }
   .site_nav .regular-li .third-level-ul {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    height: 0px;
   }
   .site_nav .regular-li .third-level-ul a {
     color: #333;
@@ -55,6 +58,9 @@
   .site_nav .regular-li .third-level-ul li a::after {
     content: "";
     color: #333;
+    font-weight: 100;
+  }
+  .site_nav .regular-li .third-level-ul .regular-li a {
     font-weight: 100;
   }
   .site_nav .regular-li .third-level-ul .regular-li:has(> .fourth-level-ul) a::after {
@@ -75,7 +81,9 @@
     content: "";
   }
   .site_nav .regular-li :hover > .third-level-ul {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    height: auto;
   }
   .site_nav .fourth-level-ul {
     display: none;
