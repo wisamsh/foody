@@ -425,23 +425,7 @@ $html .= $html_closer ;
 
 $html .="<script>
 function doclops(id) {
-    if (jQuery('#hd_collapse_' + id).val() == 0) {
-
-				jQuery([id^='hd_collapse_']).each(function() {
-				jQuery(this).val(0);
-				});
-				jQuery([id^='img_collapse_']).each(function() {
-				jQuery(this).attr('src', 'https://foody-media.s3.eu-west-1.amazonaws.com/w_images/plus.svg');
-				});
-
-        jQuery('#img_collapse_' + id).attr('src', 'https://foody-media.s3.eu-west-1.amazonaws.com/w_images/minus.svg');
-		jQuery('#hd_collapse_' + id).val(1);
-    } else {
-	 
-	 jQuery('#hd_collapse_' + id).val(0);
-        jQuery('#img_collapse_' + id).attr('src', 'https://foody-media.s3.eu-west-1.amazonaws.com/w_images/plus.svg');
-    
-		}
+   
 }
 
 </script>";
