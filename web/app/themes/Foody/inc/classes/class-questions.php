@@ -344,7 +344,112 @@ public function the_categories_RAW(){
 	}
 
 
+function recipeFAQs($recipeID){
+	//css : 
+	$html = "<style>
+	.open_button{
+	position:absolute;
+	left:0px;
+	top:0px;
+	}
+	.card{
+	border:0px !important;
+	box-shadow: none !important;
+	border-bottom: 1px solid rgb(88, 159, 186) !important;
+	}
+	.accordion{max-width:90%; margin:0 auto;}
+	.excard ,
+	.accordion, 
+	.card-header
+	
+	{
+	box-shadow: none !important;
+	border:0px;
+	}
+	
+.btn-link{
+text-decoration:none;
+}
 
+.btn-link:hover{
+	text-decoration:none;
+	}
+.card-body p{
+padding-right:5px;
+}
+.open_button{
+width:30px;
+height:30px;
+}
+	
+	</style>";
+
+
+
+	$html .= '<div class="accordion text-right" id="accordionExample"><div class="card excard">'; 
+	$html_closer = '</div></div>';
+	$faq_looper = get_field("faq_looper", $recipeID);
+if(!empty($faq_looper)){
+	$html .="<div class='title similar-content-listing-block-title'>שאלות ותשובות</div>";
+foreach($faq_looper as $key=>$lp){
+	 $faq_title = get_the_title($lp);
+	 $faq_answer = get_field('answers', $lp);
+	
+	 $html .="<div class='card'><div class='card-header' id='heading_{$key}>";
+	 $html .="<h2 class='mb-0'>";
+	 $html .="<button onclick='doclops({$key})' class='btn btn-link btn-block text-right' type='button' data-toggle='collapse'
+	  data-target='#collapse_{$key}'  id='#collapse_{$key}' aria-expanded='true' aria-controls='collapse_{$key}'>
+	 <img src='https://foody-media.s3.eu-west-1.amazonaws.com/w_images/plus.svg' class='open_button' id='img_collapse_{$key}'/>
+	 <input type='hidden' value='0' id='hd_collapse_{$key}' />
+	  ";
+	  $html .=  $faq_title ; 
+	  $html .= '</button></h2></div>';
+	  $html .= "<div id='collapse_{$key}' class='collapse ' aria-labelledby='heading_{$key}' data-parent='#accordionExample'>";
+	$html .= "<div class='card-body text-right'>"; 
+	
+foreach($faq_answer as $k=>$ans){
+	$html .= "<p>{$ans['answer_ind']}</p>";
+}
+
+	$html .="</div></div></div>" ;
+	// foreach
+	// $html .="<div class='card-header' id='heading_>"; 
+
+//https://foody-media.s3.eu-west-1.amazonaws.com/w_images/minus_e.png
+//https://foody-media.s3.eu-west-1.amazonaws.com/w_images/plus_e.png
+
+}
+
+$html .= $html_closer ;
+
+
+$html .="<script>
+function doclops(id) {
+    if (jQuery('#hd_collapse_' + id).val() == 0) {
+
+				jQuery([id^='hd_collapse_']).each(function() {
+				jQuery(this).val(0);
+				});
+				jQuery([id^='img_collapse_']).each(function() {
+				jQuery(this).attr('src', 'https://foody-media.s3.eu-west-1.amazonaws.com/w_images/plus.svg');
+				});
+
+        jQuery('#img_collapse_' + id).attr('src', 'https://foody-media.s3.eu-west-1.amazonaws.com/w_images/minus.svg');
+		jQuery('#hd_collapse_' + id).val(1);
+    } else {
+	 
+	 jQuery('#hd_collapse_' + id).val(0);
+        jQuery('#img_collapse_' + id).attr('src', 'https://foody-media.s3.eu-west-1.amazonaws.com/w_images/plus.svg');
+    
+		}
+}
+
+</script>";
+
+
+	return $html;
+}
+}
 
 
 }//class ends here
