@@ -37,3 +37,4 @@ spotx.tv, 285547, RESELLER, 7842df1d2fe2db34
 pubmatic.com, 159277, RESELLER, 5d62403b186f2ace
 advertising.com, 28605, RESELLER
 improvedigital.com, 1699, RESELLER
+google.com, pub-3607762765478350, DIRECT, f08c47fec0942fa0

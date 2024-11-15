@@ -1580,14 +1580,14 @@ color:#fff;
             $html .= '<img style="width:98%;" src="' .  $featured_image_url  . '"/>';
             $html .= '<h1 style="width:90%;text-align:center;margin:0 auto;margin-top:20px;font-size:35px; color:#57A0BB;margin-bottom:30px;">' . $recipeTitle . '</h1>';
             $html .= '<div  style="width:98%; margin:0 auto; text-align:center; border:solid 3px #57A0BB;padding-bottom: 20px;"> '; //new recipe wrapp
-            $html .= '<h3 style="color:#333333;">מתכון חדש בקטגוריה: </h3>';
+            $html .= '<h3 style="color:#333333;"> מתכון חדש בקטגוריה: </h3>';
             $html .= "<div>
         <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'> 
         {$author['display_name']}</span>
          <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'>{$category}</span> </div>";
             $html .= "</div>";
             $html .= '<div style="justify-content: center;align-items: center; align-items: center;padding:10px;margin:0 auto;margin-top:30px;width:192px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;">
-        <a target="_blank" style="color:#fff !important;text-decoration: none;" href="' . $this->EnvyormentType . '/?p=' . $post->ID . $this->notification_utm_code .'" > לעמוד המתכון >></a></div>  ';
+        <a target="_blank" style="color:#fff !important;text-decoration: none;" href="' . $this->EnvyormentType . '/?p=' . $post->ID . $this->notification_utm_code .'"  > לעמוד המתכון >></a></div>  ';
             // $html .= '<span style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="'.$this->EnvyormentType .'/unsubscribe?unid=' . $uniqID . '&email='.$email.'" >לביטול הרשמה</a></span> |  ';
             $html .= '<div style="padding-bottom:20px;"><a style="color:#3333335c;font-size:14px;text-decoration: none;" href="' . $this->EnvyormentType . '/unsubscribe?cat=' . $cat_ID . '-' . $author['id'] . '&unid=' . $uniqID . '&email=' . $myemail . '" >להסרה מרשימת התפוצה</a></div> ';
             $html .= '</div>'; //div closer
@@ -1595,7 +1595,7 @@ color:#fff;
         }
         return $html;
     }
-
+//need to be uploaded
 
 
     private function SendEmailVerificationToUser($vereficationCode, $email)

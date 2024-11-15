@@ -217,7 +217,14 @@ if (get_current_blog_id() == 1) {
 <section class="recipe-sponsor-container box no-print">
      <?php $recipe->the_sponsor() ?>
 </section>
+<?php $Foody_Questions = new Foody_Questions;?>
 
+<section id="foody_faq">
+<?php //FAQ
+echo $Foody_Questions->recipeFAQs(get_the_ID());
+?>
+<br>
+</section>
 <?php require(get_template_directory() . '/components/products_slider/products_slider.php'); ?>
 
 
@@ -249,15 +256,7 @@ $similar_content = get_field('similar_content_group', $recipe->get_id());
      $recipe->get_similar_content($similar_content);
      ?>
 </section>
-<?php $Foody_Questions = new Foody_Questions;?>
 
-<section id="foody_faq">
-<?php //FAQ
-echo $Foody_Questions->recipeFAQs(get_the_ID());
-
-?>
-
-</section>
 
 
 
