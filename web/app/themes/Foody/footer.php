@@ -57,12 +57,12 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
         <?php dynamic_sidebar('foody-social-mobile'); ?>
     </section>
 
-    <section class="newsletter d-block d-lg-none">
+    <!-- <section class="newsletter d-block d-lg-none">
         <?php
-        $footer->newsletter(get_option('foody_id_for_newsletter'));
+        //$footer->newsletter(get_option('foody_id_for_newsletter'));
         ?>
 
-    </section>
+    </section> -->
 
     <section class="social d-block d-lg-none">
         <?php

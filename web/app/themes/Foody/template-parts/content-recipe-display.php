@@ -309,7 +309,7 @@ if (get_current_blog_id() === 1) { ?>
 <?php endif; ?>
 
 <section class="newsletter no-print">
-     <?php $recipe->newsletter(); ?>
+     <?php //$recipe->newsletter(); ?>
      <?php
 
 
