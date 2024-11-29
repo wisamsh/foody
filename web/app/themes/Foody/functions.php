@@ -1332,3 +1332,8 @@ if($_SERVER['SERVER_NAME'] == 'happyfood.foody.co.il' || $_SERVER['SERVER_NAME']
 require get_template_directory() . '/w_helpers/happy.php';
 }
 
+add_action('wp_head', function () {
+    if (is_author()) {
+        echo '<meta name="robots" content="index, follow">';
+    }
+}, 1);
