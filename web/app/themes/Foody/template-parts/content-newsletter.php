@@ -18,7 +18,7 @@ $id             = get_option('foody_id_for_newsletter');
 </div>
 
 <section class="newsletter">
-	<?php //echo do_shortcode( '[contact-form-7 id="'.$id.'" title="ניוזלטר"]' ) ?>
+	<?php echo do_shortcode( '[contact-form-7 id="'.$id.'" title="ניוזלטר"]' ) ?>
     <!--    <form class="row justify-content-between" method="post">-->
     <!--        <div class="input-container --><?php //echo $input_classes?><!--">-->
     <!--            <input type="email" placeholder="--><?php //echo __('הכנס כתובת מייל', 'foody') ?><!--">-->

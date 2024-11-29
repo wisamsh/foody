@@ -105,18 +105,18 @@ wp_enqueue_script('GlobalsW', get_template_directory_uri() . '/components/js/que
         </section>
         <section class="newsletter no-print">
 
-            <!-- <?php //if (!wp_is_mobile()) { ?>
+             <?php if (!wp_is_mobile()) { ?>
                 <section class="newsletter no-print">
                     <div class="newsletter-title">
                         אל תפספסו את המתכונים החמים!</div>
 
                     <section class="newsletter">
-                        <?php //echo do_shortcode('[contact-form-7 id="10340" title="ניוזלטר"]'); ?>
+                        <?php echo do_shortcode('[contact-form-7 id="10340" title="ניוזלטר"]'); ?>
 
                     </section>
 
                 </section>
-            <?php //} ?> -->
+            <?php } ?> 
     </article>
 <input style="display:none;" type="text" id="user_holdon" class="user_holdon" value="0"/>
 </div>

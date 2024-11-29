@@ -85,7 +85,7 @@ foody_get_template_part(get_template_directory() . '/template-parts/content-tags
 ?>
 
 <section class="newsletter no-print">
-<?php //$foody_page->newsletter(); ?>
+<?php $foody_page->newsletter(); ?>
 
 </section>
 
