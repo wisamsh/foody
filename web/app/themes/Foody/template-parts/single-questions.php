@@ -109,7 +109,6 @@ wp_enqueue_script('GlobalsW', get_template_directory_uri() . '/components/js/que
                 <section class="newsletter no-print">
                     <div class="newsletter-title">
                         אל תפספסו את המתכונים החמים!</div>
-
                     <section class="newsletter">
                         <?php echo do_shortcode('[contact-form-7 id="10340" title="ניוזלטר"]'); ?>
 
