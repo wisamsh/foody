@@ -1,10 +1,9 @@
 <?php 
- $domain = 'https://' . $_SERVER['HTTP_HOST'] ;
- $target1 = "foody.co.il";
-
+ 
+  $site_id = get_current_blog_id();
 ?>
 <?php 
-if (strpos($domain, $target) !== false) {
+if ($site_id == 1 ||  $_SERVER['HTTP_HOST'] == "staging.foody.co.il") {
 
 ?>
 <!--taboola_div-->
@@ -20,7 +19,7 @@ target_type: 'mix'
 });
 </script>
 
-Flush, place this code at the end of your <body> tag:
+
 
 <script id="taboola_footer" type="text/javascript">
 window._taboola = window._taboola || [];
