@@ -266,11 +266,8 @@ if (wp_is_mobile()){// && "foody_recipe" != get_post_type()) {
         /* Media query for desktop viewport */
         @media screen and (min-width: 400px) { #bitcom-button-container { width: 250px; } }
     </style>
-<?php } 
-
+<?php } ?>
+</html>
+<?php 
 require(get_template_directory() . '/w_helpers/taboola_in_footer.php');
 ?>
-
-
-
-</html>
