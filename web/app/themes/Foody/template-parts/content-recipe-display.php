@@ -318,14 +318,7 @@ if (get_current_blog_id() === 1) { ?>
      }
      ?>
 </section>
-<?php
-$actual_link = $_SERVER['HTTP_HOST'];
-if ($actual_link == 'staging.foody.co.il') {
-     echo ('<section class="recipe-tags tags no-print">');
-     require(get_template_directory() . '/w_helpers/taboola_in_footer.php');
-     echo ('</section>');
-}
-?>
+
 
 
 <section class="recipe-sidebar-mobile d-block d-lg-none no-print">
