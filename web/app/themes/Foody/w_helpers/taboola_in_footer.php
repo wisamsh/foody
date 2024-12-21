@@ -7,7 +7,7 @@ if ($site_id == 1 ||  $_SERVER['HTTP_HOST'] == "staging.foody.co.il" || $_SERVER
 
 ?>
 <!--taboola_div-->
-<div style="width:960px;margin:0 auto; position:relative" id="wt_ab">
+<div style="width:100%;max-width:960px;margin:0 auto; position:relative" id="wt_ab">
 <div id="taboola-below-article-thumbnails-1"></div>
 </div>
 <script type="text/javascript">
