@@ -31,12 +31,17 @@ echo $Foody_Notification->DrawHTMLbox_notification_all();
     top: 5px;
     accent-color: #57a0bb;
 }
+.cat_wrapps{
+        width: 100%;
+    display: contents;
+    }
 </style> 
 <?php //css adjustments :
 
 if(!wp_is_mobile()){
 ?>
 <style>
+   
    
     .notificationBox {
     position: relative;
@@ -56,7 +61,19 @@ if(!wp_is_mobile()){
     flex-wrap: wrap!important;
     flex-direction: row!important ;
 }
-
+.text_wrapp{
+    width: 100%;
+    padding: 20px;
+    margin: 20px;
+}
+.agreement_wrap{
+    width: 85% !important;
+    text-align: right !important;
+    position: relative !important;
+    color: #57A0BB;
+    margin: 0 auto !important;
+    margin-top: 10px !important;
+    }
 </style>
 <?php }?>
 
@@ -71,6 +88,7 @@ if(wp_is_mobile()){
     top: 44px !important;
     z-index: 888!important;
     }
+   
 </style>
 <?php }?>
 <?php get_footer();?>

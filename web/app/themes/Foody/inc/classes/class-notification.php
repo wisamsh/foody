@@ -583,6 +583,18 @@ class Foody_Notification
     }
 
 
+    private function get_Authors_Admin_Choice()
+    {
+        $AuthersList = get_field("bashlanim", "options");
+        $rtn = [];
+        foreach ($AuthersList as $k => $author) {
+            $rtn[$k]["id"] = $author->data->ID;
+            $rtn[$k]["name"] = $author->data->display_name;
+        }
+        return $rtn;
+    }
+
+
     //Duplication:
     public function DrawHTMLbox_notification_all()
     {
@@ -596,45 +608,75 @@ class Foody_Notification
         $rtn .= '<div class="title_rapist">';
         $rtn .= '<div class="h4_desktop"><img class="not_icon" src="' . $this->not_icon() . '"/></div>';
         $rtn .= '<div class="m_title">' . $this->group_nots['main_title'] . '</div>';
-        $rtn .='</div>';
-        
-        
-        $rtn .= '<form id="notification_form"><div class="container-fluid"><div class="row">';
+        $rtn .= '</div>';
 
-                foreach ($terms as $term) {
-                $rtn .= '<div class="col-xxl-6  col-xl-6 col-lg-6 col-md-6 col-sm-12 form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" value="' . $term->term_id . '" id="' . $term->term_id . '">
-                <label class="form-check-label" for="' . $term->term_id . '">
+
+        $rtn .= '<form id="notification_form_all">
+        <div class="container-fluid">
+        <div class="row m-4">
+        <div class="cat_wrapps" id="termspicker">
+        ';
+
+        foreach ($terms as $term) {
+            $rtn .= '<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6  form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" value="term_' . $term->term_id . '" id="termid_' . $term->term_id . '">
+                <label class="form-check-label" for="termid_' . $term->term_id . '">
                 ' . $term->name . '
                 </label>
                 </div>';
-                }
+        }
+        $rtn .= '</div>';
 
-        $rtn .= '</div><div class="formWrapper">
-    
-    <input type="email" name="email" id="email" class="not_email" placeholder="הכניסו מייל..."/>
-    
-    <input type="submit" class="submit" value="שלח >>" />  
-   </div>
 
-    <input type="hidden" name="action" id="action" value="notification_action_call"/>
+        $rtn .= '</div>'; //row end
 
-    <input type="hidden" name="cat_id" id="cat_id" value=""/>
-    <input type="hidden" name="cat_name" id="cat_name" value=""/>
-    <input type="hidden" name="author_id" id="author_id" value=""/>
-    <input type="hidden" name="author_name" id="author_name" value=""/>
-    <input type="hidden" name="recipe_id" id="recipe_id" value="' . get_the_ID() . '"/>
-    <input type="hidden" name="recipe_name" id="recipe_name" value="' . get_the_title() . '"/>
+        $rtn .= '<div class="row m-4">
+        <div class="cat_wrapps" id="authorpicker">';
+
+        $Authors = $this->get_Authors_Admin_Choice();
+        foreach ($Authors as $author) {
+            $rtn .= '<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6  form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" value="auth_' . $author['id'] . '" id="authid_' . $author['id'] . '">
+                <label class="form-check-label" for="authid_' . $author['id'] . '">
+                ' . $author['name'] . '
+                </label>
+                </div>';
+        }
+
+
+
+
+
+        $rtn .= '<div class="formWrapper">
     
-   <div class="agreement_wrap">
+    <div class="text_wrapp">
+        <input type="email" name="email" id="email" class="not_email" placeholder="הכניסו מייל..."/>
+    
+    <input type="submit" class="submit" value="שלח >>" /> 
+
+ <div class="agreement_wrap">
    <input type="radio" name="user_subscribe" id="user_subscribe" checked />
    <label for="user_subscribe" id="user_subscribe_label">
    <a href="' . $this->use_agreement_url . '">' . $this->use_agreement_text . '<a/>
    </label>
    </div>
+
+    </div> 
+    
+   </div>
+
+    <input type="hidden" name="action" id="action" value="notification_action_call"/>
+
+    <input type="hidden" name="cat_id" id="cat_id" value=""/>
+    <input type="hidden" name="cat_name" id="cat_name" value="0"/>
+    <input type="hidden" name="author_id" id="author_id" value=""/>
+    <input type="hidden" name="author_name" id="author_name" value="0"/>
+    <input type="hidden" name="recipe_id" id="recipe_id" value="0"/>
+    <input type="hidden" name="recipe_name" id="recipe_name" value="0"/>
+    
+  
     </form>';
         $rtn .= '<p id="notification_ajax_response"></p> ';
-
 
         return $rtn;
     }
