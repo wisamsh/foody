@@ -268,6 +268,8 @@ if (wp_is_mobile()){// && "foody_recipe" != get_post_type()) {
     </style>
 <?php } ?>
 <?php 
-//require(get_template_directory() . '/w_helpers/taboola_in_footer.php');
+if ($_SERVER['HTTP_HOST'] == 'foody.co.il'){
+require(get_template_directory() . '/w_helpers/taboola_in_footer.php');
+}
 ?>
 </html>
