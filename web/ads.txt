@@ -38,3 +38,12 @@ pubmatic.com, 159277, RESELLER, 5d62403b186f2ace
 advertising.com, 28605, RESELLER
 improvedigital.com, 1699, RESELLER
 google.com, pub-3607762765478350, DIRECT, f08c47fec0942fa0
+smartadline.com, 21378692, DIRECT
+aps.amazon.com, d4004b5f-4fb6-4be2-82ae-0e36b8f52c12, DIRECT
+pubmatic.com, 157150,RESELLER, 5d62403b186f2ace
+openx.com, 540191398,RESELLER, 6a698e2ec38604c6
+contextweb.com, 562541, RESELLER, 89ff185a4c4e857c
+lijit.com, 375328, RESELLER, fafdf38b16bf6b2b
+indexexchange.com, 192410, RESELLER, 50b1c356f2c5c8fc
+themediagrid.com, JTQKMP, RESELLER, 35d5010d7789b49d
+beachfront.com, 14804, RESELLER, e2541279e8e2ca4d
