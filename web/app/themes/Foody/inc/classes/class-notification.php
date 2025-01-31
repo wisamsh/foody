@@ -38,13 +38,16 @@ class Foody_Notification
 
         $this->enqueue_Notification_scripts();
         $this->AllNotifictionPage();
+
         add_action('admin_notices', array($this, 'show_notice'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_ajax_script'));
         add_action('wp_ajax_admin_enter', array($this, 'handle_admin_enter'));
 
-       
 
-       
+        add_action('wp_ajax_sfalntf', array($this, 'handle_form_submission_notallpages'));
+        add_action('wp_ajax_nopriv_sfalntf', array($this, 'handle_form_submission_notallpages'));
+
+
 
 
 
@@ -618,7 +621,7 @@ class Foody_Notification
         $rtn .= '</div>';
 
 
-        $rtn .= '<form id="notification_form_all">
+        $rtn .= '<form id="notification_form_all" method="post">
         <div class="container-fluid">
         <div class="row m-4">
         <div class="cat_wrapps" id="termspicker">
@@ -2087,19 +2090,31 @@ window.onclick = function(event) {
     }
 
 
-    public function AllNotifictionPage() {
+    public function AllNotifictionPage()
+    {
         wp_enqueue_script('ajax-script-all-notifictions', get_template_directory_uri() . '/resources/js/notofication_all_cats.js', ['jquery'], null, true);
         wp_localize_script('ajax-script-all-notifictions', 'allnots_ajax_object', ['ajax_url' => admin_url('admin-ajax.php')]);
-    
-  
-    if (is_page_template('page_notifiction.php')) {
-        // Do something specific for this template
-        add_action('wp_enqueue_scripts', array($this, 'AllNotifictionPage'));
+
+
+        if (is_page_template('page_notifiction.php')) {
+            // Do something specific for this template
+            add_action('wp_enqueue_scripts', array($this, 'AllNotifictionPage'));
+        }
     }
 
-}
 
+    public function handle_form_submission_notallpages()
+    {
+        parse_str($_POST['formData'], $form_data); // Parse serialized data
+      
+    $terms = isset($form_data['terms']) ? $form_data['terms'] : [];
 
+    $authors = isset($form_data['authors']) ? $form_data['authors'] : [];
+
+        print_r($terms);
+        print_r($authors);
+        die();
+    }
 } //end class
 //TODO :
 //BUILD THE HTML SENDING WITH DATAGRID + UNSUBSCRIBE 
