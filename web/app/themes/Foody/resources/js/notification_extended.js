@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
             },
             success: function(response) {
                // alert('Success: ' + response.data.message);
-               console.log('post : ' , post_id);
+              // console.log('post : ' , post_id);
                //jQuery("#" + NotificationToRecipe_meta_box).css("display", "none");
                if(response.data.message == 'נמחק'){
                 message = message ; 

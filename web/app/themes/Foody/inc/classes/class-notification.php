@@ -37,9 +37,16 @@ class Foody_Notification
         $this->Creat_Necessary_Tables_Recepies_ToSend();
 
         $this->enqueue_Notification_scripts();
+        $this->AllNotifictionPage();
         add_action('admin_notices', array($this, 'show_notice'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_ajax_script'));
         add_action('wp_ajax_admin_enter', array($this, 'handle_admin_enter'));
+
+       
+
+       
+
+
 
         //cron jobs==============================================================
 
@@ -619,7 +626,7 @@ class Foody_Notification
 
         foreach ($terms as $term) {
             $rtn .= '<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6  form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" value="term_' . $term->term_id . '" id="termid_' . $term->term_id . '">
+                <input class="form-check-input" type="checkbox" role="switch" value="term_' . $term->term_id . '" name="terms[]" id="termid_' . $term->term_id . '">
                 <label class="form-check-label" for="termid_' . $term->term_id . '">
                 ' . $term->name . '
                 </label>
@@ -636,7 +643,7 @@ class Foody_Notification
         $Authors = $this->get_Authors_Admin_Choice();
         foreach ($Authors as $author) {
             $rtn .= '<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6  form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" value="auth_' . $author['id'] . '" id="authid_' . $author['id'] . '">
+                <input class="form-check-input" type="checkbox" role="switch" value="auth_' . $author['id'] . '" name="authors[]" id="authid_' . $author['id'] . '">
                 <label class="form-check-label" for="authid_' . $author['id'] . '">
                 ' . $author['name'] . '
                 </label>
@@ -2078,6 +2085,21 @@ window.onclick = function(event) {
 
         return $model . $modelCSS . $ModelJS;
     }
+
+
+    public function AllNotifictionPage() {
+        wp_enqueue_script('ajax-script-all-notifictions', get_template_directory_uri() . '/resources/js/notofication_all_cats.js', ['jquery'], null, true);
+        wp_localize_script('ajax-script-all-notifictions', 'allnots_ajax_object', ['ajax_url' => admin_url('admin-ajax.php')]);
+    
+  
+    if (is_page_template('page_notifiction.php')) {
+        // Do something specific for this template
+        add_action('wp_enqueue_scripts', array($this, 'AllNotifictionPage'));
+    }
+
+}
+
+
 } //end class
 //TODO :
 //BUILD THE HTML SENDING WITH DATAGRID + UNSUBSCRIBE 
