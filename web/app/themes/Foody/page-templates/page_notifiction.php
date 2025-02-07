@@ -6,8 +6,14 @@
 */
 
 get_header();
+
 $Foody_Notification = new Foody_Notification ;
 ?>
+<?php if ( has_post_thumbnail() ) { ?>
+    <div class="featured-image">
+        <?php the_post_thumbnail(); ?>
+    </div>
+<?php } ?>
 <?php 
 if(!wp_is_mobile()){echo $Foody_Notification->DrawCSS_Notification_Desktop();}
 if(wp_is_mobile()){echo $Foody_Notification->DrawCSS_Notification_Mobile();}

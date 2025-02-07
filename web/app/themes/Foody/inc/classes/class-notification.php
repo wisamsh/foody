@@ -27,6 +27,9 @@ class Foody_Notification
         $this->group_nots['missing_email'] = get_field('missing_email', 'option');
         $this->group_nots['email_exisit'] = get_field('email_exisit', 'option');
         $this->group_nots['success_regist'] = get_field('success_regist', 'option');
+        $this->group_nots['category_notification_second_title'] = get_field('category_notification_second_title', 'option');
+        $this->group_nots['author_notification_title'] = get_field('author_notification_title', 'option');
+
         $this->notification_utm_code = get_field('notification_utm_code', 'option');
         $this->api_key = get_field("mailgun_api_key", "option");
         // $this->api_key = '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';
@@ -624,6 +627,12 @@ class Foody_Notification
         $rtn .= '<form id="notification_form_all" method="post">
         <div class="container-fluid">
         <div class="row m-4">
+        <div class="col"><h3>
+        ' . $this->group_nots['category_notification_second_title'] . '
+        </h3></div>
+        </div>
+        <div class="row m-4">
+        
         <div class="cat_wrapps" id="termspicker">
         ';
 
@@ -639,6 +648,9 @@ class Foody_Notification
 
 
         $rtn .= '</div>'; //row end
+        $rtn .= '<div class="row m-4">
+        <div class="col"><h3>' . $this->group_nots['author_notification_title'] . '</h3></div>
+        </div>';
 
         $rtn .= '<div class="row m-4">
         <div class="cat_wrapps" id="authorpicker">';
@@ -2103,16 +2115,85 @@ window.onclick = function(event) {
     }
 
 
+    private function ValidateEmail($email)
+    {
+        $regex = "/^[^@\s]+@[^@\s]+\.[^@\s]+$/";
+        $rtn = '0';
+        if (preg_match($regex, $email)) {
+
+            $rtn = '1';
+        } else {
+            $rtn = '0';
+        }
+        return $rtn;
+    }
+
+private function check_And_Store_Term($email,$term_id){
+
+global $wpdb;
+$table_name = $wpdb->prefix . 'notification_users';
+$query_check = "select * from {$table_name} where email = '{$email}' and category_id = '{$term_id}'";
+$result = $wpdb->get_results($query_check);
+return ($result );
+    $password = $this->generatePassword();
+    // $data = array(
+    //     'first_name' => '',
+    //     'last_name' => '',
+    //     'phone' => '',
+    //     'email' => $email,
+    //     'category_id' => $cat_id,
+    //     'recipe_id' => $recipe_id,
+    //     'category_name' => $cat_name,
+    //     'recipe_name' => $recipe_name,
+    //     'valid_user' => !$this->VerefiedEmail($email) ? $vareficationCodeToSend : 'yes',
+    //     'user_ip' => $_SERVER['REMOTE_ADDR'],
+    //     'date_of_regist' => date("d-m-Y"),
+    //     'user_subscribe' => $user_subscribe,
+    //     'author_name' => $author_name,
+    //     'author_id' => $author_id,
+    //     'pass_word' => $password
+
+    // );
+
+
+    //$result = $wpdb->insert($table_name, $data);
+
+    // if ($result === false) {
+    //     // There was an error with the insert operation
+    //     print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
+    // }
+}
+
+
+
     public function handle_form_submission_notallpages()
     {
         parse_str($_POST['formData'], $form_data); // Parse serialized data
-      
-    $terms = isset($form_data['terms']) ? $form_data['terms'] : [];
 
-    $authors = isset($form_data['authors']) ? $form_data['authors'] : [];
+        $terms = isset($form_data['terms']) ? $form_data['terms'] : [];
 
-        print_r($terms);
-        print_r($authors);
+        $authors = isset($form_data['authors']) ? $form_data['authors'] : [];
+        $email = $form_data['email'];
+
+        if (!isset($email) && $this->ValidateEmail($email) == '0') {
+            echo ('בעיה באימייל!');
+            die();
+        }
+        if(empty($terms) && empty($authors)){
+        echo 'יש לבחור אחת מהאפשרויות של קטגוריות או ו בשלנים';
+        die();
+        }
+
+if($terms){
+    foreach($terms as $termarr ){
+        $term = explode("_", $termarr);
+        $termcheck = $this->check_And_Store_Term($email, $term[1]);
+        print_r($termcheck); 
+    }
+}
+
+        //print_r($form_data);
+        //print_r($authors);
         die();
     }
 } //end class
