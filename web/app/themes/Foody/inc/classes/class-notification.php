@@ -11,10 +11,10 @@ class Foody_Notification
     private $EnvyormentType;
     private $SmoovListName;
     private $notification_utm_code;
-
+    private $vareficationCodeToSend;
     function __construct()
     {
-
+        $this->vareficationCodeToSend = $this->generateVerificationCode();
         $this->EnvyormentType =  $_SERVER['SERVER_NAME'] == '0.0.0' ? 'http://foody-local.co.il' : $_SERVER['SERVER_NAME'];
 
         $this->group_nots = array();
@@ -278,7 +278,7 @@ class Foody_Notification
             exit;
         } else {
 
-            $vareficationCodeToSend = $this->generateVerificationCode();
+
             $password = $this->generatePassword();
             $data = array(
                 'first_name' => '',
@@ -289,7 +289,7 @@ class Foody_Notification
                 'recipe_id' => $recipe_id,
                 'category_name' => $cat_name,
                 'recipe_name' => $recipe_name,
-                'valid_user' => !$this->VerefiedEmail($email) ? $vareficationCodeToSend : 'yes',
+                'valid_user' => !$this->VerefiedEmail($email) ? $this->vareficationCodeToSend : 'yes',
                 'user_ip' => $_SERVER['REMOTE_ADDR'],
                 'date_of_regist' => date("d-m-Y"),
                 'user_subscribe' => $user_subscribe,
@@ -308,10 +308,10 @@ class Foody_Notification
             }
 
             if (!$this->VerefiedEmail($email)) {
-                $HtmlToSend = $this->SendEmailVerificationToUser($vareficationCodeToSend, $email);
+                $HtmlToSend = $this->SendEmailVerificationToUser($this->vareficationCodeToSend, $email);
                 $this->SendEmailValidation($email,  $HtmlToSend);
             }
-            print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'], 'smoov' => $vareficationCodeToSend, 'registed_before' => $IsUserRegistedBefore)));
+            print_r($this->ErrorHandle(array("error" => "0", "reaseon" => $this->group_nots['success_regist'], 'smoov' => $this->vareficationCodeToSend, 'registed_before' => $IsUserRegistedBefore)));
         }
 
 
@@ -698,7 +698,7 @@ class Foody_Notification
     
   
     </form>';
-        $rtn .= '<p id="notification_ajax_response"></p> ';
+        $rtn .= '<div id="notification_ajax_response_all" class="dn"></div> ';
 
         return $rtn;
     }
@@ -721,6 +721,22 @@ display: block;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     font-size:15px;
+   
+}
+
+
+#notification_ajax_response_all{
+
+    position: absolute;
+    width: 100%;
+    background: #57a0bbe8;
+    color: #fafafa;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 15px;
+    right: 0;
+    padding: 40px;
+    
    
 }
 
@@ -2128,41 +2144,129 @@ window.onclick = function(event) {
         return $rtn;
     }
 
-private function check_And_Store_Term($email,$term_id){
+    private function check_And_Store_Term($email, $term_id)
+    {
+        $rtn = '';
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_users';
+        $query_check = "select * from {$table_name} where email = '{$email}' and category_id = '{$term_id}'";
+        $result = $wpdb->get_results($query_check);
+        if (empty($result)):
 
-global $wpdb;
-$table_name = $wpdb->prefix . 'notification_users';
-$query_check = "select * from {$table_name} where email = '{$email}' and category_id = '{$term_id}'";
-$result = $wpdb->get_results($query_check);
-return ($result );
-    $password = $this->generatePassword();
-    // $data = array(
-    //     'first_name' => '',
-    //     'last_name' => '',
-    //     'phone' => '',
-    //     'email' => $email,
-    //     'category_id' => $cat_id,
-    //     'recipe_id' => $recipe_id,
-    //     'category_name' => $cat_name,
-    //     'recipe_name' => $recipe_name,
-    //     'valid_user' => !$this->VerefiedEmail($email) ? $vareficationCodeToSend : 'yes',
-    //     'user_ip' => $_SERVER['REMOTE_ADDR'],
-    //     'date_of_regist' => date("d-m-Y"),
-    //     'user_subscribe' => $user_subscribe,
-    //     'author_name' => $author_name,
-    //     'author_id' => $author_id,
-    //     'pass_word' => $password
+            $cat_name = get_cat_name($term_id);
+            $password = $this->generatePassword();
+            $data = array(
+                'first_name' => '',
+                'last_name' => '',
+                'phone' => '',
+                'email' => $email,
+                'category_id' => $term_id,
+                'recipe_id' => '',
+                'category_name' => $cat_name,
+                'recipe_name' => '',
+                'valid_user' => !$this->VerefiedEmail($email) ? $this->vareficationCodeToSend : 'yes',
+                'user_ip' => $_SERVER['REMOTE_ADDR'],
+                'date_of_regist' => date("d-m-Y"),
+                'user_subscribe' => 'on',
+                'author_name' => '',
+                'author_id' => '',
+                'pass_word' => $password
 
-    // );
+            );
 
 
-    //$result = $wpdb->insert($table_name, $data);
+            $result = $wpdb->insert($table_name, $data);
 
-    // if ($result === false) {
-    //     // There was an error with the insert operation
-    //     print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
-    // }
-}
+            if ($result === false) {
+                // There was an error with the insert operation
+                print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
+                die();
+            } else {
+                $rtn = true;
+            }
+        endif;
+        return  $rtn;
+    }
+
+    private function check_And_Store_Author($email, $author_id)
+    {
+        $rtn = '';
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_users';
+         $query_check = "select * from {$table_name} where email = '{$email}' and author_id = '{$author_id}'";
+         $result = $wpdb->get_results($query_check);
+     
+      if (empty($result)):
+            $author_name = get_the_author_meta( 'display_name', $author_id );
+           
+            $password = $this->generatePassword();
+            $data = array(
+                'first_name' => '',
+                'last_name' => '',
+                'phone' => '',
+                'email' => $email,
+                'category_id' => '',
+                'recipe_id' => '',
+                'category_name' => '',
+                'recipe_name' => '',
+                'valid_user' => !$this->VerefiedEmail($email) ? $this->vareficationCodeToSend : 'yes',
+                'user_ip' => $_SERVER['REMOTE_ADDR'],
+                'date_of_regist' => date("d-m-Y"),
+                'user_subscribe' => 'on',
+                'author_name' => $author_name,
+                'author_id' => $author_id,
+                'pass_word' => $password
+
+            );
+
+
+            $result = $wpdb->insert($table_name, $data);
+
+            if ($result === false) {
+                // There was an error with the insert operation
+                print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
+                die();
+            } else {
+                $rtn =$result ;
+            }
+        endif;
+        return  $rtn;
+    }
+
+
+
+
+    public function CheckingEmailifExist($email)
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_users';
+
+        // Prepare and execute the SQL statement to delete the record
+        $search = $wpdb->query(
+            $wpdb->prepare(
+                "SELECT id, email FROM {$table_name} WHERE email = %s ",
+                $email
+            )
+        );
+        return  $search;
+    }
+
+
+    public function is_Vrified_email($email)
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'notification_users';
+
+        // Prepare and execute the SQL statement to delete the record
+        $search = $wpdb->query(
+            $wpdb->prepare(
+                "SELECT id, email, valid_user FROM {$table_name} WHERE email = %s  and valid_user = %s ",
+                $email,
+                'yes'
+            )
+        );
+        return $search;
+    }
 
 
 
@@ -2179,26 +2283,53 @@ return ($result );
             echo ('בעיה באימייל!');
             die();
         }
-        if(empty($terms) && empty($authors)){
-        echo 'יש לבחור אחת מהאפשרויות של קטגוריות או ו בשלנים';
-        die();
+        if (empty($terms) && empty($authors)) {
+            echo 'יש לבחור אחת מהאפשרויות של קטגוריות או ו בשלנים';
+            die();
         }
 
-if($terms){
-    foreach($terms as $termarr ){
-        $term = explode("_", $termarr);
-        $termcheck = $this->check_And_Store_Term($email, $term[1]);
-        print_r($termcheck); 
-    }
-}
+        //Checking email if exsist : 
+        $emailcheck =  $this->CheckingEmailifExist($email);
 
-        //print_r($form_data);
-        //print_r($authors);
+
+
+
+        if ($terms) {
+            foreach ($terms as $termarr) {
+                $term = explode("_", $termarr);
+                $termcheck = $this->check_And_Store_Term($email, $term[1]);
+                //print_r($termcheck); 
+            }
+        }
+
+        //print_r($termcheck);  //print_r($form_data);
+
+
+
+        
+
+
+
+        if(!empty($authors)){
+            foreach($authors as $author){
+
+                $author_id = explode("auth_", $author);
+                
+                $rtn =  $this->check_And_Store_Author($email, $author_id[1]);
+
+            }
+        }
+
+        if ($emailcheck  < 1 || !$this->is_Vrified_email($email)):
+            $HtmlToSend = $this->SendEmailVerificationToUser($this->vareficationCodeToSend, $email);
+        endif;
+if ($rtn  > 0 || $termcheck){
+    echo 'תודה שנרשמתם להתראות של פודי , אם זאת פעם ראשונה תקבלו מייל אישור !יש לאשר את המייל בכדי לקבל התראות מתכונים.';
+}
         die();
     }
-} //end class
-//TODO :
-//BUILD THE HTML SENDING WITH DATAGRID + UNSUBSCRIBE 
+} //end class===============================
+
 
 
 ?>

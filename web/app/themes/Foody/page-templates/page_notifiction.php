@@ -18,6 +18,7 @@ $Foody_Notification = new Foody_Notification ;
 if(!wp_is_mobile()){echo $Foody_Notification->DrawCSS_Notification_Desktop();}
 if(wp_is_mobile()){echo $Foody_Notification->DrawCSS_Notification_Mobile();}
 echo $Foody_Notification->DrawHTMLbox_notification_all();
+echo $Foody_Notification->PopUpModel();
 ?>
 <?php //global style:?>
 <style>

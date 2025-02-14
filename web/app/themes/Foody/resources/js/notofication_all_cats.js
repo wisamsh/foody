@@ -1,8 +1,9 @@
 jQuery(document).ready(function($) {
     
-
+    
     jQuery("#notification_form_all").submit(function (event) {
         event.preventDefault();
+        jQuery("#notification_ajax_response_all").addClass("dn");
         if(jQuery("#email").val() == ''){
             alert ('יש להזין אימייל!');
             return;
@@ -19,10 +20,12 @@ console.log(formData);
                 formData: formData, // Serialized form data
             },
             success: function (response) {
-                jQuery("#notification_ajax_response").html(response); // Show response message
+                jQuery("#notification_ajax_response_all").removeClass("dn");
+                jQuery("#notification_ajax_response_all").html(response); // Show response message
             },
             error: function () {
-                jQuery("#notification_ajax_response").html("<p style='color:red;'>Error sending data</p>");
+                jQuery("#notification_ajax_response_all").removeClass("dn");
+                jQuery("#notification_ajax_response_all").html("<p style='color:red;'>Error sending data</p>");
             },
         });
     });
