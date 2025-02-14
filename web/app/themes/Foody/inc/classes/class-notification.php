@@ -720,8 +720,7 @@ display: block;
     color: red;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    font-size:15px;
-   
+    font-size:15px;   
 }
 
 #notification_ajax_response_all{
