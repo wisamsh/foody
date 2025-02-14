@@ -724,7 +724,6 @@ display: block;
    
 }
 
-
 #notification_ajax_response_all{
 
     position: absolute;
