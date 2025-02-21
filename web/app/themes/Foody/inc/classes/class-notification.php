@@ -2321,17 +2321,12 @@ window.onclick = function(event) {
 
         if ($emailcheck  < 1 || !$this->is_Vrified_email($email)):
             $HtmlToSend = $this->SendEmailVerificationToUser($this->vareficationCodeToSend, $email);
+            $this->SendEmailValidation($email,  $HtmlToSend);
         endif;
 if ($rtn  > 0 || $termcheck){
     echo 'תודה שנרשמתם להתראות של פודי , אם זאת פעם ראשונה תקבלו מייל אישור !יש לאשר את המייל בכדי לקבל התראות מתכונים.';
-    if (!$this->VerefiedEmail($email)) {
-        $HtmlToSend = $this->SendEmailVerificationToUser($this->vareficationCodeToSend, $email);
-        $this->SendEmailValidation($email,  $HtmlToSend);
-    }
 }
-else{
-    echo 'הפעולה נקלטה בהצלחה!';
-}
+
 
 
 
