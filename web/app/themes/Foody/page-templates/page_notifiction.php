@@ -97,4 +97,7 @@ if(wp_is_mobile()){
    
 </style>
 <?php }?>
+</div>
+</div>
+</div>
 <?php get_footer();?>

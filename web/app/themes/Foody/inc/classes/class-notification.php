@@ -673,6 +673,7 @@ class Foody_Notification
         $rtn .= '<div class="formWrapper">
     
     <div class="text_wrapp">
+    <h5 style="width:100%; text-align:center;margin-bottom:20px;">להשלמת ההרשמה הזינו את האימייל שלכם ולחצו על "שלח" </h5>
         <input type="email" name="email" id="email" class="not_email" placeholder="הכניסו מייל..."/>
     
     <input type="submit" class="submit" value="שלח >>" /> 
@@ -1748,8 +1749,9 @@ color:#fff;
         $html .= "<img src='{$this->email_Image_Header}' style='width:100%;'/>";
         $html .= '<div id="firstdv" style="width:100%;margin-top:0px;">';
         //$html .= '<h3 style="font-size:45px;font-weight:700;color:#E63A2C">מייל אימות - FOODY</h3>';
-        $html .= '<p>ביקשתם להירשם לקבלת התראות</p>';
-        $html .= "<a href='{$this->EnvyormentType}/email-verification/?v={$vereficationCode}&e={$email}'>יש ללחוץ כאן כדי לאשר את המייל</a>";
+        $html .= '<p> איזה כיף שנרשמת לקבל עדכונים על כל המתכונים החדשים והטעימים של פודי!   </p>';
+        $html .='<p>כדי לקבל עדכונים</p>';
+        $html .= "<a href='{$this->EnvyormentType}/email-verification/?v={$vereficationCode}&e={$email}'>אנא אשרו את כתובת המייל שלכם</a>";
         $html .= '<p>FOODY</p>';
         $html .= '</div>'; //firstdv closer
         return $html;
@@ -2153,7 +2155,7 @@ window.onclick = function(event) {
         if (!empty($result)):
             $rtn .= 'מייל זה קיים במערכת לאופציות שנבחרו!';
             die();
-            endif;
+        endif;
 
         if (empty($result)):
 
@@ -2197,12 +2199,12 @@ window.onclick = function(event) {
         $rtn = '';
         global $wpdb;
         $table_name = $wpdb->prefix . 'notification_users';
-         $query_check = "select * from {$table_name} where email = '{$email}' and author_id = '{$author_id}'";
-         $result = $wpdb->get_results($query_check);
-     
-      if (empty($result)):
-            $author_name = get_the_author_meta( 'display_name', $author_id );
-           
+        $query_check = "select * from {$table_name} where email = '{$email}' and author_id = '{$author_id}'";
+        $result = $wpdb->get_results($query_check);
+
+        if (empty($result)):
+            $author_name = get_the_author_meta('display_name', $author_id);
+
             $password = $this->generatePassword();
             $data = array(
                 'first_name' => '',
@@ -2231,7 +2233,7 @@ window.onclick = function(event) {
                 print_r($this->ErrorHandle(array("error" => "1", "reaseon" => $wpdb->last_error)));
                 die();
             } else {
-                $rtn =$result ;
+                $rtn = $result;
             }
         endif;
         return  $rtn;
@@ -2302,20 +2304,18 @@ window.onclick = function(event) {
             foreach ($terms as $termarr) {
                 $term = explode("_", $termarr);
                 $termcheck = $this->check_And_Store_Term($email, $term[1]);
-                
             }
         }
 
 
 
 
-        if(!empty($authors)){
-            foreach($authors as $author){
+        if (!empty($authors)) {
+            foreach ($authors as $author) {
 
                 $author_id = explode("auth_", $author);
-                
-                $rtn =  $this->check_And_Store_Author($email, $author_id[1]);
 
+                $rtn =  $this->check_And_Store_Author($email, $author_id[1]);
             }
         }
 
@@ -2323,14 +2323,13 @@ window.onclick = function(event) {
             $HtmlToSend = $this->SendEmailVerificationToUser($this->vareficationCodeToSend, $email);
             $this->SendEmailValidation($email,  $HtmlToSend);
         endif;
-        if ($rtn  > 0 || $termcheck){
-            echo 'תודה שנרשמתם להתראות של פודי , אם זאת פעם ראשונה תקבלו מייל אישור !יש לאשר את המייל בכדי לקבל התראות מתכונים.';
-        }
-        else{
+        if ($rtn  > 0 || $termcheck) {
+            echo 'תודה שנרשמת לקבל עדכונים על המתכונים החדשים של פודי! אם זו ההרשמה הראשונה שלך, אנא אמת את כתובת האימייל על ידי לחיצה על הקישור במייל האישור שנשלח אליך.';
+        } 
+
+        if (!$termcheck) {
             echo 'המייל כבר קיים במערכת ההוספה עודכנה!';
         }
-
-
 
 
         die();
