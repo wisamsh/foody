@@ -3,17 +3,18 @@
 jQuery(document).ready(function ($) {
   jQuery("#notification_form_all").submit(function (event) {
     event.preventDefault();
-    jQuery("#notification_ajax_response_all").addClass("dn");
 
     if (jQuery("#email").val() == '') {
       alert('יש להזין אימייל!');
+      jQuery("#notification_ajax_response_all").addClass("dn");
       return;
-    } // Prevent default form submission
+    }
 
+    jQuery("#notification_ajax_response_all").removeClass("dn");
+    jQuery("#notification_ajax_response_all").html('טוען...'); // Prevent default form submission
 
     var formData = jQuery(this).serialize(); // Serialize form data
 
-    console.log(formData);
     jQuery.ajax({
       url: allnots_ajax_object.ajax_url,
       // WP AJAX URL

@@ -685,7 +685,7 @@ class Foody_Notification
    </div>
 
     </div> 
-    
+    <div id="notification_ajax_response_all" class=" alert alert-success dn" role="alert"></div>
    </div>
 
     <input type="hidden" name="action" id="action" value="notification_action_call"/>
@@ -698,8 +698,8 @@ class Foody_Notification
     <input type="hidden" name="recipe_name" id="recipe_name" value="0"/>
     
   
-    </form>';
-        $rtn .= '<div id="notification_ajax_response_all" class="dn"></div> ';
+    ';
+        $rtn .=  '</form>';
 
         return $rtn;
     }
@@ -726,15 +726,15 @@ display: block;
 
 #notification_ajax_response_all{
 
-    position: absolute;
     width: 100%;
-    background: #57a0bbe8;
-    color: #fafafa;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+   
+    color: #151414;
+    border-radius: 5px;
+    
     font-size: 15px;
     right: 0;
-    padding: 40px;
+   
+    text-align: center
     
    
 }
@@ -2150,6 +2150,11 @@ window.onclick = function(event) {
         $table_name = $wpdb->prefix . 'notification_users';
         $query_check = "select * from {$table_name} where email = '{$email}' and category_id = '{$term_id}'";
         $result = $wpdb->get_results($query_check);
+        if (!empty($result)):
+            $rtn .= 'מייל זה קיים במערכת לאופציות שנבחרו!';
+            die();
+            endif;
+
         if (empty($result)):
 
             $cat_name = get_cat_name($term_id);
@@ -2297,15 +2302,10 @@ window.onclick = function(event) {
             foreach ($terms as $termarr) {
                 $term = explode("_", $termarr);
                 $termcheck = $this->check_And_Store_Term($email, $term[1]);
-                //print_r($termcheck); 
+                
             }
         }
 
-        //print_r($termcheck);  //print_r($form_data);
-
-
-
-        
 
 
 
@@ -2323,9 +2323,12 @@ window.onclick = function(event) {
             $HtmlToSend = $this->SendEmailVerificationToUser($this->vareficationCodeToSend, $email);
             $this->SendEmailValidation($email,  $HtmlToSend);
         endif;
-if ($rtn  > 0 || $termcheck){
-    echo 'תודה שנרשמתם להתראות של פודי , אם זאת פעם ראשונה תקבלו מייל אישור !יש לאשר את המייל בכדי לקבל התראות מתכונים.';
-}
+        if ($rtn  > 0 || $termcheck){
+            echo 'תודה שנרשמתם להתראות של פודי , אם זאת פעם ראשונה תקבלו מייל אישור !יש לאשר את המייל בכדי לקבל התראות מתכונים.';
+        }
+        else{
+            echo 'המייל כבר קיים במערכת ההוספה עודכנה!';
+        }
 
 
 
