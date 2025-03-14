@@ -8,11 +8,24 @@ get_header();
 
 $Foody_Notification = new Foody_Notification ;
 ?>
-<?php if ( has_post_thumbnail() ) { ?>
+<?php if ( has_post_thumbnail() && !wp_is_mobile()) { ?>
     <div class="featured-image">
         <?php the_post_thumbnail(); ?>
     </div>
-<?php } ?>
+<?php } 
+//mobile_image_alerts?>
+
+<?php if (wp_is_mobile() && get_field("mobile_image_alerts","options")) { ?>
+    <div class="featured-image">
+        <img src="<?php echo get_field("mobile_image_alerts","options");?>" style="width:100%;"/>
+    </div>
+<?php } 
+//mobile_image_alerts?>
+
+
+
+
+
 <?php 
 if(!wp_is_mobile()){echo $Foody_Notification->DrawCSS_Notification_Desktop();}
 if(wp_is_mobile()){echo $Foody_Notification->DrawCSS_Notification_Mobile();}
@@ -93,6 +106,9 @@ if(wp_is_mobile()){
     right: 13px !important;
     top: 44px !important;
     z-index: 888!important;
+    }
+    h1{
+        margin:10px;
     }
    
 </style>
