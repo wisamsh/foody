@@ -22,12 +22,13 @@ class FB_Site_Banner_Campaign
     private function BannerTemplate($banner = array())
     {
         if (!empty($banner)) {
-
+            $image = !wp_is_mobile() ? $banner['fb_desktop_banner']  : $banner['fb_mobile_banner'];
             $html = "<div class='banner_wrapper' id='{$banner["id"]}' ";
-            $html .= "<div class='banner_image' onclick='gotolink({$banner['fb_desktop_link']})'>";
+            $html .= "<div class='banner_image' onclick='gotolink({$image })'>";
             $html .= "<img class='desktop_banner' src='{$banner['fb_desktop_banner']}'/>";
             $html .= "</div>"; //Wrapper Closer 
             return $html;
+        
         }
     }
 
