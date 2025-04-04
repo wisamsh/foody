@@ -1337,3 +1337,6 @@ add_action('wp_head', function () {
         echo '<meta name="robots" content="index, follow">';
     }
 }, 1);
+add_action('init', function () {
+    new FB_Site_Banner_Campaign();
+});

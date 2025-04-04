@@ -198,8 +198,13 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
         }
     }
     ?>
-</footer><!-- #colophon -->
 
+
+</footer><!-- #colophon -->
+<?php 
+$FB_Site_Banner_Campaign = new FB_Site_Banner_Campaign;
+
+?>
 </div><!-- #page -->
 
 <?php
@@ -217,23 +222,6 @@ if (!is_user_logged_in() && (!function_exists('foody_is_registration_open') || f
 }
 ?>
 
-<?php
-//if (get_option('foody_show_newsletter_popup')) {
-//    $newsletter_popup_args = [
-//        'id' => 'newsletter-modal',
-//        'body' => do_shortcode('[foody-newsletter]'),
-//        'btn_approve_classes' => 'hide',
-//        'btn_cancel_classes' => 'hide',
-//        'title' => '',
-//        'hide_buttons' => true,
-//        'close_id' => 'close-newsletter-popup'
-//    ];
-//
-//    foody_get_template_part(get_template_directory() . '/template-parts/common/modal.php', $newsletter_popup_args);
-//}
-
-
-?>
 <?php wp_footer(); ?>
 
 
@@ -271,5 +259,7 @@ if (wp_is_mobile()){// && "foody_recipe" != get_post_type()) {
 if ($_SERVER['HTTP_HOST'] == 'foody.co.il'){
 require(get_template_directory() . '/w_helpers/taboola_in_footer.php');
 }
+
+
 ?>
 </html>

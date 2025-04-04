@@ -199,3 +199,4 @@ require_once get_template_directory() . "/inc/classes/new_site/class-newsite-mai
 
 //XML FOR ADMIN 
 require_once get_template_directory() . "/inc/classes/class-foody-xmlfromadmin.php";
+require_once get_template_directory() . "/inc/classes/class-fbbanner.php";
