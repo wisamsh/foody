@@ -61,7 +61,6 @@ class FB_Site_Banner_Campaign
                 $image = !wp_is_mobile() ? $banner['fb_desktop_banner']  : $banner['fb_mobile_banner'];
                 $url = !wp_is_mobile() ? $banner['fb_desktop_link']  : $banner['fb_mobile_link'];
                 $html = "<div class='banner_wrapper' id='{$banner["id"]}' data-url='{$url}'";
-               
                 $html .= "<div class='banner_image'>";
                 $html .= "<div class='close_banner'>X</div>";
                 $html .= "<img class='image_banner' src='{$image}'/>";
