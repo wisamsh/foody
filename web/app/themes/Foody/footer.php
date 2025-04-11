@@ -203,6 +203,7 @@ elseif (isset($post) && ($post->post_type == 'foody_feed_channel' || $post->post
 </footer><!-- #colophon -->
 <?php 
 $FB_Site_Banner_Campaign = new FB_Site_Banner_Campaign;
+echo  $FB_Site_Banner_Campaign->ShowPopUp();
 
 ?>
 </div><!-- #page -->

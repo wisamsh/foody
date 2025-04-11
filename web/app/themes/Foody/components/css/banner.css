@@ -1,0 +1,21 @@
+.banner_wrapper{
+    position: relative;
+    max-width:960px;
+    text-align: center;
+    margin: 0 auto;
+}
+.close_banner{
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    font-size: 21px;
+    font-weight: bold;
+    width: 40px;
+    padding: 1px;
+    border: solid 1px #ffffff82;
+    text-align: center;
+    color: #000;
+    background: #ffffff5e;
+    border-radius: 10px;
+
+}

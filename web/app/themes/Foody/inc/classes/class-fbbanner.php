@@ -7,9 +7,20 @@ class FB_Site_Banner_Campaign
     public function __construct()
     {
         add_action('wp_enqueue_scripts', array($this, 'enqueue_front_assets'), 20);
-        $this->PopUpGroup = get_field("fb_campagin", "options");
-        
+        $this->PopUpGroup = get_field("add_popup_campaign_repeater", "options");
     }
+
+
+    public function GetCampagains()
+    {
+        $campaigns = [];
+        $campaigns_Fetch =  $this->PopUpGroup;
+        foreach ($campaigns_Fetch as $key => $camps) {
+            $campaigns[] = $camps['fb_campagin'];
+        }
+        return $campaigns;
+    }
+
 
     public function CheckBannerCamp()
     {
@@ -19,22 +30,53 @@ class FB_Site_Banner_Campaign
         }
     }
 
+
+    private function site_location()
+    {
+        $post_type = get_query_var('post_type');
+        if (empty($post_type)) {
+            // fallback for default post type archives
+            if (is_singular()) {
+                $post_type = get_post_type();
+            } else {
+                $post_type = 'post';
+            }
+        }
+        return $post_type;
+    }
+
+    public function ShowPopUp()
+    {
+        return ($this->BannerTemplate($this->GetCampagains()));
+    }
+
+
     private function BannerTemplate($banner = array())
     {
         if (!empty($banner)) {
-            $image = !wp_is_mobile() ? $banner['fb_desktop_banner']  : $banner['fb_mobile_banner'];
-            $html = "<div class='banner_wrapper' id='{$banner["id"]}' ";
-            $html .= "<div class='banner_image' onclick='gotolink({$image })'>";
-            $html .= "<img class='desktop_banner' src='{$banner['fb_desktop_banner']}'/>";
-            $html .= "</div>"; //Wrapper Closer 
-            return $html;
-        
+            foreach ($banner as $banner) {
+
+
+
+                $image = !wp_is_mobile() ? $banner['fb_desktop_banner']  : $banner['fb_mobile_banner'];
+                $url = !wp_is_mobile() ? $banner['fb_desktop_link']  : $banner['fb_mobile_link'];
+                $html = "<div class='banner_wrapper' id='{$banner["id"]}' data-url='{$url}'";
+               
+                $html .= "<div class='banner_image'>";
+                $html .= "<div class='close_banner'>X</div>";
+                $html .= "<img class='image_banner' src='{$image}'/>";
+                $html .= "</div>"; //Wrapper Closer 
+                return $html;
+
+
+
+            }
         }
     }
 
     public function enqueue_front_assets()
     {
-       
+
         wp_enqueue_style(
             'foody_banner_style',
             get_template_directory_uri() . '/components/css/banner.css',
