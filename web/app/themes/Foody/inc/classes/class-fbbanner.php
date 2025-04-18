@@ -8,6 +8,7 @@ class FB_Site_Banner_Campaign
     {
         add_action('wp_enqueue_scripts', array($this, 'enqueue_front_assets'), 20);
         $this->PopUpGroup = get_field("add_popup_campaign_repeater", "options");
+        // print_r($this->PopUpGroup);
     }
 
 
@@ -51,24 +52,99 @@ class FB_Site_Banner_Campaign
     }
 
 
+    public function CheckCampArea($area, $specified=null)
+    {
+
+        switch ($area) {
+            case "all_site":
+                    break;
+                    case "foody_recipe":
+                        if ( get_post_type() === 'foody_recipe' ) {
+                            return true;
+                        }
+                    break;
+                    case "posts":
+                        if ( get_post_type() === 'posts' ) {
+                            return true;
+                        }
+                    break;
+                    case "pages":
+                        if(is_page()){
+                            return true;
+                        }
+                    break;
+                    case "Home Page":
+                        if(is_front_page() || is_home()){
+                            return true;
+                        }
+                    break;
+                    case "Specified":
+                        if($specified !="" || !empty($specified)){
+                            if(in_array(get_the_ID(), $specified)){
+                                return true;
+                            }
+                        }
+                    break;
+                    default :
+                    return false;
+                    break;
+
+        }
+
+
+
+        // $all_site
+        // $foody_recipe
+        // $posts
+        // $pages
+        // $Home Page
+        // $Specified
+    }
+
+
+
     private function BannerTemplate($banner = array())
     {
+
         if (!empty($banner)) {
+            $html = '';
             foreach ($banner as $banner) {
                 $bannerID =  strtolower(str_replace(' ', '_', $banner['fp_campain_name']));
+               
 
+    if($banner['fb_area_picker'][0]!= 'Specified'){
+            if($this->CheckCampArea($banner['fb_area_picker'][0])){
                 $image = !wp_is_mobile() ? $banner['fb_desktop_banner']  : $banner['fb_mobile_banner'];
                 $url = !wp_is_mobile() ? $banner['fb_desktop_link']  : $banner['fb_mobile_link'];
-                $html = "<div class='banner_wrapper' id='{$bannerID}' data-url='{$url}'";
+                $html .= "<div class='banner_wrapper' id='{$bannerID}' data-url='{$url}'";
                 $html .= "<div class='banner_image'>";
                 $html .= "<div class='close_banner' data-close='{$bannerID}'>X</div>";
                 $html .= "<img class='image_banner' src='{$image}'/>";
                 $html .= "</div>"; //Wrapper Closer 
                 return $html;
+            }
+        }
+            
+        
+
+        if($banner['fb_area_picker'][0]== 'Specified'){
+            if($this->CheckCampArea($banner['fb_area_picker'][0], $banner['fb_location'])){
+                $image = !wp_is_mobile() ? $banner['fb_desktop_banner']  : $banner['fb_mobile_banner'];
+                $url = !wp_is_mobile() ? $banner['fb_desktop_link']  : $banner['fb_mobile_link'];
+                $html .= "<div class='banner_wrapper' id='{$bannerID}' data-url='{$url}'";
+                $html .= "<div class='banner_image'>";
+                $html .= "<div class='close_banner' data-close='{$bannerID}'>X</div>";
+                $html .= "<img class='image_banner' src='{$image}'/>";
+                $html .= "</div>"; //Wrapper Closer 
+                return $html;
+            }
+        }
+
 
 
 
             }
+            return $html;
         }
     }
 
