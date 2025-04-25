@@ -116,11 +116,14 @@ class FB_Site_Banner_Campaign
             if($this->CheckCampArea($banner['fb_area_picker'][0])){
                 $image = !wp_is_mobile() ? $banner['fb_desktop_banner']  : $banner['fb_mobile_banner'];
                 $url = !wp_is_mobile() ? $banner['fb_desktop_link']  : $banner['fb_mobile_link'];
-                $html .= "<div class='banner_wrapper' id='{$bannerID}' data-url='{$url}'";
-                $html .= "<div class='banner_image'>";
+                $html .= "<div class='banner_wrapper'>";
+                
                 $html .= "<div class='close_banner' data-close='{$bannerID}'>X</div>";
+                $html .="<div class='banner_wrapper_2' id='{$bannerID}' data-url='{$url}'>";
+                $html .= "<div class='banner_image'>";
+                
                 $html .= "<img class='image_banner' src='{$image}'/>";
-                $html .= "</div>"; //Wrapper Closer 
+                $html .= "</div></div>"; //Wrapper Closer 
                 return $html;
             }
         }
