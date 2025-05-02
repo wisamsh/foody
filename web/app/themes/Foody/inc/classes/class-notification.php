@@ -1683,10 +1683,14 @@ color:#fff;
         //$category = category name========================
         $myemail = $this->encrypt_string($email, 'bar');
         foreach ($recipe as $recipe) {
+            $category_link = get_category_link($cat_ID);
 
             $post = get_post($recipe->recipe_id);
             // print_r($recipe);die();
             $author = $this->get_author_by_post_id($post->ID);
+            $author_url = get_author_posts_url( $author['id'] );
+
+
             $recipeTitle = $post->post_title;
             $featured_image_url = get_the_post_thumbnail_url($post, 'full'); // 'full' can be replaced with any size like 'thumbnail', 'medium', etc.
             $html  = '<!DOCTYPE html><html lang="he"><head><meta charset="UTF-8">';
@@ -1713,9 +1717,9 @@ color:#fff;
             $html .= '<div  style="width:98%; margin:0 auto; text-align:center; border:solid 3px #57A0BB;padding-bottom: 20px;"> '; //new recipe wrapp
             $html .= '<h3 style="color:#333333;"> מתכון חדש בקטגוריה: </h3>';
             $html .= "<div>
-        <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'> 
-        {$author['display_name']}</span>
-         <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'>{$category}</span> </div>";
+       <a href=".$author_url."> <span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'> 
+        {$author['display_name']}</a></span>
+         <a href=". $category_link ."><span style='color:#333333;width: 176px;font-size: 15px;background-color: #fff;padding: 7px;display: inline-block;text-align: center;vertical-align: middle; margin-left:10px;margin-bottom:5px;'>{$category}</span></a> </div>";
             $html .= "</div>";
             $html .= '<div style="justify-content: center;align-items: center; align-items: center;padding:10px;margin:0 auto;margin-top:30px;width:192px;border-radius:26px;background-color:#E5382D;margin-bottom:30px;">
         <a target="_blank" style="color:#fff !important;text-decoration: none;" href="' . $this->EnvyormentType . '/?p=' . $post->ID . $this->notification_utm_code . '"  > לעמוד המתכון >></a></div>  ';
