@@ -1,4 +1,7 @@
 <?php
+
+use Guzzle\Plugin\Cookie\Cookie;
+
 class FB_Site_Banner_Campaign
 {
 
@@ -48,6 +51,7 @@ class FB_Site_Banner_Campaign
 
     public function ShowPopUp()
     {
+       
         return ($this->BannerTemplate($this->GetCampagains()));
     }
 
@@ -101,32 +105,55 @@ class FB_Site_Banner_Campaign
         // $Specified
     }
 
-
+    public function EncryptBanner($string) {
+        // Get current timestamp
+        $number = '';
+        for ($i = 0; $i < strlen($string); $i++) {
+            $number .= str_pad(ord($string[$i]), 3, '0', STR_PAD_LEFT); // Ensure 3 digits per char
+        }
+        return $number;
+    }
+    
+    
+    function DecryptBanner($number) {
+        $string = '';
+        $chunks = str_split($number, 3); // 3 digits per char
+        foreach ($chunks as $chunk) {
+            $string .= chr((int)$chunk);
+        }
+        return $string;
+    }
 
     private function BannerTemplate($banner = array())
     {
 
         if (!empty($banner)) {
             $html = '';
-            foreach ($banner as $banner) {
-                $bannerID =  strtolower(str_replace(' ', '_', $banner['fp_campain_name']));
-               
+    foreach ($banner as $banner) 
+    {
+    $bannerID =  strtolower(str_replace(' ', '_', $banner['fp_campain_name']));
+    $CookieName = 'FB_'.$this->EncryptBanner($banner['fp_campain_name']);
+           
 
-    if($banner['fb_area_picker'][0]!= 'Specified'){
-            if($this->CheckCampArea($banner['fb_area_picker'][0])){
-                $image = !wp_is_mobile() ? $banner['fb_desktop_banner']  : $banner['fb_mobile_banner'];
-                $url = !wp_is_mobile() ? $banner['fb_desktop_link']  : $banner['fb_mobile_link'];
-                $html .= "<div class='banner_wrapper'>";
-                
-                $html .= "<div class='close_banner' data-close='{$bannerID}'>X</div>";
-                $html .="<div class='banner_wrapper_2' id='{$bannerID}' data-url='{$url}'>";
-                $html .= "<div class='banner_image'>";
-                
-                $html .= "<img class='image_banner' src='{$image}'/>";
-                $html .= "</div></div>"; //Wrapper Closer 
-                return $html;
-            }
-        }
+                if($banner['fb_area_picker'][0]!= 'Specified')
+                {
+                    if(!isset($_COOKIE[$CookieName])) 
+                    {
+                    if($this->CheckCampArea($banner['fb_area_picker'][0]))
+                    {
+                        $image = !wp_is_mobile() ? $banner['fb_desktop_banner']  : $banner['fb_mobile_banner'];
+                        $url = !wp_is_mobile() ? $banner['fb_desktop_link']  : $banner['fb_mobile_link'];
+                        $html .= "<div class='banner_wrapper'>";
+
+                        $html .= "<div class='close_banner' data-id='{$this->EncryptBanner($banner['fp_campain_name'])}' data-close='{$bannerID}'>X</div>";
+                        $html .="<div class='banner_wrapper_2' id='{$bannerID}' data-url='{$url}'>";
+                        $html .= "<div class='banner_image'>";
+
+                        $html .= "<img class='image_banner' src='{$image}'/>";
+                        $html .= "</div></div>"; //Wrapper Closer 
+                        return $html;
+                    }
+                }
             
         
 
@@ -136,18 +163,19 @@ class FB_Site_Banner_Campaign
                 $url = !wp_is_mobile() ? $banner['fb_desktop_link']  : $banner['fb_mobile_link'];
                 $html .= "<div class='banner_wrapper' id='{$bannerID}' data-url='{$url}'";
                 $html .= "<div class='banner_image'>";
-                $html .= "<div class='close_banner' data-close='{$bannerID}'>X</div>";
+                $html .= "<div class='close_banner' data-id='{$this->EncryptBanner($banner['fp_campain_name'])}' data-close='{$bannerID}'>X</div>";
                 $html .= "<img class='image_banner' src='{$image}'/>";
                 $html .= "</div>"; //Wrapper Closer 
                 return $html;
             }
         }
 
-
+    }
 
 
             }
             return $html;
+       
         }
     }
 
