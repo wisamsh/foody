@@ -83,32 +83,32 @@ class RecipeXMLGenerator {
         foreach ($posts as $post) {
             $item = $xml->addChild('recipe');
             $item->addChild('ID', $post->ID);
-            $item->addChild('title', clean_for_xml($post->post_title));
-            $item->addChild('date', clean_for_xml($post->post_date));
+            $item->addChild('title', ($post->post_title));
+            $item->addChild('date', ($post->post_date));
     
-            if (function_exists('get_fields')) {
-                $fields = get_fields($post->ID);
-                if ($fields) {
-                    $acf_node = $item->addChild('acf_fields');
-                    foreach ($fields as $key => $value) {
-                        if (is_array($value)) {
-                            $subnode = $acf_node->addChild($key);
-                            foreach ($value as $subkey => $subvalue) {
-                                if (is_array($subvalue)) {
-                                    $nested = $subnode->addChild('item');
-                                    foreach ($subvalue as $nk => $nv) {
-                                        $nested->addChild($nk, clean_for_xml($nv));
-                                    }
-                                } else {
-                                    $subnode->addChild($subkey, clean_for_xml($subvalue));
-                                }
-                            }
-                        } else {
-                            $acf_node->addChild($key, clean_for_xml($value));
-                        }
-                    }
-                }
-            }
+            // if (function_exists('get_fields')) {
+            //     $fields = get_fields($post->ID);
+            //     if ($fields) {
+            //         $acf_node = $item->addChild('acf_fields');
+            //         foreach ($fields as $key => $value) {
+            //             if (is_array($value)) {
+            //                 $subnode = $acf_node->addChild($key);
+            //                 foreach ($value as $subkey => $subvalue) {
+            //                     if (is_array($subvalue)) {
+            //                         $nested = $subnode->addChild('item');
+            //                         foreach ($subvalue as $nk => $nv) {
+            //                             $nested->addChild($nk, clean_for_xml($nv));
+            //                         }
+            //                     } else {
+            //                         $subnode->addChild($subkey, clean_for_xml($subvalue));
+            //                     }
+            //                 }
+            //             } else {
+            //                 $acf_node->addChild($key, clean_for_xml($value));
+            //             }
+            //         }
+            //     }
+            // }
         }
     
         echo $xml->asXML();
