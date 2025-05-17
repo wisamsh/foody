@@ -20,91 +20,104 @@ class RecipeXMLGenerator {
     }
 
     public function generate_xml_page() {
-        echo '<h2>Generate Recipe XML Files</h2>';
-        echo '<p>Click the button below to generate the XML files.</p>';
+        echo '<h2>Foody Recipies  XML Export</h2>';
+        echo '<hr></hr>';
         echo '<form method="post">'; // Use a form to prevent redirect
-        echo '<input type="submit" name="generate_xml" value="Generate XML Files" class="button button-primary">';
+        echo '<input type="submit" name="generate_xml_table" id="generate_xml_table" value="Generate_XML_Table" class="button button-primary" 
+        style="margin-right:20px;" >';
+        echo '<input type="submit" name="generate_xml" id="generate_xml" value="Generate XML Files" class="button button-primary">';
         echo '</form>';
 
         if (isset($_POST['generate_xml'])) { // Check if the form is submitted
             $this->generate_recipe_xml_files();
         }
+        if (isset($_POST['generate_xml_table'])) { // Check if the form is submitted
+            echo $_POST['generate_xml_table'];
+        }
     }
 
-    public function generate_recipe_xml_files() {
-        global $wpdb; // Access the WordPress database object
-
-        $offset = 0;
-        $file_counter = 1;
-        $generated_files = array();
-
-        while (true) {
-            $sql = "SELECT ID, post_title, post_content, post_name FROM {$wpdb->posts} WHERE post_type = 'foody_recipe' LIMIT {$this->recipes_per_file} OFFSET {$offset}"; // Raw SQL query
-            $recipes = $wpdb->get_results($sql, ARRAY_A); // Get results as an associative array
-
-            if (empty($recipes)) {
-                break; // No more recipes
-            }
-
-
-            $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><recipes></recipes>');
-
-            foreach ($recipes as $recipe_data) { // Loop through raw data
-                $recipe = $xml->recipes->addChild('recipe');
-
-                $recipe->addChild('id', $recipe_data['ID']);
-                $recipe->addChild('title', $recipe_data['post_title']);
-                $recipe->addChild('content', $recipe_data['post_content']);
-                $recipe->addChild('permalink', get_permalink($recipe_data['ID'])); // Generate permalink
-
-                // Get custom fields using get_post_meta() with the ID
-                $ingredients = get_field('ingredients', $recipe_data['ID']);
-               // Replace with your custom field name
-                $recipe->addChild('ingredients', $ingredients);
-
-                $recipe_channel = get_field("recipe_channel",$recipe_data['ID']);
-                // Replace with your custom field name
-                $recipe->addChild('recipe_channel', $recipe_channel);
+    public function generate_recipe_xml_files() 
+    {
+        
+        if (!is_admin() || !current_user_can('manage_options')) {
+            wp_die('Unauthorized access');
+        }
+    
+        // Offset and limit from GET, or use defaults
+        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : $this->limit;
+    
+        // Call the XML export directly
+        $this->export_to_xml($offset, $limit);
+        exit;
+    }
 
 
-                // Get featured image using get_post_thumbnail_id() and wp_get_attachment_image_url()
-                 $image_id = get_post_thumbnail_id($recipe_data['ID']);
-                if ($image_id) {
-                    $image_url = wp_get_attachment_image_url($image_id, 'full'); // Or any other size
-                    $recipe->addChild('featured_image', $image_url);
+   public function clean_for_xml($text) {
+        // Convert known HTML entities to UTF-8 chars
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    
+        // Remove any remaining entities like &lsaquo; that are unknown in XML
+        $text = preg_replace('/&[a-zA-Z0-9#]+;/', '', $text);
+    
+        // Escape special XML chars
+        return htmlspecialchars($text, ENT_XML1 | ENT_QUOTES, 'UTF-8');
+    }
+    
+    
+    private function export_to_xml($offset, $limit) {
+        $posts = get_posts([
+            'post_type'      => 'foody_recipe',
+            'post_status'    => 'publish',
+            'numberposts'    => $limit,
+            'offset'         => $offset,
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+        ]);
+    
+        header('Content-Type: application/xml; charset=utf-8');
+        header('Content-Disposition: attachment; filename="foody_recipes_' . $offset . '_to_' . ($offset + $limit) . '.xml"');
+    
+        $xml = new SimpleXMLElement('<recipes/>');
+    
+        foreach ($posts as $post) {
+            $item = $xml->addChild('recipe');
+            $item->addChild('ID', $post->ID);
+            $item->addChild('title', clean_for_xml($post->post_title));
+            $item->addChild('date', clean_for_xml($post->post_date));
+    
+            if (function_exists('get_fields')) {
+                $fields = get_fields($post->ID);
+                if ($fields) {
+                    $acf_node = $item->addChild('acf_fields');
+                    foreach ($fields as $key => $value) {
+                        if (is_array($value)) {
+                            $subnode = $acf_node->addChild($key);
+                            foreach ($value as $subkey => $subvalue) {
+                                if (is_array($subvalue)) {
+                                    $nested = $subnode->addChild('item');
+                                    foreach ($subvalue as $nk => $nv) {
+                                        $nested->addChild($nk, clean_for_xml($nv));
+                                    }
+                                } else {
+                                    $subnode->addChild($subkey, clean_for_xml($subvalue));
+                                }
+                            }
+                        } else {
+                            $acf_node->addChild($key, clean_for_xml($value));
+                        }
+                    }
                 }
-
-
             }
-
-            $filename = 'recipes_' . $file_counter . '.xml';
-            $filepath = ABSPATH . 'wp-content/uploads/recipes/' . $filename;
-
-            $result = $xml->asXML($filepath);
-
-            if ($result) {
-                echo '<p>XML file ' . $filename . ' generated successfully.</p>';
-                $generated_files[] = content_url('/uploads/recipes/' . $filename);
-            } else {
-                echo '<p>Error generating XML file ' . $filename . '.</p>';
-            }
-
-            $offset += $this->recipes_per_file;
-            $file_counter++;
         }
-
-        if (!empty($generated_files)) {
-            echo '<h2>Downloadable XML Files:</h2>';
-            echo '<ul>';
-            foreach ($generated_files as $file_url) {
-                echo '<li><a href="' . $file_url . '" download>' . basename($file_url) . '</a></li>';
-            }
-            echo '</ul>';
-        }
+    
+        echo $xml->asXML();
     }
+    
 
 
 }
+
 
 $recipe_xml_generator = new RecipeXMLGenerator();
 
