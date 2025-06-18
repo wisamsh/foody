@@ -13,6 +13,7 @@ define('WP_CACHE', true); // Added by W3 Total Cache
  * WP is hardcoded to look in its own directory or one directory up for wp-config.php.
  */
 /* Multisite */
+
 require_once(dirname(__DIR__) . '/vendor/autoload.php');
 require_once(dirname(__DIR__) . '/config/application.php');
 require_once(ABSPATH . 'wp-settings.php');

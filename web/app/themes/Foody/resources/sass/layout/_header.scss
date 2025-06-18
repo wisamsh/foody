@@ -71,7 +71,7 @@ header {
     text-align: center;
     font-size: 21px;
     color: white;
-    background-image: linear-gradient(77deg, #ec3849, #f35644);
+    background-image: linear-gradient(77deg, #ec3849, #ec3849);
 
     &.run-desktop {
       width: auto;
@@ -205,6 +205,7 @@ header {
         }
 
         .follow-us {
+          font-family: Ploni;
           font-size: 18px;
           font-weight: normal;
         }
@@ -310,7 +311,7 @@ header {
                 .quadmenu-caret {
                   .quadmenu-text {
 
-                    font-family: AfekBold !important;
+                    font-family: Ploni !important;
                     direction: rtl !important;
                   }
                 }
@@ -334,7 +335,8 @@ header {
             > .quadmenu-dropdown-menu {
               > .quadmenu-item-content {
                 .quadmenu-text {
-                  font-family: Afek !important;
+                  font-family: Ploni !important;
+                  font-weight: 400 !important;
                   direction: rtl !important;
                 }
               }
@@ -418,32 +420,32 @@ header {
 
   #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
     padding-right: 0;
-    font-family: Afek !important;
-    font-weight: 600;
+    font-family: Ploni !important;
+    font-weight: 400;
     direction: rtl;
-    font-size: 15.5px;
+    font-size: 19px;
   }
 
   #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item .quadmenu-has-link a > .quadmenu-item-content > .quadmenu-text {
     padding-right: 0;
-    font-family: Afek !important;
-    font-weight: 600;
+    font-family: Ploni !important;
+    font-weight: 400;
     direction: rtl;
     font-size: 15.5px;
   }
     #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text{
       padding-right: 0;
-      font-family: Afek !important;
-      font-weight: 600;
+      font-family: Ploni !important;
+      font-weight: 400;
       direction: rtl;
-      font-size: 15.5px;
+      font-size: 19px;
     }
     #quadmenu.quadmenu-is-horizontal .quadmenu-navbar-nav > li.bold.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
       padding-right: 0;
-      font-family: Afek !important;
-      font-weight: 700;
+      font-family: PloniMedium !important;
+      font-weight: 600;
       direction: rtl;
-      font-size: 15.5px;
+      font-size: 19px;
     }
 
 
@@ -774,6 +776,9 @@ header {
         }
 
         .user-name-header {
+          font-family: PloniMedium !important;
+          font-size: 18px !important;
+          font-weight: 600;
           display: inline-block;
           max-width: 105px;
           overflow: hidden;
@@ -892,12 +897,14 @@ header {
   }
 
   #content {
-    padding-top: 60px;
+    /*padding-top: 60px;*/
   }
 
   .non-main-site {
-    #content {
-      padding-top: 110px;
+    &.carine-site {
+      #content {
+        padding-top: 110px;
+      }
     }
 
     header {
@@ -934,20 +941,20 @@ header {
     z-index: 1;
 
     #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item.quadmenu-has-caret > a > .quadmenu-item-content > .quadmenu-text {
-      font-family: Afek !important;
-      font-weight: 600;
+      font-family: Ploni !important;
+      font-weight: 400;
       direction: rtl;
       font-size: 17px;
     }
 
     #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item .quadmenu-has-link a > .quadmenu-item-content > .quadmenu-text {
-      font-family: Afek !important;
+      font-family: Ploni !important;
       direction: rtl;
       font-size: 17px;
     }
     #quadmenu.quadmenu-touch .quadmenu-navbar-nav > li.quadmenu-item > a > .quadmenu-item-content > .quadmenu-text {
       padding-right: 0;
-      font-family: AfekBold !important;
+      font-family: Ploni !important;
       direction: rtl;
       font-size: 17px;
     }
@@ -1012,7 +1019,7 @@ header {
             > .quadmenu-item-content {
               .quadmenu-caret {
                 .quadmenu-text {
-                  font-family: Afek !important;
+                  font-family: Ploni !important;
                   direction: rtl !important;
                   font-weight: 600;
                 }
@@ -1023,7 +1030,7 @@ header {
           > .quadmenu-dropdown-menu{
             > .quadmenu-item-content {
                 .quadmenu-text {
-                  font-family: Afek !important;
+                  font-family: Ploni !important;
                   direction: rtl !important;
                 }
             }
@@ -1035,7 +1042,7 @@ header {
             a {
               .quadmenu-item-content {
                 .quadmenu-text {
-                  font-family: Afek !important;
+                  font-family: Ploni !important;
                   direction: rtl !important;
                 }
 
@@ -1397,7 +1404,7 @@ header {
             .close-menu {
               width: 100%;
               height: 66px;
-              background-image: linear-gradient(77deg, #ec3849, #f35644);
+              background-image: linear-gradient(77deg, #ec3849, #ec3849);
               color: white;
               font-size: 32px;
               font-weight: 900;

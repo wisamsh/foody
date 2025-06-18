@@ -14,7 +14,9 @@ $homepage->init();
 ?>
 
     <div class="homepage">
-        <?php $homepage->cover_photo() ?>
+        <?php //$homepage->cover_photo();
+       echo  $homepage->cover_image_new();
+        ?>
 
         <div class="content">
             <div class="row recipes-grid gutter-10 featured">

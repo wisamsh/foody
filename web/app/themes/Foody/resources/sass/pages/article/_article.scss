@@ -36,6 +36,10 @@
 
   .recipe-shortcode-container {
     .details-container {
+      .details{
+        margin-top: 20px;
+      }
+overflow: hidden;
       div:not(.details) {
         .empty-star, .full-star, .half-star, .star {
           width:24px;

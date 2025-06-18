@@ -67,14 +67,14 @@ class Foody_courses_members_exporter
 //set the header first, so the result will be treated as an xlsx file.
         header('Content-Type: application/vnd.ms-excel');
 //make it an attachment so we can define filename
-        header('Content-Disposition: attachment;filename="Courses-members.xls"');
+        header('Content-Disposition: attachment;filename="Courses-members.csv"');
 
 //create IOFactory object
-        $writer = IOFactory::createWriter($spreadsheet, 'Xls');
+        $writer = IOFactory::createWriter($spreadsheet, 'Csv');
 //save into php output
         ob_end_clean();
         $writer->save('php://output');
-
+die();
     }
 
 

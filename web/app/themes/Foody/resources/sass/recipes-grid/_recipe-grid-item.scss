@@ -1,7 +1,7 @@
 .recipe-item, .playlist-item, .article-item {
 
   .recipe-item-image, .playlist-item-image, .article-item-image {
-    clip-path: inset(0 round .2em);
+    //clip-path: inset(0 round .2em);
     object-fit: cover;
     width: 100%;
   }
@@ -129,6 +129,11 @@
         display: inline-block;
         vertical-align: middle;
         margin-right: 10px;
+
+        li{
+          font-family: Ploni;
+          font-size: 18px;
+        }
       }
     }
 
@@ -175,12 +180,12 @@
   .grid-item-title {
     margin: 0;
     font-size: 21px;
-    font-family: $font__assistant-bold;
-    font-weight: 500;
+    font-family: PloniMedium;
     text-align: right;
   }
   .description {
-    font-size: 1rem;
+    font-family: Ploni;
+    font-size: 18px;
     text-align: right;
     line-height: normal;
     padding-bottom: 5px;

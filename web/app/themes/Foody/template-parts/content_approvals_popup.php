@@ -9,14 +9,14 @@
 $approved_marketing = get_user_meta( get_current_user_id(), 'marketing', true );
 $registration_page  = get_page_by_title( 'הרשמה' );
 $show               = get_field( 'show', $registration_page );
-
+//מזרח ומערב
 ?>
 <form id="approvals" method="post">
 	<?php if ( ! Foody_User::user_has_meta( 'marketing' ) ): ?>
-        <div class="md-checkbox col-12">
-            <input id="check-marketing" type="checkbox" checked name="marketing">
+        <div class="md-checkbox col-12" >
+            <input id="check-marketing" type="checkbox" checked name="marketing" id="mz1">
             <label for="check-marketing">
-				<?php echo __( 'הריני לאשר בזה קבלת דואר מאתר Foody וחברת מזרח ומערב הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר' ) ?>
+				<?php echo __( 'הריני לאשר בזה קבלת דואר מאתר Foody  הכולל מתכונים ומידע מהאתר, וכן דואר שיווקי גם של מפרסמים הקשורים עם האתר'); ?>
             </label>
         </div>
 	<?php endif; ?>
@@ -24,7 +24,7 @@ $show               = get_field( 'show', $registration_page );
 
 	if ( $show ):
 		?>
-        <div class="md-checkbox col-12">
+        <div class="md-checkbox col-12" id="content_popup">
             <input id="check-e-book" type="checkbox" checked name="e-book">
             <label for="check-e-book">
 				<?php
